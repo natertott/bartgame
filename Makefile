@@ -4,7 +4,7 @@ all: eu jp usa demo_jp demo_usa
 
 MAKEFLAGS += --no-print-directory
 
-.PHONY: build eu jp usa demo_jp demo_usa custom
+.PHONY: build eu jp usa demo_jp demo_usa custom quickstart
 build: GAME_VERSION ?=USA
 build: tools
 	@$(MAKE) -f GBA.mk build GAME_VERSION=$(GAME_VERSION)
@@ -19,6 +19,9 @@ eu jp usa demo_jp demo_usa: tools
 
 custom: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1
+
+quickstart: tools
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
 
 .PHONY: extract_assets
 extract_assets: tools

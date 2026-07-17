@@ -56,7 +56,12 @@ ELF = $(BUILD_NAME).elf
 # entrypoint targets
 # ==================
 CUSTOM ?=
-COMPARE ?= $(if $(CUSTOM),0,1)
+# Dev-only hook: boot straight into a chosen room with full equipment instead
+# of the title/file-select flow, for fast iteration. See src/game.c.
+QUICKSTART ?=
+QUICKSTART_AREA ?= AREA_VAATI_3
+QUICKSTART_ROOM ?= ROOM_VAATI_3_0
+COMPARE ?= $(if $(CUSTOM)$(QUICKSTART),0,1)
 
 .PHONY: build extract_assets build_assets
 build: $(if $(CUSTOM), build_assets, $(BUILD_DIR)/extracted_assets_$(GAME_VERSION))
@@ -103,7 +108,8 @@ $(BUILD_DIR)/enum_include/%.inc: include/%.h
 
 # agbcc includes are separate because we don't want dependency scanning on them
 CINCLUDE := -I include -I $(BUILD_DIR)
-CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE)
+CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE) \
+	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM))
 CFLAGS := -O2 -Wimplicit -Wparentheses -Werror -Wno-multichar -g3
 
 interwork := $(BUILD_DIR)/src/interrupts.o \

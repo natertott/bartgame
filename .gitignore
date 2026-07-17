@@ -20,3 +20,17 @@ Thumbs.db
 /tools/include/
 /tools/lib/
 /tools/bin/
+
+# Emulator save data from testing - never commit
+*.sav
+*.sav.bak
+*.ss0
+*.ss1
+*.ss2
+*.ss3
+*.ss4
+*.ss5
+*.ss6
+*.ss7
+*.ss8
+*.ss9

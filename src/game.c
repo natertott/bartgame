@@ -24,6 +24,10 @@
 #include "beanstalkSubtask.h"
 #include "pauseMenu.h"
 #include "fade.h"
+#ifdef QUICKSTART
+#include "roomid.h"
+#include "item.h"
+#endif
 
 // Game task
 
@@ -112,6 +116,20 @@ static void GameTask_Transition(void) {
     FinalizeSave();
     // spawn in with saved status
     MemCopy(&gSave.saved_status, &gRoomTransition.player_status, sizeof(gRoomTransition.player_status));
+#ifdef QUICKSTART
+    // Dev-only: skip wherever the save file says to start and drop the
+    // player into QUICKSTART_AREA/QUICKSTART_ROOM instead, fully equipped.
+    gRoomTransition.player_status.area_next = QUICKSTART_AREA;
+    gRoomTransition.player_status.room_next = QUICKSTART_ROOM;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = 0xb0;
+    gRoomTransition.player_status.start_pos_y = 0x88;
+    gRoomTransition.player_status.layer = 1;
+    gSave.stats.maxHealth = 40;
+    gSave.stats.health = gSave.stats.maxHealth;
+    gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
+    gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
+#endif
     gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
     ResetTmpFlags();
 
