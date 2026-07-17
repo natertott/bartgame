@@ -1,0 +1,12 @@
+# ROMs and copyrighted game data - must never be committed
+*.gba
+*.gbc
+*.gb
+*.zip
+*.7z
+*.rar
+baserom*.gba
+
+# OS junk
+.DS_Store
+Thumbs.db
