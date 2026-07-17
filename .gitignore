@@ -10,3 +10,13 @@ baserom*.gba
 # OS junk
 .DS_Store
 Thumbs.db
+
+# Build output and extracted/generated data (derived from your local ROM - never commit)
+/build/
+*.elf
+*.map
+/translations/*.bin
+/tools/agbcc/
+/tools/include/
+/tools/lib/
+/tools/bin/

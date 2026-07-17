@@ -6,7 +6,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Add project_options v0.15.1
 # https://github.com/cpp-best-practices/project_options
 include(FetchContent)
-FetchContent_Declare(_project_options URL https://github.com/cpp-best-practices/project_options/archive/refs/tags/v0.15.1.zip)
+FetchContent_Declare(_project_options GIT_REPOSITORY https://github.com/cpp-best-practices/project_options/archive/refs/tags/v0.15.1.zip)
 if (NOT _project_options_POPULATED)
     FetchContent_Populate(_project_options)
 endif()
