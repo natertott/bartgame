@@ -82,6 +82,7 @@ extern void LoadRoomGfx(void);
 extern void RecycleEntities(void);
 extern void sub_0804AF90(void);
 extern void CallRoomProp6(void);
+extern u32 WriteSaveFile(u32, SaveFile*);
 
 static void UpdateWindcrests(void);
 static void InitializeEntities(void);
@@ -740,15 +741,23 @@ static void QuickStartSpawnWinKeyOnce(void) {
     }
 }
 
-// Difficulty only ever climbs here, then DoSoftReset() (preserves EWRAM,
-// see main.c) drops the player back on the title screen with gSave - and
-// the new difficulty counter - intact, ready for the next round.
+// Difficulty only ever climbs here. DoSoftReset() (main.c) preserves EWRAM
+// on the CPU side, but the title/file-select flow the player lands back on
+// unconditionally reloads gSave from the save file (EEPROM) the moment they
+// pick a slot - so without an explicit write here first, the very next
+// "Continue" would load the OLD, un-incremented save right back over our
+// change, and it would look like the win never registered. WriteSaveFile is
+// the same plain, synchronous EEPROM write HandleSaveInProgress (save.c)
+// itself calls to do the real work - it needs none of that function's
+// surrounding save-menu/sound-fade state machine, so it's safe to call
+// directly from mid-gameplay like this.
 static void QuickStartCheckWinCondition(void) {
     if (GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) == 0) {
         return;
     }
     QuickStartIncrementDifficulty();
     SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
+    WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     DoSoftReset();
 }
 
@@ -984,11 +993,11 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
     SetRoomFlag(1);
 }
 
-// Drops the heart container at its fixed spot and marks ITEM_5A "earned" +
+// Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
 // room flag 2 "watching this visit's drop" - shared by the initial grant
 // and the re-drop path in QuickStartSpawnMelarisMineRewardOnce below.
 static void QuickStartSpawnMelarisMineRewardItem(void) {
-    Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_CONTAINER, 0);
+    Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_PIECE, 0);
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + 0x100;
         itemEntity->y.HALF.HI = gRoomControls.origin_y + 0x100;
@@ -1000,15 +1009,16 @@ static void QuickStartSpawnMelarisMineRewardItem(void) {
     }
 }
 
-// Heart container reward once the room's own wave is cleared. No manual
-// maxHealth increment needed (unlike the pre-existing Main-sequence
-// bonus-item code elsewhere in this file, which does add one manually): a
-// GROUND_ITEM of ITEM_HEART_CONTAINER already routes through the vanilla
-// LinkHoldingItem_Action3 pickup cutscene on its own (itemOnGround.c's
-// CheckShouldPlayItemGetCutscene forces the cutscene path for any item
-// with the metadata's unk3 0x2 bit set, which ITEM_HEART_CONTAINER has),
-// and that cutscene is what actually grants the permanent +8 maxHealth -
-// the same mechanism a real dungeon's heart container boss reward uses.
+// Heart piece reward once the room's own wave is cleared - a quarter heart,
+// not a full container, since this is just one of the loop's several
+// gauntlets rather than a dungeon-boss-tier reward. No manual maxHealth
+// bookkeeping needed here either: a GROUND_ITEM of ITEM_HEART_PIECE already
+// routes through the vanilla LinkHoldingItem_Action3 pickup cutscene on its
+// own (itemOnGround.c's CheckShouldPlayItemGetCutscene forces the cutscene
+// path for any item with the metadata's unk3 0x2 bit set, which
+// ITEM_HEART_PIECE has same as ITEM_HEART_CONTAINER), and that cutscene is
+// what actually grants the permanent health increase (4 pieces = +8
+// maxHealth) - the same mechanism a real overworld heart piece uses.
 //
 // ITEM_5A is a 3-state flag like Castle Garden's ITEM_32: 0 = not earned,
 // 1 = earned and a ground item is (or was) dropped, 2 = confirmed picked
