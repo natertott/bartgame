@@ -723,13 +723,27 @@ static void QuickStartSpawnGardenRewardOnce(void) {
 // global flag needed for that part. It gets explicitly cleared again in
 // QuickStartCheckWinCondition below so the next round (after the
 // win-triggered reset) starts with the key unclaimed again.
+//
+// Ground items despawn on their own timer regardless of ENT_PERSIST (see
+// QuickStartRefreshItemTimers, which does the same thing for the starter/
+// bonus/skill choices) - left unrefreshed, the key would flicker away and
+// respawn every ~10 seconds while the player's still making their way
+// here, and worse, a pickup landing in the same frame as a despawn could
+// race and silently drop the win entirely. Called every frame from
+// QuickStartRoomMonitor, so refresh an existing key's timer every time
+// through instead of only spawning once and leaving it to fend for itself.
 static void QuickStartSpawnWinKeyOnce(void) {
     Entity* itemEntity;
+    s32 i;
     if (GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) != 0) {
         return;
     }
-    if (QuickStartGroundItemAt(0x1f8, 0x78)) {
-        return;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_QST_GRAVEYARD_KEY) {
+            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
+            return;
+        }
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_QST_GRAVEYARD_KEY, 0);
     if (itemEntity != NULL) {
@@ -1232,12 +1246,11 @@ static void QuickStartIncrementDifficulty(void) {
 // "swap the common enemy for a tougher relative once the counter is high
 // enough" rule, easy to retune once we see how it plays.
 static u8 QuickStartScaleEnemyType(u8 baseType, u8 difficulty) {
+    // Golden enemy variants deliberately left out of the rotation for now -
+    // not part of the difficulty progression yet.
     if (difficulty >= 1) {
         if (baseType == OCTOROK) {
             return SPEAR_MOBLIN;
-        }
-        if (baseType == ROPE) {
-            return ROPE_GOLDEN;
         }
     }
     return baseType;
