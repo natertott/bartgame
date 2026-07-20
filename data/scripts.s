@@ -592,3 +592,11 @@
 	.include "data/scripts/npc/script_ForestMinish20.inc"
 	.include "data/scripts/npc/script_ForestMinish21.inc"
 	.include "data/scripts/npc/script_TingleSiblings.inc"
+
+.ifdef QUICKSTART
+	.include "data/scripts/quickstart/script_QuickStartChooseOne.inc"
+	.include "data/scripts/quickstart/script_QuickStartMerchant.inc"
+	.include "data/scripts/quickstart/script_QuickStartLadderNpc0.inc"
+	.include "data/scripts/quickstart/script_QuickStartLadderNpc1.inc"
+	.include "data/scripts/quickstart/script_QuickStartLadderNpc2.inc"
+.endif

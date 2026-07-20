@@ -28,6 +28,11 @@ void EzloHintManager_Main(EzloHintManager* this) {
 }
 
 static void EzloHintManager_Init(EzloHintManager* this) {
+#ifdef QUICKSTART
+    // Dev-only: skip Ezlo's hint textbox.
+    DeleteThisEntity();
+    return;
+#endif
     if (CheckFlags(this->flag1) != 0) {
         DeleteThisEntity();
     }

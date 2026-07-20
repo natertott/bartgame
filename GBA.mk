@@ -59,8 +59,8 @@ CUSTOM ?=
 # Dev-only hook: boot straight into a chosen room with full equipment instead
 # of the title/file-select flow, for fast iteration. See src/game.c.
 QUICKSTART ?=
-QUICKSTART_AREA ?= AREA_VAATI_3
-QUICKSTART_ROOM ?= ROOM_VAATI_3_0
+QUICKSTART_AREA ?= AREA_CASTOR_DARKNUT
+QUICKSTART_ROOM ?= ROOM_CASTOR_DARKNUT_MAIN
 COMPARE ?= $(if $(CUSTOM)$(QUICKSTART),0,1)
 
 .PHONY: build extract_assets build_assets
@@ -85,7 +85,8 @@ clean:
 # ===============
 
 ASINCLUDE := -I $(BUILD_DIR)/assets -I $(BUILD_DIR)/enum_include
-ASFLAGS := -mcpu=arm7tdmi --defsym $(GAME_VERSION)=1 --defsym REVISION=$(REVISION) --defsym $(GAME_LANGUAGE)=1 $(ASINCLUDE)
+ASFLAGS := -mcpu=arm7tdmi --defsym $(GAME_VERSION)=1 --defsym REVISION=$(REVISION) --defsym $(GAME_LANGUAGE)=1 $(ASINCLUDE) \
+	$(if $(QUICKSTART),--defsym QUICKSTART=1)
 
 # TODO try solve this without the glob
 ENUM_ASM_SRCS := $(wildcard include/*.h)

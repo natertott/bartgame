@@ -437,6 +437,15 @@ void MiscManager_TypeE(MiscManager* this) {
 
 #if defined(USA) || defined(DEMO_USA) || defined(DEMO_JP)
 void MiscManager_TypeF(MiscManager* this) {
+#ifdef QUICKSTART
+    // Dev-only: this manager exists purely to simulate a SELECT press once
+    // per newly-discovered area, which is what makes Ezlo automatically pop
+    // up with an area hint (see CanDispEzloMessage in gameUtils.c) the first
+    // time the player enters any room. Skip it so QUICKSTART's single room
+    // doesn't get an unwanted Ezlo textbox on load.
+    DeleteThisEntity();
+    return;
+#endif
     SetEntityPriority((Entity*)this, PRIO_PLAYER_EVENT);
     if (gPlayerEntity.base.action == PLAYER_TALKEZLO) {
         DeleteThisEntity();
