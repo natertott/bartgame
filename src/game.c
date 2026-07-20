@@ -175,6 +175,21 @@ static void GameTask_Transition(void) {
     gRoomTransition.player_status.start_pos_x = 0x46;
     gRoomTransition.player_status.start_pos_y = 0x9b;
     gRoomTransition.player_status.layer = 1;
+    // Every fresh boot is meant to be its own clean round - none of last
+    // round's starter/bonus/skill choice, ladder/gauntlet reward pickups, or
+    // heart pieces should carry over. Global flags (gSave.flags - the
+    // difficulty counter, ladder assignments, EZERO_1ST, etc.) live in a
+    // separate array and are untouched by this, but ownership itself
+    // (gSave.inventory, 2 bits/item) persists across DoSoftReset same as
+    // everything else in gSave - left alone, QuickStartAnyPickedUp would see
+    // last round's picks as already-owned and silently skip straight past
+    // the choice phases with the old loadout, which is exactly what was
+    // happening. Wiping it here, before any of the fixed starting gear below
+    // gets (re-)granted, is simpler and more robust than re-clearing every
+    // individual item/marker (ITEM_32/33/5A, all three choice categories,
+    // every ladder-room reward) by hand.
+    MemClear(gSave.inventory, sizeof(gSave.inventory));
+    gSave.stats.heartPieces = 0;
     gSave.stats.maxHealth = 40;
     gSave.stats.health = gSave.stats.maxHealth;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
