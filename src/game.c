@@ -115,6 +115,7 @@ static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
 static void QuickStartSolveLonLonBoulder(void);
+static void QuickStartSpawnRanchHouseEnemiesOnce(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
@@ -376,17 +377,24 @@ static bool32 QuickStartEntityInCurrentRoom(Entity* entity) {
 }
 
 // Whether a ground item this file itself dropped is still sitting at the
-// exact spot it was placed (room-local offset). Used to tell "the player
-// picked it up" apart from "the room got unloaded before they picked it
-// up" for a gauntlet reward - see QuickStartSpawnGardenRewardOnce and
-// QuickStartSpawnMelarisMineRewardOnce for why that distinction matters.
+// exact spot it was placed (room-local offset) - and if so, refreshes its
+// own despawn timer. Used to tell "the player picked it up" apart from
+// "the room got unloaded before they picked it up" for a reward drop -
+// Castle Garden, Melari's Mine, and the ladder "? room" chest/mini-boss
+// rewards all use this exact pattern, and all of them need the refresh:
+// left untouched, the item silently vanishes on its default ~10-second
+// ground-item timer, often before a real player can realistically fight
+// through to it (confirmed in the emulator for Castle Garden's own
+// reward, behind a 19-enemy gauntlet) - and that disappearance then reads
+// as a genuine pickup the very next frame, permanently marking the
+// reward collected even though nothing was ever actually handed over.
 static bool32 QuickStartGroundItemAt(s16 offsetX, s16 offsetY) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == OBJECT && gEntities[i].base.id == GROUND_ITEM &&
-            QuickStartEntityInCurrentRoom(&gEntities[i].base) &&
-            gEntities[i].base.x.HALF.HI - gRoomControls.origin_x == offsetX &&
-            gEntities[i].base.y.HALF.HI - gRoomControls.origin_y == offsetY) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && QuickStartEntityInCurrentRoom(ent) &&
+            ent->x.HALF.HI - gRoomControls.origin_x == offsetX && ent->y.HALF.HI - gRoomControls.origin_y == offsetY) {
+            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
             return TRUE;
         }
     }
@@ -997,14 +1005,52 @@ static const QuickStartLink sQuickStartLinks[] = {
     // below so arriving here doesn't immediately re-trigger it.
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 488, 520, 16, 56, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       344, 870 },
-    // Lon Lon Ranch -> back to Castle Garden. Box is just south of the
-    // arrival spot above, so walking further south (deeper into the ranch,
-    // away from the entrance) is what sends the player back, rather than
-    // this immediately re-firing on arrival. Landing spot in Castle Garden
-    // is the same walkable spot the win key itself used to sit at, back
-    // before it moved to Lon Lon Ranch.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 328, 360, 895, 930, AREA_CASTLE_GARDEN,
+    // Lon Lon Ranch -> back to Castle Garden. The original version of this
+    // box sat at y:895-930 - only ~25-60px south of the (344,870) arrival
+    // spot above, so a couple of steps deeper into the ranch immediately
+    // yanked the player back out before they could reach anything. A full
+    // act-tile/collision dump of the room found the room's own real south
+    // gate: a gap in the otherwise-solid boundary row (tile y=59, local
+    // y=944-960) at tile x=18-21 (local x=288-352), with a walkable
+    // corridor leading down to it from as far up as y=848 - confirmed by
+    // walking straight down from the arrival spot with this box disabled.
+    // Box now sits right at that real gate instead, so reaching Castle
+    // Garden actually requires walking the length of the ranch. Landing
+    // spot in Castle Garden is the same walkable spot the win key itself
+    // used to sit at, back before it moved to Lon Lon Ranch.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 292, 348, 940, 958, AREA_CASTLE_GARDEN,
       ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
+    // Lon Lon Ranch -> Talon and Malon's house (west room, the one with the
+    // beds). The real vanilla door (gExitList_HyruleField_LonLonRanch[0],
+    // a WARP_TYPE_AREA door at local (344,632)) turned out to sit behind
+    // its own dedicated wall segment - a full collision-grid BFS from the
+    // Castle Garden arrival spot (even with all 3 boulders solved) never
+    // reaches within several tiles of it, so there's no "walk up and use
+    // the real door" approach to preserve here the way Melari's Mine's
+    // doors had. This box instead sits at local (184,616), the closest
+    // point on the room's own main reachable corridor (confirmed by BFS
+    // over the room's collision grid, then walking all 4 directions from
+    // it in the emulator) - the player effectively steps into the house
+    // from the side, not through the visual front door. Spawn point is
+    // (104,88), one of the 8 spots the ranch house's own enemy-offset
+    // survey below already verified walkable.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 170, 198, 602, 630, AREA_HOUSE_INTERIORS_4,
+      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 104, 88 },
+    // Ranch house (west room) -> back out to Lon Lon Ranch, at the far
+    // north end of the room's main reachable corridor (see the collision
+    // BFS + 4-direction walk mentioned above) rather than back near the
+    // entrance - walking through the house is a real shortcut to a
+    // different part of the ranch. This is a position box, not the room's
+    // own real WARP_TYPE_BORDER south exit (retargeted in transitions.c
+    // anyway, as insurance): walking straight down from the rug toward
+    // that real door dead-ends at a solid wall tile (confirmed by walking
+    // there directly, then trying to push through with repeated
+    // down-presses and A presses for several seconds - the door frame
+    // tile never opens under QUICKSTART's direct room load, the same
+    // ACT_TILE-shaped gap as every other real door this file works
+    // around). Box sits just north of that wall, on the walkable side.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 88, 120, 118, 127, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 73, 135 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1103,24 +1149,44 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
     SetRoomFlag(0);
 }
 
-// Lon Lon Ranch's real vanilla puzzle, right next to our entrance: a
-// PUSHABLE_ROCK (object.h) rests at local (488,904) - tile (30,56) - one
-// tile east of a SURFACE_HOLE act-tile at tile (29,56) (both confirmed by
-// dumping the room's own act-tile data in the emulator). Normally the
-// player pushes the rock west into the hole; its own vanilla code
+typedef struct {
+    s16 srcXMin;
+    s16 srcXMax;
+    s16 srcYMin;
+    s16 srcYMax;
+    s16 destX;
+    s16 destY;
+    u8 oldTileX;
+    u8 oldTileY;
+    u8 holeTileX;
+    u8 holeTileY;
+} QuickStartLonLonBoulder;
+
+// Lon Lon Ranch has three PUSHABLE_ROCK entities (object.h), each resting
+// one tile from its own SURFACE_HOLE act-tile - all confirmed by dumping
+// the room's full act-tile grid and cross-referencing every PUSHABLE_ROCK
+// entity's live position: (488,904)/tile(30,56) next to the hole at
+// tile(29,56) (right by our entrance); (184,200)/tile(11,12) next to the
+// hole at tile(10,12); and (216,904)/tile(13,56) next to the hole at
+// tile(14,56) (this one's hole is EAST of the rock, not west - direction
+// doesn't matter, only ending up centered on the hole tile does). Normally
+// the player pushes each rock onto its hole; its own vanilla code
 // (object/pushableRock.c: sub_0808A644) then settles it into action 3 and
 // overwrites the hole's tile with SPECIAL_TILE_21 ("Boulder in Hole", a
-// walkable bridge). This loop can't rely on the player ever having a
-// reason or the right timing to push it themselves, so force that same
-// end state directly, every frame - same idempotent per-frame pattern as
-// QuickStartClearCastleGuards.
+// walkable bridge). This can't rely on the player ever pushing them
+// itself, so force that same end state directly every frame - same
+// idempotent per-frame pattern as QuickStartClearCastleGuards.
+static const QuickStartLonLonBoulder sQuickStartLonLonBoulders[] = {
+    { 448, 528, 864, 944, 472, 904, 30, 56, 29, 56 },
+    { 144, 224, 160, 240, 168, 200, 11, 12, 10, 12 },
+    { 176, 256, 864, 944, 232, 904, 13, 56, 14, 56 },
+};
+
 static void QuickStartSolveLonLonBoulder(void) {
-    s32 i;
-    // Lon Lon Ranch has three PUSHABLE_ROCK entities total, only one of
-    // which blocks our entrance (the other two sit far away at local
-    // (184,200) and (216,904) and serve unrelated vanilla puzzles). Only
-    // touch the one that starts near the hole so we don't drag the other
-    // rocks across the map onto this tile.
+    s32 i, j;
+    // Each rock's source box is tight around its own starting spot only
+    // (not the other two rocks' spots), so this can't drag the wrong rock
+    // onto the wrong hole.
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         s32 localX;
@@ -1130,22 +1196,52 @@ static void QuickStartSolveLonLonBoulder(void) {
         }
         localX = ent->x.HALF.HI - gRoomControls.origin_x;
         localY = ent->y.HALF.HI - gRoomControls.origin_y;
-        if (localX < 448 || localX > 528 || localY < 864 || localY > 944) {
-            continue;
+        for (j = 0; j < ARRAY_COUNT(sQuickStartLonLonBoulders); j++) {
+            const QuickStartLonLonBoulder* b = &sQuickStartLonLonBoulders[j];
+            if (localX < b->srcXMin || localX > b->srcXMax || localY < b->srcYMin || localY > b->srcYMax) {
+                continue;
+            }
+            ent->x.HALF.HI = gRoomControls.origin_x + b->destX;
+            ent->y.HALF.HI = gRoomControls.origin_y + b->destY;
+            ent->action = 3;
+            break;
         }
-        ent->x.HALF.HI = gRoomControls.origin_x + 472;
-        ent->y.HALF.HI = gRoomControls.origin_y + 904;
-        ent->action = 3;
     }
-    // The rock's ORIGINAL resting tile (30,56) was already marked solid by
-    // its own vanilla init code (object/pushableRock.c: sub_0808A644, the
-    // non-hole branch) the moment the room loaded, independent of the
-    // entity itself - confirmed via a live collision-grid dump showing that
-    // tile still blocked after the entity above was relocated. Clear it
+    // Each rock's ORIGINAL resting tile was already marked solid by its own
+    // vanilla init code (object/pushableRock.c: sub_0808A644, the non-hole
+    // branch) the moment the room loaded, independent of the entity itself
+    // - confirmed via a live collision-grid dump showing the first rock's
+    // tile still blocked after the entity was relocated. Clear each one
     // explicitly with the same TILE_TYPE_0 "fix collision only" trick
     // already used in QuickStartClearCastleGuards above.
-    SetTileType(TILE_TYPE_0, TILE_POS(30, 56), LAYER_BOTTOM);
-    SetTileType(SPECIAL_TILE_21, TILE_POS(29, 56), LAYER_BOTTOM);
+    for (i = 0; i < ARRAY_COUNT(sQuickStartLonLonBoulders); i++) {
+        const QuickStartLonLonBoulder* b = &sQuickStartLonLonBoulders[i];
+        SetTileType(TILE_TYPE_0, TILE_POS(b->oldTileX, b->oldTileY), LAYER_BOTTOM);
+        SetTileType(SPECIAL_TILE_21, TILE_POS(b->holeTileX, b->holeTileY), LAYER_BOTTOM);
+    }
+}
+
+// Talon and Malon's house (west room) as a "? room" off the sQuickStartLinks
+// entrance above. Small single-screen room, mostly furniture (2 beds, a
+// dresser, a TV, a rug) - a collision-grid dump plus a per-spot 4-direction
+// movement check (same verification pipeline as every other room's offset
+// pool) found only these 8 clear floor tiles between the furniture.
+static const s16 sQuickStartRanchHouseEnemyOffsets[8][2] = {
+    { 72, 88 }, { 104, 88 }, { 136, 88 }, { 88, 104 }, { 120, 104 }, { 72, 120 }, { 72, 56 }, { 72, 72 },
+};
+// 240x160px room -> 7x5 32x32 squares = 35; maxEnemies is just the verified
+// offset pool's own size (8) - the room's small enough that entity-budget
+// headroom was never the limiting factor here, unlike the bigger gauntlets.
+#define QUICKSTART_RANCHHOUSE_ROOM_SQUARES 35
+#define QUICKSTART_RANCHHOUSE_MAX_ENEMIES 8
+
+static void QuickStartSpawnRanchHouseEnemiesOnce(void) {
+    if (CheckRoomFlag(0)) {
+        return;
+    }
+    QuickStartSpawnEnemyGroup(sQuickStartRanchHouseEnemyOffsets, ARRAY_COUNT(sQuickStartRanchHouseEnemyOffsets),
+                               QUICKSTART_RANCHHOUSE_ROOM_SQUARES, QUICKSTART_RANCHHOUSE_MAX_ENEMIES);
+    SetRoomFlag(0);
 }
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -2258,6 +2354,10 @@ static void QuickStartEnforceLonLonContainment(void) {
         gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
+    if (gRoomTransition.player_status.area_next == AREA_HOUSE_INTERIORS_4 &&
+        gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
+        return;
+    }
     gRoomTransition.transitioningOut = 0;
 }
 
@@ -2322,6 +2422,9 @@ static void QuickStartRoomMonitor(void) {
                gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST) {
         QuickStartSpawnMelarisMineMerchantOnce();
         QuickStartMaintainMelarisMineShop();
+    } else if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 &&
+               gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
+        QuickStartSpawnRanchHouseEnemiesOnce();
     } else {
         s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
         if (ladderIndex >= 0) {
