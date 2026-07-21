@@ -458,6 +458,15 @@ const Transition* const gExitLists_HyruleField[] = {
 
 // TODO this is one table
 const Transition gExitList_CastleGarden_Main[] = {
+    // Left un-retargeted under QUICKSTART: this is a WARP_TYPE_AREA door,
+    // which (like every other WARP_TYPE_AREA door in this file) depends on
+    // GetActTileAtTilePos/a specific ACT_TILE-flagged tile that never gets
+    // set up when a room is entered via QUICKSTART's direct room load
+    // instead of a real transition - confirmed empirically (see the
+    // sQuickStartLinks comment in game.c). The Lon Lon Ranch connection is
+    // done as a position-box QuickStartLink instead (game.c), same as
+    // every other cross-room link in this file that isn't a
+    // WARP_TYPE_BORDER door.
     { WARP_TYPE_AREA, 0x1f8, 0x28, 0xd8, 0x208, TRANSITION_SHAPE_AREA_28x12, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x308, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST,

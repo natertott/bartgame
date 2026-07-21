@@ -112,6 +112,8 @@ static void QuickStartMaintainGardenLadders(void);
 static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
+static void QuickStartEnforceLonLonContainment(void);
+static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
@@ -677,8 +679,10 @@ static void QuickStartSpawnGardenRewardOnce(void) {
 }
 
 // Win condition: a key sitting just south of Castle Garden Main's north
-// door (the real vanilla exit to Hyrule Castle - gExitList_CastleGarden_Main
-// entry 0, trigger at local (0x1f8, 0x28)). Picking it up ends the round.
+// door onward, in Lon Lon Ranch (world (392,264), verified walkable the
+// same way as its enemy pool below). Picking it up ends the round. Only
+// spawns once every Lon Lon Ranch enemy is dead - same "wait for a clear
+// room" gate Castle Garden's own gauntlet reward uses.
 // ITEM_QST_GRAVEYARD_KEY is a real Item enum slot that's otherwise unused
 // by anything QUICKSTART touches (it's vanilla content for the Royal
 // Valley graveyard quest, never reached from this loop), so its own
@@ -707,11 +711,15 @@ static void QuickStartSpawnWinKeyOnce(void) {
             ((ItemOnGroundEntity*)ent)->unk_6c = 600;
             return;
         }
+        if (ent->kind == ENEMY) {
+            // Still enemies alive somewhere in Lon Lon Ranch - not clear yet.
+            return;
+        }
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_QST_GRAVEYARD_KEY, 0);
     if (itemEntity != NULL) {
-        itemEntity->x.HALF.HI = gRoomControls.origin_x + 0x1f8;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + 0x78;
+        itemEntity->x.HALF.HI = gRoomControls.origin_x + 392;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + 264;
         itemEntity->collisionLayer = 1;
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
@@ -910,6 +918,24 @@ static const QuickStartLink sQuickStartLinks[] = {
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0x78, 0x64 },
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
+    // Castle Garden's real north door (gExitList_CastleGarden_Main[0]) is a
+    // WARP_TYPE_AREA door - left un-retargeted (transitions.c) for the same
+    // ACT_TILE reason documented above, so this is a position box instead,
+    // covering the door's own visual footprint (local (504,40), where the
+    // player is actually seen walking up between the castle's entrance
+    // pillars) rather than depending on it. Lands just past the entrance
+    // of Lon Lon Ranch, offset south of that room's own return-trip box
+    // below so arriving here doesn't immediately re-trigger it.
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 488, 520, 16, 56, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+      344, 870 },
+    // Lon Lon Ranch -> back to Castle Garden. Box is just south of the
+    // arrival spot above, so walking further south (deeper into the ranch,
+    // away from the entrance) is what sends the player back, rather than
+    // this immediately re-firing on arrival. Landing spot in Castle Garden
+    // is the same walkable spot the win key itself used to sit at, back
+    // before it moved to Lon Lon Ranch.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 328, 360, 895, 930, AREA_CASTLE_GARDEN,
+      ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -965,6 +991,47 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
     QuickStartSpawnEnemyGroup(sQuickStartMineEnemyOffsets, ARRAY_COUNT(sQuickStartMineEnemyOffsets),
                                QUICKSTART_MINE_ROOM_SQUARES, QUICKSTART_MINE_MAX_ENEMIES);
     SetRoomFlag(1);
+}
+
+// Lon Lon Ranch (a single room inside AREA_HYRULE_FIELD - see
+// QuickStartEnforceLonLonContainment above for why the whole area isn't
+// just added to QuickStartAreaContained) is 720x960px -> 22x30 -> 660
+// 32x32 squares, the biggest room this loop uses yet. Same story as
+// Castle Garden/Melari's Mine: MAX_ENTITIES (entity.h) caps the entire
+// room - player, the ranch's own ambient animals/decorations (measured at
+// ~9 entities before any enemy spawns), everything - at 72 total, so
+// QUICKSTART_LONLON_MAX_ENEMIES is the real, measured ceiling with a
+// safety margin, same role as the other two rooms' caps. All 50 spots
+// below were found via the same method as Castle Garden's and Melari's
+// Mine's expansions (a room-wide collision-data scan for open 3x3-tile
+// neighborhoods, then an in-emulator movement check on every candidate),
+// with the entrance from Castle Garden and the win key's own spot (see
+// QuickStartSpawnWinKeyOnce) excluded.
+#define QUICKSTART_LONLON_ROOM_SQUARES 660
+#define QUICKSTART_LONLON_MAX_ENEMIES 50
+static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
+    { 88, 24 },   { 168, 24 },  { 168, 56 },  { 56, 136 },  { 392, 136 }, { 24, 152 },  { 88, 152 },
+    { 424, 152 }, { 56, 168 },  { 360, 168 }, { 392, 168 }, { 88, 184 },  { 296, 184 }, { 56, 200 },
+    { 88, 216 },  { 56, 232 },  { 392, 232 }, { 88, 248 },  { 56, 264 },  { 88, 280 },  { 680, 280 },
+    { 56, 296 },  { 184, 296 }, { 88, 312 },  { 680, 312 }, { 56, 328 },  { 88, 344 },  { 680, 344 },
+    { 56, 360 },  { 88, 376 },  { 680, 376 }, { 88, 408 },  { 680, 408 }, { 56, 424 },  { 88, 440 },
+    { 120, 440 }, { 520, 440 }, { 680, 440 }, { 56, 456 },  { 632, 456 }, { 88, 472 },  { 120, 472 },
+    { 152, 472 }, { 520, 472 }, { 664, 472 }, { 56, 488 },  { 632, 488 }, { 88, 504 },  { 120, 504 },
+    { 152, 504 },
+};
+
+// No separate "reward earned" item marker the way Castle Garden/Melari's
+// Mine have (ITEM_32/ITEM_5A) - the win key itself is the reward here, and
+// QuickStartSpawnWinKeyOnce already re-checks "is the room clear" fresh
+// every frame on its own, so the only bookkeeping this needs is "don't
+// respawn a full wave on top of one already in progress this visit."
+static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
+    if (CheckRoomFlag(0)) {
+        return;
+    }
+    QuickStartSpawnEnemyGroup(sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets),
+                               QUICKSTART_LONLON_ROOM_SQUARES, QUICKSTART_LONLON_MAX_ENEMIES);
+    SetRoomFlag(0);
 }
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -1989,6 +2056,40 @@ static void QuickStartEnforceContainment(void) {
     }
 }
 
+// Lon Lon Ranch is a single room inside AREA_HYRULE_FIELD, a huge overworld
+// area with many entirely unrelated rooms (South Hyrule Field, Eastern
+// Hills, Trilby Highlands, ...) - QuickStartAreaContained can't just add
+// AREA_HYRULE_FIELD wholesale the way it does for single-purpose areas
+// like Castor Darknut or Melari's Mine, that would be containing far more
+// than intended. This is the same idea scoped to the one room instead of
+// the whole area: leaving Lon Lon Ranch through anything except the
+// sQuickStartLinks position box back to Castle Garden gets cancelled,
+// which blocks the ranch's other real vanilla exits - the Veil
+// Falls/Lake Hylia/Hyrule Town borders reliably fire under QUICKSTART
+// (WARP_TYPE_BORDER doesn't need GetActTileAtTilePos) and need this to
+// stay blocked; the two ranch house interiors, two cave entrances, and
+// Goron Cave are WARP_TYPE_AREA doors that don't reliably fire under
+// QUICKSTART at all (same ACT_TILE gap the Castle Garden/Lon Lon Ranch
+// link itself works around), so this check is mostly a no-op safety net
+// for those, not their only defense.
+static void QuickStartEnforceLonLonContainment(void) {
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    if (gRoomTransition.player_status.area_next == AREA_CASTLE_GARDEN &&
+        gRoomTransition.player_status.room_next == ROOM_CASTLE_GARDEN_MAIN) {
+        return;
+    }
+    if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
+        gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    gRoomTransition.transitioningOut = 0;
+}
+
 static void QuickStartProcessLinks(void) {
     s32 i;
     s16 localX, localY;
@@ -2019,6 +2120,7 @@ static void QuickStartProcessLinks(void) {
 // that leaving the starting room still gets QUICKSTART treatment.
 static void QuickStartRoomMonitor(void) {
     QuickStartEnforceContainment();
+    QuickStartEnforceLonLonContainment();
     QuickStartFixupQuestionRoomReturn();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
@@ -2040,6 +2142,8 @@ static void QuickStartRoomMonitor(void) {
         QuickStartRandomizeLaddersOnce();
         QuickStartMaintainGardenLadders();
         QuickStartProcessLadderLinks();
+    } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        QuickStartSpawnLonLonRanchEnemiesOnce();
         QuickStartSpawnWinKeyOnce();
         QuickStartCheckWinCondition();
     } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
