@@ -1190,11 +1190,30 @@ static void QuickStartSpawnMelarisMineMerchantOnce(void) {
 // walkable. Positions are a row centered on that, spaced 0x20 apart -
 // originally placed further east (0x94-0xd4) clustered off to the merchant's
 // side of the room, which made them hard to walk up to; recentered here.
-static const u16 sQuickStartShopCatalog[] = { ITEM_BOMBS10, ITEM_ARROWS10, ITEM_SHIELD };
+// Expanded from the original 3 consumables to a real stock of equipment
+// upgrades, a heart piece, a bottle with a fairy in it, and a skill -
+// covering "any item, powerup, or skill" at a small scale rather than
+// literally every item in the game, which this one small room's floor
+// space can't physically fit as simultaneous pedestals (a full collision
+// scan found only ~12 standable tiles total, already used up below).
+// Prices for every one of these (itemMetaData.c, gUnk_080FD964, #ifdef
+// QUICKSTART) start at 100 and go up with the item's value - the two
+// upgrades priced 600 in vanilla (bomb bag, large quiver) already clear
+// that bar unmodified.
+static const u16 sQuickStartShopCatalog[] = {
+    ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_SHIELD,     ITEM_HEART_PIECE,
+    ITEM_BOTTLE_FAIRY,     ITEM_WALLET,   ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
+    ITEM_SKILL_SPIN_ATTACK,
+};
+// Each spot individually verified walkable (warp there, confirm the player
+// isn't shoved elsewhere) via the same collision-scan-plus-emulator-check
+// pipeline used for every enemy offset pool in this file - this room's
+// open floor is only about 7x4 tiles, so unlike the bigger gauntlet rooms
+// there wasn't room to spare for a wider margin from the merchant NPC
+// (local (180,90)) or the walls.
 static const s16 sQuickStartShopItemOffsets[][2] = {
-    { 0x58, 0x6e },
-    { 0x78, 0x6e },
-    { 0x98, 0x6e },
+    { 0x58, 0x6e }, { 0x78, 0x6e }, { 0x98, 0x6e }, { 0x48, 0x5e }, { 0x60, 0x5e },
+    { 0x78, 0x5e }, { 0x90, 0x5e }, { 0x78, 0x4e }, { 0x90, 0x4e },
 };
 
 // Whether one of our own SHOP_ITEM props for the given catalog item still
@@ -1923,14 +1942,52 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
             }
         }
     } else if (kind == LADDER_KIND_MINIBOSS) {
+        if (CheckRoomFlag(2)) {
+            // Reward already dropped this visit - just watching for pickup
+            // (same "did it vanish for real, or did the room just unload
+            // before they grabbed it" distinction QuickStartGroundItemAt
+            // exists for on the chest case above).
+            if (!QuickStartGroundItemAt(contentX, contentY)) {
+                SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+            }
+            return;
+        }
         if (CheckRoomFlag(0)) {
             s32 i;
             for (i = 0; i < MAX_ENTITIES; i++) {
-                if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+                Entity* enemy = &gEntities[i].base;
+                if (enemy->kind == ENEMY && QuickStartEntityInCurrentRoom(enemy)) {
+                    // Keep it parked exactly on its spawn spot until the
+                    // player gets close enough to actually engage - the
+                    // same 56px "notice the player" radius its own AI
+                    // (darkNut.c) already switches out of idle patrolling
+                    // at. Without this, it visibly wanders off its spawn
+                    // point within about half a second of the room
+                    // loading, even with the player nowhere nearby to
+                    // react to - confirmed by logging its position frame
+                    // by frame with nobody else in the room. A heart piece
+                    // dropped at this same spot never has this problem
+                    // (no AI to wander with), which is the whole
+                    // discrepancy this was chasing.
+                    if (!PlayerInRange(enemy, 1, 56)) {
+                        enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+                        enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    }
                     return;
                 }
             }
-            SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+            // Dead - drop the reward and start watching for pickup.
+            {
+                Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_PIECE, 0);
+                if (itemEntity != NULL) {
+                    itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                    itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    itemEntity->collisionLayer = 1;
+                    itemEntity->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(itemEntity);
+                    SetRoomFlag(2);
+                }
+            }
             return;
         }
         {
