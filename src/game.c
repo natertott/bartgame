@@ -116,7 +116,8 @@ static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
-static u8 QuickStartScaleEnemyType(u8, u8);
+static void QuickStartPickEnemy(u8, u8*, u8*);
+static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
 static void QuickStartSpawnWinKeyOnce(void);
 static void QuickStartCheckWinCondition(void);
 #endif
@@ -389,72 +390,46 @@ static bool32 QuickStartGroundItemAt(s16 offsetX, s16 offsetY) {
     return FALSE;
 }
 
+// Castor Darknut Main's safe walkable box (world (36,39)-(235,174), origin
+// (0,0)) is ~199x135px -> 24 32x32 squares. The original 9 hand-verified
+// spots (3 from the old wave1, 4 from wave2, 2 from wave3) plus 26 more
+// found the same way (a full room collision-data scan for open 3x3-tile
+// neighborhoods, then an in-emulator movement check on every candidate) -
+// comfortably more than the ~5 the density curve ever asks for here, with
+// room to spare for variety across boots. Shared by all 3 combat waves
+// since they run in the same room, never simultaneously.
+#define QUICKSTART_MAIN_ROOM_SQUARES 24
+static const s16 sQuickStartMainEnemyOffsets[35][2] = {
+    { 0x6e, 0x87 },  { 0x96, 0x87 },  { 0xbe, 0x87 },  { 0x5a, 0x60 },  { 0x82, 0x9c },  { 0xaa, 0x60 },
+    { 0xd2, 0x9c },  { 0x6e, 0x60 },  { 0xbe, 0x60 },  { 48, 51 },      { 72, 51 },      { 96, 51 },
+    { 120, 51 },     { 144, 51 },     { 168, 51 },     { 192, 51 },     { 216, 51 },     { 48, 75 },
+    { 72, 75 },      { 96, 75 },      { 120, 75 },     { 144, 75 },     { 168, 75 },     { 192, 75 },
+    { 216, 75 },     { 48, 99 },      { 216, 99 },     { 72, 111 },     { 156, 111 },    { 48, 123 },
+    { 216, 123 },    { 72, 135 },     { 48, 147 },     { 168, 147 },    { 96, 159 },
+};
+
 static void QuickStartSpawnEnemies(void) {
-    static const s16 sQuickStartEnemyOffsets[3][2] = {
-        { 0x6e, 0x87 },
-        { 0x96, 0x87 },
-        { 0xbe, 0x87 },
-    };
-    u8 enemyType = QuickStartScaleEnemyType(OCTOROK, QuickStartGetDifficulty());
-    s32 i;
-    for (i = 0; i < 3; i++) {
-        Entity* enemy = CreateEnemy(enemyType, 0);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartEnemyOffsets[i][0];
-            enemy->y.HALF.HI = gRoomControls.origin_y + sQuickStartEnemyOffsets[i][1];
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
+                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
 }
 
-// Wave 2: a step up from the opening 3 Octoroks - just more of them, spread
-// across the room's full safe walkable box (world (36,39)-(235,174)).
+// Wave 2: same room, same pool, just rolled independently - the density
+// curve (not a fixed "more than wave 1" rule) decides how many show up.
 static void QuickStartSpawnWave2(void) {
-    static const s16 sQuickStartWave2Offsets[4][2] = {
-        { 0x5a, 0x60 },
-        { 0x82, 0x9c },
-        { 0xaa, 0x60 },
-        { 0xd2, 0x9c },
-    };
-    u8 enemyType = QuickStartScaleEnemyType(OCTOROK, QuickStartGetDifficulty());
-    s32 i;
-    for (i = 0; i < 4; i++) {
-        Entity* enemy = CreateEnemy(enemyType, 0);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartWave2Offsets[i][0];
-            enemy->y.HALF.HI = gRoomControls.origin_y + sQuickStartWave2Offsets[i][1];
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
+                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
 }
 
-// Wave 3: the hardest wave - 2 Octoroks plus a real Darknut. This room is
-// Castor Darknut Main, the Darknut's own vanilla arena (see
+// Wave 3: the climactic wave - regular enemies from the same pool, plus a
+// real Darknut as a fixed mini-boss (mini-bosses sit outside the 5-level
+// difficulty system entirely, per the brief - always exactly 1). This room
+// is Castor Darknut Main, the Darknut's own vanilla arena (see
 // object/bossDoor.c and object/cutsceneOrchestrator.c), so its sprite
 // assets are already loaded here regardless of our own cutscene removal.
 static void QuickStartSpawnWave3(void) {
-    static const s16 sQuickStartWave3OctorokOffsets[2][2] = {
-        { 0x6e, 0x60 },
-        { 0xbe, 0x60 },
-    };
-    u8 difficulty = QuickStartGetDifficulty();
-    u8 enemyType = QuickStartScaleEnemyType(OCTOROK, difficulty);
-    s32 i;
     Entity* enemy;
-    for (i = 0; i < 2; i++) {
-        enemy = CreateEnemy(enemyType, 0);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartWave3OctorokOffsets[i][0];
-            enemy->y.HALF.HI = gRoomControls.origin_y + sQuickStartWave3OctorokOffsets[i][1];
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
+                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
     enemy = CreateEnemy(DARK_NUT, 0);
     if (enemy != NULL) {
         enemy->x.HALF.HI = gRoomControls.origin_x + 0x96;
@@ -462,20 +437,6 @@ static void QuickStartSpawnWave3(void) {
         enemy->collisionLayer = 1;
         enemy->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(enemy);
-    }
-    // A second Darknut once the player's won a round or more - reuses one
-    // of Wave2's own verified-safe spots in this same room (Wave2 and
-    // Wave3 never run at the same time, so there's no collision risk
-    // reusing it here).
-    if (difficulty >= 2) {
-        enemy = CreateEnemy(DARK_NUT, 0);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + 0x82;
-            enemy->y.HALF.HI = gRoomControls.origin_y + 0x9c;
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
     }
 }
 
@@ -501,31 +462,22 @@ static void QuickStartSpawnWave3(void) {
 //    origin - verified in the emulator: two complete sets of 3, 208px
 //    apart. ITEM_33 (another bare unused Item enum slot) is a fixed,
 //    scroll-independent "already spawned" marker instead.
+// Hall's own verified-safe width is local x [70,420] at y~94 (see file
+// header comment above) -> ~350x32px -> ~10 32x32 squares.
+#define QUICKSTART_HALL_ROOM_SQUARES 10
+#define QUICKSTART_HALL_MAX_ENEMIES 4
 static void QuickStartSpawnHallEnemiesOnce(void) {
-    // Hall's own verified-safe width is local x [70,420] at y~94 (see file
-    // header comment above) - a 4th difficulty-only spot at x=410 stays
-    // comfortably inside that range without needing fresh verification.
-    static const s16 sQuickStartHallEnemyOffsets[4] = { 0x96, 0xfa, 0x15e, 0x19a };
-    u8 difficulty = QuickStartGetDifficulty();
-    u8 enemyType = QuickStartScaleEnemyType(OCTOROK, difficulty);
-    s32 count = (difficulty >= 2) ? 4 : 3;
-    s32 i;
+    static const s16 sQuickStartHallEnemyOffsets[4][2] = {
+        { 0x96, 0x5e }, { 0xfa, 0x5e }, { 0x15e, 0x5e }, { 0x19a, 0x5e },
+    };
     if (gRoomTransition.field_0x4[0] != 10) {
         return;
     }
     if (GetInventoryValue(ITEM_33) != 0) {
         return;
     }
-    for (i = 0; i < count; i++) {
-        Entity* enemy = CreateEnemy(enemyType, 0);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartHallEnemyOffsets[i];
-            enemy->y.HALF.HI = gRoomControls.origin_y + 0x5e;
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartHallEnemyOffsets, ARRAY_COUNT(sQuickStartHallEnemyOffsets),
+                               QUICKSTART_HALL_ROOM_SQUARES, QUICKSTART_HALL_MAX_ENEMIES);
     SetInventoryValue(ITEM_33, 1);
 }
 
@@ -589,48 +541,44 @@ static void QuickStartClearCastleGuards(void) {
 // "cleared" and hand out the reward for free - verified in the emulator.
 // With the wave-spawned flag auto-resetting instead, returning mid-fight
 // just respawns the wave, exactly as if the fight were only now starting.
-// Density target: 1 enemy per 25 (32x32px) squares of the room. Castle
-// Garden is 1008x528px -> 31x16 squares -> 496/25 -> 19 enemies (picking
-// 32px squares rather than the engine's native 16px tiles, since the
-// literal tile count - 63x33 -> 2079/25 -> 83 - would blow well past
-// MAX_ENTITIES (72 total, shared with the player, every decorative
-// object already in the room, and the reward item), not just this
-// room's own budget). Started as an evenly-spaced 5x4 grid, but the
-// room's middle section is a hedge maze, not open ground - a blind grid
-// landed 5 of the 19 inside solid hedge tiles with no room to even move,
-// let alone be reachable by the player. Those 5 were individually
-// verified in the emulator (can the entity actually move at all from
-// that exact spot) and moved to the nearest open ground; the other 14
-// were already fine.
+// Castle Garden is 1008x528px -> 31x16 -> 496 32x32 squares. The original
+// 19 hand-verified spots plus 46 more found the same way (a full room
+// collision-data scan for open 3x3-tile neighborhoods, then an in-emulator
+// movement check on every candidate) - not enough to ever literally reach
+// the density curve's nominal "1 per 5 squares" (496/5 = ~99), but that
+// ratio was never reachable here regardless of how many spots get
+// verified: MAX_ENTITIES (entity.h) caps the entire room - player,
+// decorations, reward item, everything - at 72 entities total, and this
+// room's own overhead (player + decorations) already used ~7 of those
+// before a single enemy spawns. QUICKSTART_GARDEN_MAX_ENEMIES is that
+// real, measured ceiling (with a safety margin for the reward item and
+// anything else sharing the room) - the density formula's own count gets
+// clamped to it, same as it's clamped to the offset pool size.
+#define QUICKSTART_GARDEN_ROOM_SQUARES 496
+#define QUICKSTART_GARDEN_MAX_ENEMIES 50
+static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
+    { 0xc8, 0x96 },  { 0x15e, 0x96 },  { 0x1f4, 0x96 },  { 0x28a, 0x96 },  { 0x320, 0x96 },
+    { 0xb4, 0xd2 },  { 0x186, 0xe6 },  { 0x1f4, 0xe6 },  { 0x262, 0xe6 },  { 0x320, 0xe6 },
+    { 0x118, 0x10e }, { 0x15e, 0x136 }, { 0x1f4, 0x136 }, { 0x28a, 0x136 }, { 0x320, 0x136 },
+    { 0x118, 0x17c }, { 0x15e, 0x17c }, { 0x1f4, 0x17c }, { 0x28a, 0x17c },
+    { 232, 72 },  { 776, 72 },  { 168, 88 },  { 424, 104 }, { 456, 104 }, { 536, 104 }, { 568, 104 },
+    { 168, 120 }, { 232, 136 }, { 264, 136 }, { 424, 136 }, { 456, 136 }, { 536, 136 }, { 568, 136 },
+    { 728, 136 }, { 760, 136 }, { 424, 168 }, { 456, 168 }, { 520, 168 }, { 552, 168 }, { 584, 168 },
+    { 488, 184 }, { 424, 200 }, { 456, 200 }, { 520, 200 }, { 552, 200 }, { 584, 200 }, { 248, 280 },
+    { 520, 328 }, { 776, 328 }, { 488, 344 }, { 520, 360 }, { 488, 408 }, { 520, 408 }, { 376, 424 },
+    { 616, 424 }, { 488, 440 }, { 520, 440 }, { 376, 456 }, { 616, 456 }, { 328, 488 }, { 360, 488 },
+    { 392, 488 }, { 616, 488 }, { 648, 488 }, { 680, 488 },
+};
+
 static void QuickStartSpawnGardenEnemiesOnce(void) {
-    static const s16 sQuickStartGardenEnemyOffsets[19][2] = {
-        { 0xc8, 0x96 },  { 0x15e, 0x96 },  { 0x1f4, 0x96 },  { 0x28a, 0x96 },  { 0x320, 0x96 },
-        { 0xb4, 0xd2 },  { 0x186, 0xe6 },  { 0x1f4, 0xe6 },  { 0x262, 0xe6 },  { 0x320, 0xe6 },
-        { 0x118, 0x10e }, { 0x15e, 0x136 }, { 0x1f4, 0x136 }, { 0x28a, 0x136 }, { 0x320, 0x136 },
-        { 0x118, 0x17c }, { 0x15e, 0x17c }, { 0x1f4, 0x17c }, { 0x28a, 0x17c },
-    };
-    static const u8 sQuickStartGardenEnemyTypes[3] = { OCTOROK, ROPE, CROW };
-    s32 i;
     if (GetInventoryValue(ITEM_32) != 0) {
         return;
     }
     if (CheckRoomFlag(0)) {
         return;
     }
-    {
-        u8 difficulty = QuickStartGetDifficulty();
-        for (i = 0; i < ARRAY_COUNT(sQuickStartGardenEnemyOffsets); i++) {
-            u8 enemyType = QuickStartScaleEnemyType(sQuickStartGardenEnemyTypes[(s32)Random() % 3], difficulty);
-            Entity* enemy = CreateEnemy(enemyType, 0);
-            if (enemy != NULL) {
-                enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartGardenEnemyOffsets[i][0];
-                enemy->y.HALF.HI = gRoomControls.origin_y + sQuickStartGardenEnemyOffsets[i][1];
-                enemy->collisionLayer = 1;
-                enemy->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(enemy);
-            }
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartGardenEnemyOffsets, ARRAY_COUNT(sQuickStartGardenEnemyOffsets),
+                               QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES);
     SetRoomFlag(0);
 }
 
@@ -980,45 +928,42 @@ static void QuickStartClearMelarisMineObstacles(void) {
     }
 }
 
-// Same density target as Castle Garden (1 per 32x32 square): Melari's Mine
-// is 720x624px -> 22x19 squares -> 418/25 -> 16 enemies. Unlike Castle
+// Melari's Mine is 720x624px -> 22x19 -> 418 32x32 squares. Unlike Castle
 // Garden's hedge maze, most of this room's own bounding box is solid rock
 // rather than open floor with occasional obstacles - a blind grid mostly
-// landed inside walls (confirmed empirically: 12 of 16 grid-spaced probes
-// couldn't move in any direction at all). Every position below was
-// individually verified walkable in the emulator instead, spread across
-// the top corridor and the larger space below it (both Door A/B's own
-// vicinities avoided, so this can't interfere with either link's box).
-static const s16 sQuickStartMineEnemyOffsets[16][2] = {
+// landed inside walls. The original 16 hand-verified spots plus 46 more
+// found via a collision-data scan + in-emulator movement check (same
+// method as Castle Garden's expansion) still can't literally reach the
+// density curve's "1 per 5 squares" (418/5 = ~84) - same MAX_ENTITIES
+// (entity.h) ceiling as Castle Garden applies here too, and this room's
+// own overhead (player + decorations) measured at ~16 entities before any
+// enemy spawns. QUICKSTART_MINE_MAX_ENEMIES is the real, measured ceiling
+// with a safety margin, same role as Castle Garden's cap above.
+#define QUICKSTART_MINE_ROOM_SQUARES 418
+#define QUICKSTART_MINE_MAX_ENEMIES 40
+static const s16 sQuickStartMineEnemyOffsets[62][2] = {
     { 0xfa, 0x56 },  { 0x14a, 0x56 },  { 0x19a, 0x56 },  { 0x1ea, 0x56 },  { 0x23a, 0x56 },
     { 0x96, 0x1cc }, { 0xfa, 0x1cc },  { 0x226, 0x1cc }, { 0x100, 0x100 }, { 0x193, 0x14e },
     { 0xe4, 0x137 }, { 0x15e, 0x12c }, { 0x258, 0x15e }, { 0x96, 0x15e },  { 0x17c, 0x10e },
     { 0x140, 0x17c },
+    { 88, 88 },   { 120, 88 },  { 152, 88 },  { 184, 88 },  { 216, 88 },  { 360, 88 },  { 520, 88 },
+    { 600, 88 },  { 632, 88 },  { 552, 104 }, { 584, 120 }, { 616, 120 }, { 568, 200 }, { 216, 232 },
+    { 584, 232 }, { 584, 264 }, { 152, 280 }, { 584, 296 }, { 328, 312 }, { 376, 312 }, { 168, 328 },
+    { 584, 328 }, { 152, 376 }, { 584, 376 }, { 584, 408 }, { 584, 440 }, { 120, 472 }, { 184, 472 },
+    { 216, 472 }, { 584, 472 }, { 152, 488 }, { 248, 488 }, { 280, 488 }, { 312, 488 }, { 344, 488 },
+    { 376, 488 }, { 408, 488 }, { 440, 488 }, { 472, 488 }, { 504, 488 }, { 536, 488 }, { 120, 504 },
+    { 184, 504 }, { 216, 504 }, { 568, 504 }, { 600, 504 },
 };
-// All Octoroks (rather than a mixed pool) so an automated/AI test pass can
-// verify the wave-clear reward drop unambiguously - one known enemy type
-// throughout, instead of needing to recognize 4 different ones.
+
 static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
-    s32 i;
     if (GetInventoryValue(ITEM_5A) != 0) {
         return;
     }
     if (CheckRoomFlag(1)) {
         return;
     }
-    {
-        u8 enemyType = QuickStartScaleEnemyType(OCTOROK, QuickStartGetDifficulty());
-        for (i = 0; i < ARRAY_COUNT(sQuickStartMineEnemyOffsets); i++) {
-            Entity* enemy = CreateEnemy(enemyType, 0);
-            if (enemy != NULL) {
-                enemy->x.HALF.HI = gRoomControls.origin_x + sQuickStartMineEnemyOffsets[i][0];
-                enemy->y.HALF.HI = gRoomControls.origin_y + sQuickStartMineEnemyOffsets[i][1];
-                enemy->collisionLayer = 1;
-                enemy->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(enemy);
-            }
-        }
-    }
+    QuickStartSpawnEnemyGroup(sQuickStartMineEnemyOffsets, ARRAY_COUNT(sQuickStartMineEnemyOffsets),
+                               QUICKSTART_MINE_ROOM_SQUARES, QUICKSTART_MINE_MAX_ENEMIES);
     SetRoomFlag(1);
 }
 
@@ -1228,47 +1173,219 @@ static void QuickStartMaintainMelarisMineShop(void) {
 
 // Difficulty counter for the win/reset loop below - well clear of the
 // ladder bits above (highest in use is GF_LADDER_ROOM_BIT(2,5) = 155).
-// 2 bits -> 0..3, one step harder each time the player wins a round.
+// 4 bits -> 0..15 (only 0..QUICKSTART_MAX_DIFFICULTY are ever produced by
+// QuickStartIncrementDifficulty, but the extra headroom over the previous
+// 2-bit counter costs nothing and leaves room to extend the curve later).
 // Save-persistent (global flags, not room flags) since it has to survive
 // the DoSoftReset a win triggers - EWRAM (and gSave with it) is
-// deliberately preserved across that reset (see DoSoftReset, main.c).
-#define GF_DIFFICULTY_BIT(b) (174 + (b)) // b = 0,1
-#define QUICKSTART_MAX_DIFFICULTY 3
+// deliberately preserved across that reset (see DoSoftReset, main.c), and
+// WriteSaveFile below makes sure it's actually on the save file the
+// title/file-select flow reloads from, not just sitting in EWRAM.
+#define GF_DIFFICULTY_BIT(b) (174 + (b)) // b = 0..3
+#define QUICKSTART_MAX_DIFFICULTY 12
 
 static u8 QuickStartGetDifficulty(void) {
-    return (CheckGlobalFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0);
+    return (CheckGlobalFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
+           (CheckGlobalFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
 }
 
 static void QuickStartIncrementDifficulty(void) {
     u8 next = QuickStartGetDifficulty();
+    s32 b;
     if (next < QUICKSTART_MAX_DIFFICULTY) {
         next++;
     }
-    if (next & 1) {
-        SetGlobalFlag(GF_DIFFICULTY_BIT(0));
-    } else {
-        ClearGlobalFlag(GF_DIFFICULTY_BIT(0));
-    }
-    if (next & 2) {
-        SetGlobalFlag(GF_DIFFICULTY_BIT(1));
-    } else {
-        ClearGlobalFlag(GF_DIFFICULTY_BIT(1));
+    for (b = 0; b < 4; b++) {
+        if (next & (1 << b)) {
+            SetGlobalFlag(GF_DIFFICULTY_BIT(b));
+        } else {
+            ClearGlobalFlag(GF_DIFFICULTY_BIT(b));
+        }
     }
 }
 
-// Single shared escalation rule so every wave gets harder the same way
-// instead of each spawner inventing its own - a deliberately simple
-// "swap the common enemy for a tougher relative once the counter is high
-// enough" rule, easy to retune once we see how it plays.
-static u8 QuickStartScaleEnemyType(u8 baseType, u8 difficulty) {
-    // Golden enemy variants deliberately left out of the rotation for now -
-    // not part of the difficulty progression yet.
-    if (difficulty >= 1) {
-        if (baseType == OCTOROK) {
-            return SPEAR_MOBLIN;
+// The enemy roster, grouped into 5 hand-picked difficulty levels (level 1
+// easiest, level 5 hardest) per the user's own list - only enemies with a
+// straightforward, crash-free CreateEnemy(id, form) spawn made the cut;
+// anything with a mechanic that needs more setup (a scripted home/range, a
+// room property, dungeon entrance data, etc.) was deliberately left out.
+// "form" here is the same value CreateEnemy's second argument always was
+// elsewhere in this file (entity->type) - for enemies with a color variant
+// it selects which color; for the rest it's always 0.
+typedef struct {
+    u8 id;
+    u8 form;
+} QuickStartEnemyPick;
+
+static const QuickStartEnemyPick sQuickStartLevel1[] = {
+    { ACRO_BANDIT, 0 }, { BEETLE, 0 }, { BOBOMB, 0 }, { CROW, 0 }, { CHUCHU, 0 /* green */ },
+    { KEESE, 0 },       { LEEVER, 0 /* red */ },      { OCTOROK, 0 /* red */ },
+    { LIKE_LIKE, 0 },   { ROPE, 0 },
+};
+static const QuickStartEnemyPick sQuickStartLevel2[] = {
+    { CHUCHU, 2 /* blue */ }, { LEEVER, 1 /* blue */ },     { OCTOROK, 1 /* blue */ }, { BOMBAROSSA, 0 },
+    { BOW_MOBLIN, 0 },        { RUPEE_LIKE, 0 /* green */ }, { HELMASAUR, 0 },          { MOLDORM, 0 },
+    { PEAHAT, 0 },            { MULLDOZER, 0 /* red */ },    { PESTO, 0 /* red */ },    { TEKTITE, 0 /* red */ },
+    { SLUGGULA, 0 },
+};
+// Yellow and purple Keaton are the same actor with no form-based color
+// variant (confirmed empirically - all 4 form values render identically),
+// so Keaton only appears once here rather than duplicated into level 4.
+static const QuickStartEnemyPick sQuickStartLevel3[] = {
+    { MULLDOZER, 1 /* blue */ }, { PESTO, 1 /* blue */ },  { STALFOS, 1 /* blue */ }, { TEKTITE, 1 /* blue */ },
+    { GHINI, 0 },                { PUFFSTOOL, 0 },         { CHUCHU, 1 /* red */ },   { RUPEE_LIKE, 2 /* red */ },
+    { STALFOS, 0 /* red */ },    { WISP, 0 /* red */ },    { ROCK_CHUCHU, 0 },        { ROLLOBITE, 0 },
+    { SPARK, 0 },                { SPEAR_MOBLIN, 0 },      { SPIKED_BEETLE, 0 },      { KEATON, 0 },
+};
+// Floormaster (Wall Master) deliberately left out - it grabs the player and
+// warps them to a dungeon's scripted "entrance" point, which none of these
+// QUICKSTART rooms have configured, so the actual destination would be
+// undefined.
+static const QuickStartEnemyPick sQuickStartLevel4[] = {
+    { RUPEE_LIKE, 1 /* blue */ }, { WISP, 1 /* blue */ }, { GOBDO, 0 /* gibdo */ }, { LAKITU, 0 },
+    { MOLDWORM, 0 },              { SCISSORS_BEETLE, 0 }, { SPINY_BEETLE, 0 },      { TAKKURI, 0 },
+};
+static const QuickStartEnemyPick sQuickStartLevel5[] = {
+    { BALL_CHAIN_SOLIDER, 0 },
+    { WIZZROBE_ICE, 0 },
+    { WIZZROBE_FIRE, 0 },
+};
+
+static const QuickStartEnemyPick* const sQuickStartEnemyLevels[5] = {
+    sQuickStartLevel1, sQuickStartLevel2, sQuickStartLevel3, sQuickStartLevel4, sQuickStartLevel5,
+};
+static const s32 sQuickStartEnemyLevelCounts[5] = {
+    ARRAY_COUNT(sQuickStartLevel1), ARRAY_COUNT(sQuickStartLevel2), ARRAY_COUNT(sQuickStartLevel3),
+    ARRAY_COUNT(sQuickStartLevel4), ARRAY_COUNT(sQuickStartLevel5),
+};
+
+// One row per difficulty step: how much of each enemy level to sample from
+// (must sum to 100) and how many squares (32x32) each enemy gets - lower is
+// denser. Density never goes below 5 (QUICKSTART_MIN_DENSITY) - going any
+// denser than that isn't just a matter of verifying more spawn spots, the
+// room's entire entity budget (MAX_ENTITIES, entity.h) is shared with the
+// player, decorations, and everything else, so there's a hard ceiling on
+// how many enemies can ever exist at once regardless of density - see the
+// per-room QUICKSTART_*_MAX_ENEMIES caps below. A simple first pass, easy
+// to retune once we see how a full run plays out.
+typedef struct {
+    u8 levelWeights[5];
+    u8 density;
+} QuickStartDifficultyTier;
+
+#define QUICKSTART_MIN_DENSITY 5
+
+static const QuickStartDifficultyTier sQuickStartDifficultyTiers[QUICKSTART_MAX_DIFFICULTY + 1] = {
+    /*  0 */ { { 100, 0, 0, 0, 0 }, 25 },
+    /*  1 */ { { 80, 20, 0, 0, 0 }, 25 },
+    /*  2 */ { { 80, 20, 0, 0, 0 }, 15 },
+    /*  3 */ { { 60, 40, 0, 0, 0 }, 12 },
+    /*  4 */ { { 40, 60, 0, 0, 0 }, 10 },
+    /*  5 */ { { 20, 80, 0, 0, 0 }, 10 },
+    /*  6 */ { { 0, 60, 40, 0, 0 }, 9 },
+    /*  7 */ { { 0, 40, 45, 15, 0 }, 8 },
+    /*  8 */ { { 0, 20, 45, 30, 5 }, 7 },
+    /*  9 */ { { 0, 10, 35, 40, 15 }, 7 },
+    /* 10 */ { { 0, 0, 30, 45, 25 }, 6 },
+    /* 11 */ { { 0, 0, 20, 40, 40 }, 5 },
+    /* 12 */ { { 0, 0, 15, 35, 50 }, 5 }, // never 100% level 5, per the brief
+};
+
+static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty) {
+    if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
+        difficulty = QUICKSTART_MAX_DIFFICULTY;
+    }
+    return &sQuickStartDifficultyTiers[difficulty];
+}
+
+// Rolls one fresh enemy (id + form) for the given difficulty: first picks a
+// level via the tier's weights (a plain weighted die roll over whichever
+// levels have nonzero weight this tier), then picks uniformly at random
+// within that level's roster. Called once per enemy spawned rather than
+// once per room, so - exactly per the brief - two rooms at the same
+// difficulty can come out with entirely different enemy mixes.
+static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
+    const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
+    s32 roll = (s32)Random() % 100;
+    s32 cumulative = 0;
+    s32 level;
+    s32 levelCount;
+    const QuickStartEnemyPick* pick;
+    for (level = 0; level < 5; level++) {
+        cumulative += tier->levelWeights[level];
+        if (roll < cumulative) {
+            break;
         }
     }
-    return baseType;
+    if (level >= 5) {
+        // Only reachable if a tier's weights don't sum to 100 - fall back
+        // to the lowest level that's actually available this tier.
+        for (level = 0; level < 5 && tier->levelWeights[level] == 0; level++) {
+        }
+        if (level >= 5) {
+            level = 0;
+        }
+    }
+    levelCount = sQuickStartEnemyLevelCounts[level];
+    pick = &sQuickStartEnemyLevels[level][(s32)Random() % levelCount];
+    *outId = pick->id;
+    *outForm = pick->form;
+}
+
+// Shared by every QUICKSTART enemy spawner: picks `count` distinct spots
+// out of this room's own pre-verified-walkable offset pool (a partial
+// Fisher-Yates shuffle, so which spots get used - not just which enemies -
+// varies across boots too) and rolls a fresh enemy for each from
+// QuickStartPickEnemy. `count` itself comes from the room's size in 32x32
+// squares divided by this difficulty's density, clamped to at least 1, and
+// to at most whichever is smaller of the offset pool's own size or
+// maxEnemies (the room's hard entity-budget ceiling - see the per-room
+// constants above each call site).
+static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
+    s32 indices[72];
+    s32 i, j, r, tmp, count, difficulty, density, cap;
+    Entity* enemy;
+    u8 id, form;
+
+    if (offsetCount > 72) {
+        offsetCount = 72;
+    }
+    for (i = 0; i < offsetCount; i++) {
+        indices[i] = i;
+    }
+    for (i = 0; i < offsetCount - 1; i++) {
+        r = (s32)Random() % (offsetCount - i);
+        tmp = indices[i];
+        indices[i] = indices[i + r];
+        indices[i + r] = tmp;
+    }
+
+    difficulty = QuickStartGetDifficulty();
+    density = QuickStartGetDifficultyTier(difficulty)->density;
+    if (density < QUICKSTART_MIN_DENSITY) {
+        density = QUICKSTART_MIN_DENSITY;
+    }
+    count = roomSquares / density;
+    if (count < 1) {
+        count = 1;
+    }
+    cap = (offsetCount < maxEnemies) ? offsetCount : maxEnemies;
+    if (count > cap) {
+        count = cap;
+    }
+
+    for (i = 0; i < count; i++) {
+        j = indices[i];
+        QuickStartPickEnemy(difficulty, &id, &form);
+        enemy = CreateEnemy(id, form);
+        if (enemy != NULL) {
+            enemy->x.HALF.HI = gRoomControls.origin_x + offsets[j][0];
+            enemy->y.HALF.HI = gRoomControls.origin_y + offsets[j][1];
+            enemy->collisionLayer = 1;
+            enemy->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(enemy);
+        }
+    }
 }
 
 enum { LADDER_KIND_CHEST, LADDER_KIND_MINIBOSS, LADDER_KIND_NPC };
@@ -2255,22 +2372,24 @@ static void QuickStartUpdateItemChoice(void) {
     if (phase == 6) {
         // Wave 1 was already spawned synchronously by the phase 5 handler,
         // before it even set phase to 6 and triggered the reload - so by
-        // construction the Octoroks already exist (having survived the
+        // construction the wave 1 enemies already exist (having survived the
         // reload via ENT_PERSIST) by the time this branch is reached at all.
-        // A same-frame "0 Octoroks" reading here always means they've
+        // A same-frame "none found" reading here always means they've
         // genuinely all been defeated, never that they simply haven't
         // spawned yet.
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
-            // Scoped to Main's own bounds (see QuickStartEntityInCurrentRoom)
-            // - this function only runs while we're in Main (guard above),
-            // so gRoomControls.origin/width/height already reflect Main's own
-            // dimensions here. Without this, Hall's entirely unrelated
-            // ambient Octoroks (QuickStartSpawnHallEnemiesOnce) would show up
-            // on a bare kind/id scan and permanently block wave 1 from ever
-            // reading as "cleared", even after Main's own are long dead.
-            if (gEntities[i].base.kind == ENEMY && gEntities[i].base.id == OCTOROK &&
-                QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+            // Checked against Main's own absolute world box (same bounds
+            // used throughout this file for Main's offsets - world
+            // (36,39)-(235,174)) rather than by enemy id: every wave now
+            // rolls its enemies from the same shared random level pool as
+            // Hall's ambient enemies (QuickStartSpawnHallEnemiesOnce), so an
+            // id-based filter (this used to just check for OCTOROK, back
+            // when wave 1 was always literally Octoroks) can no longer tell
+            // "mine" apart from "Hall's" - only position still can.
+            if (gEntities[i].base.kind == ENEMY && gEntities[i].base.x.HALF.HI >= 36 &&
+                gEntities[i].base.x.HALF.HI <= 235 && gEntities[i].base.y.HALF.HI >= 39 &&
+                gEntities[i].base.y.HALF.HI <= 174) {
                 return;
             }
         }
