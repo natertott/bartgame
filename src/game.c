@@ -114,6 +114,7 @@ static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
+static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
@@ -1032,6 +1033,51 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
     QuickStartSpawnEnemyGroup(sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets),
                                QUICKSTART_LONLON_ROOM_SQUARES, QUICKSTART_LONLON_MAX_ENEMIES);
     SetRoomFlag(0);
+}
+
+// Lon Lon Ranch's real vanilla puzzle, right next to our entrance: a
+// PUSHABLE_ROCK (object.h) rests at local (488,904) - tile (30,56) - one
+// tile east of a SURFACE_HOLE act-tile at tile (29,56) (both confirmed by
+// dumping the room's own act-tile data in the emulator). Normally the
+// player pushes the rock west into the hole; its own vanilla code
+// (object/pushableRock.c: sub_0808A644) then settles it into action 3 and
+// overwrites the hole's tile with SPECIAL_TILE_21 ("Boulder in Hole", a
+// walkable bridge). This loop can't rely on the player ever having a
+// reason or the right timing to push it themselves, so force that same
+// end state directly, every frame - same idempotent per-frame pattern as
+// QuickStartClearCastleGuards.
+static void QuickStartSolveLonLonBoulder(void) {
+    s32 i;
+    // Lon Lon Ranch has three PUSHABLE_ROCK entities total, only one of
+    // which blocks our entrance (the other two sit far away at local
+    // (184,200) and (216,904) and serve unrelated vanilla puzzles). Only
+    // touch the one that starts near the hole so we don't drag the other
+    // rocks across the map onto this tile.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        s32 localX;
+        s32 localY;
+        if (ent->kind != OBJECT || ent->id != PUSHABLE_ROCK) {
+            continue;
+        }
+        localX = ent->x.HALF.HI - gRoomControls.origin_x;
+        localY = ent->y.HALF.HI - gRoomControls.origin_y;
+        if (localX < 448 || localX > 528 || localY < 864 || localY > 944) {
+            continue;
+        }
+        ent->x.HALF.HI = gRoomControls.origin_x + 472;
+        ent->y.HALF.HI = gRoomControls.origin_y + 904;
+        ent->action = 3;
+    }
+    // The rock's ORIGINAL resting tile (30,56) was already marked solid by
+    // its own vanilla init code (object/pushableRock.c: sub_0808A644, the
+    // non-hole branch) the moment the room loaded, independent of the
+    // entity itself - confirmed via a live collision-grid dump showing that
+    // tile still blocked after the entity above was relocated. Clear it
+    // explicitly with the same TILE_TYPE_0 "fix collision only" trick
+    // already used in QuickStartClearCastleGuards above.
+    SetTileType(TILE_TYPE_0, TILE_POS(30, 56), LAYER_BOTTOM);
+    SetTileType(SPECIAL_TILE_21, TILE_POS(29, 56), LAYER_BOTTOM);
 }
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -2143,6 +2189,7 @@ static void QuickStartRoomMonitor(void) {
         QuickStartMaintainGardenLadders();
         QuickStartProcessLadderLinks();
     } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        QuickStartSolveLonLonBoulder();
         QuickStartSpawnLonLonRanchEnemiesOnce();
         QuickStartSpawnWinKeyOnce();
         QuickStartCheckWinCondition();
