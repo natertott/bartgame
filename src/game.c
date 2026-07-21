@@ -737,12 +737,80 @@ static void QuickStartSpawnWinKeyOnce(void) {
 // itself calls to do the real work - it needs none of that function's
 // surrounding save-menu/sound-fade state machine, so it's safe to call
 // directly from mid-gameplay like this.
+// MsgInit (message.c) isn't declared in message.h - it's only ever reached
+// there through gMessageFunctions[], the per-frame message state machine's
+// own dispatch table - but it's a plain non-static function, so it's still
+// a real linkable symbol. Calling it directly lets this synchronously force
+// the "resolve gMessage.textIndex into gTextRender.curToken" step to happen
+// immediately, in the same frame as the call below that then overwrites
+// curToken with this file's own custom text - rather than waiting a frame
+// for the normal MessageMain() (main.c) to reach it on its own, which would
+// mean a real (if numerically meaningless) vanilla string gets resolved
+// into curToken and is at risk of starting to render before this file ever
+// gets a chance to replace it.
+extern u32 MsgInit(void);
+
+// "You win! Difficulty\nincreased to level X." - authored directly as a
+// plain C string rather than through the usual .string/charmap asset
+// pipeline (data/const/text.s and friends): that pipeline only extracts
+// bytes that already exist in the base ROM (assets/gfx.json-style byte
+// ranges) and has never been used in this project to author brand new
+// text, and doing so would also mean adding a new object file's sections
+// into linker.ld by hand, which lays out this ROM's memory to match the
+// original exactly. A plain string literal sidesteps both: C already
+// emits standard ASCII bytes per character, which cross-checked exactly
+// against this engine's own real behavior (NumberToAscii, message.c,
+// builds digits as '0' | digit - i.e. real ASCII - and this file's
+// existing skill-pickup message already renders real letters correctly
+// via the normal TEXT_INDEX path), and \x06\x01 is this engine's own
+// control code for "insert numeric variable 1 here" (charmap.txt:
+// STR_VAR_1 = 06 01), substituted from gMessage.rupees at render time -
+// same mechanism the shop's price prompt already uses. \n is charmap's
+// '\n' = 0A, this engine's own real line-break control code. The
+// terminator is C's own implicit trailing '\0', which is also this
+// engine's own "end of text" byte (charmap.txt: '$' = 00).
+static const u8 sQuickStartWinMessage[] = "You win! Difficulty\nincreased to level \x06\x01.";
+
+// Room flag 1 (Lon Lon Ranch's flag 0 is already claimed by
+// QuickStartSpawnLonLonRanchEnemiesOnce) tracks "message already shown"
+// across the few frames it's up, the same idempotent-per-frame-check
+// pattern this whole file already uses elsewhere - a plain mutable static
+// local doesn't work in this build: agbcc emits it into .data, and this
+// ROM's linker.ld doesn't map src/game.o's .data section at all (every
+// other piece of writable per-visit state in this file already goes
+// through room/global flags or gSave fields for the same underlying
+// reason, not just for the reset-on-reload semantics).
 static void QuickStartCheckWinCondition(void) {
     if (GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) == 0) {
+        ClearRoomFlag(1);
         return;
     }
-    QuickStartIncrementDifficulty();
-    SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
+    if (!CheckRoomFlag(1)) {
+        QuickStartIncrementDifficulty();
+        SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
+        // A deliberately out-of-range category (any real one only goes up
+        // to TEXT_CAFE) so MessageRequest's own resolution step - forced to
+        // run immediately by MsgInit below - safely falls back to the
+        // engine's own "invalid index" placeholder instead of a real
+        // string with real side effects, before this file's own text
+        // replaces it a few lines down.
+        MessageRequest(TEXT_INDEX(0xff, 0));
+        // MessageRequest above MemClears the whole gMessage struct, so
+        // rupees has to be set after it, not before - confirmed in the
+        // emulator: setting it first always showed "level 0" regardless of
+        // the real difficulty, since MessageRequest was silently wiping it
+        // back out before MsgInit ever read it.
+        gMessage.rupees = QuickStartGetDifficulty();
+        MsgInit();
+        gTextRender.curToken.buf[0] = sQuickStartWinMessage;
+        gTextRender.curToken.unk01 = 0;
+        gTextRender.curToken.unk00 = 1;
+        SetRoomFlag(1);
+        return;
+    }
+    if (gMessage.state & MESSAGE_ACTIVE) {
+        return;
+    }
     WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     DoSoftReset();
 }
