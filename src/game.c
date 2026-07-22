@@ -176,9 +176,10 @@ static void GameTask_Transition(void) {
     // it, and the one that actually contains the Darknut) is a single
     // enclosed room whose safe walkable area - verified by actually walking
     // the player through it in the emulator - is roughly a 199x135 box from
-    // world (36,39) to (235,174), origin (0,0). Spawn near the bottom-left,
-    // clear of the room's static chest-spawner prop sitting around (136,104).
-    gRoomTransition.player_status.start_pos_x = 0x46;
+    // world (36,39) to (235,174), origin (0,0). Spawn point placed directly
+    // by the user (via the room-local position Lua script, Tools/Scripting
+    // in mGBA) rather than this file's own emulator survey.
+    gRoomTransition.player_status.start_pos_x = 135;
     gRoomTransition.player_status.start_pos_y = 0x9b;
     gRoomTransition.player_status.layer = 1;
     // Every fresh boot is meant to be its own clean round - none of last
@@ -725,7 +726,7 @@ static void QuickStartSpawnWinKeyOnce(void) {
     itemEntity = CreateObject(GROUND_ITEM, ITEM_QST_GRAVEYARD_KEY, 0);
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + 392;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + 264;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + 159;
         itemEntity->collisionLayer = 1;
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
@@ -936,8 +937,9 @@ static const QuickStartLink sQuickStartLinks[] = {
     // gExitList_CastorDarknut_Hall[0] (startX=0x188, startY=0x18,
     // AREA_12x12 -> box +6/+6), which in vanilla leads to Castor Caves -
     // confirmed reachable by walking straight up from around local x=390.
+    // Landing spot placed by the user directly (Lua position script).
     { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 0xa0, 0x56 },
+      ROOM_MELARIS_MINE_MAIN, 120, 162 },
     // Melari's Mine, Door A (west end of the corridor) -> back to Castor
     // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
     // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
@@ -999,14 +1001,12 @@ static const QuickStartLink sQuickStartLinks[] = {
     // merchant's own spot at the top of Grimblade's open floor.
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 120,
       104 },
-    // Grimblade -> back to Melari's Mine. Trigger box sits on the south
-    // edge of the open floor (local x=104-136, y=190-207 - confirmed inside
-    // the same open rectangle as the shop's own layout), well clear of the
-    // merchant and every item pedestal. Lands at (168,525), the exact spot
-    // this room's real (retargeted) border exit used to return to before
-    // the merchant moved here - reusing it keeps both paths back into
-    // Melari's Mine consistent with each other.
-    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 104, 136, 190, 207, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 168, 525 },
+    // Grimblade -> back to Melari's Mine. Trigger box centered on (119,185),
+    // placed by the user directly (Lua position script). Lands at
+    // (168,525), the exact spot this room's real (retargeted) border exit
+    // used to return to before the merchant moved here - reusing it keeps
+    // both paths back into Melari's Mine consistent with each other.
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 103, 135, 177, 193, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 168, 525 },
     // Castle Garden's real north door (gExitList_CastleGarden_Main[0]) is a
     // WARP_TYPE_AREA door - left un-retargeted (transitions.c) for the same
     // ACT_TILE reason documented above, so this is a position box instead,
@@ -1017,59 +1017,39 @@ static const QuickStartLink sQuickStartLinks[] = {
     // below so arriving here doesn't immediately re-trigger it.
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 488, 520, 16, 56, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       344, 870 },
-    // Lon Lon Ranch -> back to Castle Garden. The original version of this
-    // box sat at y:895-930 - only ~25-60px south of the (344,870) arrival
-    // spot above, so a couple of steps deeper into the ranch immediately
-    // yanked the player back out before they could reach anything. A full
-    // act-tile/collision dump of the room found the room's own real south
-    // gate: a gap in the otherwise-solid boundary row (tile y=59, local
-    // y=944-960) at tile x=18-21 (local x=288-352), with a walkable
-    // corridor leading down to it from as far up as y=848 - confirmed by
-    // walking straight down from the arrival spot with this box disabled.
-    // Box now sits right at that real gate instead, so reaching Castle
-    // Garden actually requires walking the length of the ranch. Landing
-    // spot in Castle Garden is the same walkable spot the win key itself
-    // used to sit at, back before it moved to Lon Lon Ranch.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 292, 348, 940, 958, AREA_CASTLE_GARDEN,
+    // Lon Lon Ranch -> back to Castle Garden. Trigger box centered on
+    // (315,975), placed by the user directly (Lua position script).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 287, 343, 966, 984, AREA_CASTLE_GARDEN,
       ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
     // Lon Lon Ranch -> Talon and Malon's house (west room, the one with the
-    // beds). The real vanilla door (gExitList_HyruleField_LonLonRanch[0],
-    // a WARP_TYPE_AREA door at local (344,632)) sits behind its own
-    // dedicated wall segment with no walkable approach at all - confirmed
-    // by a full collision-grid dump plus directly walking there. The one
-    // open corridor nearby (a collision-grid dump found it spans the
-    // entire local x=144-207, y=592-703 rectangle) IS reachable on foot as
-    // normal-sized Link - confirmed by walking there step by step from the
-    // Castle Garden arrival spot without ever shrinking - but the box used
-    // to only cover a small (170-198,602-630) slice of that rectangle,
-    // reachable only via one specific circuitous route; a normal player
-    // exploring more directly could easily walk through the rest of the
-    // open corridor without ever crossing that slice, making the whole
-    // house feel unreachable without resorting to the Minish-only crack
-    // elsewhere in the room. A second, wider collision-grid dump (local
-    // x=0-239, y=576-719) found the corridor's true full width is x=96-207
-    // (narrower than first thought - the earlier 146-205 estimate came from
-    // a dump that didn't extend far enough west, and missed that a
-    // straightforward up-then-left approach from the Castle Garden arrival
-    // spot settles at x=100, just outside that first box). Widened to the
-    // corridor's real full extent so any approach through it triggers the
-    // link.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 96, 207, 595, 700, AREA_HOUSE_INTERIORS_4,
+    // beds), front door. Trigger box centered on (345,651), placed by the
+    // user directly (Lua position script) - close to the real vanilla
+    // door's own position (344,632), which this file's own emulator survey
+    // had previously found unreachable without shrinking.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 329, 361, 643, 659, AREA_HOUSE_INTERIORS_4,
       ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 104, 88 },
-    // Ranch house (west room) -> back out to Lon Lon Ranch. The room's own
-    // south wall (collision row local y=112-127) has two separate open
-    // gaps - one at x=32-79 (this room's own real WARP_TYPE_BORDER exit,
-    // retargeted in transitions.c) and another at x=128-143 that has no
-    // real transition of its own at all (present in the room's collision
-    // data/graphics but never wired to anywhere - reads as a second
-    // "locked" door to a player who walks up to it and nothing happens).
-    // Both gaps are unreachable at the walled-off x=80-127 stretch between
-    // them, so widening this box across the whole x=32-143 span costs
-    // nothing (the player physically can't stand in the blocked middle
-    // anyway) and makes either gap work as a real exit, not just the one
-    // this room's own transitions.c data happens to name.
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 32, 143, 112, 127, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 73, 135 },
+    // Lon Lon Ranch -> Talon and Malon's house, back door. Trigger box
+    // centered on (392,635), placed by the user directly (Lua position
+    // script) - a second, distinct entrance from the front door above,
+    // landing near the house's own second south-wall gap (see the two
+    // exit links below).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 376, 408, 627, 643, AREA_HOUSE_INTERIORS_4,
+      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 135, 110 },
+    // Ranch house (west room) -> back out to Lon Lon Ranch's front door.
+    // The room's own south wall (collision row local y=112-127) has two
+    // separate open gaps - this is the west one (x=32-79), this room's own
+    // real WARP_TYPE_BORDER exit (retargeted in transitions.c).
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 32, 79, 112, 127, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 345, 651 },
+    // Ranch house (west room) -> back out to Lon Lon Ranch's back door.
+    // This is the south wall's second open gap (x=128-143) - previously
+    // had no real transition of its own at all (present in the room's
+    // collision data/graphics but never wired to anywhere, reading as a
+    // second "locked" door to a player who walked up to it and nothing
+    // happened). Now a real second exit, paired with the back door
+    // entrance above.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 128, 143, 112, 127, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 392, 635 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1372,7 +1352,7 @@ static void QuickStartSpawnMelarisMineMerchantOnce(void) {
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
         npc->x.HALF.HI = gRoomControls.origin_x + 120;
-        npc->y.HALF.HI = gRoomControls.origin_y + 104;
+        npc->y.HALF.HI = gRoomControls.origin_y + 125;
         npc->collisionLayer = 1;
         UpdateSpriteForCollisionLayer(npc);
         QuickStartMakeNpcTalkable(npc, &script_QuickStartMerchant);
@@ -1418,15 +1398,11 @@ static const u16 sQuickStartShopCatalog[] = {
     ITEM_BOTTLE_FAIRY,     ITEM_WALLET,   ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
     ITEM_SKILL_SPIN_ATTACK,
 };
-// Two rows across Grimblade's open floor (see the room's own comment
-// above), well clear of the walls on every side and of the merchant's own
-// spot at (120,104) - a much roomier layout than the old cramped room
-// allowed, but still confirmed against the same collision-grid dump: both
-// rows sit inside the single uninterrupted open rectangle (local x=32-207,
-// y=96-207), each point comfortably inset from the nearest wall.
+// Placed by the user directly (Lua position script) - two rows across
+// Grimblade's open floor.
 static const s16 sQuickStartShopItemOffsets[][2] = {
-    { 56, 145 }, { 88, 145 }, { 120, 145 }, { 152, 145 }, { 184, 145 },
-    { 72, 180 }, { 104, 180 }, { 136, 180 }, { 168, 180 },
+    { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
+    { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
 };
 
 // Whether one of our own SHOP_ITEM props for the given catalog item still
@@ -1825,19 +1801,31 @@ typedef struct {
 } QuickStartQuestionRoomEntry;
 
 static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, 0 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 0, 0 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, 0 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, 16 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, 16 },
+    // Minish House Interiors rows: content placed by the user directly (Lua
+    // position script) at a single shared spot, (120,80) - 40px north of
+    // the (120,120) shared spawn, facing back down toward the door (see
+    // QuickStartSetupLadderRoomContent's direction = IdleSouth) - rather
+    // than each room's own individually-walked offset. Confirmed in the
+    // emulator for the item and NPC kinds (both land exactly on (120,80),
+    // direction sticks for the NPC); the miniboss enemy's own continuous
+    // AI update overwrites direction on every subsequent frame regardless
+    // of what's set at spawn (and nudges its landing y by a few px, same
+    // class of engine-owned adjustment as the ladder pots' own +3px), so
+    // "facing down" only reliably holds for the brief spawn frame there -
+    // not fixable without rewriting the enemy's own AI.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, -40 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 0, 16 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, 16 },
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, 0, 0 },
@@ -1882,11 +1870,11 @@ static const u16 sQuickStartLadderRewardPool[] = {
 // rest of this save regardless of when it first ran.
 static void QuickStartRandomizeLaddersOnce(void) {
     s32 i, j;
-    u8 usedRoom[3];
+    u8 usedRoom[2];
     if (CheckGlobalFlag(GF_LADDERS_RANDOMIZED)) {
         return;
     }
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 2; i++) {
         u8 kind = (u8)((s32)Random() % 3);
         u8 roomIdx;
         QuickStartLadderSetKind(i, kind);
@@ -1898,7 +1886,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
         // Distinct room per ladder - two ladders sharing one physical "?
         // room" would make leaving through it ambiguous about which
         // ladder's content to re-arm. The pool (20) comfortably exceeds
-        // the 3 draws needed, so a plain reject-and-retry loop is enough.
+        // the 2 draws needed, so a plain reject-and-retry loop is enough.
         for (;;) {
             roomIdx = (u8)((s32)Random() % QUICKSTART_QUESTION_ROOM_POOL_SIZE);
             for (j = 0; j < i; j++) {
@@ -1916,24 +1904,15 @@ static void QuickStartRandomizeLaddersOnce(void) {
     SetGlobalFlag(GF_LADDERS_RANDOMIZED);
 }
 
-// Ladders 0 and 1 sit exactly on top of Castle Garden Main's own real,
-// vanilla HIDDEN_LADDER_DOWN fixtures (object.c: HiddenLadderDown, id 87) -
-// the game already ships two of these stone dais spots in this room,
-// invisible until their own reveal condition fires; confirmed present at
-// these two local coordinates by scanning gEntities for id 87 while walking
-// the whole room. They stay permanently un-revealed on their own (nothing
-// in this file ever satisfies their internal tile-type check), so they
-// just sit there harmlessly while our own pot supplies the "cut this to
-// open it" interaction at the same visual spot - this is what makes our
-// entrances line up with the actual ladder-shaped fixtures already in the
-// garden instead of arbitrary grass. Only two such real fixtures exist
-// anywhere in this room (verified by an exhaustive room-wide scan), so
-// ladder 2 falls back to the previous hand-picked, verified-walkable
-// enemy-grid spot (see sQuickStartGardenEnemyOffsets above).
-static const s16 sQuickStartLadderPotOffsets[3][2] = {
-    { 104, 104 },
-    { 936, 376 },
-    { 0x28a, 0x136 },
+// Only two ? rooms now (reduced from the original 3, per the user's own
+// exploration with the room-local position Lua script) - Castle Garden
+// Main only has two real, vanilla HIDDEN_LADDER_DOWN fixtures (object.c:
+// HiddenLadderDown, id 87) anyway (verified by an exhaustive room-wide
+// scan), so this also means both ladders now sit exactly on a real
+// fixture instead of one falling back to arbitrary grass.
+static const s16 sQuickStartLadderPotOffsets[2][2] = {
+    { 105, 100 },
+    { 935, 350 },
 };
 
 // Ladder index is encoded in type2, NOT type - super->type looked like a
@@ -2001,7 +1980,7 @@ static void QuickStartSpawnLadderPot(s32 ladderIndex) {
 // un-discoverable forever.
 static void QuickStartMaintainGardenLadders(void) {
     s32 i;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 2; i++) {
         s32 watchFlag = 5 + i;
         if (CheckGlobalFlag(GF_LADDER_REVEALED(i))) {
             continue;
@@ -2043,7 +2022,7 @@ static void QuickStartProcessLadderLinks(void) {
     }
     localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
     localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 2; i++) {
         s16 offsetX = sQuickStartLadderPotOffsets[i][0];
         s16 offsetY = sQuickStartLadderPotOffsets[i][1];
         if (!CheckGlobalFlag(GF_LADDER_REVEALED(i))) {
@@ -2067,11 +2046,9 @@ static void QuickStartProcessLadderLinks(void) {
 
 extern Script script_QuickStartLadderNpc0;
 extern Script script_QuickStartLadderNpc1;
-extern Script script_QuickStartLadderNpc2;
-static Script* const sQuickStartLadderNpcScripts[3] = {
+static Script* const sQuickStartLadderNpcScripts[2] = {
     &script_QuickStartLadderNpc0,
     &script_QuickStartLadderNpc1,
-    &script_QuickStartLadderNpc2,
 };
 
 // These "orphaned" rooms were never actually emptied - they still carry
@@ -2151,6 +2128,10 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 itemEntity->collisionLayer = 1;
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
+                // Set after UpdateSpriteForCollisionLayer, which otherwise
+                // overwrites it (confirmed in the emulator: direction read
+                // back as 0xFF, not IdleSouth, when set beforehand).
+                itemEntity->direction = IdleSouth;
                 SetRoomFlag(0);
             }
         }
@@ -2198,6 +2179,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                     itemEntity->collisionLayer = 1;
                     itemEntity->flags |= ENT_PERSIST;
                     UpdateSpriteForCollisionLayer(itemEntity);
+                    itemEntity->direction = IdleSouth;
                     SetRoomFlag(2);
                 }
             }
@@ -2211,6 +2193,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 enemy->collisionLayer = 1;
                 enemy->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(enemy);
+                enemy->direction = IdleSouth;
                 SetRoomFlag(0);
             }
         }
@@ -2228,6 +2211,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 npc->y.HALF.HI = gRoomControls.origin_y + contentY;
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
                 QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[ladderIndex]);
             }
         }
@@ -2272,7 +2256,7 @@ static bool32 QuickStartAreaContained(u8 area) {
 // runtime assignment instead.
 static s32 QuickStartFindLadderForCurrentRoom(void) {
     s32 i;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 2; i++) {
         s32 rawIndex = QuickStartLadderGetRoomIndex(i);
         s32 poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
         if (gRoomControls.area == sQuickStartQuestionRoomPool[poolIndex].area &&
@@ -2283,29 +2267,20 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
     return -1;
 }
 
-// Where each ladder's own real exit already lands (gExitList_TreeInteriors_14/
-// _1c/_UnusedHeartContainer, back when those 3 specific rooms were each
-// permanently tied to one ladder) - south of that ladder's own pot, clear
-// of its +/-16 trigger box. Every "? room" pool entry's retargeted exit
-// (src/data/transitions.c) points at the same literal spot regardless of
-// which ladder it's serving this save, since which physical room backs
-// which ladder varies per save and a compile-time table can't encode
-// that - QuickStartFixupQuestionRoomReturn below corrects the landing
-// position to the right one of these 3 before the transition completes.
-// Ladder 1's spot was originally (936,416) - 40px south of its pot at
-// (936,376) - which the emulator showed lands the player inside the
-// castle's solid outer wall. A closer offset directly south (936,396)
-// turned out to be no better - that whole crop-field patch is planted
-// solid, and the player is locked in place there too, unable to move in
-// any of the 4 directions at all (confirmed by comparing screenshots
-// before/after holding each direction - the player's sprite doesn't move
-// a single pixel relative to the background in any of them). (800,396),
-// on the paved path between the hedge rows west of the crops, is
-// confirmed free to walk in all 4 directions the same way.
-static const s16 sQuickStartLadderReturnSpots[3][2] = {
-    { 0x68, 0x90 },
-    { 0x320, 0x18c },
-    { 0x28a, 0x15e },
+// Where each ladder's own real exit already lands - south of that ladder's
+// own pot, clear of its +/-16 trigger box. Every "? room" pool entry's
+// retargeted exit (src/data/transitions.c) points at the same literal spot
+// regardless of which ladder it's serving this save, since which physical
+// room backs which ladder varies per save and a compile-time table can't
+// encode that - QuickStartFixupQuestionRoomReturn below corrects the
+// landing position to the right one of these before the transition
+// completes. Kept at the same offset from each ladder's own (user-placed)
+// pot position that the original verified-walkable spots used - ladder 1's
+// pot moved up by 26px (376 -> 350), so its return spot moved the same
+// amount to stay on the same confirmed-walkable paved path.
+static const s16 sQuickStartLadderReturnSpots[2][2] = {
+    { 105, 144 },
+    { 800, 370 },
 };
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
@@ -2347,7 +2322,7 @@ static void QuickStartFixupQuestionRoomReturn(void) {
 // Interiors.
 static bool32 QuickStartIsCurrentLadderTarget(u8 area, u8 room) {
     s32 i;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 2; i++) {
         u8 targetArea, targetRoom;
         QuickStartGetLadderTarget(i, &targetArea, &targetRoom);
         if (area == targetArea && room == targetRoom) {
@@ -2543,7 +2518,7 @@ static void QuickStartMakeNpcTalkable(Entity* npc, Script* script) {
 // same 3-slot item row; the single instructive sign sits in its own row
 // well above it (75px vertical separation), so browsing never risks an
 // accidental pickup.
-static const s16 sQuickStartItemOffsets[QUICKSTART_ITEM_CHOICES] = { 0x6e, 0x96, 0xbe };
+static const s16 sQuickStartItemOffsets[QUICKSTART_ITEM_CHOICES] = { 100, 136, 170 };
 
 static void QuickStartSpawnItems(const QuickStartItemChoice* choices) {
     s32 i;
@@ -2551,7 +2526,7 @@ static void QuickStartSpawnItems(const QuickStartItemChoice* choices) {
         Entity* itemEntity = CreateObject(GROUND_ITEM, choices[i].itemId, 0);
         if (itemEntity != NULL) {
             itemEntity->x.HALF.HI = gRoomControls.origin_x + sQuickStartItemOffsets[i];
-            itemEntity->y.HALF.HI = gRoomControls.origin_y + 0x87;
+            itemEntity->y.HALF.HI = gRoomControls.origin_y + 105;
             itemEntity->collisionLayer = 1;
             itemEntity->flags |= ENT_PERSIST;
             UpdateSpriteForCollisionLayer(itemEntity);
@@ -2576,8 +2551,8 @@ static void QuickStartSpawnStarterChoice(void) {
 
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
-        npc->x.HALF.HI = gRoomControls.origin_x + 0x46;
-        npc->y.HALF.HI = gRoomControls.origin_y + 0x3c;
+        npc->x.HALF.HI = gRoomControls.origin_x + 135;
+        npc->y.HALF.HI = gRoomControls.origin_y + 70;
         npc->collisionLayer = 1;
         npc->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(npc);
@@ -2711,7 +2686,7 @@ static void QuickStartUpdateItemChoice(void) {
             // through this phase (and the next) unintended. Send the player
             // back to the room's spawn point, which is clear of every
             // item-row x-offset, before spawning the next set of items.
-            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 0x46;
+            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 135;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + 0x9b;
             QuickStartSpawnItems(sQuickStartBonusItems);
             gRoomTransition.field_0x4[0] = 2;
@@ -2729,7 +2704,7 @@ static void QuickStartUpdateItemChoice(void) {
             }
             // Same reasoning as phase 1 above: reposition before the skill
             // item row spawns at the same reused coordinates.
-            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 0x46;
+            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 135;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + 0x9b;
             QuickStartSpawnItems(sQuickStartSkillItems);
             gRoomTransition.field_0x4[0] = 4;
