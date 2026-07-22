@@ -937,9 +937,14 @@ static const QuickStartLink sQuickStartLinks[] = {
     // gExitList_CastorDarknut_Hall[0] (startX=0x188, startY=0x18,
     // AREA_12x12 -> box +6/+6), which in vanilla leads to Castor Caves -
     // confirmed reachable by walking straight up from around local x=390.
-    // Landing spot placed by the user directly (Lua position script).
+    // Landing spot reverted back to this file's own original (0xa0,0x56) -
+    // the user's own (120,162) (from the Lua position script) turned out to
+    // be solid rock: a live collision dump in the emulator found every
+    // tile in a 6x6 radius around it blocked, matching their screenshot of
+    // Link spawned inside the cave wall with nowhere to walk. (0xa0,0x56)
+    // is confirmed open and walkable in all 4 directions.
     { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 120, 162 },
+      ROOM_MELARIS_MINE_MAIN, 0xa0, 0x56 },
     // Melari's Mine, Door A (west end of the corridor) -> back to Castor
     // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
     // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
