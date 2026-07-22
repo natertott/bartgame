@@ -959,8 +959,10 @@ static const QuickStartLink sQuickStartLinks[] = {
     // Hall's own door had. The real box alone is therefore unreachable on
     // foot; this is the smallest box that both contains it and reaches
     // the actual walkable corner.
+    // Landing spot placed by the user directly (Lua position script) at
+    // (120,62) - confirmed open and walkable in all 4 directions.
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x6c, 0x7e, 0x32, 0x3e, AREA_CASTOR_DARKNUT,
-      ROOM_CASTOR_DARKNUT_HALL, 0x64, 0x5e },
+      ROOM_CASTOR_DARKNUT_HALL, 120, 62 },
     // Melari's Mine, Door B -> Castle Garden, arriving at its south end
     // ("the bottom"). Door B is NOT on the top corridor - it's near the
     // real Mt Crenel Cavern of Flames door's own coordinates
@@ -2272,20 +2274,24 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
     return -1;
 }
 
-// Where each ladder's own real exit already lands - south of that ladder's
-// own pot, clear of its +/-16 trigger box. Every "? room" pool entry's
-// retargeted exit (src/data/transitions.c) points at the same literal spot
-// regardless of which ladder it's serving this save, since which physical
-// room backs which ladder varies per save and a compile-time table can't
-// encode that - QuickStartFixupQuestionRoomReturn below corrects the
-// landing position to the right one of these before the transition
-// completes. Kept at the same offset from each ladder's own (user-placed)
-// pot position that the original verified-walkable spots used - ladder 1's
-// pot moved up by 26px (376 -> 350), so its return spot moved the same
-// amount to stay on the same confirmed-walkable paved path.
+// Where each ladder's own real exit already lands - as close as possible
+// to that ladder's own pot, clear of its +/-16 trigger box. Every "? room"
+// pool entry's retargeted exit (src/data/transitions.c) points at the same
+// literal spot regardless of which ladder it's serving this save, since
+// which physical room backs which ladder varies per save and a
+// compile-time table can't encode that - QuickStartFixupQuestionRoomReturn
+// below corrects the landing position to the right one of these before the
+// transition completes. Ladder 1's spot is as close to landing "on the
+// pot" (935,350) as this room's own hedges allow - a live collision dump
+// plus walking there directly found the pot itself sits inside blocked
+// hedge collision (the previous (800,370) estimate turned out to still be
+// inside a different hedge, matching the user's own bug report of
+// spawning "inside a shrubbery"); (935,311), 39px north at the same x, is
+// the closest confirmed-walkable point, open in every direction except
+// the hedge immediately east.
 static const s16 sQuickStartLadderReturnSpots[2][2] = {
     { 105, 144 },
-    { 800, 370 },
+    { 935, 311 },
 };
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
