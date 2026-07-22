@@ -1046,28 +1046,52 @@ static const QuickStartLink sQuickStartLinks[] = {
     // had previously found unreachable without shrinking.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 329, 361, 643, 659, AREA_HOUSE_INTERIORS_4,
       ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 104, 88 },
-    // Lon Lon Ranch -> Talon and Malon's house, back door. Trigger box
+    // Lon Lon Ranch -> Talon and Malon's house, EAST room. Trigger box
     // centered on (392,635), placed by the user directly (Lua position
-    // script) - a second, distinct entrance from the front door above,
-    // landing near the house's own second south-wall gap (see the two
-    // exit links below).
+    // script) - matches the real vanilla door's own position almost
+    // exactly (gExitList_HyruleField_LonLonRanch[1]: local (392,632),
+    // WARP_TYPE_AREA -> AREA_HOUSE_INTERIORS_4/ROOM_HOUSE_INTERIORS_4_
+    // RANCH_HOUSE_EAST). A previous round of this file wrongly sent this
+    // to the WEST room's own second south-wall gap instead - that gap is
+    // the Minish-only crack, not a real regular-Link door, and had nothing
+    // to do with the east room at all. Lands at (120,120), the same spot
+    // the real (also-unreliable-under-QUICKSTART) vanilla door itself
+    // targets.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 376, 408, 627, 643, AREA_HOUSE_INTERIORS_4,
-      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 135, 110 },
+      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
     // Ranch house (west room) -> back out to Lon Lon Ranch's front door.
-    // The room's own south wall (collision row local y=112-127) has two
-    // separate open gaps - this is the west one (x=32-79), this room's own
-    // real WARP_TYPE_BORDER exit (retargeted in transitions.c).
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 32, 79, 112, 127, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 345, 651 },
-    // Ranch house (west room) -> back out to Lon Lon Ranch's back door.
-    // This is the south wall's second open gap (x=128-143) - previously
-    // had no real transition of its own at all (present in the room's
-    // collision data/graphics but never wired to anywhere, reading as a
-    // second "locked" door to a player who walked up to it and nothing
-    // happened). Now a real second exit, paired with the back door
-    // entrance above.
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 128, 143, 112, 127, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 392, 635 },
+    // The room's own south wall reads as solid in a coarse per-tile
+    // collision dump (cols 6-7, local x=96-127) - but that's this room's
+    // real WARP_TYPE_BORDER exit (retargeted in transitions.c), which
+    // (like every other border-type transition in this file) doesn't
+    // depend on the undecompiled per-tile door-open check at all; holding
+    // straight down against it long enough (confirmed in the emulator:
+    // ~30 frames of holding, not the instant single-step trigger this
+    // custom link gives) fires it correctly. A previous round of this
+    // file mistook the two genuinely-open-looking gaps on either side of
+    // this wall (local x=32-79 and x=128-143) for the real door and the
+    // "other" door, when the west gap is actually the Minish-only crack
+    // and the east one is the West<->East house connector (see the (172,92)
+    // link below) - centered on the real door instead now, matching the
+    // user's own (104,127). Lands at (345,710), NOT the front door's own
+    // (345,651) - that sits dead center of the front door entrance's own
+    // trigger box above, which immediately re-fired it, bouncing the
+    // player straight back inside before they could take a single step
+    // (confirmed happening in the emulator). (345,710), well clear of that
+    // box and confirmed open in 3 of 4 directions, is a nearby safe spot
+    // instead.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 88, 120, 115, 127, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 345, 710 },
+    // Ranch house, west room -> east room. Placed by the user directly (Lua
+    // position script) at (172,92) - "the other door in the room", meant to
+    // work "how it does in the vanilla game" per their own description.
+    // No real Transition entry connects these two rooms directly (each
+    // only lists its own single real exit back to Lon Lon Ranch), so this
+    // is a from-scratch custom link rather than a retargeted real one -
+    // lands at (120,120), the east room's own confirmed-safe spawn spot
+    // (the same one its own real vanilla door from Lon Lon Ranch uses).
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 160, 184, 84, 100, AREA_HOUSE_INTERIORS_4,
+      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -2411,7 +2435,8 @@ static void QuickStartEnforceLonLonContainment(void) {
         return;
     }
     if (gRoomTransition.player_status.area_next == AREA_HOUSE_INTERIORS_4 &&
-        gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
+        (gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
+         gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
     gRoomTransition.transitioningOut = 0;
