@@ -106,6 +106,7 @@ static void QuickStartClearMelarisMineObstacles(void);
 static void QuickStartSpawnMelarisMineEnemiesOnce(void);
 static void QuickStartSpawnMelarisMineRewardOnce(void);
 static void QuickStartSpawnMelarisMineMerchantOnce(void);
+static void QuickStartClearGrimbladeObstacles(void);
 static void QuickStartMaintainMelarisMineShop(void);
 static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartMaintainGardenLadders(void);
@@ -977,24 +978,39 @@ static const QuickStartLink sQuickStartLinks[] = {
     // east, the approach side) so a normal walking speed can't skip over it.
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x64, 0x8c, 0x128, 0x136, AREA_CASTLE_GARDEN,
       ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0 },
-    // Melari's Mine's three remaining real doors (Minish House Interiors -
-    // Southwest, Southeast, East), opened for future NPCs. Each trigger box
-    // is that door's own real coordinates (gExitList_MelarisMine_Main[2],
-    // [3], [4] respectively, all AREA_12x12 -> box +6/+6); each interior
-    // room's own return trip uses its single real exit (a WARP_TYPE_BORDER,
-    // retargeted in transitions.c) rather than a table row here, same
-    // reasoning as Castle Garden's south border - it already reliably
-    // fires without needing GetActTileAtTilePos. All three interior rooms
-    // are small, single-screen, and confirmed reachable from Melari's
-    // Mine's existing walkable network (each door's immediate approach
-    // connects back to already-verified ground within a few hundred
-    // frames of walking).
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0x78, 0x64 },
+    // Melari's Mine's two remaining real doors (Minish House Interiors -
+    // Southeast, East), opened for future NPCs. Each trigger box is that
+    // door's own real coordinates (gExitList_MelarisMine_Main[3], [4]
+    // respectively, both AREA_12x12 -> box +6/+6); each interior room's own
+    // return trip uses its single real exit (a WARP_TYPE_BORDER, retargeted
+    // in transitions.c) rather than a table row here, same reasoning as
+    // Castle Garden's south border - it already reliably fires without
+    // needing GetActTileAtTilePos. Both interior rooms are small,
+    // single-screen, and confirmed reachable from Melari's Mine's existing
+    // walkable network (each door's immediate approach connects back to
+    // already-verified ground within a few hundred frames of walking).
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x228, 0x22e, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0x78, 0x64 },
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
+    // Melari's Mine's former Southwest door -> the merchant's new room
+    // (Dojos "Grimblade", see QuickStartSpawnMelarisMineMerchantOnce) rather
+    // than the old cramped Minish House Interiors room. Same trigger box as
+    // that room used (the door's own real coordinates,
+    // gExitList_MelarisMine_Main[2], AREA_12x12 -> box +6/+6) - the physical
+    // spot in Melari's Mine the player already knows to go to for the shop
+    // doesn't change, only where it leads. Lands at local (120,104), the
+    // merchant's own spot at the top of Grimblade's open floor.
+    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 120,
+      104 },
+    // Grimblade -> back to Melari's Mine. Trigger box sits on the south
+    // edge of the open floor (local x=104-136, y=190-207 - confirmed inside
+    // the same open rectangle as the shop's own layout), well clear of the
+    // merchant and every item pedestal. Lands at (168,525), the exact spot
+    // this room's real (retargeted) border exit used to return to before
+    // the merchant moved here - reusing it keeps both paths back into
+    // Melari's Mine consistent with each other.
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 104, 136, 190, 207, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 168, 525 },
     // Castle Garden's real north door (gExitList_CastleGarden_Main[0]) is a
     // WARP_TYPE_AREA door - left un-retargeted (transitions.c) for the same
     // ACT_TILE reason documented above, so this is a position box instead,
@@ -1310,20 +1326,38 @@ static void QuickStartSpawnMelarisMineRewardOnce(void) {
     QuickStartSpawnMelarisMineRewardItem();
 }
 
-// The first of several planned NPCs for Melari's Mine's newly-opened side
-// rooms - a merchant selling a small fixed catalog (see
-// script_QuickStartMerchant), using the exact vanilla shop mechanism
-// (ScriptCommand_SaleItemConfirmMessage/CheckShopItemPrice/BuyShopItem,
-// the same trio Beedle and Talon's own shops use) rather than anything
-// custom-built. Reuses the ZELDA entity kind rather than a real
-// shopkeeper's (Stockwell/Beedle) - those kinds dispatch through their own
-// action-function tables that expect a ScriptExecutionContext already
-// wired up their own specific way (e.g. Stockwell's `this->context`, set
-// up only by his own vanilla init code), incompatible with the generic
-// StartCutscene-based script attachment QuickStartMakeNpcTalkable uses.
-// ZELDA's is already proven generic and safe (used for the Main
-// item-choice sign earlier in this file) - the merchant will look like
-// Zelda for now, a cosmetic mismatch rather than a functional one.
+// The Swordsman's Dojo "Grimblade" arena (AREA_DOJOS,
+// ROOM_DOJOS_GRIMBLADE) as the merchant's room - relocated here from the
+// original Minish House Interiors "Melari's Mines Southwest" room, which
+// (per its own room header, a single non-scrolling 240x160 screen with
+// only ~12 standable tiles amid the furniture) was too cramped. Grimblade
+// is a real one-on-one sword-duel arena: 240x192, and per a full
+// collision-grid dump in the emulator its main floor (local x=32-207,
+// y=96-207, tile-aligned) is one uninterrupted 11x7-tile open rectangle -
+// 77 tiles with zero obstacles, dwarfing the old room's ~12. It also has
+// no real exit of its own at all (gExitLists_Dojos[ROOM_DOJOS_GRIMBLADE]
+// is gExitList_NoExitList - the vanilla duel ends via cutscene, not a
+// walked door), so unlike every other repurposed room in this file this
+// one arrives with exactly zero pre-existing exits to fight around: the
+// only way in or out is the single sQuickStartLinks pair added for it
+// below, a clean match for "one room, one door."
+//
+// The first of several planned NPCs for this loop's shops - a merchant
+// selling a small fixed catalog (see script_QuickStartMerchant), using the
+// exact vanilla shop mechanism (ScriptCommand_SaleItemConfirmMessage/
+// CheckShopItemPrice/BuyShopItem, the same trio Beedle and Talon's own
+// shops use) rather than anything custom-built. Reuses the ZELDA entity
+// kind rather than a real shopkeeper's (Stockwell/Beedle) - those kinds
+// dispatch through their own action-function tables that expect a
+// ScriptExecutionContext already wired up their own specific way (e.g.
+// Stockwell's `this->context`, set up only by his own vanilla init code),
+// incompatible with the generic StartCutscene-based script attachment
+// QuickStartMakeNpcTalkable uses. ZELDA's is already proven generic and
+// safe (used for the Main item-choice sign earlier in this file) - the
+// merchant will look like Zelda for now, a cosmetic mismatch rather than a
+// functional one. Spawned at local (120,104), the top-center edge of the
+// open floor, so the catalog below (further into the room) doesn't crowd
+// the entrance.
 static void QuickStartSpawnMelarisMineMerchantOnce(void) {
     s32 i;
     Entity* npc;
@@ -1334,11 +1368,33 @@ static void QuickStartSpawnMelarisMineMerchantOnce(void) {
     }
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
-        npc->x.HALF.HI = gRoomControls.origin_x + 0xb4;
-        npc->y.HALF.HI = gRoomControls.origin_y + 0x5a;
+        npc->x.HALF.HI = gRoomControls.origin_x + 120;
+        npc->y.HALF.HI = gRoomControls.origin_y + 104;
         npc->collisionLayer = 1;
         UpdateSpriteForCollisionLayer(npc);
         QuickStartMakeNpcTalkable(npc, &script_QuickStartMerchant);
+    }
+}
+
+// Grimblade's own pre-existing content - the Blademaster (an NPC-kind
+// entity, like every named boss/duelist in this game; the vanilla duel is
+// driven by his own script/action table rather than the generic ENEMY
+// kind), the door-frame torches, and one prop - all confirmed present via
+// an emulator entity dump the first time this room was loaded. Cleared
+// unconditionally every frame, same idempotent pattern as
+// QuickStartClearMelarisMineObstacles, but scoped by id rather than a
+// blanket kind check: this room hosts our own ZELDA-kind merchant NPC and
+// SHOP_ITEM-kind pedestals, which a blanket "delete every NPC/OBJECT"
+// would also delete.
+static void QuickStartClearGrimbladeObstacles(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == NPC && ent->id != ZELDA) {
+            DeleteEntity(ent);
+        } else if (ent->kind == OBJECT && ent->id != SHOP_ITEM) {
+            DeleteEntity(ent);
+        }
     }
 }
 
@@ -1347,37 +1403,27 @@ static void QuickStartSpawnMelarisMineMerchantOnce(void) {
 // (Stockwell, the Goron Merchant): the player lifts one, carries it to the
 // merchant, and script_QuickStartMerchant completes the sale based on
 // whatever's in gRoomVars.shopItemType, exactly like Beedle/Talon's own
-// scripts do. The room (room_header for
-// ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST) is a single
-// non-scrolling 0xf0x0xa0 screen, so its horizontal center is local x=0x78 -
-// which is also the room's own spawn point x, confirming the middle is
-// walkable. Positions are a row centered on that, spaced 0x20 apart -
-// originally placed further east (0x94-0xd4) clustered off to the merchant's
-// side of the room, which made them hard to walk up to; recentered here.
-// Expanded from the original 3 consumables to a real stock of equipment
-// upgrades, a heart piece, a bottle with a fairy in it, and a skill -
-// covering "any item, powerup, or skill" at a small scale rather than
-// literally every item in the game, which this one small room's floor
-// space can't physically fit as simultaneous pedestals (a full collision
-// scan found only ~12 standable tiles total, already used up below).
-// Prices for every one of these (itemMetaData.c, gUnk_080FD964, #ifdef
-// QUICKSTART) start at 100 and go up with the item's value - the two
-// upgrades priced 600 in vanilla (bomb bag, large quiver) already clear
-// that bar unmodified.
+// scripts do. Expanded from the original 3 consumables to a real stock of
+// equipment upgrades, a heart piece, a bottle with a fairy in it, and a
+// skill - covering "any item, powerup, or skill" at a small scale rather
+// than literally every item in the game. Prices for every one of these
+// (itemMetaData.c, gUnk_080FD964, #ifdef QUICKSTART) start at 100 and go
+// up with the item's value - the two upgrades priced 600 in vanilla (bomb
+// bag, large quiver) already clear that bar unmodified.
 static const u16 sQuickStartShopCatalog[] = {
     ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_SHIELD,     ITEM_HEART_PIECE,
     ITEM_BOTTLE_FAIRY,     ITEM_WALLET,   ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
     ITEM_SKILL_SPIN_ATTACK,
 };
-// Each spot individually verified walkable (warp there, confirm the player
-// isn't shoved elsewhere) via the same collision-scan-plus-emulator-check
-// pipeline used for every enemy offset pool in this file - this room's
-// open floor is only about 7x4 tiles, so unlike the bigger gauntlet rooms
-// there wasn't room to spare for a wider margin from the merchant NPC
-// (local (180,90)) or the walls.
+// Two rows across Grimblade's open floor (see the room's own comment
+// above), well clear of the walls on every side and of the merchant's own
+// spot at (120,104) - a much roomier layout than the old cramped room
+// allowed, but still confirmed against the same collision-grid dump: both
+// rows sit inside the single uninterrupted open rectangle (local x=32-207,
+// y=96-207), each point comfortably inset from the nearest wall.
 static const s16 sQuickStartShopItemOffsets[][2] = {
-    { 0x58, 0x6e }, { 0x78, 0x6e }, { 0x98, 0x6e }, { 0x48, 0x5e }, { 0x60, 0x5e },
-    { 0x78, 0x5e }, { 0x90, 0x5e }, { 0x78, 0x4e }, { 0x90, 0x4e },
+    { 56, 145 }, { 88, 145 }, { 120, 145 }, { 152, 145 }, { 184, 145 },
+    { 72, 180 }, { 104, 180 }, { 136, 180 }, { 168, 180 },
 };
 
 // Whether one of our own SHOP_ITEM props for the given catalog item still
@@ -2318,6 +2364,16 @@ static void QuickStartEnforceContainment(void) {
     if (QuickStartIsCurrentLadderTarget(gRoomTransition.player_status.area_next, gRoomTransition.player_status.room_next)) {
         return;
     }
+    // The merchant's room (AREA_DOJOS, ROOM_DOJOS_GRIMBLADE) isn't added to
+    // QuickStartAreaContained wholesale - AREA_DOJOS holds several other
+    // real dojo rooms entered from many unrelated overworld spots, same
+    // "don't blanket-contain a shared area" reasoning as Minish House
+    // Interiors/Tree Interiors' own ladder-target exception above. This is
+    // the one specific transition sQuickStartLinks itself is about to make
+    // leaving Melari's Mine, let through the same way.
+    if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
+        return;
+    }
     if (!QuickStartAreaContained(gRoomTransition.player_status.area_next)) {
         gRoomTransition.transitioningOut = 0;
     }
@@ -2418,8 +2474,8 @@ static void QuickStartRoomMonitor(void) {
         QuickStartSpawnLonLonRanchEnemiesOnce();
         QuickStartSpawnWinKeyOnce();
         QuickStartCheckWinCondition();
-    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
-               gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST) {
+    } else if (gRoomControls.area == AREA_DOJOS && gRoomControls.room == ROOM_DOJOS_GRIMBLADE) {
+        QuickStartClearGrimbladeObstacles();
         QuickStartSpawnMelarisMineMerchantOnce();
         QuickStartMaintainMelarisMineShop();
     } else if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 &&
