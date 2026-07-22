@@ -793,7 +793,6 @@ static void QuickStartCheckWinCondition(void) {
     }
     if (!CheckRoomFlag(1)) {
         QuickStartIncrementDifficulty();
-        SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
         // A deliberately out-of-range category (any real one only goes up
         // to TEXT_CAFE) so MessageRequest's own resolution step - forced to
         // run immediately by MsgInit below - safely falls back to the
@@ -817,6 +816,18 @@ static void QuickStartCheckWinCondition(void) {
     if (gMessage.state & MESSAGE_ACTIVE) {
         return;
     }
+    // Cleared here, not in the branch above - clearing it the instant the
+    // win message starts made GetInventoryValue(...) == 0 true again on
+    // the very next frame, before the message ever finished or this
+    // function ever reached DoSoftReset below: that early-returned via the
+    // very first check above, wiping room flag 1's "message already
+    // shown" bookkeeping and abandoning the win sequence entirely - and
+    // QuickStartSpawnWinKeyOnce, seeing the same now-zeroed value, would
+    // immediately drop a fresh key, which is exactly the infinite
+    // pickup/message loop this was confirmed causing. Cleared here instead
+    // so it only happens once, right before the save that's supposed to
+    // record it, not mid-message.
+    SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
     WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     DoSoftReset();
 }
