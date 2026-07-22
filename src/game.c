@@ -105,9 +105,9 @@ static void QuickStartSpawnGardenRewardOnce(void);
 static void QuickStartClearMelarisMineObstacles(void);
 static void QuickStartSpawnMelarisMineEnemiesOnce(void);
 static void QuickStartSpawnMelarisMineRewardOnce(void);
-static void QuickStartSpawnMelarisMineMerchantOnce(void);
-static void QuickStartClearGrimbladeObstacles(void);
-static void QuickStartMaintainMelarisMineShop(void);
+static void QuickStartSpawnShopMerchantOnce(s16, s16);
+static void QuickStartClearShopObstacles(void);
+static void QuickStartMaintainShop(const s16 (*)[2]);
 static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartMaintainGardenLadders(void);
 static void QuickStartProcessLadderLinks(void);
@@ -115,6 +115,7 @@ static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
+static void QuickStartClearLonLonRanchGoron(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
@@ -245,6 +246,16 @@ static void GameTask_Transition(void) {
     // the save's inventory state matches what the player was told, with no
     // functional door-gating effect either way.
     SetInventoryValue(ITEM_QST_LONLON_KEY, 1);
+    // Fuses the Lon Lon Ranch kinstone piece at boot. In vanilla,
+    // sub_StateChange_HyruleField_LonLonRanch (roomInit.c) only loads the
+    // wall-punching Goron's entity list (and draws the wall-crack tiles at
+    // local (128,864)/(128,880)) while !CheckKinstoneFused(KINSTONE_29) -
+    // pre-fusing it here means that never happens, so the Goron and its
+    // crack are simply never there, and the cave entrance behind it (the
+    // real door at local (136,852), gExitList_HyruleField_LonLonRanch[4])
+    // is open from the start. See QuickStartClearLonLonRanchGoron below for
+    // a defensive backstop in case any of that understanding is incomplete.
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_29);
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -1020,7 +1031,7 @@ static const QuickStartLink sQuickStartLinks[] = {
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
     // Melari's Mine's former Southwest door -> the merchant's new room
-    // (Dojos "Grimblade", see QuickStartSpawnMelarisMineMerchantOnce) rather
+    // (Dojos "Grimblade", see QuickStartSpawnShopMerchantOnce) rather
     // than the old cramped Minish House Interiors room. Same trigger box as
     // that room used (the door's own real coordinates,
     // gExitList_MelarisMine_Main[2], AREA_12x12 -> box +6/+6) - the physical
@@ -1070,19 +1081,38 @@ static const QuickStartLink sQuickStartLinks[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 376, 408, 627, 643, AREA_HOUSE_INTERIORS_4,
       ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
     // Ranch house West and East no longer have their own custom exit link,
-    // or a custom West<->East connector - both rooms are now "? room" pool
-    // content (see sQuickStartRanchHouseContentPos and QuickStartRoomMonitor
-    // below), and every other "? room" in this file leaves the house via
-    // its own real WARP_TYPE_BORDER exit (retargeted in transitions.c) since
-    // border-type transitions - unlike the WARP_TYPE_AREA entrance doors
-    // above - don't depend on the undecompiled per-tile ACT_TILE check, and
-    // fire correctly under QUICKSTART with sustained holding against the
-    // wall (confirmed in the emulator this session for both this room and
-    // several others). West's real border exit is retargeted to (345,710)
-    // in transitions.c, clear of the front-door entrance box above (landing
-    // on that box's own center used to instantly bounce the player back
-    // inside); East's is left at its untouched vanilla spot, already
-    // confirmed to fire correctly on its own.
+    // or a custom West<->East connector - West is a "? room" (see
+    // sQuickStartFixedRoomContentPos and QuickStartRoomMonitor below) and
+    // East is the merchant's second shop location, but both leave the house
+    // via their own real WARP_TYPE_BORDER exit (retargeted in transitions.c
+    // for West) since border-type transitions - unlike the WARP_TYPE_AREA
+    // entrance doors above - don't depend on the undecompiled per-tile
+    // ACT_TILE check, and fire correctly under QUICKSTART with sustained
+    // holding against the wall (confirmed in the emulator this session for
+    // both rooms and several others). West's real border exit is
+    // retargeted to (345,710) in transitions.c, clear of the front-door
+    // entrance box above (landing on that box's own center used to
+    // instantly bounce the player back inside); East's is left at its
+    // untouched vanilla spot, already confirmed to fire correctly on its
+    // own.
+    //
+    // Lon Lon Ranch's Goron Cave door (the real vanilla door the
+    // wall-punching Goron used to block - see the KINSTONE_29 fuse in
+    // GameTask_Transition above) as the entrance to slot 3's "? room" - real
+    // door position local (136,852) (gExitList_HyruleField_LonLonRanch[4]),
+    // same reasoning as every other WARP_TYPE_AREA door in this file for why
+    // a position box is used instead of retargeting it directly. The actual
+    // walkable approach turned out to be a single-tile-wide vertical
+    // corridor at local x=128-143 (the crack tile
+    // sub_StateChange_HyruleField_LonLonRanch, roomInit.c, only draws while
+    // the kinstone is unfused), topping out around y=868 - traced end to end
+    // in the emulator, walking in from the front-door area all the way up
+    // through the corridor, which is what this box's y836-868 upper bound is
+    // sized to reach. Lands at (120,120), the real door's own vanilla spawn
+    // point in Goron Cave Stairs - the same shared-spawn convention every
+    // other "? room" in this file uses.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 120, 152, 836, 868, AREA_GORON_CAVE,
+      ROOM_GORON_CAVE_STAIRS, 120, 120 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1181,6 +1211,22 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
     SetRoomFlag(0);
 }
 
+// Defensive backstop for the KINSTONE_29 fuse-at-boot in GameTask_Transition:
+// that flag is what makes sub_StateChange_HyruleField_LonLonRanch
+// (roomInit.c) skip loading the wall-punching Goron's entity list in the
+// first place, so this should never actually find one - but it costs
+// nothing to also delete any GORON-kind NPC that turns up here regardless,
+// the same idempotent per-frame backstop QuickStartClearMelarisMineObstacles
+// and QuickStartClearShopObstacles already use elsewhere in this file.
+static void QuickStartClearLonLonRanchGoron(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == NPC && gEntities[i].base.id == GORON) {
+            DeleteEntity(&gEntities[i].base);
+        }
+    }
+}
+
 typedef struct {
     s16 srcXMin;
     s16 srcXMax;
@@ -1253,21 +1299,26 @@ static void QuickStartSolveLonLonBoulder(void) {
     }
 }
 
-// Talon and Malon's house, both rooms, as two more "? room" slots (ladder
-// indices 2 and 3 - see GF_LADDER_BASE etc. above and QuickStartRoomMonitor
-// below) alongside the 20-room Castle Garden ladder pool. Unlike that pool,
-// these two are fixed rooms rather than a random draw (the player reaches
-// them via their own dedicated sQuickStartLinks entrance, not a ladder), so
-// each gets its own verified-walkable content spot directly here instead of
-// going through sQuickStartQuestionRoomPool/contentDX/contentDY. West's spot
-// is one of 8 clear floor tiles found by a collision-grid dump plus a
-// per-spot 4-direction movement check between the room's furniture (2 beds,
-// a dresser, a TV, a rug) - chosen well clear of the (104,88) entrance so
-// the reward doesn't get auto-picked-up the instant the room loads. East's
-// spot was found the same way, offset from its own (120,120) entrance.
-static const s16 sQuickStartRanchHouseContentPos[2][2] = {
+// Two more "? room" slots (ladder indices 2 and 3 - see GF_LADDER_BASE etc.
+// above and QuickStartRoomMonitor below) alongside the 20-room Castle
+// Garden ladder pool: Talon and Malon's house's west room, and (now that
+// the east room is the merchant's second location instead - see
+// QuickStartSpawnShopMerchantOnce) Goron Cave Stairs, behind the real door
+// the wall-punching Goron used to block. Both are fixed rooms rather than a
+// random draw (the player reaches each via its own dedicated
+// sQuickStartLinks entrance, not a ladder), so each gets its own
+// verified-walkable content spot directly here instead of going through
+// sQuickStartQuestionRoomPool/contentDX/contentDY. West's spot is one of 8
+// clear floor tiles found by a collision-grid dump plus a per-spot
+// 4-direction movement check between the room's furniture (2 beds, a
+// dresser, a TV, a rug) - chosen well clear of the (104,88) entrance so the
+// reward doesn't get auto-picked-up the instant the room loads. Goron Cave
+// Stairs' spot is 40px north of its own (120,120) entrance - the same
+// convention the Minish House Interiors pool rows use - confirmed open in
+// the emulator's collision dump for this room.
+static const s16 sQuickStartFixedRoomContentPos[2][2] = {
     { 72, 120 },
-    { 150, 72 },
+    { 120, 80 },
 };
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -1365,10 +1416,18 @@ static void QuickStartSpawnMelarisMineRewardOnce(void) {
 // QuickStartMakeNpcTalkable uses. ZELDA's is already proven generic and
 // safe (used for the Main item-choice sign earlier in this file) - the
 // merchant will look like Zelda for now, a cosmetic mismatch rather than a
-// functional one. Spawned at local (120,104), the top-center edge of the
-// open floor, so the catalog below (further into the room) doesn't crowd
-// the entrance.
-static void QuickStartSpawnMelarisMineMerchantOnce(void) {
+// functional one.
+//
+// Same merchant (same catalog, same script_QuickStartMerchant, same
+// gRoomVars.shopItemType-based sale) now also runs in Lon Lon Ranch's east
+// house room (see QuickStartRoomMonitor below) - just called again with
+// that room's own verified npcOffsetX/Y. Nothing needs to track "bought in
+// one room, reflected in the other": the catalog, prices, and purchase
+// mechanism all key off GetInventoryValue/gSave, which is already global
+// save state, so an item bought at either location is simply owned
+// game-wide from then on - the same way it would be if Beedle and Talon
+// both happened to sell the same item.
+static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
     s32 i;
     Entity* npc;
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -1378,25 +1437,24 @@ static void QuickStartSpawnMelarisMineMerchantOnce(void) {
     }
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
-        npc->x.HALF.HI = gRoomControls.origin_x + 120;
-        npc->y.HALF.HI = gRoomControls.origin_y + 125;
+        npc->x.HALF.HI = gRoomControls.origin_x + npcOffsetX;
+        npc->y.HALF.HI = gRoomControls.origin_y + npcOffsetY;
         npc->collisionLayer = 1;
         UpdateSpriteForCollisionLayer(npc);
         QuickStartMakeNpcTalkable(npc, &script_QuickStartMerchant);
     }
 }
 
-// Grimblade's own pre-existing content - the Blademaster (an NPC-kind
-// entity, like every named boss/duelist in this game; the vanilla duel is
-// driven by his own script/action table rather than the generic ENEMY
-// kind), the door-frame torches, and one prop - all confirmed present via
-// an emulator entity dump the first time this room was loaded. Cleared
-// unconditionally every frame, same idempotent pattern as
-// QuickStartClearMelarisMineObstacles, but scoped by id rather than a
-// blanket kind check: this room hosts our own ZELDA-kind merchant NPC and
-// SHOP_ITEM-kind pedestals, which a blanket "delete every NPC/OBJECT"
-// would also delete.
-static void QuickStartClearGrimbladeObstacles(void) {
+// Shared by both shop rooms (Grimblade and Lon Lon Ranch's east house room)
+// - each room's own pre-existing vanilla content (Grimblade's Blademaster,
+// door-frame torches, and one prop; the east room's own vanilla
+// NPCs/furniture-as-entities, if any) confirmed present via an emulator
+// entity dump the first time each room was loaded. Cleared unconditionally
+// every frame, same idempotent pattern as QuickStartClearMelarisMineObstacles,
+// but scoped by id rather than a blanket kind check: both rooms host our own
+// ZELDA-kind merchant NPC and SHOP_ITEM-kind pedestals, which a blanket
+// "delete every NPC/OBJECT" would also delete.
+static void QuickStartClearShopObstacles(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
@@ -1419,7 +1477,8 @@ static void QuickStartClearGrimbladeObstacles(void) {
 // than literally every item in the game. Prices for every one of these
 // (itemMetaData.c, gUnk_080FD964, #ifdef QUICKSTART) start at 100 and go
 // up with the item's value - the two upgrades priced 600 in vanilla (bomb
-// bag, large quiver) already clear that bar unmodified.
+// bag, large quiver) already clear that bar unmodified. Shared by both shop
+// rooms - same wares everywhere the merchant appears.
 static const u16 sQuickStartShopCatalog[] = {
     ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_SHIELD,     ITEM_HEART_PIECE,
     ITEM_BOTTLE_FAIRY,     ITEM_WALLET,   ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
@@ -1430,6 +1489,14 @@ static const u16 sQuickStartShopCatalog[] = {
 static const s16 sQuickStartShopItemOffsets[][2] = {
     { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
     { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
+};
+// Lon Lon Ranch east house room's own catalog layout - same 5+4 two-row
+// split as Grimblade's, independently verified walkable in the emulator
+// (per-spot movement check from the room's own (120,120) entrance) since
+// this room's furniture layout is completely different from Grimblade's.
+static const s16 sQuickStartRanchHouseEastShopOffsets[][2] = {
+    { 60, 72 }, { 90, 72 }, { 120, 72 }, { 150, 72 }, { 180, 72 },
+    { 170, 104 }, { 140, 104 }, { 110, 104 }, { 80, 104 },
 };
 
 // Whether one of our own SHOP_ITEM props for the given catalog item still
@@ -1470,18 +1537,18 @@ static void QuickStartSpawnShopItem(u16 itemId, s16 offsetX, s16 offsetY) {
     }
 }
 
-// Polled every frame the player is in the shop room (alongside
-// QuickStartSpawnMelarisMineMerchantOnce) so a purchased item's now-deleted
+// Polled every frame the player is in either shop room (alongside
+// QuickStartSpawnShopMerchantOnce) so a purchased item's now-deleted
 // pedestal prop gets restocked - vanilla's real pedestal shops (Goron
 // Merchant etc.) have their own manager entity to do this; we don't have
 // that infrastructure, so just re-check and re-spawn missing entries here
-// instead.
-static void QuickStartMaintainMelarisMineShop(void) {
+// instead. `offsets` must have exactly ARRAY_COUNT(sQuickStartShopCatalog)
+// entries, one per catalog item in the same order.
+static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
     s32 i;
     for (i = 0; i < ARRAY_COUNT(sQuickStartShopCatalog); i++) {
         if (!QuickStartShopItemExists(sQuickStartShopCatalog[i])) {
-            QuickStartSpawnShopItem(sQuickStartShopCatalog[i], sQuickStartShopItemOffsets[i][0],
-                                     sQuickStartShopItemOffsets[i][1]);
+            QuickStartSpawnShopItem(sQuickStartShopCatalog[i], offsets[i][0], offsets[i][1]);
         }
     }
 }
@@ -1895,8 +1962,8 @@ static const u16 sQuickStartLadderRewardPool[] = {
 // is assigned a kind, and (for chest/NPC kinds) which specific reward or
 // disposition, all via Random(). Slots 0-1 are the 2 physical Castle Garden
 // ladders, each additionally drawing which of the 20 sQuickStartQuestionRoomPool
-// rooms it leads to; slots 2-3 are Ranch House West/East - fixed rooms
-// reached via their own dedicated sQuickStartLinks entrance rather than a
+// rooms it leads to; slots 2-3 are Ranch House West and Goron Cave Stairs -
+// fixed rooms reached via their own dedicated sQuickStartLinks entrance rather than a
 // ladder, so they only need a kind/extra roll, no room draw. Doing this
 // lazily on first room entry rather than in GameTask_Transition avoids
 // touching the boot sequence at all - the persistent flags this writes make
@@ -2125,14 +2192,14 @@ static void QuickStartClearLadderRoomObstacles(void) {
 // reward was observed picking itself up automatically the instant the
 // room loads, with no discovery moment at all.
 //
-// Ladder indices 2-3 (Ranch House West/East) aren't part of the random
-// pool draw - they're fixed rooms, so their content position is just
-// sQuickStartRanchHouseContentPos directly rather than a pool lookup.
+// Ladder indices 2-3 (Ranch House West, Goron Cave Stairs) aren't part of
+// the random pool draw - they're fixed rooms, so their content position is
+// just sQuickStartFixedRoomContentPos directly rather than a pool lookup.
 static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
     s32 rawIndex, poolIndex;
     if (ladderIndex >= 2) {
-        *contentX = sQuickStartRanchHouseContentPos[ladderIndex - 2][0];
-        *contentY = sQuickStartRanchHouseContentPos[ladderIndex - 2][1];
+        *contentX = sQuickStartFixedRoomContentPos[ladderIndex - 2][0];
+        *contentY = sQuickStartFixedRoomContentPos[ladderIndex - 2][1];
         return;
     }
     rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
@@ -2303,8 +2370,8 @@ static bool32 QuickStartAreaContained(u8 area) {
 // Caves, Great Fairies, Royal Valley Graves) and which physical room maps to
 // which ladder varies per save, so a plain area/room comparison against
 // fixed constants doesn't work for slots 0-1 - this checks against each
-// ladder's current runtime assignment instead. Slots 2-3 (Ranch House
-// West/East) ARE fixed physical rooms though (no pool draw - see
+// ladder's current runtime assignment instead. Slots 2-3 (Ranch House West,
+// Goron Cave Stairs) ARE fixed physical rooms though (no pool draw - see
 // QuickStartRandomizeLaddersOnce), so those two are a direct area/room
 // match.
 static s32 QuickStartFindLadderForCurrentRoom(void) {
@@ -2317,13 +2384,11 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
             return i;
         }
     }
-    if (gRoomControls.area == AREA_HOUSE_INTERIORS_4) {
-        if (gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
-            return 2;
-        }
-        if (gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST) {
-            return 3;
-        }
+    if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 && gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
+        return 2;
+    }
+    if (gRoomControls.area == AREA_GORON_CAVE && gRoomControls.room == ROOM_GORON_CAVE_STAIRS) {
+        return 3;
     }
     return -1;
 }
@@ -2434,10 +2499,12 @@ static void QuickStartEnforceContainment(void) {
 // Falls/Lake Hylia/Hyrule Town borders reliably fire under QUICKSTART
 // (WARP_TYPE_BORDER doesn't need GetActTileAtTilePos) and need this to
 // stay blocked; the two ranch house interiors, two cave entrances, and
-// Goron Cave are WARP_TYPE_AREA doors that don't reliably fire under
-// QUICKSTART at all (same ACT_TILE gap the Castle Garden/Lon Lon Ranch
-// link itself works around), so this check is mostly a no-op safety net
-// for those, not their only defense.
+// Goron Cave's own real door are WARP_TYPE_AREA doors that don't reliably
+// fire under QUICKSTART at all (same ACT_TILE gap the Castle Garden/Lon
+// Lon Ranch link itself works around), so this check is mostly a no-op
+// safety net for those, not their only defense - our own sQuickStartLinks
+// position box into Goron Cave Stairs (see above) is explicitly allowed
+// through below, same as the two ranch house interiors already were.
 static void QuickStartEnforceLonLonContainment(void) {
     if (!gRoomTransition.transitioningOut) {
         return;
@@ -2456,6 +2523,10 @@ static void QuickStartEnforceLonLonContainment(void) {
     if (gRoomTransition.player_status.area_next == AREA_HOUSE_INTERIORS_4 &&
         (gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
          gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
+        return;
+    }
+    if (gRoomTransition.player_status.area_next == AREA_GORON_CAVE &&
+        gRoomTransition.player_status.room_next == ROOM_GORON_CAVE_STAIRS) {
         return;
     }
     gRoomTransition.transitioningOut = 0;
@@ -2514,18 +2585,29 @@ static void QuickStartRoomMonitor(void) {
         QuickStartMaintainGardenLadders();
         QuickStartProcessLadderLinks();
     } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        QuickStartClearLonLonRanchGoron();
         QuickStartSolveLonLonBoulder();
         QuickStartSpawnLonLonRanchEnemiesOnce();
         QuickStartSpawnWinKeyOnce();
         QuickStartCheckWinCondition();
     } else if (gRoomControls.area == AREA_DOJOS && gRoomControls.room == ROOM_DOJOS_GRIMBLADE) {
-        QuickStartClearGrimbladeObstacles();
-        QuickStartSpawnMelarisMineMerchantOnce();
-        QuickStartMaintainMelarisMineShop();
+        QuickStartClearShopObstacles();
+        QuickStartSpawnShopMerchantOnce(120, 125);
+        QuickStartMaintainShop(sQuickStartShopItemOffsets);
+    } else if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 &&
+               gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST) {
+        // The east house room is the merchant's second location now (same
+        // catalog, same script - see QuickStartSpawnShopMerchantOnce above)
+        // rather than a "? room" - it no longer goes through
+        // QuickStartFindLadderForCurrentRoom at all (see slot 3's new fixed
+        // room, Goron Cave Stairs, below).
+        QuickStartClearShopObstacles();
+        QuickStartSpawnShopMerchantOnce(176, 56);
+        QuickStartMaintainShop(sQuickStartRanchHouseEastShopOffsets);
     } else {
-        // Falls through to here for Ranch House West/East too - both are
-        // now ladder slots 2/3 (fixed-room "? room" content), handled by
-        // the same generic dispatch as the random pool rooms.
+        // Falls through to here for Ranch House West and Goron Cave Stairs
+        // too - both are ladder slots 2/3 (fixed-room "? room" content),
+        // handled by the same generic dispatch as the random pool rooms.
         s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
         if (ladderIndex >= 0) {
             QuickStartSetupLadderRoomContent(ladderIndex);
