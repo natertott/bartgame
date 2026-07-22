@@ -721,10 +721,6 @@ static void QuickStartSpawnWinKeyOnce(void) {
             ((ItemOnGroundEntity*)ent)->unk_6c = 600;
             return;
         }
-        if (ent->kind == ENEMY) {
-            // Still enemies alive somewhere in Lon Lon Ranch - not clear yet.
-            return;
-        }
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_QST_GRAVEYARD_KEY, 0);
     if (itemEntity != NULL) {
@@ -1038,34 +1034,41 @@ static const QuickStartLink sQuickStartLinks[] = {
       ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
     // Lon Lon Ranch -> Talon and Malon's house (west room, the one with the
     // beds). The real vanilla door (gExitList_HyruleField_LonLonRanch[0],
-    // a WARP_TYPE_AREA door at local (344,632)) turned out to sit behind
-    // its own dedicated wall segment - a full collision-grid BFS from the
-    // Castle Garden arrival spot (even with all 3 boulders solved) never
-    // reaches within several tiles of it, so there's no "walk up and use
-    // the real door" approach to preserve here the way Melari's Mine's
-    // doors had. This box instead sits at local (184,616), the closest
-    // point on the room's own main reachable corridor (confirmed by BFS
-    // over the room's collision grid, then walking all 4 directions from
-    // it in the emulator) - the player effectively steps into the house
-    // from the side, not through the visual front door. Spawn point is
-    // (104,88), one of the 8 spots the ranch house's own enemy-offset
-    // survey below already verified walkable.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 170, 198, 602, 630, AREA_HOUSE_INTERIORS_4,
+    // a WARP_TYPE_AREA door at local (344,632)) sits behind its own
+    // dedicated wall segment with no walkable approach at all - confirmed
+    // by a full collision-grid dump plus directly walking there. The one
+    // open corridor nearby (a collision-grid dump found it spans the
+    // entire local x=144-207, y=592-703 rectangle) IS reachable on foot as
+    // normal-sized Link - confirmed by walking there step by step from the
+    // Castle Garden arrival spot without ever shrinking - but the box used
+    // to only cover a small (170-198,602-630) slice of that rectangle,
+    // reachable only via one specific circuitous route; a normal player
+    // exploring more directly could easily walk through the rest of the
+    // open corridor without ever crossing that slice, making the whole
+    // house feel unreachable without resorting to the Minish-only crack
+    // elsewhere in the room. A second, wider collision-grid dump (local
+    // x=0-239, y=576-719) found the corridor's true full width is x=96-207
+    // (narrower than first thought - the earlier 146-205 estimate came from
+    // a dump that didn't extend far enough west, and missed that a
+    // straightforward up-then-left approach from the Castle Garden arrival
+    // spot settles at x=100, just outside that first box). Widened to the
+    // corridor's real full extent so any approach through it triggers the
+    // link.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 96, 207, 595, 700, AREA_HOUSE_INTERIORS_4,
       ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 104, 88 },
-    // Ranch house (west room) -> back out to Lon Lon Ranch, at the far
-    // north end of the room's main reachable corridor (see the collision
-    // BFS + 4-direction walk mentioned above) rather than back near the
-    // entrance - walking through the house is a real shortcut to a
-    // different part of the ranch. This is a position box, not the room's
-    // own real WARP_TYPE_BORDER south exit (retargeted in transitions.c
-    // anyway, as insurance): walking straight down from the rug toward
-    // that real door dead-ends at a solid wall tile (confirmed by walking
-    // there directly, then trying to push through with repeated
-    // down-presses and A presses for several seconds - the door frame
-    // tile never opens under QUICKSTART's direct room load, the same
-    // ACT_TILE-shaped gap as every other real door this file works
-    // around). Box sits just north of that wall, on the walkable side.
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 88, 120, 118, 127, AREA_HYRULE_FIELD,
+    // Ranch house (west room) -> back out to Lon Lon Ranch. The room's own
+    // south wall (collision row local y=112-127) has two separate open
+    // gaps - one at x=32-79 (this room's own real WARP_TYPE_BORDER exit,
+    // retargeted in transitions.c) and another at x=128-143 that has no
+    // real transition of its own at all (present in the room's collision
+    // data/graphics but never wired to anywhere - reads as a second
+    // "locked" door to a player who walks up to it and nothing happens).
+    // Both gaps are unreachable at the walled-off x=80-127 stretch between
+    // them, so widening this box across the whole x=32-143 span costs
+    // nothing (the player physically can't stand in the blocked middle
+    // anyway) and makes either gap work as a real exit, not just the one
+    // this room's own transitions.c data happens to name.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 32, 143, 112, 127, AREA_HYRULE_FIELD,
       ROOM_HYRULE_FIELD_LON_LON_RANCH, 73, 135 },
 };
 

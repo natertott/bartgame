@@ -761,8 +761,21 @@ const Transition gExitList_MelarisMine_Main[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x70, 0x12c, 0xbc, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x6, 0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // Retargeted straight to the merchant's room (AREA_DOJOS,
+    // ROOM_DOJOS_GRIMBLADE, see game.c's sQuickStartLinks) instead of the
+    // old Minish House Interiors Southwest room. This real door's own box
+    // is the exact same spot game.c's own custom link already covers, so
+    // if it ever wins the race against that link (confirmed happening in
+    // practice, unlike most other WARP_TYPE_AREA doors this file relies on
+    // being unreachable), it now lands somewhere with a merchant either
+    // way instead of the old room, which no longer has one.
+    { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x228, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x280, 0x11c, 0x24, 0x56, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
