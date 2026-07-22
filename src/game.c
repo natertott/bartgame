@@ -116,7 +116,6 @@ static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
 static void QuickStartSolveLonLonBoulder(void);
-static void QuickStartSpawnRanchHouseEnemiesOnce(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
@@ -235,6 +234,17 @@ static void GameTask_Transition(void) {
     // owning just the upgraded arrow is enough to equip and use it.
     SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
+    // Lon Lon Ranch house key, granted at boot per the user's request ("Link
+    // should start the game with the Lon Lon ranch house key already in his
+    // inventory"). Note this doesn't actually gate anything under
+    // QUICKSTART: the only place this item is ever read is talon.c's own
+    // dialogue script (whether Talon offers his "you found my key" cutscene
+    // line), and Talon himself is deleted from the ranch house along with
+    // every other vanilla NPC/object the moment it's repurposed as a "?
+    // room" (QuickStartClearLadderRoomObstacles) - it's granted purely so
+    // the save's inventory state matches what the player was told, with no
+    // functional door-gating effect either way.
+    SetInventoryValue(ITEM_QST_LONLON_KEY, 1);
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -1059,39 +1069,20 @@ static const QuickStartLink sQuickStartLinks[] = {
     // targets.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 376, 408, 627, 643, AREA_HOUSE_INTERIORS_4,
       ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
-    // Ranch house (west room) -> back out to Lon Lon Ranch's front door.
-    // The room's own south wall reads as solid in a coarse per-tile
-    // collision dump (cols 6-7, local x=96-127) - but that's this room's
-    // real WARP_TYPE_BORDER exit (retargeted in transitions.c), which
-    // (like every other border-type transition in this file) doesn't
-    // depend on the undecompiled per-tile door-open check at all; holding
-    // straight down against it long enough (confirmed in the emulator:
-    // ~30 frames of holding, not the instant single-step trigger this
-    // custom link gives) fires it correctly. A previous round of this
-    // file mistook the two genuinely-open-looking gaps on either side of
-    // this wall (local x=32-79 and x=128-143) for the real door and the
-    // "other" door, when the west gap is actually the Minish-only crack
-    // and the east one is the West<->East house connector (see the (172,92)
-    // link below) - centered on the real door instead now, matching the
-    // user's own (104,127). Lands at (345,710), NOT the front door's own
-    // (345,651) - that sits dead center of the front door entrance's own
-    // trigger box above, which immediately re-fired it, bouncing the
-    // player straight back inside before they could take a single step
-    // (confirmed happening in the emulator). (345,710), well clear of that
-    // box and confirmed open in 3 of 4 directions, is a nearby safe spot
-    // instead.
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 88, 120, 115, 127, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 345, 710 },
-    // Ranch house, west room -> east room. Placed by the user directly (Lua
-    // position script) at (172,92) - "the other door in the room", meant to
-    // work "how it does in the vanilla game" per their own description.
-    // No real Transition entry connects these two rooms directly (each
-    // only lists its own single real exit back to Lon Lon Ranch), so this
-    // is a from-scratch custom link rather than a retargeted real one -
-    // lands at (120,120), the east room's own confirmed-safe spawn spot
-    // (the same one its own real vanilla door from Lon Lon Ranch uses).
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 160, 184, 84, 100, AREA_HOUSE_INTERIORS_4,
-      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
+    // Ranch house West and East no longer have their own custom exit link,
+    // or a custom West<->East connector - both rooms are now "? room" pool
+    // content (see sQuickStartRanchHouseContentPos and QuickStartRoomMonitor
+    // below), and every other "? room" in this file leaves the house via
+    // its own real WARP_TYPE_BORDER exit (retargeted in transitions.c) since
+    // border-type transitions - unlike the WARP_TYPE_AREA entrance doors
+    // above - don't depend on the undecompiled per-tile ACT_TILE check, and
+    // fire correctly under QUICKSTART with sustained holding against the
+    // wall (confirmed in the emulator this session for both this room and
+    // several others). West's real border exit is retargeted to (345,710)
+    // in transitions.c, clear of the front-door entrance box above (landing
+    // on that box's own center used to instantly bounce the player back
+    // inside); East's is left at its untouched vanilla spot, already
+    // confirmed to fire correctly on its own.
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1262,28 +1253,22 @@ static void QuickStartSolveLonLonBoulder(void) {
     }
 }
 
-// Talon and Malon's house (west room) as a "? room" off the sQuickStartLinks
-// entrance above. Small single-screen room, mostly furniture (2 beds, a
-// dresser, a TV, a rug) - a collision-grid dump plus a per-spot 4-direction
-// movement check (same verification pipeline as every other room's offset
-// pool) found only these 8 clear floor tiles between the furniture.
-static const s16 sQuickStartRanchHouseEnemyOffsets[8][2] = {
-    { 72, 88 }, { 104, 88 }, { 136, 88 }, { 88, 104 }, { 120, 104 }, { 72, 120 }, { 72, 56 }, { 72, 72 },
+// Talon and Malon's house, both rooms, as two more "? room" slots (ladder
+// indices 2 and 3 - see GF_LADDER_BASE etc. above and QuickStartRoomMonitor
+// below) alongside the 20-room Castle Garden ladder pool. Unlike that pool,
+// these two are fixed rooms rather than a random draw (the player reaches
+// them via their own dedicated sQuickStartLinks entrance, not a ladder), so
+// each gets its own verified-walkable content spot directly here instead of
+// going through sQuickStartQuestionRoomPool/contentDX/contentDY. West's spot
+// is one of 8 clear floor tiles found by a collision-grid dump plus a
+// per-spot 4-direction movement check between the room's furniture (2 beds,
+// a dresser, a TV, a rug) - chosen well clear of the (104,88) entrance so
+// the reward doesn't get auto-picked-up the instant the room loads. East's
+// spot was found the same way, offset from its own (120,120) entrance.
+static const s16 sQuickStartRanchHouseContentPos[2][2] = {
+    { 72, 120 },
+    { 150, 72 },
 };
-// 240x160px room -> 7x5 32x32 squares = 35; maxEnemies is just the verified
-// offset pool's own size (8) - the room's small enough that entity-budget
-// headroom was never the limiting factor here, unlike the bigger gauntlets.
-#define QUICKSTART_RANCHHOUSE_ROOM_SQUARES 35
-#define QUICKSTART_RANCHHOUSE_MAX_ENEMIES 8
-
-static void QuickStartSpawnRanchHouseEnemiesOnce(void) {
-    if (CheckRoomFlag(0)) {
-        return;
-    }
-    QuickStartSpawnEnemyGroup(sQuickStartRanchHouseEnemyOffsets, ARRAY_COUNT(sQuickStartRanchHouseEnemyOffsets),
-                               QUICKSTART_RANCHHOUSE_ROOM_SQUARES, QUICKSTART_RANCHHOUSE_MAX_ENEMIES);
-    SetRoomFlag(0);
-}
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
 // room flag 2 "watching this visit's drop" - shared by the initial grant
@@ -1535,7 +1520,9 @@ static void QuickStartMaintainMelarisMineShop(void) {
 #define GF_LADDER_ROOM_BIT(i, b) (GF_LADDER_BASE(i) + 12 + (b)) // b = 0..5
 
 // Difficulty counter for the win/reset loop below - well clear of the
-// ladder bits above (highest in use is GF_LADDER_ROOM_BIT(2,5) = 155).
+// ladder bits above (highest in use is GF_LADDER_ROOM_BIT(3,5) = 173, the
+// 4th ladder slot being Ranch House East - see QuickStartRandomizeLaddersOnce
+// below).
 // 4 bits -> 0..15 (only 0..QUICKSTART_MAX_DIFFICULTY are ever produced by
 // QuickStartIncrementDifficulty, but the extra headroom over the previous
 // 2-bit counter costs nothing and leaves room to extend the curve later).
@@ -1904,19 +1891,24 @@ static const u16 sQuickStartLadderRewardPool[] = {
 #define QUICKSTART_LADDER_REWARD_POOL_SIZE 6
 
 // Runs every frame in Castle Garden Main but only ever does anything once
-// per save (GF_LADDERS_RANDOMIZED) - exactly once, each of the 3 ladders is
-// assigned a kind, and (for chest/NPC kinds) which specific reward or
-// disposition, all via Random(). Doing this lazily on first room entry
-// rather than in GameTask_Transition avoids touching the boot sequence at
-// all - the persistent flags this writes make the choice stick for the
-// rest of this save regardless of when it first ran.
+// per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
+// is assigned a kind, and (for chest/NPC kinds) which specific reward or
+// disposition, all via Random(). Slots 0-1 are the 2 physical Castle Garden
+// ladders, each additionally drawing which of the 20 sQuickStartQuestionRoomPool
+// rooms it leads to; slots 2-3 are Ranch House West/East - fixed rooms
+// reached via their own dedicated sQuickStartLinks entrance rather than a
+// ladder, so they only need a kind/extra roll, no room draw. Doing this
+// lazily on first room entry rather than in GameTask_Transition avoids
+// touching the boot sequence at all - the persistent flags this writes make
+// the choice stick for the rest of this save regardless of when it first
+// ran.
 static void QuickStartRandomizeLaddersOnce(void) {
     s32 i, j;
     u8 usedRoom[2];
     if (CheckGlobalFlag(GF_LADDERS_RANDOMIZED)) {
         return;
     }
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 4; i++) {
         u8 kind = (u8)((s32)Random() % 3);
         u8 roomIdx;
         QuickStartLadderSetKind(i, kind);
@@ -1924,6 +1916,9 @@ static void QuickStartRandomizeLaddersOnce(void) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
         } else if (kind == LADDER_KIND_NPC) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
+        }
+        if (i >= 2) {
+            continue;
         }
         // Distinct room per ladder - two ladders sharing one physical "?
         // room" would make leaving through it ambiguous about which
@@ -2129,9 +2124,19 @@ static void QuickStartClearLadderRoomObstacles(void) {
 // the pool entries above): dropped directly on the spawn tile, a chest
 // reward was observed picking itself up automatically the instant the
 // room loads, with no discovery moment at all.
+//
+// Ladder indices 2-3 (Ranch House West/East) aren't part of the random
+// pool draw - they're fixed rooms, so their content position is just
+// sQuickStartRanchHouseContentPos directly rather than a pool lookup.
 static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
-    s32 rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
-    s32 poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
+    s32 rawIndex, poolIndex;
+    if (ladderIndex >= 2) {
+        *contentX = sQuickStartRanchHouseContentPos[ladderIndex - 2][0];
+        *contentY = sQuickStartRanchHouseContentPos[ladderIndex - 2][1];
+        return;
+    }
+    rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
+    poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
     *contentX = 0x78 + sQuickStartQuestionRoomPool[poolIndex].contentDX;
     *contentY = 0x78 + sQuickStartQuestionRoomPool[poolIndex].contentDY;
 }
@@ -2254,7 +2259,11 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[ladderIndex]);
+                // % 2: ladder indices 2-3 (Ranch House) reuse the same 2
+                // NPC scripts as indices 0-1 rather than needing their own -
+                // the script itself doesn't reference which physical room
+                // it's running in.
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[ladderIndex % 2]);
             }
         }
     }
@@ -2288,14 +2297,16 @@ static bool32 QuickStartAreaContained(u8 area) {
            area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
 }
 
-// Which ladder (0-2) the current room is standing in for, or -1 if it
-// isn't one of the 3 currently-assigned "? room" pool rooms. Unlike the
-// old fixed 3-branch dispatch this replaces, the pool spans several real
-// areas (Minish House Interiors, Tree Interiors, Caves, Great Fairies,
-// Royal Valley Graves) and which physical room maps to which ladder
-// varies per save, so a plain area/room comparison against 3 fixed
-// constants no longer works - this checks against each ladder's current
-// runtime assignment instead.
+// Which ladder slot (0-3) the current room is standing in for, or -1 if it
+// isn't one of them. Unlike the old fixed 3-branch dispatch this replaces,
+// the pool spans several real areas (Minish House Interiors, Tree Interiors,
+// Caves, Great Fairies, Royal Valley Graves) and which physical room maps to
+// which ladder varies per save, so a plain area/room comparison against
+// fixed constants doesn't work for slots 0-1 - this checks against each
+// ladder's current runtime assignment instead. Slots 2-3 (Ranch House
+// West/East) ARE fixed physical rooms though (no pool draw - see
+// QuickStartRandomizeLaddersOnce), so those two are a direct area/room
+// match.
 static s32 QuickStartFindLadderForCurrentRoom(void) {
     s32 i;
     for (i = 0; i < 2; i++) {
@@ -2304,6 +2315,14 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
         if (gRoomControls.area == sQuickStartQuestionRoomPool[poolIndex].area &&
             gRoomControls.room == sQuickStartQuestionRoomPool[poolIndex].room) {
             return i;
+        }
+    }
+    if (gRoomControls.area == AREA_HOUSE_INTERIORS_4) {
+        if (gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
+            return 2;
+        }
+        if (gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST) {
+            return 3;
         }
     }
     return -1;
@@ -2503,10 +2522,10 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearGrimbladeObstacles();
         QuickStartSpawnMelarisMineMerchantOnce();
         QuickStartMaintainMelarisMineShop();
-    } else if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 &&
-               gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
-        QuickStartSpawnRanchHouseEnemiesOnce();
     } else {
+        // Falls through to here for Ranch House West/East too - both are
+        // now ladder slots 2/3 (fixed-room "? room" content), handled by
+        // the same generic dispatch as the random pool rooms.
         s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
         if (ladderIndex >= 0) {
             QuickStartSetupLadderRoomContent(ladderIndex);

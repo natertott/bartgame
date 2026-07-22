@@ -1430,15 +1430,17 @@ const Transition gExitList_HouseInteriors4_Swiftblade[] = {
 #ifdef QUICKSTART
 // Retargeted: the real (0x158,0x28c) landing spot sits right back at the
 // entrance box (game.c's sQuickStartLinks), which would just bounce the
-// player straight back where they came from. Lands at (73,135) instead -
-// the reachable corridor's far-north end (confirmed by a collision-grid
-// BFS from the entrance, then walking all 4 directions from it in the
-// emulator) - so walking through the house is a real shortcut to a
-// different part of the ranch, not a round trip. This exit doesn't
-// actually fire under QUICKSTART in practice (see game.c's own position-
-// box link for why), so this is just insurance in case it ever does.
+// player straight back where they came from. Lands at (0x159,0x2c6) =
+// (345,710) instead - well clear of that box, confirmed open in 3 of 4
+// directions in the emulator. This is now the room's real, functioning
+// south exit (Ranch House West is a "? room" pool entry - see
+// sQuickStartRanchHouseContentPos in game.c): border-type transitions
+// don't depend on the undecompiled per-tile ACT_TILE check the AREA-type
+// entrance doors need, so this fires correctly under QUICKSTART with
+// sustained holding against the wall, same as every other "? room"'s own
+// retargeted exit in this file.
 const Transition gExitList_HouseInteriors4_RanchHouseWest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x49, 0x87, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x159, 0x2c6, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
