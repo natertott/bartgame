@@ -1080,8 +1080,24 @@ static const QuickStartLink sQuickStartLinks[] = {
     // user directly (Lua position script) - close to the real vanilla
     // door's own position (344,632), which this file's own emulator survey
     // had previously found unreachable without shrinking.
+    //
+    // Landing spot moved from (104,88) to (72,120) (the room's own OLD
+    // content position, before the user asked to move that content to
+    // (110,92)): (104,88) turned out to be the exact same 16x16 tile as
+    // the new content spot, so the reward's collision turning on (~13
+    // frames after spawn) immediately contacted the still-standing player
+    // and auto-collected it with no discovery moment at all - the same
+    // "dropped directly on the spawn tile" failure mode already documented
+    // on sQuickStartQuestionRoomPool above, just not caught here since this
+    // room's content position didn't come from that pool. Confirmed via a
+    // frame-by-frame emulator trace: the reward entity was disappearing
+    // ~20 frames after creation even though its own despawn timer
+    // (unk_6c) stayed pinned at 600 the whole time - it wasn't vanishing,
+    // it was being picked up. (72,120) is well clear of (110,92) (open
+    // floor per a live collision-grid dump, confirmed stable over 300
+    // idle frames and walkable).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 329, 361, 643, 659, AREA_HOUSE_INTERIORS_4,
-      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 104, 88 },
+      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 72, 120 },
     // Lon Lon Ranch -> Talon and Malon's house, EAST room. Trigger box
     // centered on (392,635), placed by the user directly (Lua position
     // script) - matches the real vanilla door's own position almost
@@ -1314,13 +1330,10 @@ static void QuickStartSolveLonLonBoulder(void) {
 // a random draw (the player reaches it via its own dedicated
 // sQuickStartLinks entrance, not a ladder), so it gets its own
 // verified-walkable content spot directly here instead of going through
-// sQuickStartQuestionRoomPool/contentDX/contentDY - one of 8 clear floor
-// tiles found by a collision-grid dump plus a per-spot 4-direction
-// movement check between the room's furniture (2 beds, a dresser, a TV, a
-// rug), chosen well clear of the (104,88) entrance so the reward doesn't
-// get auto-picked-up the instant the room loads.
+// sQuickStartQuestionRoomPool/contentDX/contentDY. (110,92) per the user's
+// own request - confirmed stable (no drift) and walkable in the emulator.
 static const s16 sQuickStartFixedRoomContentPos[1][2] = {
-    { 72, 120 },
+    { 110, 92 },
 };
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -1927,8 +1940,12 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, -40 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 0, 16 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, 16 },
+    // Moved from (120,136) to (119,102) (contentDX/DY -1,-18) per the user's
+    // report: the old spot put a LADDER_KIND_MINIBOSS Dark Nut right at the
+    // room's own door, where it got stuck rather than fighting properly.
+    // Confirmed walkable and stable (no drift) in both rooms.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, -1, -18 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, -1, -18 },
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, 0, 0 },
     { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, -20, 0 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, -16, 0 },
@@ -2186,11 +2203,25 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
     }
     kind = QuickStartLadderGetKind(ladderIndex);
     if (kind == LADDER_KIND_CHEST) {
+        // Room flag 3: "confirmed present at least once this visit" -
+        // distinct from flag 0 ("we've spawned it"), same two-flag "did it
+        // vanish for real, or was it wiped before ever really settling"
+        // pattern QuickStartSpawnMelarisMineRewardOnce/
+        // QuickStartSpawnGardenRewardOnce already use, kept here for the
+        // same reason: without it, a chest that disappears before this
+        // function ever confirms it was actually there (e.g. the entity
+        // slot getting reused some other way) reads as a genuine pickup on
+        // the very next frame it's checked.
         if (CheckRoomFlag(0)) {
-            if (!QuickStartGroundItemAt(contentX, contentY)) {
-                SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+            if (QuickStartGroundItemAt(contentX, contentY)) {
+                SetRoomFlag(3);
+                return;
             }
-            return;
+            if (CheckRoomFlag(3)) {
+                SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+                return;
+            }
+            // Never confirmed present - fall through and re-drop it.
         }
         {
             s32 extra = QuickStartLadderGetExtra(ladderIndex);
