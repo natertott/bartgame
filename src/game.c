@@ -109,7 +109,6 @@ static void QuickStartSpawnShopMerchantOnce(s16, s16);
 static void QuickStartClearShopObstacles(void);
 static void QuickStartMaintainShop(const s16 (*)[2]);
 static void QuickStartRandomizeLaddersOnce(void);
-static void QuickStartMaintainGardenLadders(void);
 static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
@@ -992,9 +991,11 @@ static const QuickStartLink sQuickStartLinks[] = {
     // foot; this is the smallest box that both contains it and reaches
     // the actual walkable corner.
     // Landing spot placed by the user directly (Lua position script) at
-    // (120,62) - confirmed open and walkable in all 4 directions.
+    // (119,74), facing down - confirmed open and walkable in all 4
+    // directions (see the IdleSouth start_anim special-case in
+    // QuickStartProcessLinks below for the facing).
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x6c, 0x7e, 0x32, 0x3e, AREA_CASTOR_DARKNUT,
-      ROOM_CASTOR_DARKNUT_HALL, 120, 62 },
+      ROOM_CASTOR_DARKNUT_HALL, 119, 74 },
     // Melari's Mine, Door B -> Castle Garden, arriving at its south end
     // ("the bottom"). Door B is NOT on the top corridor - it's near the
     // real Mt Crenel Cavern of Flames door's own coordinates
@@ -1096,23 +1097,14 @@ static const QuickStartLink sQuickStartLinks[] = {
     // untouched vanilla spot, already confirmed to fire correctly on its
     // own.
     //
-    // Lon Lon Ranch's Goron Cave door (the real vanilla door the
+    // Lon Lon Ranch's Goron Cave door itself (the real vanilla door the
     // wall-punching Goron used to block - see the KINSTONE_29 fuse in
-    // GameTask_Transition above) as the entrance to slot 3's "? room" - real
-    // door position local (136,852) (gExitList_HyruleField_LonLonRanch[4]),
-    // same reasoning as every other WARP_TYPE_AREA door in this file for why
-    // a position box is used instead of retargeting it directly. The actual
-    // walkable approach turned out to be a single-tile-wide vertical
-    // corridor at local x=128-143 (the crack tile
-    // sub_StateChange_HyruleField_LonLonRanch, roomInit.c, only draws while
-    // the kinstone is unfused), topping out around y=868 - traced end to end
-    // in the emulator, walking in from the front-door area all the way up
-    // through the corridor, which is what this box's y836-868 upper bound is
-    // sized to reach. Lands at (120,120), the real door's own vanilla spawn
-    // point in Goron Cave Stairs - the same shared-spawn convention every
-    // other "? room" in this file uses.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 120, 152, 836, 868, AREA_GORON_CAVE,
-      ROOM_GORON_CAVE_STAIRS, 120, 120 },
+    // GameTask_Transition above) is NOT wired up here - it leads to a
+    // random "? room" pool draw now (ladder slot 3), same as Castle
+    // Garden's two ladders, so its destination varies per save and can't be
+    // a static entry in this table. See sQuickStartLadderEntrances below
+    // instead, which (like QuickStartProcessLadderLinks) resolves the
+    // target at the moment the trigger fires.
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1299,26 +1291,22 @@ static void QuickStartSolveLonLonBoulder(void) {
     }
 }
 
-// Two more "? room" slots (ladder indices 2 and 3 - see GF_LADDER_BASE etc.
-// above and QuickStartRoomMonitor below) alongside the 20-room Castle
-// Garden ladder pool: Talon and Malon's house's west room, and (now that
-// the east room is the merchant's second location instead - see
-// QuickStartSpawnShopMerchantOnce) Goron Cave Stairs, behind the real door
-// the wall-punching Goron used to block. Both are fixed rooms rather than a
-// random draw (the player reaches each via its own dedicated
-// sQuickStartLinks entrance, not a ladder), so each gets its own
+// One more "? room" slot (ladder index 2 - see GF_LADDER_BASE etc. above
+// and QuickStartRoomMonitor below) alongside the 20-room Castle Garden
+// ladder pool and the Goron Cave Stairs door's own pool draw (ladder index
+// 3, see sQuickStartLadderEntrances below - that one draws its room from
+// the pool like Castle Garden's ladders do, rather than being a fixed
+// room): Talon and Malon's house's west room. It's a fixed room rather than
+// a random draw (the player reaches it via its own dedicated
+// sQuickStartLinks entrance, not a ladder), so it gets its own
 // verified-walkable content spot directly here instead of going through
-// sQuickStartQuestionRoomPool/contentDX/contentDY. West's spot is one of 8
-// clear floor tiles found by a collision-grid dump plus a per-spot
-// 4-direction movement check between the room's furniture (2 beds, a
-// dresser, a TV, a rug) - chosen well clear of the (104,88) entrance so the
-// reward doesn't get auto-picked-up the instant the room loads. Goron Cave
-// Stairs' spot is 40px north of its own (120,120) entrance - the same
-// convention the Minish House Interiors pool rows use - confirmed open in
-// the emulator's collision dump for this room.
-static const s16 sQuickStartFixedRoomContentPos[2][2] = {
+// sQuickStartQuestionRoomPool/contentDX/contentDY - one of 8 clear floor
+// tiles found by a collision-grid dump plus a per-spot 4-direction
+// movement check between the room's furniture (2 beds, a dresser, a TV, a
+// rug), chosen well clear of the (104,88) entrance so the reward doesn't
+// get auto-picked-up the instant the room loads.
+static const s16 sQuickStartFixedRoomContentPos[1][2] = {
     { 72, 120 },
-    { 120, 80 },
 };
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -1575,7 +1563,10 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 // 0x65-0xFF (155 bits) completely unclaimed in FLAG_BANK_0.
 #define GF_LADDERS_RANDOMIZED 0x65
 #define GF_LADDER_BASE(i) (0x66 + (i) * 18)
-#define GF_LADDER_REVEALED(i) (GF_LADDER_BASE(i) + 0)
+// Bit +0 of each ladder's block is unused now - it used to be
+// GF_LADDER_REVEALED, tracking whether the marker pot had been broken yet
+// (removed along with the whole pot mechanic; the real ladder fixtures and
+// the Goron Cave door are simply always live now, no reveal step needed).
 #define GF_LADDER_KIND_BIT(i, b) (GF_LADDER_BASE(i) + 1 + (b))  // b = 0,1
 #define GF_LADDER_EXTRA_BIT(i, b) (GF_LADDER_BASE(i) + 3 + (b)) // b = 0..7
 #define GF_LADDER_DONE(i) (GF_LADDER_BASE(i) + 11)
@@ -1588,8 +1579,8 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 
 // Difficulty counter for the win/reset loop below - well clear of the
 // ladder bits above (highest in use is GF_LADDER_ROOM_BIT(3,5) = 173, the
-// 4th ladder slot being Ranch House East - see QuickStartRandomizeLaddersOnce
-// below).
+// 4th ladder slot being the Goron Cave Stairs door's own pool draw - see
+// QuickStartRandomizeLaddersOnce below).
 // 4 bits -> 0..15 (only 0..QUICKSTART_MAX_DIFFICULTY are ever produced by
 // QuickStartIncrementDifficulty, but the extra headroom over the previous
 // 2-bit counter costs nothing and leaves room to extend the curve later).
@@ -1960,21 +1951,23 @@ static const u16 sQuickStartLadderRewardPool[] = {
 // Runs every frame in Castle Garden Main but only ever does anything once
 // per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
 // is assigned a kind, and (for chest/NPC kinds) which specific reward or
-// disposition, all via Random(). Slots 0-1 are the 2 physical Castle Garden
-// ladders, each additionally drawing which of the 20 sQuickStartQuestionRoomPool
-// rooms it leads to; slots 2-3 are Ranch House West and Goron Cave Stairs -
-// fixed rooms reached via their own dedicated sQuickStartLinks entrance rather than a
-// ladder, so they only need a kind/extra roll, no room draw. Doing this
-// lazily on first room entry rather than in GameTask_Transition avoids
-// touching the boot sequence at all - the persistent flags this writes make
-// the choice stick for the rest of this save regardless of when it first
-// ran.
+// disposition, all via Random(). Slots 0, 1, and 3 each additionally draw
+// which of the 20 sQuickStartQuestionRoomPool rooms they lead to - slots 0-1
+// are Castle Garden's own two real ladders, slot 3 is the Goron Cave Stairs
+// door in Lon Lon Ranch (see sQuickStartLadderEntrances below), a fixed
+// entrance but a random destination, same as the other two. Slot 2 (Ranch
+// House West) is a fixed room end to end - own entrance, own room - so it
+// only needs a kind/extra roll, no room draw. Doing this lazily on first
+// room entry rather than in GameTask_Transition avoids touching the boot
+// sequence at all - the persistent flags this writes make the choice stick
+// for the rest of this save regardless of when it first ran.
 static void QuickStartRandomizeLaddersOnce(void) {
-    s32 i, j;
-    u8 usedRoom[2];
+    s32 i, j, drawCount;
+    u8 usedRoom[3];
     if (CheckGlobalFlag(GF_LADDERS_RANDOMIZED)) {
         return;
     }
+    drawCount = 0;
     for (i = 0; i < 4; i++) {
         u8 kind = (u8)((s32)Random() % 3);
         u8 roomIdx;
@@ -1984,122 +1977,75 @@ static void QuickStartRandomizeLaddersOnce(void) {
         } else if (kind == LADDER_KIND_NPC) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
         }
-        if (i >= 2) {
+        if (i == 2) {
             continue;
         }
-        // Distinct room per ladder - two ladders sharing one physical "?
-        // room" would make leaving through it ambiguous about which
-        // ladder's content to re-arm. The pool (20) comfortably exceeds
-        // the 2 draws needed, so a plain reject-and-retry loop is enough.
+        // Distinct room per slot - two slots sharing one physical "? room"
+        // would make leaving through it ambiguous about which one's
+        // content to re-arm. The pool (20) comfortably exceeds the 3 draws
+        // needed, so a plain reject-and-retry loop is enough.
         for (;;) {
             roomIdx = (u8)((s32)Random() % QUICKSTART_QUESTION_ROOM_POOL_SIZE);
-            for (j = 0; j < i; j++) {
+            for (j = 0; j < drawCount; j++) {
                 if (usedRoom[j] == roomIdx) {
                     break;
                 }
             }
-            if (j == i) {
+            if (j == drawCount) {
                 break;
             }
         }
-        usedRoom[i] = roomIdx;
+        usedRoom[drawCount] = roomIdx;
+        drawCount++;
         QuickStartLadderSetRoomIndex(i, roomIdx);
     }
     SetGlobalFlag(GF_LADDERS_RANDOMIZED);
 }
 
-// Only two ? rooms now (reduced from the original 3, per the user's own
-// exploration with the room-local position Lua script) - Castle Garden
-// Main only has two real, vanilla HIDDEN_LADDER_DOWN fixtures (object.c:
-// HiddenLadderDown, id 87) anyway (verified by an exhaustive room-wide
-// scan), so this also means both ladders now sit exactly on a real
-// fixture instead of one falling back to arbitrary grass.
-static const s16 sQuickStartLadderPotOffsets[2][2] = {
-    { 105, 100 },
-    { 935, 350 },
+// No pot, no "reveal" step any more - the user didn't want the pot-lift-and-
+// throw mechanic at all, just Link descending the real vanilla ladder
+// fixture as he would in vanilla. Castle Garden Main has exactly two real
+// HIDDEN_LADDER_DOWN fixtures (object.c, id 87), at (104,104) and (936,376)
+// (their own exact x.HALF.HI/y.HALF.HI, read directly off the live entities
+// in the emulator) - but neither fixture's own tile is walkable ground: a
+// collision-grid dump plus sustained-hold movement tests in the emulator
+// found the ladder's whole footprint reads as a raised/blocked tile (value
+// 29, vs 0 for open floor), the same way real doors read "solid" in a
+// coarse dump despite being functionally a door - so a trigger box
+// centered exactly on the fixture is unreachable on foot, same problem the
+// old pot placement was quietly working around by sitting adjacent to it
+// rather than on it. These trigger boxes are centered on the nearest
+// confirmed-walkable tile immediately next to each fixture instead - south
+// of ladder 0 (the only open approach on any side, per the dump) and
+// north of ladder 1 (matching where this file's own pot used to sit,
+// before it existed only as a marker) - not literally on the fixture's own
+// coordinates, but the closest any legitimate footstep can get to it. The
+// Goron Cave Stairs door (Lon Lon Ranch, see the KINSTONE_29 fuse in
+// GameTask_Transition) is a third entrance into this same "? room" system
+// now, ladder index 3, with its own real-door-adjacent trigger box (see the
+// sQuickStartLinks comment above for how that corridor was traced) rather
+// than a HIDDEN_LADDER_DOWN fixture. Unlike the fixed 3-room mapping this
+// replaced, or Ranch House West's own single fixed room, ladder index 3's
+// destination is a pool draw exactly like ladders 0-1 (QuickStartRandomizeLaddersOnce
+// above), so its target has to be resolved at trigger time rather than
+// being a static entry in sQuickStartLinks - hence this table (fromArea/
+// fromRoom/trigger box/ladderIndex) and QuickStartProcessLadderLinks below,
+// rather than folding it into sQuickStartLinks.
+typedef struct {
+    u8 fromArea;
+    u8 fromRoom;
+    s16 triggerMinX;
+    s16 triggerMaxX;
+    s16 triggerMinY;
+    s16 triggerMaxY;
+    s32 ladderIndex;
+} QuickStartLadderEntrance;
+
+static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 88, 120, 128, 148, 0 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 920, 952, 300, 320, 1 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 120, 152, 836, 868, 3 },
 };
-
-// Ladder index is encoded in type2, NOT type - super->type looked like a
-// free field to stash it in (0/1/2, distinguishing the 3 pots), but
-// BreakPot's own drop-on-death handler (sub_0808288C in pot.c) reads that
-// exact same field back as the "form" of a real GROUND_ITEM to spawn on
-// death - form 0 and 0xff both mean "drop nothing", but form 1 or 2 (ladder
-// 1's or 2's "index") is any OTHER real in-game item, which is exactly why
-// one ladder's pot was observed re-dropping what looked like a smith's
-// sword: ladder 1's pot had type=1, and BreakPot took that as "drop item
-// form 1" instead of "this is ladder 1's pot". type must stay fixed at
-// 0xff (drop nothing) for all 3 pots, so the ladder index is tagged via
-// type2 instead, offset by 10 to dodge type2==1 specifically (Pot_Init and
-// BreakPot both give type2==1 a second, unrelated meaning: an
-// already-broken/don't-respawn check through this->flag, a field this
-// code never initializes) - 10/11/12 are read by no other pot.c logic.
-#define QUICKSTART_LADDER_POT_TYPE2(ladderIndex) (10 + (ladderIndex))
-
-// Existence anywhere in the room, NOT exact position - a real vanilla pot
-// can be picked up and carried (playerUtils.c's RegisterCarryEntity path,
-// same as any other liftable object), which relocates the entity without
-// destroying it. An earlier version of this check compared against the
-// pot's exact spawn position (with a small tolerance for Pot_Init's own
-// +3px y-nudge on spawn): the moment the player picked a pot up and walked
-// it even slightly off that spot, the position check would report it
-// "gone", and since the room-flag "watching" state from the prior frame
-// was still set, that read as "it was here, now it's missing - must have
-// been broken" - incorrectly revealing the ladder just from being carried,
-// with no need to ever actually break it. Checking existence instead (is a
-// POT tagged with this ladder's type2 marker present ANYWHERE in the room)
-// only reports "gone" once the entity is genuinely deleted - which only
-// happens via BreakPot (a real sword hit, or a thrown pot shattering on
-// impact), not from merely being relocated in the player's hands.
-static bool32 QuickStartPotExists(s32 ladderIndex) {
-    s32 i;
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == OBJECT && gEntities[i].base.id == POT &&
-            gEntities[i].base.type2 == QUICKSTART_LADDER_POT_TYPE2(ladderIndex) &&
-            QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-// type = 0xff (drop nothing - see QUICKSTART_LADDER_POT_TYPE2 above) for
-// every ladder's pot, regardless of index; type2 = 10 + ladderIndex is what
-// actually distinguishes them for QuickStartPotExists.
-static void QuickStartSpawnLadderPot(s32 ladderIndex) {
-    Entity* pot = CreateObject(POT, 0xff, QUICKSTART_LADDER_POT_TYPE2(ladderIndex));
-    if (pot != NULL) {
-        pot->x.HALF.HI = gRoomControls.origin_x + sQuickStartLadderPotOffsets[ladderIndex][0];
-        pot->y.HALF.HI = gRoomControls.origin_y + sQuickStartLadderPotOffsets[ladderIndex][1];
-        pot->collisionLayer = 1;
-        pot->flags |= ENT_PERSIST;
-        UpdateSpriteForCollisionLayer(pot);
-    }
-}
-
-// Room flags 5, 6, 7 - Castle Garden Main's own gauntlet already claims 0
-// and 1 (QuickStartSpawnGardenEnemiesOnce/QuickStartSpawnGardenRewardOnce).
-// Same "was it here and is it now gone THIS visit" pattern as
-// QuickStartGroundItemAt's callers: a pot wiped by leaving before it's
-// broken re-spawns intact on return, rather than being silently
-// un-discoverable forever.
-static void QuickStartMaintainGardenLadders(void) {
-    s32 i;
-    for (i = 0; i < 2; i++) {
-        s32 watchFlag = 5 + i;
-        if (CheckGlobalFlag(GF_LADDER_REVEALED(i))) {
-            continue;
-        }
-        if (QuickStartPotExists(i)) {
-            SetRoomFlag(watchFlag);
-            continue;
-        }
-        if (CheckRoomFlag(watchFlag)) {
-            SetGlobalFlag(GF_LADDER_REVEALED(i));
-            continue;
-        }
-        QuickStartSpawnLadderPot(i);
-    }
-}
 
 // Which "? room" pool entry backs a given ladder this save, and where the
 // player lands inside it - every pool room was verified walkable at the
@@ -2113,11 +2059,12 @@ static void QuickStartGetLadderTarget(s32 ladderIndex, u8* area, u8* room) {
     *room = sQuickStartQuestionRoomPool[poolIndex].room;
 }
 
-// Separate from QuickStartProcessLinks/sQuickStartLinks (which fire
-// unconditionally whenever the player's local position falls in their box)
-// because these three must additionally be gated on GF_LADDER_REVEALED -
-// otherwise the player could fall into a mini dungeon before ever cutting
-// the grass that's supposed to reveal it.
+// Checked every frame regardless of area (called unconditionally from
+// QuickStartRoomMonitor, alongside QuickStartEnforceContainment) since its
+// three entrances now span two different rooms (Castle Garden Main and
+// Lon Lon Ranch) - unlike the old pot-based version, there's no reveal
+// state to gate on any more, the real ladder fixtures (and the Goron Cave
+// door corridor) are simply always live.
 static void QuickStartProcessLadderLinks(void) {
     s32 i;
     s16 localX, localY;
@@ -2126,15 +2073,13 @@ static void QuickStartProcessLadderLinks(void) {
     }
     localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
     localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    for (i = 0; i < 2; i++) {
-        s16 offsetX = sQuickStartLadderPotOffsets[i][0];
-        s16 offsetY = sQuickStartLadderPotOffsets[i][1];
-        if (!CheckGlobalFlag(GF_LADDER_REVEALED(i))) {
-            continue;
-        }
-        if (localX >= offsetX - 16 && localX <= offsetX + 16 && localY >= offsetY - 16 && localY <= offsetY + 16) {
+    for (i = 0; i < ARRAY_COUNT(sQuickStartLadderEntrances); i++) {
+        const QuickStartLadderEntrance* entrance = &sQuickStartLadderEntrances[i];
+        if (gRoomControls.area == entrance->fromArea && gRoomControls.room == entrance->fromRoom &&
+            localX >= entrance->triggerMinX && localX <= entrance->triggerMaxX && localY >= entrance->triggerMinY &&
+            localY <= entrance->triggerMaxY) {
             u8 targetArea, targetRoom;
-            QuickStartGetLadderTarget(i, &targetArea, &targetRoom);
+            QuickStartGetLadderTarget(entrance->ladderIndex, &targetArea, &targetRoom);
             gRoomTransition.player_status.area_next = targetArea;
             gRoomTransition.player_status.room_next = targetRoom;
             gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
@@ -2192,14 +2137,16 @@ static void QuickStartClearLadderRoomObstacles(void) {
 // reward was observed picking itself up automatically the instant the
 // room loads, with no discovery moment at all.
 //
-// Ladder indices 2-3 (Ranch House West, Goron Cave Stairs) aren't part of
-// the random pool draw - they're fixed rooms, so their content position is
-// just sQuickStartFixedRoomContentPos directly rather than a pool lookup.
+// Ladder index 2 (Ranch House West) isn't part of the random pool draw -
+// it's a fixed room, so its content position is just
+// sQuickStartFixedRoomContentPos directly rather than a pool lookup. Index
+// 3 (Goron Cave Stairs door) IS a pool draw like 0-1, so it falls through
+// to the regular lookup below.
 static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
     s32 rawIndex, poolIndex;
-    if (ladderIndex >= 2) {
-        *contentX = sQuickStartFixedRoomContentPos[ladderIndex - 2][0];
-        *contentY = sQuickStartFixedRoomContentPos[ladderIndex - 2][1];
+    if (ladderIndex == 2) {
+        *contentX = sQuickStartFixedRoomContentPos[0][0];
+        *contentY = sQuickStartFixedRoomContentPos[0][1];
         return;
     }
     rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
@@ -2369,16 +2316,18 @@ static bool32 QuickStartAreaContained(u8 area) {
 // the pool spans several real areas (Minish House Interiors, Tree Interiors,
 // Caves, Great Fairies, Royal Valley Graves) and which physical room maps to
 // which ladder varies per save, so a plain area/room comparison against
-// fixed constants doesn't work for slots 0-1 - this checks against each
-// ladder's current runtime assignment instead. Slots 2-3 (Ranch House West,
-// Goron Cave Stairs) ARE fixed physical rooms though (no pool draw - see
-// QuickStartRandomizeLaddersOnce), so those two are a direct area/room
-// match.
+// fixed constants doesn't work for slots 0, 1, or 3 (all three draw their
+// room from the pool - see QuickStartRandomizeLaddersOnce) - this checks
+// against each one's current runtime assignment instead. Slot 2 (Ranch
+// House West) IS a fixed physical room though (no pool draw), so that one's
+// a direct area/room match.
 static s32 QuickStartFindLadderForCurrentRoom(void) {
-    s32 i;
-    for (i = 0; i < 2; i++) {
-        s32 rawIndex = QuickStartLadderGetRoomIndex(i);
-        s32 poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
+    static const u8 sPoolDrawLadderIndices[3] = { 0, 1, 3 };
+    s32 k, i, rawIndex, poolIndex;
+    for (k = 0; k < 3; k++) {
+        i = sPoolDrawLadderIndices[k];
+        rawIndex = QuickStartLadderGetRoomIndex(i);
+        poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
         if (gRoomControls.area == sQuickStartQuestionRoomPool[poolIndex].area &&
             gRoomControls.room == sQuickStartQuestionRoomPool[poolIndex].room) {
             return i;
@@ -2387,30 +2336,40 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
     if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 && gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
         return 2;
     }
-    if (gRoomControls.area == AREA_GORON_CAVE && gRoomControls.room == ROOM_GORON_CAVE_STAIRS) {
-        return 3;
-    }
     return -1;
 }
 
-// Where each ladder's own real exit already lands - as close as possible
-// to that ladder's own pot, clear of its +/-16 trigger box. Every "? room"
-// pool entry's retargeted exit (src/data/transitions.c) points at the same
-// literal spot regardless of which ladder it's serving this save, since
-// which physical room backs which ladder varies per save and a
-// compile-time table can't encode that - QuickStartFixupQuestionRoomReturn
-// below corrects the landing position to the right one of these before the
-// transition completes. Ladder 1's spot is as close to landing "on the
-// pot" (935,350) as this room's own hedges allow - a live collision dump
-// plus walking there directly found the pot itself sits inside blocked
-// hedge collision (the previous (800,370) estimate turned out to still be
+// Where each ladder's own real exit already lands - clear of every
+// ladder/entrance trigger box in this room, so returning doesn't instantly
+// re-trigger whichever one it lands near. Every "? room" pool entry's
+// retargeted exit (src/data/transitions.c) points at the same literal spot
+// regardless of which ladder it's serving this save, since which physical
+// room backs which ladder varies per save and a compile-time table can't
+// encode that - QuickStartFixupQuestionRoomReturn below corrects the
+// landing position to the right one of these before the transition
+// completes. Ladder 1's spot is as close to landing "on the ladder
+// fixture" (936,376) as this room's own hedges allow - a live collision
+// dump plus walking there directly found that spot inside blocked hedge
+// collision (the previous (800,370) estimate turned out to still be
 // inside a different hedge, matching the user's own bug report of
-// spawning "inside a shrubbery"); (935,311), 39px north at the same x, is
+// spawning "inside a shrubbery"); (935,311), well north at the same x, is
 // the closest confirmed-walkable point, open in every direction except
-// the hedge immediately east.
-static const s16 sQuickStartLadderReturnSpots[2][2] = {
+// the hedge immediately east. Ladder 3 (Goron Cave Stairs door, entered
+// from Lon Lon Ranch rather than a Castle Garden ladder - see
+// sQuickStartLadderEntrances) doesn't have a trigger box of its own to
+// avoid inside Castle Garden, so any spot clear of ladders 0 and 1's boxes
+// works - (776,72) is one of the room's own pre-verified walkable spots
+// from this session's earlier collision survey, comfortably clear of both.
+// Indexed directly by ladderIndex (0-3), not by draw order, so index 2
+// (Ranch House West) is an unused placeholder - its own real exit never
+// targets Castle Garden Main, so QuickStartFixupQuestionRoomReturn's own
+// area_next check below always skips it before this array is ever read
+// with that index.
+static const s16 sQuickStartLadderReturnSpots[4][2] = {
     { 105, 144 },
     { 935, 311 },
+    { 0, 0 },
+    { 776, 72 },
 };
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
@@ -2503,9 +2462,11 @@ static void QuickStartEnforceContainment(void) {
 // fire under QUICKSTART at all (same ACT_TILE gap the Castle Garden/Lon
 // Lon Ranch link itself works around), so this check is mostly a no-op
 // safety net for those, not their only defense - our own sQuickStartLinks
-// position box into Goron Cave Stairs (see above) is explicitly allowed
-// through below, same as the two ranch house interiors already were.
+// position box into the two ranch house rooms, and QuickStartProcessLadderLinks'
+// own transition into whichever pool room ladder 3 (the Goron Cave Stairs
+// door) currently resolves to, are both explicitly allowed through below.
 static void QuickStartEnforceLonLonContainment(void) {
+    u8 ladder3TargetArea, ladder3TargetRoom;
     if (!gRoomTransition.transitioningOut) {
         return;
     }
@@ -2525,8 +2486,9 @@ static void QuickStartEnforceLonLonContainment(void) {
          gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
-    if (gRoomTransition.player_status.area_next == AREA_GORON_CAVE &&
-        gRoomTransition.player_status.room_next == ROOM_GORON_CAVE_STAIRS) {
+    QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
+    if (gRoomTransition.player_status.area_next == ladder3TargetArea &&
+        gRoomTransition.player_status.room_next == ladder3TargetRoom) {
         return;
     }
     gRoomTransition.transitioningOut = 0;
@@ -2550,6 +2512,15 @@ static void QuickStartProcessLinks(void) {
             gRoomTransition.player_status.start_pos_x = link->spawnX;
             gRoomTransition.player_status.start_pos_y = link->spawnY;
             gRoomTransition.player_status.layer = 1;
+            // start_anim doubles as the spawn facing (gameUtils.c copies it
+            // straight into the player's animationState/direction on
+            // arrival) - only Melari's Mine -> Castor Darknut Hall needs an
+            // explicit one (the user wants Link facing down on arrival
+            // there); every other link leaves it alone, matching this
+            // function's prior behavior.
+            if (link->toArea == AREA_CASTOR_DARKNUT && link->toRoom == ROOM_CASTOR_DARKNUT_HALL) {
+                gRoomTransition.player_status.start_anim = IdleSouth;
+            }
             gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
             gRoomTransition.transitioningOut = 1;
             return;
@@ -2564,6 +2535,10 @@ static void QuickStartRoomMonitor(void) {
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartFixupQuestionRoomReturn();
+    // Unconditional (not folded into a specific room's branch below) since
+    // its 3 entrances now span two different rooms - see
+    // sQuickStartLadderEntrances and QuickStartProcessLadderLinks above.
+    QuickStartProcessLadderLinks();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
     } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
@@ -2582,8 +2557,6 @@ static void QuickStartRoomMonitor(void) {
         // of needing an exact "on pickup" hook.
         UpdatePlayerSkills();
         QuickStartRandomizeLaddersOnce();
-        QuickStartMaintainGardenLadders();
-        QuickStartProcessLadderLinks();
     } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         QuickStartClearLonLonRanchGoron();
         QuickStartSolveLonLonBoulder();
@@ -2599,15 +2572,17 @@ static void QuickStartRoomMonitor(void) {
         // The east house room is the merchant's second location now (same
         // catalog, same script - see QuickStartSpawnShopMerchantOnce above)
         // rather than a "? room" - it no longer goes through
-        // QuickStartFindLadderForCurrentRoom at all (see slot 3's new fixed
-        // room, Goron Cave Stairs, below).
+        // QuickStartFindLadderForCurrentRoom at all. Slot 3 (which used to
+        // be this room) is now the Goron Cave Stairs door's own pool draw
+        // instead - see sQuickStartLadderEntrances.
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(176, 56);
         QuickStartMaintainShop(sQuickStartRanchHouseEastShopOffsets);
     } else {
-        // Falls through to here for Ranch House West and Goron Cave Stairs
-        // too - both are ladder slots 2/3 (fixed-room "? room" content),
-        // handled by the same generic dispatch as the random pool rooms.
+        // Falls through to here for Ranch House West (slot 2, a fixed
+        // room) and for whichever pool room the Goron Cave Stairs door
+        // (slot 3) currently resolves to - same generic dispatch as
+        // Castle Garden's own two ladders (slots 0-1).
         s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
         if (ladderIndex >= 0) {
             QuickStartSetupLadderRoomContent(ladderIndex);
