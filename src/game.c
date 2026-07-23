@@ -966,16 +966,18 @@ static const QuickStartLink sQuickStartLinks[] = {
     // Castor Darknut Hall -> Melari's Mine, arriving at the corridor's west
     // end (Door A). Trigger box is Hall's own (only) real door,
     // gExitList_CastorDarknut_Hall[0] (startX=0x188, startY=0x18,
-    // AREA_12x12 -> box +6/+6), which in vanilla leads to Castor Caves -
-    // confirmed reachable by walking straight up from around local x=390.
-    // Landing spot reverted back to this file's own original (0xa0,0x56) -
-    // the user's own (120,162) (from the Lua position script) turned out to
-    // be solid rock: a live collision dump in the emulator found every
-    // tile in a 6x6 radius around it blocked, matching their screenshot of
-    // Link spawned inside the cave wall with nowhere to walk. (0xa0,0x56)
-    // is confirmed open and walkable in all 4 directions.
+    // AREA_12x12 -> box +6/+6), which is now retargeted (under #ifdef
+    // QUICKSTART, transitions.c) to the exact same destination as this
+    // link - that real door's own position is this trigger box, and it was
+    // found winning the race against this link in practice (landing the
+    // player in the old vanilla destination, Castor Caves, instead), so
+    // both now agree regardless of which one actually fires. Landing spot
+    // (120,65) per the user's own request - close to, but just outside,
+    // the OTHER direction's own trigger box below (108-126,50-62 in
+    // Melari's Mine) so arriving here doesn't immediately bounce back
+    // through it.
     { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 0xa0, 0x56 },
+      ROOM_MELARIS_MINE_MAIN, 120, 65 },
     // Melari's Mine, Door A (west end of the corridor) -> back to Castor
     // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
     // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
@@ -989,7 +991,10 @@ static const QuickStartLink sQuickStartLinks[] = {
     // toward it made no further progress) rather than a slow creep like
     // Hall's own door had. The real box alone is therefore unreachable on
     // foot; this is the smallest box that both contains it and reaches
-    // the actual walkable corner.
+    // the actual walkable corner. This same real door was found winning
+    // the race against this link too (landing in Crenel Minish Paths
+    // instead of Hall), so it's now retargeted the same way as Hall's own
+    // door above - transitions.c, gExitList_MelarisMine_Main[0].
     // Landing spot placed by the user directly (Lua position script) at
     // (119,74), facing down - confirmed open and walkable in all 4
     // directions (see the IdleSouth start_anim special-case in
@@ -1037,10 +1042,14 @@ static const QuickStartLink sQuickStartLinks[] = {
     // that room used (the door's own real coordinates,
     // gExitList_MelarisMine_Main[2], AREA_12x12 -> box +6/+6) - the physical
     // spot in Melari's Mine the player already knows to go to for the shop
-    // doesn't change, only where it leads. Lands at local (120,104), the
-    // merchant's own spot at the top of Grimblade's open floor.
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 120,
-      104 },
+    // doesn't change, only where it leads. Lands at (119,170), facing up,
+    // per the user's own request (see the IdleNorth start_anim
+    // special-case in QuickStartProcessLinks below for the facing) - this
+    // real door is also retargeted the same way (transitions.c,
+    // gExitList_MelarisMine_Main[2]), since it was found winning the race
+    // against this link in practice.
+    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 119,
+      170 },
     // Grimblade -> back to Melari's Mine. Trigger box centered on (119,185),
     // placed by the user directly (Lua position script). Lands at
     // (168,525), the exact spot this room's real (retargeted) border exit
@@ -2005,32 +2014,31 @@ static void QuickStartRandomizeLaddersOnce(void) {
 // No pot, no "reveal" step any more - the user didn't want the pot-lift-and-
 // throw mechanic at all, just Link descending the real vanilla ladder
 // fixture as he would in vanilla. Castle Garden Main has exactly two real
-// HIDDEN_LADDER_DOWN fixtures (object.c, id 87), at (104,104) and (936,376)
-// (their own exact x.HALF.HI/y.HALF.HI, read directly off the live entities
-// in the emulator) - but neither fixture's own tile is walkable ground: a
-// collision-grid dump plus sustained-hold movement tests in the emulator
-// found the ladder's whole footprint reads as a raised/blocked tile (value
-// 29, vs 0 for open floor), the same way real doors read "solid" in a
-// coarse dump despite being functionally a door - so a trigger box
-// centered exactly on the fixture is unreachable on foot, same problem the
-// old pot placement was quietly working around by sitting adjacent to it
-// rather than on it. These trigger boxes are centered on the nearest
-// confirmed-walkable tile immediately next to each fixture instead - south
-// of ladder 0 (the only open approach on any side, per the dump) and
-// north of ladder 1 (matching where this file's own pot used to sit,
-// before it existed only as a marker) - not literally on the fixture's own
-// coordinates, but the closest any legitimate footstep can get to it. The
-// Goron Cave Stairs door (Lon Lon Ranch, see the KINSTONE_29 fuse in
-// GameTask_Transition) is a third entrance into this same "? room" system
-// now, ladder index 3, with its own real-door-adjacent trigger box (see the
-// sQuickStartLinks comment above for how that corridor was traced) rather
-// than a HIDDEN_LADDER_DOWN fixture. Unlike the fixed 3-room mapping this
-// replaced, or Ranch House West's own single fixed room, ladder index 3's
-// destination is a pool draw exactly like ladders 0-1 (QuickStartRandomizeLaddersOnce
-// above), so its target has to be resolved at trigger time rather than
-// being a static entry in sQuickStartLinks - hence this table (fromArea/
-// fromRoom/trigger box/ladderIndex) and QuickStartProcessLadderLinks below,
-// rather than folding it into sQuickStartLinks.
+// HIDDEN_LADDER_DOWN fixtures (object.c, id 87). Their own registered
+// entity position ((104,104) and (936,376), read directly off the live
+// entities in the emulator) isn't quite where the player actually ends up
+// standing after descending one, though - the user walked up to each real
+// ladder in-game and read back Link's own position with the Lua script
+// afterward, landing on (104,110) and (936,382) instead (a few px off from
+// the fixture's own registration point, presumably HiddenLadderDown's own
+// undecompiled logic settling the player at a slightly different anchor).
+// These trigger boxes are centered on those user-verified positions rather
+// than the raw entity coordinates. The Goron Cave Stairs door (Lon Lon
+// Ranch, see the KINSTONE_29 fuse in GameTask_Transition) is a third
+// entrance into this same "? room" system now, ladder index 3, with its
+// own real-door-adjacent trigger box (see the sQuickStartLinks comment
+// above for how that corridor was traced) rather than a HIDDEN_LADDER_DOWN
+// fixture. Unlike the fixed 3-room mapping this replaced, or Ranch House
+// West's own single fixed room, ladder index 3's destination is a pool
+// draw exactly like ladders 0-1 (QuickStartRandomizeLaddersOnce above), so
+// its target has to be resolved at trigger time rather than being a static
+// entry in sQuickStartLinks - hence this table (fromArea/fromRoom/trigger
+// box/ladder index) and QuickStartProcessLadderLinks below, rather than
+// folding it into sQuickStartLinks. Unlike ladders 0-1, though, it's
+// entered from a different room than it returns to - see
+// QuickStartFixupQuestionRoomReturn's own ladderIndex == 3 special case
+// below for why leaving the pool room lands back in Lon Lon Ranch instead
+// of Castle Garden Main.
 typedef struct {
     u8 fromArea;
     u8 fromRoom;
@@ -2042,8 +2050,8 @@ typedef struct {
 } QuickStartLadderEntrance;
 
 static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
-    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 88, 120, 128, 148, 0 },
-    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 920, 952, 300, 320, 1 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 88, 120, 94, 126, 0 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 920, 952, 366, 398, 1 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 120, 152, 836, 868, 3 },
 };
 
@@ -2354,22 +2362,18 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
 // inside a different hedge, matching the user's own bug report of
 // spawning "inside a shrubbery"); (935,311), well north at the same x, is
 // the closest confirmed-walkable point, open in every direction except
-// the hedge immediately east. Ladder 3 (Goron Cave Stairs door, entered
-// from Lon Lon Ranch rather than a Castle Garden ladder - see
-// sQuickStartLadderEntrances) doesn't have a trigger box of its own to
-// avoid inside Castle Garden, so any spot clear of ladders 0 and 1's boxes
-// works - (776,72) is one of the room's own pre-verified walkable spots
-// from this session's earlier collision survey, comfortably clear of both.
-// Indexed directly by ladderIndex (0-3), not by draw order, so index 2
-// (Ranch House West) is an unused placeholder - its own real exit never
-// targets Castle Garden Main, so QuickStartFixupQuestionRoomReturn's own
-// area_next check below always skips it before this array is ever read
-// with that index.
+// the hedge immediately east. Indexed directly by ladderIndex (0-3), not by
+// draw order, so indices 2 and 3 are unused placeholders here: index 2
+// (Ranch House West)'s own real exit never targets Castle Garden Main, and
+// index 3 (Goron Cave Stairs door)'s pool room is redirected back to Lon
+// Lon Ranch entirely (not just repositioned within Castle Garden) by
+// QuickStartFixupQuestionRoomReturn's own ladderIndex == 3 special case
+// below - both are skipped before this array is ever read with that index.
 static const s16 sQuickStartLadderReturnSpots[4][2] = {
     { 105, 144 },
     { 935, 311 },
     { 0, 0 },
-    { 776, 72 },
+    { 0, 0 },
 };
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
@@ -2391,6 +2395,21 @@ static void QuickStartFixupQuestionRoomReturn(void) {
     }
     ladderIndex = QuickStartFindLadderForCurrentRoom();
     if (ladderIndex < 0) {
+        return;
+    }
+    if (ladderIndex == 3) {
+        // Goron Cave Stairs door - entered from Lon Lon Ranch, not Castle
+        // Garden (unlike ladders 0-1, which both enter and leave through
+        // Castle Garden), so it should return there too, rather than to
+        // the literal Castle Garden spot every pool room's own retargeted
+        // exit shares. Overrides the whole destination, not just position:
+        // (344,870) is the same proven-safe landing spot the Castle
+        // Garden -> Lon Lon Ranch link itself uses, clear of the Goron
+        // Cave door's own trigger box (120-152,836-868).
+        gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
+        gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_LON_LON_RANCH;
+        gRoomTransition.player_status.start_pos_x = 344;
+        gRoomTransition.player_status.start_pos_y = 870;
         return;
     }
     gRoomTransition.player_status.start_pos_x = sQuickStartLadderReturnSpots[ladderIndex][0];
@@ -2514,12 +2533,13 @@ static void QuickStartProcessLinks(void) {
             gRoomTransition.player_status.layer = 1;
             // start_anim doubles as the spawn facing (gameUtils.c copies it
             // straight into the player's animationState/direction on
-            // arrival) - only Melari's Mine -> Castor Darknut Hall needs an
-            // explicit one (the user wants Link facing down on arrival
-            // there); every other link leaves it alone, matching this
-            // function's prior behavior.
+            // arrival) - only these two destinations need an explicit one
+            // (per the user's own requests); every other link leaves it
+            // alone, matching this function's prior behavior.
             if (link->toArea == AREA_CASTOR_DARKNUT && link->toRoom == ROOM_CASTOR_DARKNUT_HALL) {
                 gRoomTransition.player_status.start_anim = IdleSouth;
+            } else if (link->toArea == AREA_DOJOS && link->toRoom == ROOM_DOJOS_GRIMBLADE) {
+                gRoomTransition.player_status.start_anim = IdleNorth;
             }
             gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
             gRoomTransition.transitioningOut = 1;

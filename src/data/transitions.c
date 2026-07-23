@@ -757,8 +757,22 @@ const Transition* const gExitLists_MinishVillage[] = {
 };
 
 const Transition gExitList_MelarisMine_Main[] = {
+#ifdef QUICKSTART
+    // Retargeted to Castor Darknut Hall (game.c's own custom link's
+    // destination for this same box) instead of the old Crenel Minish
+    // Paths - this real door's own position is the exact spot that custom
+    // link covers, and it was found winning the race against it in
+    // practice (same class of bug the Grimblade retarget below already
+    // works around), sending the player to Crenel Minish Paths instead of
+    // Hall. Same destination and spawn either way now, so the race no
+    // longer matters. facing_direction 0x4 (south) matches the user's
+    // request that Link land facing down here.
+    { WARP_TYPE_AREA, 0x78, 0x38, 0x77, 0x4a, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0x78, 0x38, 0x78, 0xa8, TRANSITION_SHAPE_AREA_12x12, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x70, 0x12c, 0xbc, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x6, 0x0, 0x0, 0x0 },
 #ifdef QUICKSTART
@@ -769,9 +783,10 @@ const Transition gExitList_MelarisMine_Main[] = {
     // if it ever wins the race against that link (confirmed happening in
     // practice, unlike most other WARP_TYPE_AREA doors this file relies on
     // being unreachable), it now lands somewhere with a merchant either
-    // way instead of the old room, which no longer has one.
-    { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    // way instead of the old room, which no longer has one. Spawn
+    // (119,170) facing up (0x0), per the user's own request.
+    { WARP_TYPE_AREA, 0xa8, 0x220, 0x77, 0xaa, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2212,8 +2227,21 @@ const Transition gExitList_CastorDarknut_Main[] = {
     TransitionListEnd,
 };
 const Transition gExitList_CastorDarknut_Hall[] = {
+#ifdef QUICKSTART
+    // Retargeted to Melari's Mine (game.c's own custom link's destination
+    // for this same box) instead of the old Castor Caves - same race
+    // concern as the Melari's Mine side of this pair (see
+    // gExitList_MelarisMine_Main above): this real door's position is the
+    // exact spot that custom link covers. Spawn (120,65) per the user's own
+    // request - close to (but just outside) that link's own trigger box on
+    // the Melari's Mine side, so arriving here doesn't immediately bounce
+    // back through it.
+    { WARP_TYPE_AREA, 0x188, 0x18, 0x78, 0x41, TRANSITION_SHAPE_AREA_12x12, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0x188, 0x18, 0x68, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition* const gExitLists_CastorDarknut[] = {
