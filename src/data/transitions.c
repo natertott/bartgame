@@ -2232,11 +2232,11 @@ const Transition gExitList_CastorDarknut_Hall[] = {
     // for this same box) instead of the old Castor Caves - same race
     // concern as the Melari's Mine side of this pair (see
     // gExitList_MelarisMine_Main above): this real door's position is the
-    // exact spot that custom link covers. Spawn (120,65) per the user's own
-    // request - close to (but just outside) that link's own trigger box on
-    // the Melari's Mine side, so arriving here doesn't immediately bounce
-    // back through it.
-    { WARP_TYPE_AREA, 0x188, 0x18, 0x78, 0x41, TRANSITION_SHAPE_AREA_12x12, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1,
+    // exact spot that custom link covers. Spawn (120,120) - see that link's
+    // own comment (game.c, sQuickStartLinks) for why this is further from
+    // the door than it first looks: a passive drift near the door pulls the
+    // player back into the return trigger box from anywhere closer.
+    { WARP_TYPE_AREA, 0x188, 0x18, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_AREA, 0x188, 0x18, 0x68, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 1,

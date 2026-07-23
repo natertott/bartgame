@@ -972,12 +972,17 @@ static const QuickStartLink sQuickStartLinks[] = {
     // found winning the race against this link in practice (landing the
     // player in the old vanilla destination, Castor Caves, instead), so
     // both now agree regardless of which one actually fires. Landing spot
-    // (120,65) per the user's own request - close to, but just outside,
-    // the OTHER direction's own trigger box below (108-126,50-62 in
-    // Melari's Mine) so arriving here doesn't immediately bounce back
-    // through it.
+    // (120,120), well clear of the OTHER direction's own trigger box below
+    // (108-126,50-62 in Melari's Mine) - (120,65), tried first, turned out
+    // to still be caught by a slow passive drift toward that box (confirmed
+    // in the emulator: spawning as close as (120,82) stays put for ~100
+    // frames, then drifts north several px per frame with zero input,
+    // eventually crossing into the box and bouncing straight back to Hall -
+    // an infinite loop the user reported). (120,120) sits well outside the
+    // whole drift-affected range (confirmed stable over 300+ idle frames,
+    // walkable in all 4 directions).
     { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 120, 65 },
+      ROOM_MELARIS_MINE_MAIN, 120, 120 },
     // Melari's Mine, Door A (west end of the corridor) -> back to Castor
     // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
     // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
