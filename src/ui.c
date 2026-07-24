@@ -24,6 +24,22 @@ extern u32 sub_08000E44(u32);
 #define QUICKSTART_ITEM_D_X 0xb8
 #define QUICKSTART_ITEM_D_Y 0x2e
 
+// gUIElementDefinitions packs every existing element type into one
+// contiguous OBJ VRAM tile range with zero slack (BUTTON_A/B/R at 0x100 for
+// 14 tiles, TEXT_R at 0x10e for 12, ITEM_A at 0x11a for 8, HEART at 0x122
+// for 4, ITEM_B at 0x126 for 8, EZLONAGSTART/ACTIVE at 0x12e for 8 - dumped
+// straight from ROM to confirm) - reusing ITEM_A/ITEM_B's own unk_1a
+// (0x11a/0x126) for the new instances below made them fight over the exact
+// same destination tiles as the real A/B icons: whichever one's graphic got
+// DMA'd there most recently is what BOTH the real and extra icon show,
+// which is exactly the "extra slots just duplicate A/B" bug this was fixing.
+// 0x136 is the first tile past that whole packed range (right after
+// EZLONAGSTART/ACTIVE's 8), so claiming 16 tiles there for these two new
+// icons (8 each, matching ITEM_A/B's own size) doesn't collide with any of
+// the above.
+#define QUICKSTART_ITEM_C_VRAM_TILE 0x136
+#define QUICKSTART_ITEM_D_VRAM_TILE 0x13e
+
 extern const u16 gUnk_080C8F2C[];
 extern u32 gUnk_085C4620[];
 extern Frame* gSpriteAnimations_322[];
@@ -55,7 +71,7 @@ void DrawHearts(void);
 void DrawChargeBar(void);
 void DrawRupees(void);
 void DrawKeys(void);
-void CreateUIElement(u32, u32);
+UIElement* CreateUIElement(u32, u32);
 void RenderDigits(u32, u32, u32, u32);
 void sub_0801CAFC(UIElement*, u32);
 void sub_0801CB20(UIElement*, UIElementDefinition*);
@@ -201,8 +217,19 @@ void InitUI(bool32 keepHealthAndRupees) {
     // types (type2=1 selects equippedExtra[] instead of equipped[], see
     // sub_0801CC80/ItemUIElement), just a second instance of each so both
     // the original and extra slot for that button can be drawn at once.
-    CreateUIElement(UI_ELEMENT_ITEM_A, 1);
-    CreateUIElement(UI_ELEMENT_ITEM_B, 1);
+    // unk_1a must be overridden to its own VRAM tile range right after
+    // creation - CreateUIElement() otherwise copies gUIElementDefinitions[
+    // type].unk_4, the SAME destination the real A/B icon already uses.
+    {
+        UIElement* extraItemC = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+        UIElement* extraItemD = CreateUIElement(UI_ELEMENT_ITEM_B, 1);
+        if (extraItemC != NULL) {
+            extraItemC->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
+        }
+        if (extraItemD != NULL) {
+            extraItemD->unk_1a = QUICKSTART_ITEM_D_VRAM_TILE;
+        }
+    }
     CreateUIElement(UI_ELEMENT_BUTTON_R, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_B, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_A, 0);
@@ -574,7 +601,7 @@ void DrawKeys(void) {
     }
 }
 
-void CreateUIElement(u32 type, u32 type2) {
+UIElement* CreateUIElement(u32 type, u32 type2) {
     u32 index;
     UIElement* element;
 
@@ -592,9 +619,10 @@ void CreateUIElement(u32 type, u32 type2) {
             // Permuter trickery. TODO find something more senseful?
             index = type;
             element->buttonElementId = gUIElementDefinitions[index].buttonElementId;
-            return;
+            return element;
         }
     }
+    return NULL;
 }
 
 void sub_0801CAB8(UIElement* element, Frame* frame) {
@@ -782,11 +810,19 @@ void ItemUIElement(UIElement* element) {
         // BUTTON_* element to slide in from (that would need a new
         // UIElementType, and gUIElementDefinitions is fixed ROM asset data -
         // see sub_0801CC80), so just draw at a fixed spot below the A/B
-        // icons instead of animating into view.
-        element->x = (uiElementType == 0) ? QUICKSTART_ITEM_C_X : QUICKSTART_ITEM_D_X;
-        element->y = (uiElementType == 0) ? QUICKSTART_ITEM_C_Y : QUICKSTART_ITEM_D_Y;
-        element->unk_0_1 = 1;
-        sub_0801CAD0(element);
+        // icons instead of animating into view. Still needs the same
+        // hide-during-message/cutscene check the companion BUTTON_A/BUTTON_B
+        // element would otherwise provide (see ButtonUIElement_Action1) -
+        // without it, this drew on top of dialogue boxes and cutscenes
+        // instead of disappearing with the rest of the HUD.
+        if (((gHUD.hideFlags >> uiElementType) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0) {
+            element->unk_0_1 = 0;
+        } else {
+            element->x = (uiElementType == 0) ? QUICKSTART_ITEM_C_X : QUICKSTART_ITEM_D_X;
+            element->y = (uiElementType == 0) ? QUICKSTART_ITEM_C_Y : QUICKSTART_ITEM_D_Y;
+            element->unk_0_1 = 1;
+            sub_0801CAD0(element);
+        }
     } else {
         element2 = FindUIElement(uiElementType);
         if (element2 != 0) {
