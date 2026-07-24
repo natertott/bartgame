@@ -16,6 +16,14 @@
 extern void sub_0805ECEC(u32, u32, u32, u32);
 extern u32 sub_08000E44(u32);
 
+// QUICKSTART L/Select extra item slots - drawn directly below the A/B icons
+// (which sit at buttonX/Y[0]=(0xd0,0x1c) and [1]=(0xb8,0x1c) once slid into
+// view). See sub_0801CC80/ItemUIElement.
+#define QUICKSTART_ITEM_C_X 0xd0
+#define QUICKSTART_ITEM_C_Y 0x2e
+#define QUICKSTART_ITEM_D_X 0xb8
+#define QUICKSTART_ITEM_D_Y 0x2e
+
 extern const u16 gUnk_080C8F2C[];
 extern u32 gUnk_085C4620[];
 extern Frame* gSpriteAnimations_322[];
@@ -189,6 +197,12 @@ void InitUI(bool32 keepHealthAndRupees) {
     CreateUIElement(UI_ELEMENT_TEXT_R, 9);
     CreateUIElement(UI_ELEMENT_ITEM_A, 0);
     CreateUIElement(UI_ELEMENT_ITEM_B, 0);
+    // QUICKSTART L/Select extra item slots - same ITEM_A/ITEM_B element
+    // types (type2=1 selects equippedExtra[] instead of equipped[], see
+    // sub_0801CC80/ItemUIElement), just a second instance of each so both
+    // the original and extra slot for that button can be drawn at once.
+    CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+    CreateUIElement(UI_ELEMENT_ITEM_B, 1);
     CreateUIElement(UI_ELEMENT_BUTTON_R, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_B, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_A, 0);
@@ -685,7 +699,19 @@ void ButtonUIElement_Action1(UIElement* element) {
 u32 sub_0801CC80(UIElement* element) {
     u8 type = element->type;
     u32 buttonId = (type ^ 3) != 0;
-    u32 itemId = gSave.stats.equipped[buttonId];
+    u32 itemId;
+    // type2 is otherwise unused for ITEM_A/ITEM_B elements (only the BUTTON_*
+    // types read it, for their slide-in animation) - repurposed here so a
+    // second ITEM_A/ITEM_B instance can show the QUICKSTART L/Select extra
+    // slots (equippedExtra[]) instead of the original A/B pair, without
+    // needing new UIElementType values. New types aren't an option: this
+    // table (gUIElementDefinitions) is raw incbin'd ROM asset data, not a C
+    // array that can just grow two more entries.
+    if (element->type2 != 0) {
+        itemId = gSave.stats.equippedExtra[buttonId];
+    } else {
+        itemId = gSave.stats.equipped[buttonId];
+    }
     if (ItemIsBottle(itemId)) {
         itemId = gSave.stats.bottles[itemId - ITEM_BOTTLE1];
     }
@@ -751,12 +777,24 @@ void ItemUIElement(UIElement* element) {
         uVar5 = 4;
     }
     element->unk_18 = uVar5;
-    element2 = FindUIElement(uiElementType);
-    if (element2 != 0) {
-        element->x = element2->x;
-        element->y = element2->y;
+    if (element->type2 != 0) {
+        // QUICKSTART L/Select extra-slot icon: there's no companion
+        // BUTTON_* element to slide in from (that would need a new
+        // UIElementType, and gUIElementDefinitions is fixed ROM asset data -
+        // see sub_0801CC80), so just draw at a fixed spot below the A/B
+        // icons instead of animating into view.
+        element->x = (uiElementType == 0) ? QUICKSTART_ITEM_C_X : QUICKSTART_ITEM_D_X;
+        element->y = (uiElementType == 0) ? QUICKSTART_ITEM_C_Y : QUICKSTART_ITEM_D_Y;
         element->unk_0_1 = 1;
         sub_0801CAD0(element);
+    } else {
+        element2 = FindUIElement(uiElementType);
+        if (element2 != 0) {
+            element->x = element2->x;
+            element->y = element2->y;
+            element->unk_0_1 = 1;
+            sub_0801CAD0(element);
+        }
     }
 }
 

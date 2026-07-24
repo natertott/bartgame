@@ -402,6 +402,17 @@ void PauseMenu_ItemMenu_Update(void) {
                     SoundReq(SFX_TEXTBOX_SELECT);
                 }
                 break;
+            case SELECT_BUTTON:
+                // L and R already flip subscreen pages everywhere in the
+                // pause menu (see PauseMenu_Variant2), so unlike A/B above
+                // there's no free button per extra slot here - Select cycles
+                // the highlighted item through "not in an extra slot" -> C
+                // (L) -> D (Select) -> "not in an extra slot" instead.
+                if (gPauseMenu.items[menuSlot] != 0) {
+                    CycleExtraEquip(gPauseMenu.items[menuSlot]);
+                    SoundReq(SFX_TEXTBOX_SELECT);
+                }
+                break;
             default:
                 switch (gInput.menuScrollKeys) {
                     case DPAD_UP:
@@ -536,6 +547,20 @@ void PauseMenu_ItemMenu_Draw(void) {
         DrawDirect(sub_080A5384_draw_constant0, 3);
     }
     i = GetMenuSlotForItem(gSave.stats.equipped[SLOT_B]);
+    if (i < MENU_SLOT_COUNT) {
+        entry = &gItemMenuTable[i];
+        gOamCmd.x = entry->x;
+        gOamCmd.y = entry->y;
+        DrawDirect(sub_080A5384_draw_constant0, 3);
+    }
+    i = GetMenuSlotForItem(gSave.stats.equippedExtra[0]);
+    if (i < MENU_SLOT_COUNT) {
+        entry = &gItemMenuTable[i];
+        gOamCmd.x = entry->x;
+        gOamCmd.y = entry->y;
+        DrawDirect(sub_080A5384_draw_constant0, 3);
+    }
+    i = GetMenuSlotForItem(gSave.stats.equippedExtra[1]);
     if (i < MENU_SLOT_COUNT) {
         entry = &gItemMenuTable[i];
         gOamCmd.x = entry->x;

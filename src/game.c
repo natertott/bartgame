@@ -200,6 +200,10 @@ static void GameTask_Transition(void) {
     gSave.stats.health = gSave.stats.maxHealth;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
+    // L/Select item slots - start empty like a fresh save, same as every
+    // other piece of starting gear reset just above.
+    gSave.stats.equippedExtra[0] = ITEM_NONE;
+    gSave.stats.equippedExtra[1] = ITEM_NONE;
     // Start with the Big Wallet (300 rupee cap) already owned. walletType is
     // the field gameplay actually reads (gWalletSizes[walletType].size, see
     // gameUtils.c/ui.c) - it's separate from the inventory-ownership bit

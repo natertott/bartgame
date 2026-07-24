@@ -429,23 +429,12 @@ void InitRoomTransition(void) {
 }
 
 bool32 CanDispEzloMessage(void) {
-    s32 tmp = PL_STATE_WALK;
-
-    if (!(gInput.heldKeys & SELECT_BUTTON) || gPlayerState.controlMode != CONTROL_ENABLED ||
-        gPauseMenuOptions.disabled || gHUD.hideFlags != HUD_HIDE_NONE)
-        return FALSE;
-
-    if ((gPlayerState.flags & (PL_NO_CAP | PL_CAPTURED | PL_DISABLE_ITEMS)) || (gPlayerState.framestate_last > tmp) ||
-        gPlayerState.item || gPlayerEntity.unk_7a)
-        return FALSE;
-
-    if ((gPlayerEntity.base.z.HALF.HI & 0x8000) && !gPlayerState.field_0xa)
-        return FALSE;
-
-    GenerateAreaHint();
-    ForceSetPlayerState(PL_STATE_TALKEZLO);
-    SetPlayerEventPriority();
-    return TRUE;
+    // Ezlo's Select-triggered area hint is removed entirely under QUICKSTART
+    // - Select is now the 4th item-use button (see Stats.equippedExtra[1],
+    // player.h/playerUtils.c), and this was its only consumer. Left as a
+    // stub rather than removed outright since sub_080782C0 (playerUtils.c)
+    // still calls it as part of the shared L-button context check.
+    return FALSE;
 }
 
 void DisplayEzloMessage(void) {
