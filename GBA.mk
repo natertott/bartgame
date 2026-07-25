@@ -65,8 +65,8 @@ QUICKSTART_ROOM ?= ROOM_CASTOR_DARKNUT_MAIN
 # main quest done except the Vaati fight, for walking the full overworld and
 # recording coordinates. See src/game.c. Mutually exclusive with QUICKSTART.
 MAPEXPLORE ?=
-MAPEXPLORE_AREA ?= AREA_HYRULE_TOWN
-MAPEXPLORE_ROOM ?= ROOM_HYRULE_TOWN_MAIN
+MAPEXPLORE_AREA ?= AREA_HYRULE_FIELD
+MAPEXPLORE_ROOM ?= ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD
 COMPARE ?= $(if $(CUSTOM)$(QUICKSTART)$(MAPEXPLORE),0,1)
 
 .PHONY: build extract_assets build_assets

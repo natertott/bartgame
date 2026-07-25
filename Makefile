@@ -23,9 +23,10 @@ custom: tools
 quickstart: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
 
-# Dev-only: boot straight into Hyrule Castle Town with the entire main quest
-# done except the Vaati fight - see src/game.c. For manually walking the full
-# overworld and recording entrance/exit/enemy-spawn coordinates.
+# Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
+# south gate, with the entire main quest done except the Vaati fight - see
+# src/game.c. For manually walking the full overworld and recording
+# entrance/exit/enemy-spawn coordinates.
 mapexplore: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 MAPEXPLORE=1
 

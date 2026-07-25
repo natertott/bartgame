@@ -154,19 +154,42 @@ void GameTask(void) {
 // skill, and the wallet/bag/quiver/kinstone-bag upgrade markers. Left out
 // deliberately: one-shot pickup-effect ids (ITEM_RUPEE1, ITEM_HEART,
 // ITEM_KINSTONE, ...) and QUICKSTART's own ITEM_32/33/5A markers - none of
-// those are meant to be permanently "owned" inventory entries. File-scope
-// (not block-scope) - agbcc doesn't resolve enum-constant initializers for a
-// static array declared inside a function body.
+// those are meant to be permanently "owned" inventory entries.
+//
+// Also deliberately NOT granted: ITEM_MAP (dungeon-map pause screen isn't
+// needed for overworld mapping) and ITEM_LANTERN_ON (see below).
+//
+// Only ITEM_LANTERN_OFF is granted, not ITEM_LANTERN_ON - matching
+// QUICKSTART's own item list. Owning both simultaneously (which a real save
+// never does; they're the unlit/lit states of one item) breaks
+// PauseMenu_ItemMenu_Init: agbcc compiles that function's inventory-scan
+// for-loop using the loop variable `item` itself as the loop counter
+// register, and the ITEM_LANTERN_OFF/ITEM_LANTERN_ON special case
+// overwrites `item` mid-iteration with gPauseMenuOptions.unk15 (the sprite
+// variant to draw). With only one lantern item owned this is a no-op each
+// time (the overwritten value equals the value it already had), but with
+// both owned, reaching item==ITEM_LANTERN_ON(16) resets the loop counter
+// back down to unk15==ITEM_LANTERN_OFF(15) - the next increment lands back
+// on 16, and the loop cycles 15/16 forever, never reaching item==32 and
+// never calling SetMenuType(1). Confirmed via the emulator: with both
+// lantern items granted, opening the pause menu spins the CPU in this loop
+// forever (gMain.ticks and gFadeControl frozen, screen black, hardware
+// interrupts still firing normally in the background) - exactly the freeze
+// the user reported. Granting only ITEM_LANTERN_OFF avoids the whole class
+// of bug.
+//
+// File-scope (not block-scope) - agbcc doesn't resolve enum-constant
+// initializers for a static array declared inside a function body.
 static const u8 sMapExploreItems[] = {
     ITEM_SMITH_SWORD,       ITEM_GREEN_SWORD,      ITEM_RED_SWORD,        ITEM_BLUE_SWORD,
     ITEM_FOURSWORD,         ITEM_BOMBS,            ITEM_REMOTE_BOMBS,     ITEM_BOW,
     ITEM_LIGHT_ARROW,       ITEM_BOOMERANG,        ITEM_MAGIC_BOOMERANG,  ITEM_SHIELD,
-    ITEM_MIRROR_SHIELD,     ITEM_LANTERN_OFF,      ITEM_LANTERN_ON,       ITEM_GUST_JAR,
+    ITEM_MIRROR_SHIELD,     ITEM_LANTERN_OFF,      ITEM_GUST_JAR,
     ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,       ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
     ITEM_FIRE_ROD,          ITEM_OCARINA,           ITEM_BOTTLE1,          ITEM_BOTTLE2,
     ITEM_BOTTLE3,           ITEM_BOTTLE4,           ITEM_SHELLS,           ITEM_EARTH_ELEMENT,
     ITEM_FIRE_ELEMENT,      ITEM_WATER_ELEMENT,     ITEM_WIND_ELEMENT,     ITEM_GRIP_RING,
-    ITEM_POWER_BRACELETS,   ITEM_FLIPPERS,          ITEM_MAP,              ITEM_SKILL_SPIN_ATTACK,
+    ITEM_POWER_BRACELETS,   ITEM_FLIPPERS,          ITEM_SKILL_SPIN_ATTACK,
     ITEM_SKILL_ROLL_ATTACK, ITEM_SKILL_DASH_ATTACK, ITEM_SKILL_ROCK_BREAKER, ITEM_SKILL_SWORD_BEAM,
     ITEM_SKILL_GREAT_SPIN,  ITEM_SKILL_DOWN_THRUST, ITEM_SKILL_PERIL_BEAM, ITEM_WALLET,
     ITEM_BOMBBAG,           ITEM_LARGE_QUIVER,      ITEM_KINSTONE_BAG,     ITEM_SKILL_FAST_SPIN,
@@ -309,18 +332,34 @@ static void GameTask_Transition(void) {
     gSave.stats.bottles[0] = 0x20;
     SetInventoryValue(ITEM_BOTTLE1, 1);
 #elif defined(MAPEXPLORE)
-    // Dev-only: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM (Hyrule Castle
-    // Town by default) with the entire main quest done except the Vaati
-    // fight, for walking the full overworld and recording entrance/exit/
-    // enemy-spawn coordinates. Spawn point matches the real vanilla door
-    // gExitList_HyruleField_SouthHyruleField's own South Hyrule Field ->
-    // Hyrule Town Main entry (transitions.c) - a known-open, walkable spot
-    // at the town's south gate.
+    // Dev-only: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM (South Hyrule
+    // Field by default, right outside Hyrule Castle Town's south gate) with
+    // the entire main quest done except the Vaati fight, for walking the
+    // full overworld and recording entrance/exit/enemy-spawn coordinates.
+    //
+    // NOT spawned directly in town itself (AREA_HYRULE_TOWN):
+    // confirmed in the emulator that opening the pause menu after a direct
+    // boot-spawn into Hyrule Town Main freezes with a black screen -
+    // gArea.dungeon_idx reads as 243 there (computed from per-area ROM
+    // metadata as `location - 23`, which underflows for any non-dungeon
+    // area), and PauseMenu_Screen_5 unconditionally calls
+    // DrawDungeonMapActually(), which indexes gDungeonFloorMetadatas/
+    // gSave.dungeonItems by that same out-of-bounds dungeon_idx with no
+    // bounds check - reading whatever happens to sit there in EWRAM (hence
+    // the freeze being intermittent/build-layout-sensitive rather than
+    // deterministic). Reproduced this with the existing, already-proven
+    // QUICKSTART spawn-override mechanism pointed at Hyrule Town too (not
+    // anything specific to this build's own item/flag setup), and confirmed
+    // the pause menu opens fine from an ordinary overworld field room
+    // instead. Spawning in South Hyrule Field sidesteps the whole class of
+    // bug: the player just walks a few steps north through the real town
+    // gate themselves, a genuine transition rather than a boot override,
+    // which does not carry this problem.
     gRoomTransition.player_status.area_next = MAPEXPLORE_AREA;
     gRoomTransition.player_status.room_next = MAPEXPLORE_ROOM;
     gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
     gRoomTransition.player_status.start_pos_x = 504;
-    gRoomTransition.player_status.start_pos_y = 952;
+    gRoomTransition.player_status.start_pos_y = 872;
     gRoomTransition.player_status.layer = 1;
 
     // Max out hearts, rupees, bombs, arrows, shells, and every wallet/bag/
