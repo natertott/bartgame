@@ -24,7 +24,7 @@
 #include "beanstalkSubtask.h"
 #include "pauseMenu.h"
 #include "fade.h"
-#ifdef QUICKSTART
+#if defined(QUICKSTART) || defined(MAPEXPLORE)
 #include "roomid.h"
 #include "item.h"
 #include "enemy.h"
@@ -147,6 +147,33 @@ void GameTask(void) {
     }
 #endif
 }
+
+#ifdef MAPEXPLORE
+// Full main-quest inventory: every sword/shield upgrade, both bomb/bow/
+// boomerang variants, every non-attack item, all 4 Elements, every sword
+// skill, and the wallet/bag/quiver/kinstone-bag upgrade markers. Left out
+// deliberately: one-shot pickup-effect ids (ITEM_RUPEE1, ITEM_HEART,
+// ITEM_KINSTONE, ...) and QUICKSTART's own ITEM_32/33/5A markers - none of
+// those are meant to be permanently "owned" inventory entries. File-scope
+// (not block-scope) - agbcc doesn't resolve enum-constant initializers for a
+// static array declared inside a function body.
+static const u8 sMapExploreItems[] = {
+    ITEM_SMITH_SWORD,       ITEM_GREEN_SWORD,      ITEM_RED_SWORD,        ITEM_BLUE_SWORD,
+    ITEM_FOURSWORD,         ITEM_BOMBS,            ITEM_REMOTE_BOMBS,     ITEM_BOW,
+    ITEM_LIGHT_ARROW,       ITEM_BOOMERANG,        ITEM_MAGIC_BOOMERANG,  ITEM_SHIELD,
+    ITEM_MIRROR_SHIELD,     ITEM_LANTERN_OFF,      ITEM_LANTERN_ON,       ITEM_GUST_JAR,
+    ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,       ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
+    ITEM_FIRE_ROD,          ITEM_OCARINA,           ITEM_BOTTLE1,          ITEM_BOTTLE2,
+    ITEM_BOTTLE3,           ITEM_BOTTLE4,           ITEM_SHELLS,           ITEM_EARTH_ELEMENT,
+    ITEM_FIRE_ELEMENT,      ITEM_WATER_ELEMENT,     ITEM_WIND_ELEMENT,     ITEM_GRIP_RING,
+    ITEM_POWER_BRACELETS,   ITEM_FLIPPERS,          ITEM_MAP,              ITEM_SKILL_SPIN_ATTACK,
+    ITEM_SKILL_ROLL_ATTACK, ITEM_SKILL_DASH_ATTACK, ITEM_SKILL_ROCK_BREAKER, ITEM_SKILL_SWORD_BEAM,
+    ITEM_SKILL_GREAT_SPIN,  ITEM_SKILL_DOWN_THRUST, ITEM_SKILL_PERIL_BEAM, ITEM_WALLET,
+    ITEM_BOMBBAG,           ITEM_LARGE_QUIVER,      ITEM_KINSTONE_BAG,     ITEM_SKILL_FAST_SPIN,
+    ITEM_SKILL_FAST_SPLIT,  ITEM_SKILL_LONG_SPIN,   ITEM_QST_LONLON_KEY,   ITEM_QST_GRAVEYARD_KEY,
+    ITEM_QST_TINGLE_TROPHY, ITEM_QST_CARLOV_MEDAL,
+};
+#endif
 
 static void GameTask_Transition(void) {
     // wait for file select to fade out
@@ -281,6 +308,87 @@ static void GameTask_Transition(void) {
     // pickup would silently do nothing.
     gSave.stats.bottles[0] = 0x20;
     SetInventoryValue(ITEM_BOTTLE1, 1);
+#elif defined(MAPEXPLORE)
+    // Dev-only: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM (Hyrule Castle
+    // Town by default) with the entire main quest done except the Vaati
+    // fight, for walking the full overworld and recording entrance/exit/
+    // enemy-spawn coordinates. Spawn point matches the real vanilla door
+    // gExitList_HyruleField_SouthHyruleField's own South Hyrule Field ->
+    // Hyrule Town Main entry (transitions.c) - a known-open, walkable spot
+    // at the town's south gate.
+    gRoomTransition.player_status.area_next = MAPEXPLORE_AREA;
+    gRoomTransition.player_status.room_next = MAPEXPLORE_ROOM;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = 504;
+    gRoomTransition.player_status.start_pos_y = 952;
+    gRoomTransition.player_status.layer = 1;
+
+    // Max out hearts, rupees, bombs, arrows, shells, and every wallet/bag/
+    // quiver upgrade.
+    gSave.stats.heartPieces = 0;
+    gSave.stats.maxHealth = 0xA0; // 40 hearts - script.c's own cap (min(+8, 0xA0))
+    gSave.stats.health = gSave.stats.maxHealth;
+    gSave.stats.walletType = 3; // gWalletSizes[3] == 999 (itemUtils.c)
+    gSave.stats.rupees = 999;
+    gSave.stats.bombBagType = 3; // gBombBagSizes[3] == 99
+    gSave.stats.bombCount = 99;
+    gSave.stats.quiverType = 3; // gQuiverSizes[3] == 99
+    gSave.stats.arrowCount = 99;
+    gSave.stats.shells = 9999;
+
+    // Full main-quest inventory: see sMapExploreItems above.
+    {
+        s32 i;
+        for (i = 0; i < ARRAY_COUNT(sMapExploreItems); i++) {
+            SetInventoryValue(sMapExploreItems[i], 1);
+        }
+    }
+    gSave.stats.bottles[0] = ITEM_BOTTLE_RED_POTION;
+    gSave.stats.bottles[1] = ITEM_BOTTLE_RED_POTION;
+    gSave.stats.bottles[2] = ITEM_BOTTLE_RED_POTION;
+    gSave.stats.bottles[3] = ITEM_BOTTLE_RED_POTION;
+
+    // Best-in-slot equip loadout: Four Sword + Mirror Shield on A/B, Pegasus
+    // Boots + Roc's Cape on the L/Select slots (fast travel + gap-jumping -
+    // the two most useful for covering ground while mapping the overworld).
+    gSave.stats.equipped[SLOT_A] = ITEM_MIRROR_SHIELD;
+    gSave.stats.equipped[SLOT_B] = ITEM_FOURSWORD;
+    gSave.stats.equippedExtra[0] = ITEM_PEGASUS_BOOTS;
+    gSave.stats.equippedExtra[1] = ITEM_ROCS_CAPE;
+
+    // Every dungeon's small/big key count and compass/map/big-key bits, all
+    // area-visit flags (skip first-visit cutscenes/triggers anywhere), and
+    // the upper Windcrest-visited byte (see the field comment in save.h).
+    {
+        s32 i;
+        for (i = 0; i < 0x10; i++) {
+            gSave.dungeonKeys[i] = 9;
+            gSave.dungeonItems[i] = 7; // 4:compass 2:bigkey 1:smallkey
+        }
+        for (i = 0; i < 8; i++) {
+            gSave.areaVisitFlags[i] = 0xFFFFFFFF;
+        }
+    }
+    gSave.windcrests |= 0xFF000000;
+
+    // All 100 Kinstone fusions - this is what actually flips the overworld
+    // into its fully-fused late-game appearance (roomInit.c gates dozens of
+    // bridges/NPCs/obstacles on CheckKinstoneFused). fusedCount/didAllFusions
+    // are only the Kinstone-menu "100/100" completion marker; fuserProgress/
+    // fuserOffers are set to KINSTONE_FUSER_DONE so no fuser NPC still has an
+    // offer pending.
+    {
+        s32 i;
+        for (i = 1; i <= KINSTONE_64; i++) {
+            WriteBit(&gSave.kinstones.fusedKinstones, i);
+        }
+        for (i = 0; i < 128; i++) {
+            gSave.kinstones.fuserProgress[i] = KINSTONE_FUSER_DONE;
+            gSave.kinstones.fuserOffers[i] = KINSTONE_FUSER_DONE;
+        }
+    }
+    gSave.kinstones.fusedCount = 100;
+    gSave.kinstones.didAllFusions = 1;
 #endif
     gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
     ResetTmpFlags();
@@ -306,6 +414,44 @@ static void GameTask_Transition(void) {
     // this is what looked like Zelda "randomly" appearing in unrelated
     // areas. Clear it so that companion never spawns.
     ClearGlobalFlag(ZELDA_CHASE);
+#elif defined(MAPEXPLORE)
+    // Every dungeon-clear/boss-die flag plus the full Elemental Sanctuary
+    // sequence (SEIIKI_STAINED_GLASS is what UpdateGlobalProgress reads for
+    // its max value, 9 - "everything done, ready for Vaati") and the
+    // handful of other main-quest story flags read elsewhere in the
+    // overworld. Placed after ResetTmpFlags(), same reason QUICKSTART's own
+    // LV1_CLEAR above is: that call unconditionally re-derives LV1/2/4_CLEAR
+    // from real Element ownership, so setting these any earlier would get
+    // clobbered (the Elements are already granted above, so this isn't
+    // strictly necessary here, but matches the established pattern).
+    //
+    // Deliberately NOT set: ENDING ("Vaati's wrath defeated"), GAMECLEAR
+    // ("watched end cutscene"), or LV6_SOTO_ENDING/LV6_CLEAR (Dark Hyrule
+    // Castle has no simple "clear" flag - reaching and beating Vaati IS that
+    // dungeon's completion) - the whole point of this build is stopping
+    // just short of the Vaati fight itself.
+    SetGlobalFlag(LV1_CLEAR);
+    SetGlobalFlag(LV2_CLEAR);
+    SetGlobalFlag(LV3_CLEAR);
+    SetGlobalFlag(LV4_CLEAR);
+    SetGlobalFlag(LV5_CLEAR);
+    SetGlobalFlag(EZERO_1ST);
+    SetGlobalFlag(WHITE_SWORD_END);
+    SetGlobalFlag(KAKERA_COMPLETE);
+    ClearGlobalFlag(ZELDA_CHASE);
+    SetLocalFlagByBank(FLAG_BANK_1, SOUGEN_08_TORITSUKI);
+    SetLocalFlagByBank(FLAG_BANK_3, OUBO_KAKERA);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_ENTER);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_SWORD_1ST);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_SWORD_2ND);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_SWORD_3RD);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_BUNSHIN);
+    SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_STAINED_GLASS);
+    SetLocalFlagByBank(FLAG_BANK_7, LV3_16_BOSSDIE);
+    SetLocalFlagByBank(FLAG_BANK_8, LV4_10_BOSSDIE);
+    SetLocalFlagByBank(FLAG_BANK_9, LV5_BOSSDIE);
+    SetLocalFlagByBank(FLAG_BANK_9, LV5_MBOSSDIE);
+    gSave.global_progress = 9;
 #endif
 
     gMain.state = GAMETASK_INIT;

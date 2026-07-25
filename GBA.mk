@@ -61,7 +61,13 @@ CUSTOM ?=
 QUICKSTART ?=
 QUICKSTART_AREA ?= AREA_CASTOR_DARKNUT
 QUICKSTART_ROOM ?= ROOM_CASTOR_DARKNUT_MAIN
-COMPARE ?= $(if $(CUSTOM)$(QUICKSTART),0,1)
+# Dev-only hook: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM with the entire
+# main quest done except the Vaati fight, for walking the full overworld and
+# recording coordinates. See src/game.c. Mutually exclusive with QUICKSTART.
+MAPEXPLORE ?=
+MAPEXPLORE_AREA ?= AREA_HYRULE_TOWN
+MAPEXPLORE_ROOM ?= ROOM_HYRULE_TOWN_MAIN
+COMPARE ?= $(if $(CUSTOM)$(QUICKSTART)$(MAPEXPLORE),0,1)
 
 .PHONY: build extract_assets build_assets
 build: $(if $(CUSTOM), build_assets, $(BUILD_DIR)/extracted_assets_$(GAME_VERSION))
@@ -86,7 +92,8 @@ clean:
 
 ASINCLUDE := -I $(BUILD_DIR)/assets -I $(BUILD_DIR)/enum_include
 ASFLAGS := -mcpu=arm7tdmi --defsym $(GAME_VERSION)=1 --defsym REVISION=$(REVISION) --defsym $(GAME_LANGUAGE)=1 $(ASINCLUDE) \
-	$(if $(QUICKSTART),--defsym QUICKSTART=1)
+	$(if $(QUICKSTART),--defsym QUICKSTART=1) \
+	$(if $(MAPEXPLORE),--defsym MAPEXPLORE=1)
 
 # TODO try solve this without the glob
 ENUM_ASM_SRCS := $(wildcard include/*.h)
@@ -110,7 +117,8 @@ $(BUILD_DIR)/enum_include/%.inc: include/%.h
 # agbcc includes are separate because we don't want dependency scanning on them
 CINCLUDE := -I include -I $(BUILD_DIR)
 CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE) \
-	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM))
+	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM)) \
+	$(if $(MAPEXPLORE),-DMAPEXPLORE -DMAPEXPLORE_AREA=$(MAPEXPLORE_AREA) -DMAPEXPLORE_ROOM=$(MAPEXPLORE_ROOM))
 CFLAGS := -O2 -Wimplicit -Wparentheses -Werror -Wno-multichar -g3
 
 interwork := $(BUILD_DIR)/src/interrupts.o \
