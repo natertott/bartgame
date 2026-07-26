@@ -478,6 +478,29 @@ static void GameTask_Transition(void) {
     SetGlobalFlag(WHITE_SWORD_END);
     SetGlobalFlag(KAKERA_COMPLETE);
     ClearGlobalFlag(ZELDA_CHASE);
+    // Talked to Daltus and Smith - without this, South Hyrule Field's own
+    // room-init function (sub_StateChange_HyruleField_SouthHyruleField,
+    // roomInit.c) queues the pre-game BGM_FESTIVAL_APPROACH music, since it
+    // still thinks we're in the "walking to the festival for the first
+    // time" opening state.
+    SetGlobalFlag(TABIDACHI);
+    // "Zelda enters Town in South Hyrule Field" - without this, that same
+    // room-init function treats this as the very first visit and loads the
+    // game's actual opening-cutscene entity list (gUnk_080F70A8: Zelda and
+    // the Master Smith escorting Link to the festival) on top of our spawn
+    // point, and unconditionally re-clears ZELDA_CHASE right along with it.
+    // That cutscene immediately pans gRoomControls.camera_target to one of
+    // those NPCs and never hands it back (the scripted walk-to-the-castle
+    // sequence has nowhere sensible to go from a boot-spawn instead of a
+    // real new-game intro), which is what actually caused the "no Link
+    // sprite" bug the user reported - Link's entity was there the whole
+    // time, just permanently off-screen because the camera had latched onto
+    // the intro NPC instead. Confirmed via the emulator: gRoomControls.
+    // camera_target pointed at one of that entity list's NPCs, not
+    // &gPlayerEntity.base, and the player's own local (room-relative)
+    // position was correct the whole time. Setting this flag stops that
+    // entity list (and the whole opening scene) from loading at all.
+    SetLocalFlagByBank(FLAG_BANK_1, SOUGEN_01_ZELDA);
     SetLocalFlagByBank(FLAG_BANK_1, SOUGEN_08_TORITSUKI);
     SetLocalFlagByBank(FLAG_BANK_3, OUBO_KAKERA);
     SetLocalFlagByBank(FLAG_BANK_3, SEIIKI_ENTER);
