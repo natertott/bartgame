@@ -250,10 +250,9 @@ static void GameTask_Transition(void) {
     gSave.stats.health = gSave.stats.maxHealth;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
-    // L/Select item slots - start empty like a fresh save, same as every
-    // other piece of starting gear reset just above.
+    // L item slot - start empty like a fresh save, same as every other piece
+    // of starting gear reset just above.
     gSave.stats.equippedExtra[0] = ITEM_NONE;
-    gSave.stats.equippedExtra[1] = ITEM_NONE;
     // Start with the Big Wallet (300 rupee cap) already owned. walletType is
     // the field gameplay actually reads (gWalletSizes[walletType].size, see
     // gameUtils.c/ui.c) - it's separate from the inventory-ownership bit
@@ -395,12 +394,11 @@ static void GameTask_Transition(void) {
     gSave.stats.bottles[3] = ITEM_BOTTLE_RED_POTION;
 
     // Best-in-slot equip loadout: Four Sword + Mirror Shield on A/B, Pegasus
-    // Boots + Roc's Cape on the L/Select slots (fast travel + gap-jumping -
-    // the two most useful for covering ground while mapping the overworld).
+    // Boots on the L slot (fastest way to cover ground while mapping the
+    // overworld).
     gSave.stats.equipped[SLOT_A] = ITEM_MIRROR_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_FOURSWORD;
     gSave.stats.equippedExtra[0] = ITEM_PEGASUS_BOOTS;
-    gSave.stats.equippedExtra[1] = ITEM_ROCS_CAPE;
 
     // Every dungeon's small/big key count and compass/map/big-key bits, all
     // area-visit flags (skip first-visit cutscenes/triggers anywhere), and

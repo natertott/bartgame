@@ -120,9 +120,6 @@ void PlayerItemBomb_Action1(PlayerItemBombEntity* this) {
         case EQUIP_SLOT_C:
             input = INPUT_USE_ITEM3;
             break;
-        case EQUIP_SLOT_D:
-            input = INPUT_USE_ITEM4;
-            break;
         case EQUIP_SLOT_NONE:
             input = 0;
             break;

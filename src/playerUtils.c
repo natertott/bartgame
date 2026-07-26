@@ -140,11 +140,11 @@ extern u32 gUsedPalettes;
 
 void sub_0807BFA8(void);
 
-// gSave.stats.equipped[] holds the original A/B pair; the L/Select slots
-// added alongside them live in the separate equippedExtra[] array (repurposed
+// gSave.stats.equipped[] holds the original A/B pair; the extra L slot added
+// alongside them lives in the separate equippedExtra[] array (repurposed
 // save-file filler, see Stats in player.h) so nothing about the original 2
 // slots' layout or offsets changes. These two helpers let the rest of the
-// item-equip code address all 4 slots uniformly instead of caring which
+// item-equip code address all 3 slots uniformly instead of caring which
 // physical array backs a given slot.
 u8 GetEquippedItemAtSlot(u32 slot) {
     if (slot == SLOT_A || slot == SLOT_B) {
@@ -170,13 +170,7 @@ void UpdateActiveItems(PlayerEntity* this) {
         gPlayerState.swim_state == 0 && IsAbleToUseItem(this) && !IsPreventedFromUsingItem()) {
         CreateItemIfInputMatches(gSave.stats.equipped[SLOT_A], INPUT_USE_ITEM1, FALSE);
         CreateItemIfInputMatches(gSave.stats.equipped[SLOT_B], INPUT_USE_ITEM2, FALSE);
-        // L doubles as the Kinstone Fusion button. sub_080782C0 (called every
-        // frame in PlayerNormal/PlayerSwimming before this function, see
-        // player.c) already returns early - never reaching this function at
-        // all that frame - whenever L actually triggers a fusion, so slot C's
-        // item never fires on the same press that starts a fusion.
         CreateItemIfInputMatches(gSave.stats.equippedExtra[0], INPUT_USE_ITEM3, FALSE);
-        CreateItemIfInputMatches(gSave.stats.equippedExtra[1], INPUT_USE_ITEM4, FALSE);
         IsTryingToPickupObject();
     }
 
@@ -194,9 +188,6 @@ void CreateItemEquippedAtSlot(EquipSlot equipSlot) {
             break;
         case EQUIP_SLOT_C:
             CreateItemIfInputMatches(gSave.stats.equippedExtra[0], INPUT_USE_ITEM3, TRUE);
-            break;
-        case EQUIP_SLOT_D:
-            CreateItemIfInputMatches(gSave.stats.equippedExtra[1], INPUT_USE_ITEM4, TRUE);
             break;
         case EQUIP_SLOT_B:
         default:
@@ -286,8 +277,8 @@ bool32 IsTryingToPickupObject(void) {
            (((gPlayerEntity.unk_79 != 0 || (gPlayerState.heldObject != 0)) ||
              ((gPlayerState.playerInput.newInput & INPUT_LIFT_THROW) != 0)))) &&
           (((sub_080789A8() != 0 ||
-             ((gPlayerState.playerInput.heldInput & (INPUT_ANY_DIRECTION | INPUT_USE_ITEM1 | INPUT_USE_ITEM2 |
-                                                      INPUT_USE_ITEM3 | INPUT_USE_ITEM4)) == 0)))))) {
+             ((gPlayerState.playerInput.heldInput &
+               (INPUT_ANY_DIRECTION | INPUT_USE_ITEM1 | INPUT_USE_ITEM2 | INPUT_USE_ITEM3)) == 0)))))) {
         return FALSE;
     }
     item = CreateItem(ITEM_TRY_PICKUP_OBJECT);
@@ -648,8 +639,6 @@ bool32 IsItemActiveByInput(ItemBehavior* this, PlayerInputState input) {
         val = INPUT_USE_ITEM2;
     } else if (stats->equippedExtra[0] == id) {
         val = INPUT_USE_ITEM3;
-    } else if (stats->equippedExtra[1] == id) {
-        val = INPUT_USE_ITEM4;
     } else {
         val = 0;
     }

@@ -16,29 +16,27 @@
 extern void sub_0805ECEC(u32, u32, u32, u32);
 extern u32 sub_08000E44(u32);
 
-// QUICKSTART L/Select extra item slots - drawn directly below the A/B icons
-// (which sit at buttonX/Y[0]=(0xd0,0x1c) and [1]=(0xb8,0x1c) once slid into
-// view). See sub_0801CC80/ItemUIElement.
-#define QUICKSTART_ITEM_C_X 0xd0
-#define QUICKSTART_ITEM_C_Y 0x2e
-#define QUICKSTART_ITEM_D_X 0xb8
-#define QUICKSTART_ITEM_D_Y 0x2e
+// Mirrored L button plate (see InitUI/ButtonUIElement_Action0/1): same row
+// as the real R plate (buttonY[2]=0xe), continuing the same 0x18-pixel
+// column rhythm the A/B icons already use (buttonX[0]=0xd0, buttonX[1]=0xb8)
+// one more step to the left so the plate doesn't crowd the B icon directly
+// below/beside it.
+#define BUTTON_L_X 0xa0
+#define BUTTON_L_Y 0xe
 
 // gUIElementDefinitions packs every existing element type into one
 // contiguous OBJ VRAM tile range with zero slack (BUTTON_A/B/R at 0x100 for
 // 14 tiles, TEXT_R at 0x10e for 12, ITEM_A at 0x11a for 8, HEART at 0x122
 // for 4, ITEM_B at 0x126 for 8, EZLONAGSTART/ACTIVE at 0x12e for 8 - dumped
-// straight from ROM to confirm) - reusing ITEM_A/ITEM_B's own unk_1a
-// (0x11a/0x126) for the new instances below made them fight over the exact
-// same destination tiles as the real A/B icons: whichever one's graphic got
-// DMA'd there most recently is what BOTH the real and extra icon show,
-// which is exactly the "extra slots just duplicate A/B" bug this was fixing.
-// 0x136 is the first tile past that whole packed range (right after
-// EZLONAGSTART/ACTIVE's 8), so claiming 16 tiles there for these two new
-// icons (8 each, matching ITEM_A/B's own size) doesn't collide with any of
-// the above.
+// straight from ROM to confirm) - reusing ITEM_A's own unk_1a (0x11a) for
+// the extra L item instance below made it fight over the exact same
+// destination tiles as the real A icon: whichever one's graphic got DMA'd
+// there most recently is what BOTH the real and extra icon show, which is
+// exactly the "extra slot just duplicates A" bug this was fixing. 0x136 is
+// the first tile past that whole packed range (right after
+// EZLONAGSTART/ACTIVE's 8), so claiming 8 tiles there for this new icon
+// (matching ITEM_A's own size) doesn't collide with any of the above.
 #define QUICKSTART_ITEM_C_VRAM_TILE 0x136
-#define QUICKSTART_ITEM_D_VRAM_TILE 0x13e
 
 extern const u16 gUnk_080C8F2C[];
 extern u32 gUnk_085C4620[];
@@ -76,6 +74,7 @@ void RenderDigits(u32, u32, u32, u32);
 void sub_0801CAFC(UIElement*, u32);
 void sub_0801CB20(UIElement*, UIElementDefinition*);
 UIElement* FindUIElement(u32);
+UIElement* FindUIElementByType2(u32, u32);
 void sub_0801CAD0(UIElement*);
 void sub_0801CAB8(UIElement*, Frame*);
 void EraseChargeBar(void);
@@ -106,6 +105,13 @@ void DrawUIElements(void) {
             definition = &gUIElementDefinitions[element->type];
             gOamCmd._4 = definition->unk_0;
             gOamCmd._6 = definition->unk_2;
+            // Mirrored L button plate: same R plate graphic, flipped
+            // horizontally at draw time via the hardware OAM h-flip bit
+            // (ATTR1 bit 12) instead of needing a second copy of the sprite
+            // data (see the incbin note on gUIElementDefinitions above).
+            if (element->type == UI_ELEMENT_BUTTON_R && element->type2 != 0) {
+                gOamCmd._6 |= 0x1000;
+            }
             gOamCmd._8 = element->unk_18 << 0xc | element->unk_1a;
             DrawDirect(definition->spriteIndex, element->frameIndex);
         }
@@ -213,24 +219,29 @@ void InitUI(bool32 keepHealthAndRupees) {
     CreateUIElement(UI_ELEMENT_TEXT_R, 9);
     CreateUIElement(UI_ELEMENT_ITEM_A, 0);
     CreateUIElement(UI_ELEMENT_ITEM_B, 0);
-    // QUICKSTART L/Select extra item slots - same ITEM_A/ITEM_B element
-    // types (type2=1 selects equippedExtra[] instead of equipped[], see
-    // sub_0801CC80/ItemUIElement), just a second instance of each so both
-    // the original and extra slot for that button can be drawn at once.
-    // unk_1a must be overridden to its own VRAM tile range right after
-    // creation - CreateUIElement() otherwise copies gUIElementDefinitions[
-    // type].unk_4, the SAME destination the real A/B icon already uses.
+    // QUICKSTART extra L item slot - same ITEM_A element type (type2=1
+    // selects equippedExtra[] instead of equipped[], see
+    // sub_0801CC80/ItemUIElement), just a second instance so both the real A
+    // item and the extra L item can be drawn at once. unk_1a must be
+    // overridden to its own VRAM tile range right after creation -
+    // CreateUIElement() otherwise copies gUIElementDefinitions[type].unk_4,
+    // the SAME destination the real A icon already uses.
     {
-        UIElement* extraItemC = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
-        UIElement* extraItemD = CreateUIElement(UI_ELEMENT_ITEM_B, 1);
-        if (extraItemC != NULL) {
-            extraItemC->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
-        }
-        if (extraItemD != NULL) {
-            extraItemD->unk_1a = QUICKSTART_ITEM_D_VRAM_TILE;
+        UIElement* extraItemL = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+        if (extraItemL != NULL) {
+            extraItemL->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
         }
     }
     CreateUIElement(UI_ELEMENT_BUTTON_R, 0);
+    // Mirrored L button plate - a second BUTTON_R instance (type2=1) so it
+    // gets the exact same slide-in/hide behavior as every other button (see
+    // ButtonUIElement_Action0/1), reusing R's own graphic (no new sprite
+    // data needed - see the incbin note on gUIElementDefinitions above) and
+    // flipped horizontally at draw time in DrawUIElements. Shares R's
+    // unk_1a/VRAM tiles on purpose: both instances draw the identical,
+    // unflipped source tiles - only the OAM h-flip bit differs - so there's
+    // no competing-graphic problem like the ITEM_A/B case above.
+    CreateUIElement(UI_ELEMENT_BUTTON_R, 1);
     CreateUIElement(UI_ELEMENT_BUTTON_B, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_A, 0);
     CreateUIElement(UI_ELEMENT_EZLONAGSTART, 0);
@@ -674,8 +685,10 @@ void ButtonUIElement(UIElement* element) {
 }
 
 void ButtonUIElement_Action0(UIElement* element) {
-    element->x = gHUD.buttonX[element->type];
-    element->y = gHUD.buttonY[element->type] - 0x20;
+    u32 targetX = (element->type2 == 0) ? gHUD.buttonX[element->type] : BUTTON_L_X;
+    u32 targetY = (element->type2 == 0) ? gHUD.buttonY[element->type] : BUTTON_L_Y;
+    element->x = targetX;
+    element->y = targetY - 0x20;
     element->action = 1;
     element->unk_0_1 = 1;
     sub_0801CAFC(element, element->type);
@@ -687,13 +700,15 @@ void ButtonUIElement_Action1(UIElement* element) {
     u32 y_diff;
     s32 x;
     u32 x_diff;
+    u32 targetX = (element->type2 == 0) ? gHUD.buttonX[element->type] : BUTTON_L_X;
+    u32 targetY = (element->type2 == 0) ? gHUD.buttonY[element->type] : BUTTON_L_Y;
 
     MAX_MOVEMENT = (!element->type2) ? 4 : 8;
 
-    if (element->type2 == 0 && (((gHUD.hideFlags >> element->type) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0)) {
-        y = (s16)gHUD.buttonY[element->type] - 0x28;
+    if (((gHUD.hideFlags >> element->type) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0) {
+        y = (s16)targetY - 0x28;
     } else {
-        y = (s16)gHUD.buttonY[element->type];
+        y = (s16)targetY;
     }
 
     y -= (s16)element->y;
@@ -709,7 +724,7 @@ void ButtonUIElement_Action1(UIElement* element) {
         element->y += y_diff;
     }
 
-    x = (short)gHUD.buttonX[element->type];
+    x = (short)targetX;
     x -= (short)element->x;
     x_diff = (x < 0) ? -x : x;
 
@@ -728,13 +743,13 @@ u32 sub_0801CC80(UIElement* element) {
     u8 type = element->type;
     u32 buttonId = (type ^ 3) != 0;
     u32 itemId;
-    // type2 is otherwise unused for ITEM_A/ITEM_B elements (only the BUTTON_*
-    // types read it, for their slide-in animation) - repurposed here so a
-    // second ITEM_A/ITEM_B instance can show the QUICKSTART L/Select extra
-    // slots (equippedExtra[]) instead of the original A/B pair, without
-    // needing new UIElementType values. New types aren't an option: this
-    // table (gUIElementDefinitions) is raw incbin'd ROM asset data, not a C
-    // array that can just grow two more entries.
+    // type2 is otherwise unused for ITEM_A/ITEM_B elements - repurposed here
+    // so a second ITEM_A instance can show the QUICKSTART extra L slot
+    // (equippedExtra[]) instead of the original A/B pair, without needing a
+    // new UIElementType value. New types aren't an option: this table
+    // (gUIElementDefinitions) is raw incbin'd ROM asset data, not a C array
+    // that can just grow another entry (the mirrored L button plate reuses
+    // BUTTON_R's own type the same way - see InitUI).
     if (element->type2 != 0) {
         itemId = gSave.stats.equippedExtra[buttonId];
     } else {
@@ -805,32 +820,20 @@ void ItemUIElement(UIElement* element) {
         uVar5 = 4;
     }
     element->unk_18 = uVar5;
+    // QUICKSTART extra L item icon: attaches to the mirrored L button plate
+    // (UI_ELEMENT_BUTTON_R, type2=1 - see InitUI) exactly like the real A
+    // item icon attaches to its own button below, so it gets the identical
+    // slide-in and hide-during-message/cutscene behavior for free.
     if (element->type2 != 0) {
-        // QUICKSTART L/Select extra-slot icon: there's no companion
-        // BUTTON_* element to slide in from (that would need a new
-        // UIElementType, and gUIElementDefinitions is fixed ROM asset data -
-        // see sub_0801CC80), so just draw at a fixed spot below the A/B
-        // icons instead of animating into view. Still needs the same
-        // hide-during-message/cutscene check the companion BUTTON_A/BUTTON_B
-        // element would otherwise provide (see ButtonUIElement_Action1) -
-        // without it, this drew on top of dialogue boxes and cutscenes
-        // instead of disappearing with the rest of the HUD.
-        if (((gHUD.hideFlags >> uiElementType) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0) {
-            element->unk_0_1 = 0;
-        } else {
-            element->x = (uiElementType == 0) ? QUICKSTART_ITEM_C_X : QUICKSTART_ITEM_D_X;
-            element->y = (uiElementType == 0) ? QUICKSTART_ITEM_C_Y : QUICKSTART_ITEM_D_Y;
-            element->unk_0_1 = 1;
-            sub_0801CAD0(element);
-        }
+        element2 = FindUIElementByType2(UI_ELEMENT_BUTTON_R, 1);
     } else {
         element2 = FindUIElement(uiElementType);
-        if (element2 != 0) {
-            element->x = element2->x;
-            element->y = element2->y;
-            element->unk_0_1 = 1;
-            sub_0801CAD0(element);
-        }
+    }
+    if (element2 != 0) {
+        element->x = element2->x;
+        element->y = element2->y;
+        element->unk_0_1 = 1;
+        sub_0801CAD0(element);
     }
 }
 
@@ -875,6 +878,21 @@ UIElement* FindUIElement(u32 type) {
     for (index = 0; index < MAX_UI_ELEMENTS; index++) {
         element = &gHUD.elements[index];
         if (element->used != 0 && type == element->type) {
+            return element;
+        }
+    }
+    return NULL;
+}
+
+// Like FindUIElement, but also matches type2 - needed once more than one
+// element of the same type can exist at once (the mirrored L button plate is
+// a second UI_ELEMENT_BUTTON_R instance, see InitUI/ButtonUIElement_Action0).
+UIElement* FindUIElementByType2(u32 type, u32 type2) {
+    UIElement* element;
+    u32 index;
+    for (index = 0; index < MAX_UI_ELEMENTS; index++) {
+        element = &gHUD.elements[index];
+        if (element->used != 0 && type == element->type && type2 == element->type2) {
             return element;
         }
     }

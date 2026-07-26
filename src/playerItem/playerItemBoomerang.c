@@ -240,9 +240,6 @@ void sub_0801B804(PlayerItemBoomerangEntity* this) {
         case EQUIP_SLOT_C:
             uVar1 = INPUT_USE_ITEM3;
             break;
-        case EQUIP_SLOT_D:
-            uVar1 = INPUT_USE_ITEM4;
-            break;
         case EQUIP_SLOT_NONE:
             uVar1 = 0;
             break;

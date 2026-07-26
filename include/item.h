@@ -163,7 +163,6 @@ typedef enum {
     EQUIP_SLOT_A,
     EQUIP_SLOT_B,
     EQUIP_SLOT_C, // L
-    EQUIP_SLOT_D, // Select
     EQUIP_SLOT_NONE,
 } EquipSlot;
 

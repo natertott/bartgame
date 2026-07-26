@@ -110,9 +110,6 @@ void PauseMenu_Variant2(void) {
             case START_BUTTON:
                 iVar1 = 0;
                 break;
-            case L_BUTTON:
-                iVar1 = 1;
-                break;
             case R_BUTTON:
                 iVar1 = 2;
                 break;
@@ -402,14 +399,13 @@ void PauseMenu_ItemMenu_Update(void) {
                     SoundReq(SFX_TEXTBOX_SELECT);
                 }
                 break;
-            case SELECT_BUTTON:
-                // L and R already flip subscreen pages everywhere in the
-                // pause menu (see PauseMenu_Variant2), so unlike A/B above
-                // there's no free button per extra slot here - Select cycles
-                // the highlighted item through "not in an extra slot" -> C
-                // (L) -> D (Select) -> "not in an extra slot" instead.
+            case L_BUTTON:
+                // R still flips subscreen pages (see PauseMenu_Variant2), but
+                // L no longer does - it's free here to toggle the highlighted
+                // item in/out of the extra L slot instead, mirroring how A/B
+                // above equip straight from the grid.
                 if (gPauseMenu.items[menuSlot] != 0) {
-                    CycleExtraEquip(gPauseMenu.items[menuSlot]);
+                    ToggleExtraEquip(gPauseMenu.items[menuSlot]);
                     SoundReq(SFX_TEXTBOX_SELECT);
                 }
                 break;
@@ -554,13 +550,6 @@ void PauseMenu_ItemMenu_Draw(void) {
         DrawDirect(sub_080A5384_draw_constant0, 3);
     }
     i = GetMenuSlotForItem(gSave.stats.equippedExtra[0]);
-    if (i < MENU_SLOT_COUNT) {
-        entry = &gItemMenuTable[i];
-        gOamCmd.x = entry->x;
-        gOamCmd.y = entry->y;
-        DrawDirect(sub_080A5384_draw_constant0, 3);
-    }
-    i = GetMenuSlotForItem(gSave.stats.equippedExtra[1]);
     if (i < MENU_SLOT_COUNT) {
         entry = &gItemMenuTable[i];
         gOamCmd.x = entry->x;

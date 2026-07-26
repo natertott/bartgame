@@ -257,8 +257,7 @@ void ModArrows(s32 arrows) {
  * 0: A
  * 1: B
  * 2: C (L)
- * 3: D (Select)
- * 4: Not equipped
+ * 3: Not equipped
  */
 EquipSlot IsItemEquipped(u32 itemId) {
     EquipSlot equipSlot;
@@ -269,8 +268,6 @@ EquipSlot IsItemEquipped(u32 itemId) {
         equipSlot = EQUIP_SLOT_B;
     } else if (itemId == gSave.stats.equippedExtra[0]) {
         equipSlot = EQUIP_SLOT_C;
-    } else if (itemId == gSave.stats.equippedExtra[1]) {
-        equipSlot = EQUIP_SLOT_D;
     } else {
         equipSlot = EQUIP_SLOT_NONE;
     }
@@ -326,15 +323,14 @@ void ForceEquipItem(u32 itemId, u32 equipSlot) {
     }
 }
 
-// Player-driven equip (subscreen only) for the two extra slots (L, Select)
-// added alongside the original A/B pair. Unlike ForceEquipItem above (which
-// swaps specifically with "the other of A/B", built for NPC-granted item
+// Player-driven equip (subscreen only) for the extra L slot added alongside
+// the original A/B pair. Unlike ForceEquipItem above (which swaps
+// specifically with "the other of A/B", built for NPC-granted item
 // upgrades), this only needs to make sure the same item never ends up parked
 // in more than one slot at once - clear it from wherever else it was, then
 // place it here.
-void ForceEquipExtraSlot(u32 itemId, u32 equipSlot) {
-    u32 idx;
-    if (itemId - 1 >= 0x1f || equipSlot < EQUIP_SLOT_C || equipSlot >= EQUIP_SLOT_NONE) {
+void ForceEquipExtraSlot(u32 itemId) {
+    if (itemId - 1 >= 0x1f) {
         return;
     }
     if (gSave.stats.equipped[SLOT_A] == itemId) {
@@ -343,27 +339,18 @@ void ForceEquipExtraSlot(u32 itemId, u32 equipSlot) {
     if (gSave.stats.equipped[SLOT_B] == itemId) {
         gSave.stats.equipped[SLOT_B] = ITEM_NONE;
     }
-    if (gSave.stats.equippedExtra[0] == itemId) {
-        gSave.stats.equippedExtra[0] = ITEM_NONE;
-    }
-    if (gSave.stats.equippedExtra[1] == itemId) {
-        gSave.stats.equippedExtra[1] = ITEM_NONE;
-    }
-    idx = equipSlot - EQUIP_SLOT_C;
-    gSave.stats.equippedExtra[idx] = itemId;
+    gSave.stats.equippedExtra[0] = itemId;
     gHUD.unk_13 = 0x7f;
     gHUD.unk_14 = 0x7f;
 }
 
-void CycleExtraEquip(u32 itemId) {
+void ToggleExtraEquip(u32 itemId) {
     if (gSave.stats.equippedExtra[0] == itemId) {
-        ForceEquipExtraSlot(itemId, EQUIP_SLOT_D);
-    } else if (gSave.stats.equippedExtra[1] == itemId) {
-        gSave.stats.equippedExtra[1] = ITEM_NONE;
+        gSave.stats.equippedExtra[0] = ITEM_NONE;
         gHUD.unk_13 = 0x7f;
         gHUD.unk_14 = 0x7f;
     } else {
-        ForceEquipExtraSlot(itemId, EQUIP_SLOT_C);
+        ForceEquipExtraSlot(itemId);
     }
 }
 

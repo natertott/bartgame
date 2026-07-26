@@ -156,25 +156,21 @@ void PutItemOnSlot(u32 item);
 void ForceEquipItem(u32 item, /*EquipSlot*/ u32 slot);
 
 /**
- * Equip an item into one of the two QUICKSTART extra slots (EQUIP_SLOT_C/L,
- * EQUIP_SLOT_D/Select), clearing it from any other slot (A/B included) it
- * was already sitting in so the same item never occupies two slots at once.
+ * Equip an item into the extra L slot (EQUIP_SLOT_C), clearing it from any
+ * other slot (A/B included) it was already sitting in so the same item never
+ * occupies two slots at once.
  *
  * @param item The item to equip.
- * @param slot EQUIP_SLOT_C or EQUIP_SLOT_D.
  */
-void ForceEquipExtraSlot(u32 item, /*EquipSlot*/ u32 slot);
+void ForceEquipExtraSlot(u32 item);
 
 /**
- * Subscreen helper bound to Select in the item grid: cycles the given item
- * between "not in an extra slot" -> C (L) -> D (Select) -> "not in an extra
- * slot" on each press. L and R already flip subscreen pages everywhere in
- * the pause menu (see PauseMenu_Variant2), so this is the only new item-grid
- * binding rather than a dedicated key per extra slot.
+ * Subscreen helper bound to L in the item grid: toggles the given item
+ * in/out of the extra L slot on each press.
  *
  * @param item The highlighted item.
  */
-void CycleExtraEquip(u32 item);
+void ToggleExtraEquip(u32 item);
 
 /**
  * Get item price.

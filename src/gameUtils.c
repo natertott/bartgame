@@ -430,10 +430,10 @@ void InitRoomTransition(void) {
 
 bool32 CanDispEzloMessage(void) {
     // Ezlo's Select-triggered area hint is removed entirely under QUICKSTART
-    // - Select is now the 4th item-use button (see Stats.equippedExtra[1],
-    // player.h/playerUtils.c), and this was its only consumer. Left as a
-    // stub rather than removed outright since sub_080782C0 (playerUtils.c)
-    // still calls it as part of the shared L-button context check.
+    // - Select is now the Kinstone Fusion button (see ConvInputToState,
+    // code_0805EC04.c), and this was its only consumer. Left as a stub rather
+    // than removed outright since sub_080782C0 (playerUtils.c) still calls it
+    // as part of the shared fusion/interact context check.
     return FALSE;
 }
 

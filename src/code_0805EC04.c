@@ -143,7 +143,7 @@ void UpdatePlayerInput(void) {
 u32 ConvInputToState(u32 keys) {
     u32 result;
     if (keys & L_BUTTON) {
-        result = INPUT_FUSE | INPUT_USE_ITEM3;
+        result = INPUT_USE_ITEM3;
     } else {
         result = 0;
     }
@@ -161,7 +161,7 @@ u32 ConvInputToState(u32 keys) {
         result |= INPUT_USE_ITEM2;
     }
     if (keys & SELECT_BUTTON) {
-        result |= INPUT_USE_ITEM4;
+        result |= INPUT_FUSE;
     }
     if (keys & DPAD_RIGHT) {
         result |= INPUT_RIGHT;
