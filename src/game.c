@@ -358,8 +358,15 @@ static void GameTask_Transition(void) {
     gRoomTransition.player_status.area_next = MAPEXPLORE_AREA;
     gRoomTransition.player_status.room_next = MAPEXPLORE_ROOM;
     gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    gRoomTransition.player_status.start_pos_x = 504;
-    gRoomTransition.player_status.start_pos_y = 872;
+    // (584, 264): the actual "arrive from Town's south gate" landing point
+    // for this room, taken from its WARP_TYPE_AREA transition entry
+    // (screenTransitions.c). The previous (504, 872) was well past this
+    // room's own bounds (width 1008, height 688 - see gRoomControls at
+    // runtime), placing Link 184px south of the room's bottom edge, which is
+    // why the camera clamped at the room's southern edge and never centered
+    // on him: the "target" itself is outside the room the clamp is built for.
+    gRoomTransition.player_status.start_pos_x = 584;
+    gRoomTransition.player_status.start_pos_y = 264;
     gRoomTransition.player_status.layer = 1;
 
     // Max out hearts, rupees, bombs, arrows, shells, and every wallet/bag/
