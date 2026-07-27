@@ -275,8 +275,21 @@ typedef enum {
     TEXT_DR_LEFT,
     TEXT_TOWN8,
     TEXT_CAFE,
+    // Every category above is a real, compiled-asset vanilla text bank
+    // (translations/USA.bin) with no editable source - none of them can
+    // have new lines authored into them. TEXT_CUSTOM is not one of those:
+    // it's a reserved category sub_0805EEB4 (text.c) special-cases to
+    // resolve TEXT_INDEX(TEXT_CUSTOM, n) to gCustomStrings[n] instead of the
+    // real translation tables, making genuine custom dialogue possible
+    // anywhere a normal TEXT_INDEX is - MessageNoOverlap/EzloMessage from a
+    // script, or CreateEzloHint/MessageRequest directly from C. See
+    // gCustomStrings in game.c to add a new line.
+    TEXT_CUSTOM = 0xfe,
 } TextCategory;
 
 #define TEXT_INDEX(category, index) ((category << 8) | index)
+
+extern const u8* const gCustomStrings[];
+extern const u32 gCustomStringCount;
 
 #endif // MESSAGE_H

@@ -67,8 +67,25 @@ void sub_0805EEB4(Token* token, u32 textIndex) {
     u32 uVar4;
     u32 uVar6;
     u32 uVar7;
+    u32 customIndex;
 
     token->textIndex = (u16)textIndex;
+    // Custom text (see TEXT_CUSTOM, message.h): resolve straight to our own
+    // string table instead of the real translations blob below, which has
+    // no entries to give it and no source to add any. Bypassing gTranslations
+    // entirely (rather than only falling back to it on a lookup miss) means
+    // an out-of-range custom index can't accidentally read real ROM data at
+    // some coincidental offset - it just falls through to the same "invalid
+    // text" placeholder a real out-of-range category already gets below.
+    if ((textIndex >> 8) == TEXT_CUSTOM) {
+        customIndex = (u8)textIndex;
+        if (customIndex < gCustomStringCount) {
+            sub_0805EF40(token, gCustomStrings[customIndex]);
+            return;
+        }
+        sub_0805EF40(token, (const u8*)&gUnk_08109244);
+        return;
+    }
     langIndex = gSaveHeader->language;
     if (((1 < langIndex) && (textIndex >> 8 == 1)) && (textIndex < 0x119)) {
         langIndex = 3;

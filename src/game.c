@@ -993,26 +993,58 @@ static void QuickStartSpawnWinKeyOnce(void) {
 // gets a chance to replace it.
 extern u32 MsgInit(void);
 
-// "You win! Difficulty\nincreased to level X." - authored directly as a
-// plain C string rather than through the usual .string/charmap asset
-// pipeline (data/const/text.s and friends): that pipeline only extracts
-// bytes that already exist in the base ROM (assets/gfx.json-style byte
-// ranges) and has never been used in this project to author brand new
-// text, and doing so would also mean adding a new object file's sections
-// into linker.ld by hand, which lays out this ROM's memory to match the
-// original exactly. A plain string literal sidesteps both: C already
-// emits standard ASCII bytes per character, which cross-checked exactly
-// against this engine's own real behavior (NumberToAscii, message.c,
-// builds digits as '0' | digit - i.e. real ASCII - and this file's
-// existing skill-pickup message already renders real letters correctly
-// via the normal TEXT_INDEX path), and \x06\x01 is this engine's own
-// control code for "insert numeric variable 1 here" (charmap.txt:
-// STR_VAR_1 = 06 01), substituted from gMessage.rupees at render time -
-// same mechanism the shop's price prompt already uses. \n is charmap's
-// '\n' = 0A, this engine's own real line-break control code. The
-// terminator is C's own implicit trailing '\0', which is also this
+// Genuine custom dialogue - see TEXT_CUSTOM/gCustomStrings (message.h,
+// text.c): sub_0805EEB4 resolves TEXT_INDEX(TEXT_CUSTOM, n) straight to
+// gCustomStrings[n] instead of the real, compiled-asset translation tables
+// (which have no source and can't have new lines authored into them - the
+// whole reason the QUICKSTART ladder-NPC scripts used to borrow real,
+// unrelated vanilla dialogue lines instead, see data/scripts/quickstart/
+// script_QuickStartLadderNpc0.inc's own comment on that). Works from
+// anywhere a normal TEXT_INDEX does: MessageNoOverlap/EzloMessage in a
+// script, or CreateEzloHint/MessageRequest directly from C, like the win
+// message below.
+//
+// Authored as plain C strings rather than through the usual .string/
+// charmap asset pipeline (data/const/text.s and friends): that pipeline
+// only extracts bytes that already exist in the base ROM (assets/gfx.json-
+// style byte ranges), and using it to author brand new text would also
+// mean adding a new object file's sections into linker.ld by hand, which
+// lays out this ROM's memory to match the original exactly. A plain string
+// literal sidesteps both: C already emits standard ASCII bytes per
+// character, which cross-checked exactly against this engine's own real
+// behavior (NumberToAscii, message.c, builds digits as '0' | digit - i.e.
+// real ASCII - and this file's existing skill-pickup message already
+// renders real letters correctly via the normal TEXT_INDEX path), and
+// \x06\x01 is this engine's own control code for "insert numeric variable 1
+// here" (charmap.txt: STR_VAR_1 = 06 01), substituted from gMessage.rupees
+// at render time - same mechanism the shop's price prompt already uses. \n
+// is charmap's '\n' = 0A, this engine's own real line-break control code.
+// The terminator is C's own implicit trailing '\0', which is also this
 // engine's own "end of text" byte (charmap.txt: '$' = 00).
-static const u8 sQuickStartWinMessage[] = "You win! Difficulty\nincreased to level \x06\x01.";
+const u8* const gCustomStrings[] = {
+    [0] = (const u8*)"You win! Difficulty\nincreased to level \x06\x01.",
+    // Castle Garden ladder mini-dungeon reward NPCs (data/scripts/quickstart/
+    // script_QuickStartLadderNpc0/1/2.inc) - all 3 ladders share the same
+    // pair of outcomes and, before this existed, the same borrowed TEXT_ANJU/
+    // TEXT_HAPPY_HEARTH real dialogue lines. ModRupees's amount is a fixed
+    // 100 in every script that uses these, so it's written directly into
+    // the text instead of needing the ScriptCommand_SetMessageValue/
+    // BeginBlock dance those real lines required for their own {rupees}
+    // template slot.
+    [1] = (const u8*)"Thanks for stopping by!\nHave 100 Rupees.",
+    [2] = (const u8*)"It's a trap!\nYou lost 100 Rupees!",
+    [3] = (const u8*)"There's nothing left\nfor you here.",
+    // Item-choice sign NPC (data/scripts/quickstart/script_QuickStartChooseOne.inc,
+    // shared by all 3 choice rows). Used to show TEXT_BURLOV,30 - a real,
+    // unrelated mid-sentence Carlov/Burlov dialogue fragment ("Now, when
+    // you're...") that happened to be reachable, not actual instructions.
+    [4] = (const u8*)"Choose one of these\nitems!",
+    // Ezlo's one-time round-start greeting (see QuickStartSpawnStarterChoice
+    // below) - CreateEzloHint funnels through the same sub_0805EEB4 resolver
+    // as every other TEXT_INDEX use, so TEXT_CUSTOM works here too.
+    [5] = (const u8*)"Ezlo: Gear up, then get\nready for a fight!",
+};
+const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
 // Room flag 400 tracks "message already shown" across the few frames it's
 // up, the same idempotent-per-frame-check pattern this whole file already
@@ -1044,23 +1076,19 @@ static void QuickStartCheckWinCondition(void) {
     }
     if (!CheckRoomFlag(400)) {
         QuickStartIncrementDifficulty();
-        // A deliberately out-of-range category (any real one only goes up
-        // to TEXT_CAFE) so MessageRequest's own resolution step - forced to
-        // run immediately by MsgInit below - safely falls back to the
-        // engine's own "invalid index" placeholder instead of a real
-        // string with real side effects, before this file's own text
-        // replaces it a few lines down.
-        MessageRequest(TEXT_INDEX(0xff, 0));
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 0));
         // MessageRequest above MemClears the whole gMessage struct, so
         // rupees has to be set after it, not before - confirmed in the
         // emulator: setting it first always showed "level 0" regardless of
         // the real difficulty, since MessageRequest was silently wiping it
         // back out before MsgInit ever read it.
         gMessage.rupees = QuickStartGetDifficulty();
+        // Forces the resolution step (normally the next MessageMain() tick,
+        // see message.c) to happen immediately instead of a frame later -
+        // this function isn't itself part of the script/message system's
+        // own per-frame timing, so nothing else would otherwise drive it
+        // forward the moment MessageRequest above sets state=1.
         MsgInit();
-        gTextRender.curToken.buf[0] = sQuickStartWinMessage;
-        gTextRender.curToken.unk01 = 0;
-        gTextRender.curToken.unk00 = 1;
         SetRoomFlag(400);
         return;
     }
@@ -3154,6 +3182,23 @@ static void QuickStartUpdateItemChoice(void) {
             gRoomControls.reload_flags = RELOAD_ALL;
         }
         return;
+    }
+
+    if (phase == 0 && !CheckRoomFlag(401)) {
+        // One-time custom Ezlo hint, moved here from QuickStartSpawnStarterChoice
+        // (see its own comment) - that function runs during
+        // GameMain_ChangeRoom's brief room-entry transition, before the
+        // player is back in real control, so CreateEzloHint's queued_action
+        // was getting reset before PlayerTalkEzlo ever ran. This branch runs
+        // every frame of real GAMEMAIN_UPDATE gameplay (see the QUICKSTART
+        // block right after PausePlayer, below in this file), so the player
+        // is guaranteed to actually be in a state that can process it. Room
+        // flag 401 (rather than a low number) for the same reason flag 400
+        // was picked for the Lon Lon Ranch win condition - low numbers are a
+        // real collision risk in a room this deeply tied to real vanilla
+        // content (Castor Wilds' own Darknut/Kinstone guardian fight).
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 5), 0);
+        SetRoomFlag(401);
     }
 
     if (phase == 0 || phase == 2 || phase == 4) {
