@@ -926,41 +926,41 @@ static void QuickStartSpawnGardenRewardOnce(void) {
     QuickStartSpawnGardenRewardItem();
 }
 
-// Win condition: a key sitting just south of Castle Garden Main's north
-// door onward, in Lon Lon Ranch (world (392,264), verified walkable the
+// Win condition: an Earth Element sitting just south of Castle Garden Main's
+// north door onward, in Lon Lon Ranch (world (392,264), verified walkable the
 // same way as its enemy pool below). Picking it up ends the round. Only
 // spawns once every Lon Lon Ranch enemy is dead - same "wait for a clear
 // room" gate Castle Garden's own gauntlet reward uses.
-// ITEM_QST_GRAVEYARD_KEY is a real Item enum slot that's otherwise unused
-// by anything QUICKSTART touches (it's vanilla content for the Royal
-// Valley graveyard quest, never reached from this loop), so its own
-// inventory flag doubles as the "already spawned/taken" latch - no new
-// global flag needed for that part. It gets explicitly cleared again in
+// ITEM_EARTH_ELEMENT is a real Item enum slot that's otherwise unused by
+// anything QUICKSTART touches on this loop (the actual main-quest Earth
+// Element, never granted anywhere in this file), so its own inventory flag
+// doubles as the "already spawned/taken" latch - no new global flag needed
+// for that part. It gets explicitly cleared again in
 // QuickStartCheckWinCondition below so the next round (after the
-// win-triggered reset) starts with the key unclaimed again.
+// win-triggered reset) starts with the Element unclaimed again.
 //
 // Ground items despawn on their own timer regardless of ENT_PERSIST (see
 // QuickStartRefreshItemTimers, which does the same thing for the starter/
-// bonus/skill choices) - left unrefreshed, the key would flicker away and
+// bonus/skill choices) - left unrefreshed, the Element would flicker away and
 // respawn every ~10 seconds while the player's still making their way
 // here, and worse, a pickup landing in the same frame as a despawn could
 // race and silently drop the win entirely. Called every frame from
-// QuickStartRoomMonitor, so refresh an existing key's timer every time
+// QuickStartRoomMonitor, so refresh an existing Element's timer every time
 // through instead of only spawning once and leaving it to fend for itself.
 static void QuickStartSpawnWinKeyOnce(void) {
     Entity* itemEntity;
     s32 i;
-    if (GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) != 0) {
+    if (GetInventoryValue(ITEM_EARTH_ELEMENT) != 0) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_QST_GRAVEYARD_KEY) {
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_EARTH_ELEMENT) {
             ((ItemOnGroundEntity*)ent)->unk_6c = 600;
             return;
         }
     }
-    itemEntity = CreateObject(GROUND_ITEM, ITEM_QST_GRAVEYARD_KEY, 0);
+    itemEntity = CreateObject(GROUND_ITEM, ITEM_EARTH_ELEMENT, 0);
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + 392;
         itemEntity->y.HALF.HI = gRoomControls.origin_y + 159;
@@ -1014,21 +1014,35 @@ extern u32 MsgInit(void);
 // engine's own "end of text" byte (charmap.txt: '$' = 00).
 static const u8 sQuickStartWinMessage[] = "You win! Difficulty\nincreased to level \x06\x01.";
 
-// Room flag 1 (Lon Lon Ranch's flag 0 is already claimed by
-// QuickStartSpawnLonLonRanchEnemiesOnce) tracks "message already shown"
-// across the few frames it's up, the same idempotent-per-frame-check
-// pattern this whole file already uses elsewhere - a plain mutable static
-// local doesn't work in this build: agbcc emits it into .data, and this
-// ROM's linker.ld doesn't map src/game.o's .data section at all (every
-// other piece of writable per-visit state in this file already goes
-// through room/global flags or gSave fields for the same underlying
-// reason, not just for the reset-on-reload semantics).
+// Room flag 400 tracks "message already shown" across the few frames it's
+// up, the same idempotent-per-frame-check pattern this whole file already
+// uses elsewhere - a plain mutable static local doesn't work in this build:
+// agbcc emits it into .data, and this ROM's linker.ld doesn't map
+// src/game.o's .data section at all (every other piece of writable per-visit
+// state in this file already goes through room/global flags or gSave fields
+// for the same underlying reason, not just for the reset-on-reload
+// semantics).
+//
+// Deliberately a high flag number (gRoomVars.flags is 52 bytes = 416 valid
+// bits, and every OTHER QUICKSTART use of a room flag in this file is a
+// single-digit number) rather than reusing low flag 1 as this used to:
+// unlike Castle Garden/Melari's Mine/Castor Darknut, Lon Lon Ranch is a real,
+// content-heavy vanilla room (see sub_StateChange_HyruleField_LonLonRanch,
+// roomInit.c - Goron NPC, KINOKO/TABIDACHI/INLOCK checks, its own boulder
+// puzzle), so a low flag number is a real collision risk with whatever
+// vanilla script logic already runs in this room and happens to set/read the
+// same bit for its own unrelated purpose - which would make CheckRoomFlag
+// below read true before the win message ever actually shows, silently
+// skipping straight to "already shown, waiting for dismissal" and hanging
+// forever. A number far outside vanilla's own low range sidesteps the whole
+// class of bug instead of having to prove which specific flag (if any)
+// collided.
 static void QuickStartCheckWinCondition(void) {
-    if (GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) == 0) {
-        ClearRoomFlag(1);
+    if (GetInventoryValue(ITEM_EARTH_ELEMENT) == 0) {
+        ClearRoomFlag(400);
         return;
     }
-    if (!CheckRoomFlag(1)) {
+    if (!CheckRoomFlag(400)) {
         QuickStartIncrementDifficulty();
         // A deliberately out-of-range category (any real one only goes up
         // to TEXT_CAFE) so MessageRequest's own resolution step - forced to
@@ -1047,7 +1061,7 @@ static void QuickStartCheckWinCondition(void) {
         gTextRender.curToken.buf[0] = sQuickStartWinMessage;
         gTextRender.curToken.unk01 = 0;
         gTextRender.curToken.unk00 = 1;
-        SetRoomFlag(1);
+        SetRoomFlag(400);
         return;
     }
     if (gMessage.state & MESSAGE_ACTIVE) {
@@ -1057,14 +1071,14 @@ static void QuickStartCheckWinCondition(void) {
     // win message starts made GetInventoryValue(...) == 0 true again on
     // the very next frame, before the message ever finished or this
     // function ever reached DoSoftReset below: that early-returned via the
-    // very first check above, wiping room flag 1's "message already
+    // very first check above, wiping room flag 400's "message already
     // shown" bookkeeping and abandoning the win sequence entirely - and
     // QuickStartSpawnWinKeyOnce, seeing the same now-zeroed value, would
-    // immediately drop a fresh key, which is exactly the infinite
+    // immediately drop a fresh Element, which is exactly the infinite
     // pickup/message loop this was confirmed causing. Cleared here instead
     // so it only happens once, right before the save that's supposed to
     // record it, not mid-message.
-    SetInventoryValue(ITEM_QST_GRAVEYARD_KEY, 0);
+    SetInventoryValue(ITEM_EARTH_ELEMENT, 0);
     WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     DoSoftReset();
 }

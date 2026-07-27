@@ -143,6 +143,11 @@ void sub_0801C25C(void) {
         gHUD.unk_14 = tmp;
         sub_0801C2F0(0x126, tmp);
     }
+    if (gHUD.unk_15 < 0) {
+        tmp = gHUD.unk_15 & 0x7f;
+        gHUD.unk_15 = tmp;
+        sub_0801C2F0(QUICKSTART_ITEM_C_VRAM_TILE, tmp);
+    }
 }
 
 void sub_0801C2F0(u32 dest, u32 param_2) {
@@ -787,9 +792,20 @@ void ItemUIElement(UIElement* element) {
         uiElementType = 0;
     }
 
-    psVar8 = &gHUD.unk_13;
-    if (uiElementType != 0) {
+    // The extra L item icon (type2 != 0) needs its own dirty-flag/count byte
+    // and VRAM digit destination - it happens to compute the same
+    // uiElementType (0) as the real A item since both share
+    // UI_ELEMENT_ITEM_A, but sharing psVar8/VRAM tiles with the real A icon
+    // would render L's bomb/arrow count into A's tiles instead (visually
+    // showing up wherever A's icon is drawn, near the R plate) rather than
+    // on L's own icon. Check it first so it always wins over the uiElementType
+    // fallback below.
+    if (element->type2 != 0) {
+        psVar8 = &gHUD.unk_15;
+    } else if (uiElementType != 0) {
         psVar8 = &gHUD.unk_14;
+    } else {
+        psVar8 = &gHUD.unk_13;
     }
 
     switch ((s32)element->unk_8) {
