@@ -33,6 +33,13 @@
 @ CheckShopItemPrice failed for insufficient rupees, in which case
 @ shopItemType was never cleared) it instead resets the prop back to its
 @ original pedestal position - the item is handed back rather than lost.
+@
+@ Text: genuine custom dialogue via TEXT_CUSTOM (see gCustomStrings, game.c;
+@ TEXT_CUSTOM/sub_0805EEB4, message.h/text.c). The greeting used to show
+@ TEXT_BURLOV,30, the same borrowed, unrelated mid-sentence Carlov/Burlov
+@ fragment ("Now, when you're...") the item-choice sign used before it got
+@ its own custom text; the "can't afford it" line used TEXT_PICOLYTE,0x09, a
+@ real Picolyte-shop line that's equally out of context here.
 SCRIPT_START script_QuickStartMerchant
 script_QuickStartMerchant_loop:
 	CheckEntityInteractType
@@ -42,7 +49,7 @@ script_QuickStartMerchant_loop:
 	SetPlayerIdle
 	Call DisablePauseMenuAndPutAwayItems
 	FacePlayer
-	MessageNoOverlap TEXT_BURLOV, 30
+	MessageNoOverlap TEXT_CUSTOM, 6
 	Jump script_QuickStartMerchant_done
 script_QuickStartMerchant_sell:
 	SetPlayerIdle
@@ -58,7 +65,7 @@ script_QuickStartMerchant_sell:
 	WaitPlayerGetItem
 	Jump script_QuickStartMerchant_done
 script_QuickStartMerchant_cant_afford:
-	MessageNoOverlap TEXT_PICOLYTE, 0x09
+	MessageNoOverlap TEXT_CUSTOM, 7
 	WaitUntilTextboxCloses
 script_QuickStartMerchant_done:
 	Call ScriptCommand_PlayerDropHeldObject

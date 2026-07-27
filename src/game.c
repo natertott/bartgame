@@ -1039,10 +1039,20 @@ const u8* const gCustomStrings[] = {
     // unrelated mid-sentence Carlov/Burlov dialogue fragment ("Now, when
     // you're...") that happened to be reachable, not actual instructions.
     [4] = (const u8*)"Choose one of these\nitems!",
-    // Ezlo's one-time round-start greeting (see QuickStartSpawnStarterChoice
-    // below) - CreateEzloHint funnels through the same sub_0805EEB4 resolver
-    // as every other TEXT_INDEX use, so TEXT_CUSTOM works here too.
+    // Ezlo's one-time round-start greeting (see the phase==0 branch of
+    // QuickStartUpdateItemChoice below) - CreateEzloHint funnels through the
+    // same sub_0805EEB4 resolver as every other TEXT_INDEX use, so
+    // TEXT_CUSTOM works here too.
     [5] = (const u8*)"Ezlo: Gear up, then get\nready for a fight!",
+    // Shop merchant (data/scripts/quickstart/script_QuickStartMerchant.inc) -
+    // shared by both shop rooms (Dojos Grimblade and Lon Lon Ranch's east
+    // house room, see QuickStartSpawnShopMerchantOnce). Used to show
+    // TEXT_BURLOV,30 (the same borrowed, unrelated Carlov/Burlov fragment as
+    // the item-choice sign above) for the greeting, and TEXT_PICOLYTE,0x09
+    // (a real Picolyte-shop line, equally out of context here) for the
+    // "can't afford it" case.
+    [6] = (const u8*)"Welcome! Carry an item\nhere to buy it.",
+    [7] = (const u8*)"Sorry, you can't afford\nthat right now!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
