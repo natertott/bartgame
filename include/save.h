@@ -76,9 +76,21 @@ typedef struct {
     /*0x022*/ u8 filler22[30];               /**< unused filler */
     /*0x040*/ u32 windcrests;                /**< upper 8 bit Windcrest flags @see WindcrestID
                                               * lower bits used for other things */
+#ifdef QUICKSTART
+    /*0x044*/ u32 run_frames;                /**< QUICKSTART: frames elapsed in the current run,
+                                               * reset to 0 at the top of every run (GameTask_Transition) */
+    /*0x048*/ u8 filler44b[8];               /**< unused filler */
+#else
     /*0x044*/ u8 filler44[12];               /**< unused filler */
-    /*0x050*/ u32 enemies_killed;            /**< number of enemies killed */
+#endif
+    /*0x050*/ u32 enemies_killed;            /**< number of enemies killed
+                                               * (QUICKSTART: reset to 0 per run, see GameTask_Transition) */
+#ifdef QUICKSTART
+    /*0x054*/ u32 miniboss_kills;            /**< QUICKSTART: mini-bosses killed this run (reset per run) */
+    /*0x058*/ u32 boss_kills;                /**< QUICKSTART: bosses killed this run (reset per run) */
+#else
     /*0x054*/ u8 filler54[8];                /**< unused filler */
+#endif
     /*0x05C*/ u32 items_bought;              /**< number of items bought in stockwells shop */
     /*0x060*/ u32 areaVisitFlags[8];         /**< Area visit flags. */
     /*0x080*/ char name[FILENAME_LENGTH];    /**< Save file name. */
@@ -101,7 +113,15 @@ typedef struct {
     /*0x4A0*/ u32 timer5;                    /**< "timer5" unused */
     /*0x4A4*/ u32 timer6;                    /**< "timer6" unused */
     /*0x4A8*/ u32 demo_timer;                /**< timer for US demo version playtime limit */
+#ifdef QUICKSTART
+    /*0x4AC*/ u32 meta_xp;                   /**< QUICKSTART: persistent meta-progression currency,
+                                               * accumulated from each run's score, survives the win-loop's
+                                               * DoSoftReset (never reset by GameTask_Transition) - see
+                                               * docs/QUICKSTART_ROADMAP.md */
+    /*0x4B0*/ u32 runs_completed;            /**< QUICKSTART: total wins this save file has ever recorded */
+#else
     /*0x4AC*/ u8 filler4ac[8];               /**< unused filler */
+#endif
 } SaveFile;
 
 /**

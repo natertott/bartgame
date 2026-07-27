@@ -124,6 +124,8 @@ static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
 static void QuickStartSpawnWinKeyOnce(void);
 static void QuickStartCheckWinCondition(void);
+static s32 QuickStartCountItemsHeld(void);
+static u32 QuickStartComputeScore(void);
 #endif
 
 void sub_08054974(u32 worldEventId, bool32 param_2);
@@ -252,6 +254,15 @@ static void GameTask_Transition(void) {
     // itself in quarter-heart units).
     gSave.stats.maxHealth = 24;
     gSave.stats.health = gSave.stats.maxHealth;
+    // Run-scoped scoring counters (see docs/QUICKSTART_ROADMAP.md) - all
+    // reset to 0 here so each run's score reflects only that run. meta_xp
+    // and runs_completed are the one exception: they're the persistent
+    // meta-progression currency the score feeds into at each win
+    // (QuickStartCheckWinCondition), and must NOT be touched here.
+    gSave.run_frames = 0;
+    gSave.enemies_killed = 0;
+    gSave.miniboss_kills = 0;
+    gSave.boss_kills = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
     // L item slot - start empty like a fresh save, same as every other piece
@@ -1057,6 +1068,12 @@ const u8* const gCustomStrings[] = {
     // "can't afford it" case.
     [6] = (const u8*)"Welcome! Carry an item\nhere to buy it.",
     [7] = (const u8*)"Sorry, you can't afford\nthat right now!",
+    // Shown right after the difficulty message on a win, see
+    // QuickStartCheckWinCondition below - same \x06\x01/gMessage.rupees
+    // mechanism, just a second message rather than a second number packed
+    // into the first (this engine only exposes one live numeric slot to
+    // substitute per message).
+    [8] = (const u8*)"Run score: \x06\x01\nKeep it up!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -1083,9 +1100,61 @@ const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 // forever. A number far outside vanilla's own low range sidesteps the whole
 // class of bug instead of having to prove which specific flag (if any)
 // collided.
+// Counts distinct items currently owned (GetInventoryValue != 0) across the
+// real item id range (ITEM_NONE=0 excluded; ids from 0xfc on are drop-table
+// markers, not real inventory slots - see item.h - so the loop stops well
+// short of those). Used by QuickStartComputeScore's item-variety bonus
+// below; nothing here needs a persistent counter of its own since ownership
+// is already tracked (gSave.inventory) and reset per run by the same
+// MemClear(gSave.inventory, ...) GameTask_Transition already does for every
+// other piece of starting-gear bookkeeping.
+static s32 QuickStartCountItemsHeld(void) {
+    s32 i;
+    s32 count = 0;
+    for (i = 1; i < ITEM_KINSTONE_RED; i++) {
+        if (GetInventoryValue(i) != 0) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// First-cut scoring formula for the run just finished - see
+// docs/QUICKSTART_ROADMAP.md for the full design and rationale. Deliberately
+// simple and easy to retune once we see real playthroughs: regular/miniboss/
+// boss kills each score linearly (boss_kills is always 0 today - no region
+// yet spawns one - kept in the formula so it's a pure config change, not a
+// code change, once regions add bosses), plus four flat bonuses matching
+// the user's brief (finish quickly, hold a lot of rupees, gain hearts,
+// collect a variety of items). All four bonus thresholds are placeholders
+// pending real playtest data.
+#define QUICKSTART_SCORE_TIME_BONUS_FRAMES (10 * 60 * 60) // finish within 10 in-game minutes
+#define QUICKSTART_SCORE_TIME_BONUS 500
+#define QUICKSTART_SCORE_RUPEE_BONUS_THRESHOLD 200
+#define QUICKSTART_SCORE_RUPEE_BONUS 200
+#define QUICKSTART_SCORE_HEART_BONUS_PER_HEART 50
+#define QUICKSTART_SCORE_ITEM_BONUS_PER_ITEM 20
+static u32 QuickStartComputeScore(void) {
+    u32 score = gSave.enemies_killed * 10 + gSave.miniboss_kills * 100 + gSave.boss_kills * 500;
+    s32 heartsGained = ((s32)gSave.stats.maxHealth - 24) / 8;
+
+    if (gSave.run_frames <= QUICKSTART_SCORE_TIME_BONUS_FRAMES) {
+        score += QUICKSTART_SCORE_TIME_BONUS;
+    }
+    if (gSave.stats.rupees >= QUICKSTART_SCORE_RUPEE_BONUS_THRESHOLD) {
+        score += QUICKSTART_SCORE_RUPEE_BONUS;
+    }
+    if (heartsGained > 0) {
+        score += heartsGained * QUICKSTART_SCORE_HEART_BONUS_PER_HEART;
+    }
+    score += QuickStartCountItemsHeld() * QUICKSTART_SCORE_ITEM_BONUS_PER_ITEM;
+    return score;
+}
+
 static void QuickStartCheckWinCondition(void) {
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) == 0) {
         ClearRoomFlag(400);
+        ClearRoomFlag(402);
         return;
     }
     if (!CheckRoomFlag(400)) {
@@ -1104,6 +1173,25 @@ static void QuickStartCheckWinCondition(void) {
         // forward the moment MessageRequest above sets state=1.
         MsgInit();
         SetRoomFlag(400);
+        return;
+    }
+    if (gMessage.state & MESSAGE_ACTIVE) {
+        return;
+    }
+    // Second message: this run's score, shown once the difficulty message
+    // above has been dismissed. Same room-flag-gated one-shot pattern as
+    // flag 400 itself. meta_xp/runs_completed are updated here too, exactly
+    // once, right as the score they're derived from is computed and shown -
+    // not in the branch below, which can run several frames later once the
+    // player dismisses this message.
+    if (!CheckRoomFlag(402)) {
+        u32 score = QuickStartComputeScore();
+        gSave.meta_xp += score;
+        gSave.runs_completed++;
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 8));
+        gMessage.rupees = score;
+        MsgInit();
+        SetRoomFlag(402);
         return;
     }
     if (gMessage.state & MESSAGE_ACTIVE) {
@@ -2559,6 +2647,12 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                     UpdateSpriteForCollisionLayer(itemEntity);
                     itemEntity->direction = IdleSouth;
                     SetRoomFlag(2);
+                    // Tied to the same SetRoomFlag(2) success path so this
+                    // only ever counts once per miniboss, even if
+                    // CreateObject fails and this branch legitimately
+                    // retries on a later frame (see QuickStartComputeScore,
+                    // docs/QUICKSTART_ROADMAP.md).
+                    gSave.miniboss_kills++;
                 }
             }
             return;
@@ -2861,6 +2955,16 @@ static void QuickStartProcessLinks(void) {
 // QuickStartUpdateItemChoice, which is specific to Castor Darknut Main) so
 // that leaving the starting room still gets QUICKSTART treatment.
 static void QuickStartRoomMonitor(void) {
+    // Run clock for the scoring system's time bonus (QuickStartComputeScore
+    // below) - called once per real frame during normal gameplay (from
+    // GameMain_Update) plus a handful of extra frames during each room's
+    // brief transition window (also called from QuickStartUpdate,
+    // GameMain_ChangeRoom) - close enough for a bonus threshold, not worth
+    // separating the two call sites over. gSave.run_frames itself is reset
+    // to 0 once per run in GameTask_Transition.
+    if (gSave.run_frames < 0xFFFFFFFF) {
+        gSave.run_frames++;
+    }
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartFixupQuestionRoomReturn();
