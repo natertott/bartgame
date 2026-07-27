@@ -512,6 +512,17 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
             if (gSave.stats.rupees <= 10) {
                 droptable.s.rupee5++;
             }
+#ifdef QUICKSTART
+            // r3 in [1, 12] is the enemy-table range (excludes grass/pot/area/crit tables).
+            if (r3 >= 1 && r3 <= 12) {
+                droptable.s.rupee1 += 300;
+                droptable.s.rupee5 += 250;
+                droptable.s.rupee20 += 100;
+                if (droptable.s.hearts > 0) {
+                    droptable.s.hearts = 2;
+                }
+            }
+#endif
             ptr2 = &gDroptableModifiers[DROPTABLE_NONE];
             r0 = gSave.stats.hasAllFigurines;
             ptr3 = &gDroptableModifiers[DROPTABLE_NONE];

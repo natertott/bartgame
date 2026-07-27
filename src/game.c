@@ -246,7 +246,11 @@ static void GameTask_Transition(void) {
     // every ladder-room reward) by hand.
     MemClear(gSave.inventory, sizeof(gSave.inventory));
     gSave.stats.heartPieces = 0;
-    gSave.stats.maxHealth = 40;
+    // 3 hearts to start (a full heart is 8 health units in this engine - see
+    // the ITEM_HEART_CONTAINER comment on phase 3's bonus-reward handling
+    // below, and DrawHearts/ui.c: gHUD.maxHealth = gSave.stats.maxHealth/2,
+    // itself in quarter-heart units).
+    gSave.stats.maxHealth = 24;
     gSave.stats.health = gSave.stats.maxHealth;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
