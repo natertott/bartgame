@@ -843,7 +843,13 @@ static void QuickStartClearCastleGuards(void) {
 // anything else sharing the room) - the density formula's own count gets
 // clamped to it, same as it's clamped to the offset pool size.
 #define QUICKSTART_GARDEN_ROOM_SQUARES 496
-#define QUICKSTART_GARDEN_MAX_ENEMIES 50
+// Temporarily halved from the original 50 - the user reported a garbled-
+// sprite display bug in Lon Lon Ranch consistent with running a room close
+// to entity.h's MAX_ENTITIES=72 ceiling; cutting every room's density back
+// for now (not just Lon Lon Ranch's) rather than assuming this one room is
+// uniquely at risk. Easy to raise again once the entity-budget picture is
+// better understood.
+#define QUICKSTART_GARDEN_MAX_ENEMIES 25
 static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
     { 0xc8, 0x96 },  { 0x15e, 0x96 },  { 0x1f4, 0x96 },  { 0x28a, 0x96 },  { 0x320, 0x96 },
     { 0xb4, 0xd2 },  { 0x186, 0xe6 },  { 0x1f4, 0xe6 },  { 0x262, 0xe6 },  { 0x320, 0xe6 },
@@ -1613,7 +1619,9 @@ static void QuickStartClearMelarisMineObstacles(void) {
 // enemy spawns. QUICKSTART_MINE_MAX_ENEMIES is the real, measured ceiling
 // with a safety margin, same role as Castle Garden's cap above.
 #define QUICKSTART_MINE_ROOM_SQUARES 418
-#define QUICKSTART_MINE_MAX_ENEMIES 40
+// Temporarily halved from the original 40 - see QUICKSTART_GARDEN_MAX_ENEMIES's
+// own comment above.
+#define QUICKSTART_MINE_MAX_ENEMIES 20
 static const s16 sQuickStartMineEnemyOffsets[62][2] = {
     { 0xfa, 0x56 },  { 0x14a, 0x56 },  { 0x19a, 0x56 },  { 0x1ea, 0x56 },  { 0x23a, 0x56 },
     { 0x96, 0x1cc }, { 0xfa, 0x1cc },  { 0x226, 0x1cc }, { 0x100, 0x100 }, { 0x193, 0x14e },
@@ -1655,7 +1663,10 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
 // with the entrance from Castle Garden and the win key's own spot (see
 // QuickStartSpawnWinKeyOnce) excluded.
 #define QUICKSTART_LONLON_ROOM_SQUARES 660
-#define QUICKSTART_LONLON_MAX_ENEMIES 50
+// Temporarily halved from the original 50 - see QUICKSTART_GARDEN_MAX_ENEMIES's
+// own comment above (this is the room the user actually saw the display
+// bug in, but the entity-budget risk isn't unique to it).
+#define QUICKSTART_LONLON_MAX_ENEMIES 25
 static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
     { 88, 24 },   { 168, 24 },  { 168, 56 },  { 56, 136 },  { 392, 136 }, { 24, 152 },  { 88, 152 },
     { 424, 152 }, { 56, 168 },  { 360, 168 }, { 392, 168 }, { 88, 184 },  { 296, 184 }, { 56, 200 },
@@ -1688,10 +1699,22 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
 // nothing to also delete any GORON-kind NPC that turns up here regardless,
 // the same idempotent per-frame backstop QuickStartClearMelarisMineObstacles
 // and QuickStartClearShopObstacles already use elsewhere in this file.
+//
+// Also deletes the ranch's own ambient animals (COW, CUCCO, CUCCO_CHICK) -
+// purely decorative, and each one is a real entity slot (entity.h:
+// MAX_ENTITIES=72 total for the whole room) that isn't free for the
+// Earth Element/enemy wave otherwise. The room measured at ~9 ambient
+// entities before any enemy spawns; freeing whichever of those are just
+// wandering animals gives QuickStartSpawnLonLonRanchEnemiesOnce's 50-enemy
+// wave (and QuickStartSpawnWinKeyOnce's reward) meaningfully more headroom,
+// per the user's own report of a garbled-sprite display bug consistent
+// with running the room close to its entity budget.
 static void QuickStartClearLonLonRanchGoron(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == NPC && gEntities[i].base.id == GORON) {
+        if (gEntities[i].base.kind == NPC &&
+            (gEntities[i].base.id == GORON || gEntities[i].base.id == COW || gEntities[i].base.id == CUCCO ||
+             gEntities[i].base.id == CUCCO_CHICK)) {
             DeleteEntity(&gEntities[i].base);
         }
     }
