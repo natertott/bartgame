@@ -960,7 +960,15 @@ const Transition gExitList_MinishHouseInteriors_Blue[] = {
 #endif
 #ifdef QUICKSTART
 const Transition gExitList_MinishHouseInteriors_SideArea[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    // Retargeted from Castle Garden to the Lon Lon Ranch ledge (the real
+    // vanilla cave's own north-exit landing spot, per
+    // gExitList_Caves_LonLonRanch) - this room is now the cave-connector's
+    // second door instead of a plain "? room" pool entry. See
+    // sQuickStartLinks in game.c for the matching first door (the cave
+    // entrance trigger box) and QuickStartEnforceContainment/
+    // QuickStartEnforceLonLonContainment for the containment exceptions
+    // this needs.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };

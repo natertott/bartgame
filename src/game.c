@@ -1565,30 +1565,36 @@ static const QuickStartLink sQuickStartLinks[] = {
     // instead, which (like QuickStartProcessLadderLinks) resolves the
     // target at the moment the trigger fires.
     //
-    // Lon Lon Ranch -> the cave connecting to the upper ledge (the user's
-    // own report: sealed off in vanilla, with an internal ladder up to a
-    // ledge inside Lon Lon Ranch that enemies already spawn on as part of
-    // this room's own enemy wave - see sQuickStartLonLonRanchEnemyOffsets -
-    // but that's currently unreachable without this). This is a real
-    // vanilla WARP_TYPE_AREA door (gExitList_HyruleField_LonLonRanch:
-    // startX=0xe8, startY=0x1b4, AREA_12x12 -> box +6/+6), same class of
-    // door as Castor Darknut Hall's own real door above that doesn't
-    // reliably fire under QUICKSTART on its own - the same trigger-box
-    // technique restores it here too. Landing spot (0xa8,0xd8) is the
-    // real vanilla entry's own endX/endY - a proven-safe spot the actual
-    // game already lands players on.
+    // Lon Lon Ranch -> a "? room"-style cave connector (the user's own
+    // report: the real vanilla cave here, AREA_CAVES/ROOM_CAVES_LON_LON_RANCH,
+    // has a large immovable block obstructing it after real playtesting -
+    // background geometry entity-clearing can't touch, same class of bug
+    // ROOM_TREE_INTERIORS_1c had - so that room was abandoned as this
+    // connector's destination). This is a real vanilla WARP_TYPE_AREA door
+    // (gExitList_HyruleField_LonLonRanch: startX=0xe8, startY=0x1b4,
+    // AREA_12x12 -> box +6/+6), same class of door as Castor Darknut Hall's
+    // own real door above that doesn't reliably fire under QUICKSTART on
+    // its own - the same trigger-box technique restores it here too, now
+    // leading instead to ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, an
+    // already-vetted "? room" pool room (removed from the general pool,
+    // see sQuickStartQuestionRoomPool's own comment) reused here as the
+    // connector's first door. Landing spot (0x80,0x78) is that room's real
+    // vanilla entry's own endX/endY (from AREA_MINISH_VILLAGE/
+    // ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA per transitions.c) - a
+    // proven-safe spot, same convention as the rest of this pool.
     //
-    // Unlike the Castor Wilds/Melari's Mine links above, this cave's own
-    // TWO real exits (a WARP_TYPE_BORDER south, back near this same
-    // entrance, and north, onto the ledge) are deliberately left
-    // untouched rather than retargeted - the whole point is restoring a
-    // real two-door passage, not routing both ends through one fixed
-    // spot the way the single-exit "? room" pool rooms do. See
-    // QuickStartEnforceLonLonContainment's own AREA_CAVES exception and
-    // QuickStartRoomMonitor's new AREA_CAVES/ROOM_CAVES_LON_LON_RANCH
-    // branch below for the room's contents.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xe2, 0xee, 0x1ae, 0x1ba, AREA_CAVES,
-      ROOM_CAVES_LON_LON_RANCH, 0xa8, 0xd8 },
+    // The room's second door is its own real south border exit,
+    // re-retargeted under #ifdef QUICKSTART in transitions.c
+    // (gExitList_MinishHouseInteriors_SideArea) from Castle Garden to the
+    // Lon Lon Ranch ledge (0xb8,0x138 - the real cave's own north-exit
+    // landing spot) - reusing a proven-reliable real transition as the
+    // "second door" instead of a brand-new custom trigger box. See
+    // QuickStartEnforceLonLonContainment's own exception and
+    // QuickStartEnforceContainment's AREA_HYRULE_FIELD exception, plus
+    // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA branch
+    // below for the room's contents.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xe2, 0xee, 0x1ae, 0x1ba, AREA_MINISH_HOUSE_INTERIORS,
+      ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0x80, 0x78 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -2467,7 +2473,16 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, -40 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, -40 },
+    // SIDE_AREA removed from this pool - it's now the Lon Lon Ranch cave
+    // connector's own dedicated room instead (see sQuickStartLinks and
+    // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA
+    // branch below). The room this replaced (AREA_CAVES/
+    // ROOM_CAVES_LON_LON_RANCH, the real vanilla cave itself) turned out
+    // to have a large immovable block obstructing it (reported by the
+    // user after real playtesting - not something entity-clearing can
+    // touch, same class of background-geometry problem
+    // ROOM_TREE_INTERIORS_1c had). This room was already a proven-safe,
+    // open, single-room pool candidate with no such obstruction.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, -40 },
     // Moved from (120,136) to (119,102) (contentDX/DY -1,-18) per the user's
     // report: the old spot put a LADDER_KIND_MINIBOSS Dark Nut right at the
@@ -2484,7 +2499,7 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
 // Literal, matching this file's other pool-size constants (see
 // QUICKSTART_LADDER_REWARD_POOL_SIZE below) rather than a sizeof-derived
 // expression, for the same __umodsi3 reason.
-#define QUICKSTART_QUESTION_ROOM_POOL_SIZE 20
+#define QUICKSTART_QUESTION_ROOM_POOL_SIZE 19
 
 // Every pool room's retargeted exit (src/data/transitions.c) lands here -
 // south of ladder 0's own real HIDDEN_LADDER_DOWN pot (104,104), clear of
@@ -2864,7 +2879,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
 
 // One-time content roll for the Lon Lon Ranch cave-connector room (see
 // sQuickStartLinks' own comment on the new entrance, and
-// QuickStartRoomMonitor's AREA_CAVES/ROOM_CAVES_LON_LON_RANCH branch
+// QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA branch
 // below) - a prototype "new kind of ? room" per the user's own request:
 // unlike the regular pool (QuickStartSetupLadderRoomContent above), this
 // one keeps its own two real doors (see the sQuickStartLinks comment)
@@ -2912,16 +2927,19 @@ static void QuickStartCaveConnectorSetExtra(u8 extra) {
     }
 }
 
-// Content position (0x78,0x78) matches the shared spawn point every
-// regular "? room" pool entry was confirmed walkable at
-// (QuickStartClearLadderRoomObstacles' own comment) - a reasonable first
-// guess for this room too since it's cleared the same way, but NOT yet
-// independently confirmed walkable here specifically (this room's real
-// vanilla layout - a vertical cave with a ladder - is different in kind
-// from the pool's single-screen rooms); adjust after checking in the
-// emulator if it turns out to land somewhere awkward (mid-ladder, etc.).
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x78
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x78
+// Unlike the regular "? room" pool (whose shared ladder-trigger entry always
+// lands at (0x78,0x78) regardless of physical room, so its own content sits
+// 40px north of that at (0x78,0x50)), this room's entry point is the cave
+// entrance's own real landing spot, (0x80,0x78) (see sQuickStartLinks) -
+// almost the same spot, so the same "40px north" offset is used here too:
+// placing the reward at the entrance's own X and Y-40 avoids the reward
+// spawning right under the player's feet and getting picked up instantly on
+// arrival (confirmed in the emulator: the room is a narrow north/south
+// vault corridor - up and down both walk cleanly for 40+ px from the
+// landing spot, left/right are blocked - so straight north is a safe,
+// reachable, distinct spot).
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x80
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x50
 static void QuickStartSetupCaveConnectorContent(void) {
     u8 kind;
     s32 contentX = QUICKSTART_CAVE_CONNECTOR_CONTENT_X;
@@ -3198,6 +3216,18 @@ static void QuickStartEnforceContainment(void) {
     if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
         return;
     }
+    // The cave-connector's second door: ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA's
+    // own real south border exit, re-retargeted in transitions.c to lead to
+    // the Lon Lon Ranch ledge instead of Castle Garden (see sQuickStartLinks'
+    // comment on the cave-connector entrance for the full picture). AREA_HYRULE_FIELD
+    // isn't on QuickStartAreaContained's list (it's a huge overworld area,
+    // same reasoning as QuickStartEnforceLonLonContainment's own comment),
+    // so this one specific destination needs its own exception the same way
+    // AREA_DOJOS/ROOM_DOJOS_GRIMBLADE does above.
+    if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
+        gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
     if (!QuickStartAreaContained(gRoomTransition.player_status.area_next)) {
         gRoomTransition.transitioningOut = 0;
     }
@@ -3243,17 +3273,18 @@ static void QuickStartEnforceLonLonContainment(void) {
          gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
-    // The real cave entrance (below, sQuickStartLinks) - unlike the ? room
-    // pool's own areas (Caves/Great Fairies/Royal Valley Graves, each
-    // selected for having exactly one real exit that's individually
-    // retargeted in transitions.c instead), this specific cave keeps BOTH
-    // its real exits untouched (north border -> the ledge, south border ->
-    // back near this same entrance) - the whole point of restoring this
-    // connection - so it isn't blanket-contained in QuickStartAreaContained
-    // either; this is only about letting the entrance transition itself
-    // through.
-    if (gRoomTransition.player_status.area_next == AREA_CAVES &&
-        gRoomTransition.player_status.room_next == ROOM_CAVES_LON_LON_RANCH) {
+    // The cave-connector's first door (below, sQuickStartLinks) - now
+    // ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA (the original AREA_CAVES/
+    // ROOM_CAVES_LON_LON_RANCH destination was abandoned after real
+    // playtesting found an immovable block obstructing it). Unlike
+    // AREA_MINISH_HOUSE_INTERIORS' own blanket QuickStartAreaContained
+    // membership (which the general QuickStartEnforceContainment relies
+    // on for every OTHER Minish House Interiors room), letting the player
+    // in here specifically still needs its own exception in this
+    // Lon-Lon-Ranch-scoped function, same as the Castle Garden/Ranch House
+    // exceptions above.
+    if (gRoomTransition.player_status.area_next == AREA_MINISH_HOUSE_INTERIORS &&
+        gRoomTransition.player_status.room_next == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
         return;
     }
     QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
@@ -3373,7 +3404,7 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(176, 56);
         QuickStartMaintainShop(sQuickStartRanchHouseEastShopOffsets);
-    } else if (gRoomControls.area == AREA_CAVES && gRoomControls.room == ROOM_CAVES_LON_LON_RANCH) {
+    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS && gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
         // The cave-connector prototype (see sQuickStartLinks' own comment on
         // the new entrance, and QuickStartSetupCaveConnectorContent above) -
         // same "clear real vanilla obstacles once" step every other
