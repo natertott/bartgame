@@ -268,6 +268,18 @@ static void GameTask_Transition(void) {
     gSave.enemies_killed = 0;
     gSave.miniboss_kills = 0;
     gSave.boss_kills = 0;
+    // Bomb bag/quiver capacity and current ammo count - like the equip
+    // slots just below, these are never touched by the inventory-ownership
+    // MemClear above (they're separate Stats fields, not inventory bits),
+    // so a Large Quiver/Bomb Bag upgrade found on one run silently carried
+    // its capacity (and whatever ammo count) into the next. Zeroed here so
+    // ammo capacity/count only ever comes from what's actually picked up
+    // this run, same as the starting Bombs/Bow/Boomerang choice already
+    // grants via the real GiveItem path.
+    gSave.stats.bombBagType = 0;
+    gSave.stats.bombCount = 0;
+    gSave.stats.quiverType = 0;
+    gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
     // L item slot - start empty like a fresh save, same as every other piece
@@ -973,6 +985,27 @@ static void QuickStartSpawnWinKeyOnce(void) {
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) != 0) {
         return;
     }
+    // Room flag 403: "already created one this round" - GiveItem (the real
+    // vanilla pickup path, LinkHoldingItem_Action1 in
+    // object/linkHoldingItem.c) isn't called until the pickup cutscene's own
+    // held-item entity reaches a specific animation frame, several frames
+    // after the original ItemOnGround entity here is already deleted (see
+    // ItemOnGround_Action4/sub_08081420) - so GetInventoryValue above still
+    // reads 0 for a real window after the item is physically gone. Without
+    // this flag, the entity scan below finds nothing during that window
+    // (the cutscene's own entity isn't a GROUND_ITEM) and concludes none
+    // exists yet, spawning a second Earth Element at the same spot - which
+    // the player then immediately stands on and picks up again the moment
+    // they regain control, replaying the whole cutscene a second time
+    // (reported by the user, reasoned from a full read of the real
+    // ItemOnGround -> LinkHoldingItem call chain rather than reproduced via
+    // emulator, since forcing this exact multi-entity timing window is
+    // impractical to script). No manual clearing needed elsewhere: like
+    // every other room flag in this file, it resets on its own the moment
+    // the room reloads for a genuinely new round.
+    if (CheckRoomFlag(403)) {
+        return;
+    }
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_EARTH_ELEMENT) {
@@ -987,6 +1020,7 @@ static void QuickStartSpawnWinKeyOnce(void) {
         itemEntity->collisionLayer = 1;
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
+        SetRoomFlag(403);
     }
 }
 
