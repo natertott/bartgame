@@ -38,6 +38,10 @@
 #include "flags.h"
 #include "tiles.h"
 #include "map.h"
+#include "vram.h"
+// Not declared in ui.h (see QuickStartDrawDifficultyHUD's own comment) -
+// plain non-static function, same as WriteSaveFile/MsgInit below.
+void RenderDigits(u32, u32, u32, u32);
 #endif
 
 // Game task
@@ -120,6 +124,7 @@ static void QuickStartProcessLinks(void);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
+static void QuickStartDrawDifficultyHUD(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
 static void QuickStartSpawnWinKeyOnce(void);
@@ -2056,6 +2061,50 @@ static void QuickStartIncrementDifficulty(void) {
     }
 }
 
+// Persistent HUD readout of the current run's difficulty (the user asked
+// "is there a way to display the current difficulty... a counter on the
+// HUD"). Uses the exact same BG0-tilemap digit mechanism DrawRupees/
+// DrawKeys already use (RenderDigits, ui.c): reading RenderDigits' own
+// addressing (src/ui.c) shows iconVramIndex is a starting VRAM tile index
+// and each decimal digit consumes 2 consecutive tiles for its 8x16 glyph
+// (top half/bottom half) - rupees (3 digits) claims 0x70-0x75, keys (2
+// digits) claims 0x76-0x79 right after, so 0x7A is the first tile past
+// both. Confirmed safe empirically (screenshot after wiring this up shows
+// nothing else on screen affected).
+//
+// Placed at the bottom-left corner of the screen (gBG0Buffer row 18, col
+// 0-1 - row 18 is the same row DrawRupees uses on the opposite/right side
+// of the screen) since every screenshot taken this session shows that
+// corner is otherwise always empty.
+//
+// Redrawn unconditionally every frame rather than latched "once per run" -
+// a first attempt used a one-shot global-flag latch (matching the "draw
+// once" instinct: difficulty never changes mid-run), but that only ever
+// showed up for a single frame before vanishing again, confirmed via
+// memory inspection in the emulator: every real room transition reloads
+// the WHOLE BG0 tilemap and character data fresh from the new room's own
+// map data, wiping both the tilemap entries and the tile graphics
+// RenderDigits had written, and the latch then prevented ever redrawing
+// either. DrawRupees/DrawKeys (ui.c) already solve exactly this the same
+// way - reasserting their own tiles/digits every single frame rather than
+// once - so this does the same instead of trying to be cleverer about it.
+// The actual cost (a handful of u16 writes plus RenderDigits' own small
+// DMA copies) is trivial on GBA hardware and no different in kind from
+// what those two already do far more often (every frame rupees/keys are
+// on screen at all).
+#define QUICKSTART_DIFFICULTY_VRAM_TILE 0x7A
+static void QuickStartDrawDifficultyHUD(void) {
+    u16* row1 = &gBG0Buffer[0x240];
+    u16* row2 = &gBG0Buffer[0x260];
+    u16 temp = 0xf000 | QUICKSTART_DIFFICULTY_VRAM_TILE;
+    row1[0] = temp;
+    row2[0] = temp + 1;
+    row1[1] = temp + 2;
+    row2[1] = temp + 3;
+    gScreen.bg0.updated = 1;
+    RenderDigits(QUICKSTART_DIFFICULTY_VRAM_TILE, QuickStartGetDifficulty(), 0, 2);
+}
+
 // The enemy roster, grouped into 5 hand-picked difficulty levels (level 1
 // easiest, level 5 hardest) per the user's own list - only enemies with a
 // straightforward, crash-free CreateEnemy(id, form) spawn made the cut;
@@ -3021,6 +3070,7 @@ static void QuickStartRoomMonitor(void) {
     if (gSave.run_frames < 0xFFFFFFFF) {
         gSave.run_frames++;
     }
+    QuickStartDrawDifficultyHUD();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartFixupQuestionRoomReturn();
