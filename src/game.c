@@ -2268,12 +2268,31 @@ static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty
     return &sQuickStartDifficultyTiers[difficulty];
 }
 
+// GBA sprite-graphics VRAM is a completely separate, much scarcer budget
+// than MAX_ENTITIES (entity.h, 72): only MAX_GFX_SLOTS (vram.h, 44) distinct
+// sprite graphics sets can be loaded at once via gGFXSlots (see vram.c's
+// FindFreeGFXSlots/ReserveGFXSlots/CleanUpGFXSlots), regardless of how many
+// entities exist. QuickStartPickEnemy rolling a fresh random enemy per
+// individual spawn meant a single wave of 20-25 enemies could trivially
+// need 10+ distinct GFX slots on top of everything else the room needs
+// (player, HUD, any reward item) - blowing the 44-slot budget and
+// corrupting sprite data for everything else in the room, likely including
+// the Earth Element reward itself (it can still exist as an entity but
+// never get a GFX slot to actually render or be interacted with). Capping
+// each wave to a handful of distinct types, rolled once per wave rather
+// than per enemy, keeps the cross-room/round variety the original design
+// wanted (see QuickStartPickEnemy's own comment) while bounding the worst
+// case. See QuickStartSpawnEnemyGroup below for where this is applied.
+#define QUICKSTART_WAVE_TYPE_CAP 3
+
 // Rolls one fresh enemy (id + form) for the given difficulty: first picks a
 // level via the tier's weights (a plain weighted die roll over whichever
 // levels have nonzero weight this tier), then picks uniformly at random
-// within that level's roster. Called once per enemy spawned rather than
-// once per room, so - exactly per the brief - two rooms at the same
-// difficulty can come out with entirely different enemy mixes.
+// within that level's roster. QuickStartSpawnEnemyGroup below calls this
+// only QUICKSTART_WAVE_TYPE_CAP times per wave now (not once per enemy) -
+// enough that two rooms at the same difficulty still come out with
+// different enemy mixes, without every individual enemy needing its own
+// distinct GFX slot.
 static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
     const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
     s32 roll = (s32)Random() % 100;
@@ -2313,9 +2332,11 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
 // constants above each call site).
 static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, difficulty, density, cap;
+    s32 i, j, r, tmp, count, difficulty, density, cap, waveTypeCount, k;
     Entity* enemy;
     u8 id, form;
+    u8 waveIds[QUICKSTART_WAVE_TYPE_CAP];
+    u8 waveForms[QUICKSTART_WAVE_TYPE_CAP];
 
     if (offsetCount > 72) {
         offsetCount = 72;
@@ -2344,9 +2365,23 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
         count = cap;
     }
 
+    // Roll a small, fixed set of distinct enemy types once for this whole
+    // wave (see QUICKSTART_WAVE_TYPE_CAP's own comment above
+    // QuickStartPickEnemy) instead of once per enemy - every enemy spawned
+    // below draws from this set rather than rolling independently.
+    waveTypeCount = (count < QUICKSTART_WAVE_TYPE_CAP) ? count : QUICKSTART_WAVE_TYPE_CAP;
+    if (waveTypeCount < 1) {
+        waveTypeCount = 1;
+    }
+    for (i = 0; i < waveTypeCount; i++) {
+        QuickStartPickEnemy(difficulty, &waveIds[i], &waveForms[i]);
+    }
+
     for (i = 0; i < count; i++) {
         j = indices[i];
-        QuickStartPickEnemy(difficulty, &id, &form);
+        k = (s32)Random() % waveTypeCount;
+        id = waveIds[k];
+        form = waveForms[k];
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
             enemy->x.HALF.HI = gRoomControls.origin_x + offsets[j][0];
