@@ -1122,8 +1122,16 @@ const Transition gExitList_MinishHouseInteriors_HyruleFieldExit[] = {
 #endif
 #ifdef QUICKSTART
 const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
+    // Retargeted to the Lon Lon Ranch spot the abandoned Ranch House West
+    // room's own exit used to use (0x159,0x2c6 = 345,710) rather than the
+    // shared Castle Garden landing spot every other pool room uses - this
+    // room is now dedicated to ladder slot 2 (see sQuickStartFixedRoomContentPos
+    // in game.c), which enters and returns via Lon Lon Ranch, not Castle
+    // Garden. Clear of the entrance trigger box's own center (game.c's
+    // sQuickStartLinks), so landing here doesn't instantly bounce the
+    // player back inside.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x159, 0x2c6, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
