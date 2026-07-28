@@ -1163,6 +1163,21 @@ static void QuickStartCheckWinCondition(void) {
         return;
     }
     if (!CheckRoomFlag(400)) {
+        // Wait for the real vanilla "You got the Earth Element" pickup
+        // cutscene to finish and be dismissed before starting our own
+        // message - GetInventoryValue(ITEM_EARTH_ELEMENT) above already
+        // reads nonzero the instant the item is touched, well before that
+        // cutscene's own multi-page text is done with gMessage, and
+        // MessageRequest below does an unconditional MemClear(&gMessage,
+        // ...): firing it immediately here was confirmed in the emulator
+        // (via a real walk-up pickup, not a memory poke - see
+        // scratchpad/vidframes this session) to silently clobber the real
+        // cutscene's state and race straight through to DoSoftReset within
+        // a couple of frames, so neither this message nor the score message
+        // below ever actually got shown to the player.
+        if (gMessage.state & MESSAGE_ACTIVE) {
+            return;
+        }
         QuickStartIncrementDifficulty();
         MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 0));
         // MessageRequest above MemClears the whole gMessage struct, so
@@ -1337,18 +1352,20 @@ static const QuickStartLink sQuickStartLinks[] = {
     // link - that real door's own position is this trigger box, and it was
     // found winning the race against this link in practice (landing the
     // player in the old vanilla destination, Castor Caves, instead), so
-    // both now agree regardless of which one actually fires. Landing spot
-    // (120,120), well clear of the OTHER direction's own trigger box below
-    // (108-126,50-62 in Melari's Mine) - (120,65), tried first, turned out
-    // to still be caught by a slow passive drift toward that box (confirmed
-    // in the emulator: spawning as close as (120,82) stays put for ~100
-    // frames, then drifts north several px per frame with zero input,
-    // eventually crossing into the box and bouncing straight back to Hall -
-    // an infinite loop the user reported). (120,120) sits well outside the
-    // whole drift-affected range (confirmed stable over 300+ idle frames,
-    // walkable in all 4 directions).
+    // both now agree regardless of which one actually fires.
+    //
+    // Landing spot (150,70): the user reported (120,120) - this link's
+    // original spot, picked purely to dodge a drift bug near the OTHER
+    // direction's own trigger box (108-126,50-62) - didn't read as "near
+    // the door" (it's a fair way further south, in open floor). Re-surveyed
+    // in the emulator directly against the door archway instead of drift-
+    // avoidance alone: (150,70) sits right at the corridor's north wall,
+    // visually at the door, well clear of the return box in X (108-126)
+    // even though it's close in Y - confirmed stable over 350+ idle frames
+    // (zero drift) and walkable down/left/right (blocked north by the wall
+    // it's placed against, as expected for a spot right at the archway).
     { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 120, 120 },
+      ROOM_MELARIS_MINE_MAIN, 150, 70 },
     // Melari's Mine, Door A (west end of the corridor) -> back to Castor
     // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
     // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
