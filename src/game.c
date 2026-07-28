@@ -1518,44 +1518,23 @@ static const QuickStartLink sQuickStartLinks[] = {
     // (315,975), placed by the user directly (Lua position script).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 287, 343, 966, 984, AREA_CASTLE_GARDEN,
       ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
-    // Lon Lon Ranch -> Talon and Malon's house, WEST door position - but no
-    // longer actually leading into that room. Real playtesting found a
-    // large, un-clearable black obstruction blocking part of Talon and
-    // Malon's west bedroom (a background-geometry bug, same class as the
-    // abandoned cave connector candidate) plus door/collision glitches
-    // between it and the east room, so ladder slot 2 now points at
-    // ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN instead - an already-vetted
-    // "? room" pool room, removed from the general pool and dedicated here
-    // (see sQuickStartFixedRoomContentPos's own comment). Trigger box itself
-    // unchanged (centered on (345,651), placed by the user directly via Lua
-    // position script, close to the real vanilla west door's own position).
-    // Landing spot (120,120) matches this pool room's own shared
-    // entrance/spawn point, same convention as every other pool room.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 329, 361, 643, 659, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 120, 120 },
-    // Lon Lon Ranch -> Talon and Malon's house, EAST room. Trigger box
-    // centered on (392,635), placed by the user directly (Lua position
-    // script) - matches the real vanilla door's own position almost
-    // exactly (gExitList_HyruleField_LonLonRanch[1]: local (392,632),
-    // WARP_TYPE_AREA -> AREA_HOUSE_INTERIORS_4/ROOM_HOUSE_INTERIORS_4_
-    // RANCH_HOUSE_EAST). A previous round of this file wrongly sent this
-    // to the WEST room's own second south-wall gap instead - that gap is
-    // the Minish-only crack, not a real regular-Link door, and had nothing
-    // to do with the east room at all. Lands at (120,120), the same spot
-    // the real (also-unreliable-under-QUICKSTART) vanilla door itself
-    // targets.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 376, 408, 627, 643, AREA_HOUSE_INTERIORS_4,
-      ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 120, 120 },
-    // Ranch house East no longer has its own custom exit link - it's the
-    // merchant's second shop location, and leaves the house via its own real
-    // WARP_TYPE_BORDER exit, left at its untouched vanilla spot (already
-    // confirmed to fire correctly under QUICKSTART on its own - border-type
-    // transitions don't depend on the undecompiled per-tile ACT_TILE check
-    // the WARP_TYPE_AREA entrance doors above need, and fire correctly with
-    // sustained holding against the wall). The WEST room itself is no longer
-    // used at all (see the entrance link above, now retargeted to
-    // ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN instead) - its own real border
-    // exit is simply never reached anymore.
+    // Talon and Malon's house (both west and east rooms) is fully reset to
+    // vanilla per the user's own request - repeated rounds of custom content
+    // there (a "? room" reward in the west room, a second shop location in
+    // the east room) kept turning up new bugs (a large un-clearable black
+    // obstruction in the west room, a real internal west/east connecting
+    // door bleeding through past our own custom systems, shop item
+    // density concerns) on top of each other. No custom entrance trigger
+    // boxes for either room here anymore - both real vanilla
+    // WARP_TYPE_AREA doors (gExitList_HyruleField_LonLonRanch) are left
+    // exactly as-is, same "unreliable under QUICKSTART, same as every
+    // other un-retargeted WARP_TYPE_AREA door" situation as Castle Garden's
+    // own north door above, not something this file tries to work around
+    // for this house anymore. See QuickStartEnforceLonLonContainment's own
+    // exception below for both rooms (letting the real doors through
+    // without canceling them, but adding nothing on top), and
+    // transitions.c/QuickStartRoomMonitor for the rest of the reset (no
+    // ifdef divergence, no ladder/shop content dispatch).
     //
     // Lon Lon Ranch's Goron Cave door itself (the real vanilla door the
     // wall-punching Goron used to block - see the KINSTONE_29 fuse in
@@ -1799,26 +1778,6 @@ static void QuickStartSolveLonLonBoulder(void) {
     }
 }
 
-// One more "? room" slot (ladder index 2 - see GF_LADDER_BASE etc. above
-// and QuickStartRoomMonitor below) alongside the 20-room Castle Garden
-// ladder pool and the Goron Cave Stairs door's own pool draw (ladder index
-// 3, see sQuickStartLadderEntrances below - that one draws its room from
-// the pool like Castle Garden's ladders do, rather than being a fixed
-// room): now ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN (removed from
-// sQuickStartQuestionRoomPool above and dedicated here instead), reached via
-// its own dedicated sQuickStartLinks entrance rather than a ladder, same as
-// before. Talon and Malon's house's WEST room (the original ladder-2 room)
-// turned out to have a large, un-clearable black obstruction (reported by
-// the user after real playtesting) - the same class of background-geometry
-// bug as the abandoned cave connector candidate. (120,80) matches every
-// other Minish House Interiors pool room's own shared content spot (40px
-// north of the shared (120,120) entrance/spawn point) rather than a
-// room-specific hand-walked position, since this room already uses that
-// same convention as a former pool member.
-static const s16 sQuickStartFixedRoomContentPos[1][2] = {
-    { 120, 80 },
-};
-
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
 // room flag 2 "watching this visit's drop" - shared by the initial grant
 // and the re-drop path in QuickStartSpawnMelarisMineRewardOnce below.
@@ -1988,15 +1947,6 @@ static const s16 sQuickStartShopItemOffsets[][2] = {
     { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
     { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
 };
-// Lon Lon Ranch east house room's own catalog layout - same 5+4 two-row
-// split as Grimblade's, independently verified walkable in the emulator
-// (per-spot movement check from the room's own (120,120) entrance) since
-// this room's furniture layout is completely different from Grimblade's.
-static const s16 sQuickStartRanchHouseEastShopOffsets[][2] = {
-    { 60, 72 }, { 90, 72 }, { 120, 72 }, { 150, 72 }, { 180, 72 },
-    { 170, 104 }, { 140, 104 }, { 110, 104 }, { 80, 104 },
-};
-
 // Whether one of our own SHOP_ITEM props for the given catalog item still
 // exists in the current room - false while it's off being carried, on the
 // pedestal, or (per sub_080819B4 in itemForSale.c) has just been consumed
@@ -2507,17 +2457,7 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 0, -40 },
-    // HYRULE_TOWN removed from this pool - it's now Ranch House West's
-    // dedicated replacement room instead (ladder index 2, see
-    // sQuickStartFixedRoomContentPos, sQuickStartLinks, and
-    // QuickStartFindLadderForCurrentRoom below). The real Ranch House West
-    // room (Talon and Malon's bedroom) turned out to have a large,
-    // un-clearable black obstruction blocking part of the room (reported
-    // by the user after real playtesting, screenshot showed it blocking
-    // what should be a stairway) - the same class of background-geometry
-    // bug as the abandoned cave connector candidate and
-    // ROOM_TREE_INTERIORS_1c. This room was already a proven-safe, open,
-    // single-room pool candidate with no such obstruction.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, -40 },
@@ -2550,7 +2490,7 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
 // Literal, matching this file's other pool-size constants (see
 // QUICKSTART_LADDER_REWARD_POOL_SIZE below) rather than a sizeof-derived
 // expression, for the same __umodsi3 reason.
-#define QUICKSTART_QUESTION_ROOM_POOL_SIZE 18
+#define QUICKSTART_QUESTION_ROOM_POOL_SIZE 19
 
 // Every pool room's retargeted exit (src/data/transitions.c) lands here -
 // south of ladder 0's own real HIDDEN_LADDER_DOWN pot (104,104), clear of
@@ -2762,18 +2702,8 @@ static void QuickStartClearLadderRoomObstacles(void) {
 // reward was observed picking itself up automatically the instant the
 // room loads, with no discovery moment at all.
 //
-// Ladder index 2 (Ranch House West) isn't part of the random pool draw -
-// it's a fixed room, so its content position is just
-// sQuickStartFixedRoomContentPos directly rather than a pool lookup. Index
-// 3 (Goron Cave Stairs door) IS a pool draw like 0-1, so it falls through
-// to the regular lookup below.
 static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
     s32 rawIndex, poolIndex;
-    if (ladderIndex == 2) {
-        *contentX = sQuickStartFixedRoomContentPos[0][0];
-        *contentY = sQuickStartFixedRoomContentPos[0][1];
-        return;
-    }
     rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
     poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
     *contentX = 0x78 + sQuickStartQuestionRoomPool[poolIndex].contentDX;
@@ -2918,10 +2848,10 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
-                // % 2: ladder indices 2-3 (Ranch House) reuse the same 2
-                // NPC scripts as indices 0-1 rather than needing their own -
-                // the script itself doesn't reference which physical room
-                // it's running in.
+                // % 2: ladder index 3 (Goron Cave Stairs door) reuses the
+                // same 2 NPC scripts as indices 0-1 rather than needing its
+                // own - the script itself doesn't reference which physical
+                // room it's running in.
                 QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[ladderIndex % 2]);
             }
         }
@@ -3126,17 +3056,14 @@ static bool32 QuickStartAreaContained(u8 area) {
            area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
 }
 
-// Which ladder slot (0-3) the current room is standing in for, or -1 if it
-// isn't one of them. Unlike the old fixed 3-branch dispatch this replaces,
-// the pool spans several real areas (Minish House Interiors, Tree Interiors,
-// Caves, Great Fairies, Royal Valley Graves) and which physical room maps to
-// which ladder varies per save, so a plain area/room comparison against
-// fixed constants doesn't work for slots 0, 1, or 3 (all three draw their
-// room from the pool - see QuickStartRandomizeLaddersOnce) - this checks
-// against each one's current runtime assignment instead. Slot 2 (formerly
-// Ranch House West, now ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN - see
-// sQuickStartFixedRoomContentPos's own comment) IS a fixed physical room
-// though (no pool draw), so that one's a direct area/room match.
+// Which ladder slot (0, 1, or 3 - slot 2 is retired, see sQuickStartLinks'
+// own comment on the Ranch House reset) the current room is standing in
+// for, or -1 if it isn't one of them. The pool spans several real areas
+// (Minish House Interiors, Tree Interiors, Caves, Great Fairies, Royal
+// Valley Graves) and which physical room maps to which ladder varies per
+// save, so a plain area/room comparison against fixed constants doesn't
+// work - this checks against each one's current runtime assignment
+// instead.
 static s32 QuickStartFindLadderForCurrentRoom(void) {
     static const u8 sPoolDrawLadderIndices[3] = { 0, 1, 3 };
     s32 k, i, rawIndex, poolIndex;
@@ -3148,9 +3075,6 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
             gRoomControls.room == sQuickStartQuestionRoomPool[poolIndex].room) {
             return i;
         }
-    }
-    if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS && gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN) {
-        return 2;
     }
     return -1;
 }
@@ -3171,49 +3095,19 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
 // spawning "inside a shrubbery"); (935,311), well north at the same x, is
 // the closest confirmed-walkable point, open in every direction except
 // the hedge immediately east. Indexed directly by ladderIndex (0-3), not by
-// draw order, so indices 2 and 3 are unused placeholders here: index 2
-// (Ranch House West)'s own real exit never targets Castle Garden Main, and
-// index 3 (Goron Cave Stairs door)'s pool room is redirected back to Lon
-// Lon Ranch entirely (not just repositioned within Castle Garden) by
-// QuickStartFixupQuestionRoomReturn's own ladderIndex == 3 special case
-// below - both are skipped before this array is ever read with that index.
+// draw order, so indices 2 and 3 are unused placeholders here: index 2 is
+// retired entirely (see sQuickStartLinks' own comment on the Ranch House
+// reset), and index 3 (Goron Cave Stairs door)'s pool room is redirected
+// back to Lon Lon Ranch entirely (not just repositioned within Castle
+// Garden) by QuickStartFixupQuestionRoomReturn's own ladderIndex == 3
+// special case below - both are skipped before this array is ever read
+// with that index.
 static const s16 sQuickStartLadderReturnSpots[4][2] = {
     { 105, 144 },
     { 935, 311 },
     { 0, 0 },
     { 0, 0 },
 };
-
-// Talon and Malon's house WEST room is fully deprecated now (see
-// sQuickStartLinks' own entrance comment and sQuickStartFixedRoomContentPos
-// - ladder slot 2 moved to ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN after
-// real playtesting found a large, un-clearable black obstruction here).
-// Despite that, the room still has a real internal connection to the EAST
-// room (walking far enough west while browsing the shop drops the player
-// straight into this room - reported by the user, confirmed in the
-// emulator: no sQuickStartLinks entry or transitions.c exit is involved at
-// all, so this is real vanilla background/tile behavior our custom system
-// has no hook into, not a scripted door we can just retarget). Rather than
-// try to block that tile-level connection itself, this just detects
-// landing here - by any path - and immediately bounces the player back out
-// to Lon Lon Ranch, at the same spot the room's own real border exit
-// (transitions.c) already uses, so there's no double-transition oddity.
-static void QuickStartBounceFromRanchHouseWest(void) {
-    if (gRoomControls.area != AREA_HOUSE_INTERIORS_4 || gRoomControls.room != ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST) {
-        return;
-    }
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
-    gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_LON_LON_RANCH;
-    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    gRoomTransition.player_status.start_pos_x = 345;
-    gRoomTransition.player_status.start_pos_y = 710;
-    gRoomTransition.player_status.layer = 1;
-    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-    gRoomTransition.transitioningOut = 1;
-}
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
 // called alongside it below) so it catches the outgoing transition while
@@ -3351,12 +3245,15 @@ static void QuickStartEnforceLonLonContainment(void) {
         gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
-    // Ranch House EAST only now - WEST is no longer used at all (see
-    // sQuickStartLinks' own entrance comment: that trigger box now leads to
-    // ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN instead, covered by the
-    // exception right below).
+    // Talon and Malon's house, reset to vanilla (see sQuickStartLinks' own
+    // comment) - no custom trigger box for either room anymore, just the
+    // real vanilla WARP_TYPE_AREA doors themselves, same "may not always
+    // fire under QUICKSTART" situation as Castle Garden's own real north
+    // door. This just lets either one through without canceling it if it
+    // does fire - nothing else is done for this house anymore.
     if (gRoomTransition.player_status.area_next == AREA_HOUSE_INTERIORS_4 &&
-        gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST) {
+        (gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
+         gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
     // The cave-connector's first door (below, sQuickStartLinks) - now
@@ -3371,14 +3268,6 @@ static void QuickStartEnforceLonLonContainment(void) {
     // exceptions above.
     if (gRoomTransition.player_status.area_next == AREA_MINISH_HOUSE_INTERIORS &&
         gRoomTransition.player_status.room_next == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
-        return;
-    }
-    // Ladder slot 2's entrance (above, sQuickStartLinks) - now
-    // ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN in place of the abandoned
-    // Ranch House West room, same reasoning as the SIDE_AREA exception just
-    // above.
-    if (gRoomTransition.player_status.area_next == AREA_MINISH_HOUSE_INTERIORS &&
-        gRoomTransition.player_status.room_next == ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN) {
         return;
     }
     QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
@@ -3439,7 +3328,6 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartDrawDifficultyHUD();
-    QuickStartBounceFromRanchHouseWest();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartFixupQuestionRoomReturn();
@@ -3488,17 +3376,6 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(120, 125);
         QuickStartMaintainShop(sQuickStartShopItemOffsets);
-    } else if (gRoomControls.area == AREA_HOUSE_INTERIORS_4 &&
-               gRoomControls.room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST) {
-        // The east house room is the merchant's second location now (same
-        // catalog, same script - see QuickStartSpawnShopMerchantOnce above)
-        // rather than a "? room" - it no longer goes through
-        // QuickStartFindLadderForCurrentRoom at all. Slot 3 (which used to
-        // be this room) is now the Goron Cave Stairs door's own pool draw
-        // instead - see sQuickStartLadderEntrances.
-        QuickStartClearShopObstacles();
-        QuickStartSpawnShopMerchantOnce(176, 56);
-        QuickStartMaintainShop(sQuickStartRanchHouseEastShopOffsets);
     } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS && gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
         // The cave-connector prototype (see sQuickStartLinks' own comment on
         // the new entrance, and QuickStartSetupCaveConnectorContent above) -
@@ -3508,10 +3385,9 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearLadderRoomObstacles();
         QuickStartSetupCaveConnectorContent();
     } else {
-        // Falls through to here for Ranch House West (slot 2, a fixed
-        // room) and for whichever pool room the Goron Cave Stairs door
-        // (slot 3) currently resolves to - same generic dispatch as
-        // Castle Garden's own two ladders (slots 0-1).
+        // Falls through to here for whichever pool room the Goron Cave
+        // Stairs door (slot 3) currently resolves to - same generic
+        // dispatch as Castle Garden's own two ladders (slots 0-1).
         s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
         if (ladderIndex >= 0) {
             QuickStartSetupLadderRoomContent(ladderIndex);
