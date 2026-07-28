@@ -125,6 +125,7 @@ static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
+static void QuickStartSetupCaveConnectorContent(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
 static void QuickStartSpawnWinKeyOnce(void);
@@ -1557,6 +1558,31 @@ static const QuickStartLink sQuickStartLinks[] = {
     // a static entry in this table. See sQuickStartLadderEntrances below
     // instead, which (like QuickStartProcessLadderLinks) resolves the
     // target at the moment the trigger fires.
+    //
+    // Lon Lon Ranch -> the cave connecting to the upper ledge (the user's
+    // own report: sealed off in vanilla, with an internal ladder up to a
+    // ledge inside Lon Lon Ranch that enemies already spawn on as part of
+    // this room's own enemy wave - see sQuickStartLonLonRanchEnemyOffsets -
+    // but that's currently unreachable without this). This is a real
+    // vanilla WARP_TYPE_AREA door (gExitList_HyruleField_LonLonRanch:
+    // startX=0xe8, startY=0x1b4, AREA_12x12 -> box +6/+6), same class of
+    // door as Castor Darknut Hall's own real door above that doesn't
+    // reliably fire under QUICKSTART on its own - the same trigger-box
+    // technique restores it here too. Landing spot (0xa8,0xd8) is the
+    // real vanilla entry's own endX/endY - a proven-safe spot the actual
+    // game already lands players on.
+    //
+    // Unlike the Castor Wilds/Melari's Mine links above, this cave's own
+    // TWO real exits (a WARP_TYPE_BORDER south, back near this same
+    // entrance, and north, onto the ledge) are deliberately left
+    // untouched rather than retargeted - the whole point is restoring a
+    // real two-door passage, not routing both ends through one fixed
+    // spot the way the single-exit "? room" pool rooms do. See
+    // QuickStartEnforceLonLonContainment's own AREA_CAVES exception and
+    // QuickStartRoomMonitor's new AREA_CAVES/ROOM_CAVES_LON_LON_RANCH
+    // branch below for the room's contents.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xe2, 0xee, 0x1ae, 0x1ba, AREA_CAVES,
+      ROOM_CAVES_LON_LON_RANCH, 0xa8, 0xd8 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -2092,7 +2118,21 @@ static void QuickStartIncrementDifficulty(void) {
 // DMA copies) is trivial on GBA hardware and no different in kind from
 // what those two already do far more often (every frame rupees/keys are
 // on screen at all).
-#define QUICKSTART_DIFFICULTY_VRAM_TILE 0x7A
+//
+// VRAM tile 0x7A (this constant's first value) turned out NOT to be free -
+// missed on the first pass because only ui.c's own RenderDigits call sites
+// (rupees at 0x70, keys at 0x76) were checked. message.c's own textbox
+// border tiles (MSG_BORDER_CORNER = 0x7B, running through 0x7F) sit right
+// past those, and the real message-text glyph rendering claims a further
+// stretch beyond that (MSG_TEXT_LINE1TOP=0x82 through MSG_TEXT_LINE2BOTTOM=
+// 0xB7 and whatever ring of tiles follows it) - overlapping this HUD
+// element's 4 tiles (0x7A-0x7D) corrupted the textbox border into a
+// garbled tooth/comb pattern the instant any message showed on screen
+// (reported by the user, reproduced by inspecting message.c after the
+// report rather than guessing blind). 0x1E0 is comfortably clear of both
+// that whole range and the rupees/keys range, confirmed empirically this
+// time with a message box actually open on screen, not just idle gameplay.
+#define QUICKSTART_DIFFICULTY_VRAM_TILE 0x1E0
 static void QuickStartDrawDifficultyHUD(void) {
     u16* row1 = &gBG0Buffer[0x240];
     u16* row2 = &gBG0Buffer[0x260];
@@ -2799,6 +2839,173 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
     }
 }
 
+// One-time content roll for the Lon Lon Ranch cave-connector room (see
+// sQuickStartLinks' own comment on the new entrance, and
+// QuickStartRoomMonitor's AREA_CAVES/ROOM_CAVES_LON_LON_RANCH branch
+// below) - a prototype "new kind of ? room" per the user's own request:
+// unlike the regular pool (QuickStartSetupLadderRoomContent above), this
+// one keeps its own two real doors (see the sQuickStartLinks comment)
+// instead of a single fixed entrance/return spot, and is deliberately its
+// own standalone implementation rather than folded into that pool's
+// ladderIndex-driven machinery - it only ever applies to this one
+// physical room, and the pool's own 4-slot bit budget
+// (GF_LADDER_BASE(i), i=0..3) has no room left for a 5th index before
+// running into GF_DIFFICULTY_BIT at 174 anyway. Dedicated global flag
+// bits instead, right after the difficulty counter's own 174-177.
+#define GF_CAVE_CONNECTOR_KIND_BIT(b) (178 + (b))  // b = 0,1 -> 0..3, only 0..2 (kind) used
+#define GF_CAVE_CONNECTOR_EXTRA_BIT(b) (180 + (b)) // b = 0..2 -> 0..7, reward pool index
+#define GF_CAVE_CONNECTOR_DONE 183
+
+static u8 QuickStartCaveConnectorGetKind(void) {
+    return (CheckGlobalFlag(GF_CAVE_CONNECTOR_KIND_BIT(0)) ? 1 : 0) |
+           (CheckGlobalFlag(GF_CAVE_CONNECTOR_KIND_BIT(1)) ? 2 : 0);
+}
+
+static u8 QuickStartCaveConnectorGetExtra(void) {
+    return (CheckGlobalFlag(GF_CAVE_CONNECTOR_EXTRA_BIT(0)) ? 1 : 0) |
+           (CheckGlobalFlag(GF_CAVE_CONNECTOR_EXTRA_BIT(1)) ? 2 : 0) |
+           (CheckGlobalFlag(GF_CAVE_CONNECTOR_EXTRA_BIT(2)) ? 4 : 0);
+}
+
+static void QuickStartCaveConnectorSetKind(u8 kind) {
+    s32 b;
+    for (b = 0; b < 2; b++) {
+        if (kind & (1 << b)) {
+            SetGlobalFlag(GF_CAVE_CONNECTOR_KIND_BIT(b));
+        } else {
+            ClearGlobalFlag(GF_CAVE_CONNECTOR_KIND_BIT(b));
+        }
+    }
+}
+
+static void QuickStartCaveConnectorSetExtra(u8 extra) {
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (extra & (1 << b)) {
+            SetGlobalFlag(GF_CAVE_CONNECTOR_EXTRA_BIT(b));
+        } else {
+            ClearGlobalFlag(GF_CAVE_CONNECTOR_EXTRA_BIT(b));
+        }
+    }
+}
+
+// Content position (0x78,0x78) matches the shared spawn point every
+// regular "? room" pool entry was confirmed walkable at
+// (QuickStartClearLadderRoomObstacles' own comment) - a reasonable first
+// guess for this room too since it's cleared the same way, but NOT yet
+// independently confirmed walkable here specifically (this room's real
+// vanilla layout - a vertical cave with a ladder - is different in kind
+// from the pool's single-screen rooms); adjust after checking in the
+// emulator if it turns out to land somewhere awkward (mid-ladder, etc.).
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x78
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x78
+static void QuickStartSetupCaveConnectorContent(void) {
+    u8 kind;
+    s32 contentX = QUICKSTART_CAVE_CONNECTOR_CONTENT_X;
+    s32 contentY = QUICKSTART_CAVE_CONNECTOR_CONTENT_Y;
+    if (CheckGlobalFlag(GF_CAVE_CONNECTOR_DONE)) {
+        return;
+    }
+    if (!CheckRoomFlag(0)) {
+        kind = (u8)((s32)Random() % 3);
+        QuickStartCaveConnectorSetKind(kind);
+        if (kind == LADDER_KIND_CHEST) {
+            QuickStartCaveConnectorSetExtra((u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+        }
+    }
+    kind = QuickStartCaveConnectorGetKind();
+    if (kind == LADDER_KIND_CHEST) {
+        if (CheckRoomFlag(0)) {
+            if (QuickStartGroundItemAt(contentX, contentY)) {
+                SetRoomFlag(3);
+                return;
+            }
+            if (CheckRoomFlag(3)) {
+                SetGlobalFlag(GF_CAVE_CONNECTOR_DONE);
+                return;
+            }
+        }
+        {
+            s32 extra = QuickStartCaveConnectorGetExtra();
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else if (kind == LADDER_KIND_MINIBOSS) {
+        if (CheckRoomFlag(2)) {
+            if (!QuickStartGroundItemAt(contentX, contentY)) {
+                SetGlobalFlag(GF_CAVE_CONNECTOR_DONE);
+            }
+            return;
+        }
+        if (CheckRoomFlag(0)) {
+            s32 i;
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* enemy = &gEntities[i].base;
+                if (enemy->kind == ENEMY && QuickStartEntityInCurrentRoom(enemy)) {
+                    if (!PlayerInRange(enemy, 1, 56)) {
+                        enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+                        enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    }
+                    return;
+                }
+            }
+            {
+                Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_PIECE, 0);
+                if (itemEntity != NULL) {
+                    itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                    itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    itemEntity->collisionLayer = 1;
+                    itemEntity->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(itemEntity);
+                    itemEntity->direction = IdleSouth;
+                    SetRoomFlag(2);
+                    gSave.miniboss_kills++;
+                }
+            }
+            return;
+        }
+        {
+            Entity* enemy = CreateEnemy(DARK_NUT, 0);
+            if (enemy != NULL) {
+                enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+                enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                enemy->collisionLayer = 1;
+                enemy->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(enemy);
+                enemy->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + contentX;
+                npc->y.HALF.HI = gRoomControls.origin_y + contentY;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
+            }
+        }
+    }
+}
+
 // "Fully contained" per the user's request: once inside Castor Darknut
 // (Hall or Main), Melari's Mine, Castle Garden, or the Minish House
 // Interiors rooms opened off Melari's Mine, no transition - real or our
@@ -3013,6 +3220,19 @@ static void QuickStartEnforceLonLonContainment(void) {
          gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
+    // The real cave entrance (below, sQuickStartLinks) - unlike the ? room
+    // pool's own areas (Caves/Great Fairies/Royal Valley Graves, each
+    // selected for having exactly one real exit that's individually
+    // retargeted in transitions.c instead), this specific cave keeps BOTH
+    // its real exits untouched (north border -> the ledge, south border ->
+    // back near this same entrance) - the whole point of restoring this
+    // connection - so it isn't blanket-contained in QuickStartAreaContained
+    // either; this is only about letting the entrance transition itself
+    // through.
+    if (gRoomTransition.player_status.area_next == AREA_CAVES &&
+        gRoomTransition.player_status.room_next == ROOM_CAVES_LON_LON_RANCH) {
+        return;
+    }
     QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
     if (gRoomTransition.player_status.area_next == ladder3TargetArea &&
         gRoomTransition.player_status.room_next == ladder3TargetRoom) {
@@ -3099,8 +3319,21 @@ static void QuickStartRoomMonitor(void) {
     } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         QuickStartClearLonLonRanchGoron();
         QuickStartSolveLonLonBoulder();
-        QuickStartSpawnLonLonRanchEnemiesOnce();
+        // Reward before enemies, not after - both Melari's Mine and Castle
+        // Garden's own dispatch below already do it in this order (reward
+        // spawner called before that room's own enemy spawner); this room
+        // had them backwards, the one inconsistency in the file. With 50
+        // enemies eligible to spawn here (QUICKSTART_LONLON_MAX_ENEMIES) on
+        // top of the room's own ~9 ambient entities and the player, letting
+        // the enemy wave claim its entity slots (entity.h: MAX_ENTITIES=72
+        // total) before the Earth Element got a chance to spawn is a
+        // plausible reason the user reported it not dropping - CreateObject
+        // (QuickStartSpawnWinKeyOnce) fails silently if no slot is free,
+        // and unlike the other two rooms' rewards this one was going
+        // second. Spawning it first guarantees it a slot regardless of how
+        // full the room gets afterward.
         QuickStartSpawnWinKeyOnce();
+        QuickStartSpawnLonLonRanchEnemiesOnce();
         QuickStartCheckWinCondition();
     } else if (gRoomControls.area == AREA_DOJOS && gRoomControls.room == ROOM_DOJOS_GRIMBLADE) {
         QuickStartClearShopObstacles();
@@ -3117,6 +3350,14 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(176, 56);
         QuickStartMaintainShop(sQuickStartRanchHouseEastShopOffsets);
+    } else if (gRoomControls.area == AREA_CAVES && gRoomControls.room == ROOM_CAVES_LON_LON_RANCH) {
+        // The cave-connector prototype (see sQuickStartLinks' own comment on
+        // the new entrance, and QuickStartSetupCaveConnectorContent above) -
+        // same "clear real vanilla obstacles once" step every other
+        // repurposed room uses, then its own standalone content roll rather
+        // than the regular ladder pool's.
+        QuickStartClearLadderRoomObstacles();
+        QuickStartSetupCaveConnectorContent();
     } else {
         // Falls through to here for Ranch House West (slot 2, a fixed
         // room) and for whichever pool room the Goron Cave Stairs door
