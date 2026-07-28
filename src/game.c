@@ -997,6 +997,27 @@ static void QuickStartSpawnWinKeyOnce(void) {
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) != 0) {
         return;
     }
+    // Refresh the existing Element's despawn timer FIRST, every frame,
+    // regardless of room flag 403 below - this used to be checked only
+    // inside the "not flagged yet" branch, so it only ever ran on the one
+    // frame the item was first created; every frame after that hit flag
+    // 403's early return before ever reaching this scan, leaving the
+    // ground item's own ~10-second despawn timer (unk_6c, itemOnGround.c)
+    // completely unrefreshed. The Element would then vanish exactly 10
+    // seconds after spawning regardless of whether the player had actually
+    // fought through the room's enemy wave to reach it yet (reported by
+    // the user after real playtesting) - the same "reward silently expires
+    // before a real player can get there" failure QuickStartGroundItemAt's
+    // own comment documents for Castle Garden/Melari's Mine/the ladder
+    // pool, just missed here since this reward doesn't go through that
+    // shared helper.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_EARTH_ELEMENT) {
+            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
+            return;
+        }
+    }
     // Room flag 403: "already created one this round" - GiveItem (the real
     // vanilla pickup path, LinkHoldingItem_Action1 in
     // object/linkHoldingItem.c) isn't called until the pickup cutscene's own
@@ -1004,7 +1025,7 @@ static void QuickStartSpawnWinKeyOnce(void) {
     // after the original ItemOnGround entity here is already deleted (see
     // ItemOnGround_Action4/sub_08081420) - so GetInventoryValue above still
     // reads 0 for a real window after the item is physically gone. Without
-    // this flag, the entity scan below finds nothing during that window
+    // this flag, the entity scan above finds nothing during that window
     // (the cutscene's own entity isn't a GROUND_ITEM) and concludes none
     // exists yet, spawning a second Earth Element at the same spot - which
     // the player then immediately stands on and picks up again the moment
@@ -1017,13 +1038,6 @@ static void QuickStartSpawnWinKeyOnce(void) {
     // the room reloads for a genuinely new round.
     if (CheckRoomFlag(403)) {
         return;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == ITEM_EARTH_ELEMENT) {
-            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
-            return;
-        }
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_EARTH_ELEMENT, 0);
     if (itemEntity != NULL) {
