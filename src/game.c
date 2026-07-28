@@ -248,6 +248,11 @@ static void GameTask_Transition(void) {
     // every ladder-room reward) by hand.
     MemClear(gSave.inventory, sizeof(gSave.inventory));
     gSave.stats.heartPieces = 0;
+    // Unlike maxHealth/health/inventory just below, rupees was never reset
+    // here - confirmed via emulator testing (dirty rupees to a known value,
+    // play through a full win, check after DoSoftReset) that it carries
+    // over from the previous run otherwise. Every run starts broke.
+    gSave.stats.rupees = 0;
     // 3 hearts to start (a full heart is 8 health units in this engine - see
     // the ITEM_HEART_CONTAINER comment on phase 3's bonus-reward handling
     // below, and DrawHearts/ui.c: gHUD.maxHealth = gSave.stats.maxHealth/2,
