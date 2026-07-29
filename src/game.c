@@ -2886,25 +2886,24 @@ static void QuickStartRandomizeLaddersOnce(void) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
-        // Distinct room per slot within the same pool - two slots sharing
-        // one physical "? room" would make leaving through it ambiguous
-        // about which one's content to re-arm. Slots that land in
-        // different pools can't collide with each other at all.
-        //
-        // Bug fixed here (reported as a ~coin-flip-odds freeze on Melari's
-        // Mine -> Castle Garden, worst on a brand new save): with the
-        // medium pool down to a single room (POT_MINISH pulled out for its
-        // own rendering bug - see sQuickStartMediumRoomPool's own comment),
-        // the retry loop below had no escape once 2 of the 3 ladders
-        // independently rolled the medium pool - there is only one valid
-        // room index, it's already taken, and Random() can never produce
-        // anything else, so the loop spun forever the instant
-        // QuickStartRandomizeLaddersOnce first ran (always in Castle
-        // Garden, hence "right after Melari's Mine"). Count how many
-        // earlier slots already claimed a room in this same pool first;
-        // once that count reaches the pool's own size, there is no
-        // distinct index left to find, so fall back to a duplicate instead
-        // of retrying forever.
+        // Distinct room per slot - two slots sharing one physical "? room"
+        // makes leaving through it genuinely ambiguous about which slot's
+        // content/return-path applies. This used to fall back to a
+        // duplicate once the rolled pool was exhausted (accepting the
+        // ambiguity to avoid an infinite retry loop - see the medium
+        // pool's own single-room history below) - confirmed by the user's
+        // own bug report to actually manifest: with
+        // QUICKSTART_MEDIUM_ROOM_POOL_SIZE==1, any 2 of the 3 slots rolling
+        // "medium" (a 50/50 coin flip each, ~50% chance overall) were
+        // forced to share that one room, and leaving through it via
+        // whichever slot iterates later in QuickStartFindLadderForCurrentRoom's
+        // fixed {0,1,3} order got misattributed to the earlier slot instead
+        // - reported as leaving the Goron Cave Stairs door's (slot 3) room
+        // landing back at slot 1's own Castle Garden spot instead of Lon
+        // Lon Ranch. Falls back to the OTHER pool instead now - total
+        // capacity (14+1=15) always comfortably covers 3 slots, so this
+        // never needs to loop forever, and kind/extra are re-rolled to
+        // match whichever pool actually ends up backing this slot.
         {
             s32 usedInThisPool = 0;
             for (j = 0; j < drawCount; j++) {
@@ -2913,18 +2912,30 @@ static void QuickStartRandomizeLaddersOnce(void) {
                 }
             }
             if (usedInThisPool >= poolSize) {
+                pool = 1 - pool;
+                QuickStartLadderSetPool(i, pool);
+                if (pool == 0) {
+                    kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_CHEST : LADDER_KIND_NPC;
+                } else {
+                    kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_MINIBOSS : LADDER_KIND_WAVES;
+                }
+                QuickStartLadderSetKind(i, kind);
+                if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
+                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+                } else if (kind == LADDER_KIND_NPC) {
+                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
+                }
+                poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+            }
+            for (;;) {
                 roomIdx = (u8)((s32)Random() % poolSize);
-            } else {
-                for (;;) {
-                    roomIdx = (u8)((s32)Random() % poolSize);
-                    for (j = 0; j < drawCount; j++) {
-                        if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
-                            break;
-                        }
-                    }
-                    if (j == drawCount) {
+                for (j = 0; j < drawCount; j++) {
+                    if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
                         break;
                     }
+                }
+                if (j == drawCount) {
+                    break;
                 }
             }
         }
