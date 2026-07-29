@@ -843,13 +843,7 @@ static void QuickStartClearCastleGuards(void) {
 // anything else sharing the room) - the density formula's own count gets
 // clamped to it, same as it's clamped to the offset pool size.
 #define QUICKSTART_GARDEN_ROOM_SQUARES 496
-// Temporarily halved from the original 50 - the user reported a garbled-
-// sprite display bug in Lon Lon Ranch consistent with running a room close
-// to entity.h's MAX_ENTITIES=72 ceiling; cutting every room's density back
-// for now (not just Lon Lon Ranch's) rather than assuming this one room is
-// uniquely at risk. Easy to raise again once the entity-budget picture is
-// better understood.
-#define QUICKSTART_GARDEN_MAX_ENEMIES 25
+#define QUICKSTART_GARDEN_MAX_ENEMIES 50
 static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
     { 0xc8, 0x96 },  { 0x15e, 0x96 },  { 0x1f4, 0x96 },  { 0x28a, 0x96 },  { 0x320, 0x96 },
     { 0xb4, 0xd2 },  { 0x186, 0xe6 },  { 0x1f4, 0xe6 },  { 0x262, 0xe6 },  { 0x320, 0xe6 },
@@ -1605,9 +1599,7 @@ static void QuickStartClearMelarisMineObstacles(void) {
 // enemy spawns. QUICKSTART_MINE_MAX_ENEMIES is the real, measured ceiling
 // with a safety margin, same role as Castle Garden's cap above.
 #define QUICKSTART_MINE_ROOM_SQUARES 418
-// Temporarily halved from the original 40 - see QUICKSTART_GARDEN_MAX_ENEMIES's
-// own comment above.
-#define QUICKSTART_MINE_MAX_ENEMIES 20
+#define QUICKSTART_MINE_MAX_ENEMIES 40
 static const s16 sQuickStartMineEnemyOffsets[62][2] = {
     { 0xfa, 0x56 },  { 0x14a, 0x56 },  { 0x19a, 0x56 },  { 0x1ea, 0x56 },  { 0x23a, 0x56 },
     { 0x96, 0x1cc }, { 0xfa, 0x1cc },  { 0x226, 0x1cc }, { 0x100, 0x100 }, { 0x193, 0x14e },
@@ -1649,10 +1641,7 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
 // with the entrance from Castle Garden and the win key's own spot (see
 // QuickStartSpawnWinKeyOnce) excluded.
 #define QUICKSTART_LONLON_ROOM_SQUARES 660
-// Temporarily halved from the original 50 - see QUICKSTART_GARDEN_MAX_ENEMIES's
-// own comment above (this is the room the user actually saw the display
-// bug in, but the entity-budget risk isn't unique to it).
-#define QUICKSTART_LONLON_MAX_ENEMIES 25
+#define QUICKSTART_LONLON_MAX_ENEMIES 50
 static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
     { 88, 24 },   { 168, 24 },  { 168, 56 },  { 56, 136 },  { 392, 136 }, { 24, 152 },  { 88, 152 },
     { 424, 152 }, { 56, 168 },  { 360, 168 }, { 392, 168 }, { 88, 184 },  { 296, 184 }, { 56, 200 },
@@ -1685,22 +1674,10 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
 // nothing to also delete any GORON-kind NPC that turns up here regardless,
 // the same idempotent per-frame backstop QuickStartClearMelarisMineObstacles
 // and QuickStartClearShopObstacles already use elsewhere in this file.
-//
-// Also deletes the ranch's own ambient animals (COW, CUCCO, CUCCO_CHICK) -
-// purely decorative, and each one is a real entity slot (entity.h:
-// MAX_ENTITIES=72 total for the whole room) that isn't free for the
-// Earth Element/enemy wave otherwise. The room measured at ~9 ambient
-// entities before any enemy spawns; freeing whichever of those are just
-// wandering animals gives QuickStartSpawnLonLonRanchEnemiesOnce's 50-enemy
-// wave (and QuickStartSpawnWinKeyOnce's reward) meaningfully more headroom,
-// per the user's own report of a garbled-sprite display bug consistent
-// with running the room close to its entity budget.
 static void QuickStartClearLonLonRanchGoron(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == NPC &&
-            (gEntities[i].base.id == GORON || gEntities[i].base.id == COW || gEntities[i].base.id == CUCCO ||
-             gEntities[i].base.id == CUCCO_CHICK)) {
+        if (gEntities[i].base.kind == NPC && gEntities[i].base.id == GORON) {
             DeleteEntity(&gEntities[i].base);
         }
     }
@@ -2251,31 +2228,12 @@ static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty
     return &sQuickStartDifficultyTiers[difficulty];
 }
 
-// GBA sprite-graphics VRAM is a completely separate, much scarcer budget
-// than MAX_ENTITIES (entity.h, 72): only MAX_GFX_SLOTS (vram.h, 44) distinct
-// sprite graphics sets can be loaded at once via gGFXSlots (see vram.c's
-// FindFreeGFXSlots/ReserveGFXSlots/CleanUpGFXSlots), regardless of how many
-// entities exist. QuickStartPickEnemy rolling a fresh random enemy per
-// individual spawn meant a single wave of 20-25 enemies could trivially
-// need 10+ distinct GFX slots on top of everything else the room needs
-// (player, HUD, any reward item) - blowing the 44-slot budget and
-// corrupting sprite data for everything else in the room, likely including
-// the Earth Element reward itself (it can still exist as an entity but
-// never get a GFX slot to actually render or be interacted with). Capping
-// each wave to a handful of distinct types, rolled once per wave rather
-// than per enemy, keeps the cross-room/round variety the original design
-// wanted (see QuickStartPickEnemy's own comment) while bounding the worst
-// case. See QuickStartSpawnEnemyGroup below for where this is applied.
-#define QUICKSTART_WAVE_TYPE_CAP 3
-
 // Rolls one fresh enemy (id + form) for the given difficulty: first picks a
 // level via the tier's weights (a plain weighted die roll over whichever
 // levels have nonzero weight this tier), then picks uniformly at random
-// within that level's roster. QuickStartSpawnEnemyGroup below calls this
-// only QUICKSTART_WAVE_TYPE_CAP times per wave now (not once per enemy) -
-// enough that two rooms at the same difficulty still come out with
-// different enemy mixes, without every individual enemy needing its own
-// distinct GFX slot.
+// within that level's roster. Called once per enemy spawned rather than
+// once per room, so - exactly per the brief - two rooms at the same
+// difficulty can come out with entirely different enemy mixes.
 static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
     const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
     s32 roll = (s32)Random() % 100;
@@ -2315,11 +2273,9 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
 // constants above each call site).
 static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, difficulty, density, cap, waveTypeCount, k;
+    s32 i, j, r, tmp, count, difficulty, density, cap;
     Entity* enemy;
     u8 id, form;
-    u8 waveIds[QUICKSTART_WAVE_TYPE_CAP];
-    u8 waveForms[QUICKSTART_WAVE_TYPE_CAP];
 
     if (offsetCount > 72) {
         offsetCount = 72;
@@ -2348,23 +2304,9 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
         count = cap;
     }
 
-    // Roll a small, fixed set of distinct enemy types once for this whole
-    // wave (see QUICKSTART_WAVE_TYPE_CAP's own comment above
-    // QuickStartPickEnemy) instead of once per enemy - every enemy spawned
-    // below draws from this set rather than rolling independently.
-    waveTypeCount = (count < QUICKSTART_WAVE_TYPE_CAP) ? count : QUICKSTART_WAVE_TYPE_CAP;
-    if (waveTypeCount < 1) {
-        waveTypeCount = 1;
-    }
-    for (i = 0; i < waveTypeCount; i++) {
-        QuickStartPickEnemy(difficulty, &waveIds[i], &waveForms[i]);
-    }
-
     for (i = 0; i < count; i++) {
         j = indices[i];
-        k = (s32)Random() % waveTypeCount;
-        id = waveIds[k];
-        form = waveForms[k];
+        QuickStartPickEnemy(difficulty, &id, &form);
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
             enemy->x.HALF.HI = gRoomControls.origin_x + offsets[j][0];
