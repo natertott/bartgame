@@ -1579,9 +1579,28 @@ static const QuickStartLink sQuickStartLinks[] = {
     // QuickStartEnforceLonLonContainment's own exception and
     // QuickStartEnforceContainment's AREA_HYRULE_FIELD exception, plus
     // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/GENTARI_EXIT
-    // branch below for the room's contents.
+    // branch below for the room's contents. Landing spot (0x68,0x50) is
+    // GENTARI_EXIT's own real vanilla entry point (confirmed via
+    // scratchpad/parse_transitions.py: gExitList_MinishVillage_Main's own
+    // entry into this room lands at endX=0x68,endY=0x50) - a guaranteed
+    // walkable spot the room was actually designed around, unlike the
+    // shared (0x78,0x78) convention the small-pool's generic template rooms
+    // use (GENTARI_EXIT isn't that same template - it has its own distinct
+    // layout).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xe2, 0xee, 0x1ae, 0x1ba, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x78, 0x78 },
+      ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x68, 0x50 },
+    // The cave-connector's second door, duplicated here as a reliable
+    // backup: GENTARI_EXIT's own real WARP_TYPE_AREA exit (transitions.c,
+    // retargeted to this same destination) is a real AREA-type door, which
+    // this file's own experience says doesn't reliably fire under
+    // QUICKSTART alone (same gap Castor Darknut Hall's own real door has -
+    // see its own sQuickStartLinks comment above). Box is that door's own
+    // real startX/startY (0x48,0x50) expanded by its shape's own (w,h) -
+    // AREA_12x28 -> (6,14), per this file's "Box math" comment further
+    // above - giving [0x48,0x4e]x[0x50,0x5e]. Lands at the same Lon Lon
+    // Ranch ledge spot (0xb8,0x138) the retargeted real door itself uses.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x48, 0x4e, 0x50, 0x5e, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xb8, 0x138 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -1687,10 +1706,18 @@ static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
 // nothing to also delete any GORON-kind NPC that turns up here regardless,
 // the same idempotent per-frame backstop QuickStartClearMelarisMineObstacles
 // and QuickStartClearShopObstacles already use elsewhere in this file.
+//
+// Also deletes the ranch's own ambient animals (COW, CUCCO, CUCCO_CHICK) per
+// the user's own explicit request ("the cows are back... but they should be
+// gone") - this was here earlier this session, then removed when the
+// density-reduction pass it was originally bundled with got reverted, but
+// the user wants the animals gone regardless of that unrelated reasoning.
 static void QuickStartClearLonLonRanchGoron(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == NPC && gEntities[i].base.id == GORON) {
+        if (gEntities[i].base.kind == NPC &&
+            (gEntities[i].base.id == GORON || gEntities[i].base.id == COW || gEntities[i].base.id == CUCCO ||
+             gEntities[i].base.id == CUCCO_CHICK)) {
             DeleteEntity(&gEntities[i].base);
         }
     }
@@ -3128,14 +3155,15 @@ static void QuickStartCaveConnectorSetExtra(u8 extra) {
     }
 }
 
-// Now that the connector lives in ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT
-// (the same shared circular Minish House Interiors template every
-// small-pool room uses), this matches that pool's own convention exactly:
-// entry lands at (0x78,0x78), content sits 40px north of it at (0x78,0x50) -
-// confirmed walkable in the emulator, same as every other room built on
-// this template.
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x78
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x50
+// GENTARI_EXIT isn't the small pool's shared generic template after all -
+// it's built around its own real vanilla door, which lands the player at
+// (0x68,0x50) rather than that template's (0x78,0x78). The real door itself
+// (and this room's duplicate backup link, see sQuickStartLinks) sits just
+// northwest of that spawn (box [0x48,0x4e]x[0x50,0x5e]), so content goes
+// south instead of the usual "40px north" - confirmed walkable in the
+// emulator straight down from spawn, and well clear of the door box.
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x68
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x78
 static void QuickStartSetupCaveConnectorContent(void) {
     u8 kind;
     s32 contentX = QUICKSTART_CAVE_CONNECTOR_CONTENT_X;

@@ -906,11 +906,16 @@ const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
     // gExitList_Caves_LonLonRanch) - this room is the cave-connector's
     // second door (moved here from ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA,
     // which is now a plain "? room" pool entry instead, per the user's own
-    // request). See sQuickStartLinks in game.c for the matching first door
-    // (the cave entrance trigger box) and QuickStartEnforceContainment/
-    // QuickStartEnforceLonLonContainment for the containment exceptions
-    // this needs.
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+    // request). Keeps its real WARP_TYPE_AREA warp_type/startX/startY/shape
+    // unchanged (0x48,0x50, AREA_12x28 -> box [0x48,0x4e]x[0x50,0x5e]) -
+    // this room's actual exit is an interior door box, not a screen edge, so
+    // switching it to WARP_TYPE_BORDER (as briefly tried) simply had nowhere
+    // to fire from; only area/room/endX/endY (destination + landing spot)
+    // are retargeted. WARP_TYPE_AREA doors are already known not to reliably
+    // fire under QUICKSTART on their own (same class of gap Castor Darknut
+    // Hall's real door has) - game.c's own sQuickStartLinks duplicates this
+    // exact box as a reliable backup, same technique used there.
+    { WARP_TYPE_AREA, 0x48, 0x50, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x28, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
