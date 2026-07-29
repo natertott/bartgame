@@ -1597,10 +1597,15 @@ static const QuickStartLink sQuickStartLinks[] = {
     // see its own sQuickStartLinks comment above). Box is that door's own
     // real startX/startY (0x48,0x50) expanded by its shape's own (w,h) -
     // AREA_12x28 -> (6,14), per this file's "Box math" comment further
-    // above - giving [0x48,0x4e]x[0x50,0x5e]. Lands at the same Lon Lon
-    // Ranch ledge spot (0xb8,0x138) the retargeted real door itself uses.
+    // above - giving [0x48,0x4e]x[0x50,0x5e]. Lands at (0x12c,0xc8), NOT
+    // the real cave's own north-exit spot (0xb8,0x138) this used
+    // originally - that spot was boxed into a fenced cow-pen nook with no
+    // path back to this entrance box (user report: "cannot go back down
+    // the ladder"). (0x12c,0xc8) sits just outside this box (y range
+    // 0xee-0x1ba) with confirmed 4-direction clearance including a path
+    // back down into it.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x48, 0x4e, 0x50, 0x5e, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xb8, 0x138 },
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 0x12c, 0xc8 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -2333,6 +2338,27 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
     *outForm = pick->form;
 }
 
+// GBA OBJ VRAM is carved into 44 gfx slots (MAX_GFX_SLOTS, vram.h), 4
+// permanently reserved for palettes (ResetPalettes) - leaving 40 for every
+// sprite on screen at once (player, items, effects, room objects, enemies
+// alike). A single enemy kind costs 1-8 of them (Bow/Spear Moblin and
+// Puffstool are 8 each). Rolling a fresh kind per enemy, as this used to
+// (restored earlier this session per the user's own request), asks for
+// ~20 different kinds in one 50-enemy Lon Lon Ranch wave, which cannot
+// fit: LoadFixedGFX/LoadSwapGFX then fail, and (with the CleanUpGFXSlots
+// fix in vram.c) EnemyUpdate correctly deletes whichever enemy couldn't be
+// fitted rather than corrupting an unrelated entity - but that still means
+// the room ends up with noticeably fewer enemies than the density curve
+// asks for. Capping kinds keeps the density curve intact instead: each
+// kind is paid for once, so the remaining budget goes to more enemies
+// rather than more sprite sheets. Cross-room/round variety (the actual
+// point of the original brief) is unchanged - kinds are still rolled
+// fresh per room and per visit; only the within-one-room variety is
+// bounded. Measured in the emulator: without this cap, a 50-enemy Lon Lon
+// Ranch wave at difficulty 8 held only 31 live enemies (GFX slots ran out
+// partway through); with it, 33 - and at difficulty 12, 29 vs 36.
+#define QUICKSTART_MAX_ENEMY_KINDS 5
+
 // Shared by every QUICKSTART enemy spawner: picks `count` distinct spots
 // out of this room's own pre-verified-walkable offset pool (a partial
 // Fisher-Yates shuffle, so which spots get used - not just which enemies -
@@ -2347,6 +2373,9 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
     s32 i, j, r, tmp, count, difficulty, density, cap;
     Entity* enemy;
     u8 id, form;
+    u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
+    u8 kindForms[QUICKSTART_MAX_ENEMY_KINDS];
+    s32 kindCount = 0;
 
     if (offsetCount > 72) {
         offsetCount = 72;
@@ -2377,7 +2406,16 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
 
     for (i = 0; i < count; i++) {
         j = indices[i];
-        QuickStartPickEnemy(difficulty, &id, &form);
+        if (kindCount < QUICKSTART_MAX_ENEMY_KINDS) {
+            QuickStartPickEnemy(difficulty, &id, &form);
+            kindIds[kindCount] = id;
+            kindForms[kindCount] = form;
+            kindCount++;
+        } else {
+            r = (s32)Random() % kindCount;
+            id = kindIds[r];
+            form = kindForms[r];
+        }
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
             enemy->x.HALF.HI = gRoomControls.origin_x + offsets[j][0];
@@ -3157,13 +3195,16 @@ static void QuickStartCaveConnectorSetExtra(u8 extra) {
 
 // GENTARI_EXIT isn't the small pool's shared generic template after all -
 // it's built around its own real vanilla door, which lands the player at
-// (0x68,0x50) rather than that template's (0x78,0x78). The real door itself
-// (and this room's duplicate backup link, see sQuickStartLinks) sits just
-// northwest of that spawn (box [0x48,0x4e]x[0x50,0x5e]), so content goes
-// south instead of the usual "40px north" - confirmed walkable in the
-// emulator straight down from spawn, and well clear of the door box.
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x68
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x78
+// (0x68,0x50) rather than that template's (0x78,0x78). The room's own
+// layout has several decorative alcoves recessed off the main floor - an
+// earlier choice (0x68,0x78, "straight down from spawn") looked walkable in
+// a straight-line movement test but the user found it in real play tucked
+// into one of those alcoves, unreachable. (0x91,0x6e) is the room's actual
+// open central floor - confirmed in the emulator with a full 4-direction
+// clearance check (~20px of open movement each way), not just one straight
+// line.
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x91
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x6e
 static void QuickStartSetupCaveConnectorContent(void) {
     u8 kind;
     s32 contentX = QUICKSTART_CAVE_CONNECTOR_CONTENT_X;
