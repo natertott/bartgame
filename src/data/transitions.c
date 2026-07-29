@@ -915,15 +915,19 @@ const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
     // Hall's real door has) - game.c's own sQuickStartLinks duplicates this
     // exact box as a reliable backup, same technique used there.
     //
-    // Landing spot (0x12c,0xc8) - NOT the real cave's own north-exit
-    // landing spot (0xb8,0x138) this used originally: that spot turned out
-    // to be boxed into a small fenced cow-pen nook with no path back to the
-    // cave-connector's own entrance trigger box (user report: "cannot go
-    // back down the ladder"). (0x12c,0xc8) sits just outside that entrance
-    // box (which spans local y 0xee-0x1ba) with confirmed 4-direction
-    // clearance in the emulator, including a clear path down into the box
-    // itself to go back in.
-    { WARP_TYPE_AREA, 0x48, 0x50, 0x12c, 0xc8, TRANSITION_SHAPE_AREA_12x28, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+    // Landing spot (0xb8,0x138) - the real cave's own north-exit/ladder
+    // landing spot, restored per the user's explicit request ("he should be
+    // spawning by the ladder on the ledge"). An earlier revision moved this
+    // to (0x12c,0xc8) after a hasty 4-cardinal-direction probe seemed to
+    // show (0xb8,0x138) boxed into a fenced cow-pen nook with no way back -
+    // that probe was wrong (a straight-line-only check, not a real
+    // pathfind). A proper emulator walk (BFS-style, right/down/left/up
+    // around the fence) confirms a genuine walkable path exists from
+    // (0xb8,0x138) back down into the entrance trigger box (local x
+    // 0xe2-0xee, y 0x1ae-0x1ba) - go right ~65px, down ~100px around a
+    // fence corner, right ~35px more, down ~55px, then left ~75px and up
+    // ~12px into the box. Not a straight line, but real and reliable.
+    { WARP_TYPE_AREA, 0x48, 0x50, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x28, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };

@@ -1597,15 +1597,17 @@ static const QuickStartLink sQuickStartLinks[] = {
     // see its own sQuickStartLinks comment above). Box is that door's own
     // real startX/startY (0x48,0x50) expanded by its shape's own (w,h) -
     // AREA_12x28 -> (6,14), per this file's "Box math" comment further
-    // above - giving [0x48,0x4e]x[0x50,0x5e]. Lands at (0x12c,0xc8), NOT
-    // the real cave's own north-exit spot (0xb8,0x138) this used
-    // originally - that spot was boxed into a fenced cow-pen nook with no
-    // path back to this entrance box (user report: "cannot go back down
-    // the ladder"). (0x12c,0xc8) sits just outside this box (y range
-    // 0xee-0x1ba) with confirmed 4-direction clearance including a path
-    // back down into it.
+    // above - giving [0x48,0x4e]x[0x50,0x5e]. Lands at (0xb8,0x138), the
+    // real cave's own north-exit/ladder spot ("he should be spawning by the
+    // ladder on the ledge" - user request). A prior revision moved this to
+    // (0x12c,0xc8) after a hasty straight-line probe seemed to show
+    // (0xb8,0x138) boxed into a fenced cow-pen nook with no way back - a
+    // proper multi-turn emulator walk (right/down/left/up around the
+    // fence) found a genuine, if winding, path from (0xb8,0x138) back into
+    // this entrance box, confirming the original spot works and restoring
+    // it.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x48, 0x4e, 0x50, 0x5e, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_LON_LON_RANCH, 0x12c, 0xc8 },
+      ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xb8, 0x138 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
