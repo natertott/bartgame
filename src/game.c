@@ -2178,14 +2178,30 @@ static const QuickStartEnemyPick sQuickStartLevel3[] = {
 // warps them to a dungeon's scripted "entrance" point, which none of these
 // QUICKSTART rooms have configured, so the actual destination would be
 // undefined.
+// Darknut (the vanilla game's own recurring miniboss, e.g. Palace of Winds'
+// "Darknut Miniboss" room and the Castor Wilds encounter this file's own
+// fixed-room setup already spawns) is already a proven, crash-free
+// CreateEnemy(DARK_NUT, form) call elsewhere in this file (see the Castor
+// Darknut room setup and the ladder-room LADDER_KIND_MINIBOSS spawn code
+// below) - gEnemyDefinition_5 (enemy.c) gives it 4 forms with increasing
+// health (12/12/20/26), so the two weaker forms are grouped here with the
+// rest of level 4 and the two tougher ones go in level 5 below.
 static const QuickStartEnemyPick sQuickStartLevel4[] = {
     { RUPEE_LIKE, 1 /* blue */ }, { WISP, 1 /* blue */ }, { GOBDO, 0 /* gibdo */ }, { LAKITU, 0 },
     { MOLDWORM, 0 },              { SCISSORS_BEETLE, 0 }, { SPINY_BEETLE, 0 },      { TAKKURI, 0 },
+    { DARK_NUT, 0 },              { DARK_NUT, 1 },
 };
+// Since QuickStartPickEnemy is rolled independently per enemy (see its own
+// comment above), a high-difficulty wave that leans heavily on level 5 can
+// already come up with more than one Darknut/Ball and Chain Soldier/Wizzrobe
+// in the same room purely by chance - no separate "spawn N minibosses"
+// mechanism needed for that.
 static const QuickStartEnemyPick sQuickStartLevel5[] = {
     { BALL_CHAIN_SOLIDER, 0 },
     { WIZZROBE_ICE, 0 },
     { WIZZROBE_FIRE, 0 },
+    { DARK_NUT, 2 /* blue, 20hp */ },
+    { DARK_NUT, 3 /* red, 26hp */ },
 };
 
 static const QuickStartEnemyPick* const sQuickStartEnemyLevels[5] = {
