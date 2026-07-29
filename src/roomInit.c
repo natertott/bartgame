@@ -1359,6 +1359,15 @@ u32 sub_unk3_MinishHouseInteriors_Festari(void) {
 
 void sub_StateChange_MinishHouseInteriors_Festari(void) {
     sub_0801AFE4();
+#ifdef QUICKSTART
+    // Vanilla only lets Festari step aside from his own doorway (his own
+    // script, script_Festari.inc, checks M_PRIEST_MOVE every BeginBlock and
+    // offsets his position out of the way once it's set) after the player
+    // shows him the Jabber Nut. QUICKSTART repurposes this room's back door
+    // (into AREA_MINISH_WOODS) as one of the 2-door ? room pool's two exits
+    // - force the flag every visit so he's never blocking it.
+    SetLocalFlag(M_PRIEST_MOVE);
+#endif
 }
 
 u32 sub_unk3_MinishHouseInteriors_Red(void) {
@@ -5261,12 +5270,25 @@ extern EntityData gUnk_080F5328;
 extern EntityData gUnk_080F5308;
 
 void sub_StateChange_SanctuaryEntrance_Main(void) {
+#ifdef QUICKSTART
+    // Vanilla gates this room's "resolved" state behind ITEM_GREEN_SWORD (an
+    // upgrade QUICKSTART players never naturally acquire) and
+    // NAKANIWA_00_EZERO ("Ezlo talks about Sanctuary entrance" - set once
+    // the real story event fires, otherwise gUnk_080F5308's entities load
+    // instead). This room's AREA door into AREA_SANCTUARY is one of the
+    // 2-door ? room pool's two exits - force the flag and always load the
+    // resolved-state entity list so nothing here depends on either
+    // precondition.
+    SetLocalFlag(NAKANIWA_00_EZERO);
+    LoadRoomEntityList(&gUnk_080F5328);
+#else
     if (GetInventoryValue(ITEM_GREEN_SWORD)) {
         LoadRoomEntityList(&gUnk_080F5328);
         if (!CheckLocalFlag(NAKANIWA_00_EZERO)) {
             LoadRoomEntityList(&gUnk_080F5308);
         }
     }
+#endif
 }
 
 static void sub_0804ED18(void) {
