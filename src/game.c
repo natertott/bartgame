@@ -256,6 +256,27 @@ static void GameTask_Transition(void) {
     // individual item/marker (ITEM_32/33/5A, all three choice categories,
     // every ladder-room reward) by hand.
     MemClear(gSave.inventory, sizeof(gSave.inventory));
+    // The ladder pool's assignments (GF_LADDERS_RANDOMIZED=101 through the
+    // last ladder's own block, 173) and the 2-door cave connector's own
+    // draw (GF_2DOOR_RANDOMIZED=184 through GF_2DOOR_DONE=201) need to be
+    // re-rolled every fresh boot too, same "no carry-over between rounds"
+    // policy as everything else in this block - left alone (as the comment
+    // above says gSave.flags generally is), both stayed pinned to whatever
+    // they first rolled on the very first-ever QUICKSTART boot, unchanged
+    // by any later DoSoftReset (reported by the user as the cave connector
+    // "locked as a single room"). GF_DIFFICULTY_BIT (174-177), in the
+    // middle of this same range, is deliberately skipped - it's the one
+    // genuinely persistent meta-progression counter here, incremented by
+    // QuickStartIncrementDifficulty on every win, not reset per round.
+    {
+        s32 bit;
+        for (bit = 101; bit <= 173; bit++) {
+            ClearGlobalFlag(bit);
+        }
+        for (bit = 184; bit <= 201; bit++) {
+            ClearGlobalFlag(bit);
+        }
+    }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
     // here - confirmed via emulator testing (dirty rupees to a known value,
@@ -3469,6 +3490,35 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
     SetRoomFlag(0);
 }
 
+// Unlike QuickStartClearLadderRoomObstacles (which sweeps every pre-existing
+// OBJECT/ENEMY/NPC, on the assumption each 1-door pool room needs a genuine
+// blank canvas), the 2-door pool's own rooms were picked specifically for
+// already having open floor around their furniture/decoration (bookshelves,
+// tables, statues, etc. - all OBJECT-kind, per the user's own example: the
+// library rooms' shelves shouldn't have been removed). Only ENEMY/NPC
+// ("sprites" - the user's own word, living/character graphics as opposed to
+// static decoration) are swept unconditionally here; OBJECT-kind is left
+// alone except in ROOM_VEIL_FALLS_CAVES_EXIT, where the vanilla pots
+// specifically needed removing per an earlier, separate request (see
+// sQuickStart2DoorSmallRoomPool's own comment on that room).
+static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
+    s32 i;
+    bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT);
+    if (CheckRoomFlag(1)) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* entity = &gEntities[i].base;
+        if (!QuickStartEntityInCurrentRoom(entity) || entity == gRoomControls.camera_target) {
+            continue;
+        }
+        if (entity->kind == ENEMY || entity->kind == NPC || (clearObjects && entity->kind == OBJECT)) {
+            DeleteEntity(entity);
+        }
+    }
+    SetRoomFlag(1);
+}
+
 // Dispatch for whichever room the save's one 2-door connector draw
 // resolved to (see QuickStart2DoorRandomizeOnce/GetTarget above) - called
 // every frame the player is standing in it (QuickStartRoomMonitor below).
@@ -3486,7 +3536,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
     if (QuickStart2DoorIsKeptVanilla(area, room)) {
         return;
     }
-    QuickStartClearLadderRoomObstacles();
+    QuickStart2DoorClearRoomObstacles(area, room);
     QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
     contentX = entranceX + contentDX;
     contentY = entranceY + contentDY;
