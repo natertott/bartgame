@@ -899,11 +899,28 @@ const Transition gExitList_MinishHouseInteriors_GentariMain[] = {
     TransitionListEnd,
 };
 #endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
+    // Retargeted from Minish Village to the Lon Lon Ranch ledge (the real
+    // vanilla cave's own north-exit landing spot, per
+    // gExitList_Caves_LonLonRanch) - this room is the cave-connector's
+    // second door (moved here from ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA,
+    // which is now a plain "? room" pool entry instead, per the user's own
+    // request). See sQuickStartLinks in game.c for the matching first door
+    // (the cave entrance trigger box) and QuickStartEnforceContainment/
+    // QuickStartEnforceLonLonContainment for the containment exceptions
+    // this needs.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
     { WARP_TYPE_AREA, 0x48, 0x50, 0x28, 0x70, TRANSITION_SHAPE_AREA_12x28, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_MinishHouseInteriors_Festari[] = {
     { WARP_TYPE_AREA, 0xe8, 0xe8, 0x258, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -960,16 +977,12 @@ const Transition gExitList_MinishHouseInteriors_Blue[] = {
 #endif
 #ifdef QUICKSTART
 const Transition gExitList_MinishHouseInteriors_SideArea[] = {
-    // Retargeted from Castle Garden to the Lon Lon Ranch ledge (the real
-    // vanilla cave's own north-exit landing spot, per
-    // gExitList_Caves_LonLonRanch) - this room is now the cave-connector's
-    // second door instead of a plain "? room" pool entry. See
-    // sQuickStartLinks in game.c for the matching first door (the cave
-    // entrance trigger box) and QuickStartEnforceContainment/
-    // QuickStartEnforceLonLonContainment for the containment exceptions
-    // this needs.
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    // Back to a plain "? room" pool entry (the shared Castle Garden return
+    // point every other pool room uses) - the cave-connector's second door
+    // moved to ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT instead, per the
+    // user's own request (this room stays in the small-room pool).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else

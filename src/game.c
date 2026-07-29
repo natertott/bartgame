@@ -1140,6 +1140,12 @@ const u8* const gCustomStrings[] = {
     // into the first (this engine only exposes one live numeric slot to
     // substitute per message).
     [8] = (const u8*)"Run score: \x06\x01\nKeep it up!",
+    // Shown once, the moment a "? room" ladder resolves to the new
+    // LADDER_KIND_WAVES content (QuickStartSetupWaveRoomContent) - the
+    // player's only warning that this room wants 3 waves cleared before it
+    // drops a reward, since nothing else about the room looks different
+    // from a single-miniboss room until the first wave spawns.
+    [9] = (const u8*)"Ezlo: Get ready! Defeat\nthree waves of enemies!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -1556,26 +1562,26 @@ static const QuickStartLink sQuickStartLinks[] = {
     // AREA_12x12 -> box +6/+6), same class of door as Castor Darknut Hall's
     // own real door above that doesn't reliably fire under QUICKSTART on
     // its own - the same trigger-box technique restores it here too, now
-    // leading instead to ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, an
-    // already-vetted "? room" pool room (removed from the general pool,
-    // see sQuickStartQuestionRoomPool's own comment) reused here as the
-    // connector's first door. Landing spot (0x80,0x78) is that room's real
-    // vanilla entry's own endX/endY (from AREA_MINISH_VILLAGE/
-    // ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA per transitions.c) - a
-    // proven-safe spot, same convention as the rest of this pool.
+    // leading to ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT as the connector's
+    // first door (moved here from ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA per
+    // the user's own request - SIDE_AREA is a plain "? room" pool entry
+    // again now, see sQuickStartSmallRoomPool). Landing spot (0x78,0x78) is
+    // this room's real shared template spawn (the same generic circular
+    // Minish House Interiors layout every small-pool room uses, confirmed
+    // walkable in the emulator).
     //
-    // The room's second door is its own real south border exit,
+    // The room's second door is its own real WARP_TYPE_AREA exit,
     // re-retargeted under #ifdef QUICKSTART in transitions.c
-    // (gExitList_MinishHouseInteriors_SideArea) from Castle Garden to the
+    // (gExitList_MinishHouseInteriors_GentariExit) from Minish Village to the
     // Lon Lon Ranch ledge (0xb8,0x138 - the real cave's own north-exit
     // landing spot) - reusing a proven-reliable real transition as the
     // "second door" instead of a brand-new custom trigger box. See
     // QuickStartEnforceLonLonContainment's own exception and
     // QuickStartEnforceContainment's AREA_HYRULE_FIELD exception, plus
-    // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA branch
-    // below for the room's contents.
+    // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/GENTARI_EXIT
+    // branch below for the room's contents.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0xe2, 0xee, 0x1ae, 0x1ba, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0x80, 0x78 },
+      ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0x78, 0x78 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -2007,19 +2013,34 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 // 0x65-0xFF (155 bits) completely unclaimed in FLAG_BANK_0.
 #define GF_LADDERS_RANDOMIZED 0x65
 #define GF_LADDER_BASE(i) (0x66 + (i) * 18)
-// Bit +0 of each ladder's block is unused now - it used to be
-// GF_LADDER_REVEALED, tracking whether the marker pot had been broken yet
-// (removed along with the whole pot mechanic; the real ladder fixtures and
-// the Goron Cave door are simply always live now, no reveal step needed).
+// Bit +0 of each ladder's block used to be unused - it was GF_LADDER_REVEALED,
+// tracking whether the marker pot had been broken yet (removed along with
+// the whole pot mechanic). Repurposed now as GF_LADDER_POOL_BIT: which of
+// the two size-restricted room pools (sQuickStartSmallRoomPool/
+// sQuickStartMediumRoomPool below) this ladder drew from, so its kind roll
+// and room draw both stay inside that pool's own rules (see
+// QuickStartRandomizeLaddersOnce).
+#define GF_LADDER_POOL_BIT(i) (GF_LADDER_BASE(i) + 0)
 #define GF_LADDER_KIND_BIT(i, b) (GF_LADDER_BASE(i) + 1 + (b))  // b = 0,1
 #define GF_LADDER_EXTRA_BIT(i, b) (GF_LADDER_BASE(i) + 3 + (b)) // b = 0..7
 #define GF_LADDER_DONE(i) (GF_LADDER_BASE(i) + 11)
-// Which of the 20 "? room" pool entries (sQuickStartQuestionRoomPool below)
-// backs this ladder this save - a second independent Random() draw from
-// the kind/extra above, so the physical room and the reward/challenge it
-// holds vary separately. 6 bits covers indices 0-31, comfortably more than
-// the pool's 20 entries.
+// Which pool entry backs this ladder this save - a second independent
+// Random() draw from the kind/extra above, so the physical room and the
+// reward/challenge it holds vary separately. 6 bits covers indices 0-31,
+// comfortably more than either pool's size.
 #define GF_LADDER_ROOM_BIT(i, b) (GF_LADDER_BASE(i) + 12 + (b)) // b = 0..5
+
+static u8 QuickStartLadderGetPool(s32 ladderIndex) {
+    return CheckGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex)) ? 1 : 0;
+}
+
+static void QuickStartLadderSetPool(s32 ladderIndex, u8 pool) {
+    if (pool) {
+        SetGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex));
+    } else {
+        ClearGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex));
+    }
+}
 
 // Difficulty counter for the win/reset loop below - well clear of the
 // ladder bits above (highest in use is GF_LADDER_ROOM_BIT(3,5) = 173, the
@@ -2341,7 +2362,13 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
     }
 }
 
-enum { LADDER_KIND_CHEST, LADDER_KIND_MINIBOSS, LADDER_KIND_NPC };
+// LADDER_KIND_WAVES (see QuickStartSetupWaveRoomContent) is new - a 3-wave
+// combat room, single enemy type per wave, only ever assigned to a
+// medium/large pool room (QuickStartRandomizeLaddersOnce) alongside
+// LADDER_KIND_MINIBOSS, per the user's own room-size split: chest/NPC
+// content stays in the small pool, miniboss/waves (and puzzles, later) stay
+// in the medium/large one.
+enum { LADDER_KIND_CHEST, LADDER_KIND_MINIBOSS, LADDER_KIND_NPC, LADDER_KIND_WAVES };
 
 static u8 QuickStartLadderGetKind(s32 ladderIndex) {
     return (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 0)) ? 1 : 0) |
@@ -2432,57 +2459,81 @@ typedef struct {
     s16 contentDY;
 } QuickStartQuestionRoomEntry;
 
-static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
-    // Minish House Interiors rows: content placed by the user directly (Lua
-    // position script) at a single shared spot, (120,80) - 40px north of
-    // the (120,120) shared spawn, facing back down toward the door (see
-    // QuickStartSetupLadderRoomContent's direction = IdleSouth) - rather
-    // than each room's own individually-walked offset. Confirmed in the
-    // emulator for the item and NPC kinds (both land exactly on (120,80),
-    // direction sticks for the NPC); the miniboss enemy's own continuous
-    // AI update overwrites direction on every subsequent frame regardless
-    // of what's set at spawn (and nudges its landing y by a few px, same
-    // class of engine-owned adjustment as the ladder pots' own +3px), so
-    // "facing down" only reliably holds for the brief spawn frame there -
-    // not fixable without rewriting the enemy's own AI.
+// Split into two pools per the user's own room-size survey: small rooms get
+// item/sprite-event content only (chest/NPC); medium/large rooms get
+// combat/puzzle content only (miniboss/waves, and puzzles later). See
+// QuickStartRandomizeLaddersOnce for how a ladder picks a pool and a kind
+// together, and QuickStartLadderGetPool/SetPool for the per-ladder bit that
+// remembers which pool it drew from.
+//
+// Small pool: content placed by the user directly (Lua position script) at
+// a single shared spot, (120,80) - 40px north of the (120,120) shared
+// spawn, facing back down toward the door (see
+// QuickStartSetupLadderRoomContent's direction = IdleSouth) - rather than
+// each room's own individually-walked offset. Confirmed in the emulator for
+// the item and NPC kinds (both land exactly on (120,80), direction sticks
+// for the NPC).
+static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, -40 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, -40 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, -40 },
-    // SIDE_AREA removed from this pool - it's now the Lon Lon Ranch cave
-    // connector's own dedicated room instead (see sQuickStartLinks and
-    // QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA
-    // branch below). The room this replaced (AREA_CAVES/
-    // ROOM_CAVES_LON_LON_RANCH, the real vanilla cave itself) turned out
-    // to have a large immovable block obstructing it (reported by the
-    // user after real playtesting - not something entity-clearing can
-    // touch, same class of background-geometry problem
-    // ROOM_TREE_INTERIORS_1c had). This room was already a proven-safe,
-    // open, single-room pool candidate with no such obstruction.
+    // Back in the pool - freed up now that the cave connector's second door
+    // moved to ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT instead (see
+    // sQuickStartLinks and QuickStartRoomMonitor's
+    // AREA_MINISH_HOUSE_INTERIORS/GENTARI_EXIT branch below), per the
+    // user's own explicit request.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, -40 },
-    // Moved from (120,136) to (119,102) (contentDX/DY -1,-18) per the user's
-    // report: the old spot put a LADDER_KIND_MINIBOSS Dark Nut right at the
-    // room's own door, where it got stuck rather than fighting properly.
-    // Confirmed walkable and stable (no drift) in both rooms.
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, -1, -18 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, -1, -18 },
-    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, 0, 0 },
-    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, -20, 0 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, -16, 0 },
-    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_MINISH_WOODS, 0, -16 },
+    // Not the shared Minish House Interiors template room, so not verified
+    // against the same (120,120)/(120,80) convention - the user's own
+    // testing harness (this file's synthetic-warp technique) can't reach
+    // AREA_VEIL_FALLS_CAVES directly either (QuickStartEnforceContainment/
+    // QuickStartEnforceLonLonContainment block any raw warp there from every
+    // reachable starting room), so this offset is a conservative guess
+    // pending real in-game playtesting, not an emulator-confirmed spot like
+    // every other entry in this pool. The user's own note: reaching this
+    // room in a real playthrough needs Zora's Flippers or Roc's Cape
+    // already found elsewhere this run.
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, -16 },
+};
+#define QUICKSTART_SMALL_ROOM_POOL_SIZE 14
+
+// Medium/large pool: miniboss and (once built) puzzle/wave content needs
+// more room to work with than the small pool's shared generic template
+// rooms. Only 1 room for now - the 7 Dojo rooms the user wants added still
+// need their vanilla content (dojo masters, fight scripts, etc.) cleared
+// out first, same prerequisite work Lon Lon Ranch's house needed earlier.
+//
+// ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH deliberately left OUT: verified in
+// the emulator that LADDER_KIND_WAVES there spawns entities with correct
+// positions/sprite indices (confirmed via direct memory reads) but they
+// never actually render on screen - a real bug, not a placement issue (the
+// exact same enemy type/position combo rendered fine in the Gina room
+// below). POT_MINISH has its own distinctive water/swirl tile reskin,
+// which likely eats into the same VRAM/GFX-slot budget
+// QUICKSTART_WAVE_TYPE_CAP was built to protect earlier this session -
+// needs its own dedicated investigation before hosting multi-enemy content
+// again (a single MINIBOSS enemy worked here before this split, so the
+// problem seems specific to spawning several at once, not the room in
+// general).
+static const QuickStartQuestionRoomEntry sQuickStartMediumRoomPool[] = {
+    // Chest/Gina-ghost cleanup still pending (the user asked for the room's
+    // own treasure chest to be removed/replaced and possibly the Gina
+    // sprite removed). Verified in the emulator: a full 3-wave
+    // LADDER_KIND_WAVES encounter here renders correctly end to end (hint,
+    // 4/6/8-enemy waves, reward drop).
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, 0, -20 },
 };
-// Literal, matching this file's other pool-size constants (see
-// QUICKSTART_LADDER_REWARD_POOL_SIZE below) rather than a sizeof-derived
-// expression, for the same __umodsi3 reason.
-#define QUICKSTART_QUESTION_ROOM_POOL_SIZE 19
+#define QUICKSTART_MEDIUM_ROOM_POOL_SIZE 1
 
 // Every pool room's retargeted exit (src/data/transitions.c) lands here -
 // south of ladder 0's own real HIDDEN_LADDER_DOWN pot (104,104), clear of
@@ -2511,44 +2562,68 @@ static const u16 sQuickStartLadderRewardPool[] = {
 
 // Runs every frame in Castle Garden Main but only ever does anything once
 // per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
-// is assigned a kind, and (for chest/NPC kinds) which specific reward or
-// disposition, all via Random(). Slots 0, 1, and 3 each additionally draw
-// which of the 20 sQuickStartQuestionRoomPool rooms they lead to - slots 0-1
-// are Castle Garden's own two real ladders, slot 3 is the Goron Cave Stairs
-// door in Lon Lon Ranch (see sQuickStartLadderEntrances below), a fixed
-// entrance but a random destination, same as the other two. Slot 2 (Ranch
-// House West) is a fixed room end to end - own entrance, own room - so it
-// only needs a kind/extra roll, no room draw. Doing this lazily on first
-// room entry rather than in GameTask_Transition avoids touching the boot
+// is assigned a pool (small vs medium/large, per the user's own room-size
+// split), a kind restricted to whatever that pool allows, and (for
+// chest/NPC kinds) which specific reward or disposition, all via Random().
+// Slots 0, 1, and 3 each additionally draw which room within that pool they
+// lead to - slots 0-1 are Castle Garden's own two real ladders, slot 3 is
+// the Goron Cave Stairs door in Lon Lon Ranch (see sQuickStartLadderEntrances
+// below), a fixed entrance but a random destination, same as the other two.
+// Slot 2 (Ranch House West) predates the Ranch House's full vanilla reset
+// earlier this session - it still rolls a kind/extra for save-flag-layout
+// stability, but nothing reads it any more (Ranch House West has no
+// QUICKSTART content left), so it's left exactly as it always was rather
+// than folded into the new pool system. Doing this lazily on first room
+// entry rather than in GameTask_Transition avoids touching the boot
 // sequence at all - the persistent flags this writes make the choice stick
 // for the rest of this save regardless of when it first ran.
 static void QuickStartRandomizeLaddersOnce(void) {
     s32 i, j, drawCount;
+    u8 usedPool[3];
     u8 usedRoom[3];
     if (CheckGlobalFlag(GF_LADDERS_RANDOMIZED)) {
         return;
     }
     drawCount = 0;
     for (i = 0; i < 4; i++) {
-        u8 kind = (u8)((s32)Random() % 3);
-        u8 roomIdx;
+        u8 pool, kind, roomIdx, poolSize;
+        if (i == 2) {
+            kind = (u8)((s32)Random() % 3);
+            QuickStartLadderSetKind(i, kind);
+            if (kind == LADDER_KIND_CHEST) {
+                QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+            } else if (kind == LADDER_KIND_NPC) {
+                QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
+            }
+            continue;
+        }
+        pool = (u8)((s32)Random() % 2);
+        QuickStartLadderSetPool(i, pool);
+        if (pool == 0) {
+            kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_CHEST : LADDER_KIND_NPC;
+        } else {
+            kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_MINIBOSS : LADDER_KIND_WAVES;
+        }
         QuickStartLadderSetKind(i, kind);
         if (kind == LADDER_KIND_CHEST) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
         } else if (kind == LADDER_KIND_NPC) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
+        } else if (kind == LADDER_KIND_WAVES) {
+            // Reuses the ladder chest reward pool for the wave room's own
+            // 3-waves-cleared drop, same reward variety a chest room gets
+            // instead of a single fixed item.
+            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
         }
-        if (i == 2) {
-            continue;
-        }
-        // Distinct room per slot - two slots sharing one physical "? room"
-        // would make leaving through it ambiguous about which one's
-        // content to re-arm. The pool (20) comfortably exceeds the 3 draws
-        // needed, so a plain reject-and-retry loop is enough.
+        poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+        // Distinct room per slot within the same pool - two slots sharing
+        // one physical "? room" would make leaving through it ambiguous
+        // about which one's content to re-arm. Slots that land in
+        // different pools can't collide with each other at all.
         for (;;) {
-            roomIdx = (u8)((s32)Random() % QUICKSTART_QUESTION_ROOM_POOL_SIZE);
+            roomIdx = (u8)((s32)Random() % poolSize);
             for (j = 0; j < drawCount; j++) {
-                if (usedRoom[j] == roomIdx) {
+                if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
                     break;
                 }
             }
@@ -2556,6 +2631,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
                 break;
             }
         }
+        usedPool[drawCount] = pool;
         usedRoom[drawCount] = roomIdx;
         drawCount++;
         QuickStartLadderSetRoomIndex(i, roomIdx);
@@ -2614,9 +2690,15 @@ static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
 // override.
 static void QuickStartGetLadderTarget(s32 ladderIndex, u8* area, u8* room) {
     s32 rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
-    s32 poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
-    *area = sQuickStartQuestionRoomPool[poolIndex].area;
-    *room = sQuickStartQuestionRoomPool[poolIndex].room;
+    if (QuickStartLadderGetPool(ladderIndex) == 0) {
+        s32 poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
+        *area = sQuickStartSmallRoomPool[poolIndex].area;
+        *room = sQuickStartSmallRoomPool[poolIndex].room;
+    } else {
+        s32 poolIndex = rawIndex % QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+        *area = sQuickStartMediumRoomPool[poolIndex].area;
+        *room = sQuickStartMediumRoomPool[poolIndex].room;
+    }
 }
 
 // Checked every frame regardless of area (called unconditionally from
@@ -2700,9 +2782,150 @@ static void QuickStartClearLadderRoomObstacles(void) {
 static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
     s32 rawIndex, poolIndex;
     rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
-    poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
-    *contentX = 0x78 + sQuickStartQuestionRoomPool[poolIndex].contentDX;
-    *contentY = 0x78 + sQuickStartQuestionRoomPool[poolIndex].contentDY;
+    if (QuickStartLadderGetPool(ladderIndex) == 0) {
+        poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
+        *contentX = 0x78 + sQuickStartSmallRoomPool[poolIndex].contentDX;
+        *contentY = 0x78 + sQuickStartSmallRoomPool[poolIndex].contentDY;
+    } else {
+        poolIndex = rawIndex % QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+        *contentX = 0x78 + sQuickStartMediumRoomPool[poolIndex].contentDX;
+        *contentY = 0x78 + sQuickStartMediumRoomPool[poolIndex].contentDY;
+    }
+}
+
+// LADDER_KIND_WAVES: a 3-wave gauntlet (one enemy type per wave, per the
+// user's own brief), an Ezlo hint the first time a ladder resolves to this
+// kind, and a reward off sQuickStartLadderRewardPool once all 3 are
+// cleared. Room flags used, all distinct from the other kinds' own (they
+// never run in the same room at once, so there's no collision reusing low
+// numbers): flag 0 = the current wave's enemies have been spawned and at
+// least one is still alive; flag 2 = all 3 waves cleared, reward dropped,
+// watching for pickup (same flag/meaning LADDER_KIND_MINIBOSS uses for its
+// own reward-drop state); flag 4 = the one-time hint has been shown; flags
+// 5-6 = which wave is in progress, 0-2 (wave 1/2/3).
+#define QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG 4
+#define QUICKSTART_WAVE_ROOM_WAVE_BIT(b) (5 + (b)) // b = 0,1
+
+static u8 QuickStartWaveRoomGetWave(void) {
+    return (CheckRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
+           (CheckRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1)) ? 2 : 0);
+}
+
+static void QuickStartWaveRoomSetWave(u8 wave) {
+    if (wave & 1) {
+        SetRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+    } else {
+        ClearRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+    }
+    if (wave & 2) {
+        SetRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+    } else {
+        ClearRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+    }
+}
+
+// Generic surrounding-grid placement, centered on the room's own single
+// verified content spot. This file's other multi-enemy spawners
+// (QuickStartSpawnEnemyGroup) all use a per-room, individually-walked
+// offset table found via a dedicated collision survey instead - the "?
+// room" pool's medium/large rooms (POT_MINISH, the Gina room, and
+// eventually the Dojos) have never had that kind of survey done for a
+// MULTI-enemy encounter, only ever a single point for the miniboss/chest/
+// NPC kinds above. This is a deliberately conservative placeholder (tight
+// to the verified point, not a full room-spanning grid) pending real
+// playtesting, and also stands in for the user's own "no more than 1 enemy
+// per 4 tiles" density cap until these rooms get their own measured
+// squares the way Castle Garden/Melari's Mine/Lon Lon Ranch did earlier.
+#define QUICKSTART_WAVE_ROOM_OFFSET_COUNT 12
+static const s16 sQuickStartWaveRoomOffsets[QUICKSTART_WAVE_ROOM_OFFSET_COUNT][2] = {
+    { 0, 0 },     { -24, 0 },  { 24, 0 },   { 0, -24 },  { 0, 24 },
+    { -24, -24 }, { 24, -24 }, { -24, 24 }, { 24, 24 },
+    { -48, 0 },   { 48, 0 },   { 0, -48 },
+};
+
+static s32 QuickStartCountRoomEnemies(void) {
+    s32 i, count;
+    count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// One enemy TYPE per wave (a single QuickStartPickEnemy roll, not one per
+// enemy), scaled up per wave and by the overall difficulty counter, capped
+// to this room's own offset-grid size.
+static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty) {
+    u8 id, form;
+    s32 i, count;
+    QuickStartPickEnemy(difficulty, &id, &form);
+    count = 4 + difficulty / 2 + wave * 2;
+    if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
+        count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
+    }
+    for (i = 0; i < count; i++) {
+        Entity* enemy = CreateEnemy(id, form);
+        if (enemy != NULL) {
+            enemy->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartWaveRoomOffsets[i][0];
+            enemy->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartWaveRoomOffsets[i][1];
+            enemy->collisionLayer = 1;
+            enemy->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(enemy);
+        }
+    }
+}
+
+static void QuickStartSetupWaveRoomContent(s32 ladderIndex, s32 contentX, s32 contentY) {
+    u8 wave, difficulty;
+    if (CheckRoomFlag(2)) {
+        // All 3 waves cleared, reward already dropped - just watch for
+        // pickup, same convention as the miniboss kind's own reward state.
+        if (!QuickStartGroundItemAt(contentX, contentY)) {
+            SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+        }
+        return;
+    }
+    if (!CheckRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
+        SetRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
+    }
+    difficulty = QuickStartGetDifficulty();
+    wave = QuickStartWaveRoomGetWave();
+    if (CheckRoomFlag(0)) {
+        // This wave's enemies are still out there somewhere.
+        if (QuickStartCountRoomEnemies() > 0) {
+            return;
+        }
+        // Cleared.
+        if (wave >= 2) {
+            // That was wave 3 - drop the reward and start watching for
+            // pickup (same reward pool a chest room draws from, so a wave
+            // room's payoff has the same variety instead of a single fixed
+            // item).
+            s32 extra = QuickStartLadderGetExtra(ladderIndex);
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(2);
+            }
+            return;
+        }
+        // Advance to the next wave - ClearRoomFlag(0) lets the fallthrough
+        // below spawn it on the next frame.
+        QuickStartWaveRoomSetWave(wave + 1);
+        ClearRoomFlag(0);
+        return;
+    }
+    QuickStartSpawnWave(contentX, contentY, wave, difficulty);
+    SetRoomFlag(0);
 }
 
 // Called every frame the player is in whichever pool room is currently
@@ -2828,6 +3051,8 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
                 SetRoomFlag(0);
             }
         }
+    } else if (kind == LADDER_KIND_WAVES) {
+        QuickStartSetupWaveRoomContent(ladderIndex, contentX, contentY);
     } else {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
@@ -2855,7 +3080,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
 
 // One-time content roll for the Lon Lon Ranch cave-connector room (see
 // sQuickStartLinks' own comment on the new entrance, and
-// QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/SIDE_AREA branch
+// QuickStartRoomMonitor's AREA_MINISH_HOUSE_INTERIORS/GENTARI_EXIT branch
 // below) - a prototype "new kind of ? room" per the user's own request:
 // unlike the regular pool (QuickStartSetupLadderRoomContent above), this
 // one keeps its own two real doors (see the sQuickStartLinks comment)
@@ -2903,18 +3128,13 @@ static void QuickStartCaveConnectorSetExtra(u8 extra) {
     }
 }
 
-// Unlike the regular "? room" pool (whose shared ladder-trigger entry always
-// lands at (0x78,0x78) regardless of physical room, so its own content sits
-// 40px north of that at (0x78,0x50)), this room's entry point is the cave
-// entrance's own real landing spot, (0x80,0x78) (see sQuickStartLinks) -
-// almost the same spot, so the same "40px north" offset is used here too:
-// placing the reward at the entrance's own X and Y-40 avoids the reward
-// spawning right under the player's feet and getting picked up instantly on
-// arrival (confirmed in the emulator: the room is a narrow north/south
-// vault corridor - up and down both walk cleanly for 40+ px from the
-// landing spot, left/right are blocked - so straight north is a safe,
-// reachable, distinct spot).
-#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x80
+// Now that the connector lives in ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT
+// (the same shared circular Minish House Interiors template every
+// small-pool room uses), this matches that pool's own convention exactly:
+// entry lands at (0x78,0x78), content sits 40px north of it at (0x78,0x50) -
+// confirmed walkable in the emulator, same as every other room built on
+// this template.
+#define QUICKSTART_CAVE_CONNECTOR_CONTENT_X 0x78
 #define QUICKSTART_CAVE_CONNECTOR_CONTENT_Y 0x50
 static void QuickStartSetupCaveConnectorContent(void) {
     u8 kind;
@@ -3062,12 +3282,20 @@ static bool32 QuickStartAreaContained(u8 area) {
 static s32 QuickStartFindLadderForCurrentRoom(void) {
     static const u8 sPoolDrawLadderIndices[3] = { 0, 1, 3 };
     s32 k, i, rawIndex, poolIndex;
+    u8 area, room;
     for (k = 0; k < 3; k++) {
         i = sPoolDrawLadderIndices[k];
         rawIndex = QuickStartLadderGetRoomIndex(i);
-        poolIndex = rawIndex % QUICKSTART_QUESTION_ROOM_POOL_SIZE;
-        if (gRoomControls.area == sQuickStartQuestionRoomPool[poolIndex].area &&
-            gRoomControls.room == sQuickStartQuestionRoomPool[poolIndex].room) {
+        if (QuickStartLadderGetPool(i) == 0) {
+            poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
+            area = sQuickStartSmallRoomPool[poolIndex].area;
+            room = sQuickStartSmallRoomPool[poolIndex].room;
+        } else {
+            poolIndex = rawIndex % QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+            area = sQuickStartMediumRoomPool[poolIndex].area;
+            room = sQuickStartMediumRoomPool[poolIndex].room;
+        }
+        if (gRoomControls.area == area && gRoomControls.room == room) {
             return i;
         }
     }
@@ -3144,9 +3372,9 @@ static void QuickStartFixupQuestionRoomReturn(void) {
     gRoomTransition.player_status.start_pos_y = sQuickStartLadderReturnSpots[ladderIndex][1];
 }
 
-// "? room" pool entries outside Minish House Interiors/Tree Interiors
-// (Caves, Great Fairies, Royal Valley Graves) deliberately aren't added
-// wholesale to QuickStartAreaContained's area list - those areas are used
+// "? room" pool entries outside Minish House Interiors (Veil Falls Caves,
+// Royal Valley Graves) deliberately aren't added wholesale to
+// QuickStartAreaContained's area list - those areas are used
 // all over the real game from many unrelated vanilla entrances, and
 // blanket-containing them would block every one of THOSE rooms' own real
 // exits back to the ordinary overworld, a regression far bigger than this
@@ -3188,9 +3416,9 @@ static void QuickStartEnforceContainment(void) {
     if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
         return;
     }
-    // The cave-connector's second door: ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA's
-    // own real south border exit, re-retargeted in transitions.c to lead to
-    // the Lon Lon Ranch ledge instead of Castle Garden (see sQuickStartLinks'
+    // The cave-connector's second door: ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT's
+    // own real WARP_TYPE_AREA exit, re-retargeted in transitions.c to lead to
+    // the Lon Lon Ranch ledge instead of Minish Village (see sQuickStartLinks'
     // comment on the cave-connector entrance for the full picture). AREA_HYRULE_FIELD
     // isn't on QuickStartAreaContained's list (it's a huge overworld area,
     // same reasoning as QuickStartEnforceLonLonContainment's own comment),
@@ -3252,17 +3480,18 @@ static void QuickStartEnforceLonLonContainment(void) {
         return;
     }
     // The cave-connector's first door (below, sQuickStartLinks) - now
-    // ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA (the original AREA_CAVES/
+    // ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT (the original AREA_CAVES/
     // ROOM_CAVES_LON_LON_RANCH destination was abandoned after real
-    // playtesting found an immovable block obstructing it). Unlike
-    // AREA_MINISH_HOUSE_INTERIORS' own blanket QuickStartAreaContained
-    // membership (which the general QuickStartEnforceContainment relies
-    // on for every OTHER Minish House Interiors room), letting the player
-    // in here specifically still needs its own exception in this
-    // Lon-Lon-Ranch-scoped function, same as the Castle Garden/Ranch House
-    // exceptions above.
+    // playtesting found an immovable block obstructing it, and the room
+    // this replaced it with, SIDE_AREA, moved back into the general small
+    // pool per the user's own request). Unlike AREA_MINISH_HOUSE_INTERIORS'
+    // own blanket QuickStartAreaContained membership (which the general
+    // QuickStartEnforceContainment relies on for every OTHER Minish House
+    // Interiors room), letting the player in here specifically still needs
+    // its own exception in this Lon-Lon-Ranch-scoped function, same as the
+    // Castle Garden/Ranch House exceptions above.
     if (gRoomTransition.player_status.area_next == AREA_MINISH_HOUSE_INTERIORS &&
-        gRoomTransition.player_status.room_next == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
+        gRoomTransition.player_status.room_next == ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT) {
         return;
     }
     QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
@@ -3371,7 +3600,7 @@ static void QuickStartRoomMonitor(void) {
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(120, 125);
         QuickStartMaintainShop(sQuickStartShopItemOffsets);
-    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS && gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA) {
+    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS && gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT) {
         // The cave-connector prototype (see sQuickStartLinks' own comment on
         // the new entrance, and QuickStartSetupCaveConnectorContent above) -
         // same "clear real vanilla obstacles once" step every other
