@@ -2497,14 +2497,17 @@ static const QuickStartQuestionRoomEntry sQuickStartQuestionRoomPool[] = {
 // Chest rewards deliberately skip the shop's consumables (Bombs10/Arrows10)
 // and lean toward upgrades/heart progress, so a ladder chest never feels
 // like a smaller version of what Melari's Mine's merchant already sells.
+// ITEM_WALLET and ITEM_KINSTONE_BAG removed - both are granted for free at
+// boot now (GameTask_Transition), so either one dropping here would just be
+// a dead pick that does nothing.
 static const u16 sQuickStartLadderRewardPool[] = {
-    ITEM_HEART_PIECE, ITEM_BOMBBAG, ITEM_LARGE_QUIVER, ITEM_RUPEE200, ITEM_WALLET, ITEM_KINSTONE_BAG,
+    ITEM_HEART_PIECE, ITEM_BOMBBAG, ITEM_LARGE_QUIVER, ITEM_RUPEE200,
 };
 // A plain literal (matching this file's other enemy/reward pool modulos,
 // e.g. "% 3"/"% 4" above) rather than a sizeof-based macro - agbcc emits an
 // unsigned modulo helper (__umodsi3, not provided by its runtime lib) for
 // the sizeof-derived expression even when cast to (s32) on both sides.
-#define QUICKSTART_LADDER_REWARD_POOL_SIZE 6
+#define QUICKSTART_LADDER_REWARD_POOL_SIZE 4
 
 // Runs every frame in Castle Garden Main but only ever does anything once
 // per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
