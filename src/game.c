@@ -2567,9 +2567,7 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
 
 // Medium/large pool: miniboss and (once built) puzzle/wave content needs
 // more room to work with than the small pool's shared generic template
-// rooms. Only 1 room for now - the 7 Dojo rooms the user wants added still
-// need their vanilla content (dojo masters, fight scripts, etc.) cleared
-// out first, same prerequisite work Lon Lon Ranch's house needed earlier.
+// rooms.
 //
 // ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH deliberately left OUT: verified in
 // the emulator that LADDER_KIND_WAVES there spawns entities with correct
@@ -2583,6 +2581,29 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
 // again (a single MINIBOSS enemy worked here before this split, so the
 // problem seems specific to spawning several at once, not the room in
 // general).
+//
+// Of the 7 named Dojo rooms (AREA_DOJOS), only 3 have their own single real
+// door and are simple additions here: ROOM_DOJOS_GRAYBLADE, SWIFTBLADE_I,
+// and WAVEBLADE (all WARP_TYPE_BORDER_SOUTH, retargeted in transitions.c
+// the same way as every other pool room here). ROOM_DOJOS_GRIMBLADE is
+// already this mode's shop room, not a pool candidate. The remaining 3
+// (SPLITBLADE, GREATBLADE, SCARBLADE) have NO real door of their own -
+// gExitLists_Dojos maps them to gExitList_NoExitList; they're reached via
+// a scroll-seam from a separate "TO_X" hallway room instead (ROOM_DOJOS_TO_
+// SPLITBLADE/GREATBLADE/SCARBLADE, which hold the real doors) - the same
+// class of adjacency problem as Gentari's Room/Main (still unresolved),
+// left out per the user's own explicit choice rather than solved here.
+//
+// The 3 added rooms share an identical vanilla layout (confirmed via a
+// dedicated content survey): a BLADE_BROTHERS dojo-master NPC (dialogue/
+// technique-demo script, not a fight - script_BladeBrothers.inc), an
+// ARCHWAY decoration, 6 FURNITURE pillars, and one more OBJECT-kind
+// fixture (a per-dojo technique-scroll reward, not a decompiled chest
+// type) - no ENEMY-kind entities and no per-room roomInit.c logic to
+// special-case (unlike Grimblade's darkness/torch handling). All of this
+// is OBJECT/NPC kind, so QuickStartClearLadderRoomObstacles' existing
+// generic sweep handles every one of them the same way it already does for
+// Gina's own leftover content below - no manual removal needed.
 static const QuickStartQuestionRoomEntry sQuickStartMediumRoomPool[] = {
     // Chest/Gina-ghost cleanup still pending (the user asked for the room's
     // own treasure chest to be removed/replaced and possibly the Gina
@@ -2590,8 +2611,16 @@ static const QuickStartQuestionRoomEntry sQuickStartMediumRoomPool[] = {
     // LADDER_KIND_WAVES encounter here renders correctly end to end (hint,
     // 4/6/8-enemy waves, reward drop).
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, 0, -20 },
+    // All 3 Dojo rooms share the exact same tilemap/layout (confirmed via
+    // screenshot comparison at the shared (0x78,0x78) spawn point), so the
+    // same modest content offset works for all of them - matching Gina's
+    // own (0,-20), clear of the vanilla BLADE_BROTHERS NPC's own spot
+    // (0x78,0x28) and the symmetric furniture pillars.
+    { AREA_DOJOS, ROOM_DOJOS_GRAYBLADE, 0, -20 },
+    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, 0, -20 },
+    { AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, 0, -20 },
 };
-#define QUICKSTART_MEDIUM_ROOM_POOL_SIZE 1
+#define QUICKSTART_MEDIUM_ROOM_POOL_SIZE 4
 
 // ---- 2-door "? room" pool ----
 // Rooms with two REAL doors, for wherever an overworld region needs a
@@ -2890,20 +2919,23 @@ static void QuickStartRandomizeLaddersOnce(void) {
         // makes leaving through it genuinely ambiguous about which slot's
         // content/return-path applies. This used to fall back to a
         // duplicate once the rolled pool was exhausted (accepting the
-        // ambiguity to avoid an infinite retry loop - see the medium
-        // pool's own single-room history below) - confirmed by the user's
-        // own bug report to actually manifest: with
-        // QUICKSTART_MEDIUM_ROOM_POOL_SIZE==1, any 2 of the 3 slots rolling
-        // "medium" (a 50/50 coin flip each, ~50% chance overall) were
-        // forced to share that one room, and leaving through it via
-        // whichever slot iterates later in QuickStartFindLadderForCurrentRoom's
-        // fixed {0,1,3} order got misattributed to the earlier slot instead
-        // - reported as leaving the Goron Cave Stairs door's (slot 3) room
-        // landing back at slot 1's own Castle Garden spot instead of Lon
-        // Lon Ranch. Falls back to the OTHER pool instead now - total
-        // capacity (14+1=15) always comfortably covers 3 slots, so this
-        // never needs to loop forever, and kind/extra are re-rolled to
-        // match whichever pool actually ends up backing this slot.
+        // ambiguity to avoid an infinite retry loop) - confirmed by the
+        // user's own bug report to actually manifest: back when the medium
+        // pool held only Gina's room (QUICKSTART_MEDIUM_ROOM_POOL_SIZE==1),
+        // any 2 of the 3 slots rolling "medium" (a 50/50 coin flip each,
+        // ~50% chance overall) were forced to share that one room, and
+        // leaving through it via whichever slot iterates later in
+        // QuickStartFindLadderForCurrentRoom's fixed {0,1,3} order got
+        // misattributed to the earlier slot instead - reported as leaving
+        // the Goron Cave Stairs door's (slot 3) room landing back at slot
+        // 1's own Castle Garden spot instead of Lon Lon Ranch. The medium
+        // pool has more rooms now (the 3 Dojo rooms above), which lowers
+        // the odds, but this fallback stays regardless - it's a real fix,
+        // not just odds-reduction. Falls back to the OTHER pool instead
+        // now - total capacity (14+4=18) always comfortably covers 3
+        // slots, so this never needs to loop forever, and kind/extra are
+        // re-rolled to match whichever pool actually ends up backing this
+        // slot.
         {
             s32 usedInThisPool = 0;
             for (j = 0; j < drawCount; j++) {
@@ -3136,9 +3168,9 @@ static void QuickStartWaveRoomSetWave(u8 wave) {
 // verified content spot. This file's other multi-enemy spawners
 // (QuickStartSpawnEnemyGroup) all use a per-room, individually-walked
 // offset table found via a dedicated collision survey instead - the "?
-// room" pool's medium/large rooms (POT_MINISH, the Gina room, and
-// eventually the Dojos) have never had that kind of survey done for a
-// MULTI-enemy encounter, only ever a single point for the miniboss/chest/
+// room" pool's medium/large rooms (POT_MINISH, the Gina room, and the 3
+// Dojo rooms) have never had that kind of survey done for a MULTI-enemy
+// encounter, only ever a single point for the miniboss/chest/
 // NPC kinds above. This is a deliberately conservative placeholder (tight
 // to the verified point, not a full room-spanning grid) pending real
 // playtesting, and also stands in for the user's own "no more than 1 enemy

@@ -2026,21 +2026,46 @@ const Transition* const gExitLists_TreeInteriors[] = {
     [ROOM_TREE_INTERIORS_UNUSED_HEART_CONTAINER] = gExitList_TreeInteriors_UnusedHeartContainer,
 };
 
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
+const Transition gExitList_Dojos_Grayblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Grayblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x20, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_Dojos_Swiftblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Swiftblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x2e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_Dojos_Waveblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Waveblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_Dojos_ToGrimblade[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x3a8, 0x168, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
