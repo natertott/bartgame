@@ -2114,10 +2114,37 @@ static void QuickStartIncrementDifficulty(void) {
 // element's 4 tiles (0x7A-0x7D) corrupted the textbox border into a
 // garbled tooth/comb pattern the instant any message showed on screen
 // (reported by the user, reproduced by inspecting message.c after the
-// report rather than guessing blind). 0x1E0 is comfortably clear of both
-// that whole range and the rupees/keys range, confirmed empirically this
-// time with a message box actually open on screen, not just idle gameplay.
-#define QUICKSTART_DIFFICULTY_VRAM_TILE 0x1E0
+// report rather than guessing blind).
+//
+// 0x1E0 (the value this moved to next) turned out to be a second, worse
+// instance of the exact same mistake: RenderDigits' iconVramIndex is a
+// *character* tile index into BG0's own charbase (charbase 3, i.e.
+// VRAM+0xC000), but charbase 3 is also where the screenbases (tilemaps) for
+// ALL FOUR backgrounds live on this build - gScreen.bg0/bg1/bg2/bg3.control
+// put their screenbases at 31/29/28/30 respectively, and screenbase N
+// occupies VRAM+N*0x800, which for N=28..31 falls at VRAM+0xE000-0xFFFF -
+// i.e. charbase-3 *character* tile indices 0x100-0x1FF are not free tile
+// graphics at all, they ARE the live tilemaps. 0x1E0 sits squarely inside
+// BG0's own screenbase (31, tiles 0x1C0-0x1FF), so every single redraw of
+// this HUD element DMA'd digit-glyph pixel data directly over 4 tiles' worth
+// of BG0's real tilemap (rows 16-17, spanning both columns since RenderDigits
+// writes a contiguous run) - two of those overwritten cells happened to
+// decode as an opaque, solid-black pixel (BG0 is priority 0, i.e. always on
+// top, and screen-locked, i.e. it doesn't scroll with the room camera), so
+// the corruption showed up as two small solid-black rectangles fixed at the
+// same screen position in every room, reappearing every frame this runs.
+// Root-caused via mGBA memory/VRAM introspection + single-step tracing back
+// to the exact RenderDigits DMA call that overwrites screenbase 31.
+//
+// The only tile range in charbase 3 that is actually just character
+// graphics (not doubling as one of the four screenbases) is 0x000-0x0FF, and
+// of that, everything up through message text (0x82-0xB7, see message.c) is
+// already claimed. 0xF0 sits in the gap between the message system's last
+// known tile and the start of the screenbase region (0x100) with a
+// comfortable margin on both sides, confirmed empirically with a message box
+// open on screen and after multiple room transitions (the failure mode this
+// bug depended on).
+#define QUICKSTART_DIFFICULTY_VRAM_TILE 0xF0
 static void QuickStartDrawDifficultyHUD(void) {
     u16* row1 = &gBG0Buffer[0x240];
     u16* row2 = &gBG0Buffer[0x260];
