@@ -2685,15 +2685,42 @@ static void QuickStartRandomizeLaddersOnce(void) {
         // one physical "? room" would make leaving through it ambiguous
         // about which one's content to re-arm. Slots that land in
         // different pools can't collide with each other at all.
-        for (;;) {
-            roomIdx = (u8)((s32)Random() % poolSize);
+        //
+        // Bug fixed here (reported as a ~coin-flip-odds freeze on Melari's
+        // Mine -> Castle Garden, worst on a brand new save): with the
+        // medium pool down to a single room (POT_MINISH pulled out for its
+        // own rendering bug - see sQuickStartMediumRoomPool's own comment),
+        // the retry loop below had no escape once 2 of the 3 ladders
+        // independently rolled the medium pool - there is only one valid
+        // room index, it's already taken, and Random() can never produce
+        // anything else, so the loop spun forever the instant
+        // QuickStartRandomizeLaddersOnce first ran (always in Castle
+        // Garden, hence "right after Melari's Mine"). Count how many
+        // earlier slots already claimed a room in this same pool first;
+        // once that count reaches the pool's own size, there is no
+        // distinct index left to find, so fall back to a duplicate instead
+        // of retrying forever.
+        {
+            s32 usedInThisPool = 0;
             for (j = 0; j < drawCount; j++) {
-                if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
-                    break;
+                if (usedPool[j] == pool) {
+                    usedInThisPool++;
                 }
             }
-            if (j == drawCount) {
-                break;
+            if (usedInThisPool >= poolSize) {
+                roomIdx = (u8)((s32)Random() % poolSize);
+            } else {
+                for (;;) {
+                    roomIdx = (u8)((s32)Random() % poolSize);
+                    for (j = 0; j < drawCount; j++) {
+                        if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
+                            break;
+                        }
+                    }
+                    if (j == drawCount) {
+                        break;
+                    }
+                }
             }
         }
         usedPool[drawCount] = pool;
