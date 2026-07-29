@@ -343,6 +343,37 @@ void CleanUpGFXSlots(void) {
     if (gGFXSlots.unk0 != 0) {
         for (occupiedIndex = 4; (occupiedIndex = FindNextOccupiedGFXSlot(occupiedIndex)) != 0; occupiedIndex++) {
             firstFreeIndex = FindFirstFreeGFXSlot();
+#ifdef QUICKSTART
+            // FindFirstFreeGFXSlot() only ever scans slots 4..MAX_GFX_SLOTS-1
+            // and returns 0 to mean "there is no free slot at all" - 0 is
+            // never a real result, because slots 0-3 are permanently reserved
+            // for palettes by ResetPalettes() above. Vanilla doesn't
+            // distinguish the two: with every slot occupied, `0 <=
+            // occupiedIndex` is trivially true and the compaction below
+            // happily moves a live entity's gfx run *into* the reserved
+            // palette slots, wiping them and re-pointing that entity's
+            // spriteVramOffset at slot 0 (OBJ VRAM tile 320) - which holds
+            // palette data, not sprite tiles, so that entity renders as
+            // garbage from then on.
+            //
+            // Unreachable in the vanilla game (no vanilla room ever fills all
+            // 40 usable slots), but QUICKSTART's wave spawners routinely do.
+            // Confirmed in the emulator: at difficulty >= 8 the Lon Lon Ranch
+            // house's two exterior door objects - loaded at room init, long
+            // before the wave - were the entities that got relocated into
+            // slot 0 and rendered as garbage tiles instead of their blue door
+            // sprite (reported by the user as "doors render yellow").
+            //
+            // With no free slot there is simply nothing to compact, so stop:
+            // FindFreeGFXSlots() then correctly reports failure to its
+            // caller, LoadEnemySprite() returns FALSE, and EnemyUpdate
+            // deletes the enemy that couldn't be fitted (asm/src/enemy.s) -
+            // the engine's own intended out-of-VRAM path - instead of
+            // corrupting an unrelated entity that already had its graphics.
+            if (firstFreeIndex == 0) {
+                break;
+            }
+#endif
             if (firstFreeIndex <= occupiedIndex) {
                 sub_080AE218(occupiedIndex, firstFreeIndex);
                 MoveGFXSlots(occupiedIndex, firstFreeIndex);
