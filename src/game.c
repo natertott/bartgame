@@ -291,14 +291,15 @@ static void GameTask_Transition(void) {
     // L item slot - start empty like a fresh save, same as every other piece
     // of starting gear reset just above.
     gSave.stats.equippedExtra[0] = ITEM_NONE;
-    // Start with the Big Wallet (300 rupee cap) already owned. walletType is
-    // the field gameplay actually reads (gWalletSizes[walletType].size, see
+    // Start with every wallet upgrade already owned (walletType 3 ==
+    // gWalletSizes[3] == 999 rupee cap, itemUtils.c). walletType is the
+    // field gameplay actually reads (gWalletSizes[walletType].size, see
     // gameUtils.c/ui.c) - it's separate from the inventory-ownership bit
     // GetInventoryValue(ITEM_WALLET) tracks, which nothing here needs to
     // touch (ITEM_WALLET stays in the "? room" chest reward pool - GiveItem
     // just bumps walletType again if it's ever picked up a second time,
-    // same as any other wallet upgrade).
-    gSave.stats.walletType = 1;
+    // same as any other wallet upgrade, capped at 3 either way).
+    gSave.stats.walletType = 3;
     // Writing straight into equipped[] only plugs these into the A/B slots -
     // it never marks them as owned (that's a separate 2-bit-per-item record,
     // see GetInventoryValue/SetInventoryValue in playerUtils.c). The real
@@ -336,6 +337,12 @@ static void GameTask_Transition(void) {
     // the save's inventory state matches what the player was told, with no
     // functional door-gating effect either way.
     SetInventoryValue(ITEM_QST_LONLON_KEY, 1);
+    // Kinstone bag, granted at boot per the user's request - without it
+    // owned, NPCs offering a fusion simply can't be interacted with
+    // (kinstone.c gates the fusion prompt on GetInventoryValue(ITEM_KINSTONE_BAG)),
+    // so any "? room" NPC/kinstone-fusion content would otherwise be
+    // silently unusable from the very first run.
+    SetInventoryValue(ITEM_KINSTONE_BAG, 1);
     // Fuses the Lon Lon Ranch kinstone piece at boot. In vanilla,
     // sub_StateChange_HyruleField_LonLonRanch (roomInit.c) only loads the
     // wall-punching Goron's entity list (and draws the wall-crack tiles at
