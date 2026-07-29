@@ -2698,7 +2698,13 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // checks to step aside).
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_FESTARI, 100, 100, 0, -24 },
     { AREA_DARK_HYRULE_CASTLE, ROOM_DARK_HYRULE_CASTLE_3F_TRIPLE_DARKNUT, 100, 100, 0, -24 },
-    { AREA_DARK_HYRULE_CASTLE_BRIDGE, ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 100, 100, 0, -24 },
+    // (0,-24) originally put content at local (100,76), directly on top of
+    // one of this room's own decorative torch pillars (confirmed via
+    // screenshot survey after the user reported spawning inside one) -
+    // this bridge corridor has pillar rows repeating roughly every ~12-24px,
+    // and 76 lands right on one. (0,-48) instead confirmed clean in the
+    // gap between pillar rows.
+    { AREA_DARK_HYRULE_CASTLE_BRIDGE, ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 100, 100, 0, -48 },
     // Vanilla's own locked-door precondition (ITEM_GREEN_SWORD +
     // NAKANIWA_00_EZERO) is forced open every visit (roomInit.c:
     // sub_StateChange_SanctuaryEntrance_Main, under #ifdef QUICKSTART).
