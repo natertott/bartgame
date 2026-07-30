@@ -104,9 +104,6 @@ static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartSpawnHallEnemiesOnce(void);
 static void QuickStartClearCastleGuards(void);
-static void QuickStartSpawnGardenEnemiesOnce(void);
-static void QuickStartSpawnGardenBossOnce(void);
-static void QuickStartSpawnGardenRewardOnce(void);
 static void QuickStartShowRegionIntroHintOnce(void);
 static void QuickStartClearMelarisMineObstacles(void);
 static void QuickStartSpawnMelarisMineEnemiesOnce(void);
@@ -119,10 +116,13 @@ static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
-static void QuickStartSpawnLonLonRanchEnemiesOnce(void);
 static void QuickStartClearLonLonRanchGoron(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
+static void QuickStartProcessRegionChainLinks(void);
+static void QuickStartRandomizeRegionChainOnce(void);
+static s32 QuickStartGetCurrentRegionChainPosition(void);
+static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
@@ -133,7 +133,7 @@ static void QuickStartProcessCaveConnectorLink(void);
 static bool32 QuickStart2DoorIsCurrentRoom(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
-static void QuickStartSpawnWinKeyOnce(void);
+static void QuickStartSpawnWinKeyOnce(s16, s16);
 static void QuickStartCheckWinCondition(void);
 static s32 QuickStartCountItemsHeld(void);
 static u32 QuickStartComputeScore(void);
@@ -283,8 +283,11 @@ static void GameTask_Transition(void) {
         // outside the two contiguous blocks above since inserting it inline
         // would have shifted every bit after it (colliding with
         // GF_DIFFICULTY_BIT below). 207: GF_REGION_INTRO_HINT_SHOWN, same
-        // "own the tail end of the free range" reasoning.
-        for (bit = 202; bit <= 207; bit++) {
+        // "own the tail end of the free range" reasoning. 208-228: the
+        // region chain's own randomized-once flag, pool-index-per-slot, and
+        // reward-state-per-slot ranges - same "re-roll every fresh boot"
+        // policy as the ladder/2door pools above.
+        for (bit = 202; bit <= 228; bit++) {
             ClearGlobalFlag(bit);
         }
     }
@@ -677,6 +680,66 @@ extern Script script_QuickStartMerchant;
 // GameTask_Transition alongside the ladder/2door ranges.
 #define GF_REGION_INTRO_HINT_SHOWN 207
 
+// The overworld-region chain: at the hub (Melari's Mine), QUICKSTART_REGION_CHAIN_LENGTH
+// distinct regions are drawn at random from sQuickStartRegionPool and put in
+// a random order, replacing the old fixed Castle Garden -> Lon Lon Ranch
+// sequence. QUICKSTART_REGION_CHAIN_LENGTH is 2 for now per the user's own
+// request ("for now, there should only be two overworld regions maximum") -
+// a hardcoded constant rather than something read from gSave, since the
+// later unlock system that raises it to 4 doesn't exist yet; when it does,
+// this becomes a runtime value instead (same shape as
+// QuickStartGetDifficulty already has for a persistent, run-independent
+// number). GF_REGION_CHAIN_POOL_BIT reserves 3 bits/slot (pool indices
+// 0-7) and GF_REGION_CHAIN_REWARD_STATE_BIT 2 bits/slot (0/1/2, same
+// 3-state shape Castle Garden's old ITEM_32 marker used) - both sized for
+// 4 slots even though only 2 are used today, so the later 4-region unlock
+// doesn't need new flag plumbing, just a bigger QUICKSTART_REGION_CHAIN_LENGTH.
+#define QUICKSTART_REGION_CHAIN_LENGTH 2
+#define GF_REGION_CHAIN_RANDOMIZED 208
+#define GF_REGION_CHAIN_POOL_BIT(slot, b) (209 + (slot) * 3 + (b))         // b = 0..2, slot = 0..3 -> 209-220
+#define GF_REGION_CHAIN_REWARD_STATE_BIT(slot, b) (221 + (slot) * 2 + (b)) // b = 0..1, slot = 0..3 -> 221-228
+
+typedef struct QuickStartRegion_ {
+    u8 area;
+    u8 room;
+    // Landing spot when warped in via the region-chain portal (see
+    // QuickStartProcessRegionChainLinks) - not necessarily either real
+    // door's own vanilla landing point, just a confirmed-safe spot in this
+    // room.
+    s16 entranceX;
+    s16 entranceY;
+    // This region's own "onward" trigger box (local coordinates) - reused
+    // verbatim from whichever real door/box already continues the fixed
+    // Castle Garden -> Lon Lon Ranch sequence today; only the box's
+    // destination becomes dynamic (whichever region is next in this save's
+    // chain), not its position.
+    s16 exitMinX;
+    s16 exitMaxX;
+    s16 exitMinY;
+    s16 exitMaxY;
+    const s16 (*enemyOffsets)[2];
+    s32 enemyOffsetCount;
+    s32 roomSquares;
+    s32 maxEnemies;
+    // Reward pool for whenever this region ISN'T the chain's last slot -
+    // the last slot drops an Earth Element and triggers the win condition
+    // instead (see QuickStartSpawnRegionRewardOnce), same as Lon Lon Ranch
+    // always has today.
+    const u16* rewardPool;
+    s32 rewardPoolSize;
+    s16 rewardX;
+    s16 rewardY;
+    // Optional - NULL for every region except Castle Garden today. Takes
+    // this region's own table row and its position in the current chain
+    // (needed for QuickStartGetRegionChainRewardState).
+    void (*bossHook)(const struct QuickStartRegion_* region, s32 position);
+    // Optional per-region "quirk" logic that doesn't fit the generic shape
+    // (Lon Lon Ranch's boulder puzzle + Goron/animal removal, Castle
+    // Garden's guard removal) - called unconditionally every frame this
+    // region is current, same as those functions already run today.
+    void (*quirkHook)(void);
+} QuickStartRegion;
+
 typedef struct {
     u16 itemId;
 } QuickStartItemChoice;
@@ -938,67 +1001,6 @@ static void QuickStartShowRegionIntroHintOnce(void) {
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 10), 0);
 }
 
-static void QuickStartSpawnGardenEnemiesOnce(void) {
-    if (GetInventoryValue(ITEM_32) != 0) {
-        return;
-    }
-    if (CheckRoomFlag(0)) {
-        return;
-    }
-    QuickStartSpawnEnemyGroup(sQuickStartGardenEnemyOffsets, ARRAY_COUNT(sQuickStartGardenEnemyOffsets),
-                               QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES);
-    SetRoomFlag(0);
-}
-
-// Castle Garden's boss - Scenario 1 only (normal enemies fully cleared,
-// then the boss spawns, then the reward drops once it's dead too). Not
-// Scenario 2 (everything spawned together): CHUCHU_BOSS alone measured at
-// 8 GFX slots in the emulator (scratchpad/test_gfx_boss_cost.py this
-// session, gGFXSlots directly) - the maximum single-actor cost this file's
-// own GFX-slot comment already calls out (see QUICKSTART_MAX_ENEMY_KINDS
-// above). At difficulty 0 (the sparsest gauntlet this room ever rolls) the
-// normal wave alone already used 35 of 44 slots, leaving exactly 9 free -
-// the boss's 8 barely fits. At higher difficulty the wave alone already
-// measured a full 44/44 with zero free, so adding the boss on top produced
-// a measured 0 slot delta: its own graphics simply never got a slot to
-// load into (LoadFixedGFX/LoadSwapGFX fail silently - see the GFX-slot
-// comment's own description of this failure mode). Since the persistent
-// difficulty counter only ever climbs, a Scenario 2 that works on a fresh
-// save would start silently spawning an invisible/graphics-less boss once
-// the player's runs get harder - not shipped.
-// Reuses the exact same "is any ENEMY-kind entity still in this room"
-// check the normal wave's own clear detection already uses (see
-// QuickStartSpawnGardenRewardOnce below) - the boss's 5 segments are all
-// ENEMY-kind, so nothing new is needed to detect either "the wave is
-// clear, spawn the boss" or "the boss is dead, drop the reward".
-static void QuickStartSpawnGardenBossOnce(void) {
-    s32 i;
-    if (GetInventoryValue(ITEM_32) != 0) {
-        return;
-    }
-    if (!CheckRoomFlag(0) || CheckRoomFlag(5)) {
-        // Either the normal wave hasn't spawned yet, or the boss already
-        // has (room flag 5) - either way, nothing to do here this frame.
-        return;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-            // Normal wave still has survivors.
-            return;
-        }
-    }
-    {
-        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
-        if (boss != NULL) {
-            boss->x.HALF.HI = gRoomControls.origin_x + 0x1f8;
-            boss->y.HALF.HI = gRoomControls.origin_y + 0x108;
-            boss->collisionLayer = 1;
-            UpdateSpriteForCollisionLayer(boss);
-            SetRoomFlag(5);
-        }
-    }
-}
-
 // The pool of "not guaranteed by the earlier starter/bonus/skill choices"
 // rewards the gauntlet can drop - tools, upgrades, skills, and heart
 // progression. Filtered at drop time to whichever the player doesn't
@@ -1013,108 +1015,12 @@ static const u16 sQuickStartGardenRewardPool[] = {
 };
 #define QUICKSTART_GARDEN_REWARD_POOL_SIZE (sizeof(sQuickStartGardenRewardPool) / sizeof(u16))
 
-// Picks a random not-yet-owned reward and drops it at the gauntlet's fixed
-// reward spot, marking ITEM_32 as "earned" (1) and room flag 1 as "now
-// watching this visit's drop" - shared by both the initial grant and the
-// re-drop path in QuickStartSpawnGardenRewardOnce below.
-static void QuickStartSpawnGardenRewardItem(void) {
-    s32 i;
-    u16 available[QUICKSTART_GARDEN_REWARD_POOL_SIZE];
-    s32 availableCount = 0;
-    u16 chosenItem;
-    Entity* itemEntity;
-    for (i = 0; i < QUICKSTART_GARDEN_REWARD_POOL_SIZE; i++) {
-        if (GetInventoryValue(sQuickStartGardenRewardPool[i]) == 0) {
-            available[availableCount] = sQuickStartGardenRewardPool[i];
-            availableCount++;
-        }
-    }
-    // Everything in the pool is already owned (unlikely, but possible after
-    // repeated testing) - fall back to a rupee pile so clearing the room
-    // still has something to show for it.
-    chosenItem = (availableCount != 0) ? available[(s32)Random() % availableCount] : ITEM_RUPEE100;
-    itemEntity = CreateObject(GROUND_ITEM, chosenItem, 0);
-    if (itemEntity != NULL) {
-        itemEntity->x.HALF.HI = gRoomControls.origin_x + 0x1f8;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + 0x108;
-        itemEntity->collisionLayer = 1;
-        itemEntity->flags |= ENT_PERSIST;
-        UpdateSpriteForCollisionLayer(itemEntity);
-        SetInventoryValue(ITEM_32, 1);
-        SetRoomFlag(1);
-    }
-}
-
-// Once every gauntlet enemy is dead, drop a random reward the player
-// doesn't already have. Only fires once the wave has actually been spawned
-// THIS visit (room flag 0, set by QuickStartSpawnGardenEnemiesOnce): on
-// the very first frame in the room, before that, "no enemies alive" would
-// otherwise look identical to "already cleared" and grant the reward
-// immediately - and after leaving mid-fight and coming back, it looks
-// identical to "the area-unload just wiped them", which must respawn the
-// wave rather than pay out for it (see QuickStartSpawnGardenEnemiesOnce).
-//
-// ITEM_32 is a 3-state flag, not a boolean: 0 = not earned yet, 1 = earned
-// and a ground item is (or was) dropped for it, 2 = confirmed actually
-// picked up. That distinction exists because leaving the room (any of
-// Castle Garden's several exits) wipes ground items same as it wipes
-// enemies, regardless of ENT_PERSIST - a player who clears the gauntlet
-// then wanders off before grabbing the drop would otherwise lose it
-// forever (ITEM_32 already 1, nothing left to spawn it again). Room flag 1
-// tracks "watching a drop THIS visit": if the item vanishes while that
-// flag is still set, it was a genuine pickup (promote to 2); if the flag
-// is already gone (a fresh visit) and there's no item, it was wiped before
-// pickup, so re-drop it.
-static void QuickStartSpawnGardenRewardOnce(void) {
-    s32 i;
-    if (GetInventoryValue(ITEM_32) >= 2) {
-        return;
-    }
-    if (GetInventoryValue(ITEM_32) == 0) {
-        // Room flag 5 - has the boss (QuickStartSpawnGardenBossOnce) been
-        // spawned yet this visit. The reward can't drop until BOTH the
-        // normal wave (flag 0) and the boss stage have happened, not just
-        // "no ENEMY-kind entity currently in the room" - on the very first
-        // frame after the wave dies, that check would already read true
-        // (before QuickStartSpawnGardenBossOnce gets a chance to spawn the
-        // boss on a later frame), which would drop the reward a whole boss
-        // fight early.
-        if (!CheckRoomFlag(0) || !CheckRoomFlag(5)) {
-            return;
-        }
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-                return;
-            }
-        }
-        // Room flag 4: "region-cleared hint already shown this visit" -
-        // same one-shot-per-visit shape as the WAVES room hint above
-        // (QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG); a plain room flag is
-        // enough since by the time ITEM_32 leaves 0, this branch never runs
-        // again regardless.
-        if (!CheckRoomFlag(4)) {
-            SetRoomFlag(4);
-            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 11), 0);
-        }
-        QuickStartSpawnGardenRewardItem();
-        return;
-    }
-    if (QuickStartGroundItemAt(0x1f8, 0x108)) {
-        SetRoomFlag(1);
-        return;
-    }
-    if (CheckRoomFlag(1)) {
-        SetInventoryValue(ITEM_32, 2);
-        return;
-    }
-    QuickStartSpawnGardenRewardItem();
-}
-
-// Win condition: an Earth Element sitting just south of Castle Garden Main's
-// north door onward, in Lon Lon Ranch (world (392,264), verified walkable the
-// same way as its enemy pool below). Picking it up ends the round. Only
-// spawns once every Lon Lon Ranch enemy is dead - same "wait for a clear
-// room" gate Castle Garden's own gauntlet reward uses.
+// Win condition: an Earth Element dropped at whichever region ends up last
+// in this save's region chain (see QuickStartSpawnRegionRewardOnce) - at
+// rewardX/rewardY, that region's own normal-loot reward spot. Picking it up
+// ends the round. Only spawns once that region's own wave (and boss, if it
+// has one) is fully cleared - same "wait for a clear room" gate every other
+// region's own normal-loot reward uses.
 // ITEM_EARTH_ELEMENT is a real Item enum slot that's otherwise unused by
 // anything QUICKSTART touches on this loop (the actual main-quest Earth
 // Element, never granted anywhere in this file), so its own inventory flag
@@ -1131,7 +1037,7 @@ static void QuickStartSpawnGardenRewardOnce(void) {
 // race and silently drop the win entirely. Called every frame from
 // QuickStartRoomMonitor, so refresh an existing Element's timer every time
 // through instead of only spawning once and leaving it to fend for itself.
-static void QuickStartSpawnWinKeyOnce(void) {
+static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
     Entity* itemEntity;
     s32 i;
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) != 0) {
@@ -1181,8 +1087,8 @@ static void QuickStartSpawnWinKeyOnce(void) {
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_EARTH_ELEMENT, 0);
     if (itemEntity != NULL) {
-        itemEntity->x.HALF.HI = gRoomControls.origin_x + 392;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + 159;
+        itemEntity->x.HALF.HI = gRoomControls.origin_x + rewardX;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + rewardY;
         itemEntity->collisionLayer = 1;
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
@@ -1605,26 +1511,15 @@ static const QuickStartLink sQuickStartLinks[] = {
     // QuickStartProcessLinks below for the facing).
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x6c, 0x7e, 0x32, 0x3e, AREA_CASTOR_DARKNUT,
       ROOM_CASTOR_DARKNUT_HALL, 119, 74 },
-    // Melari's Mine, Door B -> Castle Garden, arriving at its south end
-    // ("the bottom"). Door B is NOT on the top corridor - it's near the
-    // real Mt Crenel Cavern of Flames door's own coordinates
-    // (gExitList_MelarisMine_Main[1]: startX=0x70, startY=0x12c,
-    // AREA_12x12 -> box +6/+6) in the larger open space below the
-    // corridor, on the room's far west side (that real door's own
-    // facing_direction, 0x6/west, matches "exiting left"). Confirmed
-    // reachable from the corridor by a specific route: down through a gap
-    // around local x=580 into the lower space, then walkable most of the
-    // way west, then up through a second gap around local x=140-160 that
-    // lands right next to this door. That approach is also the ONLY
-    // direction this spot is reachable from at all (walking down from the
-    // north or up from the south dead-ends well short of it) - and the
-    // real box's own tight 6x6px size meant a fast walk-left could overshoot
-    // past it in a single frame before ever registering, only catching on
-    // a slower second attempt. Widened well past the real box (to
-    // 0x64-0x8c x, 0x128-0x136 y) in the one direction that matters (further
-    // east, the approach side) so a normal walking speed can't skip over it.
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x64, 0x8c, 0x128, 0x136, AREA_CASTLE_GARDEN,
-      ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0 },
+    // Melari's Mine's own Door B (near the real Mt Crenel Cavern of Flames
+    // door, gExitList_MelarisMine_Main[1] - box widened to 0x64-0x8c x,
+    // 0x128-0x136 y for the same overshoot reason documented on other links
+    // in this file) used to be a static row here leading to Castle Garden.
+    // Now dynamic instead - it leads to whichever region this save's chain
+    // put in slot 0 (see QuickStartProcessRegionChainLinks below), since
+    // that varies per save just like the ladder/2-door pool destinations
+    // already do.
+    //
     // Melari's Mine's two remaining real doors (Minish House Interiors -
     // Southeast, East), opened for future NPCs. Each trigger box is that
     // door's own real coordinates (gExitList_MelarisMine_Main[3], [4]
@@ -1660,20 +1555,17 @@ static const QuickStartLink sQuickStartLinks[] = {
     // used to return to before the merchant moved here - reusing it keeps
     // both paths back into Melari's Mine consistent with each other.
     { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 103, 135, 177, 193, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 168, 525 },
-    // Castle Garden's real north door (gExitList_CastleGarden_Main[0]) is a
-    // WARP_TYPE_AREA door - left un-retargeted (transitions.c) for the same
-    // ACT_TILE reason documented above, so this is a position box instead,
-    // covering the door's own visual footprint (local (504,40), where the
-    // player is actually seen walking up between the castle's entrance
-    // pillars) rather than depending on it. Lands just past the entrance
-    // of Lon Lon Ranch, offset south of that room's own return-trip box
-    // below so arriving here doesn't immediately re-trigger it.
-    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 488, 520, 16, 56, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
-      344, 870 },
-    // Lon Lon Ranch -> back to Castle Garden. Trigger box centered on
-    // (315,975), placed by the user directly (Lua position script).
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 287, 343, 966, 984, AREA_CASTLE_GARDEN,
-      ROOM_CASTLE_GARDEN_MAIN, 504, 120 },
+    // Castle Garden's real north door (gExitList_CastleGarden_Main[0], a
+    // WARP_TYPE_AREA door left un-retargeted for the same ACT_TILE reason
+    // documented above - local (504,40), the castle's own entrance
+    // pillars) and Lon Lon Ranch's own return box (287-343,966-984,
+    // centered on (315,975)) both used to be static rows here, leading to
+    // each other. Now dynamic instead, same reasoning as Melari's Mine's
+    // Door B above - each region's own "onward" exit box
+    // (sQuickStartRegionPool's exitMinX/MaxX/MinY/MaxY) leads to whichever
+    // region is next in this save's chain, resolved at trigger time by
+    // QuickStartProcessRegionChainLinks below rather than a fixed
+    // destination here.
     // Talon and Malon's house (both west and east rooms) is fully reset to
     // vanilla per the user's own request - repeated rounds of custom content
     // there (a "? room" reward in the west room, a second shop location in
@@ -1795,20 +1687,6 @@ static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
     { 152, 504 },
 };
 
-// No separate "reward earned" item marker the way Castle Garden/Melari's
-// Mine have (ITEM_32/ITEM_5A) - the win key itself is the reward here, and
-// QuickStartSpawnWinKeyOnce already re-checks "is the room clear" fresh
-// every frame on its own, so the only bookkeeping this needs is "don't
-// respawn a full wave on top of one already in progress this visit."
-static void QuickStartSpawnLonLonRanchEnemiesOnce(void) {
-    if (CheckRoomFlag(0)) {
-        return;
-    }
-    QuickStartSpawnEnemyGroup(sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets),
-                               QUICKSTART_LONLON_ROOM_SQUARES, QUICKSTART_LONLON_MAX_ENEMIES);
-    SetRoomFlag(0);
-}
-
 // Defensive backstop for the KINSTONE_29 fuse-at-boot in GameTask_Transition:
 // that flag is what makes sub_StateChange_HyruleField_LonLonRanch
 // (roomInit.c) skip loading the wall-punching Goron's entity list in the
@@ -1902,6 +1780,337 @@ static void QuickStartSolveLonLonBoulder(void) {
         const QuickStartLonLonBoulder* b = &sQuickStartLonLonBoulders[i];
         SetTileType(TILE_TYPE_0, TILE_POS(b->oldTileX, b->oldTileY), LAYER_BOTTOM);
         SetTileType(SPECIAL_TILE_21, TILE_POS(b->holeTileX, b->holeTileY), LAYER_BOTTOM);
+    }
+}
+
+// ---- Overworld region chain ----
+// Generalizes what used to be Castle Garden and Lon Lon Ranch's own
+// separately hand-written implementations into one data table
+// (sQuickStartRegionPool below) plus one generic set of dispatch functions,
+// per docs/QUICKSTART_ROADMAP.md sec 3.1. QUICKSTART_REGION_CHAIN_LENGTH
+// distinct regions are drawn at random from the pool and put in a random
+// order at the hub (Melari's Mine); whichever region ends up last drops an
+// Earth Element and ends the run (QuickStartSpawnWinKeyOnce/
+// QuickStartCheckWinCondition above, both already region-agnostic - neither
+// references any specific area/room), every other region drops an ordinary
+// item from its own reward pool and opens a portal to the next region in
+// the chain instead (QuickStartProcessRegionChainLinks below).
+
+static u8 QuickStartGetRegionChainPoolIndex(s32 slot) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_REGION_CHAIN_POOL_BIT(slot, b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartSetRegionChainPoolIndex(s32 slot, u8 value) {
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (value & (1 << b)) {
+            SetGlobalFlag(GF_REGION_CHAIN_POOL_BIT(slot, b));
+        }
+    }
+}
+
+// 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
+// earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
+// confirmed actually picked up. Indexed by chain SLOT rather than by
+// physical region, since which physical region occupies a given slot
+// varies per save - an Item enum slot (this file's usual "spare inventory
+// bit" trick) can't do that on its own, it would need one spare slot per
+// chain position, and this file is already down to none left unclaimed.
+static u8 QuickStartGetRegionChainRewardState(s32 slot) {
+    return (CheckGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0)) ? 1 : 0) |
+           (CheckGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1)) ? 2 : 0);
+}
+
+static void QuickStartSetRegionChainRewardState(s32 slot, u8 value) {
+    if (value & 1) {
+        SetGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
+    } else {
+        ClearGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
+    }
+    if (value & 2) {
+        SetGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
+    } else {
+        ClearGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
+    }
+}
+
+// Castle Garden's boss hook - moved verbatim from the old
+// QuickStartSpawnGardenBossOnce, just reading its content offset/reward
+// state from the table row + chain slot instead of a hardcoded position
+// and ITEM_32. See sQuickStartRegionPool's own entry below for the
+// Scenario-1-only reasoning (measured GFX-slot budget, this session's
+// scratchpad/test_gfx_boss_cost.py).
+static void QuickStartCastleGardenBossHook(const QuickStartRegion* region, s32 slot) {
+    s32 i;
+    if (QuickStartGetRegionChainRewardState(slot) != 0) {
+        return;
+    }
+    if (!CheckRoomFlag(0) || CheckRoomFlag(5)) {
+        // Either the normal wave hasn't spawned yet, or the boss already
+        // has (room flag 5) - either way, nothing to do here this frame.
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+            // Normal wave still has survivors.
+            return;
+        }
+    }
+    {
+        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
+        if (boss != NULL) {
+            boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
+            boss->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+            boss->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(boss);
+            SetRoomFlag(5);
+        }
+    }
+}
+
+// Lon Lon Ranch's own quirks (boulder puzzle + Goron/animal removal) -
+// unconditional every frame, exactly as today, just folded into one hook
+// so the table row only needs the one function pointer.
+static void QuickStartLonLonRanchQuirkHook(void) {
+    QuickStartClearLonLonRanchGoron();
+    QuickStartSolveLonLonBoulder();
+}
+
+// First two rows only - Castle Garden and Lon Lon Ranch, a refactor of
+// existing behavior (see docs/QUICKSTART_ROADMAP.md sec 3.1's own "become
+// the first two rows in that table" plan), regression-tested to behave
+// exactly as before this session's chain/randomization work. More regions
+// (Castor Wilds, Eastern Hills, Trilby Highlands, North/South Hyrule
+// Field - see the roadmap's own sec 2.1 table) get surveyed and appended
+// here one at a time in later passes; QUICKSTART_REGION_CHAIN_LENGTH stays
+// independent of pool size (a distinct-draw, same as the ladder/2door
+// pools already do), so growing the pool alone doesn't change how many
+// regions a single run visits.
+static const QuickStartRegion sQuickStartRegionPool[] = {
+    // Castle Garden - entrance/exit reused from the old static
+    // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
+    // real north door's own trigger box), enemy grid/reward pool/spot
+    // unchanged from the old QuickStartSpawnGarden*/sQuickStartGarden*
+    // functions/data above.
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0, 488, 520, 16, 56, sQuickStartGardenEnemyOffsets,
+      ARRAY_COUNT(sQuickStartGardenEnemyOffsets), QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES,
+      sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 0x1f8, 0x108, QuickStartCastleGardenBossHook,
+      QuickStartClearCastleGuards },
+    // Lon Lon Ranch - entrance/exit reused from the old static
+    // sQuickStartLinks rows (Castle Garden's own north-door destination,
+    // and Lon Lon's own return box), enemy grid unchanged from
+    // sQuickStartLonLonRanchEnemyOffsets above. Reward pool/spot reused
+    // from Castle Garden's own sQuickStartGardenRewardPool - this region
+    // never actually draws from it while it's the chain's last slot (the
+    // Earth Element/win path takes over instead, see
+    // QuickStartSpawnRegionRewardOnce below), only if a future, bigger
+    // chain ever puts it somewhere other than last.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 287, 343, 966, 984,
+      sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
+      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 392, 159, NULL,
+      QuickStartLonLonRanchQuirkHook },
+};
+#define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
+
+// Which chain slot (0..QUICKSTART_REGION_CHAIN_LENGTH-1) the current room
+// is standing in for, or -1 if it isn't part of the chain at all - same
+// "check against each one's current runtime assignment" idea as
+// QuickStartFindLadderForCurrentRoom, needed here because which physical
+// region backs which slot varies per save.
+static s32 QuickStartGetCurrentRegionChainPosition(void) {
+    s32 slot;
+    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
+        u8 poolIndex = QuickStartGetRegionChainPoolIndex(slot) % QUICKSTART_REGION_POOL_SIZE;
+        const QuickStartRegion* region = &sQuickStartRegionPool[poolIndex];
+        if (gRoomControls.area == region->area && gRoomControls.room == region->room) {
+            return slot;
+        }
+    }
+    return -1;
+}
+
+static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
+    u8 poolIndex = QuickStartGetRegionChainPoolIndex(slot) % QUICKSTART_REGION_POOL_SIZE;
+    return &sQuickStartRegionPool[poolIndex];
+}
+
+// One draw per save - QUICKSTART_REGION_CHAIN_LENGTH distinct pool indices,
+// order matters (it IS the run's region order). Same distinct-draw shape
+// QuickStartRandomizeLaddersOnce/QuickStart2DoorRandomizeOnce already use;
+// safe as long as the pool is at least as big as the chain (true today,
+// 2 == 2, and stays true as the pool only grows from here). Called from
+// Melari's Mine's own dispatch (QuickStartRoomMonitor) - the hub is always
+// visited before the chain's own first entrance trigger is reachable, same
+// "roll it well before the player can reach it" reasoning the ladder/2door
+// draws already use.
+static void QuickStartRandomizeRegionChainOnce(void) {
+    s32 slot, j;
+    u8 usedPool[QUICKSTART_REGION_CHAIN_LENGTH];
+    if (CheckGlobalFlag(GF_REGION_CHAIN_RANDOMIZED)) {
+        return;
+    }
+    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
+        u8 poolIndex;
+        for (;;) {
+            poolIndex = (u8)((s32)Random() % QUICKSTART_REGION_POOL_SIZE);
+            for (j = 0; j < slot; j++) {
+                if (usedPool[j] == poolIndex) {
+                    break;
+                }
+            }
+            if (j == slot) {
+                break;
+            }
+        }
+        usedPool[slot] = poolIndex;
+        QuickStartSetRegionChainPoolIndex(slot, poolIndex);
+    }
+    SetGlobalFlag(GF_REGION_CHAIN_RANDOMIZED);
+}
+
+// Same "is any ENEMY-kind entity still in this room" check every kind of
+// wave-clear detection in this file already uses, plus (for a region with
+// a boss) waiting on room flag 5 too - a region's own reward can't drop
+// (or its Element, if it's the chain's last slot) until both the normal
+// wave AND the boss stage have happened, not just "no ENEMY-kind entity
+// currently in the room": on the very first frame after the wave dies,
+// that check would already read true, before the boss hook ever gets a
+// chance to spawn it on a later frame, which would drop the reward a whole
+// boss fight early.
+static bool32 QuickStartRegionWaveCleared(const QuickStartRegion* region) {
+    s32 i;
+    if (!CheckRoomFlag(0)) {
+        return FALSE;
+    }
+    if (region->bossHook != NULL && !CheckRoomFlag(5)) {
+        return FALSE;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
+    if (QuickStartGetRegionChainRewardState(slot) != 0) {
+        return;
+    }
+    if (CheckRoomFlag(0)) {
+        return;
+    }
+    QuickStartSpawnEnemyGroup(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares, region->maxEnemies);
+    SetRoomFlag(0);
+}
+
+// Picks a random not-yet-owned reward from this region's own pool and
+// drops it at its reward spot, marking this chain slot "earned" (1) and
+// room flag 1 "now watching this visit's drop" - shared by both the
+// initial grant and the re-drop path in QuickStartSpawnRegionRewardOnce
+// below. 32 is comfortably bigger than the one shared reward pool this
+// file has today (21 entries) - a plain fixed-size stack buffer rather
+// than a VLA, since agbcc doesn't support C99 VLAs.
+static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 slot) {
+    s32 i;
+    u16 available[32];
+    s32 availableCount = 0;
+    u16 chosenItem;
+    Entity* itemEntity;
+    for (i = 0; i < region->rewardPoolSize && availableCount < 32; i++) {
+        if (GetInventoryValue(region->rewardPool[i]) == 0) {
+            available[availableCount] = region->rewardPool[i];
+            availableCount++;
+        }
+    }
+    // Everything in the pool is already owned (unlikely, but possible after
+    // repeated testing) - fall back to a rupee pile so clearing the room
+    // still has something to show for it.
+    chosenItem = (availableCount != 0) ? available[(s32)Random() % availableCount] : ITEM_RUPEE100;
+    itemEntity = CreateObject(GROUND_ITEM, chosenItem, 0);
+    if (itemEntity != NULL) {
+        itemEntity->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+        itemEntity->collisionLayer = 1;
+        itemEntity->flags |= ENT_PERSIST;
+        UpdateSpriteForCollisionLayer(itemEntity);
+        QuickStartSetRegionChainRewardState(slot, 1);
+        SetRoomFlag(1);
+    }
+}
+
+// Generalizes QuickStartSpawnGardenRewardOnce - same 3-state
+// earned/dropped/confirmed shape (now chain-slot-indexed instead of an
+// Item enum marker), except the chain's LAST slot drops an Earth Element
+// and feeds the win condition instead of a normal loot item (see
+// QuickStartSpawnWinKeyOnce/QuickStartCheckWinCondition above - both
+// already region-agnostic, so nothing about them needed to change).
+static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 slot) {
+    u8 state;
+    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        if (!QuickStartRegionWaveCleared(region)) {
+            return;
+        }
+        QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
+        QuickStartCheckWinCondition();
+        return;
+    }
+    state = QuickStartGetRegionChainRewardState(slot);
+    if (state >= 2) {
+        return;
+    }
+    if (state == 0) {
+        if (!QuickStartRegionWaveCleared(region)) {
+            return;
+        }
+        // Room flag 4: "region-cleared hint already shown this visit" -
+        // same one-shot-per-visit shape as the WAVES room hint elsewhere in
+        // this file; enough on its own since by the time this slot's
+        // reward state leaves 0, this branch never runs again regardless.
+        if (!CheckRoomFlag(4)) {
+            SetRoomFlag(4);
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 11), 0);
+        }
+        QuickStartSpawnRegionRewardItem(region, slot);
+        return;
+    }
+    if (QuickStartGroundItemAt(region->rewardX, region->rewardY)) {
+        SetRoomFlag(1);
+        return;
+    }
+    if (CheckRoomFlag(1)) {
+        QuickStartSetRegionChainRewardState(slot, 2);
+        return;
+    }
+    QuickStartSpawnRegionRewardItem(region, slot);
+}
+
+// Dispatch for whichever region the current room resolves to in this
+// save's chain - called every frame from QuickStartRoomMonitor once
+// QuickStartGetCurrentRegionChainPosition confirms the current room is
+// part of it. Reward before enemies, matching this file's own established
+// convention elsewhere (Melari's Mine/Castle Garden already call their
+// reward spawner before their enemy spawner, so a full room doesn't cost
+// the reward its entity slot).
+static void QuickStartRegionMonitor(s32 slot) {
+    const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
+    if (region->quirkHook != NULL) {
+        region->quirkHook();
+    }
+    if (slot == 0) {
+        QuickStartShowRegionIntroHintOnce();
+    }
+    QuickStartSpawnRegionRewardOnce(region, slot);
+    QuickStartSpawnRegionEnemiesOnce(region, slot);
+    if (region->bossHook != NULL) {
+        region->bossHook(region, slot);
     }
 }
 
@@ -4396,18 +4605,37 @@ static void QuickStartEnforceContainment(void) {
     if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
         return;
     }
-    // Every 2-door pool room's own two real doors are retargeted in
-    // transitions.c to lead back to the Lon Lon Ranch cave-connector ledge
-    // (see sQuickStart2DoorSmallRoomPool/LargeRoomPool) - this matters here
-    // specifically for ROOM_MINISH_HOUSE_INTERIORS_FESTARI, the one pool
-    // room whose area (AREA_MINISH_HOUSE_INTERIORS) is itself contained.
     // AREA_HYRULE_FIELD isn't on QuickStartAreaContained's list (it's a huge
     // overworld area, same reasoning as QuickStartEnforceLonLonContainment's
-    // own comment), so this one specific destination needs its own
-    // exception the same way AREA_DOJOS/ROOM_DOJOS_GRIMBLADE does above.
-    if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
-        gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
-        return;
+    // own comment) - Lon Lon Ranch living there used to need its own fixed
+    // exception here the same way AREA_DOJOS/ROOM_DOJOS_GRIMBLADE still does
+    // above. Now folded into the two dynamic checks below instead: Lon Lon
+    // Ranch is always either this save's chain slot 0 or the region "next"
+    // after Castle Garden, so whichever one it resolves to already covers
+    // this case without a separate fixed constant.
+    //
+    // The region chain's own two dynamic destinations from a contained
+    // area: the hub (Melari's Mine) leaving to whichever region is chain
+    // slot 0, or a contained region (Castle Garden) leaving to whichever
+    // region is next after its own slot. Both vary per save, same reason
+    // the old fixed AREA_CASTLE_GARDEN/AREA_HYRULE_FIELD checks this
+    // replaced couldn't just stay static.
+    {
+        const QuickStartRegion* first = QuickStartGetRegionAtChainSlot(0);
+        if (gRoomTransition.player_status.area_next == first->area &&
+            gRoomTransition.player_status.room_next == first->room) {
+            return;
+        }
+    }
+    {
+        s32 slot = QuickStartGetCurrentRegionChainPosition();
+        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
+            if (gRoomTransition.player_status.area_next == next->area &&
+                gRoomTransition.player_status.room_next == next->room) {
+                return;
+            }
+        }
     }
     if (!QuickStartAreaContained(gRoomTransition.player_status.area_next)) {
         gRoomTransition.transitioningOut = 0;
@@ -4441,9 +4669,22 @@ static void QuickStartEnforceLonLonContainment(void) {
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
-    if (gRoomTransition.player_status.area_next == AREA_CASTLE_GARDEN &&
-        gRoomTransition.player_status.room_next == ROOM_CASTLE_GARDEN_MAIN) {
-        return;
+    // Leaving Lon Lon Ranch to whichever region is next in this save's
+    // chain (or nowhere further, if Lon Lon Ranch is the chain's own last
+    // slot - QuickStartGetCurrentRegionChainPosition then returns
+    // QUICKSTART_REGION_CHAIN_LENGTH-1, so the check below is simply
+    // skipped) - replaces the old fixed AREA_CASTLE_GARDEN check, since
+    // Lon Lon Ranch's own position (and so which region comes after it)
+    // now varies per save.
+    {
+        s32 slot = QuickStartGetCurrentRegionChainPosition();
+        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
+            if (gRoomTransition.player_status.area_next == next->area &&
+                gRoomTransition.player_status.room_next == next->room) {
+                return;
+            }
+        }
     }
     if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
         gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
@@ -4518,10 +4759,61 @@ static void QuickStartProcessLinks(void) {
     }
 }
 
+// Dynamic counterpart to sQuickStartLinks/QuickStartProcessLinks above -
+// the region chain's own two kinds of transition, both needing a
+// destination resolved at trigger time instead of a fixed table row, same
+// reasoning as QuickStartProcessLadderLinks/QuickStartProcessCaveConnectorLink:
+// (1) Melari's Mine's Door B, now leading to whichever region this save's
+// chain drew for slot 0; (2) each region's own "onward" exit box
+// (sQuickStartRegionPool's exitMinX/MaxX/MinY/MaxY, reused verbatim from
+// the old static Castle Garden/Lon Lon Ranch rows), leading to whichever
+// region is next after the CURRENT room's own slot - or nowhere, if the
+// current room is already the chain's last slot, since winning happens at
+// the reward spot instead of by walking anywhere further.
+static void QuickStartProcessRegionChainLinks(void) {
+    s16 localX, localY;
+    s32 slot;
+    if (gRoomTransition.transitioningOut) {
+        return;
+    }
+    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN && localX >= 0x64 &&
+        localX <= 0x8c && localY >= 0x128 && localY <= 0x136) {
+        const QuickStartRegion* first = QuickStartGetRegionAtChainSlot(0);
+        gRoomTransition.player_status.area_next = first->area;
+        gRoomTransition.player_status.room_next = first->room;
+        gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+        gRoomTransition.player_status.start_pos_x = first->entranceX;
+        gRoomTransition.player_status.start_pos_y = first->entranceY;
+        gRoomTransition.player_status.layer = 1;
+        gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+        gRoomTransition.transitioningOut = 1;
+        return;
+    }
+    slot = QuickStartGetCurrentRegionChainPosition();
+    if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
+        if (localX >= region->exitMinX && localX <= region->exitMaxX && localY >= region->exitMinY &&
+            localY <= region->exitMaxY) {
+            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
+            gRoomTransition.player_status.area_next = next->area;
+            gRoomTransition.player_status.room_next = next->room;
+            gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+            gRoomTransition.player_status.start_pos_x = next->entranceX;
+            gRoomTransition.player_status.start_pos_y = next->entranceY;
+            gRoomTransition.player_status.layer = 1;
+            gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+            gRoomTransition.transitioningOut = 1;
+        }
+    }
+}
+
 // Polled every frame regardless of item-choice phase (unlike
 // QuickStartUpdateItemChoice, which is specific to Castor Darknut Main) so
 // that leaving the starting room still gets QUICKSTART treatment.
 static void QuickStartRoomMonitor(void) {
+    s32 regionSlot;
     // Run clock for the scoring system's time bonus (QuickStartComputeScore
     // below) - called once per real frame during normal gameplay (from
     // GameMain_Update) plus a handful of extra frames during each room's
@@ -4545,50 +4837,43 @@ static void QuickStartRoomMonitor(void) {
     // real room every save, so it can't be folded into a specific room's
     // branch below either.
     QuickStartProcessCaveConnectorLink();
+    // Same reasoning again - the region chain's own two kinds of link
+    // (Melari's Mine's Door B, and each region's own "onward" exit box)
+    // both target a different real room every save.
+    QuickStartProcessRegionChainLinks();
+    regionSlot = QuickStartGetCurrentRegionChainPosition();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
     } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
         QuickStartClearMelarisMineObstacles();
         QuickStartSpawnMelarisMineRewardOnce();
         QuickStartSpawnMelarisMineEnemiesOnce();
-    } else if (gRoomControls.area == AREA_CASTLE_GARDEN && gRoomControls.room == ROOM_CASTLE_GARDEN_MAIN) {
-        QuickStartClearCastleGuards();
-        QuickStartShowRegionIntroHintOnce();
-        QuickStartSpawnGardenRewardOnce();
-        QuickStartSpawnGardenEnemiesOnce();
-        QuickStartSpawnGardenBossOnce();
+        // Rolled here (the hub, always visited before the chain's own
+        // first entrance is reachable) rather than in whichever region
+        // ends up first - unlike the old fixed Castle Garden -> Lon Lon
+        // Ranch order, the chain can now put either region first, and the
+        // ladder pool (Castle Garden's own 2 ladders) / 2-door pool (Lon
+        // Lon Ranch's cave connector) each need their own draw done before
+        // the player can possibly reach whichever one of those two rooms
+        // comes first this save.
+        QuickStartRandomizeRegionChainOnce();
+        QuickStartRandomizeLaddersOnce();
+        QuickStart2DoorRandomizeOnce();
+    } else if (regionSlot >= 0) {
+        // Whichever region this save's chain put the current room in -
+        // Castle Garden and Lon Lon Ranch today, more later as new regions
+        // get surveyed and added to sQuickStartRegionPool.
+        QuickStartRegionMonitor(regionSlot);
         // Ground-item pickup alone sets a skill's ITEM_SKILL_* inventory
         // flag but (outside of a full player (re)init) doesn't itself
         // refresh gPlayerState.skills - same gap already hit and fixed for
         // the earlier Woods-gauntlet prototype's boss-skill reward. Cheap
         // and idempotent to just keep it in sync every frame here instead
-        // of needing an exact "on pickup" hook.
+        // of needing an exact "on pickup" hook. Only Castle Garden's own
+        // reward pool has any ITEM_SKILL_* entries today, but this is
+        // harmless (and correct to keep doing) for any future region whose
+        // pool does too.
         UpdatePlayerSkills();
-        QuickStartRandomizeLaddersOnce();
-        // Same "roll it early, well before the player can possibly reach
-        // the trigger" reasoning as the ladder draw just above - Castle
-        // Garden is always visited right after Melari's Mine, long before
-        // Lon Lon Ranch.
-        QuickStart2DoorRandomizeOnce();
-    } else if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
-        QuickStartClearLonLonRanchGoron();
-        QuickStartSolveLonLonBoulder();
-        // Reward before enemies, not after - both Melari's Mine and Castle
-        // Garden's own dispatch below already do it in this order (reward
-        // spawner called before that room's own enemy spawner); this room
-        // had them backwards, the one inconsistency in the file. With 50
-        // enemies eligible to spawn here (QUICKSTART_LONLON_MAX_ENEMIES) on
-        // top of the room's own ~9 ambient entities and the player, letting
-        // the enemy wave claim its entity slots (entity.h: MAX_ENTITIES=72
-        // total) before the Earth Element got a chance to spawn is a
-        // plausible reason the user reported it not dropping - CreateObject
-        // (QuickStartSpawnWinKeyOnce) fails silently if no slot is free,
-        // and unlike the other two rooms' rewards this one was going
-        // second. Spawning it first guarantees it a slot regardless of how
-        // full the room gets afterward.
-        QuickStartSpawnWinKeyOnce();
-        QuickStartSpawnLonLonRanchEnemiesOnce();
-        QuickStartCheckWinCondition();
     } else if (gRoomControls.area == AREA_DOJOS && gRoomControls.room == ROOM_DOJOS_GRIMBLADE) {
         QuickStartClearShopObstacles();
         QuickStartSpawnShopMerchantOnce(120, 125);
