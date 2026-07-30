@@ -2709,7 +2709,13 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // NAKANIWA_00_EZERO) is forced open every visit (roomInit.c:
     // sub_StateChange_SanctuaryEntrance_Main, under #ifdef QUICKSTART).
     { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 100, 100, 0, -24 },
-    { AREA_NULL_61, ROOM_NULL_61_0, 100, 100, 0, -24 },
+    // (0,-24) originally put content at local (100,76), inside the rocky
+    // cave-mouth archway just north of the entrance spot (unwalkable) -
+    // confirmed via screenshot survey after the user reported both the
+    // Darknut and its drop spawning inside it. This room's own walkable
+    // path runs south from the entrance, not north; (0,+24) instead
+    // confirmed clean, still on the open path.
+    { AREA_NULL_61, ROOM_NULL_61_0, 100, 100, 0, 24 },
 };
 #define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 13
 
@@ -4166,10 +4172,28 @@ static void QuickStartMakeNpcTalkable(Entity* npc, Script* script) {
 // accidental pickup.
 static const s16 sQuickStartItemOffsets[QUICKSTART_ITEM_CHOICES] = { 100, 136, 170 };
 
+// Called exactly once per phase (QuickStartSpawnStarterChoiceOnce's own NPC
+// scan guards the phase-0 call, and the phase==1/phase==3 reload handlers
+// below each fire their own call exactly once transitioning into that
+// phase), so shuffling fresh on every call - rather than needing any
+// persisted state - still means each of the 3 rounds' left-to-right order
+// is independently randomized once per game, instead of always the same
+// bombs/bow/boomerang (etc.) order every time. Same Fisher-Yates shape as
+// QuickStartSpawnEnemyGroup's own indices shuffle elsewhere in this file.
 static void QuickStartSpawnItems(const QuickStartItemChoice* choices) {
-    s32 i;
+    s32 i, r, tmp;
+    s32 order[QUICKSTART_ITEM_CHOICES];
     for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
-        Entity* itemEntity = CreateObject(GROUND_ITEM, choices[i].itemId, 0);
+        order[i] = i;
+    }
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES - 1; i++) {
+        r = (s32)Random() % (QUICKSTART_ITEM_CHOICES - i);
+        tmp = order[i];
+        order[i] = order[i + r];
+        order[i + r] = tmp;
+    }
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
+        Entity* itemEntity = CreateObject(GROUND_ITEM, choices[order[i]].itemId, 0);
         if (itemEntity != NULL) {
             itemEntity->x.HALF.HI = gRoomControls.origin_x + sQuickStartItemOffsets[i];
             itemEntity->y.HALF.HI = gRoomControls.origin_y + 105;
