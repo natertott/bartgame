@@ -340,15 +340,22 @@ void ForceEquipExtraSlot(u32 itemId) {
         gSave.stats.equipped[SLOT_B] = ITEM_NONE;
     }
     gSave.stats.equippedExtra[0] = itemId;
+    // unk_13/unk_14 (A/B's own dirty flags) still matter here - the two
+    // checks above can clear A or B's icon out to NONE - but the L icon
+    // itself is drawn from unk_15, not either of those (see ui.c's own
+    // element->type2 check), and always changes in this function, so it
+    // needs marking dirty unconditionally too.
     gHUD.unk_13 = 0x7f;
     gHUD.unk_14 = 0x7f;
+    gHUD.unk_15 = 0x7f;
 }
 
 void ToggleExtraEquip(u32 itemId) {
     if (gSave.stats.equippedExtra[0] == itemId) {
         gSave.stats.equippedExtra[0] = ITEM_NONE;
-        gHUD.unk_13 = 0x7f;
-        gHUD.unk_14 = 0x7f;
+        // Only L's own icon changes on this path (A/B untouched) - unk_15,
+        // not unk_13/14 (see ForceEquipExtraSlot's own comment above).
+        gHUD.unk_15 = 0x7f;
     } else {
         ForceEquipExtraSlot(itemId);
     }

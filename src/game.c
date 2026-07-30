@@ -361,6 +361,12 @@ static void GameTask_Transition(void) {
     // owning just the upgraded arrow is enough to equip and use it.
     SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
+    // Gust Jar, granted at boot per the user's request - it's the only way
+    // to actually damage CHUCHU_BOSS (Castle Garden's own boss - see
+    // QuickStartSpawnGardenBossOnce): its core is only vulnerable to being
+    // sucked in and slammed, not sword hits, matching its vanilla Deepwood
+    // Shrine fight.
+    SetInventoryValue(ITEM_GUST_JAR, 1);
     // Lon Lon Ranch house key, granted at boot per the user's request ("Link
     // should start the game with the Lon Lon ranch house key already in his
     // inventory"). Note this doesn't actually gate anything under
