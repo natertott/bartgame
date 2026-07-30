@@ -105,7 +105,9 @@ static void QuickStartUpdate(void);
 static void QuickStartSpawnHallEnemiesOnce(void);
 static void QuickStartClearCastleGuards(void);
 static void QuickStartSpawnGardenEnemiesOnce(void);
+static void QuickStartSpawnGardenBossOnce(void);
 static void QuickStartSpawnGardenRewardOnce(void);
+static void QuickStartShowRegionIntroHintOnce(void);
 static void QuickStartClearMelarisMineObstacles(void);
 static void QuickStartSpawnMelarisMineEnemiesOnce(void);
 static void QuickStartSpawnMelarisMineRewardOnce(void);
@@ -276,12 +278,13 @@ static void GameTask_Transition(void) {
         for (bit = 184; bit <= 201; bit++) {
             ClearGlobalFlag(bit);
         }
-        // GF_LADDER_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2 - the 3rd kind bit
-        // added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
+        // 202-206: GF_LADDER_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2, the 3rd kind
+        // bit added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
         // outside the two contiguous blocks above since inserting it inline
         // would have shifted every bit after it (colliding with
-        // GF_DIFFICULTY_BIT below).
-        for (bit = 202; bit <= 206; bit++) {
+        // GF_DIFFICULTY_BIT below). 207: GF_REGION_INTRO_HINT_SHOWN, same
+        // "own the tail end of the free range" reasoning.
+        for (bit = 202; bit <= 207; bit++) {
             ClearGlobalFlag(bit);
         }
     }
@@ -654,6 +657,20 @@ static void GameMain_InitRoom(void) {
 extern Script script_QuickStartChooseOne;
 extern Script script_QuickStartMerchant;
 
+// Per-run (not per-visit, not permanent) - "has the region-intro Ezlo hint
+// already been shown this run". Only the run's first overworld region ever
+// sets this (see QuickStartShowRegionIntroHintOnce) - re-entering that same
+// region, or any later region, must not re-trigger it, but a fresh run
+// should see it again. Global flag rather than a room flag since Castle
+// Garden Main can be freely left and re-entered many times in one run.
+// Declared up here (rather than alongside the rest of this file's GF_*
+// flag constants, much further down) purely so QuickStartShowRegionIntroHintOnce
+// below - itself placed early, next to the Castle Garden functions it
+// belongs with - can see it; picks up right after GF_2DOOR_KIND_BIT2 (206),
+// the highest bit allocated down there, and is cleared every run in
+// GameTask_Transition alongside the ladder/2door ranges.
+#define GF_REGION_INTRO_HINT_SHOWN 207
+
 typedef struct {
     u16 itemId;
 } QuickStartItemChoice;
@@ -897,6 +914,24 @@ static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
     { 392, 488 }, { 616, 488 }, { 648, 488 }, { 680, 488 },
 };
 
+// Called every frame in whichever room is the run's first overworld region
+// (today, always Castle Garden Main) - fires exactly once per run, the
+// first frame the player is ever in that room. GF_REGION_INTRO_HINT_SHOWN
+// is a per-run (not per-visit) global flag: unlike the room-flag-gated
+// hints elsewhere in this file, this must not repeat on every re-entry into
+// the same region, only once each run, however many times the player
+// wanders in and out. When regions are generalized/randomized
+// (docs/QUICKSTART_ROADMAP.md secs 3.1/3.2), this same call just needs to move
+// to wherever "region position 1 this run" resolves to - it's independent
+// of which physical region that turns out to be.
+static void QuickStartShowRegionIntroHintOnce(void) {
+    if (CheckGlobalFlag(GF_REGION_INTRO_HINT_SHOWN)) {
+        return;
+    }
+    SetGlobalFlag(GF_REGION_INTRO_HINT_SHOWN);
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 10), 0);
+}
+
 static void QuickStartSpawnGardenEnemiesOnce(void) {
     if (GetInventoryValue(ITEM_32) != 0) {
         return;
@@ -907,6 +942,55 @@ static void QuickStartSpawnGardenEnemiesOnce(void) {
     QuickStartSpawnEnemyGroup(sQuickStartGardenEnemyOffsets, ARRAY_COUNT(sQuickStartGardenEnemyOffsets),
                                QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES);
     SetRoomFlag(0);
+}
+
+// Castle Garden's boss - Scenario 1 only (normal enemies fully cleared,
+// then the boss spawns, then the reward drops once it's dead too). Not
+// Scenario 2 (everything spawned together): CHUCHU_BOSS alone measured at
+// 8 GFX slots in the emulator (scratchpad/test_gfx_boss_cost.py this
+// session, gGFXSlots directly) - the maximum single-actor cost this file's
+// own GFX-slot comment already calls out (see QUICKSTART_MAX_ENEMY_KINDS
+// above). At difficulty 0 (the sparsest gauntlet this room ever rolls) the
+// normal wave alone already used 35 of 44 slots, leaving exactly 9 free -
+// the boss's 8 barely fits. At higher difficulty the wave alone already
+// measured a full 44/44 with zero free, so adding the boss on top produced
+// a measured 0 slot delta: its own graphics simply never got a slot to
+// load into (LoadFixedGFX/LoadSwapGFX fail silently - see the GFX-slot
+// comment's own description of this failure mode). Since the persistent
+// difficulty counter only ever climbs, a Scenario 2 that works on a fresh
+// save would start silently spawning an invisible/graphics-less boss once
+// the player's runs get harder - not shipped.
+// Reuses the exact same "is any ENEMY-kind entity still in this room"
+// check the normal wave's own clear detection already uses (see
+// QuickStartSpawnGardenRewardOnce below) - the boss's 5 segments are all
+// ENEMY-kind, so nothing new is needed to detect either "the wave is
+// clear, spawn the boss" or "the boss is dead, drop the reward".
+static void QuickStartSpawnGardenBossOnce(void) {
+    s32 i;
+    if (GetInventoryValue(ITEM_32) != 0) {
+        return;
+    }
+    if (!CheckRoomFlag(0) || CheckRoomFlag(5)) {
+        // Either the normal wave hasn't spawned yet, or the boss already
+        // has (room flag 5) - either way, nothing to do here this frame.
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+            // Normal wave still has survivors.
+            return;
+        }
+    }
+    {
+        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
+        if (boss != NULL) {
+            boss->x.HALF.HI = gRoomControls.origin_x + 0x1f8;
+            boss->y.HALF.HI = gRoomControls.origin_y + 0x108;
+            boss->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(boss);
+            SetRoomFlag(5);
+        }
+    }
 }
 
 // The pool of "not guaranteed by the earlier starter/bonus/skill choices"
@@ -981,13 +1065,30 @@ static void QuickStartSpawnGardenRewardOnce(void) {
         return;
     }
     if (GetInventoryValue(ITEM_32) == 0) {
-        if (!CheckRoomFlag(0)) {
+        // Room flag 5 - has the boss (QuickStartSpawnGardenBossOnce) been
+        // spawned yet this visit. The reward can't drop until BOTH the
+        // normal wave (flag 0) and the boss stage have happened, not just
+        // "no ENEMY-kind entity currently in the room" - on the very first
+        // frame after the wave dies, that check would already read true
+        // (before QuickStartSpawnGardenBossOnce gets a chance to spawn the
+        // boss on a later frame), which would drop the reward a whole boss
+        // fight early.
+        if (!CheckRoomFlag(0) || !CheckRoomFlag(5)) {
             return;
         }
         for (i = 0; i < MAX_ENTITIES; i++) {
             if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
                 return;
             }
+        }
+        // Room flag 4: "region-cleared hint already shown this visit" -
+        // same one-shot-per-visit shape as the WAVES room hint above
+        // (QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG); a plain room flag is
+        // enough since by the time ITEM_32 leaves 0, this branch never runs
+        // again regardless.
+        if (!CheckRoomFlag(4)) {
+            SetRoomFlag(4);
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 11), 0);
         }
         QuickStartSpawnGardenRewardItem();
         return;
@@ -1178,6 +1279,16 @@ const u8* const gCustomStrings[] = {
     // drops a reward, since nothing else about the room looks different
     // from a single-miniboss room until the first wave spawns.
     [9] = (const u8*)"Ezlo: Get ready! Defeat\nthree waves of enemies!",
+    // Shown once per run, the moment the player first sets foot in the
+    // run's first overworld region (see QuickStartShowRegionIntroHintOnce) -
+    // a general "how this region works" tutorial line, not tied to any one
+    // specific region's content.
+    [10] = (const u8*)"Ezlo: Clear every enemy\nhere for a reward!",
+    // Shown once per region-clear (see QuickStartSpawnGardenRewardOnce's own
+    // GF_REGION_CLEAR_HINT-gated call) right as the actual reward item
+    // drops - true for every region, boss or no boss, since it fires at the
+    // same point the reward spawner itself finally runs.
+    [11] = (const u8*)"Ezlo: Well done! Reward\nin the middle of the map.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -4436,8 +4547,10 @@ static void QuickStartRoomMonitor(void) {
         QuickStartSpawnMelarisMineEnemiesOnce();
     } else if (gRoomControls.area == AREA_CASTLE_GARDEN && gRoomControls.room == ROOM_CASTLE_GARDEN_MAIN) {
         QuickStartClearCastleGuards();
+        QuickStartShowRegionIntroHintOnce();
         QuickStartSpawnGardenRewardOnce();
         QuickStartSpawnGardenEnemiesOnce();
+        QuickStartSpawnGardenBossOnce();
         // Ground-item pickup alone sets a skill's ITEM_SKILL_* inventory
         // flag but (outside of a full player (re)init) doesn't itself
         // refresh gPlayerState.skills - same gap already hit and fixed for
