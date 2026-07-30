@@ -276,6 +276,14 @@ static void GameTask_Transition(void) {
         for (bit = 184; bit <= 201; bit++) {
             ClearGlobalFlag(bit);
         }
+        // GF_LADDER_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2 - the 3rd kind bit
+        // added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
+        // outside the two contiguous blocks above since inserting it inline
+        // would have shifted every bit after it (colliding with
+        // GF_DIFFICULTY_BIT below).
+        for (bit = 202; bit <= 206; bit++) {
+            ClearGlobalFlag(bit);
+        }
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -2034,6 +2042,10 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 // QuickStartRandomizeLaddersOnce).
 #define GF_LADDER_POOL_BIT(i) (GF_LADDER_BASE(i) + 0)
 #define GF_LADDER_KIND_BIT(i, b) (GF_LADDER_BASE(i) + 1 + (b))  // b = 0,1
+// 3rd kind bit, added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY - see
+// GameTask_Transition's own comment on why this lives outside the
+// contiguous per-ladder block instead of widening it in place.
+#define GF_LADDER_KIND_BIT2(i) (202 + (i))
 #define GF_LADDER_EXTRA_BIT(i, b) (GF_LADDER_BASE(i) + 3 + (b)) // b = 0..7
 #define GF_LADDER_DONE(i) (GF_LADDER_BASE(i) + 11)
 // Which pool entry backs this ladder this save - a second independent
@@ -2413,11 +2425,57 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
 // LADDER_KIND_MINIBOSS, per the user's own room-size split: chest/NPC
 // content stays in the small pool, miniboss/waves (and puzzles, later) stay
 // in the medium/large one.
-enum { LADDER_KIND_CHEST, LADDER_KIND_MINIBOSS, LADDER_KIND_NPC, LADDER_KIND_WAVES };
+// POT_LOTTERY/CHEST_LOTTERY/FAIRY added this session, alongside pot-lottery
+// and chest-lottery puzzle rooms and free-heal fairy rooms - see
+// QuickStartPickSmallKind/QuickStartPickLargeKind below for which pool
+// draws which subset. Needed a 3rd kind bit (GF_LADDER_KIND_BIT2/
+// GF_2DOOR_KIND_BIT2) since the original 2-bit field's 4 raw values were
+// already fully spoken for once you count both pools sharing one field
+// (small: CHEST/NPC, large: MINIBOSS/WAVES).
+enum {
+    LADDER_KIND_CHEST,
+    LADDER_KIND_MINIBOSS,
+    LADDER_KIND_NPC,
+    LADDER_KIND_WAVES,
+    LADDER_KIND_POT_LOTTERY,
+    LADDER_KIND_CHEST_LOTTERY,
+    LADDER_KIND_FAIRY,
+};
+
+// Small pool: puzzle/dialogue content, no combat needed - CHEST/NPC (the
+// original two) plus the two new lottery puzzles.
+static u8 QuickStartPickSmallKind(void) {
+    switch ((s32)Random() % 4) {
+        case 0:
+            return LADDER_KIND_CHEST;
+        case 1:
+            return LADDER_KIND_NPC;
+        case 2:
+            return LADDER_KIND_POT_LOTTERY;
+        default:
+            return LADDER_KIND_CHEST_LOTTERY;
+    }
+}
+
+// Large pool: combat-capable rooms - MINIBOSS/WAVES (the original two) plus
+// FAIRY as an occasional pure-reward breather between the combat-heavy
+// draws, since these rooms have the floor space for a couple of fairies to
+// wander without clutter.
+static u8 QuickStartPickLargeKind(void) {
+    switch ((s32)Random() % 3) {
+        case 0:
+            return LADDER_KIND_MINIBOSS;
+        case 1:
+            return LADDER_KIND_WAVES;
+        default:
+            return LADDER_KIND_FAIRY;
+    }
+}
 
 static u8 QuickStartLadderGetKind(s32 ladderIndex) {
     return (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 0)) ? 1 : 0) |
-           (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 1)) ? 2 : 0);
+           (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 1)) ? 2 : 0) |
+           (CheckGlobalFlag(GF_LADDER_KIND_BIT2(ladderIndex)) ? 4 : 0);
 }
 
 static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
@@ -2426,6 +2484,9 @@ static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
     }
     if (kind & 2) {
         SetGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 1));
+    }
+    if (kind & 4) {
+        SetGlobalFlag(GF_LADDER_KIND_BIT2(ladderIndex));
     }
 }
 
@@ -2728,6 +2789,7 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
 #define GF_2DOOR_POOL_BIT 185
 #define GF_2DOOR_ROOM_BIT(b) (186 + (b)) // b = 0..4, up to 32 rooms/pool
 #define GF_2DOOR_KIND_BIT(b) (191 + (b)) // b = 0,1
+#define GF_2DOOR_KIND_BIT2 206 // 3rd kind bit - see GF_LADDER_KIND_BIT2(i)
 #define GF_2DOOR_EXTRA_BIT(b) (193 + (b)) // b = 0..7
 #define GF_2DOOR_DONE 201
 
@@ -2742,7 +2804,8 @@ static void QuickStart2DoorSetPool(u8 pool) {
 }
 
 static u8 QuickStart2DoorGetKind(void) {
-    return (CheckGlobalFlag(GF_2DOOR_KIND_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_2DOOR_KIND_BIT(1)) ? 2 : 0);
+    return (CheckGlobalFlag(GF_2DOOR_KIND_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_2DOOR_KIND_BIT(1)) ? 2 : 0) |
+           (CheckGlobalFlag(GF_2DOOR_KIND_BIT2) ? 4 : 0);
 }
 
 static void QuickStart2DoorSetKind(u8 kind) {
@@ -2751,6 +2814,9 @@ static void QuickStart2DoorSetKind(u8 kind) {
     }
     if (kind & 2) {
         SetGlobalFlag(GF_2DOOR_KIND_BIT(1));
+    }
+    if (kind & 4) {
+        SetGlobalFlag(GF_2DOOR_KIND_BIT2);
     }
 }
 
@@ -2871,6 +2937,25 @@ static const u16 sQuickStartLadderRewardPool[] = {
 // the sizeof-derived expression even when cast to (s32) on both sides.
 #define QUICKSTART_LADDER_REWARD_POOL_SIZE 4
 
+// Miniboss variety: LADDER_KIND_MINIBOSS/QuickStart2Door's own miniboss case
+// used to always spawn a plain CreateEnemy(DARK_NUT, 0). sQuickStartLevel5
+// (above) is already this file's own curated, emulator-confirmed "tough
+// solo enemy" tier for the wave/density spawner (Ball and Chain Soldier,
+// both Wizzrobe colors, and the two toughest Darknut forms) - reused here
+// via the ladder/2door slot's own "extra" value rather than auditing a
+// fresh roster from scratch.
+#define QUICKSTART_MINIBOSS_POOL_SIZE 5
+
+// Shared "extra" packing for the two new lottery kinds: which of the 3
+// pot/chest slots holds the real prize (bits 0-1, 0-2) and which reward
+// pool entry it is (bits 2-3, 0-3) - both packed into the same 8-bit extra
+// value every other kind already gets one Random() draw's worth of.
+static u8 QuickStartPickLotteryExtra(void) {
+    u8 winnerSlot = (u8)((s32)Random() % 3);
+    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    return (u8)(winnerSlot | (prizeIndex << 2));
+}
+
 // Runs every frame in Castle Garden Main but only ever does anything once
 // per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
 // is assigned a pool (small vs medium/large, per the user's own room-size
@@ -2911,9 +2996,9 @@ static void QuickStartRandomizeLaddersOnce(void) {
         pool = (u8)((s32)Random() % 2);
         QuickStartLadderSetPool(i, pool);
         if (pool == 0) {
-            kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_CHEST : LADDER_KIND_NPC;
+            kind = QuickStartPickSmallKind();
         } else {
-            kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_MINIBOSS : LADDER_KIND_WAVES;
+            kind = QuickStartPickLargeKind();
         }
         QuickStartLadderSetKind(i, kind);
         if (kind == LADDER_KIND_CHEST) {
@@ -2925,6 +3010,10 @@ static void QuickStartRandomizeLaddersOnce(void) {
             // 3-waves-cleared drop, same reward variety a chest room gets
             // instead of a single fixed item.
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+        } else if (kind == LADDER_KIND_MINIBOSS) {
+            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+        } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+            QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
         // Distinct room per slot - two slots sharing one physical "? room"
@@ -2959,15 +3048,19 @@ static void QuickStartRandomizeLaddersOnce(void) {
                 pool = 1 - pool;
                 QuickStartLadderSetPool(i, pool);
                 if (pool == 0) {
-                    kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_CHEST : LADDER_KIND_NPC;
+                    kind = QuickStartPickSmallKind();
                 } else {
-                    kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_MINIBOSS : LADDER_KIND_WAVES;
+                    kind = QuickStartPickLargeKind();
                 }
                 QuickStartLadderSetKind(i, kind);
                 if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
                 } else if (kind == LADDER_KIND_NPC) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
+                } else if (kind == LADDER_KIND_MINIBOSS) {
+                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+                } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+                    QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
                 }
                 poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
             }
@@ -3280,6 +3373,151 @@ static void QuickStartSetupWaveRoomContent(s32 ladderIndex, s32 contentX, s32 co
     SetRoomFlag(0);
 }
 
+// 3 pots, 16px apart (one tile each) centered on contentX/contentY - one
+// (the "extra" value's winnerSlot, same value that also picks the prize)
+// shatters into a real reward, the other two are always empty (form 0xFF -
+// see pot.c's sub_0808288C). Pots are OBJECT-kind, so
+// QuickStartClearLadderRoomObstacles never sweeps them mid-visit - the same
+// "spawn once, then just watch for the drop" two-flag shape LADDER_KIND_CHEST
+// above uses (room flag 0 = spawned, 3 = confirmed present at least once)
+// is enough on its own to prevent a reload from re-rolling/duplicating the
+// prize.
+static void QuickStartSetupPotLotteryContent(s32 ladderIndex, s32 contentX, s32 contentY) {
+    static const s16 offsets[3] = { -16, 0, 16 };
+    s32 extra, winnerSlot, prizeIndex, winnerX;
+    if (CheckGlobalFlag(GF_LADDER_DONE(ladderIndex))) {
+        return;
+    }
+    extra = QuickStartLadderGetExtra(ladderIndex);
+    winnerSlot = extra & 3;
+    prizeIndex = (extra >> 2) & 3;
+    winnerX = contentX + offsets[winnerSlot];
+    if (CheckRoomFlag(0)) {
+        if (QuickStartGroundItemAt(winnerX, contentY)) {
+            SetRoomFlag(3);
+            return;
+        }
+        if (CheckRoomFlag(3)) {
+            SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+        }
+        return;
+    }
+    {
+        s32 i;
+        for (i = 0; i < 3; i++) {
+            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : 0xFF;
+            Entity* pot = CreateObject(POT, form, 0);
+            if (pot != NULL) {
+                pot->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
+                pot->y.HALF.HI = gRoomControls.origin_y + contentY;
+                pot->collisionLayer = 1;
+                pot->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(pot);
+            }
+        }
+        SetRoomFlag(0);
+    }
+}
+
+// Each of the 3 chests' own "already opened" local flag (SpecialChest_Init:
+// CheckLocalFlag(this->type), specialChest.c) is drawn from this fixed,
+// high, QUICKSTART-reserved range rather than anything meaningful to the
+// room's own vanilla data - chosen well above any real room's own local
+// flag usage. Cleared explicitly right before every spawn (not just in
+// GameTask_Transition, which only knows about global flags) so a flag left
+// set by a previous save's playthrough of this same physical room can never
+// make a chest insta-delete itself on a fresh save.
+#define QUICKSTART_CHEST_LOTTERY_FLAG(i) (250 + (i))
+
+// Same winnerSlot/prizeIndex shape as the pot lottery above, but via
+// SPECIAL_CHEST + a manually-injected gSmallChests entry (see room.c's
+// LoadSmallChestTile/playerItemUtils.c's OpenSmallChest) instead of POT's
+// form parameter - the other two chests are left unregistered, so opening
+// them falls through to OpenSmallChest's own "not found" consolation prize
+// (a fairy). Tracks done via the winner's own local flag going from clear
+// to set (OpenSmallChest sets it on a successful, registered open) - no
+// ground-item polling needed here since that flag is itself an
+// unambiguous, persistent "was this actually opened" signal.
+static void QuickStartSetupChestLotteryContent(s32 ladderIndex, s32 contentX, s32 contentY) {
+    static const s16 offsets[3] = { -16, 0, 16 };
+    s32 extra, winnerSlot, prizeIndex;
+    if (CheckGlobalFlag(GF_LADDER_DONE(ladderIndex))) {
+        return;
+    }
+    extra = QuickStartLadderGetExtra(ladderIndex);
+    winnerSlot = extra & 3;
+    prizeIndex = (extra >> 2) & 3;
+    if (CheckRoomFlag(0)) {
+        if (CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot))) {
+            SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+        }
+        return;
+    }
+    {
+        s32 i;
+        for (i = 0; i < 3; i++) {
+            ClearLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(i));
+        }
+        for (i = 0; i < 3; i++) {
+            s32 localX = contentX + offsets[i];
+            Entity* chest = CreateObject(SPECIAL_CHEST, QUICKSTART_CHEST_LOTTERY_FLAG(i), 0);
+            if (chest != NULL) {
+                chest->x.HALF.HI = gRoomControls.origin_x + localX;
+                chest->y.HALF.HI = gRoomControls.origin_y + contentY;
+                chest->collisionLayer = 1;
+                chest->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(chest);
+            }
+            if (i == winnerSlot) {
+                s32 j;
+                TileEntity* slot = NULL;
+                for (j = 0; j < 8; j++) {
+                    if (gSmallChests[j].tilePos == 0) {
+                        slot = &gSmallChests[j];
+                        break;
+                    }
+                }
+                if (slot != NULL) {
+                    slot->type = SMALL_CHEST;
+                    slot->localFlag = (u8)QUICKSTART_CHEST_LOTTERY_FLAG(i);
+                    slot->_2 = (u8)sQuickStartLadderRewardPool[prizeIndex];
+                    slot->_3 = 0;
+                    slot->tilePos = (u16)(((localX >> 4) & 0x3F) | (((contentY >> 4) & 0x3F) << 6));
+                    slot->_6 = 1;
+                    slot->_7 = 0;
+                }
+            }
+        }
+        SetRoomFlag(0);
+    }
+}
+
+// Two Fairy objects (fairy.c) at fixed offsets - the exact object an
+// ITEM_FAIRY ground item already turns itself into on its own (see
+// itemOnGround.c's ITEM_FAIRY special case: CreateObject(FAIRY, 0x60, 0)),
+// reused directly here instead of going through a ground-item middleman.
+// type2=0 gives the default "pop up, wander, heal on contact, vanish after
+// ~10s if ignored" behavior, identical to any fairy found in the wild -
+// unlike the lottery kinds above, there's no lasting reward here to guard
+// against re-farming, so this doesn't bother with GF_LADDER_DONE at all.
+static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY) {
+    static const s16 offsets[2] = { -16, 16 };
+    s32 i;
+    if (CheckRoomFlag(0)) {
+        return;
+    }
+    for (i = 0; i < 2; i++) {
+        Entity* fairy = CreateObject(FAIRY, 0x60, 0);
+        if (fairy != NULL) {
+            fairy->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
+            fairy->y.HALF.HI = gRoomControls.origin_y + contentY;
+            fairy->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(fairy);
+        }
+    }
+    SetRoomFlag(0);
+}
+
 // Called every frame the player is in whichever pool room is currently
 // assigned to a ladder, keyed by that ladder's index. GF_LADDER_DONE
 // permanently stops any further spawning once the chest is looted / the
@@ -3392,7 +3630,9 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
             return;
         }
         {
-            Entity* enemy = CreateEnemy(DARK_NUT, 0);
+            s32 extra = QuickStartLadderGetExtra(ladderIndex);
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            Entity* enemy = CreateEnemy(pick->id, pick->form);
             if (enemy != NULL) {
                 enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
                 enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
@@ -3405,6 +3645,12 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
         }
     } else if (kind == LADDER_KIND_WAVES) {
         QuickStartSetupWaveRoomContent(ladderIndex, contentX, contentY);
+    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+        QuickStartSetupPotLotteryContent(ladderIndex, contentX, contentY);
+    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+        QuickStartSetupChestLotteryContent(ladderIndex, contentX, contentY);
+    } else if (kind == LADDER_KIND_FAIRY) {
+        QuickStartSetupFairyRoomContent(contentX, contentY);
     } else {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
@@ -3444,15 +3690,19 @@ static void QuickStart2DoorRandomizeOnce(void) {
     pool = (u8)((s32)Random() % 2);
     QuickStart2DoorSetPool(pool);
     if (pool == 0) {
-        kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_CHEST : LADDER_KIND_NPC;
+        kind = QuickStartPickSmallKind();
     } else {
-        kind = ((s32)Random() % 2 == 0) ? LADDER_KIND_MINIBOSS : LADDER_KIND_WAVES;
+        kind = QuickStartPickLargeKind();
     }
     QuickStart2DoorSetKind(kind);
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
     } else if (kind == LADDER_KIND_NPC) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % 2));
+    } else if (kind == LADDER_KIND_MINIBOSS) {
+        QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+    } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+        QuickStart2DoorSetExtra(QuickStartPickLotteryExtra());
     }
     poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
     roomIdx = (u8)((s32)Random() % poolSize);
@@ -3542,6 +3792,121 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         return;
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
+    SetRoomFlag(0);
+}
+
+// 2-door pool counterparts of QuickStartSetupPotLotteryContent/
+// QuickStartSetupChestLotteryContent/QuickStartSetupFairyRoomContent above -
+// same logic, GF_2DOOR_DONE/QuickStart2DoorGetExtra in place of the
+// ladder-indexed flags, duplicated rather than shared for the same reason
+// QuickStart2DoorSetupWaveRoomContent above is its own separate copy
+// instead of taking a ladderIndex.
+static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
+    static const s16 offsets[3] = { -16, 0, 16 };
+    s32 extra, winnerSlot, prizeIndex, winnerX;
+    if (CheckGlobalFlag(GF_2DOOR_DONE)) {
+        return;
+    }
+    extra = QuickStart2DoorGetExtra();
+    winnerSlot = extra & 3;
+    prizeIndex = (extra >> 2) & 3;
+    winnerX = contentX + offsets[winnerSlot];
+    if (CheckRoomFlag(0)) {
+        if (QuickStartGroundItemAt(winnerX, contentY)) {
+            SetRoomFlag(3);
+            return;
+        }
+        if (CheckRoomFlag(3)) {
+            SetGlobalFlag(GF_2DOOR_DONE);
+        }
+        return;
+    }
+    {
+        s32 i;
+        for (i = 0; i < 3; i++) {
+            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : 0xFF;
+            Entity* pot = CreateObject(POT, form, 0);
+            if (pot != NULL) {
+                pot->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
+                pot->y.HALF.HI = gRoomControls.origin_y + contentY;
+                pot->collisionLayer = 1;
+                pot->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(pot);
+            }
+        }
+        SetRoomFlag(0);
+    }
+}
+
+static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) {
+    static const s16 offsets[3] = { -16, 0, 16 };
+    s32 extra, winnerSlot, prizeIndex;
+    if (CheckGlobalFlag(GF_2DOOR_DONE)) {
+        return;
+    }
+    extra = QuickStart2DoorGetExtra();
+    winnerSlot = extra & 3;
+    prizeIndex = (extra >> 2) & 3;
+    if (CheckRoomFlag(0)) {
+        if (CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot))) {
+            SetGlobalFlag(GF_2DOOR_DONE);
+        }
+        return;
+    }
+    {
+        s32 i;
+        for (i = 0; i < 3; i++) {
+            ClearLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(i));
+        }
+        for (i = 0; i < 3; i++) {
+            s32 localX = contentX + offsets[i];
+            Entity* chest = CreateObject(SPECIAL_CHEST, QUICKSTART_CHEST_LOTTERY_FLAG(i), 0);
+            if (chest != NULL) {
+                chest->x.HALF.HI = gRoomControls.origin_x + localX;
+                chest->y.HALF.HI = gRoomControls.origin_y + contentY;
+                chest->collisionLayer = 1;
+                chest->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(chest);
+            }
+            if (i == winnerSlot) {
+                s32 j;
+                TileEntity* slot = NULL;
+                for (j = 0; j < 8; j++) {
+                    if (gSmallChests[j].tilePos == 0) {
+                        slot = &gSmallChests[j];
+                        break;
+                    }
+                }
+                if (slot != NULL) {
+                    slot->type = SMALL_CHEST;
+                    slot->localFlag = (u8)QUICKSTART_CHEST_LOTTERY_FLAG(i);
+                    slot->_2 = (u8)sQuickStartLadderRewardPool[prizeIndex];
+                    slot->_3 = 0;
+                    slot->tilePos = (u16)(((localX >> 4) & 0x3F) | (((contentY >> 4) & 0x3F) << 6));
+                    slot->_6 = 1;
+                    slot->_7 = 0;
+                }
+            }
+        }
+        SetRoomFlag(0);
+    }
+}
+
+static void QuickStart2DoorSetupFairyRoomContent(s32 contentX, s32 contentY) {
+    static const s16 offsets[2] = { -16, 16 };
+    s32 i;
+    if (CheckRoomFlag(0)) {
+        return;
+    }
+    for (i = 0; i < 2; i++) {
+        Entity* fairy = CreateObject(FAIRY, 0x60, 0);
+        if (fairy != NULL) {
+            fairy->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
+            fairy->y.HALF.HI = gRoomControls.origin_y + contentY;
+            fairy->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(fairy);
+        }
+    }
     SetRoomFlag(0);
 }
 
@@ -3664,7 +4029,9 @@ static void QuickStart2DoorSetupRoomContent(void) {
             return;
         }
         {
-            Entity* enemy = CreateEnemy(DARK_NUT, 0);
+            s32 extra = QuickStart2DoorGetExtra();
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            Entity* enemy = CreateEnemy(pick->id, pick->form);
             if (enemy != NULL) {
                 enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
                 enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
@@ -3677,6 +4044,12 @@ static void QuickStart2DoorSetupRoomContent(void) {
         }
     } else if (kind == LADDER_KIND_WAVES) {
         QuickStart2DoorSetupWaveRoomContent(contentX, contentY);
+    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+        QuickStart2DoorSetupPotLotteryContent(contentX, contentY);
+    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+        QuickStart2DoorSetupChestLotteryContent(contentX, contentY);
+    } else if (kind == LADDER_KIND_FAIRY) {
+        QuickStart2DoorSetupFairyRoomContent(contentX, contentY);
     } else {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
