@@ -30,7 +30,17 @@ const ItemDefinition gItemDefinitions[] = {
     [ITEM_MOLE_MITTS] = { TRUE, 3, CREATE_ITEM_3, PLAYER_ITEM_NONE2, 0, 2, TRUE, FALSE },
     [ITEM_ROCS_CAPE] = { TRUE, 1, CREATE_ITEM_1, PLAYER_ITEM_NONE3, ANIM_HOP, 0, FALSE, FALSE },
     [ITEM_PEGASUS_BOOTS] = { TRUE, 1, CREATE_ITEM_1, PLAYER_ITEM_DASH_SWORD, ANIM_WALK, 6, FALSE, FALSE },
-    [ITEM_FIRE_ROD] = { TRUE, 4, CREATE_ITEM_3, PLAYER_ITEM_CELL_OVERWRITE_SET, ANIM_WALK, 6, FALSE, FALSE },
+    // Was a debug placeholder (PLAYER_ITEM_CELL_OVERWRITE_SET, ANIM_WALK) -
+    // now a real item, same shape as ITEM_PACCI_CANE just above. playerItemId
+    // here is the *held-prop* visual (see playerItemPacciCane.c - it's just a
+    // hand-synced sprite overlay, unrelated to what actually gets fired), not
+    // the projectile - there's no dedicated "holding a fire rod" sprite in
+    // this game, so PLAYER_ITEM_PACCI_CANE is reused for a reasonable-looking
+    // held rod/stick prop (same reasoning as ANIM_CANE below for the raise
+    // motion). ItemFireRod (src/item/itemFireRod.c) explicitly creates the
+    // real PLAYER_ITEM_FIRE_ROD_PROJECTILE itself partway through the swing -
+    // this field never touches that.
+    [ITEM_FIRE_ROD] = { TRUE, 4, CREATE_ITEM_3, PLAYER_ITEM_PACCI_CANE, ANIM_CANE, 6, TRUE, FALSE },
     [ITEM_OCARINA] = { TRUE, 7, CREATE_ITEM_3, PLAYER_ITEM_NONE, ANIM_OCARINA, 6, FALSE, FALSE },
     [ITEM_ORB_GREEN] = { TRUE, 3, CREATE_ITEM_3, PLAYER_ITEM_NULLED2, 0, 1, TRUE, TRUE },
     [ITEM_ORB_BLUE] = { TRUE, 3, CREATE_ITEM_3, PLAYER_ITEM_NULLED, 0, 1, TRUE, TRUE },

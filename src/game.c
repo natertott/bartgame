@@ -326,13 +326,13 @@ static void GameTask_Transition(void) {
     gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
-    // L item slot - Zora's Flippers, granted and pre-equipped per the user's
-    // request. SetInventoryValue below (ownership) is still needed on top of
-    // this - same reasoning as the shield/sword comment above: writing
-    // straight into equippedExtra[] alone never registers ownership, so the
-    // item menu wouldn't offer it back if the player later swaps the L slot
-    // to something else.
-    gSave.stats.equippedExtra[0] = ITEM_FLIPPERS;
+    // L item slot - empty by default, same as a fresh save. Zora's Flippers
+    // is NOT an equippable item (confirmed: player.c's swim-ability check is
+    // a bare GetInventoryValue(ITEM_FLIPPERS), no equip-slot/IsItemEquipped
+    // check anywhere - same shape as Grip Ring and the scrolls, ownership
+    // alone silently grants the ability). Forcing it into equippedExtra[0]
+    // was wrong; SetInventoryValue below is the only grant it needs.
+    gSave.stats.equippedExtra[0] = ITEM_NONE;
     // Start with every wallet upgrade already owned (walletType 3 ==
     // gWalletSizes[3] == 999 rupee cap, itemUtils.c). walletType is the
     // field gameplay actually reads (gWalletSizes[walletType].size, see
@@ -355,7 +355,7 @@ static void GameTask_Transition(void) {
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
     SetInventoryValue(ITEM_SMITH_SWORD, 1);
-    // Dev-only: also pre-grant the Lantern and Light Arrow (the upgraded
+    // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
     // testing without needing to actually find them in the world. Deliberately
@@ -367,16 +367,20 @@ static void GameTask_Transition(void) {
     // (item.c) handles both ITEM_BOW and ITEM_LIGHT_ARROW identically, so
     // owning just the upgraded arrow is enough to equip and use it.
     //
-    // ITEM_FIRE_ROD used to be granted here instead of the Lantern - turned
-    // out to be a non-functional leftover: item.c maps it to ItemDebug (the
-    // same stub used for ITEM_NONE and the unused debug orb items), and its
-    // itemMetaData entry (itemMetaData.c) has menuSlot=0x63, nowhere near a
-    // real slot in ItemMenuTableSlot (itemMetaData.h) - it could never draw
-    // an icon or do anything once equipped. ITEM_LANTERN_OFF is the real,
-    // fully-implemented item in its place (src/item/itemLantern.c): its own
-    // ItemLantern handler, a real MENU_SLOT_LANTERN icon, on/off toggle with
-    // sound/particle effects, and the torch/web-burning tile check baked in.
-    SetInventoryValue(ITEM_LANTERN_OFF, 1);
+    // ITEM_FIRE_ROD is a real, working item again as of this session: it
+    // used to be a non-functional leftover (item.c mapped it to ItemDebug,
+    // the same stub used for ITEM_NONE and the unused debug orb items, and
+    // its itemMetaData menuSlot was 0x63 - nowhere near a real slot). Now
+    // wired up for real: src/item/itemFireRod.c (a new ItemFireRod handler,
+    // modeled on ItemPacciCane's simple "raise it, spawn a projectile
+    // partway through the animation, delete when done" shape) creates
+    // PLAYER_ITEM_FIRE_ROD_PROJECTILE (src/playerItem/playerItemFireRodProjectile.c
+    // - already a complete, working projectile implementation, just never
+    // reachable from any real item before), and itemMetaData.c/
+    // itemDefinitions.c now give it MENU_SLOT_CANE's grid position (never
+    // granted under QUICKSTART, so no collision) and a real playerItemId/
+    // animation instead of their old debug placeholders.
+    SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
     SetInventoryValue(ITEM_FLIPPERS, 1);
     // Bombs, granted at boot per the user's request. bombBagType stays 0

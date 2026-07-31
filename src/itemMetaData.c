@@ -26,7 +26,10 @@ const ItemMetaData gItemMetaData[] = {
     [ITEM_MOLE_MITTS] = { MENU_SLOT_MOLE_MITTS, 0u, 0u, 0u, 0x13u, TEXT_ITEM_GET, 0x13u, 0x5u },
     [ITEM_ROCS_CAPE] = { MENU_SLOT_ROCS_CAPE, 0u, 0u, 0u, 0x14u, TEXT_ITEM_GET, 0x14u, 0x5u },
     [ITEM_PEGASUS_BOOTS] = { MENU_SLOT_PEGASUS_BOOTS, 0u, 0u, 0u, 0x15u, TEXT_ITEM_GET, 0x15u, 0x5u },
-    [ITEM_FIRE_ROD] = { 0x63u, 0u, 0u, 0u, 0x16u, TEXT_ITEM_GET, 0x16u, 0x5u },
+    // menuSlot was 0x63 (the same "not on the grid" sentinel ITEM_NONE uses
+    // above) - reused MENU_SLOT_CANE since ITEM_PACCI_CANE is never granted
+    // under QUICKSTART, so there's no real collision in practice.
+    [ITEM_FIRE_ROD] = { MENU_SLOT_CANE, 0u, 0u, 0u, 0x16u, TEXT_ITEM_GET, 0x16u, 0x5u },
     [ITEM_OCARINA] = { MENU_SLOT_OCARINA, 0u, 0u, 0u, 0x17u, TEXT_ITEM_GET, 0x17u, 0x5u },
     [ITEM_ORB_GREEN] = { 0x63u, 0u, 0u, 0u, 0u, 0u, 0u, 0u },
     [ITEM_ORB_BLUE] = { 0x63u, 0u, 0u, 0u, 0u, 0u, 0u, 0u },

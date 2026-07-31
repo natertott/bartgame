@@ -23,6 +23,7 @@ extern void ItemShield(ItemBehavior*, u32);
 extern void ItemLantern(ItemBehavior*, u32);
 extern void ItemGustJar(ItemBehavior*, u32);
 extern void ItemPacciCane(ItemBehavior*, u32);
+extern void ItemFireRod(ItemBehavior*, u32);
 extern void ItemMoleMitts(ItemBehavior*, u32);
 extern void ItemRocsCape(ItemBehavior*, u32);
 extern void ItemPegasusBoots(ItemBehavior*, u32);
