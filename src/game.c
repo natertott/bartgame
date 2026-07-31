@@ -355,7 +355,7 @@ static void GameTask_Transition(void) {
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
     SetInventoryValue(ITEM_SMITH_SWORD, 1);
-    // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
+    // Dev-only: also pre-grant the Lantern and Light Arrow (the upgraded
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
     // testing without needing to actually find them in the world. Deliberately
@@ -366,7 +366,17 @@ static void GameTask_Transition(void) {
     // silently auto-skip the whole starter-choice phase at boot. ItemBow
     // (item.c) handles both ITEM_BOW and ITEM_LIGHT_ARROW identically, so
     // owning just the upgraded arrow is enough to equip and use it.
-    SetInventoryValue(ITEM_FIRE_ROD, 1);
+    //
+    // ITEM_FIRE_ROD used to be granted here instead of the Lantern - turned
+    // out to be a non-functional leftover: item.c maps it to ItemDebug (the
+    // same stub used for ITEM_NONE and the unused debug orb items), and its
+    // itemMetaData entry (itemMetaData.c) has menuSlot=0x63, nowhere near a
+    // real slot in ItemMenuTableSlot (itemMetaData.h) - it could never draw
+    // an icon or do anything once equipped. ITEM_LANTERN_OFF is the real,
+    // fully-implemented item in its place (src/item/itemLantern.c): its own
+    // ItemLantern handler, a real MENU_SLOT_LANTERN icon, on/off toggle with
+    // sound/particle effects, and the torch/web-burning tile check baked in.
+    SetInventoryValue(ITEM_LANTERN_OFF, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
     SetInventoryValue(ITEM_FLIPPERS, 1);
     // Bombs, granted at boot per the user's request. bombBagType stays 0
