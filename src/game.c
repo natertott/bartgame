@@ -326,9 +326,13 @@ static void GameTask_Transition(void) {
     gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
-    // L item slot - start empty like a fresh save, same as every other piece
-    // of starting gear reset just above.
-    gSave.stats.equippedExtra[0] = ITEM_NONE;
+    // L item slot - Zora's Flippers, granted and pre-equipped per the user's
+    // request. SetInventoryValue below (ownership) is still needed on top of
+    // this - same reasoning as the shield/sword comment above: writing
+    // straight into equippedExtra[] alone never registers ownership, so the
+    // item menu wouldn't offer it back if the player later swaps the L slot
+    // to something else.
+    gSave.stats.equippedExtra[0] = ITEM_FLIPPERS;
     // Start with every wallet upgrade already owned (walletType 3 ==
     // gWalletSizes[3] == 999 rupee cap, itemUtils.c). walletType is the
     // field gameplay actually reads (gWalletSizes[walletType].size, see
@@ -364,6 +368,16 @@ static void GameTask_Transition(void) {
     // owning just the upgraded arrow is enough to equip and use it.
     SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
+    SetInventoryValue(ITEM_FLIPPERS, 1);
+    // Bombs, granted at boot per the user's request. bombBagType stays 0
+    // (reset just above) - gBombBagSizes[0] == 10 (itemUtils.c), so this
+    // isn't a "0-capacity, can't carry any" state, it's just the smallest
+    // real bag. ModBombs(99) mirrors the real first-time Bombs pickup path
+    // (GiveItem's own case 8), which also just calls ModBombs(99) and lets
+    // it clamp to whatever the current bag size is - same clamp applies
+    // here, filling to 10.
+    SetInventoryValue(ITEM_BOMBS, 1);
+    ModBombs(99);
     // Gust Jar, granted at boot per the user's request - it's the only way
     // to actually damage CHUCHU_BOSS (Castle Garden's own boss - see
     // QuickStartSpawnGardenBossOnce): its core is only vulnerable to being
@@ -769,7 +783,11 @@ typedef struct {
 #define QUICKSTART_ITEM_CHOICES 3
 
 static const QuickStartItemChoice sQuickStartStarterItems[QUICKSTART_ITEM_CHOICES] = {
-    { ITEM_BOMBS },
+    // ITEM_BOMBS used to be here - now granted automatically at boot (see
+    // the QUICKSTART item-grant block above), so the Green Sword (the first
+    // sword upgrade past the starting Smith Sword) takes its place as a
+    // choice instead.
+    { ITEM_GREEN_SWORD },
     { ITEM_BOW },
     { ITEM_BOOMERANG },
 };
