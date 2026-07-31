@@ -4943,32 +4943,47 @@ static const s16 sQuickStartLadderReturnSpots[4][2] = {
 // retargeted exit actually points, same shared literal spot ladders 0-1
 // use). QuickStartFixupQuestionRoomReturn below overrides the whole
 // destination for these, same as ladderIndex == 3's own Lon Lon Ranch
-// special case. x/y are each door's own real startX/startY (transitions.c,
-// same values sQuickStartLadderEntrances' trigger boxes are centered on) -
-// a first-pass estimate landing spot, not yet emulator-walked for a clear
-// stand (see sQuickStartLadderEntrances' own comment on that same
-// unfinished verification pass).
+// special case.
+//
+// BUG FIX (user report): the first version of this table used each door's
+// own real startX/startY - i.e. its trigger box's own center - as the
+// return spot too. That's guaranteed to sit inside the same box
+// sQuickStartLadderEntrances defines for that entrance (+-24px), so landing
+// there immediately re-satisfied QuickStartProcessLadderLinks' own box
+// check on the very next frame, sending the player straight back into the
+// ? room - confirmed in practice on Link's House (idx4/doorSlot 0): an
+// infinite back-and-forth warp loop. Fixed by moving y +40 past the box's
+// own southern edge (boxMaxY = center+24, so +40 clears it with 16px to
+// spare) for every entry - these are all doors/cave mouths/tree stumps
+// entered by walking up into them from below, so the open approach ground
+// is south of the doorway, same side these boxes' own south edge already
+// faces. x is unchanged, still centered on the real door. Still a
+// first-pass estimate for actual walkable terrain (not yet emulator-walked
+// the way Castle Garden's/Lon Lon Ranch's own return spots were after
+// their own initial misses - see sQuickStartLadderEntrances' own comment on
+// that same unfinished verification pass), but no longer inside the
+// re-trigger box regardless.
 static const struct {
     u8 area;
     u8 room;
     s16 x;
     s16 y;
 } sQuickStartDoorReturnSpots[QUICKSTART_DOOR_COUNT] = {
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 656, 392 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 928, 552 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 280, 168 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 88, 280 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 296 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 296 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 392 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 392 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 752, 312 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 340 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 312, 488 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 64, 904 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 136, 546 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 56, 680 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 408, 690 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 656, 432 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 928, 592 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 280, 208 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 88, 320 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 336 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 336 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 432 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 432 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 752, 352 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 380 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 312, 528 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 64, 944 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 136, 586 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 56, 720 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 408, 730 },
 };
 
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
