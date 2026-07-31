@@ -547,6 +547,28 @@ static void GameTask_Transition(void) {
     // this is what looked like Zelda "randomly" appearing in unrelated
     // areas. Clear it so that companion never spawns.
     ClearGlobalFlag(ZELDA_CHASE);
+    // Now that the region pool includes real overworld Hyrule Field rooms
+    // (not just Castle Garden/Lon Lon Ranch), the same early-game state that
+    // ZELDA_CHASE covers above also affects those rooms directly:
+    // sub_StateChange_HyruleField_SouthHyruleField (roomInit.c) still loads
+    // the opening Zelda/Smith escort cutscene entity list and does an
+    // instant black/white fade without SOUGEN_01_ZELDA, and other Hyrule
+    // Field rooms gate their own decorations on gSave.global_progress. Set
+    // global_progress to 9 (the same "everything done" value MAPEXPLORE
+    // uses, see below) and SOUGEN_01_ZELDA so every field region loads in
+    // its ordinary state instead of the festival-day intro state.
+    //
+    // Deliberately NOT setting TABIDACHI ("Talked to Daltus and Smith"),
+    // unlike MAPEXPLORE: it only buys correct BGM in South Hyrule Field (a
+    // cosmetic wrong-music-cue issue), but CheckGlobalFlag(TABIDACHI) also
+    // gates sub_StateChange_HyruleField_LonLonRanch's own
+    // LoadRoomEntityList(&gUnk_080F7810) call - confirmed in the emulator
+    // that setting TABIDACHI adds 10 extra native entities to Lon Lon
+    // Ranch's room (kind=ENEMY, counted by QuickStartRegionWaveCleared),
+    // pushing its already-verified wave count from 26 to 36. Not worth
+    // breaking an existing, working region over a music cue.
+    gSave.global_progress = 9;
+    SetLocalFlagByBank(FLAG_BANK_1, SOUGEN_01_ZELDA);
 #elif defined(MAPEXPLORE)
     // Every dungeon-clear/boss-die flag plus the full Elemental Sanctuary
     // sequence (SEIIKI_STAINED_GLASS is what UpdateGlobalProgress reads for
@@ -1883,16 +1905,84 @@ static void QuickStartLonLonRanchQuirkHook(void) {
     QuickStartSolveLonLonBoulder();
 }
 
-// First two rows only - Castle Garden and Lon Lon Ranch, a refactor of
-// existing behavior (see docs/QUICKSTART_ROADMAP.md sec 3.1's own "become
-// the first two rows in that table" plan), regression-tested to behave
-// exactly as before this session's chain/randomization work. More regions
-// (Castor Wilds, Eastern Hills, Trilby Highlands, North/South Hyrule
-// Field - see the roadmap's own sec 2.1 table) get surveyed and appended
-// here one at a time in later passes; QUICKSTART_REGION_CHAIN_LENGTH stays
-// independent of pool size (a distinct-draw, same as the ladder/2door
-// pools already do), so growing the pool alone doesn't change how many
-// regions a single run visits.
+// North Hyrule Field has one native BUSINESS_SCRUB_PROLOGUE (a one-time
+// vanilla prologue NPC) that spawns as kind ENEMY, not NPC - confirmed in
+// the emulator that it's present at boot with no player action needed. Left
+// alive it would permanently block QuickStartRegionWaveCleared (which
+// requires zero ENEMY-kind entities in the room), so it needs the same
+// "delete on sight" treatment as Castle Garden's guards/Lon Lon's Goron.
+static void QuickStartClearNorthFieldScrub(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && gEntities[i].base.id == BUSINESS_SCRUB_PROLOGUE) {
+            DeleteEntity(&gEntities[i].base);
+        }
+    }
+}
+
+// South Hyrule Field, North Hyrule Field, and Trilby Highlands - the first
+// 3 of the 5 additional regions from docs/QUICKSTART_ROADMAP.md sec 2.1's
+// table, surveyed one pass after Castle Garden/Lon Lon Ranch's own
+// generalization. Entrance/exit/enemy-grid data below comes from a
+// collision-data scan (gMapBottom.collisionData/actTiles read directly via
+// mgba, filtering out both real wall collision and water/lilypad act-tiles)
+// for open 3x3-tile neighborhoods, the same method the original two
+// regions' own grids used, plus spot-checks in the emulator (screenshots
+// confirming dry land, not a lake). Exit boxes are one of each room's own
+// user-surveyed real transition edges (given several pixels of thickness
+// perpendicular to the edge for a workable trigger box) - which real
+// neighbor it used to lead to doesn't matter now that the chain always
+// portals to whichever region comes next (see QuickStartProcessRegionChainLinks).
+// Reward pool/spot reused from Castle Garden's generic sQuickStartGardenRewardPool,
+// same as Lon Lon Ranch. No boss hook for any of the three yet, per the
+// "boss-less for now" plan - only Castle Garden has one so far.
+static const s16 sQuickStartSouthFieldEnemyOffsets[][2] = {
+    { 504, 24 },  { 504, 72 },  { 744, 72 },  { 840, 72 },  { 72, 120 },  { 120, 120}, { 456, 120},
+    { 504, 120}, { 552, 120}, { 696, 120}, { 744, 120}, { 792, 120}, { 840, 120}, { 888, 120},
+    { 936, 120}, { 984, 120}, { 504, 168}, { 888, 168}, { 504, 216}, { 888, 216}, { 504, 264},
+    { 552, 264}, { 840, 264}, { 888, 264}, { 456, 312}, { 504, 312}, { 792, 312}, { 840, 312},
+    { 888, 312}, { 456, 360}, { 504, 360}, { 840, 360}, { 888, 360}, { 456, 408}, { 504, 408},
+    { 840, 408}, { 888, 408}, { 456, 456}, { 504, 456}, { 600, 456}, { 888, 456}, { 504, 504},
+    { 504, 552}, { 552, 552}, { 600, 552}, { 648, 552}, { 840, 552}, { 72, 600},
+};
+#define QUICKSTART_SOUTHFIELD_ROOM_SQUARES 651
+#define QUICKSTART_SOUTHFIELD_MAX_ENEMIES 50
+
+static const s16 sQuickStartNorthFieldEnemyOffsets[][2] = {
+    { 504, 120}, { 936, 120}, { 984, 120}, { 504, 168}, { 72, 216},  { 504, 216}, { 72, 264},
+    { 504, 264}, { 648, 264}, { 696, 264}, { 840, 264}, { 72, 312},  { 120, 312}, { 504, 312},
+    { 648, 312}, { 696, 312}, { 840, 312}, { 72, 360},  { 120, 360}, { 504, 360}, { 648, 360},
+    { 696, 360}, { 744, 360}, { 504, 408}, { 648, 408}, { 408, 456}, { 456, 456}, { 504, 456},
+    { 552, 456}, { 600, 456}, { 744, 504}, { 504, 552}, { 552, 552}, { 600, 552}, { 24, 600},
+    { 72, 600},  { 504, 600}, { 552, 600}, { 264, 648}, { 312, 648}, { 360, 648}, { 504, 648},
+    { 840, 648}, { 888, 648}, { 984, 648}, { 264, 696}, { 312, 696}, { 360, 696}, { 408, 696},
+    { 456, 696}, { 504, 696}, { 552, 696}, { 600, 696}, { 648, 696}, { 696, 696}, { 744, 696},
+    { 792, 696}, { 840, 696}, { 888, 696}, { 264, 744}, { 312, 744}, { 360, 744}, { 408, 744},
+    { 456, 744}, { 504, 744}, { 552, 744}, { 600, 744}, { 648, 744}, { 696, 744}, { 744, 744},
+    { 792, 744}, { 840, 744},
+};
+#define QUICKSTART_NORTHFIELD_ROOM_SQUARES 775
+#define QUICKSTART_NORTHFIELD_MAX_ENEMIES 50
+
+static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
+    { 120, 24 },  { 360, 120}, { 408, 120}, { 456, 120}, { 360, 168}, { 312, 360}, { 360, 360},
+    { 24, 408 },  { 360, 408}, { 360, 456}, { 312, 504}, { 360, 504}, { 408, 504}, { 360, 552},
+    { 408, 552}, { 456, 552}, { 360, 840}, { 312, 888}, { 360, 888}, { 360, 936},
+};
+#define QUICKSTART_TRILBY_ROOM_SQUARES 450
+#define QUICKSTART_TRILBY_MAX_ENEMIES 50
+
+// Castle Garden and Lon Lon Ranch (the original two, refactored per
+// docs/QUICKSTART_ROADMAP.md sec 3.1's own "become the first two rows in
+// that table" plan) plus South Hyrule Field, North Hyrule Field, and
+// Trilby Highlands (the first 3 of the roadmap's 5 additional regions,
+// surveyed this pass - see the block comment above their data). Castor
+// Wilds and Eastern Hills (the latter split across 3 real rooms - South/
+// Center/North - needing its own separate look) are still not in the pool
+// yet and get appended in a later pass. QUICKSTART_REGION_CHAIN_LENGTH
+// stays independent of pool size (a distinct-draw, same as the ladder/
+// 2door pools already do), so growing the pool alone doesn't change how
+// many regions a single run visits.
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -1916,6 +2006,33 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
       QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 392, 159, NULL,
       QuickStartLonLonRanchQuirkHook },
+    // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
+    // both verified-open, non-water tiles from the collision scan. Exit box
+    // is the user-surveyed top edge (467,10)-(539,10) padded to a 0-30 y
+    // band (a workable trigger thickness; that edge's real vanilla
+    // destination doesn't matter, see the block comment above).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 504, 264, 460, 546, 0, 30,
+      sQuickStartSouthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartSouthFieldEnemyOffsets), QUICKSTART_SOUTHFIELD_ROOM_SQUARES,
+      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 648, 552, NULL,
+      NULL },
+    // North Hyrule Field - entrance (504,456) and reward spot (744,504) are
+    // verified-open. Exit box is the user-surveyed bottom edge
+    // (484,797)-(524,797) padded to a 770-800 y band. Needs
+    // QuickStartClearNorthFieldScrub (see above) for the native
+    // BUSINESS_SCRUB_PROLOGUE that otherwise blocks wave-clear detection.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 456, 478, 530, 770, 800,
+      sQuickStartNorthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartNorthFieldEnemyOffsets), QUICKSTART_NORTHFIELD_ROOM_SQUARES,
+      QUICKSTART_NORTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 744, 504, NULL,
+      QuickStartClearNorthFieldScrub },
+    // Trilby Highlands - entrance (360,360) and reward spot (360,504) are
+    // both spot-checked with screenshots (dry land next to the room's
+    // lake/waterfall, not in the water itself). Exit box is the
+    // user-surveyed right edge (472,535)-(472,590) padded to a 465-480 x
+    // band (room width is only 480px, so this sits right at the edge).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
+      sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
+      QUICKSTART_TRILBY_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 360, 504, NULL,
+      NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 
@@ -1927,8 +2044,14 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
 static s32 QuickStartGetCurrentRegionChainPosition(void) {
     s32 slot;
     for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
-        u8 poolIndex = QuickStartGetRegionChainPoolIndex(slot) % QUICKSTART_REGION_POOL_SIZE;
-        const QuickStartRegion* region = &sQuickStartRegionPool[poolIndex];
+        // Plain s32 local, then %= on it - not an inline (s32) cast
+        // expression - matches QuickStart2DoorGetTarget's own established
+        // convention (see its comment) for avoiding an __umodsi3 (unsigned
+        // modulo) link error once the pool size stops being a power of 2.
+        s32 poolIndex = QuickStartGetRegionChainPoolIndex(slot);
+        const QuickStartRegion* region;
+        poolIndex %= QUICKSTART_REGION_POOL_SIZE;
+        region = &sQuickStartRegionPool[poolIndex];
         if (gRoomControls.area == region->area && gRoomControls.room == region->room) {
             return slot;
         }
@@ -1937,7 +2060,8 @@ static s32 QuickStartGetCurrentRegionChainPosition(void) {
 }
 
 static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
-    u8 poolIndex = QuickStartGetRegionChainPoolIndex(slot) % QUICKSTART_REGION_POOL_SIZE;
+    s32 poolIndex = QuickStartGetRegionChainPoolIndex(slot);
+    poolIndex %= QUICKSTART_REGION_POOL_SIZE;
     return &sQuickStartRegionPool[poolIndex];
 }
 
@@ -1957,9 +2081,12 @@ static void QuickStartRandomizeRegionChainOnce(void) {
         return;
     }
     for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
+        s32 draw;
         u8 poolIndex;
         for (;;) {
-            poolIndex = (u8)((s32)Random() % QUICKSTART_REGION_POOL_SIZE);
+            draw = (s32)Random();
+            draw %= QUICKSTART_REGION_POOL_SIZE;
+            poolIndex = (u8)draw;
             for (j = 0; j < slot; j++) {
                 if (usedPool[j] == poolIndex) {
                     break;
