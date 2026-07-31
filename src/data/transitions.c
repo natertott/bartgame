@@ -316,6 +316,36 @@ const Transition gExitList_HyruleField_WesternWoodSouth[] = {
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Defensive fallback for the 4 doors this region contributes to the new
+// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
+// indices 4-7) - the real per-frame race between this file's own
+// WARP_TYPE_AREA/ACT_TILE-driven transition and game.c's synthetic
+// position-box link (QuickStartProcessLadderLinks) is won by whichever
+// fires first each frame, and QuickStartProcessLadderLinks explicitly skips
+// itself whenever gRoomTransition.transitioningOut is already set - so if
+// this file's own real transition wins, it needs a safe destination of its
+// own rather than the old vanilla one (confirmed empirically: an emulator
+// test teleporting straight onto Link's House entrance's box hit exactly
+// this race and landed in the untouched vanilla AREA_HOUSE_INTERIORS_2 room
+// instead of the ? room pool). Same convention every other pool-adjacent
+// real door retarget in this file already uses - only area/room change,
+// every positional field (startX/startY/endX/endY/shape/facing_direction)
+// stays exactly as real gameplay expects, so IF this does fire, at worst
+// the player just doesn't get that particular door's ? room content this
+// one time (a real fallback, not a broken landing).
+const Transition gExitList_HyruleField_SouthHyruleField[] = {
+    { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
+      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x3a0, 0x228, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
+      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x118, 0xa8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x58, 0x118, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x178, 0xd8, 0x78, 0xb8, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_SouthHyruleField[] = {
     { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_2,
       ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -327,6 +357,7 @@ const Transition gExitList_HyruleField_SouthHyruleField[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x178, 0xd8, 0x78, 0xb8, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x48, 0x1c8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x3b8, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
@@ -375,6 +406,42 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Defensive fallback for the 7 doors this region contributes to the new
+// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
+// indices 8-14) - same reasoning as gExitList_HyruleField_SouthHyruleField's
+// own #ifdef block above: only area/room change, every positional field
+// stays real, so a real-transition race win just lands the player at Castle
+// Garden Main instead of the old vanilla destination. The Castle Garden
+// connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD occurrences
+// (a genuine multi-exit through-cave, deferred as a future "2-door"
+// candidate rather than wired here) are untouched in both branches.
+const Transition gExitList_HyruleField_NorthHyruleField[] = {
+    { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1b0, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x240, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1b0, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x240, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x2f0, 0x138, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
+      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1f8, 0x154, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0x138, 0x108, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x138, 0x1e8, 0x78, 0xc8, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0xf4, 0x38, 0x58, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x118, 0xf4, 0x118, 0x58, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_NorthHyruleField[] = {
     { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -400,6 +467,7 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST_NORTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
@@ -408,6 +476,26 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
       0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Defensive fallback for the 4 doors this region contributes to the new
+// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
+// indices 15-18) - same reasoning as gExitList_HyruleField_SouthHyruleField's
+// own #ifdef block above. The digging cave (AREA_DIG_CAVES - deferred, its
+// own digging-specific quirks unchecked) and the 2 ROOM_CAVES_TRILBY_HIGHLANDS
+// occurrences (a genuine multi-exit through-cave, deferred as a future
+// "2-door" candidate) are untouched in both branches.
+const Transition gExitList_HyruleField_TrilbyHighlands[] = {
+    { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x222, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x2a8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x198, 0x2b2, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x94, 0x88, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -419,6 +507,7 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x88, 0x94, 0x88, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x98, 0x284, 0x38, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x118, 0x284, 0x128, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL,
