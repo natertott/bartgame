@@ -281,6 +281,45 @@ Needs a concrete prerequisite list from the user before this can be more
 than a mechanism - which items gate which other items, and which regions
 need which traversal item, are content decisions, not engineering ones.
 
+### 3.8 Kinstone-fusion door gating (planned, not yet built)
+
+Several real overworld entrances - trees that split open, ground that sinks
+into a cave mouth, a fountain that dries into a staircase - are gated behind
+vanilla's Kinstone Fusion mechanic rather than being plain doors. Today
+every one of these found in the current region pool (South Hyrule Field's
+Heart Piece tree and Rupee cave; North Hyrule Field's 4 Boomerang trees and
+Fairy Fountain tree; Trilby Highlands' Rupee cave; Lon Lon Ranch's Goron
+cave) is force-fused at boot (`WriteBit(&gSave.kinstones.fusedKinstones,
+KINSTONE_x)`, `game.c`, `GameTask_Transition`) - a stopgap that just
+silently pre-solves them so they're open from the start, with no player
+interaction at all. Two more real ones (Castle Garden Main's East and West
+Fountains) aren't in the pool yet, and Lon Lon Ranch has a second gated cave
+(a pool/sinkhole into `AREA_CAVES`/`ROOM_CAVES_LON_LON_RANCH_WALLET`)
+that's also currently unwired.
+
+The real, player-facing feature this should become: Kinstone pieces drop
+randomly from enemies/pots/grass throughout a run (vanilla already resolves
+generic drops down to one of 3 colors/~8 shapes via a small weighted table -
+much simpler than vanilla's full 100-unique-piece system, and easy to tune
+with the same reward-pool pattern already used elsewhere in this codebase).
+Scattered around each region are a handful of lightweight fusion-partner
+sprites (a plain `OBJECT`-kind entity, not a full NPC with dialogue/
+animation states, to conserve the shared 72-entity/40-gfx-slot budget - see
+the emulator-measured enemy-kind-cap precedent in 2.x). Walking up to one
+with a matching piece performs the fusion and permanently clears whichever
+door's blocking obstacle - likely via a parallel, QUICKSTART-owned flag/
+check (bank 12 has ample free bits) rather than reusing vanilla's real
+`KinstoneId`/shape-matching/fuser-progression machinery, which is built for
+pairing 100 specific named partners and pieces and isn't a good fit for an
+arbitrary, randomized set of QUICKSTART-only gates.
+
+Not yet designed: exactly how many fusion sprites per region, whether one
+sprite can unlock multiple doors or it's strictly 1:1, how drop weighting
+should scale with difficulty/region, and whether the sprite should be
+visible before any piece is collected or only appear once the player holds
+a matching piece. All still open questions for the user before this moves
+from "researched" to "implementable."
+
 ## 4. Implementation order
 
 Roughly in dependency order - each phase should get its own build+commit,

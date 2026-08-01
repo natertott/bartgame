@@ -426,6 +426,34 @@ static void GameTask_Transition(void) {
     // is open from the start. See QuickStartClearLonLonRanchGoron below for
     // a defensive backstop in case any of that understanding is incomplete.
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_29);
+    // Same treatment for the 8 other real Kinstone-gated entrances that turn
+    // out to sit among the 15 single-door "? room" candidates surveyed for
+    // South Hyrule Field, North Hyrule Field, and Trilby Highlands
+    // (sQuickStartLadderEntrances below) - discovered only after wiring them
+    // up and hitting an emulator-vs-real-gameplay mismatch: teleporting the
+    // player directly onto a trigger box (this project's own test
+    // methodology) skips real tile collision entirely, so it never caught
+    // that several of these real doors are still standing behind an
+    // un-fused vanilla tree/pond obstacle exactly like the Goron above -
+    // walking there normally would just hit solid terrain. Same fix, same
+    // reasoning: pre-fuse each one at boot so roomInit.c's own
+    // !CheckKinstoneFused(...) guards skip loading the blocking
+    // entity/tiles, leaving the door open from the start. This is a stopgap
+    // (see docs/QUICKSTART_ROADMAP.md's own note on the real, player-facing
+    // Kinstone-fusion-sprite feature planned to eventually replace it -
+    // walking up to a placed sprite with the right piece, rather than every
+    // gate being silently pre-solved) - not a permanent design choice.
+    //   South Hyrule Field: Heart Piece tree, Rupee cave
+    //   North Hyrule Field: all 4 Boomerang trees, Fairy Fountain tree
+    //   Trilby Highlands: Rupee cave
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_32);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_58);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_59);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_40);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_4D);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_5A);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_2D);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_3F);
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
