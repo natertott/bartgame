@@ -298,11 +298,12 @@ static void GameTask_Transition(void) {
     // play through a full win, check after DoSoftReset) that it carries
     // over from the previous run otherwise. Every run starts broke.
     gSave.stats.rupees = 0;
-    // 3 hearts to start (a full heart is 8 health units in this engine - see
-    // the ITEM_HEART_CONTAINER comment on phase 3's bonus-reward handling
-    // below, and DrawHearts/ui.c: gHUD.maxHealth = gSave.stats.maxHealth/2,
-    // itself in quarter-heart units).
-    gSave.stats.maxHealth = 24;
+    // 2 hearts to start, per the user's own request (was 3) - a full heart
+    // is 8 health units in this engine (see the ITEM_HEART_CONTAINER comment
+    // on phase 3's bonus-reward handling below, and DrawHearts/ui.c:
+    // gHUD.maxHealth = gSave.stats.maxHealth/2, itself in quarter-heart
+    // units).
+    gSave.stats.maxHealth = 16;
     gSave.stats.health = gSave.stats.maxHealth;
     // Run-scoped scoring counters (see docs/QUICKSTART_ROADMAP.md) - all
     // reset to 0 here so each run's score reflects only that run. meta_xp
