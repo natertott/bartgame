@@ -117,6 +117,7 @@ static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
+static void QuickStartEnforceFieldRegionContainment(void);
 static void QuickStartClearLonLonRanchGoron(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
@@ -5231,6 +5232,63 @@ static void QuickStartEnforceLonLonContainment(void) {
     gRoomTransition.transitioningOut = 0;
 }
 
+// South Hyrule Field, North Hyrule Field, and Trilby Highlands - same
+// "AREA_HYRULE_FIELD is too big to blanket-contain" situation
+// QuickStartEnforceLonLonContainment's own comment describes (all 3 are
+// big vanilla overworld screens with several real border/door exits of
+// their own, most leading to areas entirely outside this run - Hyrule
+// Town, Veil Falls, Royal Valley, Mt Crenel, depending on the room), so
+// each needs the same kind of room-scoped containment Lon Lon Ranch
+// already gets - generalized here to cover all 3 at once, since (unlike
+// Lon Lon Ranch's own small, fixed set of exceptions - the wallet cave,
+// the two ranch houses, the Goron Cave Stairs pool room) the only real
+// destinations any of these 3 rooms needs to allow are generic: the
+// chain's own "next" region (varies per save, same dynamic lookup Lon
+// Lon's version already uses), and whichever pool room any of the 15
+// single-door "? room" entrances physically inside the room being left
+// currently resolves to (sQuickStartLadderEntrances - these fire their
+// own real transition later this same frame via
+// QuickStartProcessLadderLinks, but this containment check runs first
+// and would otherwise cancel them out from under themselves during the
+// multi-frame transition-out window, exactly the bug this function
+// exists to prevent for illegitimate transitions). Cancels anything else
+// (transitioningOut = 0), which is what actually blocks every other real
+// vanilla border these rooms still have.
+static void QuickStartEnforceFieldRegionContainment(void) {
+    s32 i;
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomControls.area != AREA_HYRULE_FIELD ||
+        (gRoomControls.room != ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD &&
+         gRoomControls.room != ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD &&
+         gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS)) {
+        return;
+    }
+    {
+        s32 slot = QuickStartGetCurrentRegionChainPosition();
+        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
+            if (gRoomTransition.player_status.area_next == next->area &&
+                gRoomTransition.player_status.room_next == next->room) {
+                return;
+            }
+        }
+    }
+    for (i = 0; i < ARRAY_COUNT(sQuickStartLadderEntrances); i++) {
+        const QuickStartLadderEntrance* entrance = &sQuickStartLadderEntrances[i];
+        if (entrance->fromArea == gRoomControls.area && entrance->fromRoom == gRoomControls.room) {
+            u8 targetArea, targetRoom;
+            QuickStartGetLadderTarget(entrance->ladderIndex, &targetArea, &targetRoom);
+            if (gRoomTransition.player_status.area_next == targetArea &&
+                gRoomTransition.player_status.room_next == targetRoom) {
+                return;
+            }
+        }
+    }
+    gRoomTransition.transitioningOut = 0;
+}
+
 static void QuickStartProcessLinks(void) {
     s32 i;
     s16 localX, localY;
@@ -5334,6 +5392,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartDrawDifficultyHUD();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
+    QuickStartEnforceFieldRegionContainment();
     QuickStartFixupQuestionRoomReturn();
     // Unconditional (not folded into a specific room's branch below) since
     // its 3 entrances now span two different rooms - see
