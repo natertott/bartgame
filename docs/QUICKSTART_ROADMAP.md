@@ -281,6 +281,29 @@ Needs a concrete prerequisite list from the user before this can be more
 than a mechanism - which items gate which other items, and which regions
 need which traversal item, are content decisions, not engineering ones.
 
+**Region-requires-item is now partially implemented** (this session), for
+the one case the emulator has actually confirmed: round 1 of the item
+choice (`sQuickStartKeyItems`, `game.c`) now offers 3 of 5 real traversal
+items - Pegasus Boots, Roc's Cape, Mole Mitts, Zora Flippers, Lantern -
+instead of the old fixed weapon choice (Green Sword/Bow/Boomerang, now
+retired). `QuickStartRandomizeRegionChainOnce` checks
+`GetInventoryValue(ITEM_FLIPPERS)` when rolling the run's 2-region chain:
+owning Flippers forces Trilby Highlands into the chain's last slot (where
+the Earth Element/win condition always drops), and excludes it entirely
+from the draw otherwise - matching the real, walk-tested obstacle found
+this session (a water canal blocks every direct approach to Trilby
+Highlands from Hyrule Town in a 36-point emulator survey; see
+`scratchpad/traversal_graph.py`). Verified in the emulator: with Flippers
+owned the chain's last slot always resolves to Trilby Highlands; without
+it, Trilby Highlands never appears in the chain at all.
+
+The other 4 key items don't have a surveyed gate anywhere in the current
+5-region pool yet, so picking any of them currently just draws from the
+same plain 4-region pool as each other - giving each of them a real,
+distinct path (Pegasus Boots -> a gap-jump region, Mole Mitts -> a dig
+region, Lantern -> a dark-cave region) is the natural next step once those
+regions/obstacles get surveyed the same way Trilby's canal was.
+
 ### 3.8 Kinstone-fusion door gating (planned, not yet built)
 
 Several real overworld entrances - trees that split open, ground that sinks

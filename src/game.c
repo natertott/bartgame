@@ -362,13 +362,10 @@ static void GameTask_Transition(void) {
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
     // testing without needing to actually find them in the world. Deliberately
-    // NOT granting plain ITEM_BOW here - it's one of the three starter-item
-    // choices (see sQuickStartStarterItems below), and QuickStartAnyPickedUp
-    // detects a "pickup" purely via GetInventoryValue, with no way to tell a
-    // genuine pickup apart from an already-owned item - pre-granting it would
-    // silently auto-skip the whole starter-choice phase at boot. ItemBow
-    // (item.c) handles both ITEM_BOW and ITEM_LIGHT_ARROW identically, so
-    // owning just the upgraded arrow is enough to equip and use it.
+    // NOT granting plain ITEM_BOW here - ItemBow (item.c) handles both
+    // ITEM_BOW and ITEM_LIGHT_ARROW identically, so owning just the upgraded
+    // arrow is enough to equip and use it, and leaving plain Bow ungranted
+    // means it can still turn up in a region's own reward pool.
     //
     // ITEM_FIRE_ROD is a real, working item again as of this session: it
     // used to be a non-functional leftover (item.c mapped it to ItemDebug,
@@ -385,7 +382,10 @@ static void GameTask_Transition(void) {
     // animation instead of their old debug placeholders.
     SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
-    SetInventoryValue(ITEM_FLIPPERS, 1);
+    // ITEM_FLIPPERS is no longer a free grant - it's one of the round-1
+    // key-item choices now (sQuickStartKeyItems), and the whole point of
+    // that round is that owning it (or not) actually changes which region
+    // the run's chain routes through (QuickStartRandomizeRegionChainOnce).
     // Bombs, granted at boot per the user's request. bombBagType stays 0
     // (reset just above) - gBombBagSizes[0] == 10 (itemUtils.c), so this
     // isn't a "0-capacity, can't carry any" state, it's just the smallest
@@ -827,15 +827,24 @@ typedef struct {
 
 #define QUICKSTART_ITEM_CHOICES 3
 
-static const QuickStartItemChoice sQuickStartStarterItems[QUICKSTART_ITEM_CHOICES] = {
-    // ITEM_BOMBS used to be here - now granted automatically at boot (see
-    // the QUICKSTART item-grant block above), so the Green Sword (the first
-    // sword upgrade past the starting Smith Sword) takes its place as a
-    // choice instead.
-    { ITEM_GREEN_SWORD },
-    { ITEM_BOW },
-    { ITEM_BOOMERANG },
+// Round 1 is now the run's key-item choice, per the user's own redesign:
+// this determines which overworld path the player must take to reach the
+// Earth Element (see QuickStartRandomizeRegionChainOnce below). All 5 are
+// offered as candidates; only 3 are drawn per run (QuickStartSpawnKeyItemChoice)
+// so the player never knows in advance which 3 they'll see. Zora Flippers
+// is the only one with a real, confirmed gate behind it today (the canal
+// blocking Trilby Highlands' west border - see scratchpad/traversal_graph.py,
+// TRILBY_HIGHLANDS<->HYRULE_TOWN edge) - the other 4 don't have a surveyed
+// gate yet, so picking them currently just routes to the plain 4-region
+// pool below, same as each other for now.
+static const QuickStartItemChoice sQuickStartKeyItems[] = {
+    { ITEM_PEGASUS_BOOTS },
+    { ITEM_ROCS_CAPE },
+    { ITEM_MOLE_MITTS },
+    { ITEM_FLIPPERS },
+    { ITEM_LANTERN_OFF },
 };
+#define QUICKSTART_KEY_ITEM_POOL_SIZE (s32)(sizeof(sQuickStartKeyItems) / sizeof(QuickStartItemChoice))
 static const QuickStartItemChoice sQuickStartBonusItems[QUICKSTART_ITEM_CHOICES] = {
     { ITEM_HEART_CONTAINER },
     { ITEM_RUPEE100 },
@@ -1253,8 +1262,10 @@ const u8* const gCustomStrings[] = {
     // Ezlo's one-time round-start greeting (see the phase==0 branch of
     // QuickStartUpdateItemChoice below) - CreateEzloHint funnels through the
     // same sub_0805EEB4 resolver as every other TEXT_INDEX use, so
-    // TEXT_CUSTOM works here too.
-    [5] = (const u8*)"Ezlo: Gear up, then get\nready for a fight!",
+    // TEXT_CUSTOM works here too. Rewritten for the round-1 key-item
+    // redesign - this choice isn't just flavor, it actually decides which
+    // region the run's chain routes through (QuickStartRandomizeRegionChainOnce).
+    [5] = (const u8*)"Ezlo: Choose wisely -\nyour item picks your path!",
     // Shop merchant (data/scripts/quickstart/script_QuickStartMerchant.inc) -
     // shared by both shop rooms (Dojos Grimblade and Lon Lon Ranch's east
     // house room, see QuickStartSpawnShopMerchantOnce). Used to show
@@ -1278,9 +1289,10 @@ const u8* const gCustomStrings[] = {
     [9] = (const u8*)"Ezlo: Get ready! Defeat\nthree waves of enemies!",
     // Shown once per run, the moment the player first sets foot in the
     // run's first overworld region (see QuickStartShowRegionIntroHintOnce) -
-    // a general "how this region works" tutorial line, not tied to any one
-    // specific region's content.
-    [10] = (const u8*)"Ezlo: Clear every enemy\nhere for a reward!",
+    // the game's actual goal statement now that the region chain leads
+    // somewhere specific (an Earth Element at the last slot), not just a
+    // generic "clear the room" tutorial line.
+    [10] = (const u8*)"Ezlo: Seek the Earth\nElement out there!",
     // Shown once per region-clear (see QuickStartSpawnGardenRewardOnce's own
     // GF_REGION_CLEAR_HINT-gated call) right as the actual reward item
     // drops - true for every region, boss or no boss, since it fires at the
@@ -2098,6 +2110,12 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
+// Trilby Highlands is the pool's last entry, and the only one with a real,
+// confirmed item gate today (Zora Flippers - see the canal blocking its
+// HYRULE_TOWN border, scratchpad/traversal_graph.py). Named rather than a
+// bare literal so QuickStartRandomizeRegionChainOnce's "exclude/force this
+// one" logic stays readable if the pool order ever changes.
+#define QUICKSTART_TRILBY_POOL_INDEX (QUICKSTART_REGION_POOL_SIZE - 1)
 
 // Which chain slot (0..QUICKSTART_REGION_CHAIN_LENGTH-1) the current room
 // is standing in for, or -1 if it isn't part of the chain at all - same
@@ -2137,18 +2155,45 @@ static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
 // visited before the chain's own first entrance trigger is reachable, same
 // "roll it well before the player can reach it" reasoning the ladder/2door
 // draws already use.
+//
+// This is also where the run's key-item choice (round 1, phase 0 of
+// QuickStartUpdateItemChoice) actually becomes a real path: Trilby
+// Highlands is the only region in the pool with a confirmed real gate in
+// front of it - a water canal on its Hyrule Town border that a straight
+// walk-test never got through in 36 sample points (scratchpad/
+// traversal_graph.py, TRILBY_HIGHLANDS<->HYRULE_TOWN edge) - so it's the
+// one item (Zora Flippers) that changes where this run's chain, and its
+// Earth Element, actually goes. The other 4 key items (Pegasus Boots/Roc's
+// Cape/Mole Mitts/Lantern) don't have a surveyed gate anywhere in this pool
+// yet, so picking any of them just means "the plain 4-region pool", same as
+// each other for now - a real per-item path for each is future work (see
+// docs/QUICKSTART_ROADMAP.md).
 static void QuickStartRandomizeRegionChainOnce(void) {
     s32 slot, j;
     u8 usedPool[QUICKSTART_REGION_CHAIN_LENGTH];
+    bool32 hasFlippers;
     if (CheckGlobalFlag(GF_REGION_CHAIN_RANDOMIZED)) {
         return;
     }
-    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
+    hasFlippers = GetInventoryValue(ITEM_FLIPPERS) != 0;
+    if (hasFlippers) {
+        // Force Trilby Highlands into the chain's last slot - the slot
+        // whose reward is always the Earth Element/win condition (see
+        // QuickStartSpawnRegionRewardOnce) - so a Flippers run always ends
+        // there. Every earlier slot is drawn from the remaining 4 plain
+        // regions only.
+        usedPool[QUICKSTART_REGION_CHAIN_LENGTH - 1] = QUICKSTART_TRILBY_POOL_INDEX;
+        QuickStartSetRegionChainPoolIndex(QUICKSTART_REGION_CHAIN_LENGTH - 1, QUICKSTART_TRILBY_POOL_INDEX);
+    }
+    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH - (hasFlippers ? 1 : 0); slot++) {
         s32 draw;
         u8 poolIndex;
         for (;;) {
             draw = (s32)Random();
-            draw %= QUICKSTART_REGION_POOL_SIZE;
+            // Without Flippers, Trilby Highlands (the pool's last entry)
+            // is unreachable, so it's excluded from every other slot's
+            // draw entirely, not just guarded against as a duplicate.
+            draw %= (QUICKSTART_REGION_POOL_SIZE - 1);
             poolIndex = (u8)draw;
             for (j = 0; j < slot; j++) {
                 if (usedPool[j] == poolIndex) {
@@ -5563,10 +5608,57 @@ static bool32 QuickStartAnyPickedUp(const QuickStartItemChoice* choices) {
     return FALSE;
 }
 
+// Same idea as QuickStartAnyPickedUp, but scoped to the full 5-item key-item
+// pool rather than a fixed 3 - only 3 are ever actually spawned in the room
+// per run (QuickStartSpawnKeyItemChoice), so at most one of these 5 can ever
+// have a nonzero inventory value; scanning the superset just costs a couple
+// of always-false checks and avoids needing to persist "which 3 were shown"
+// anywhere (this file's own statics don't survive - see the .data/linker.ld
+// note on QUICKSTART_MAIN_ROOM_SQUARES's neighboring comments elsewhere in
+// this file - so any such tracking would need its own gSave.flags bits).
+static bool32 QuickStartAnyKeyItemPickedUp(void) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_KEY_ITEM_POOL_SIZE; i++) {
+        if (GetInventoryValue(sQuickStartKeyItems[i].itemId) != 0) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Draws 3 distinct items from the 5-item key-item pool (fresh every run,
+// same Fisher-Yates-adjacent "reject and redraw on collision" shape
+// QuickStartRandomizeRegionChainOnce/QuickStartRandomizeDoorsOnce already
+// use elsewhere in this file) and hands them to QuickStartSpawnItems, which
+// itself shuffles their left-to-right display order. `choices` is a plain
+// stack-local array - fine here since it's only read synchronously within
+// this same call, unlike any state that needs to survive across frames.
+static void QuickStartSpawnKeyItemChoice(void) {
+    QuickStartItemChoice choices[QUICKSTART_ITEM_CHOICES];
+    s32 i, j, draw;
+    u8 used[QUICKSTART_ITEM_CHOICES];
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
+        for (;;) {
+            draw = (s32)Random() % QUICKSTART_KEY_ITEM_POOL_SIZE;
+            for (j = 0; j < i; j++) {
+                if (used[j] == draw) {
+                    break;
+                }
+            }
+            if (j == i) {
+                break;
+            }
+        }
+        used[i] = (u8)draw;
+        choices[i] = sQuickStartKeyItems[draw];
+    }
+    QuickStartSpawnItems(choices);
+}
+
 static void QuickStartSpawnStarterChoice(void) {
     Entity* npc;
 
-    QuickStartSpawnItems(sQuickStartStarterItems);
+    QuickStartSpawnKeyItemChoice();
 
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
@@ -5637,8 +5729,10 @@ static void QuickStartSpawnChest(void) {
 }
 
 // Phase progression for gRoomTransition.field_0x4[0]:
-//   0 - choosing starting weapon (bombs/bow/boomerang)
-//   1 - pending starting weapon pickup cutscene
+//   0 - choosing the run's key item (3 of 5: Pegasus Boots/Roc's Cape/Mole
+//       Mitts/Zora Flippers/Lantern) - decides which region the chain
+//       routes to (QuickStartRandomizeRegionChainOnce)
+//   1 - pending key item pickup cutscene
 //   2 - choosing bonus reward (heart container/100 rupees/red potion)
 //   3 - pending bonus reward pickup cutscene
 //   4 - choosing tiger scroll (spin attack/roll attack/peril beam)
@@ -5783,10 +5877,10 @@ static void QuickStartUpdateItemChoice(void) {
     }
 
     if (phase == 0 || phase == 2 || phase == 4) {
-        const QuickStartItemChoice* choices =
-            (phase == 0) ? sQuickStartStarterItems : (phase == 2) ? sQuickStartBonusItems : sQuickStartSkillItems;
+        const QuickStartItemChoice* choices = (phase == 2) ? sQuickStartBonusItems : sQuickStartSkillItems;
+        bool32 pickedUp = (phase == 0) ? QuickStartAnyKeyItemPickedUp() : QuickStartAnyPickedUp(choices);
         QuickStartRefreshItemTimers();
-        if (QuickStartAnyPickedUp(choices)) {
+        if (pickedUp) {
             // Bombs/bow/boomerang and the heart/rupee/potion row both show a
             // proper "You got/swapped for the X!" message on pickup for
             // free, via the vanilla ItemOnGround -> GiveItem cutscene path
