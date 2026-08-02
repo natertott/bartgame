@@ -135,6 +135,7 @@ static void QuickStartProcessCaveConnectorLink(void);
 static bool32 QuickStart2DoorIsCurrentRoom(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
+static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*)[2], s32, s32, s32, u8);
 static void QuickStartSpawnWinKeyOnce(s16, s16);
 static void QuickStartCheckWinCondition(void);
 static s32 QuickStartCountItemsHeld(void);
@@ -805,15 +806,13 @@ typedef struct QuickStartRegion_ {
     // Reward pool for whenever this region ISN'T the chain's last slot -
     // the last slot drops an Earth Element and triggers the win condition
     // instead (see QuickStartSpawnRegionRewardOnce), same as Lon Lon Ranch
-    // always has today.
+    // always has today. Also where the Chuchu Boss (one of the possible
+    // endless-wave rolls, QuickStartSpawnRegionWave) and each wave's
+    // enemy group both spawn/center.
     const u16* rewardPool;
     s32 rewardPoolSize;
     s16 rewardX;
     s16 rewardY;
-    // Optional - NULL for every region except Castle Garden today. Takes
-    // this region's own table row and its position in the current chain
-    // (needed for QuickStartGetRegionChainRewardState).
-    void (*bossHook)(const struct QuickStartRegion_* region, s32 position);
     // Optional per-region "quirk" logic that doesn't fit the generic shape
     // (Lon Lon Ranch's boulder puzzle + Goron/animal removal, Castle
     // Garden's guard removal) - called unconditionally every frame this
@@ -1938,40 +1937,6 @@ static void QuickStartSetRegionChainRewardState(s32 slot, u8 value) {
     }
 }
 
-// Castle Garden's boss hook - moved verbatim from the old
-// QuickStartSpawnGardenBossOnce, just reading its content offset/reward
-// state from the table row + chain slot instead of a hardcoded position
-// and ITEM_32. See sQuickStartRegionPool's own entry below for the
-// Scenario-1-only reasoning (measured GFX-slot budget, this session's
-// scratchpad/test_gfx_boss_cost.py).
-static void QuickStartCastleGardenBossHook(const QuickStartRegion* region, s32 slot) {
-    s32 i;
-    if (QuickStartGetRegionChainRewardState(slot) != 0) {
-        return;
-    }
-    if (!CheckRoomFlag(0) || CheckRoomFlag(5)) {
-        // Either the normal wave hasn't spawned yet, or the boss already
-        // has (room flag 5) - either way, nothing to do here this frame.
-        return;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-            // Normal wave still has survivors.
-            return;
-        }
-    }
-    {
-        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
-        if (boss != NULL) {
-            boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
-            boss->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
-            boss->collisionLayer = 1;
-            UpdateSpriteForCollisionLayer(boss);
-            SetRoomFlag(5);
-        }
-    }
-}
-
 // Lon Lon Ranch's own quirks (boulder puzzle + Goron/animal removal) -
 // unconditional every frame, exactly as today, just folded into one hook
 // so the table row only needs the one function pointer.
@@ -2066,7 +2031,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // functions/data above.
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0, 488, 520, 16, 56, sQuickStartGardenEnemyOffsets,
       ARRAY_COUNT(sQuickStartGardenEnemyOffsets), QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES,
-      sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 0x1f8, 0x108, QuickStartCastleGardenBossHook,
+      sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 0x1f8, 0x108,
       QuickStartClearCastleGuards },
     // Lon Lon Ranch - entrance/exit reused from the old static
     // sQuickStartLinks rows (Castle Garden's own north-door destination,
@@ -2079,7 +2044,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // chain ever puts it somewhere other than last.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 287, 343, 966, 984,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
-      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 392, 159, NULL,
+      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 392, 159,
       QuickStartLonLonRanchQuirkHook },
     // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
     // both verified-open, non-water tiles from the collision scan. Exit box
@@ -2088,7 +2053,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // destination doesn't matter, see the block comment above).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 504, 264, 460, 546, 0, 30,
       sQuickStartSouthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartSouthFieldEnemyOffsets), QUICKSTART_SOUTHFIELD_ROOM_SQUARES,
-      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 648, 552, NULL,
+      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 648, 552,
       NULL },
     // North Hyrule Field - entrance (504,456) and reward spot (744,504) are
     // verified-open. Exit box is the user-surveyed bottom edge
@@ -2097,7 +2062,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // BUSINESS_SCRUB_PROLOGUE that otherwise blocks wave-clear detection.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 456, 478, 530, 770, 800,
       sQuickStartNorthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartNorthFieldEnemyOffsets), QUICKSTART_NORTHFIELD_ROOM_SQUARES,
-      QUICKSTART_NORTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 744, 504, NULL,
+      QUICKSTART_NORTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 744, 504,
       QuickStartClearNorthFieldScrub },
     // Trilby Highlands - entrance (360,360) and reward spot (360,504) are
     // both spot-checked with screenshots (dry land next to the room's
@@ -2106,7 +2071,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // band (room width is only 480px, so this sits right at the edge).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
-      QUICKSTART_TRILBY_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 360, 504, NULL,
+      QUICKSTART_TRILBY_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 360, 504,
       NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
@@ -2210,21 +2175,22 @@ static void QuickStartRandomizeRegionChainOnce(void) {
     SetGlobalFlag(GF_REGION_CHAIN_RANDOMIZED);
 }
 
+// Moved up from next to QuickStartGetDifficulty/QuickStartIncrementDifficulty
+// further down this file (still the canonical home for the rest of that
+// comment) - needed here first, by QuickStartSpawnRegionWave's own
+// escalating-difficulty clamp below.
+#define QUICKSTART_MAX_DIFFICULTY 12
+
 // Same "is any ENEMY-kind entity still in this room" check every kind of
-// wave-clear detection in this file already uses, plus (for a region with
-// a boss) waiting on room flag 5 too - a region's own reward can't drop
-// (or its Element, if it's the chain's last slot) until both the normal
-// wave AND the boss stage have happened, not just "no ENEMY-kind entity
-// currently in the room": on the very first frame after the wave dies,
-// that check would already read true, before the boss hook ever gets a
-// chance to spawn it on a later frame, which would drop the reward a whole
-// boss fight early.
-static bool32 QuickStartRegionWaveCleared(const QuickStartRegion* region) {
+// wave-clear detection in this file already uses. Only ever consulted for
+// wave 0 (see QuickStartSpawnRegionRewardOnce - the reward/Earth Element
+// only ever cares about the first wave), and wave 0 is always a plain
+// tiered group, never a Chuchu Boss (QuickStartSpawnRegionWave below), so
+// there's no separate "boss has actually appeared yet" race to guard
+// against here the way the old Castle-Garden-only boss hook needed to.
+static bool32 QuickStartRegionWaveCleared(void) {
     s32 i;
     if (!CheckRoomFlag(0)) {
-        return FALSE;
-    }
-    if (region->bossHook != NULL && !CheckRoomFlag(5)) {
         return FALSE;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -2235,14 +2201,89 @@ static bool32 QuickStartRegionWaveCleared(const QuickStartRegion* region) {
     return TRUE;
 }
 
+// Endless-wave state, room-flag bits distinct from 0/1/4 above (flag 0's
+// meaning is unchanged - "this visit's current wave is still in progress").
+// Reused per visit, same "each combat encounter is its own fresh
+// sit-and-fight session" shape LADDER_KIND_WAVES already established
+// elsewhere in this file - leaving and re-entering restarts at wave 0.
+#define QUICKSTART_REGION_WAVE_COUNT_BIT(b) (20 + (b)) // b = 0..7, wave count 0-255
+// Out of 100 - the chance any wave AFTER the first (wave 0 is always a
+// plain group, see QuickStartSpawnRegionWave) rolls as a solo Chuchu Boss
+// encounter instead. Never concurrent with a normal wave's own enemies -
+// only ever rolled once the room is already fully clear - so this doesn't
+// reopen the GFX-slot budget question that capped the old Castle-Garden-
+// only pairing to "boss alone" in the first place (docs/QUICKSTART_ROADMAP.md
+// sec 3.3, this session's scratchpad/test_gfx_boss_cost.py).
+#define QUICKSTART_REGION_BOSS_WAVE_CHANCE 20
+
+static u8 QuickStartRegionGetWaveCount(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 8; b++) {
+        if (CheckRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartRegionSetWaveCount(u8 value) {
+    s32 b;
+    for (b = 0; b < 8; b++) {
+        if (value & (1 << b)) {
+            SetRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b));
+        } else {
+            ClearRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b));
+        }
+    }
+}
+
+// Rolls and spawns wave `wave` (0-indexed) for this region. Difficulty
+// escalates with wave count on top of the run's own persistent difficulty
+// counter (QuickStartGetDifficulty) - reusing the exact same tier table
+// (sQuickStartDifficultyTiers/QuickStartSpawnEnemyGroupAtDifficulty) a
+// normal wave already draws from, just at a higher tier the deeper into
+// one sitting the player gets.
+static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
+    s32 escalated;
+    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE) {
+        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
+        if (boss != NULL) {
+            boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
+            boss->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+            boss->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(boss);
+        }
+        return;
+    }
+    escalated = QuickStartGetDifficulty() + wave;
+    if (escalated > QUICKSTART_MAX_DIFFICULTY) {
+        escalated = QUICKSTART_MAX_DIFFICULTY;
+    }
+    QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
+                                          region->maxEnemies, (u8)escalated);
+}
+
+// Replaces the old "spawn exactly one wave, ever" gate: once a wave goes
+// fully clear, queues the next one (harder than the last), forever - on
+// every visit, regardless of whether this region's one-time reward has
+// already been earned. That reward (QuickStartSpawnRegionRewardOnce) still
+// only ever comes from wave 0's own clear, via its own once-only reward-
+// state gate, completely untouched by this loop continuing past it.
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
-    if (QuickStartGetRegionChainRewardState(slot) != 0) {
-        return;
-    }
+    u8 wave = QuickStartRegionGetWaveCount();
+    (void)slot;
     if (CheckRoomFlag(0)) {
+        if (!QuickStartRegionWaveCleared()) {
+            return;
+        }
+        if (wave < 255) {
+            QuickStartRegionSetWaveCount(wave + 1);
+        }
+        ClearRoomFlag(0);
         return;
     }
-    QuickStartSpawnEnemyGroup(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares, region->maxEnemies);
+    QuickStartSpawnRegionWave(region, wave);
     SetRoomFlag(0);
 }
 
@@ -2290,7 +2331,7 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
 static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 slot) {
     u8 state;
     if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
-        if (!QuickStartRegionWaveCleared(region)) {
+        if (!QuickStartRegionWaveCleared()) {
             return;
         }
         QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
@@ -2302,7 +2343,7 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         return;
     }
     if (state == 0) {
-        if (!QuickStartRegionWaveCleared(region)) {
+        if (!QuickStartRegionWaveCleared()) {
             return;
         }
         // Room flag 4: "region-cleared hint already shown this visit" -
@@ -2344,9 +2385,6 @@ static void QuickStartRegionMonitor(s32 slot) {
     }
     QuickStartSpawnRegionRewardOnce(region, slot);
     QuickStartSpawnRegionEnemiesOnce(region, slot);
-    if (region->bossHook != NULL) {
-        region->bossHook(region, slot);
-    }
 }
 
 // Drops the heart piece at its fixed spot and marks ITEM_5A "earned" +
@@ -2701,7 +2739,6 @@ static void QuickStartLadderSetDone(s32 ladderIndex) {
 // WriteSaveFile below makes sure it's actually on the save file the
 // title/file-select flow reloads from, not just sitting in EWRAM.
 #define GF_DIFFICULTY_BIT(b) (174 + (b)) // b = 0..3
-#define QUICKSTART_MAX_DIFFICULTY 12
 
 static u8 QuickStartGetDifficulty(void) {
     return (CheckGlobalFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
@@ -2981,10 +3018,15 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
 // squares divided by this difficulty's density, clamped to at least 1, and
 // to at most whichever is smaller of the offset pool's own size or
 // maxEnemies (the room's hard entity-budget ceiling - see the per-room
-// constants above each call site).
-static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
+// constants above each call site). Difficulty is an explicit parameter
+// (rather than always reading QuickStartGetDifficulty() itself) so the
+// region-chain's endless-wave loop (QuickStartSpawnRegionWave) can escalate
+// past the run's own persistent difficulty counter as waves stack up,
+// while every other call site keeps using the plain wrapper below.
+static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
+                                                   s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, difficulty, density, cap;
+    s32 i, j, r, tmp, count, density, cap;
     Entity* enemy;
     u8 id, form;
     u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
@@ -3004,7 +3046,6 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
         indices[i + r] = tmp;
     }
 
-    difficulty = QuickStartGetDifficulty();
     density = QuickStartGetDifficultyTier(difficulty)->density;
     if (density < QUICKSTART_MIN_DENSITY) {
         density = QUICKSTART_MIN_DENSITY;
@@ -3039,6 +3080,10 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
             UpdateSpriteForCollisionLayer(enemy);
         }
     }
+}
+
+static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
+    QuickStartSpawnEnemyGroupAtDifficulty(offsets, offsetCount, roomSquares, maxEnemies, QuickStartGetDifficulty());
 }
 
 // LADDER_KIND_WAVES (see QuickStartSetupWaveRoomContent) is new - a 3-wave
