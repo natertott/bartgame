@@ -2040,8 +2040,15 @@ static void PlayerRoll(PlayerEntity* this) {
     sPlayerRollStates[super->subAction](this);
 }
 
+// How many frames (gMain.ticks, main.c's free-running frame counter) must
+// separate two rolls before the roll sound plays again - same debounce
+// idea, and the same reasoning, as SWORD_SWING_SOUND_DEBOUNCE_FRAMES in
+// playerItem/playerItemSword.c.
+#define ROLL_SOUND_DEBOUNCE_FRAMES 20
+
 static void PlayerRollInit(PlayerEntity* this) {
     u32 playerFlags;
+    bool32 playRollSound;
 
     if ((gPlayerState.flags & PL_MOLDWORM_RELEASED) == 0) {
         sub_0806F948(&gPlayerEntity.base);
@@ -2063,12 +2070,21 @@ static void PlayerRollInit(PlayerEntity* this) {
         }
     }
     gPlayerState.flags |= PL_ROLLING;
-    if (Random() & 1) {
-        SoundReq(SFX_PLY_VO5);
-    } else {
-        SoundReq(SFX_PLY_VO4);
+    // Debounce, per the user's own request: only the first roll of a rapid
+    // mashing series makes noise. gPlayerState.pad[1] is genuine unused
+    // scratch space (see player.h, and playerItem/playerItemSword.c's own
+    // pad[0] use for the identical sword-swing debounce) reused here as a
+    // rolling "ticks at last roll" byte.
+    playRollSound = (u8)(gMain.ticks - gPlayerState.pad[1]) >= ROLL_SOUND_DEBOUNCE_FRAMES;
+    gPlayerState.pad[1] = (u8)gMain.ticks;
+    if (playRollSound) {
+        if (Random() & 1) {
+            SoundReq(SFX_PLY_VO5);
+        } else {
+            SoundReq(SFX_PLY_VO4);
+        }
+        SoundReq(SFX_7E);
     }
-    SoundReq(SFX_7E);
 }
 
 static void PlayerRollUpdate(PlayerEntity* this) {

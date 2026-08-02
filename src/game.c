@@ -293,6 +293,15 @@ static void GameTask_Transition(void) {
         for (bit = 202; bit <= 228; bit++) {
             ClearGlobalFlag(bit);
         }
+        // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
+        // counter (GF_REGION_WAVE_COUNT_BIT) - deliberately persists across
+        // leaving/re-entering a region within a run (that's the whole
+        // point, per the user's own request), but still needs to start
+        // fresh at 0 for a brand new run, same "no carry-over between
+        // rounds" policy as everything else in this block.
+        for (bit = 0; bit <= 31; bit++) {
+            ClearLocalFlagByBank(FLAG_BANK_11, bit);
+        }
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -330,13 +339,10 @@ static void GameTask_Transition(void) {
     gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
-    // L item slot - empty by default, same as a fresh save. Zora's Flippers
-    // is NOT an equippable item (confirmed: player.c's swim-ability check is
-    // a bare GetInventoryValue(ITEM_FLIPPERS), no equip-slot/IsItemEquipped
-    // check anywhere - same shape as Grip Ring and the scrolls, ownership
-    // alone silently grants the ability). Forcing it into equippedExtra[0]
-    // was wrong; SetInventoryValue below is the only grant it needs.
-    gSave.stats.equippedExtra[0] = ITEM_NONE;
+    // L item slot - the Bow, per the user's own request ("the player should
+    // start with the bow equipped"). Ownership + arrows are granted below
+    // alongside the other free starting gear, same pattern as Bombs.
+    gSave.stats.equippedExtra[0] = ITEM_BOW;
     // Start with every wallet upgrade already owned (walletType 3 ==
     // gWalletSizes[3] == 999 rupee cap, itemUtils.c). walletType is the
     // field gameplay actually reads (gWalletSizes[walletType].size, see
@@ -362,11 +368,7 @@ static void GameTask_Transition(void) {
     // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
-    // testing without needing to actually find them in the world. Deliberately
-    // NOT granting plain ITEM_BOW here - ItemBow (item.c) handles both
-    // ITEM_BOW and ITEM_LIGHT_ARROW identically, so owning just the upgraded
-    // arrow is enough to equip and use it, and leaving plain Bow ungranted
-    // means it can still turn up in a region's own reward pool.
+    // testing without needing to actually find them in the world.
     //
     // ITEM_FIRE_ROD is a real, working item again as of this session: it
     // used to be a non-functional leftover (item.c mapped it to ItemDebug,
@@ -383,6 +385,12 @@ static void GameTask_Transition(void) {
     // animation instead of their old debug placeholders.
     SetInventoryValue(ITEM_FIRE_ROD, 1);
     SetInventoryValue(ITEM_LIGHT_ARROW, 1);
+    // Bow, granted and equipped (L slot, see equippedExtra[0] above) at
+    // boot per the user's own request. ModArrows(99) mirrors ModBombs(99)
+    // just below - gQuiverSizes[0] is the smallest real quiver, so this
+    // just fills it rather than granting some inflated capacity.
+    SetInventoryValue(ITEM_BOW, 1);
+    ModArrows(99);
     // ITEM_FLIPPERS is no longer a free grant - it's one of the round-1
     // key-item choices now (sQuickStartKeyItems), and the whole point of
     // that round is that owning it (or not) actually changes which region
@@ -2201,12 +2209,19 @@ static bool32 QuickStartRegionWaveCleared(void) {
     return TRUE;
 }
 
-// Endless-wave state, room-flag bits distinct from 0/1/4 above (flag 0's
-// meaning is unchanged - "this visit's current wave is still in progress").
-// Reused per visit, same "each combat encounter is its own fresh
-// sit-and-fight session" shape LADDER_KIND_WAVES already established
-// elsewhere in this file - leaving and re-entering restarts at wave 0.
-#define QUICKSTART_REGION_WAVE_COUNT_BIT(b) (20 + (b)) // b = 0..7, wave count 0-255
+// Endless-wave state - persistent (FLAG_BANK_11, completely unclaimed
+// until now - see the FLAG_BANK_12 door-storage comment elsewhere in this
+// file for why a dedicated bank rather than cramming into bank 0's own
+// dwindling ~27 free bits), keyed by chain slot rather than a room flag:
+// per the user's own request, the wave/difficulty level a region has
+// reached must survive leaving for another region and coming back, not
+// reset to wave 0 on every fresh room load the way a room flag would.
+// Sized for 4 slots even though QUICKSTART_REGION_CHAIN_LENGTH is 2 today,
+// matching GF_REGION_CHAIN_POOL_BIT/REWARD_STATE_BIT's own forward-looking
+// sizing. Room flag 0 (this visit's current wave still in progress) still
+// resets per visit, same as before - that's correct: a fresh room load has
+// no enemies out yet regardless of which wave number it's about to spawn.
+#define GF_REGION_WAVE_COUNT_BIT(slot, b) ((slot) * 8 + (b)) // slot=0..3, b=0..7 -> 0-31 within bank 11
 // Out of 100 - the chance any wave AFTER the first (wave 0 is always a
 // plain group, see QuickStartSpawnRegionWave) rolls as a solo Chuchu Boss
 // encounter instead. Never concurrent with a normal wave's own enemies -
@@ -2216,24 +2231,24 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // sec 3.3, this session's scratchpad/test_gfx_boss_cost.py).
 #define QUICKSTART_REGION_BOSS_WAVE_CHANCE 20
 
-static u8 QuickStartRegionGetWaveCount(void) {
+static u8 QuickStartRegionGetWaveCount(s32 slot) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 8; b++) {
-        if (CheckRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b))) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_REGION_WAVE_COUNT_BIT(slot, b))) {
             value |= (1 << b);
         }
     }
     return value;
 }
 
-static void QuickStartRegionSetWaveCount(u8 value) {
+static void QuickStartRegionSetWaveCount(s32 slot, u8 value) {
     s32 b;
     for (b = 0; b < 8; b++) {
         if (value & (1 << b)) {
-            SetRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b));
+            SetLocalFlagByBank(FLAG_BANK_11, GF_REGION_WAVE_COUNT_BIT(slot, b));
         } else {
-            ClearRoomFlag(QUICKSTART_REGION_WAVE_COUNT_BIT(b));
+            ClearLocalFlagByBank(FLAG_BANK_11, GF_REGION_WAVE_COUNT_BIT(slot, b));
         }
     }
 }
@@ -2271,14 +2286,13 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
 // only ever comes from wave 0's own clear, via its own once-only reward-
 // state gate, completely untouched by this loop continuing past it.
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
-    u8 wave = QuickStartRegionGetWaveCount();
-    (void)slot;
+    u8 wave = QuickStartRegionGetWaveCount(slot);
     if (CheckRoomFlag(0)) {
         if (!QuickStartRegionWaveCleared()) {
             return;
         }
         if (wave < 255) {
-            QuickStartRegionSetWaveCount(wave + 1);
+            QuickStartRegionSetWaveCount(slot, wave + 1);
         }
         ClearRoomFlag(0);
         return;
