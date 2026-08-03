@@ -111,6 +111,10 @@ static void QuickStartSpawnMelarisMineRewardOnce(void);
 static void QuickStartSpawnShopMerchantOnce(s16, s16);
 static void QuickStartClearShopObstacles(void);
 static void QuickStartMaintainShop(const s16 (*)[2]);
+static void QuickStartRandomizeMelariEastOnce(void);
+static void QuickStartSetupMelariEastRoomContent(void);
+static void QuickStartSetupMelariShopRoom(void);
+static void QuickStartApplyHeartContainerBonusOnce(void);
 static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartRandomizeDoorsOnce(void);
 static void QuickStartProcessLadderLinks(void);
@@ -289,8 +293,12 @@ static void GameTask_Transition(void) {
         // "own the tail end of the free range" reasoning. 208-228: the
         // region chain's own randomized-once flag, pool-index-per-slot, and
         // reward-state-per-slot ranges - same "re-roll every fresh boot"
-        // policy as the ladder/2door pools above.
-        for (bit = 202; bit <= 228; bit++) {
+        // policy as the ladder/2door pools above. 229: GF_REGION_FINAL_HINT_SHOWN,
+        // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
+        // Melari's Mine East room's own randomized-once/kind/extra bits.
+        // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
+        // shape as the two hint-shown flags above.
+        for (bit = 202; bit <= 235; bit++) {
             ClearGlobalFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1102,6 +1110,50 @@ static void QuickStartShowRegionIntroHintOnce(void) {
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 10), 0);
 }
 
+// Same one-per-run shape as QuickStartShowRegionIntroHintOnce above, but
+// fired on first entry to the chain's LAST slot instead of its first -
+// per the user's own feedback ("I haven't seen [the Earth Element] in
+// other areas, even after defeating full waves of enemies"): the actual
+// mechanic is simple and deterministic (the Earth Element always drops the
+// moment the FIRST wave in this one specific region - the chain's last
+// slot - is cleared, no RNG, no boss requirement), but nothing in-game
+// ever said so, and every other region a player might grind endless waves
+// in in the meantime (this session's own new infinite-wave system) will
+// never drop it no matter how long they stay. This hint directly names
+// the trigger the moment the player reaches the region where it's real.
+#define GF_REGION_FINAL_HINT_SHOWN 229
+static void QuickStartShowRegionFinalHintOnce(void) {
+    if (CheckGlobalFlag(GF_REGION_FINAL_HINT_SHOWN)) {
+        return;
+    }
+    SetGlobalFlag(GF_REGION_FINAL_HINT_SHOWN);
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 12), 0);
+}
+
+// Melari's Mine's other 2 real doors (Southeast/East - see
+// gExitList_MelarisMine_Main, transitions.c) were sitting completely
+// unused under QUICKSTART until now - per the user's own request, each
+// gets a random "?" room event assigned once per run, with no pool-draw
+// indirection needed (the real door already leads there for real):
+// Southeast is always the new guaranteed Shop (see
+// QuickStartSetupMelariShopRoom below - the user wants it to show up at
+// least once every run, and hardcoding it here is far simpler than
+// reserving a slot in the already-fully-claimed 18-room ladder/door
+// pool), and East gets a genuine random pick between the two simplest
+// existing "?" room kinds (chest / talking NPC) - the other kinds
+// (miniboss/waves/fairy/lotteries) either need more room than this small
+// interior has (this session's own "combat needs big rooms" rule) or the
+// ladderIndex-keyed state this standalone room doesn't have.
+#define GF_MELARI_EAST_RANDOMIZED 230
+#define GF_MELARI_EAST_KIND_BIT 231 // 0 = chest, 1 = NPC
+#define GF_MELARI_EAST_EXTRA_BIT(b) (232 + (b)) // b = 0..2, chest reward index or NPC script index
+// One-time latch for the maxHealth bonus a bought Heart Container should
+// grant - GiveItem's own metadata has no effect for this item (see
+// QuickStartUpdateItemChoice's phase==3 handler, which already grants it
+// by hand for the round-2 choice path); this generalizes that same grant
+// to also cover buying one from the new shop instead of picking it.
+#define GF_HEART_CONTAINER_BONUS_APPLIED 235
+
 // The pool of "not guaranteed by the earlier starter/bonus/skill choices"
 // rewards the gauntlet can drop - tools, upgrades, skills, and heart
 // progression. Filtered at drop time to whichever the player doesn't
@@ -1302,9 +1354,18 @@ const u8* const gCustomStrings[] = {
     [10] = (const u8*)"Ezlo: Seek the Earth\nElement out there!",
     // Shown once per region-clear (see QuickStartSpawnGardenRewardOnce's own
     // GF_REGION_CLEAR_HINT-gated call) right as the actual reward item
-    // drops - true for every region, boss or no boss, since it fires at the
-    // same point the reward spawner itself finally runs.
-    [11] = (const u8*)"Ezlo: Well done! Reward\nin the middle of the map.",
+    // drops - only ever the chain's non-last slot(s), since the last slot's
+    // own clear goes through the separate Earth Element/win path instead
+    // (QuickStartSpawnRegionRewardOnce). Reworded per the user's own
+    // feedback to point onward rather than imply this reward IS the goal -
+    // the Element is always still further ahead from here.
+    [11] = (const u8*)"Ezlo: Well done! Now\npress on to the next area.",
+    // Shown once per run, the moment the player first sets foot in the
+    // chain's LAST region (see QuickStartShowRegionFinalHintOnce) - directly
+    // names the actual trigger (clearing this region's first wave, nothing
+    // more) per the user's own request for a hint about what causes the
+    // Earth Element to drop.
+    [12] = (const u8*)"Ezlo: The Earth Element\nis here! Clear the foes!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2396,6 +2457,9 @@ static void QuickStartRegionMonitor(s32 slot) {
     }
     if (slot == 0) {
         QuickStartShowRegionIntroHintOnce();
+    }
+    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        QuickStartShowRegionFinalHintOnce();
     }
     QuickStartSpawnRegionRewardOnce(region, slot);
     QuickStartSpawnRegionEnemiesOnce(region, slot);
@@ -4545,6 +4609,202 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
     }
 }
 
+// --- Melari's Mine's other 2 real doors (Southeast/East) --------------------
+//
+// See gExitList_MelarisMine_Main (transitions.c) - both real vanilla doors
+// still lead exactly where they always did, untouched; the room a player
+// lands in via either one IS the "?" room content directly, no synthetic
+// warp/pool-room indirection needed (unlike the ladder/2-door systems
+// above, which are already at their 18-room pool's exact capacity).
+#define QUICKSTART_MELARI_CONTENT_X 120
+#define QUICKSTART_MELARI_CONTENT_Y 120
+
+static u8 QuickStartMelariEastGetKind(void) {
+    return CheckGlobalFlag(GF_MELARI_EAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+}
+
+static u8 QuickStartMelariEastGetExtra(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_MELARI_EAST_EXTRA_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+// Called from Melari's Mine Main's own hub dispatch, same "roll it before
+// the player can possibly reach it" timing as the ladder/2-door/region
+// chain draws there already use.
+static void QuickStartRandomizeMelariEastOnce(void) {
+    u8 kind, extra;
+    s32 b;
+    if (CheckGlobalFlag(GF_MELARI_EAST_RANDOMIZED)) {
+        return;
+    }
+    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    if (kind == LADDER_KIND_NPC) {
+        SetGlobalFlag(GF_MELARI_EAST_KIND_BIT);
+        extra = (u8)((s32)Random() % 2);
+    } else {
+        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    }
+    for (b = 0; b < 3; b++) {
+        if (extra & (1 << b)) {
+            SetGlobalFlag(GF_MELARI_EAST_EXTRA_BIT(b));
+        }
+    }
+    SetGlobalFlag(GF_MELARI_EAST_RANDOMIZED);
+}
+
+// Shared by both rooms - each one's own pre-existing vanilla decorations
+// (the statues/shrine props confirmed present via an emulator entity dump
+// the first time each room was loaded, OBJECT-kind but not our own
+// GROUND_ITEM/SHOP_ITEM/ZELDA, so left alone) stay untouched; only real
+// obstacles (vanilla NPCs, enemies) get cleared, same idempotent
+// per-frame pattern QuickStartClearShopObstacles/
+// QuickStartClearMelarisMineObstacles already use elsewhere in this file.
+static void QuickStartClearMelariRoomObstacles(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == NPC && ent->id != ZELDA) {
+            DeleteEntity(ent);
+        } else if (ent->kind == ENEMY) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
+// East room's own content dispatch - a plain chest (one reward off the
+// same sQuickStartLadderRewardPool the ladder/2-door chests already draw
+// from) or a talking NPC (same 2 canned scripts sQuickStartLadderNpcScripts
+// already uses), whichever QuickStartRandomizeMelariEastOnce rolled.
+// Simpler double-flag-free version of the ladder system's own chest/NPC
+// handling above: this room doesn't need a ladderIndex, so there's no
+// generic accessor plumbing to reuse, just a direct room-flag check.
+static void QuickStartSetupMelariEastRoomContent(void) {
+    u8 kind, extra;
+    QuickStartClearMelariRoomObstacles();
+    kind = QuickStartMelariEastGetKind();
+    extra = QuickStartMelariEastGetExtra();
+    if (kind == LADDER_KIND_CHEST) {
+        if (QuickStartGroundItemAt(QUICKSTART_MELARI_CONTENT_X, QUICKSTART_MELARI_CONTENT_Y)) {
+            return;
+        }
+        if (CheckRoomFlag(0)) {
+            return;
+        }
+        {
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_CONTENT_X;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_CONTENT_Y;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_CONTENT_X;
+                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_CONTENT_Y;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+            }
+        }
+    }
+}
+
+// Southeast room is always the new guaranteed Shop, per the user's own
+// request ("the Shop as a ? room that shows up in the overworld... should
+// be guaranteed to show up at least once in every run"). Stock is built
+// fresh every frame (not randomized-once - it just tracks live inventory
+// state, same idempotent-rescan shape QuickStartMaintainShop already uses)
+// from whichever of the round-1/2/3 choice items the player didn't end up
+// with: round 1's full 5-item key-item pool (see sQuickStartKeyItems)
+// minus whichever one they hold, plus round 2's and round 3's own 2
+// unpicked items each (sQuickStartBonusItems/sQuickStartSkillItems always
+// offer all 3, so "not owned" here really does mean "not chosen"). Prices
+// are all 1 rupee for now (itemMetaData.c, #ifdef QUICKSTART) - a
+// deliberate placeholder per the user's own words.
+#define QUICKSTART_MELARI_SHOP_MAX_ITEMS 11
+static const s16 sQuickStartMelariShopOffsets[QUICKSTART_MELARI_SHOP_MAX_ITEMS][2] = {
+    { 96, 104 },  { 120, 104 }, { 144, 104 }, { 96, 122 }, { 120, 122 },
+    { 144, 122 }, { 96, 140 },  { 120, 140 }, { 144, 140 }, { 108, 158 }, { 132, 158 },
+};
+
+static s32 QuickStartBuildUnchosenCatalog(u16* outItems) {
+    s32 count = 0;
+    s32 i;
+    for (i = 0; i < QUICKSTART_KEY_ITEM_POOL_SIZE; i++) {
+        if (GetInventoryValue(sQuickStartKeyItems[i].itemId) == 0) {
+            outItems[count++] = sQuickStartKeyItems[i].itemId;
+        }
+    }
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
+        if (GetInventoryValue(sQuickStartBonusItems[i].itemId) == 0) {
+            outItems[count++] = sQuickStartBonusItems[i].itemId;
+        }
+    }
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
+        if (GetInventoryValue(sQuickStartSkillItems[i].itemId) == 0) {
+            outItems[count++] = sQuickStartSkillItems[i].itemId;
+        }
+    }
+    return count;
+}
+
+static void QuickStartSetupMelariShopRoom(void) {
+    u16 catalog[QUICKSTART_MELARI_SHOP_MAX_ITEMS];
+    s32 count, i;
+    QuickStartClearMelariRoomObstacles();
+    QuickStartSpawnShopMerchantOnce(120, 90);
+    count = QuickStartBuildUnchosenCatalog(catalog);
+    if (count > QUICKSTART_MELARI_SHOP_MAX_ITEMS) {
+        count = QUICKSTART_MELARI_SHOP_MAX_ITEMS;
+    }
+    for (i = 0; i < count; i++) {
+        if (!QuickStartShopItemExists(catalog[i])) {
+            QuickStartSpawnShopItem(catalog[i], sQuickStartMelariShopOffsets[i][0], sQuickStartMelariShopOffsets[i][1]);
+        }
+    }
+}
+
+// Grants the Heart Container's actual +1 max heart effect (GiveItem has no
+// switch-case for this item - see QuickStartUpdateItemChoice's phase==3
+// handler, which already applies it by hand for the round-2 choice path)
+// regardless of how the player ended up owning one - picking it in round 2,
+// or now, buying it from the new Melari's Mine shop above. Idempotent via
+// its own one-time latch rather than re-deriving "was this just granted"
+// from inventory state, since GetInventoryValue alone can't tell "just
+// bought" apart from "already owned from a previous check this same run".
+static void QuickStartApplyHeartContainerBonusOnce(void) {
+    if (GetInventoryValue(ITEM_HEART_CONTAINER) == 0) {
+        return;
+    }
+    if (CheckGlobalFlag(GF_HEART_CONTAINER_BONUS_APPLIED)) {
+        return;
+    }
+    gSave.stats.maxHealth += 8;
+    gSave.stats.health = gSave.stats.maxHealth;
+    SetGlobalFlag(GF_HEART_CONTAINER_BONUS_APPLIED);
+}
+
 // One draw per save, same shape as QuickStartRandomizeLaddersOnce but for
 // a single slot - no cross-slot dedup needed, there's only one connector.
 // Placed here rather than alongside QuickStart2DoorGetTarget/GetSpawnInfo
@@ -5498,6 +5758,12 @@ static void QuickStartRoomMonitor(void) {
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();
     QuickStartFixupQuestionRoomReturn();
+    // Unconditional for the same reason QuickStartEnforceContainment etc.
+    // are above - a Heart Container can now be gained either through the
+    // round-2 choice (already handled inline there) or by buying one from
+    // the new Melari's Mine shop, and this call is what actually applies
+    // the buy path's effect; idempotent either way via its own latch.
+    QuickStartApplyHeartContainerBonusOnce();
     // Unconditional (not folded into a specific room's branch below) since
     // its 3 entrances now span two different rooms - see
     // sQuickStartLadderEntrances and QuickStartProcessLadderLinks above.
@@ -5535,6 +5801,13 @@ static void QuickStartRoomMonitor(void) {
         // QuickStartRandomizeDoorsOnce's own comment).
         QuickStartRandomizeDoorsOnce();
         QuickStart2DoorRandomizeOnce();
+        QuickStartRandomizeMelariEastOnce();
+    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
+               gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST) {
+        QuickStartSetupMelariShopRoom();
+    } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
+               gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST) {
+        QuickStartSetupMelariEastRoomContent();
     } else if (regionSlot >= 0) {
         // Whichever region this save's chain put the current room in -
         // Castle Garden and Lon Lon Ranch today, more later as new regions

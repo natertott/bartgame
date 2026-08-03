@@ -148,13 +148,28 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_SHIELD] = { 40, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x1d) },
 #endif
     [ITEM_MIRROR_SHIELD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xe) },
+#ifdef QUICKSTART
+    // 1 rupee, per the user's own request for the new guaranteed "?" room
+    // shop's stock (Melari's Mine East room - see game.c's
+    // QuickStartSetupMelariShopRoom): these 5 are the round-1 key-item
+    // pool, never priced/sellable anywhere else, so there's no other
+    // shop's price to collide with.
+    [ITEM_LANTERN_OFF] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0xf) },
+#else
     [ITEM_LANTERN_OFF] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xf) },
+#endif
     [ITEM_LANTERN_ON] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x10) },
     [ITEM_GUST_JAR] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x11) },
     [ITEM_PACCI_CANE] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x12) },
+#ifdef QUICKSTART
+    [ITEM_MOLE_MITTS] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x13) },
+    [ITEM_ROCS_CAPE] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x14) },
+    [ITEM_PEGASUS_BOOTS] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x15) },
+#else
     [ITEM_MOLE_MITTS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x13) },
     [ITEM_ROCS_CAPE] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x14) },
     [ITEM_PEGASUS_BOOTS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x15) },
+#endif
     [ITEM_FIRE_ROD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x16) },
     [ITEM_OCARINA] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x17) },
     [ITEM_ORB_GREEN] = { 0, 0, 0x0, 0x0 },
@@ -169,7 +184,14 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_BOTTLE_BUTTER] = { 120, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x21) },
     [ITEM_BOTTLE_MILK] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x22) },
     [ITEM_BOTTLE_HALF_MILK] = { 60, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x23) },
+#ifdef QUICKSTART
+    // 1 rupee for the new guaranteed "?" room shop's stock (round-2 bonus
+    // pool item) - see the ITEM_LANTERN_OFF comment above for the same
+    // reasoning.
+    [ITEM_BOTTLE_RED_POTION] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x24) },
+#else
     [ITEM_BOTTLE_RED_POTION] = { 150, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x24) },
+#endif
     [ITEM_BOTTLE_BLUE_POTION] = { 60, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x25) },
     [ITEM_BOTTLE_WATER] = { 1, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x26) },
     [ITEM_BOTTLE_MINERAL_WATER] = { 5, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x27) },
@@ -220,20 +242,34 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_WIND_ELEMENT] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x43) },
     [ITEM_GRIP_RING] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x44) },
     [ITEM_POWER_BRACELETS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x45) },
+#ifdef QUICKSTART
+    [ITEM_FLIPPERS] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x46) },
+#else
     [ITEM_FLIPPERS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x46) },
+#endif
     [ITEM_MAP] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x47) },
 #ifdef QUICKSTART
-    [ITEM_SKILL_SPIN_ATTACK] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x48) },
+    // Was 250 (Grimblade's own catalog price) - lowered to 1 rupee per the
+    // user's own explicit request that the new guaranteed "?" room shop's
+    // stock (round-3 scroll pool, this included) sell for 1 rupee; this is
+    // the same shared price-table entry Grimblade's shop reads too, so its
+    // price drops to match rather than diverging.
+    [ITEM_SKILL_SPIN_ATTACK] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x48) },
+    [ITEM_SKILL_ROLL_ATTACK] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x49) },
 #else
     [ITEM_SKILL_SPIN_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x48) },
-#endif
     [ITEM_SKILL_ROLL_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x49) },
+#endif
     [ITEM_SKILL_DASH_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4a) },
     [ITEM_SKILL_ROCK_BREAKER] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4b) },
     [ITEM_SKILL_SWORD_BEAM] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4c) },
     [ITEM_SKILL_GREAT_SPIN] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4d) },
     [ITEM_SKILL_DOWN_THRUST] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4e) },
+#ifdef QUICKSTART
+    [ITEM_SKILL_PERIL_BEAM] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x4f) },
+#else
     [ITEM_SKILL_PERIL_BEAM] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4f) },
+#endif
     [ITEM_DUNGEON_MAP] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x50) },
     [ITEM_COMPASS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x51) },
     [ITEM_BIG_KEY] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x52) },
@@ -242,7 +278,13 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_RUPEE5] = { 5, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x55) },
     [ITEM_RUPEE20] = { 20, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x56) },
     [ITEM_RUPEE50] = { 50, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x57) },
+#ifdef QUICKSTART
+    // 1 rupee for the new guaranteed "?" room shop's stock (round-2 bonus
+    // pool item).
+    [ITEM_RUPEE100] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x58) },
+#else
     [ITEM_RUPEE100] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x58) },
+#endif
     [ITEM_RUPEE200] = { 200, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x59) },
     [ITEM_5A] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5a) },
     [ITEM_JABBERNUT] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5b) },
@@ -256,7 +298,11 @@ const struct_080FD964 gUnk_080FD964[] = {
 #else
     [ITEM_SHELLS30] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x05), TEXT_INDEX(TEXT_ITEM_GET, 0x76) },
 #endif
+#ifdef QUICKSTART
+    [ITEM_HEART_CONTAINER] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x62) },
+#else
     [ITEM_HEART_CONTAINER] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x62) },
+#endif
 #ifdef QUICKSTART
     // Every QUICKSTART shop price on this page is kept in [51, 299] per the
     // user's request - the real vanilla prices below (300/350/600/600) all
