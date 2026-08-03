@@ -12,6 +12,7 @@
 #include "asm.h"
 #include "effects.h"
 #include "physics.h"
+#include "item.h"
 #include "object/itemOnGround.h"
 #include "player.h"
 #include "playeritem.h"
@@ -333,10 +334,18 @@ u32 sub_0808288C(Entity* this, u32 form, u32 arg2, u32 arg3) {
             // bombs or explode when the player interacts with them"). Reuses
             // the real placed-bomb player item (see
             // src/playerItem/playerItemBomb.c) with type=0xfe, which its own
-            // Init already gives a short 15-frame fuse before it detonates
-            // and deals real blast damage via DoTileInteraction - the same
-            // explosion any player-placed bomb produces, just pre-lit.
-            Entity* bomb = CreatePlayerItem(PLAYER_ITEM_BOMB, 0xfe, 0, 0);
+            // Init gives a short 15-frame fuse before it detonates and deals
+            // real blast damage via DoTileInteraction - the same explosion
+            // any player-placed bomb produces, just pre-lit. The 4th
+            // CreatePlayerItem arg must be ITEM_BOMBS (7): playerItemBomb.c's
+            // own update only ever decrements that fuse timer when this
+            // field equals 7 (its check for "a normal, auto-ticking bomb"
+            // vs. 8/ITEM_REMOTE_BOMBS, which waits for a manual detonator
+            // instead) - passing 0 here left the timer frozen forever, so
+            // the bomb sprite appeared but never counted down or exploded
+            // (confirmed via the user's own bug report: "a bomb icon drops,
+            // but nothing happens").
+            Entity* bomb = CreatePlayerItem(PLAYER_ITEM_BOMB, 0xfe, 0, ITEM_BOMBS);
             if (bomb != NULL) {
                 bomb->x.HALF.HI = this->x.HALF.HI;
                 bomb->y.HALF.HI = this->y.HALF.HI;
