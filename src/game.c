@@ -3756,6 +3756,16 @@ static u8 QuickStartPickLotteryExtra(void) {
     return (u8)(winnerSlot | (prizeIndex << 2));
 }
 
+// Pot lottery only: 9 pots instead of chests' 3, so winnerSlot needs 4 bits
+// (0-8) instead of the 2 bits QuickStartPickLotteryExtra above packs for the
+// 3-chest case - still fits the same 8-bit "extra" scratch value every other
+// kind gets (4 bits winner + 2 bits prize = 6 of 8 bits used).
+static u8 QuickStartPickPotLotteryExtra(void) {
+    u8 winnerSlot = (u8)((s32)Random() % 9);
+    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    return (u8)(winnerSlot | (prizeIndex << 4));
+}
+
 // Runs every frame in Castle Garden Main but only ever does anything once
 // per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
 // is assigned a pool (small vs medium/large, per the user's own room-size
@@ -3812,7 +3822,9 @@ static void QuickStartRandomizeLaddersOnce(void) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
         } else if (kind == LADDER_KIND_MINIBOSS) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-        } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+        } else if (kind == LADDER_KIND_POT_LOTTERY) {
+            QuickStartLadderSetExtra(i, QuickStartPickPotLotteryExtra());
+        } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
             QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
@@ -3859,7 +3871,9 @@ static void QuickStartRandomizeLaddersOnce(void) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
                 } else if (kind == LADDER_KIND_MINIBOSS) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-                } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+                } else if (kind == LADDER_KIND_POT_LOTTERY) {
+                    QuickStartLadderSetExtra(i, QuickStartPickPotLotteryExtra());
+                } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
                     QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
                 }
                 poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
@@ -3927,7 +3941,9 @@ static void QuickStartRandomizeDoorsOnce(void) {
             QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
         } else if (kind == LADDER_KIND_MINIBOSS) {
             QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-        } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+        } else if (kind == LADDER_KIND_POT_LOTTERY) {
+            QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotLotteryExtra());
+        } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
             QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
@@ -3953,7 +3969,9 @@ static void QuickStartRandomizeDoorsOnce(void) {
                     QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2));
                 } else if (kind == LADDER_KIND_MINIBOSS) {
                     QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-                } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+                } else if (kind == LADDER_KIND_POT_LOTTERY) {
+                    QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotLotteryExtra());
+                } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
                     QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
                 }
                 poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
@@ -4306,27 +4324,35 @@ static void QuickStartSetupWaveRoomContent(s32 ladderIndex, s32 contentX, s32 co
     SetRoomFlag(0);
 }
 
-// 3 pots, 16px apart (one tile each) centered on contentX/contentY - one
-// (the "extra" value's winnerSlot, same value that also picks the prize)
-// shatters into a real reward, the other two are always empty (form 0xFF -
-// see pot.c's sub_0808288C). Pots are OBJECT-kind, so
-// QuickStartClearLadderRoomObstacles never sweeps them mid-visit - the same
-// "spawn once, then just watch for the drop" two-flag shape LADDER_KIND_CHEST
-// above uses (room flag 0 = spawned, 3 = confirmed present at least once)
-// is enough on its own to prevent a reload from re-rolling/duplicating the
-// prize.
+// 9 pots, 16px apart in a 3x3 grid centered on contentX/contentY - one (the
+// "extra" value's winnerSlot, now 0-8 since QuickStartPickPotLotteryExtra
+// packs 4 bits instead of QuickStartPickLotteryExtra's 2) shatters into a
+// real reward; the other 8 are QUICKSTART's own "trap" pot form
+// (QUICKSTART_POT_TRAP_FORM, pot.c's sub_0808288C) - a primed bomb that
+// explodes on contact instead of the plain empty crack the original 3-pot
+// version used, matching the user's own original vision for this room ("8
+// of them are filled with bombs or explode when the player interacts with
+// them"). Pots are OBJECT-kind, so QuickStartClearLadderRoomObstacles never
+// sweeps them mid-visit - the same "spawn once, then just watch for the
+// drop" two-flag shape LADDER_KIND_CHEST above uses (room flag 0 = spawned,
+// 3 = confirmed present at least once) is enough on its own to prevent a
+// reload from re-rolling/duplicating the prize.
+static const s16 sQuickStartPotLotteryOffsetsX[9] = { -16, 0, 16, -16, 0, 16, -16, 0, 16 };
+static const s16 sQuickStartPotLotteryOffsetsY[9] = { -16, -16, -16, 0, 0, 0, 16, 16, 16 };
+#define QUICKSTART_POT_TRAP_FORM 0xFE
+
 static void QuickStartSetupPotLotteryContent(s32 ladderIndex, s32 contentX, s32 contentY) {
-    static const s16 offsets[3] = { -16, 0, 16 };
-    s32 extra, winnerSlot, prizeIndex, winnerX;
+    s32 extra, winnerSlot, prizeIndex, winnerX, winnerY;
     if (QuickStartLadderCheckDone(ladderIndex)) {
         return;
     }
     extra = QuickStartLadderGetExtra(ladderIndex);
-    winnerSlot = extra & 3;
-    prizeIndex = (extra >> 2) & 3;
-    winnerX = contentX + offsets[winnerSlot];
+    winnerSlot = extra & 0xF;
+    prizeIndex = (extra >> 4) & 3;
+    winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
+    winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
     if (CheckRoomFlag(0)) {
-        if (QuickStartGroundItemAt(winnerX, contentY)) {
+        if (QuickStartGroundItemAt(winnerX, winnerY)) {
             SetRoomFlag(3);
             return;
         }
@@ -4337,12 +4363,12 @@ static void QuickStartSetupPotLotteryContent(s32 ladderIndex, s32 contentX, s32 
     }
     {
         s32 i;
-        for (i = 0; i < 3; i++) {
-            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : 0xFF;
+        for (i = 0; i < 9; i++) {
+            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : QUICKSTART_POT_TRAP_FORM;
             Entity* pot = CreateObject(POT, form, 0);
             if (pot != NULL) {
-                pot->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
-                pot->y.HALF.HI = gRoomControls.origin_y + contentY;
+                pot->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartPotLotteryOffsetsX[i];
+                pot->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartPotLotteryOffsetsY[i];
                 pot->collisionLayer = 1;
                 pot->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(pot);
@@ -4830,7 +4856,9 @@ static void QuickStart2DoorRandomizeOnce(void) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % 2));
     } else if (kind == LADDER_KIND_MINIBOSS) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-    } else if (kind == LADDER_KIND_POT_LOTTERY || kind == LADDER_KIND_CHEST_LOTTERY) {
+    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+        QuickStart2DoorSetExtra(QuickStartPickPotLotteryExtra());
+    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
         QuickStart2DoorSetExtra(QuickStartPickLotteryExtra());
     }
     poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
@@ -4931,17 +4959,17 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
 // QuickStart2DoorSetupWaveRoomContent above is its own separate copy
 // instead of taking a ladderIndex.
 static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
-    static const s16 offsets[3] = { -16, 0, 16 };
-    s32 extra, winnerSlot, prizeIndex, winnerX;
+    s32 extra, winnerSlot, prizeIndex, winnerX, winnerY;
     if (CheckGlobalFlag(GF_2DOOR_DONE)) {
         return;
     }
     extra = QuickStart2DoorGetExtra();
-    winnerSlot = extra & 3;
-    prizeIndex = (extra >> 2) & 3;
-    winnerX = contentX + offsets[winnerSlot];
+    winnerSlot = extra & 0xF;
+    prizeIndex = (extra >> 4) & 3;
+    winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
+    winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
     if (CheckRoomFlag(0)) {
-        if (QuickStartGroundItemAt(winnerX, contentY)) {
+        if (QuickStartGroundItemAt(winnerX, winnerY)) {
             SetRoomFlag(3);
             return;
         }
@@ -4952,12 +4980,12 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
     }
     {
         s32 i;
-        for (i = 0; i < 3; i++) {
-            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : 0xFF;
+        for (i = 0; i < 9; i++) {
+            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : QUICKSTART_POT_TRAP_FORM;
             Entity* pot = CreateObject(POT, form, 0);
             if (pot != NULL) {
-                pot->x.HALF.HI = gRoomControls.origin_x + contentX + offsets[i];
-                pot->y.HALF.HI = gRoomControls.origin_y + contentY;
+                pot->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartPotLotteryOffsetsX[i];
+                pot->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartPotLotteryOffsetsY[i];
                 pot->collisionLayer = 1;
                 pot->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(pot);

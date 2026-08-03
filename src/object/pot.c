@@ -14,6 +14,7 @@
 #include "physics.h"
 #include "object/itemOnGround.h"
 #include "player.h"
+#include "playeritem.h"
 #include "room.h"
 #include "script.h"
 #include "sound.h"
@@ -323,6 +324,28 @@ u32 sub_0808288C(Entity* this, u32 form, u32 arg2, u32 arg3) {
         case 0xFF:
             result = 0;
             break;
+#ifdef QUICKSTART
+        case 0xFE: {
+            // QUICKSTART's 9-pot lottery room (game.c,
+            // QuickStartSetupPotLotteryContent) - 8 of the 9 pots use this
+            // reserved "trap" form instead of the plain empty 0xFF above, per
+            // the user's own original vision ("8 of them are filled with
+            // bombs or explode when the player interacts with them"). Reuses
+            // the real placed-bomb player item (see
+            // src/playerItem/playerItemBomb.c) with type=0xfe, which its own
+            // Init already gives a short 15-frame fuse before it detonates
+            // and deals real blast damage via DoTileInteraction - the same
+            // explosion any player-placed bomb produces, just pre-lit.
+            Entity* bomb = CreatePlayerItem(PLAYER_ITEM_BOMB, 0xfe, 0, 0);
+            if (bomb != NULL) {
+                bomb->x.HALF.HI = this->x.HALF.HI;
+                bomb->y.HALF.HI = this->y.HALF.HI;
+                bomb->collisionLayer = this->collisionLayer;
+            }
+            result = 0;
+            break;
+        }
+#endif
         case 0:
             result = 0x80;
             break;
