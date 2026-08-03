@@ -113,7 +113,8 @@ static void QuickStartClearShopObstacles(void);
 static void QuickStartMaintainShop(const s16 (*)[2]);
 static void QuickStartRandomizeMelariEastOnce(void);
 static void QuickStartSetupMelariEastRoomContent(void);
-static void QuickStartSetupMelariShopRoom(void);
+static void QuickStartRandomizeMelariSoutheastOnce(void);
+static void QuickStartSetupMelariSoutheastRoomContent(void);
 static void QuickStartApplyHeartContainerBonusOnce(void);
 static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartRandomizeDoorsOnce(void);
@@ -136,7 +137,18 @@ static void QuickStartDrawDifficultyHUD(void);
 static void QuickStart2DoorRandomizeOnce(void);
 static void QuickStart2DoorSetupRoomContent(void);
 static void QuickStartProcessCaveConnectorLink(void);
+static void QuickStartFixupCaveConnectorReturn(void);
 static bool32 QuickStart2DoorIsCurrentRoom(void);
+static void QuickStartRandomizeRiverBridgeOnce(void);
+static void QuickStartSetupRiverBridgeRoomContent(void);
+static void QuickStartProcessRiverBridgeLink(void);
+static void QuickStartFixupRiverBridgeReturn(void);
+static bool32 QuickStartRiverBridgeIsCurrentRoom(void);
+static void QuickStartRandomizeCaveOnce(void);
+static void QuickStartSetupCaveRoomContent(void);
+static void QuickStartProcessCaveLink(void);
+static void QuickStartFixupCaveReturn(void);
+static bool32 QuickStartCaveIsCurrentRoom(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
 static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*)[2], s32, s32, s32, u8);
@@ -298,7 +310,7 @@ static void GameTask_Transition(void) {
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
-        for (bit = 202; bit <= 235; bit++) {
+        for (bit = 202; bit <= 265; bit++) {
             ClearGlobalFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1134,16 +1146,17 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // gExitList_MelarisMine_Main, transitions.c) were sitting completely
 // unused under QUICKSTART until now - per the user's own request, each
 // gets a random "?" room event assigned once per run, with no pool-draw
-// indirection needed (the real door already leads there for real):
-// Southeast is always the new guaranteed Shop (see
-// QuickStartSetupMelariShopRoom below - the user wants it to show up at
-// least once every run, and hardcoding it here is far simpler than
-// reserving a slot in the already-fully-claimed 18-room ladder/door
-// pool), and East gets a genuine random pick between the two simplest
-// existing "?" room kinds (chest / talking NPC) - the other kinds
-// (miniboss/waves/fairy/lotteries) either need more room than this small
-// interior has (this session's own "combat needs big rooms" rule) or the
-// ladderIndex-keyed state this standalone room doesn't have.
+// indirection needed (the real door already leads there for real). Both
+// rooms use the same shape: a genuine random pick between the two
+// simplest existing "?" room kinds (chest / talking NPC) - the other
+// kinds (miniboss/waves/fairy/lotteries) either need more room than these
+// small interiors have (this session's own "combat needs big rooms"
+// rule) or the ladderIndex-keyed state these standalone rooms don't have.
+// Southeast was originally hardcoded to always be a guaranteed Shop, but
+// the user later pointed out Melari's Mine already has a real shop (Door
+// 3, retargeted to Dojos Grimblade) - a second, forced one here was
+// redundant, so Southeast was changed to this same randomized-kind
+// pattern East already used.
 #define GF_MELARI_EAST_RANDOMIZED 230
 #define GF_MELARI_EAST_KIND_BIT 231 // 0 = chest, 1 = NPC
 #define GF_MELARI_EAST_EXTRA_BIT(b) (232 + (b)) // b = 0..2, chest reward index or NPC script index
@@ -1151,8 +1164,73 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // grant - GiveItem's own metadata has no effect for this item (see
 // QuickStartUpdateItemChoice's phase==3 handler, which already grants it
 // by hand for the round-2 choice path); this generalizes that same grant
-// to also cover buying one from the new shop instead of picking it.
+// to also cover buying one from a shop instead of picking it.
 #define GF_HEART_CONTAINER_BONUS_APPLIED 235
+#define GF_MELARI_SOUTHEAST_RANDOMIZED 236
+#define GF_MELARI_SOUTHEAST_KIND_BIT 237 // 0 = chest, 1 = NPC
+#define GF_MELARI_SOUTHEAST_EXTRA_BIT(b) (238 + (b)) // b = 0..2, chest reward index or NPC script index
+
+// North Hyrule Field's river-crossing 2-door bridge - a SEPARATE draw from
+// the ladder pool from Lon Lon Ranch's own 2-door connector (GF_2DOOR_*
+// above), reusing the same sQuickStart2DoorSmallRoomPool/LargeRoomPool room
+// list but with its own room-index draw (excluded from colliding with
+// whichever room Lon Lon Ranch's own connector already claimed - see
+// QuickStartRandomizeRiverBridgeOnce). Unlike Lon Lon Ranch's connector
+// (effectively one-sided - see QuickStartFixupCaveConnectorReturn's own
+// comment), this one is a genuine two-sided bridge: two distinct real
+// ladders (280,238) and (120,238), the user's own walked/found positions on
+// either bank of the river cutting through the room, both wired to the
+// SAME pool room. GF_RIVER_ENTERED_FROM_B is the one piece of state that
+// can't be a room flag (it has to survive the load into the pool room
+// itself, whose own room flags don't exist until that room is current) -
+// set right when either entrance trigger fires, read back by
+// QuickStartFixupRiverBridgeReturn to send the player out the side they
+// DIDN'T enter from, regardless of which of the room's 2 real doors they
+// physically use to leave.
+#define GF_RIVER_RANDOMIZED 241
+#define GF_RIVER_POOL_BIT 242
+#define GF_RIVER_ROOM_BIT(b) (243 + (b)) // b = 0..4
+#define GF_RIVER_KIND_BIT 248 // 0 = chest, 1 = NPC
+#define GF_RIVER_EXTRA_BIT(b) (249 + (b)) // b = 0..2
+#define GF_RIVER_DONE 252
+#define GF_RIVER_ENTERED_FROM_B 253
+
+// North Hyrule Field's other new entrance - a real cave mouth at (264,304),
+// one-sided like Lon Lon Ranch's own cave connector (no second physical
+// side given for this one, so no GF_CAVE_ENTERED_FROM_B-style tracking
+// needed): walking up to it draws a third independent room from the same
+// 2-door pool (excluded from whichever rooms the connector above and the
+// river bridge already claimed), and leaving via that room's own real
+// door(s) always lands back at the same fixed, walkable spot just south of
+// the cave mouth (264,344) - confirmed in the emulator: open ground in
+// every direction, walking back north re-enters the cave's own trigger box.
+#define GF_CAVE_RANDOMIZED 254
+#define GF_CAVE_POOL_BIT 255
+#define GF_CAVE_ROOM_BIT(b) (256 + (b)) // b = 0..4
+#define GF_CAVE_KIND_BIT 261 // 0 = chest, 1 = NPC
+#define GF_CAVE_EXTRA_BIT(b) (262 + (b)) // b = 0..2
+#define GF_CAVE_DONE 265
+#define QUICKSTART_CAVE_X 264
+#define QUICKSTART_CAVE_Y 304
+#define QUICKSTART_CAVE_RETURN_X 264
+#define QUICKSTART_CAVE_RETURN_Y 344
+
+// Room-local coordinates, walked/confirmed walkable in the emulator (4-way
+// movement check from each point, no wall/water immediately blocking any
+// direction). Side A is the user's own given ladder position; Side B was
+// found by tracing the river west from there to a matching dock structure
+// on the far bank. Each side's "arrival" spot is offset from its own entry
+// trigger so returning to it doesn't immediately re-satisfy that same
+// trigger box next frame (same reasoning as sQuickStartDoorReturnSpots'
+// own "+40, clear of the box" comment).
+#define QUICKSTART_RIVER_SIDE_A_X 280
+#define QUICKSTART_RIVER_SIDE_A_Y 238
+#define QUICKSTART_RIVER_SIDE_A_ARRIVAL_X 320
+#define QUICKSTART_RIVER_SIDE_A_ARRIVAL_Y 238
+#define QUICKSTART_RIVER_SIDE_B_X 120
+#define QUICKSTART_RIVER_SIDE_B_Y 238
+#define QUICKSTART_RIVER_SIDE_B_ARRIVAL_X 120
+#define QUICKSTART_RIVER_SIDE_B_ARRIVAL_Y 278
 
 // The pool of "not guaranteed by the earlier starter/bonus/skill choices"
 // rewards the gauntlet can drop - tools, upgrades, skills, and heart
@@ -4642,8 +4720,16 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
 // lands in via either one IS the "?" room content directly, no synthetic
 // warp/pool-room indirection needed (unlike the ladder/2-door systems
 // above, which are already at their 18-room pool's exact capacity).
-#define QUICKSTART_MELARI_CONTENT_X 120
-#define QUICKSTART_MELARI_CONTENT_Y 120
+// East ("the one with all the beds in it"): the user walked its own
+// walkable floor space directly and gave its bounding box in room-local
+// coordinates - (88,65) to (184,94) - rather than this session's earlier,
+// unsurveyed guess of the shared (120,120) ladder-room convention. Content
+// sits at that box's center.
+#define QUICKSTART_MELARI_EAST_CONTENT_X 136
+#define QUICKSTART_MELARI_EAST_CONTENT_Y 80
+// Southeast: content point given directly by the user.
+#define QUICKSTART_MELARI_SOUTHEAST_CONTENT_X 152
+#define QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y 83
 
 static u8 QuickStartMelariEastGetKind(void) {
     return CheckGlobalFlag(GF_MELARI_EAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
@@ -4654,6 +4740,21 @@ static u8 QuickStartMelariEastGetExtra(void) {
     s32 b;
     for (b = 0; b < 3; b++) {
         if (CheckGlobalFlag(GF_MELARI_EAST_EXTRA_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static u8 QuickStartMelariSoutheastGetKind(void) {
+    return CheckGlobalFlag(GF_MELARI_SOUTHEAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+}
+
+static u8 QuickStartMelariSoutheastGetExtra(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -4682,6 +4783,29 @@ static void QuickStartRandomizeMelariEastOnce(void) {
         }
     }
     SetGlobalFlag(GF_MELARI_EAST_RANDOMIZED);
+}
+
+// Southeast's own copy of the above - separate flags/room-state, same
+// random chest/NPC shape.
+static void QuickStartRandomizeMelariSoutheastOnce(void) {
+    u8 kind, extra;
+    s32 b;
+    if (CheckGlobalFlag(GF_MELARI_SOUTHEAST_RANDOMIZED)) {
+        return;
+    }
+    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    if (kind == LADDER_KIND_NPC) {
+        SetGlobalFlag(GF_MELARI_SOUTHEAST_KIND_BIT);
+        extra = (u8)((s32)Random() % 2);
+    } else {
+        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    }
+    for (b = 0; b < 3; b++) {
+        if (extra & (1 << b)) {
+            SetGlobalFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b));
+        }
+    }
+    SetGlobalFlag(GF_MELARI_SOUTHEAST_RANDOMIZED);
 }
 
 // Shared by both rooms - each one's own pre-existing vanilla decorations
@@ -4716,7 +4840,7 @@ static void QuickStartSetupMelariEastRoomContent(void) {
     kind = QuickStartMelariEastGetKind();
     extra = QuickStartMelariEastGetExtra();
     if (kind == LADDER_KIND_CHEST) {
-        if (QuickStartGroundItemAt(QUICKSTART_MELARI_CONTENT_X, QUICKSTART_MELARI_CONTENT_Y)) {
+        if (QuickStartGroundItemAt(QUICKSTART_MELARI_EAST_CONTENT_X, QUICKSTART_MELARI_EAST_CONTENT_Y)) {
             return;
         }
         if (CheckRoomFlag(0)) {
@@ -4726,8 +4850,8 @@ static void QuickStartSetupMelariEastRoomContent(void) {
             u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_CONTENT_X;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_CONTENT_Y;
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_EAST_CONTENT_X;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_EAST_CONTENT_Y;
                 itemEntity->collisionLayer = 1;
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
@@ -4745,8 +4869,8 @@ static void QuickStartSetupMelariEastRoomContent(void) {
         {
             Entity* npc = CreateNPC(ZELDA, 0, 0);
             if (npc != NULL) {
-                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_CONTENT_X;
-                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_CONTENT_Y;
+                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_EAST_CONTENT_X;
+                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_EAST_CONTENT_Y;
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
@@ -4756,57 +4880,51 @@ static void QuickStartSetupMelariEastRoomContent(void) {
     }
 }
 
-// Southeast room is always the new guaranteed Shop, per the user's own
-// request ("the Shop as a ? room that shows up in the overworld... should
-// be guaranteed to show up at least once in every run"). Stock is built
-// fresh every frame (not randomized-once - it just tracks live inventory
-// state, same idempotent-rescan shape QuickStartMaintainShop already uses)
-// from whichever of the round-1/2/3 choice items the player didn't end up
-// with: round 1's full 5-item key-item pool (see sQuickStartKeyItems)
-// minus whichever one they hold, plus round 2's and round 3's own 2
-// unpicked items each (sQuickStartBonusItems/sQuickStartSkillItems always
-// offer all 3, so "not owned" here really does mean "not chosen"). Prices
-// are all 1 rupee for now (itemMetaData.c, #ifdef QUICKSTART) - a
-// deliberate placeholder per the user's own words.
-#define QUICKSTART_MELARI_SHOP_MAX_ITEMS 11
-static const s16 sQuickStartMelariShopOffsets[QUICKSTART_MELARI_SHOP_MAX_ITEMS][2] = {
-    { 96, 104 },  { 120, 104 }, { 144, 104 }, { 96, 122 }, { 120, 122 },
-    { 144, 122 }, { 96, 140 },  { 120, 140 }, { 144, 140 }, { 108, 158 }, { 132, 158 },
-};
-
-static s32 QuickStartBuildUnchosenCatalog(u16* outItems) {
-    s32 count = 0;
-    s32 i;
-    for (i = 0; i < QUICKSTART_KEY_ITEM_POOL_SIZE; i++) {
-        if (GetInventoryValue(sQuickStartKeyItems[i].itemId) == 0) {
-            outItems[count++] = sQuickStartKeyItems[i].itemId;
-        }
-    }
-    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
-        if (GetInventoryValue(sQuickStartBonusItems[i].itemId) == 0) {
-            outItems[count++] = sQuickStartBonusItems[i].itemId;
-        }
-    }
-    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
-        if (GetInventoryValue(sQuickStartSkillItems[i].itemId) == 0) {
-            outItems[count++] = sQuickStartSkillItems[i].itemId;
-        }
-    }
-    return count;
-}
-
-static void QuickStartSetupMelariShopRoom(void) {
-    u16 catalog[QUICKSTART_MELARI_SHOP_MAX_ITEMS];
-    s32 count, i;
+// Southeast's own copy of the above - separate flags/room-state/content
+// point, same random chest/NPC shape. No longer the forced Shop (see the
+// GF_MELARI_SOUTHEAST_* comment above for why).
+static void QuickStartSetupMelariSoutheastRoomContent(void) {
+    u8 kind, extra;
     QuickStartClearMelariRoomObstacles();
-    QuickStartSpawnShopMerchantOnce(120, 90);
-    count = QuickStartBuildUnchosenCatalog(catalog);
-    if (count > QUICKSTART_MELARI_SHOP_MAX_ITEMS) {
-        count = QUICKSTART_MELARI_SHOP_MAX_ITEMS;
-    }
-    for (i = 0; i < count; i++) {
-        if (!QuickStartShopItemExists(catalog[i])) {
-            QuickStartSpawnShopItem(catalog[i], sQuickStartMelariShopOffsets[i][0], sQuickStartMelariShopOffsets[i][1]);
+    kind = QuickStartMelariSoutheastGetKind();
+    extra = QuickStartMelariSoutheastGetExtra();
+    if (kind == LADDER_KIND_CHEST) {
+        if (QuickStartGroundItemAt(QUICKSTART_MELARI_SOUTHEAST_CONTENT_X, QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y)) {
+            return;
+        }
+        if (CheckRoomFlag(0)) {
+            return;
+        }
+        {
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_SOUTHEAST_CONTENT_X;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_SOUTHEAST_CONTENT_X;
+                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+            }
         }
     }
 }
@@ -5263,6 +5381,560 @@ static void QuickStartProcessCaveConnectorLink(void) {
     gRoomTransition.transitioningOut = 1;
 }
 
+// BUG FIX (user report): every one of this pool's real rooms has both its
+// doors retargeted (transitions.c) to the same literal (0xb8,0x138) -
+// confirmed in the emulator to be a real, walkable vanilla landing spot,
+// but a DEAD END: it's a small wooden platform inside a sheep pen, reached
+// only by walking down onto a real SURFACE_AUTO_LADDER tile that dead-ends
+// against a fence a few tiles later - no path back to the connector's own
+// entrance box (0xe2-0xee,0x1ae-0x1ba). Effectively the same "arrives on
+// top of the ledge, can't get back down" bug as the user's own diagnosis,
+// just discovered independently via direct emulator movement/collision
+// tracing rather than assumed. Since transitions.c bakes that literal
+// destination into every pool room's own door data at compile time (~40
+// entries across the file), overriding it there per-room isn't practical;
+// instead this reuses the exact same "let the real static transition fire,
+// then correct start_pos_x/y before it completes" technique
+// QuickStartFixupQuestionRoomReturn already established for the ladder
+// pool. (232,476) is a plain, walkable patch of ground the emulator
+// confirmed moves in all 4 directions from - genuinely adjacent to the
+// entrance box (walking north from here re-enters it directly), unlike the
+// old dead-end spot. Lon Lon Ranch's connector stays one-sided (unlike the
+// new North Hyrule Field river bridge below): the user's own bug report
+// describes one ladder's top and bottom, not two separate physical sides,
+// so simply landing back next to the entrance is the whole fix - no
+// GF_RIVER_ENTERED_FROM_B-style side tracking needed here.
+static void QuickStartFixupCaveConnectorReturn(void) {
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomTransition.player_status.area_next != AREA_HYRULE_FIELD ||
+        gRoomTransition.player_status.room_next != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    if (!QuickStart2DoorIsCurrentRoom()) {
+        return;
+    }
+    gRoomTransition.player_status.start_pos_x = 232;
+    gRoomTransition.player_status.start_pos_y = 476;
+}
+
+// --- North Hyrule Field's river-crossing 2-door bridge ----------------------
+//
+// See the GF_RIVER_* comment above for the flag layout and why this is a
+// separate draw from Lon Lon Ranch's own 2-door connector rather than a
+// shared one - two independent connectors could otherwise both resolve to
+// the same physical pool room, which can't correctly serve two different
+// bridges' arrival spots at once.
+static u8 QuickStartRiverBridgeGetPool(void) {
+    return CheckGlobalFlag(GF_RIVER_POOL_BIT) ? 1 : 0;
+}
+
+static void QuickStartRiverBridgeSetPool(u8 pool) {
+    if (pool) {
+        SetGlobalFlag(GF_RIVER_POOL_BIT);
+    }
+}
+
+static u8 QuickStartRiverBridgeGetRoomIndex(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 5; b++) {
+        if (CheckGlobalFlag(GF_RIVER_ROOM_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartRiverBridgeSetRoomIndex(u8 value) {
+    s32 b;
+    for (b = 0; b < 5; b++) {
+        if (value & (1 << b)) {
+            SetGlobalFlag(GF_RIVER_ROOM_BIT(b));
+        }
+    }
+}
+
+static u8 QuickStartRiverBridgeGetKind(void) {
+    return CheckGlobalFlag(GF_RIVER_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+}
+
+static u8 QuickStartRiverBridgeGetExtra(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_RIVER_EXTRA_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartRiverBridgeGetTarget(u8* area, u8* room) {
+    u8 pool = QuickStartRiverBridgeGetPool();
+    s32 poolIndex = QuickStartRiverBridgeGetRoomIndex();
+    if (pool == 0) {
+        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
+        *area = sQuickStart2DoorSmallRoomPool[poolIndex].area;
+        *room = sQuickStart2DoorSmallRoomPool[poolIndex].room;
+    } else {
+        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+        *area = sQuickStart2DoorLargeRoomPool[poolIndex].area;
+        *room = sQuickStart2DoorLargeRoomPool[poolIndex].room;
+    }
+}
+
+static void QuickStartRiverBridgeGetSpawnInfo(s16* entranceX, s16* entranceY) {
+    u8 pool = QuickStartRiverBridgeGetPool();
+    s32 poolIndex = QuickStartRiverBridgeGetRoomIndex();
+    if (pool == 0) {
+        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
+        *entranceX = sQuickStart2DoorSmallRoomPool[poolIndex].entranceX;
+        *entranceY = sQuickStart2DoorSmallRoomPool[poolIndex].entranceY;
+    } else {
+        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+        *entranceX = sQuickStart2DoorLargeRoomPool[poolIndex].entranceX;
+        *entranceY = sQuickStart2DoorLargeRoomPool[poolIndex].entranceY;
+    }
+}
+
+static bool32 QuickStartRiverBridgeIsCurrentRoom(void) {
+    u8 area, room;
+    if (!CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+        return FALSE;
+    }
+    QuickStartRiverBridgeGetTarget(&area, &room);
+    return gRoomControls.area == area && gRoomControls.room == room;
+}
+
+// Same "roll it before the player can reach it" timing as every other pool
+// draw in this file (see the Melari's Mine Main call site) - reads back
+// Lon Lon Ranch's own 2-door draw (already rolled the same frame, called
+// right before this one) purely to avoid claiming the identical physical
+// room for both connectors.
+static void QuickStartRandomizeRiverBridgeOnce(void) {
+    u8 pool, kind, roomIdx, poolSize;
+    u8 otherPool;
+    s32 otherPoolSize, otherResolvedIdx;
+    if (CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+        return;
+    }
+    otherPool = QuickStart2DoorGetPool();
+    otherPoolSize = (otherPool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+    otherResolvedIdx = (s32)QuickStart2DoorGetRoomIndex() % otherPoolSize;
+    pool = (u8)((s32)Random() % 2);
+    poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+    for (;;) {
+        roomIdx = (u8)((s32)Random() % poolSize);
+        if (!(pool == otherPool && (s32)roomIdx == otherResolvedIdx)) {
+            break;
+        }
+    }
+    QuickStartRiverBridgeSetPool(pool);
+    QuickStartRiverBridgeSetRoomIndex(roomIdx);
+    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    if (kind == LADDER_KIND_NPC) {
+        SetGlobalFlag(GF_RIVER_KIND_BIT);
+        {
+            s32 b;
+            u8 extra = (u8)((s32)Random() % 2);
+            for (b = 0; b < 3; b++) {
+                if (extra & (1 << b)) {
+                    SetGlobalFlag(GF_RIVER_EXTRA_BIT(b));
+                }
+            }
+        }
+    } else {
+        s32 b;
+        u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        for (b = 0; b < 3; b++) {
+            if (extra & (1 << b)) {
+                SetGlobalFlag(GF_RIVER_EXTRA_BIT(b));
+            }
+        }
+    }
+    SetGlobalFlag(GF_RIVER_RANDOMIZED);
+}
+
+// Simple CHEST/NPC content only (same reasoning as Melari's East/Southeast
+// rooms - this is a small passage room, not a combat-capable one), placed
+// a fixed 20px south of the shared entrance/arrival spot every visit lands
+// at regardless of which side the player entered from.
+static void QuickStartSetupRiverBridgeRoomContent(void) {
+    u8 area, room, kind, extra;
+    s16 entranceX, entranceY;
+    s32 contentX, contentY;
+    if (CheckGlobalFlag(GF_RIVER_DONE)) {
+        return;
+    }
+    QuickStartRiverBridgeGetTarget(&area, &room);
+    QuickStart2DoorClearRoomObstacles(area, room);
+    QuickStartRiverBridgeGetSpawnInfo(&entranceX, &entranceY);
+    contentX = entranceX;
+    contentY = entranceY + 20;
+    kind = QuickStartRiverBridgeGetKind();
+    extra = QuickStartRiverBridgeGetExtra();
+    if (kind == LADDER_KIND_CHEST) {
+        if (CheckRoomFlag(0)) {
+            if (QuickStartGroundItemAt(contentX, contentY)) {
+                SetRoomFlag(3);
+                return;
+            }
+            if (CheckRoomFlag(3)) {
+                SetGlobalFlag(GF_RIVER_DONE);
+            }
+            return;
+        }
+        {
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + contentX;
+                npc->y.HALF.HI = gRoomControls.origin_y + contentY;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+            }
+        }
+    }
+}
+
+// The bridge's two real-world entrances - (280,238) is the user's own given
+// ladder position; (120,238) was found by tracing the river (a vertical
+// water band confirmed via a live collision-grid dump, roughly tiles
+// x=192-224) west from there to a matching dock structure on the far bank.
+// Whichever one the player steps into, GF_RIVER_ENTERED_FROM_B records
+// which side so QuickStartFixupRiverBridgeReturn can send them out the
+// other one later, regardless of which of the pool room's 2 real doors
+// they actually leave through.
+static void QuickStartProcessRiverBridgeLink(void) {
+    s16 localX, localY;
+    u8 targetArea, targetRoom;
+    s16 entranceX, entranceY;
+    bool32 fromB;
+    if (gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
+        return;
+    }
+    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    if (localX >= QUICKSTART_RIVER_SIDE_A_X - 6 && localX <= QUICKSTART_RIVER_SIDE_A_X + 6 &&
+        localY >= QUICKSTART_RIVER_SIDE_A_Y - 6 && localY <= QUICKSTART_RIVER_SIDE_A_Y + 6) {
+        fromB = FALSE;
+    } else if (localX >= QUICKSTART_RIVER_SIDE_B_X - 6 && localX <= QUICKSTART_RIVER_SIDE_B_X + 6 &&
+               localY >= QUICKSTART_RIVER_SIDE_B_Y - 6 && localY <= QUICKSTART_RIVER_SIDE_B_Y + 6) {
+        fromB = TRUE;
+    } else {
+        return;
+    }
+    if (fromB) {
+        SetGlobalFlag(GF_RIVER_ENTERED_FROM_B);
+    } else {
+        ClearGlobalFlag(GF_RIVER_ENTERED_FROM_B);
+    }
+    QuickStartRiverBridgeGetTarget(&targetArea, &targetRoom);
+    QuickStartRiverBridgeGetSpawnInfo(&entranceX, &entranceY);
+    gRoomTransition.player_status.area_next = targetArea;
+    gRoomTransition.player_status.room_next = targetRoom;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = entranceX;
+    gRoomTransition.player_status.start_pos_y = entranceY;
+    gRoomTransition.player_status.layer = 1;
+    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+    gRoomTransition.transitioningOut = 1;
+}
+
+// Same "let the real transition fire, then correct the destination before
+// it completes" technique as QuickStartFixupCaveConnectorReturn/
+// QuickStartFixupQuestionRoomReturn - whichever of the room's 2 real doors
+// triggers this, the destination becomes whichever side the player did
+// NOT enter from, making the crossing genuinely reversible in both
+// directions.
+static void QuickStartFixupRiverBridgeReturn(void) {
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (!QuickStartRiverBridgeIsCurrentRoom()) {
+        return;
+    }
+    gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
+    gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
+    if (CheckGlobalFlag(GF_RIVER_ENTERED_FROM_B)) {
+        gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_A_ARRIVAL_X;
+        gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_A_ARRIVAL_Y;
+    } else {
+        gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_B_ARRIVAL_X;
+        gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_B_ARRIVAL_Y;
+    }
+}
+
+// --- North Hyrule Field's cave mouth (264,304) -------------------------
+//
+// A third, independent draw from the same 2-door pool - excluded from
+// whichever rooms the cave connector and the river bridge above already
+// claimed. One-sided like the cave connector (see GF_CAVE_* comment for
+// why no side-tracking is needed here).
+static u8 QuickStartCaveGetPool(void) {
+    return CheckGlobalFlag(GF_CAVE_POOL_BIT) ? 1 : 0;
+}
+
+static void QuickStartCaveSetPool(u8 pool) {
+    if (pool) {
+        SetGlobalFlag(GF_CAVE_POOL_BIT);
+    }
+}
+
+static u8 QuickStartCaveGetRoomIndex(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 5; b++) {
+        if (CheckGlobalFlag(GF_CAVE_ROOM_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartCaveSetRoomIndex(u8 value) {
+    s32 b;
+    for (b = 0; b < 5; b++) {
+        if (value & (1 << b)) {
+            SetGlobalFlag(GF_CAVE_ROOM_BIT(b));
+        }
+    }
+}
+
+static u8 QuickStartCaveGetKind(void) {
+    return CheckGlobalFlag(GF_CAVE_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+}
+
+static u8 QuickStartCaveGetExtra(void) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_CAVE_EXTRA_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartCaveGetTarget(u8* area, u8* room) {
+    u8 pool = QuickStartCaveGetPool();
+    s32 poolIndex = QuickStartCaveGetRoomIndex();
+    if (pool == 0) {
+        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
+        *area = sQuickStart2DoorSmallRoomPool[poolIndex].area;
+        *room = sQuickStart2DoorSmallRoomPool[poolIndex].room;
+    } else {
+        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+        *area = sQuickStart2DoorLargeRoomPool[poolIndex].area;
+        *room = sQuickStart2DoorLargeRoomPool[poolIndex].room;
+    }
+}
+
+static void QuickStartCaveGetSpawnInfo(s16* entranceX, s16* entranceY) {
+    u8 pool = QuickStartCaveGetPool();
+    s32 poolIndex = QuickStartCaveGetRoomIndex();
+    if (pool == 0) {
+        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
+        *entranceX = sQuickStart2DoorSmallRoomPool[poolIndex].entranceX;
+        *entranceY = sQuickStart2DoorSmallRoomPool[poolIndex].entranceY;
+    } else {
+        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+        *entranceX = sQuickStart2DoorLargeRoomPool[poolIndex].entranceX;
+        *entranceY = sQuickStart2DoorLargeRoomPool[poolIndex].entranceY;
+    }
+}
+
+static bool32 QuickStartCaveIsCurrentRoom(void) {
+    u8 area, room;
+    if (!CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+        return FALSE;
+    }
+    QuickStartCaveGetTarget(&area, &room);
+    return gRoomControls.area == area && gRoomControls.room == room;
+}
+
+// Reads back BOTH the cave connector's and the river bridge's own draws
+// (both already rolled earlier this same frame - see the call order in
+// QuickStartRoomMonitor) so this third draw can't collide with either.
+static void QuickStartRandomizeCaveOnce(void) {
+    u8 pool, kind, roomIdx, poolSize;
+    u8 pool2, pool3;
+    s32 poolSize2, resolvedIdx2, poolSize3, resolvedIdx3;
+    if (CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+        return;
+    }
+    pool2 = QuickStart2DoorGetPool();
+    poolSize2 = (pool2 == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+    resolvedIdx2 = (s32)QuickStart2DoorGetRoomIndex() % poolSize2;
+    pool3 = QuickStartRiverBridgeGetPool();
+    poolSize3 = (pool3 == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+    resolvedIdx3 = (s32)QuickStartRiverBridgeGetRoomIndex() % poolSize3;
+    pool = (u8)((s32)Random() % 2);
+    poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
+    for (;;) {
+        roomIdx = (u8)((s32)Random() % poolSize);
+        if ((pool == pool2 && (s32)roomIdx == resolvedIdx2) || (pool == pool3 && (s32)roomIdx == resolvedIdx3)) {
+            continue;
+        }
+        break;
+    }
+    QuickStartCaveSetPool(pool);
+    QuickStartCaveSetRoomIndex(roomIdx);
+    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    if (kind == LADDER_KIND_NPC) {
+        SetGlobalFlag(GF_CAVE_KIND_BIT);
+        {
+            s32 b;
+            u8 extra = (u8)((s32)Random() % 2);
+            for (b = 0; b < 3; b++) {
+                if (extra & (1 << b)) {
+                    SetGlobalFlag(GF_CAVE_EXTRA_BIT(b));
+                }
+            }
+        }
+    } else {
+        s32 b;
+        u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        for (b = 0; b < 3; b++) {
+            if (extra & (1 << b)) {
+                SetGlobalFlag(GF_CAVE_EXTRA_BIT(b));
+            }
+        }
+    }
+    SetGlobalFlag(GF_CAVE_RANDOMIZED);
+}
+
+// Same simple CHEST/NPC content as the river bridge above.
+static void QuickStartSetupCaveRoomContent(void) {
+    u8 area, room, kind, extra;
+    s16 entranceX, entranceY;
+    s32 contentX, contentY;
+    if (CheckGlobalFlag(GF_CAVE_DONE)) {
+        return;
+    }
+    QuickStartCaveGetTarget(&area, &room);
+    QuickStart2DoorClearRoomObstacles(area, room);
+    QuickStartCaveGetSpawnInfo(&entranceX, &entranceY);
+    contentX = entranceX;
+    contentY = entranceY + 20;
+    kind = QuickStartCaveGetKind();
+    extra = QuickStartCaveGetExtra();
+    if (kind == LADDER_KIND_CHEST) {
+        if (CheckRoomFlag(0)) {
+            if (QuickStartGroundItemAt(contentX, contentY)) {
+                SetRoomFlag(3);
+                return;
+            }
+            if (CheckRoomFlag(3)) {
+                SetGlobalFlag(GF_CAVE_DONE);
+            }
+            return;
+        }
+        {
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + contentX;
+                npc->y.HALF.HI = gRoomControls.origin_y + contentY;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+            }
+        }
+    }
+}
+
+// The cave's own real-world entrance box - a plain synthetic position
+// check, same technique as QuickStartProcessCaveConnectorLink/
+// QuickStartProcessRiverBridgeLink above, not dependent on the real cave
+// door's own transition data at all.
+static void QuickStartProcessCaveLink(void) {
+    s16 localX, localY;
+    u8 targetArea, targetRoom;
+    s16 entranceX, entranceY;
+    if (gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
+        return;
+    }
+    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    if (localX < QUICKSTART_CAVE_X - 6 || localX > QUICKSTART_CAVE_X + 6 || localY < QUICKSTART_CAVE_Y - 6 ||
+        localY > QUICKSTART_CAVE_Y + 6) {
+        return;
+    }
+    QuickStartCaveGetTarget(&targetArea, &targetRoom);
+    QuickStartCaveGetSpawnInfo(&entranceX, &entranceY);
+    gRoomTransition.player_status.area_next = targetArea;
+    gRoomTransition.player_status.room_next = targetRoom;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = entranceX;
+    gRoomTransition.player_status.start_pos_y = entranceY;
+    gRoomTransition.player_status.layer = 1;
+    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+    gRoomTransition.transitioningOut = 1;
+}
+
+static void QuickStartFixupCaveReturn(void) {
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (!QuickStartCaveIsCurrentRoom()) {
+        return;
+    }
+    gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
+    gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
+    gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
+    gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+}
+
 // "Fully contained" per the user's request: once inside Castor Darknut
 // (Hall or Main), Melari's Mine, Castle Garden, or the Minish House
 // Interiors rooms opened off Melari's Mine, no transition - real or our
@@ -5678,6 +6350,27 @@ static void QuickStartEnforceFieldRegionContainment(void) {
             }
         }
     }
+    // The river bridge's own two entrances (QuickStartProcessRiverBridgeLink)
+    // fire from right here in North Hyrule Field, targeting whichever real
+    // pool room this save's draw resolved to - same "varies per save,
+    // resolve at check time" reasoning as QuickStartEnforceLonLonContainment's
+    // own cave-connector exception.
+    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+        u8 targetArea, targetRoom;
+        QuickStartRiverBridgeGetTarget(&targetArea, &targetRoom);
+        if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
+            return;
+        }
+    }
+    // Same reasoning again - the cave mouth's own single entrance
+    // (QuickStartProcessCaveLink).
+    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+        u8 targetArea, targetRoom;
+        QuickStartCaveGetTarget(&targetArea, &targetRoom);
+        if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
+            return;
+        }
+    }
     gRoomTransition.transitioningOut = 0;
 }
 
@@ -5786,6 +6479,9 @@ static void QuickStartRoomMonitor(void) {
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();
     QuickStartFixupQuestionRoomReturn();
+    QuickStartFixupCaveConnectorReturn();
+    QuickStartFixupRiverBridgeReturn();
+    QuickStartFixupCaveReturn();
     // Unconditional for the same reason QuickStartEnforceContainment etc.
     // are above - a Heart Container can now be gained either through the
     // round-2 choice (already handled inline there) or by buying one from
@@ -5801,6 +6497,12 @@ static void QuickStartRoomMonitor(void) {
     // real room every save, so it can't be folded into a specific room's
     // branch below either.
     QuickStartProcessCaveConnectorLink();
+    // Same reasoning again - North Hyrule Field's river bridge has two
+    // entrances (either bank), each targeting a different real room every
+    // save.
+    QuickStartProcessRiverBridgeLink();
+    // Same reasoning again - North Hyrule Field's cave mouth (264,304).
+    QuickStartProcessCaveLink();
     // Same reasoning again - the region chain's own two kinds of link
     // (Melari's Mine's Door B, and each region's own "onward" exit box)
     // both target a different real room every save.
@@ -5829,10 +6531,13 @@ static void QuickStartRoomMonitor(void) {
         // QuickStartRandomizeDoorsOnce's own comment).
         QuickStartRandomizeDoorsOnce();
         QuickStart2DoorRandomizeOnce();
+        QuickStartRandomizeRiverBridgeOnce();
+        QuickStartRandomizeCaveOnce();
         QuickStartRandomizeMelariEastOnce();
+        QuickStartRandomizeMelariSoutheastOnce();
     } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
                gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST) {
-        QuickStartSetupMelariShopRoom();
+        QuickStartSetupMelariSoutheastRoomContent();
     } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
                gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST) {
         QuickStartSetupMelariEastRoomContent();
@@ -5862,6 +6567,18 @@ static void QuickStartRoomMonitor(void) {
         // QuickStart2DoorSetupRoomContent (it skips the clear entirely for
         // ROOM_CAVES_HEART_PIECE_HALLWAY, kept fully vanilla).
         QuickStart2DoorSetupRoomContent();
+    } else if (QuickStartRiverBridgeIsCurrentRoom()) {
+        // Whichever real 2-door pool room North Hyrule Field's own river
+        // bridge draw resolved to (see QuickStartRandomizeRiverBridgeOnce/
+        // QuickStartRiverBridgeGetTarget) - a separate draw from the cave
+        // connector above, so this can never be the same physical room as
+        // that branch.
+        QuickStartSetupRiverBridgeRoomContent();
+    } else if (QuickStartCaveIsCurrentRoom()) {
+        // Whichever real 2-door pool room North Hyrule Field's own cave
+        // mouth draw resolved to - a third, separate draw from the two
+        // above, so this can never be the same physical room as either.
+        QuickStartSetupCaveRoomContent();
     } else {
         // Falls through to here for whichever pool room the Goron Cave
         // Stairs door (slot 3) currently resolves to - same generic
