@@ -310,7 +310,7 @@ static void GameTask_Transition(void) {
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
-        for (bit = 202; bit <= 265; bit++) {
+        for (bit = 202; bit <= 305; bit++) {
             ClearGlobalFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1210,6 +1210,29 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define GF_CAVE_KIND_BIT 261 // 0 = chest, 1 = NPC
 #define GF_CAVE_EXTRA_BIT(b) (262 + (b)) // b = 0..2
 #define GF_CAVE_DONE 265
+
+// --- PILOT: room-keyed "? room" content sites ------------------------------
+//
+// The generalization of what Melari's Mine East/Southeast already do by
+// hand, and the core of the vanilla-doors-with-randomized-contents model:
+// instead of rerouting a door to a randomly drawn room, the door is left
+// exactly as vanilla built it and the ROOM it leads to gets a randomized
+// event spawned inside it. Keyed by (area, room) rather than by an
+// entrance index, so a room's content is a property of the room itself -
+// which is what makes the door count and the room count independent.
+//
+// 8 bits per site: 1 randomized latch + 1 kind bit + 3 extra bits + 1 done
+// latch, laid out contiguously so adding a site is +8 bits and one table
+// row. QUICKSTART_CONTENT_SITE_COUNT is sized for the pilot's 5 rooms with
+// room to grow; bank 0 is nearly exhausted at this point (this range ends
+// at 265 + 5*8 = 305), so the full rollout should move these to one of the
+// empty named banks rather than extending bank 0 further.
+#define QUICKSTART_CONTENT_SITE_COUNT 5
+#define GF_CONTENT_SITE_BASE(i) (266 + (i) * 8)
+#define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
+#define GF_CONTENT_SITE_KIND_BIT(i) (GF_CONTENT_SITE_BASE(i) + 1) // 0 = chest, 1 = NPC
+#define GF_CONTENT_SITE_EXTRA_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 2 + (b)) // b = 0..2
+#define GF_CONTENT_SITE_DONE(i) (GF_CONTENT_SITE_BASE(i) + 5)
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -4005,6 +4028,17 @@ static void QuickStartRandomizeDoorsOnce(void) {
     for (i = 0; i < QUICKSTART_DOOR_COUNT; i++) {
         s32 ladderIndex = QUICKSTART_LADDER_COUNT + i;
         u8 pool, kind, roomIdx, poolSize;
+        // PILOT: entrance indices 8-12 (North Hyrule Field's 5 tree doors)
+        // are retired from the synthetic-teleport system - they're real
+        // vanilla doors again, with content spawned inside their real
+        // destination rooms instead (see sQuickStartLadderEntrances'
+        // comment). Skipping their draws here is the capacity win the
+        // pilot is meant to demonstrate: 5 pool rooms that used to be
+        // consumed by these doors are now free for the entrances that
+        // still need one, instead of being drawn and left unreachable.
+        if (ladderIndex >= 8 && ladderIndex <= 12) {
+            continue;
+        }
         pool = (u8)((s32)Random() % 2);
         QuickStartLadderSetPool(ladderIndex, pool);
         if (pool == 0) {
@@ -4142,12 +4176,22 @@ static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 904, 952, 528, 576, 5 }, // Heart Piece tree
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 256, 304, 144, 192, 6 }, // Fairy Fountain cave
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 64, 112, 256, 304, 7 },  // Rupee cave
-    // North Hyrule Field (7 doors)
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 408, 456, 272, 320, 8 },  // Boomerang tree NW
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 552, 600, 272, 320, 9 },  // Boomerang tree NE
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 408, 456, 368, 416, 10 }, // Boomerang tree SW
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 552, 600, 368, 416, 11 }, // Boomerang tree SE
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 728, 776, 288, 336, 12 }, // Fairy Fountain tree
+    // North Hyrule Field (2 doors - was 7)
+    //
+    // PILOT: the 5 tree doors (entrance indices 8-12) are GONE from this
+    // table. They're real vanilla doors again (see
+    // gExitList_HyruleField_NorthHyruleField, transitions.c) leading to
+    // their real tree interiors, which now get randomized "? room" content
+    // spawned inside them instead (sQuickStartRoomContentSites below).
+    // That removes 5 synthetic trigger boxes, 5 pool-room draws, and 5
+    // hand-placed return spots outright, and the player gets vanilla's own
+    // door animation and spawn placement for free.
+    //
+    // Their ladderIndex values (8-12) are deliberately NOT reused or
+    // renumbered - the remaining rows keep their original indices so every
+    // GF_LADDER_* flag bit, sQuickStartDoorReturnSpots row, and pool draw
+    // keeps the same meaning it had before (QuickStartRandomizeDoorsOnce
+    // skips the retired ones explicitly rather than re-packing the range).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 480, 528, 316, 364, 13 }, // Boomerang cave
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 288, 336, 464, 512, 14 }, // Heart Piece Hallway cave
     // Trilby Highlands (4 doors)
@@ -4920,6 +4964,170 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
             if (npc != NULL) {
                 npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_SOUTHEAST_CONTENT_X;
                 npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+            }
+        }
+    }
+}
+
+// --- PILOT: room-keyed "? room" content ------------------------------------
+//
+// See the GF_CONTENT_SITE_* comment for the model. Each row is a real
+// vanilla room reached through its own real vanilla door, plus the spot
+// inside it where the randomized event goes.
+//
+// The 5 rows below are North Hyrule Field's tree interiors. Content sits at
+// (0x78,0x60) - just north of the (0x78,0x78) spot every one of these
+// rooms' own real return transitions lands the player at (confirmed from
+// gExitList_HyruleField_NorthHyruleField's endX/endY for each door), so the
+// reward/NPC is visible on arrival without being close enough to collide
+// with the player as they spawn in.
+//
+// Note the Boomerang trees are not dead ends - each also has a real
+// WARP_TYPE_AREA down into the shared ROOM_CAVES_BOOMERANG hub, left fully
+// vanilla. That's deliberate: the player gets a small explorable pocket
+// with an event in each of its 4 leaves, rather than 4 isolated closets.
+typedef struct {
+    u8 area;
+    u8 room;
+    s16 contentX;
+    s16 contentY;
+} QuickStartContentSite;
+
+static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0x78, 0x60 },
+};
+
+// -1 if the current room isn't a content site.
+static s32 QuickStartFindContentSiteForCurrentRoom(void) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (gRoomControls.area == sQuickStartRoomContentSites[i].area &&
+            gRoomControls.room == sQuickStartRoomContentSites[i].room) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Every room inside the pilot's self-contained pocket: North Hyrule Field
+// itself, its 5 tree interiors, and the 2 vanilla caves those trees drop
+// into. Containment consults this to allow real vanilla travel WITHIN the
+// pocket while still cancelling anything leading out of the run.
+//
+// This is the part of the model that genuinely differs from the old one.
+// The synthetic-teleport system only ever had to bless one destination per
+// entrance, because it controlled both ends of every jump. Restoring real
+// doors means blessing a small connected graph instead - every room the
+// vanilla data can reach from here, or the first real door the player opens
+// gets cancelled out from under them (which, per the transitions.c comment,
+// is very likely what made real doors look like they "never fire" when this
+// was first attempted).
+static bool32 QuickStartIsPilotPocketRoom(u8 area, u8 room) {
+    s32 i;
+    if (area == AREA_HYRULE_FIELD && room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
+        return TRUE;
+    }
+    if (area == AREA_CAVES &&
+        (room == ROOM_CAVES_BOOMERANG || room == ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN)) {
+        return TRUE;
+    }
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (area == sQuickStartRoomContentSites[i].area && room == sQuickStartRoomContentSites[i].room) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Rolled lazily on first entry to the site itself rather than up front at
+// the hub - unlike the old pool draws, nothing about a site's content
+// depends on what any other site drew (there's no shared room pool left to
+// deconflict), so there's no reason to force it earlier.
+static void QuickStartRandomizeContentSiteOnce(s32 site) {
+    u8 kind, extra;
+    s32 b;
+    if (CheckGlobalFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
+        return;
+    }
+    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    if (kind == LADDER_KIND_NPC) {
+        SetGlobalFlag(GF_CONTENT_SITE_KIND_BIT(site));
+        extra = (u8)((s32)Random() % 2);
+    } else {
+        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    }
+    for (b = 0; b < 3; b++) {
+        if (extra & (1 << b)) {
+            SetGlobalFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
+        }
+    }
+    SetGlobalFlag(GF_CONTENT_SITE_RANDOMIZED(site));
+}
+
+static void QuickStartSetupContentSite(s32 site) {
+    const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
+    s16 contentX = entry->contentX;
+    s16 contentY = entry->contentY;
+    u8 kind, extra;
+    s32 b;
+    QuickStartRandomizeContentSiteOnce(site);
+    if (CheckGlobalFlag(GF_CONTENT_SITE_DONE(site))) {
+        return;
+    }
+    kind = CheckGlobalFlag(GF_CONTENT_SITE_KIND_BIT(site)) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    extra = 0;
+    for (b = 0; b < 3; b++) {
+        if (CheckGlobalFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
+            extra |= (1 << b);
+        }
+    }
+    if (kind == LADDER_KIND_CHEST) {
+        // Same two-flag "did it vanish for real, or did the room just
+        // unload before they grabbed it" shape every other chest kind in
+        // this file uses (room flag 0 = spawned, 3 = confirmed present).
+        if (CheckRoomFlag(0)) {
+            if (QuickStartGroundItemAt(contentX, contentY)) {
+                SetRoomFlag(3);
+                return;
+            }
+            if (CheckRoomFlag(3)) {
+                SetGlobalFlag(GF_CONTENT_SITE_DONE(site));
+            }
+            return;
+        }
+        {
+            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity != NULL) {
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
+                SetRoomFlag(0);
+            }
+        }
+    } else {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                return;
+            }
+        }
+        {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = gRoomControls.origin_x + contentX;
+                npc->y.HALF.HI = gRoomControls.origin_y + contentY;
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
@@ -5983,6 +6191,13 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
     u8 area, room;
     for (k = 0; k < 3 + QUICKSTART_DOOR_COUNT; k++) {
         i = sPoolDrawLadderIndices[k];
+        // PILOT: 8-12 are retired (see QuickStartRandomizeDoorsOnce). Their
+        // pool/room bits were never rolled, so they read back as pool 0 /
+        // room index 0 - which would otherwise falsely claim whichever real
+        // room sits at small-pool index 0 and shadow its true owner.
+        if (i >= 8 && i <= 12) {
+            continue;
+        }
         rawIndex = QuickStartLadderGetRoomIndex(i);
         if (QuickStartLadderGetPool(i) == 0) {
             poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
@@ -6177,6 +6392,17 @@ static void QuickStartEnforceContainment(void) {
     if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
         return;
     }
+    // PILOT: AREA_TREE_INTERIORS is on QuickStartAreaContained's list, so
+    // without this the tree rooms' own real vanilla exits - back out to
+    // North Hyrule Field, or down into the Boomerang cave hub - would all
+    // be cancelled, trapping the player inside the first tree they enter.
+    // Only travel within the pilot's own pocket is allowed; anything else
+    // still falls through to the cancel below.
+    if (QuickStartIsPilotPocketRoom(gRoomControls.area, gRoomControls.room) &&
+        QuickStartIsPilotPocketRoom(gRoomTransition.player_status.area_next,
+                                    gRoomTransition.player_status.room_next)) {
+        return;
+    }
     // AREA_HYRULE_FIELD isn't on QuickStartAreaContained's list (it's a huge
     // overworld area, same reasoning as QuickStartEnforceLonLonContainment's
     // own comment) - Lon Lon Ranch living there used to need its own fixed
@@ -6361,6 +6587,16 @@ static void QuickStartEnforceFieldRegionContainment(void) {
         if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
             return;
         }
+    }
+    // PILOT: the 5 restored vanilla tree doors leaving North Hyrule Field.
+    // Unlike every other exception in this function these aren't synthetic
+    // links at all - they're real WARP_TYPE_AREA transitions fired by
+    // vanilla's own UpdateDoorTransition, so there's nothing to look up
+    // per save; the destination just has to be inside the pilot's pocket.
+    if (QuickStartIsPilotPocketRoom(gRoomControls.area, gRoomControls.room) &&
+        QuickStartIsPilotPocketRoom(gRoomTransition.player_status.area_next,
+                                    gRoomTransition.player_status.room_next)) {
+        return;
     }
     // Same reasoning again - the cave mouth's own single entrance
     // (QuickStartProcessCaveLink).
@@ -6579,6 +6815,12 @@ static void QuickStartRoomMonitor(void) {
         // mouth draw resolved to - a third, separate draw from the two
         // above, so this can never be the same physical room as either.
         QuickStartSetupCaveRoomContent();
+    } else if (QuickStartFindContentSiteForCurrentRoom() >= 0) {
+        // PILOT: a real vanilla room, reached through its own real vanilla
+        // door, that simply has a randomized event spawned inside it. No
+        // pool draw, no synthetic entrance, no return-spot table - see
+        // sQuickStartRoomContentSites.
+        QuickStartSetupContentSite(QuickStartFindContentSiteForCurrentRoom());
     } else {
         // Falls through to here for whichever pool room the Goron Cave
         // Stairs door (slot 3) currently resolves to - same generic

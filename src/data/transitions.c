@@ -407,28 +407,50 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
     TransitionListEnd,
 };
 #ifdef QUICKSTART
-// Defensive fallback for the 7 doors this region contributes to the new
-// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
-// indices 8-14) - same reasoning as gExitList_HyruleField_SouthHyruleField's
-// own #ifdef block above: only area/room change, every positional field
-// stays real, so a real-transition race win just lands the player at Castle
-// Garden Main instead of the old vanilla destination. The Castle Garden
-// connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD occurrences
-// (a genuine multi-exit through-cave, deferred as a future "2-door"
-// candidate rather than wired here) are untouched in both branches.
+// PILOT (vanilla-doors-with-randomized-contents): the 5 tree doors below
+// are back on their REAL vanilla destinations. The old approach retargeted
+// every one of them to Castle Garden Main and reached the "? rooms" through
+// synthetic position-box teleports instead (game.c:
+// sQuickStartLadderEntrances) - that was built on the belief that real
+// WARP_TYPE_AREA doors can't fire under QUICKSTART's direct room load.
+// That belief is wrong: UpdateDoorTransition (scroll.c) gates only on the
+// player's action state and the tile's actTile value, and actTiles are
+// rebuilt from compiled map data by FillActTileForLayer on EVERY room load
+// - there is no "arrived via a real transition" prerequisite anywhere in
+// that path. Confirmed by reading the live actTile table after a direct
+// QUICKSTART warp into this room: all 5 tree doors below read ACT_TILE_40,
+// i.e. fully armed. The historical "never fires" result is far better
+// explained by QUICKSTART's own containment functions, which cancel any
+// transition whose destination isn't allowlisted - a real door firing to
+// AREA_TREE_INTERIORS would have been cancelled the same frame, which is
+// indistinguishable from never firing.
+//
+// Note these are NOT dead-end rooms: all 4 Boomerang trees also connect
+// down into a shared ROOM_CAVES_BOOMERANG hub which links back up to each
+// of them and back out to this room, and the Fairy Fountain tree drops
+// into its own cave. That whole pocket is left working exactly as vanilla
+// - the "? room" randomization now happens INSIDE those rooms rather than
+// by rerouting the doors (see QuickStartRoomContentSites, game.c).
+//
+// Still retargeted below, deliberately: the Boomerang cave (0x1f8,0x154)
+// and Heart Piece Hallway cave (0x138,0x1e8) - both are still served by
+// the old synthetic-teleport pool this pilot hasn't converted yet. The
+// Castle Garden connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD
+// occurrences (a genuine multi-exit through-cave) are untouched in both
+// branches, as before.
 const Transition gExitList_HyruleField_NorthHyruleField[] = {
     { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x1b0, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    { WARP_TYPE_AREA, 0x1b0, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x240, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    { WARP_TYPE_AREA, 0x240, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x1b0, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    { WARP_TYPE_AREA, 0x1b0, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x240, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    { WARP_TYPE_AREA, 0x240, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x2f0, 0x138, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
-      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x2f0, 0x138, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
+      ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x1f8, 0x154, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x138, 0x108, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL,
