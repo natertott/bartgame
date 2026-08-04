@@ -3450,10 +3450,65 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
 // region-chain's endless-wave loop (QuickStartSpawnRegionWave) can escalate
 // past the run's own persistent difficulty counter as waves stack up,
 // while every other call site keeps using the plain wrapper below.
+// Parts of the overworld that are walled off behind an item. The wave-clear
+// objective is the reason these matter: an enemy that spawns somewhere the
+// player cannot reach makes the wave, and so the run, unwinnable. That was
+// happening in practice.
+//
+// Each row is a box in room-local coordinates, hand-walked in game rather
+// than derived from collision data - the emulator walk-simulation used
+// elsewhere in this file has been wrong often enough in this codebase that
+// walked ground truth is the more trustworthy source.
+//
+// requiredItem is what unlocks the box. Hold it and the zone behaves like
+// any other ground: events may happen there. Lack it and nothing is placed
+// inside. requiredItem of 0 means "never", for pockets that cannot be
+// reached at all from this region however well equipped.
+//
+// This is deliberately a general position filter rather than an enemy-only
+// one, so the same table can gate whatever else ends up wanting a spot -
+// Kinstone fusions, item drops, side quests.
+typedef struct {
+    u8 area;
+    u8 room;
+    s16 minX;
+    s16 maxX;
+    s16 minY;
+    s16 maxY;
+    u16 requiredItem;
+} QuickStartGatedZone;
+
+static const QuickStartGatedZone sQuickStartGatedZones[] = {
+    // South Hyrule Field's northeast shelf, reachable only by Cane of
+    // Pacci. Box walked by the user: (898,189) to (971,399).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 898, 971, 189, 399, ITEM_PACCI_CANE },
+};
+
+// Whether something may be placed at this room-local spot in the current
+// room. TRUE for anywhere not inside a gated box, and for a gated box whose
+// item the player is carrying.
+static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartGatedZones); i++) {
+        const QuickStartGatedZone* zone = &sQuickStartGatedZones[i];
+        if (gRoomControls.area != zone->area || gRoomControls.room != zone->room) {
+            continue;
+        }
+        if (localX < zone->minX || localX > zone->maxX || localY < zone->minY || localY > zone->maxY) {
+            continue;
+        }
+        if (zone->requiredItem == 0) {
+            return FALSE;
+        }
+        return GetInventoryValue(zone->requiredItem) != 0;
+    }
+    return TRUE;
+}
+
 static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
                                                    s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, density, cap;
+    s32 i, j, r, tmp, count, density, cap, allowed;
     Entity* enemy;
     u8 id, form;
     u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
@@ -3463,8 +3518,18 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     if (offsetCount > 72) {
         offsetCount = 72;
     }
+    // Drop every spot the player can't currently get to before anything is
+    // shuffled or counted, so a gated zone costs the wave nothing: the same
+    // number of enemies still spawn, just all of them somewhere reachable.
+    allowed = 0;
     for (i = 0; i < offsetCount; i++) {
-        indices[i] = i;
+        if (QuickStartPositionAllowed(offsets[i][0], offsets[i][1])) {
+            indices[allowed++] = i;
+        }
+    }
+    offsetCount = allowed;
+    if (offsetCount == 0) {
+        return;
     }
     for (i = 0; i < offsetCount - 1; i++) {
         r = (s32)Random() % (offsetCount - i);
