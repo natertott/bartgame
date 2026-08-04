@@ -93,6 +93,51 @@ static void InitializeEntities(void);
 static void sub_08051D98(void);
 static void sub_08051DCC(void);
 #ifdef QUICKSTART
+// --- QUICKSTART's own flag storage -----------------------------------------
+//
+// gSave.flags is 0x200 bytes = 4096 bits, carved into 13 "banks". A bank is
+// just a base offset into that bit array (see enum LocalFlagOffsets,
+// flags.h); CheckLocalFlagByBank(bank, n) reads absolute bit bank+n. Every
+// AREA is assigned a bank in gAreaMetadata, and CheckLocalFlag/SetLocalFlag
+// implicitly use whichever bank the CURRENT area was assigned - that's how
+// vanilla lets many areas reuse small flag numbers without colliding.
+//
+// CheckGlobalFlag/SetGlobalFlag are simply "bank 0" - and bank 0 ends at
+// bit 255, because FLAG_BANK_1 begins at 0x100. That matters a great deal
+// here: QUICKSTART had been allocating its own state as "global" flags
+// climbing from 101 upward and had reached 305, i.e. 50 bits PAST the end of
+// bank 0 and directly on top of FLAG_BANK_1 - which gAreaMetadata assigns to
+// 15 areas including AREA_HYRULE_FIELD, the overworld this entire mode is
+// played in. Vanilla Hyrule Field local flags and QUICKSTART state were
+// aliasing each other.
+//
+// So QUICKSTART's flags move out of bank 0 into a private window inside
+// FLAG_BANK_12. Bank 12 is by far the largest (0xA80..0xFFF = 1408 bits) and
+// QUICKSTART already owns part of it for the 15 door slots
+// (GF_DOORS_RANDOMIZED/GF_DOOR_BASE, offsets 300-585). ORIGIN 700 starts
+// clear of that block, leaving offsets 700-1407 (708 bits) for the flag
+// numbers below, which currently span 101-305.
+//
+// The flag NUMBERS are deliberately unchanged - only the accessor moves - so
+// every GF_* definition, comment and bit-packing layout keeps its existing
+// meaning, and this stays a relocation rather than a renumbering. Vanilla
+// progress flags (LV1_CLEAR, TABIDACHI, ZELDA_CHASE, ...) still go through
+// the real CheckGlobalFlag/SetGlobalFlag and stay in bank 0, where the rest
+// of the engine expects to find them.
+#define QUICKSTART_FLAG_ORIGIN 700
+
+static bool32 QsCheckFlag(u32 flag) {
+    return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
+}
+
+static void QsSetFlag(u32 flag) {
+    SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
+}
+
+static void QsClearFlag(u32 flag) {
+    ClearLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
+}
+
 static void QuickStartSpawnEnemies(void);
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnStarterChoice(void);
@@ -292,10 +337,10 @@ static void GameTask_Transition(void) {
     {
         s32 bit;
         for (bit = 101; bit <= 173; bit++) {
-            ClearGlobalFlag(bit);
+            QsClearFlag(bit);
         }
         for (bit = 184; bit <= 201; bit++) {
-            ClearGlobalFlag(bit);
+            QsClearFlag(bit);
         }
         // 202-206: GF_LADDER_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2, the 3rd kind
         // bit added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
@@ -311,7 +356,7 @@ static void GameTask_Transition(void) {
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
         for (bit = 202; bit <= 305; bit++) {
-            ClearGlobalFlag(bit);
+            QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
         // counter (GF_REGION_WAVE_COUNT_BIT) - deliberately persists across
@@ -1115,10 +1160,10 @@ static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
 // to wherever "region position 1 this run" resolves to - it's independent
 // of which physical region that turns out to be.
 static void QuickStartShowRegionIntroHintOnce(void) {
-    if (CheckGlobalFlag(GF_REGION_INTRO_HINT_SHOWN)) {
+    if (QsCheckFlag(GF_REGION_INTRO_HINT_SHOWN)) {
         return;
     }
-    SetGlobalFlag(GF_REGION_INTRO_HINT_SHOWN);
+    QsSetFlag(GF_REGION_INTRO_HINT_SHOWN);
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 10), 0);
 }
 
@@ -1135,10 +1180,10 @@ static void QuickStartShowRegionIntroHintOnce(void) {
 // the trigger the moment the player reaches the region where it's real.
 #define GF_REGION_FINAL_HINT_SHOWN 229
 static void QuickStartShowRegionFinalHintOnce(void) {
-    if (CheckGlobalFlag(GF_REGION_FINAL_HINT_SHOWN)) {
+    if (QsCheckFlag(GF_REGION_FINAL_HINT_SHOWN)) {
         return;
     }
-    SetGlobalFlag(GF_REGION_FINAL_HINT_SHOWN);
+    QsSetFlag(GF_REGION_FINAL_HINT_SHOWN);
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 12), 0);
 }
 
@@ -2066,7 +2111,7 @@ static u8 QuickStartGetRegionChainPoolIndex(s32 slot) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_REGION_CHAIN_POOL_BIT(slot, b))) {
+        if (QsCheckFlag(GF_REGION_CHAIN_POOL_BIT(slot, b))) {
             value |= (1 << b);
         }
     }
@@ -2077,7 +2122,7 @@ static void QuickStartSetRegionChainPoolIndex(s32 slot, u8 value) {
     s32 b;
     for (b = 0; b < 3; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_REGION_CHAIN_POOL_BIT(slot, b));
+            QsSetFlag(GF_REGION_CHAIN_POOL_BIT(slot, b));
         }
     }
 }
@@ -2090,20 +2135,20 @@ static void QuickStartSetRegionChainPoolIndex(s32 slot, u8 value) {
 // bit" trick) can't do that on its own, it would need one spare slot per
 // chain position, and this file is already down to none left unclaimed.
 static u8 QuickStartGetRegionChainRewardState(s32 slot) {
-    return (CheckGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0)) ? 1 : 0) |
-           (CheckGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1)) ? 2 : 0);
+    return (QsCheckFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0)) ? 1 : 0) |
+           (QsCheckFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1)) ? 2 : 0);
 }
 
 static void QuickStartSetRegionChainRewardState(s32 slot, u8 value) {
     if (value & 1) {
-        SetGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
+        QsSetFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
     } else {
-        ClearGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
+        QsClearFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 0));
     }
     if (value & 2) {
-        SetGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
+        QsSetFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
     } else {
-        ClearGlobalFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
+        QsClearFlag(GF_REGION_CHAIN_REWARD_STATE_BIT(slot, 1));
     }
 }
 
@@ -2307,7 +2352,7 @@ static void QuickStartRandomizeRegionChainOnce(void) {
     s32 slot, j;
     u8 usedPool[QUICKSTART_REGION_CHAIN_LENGTH];
     bool32 hasFlippers;
-    if (CheckGlobalFlag(GF_REGION_CHAIN_RANDOMIZED)) {
+    if (QsCheckFlag(GF_REGION_CHAIN_RANDOMIZED)) {
         return;
     }
     hasFlippers = GetInventoryValue(ITEM_FLIPPERS) != 0;
@@ -2342,7 +2387,7 @@ static void QuickStartRandomizeRegionChainOnce(void) {
         usedPool[slot] = poolIndex;
         QuickStartSetRegionChainPoolIndex(slot, poolIndex);
     }
-    SetGlobalFlag(GF_REGION_CHAIN_RANDOMIZED);
+    QsSetFlag(GF_REGION_CHAIN_RANDOMIZED);
 }
 
 // Moved up from next to QuickStartGetDifficulty/QuickStartIncrementDifficulty
@@ -2865,7 +2910,7 @@ static u8 QuickStartLadderGetPool(s32 ladderIndex) {
     if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
         return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(ladderIndex - QUICKSTART_LADDER_COUNT)) ? 1 : 0;
     }
-    return CheckGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex)) ? 1 : 0;
+    return QsCheckFlag(GF_LADDER_POOL_BIT(ladderIndex)) ? 1 : 0;
 }
 
 static void QuickStartLadderSetPool(s32 ladderIndex, u8 pool) {
@@ -2879,22 +2924,22 @@ static void QuickStartLadderSetPool(s32 ladderIndex, u8 pool) {
         return;
     }
     if (pool) {
-        SetGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex));
+        QsSetFlag(GF_LADDER_POOL_BIT(ladderIndex));
     } else {
-        ClearGlobalFlag(GF_LADDER_POOL_BIT(ladderIndex));
+        QsClearFlag(GF_LADDER_POOL_BIT(ladderIndex));
     }
 }
 
 // Check/set wrapper for GF_LADDER_DONE(ladderIndex), widened the same way as
 // the accessors above - every call site that used to do
-// CheckGlobalFlag(GF_LADDER_DONE(ladderIndex))/SetGlobalFlag(GF_LADDER_DONE(ladderIndex))
+// QsCheckFlag(GF_LADDER_DONE(ladderIndex))/QsSetFlag(GF_LADDER_DONE(ladderIndex))
 // directly now goes through these instead, so door-slot "done" state lands
 // in FLAG_BANK_12 too.
 static u32 QuickStartLadderCheckDone(s32 ladderIndex) {
     if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
         return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(ladderIndex - QUICKSTART_LADDER_COUNT));
     }
-    return CheckGlobalFlag(GF_LADDER_DONE(ladderIndex));
+    return QsCheckFlag(GF_LADDER_DONE(ladderIndex));
 }
 
 static void QuickStartLadderSetDone(s32 ladderIndex) {
@@ -2902,7 +2947,7 @@ static void QuickStartLadderSetDone(s32 ladderIndex) {
         SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(ladderIndex - QUICKSTART_LADDER_COUNT));
         return;
     }
-    SetGlobalFlag(GF_LADDER_DONE(ladderIndex));
+    QsSetFlag(GF_LADDER_DONE(ladderIndex));
 }
 
 // Difficulty counter for the win/reset loop below - well clear of the
@@ -2920,8 +2965,8 @@ static void QuickStartLadderSetDone(s32 ladderIndex) {
 #define GF_DIFFICULTY_BIT(b) (174 + (b)) // b = 0..3
 
 static u8 QuickStartGetDifficulty(void) {
-    return (CheckGlobalFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
-           (CheckGlobalFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (CheckGlobalFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
+    return (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
+           (QsCheckFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
 }
 
 static void QuickStartIncrementDifficulty(void) {
@@ -2932,9 +2977,9 @@ static void QuickStartIncrementDifficulty(void) {
     }
     for (b = 0; b < 4; b++) {
         if (next & (1 << b)) {
-            SetGlobalFlag(GF_DIFFICULTY_BIT(b));
+            QsSetFlag(GF_DIFFICULTY_BIT(b));
         } else {
-            ClearGlobalFlag(GF_DIFFICULTY_BIT(b));
+            QsClearFlag(GF_DIFFICULTY_BIT(b));
         }
     }
 }
@@ -3325,9 +3370,9 @@ static u8 QuickStartLadderGetKind(s32 ladderIndex) {
                (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 1)) ? 2 : 0) |
                (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT2(doorSlot)) ? 4 : 0);
     }
-    return (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 0)) ? 1 : 0) |
-           (CheckGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 1)) ? 2 : 0) |
-           (CheckGlobalFlag(GF_LADDER_KIND_BIT2(ladderIndex)) ? 4 : 0);
+    return (QsCheckFlag(GF_LADDER_KIND_BIT(ladderIndex, 0)) ? 1 : 0) |
+           (QsCheckFlag(GF_LADDER_KIND_BIT(ladderIndex, 1)) ? 2 : 0) |
+           (QsCheckFlag(GF_LADDER_KIND_BIT2(ladderIndex)) ? 4 : 0);
 }
 
 static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
@@ -3345,13 +3390,13 @@ static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
         return;
     }
     if (kind & 1) {
-        SetGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 0));
+        QsSetFlag(GF_LADDER_KIND_BIT(ladderIndex, 0));
     }
     if (kind & 2) {
-        SetGlobalFlag(GF_LADDER_KIND_BIT(ladderIndex, 1));
+        QsSetFlag(GF_LADDER_KIND_BIT(ladderIndex, 1));
     }
     if (kind & 4) {
-        SetGlobalFlag(GF_LADDER_KIND_BIT2(ladderIndex));
+        QsSetFlag(GF_LADDER_KIND_BIT2(ladderIndex));
     }
 }
 
@@ -3371,7 +3416,7 @@ static u8 QuickStartLadderGetExtra(s32 ladderIndex) {
         return value;
     }
     for (b = 0; b < 8; b++) {
-        if (CheckGlobalFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b))) {
+        if (QsCheckFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b))) {
             value |= (1 << b);
         }
     }
@@ -3391,7 +3436,7 @@ static void QuickStartLadderSetExtra(s32 ladderIndex, u8 value) {
     }
     for (b = 0; b < 8; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b));
+            QsSetFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b));
         }
     }
 }
@@ -3409,7 +3454,7 @@ static u8 QuickStartLadderGetRoomIndex(s32 ladderIndex) {
         return value;
     }
     for (b = 0; b < 6; b++) {
-        if (CheckGlobalFlag(GF_LADDER_ROOM_BIT(ladderIndex, b))) {
+        if (QsCheckFlag(GF_LADDER_ROOM_BIT(ladderIndex, b))) {
             value |= (1 << b);
         }
     }
@@ -3429,7 +3474,7 @@ static void QuickStartLadderSetRoomIndex(s32 ladderIndex, u8 value) {
     }
     for (b = 0; b < 6; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_LADDER_ROOM_BIT(ladderIndex, b));
+            QsSetFlag(GF_LADDER_ROOM_BIT(ladderIndex, b));
         }
     }
 }
@@ -3695,29 +3740,29 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
 #define GF_2DOOR_DONE 201
 
 static u8 QuickStart2DoorGetPool(void) {
-    return CheckGlobalFlag(GF_2DOOR_POOL_BIT) ? 1 : 0;
+    return QsCheckFlag(GF_2DOOR_POOL_BIT) ? 1 : 0;
 }
 
 static void QuickStart2DoorSetPool(u8 pool) {
     if (pool) {
-        SetGlobalFlag(GF_2DOOR_POOL_BIT);
+        QsSetFlag(GF_2DOOR_POOL_BIT);
     }
 }
 
 static u8 QuickStart2DoorGetKind(void) {
-    return (CheckGlobalFlag(GF_2DOOR_KIND_BIT(0)) ? 1 : 0) | (CheckGlobalFlag(GF_2DOOR_KIND_BIT(1)) ? 2 : 0) |
-           (CheckGlobalFlag(GF_2DOOR_KIND_BIT2) ? 4 : 0);
+    return (QsCheckFlag(GF_2DOOR_KIND_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_2DOOR_KIND_BIT(1)) ? 2 : 0) |
+           (QsCheckFlag(GF_2DOOR_KIND_BIT2) ? 4 : 0);
 }
 
 static void QuickStart2DoorSetKind(u8 kind) {
     if (kind & 1) {
-        SetGlobalFlag(GF_2DOOR_KIND_BIT(0));
+        QsSetFlag(GF_2DOOR_KIND_BIT(0));
     }
     if (kind & 2) {
-        SetGlobalFlag(GF_2DOOR_KIND_BIT(1));
+        QsSetFlag(GF_2DOOR_KIND_BIT(1));
     }
     if (kind & 4) {
-        SetGlobalFlag(GF_2DOOR_KIND_BIT2);
+        QsSetFlag(GF_2DOOR_KIND_BIT2);
     }
 }
 
@@ -3725,7 +3770,7 @@ static u8 QuickStart2DoorGetExtra(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 8; b++) {
-        if (CheckGlobalFlag(GF_2DOOR_EXTRA_BIT(b))) {
+        if (QsCheckFlag(GF_2DOOR_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -3736,7 +3781,7 @@ static void QuickStart2DoorSetExtra(u8 value) {
     s32 b;
     for (b = 0; b < 8; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_2DOOR_EXTRA_BIT(b));
+            QsSetFlag(GF_2DOOR_EXTRA_BIT(b));
         }
     }
 }
@@ -3745,7 +3790,7 @@ static u8 QuickStart2DoorGetRoomIndex(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 5; b++) {
-        if (CheckGlobalFlag(GF_2DOOR_ROOM_BIT(b))) {
+        if (QsCheckFlag(GF_2DOOR_ROOM_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -3756,7 +3801,7 @@ static void QuickStart2DoorSetRoomIndex(u8 value) {
     s32 b;
     for (b = 0; b < 5; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_2DOOR_ROOM_BIT(b));
+            QsSetFlag(GF_2DOOR_ROOM_BIT(b));
         }
     }
 }
@@ -3796,7 +3841,7 @@ static void QuickStart2DoorGetSpawnInfo(s16* entranceX, s16* entranceY, s16* con
 
 static bool32 QuickStart2DoorIsCurrentRoom(void) {
     u8 area, room;
-    if (!CheckGlobalFlag(GF_2DOOR_RANDOMIZED)) {
+    if (!QsCheckFlag(GF_2DOOR_RANDOMIZED)) {
         return FALSE;
     }
     QuickStart2DoorGetTarget(&area, &room);
@@ -3888,7 +3933,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
     s32 i, j, drawCount;
     u8 usedPool[3];
     u8 usedRoom[3];
-    if (CheckGlobalFlag(GF_LADDERS_RANDOMIZED)) {
+    if (QsCheckFlag(GF_LADDERS_RANDOMIZED)) {
         return;
     }
     drawCount = 0;
@@ -3996,7 +4041,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
         drawCount++;
         QuickStartLadderSetRoomIndex(i, roomIdx);
     }
-    SetGlobalFlag(GF_LADDERS_RANDOMIZED);
+    QsSetFlag(GF_LADDERS_RANDOMIZED);
 }
 
 // Rolls pool/kind/extra/room for the 15 new door entrances (ladderIndex
@@ -4776,14 +4821,14 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
 #define QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y 83
 
 static u8 QuickStartMelariEastGetKind(void) {
-    return CheckGlobalFlag(GF_MELARI_EAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_MELARI_EAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
 }
 
 static u8 QuickStartMelariEastGetExtra(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_MELARI_EAST_EXTRA_BIT(b))) {
+        if (QsCheckFlag(GF_MELARI_EAST_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -4791,14 +4836,14 @@ static u8 QuickStartMelariEastGetExtra(void) {
 }
 
 static u8 QuickStartMelariSoutheastGetKind(void) {
-    return CheckGlobalFlag(GF_MELARI_SOUTHEAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_MELARI_SOUTHEAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
 }
 
 static u8 QuickStartMelariSoutheastGetExtra(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b))) {
+        if (QsCheckFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -4811,22 +4856,22 @@ static u8 QuickStartMelariSoutheastGetExtra(void) {
 static void QuickStartRandomizeMelariEastOnce(void) {
     u8 kind, extra;
     s32 b;
-    if (CheckGlobalFlag(GF_MELARI_EAST_RANDOMIZED)) {
+    if (QsCheckFlag(GF_MELARI_EAST_RANDOMIZED)) {
         return;
     }
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
-        SetGlobalFlag(GF_MELARI_EAST_KIND_BIT);
+        QsSetFlag(GF_MELARI_EAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
     }
     for (b = 0; b < 3; b++) {
         if (extra & (1 << b)) {
-            SetGlobalFlag(GF_MELARI_EAST_EXTRA_BIT(b));
+            QsSetFlag(GF_MELARI_EAST_EXTRA_BIT(b));
         }
     }
-    SetGlobalFlag(GF_MELARI_EAST_RANDOMIZED);
+    QsSetFlag(GF_MELARI_EAST_RANDOMIZED);
 }
 
 // Southeast's own copy of the above - separate flags/room-state, same
@@ -4834,22 +4879,22 @@ static void QuickStartRandomizeMelariEastOnce(void) {
 static void QuickStartRandomizeMelariSoutheastOnce(void) {
     u8 kind, extra;
     s32 b;
-    if (CheckGlobalFlag(GF_MELARI_SOUTHEAST_RANDOMIZED)) {
+    if (QsCheckFlag(GF_MELARI_SOUTHEAST_RANDOMIZED)) {
         return;
     }
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
-        SetGlobalFlag(GF_MELARI_SOUTHEAST_KIND_BIT);
+        QsSetFlag(GF_MELARI_SOUTHEAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
     }
     for (b = 0; b < 3; b++) {
         if (extra & (1 << b)) {
-            SetGlobalFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b));
+            QsSetFlag(GF_MELARI_SOUTHEAST_EXTRA_BIT(b));
         }
     }
-    SetGlobalFlag(GF_MELARI_SOUTHEAST_RANDOMIZED);
+    QsSetFlag(GF_MELARI_SOUTHEAST_RANDOMIZED);
 }
 
 // Shared by both rooms - each one's own pre-existing vanilla decorations
@@ -5054,22 +5099,22 @@ static bool32 QuickStartIsPilotPocketRoom(u8 area, u8 room) {
 static void QuickStartRandomizeContentSiteOnce(s32 site) {
     u8 kind, extra;
     s32 b;
-    if (CheckGlobalFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
+    if (QsCheckFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
         return;
     }
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
-        SetGlobalFlag(GF_CONTENT_SITE_KIND_BIT(site));
+        QsSetFlag(GF_CONTENT_SITE_KIND_BIT(site));
         extra = (u8)((s32)Random() % 2);
     } else {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
     }
     for (b = 0; b < 3; b++) {
         if (extra & (1 << b)) {
-            SetGlobalFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
+            QsSetFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
         }
     }
-    SetGlobalFlag(GF_CONTENT_SITE_RANDOMIZED(site));
+    QsSetFlag(GF_CONTENT_SITE_RANDOMIZED(site));
 }
 
 static void QuickStartSetupContentSite(s32 site) {
@@ -5079,13 +5124,13 @@ static void QuickStartSetupContentSite(s32 site) {
     u8 kind, extra;
     s32 b;
     QuickStartRandomizeContentSiteOnce(site);
-    if (CheckGlobalFlag(GF_CONTENT_SITE_DONE(site))) {
+    if (QsCheckFlag(GF_CONTENT_SITE_DONE(site))) {
         return;
     }
-    kind = CheckGlobalFlag(GF_CONTENT_SITE_KIND_BIT(site)) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    kind = QsCheckFlag(GF_CONTENT_SITE_KIND_BIT(site)) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     extra = 0;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
+        if (QsCheckFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
             extra |= (1 << b);
         }
     }
@@ -5099,7 +5144,7 @@ static void QuickStartSetupContentSite(s32 site) {
                 return;
             }
             if (CheckRoomFlag(3)) {
-                SetGlobalFlag(GF_CONTENT_SITE_DONE(site));
+                QsSetFlag(GF_CONTENT_SITE_DONE(site));
             }
             return;
         }
@@ -5149,12 +5194,12 @@ static void QuickStartApplyHeartContainerBonusOnce(void) {
     if (GetInventoryValue(ITEM_HEART_CONTAINER) == 0) {
         return;
     }
-    if (CheckGlobalFlag(GF_HEART_CONTAINER_BONUS_APPLIED)) {
+    if (QsCheckFlag(GF_HEART_CONTAINER_BONUS_APPLIED)) {
         return;
     }
     gSave.stats.maxHealth += 8;
     gSave.stats.health = gSave.stats.maxHealth;
-    SetGlobalFlag(GF_HEART_CONTAINER_BONUS_APPLIED);
+    QsSetFlag(GF_HEART_CONTAINER_BONUS_APPLIED);
 }
 
 // One draw per save, same shape as QuickStartRandomizeLaddersOnce but for
@@ -5165,7 +5210,7 @@ static void QuickStartApplyHeartContainerBonusOnce(void) {
 // function group.
 static void QuickStart2DoorRandomizeOnce(void) {
     u8 pool, kind, roomIdx, poolSize;
-    if (CheckGlobalFlag(GF_2DOOR_RANDOMIZED)) {
+    if (QsCheckFlag(GF_2DOOR_RANDOMIZED)) {
         return;
     }
     pool = (u8)((s32)Random() % 2);
@@ -5190,7 +5235,7 @@ static void QuickStart2DoorRandomizeOnce(void) {
     poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
     roomIdx = (u8)((s32)Random() % poolSize);
     QuickStart2DoorSetRoomIndex(roomIdx);
-    SetGlobalFlag(GF_2DOOR_RANDOMIZED);
+    QsSetFlag(GF_2DOOR_RANDOMIZED);
 }
 
 // Absolute room-local spawn points for the 3 "overworld density" rooms -
@@ -5241,7 +5286,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
     u8 wave, difficulty;
     if (CheckRoomFlag(2)) {
         if (!QuickStartGroundItemAt(contentX, contentY)) {
-            SetGlobalFlag(GF_2DOOR_DONE);
+            QsSetFlag(GF_2DOOR_DONE);
         }
         return;
     }
@@ -5286,7 +5331,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
 // instead of taking a ladderIndex.
 static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
     s32 extra, winnerSlot, prizeIndex, winnerX, winnerY;
-    if (CheckGlobalFlag(GF_2DOOR_DONE)) {
+    if (QsCheckFlag(GF_2DOOR_DONE)) {
         return;
     }
     extra = QuickStart2DoorGetExtra();
@@ -5300,7 +5345,7 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
             return;
         }
         if (CheckRoomFlag(3)) {
-            SetGlobalFlag(GF_2DOOR_DONE);
+            QsSetFlag(GF_2DOOR_DONE);
         }
         return;
     }
@@ -5324,7 +5369,7 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
 static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) {
     static const s16 offsets[3] = { -16, 0, 16 };
     s32 extra, winnerSlot, prizeIndex;
-    if (CheckGlobalFlag(GF_2DOOR_DONE)) {
+    if (QsCheckFlag(GF_2DOOR_DONE)) {
         return;
     }
     extra = QuickStart2DoorGetExtra();
@@ -5332,7 +5377,7 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
     prizeIndex = (extra >> 2) & 3;
     if (CheckRoomFlag(0)) {
         if (CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot))) {
-            SetGlobalFlag(GF_2DOOR_DONE);
+            QsSetFlag(GF_2DOOR_DONE);
         }
         return;
     }
@@ -5448,7 +5493,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         QuickStart2DoorSpawnOverworldEnemiesOnce(area, room);
         return;
     }
-    if (CheckGlobalFlag(GF_2DOOR_DONE)) {
+    if (QsCheckFlag(GF_2DOOR_DONE)) {
         return;
     }
     kind = QuickStart2DoorGetKind();
@@ -5459,7 +5504,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 return;
             }
             if (CheckRoomFlag(3)) {
-                SetGlobalFlag(GF_2DOOR_DONE);
+                QsSetFlag(GF_2DOOR_DONE);
                 return;
             }
         }
@@ -5480,7 +5525,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
     } else if (kind == LADDER_KIND_MINIBOSS) {
         if (CheckRoomFlag(2)) {
             if (!QuickStartGroundItemAt(contentX, contentY)) {
-                SetGlobalFlag(GF_2DOOR_DONE);
+                QsSetFlag(GF_2DOOR_DONE);
             }
             return;
         }
@@ -5635,12 +5680,12 @@ static void QuickStartFixupCaveConnectorReturn(void) {
 // the same physical pool room, which can't correctly serve two different
 // bridges' arrival spots at once.
 static u8 QuickStartRiverBridgeGetPool(void) {
-    return CheckGlobalFlag(GF_RIVER_POOL_BIT) ? 1 : 0;
+    return QsCheckFlag(GF_RIVER_POOL_BIT) ? 1 : 0;
 }
 
 static void QuickStartRiverBridgeSetPool(u8 pool) {
     if (pool) {
-        SetGlobalFlag(GF_RIVER_POOL_BIT);
+        QsSetFlag(GF_RIVER_POOL_BIT);
     }
 }
 
@@ -5648,7 +5693,7 @@ static u8 QuickStartRiverBridgeGetRoomIndex(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 5; b++) {
-        if (CheckGlobalFlag(GF_RIVER_ROOM_BIT(b))) {
+        if (QsCheckFlag(GF_RIVER_ROOM_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -5659,20 +5704,20 @@ static void QuickStartRiverBridgeSetRoomIndex(u8 value) {
     s32 b;
     for (b = 0; b < 5; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_RIVER_ROOM_BIT(b));
+            QsSetFlag(GF_RIVER_ROOM_BIT(b));
         }
     }
 }
 
 static u8 QuickStartRiverBridgeGetKind(void) {
-    return CheckGlobalFlag(GF_RIVER_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_RIVER_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
 }
 
 static u8 QuickStartRiverBridgeGetExtra(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_RIVER_EXTRA_BIT(b))) {
+        if (QsCheckFlag(GF_RIVER_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -5709,7 +5754,7 @@ static void QuickStartRiverBridgeGetSpawnInfo(s16* entranceX, s16* entranceY) {
 
 static bool32 QuickStartRiverBridgeIsCurrentRoom(void) {
     u8 area, room;
-    if (!CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+    if (!QsCheckFlag(GF_RIVER_RANDOMIZED)) {
         return FALSE;
     }
     QuickStartRiverBridgeGetTarget(&area, &room);
@@ -5725,7 +5770,7 @@ static void QuickStartRandomizeRiverBridgeOnce(void) {
     u8 pool, kind, roomIdx, poolSize;
     u8 otherPool;
     s32 otherPoolSize, otherResolvedIdx;
-    if (CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+    if (QsCheckFlag(GF_RIVER_RANDOMIZED)) {
         return;
     }
     otherPool = QuickStart2DoorGetPool();
@@ -5743,13 +5788,13 @@ static void QuickStartRandomizeRiverBridgeOnce(void) {
     QuickStartRiverBridgeSetRoomIndex(roomIdx);
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
-        SetGlobalFlag(GF_RIVER_KIND_BIT);
+        QsSetFlag(GF_RIVER_KIND_BIT);
         {
             s32 b;
             u8 extra = (u8)((s32)Random() % 2);
             for (b = 0; b < 3; b++) {
                 if (extra & (1 << b)) {
-                    SetGlobalFlag(GF_RIVER_EXTRA_BIT(b));
+                    QsSetFlag(GF_RIVER_EXTRA_BIT(b));
                 }
             }
         }
@@ -5758,11 +5803,11 @@ static void QuickStartRandomizeRiverBridgeOnce(void) {
         u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
         for (b = 0; b < 3; b++) {
             if (extra & (1 << b)) {
-                SetGlobalFlag(GF_RIVER_EXTRA_BIT(b));
+                QsSetFlag(GF_RIVER_EXTRA_BIT(b));
             }
         }
     }
-    SetGlobalFlag(GF_RIVER_RANDOMIZED);
+    QsSetFlag(GF_RIVER_RANDOMIZED);
 }
 
 // Simple CHEST/NPC content only (same reasoning as Melari's East/Southeast
@@ -5773,7 +5818,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     u8 area, room, kind, extra;
     s16 entranceX, entranceY;
     s32 contentX, contentY;
-    if (CheckGlobalFlag(GF_RIVER_DONE)) {
+    if (QsCheckFlag(GF_RIVER_DONE)) {
         return;
     }
     QuickStartRiverBridgeGetTarget(&area, &room);
@@ -5790,7 +5835,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
                 return;
             }
             if (CheckRoomFlag(3)) {
-                SetGlobalFlag(GF_RIVER_DONE);
+                QsSetFlag(GF_RIVER_DONE);
             }
             return;
         }
@@ -5859,9 +5904,9 @@ static void QuickStartProcessRiverBridgeLink(void) {
         return;
     }
     if (fromB) {
-        SetGlobalFlag(GF_RIVER_ENTERED_FROM_B);
+        QsSetFlag(GF_RIVER_ENTERED_FROM_B);
     } else {
-        ClearGlobalFlag(GF_RIVER_ENTERED_FROM_B);
+        QsClearFlag(GF_RIVER_ENTERED_FROM_B);
     }
     QuickStartRiverBridgeGetTarget(&targetArea, &targetRoom);
     QuickStartRiverBridgeGetSpawnInfo(&entranceX, &entranceY);
@@ -5890,7 +5935,7 @@ static void QuickStartFixupRiverBridgeReturn(void) {
     }
     gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
     gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
-    if (CheckGlobalFlag(GF_RIVER_ENTERED_FROM_B)) {
+    if (QsCheckFlag(GF_RIVER_ENTERED_FROM_B)) {
         gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_A_ARRIVAL_X;
         gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_A_ARRIVAL_Y;
     } else {
@@ -5906,12 +5951,12 @@ static void QuickStartFixupRiverBridgeReturn(void) {
 // claimed. One-sided like the cave connector (see GF_CAVE_* comment for
 // why no side-tracking is needed here).
 static u8 QuickStartCaveGetPool(void) {
-    return CheckGlobalFlag(GF_CAVE_POOL_BIT) ? 1 : 0;
+    return QsCheckFlag(GF_CAVE_POOL_BIT) ? 1 : 0;
 }
 
 static void QuickStartCaveSetPool(u8 pool) {
     if (pool) {
-        SetGlobalFlag(GF_CAVE_POOL_BIT);
+        QsSetFlag(GF_CAVE_POOL_BIT);
     }
 }
 
@@ -5919,7 +5964,7 @@ static u8 QuickStartCaveGetRoomIndex(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 5; b++) {
-        if (CheckGlobalFlag(GF_CAVE_ROOM_BIT(b))) {
+        if (QsCheckFlag(GF_CAVE_ROOM_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -5930,20 +5975,20 @@ static void QuickStartCaveSetRoomIndex(u8 value) {
     s32 b;
     for (b = 0; b < 5; b++) {
         if (value & (1 << b)) {
-            SetGlobalFlag(GF_CAVE_ROOM_BIT(b));
+            QsSetFlag(GF_CAVE_ROOM_BIT(b));
         }
     }
 }
 
 static u8 QuickStartCaveGetKind(void) {
-    return CheckGlobalFlag(GF_CAVE_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_CAVE_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
 }
 
 static u8 QuickStartCaveGetExtra(void) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 3; b++) {
-        if (CheckGlobalFlag(GF_CAVE_EXTRA_BIT(b))) {
+        if (QsCheckFlag(GF_CAVE_EXTRA_BIT(b))) {
             value |= (1 << b);
         }
     }
@@ -5980,7 +6025,7 @@ static void QuickStartCaveGetSpawnInfo(s16* entranceX, s16* entranceY) {
 
 static bool32 QuickStartCaveIsCurrentRoom(void) {
     u8 area, room;
-    if (!CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+    if (!QsCheckFlag(GF_CAVE_RANDOMIZED)) {
         return FALSE;
     }
     QuickStartCaveGetTarget(&area, &room);
@@ -5994,7 +6039,7 @@ static void QuickStartRandomizeCaveOnce(void) {
     u8 pool, kind, roomIdx, poolSize;
     u8 pool2, pool3;
     s32 poolSize2, resolvedIdx2, poolSize3, resolvedIdx3;
-    if (CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+    if (QsCheckFlag(GF_CAVE_RANDOMIZED)) {
         return;
     }
     pool2 = QuickStart2DoorGetPool();
@@ -6016,13 +6061,13 @@ static void QuickStartRandomizeCaveOnce(void) {
     QuickStartCaveSetRoomIndex(roomIdx);
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
-        SetGlobalFlag(GF_CAVE_KIND_BIT);
+        QsSetFlag(GF_CAVE_KIND_BIT);
         {
             s32 b;
             u8 extra = (u8)((s32)Random() % 2);
             for (b = 0; b < 3; b++) {
                 if (extra & (1 << b)) {
-                    SetGlobalFlag(GF_CAVE_EXTRA_BIT(b));
+                    QsSetFlag(GF_CAVE_EXTRA_BIT(b));
                 }
             }
         }
@@ -6031,11 +6076,11 @@ static void QuickStartRandomizeCaveOnce(void) {
         u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
         for (b = 0; b < 3; b++) {
             if (extra & (1 << b)) {
-                SetGlobalFlag(GF_CAVE_EXTRA_BIT(b));
+                QsSetFlag(GF_CAVE_EXTRA_BIT(b));
             }
         }
     }
-    SetGlobalFlag(GF_CAVE_RANDOMIZED);
+    QsSetFlag(GF_CAVE_RANDOMIZED);
 }
 
 // Same simple CHEST/NPC content as the river bridge above.
@@ -6043,7 +6088,7 @@ static void QuickStartSetupCaveRoomContent(void) {
     u8 area, room, kind, extra;
     s16 entranceX, entranceY;
     s32 contentX, contentY;
-    if (CheckGlobalFlag(GF_CAVE_DONE)) {
+    if (QsCheckFlag(GF_CAVE_DONE)) {
         return;
     }
     QuickStartCaveGetTarget(&area, &room);
@@ -6060,7 +6105,7 @@ static void QuickStartSetupCaveRoomContent(void) {
                 return;
             }
             if (CheckRoomFlag(3)) {
-                SetGlobalFlag(GF_CAVE_DONE);
+                QsSetFlag(GF_CAVE_DONE);
             }
             return;
         }
@@ -6581,7 +6626,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     // pool room this save's draw resolved to - same "varies per save,
     // resolve at check time" reasoning as QuickStartEnforceLonLonContainment's
     // own cave-connector exception.
-    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && CheckGlobalFlag(GF_RIVER_RANDOMIZED)) {
+    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && QsCheckFlag(GF_RIVER_RANDOMIZED)) {
         u8 targetArea, targetRoom;
         QuickStartRiverBridgeGetTarget(&targetArea, &targetRoom);
         if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
@@ -6600,7 +6645,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     }
     // Same reasoning again - the cave mouth's own single entrance
     // (QuickStartProcessCaveLink).
-    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && CheckGlobalFlag(GF_CAVE_RANDOMIZED)) {
+    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && QsCheckFlag(GF_CAVE_RANDOMIZED)) {
         u8 targetArea, targetRoom;
         QuickStartCaveGetTarget(&targetArea, &targetRoom);
         if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
