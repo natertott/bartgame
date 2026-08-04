@@ -355,7 +355,7 @@ static void GameTask_Transition(void) {
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
-        for (bit = 202; bit <= 305; bit++) {
+        for (bit = 202; bit <= 329; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1272,7 +1272,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // room to grow; bank 0 is nearly exhausted at this point (this range ends
 // at 265 + 5*8 = 305), so the full rollout should move these to one of the
 // empty named banks rather than extending bank 0 further.
-#define QUICKSTART_CONTENT_SITE_COUNT 5
+#define QUICKSTART_CONTENT_SITE_COUNT 8
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 8)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i) (GF_CONTENT_SITE_BASE(i) + 1) // 0 = chest, 1 = NPC
@@ -4081,7 +4081,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         // pilot is meant to demonstrate: 5 pool rooms that used to be
         // consumed by these doors are now free for the entrances that
         // still need one, instead of being drawn and left unreachable.
-        if (ladderIndex >= 8 && ladderIndex <= 12) {
+        if ((ladderIndex >= 5 && ladderIndex <= 7) || (ladderIndex >= 8 && ladderIndex <= 12)) {
             continue;
         }
         pool = (u8)((s32)Random() % 2);
@@ -4216,11 +4216,18 @@ static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 88, 120, 94, 126, 0 },
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 920, 952, 366, 398, 1 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 120, 152, 836, 868, 3 },
-    // South Hyrule Field (4 doors)
+    // South Hyrule Field (1 door - was 4)
+    //
+    // Converted to the vanilla-door model alongside North Hyrule Field's
+    // trees: entrance indices 5-7 (Heart Piece tree, Fairy Fountain cave,
+    // Rupee cave) are gone from this table and are real vanilla doors into
+    // their real rooms again, each of which is a genuine dead end whose
+    // only exit is a border straight back here.
+    //
+    // Link's House (index 4) deliberately stays: it's a 2-room interior
+    // with a bedroom beyond, i.e. the "leads into a sprawling interior"
+    // case that should keep drawing a pool room instead.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 632, 680, 368, 416, 4 }, // Link's House entrance
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 904, 952, 528, 576, 5 }, // Heart Piece tree
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 256, 304, 144, 192, 6 }, // Fairy Fountain cave
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 64, 112, 256, 304, 7 },  // Rupee cave
     // North Hyrule Field (2 doors - was 7)
     //
     // PILOT: the 5 tree doors (entrance indices 8-12) are GONE from this
@@ -5048,6 +5055,14 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0x78, 0x60 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0x78, 0x60 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0x78, 0x60 },
+    // South Hyrule Field's 3 converted doors. Unlike the Boomerang trees
+    // these are true dead ends - one room each, single border exit back to
+    // the field - so they're the simplest possible shape for this model.
+    // Content sits just north of each room's own (0x78,0x78) arrival spot,
+    // same convention as the tree rooms above.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, 0x78, 0x60 },
 };
 
 // -1 if the current room isn't a content site.
@@ -5077,7 +5092,8 @@ static s32 QuickStartFindContentSiteForCurrentRoom(void) {
 // was first attempted).
 static bool32 QuickStartIsPilotPocketRoom(u8 area, u8 room) {
     s32 i;
-    if (area == AREA_HYRULE_FIELD && room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
+    if (area == AREA_HYRULE_FIELD &&
+        (room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD)) {
         return TRUE;
     }
     if (area == AREA_CAVES &&
@@ -6240,7 +6256,7 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
         // pool/room bits were never rolled, so they read back as pool 0 /
         // room index 0 - which would otherwise falsely claim whichever real
         // room sits at small-pool index 0 and shadow its true owner.
-        if (i >= 8 && i <= 12) {
+        if ((i >= 5 && i <= 7) || (i >= 8 && i <= 12)) {
             continue;
         }
         rawIndex = QuickStartLadderGetRoomIndex(i);

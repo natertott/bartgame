@@ -337,11 +337,28 @@ const Transition gExitList_HyruleField_WesternWoodSouth[] = {
 const Transition gExitList_HyruleField_SouthHyruleField[] = {
     { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
       ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x3a0, 0x228, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
-      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x118, 0xa8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    // PILOT (see gExitList_HyruleField_NorthHyruleField's own comment for
+    // why real doors work): these 3 are back on their real vanilla
+    // destinations, each a genuine dead-end single room whose only exit is
+    // a WARP_TYPE_BORDER straight back here. Border transitions don't even
+    // go through the actTile path real doors use - IsPosInBorderTransitionRegion
+    // only checks facing and which half of the room you're in - so the
+    // return leg is the most reliable kind of transition in the engine.
+    //
+    // Link's House (the first entry above) deliberately stays retargeted:
+    // it's a 2-room interior with its own bedroom beyond, i.e. the
+    // "sprawling interior" case that should keep using a drawn pool room
+    // rather than becoming a ? room in place.
+    { WARP_TYPE_AREA, 0x3a0, 0x228, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
+      ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // Behind a bombable wall in vanilla (its tile reads ACT_TILE_46 =
+    // BombableWallManager, not a door actTile, until the wall is blown
+    // open). Left exactly as vanilla built it - the player starts with
+    // bombs, so this becomes a genuine hidden ? room rather than a door
+    // that opens on touch like the old synthetic trigger box did.
+    { WARP_TYPE_AREA, 0x118, 0xa8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x58, 0x118, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    { WARP_TYPE_AREA, 0x58, 0x118, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x178, 0xd8, 0x78, 0xb8, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -1964,20 +1981,15 @@ const Transition gExitList_TreeInteriors_PercysTreehouse[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_TreeInteriors_HeartPiece[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// PILOT: no longer retargeted. This room is now a ? room in place, reached
+// through South Hyrule Field's own real tree door, so its real vanilla exit
+// back to South Hyrule Field is exactly what's wanted - identical in both
+// builds now.
 const Transition gExitList_TreeInteriors_HeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a0, 0x238, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_TreeInteriors_Waveblade[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x78, 0x98, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0,
       0x0, 0x0 },
@@ -2854,20 +2866,14 @@ const Transition gExitList_Caves_TrilbyFairyFountain[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_Caves_SouthHyruleFieldFairyFountain[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// PILOT: no longer retargeted, same reasoning as
+// gExitList_TreeInteriors_HeartPiece above - this cave is a ? room in place
+// now, reached through South Hyrule Field's own (bombable) cave mouth.
 const Transition gExitList_Caves_SouthHyruleFieldFairyFountain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x118, 0xb8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_Caves_A[] = {
     TransitionListEnd,
 };
