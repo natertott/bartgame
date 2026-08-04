@@ -7228,29 +7228,27 @@ static bool32 QuickStartIsBoomerangTree(u8 area, u8 room) {
             room == ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST || room == ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST);
 }
 
-// The full 3x3 patch HiddenLadderDown_Init lays down, not just the centre
-// tile. Arming the actTile alone is not enough: the first attempt set only
-// TILE_TYPE_422 and the doors read ACT_TILE_63 correctly but still never
-// fired, because the surrounding tiles were solid and the player could
-// never physically stand on the door tile to trigger it. The 9-tile patch
-// is what makes the ladder both walkable and door-capable.
+// Arms a door by writing ONLY its actTile - the single value
+// UpdateDoorTransition actually reads (it fires on ACT_TILE_40/41/63/241).
+// Nothing about the tile's graphics or its collision is touched.
+//
+// This started out copying HiddenLadderDown_Init instead, laying down its
+// full 3x3 TILE_TYPE_418..426 patch. That was wrong, and it is what caused
+// the artifacts and the invisible walls: those nine tile types are used
+// by exactly one thing in the whole game, Castle Garden's hidden ladders,
+// and they mean "ladder" only in that area's tileset. Writing them into
+// the Caves and Tree Interiors tilesets stamps whatever art those indices
+// happen to address there - hence the visual garbage - and each one also
+// carries its own collision (see gUnk in playerItemBow.c's table), which
+// is what was blocking Link on tiles that looked like open floor.
+//
+// The doorways already have ladder and staircase art drawn on them by
+// vanilla; the only thing missing was the actTile. So set that and nothing
+// else.
 static void QuickStartArmLadderTiles(s32 localX, s32 localY) {
-    u32 pos = TILE_POS(localX >> 4, localY >> 4);
-    SetTileType(TILE_TYPE_418, pos + TILE_POS(-1, -1), 1);
-    SetTileType(TILE_TYPE_419, pos + TILE_POS(0, -1), 1);
-    SetTileType(TILE_TYPE_420, pos + TILE_POS(1, -1), 1);
-    SetTileType(TILE_TYPE_421, pos + TILE_POS(-1, 0), 1);
-    SetTileType(TILE_TYPE_422, pos + TILE_POS(0, 0), 1);
-    SetTileType(TILE_TYPE_423, pos + TILE_POS(1, 0), 1);
-    SetTileType(TILE_TYPE_424, pos + TILE_POS(-1, 1), 1);
-    SetTileType(TILE_TYPE_425, pos + TILE_POS(0, 1), 1);
-    SetTileType(TILE_TYPE_426, pos + TILE_POS(1, 1), 1);
+    SetActTileAtTilePos(ACT_TILE_63, TILE_POS(localX >> 4, localY >> 4), 1);
 }
 
-// Room flag 6: tiles already written this visit. SetTileType records the
-// tile it replaced in gRoomVars' own special-tile table (tileEntityCount),
-// so calling it every frame would keep pushing entries into a fixed-size
-// buffer for no reason - the tiles only need writing once per room load.
 static void QuickStartOpenBoomerangChamber(void) {
     if (CheckRoomFlag(6)) {
         return;
@@ -7264,11 +7262,10 @@ static void QuickStartOpenBoomerangChamber(void) {
         // onto the door tile fired the transition every time, but walking
         // up into it stopped dead at y=91. Extending the patch one tile
         // further down gives a walkable run all the way onto the door.
-        // Lower patch first: its top row lands on the door tile, so writing
-        // it second would overwrite TILE_TYPE_422 with TILE_TYPE_419 and
-        // strip the door's ACT_TILE_63 right back off (measured: the tile
-        // read 0x00 again).
-        QuickStartArmLadderTiles(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y + 16);
+        // One tile, not the two overlapping patches this used to need. Those
+        // existed only to work around a collision lip the tile-type patch
+        // was itself creating; with nothing but the actTile changing, the
+        // vanilla floor underneath is untouched and there is no lip.
         QuickStartArmLadderTiles(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y);
         return;
     }
