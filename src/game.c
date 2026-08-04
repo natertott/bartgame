@@ -355,7 +355,7 @@ static void GameTask_Transition(void) {
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
-        for (bit = 202; bit <= 337; bit++) {
+        for (bit = 202; bit <= 369; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1272,7 +1272,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // room to grow; bank 0 is nearly exhausted at this point (this range ends
 // at 265 + 5*8 = 305), so the full rollout should move these to one of the
 // empty named banks rather than extending bank 0 further.
-#define QUICKSTART_CONTENT_SITE_COUNT 9
+#define QUICKSTART_CONTENT_SITE_COUNT 13
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 8)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i) (GF_CONTENT_SITE_BASE(i) + 1) // 0 = chest, 1 = NPC
@@ -4081,7 +4081,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         // pilot is meant to demonstrate: 5 pool rooms that used to be
         // consumed by these doors are now free for the entrances that
         // still need one, instead of being drawn and left unreachable.
-        if (ladderIndex >= 5 && ladderIndex <= 13) {
+        if (ladderIndex >= 5 && ladderIndex <= 18) {
             continue;
         }
         pool = (u8)((s32)Random() % 2);
@@ -4257,11 +4257,13 @@ static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
     // "leads somewhere sprawling" case, which needs its own containment
     // design before it can be converted.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 288, 336, 464, 512, 14 }, // Heart Piece Hallway cave
-    // Trilby Highlands (4 doors)
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 40, 88, 880, 928, 15 },   // Percy's Treehouse
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 112, 160, 522, 570, 16 }, // Keese Chest cave
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 32, 80, 656, 704, 17 },   // Rupee cave
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 384, 432, 666, 714, 18 }, // Fairy Fountain cave
+    // Trilby Highlands (0 doors - was 4)
+    //
+    // All 4 converted to the vanilla-door model: each leads to a genuine
+    // single-room dead end whose only exit is a border back to the field.
+    // Two open on touch, two sit behind vanilla bombable walls. Indices
+    // 15-18 are retired here and skipped in the draw and room lookup, same
+    // as 5-13.
 };
 
 // Which "? room" pool entry backs a given ladder this save, and where the
@@ -5083,6 +5085,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // field are armed with door actTiles. Content is defined anyway so the
     // room is ready if that changes; it costs one row and one flag slot.
     { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0xa8, 0x98 },
+    // Trilby Highlands' 4 converted doors - all true dead ends, same shape
+    // as South Hyrule Field's. The Keese Chest and Fairy Fountain caves are
+    // the two reached by bombing a wall open.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0x78, 0x60 },
 };
 
 // -1 if the current room isn't a content site.
@@ -5113,7 +5122,8 @@ static s32 QuickStartFindContentSiteForCurrentRoom(void) {
 static bool32 QuickStartIsPilotPocketRoom(u8 area, u8 room) {
     s32 i;
     if (area == AREA_HYRULE_FIELD &&
-        (room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD)) {
+        (room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD ||
+         room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS)) {
         return TRUE;
     }
     if (area == AREA_CAVES &&
@@ -6276,7 +6286,7 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
         // pool/room bits were never rolled, so they read back as pool 0 /
         // room index 0 - which would otherwise falsely claim whichever real
         // room sits at small-pool index 0 and shadow its true owner.
-        if (i >= 5 && i <= 13) {
+        if (i >= 5 && i <= 18) {
             continue;
         }
         rawIndex = QuickStartLadderGetRoomIndex(i);

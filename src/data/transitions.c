@@ -558,13 +558,23 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
 // occurrences (a genuine multi-exit through-cave, deferred as a future
 // "2-door" candidate) are untouched in both branches.
 const Transition gExitList_HyruleField_TrilbyHighlands[] = {
-    { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+    // PILOT: all 4 back on their real vanilla destinations. Every one is a
+    // genuine single-room dead end whose only exit is a WARP_TYPE_BORDER
+    // straight back here, which is the most reliable shape for this model
+    // (borders skip the actTile path entirely).
+    //
+    // Two of these open on touch (Percy's Treehouse and the Rupee cave both
+    // read ACT_TILE_40); the other two sit behind vanilla bombable walls -
+    // the Keese Chest and Fairy Fountain cave mouths read ACT_TILE_46
+    // (BombableWallManager) until blown open, so they now have to be bombed
+    // to find, which is the behaviour the user asked to keep.
+    { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x88, 0x222, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+    { WARP_TYPE_AREA, 0x88, 0x222, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x38, 0x2a8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
+    { WARP_TYPE_AREA, 0x38, 0x2a8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x198, 0x2b2, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+    { WARP_TYPE_AREA, 0x198, 0x2b2, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x88, 0x94, 0x88, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -2949,20 +2959,14 @@ const Transition gExitList_Caves_SouthHyruleFieldRupee[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_Caves_TrilbyRupee[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// PILOT: no longer retargeted - this cave is a ? room in place now, reached
+// through Trilby Highlands' own real cave mouth, so its real vanilla exit
+// back to Trilby is exactly what's wanted. Identical in both builds.
 const Transition gExitList_Caves_TrilbyRupee[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x2b8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_Caves_TrilbyMittsFairyFountain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1a8, 0x68, TRANSITION_SHAPE_BORDER_NORTH, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
