@@ -3482,6 +3482,12 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // South Hyrule Field's northeast shelf, reachable only by Cane of
     // Pacci. Box walked by the user: (898,189) to (971,399).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 898, 971, 189, 399, ITEM_PACCI_CANE },
+    // Trilby Highlands' northwest ledge, box walked by the user:
+    // (220,55) to (314,119). Reached only through a dirt-filled cave, so
+    // the gate is the Mole Mitts - that is an inference from "dirt-filled",
+    // not something confirmed by finding the cave itself, and it is a
+    // one-word change here if it turns out to be another item.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 220, 314, 55, 119, ITEM_MOLE_MITTS },
 };
 
 // Whether something may be placed at this room-local spot in the current
