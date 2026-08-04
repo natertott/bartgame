@@ -317,38 +317,30 @@ const Transition gExitList_HyruleField_WesternWoodSouth[] = {
     TransitionListEnd,
 };
 #ifdef QUICKSTART
-// Defensive fallback for the 4 doors this region contributes to the new
-// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
-// indices 4-7) - the real per-frame race between this file's own
-// WARP_TYPE_AREA/ACT_TILE-driven transition and game.c's synthetic
-// position-box link (QuickStartProcessLadderLinks) is won by whichever
-// fires first each frame, and QuickStartProcessLadderLinks explicitly skips
-// itself whenever gRoomTransition.transitioningOut is already set - so if
-// this file's own real transition wins, it needs a safe destination of its
-// own rather than the old vanilla one (confirmed empirically: an emulator
-// test teleporting straight onto Link's House entrance's box hit exactly
-// this race and landed in the untouched vanilla AREA_HOUSE_INTERIORS_2 room
-// instead of the ? room pool). Same convention every other pool-adjacent
-// real door retarget in this file already uses - only area/room change,
-// every positional field (startX/startY/endX/endY/shape/facing_direction)
-// stays exactly as real gameplay expects, so IF this does fire, at worst
-// the player just doesn't get that particular door's ? room content this
-// one time (a real fallback, not a broken landing).
+// All 4 of this region's "? room" doors are on the vanilla-door model now:
+// every one leads to its real vanilla destination and gets its randomized
+// event spawned inside that room instead (game.c:
+// sQuickStartRoomContentSites). Nothing in this list is retargeted anymore.
+//
+// Real doors work here for the reason spelled out in
+// gExitList_HyruleField_NorthHyruleField's own comment below:
+// UpdateDoorTransition gates only on the player's action state and the
+// tile's actTile value, and actTiles are rebuilt from compiled map data on
+// every room load - there's no "arrived via a real transition" prerequisite.
 const Transition gExitList_HyruleField_SouthHyruleField[] = {
-    { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_CASTLE_GARDEN,
-      ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    // PILOT (see gExitList_HyruleField_NorthHyruleField's own comment for
-    // why real doors work): these 3 are back on their real vanilla
-    // destinations, each a genuine dead-end single room whose only exit is
-    // a WARP_TYPE_BORDER straight back here. Border transitions don't even
+    // Link's House. A 2-room interior (entrance + bedroom) rather than a
+    // dead end, converted anyway per the user's own call to do this "for
+    // all the rooms, regardless of if they are single door rooms or
+    // two-door rooms". Both rooms are content sites, and the pocket is
+    // genuinely closed: the bedroom's only exit is back to the entrance,
+    // and the entrance's only other exit is the border back to this field.
+    { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_2,
+      ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // These 3 are genuine dead-end single rooms whose only exit is a
+    // WARP_TYPE_BORDER straight back here. Border transitions don't even
     // go through the actTile path real doors use - IsPosInBorderTransitionRegion
     // only checks facing and which half of the room you're in - so the
     // return leg is the most reliable kind of transition in the engine.
-    //
-    // Link's House (the first entry above) deliberately stays retargeted:
-    // it's a 2-room interior with its own bedroom beyond, i.e. the
-    // "sprawling interior" case that should keep using a drawn pool room
-    // rather than becoming a ? room in place.
     { WARP_TYPE_AREA, 0x3a0, 0x228, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     // Behind a bombable wall in vanilla (its tile reads ACT_TILE_46 =
@@ -452,12 +444,12 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
 // see sQuickStartRoomContentSites, game.c), but do not rely on the pocket
 // being explorable; it isn't, and the hub is currently unreachable.
 //
-// Still retargeted below, deliberately: the Boomerang cave (0x1f8,0x154)
-// and Heart Piece Hallway cave (0x138,0x1e8) - both are still served by
-// the old synthetic-teleport pool this pilot hasn't converted yet. The
-// Castle Garden connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD
-// occurrences (a genuine multi-exit through-cave) are untouched in both
-// branches, as before.
+// Nothing in this list is retargeted anymore - the Heart Piece Hallway
+// cave (0x138,0x1e8) was the last holdout and is back on its real vanilla
+// destination too (see its own comment below). The Castle Garden
+// connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD occurrences
+// (a genuine multi-exit through-cave) are untouched in both branches, as
+// before.
 const Transition gExitList_HyruleField_NorthHyruleField[] = {
     { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -506,7 +498,16 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
       0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x138, 0x108, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x138, 0x1e8, 0x78, 0xc8, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+    // The Heart Piece Hallway cave, converted to the vanilla-door model
+    // (the last of this region's doors to be). Its real destination is not
+    // a dead end in vanilla - ROOM_CAVES_HEART_PIECE_HALLWAY also has a
+    // WARP_TYPE_AREA onward into ROOM_CAVES_TO_GRAVEYARD, a genuine
+    // multi-exit through-cave that reaches Royal Valley, i.e. straight out
+    // of the run. That onward door is neutralized in the room's own exit
+    // list instead (gExitList_Caves_HeartPieceHallway below, QUICKSTART
+    // branch), which turns the hallway into the same shape as every other
+    // converted door here: one way in, one border back out.
+    { WARP_TYPE_AREA, 0x138, 0x1e8, 0x78, 0xc8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x88, 0xf4, 0x38, 0x58, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
@@ -630,23 +631,35 @@ const Transition* const gExitLists_HyruleField[] = {
 
 // TODO this is one table
 const Transition gExitList_CastleGarden_Main[] = {
-    // Left un-retargeted under QUICKSTART: this is a WARP_TYPE_AREA door,
-    // which (like every other WARP_TYPE_AREA door in this file) depends on
-    // GetActTileAtTilePos/a specific ACT_TILE-flagged tile that never gets
-    // set up when a room is entered via QUICKSTART's direct room load
-    // instead of a real transition - confirmed empirically (see the
-    // sQuickStartLinks comment in game.c). The Lon Lon Ranch connection is
-    // done as a position-box QuickStartLink instead (game.c), same as
-    // every other cross-room link in this file that isn't a
-    // WARP_TYPE_BORDER door.
+    // Every entry here is vanilla, untouched. The two that matter for
+    // QUICKSTART are the cellar ladder and the Grimblade dojo door further
+    // down - those are Castle Garden's two "? room" ladders, and they're on
+    // the vanilla-door model now (their destination rooms get randomized
+    // events spawned inside them; see sQuickStartRoomContentSites, game.c).
+    //
+    // The old comment here claimed WARP_TYPE_AREA doors can never fire
+    // under QUICKSTART because the ACT_TILE they depend on isn't set up on
+    // a direct room load. That is wrong: FillActTileForLayer rebuilds
+    // actTiles from compiled map data on EVERY room load, and probing the
+    // live table confirms both of these doors read ACT_TILE_40 (armed).
+    // What actually cancelled them was QUICKSTART's own containment
+    // functions, which is now handled per-destination instead.
+    //
+    // The remaining 3 WARP_TYPE_AREA doors (Hyrule Castle proper, and the
+    // two Garden Fountains) genuinely do lead somewhere sprawling and are
+    // still blocked by containment (QuickStartEnforceContainment).
     { WARP_TYPE_AREA, 0x1f8, 0x28, 0xd8, 0x208, TRANSITION_SHAPE_AREA_28x12, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x308, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0xe8, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // "? room" ladder 1 of 2: the Great Fairy cellar. A true dead end -
+    // ROOM_HYRULE_CASTLE_CELLAR_0's only exit is straight back here.
     { WARP_TYPE_AREA, 0x68, 0x74, 0x68, 0x1a8, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // "? room" ladder 2 of 2: Grimblade's dojo entrance. Also a true dead
+    // end - ROOM_DOJOS_TO_GRIMBLADE's only exit is straight back here.
     { WARP_TYPE_AREA, 0x3a8, 0x184, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
 #ifdef QUICKSTART
@@ -1619,6 +1632,37 @@ const Transition gExitList_HouseInteriors2_Cucco[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Link's House is a "? room" now (game.c: sQuickStartRoomContentSites), so
+// this room is entered through its own real vanilla front door from South
+// Hyrule Field, holds a randomized event, and is left the same way.
+//
+// The stairs up to the bedroom are neutralized, and only the stairs: the
+// bedroom room itself does not load correctly outside vanilla's own opening
+// sequence. Confirmed empirically - warping straight into
+// ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, and walking up these stairs,
+// both land the player in South Hyrule Field at (1384,472) within a second,
+// nowhere near the house. That isn't a softlock, but it is a silent
+// teleport into the middle of a field from a spot the player has no reason
+// to expect one, so the stairs are pointed back into this room instead
+// (arriving at (0x58,0x38), a clear 32px below the stairs tile so the door
+// can't immediately re-fire). Walking up now simply reads as "nothing up
+// there". Same treatment, and same reasoning, as the Heart Piece Hallway's
+// onward door to ROOM_CAVES_TO_GRAVEYARD.
+//
+// The border below is vanilla's own, untouched - that is the exit the
+// player actually uses. It needs the front door to be openable at all,
+// which is a separate fix in game.c (QuickStartRevealHiddenLadders):
+// this house's HOUSE_DOOR_INT ships with unk7d = 1, so it never opens by
+// being walked into, and without that fix this room is a trap.
+const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
+    { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2,
+      ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x290, 0x19c, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
     { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1626,6 +1670,7 @@ const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_HouseInteriors2_Dampe[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1a0, 0x1ac, TRANSITION_SHAPE_BORDER_SOUTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2981,14 +3026,26 @@ const Transition gExitList_Caves_BottleBusinessScrub[] = {
     TransitionListEnd,
 };
 #ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
+// This room is North Hyrule Field's Heart Piece Hallway cave on the
+// vanilla-door model now (gExitList_HyruleField_NorthHyruleField above):
+// entered through its own real vanilla cave mouth, with a randomized event
+// spawned inside it (game.c: sQuickStartRoomContentSites). It is no longer
+// a 2-door pool room, so the old "both doors lead back to the Lon Lon
+// Ranch connector ledge" retarget is gone.
+//
+// Only the FIRST entry still differs from vanilla, and only in its
+// destination: vanilla sends it onward to ROOM_CAVES_TO_GRAVEYARD, a
+// multi-exit through-cave that reaches Royal Valley and so escapes the
+// run entirely. Pointing it back at this cave's own mouth in North Hyrule
+// Field neutralizes it without removing the door (removing the entry
+// would leave the player walking into an unresponsive wall tile; sending
+// them back outside reads as a dead end, which is what it now is).
+// The border below is vanilla's own, untouched.
 const Transition gExitList_Caves_HeartPieceHallway[] = {
-    { WARP_TYPE_AREA, 0x78, 0x38, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x38, 0x138, 0x1f8, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
