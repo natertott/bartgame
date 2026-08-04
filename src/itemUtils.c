@@ -45,6 +45,22 @@ u32 GetSaleItemConfirmMessageID(u32 item) {
 
 s32 GetItemPrice(u32 item) {
     const struct_080FD964* ptr = &gUnk_080FD964[item];
+#ifdef QUICKSTART
+    // The shop's prices vary from run to run, and gUnk_080FD964 is const
+    // ROM data, so the randomization can't live in the table - it has to
+    // happen at the one place the price is actually read. This is that
+    // place: every shop path (ScriptCommand_SaleItemConfirmMessage,
+    // CheckShopItemPrice, BuyShopItem) reaches the price through here, so
+    // hooking it keeps the displayed price and the charged price in sync
+    // for free. Returns a negative value for anything the run isn't
+    // pricing itself, which falls through to the vanilla table below.
+    {
+        s32 rolled = QuickStartGetShopPrice(item, ptr->itemPrice);
+        if (rolled >= 0) {
+            return rolled;
+        }
+    }
+#endif
     return ptr->itemPrice;
 }
 

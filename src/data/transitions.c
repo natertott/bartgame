@@ -1820,11 +1820,34 @@ const Transition* const gExitLists_GreatFairies[] = {
     [ROOM_GREAT_FAIRIES_NOT_IMPLEMENTED] = gExitList_NoExitList,
 };
 
+#ifdef QUICKSTART
+// Stockwell's shop, vanilla's own general store, is QUICKSTART's shop room
+// now (game.c: QuickStartSetupShopRoom). It was picked against the user's
+// own three constraints: currently unused by this mode, and - the part that
+// actually matters - its single vanilla connection is to Hyrule Town, which
+// is NOT one of the overworld regions in this run's pool. So nothing the
+// player can already reach opens onto it, and it can be attached to
+// whichever overworld door the save's own draw picks without colliding with
+// a real connection.
+//
+// The destination here is a placeholder. Which door the shop hangs off
+// varies per save, so the real return leg is written at transition time by
+// QuickStartFixupShopReturn (game.c), the same way every other
+// per-save-variable return in this file is handled. North Hyrule Field is
+// used as the placeholder rather than Hyrule Town purely so a missed fixup
+// lands inside the run instead of escaping it.
+const Transition gExitList_HouseInteriors3_StockwellShop[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors3_StockwellShop[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x258, 0x2fc, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_HouseInteriors3_Cafe[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x198, 0x2fc, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },

@@ -165,6 +165,7 @@ static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartRandomizeDoorsOnce(void);
 static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
+static void QuickStart2DoorClearRoomObstacles(u8, u8);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
@@ -360,7 +361,10 @@ static void GameTask_Transition(void) {
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        for (bit = 202; bit <= 525; bit++) {
+        // 526-558: the shop's own door draw and price rolls - re-rolled
+        // every fresh boot like everything else here, so a new run gets the
+        // shop somewhere else at different prices.
+        for (bit = 202; bit <= 558; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1296,6 +1300,18 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
 #define GF_CONTENT_SITE_EXTRA_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 4 + (b))   // b = 0..7
 #define GF_CONTENT_SITE_DONE(i) (GF_CONTENT_SITE_BASE(i) + 12)
+// --- The shop, as a randomly-placed "? room" -------------------------------
+//
+// Which overworld door leads to the shop this run (5 bits, an index into
+// sQuickStartShopDoors), plus a per-catalog-item price roll (3 bits each).
+// Both are rolled once per run and then fixed, so the player can go back to
+// the shop as often as they like and find it in the same place at the same
+// prices.
+//
+// Range 526..558, immediately after the content sites' own 266..525.
+#define GF_SHOP_RANDOMIZED 526
+#define GF_SHOP_DOOR_BIT(b) (527 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (532 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -1864,26 +1880,13 @@ static const QuickStartLink sQuickStartLinks[] = {
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0x78, 0x64 },
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
-    // Melari's Mine's former Southwest door -> the merchant's new room
-    // (Dojos "Grimblade", see QuickStartSpawnShopMerchantOnce) rather
-    // than the old cramped Minish House Interiors room. Same trigger box as
-    // that room used (the door's own real coordinates,
-    // gExitList_MelarisMine_Main[2], AREA_12x12 -> box +6/+6) - the physical
-    // spot in Melari's Mine the player already knows to go to for the shop
-    // doesn't change, only where it leads. Lands at (119,170), facing up,
-    // per the user's own request (see the IdleNorth start_anim
-    // special-case in QuickStartProcessLinks below for the facing) - this
-    // real door is also retargeted the same way (transitions.c,
-    // gExitList_MelarisMine_Main[2]), since it was found winning the race
-    // against this link in practice.
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 119,
-      170 },
-    // Grimblade -> back to Melari's Mine. Trigger box centered on (119,185),
-    // placed by the user directly (Lua position script). Lands at
-    // (168,525), the exact spot this room's real (retargeted) border exit
-    // used to return to before the merchant moved here - reusing it keeps
-    // both paths back into Melari's Mine consistent with each other.
-    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 103, 135, 177, 193, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 168, 525 },
+    // Melari's Mine's former Southwest door used to link here to the shop,
+    // and the shop's room linked back. Both are gone: the shop no longer
+    // lives in the Grimblade dojo, and is no longer reached from Melari's
+    // Mine at all - it hangs off one randomly drawn overworld door per run
+    // instead (see sQuickStartShopDoors). The dojo is a plain "? room" now,
+    // entered the way vanilla always intended: down Castle Garden's
+    // southeast ladder, through the ante room, north into the arena.
     // Castle Garden's real north door (gExitList_CastleGarden_Main[0], a
     // WARP_TYPE_AREA door left un-retargeted for the same ACT_TILE reason
     // documented above - local (504,40), the castle's own entrance
@@ -2762,15 +2765,33 @@ static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
 // but scoped by id rather than a blanket kind check: both rooms host our own
 // ZELDA-kind merchant NPC and SHOP_ITEM-kind pedestals, which a blanket
 // "delete every NPC/OBJECT" would also delete.
+// Room flag 5: "vanilla stock already swept". The shop room is Stockwell's
+// own store now, and it arrives with six of his SHOP_ITEM props already on
+// the shelves. They can't be caught by the blanket OBJECT sweep below -
+// that deliberately spares SHOP_ITEM, or it would delete our own catalog
+// props the moment QuickStartMaintainShop spawned them. So his stock is
+// cleared once per visit instead, before the catalog goes out; after that
+// the flag stops this from touching SHOP_ITEM again.
+//
+// Without it the two stocks share the room's entity slots and ours loses:
+// only 4 of the 9 catalog items had room to spawn (confirmed in the
+// emulator), with Stockwell's six sitting alongside them at vanilla prices.
 static void QuickStartClearShopObstacles(void) {
     s32 i;
+    bool32 sweepVanillaStock = !CheckRoomFlag(5);
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent->kind == NPC && ent->id != ZELDA) {
             DeleteEntity(ent);
         } else if (ent->kind == OBJECT && ent->id != SHOP_ITEM) {
             DeleteEntity(ent);
+        } else if (sweepVanillaStock && ent->kind == OBJECT && ent->id == SHOP_ITEM &&
+                   QuickStartEntityInCurrentRoom(ent)) {
+            DeleteEntity(ent);
         }
+    }
+    if (sweepVanillaStock) {
+        SetRoomFlag(5);
     }
 }
 
@@ -2851,6 +2872,144 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
         }
     }
 }
+
+// --- The shop's own room, and which overworld door reaches it -------------
+//
+// The shop used to live in the Grimblade dojo, reached by a fixed link from
+// Melari's Mine. Both of those are gone. It now lives in Stockwell's shop -
+// vanilla's own general store, whose only vanilla connection is to Hyrule
+// Town, i.e. nothing in this run's overworld pool opens onto it (see
+// gExitList_HouseInteriors3_StockwellShop, transitions.c) - and it is
+// reached through ONE randomly chosen overworld door, different every run.
+//
+// The randomization is deliberately NOT a synthetic teleport box. Each row
+// below names a real vanilla door that already works, by the room it
+// normally leads to; when the save's draw picks that row, the door's own
+// real transition is caught mid-flight and its destination rewritten to the
+// shop (QuickStartProcessDoorRedirects). The player walks into an ordinary
+// cave mouth or tree hollow, gets vanilla's own door animation, and comes
+// out in the shop. The door's usual "? room" event is simply displaced for
+// that run - that door IS the shop this time.
+//
+// returnX/returnY is where leaving the shop puts the player: each door's own
+// vanilla arrival spot back in its region, taken from the destination room's
+// own border exit in transitions.c, so the return lands exactly where using
+// that door normally would.
+//
+// Every row is a door verified end to end in the emulator (enter, spawn,
+// round-trip). The two bombable-wall caves are deliberately excluded - they
+// need blowing open first, and a shop the player can't find without bombs
+// is a worse first-run experience than one behind an open door.
+typedef struct {
+    u8 destArea;
+    u8 destRoom;
+    u8 fromArea;
+    u8 fromRoom;
+    s16 returnX;
+    s16 returnY;
+} QuickStartShopDoor;
+
+static const QuickStartShopDoor sQuickStartShopDoors[] = {
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 0x3a0, 0x238 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 0x58,
+      0x128 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 0x290, 0x19c },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0x2f0, 0x148 },
+    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0x138,
+      0x1f8 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
+      0x40, 0x398 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0x38, 0x2b8 },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0x88, 0x368 },
+};
+#define QUICKSTART_SHOP_DOOR_COUNT 8
+
+#define QUICKSTART_SHOP_AREA AREA_HOUSE_INTERIORS_3
+#define QUICKSTART_SHOP_ROOM ROOM_HOUSE_INTERIORS_3_STOCKWELL_SHOP
+
+// Rolled once per run: which door hosts the shop, and what everything costs.
+static void QuickStartRandomizeShopOnce(void) {
+    s32 i, b;
+    u8 door;
+    if (QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+        return;
+    }
+    door = (u8)((s32)Random() % QUICKSTART_SHOP_DOOR_COUNT);
+    for (b = 0; b < 5; b++) {
+        if (door & (1 << b)) {
+            QsSetFlag(GF_SHOP_DOOR_BIT(b));
+        }
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartShopCatalog); i++) {
+        u8 roll = (u8)((s32)Random() % 8);
+        for (b = 0; b < 3; b++) {
+            if (roll & (1 << b)) {
+                QsSetFlag(GF_SHOP_PRICE_BIT(i, b));
+            }
+        }
+    }
+    QsSetFlag(GF_SHOP_RANDOMIZED);
+}
+
+static const QuickStartShopDoor* QuickStartShopGetDoor(void) {
+    s32 b, index = 0;
+    for (b = 0; b < 5; b++) {
+        if (QsCheckFlag(GF_SHOP_DOOR_BIT(b))) {
+            index |= (1 << b);
+        }
+    }
+    return &sQuickStartShopDoors[index % QUICKSTART_SHOP_DOOR_COUNT];
+}
+
+// Scales each catalog item's vanilla price by its own 3-bit roll: 0 gives
+// half price, 7 gives just under 1.4x, so a run can be a bargain or a
+// squeeze without any item ever becoming free or absurd. Rounded down to a
+// multiple of 5 so the numbers read like shop prices rather than noise, and
+// floored at 5 so nothing lands on 0.
+//
+// Called from GetItemPrice (itemUtils.c) for EVERY item lookup in the game,
+// so it has to be cheap and has to say "not mine" quickly - hence the
+// catalog scan and the negative return for everything else. Vanilla shops
+// elsewhere keep their own prices untouched.
+s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
+    s32 i, b, roll, price;
+    if (basePrice <= 0 || !QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+        return -1;
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartShopCatalog); i++) {
+        if (sQuickStartShopCatalog[i] != item) {
+            continue;
+        }
+        roll = 0;
+        for (b = 0; b < 3; b++) {
+            if (QsCheckFlag(GF_SHOP_PRICE_BIT(i, b))) {
+                roll |= (1 << b);
+            }
+        }
+        price = (basePrice * (4 + roll)) / 8;
+        price -= price % 5;
+        if (price < 5) {
+            price = 5;
+        }
+        return price;
+    }
+    return -1;
+}
+
+// Stockwell's shop is a real vanilla room with its own shopkeeper, counter
+// props and stock already in it, none of which belongs to this mode - the
+// generic sweep clears the living entities and the merchant/stock below
+// replace them. Offsets are the room's own open floor in front of the
+// counter.
+#define QUICKSTART_SHOP_MERCHANT_X 120
+#define QUICKSTART_SHOP_MERCHANT_Y 125
+static const s16 sQuickStartShopRoomItemOffsets[][2] = {
+    { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
+    { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
+};
 
 // --- Castle Garden hidden ladders -----------------------------------------
 //
@@ -5124,7 +5283,19 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // 24px off the arrival spot: further up the cellar, and off to one side
     // in the dojo (which is too short to go further up).
     { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, 0, 0x98, 0x178 },  // arrives (0x68,0x1a8), ladder (104,412)
-    { AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 0, 0x50, 0x50 },                      // arrives (0x78,0x68), ladder (120,92)
+    // Castle Garden's southeast ladder leads to this dojo's ante room, and
+    // the ante room scroll-seams north into the dojo proper. The event goes
+    // in the DOJO, not the ante room - the ante room is a corridor, and the
+    // dojo is a 240x192 arena with 77 unobstructed floor tiles. It rolls
+    // from the large pool accordingly, so this is a place a miniboss or a
+    // 3-wave gauntlet can actually be fought. Its vanilla content (the
+    // dojo-master NPC and its props) is swept first; see
+    // QuickStartSetupDojoRoom in the monitor.
+    //
+    // This room was the shop until now. The shop has moved out entirely
+    // (see sQuickStartShopDoors above) and the fixed Melari's Mine link
+    // that used to reach it is gone with it.
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1, 0x78, 0x88 },                         // arena floor, clear of the seam
     { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, 0x78, 0x60 },                  // arrives (0x78,0x78)
     // Goron Cave's main chamber - the one genuinely large room in this
     // batch, so it rolls from the large kind pool (miniboss / 3-wave
@@ -5144,6 +5315,16 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, 0, 0x58, 0x40 },  // arrives (0x58,0x28)
     { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 0, 0x78, 0xb0 },               // arrives (0x78,0xc8)
 };
+
+// Content sites are normally left alone - they're real vanilla rooms the
+// player is meant to recognise, and their own furniture and payouts stay
+// put alongside the event. The dojo is the exception the user asked for:
+// it ships with a dojo-master NPC and its props filling the arena, and the
+// whole point of putting the event there is that the arena is empty enough
+// to fight in.
+static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
+    return area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE;
+}
 
 // -1 if the current room isn't a content site.
 static s32 QuickStartFindContentSiteForCurrentRoom(void) {
@@ -5180,6 +5361,19 @@ static s32 QuickStartFindContentSiteForCurrentRoom(void) {
 // the region chain's own gating.
 static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     s32 i;
+    // The dojo ante room and the dojo proper. Only the dojo is a content
+    // site, but the ante room is the room the ladder actually lands in and
+    // the two are joined by a scroll seam, so both have to be blessed or
+    // the ladder itself gets cancelled.
+    if (area == AREA_DOJOS && (room == ROOM_DOJOS_TO_GRIMBLADE || room == ROOM_DOJOS_GRIMBLADE)) {
+        return TRUE;
+    }
+    // The shop. Reached by redirecting one real overworld door per run
+    // (QuickStartProcessDoorRedirects), so containment has to let it
+    // through from whichever region that door lives in.
+    if (area == QUICKSTART_SHOP_AREA && room == QUICKSTART_SHOP_ROOM) {
+        return TRUE;
+    }
     // Reachable from the North Hyrule Field fairy fountain tree, and not
     // itself a content site (it holds vanilla's own fountain).
     if (area == AREA_CAVES && room == ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN) {
@@ -5283,11 +5477,12 @@ static void QuickStartSetupContentSite(s32 site) {
             extra |= (1 << b);
         }
     }
-    // Deliberately no obstacle clear here, unlike the retired ladder path's
-    // QuickStartClearLadderRoomObstacles: these are real vanilla rooms the
-    // player is meant to recognise, so their own furniture and their own
-    // vanilla payouts (the Rupee caves' 15 rupees, say) stay put alongside
-    // the randomized event.
+    // See QuickStartContentSiteWantsClear: almost every site keeps its
+    // vanilla content alongside the event (the Rupee caves' 15 rupees, say);
+    // only the dojo gets swept.
+    if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
+        QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
+    }
     if (QuickStartSetupEventContent(kind, extra, entry->contentX, entry->contentY)) {
         QsSetFlag(GF_CONTENT_SITE_DONE(site));
     }
@@ -5562,7 +5757,13 @@ static void QuickStart2DoorSetupFairyRoomContent(s32 contentX, s32 contentY) {
 // sQuickStart2DoorSmallRoomPool's own comment on that room).
 static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     s32 i;
-    bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT);
+    // The dojo joins ROOM_VEIL_FALLS_CAVES_EXIT in wanting its OBJECT-kind
+    // content gone too, not just the living entities: its six furniture
+    // pillars, archway and technique-scroll reward are exactly the "vanilla
+    // content" the user asked to have cleared out of it, and they take up
+    // most of the arena a miniboss or wave gauntlet needs.
+    bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT) ||
+                          (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE);
     if (CheckRoomFlag(1)) {
         return;
     }
@@ -6347,13 +6548,14 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
     u8 area, room;
     for (k = 0; k < 3 + QUICKSTART_DOOR_COUNT; k++) {
         i = sPoolDrawLadderIndices[k];
-        // All 19 slots are retired (see QuickStartRandomizeDoorsOnce), so
-        // this always returns -1. Skipping is not cosmetic: a retired
-        // slot's pool/room bits were never rolled, so they read back as
-        // pool 0 / room index 0, and without this the function would
-        // falsely claim whichever real room sits at small-pool index 0 -
-        // which is a live room in some other system's hands now.
-        if (i >= 0 && i <= 18) {
+        // Slot 0 is live again - it backs Castle Garden's northwest ladder,
+        // the one door still served by a pool draw (see
+        // QuickStartProcessDoorRedirects). Every other slot is retired, and
+        // skipping them is not cosmetic: a retired slot's pool/room bits
+        // were never rolled, so they read back as pool 0 / room index 0,
+        // and without this the function would falsely claim whichever real
+        // room sits at small-pool index 0 - a room another system owns now.
+        if (i >= 1 && i <= 18) {
             continue;
         }
         rawIndex = QuickStartLadderGetRoomIndex(i);
@@ -6506,6 +6708,78 @@ static void QuickStartFixupQuestionRoomReturn(void) {
     gRoomTransition.player_status.start_pos_y = sQuickStartLadderReturnSpots[ladderIndex][1];
 }
 
+// Two real vanilla doors whose far side is decided per save rather than by
+// the transition data. Both are caught the same way: the door fires
+// normally, and this rewrites player_status before the transition lands, so
+// the player gets vanilla's own door animation and spawn handling and only
+// the destination differs.
+//
+// This replaces the synthetic position-box teleport for both cases. A box
+// fired on proximity rather than on the door itself, which is what made the
+// old entrances feel mis-aimed; catching the real transition can't miss,
+// because it only runs when the door the player actually walked into has
+// already decided to fire.
+static void QuickStartProcessDoorRedirects(void) {
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    // Castle Garden's northwest ladder. Its vanilla connection is the Great
+    // Fairy cellar, which opens onward into Hyrule Castle - a sprawl this
+    // run has no business in - so per the user's own call this ladder goes
+    // back to drawing a random single-door "? room" instead, the one place
+    // the old pool system is still used for its original purpose. The
+    // ladder fixture, its art and its transition stay exactly vanilla; only
+    // where it comes out is ours.
+    if (gRoomTransition.player_status.area_next == AREA_HYRULE_CASTLE_CELLAR &&
+        gRoomTransition.player_status.room_next == ROOM_HYRULE_CASTLE_CELLAR_0) {
+        u8 targetArea, targetRoom;
+        QuickStartGetLadderTarget(0, &targetArea, &targetRoom);
+        gRoomTransition.player_status.area_next = targetArea;
+        gRoomTransition.player_status.room_next = targetRoom;
+        gRoomTransition.player_status.start_pos_x = 0x78;
+        gRoomTransition.player_status.start_pos_y = 0x78;
+        return;
+    }
+    // The shop's door for this run.
+    {
+        const QuickStartShopDoor* door;
+        if (!QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+            return;
+        }
+        door = QuickStartShopGetDoor();
+        if (gRoomTransition.player_status.area_next == door->destArea &&
+            gRoomTransition.player_status.room_next == door->destRoom &&
+            gRoomControls.area == door->fromArea && gRoomControls.room == door->fromRoom) {
+            gRoomTransition.player_status.area_next = QUICKSTART_SHOP_AREA;
+            gRoomTransition.player_status.room_next = QUICKSTART_SHOP_ROOM;
+            gRoomTransition.player_status.start_pos_x = 0x78;
+            gRoomTransition.player_status.start_pos_y = 0xa8;
+        }
+    }
+}
+
+// Leaving the shop. Its own exit is a placeholder (see
+// gExitList_HouseInteriors3_StockwellShop, transitions.c) because which
+// region the shop hangs off varies per save; this writes the real one,
+// landing the player exactly where that door's normal arrival spot is.
+static void QuickStartFixupShopReturn(void) {
+    const QuickStartShopDoor* door;
+    if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (gRoomControls.area != QUICKSTART_SHOP_AREA || gRoomControls.room != QUICKSTART_SHOP_ROOM) {
+        return;
+    }
+    if (!QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+        return;
+    }
+    door = QuickStartShopGetDoor();
+    gRoomTransition.player_status.area_next = door->fromArea;
+    gRoomTransition.player_status.room_next = door->fromRoom;
+    gRoomTransition.player_status.start_pos_x = door->returnX;
+    gRoomTransition.player_status.start_pos_y = door->returnY;
+}
+
 // "? room" pool entries outside Minish House Interiors (Veil Falls Caves,
 // Royal Valley Graves) deliberately aren't added wholesale to
 // QuickStartAreaContained's area list - those areas are used
@@ -6540,16 +6814,6 @@ static void QuickStartEnforceContainment(void) {
     if (QuickStartIsCurrentLadderTarget(gRoomTransition.player_status.area_next, gRoomTransition.player_status.room_next)) {
         return;
     }
-    // The merchant's room (AREA_DOJOS, ROOM_DOJOS_GRIMBLADE) isn't added to
-    // QuickStartAreaContained wholesale - AREA_DOJOS holds several other
-    // real dojo rooms entered from many unrelated overworld spots, same
-    // "don't blanket-contain a shared area" reasoning as Minish House
-    // Interiors/Tree Interiors' own ladder-target exception above. This is
-    // the one specific transition sQuickStartLinks itself is about to make
-    // leaving Melari's Mine, let through the same way.
-    if (gRoomTransition.player_status.area_next == AREA_DOJOS && gRoomTransition.player_status.room_next == ROOM_DOJOS_GRIMBLADE) {
-        return;
-    }
     // Real vanilla travel inside the "? room" pocket. Two things need this.
     //
     // AREA_TREE_INTERIORS is on QuickStartAreaContained's list, so without
@@ -6573,8 +6837,7 @@ static void QuickStartEnforceContainment(void) {
     // AREA_HYRULE_FIELD isn't on QuickStartAreaContained's list (it's a huge
     // overworld area, same reasoning as QuickStartEnforceLonLonContainment's
     // own comment) - Lon Lon Ranch living there used to need its own fixed
-    // exception here the same way AREA_DOJOS/ROOM_DOJOS_GRIMBLADE still does
-    // above. Now folded into the two dynamic checks below instead: Lon Lon
+    // exception here. Now folded into the two dynamic checks below instead: Lon Lon
     // Ranch is always either this save's chain slot 0 or the region "next"
     // after Castle Garden, so whichever one it resolves to already covers
     // this case without a separate fixed constant.
@@ -6812,8 +7075,6 @@ static void QuickStartProcessLinks(void) {
             // alone, matching this function's prior behavior.
             if (link->toArea == AREA_CASTOR_DARKNUT && link->toRoom == ROOM_CASTOR_DARKNUT_HALL) {
                 gRoomTransition.player_status.start_anim = IdleSouth;
-            } else if (link->toArea == AREA_DOJOS && link->toRoom == ROOM_DOJOS_GRIMBLADE) {
-                gRoomTransition.player_status.start_anim = IdleNorth;
             }
             gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
             gRoomTransition.transitioningOut = 1;
@@ -6953,6 +7214,11 @@ static void QuickStartRoomMonitor(void) {
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();
     QuickStartFixupQuestionRoomReturn();
+    QuickStartFixupShopReturn();
+    // Runs before the containment checks would see the rewritten
+    // destination, so a redirected door is judged on where it is actually
+    // going rather than on its vanilla destination.
+    QuickStartProcessDoorRedirects();
     QuickStartFixupCaveConnectorReturn();
     QuickStartFixupRiverBridgeReturn();
     QuickStartFixupCaveReturn();
@@ -6962,6 +7228,9 @@ static void QuickStartRoomMonitor(void) {
     // the new Melari's Mine shop, and this call is what actually applies
     // the buy path's effect; idempotent either way via its own latch.
     QuickStartApplyHeartContainerBonusOnce();
+    // Rolled here rather than at a specific room so the draw exists before
+    // the player can reach any of the candidate doors.
+    QuickStartRandomizeShopOnce();
     // Also unconditional: the two rooms that need it today are Castle
     // Garden Main and Link's House, but the checks are per-entity rather
     // than per-room, so any other room's hidden ladder or stuck house door
@@ -7035,10 +7304,13 @@ static void QuickStartRoomMonitor(void) {
         // harmless (and correct to keep doing) for any future region whose
         // pool does too.
         UpdatePlayerSkills();
-    } else if (gRoomControls.area == AREA_DOJOS && gRoomControls.room == ROOM_DOJOS_GRIMBLADE) {
+    } else if (gRoomControls.area == QUICKSTART_SHOP_AREA && gRoomControls.room == QUICKSTART_SHOP_ROOM) {
+        // Stockwell's shop, this run's shop room. Same merchant, same
+        // catalog, same vanilla pedestal-sale mechanism as before - only the
+        // room and the prices changed.
         QuickStartClearShopObstacles();
-        QuickStartSpawnShopMerchantOnce(120, 125);
-        QuickStartMaintainShop(sQuickStartShopItemOffsets);
+        QuickStartSpawnShopMerchantOnce(QUICKSTART_SHOP_MERCHANT_X, QUICKSTART_SHOP_MERCHANT_Y);
+        QuickStartMaintainShop(sQuickStartShopRoomItemOffsets);
     } else if (QuickStart2DoorIsCurrentRoom()) {
         // Whichever real 2-door pool room the save's cave-connector draw
         // resolved to (see QuickStart2DoorRandomizeOnce/GetTarget) - its own
