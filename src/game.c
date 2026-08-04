@@ -361,10 +361,11 @@ static void GameTask_Transition(void) {
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 604-636: the shop's own door draw and price rolls - re-rolled
+        // 604-636: the shop's own door draw and price rolls. 637-638:
+        // Melari's Mine's two rooms' collected latches - re-rolled
         // every fresh boot like everything else here, so a new run gets the
         // shop somewhere else at different prices.
-        for (bit = 202; bit <= 636; bit++) {
+        for (bit = 202; bit <= 638; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1309,6 +1310,15 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // the shop as often as they like and find it in the same place at the same
 // prices.
 //
+// Melari's Mine's two hand-written "? rooms" never had a persistent "this
+// has been collected" latch - only a room flag, which resets on every room
+// load. Re-entering respawned the reward, so either room could be farmed
+// indefinitely by walking out and back in. These are that latch. Every
+// other "? room" already had one: the generic content sites carry
+// GF_CONTENT_SITE_DONE.
+#define GF_MELARI_EAST_DONE 637
+#define GF_MELARI_SOUTHEAST_DONE 638
+
 // Range 604..636, immediately after the content sites' own 266..603.
 #define GF_SHOP_RANDOMIZED 604
 #define GF_SHOP_DOOR_BIT(b) (605 + (b))                  // b = 0..4
@@ -5106,48 +5116,21 @@ static void QuickStartClearMelariRoomObstacles(void) {
 // handling above: this room doesn't need a ladderIndex, so there's no
 // generic accessor plumbing to reuse, just a direct room-flag check.
 static void QuickStartSetupMelariEastRoomContent(void) {
-    u8 kind, extra;
     QuickStartClearMelariRoomObstacles();
-    kind = QuickStartMelariEastGetKind();
-    extra = QuickStartMelariEastGetExtra();
-    if (kind == LADDER_KIND_CHEST) {
-        if (QuickStartGroundItemAt(QUICKSTART_MELARI_EAST_CONTENT_X, QUICKSTART_MELARI_EAST_CONTENT_Y)) {
-            return;
-        }
-        if (CheckRoomFlag(0)) {
-            return;
-        }
-        {
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_EAST_CONTENT_X;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_EAST_CONTENT_Y;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
-            }
-        }
-    } else {
-        s32 i;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
-                return;
-            }
-        }
-        {
-            Entity* npc = CreateNPC(ZELDA, 0, 0);
-            if (npc != NULL) {
-                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_EAST_CONTENT_X;
-                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_EAST_CONTENT_Y;
-                npc->collisionLayer = 1;
-                UpdateSpriteForCollisionLayer(npc);
-                npc->direction = IdleSouth;
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
-            }
-        }
+    if (QsCheckFlag(GF_MELARI_EAST_DONE)) {
+        return;
+    }
+    // Routed through the shared event path instead of the inlined copy of
+    // the chest/NPC handling this used to carry. That copy was the bug: it
+    // gated respawning on a bare room flag, and room flags reset on every
+    // room load, so leaving and re-entering dropped a fresh reward every
+    // time. The shared path carries the two-flag "spawned" / "confirmed
+    // present" pair that tells a real pickup apart from a room that merely
+    // unloaded, and reports back once the reward is genuinely gone - which
+    // is what the latch above records, permanently.
+    if (QuickStartSetupEventContent(QuickStartMelariEastGetKind(), QuickStartMelariEastGetExtra(),
+                                    QUICKSTART_MELARI_EAST_CONTENT_X, QUICKSTART_MELARI_EAST_CONTENT_Y, 0)) {
+        QsSetFlag(GF_MELARI_EAST_DONE);
     }
 }
 
@@ -5155,48 +5138,15 @@ static void QuickStartSetupMelariEastRoomContent(void) {
 // point, same random chest/NPC shape. No longer the forced Shop (see the
 // GF_MELARI_SOUTHEAST_* comment above for why).
 static void QuickStartSetupMelariSoutheastRoomContent(void) {
-    u8 kind, extra;
     QuickStartClearMelariRoomObstacles();
-    kind = QuickStartMelariSoutheastGetKind();
-    extra = QuickStartMelariSoutheastGetExtra();
-    if (kind == LADDER_KIND_CHEST) {
-        if (QuickStartGroundItemAt(QUICKSTART_MELARI_SOUTHEAST_CONTENT_X, QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y)) {
-            return;
-        }
-        if (CheckRoomFlag(0)) {
-            return;
-        }
-        {
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_SOUTHEAST_CONTENT_X;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
-            }
-        }
-    } else {
-        s32 i;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
-                return;
-            }
-        }
-        {
-            Entity* npc = CreateNPC(ZELDA, 0, 0);
-            if (npc != NULL) {
-                npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_MELARI_SOUTHEAST_CONTENT_X;
-                npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y;
-                npc->collisionLayer = 1;
-                UpdateSpriteForCollisionLayer(npc);
-                npc->direction = IdleSouth;
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
-            }
-        }
+    if (QsCheckFlag(GF_MELARI_SOUTHEAST_DONE)) {
+        return;
+    }
+    // Same fix as the East room above, same reasoning.
+    if (QuickStartSetupEventContent(QuickStartMelariSoutheastGetKind(), QuickStartMelariSoutheastGetExtra(),
+                                    QUICKSTART_MELARI_SOUTHEAST_CONTENT_X, QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y,
+                                    0)) {
+        QsSetFlag(GF_MELARI_SOUTHEAST_DONE);
     }
 }
 
