@@ -361,10 +361,10 @@ static void GameTask_Transition(void) {
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 578-610: the shop's own door draw and price rolls - re-rolled
+        // 604-636: the shop's own door draw and price rolls - re-rolled
         // every fresh boot like everything else here, so a new run gets the
         // shop somewhere else at different prices.
-        for (bit = 202; bit <= 610; bit++) {
+        for (bit = 202; bit <= 636; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1292,10 +1292,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 //
 // These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
 // (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At
-// 24 sites the range is 266..577, and bank 12 has room up to offset 707
+// 26 sites the range is 266..603, and bank 12 has room up to offset 707
 // (the shop's own block sits just above it), so there is still headroom
 // before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 24
+#define QUICKSTART_CONTENT_SITE_COUNT 26
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1309,10 +1309,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // the shop as often as they like and find it in the same place at the same
 // prices.
 //
-// Range 578..610, immediately after the content sites' own 266..577.
-#define GF_SHOP_RANDOMIZED 578
-#define GF_SHOP_DOOR_BIT(b) (579 + (b))                  // b = 0..4
-#define GF_SHOP_PRICE_BIT(i, b) (584 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// Range 604..636, immediately after the content sites' own 266..603.
+#define GF_SHOP_RANDOMIZED 604
+#define GF_SHOP_DOOR_BIT(b) (605 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (610 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -3003,13 +3003,27 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // Stockwell's shop is a real vanilla room with its own shopkeeper, counter
 // props and stock already in it, none of which belongs to this mode - the
 // generic sweep clears the living entities and the merchant/stock below
-// replace them. Offsets are the room's own open floor in front of the
-// counter.
-#define QUICKSTART_SHOP_MERCHANT_X 120
-#define QUICKSTART_SHOP_MERCHANT_Y 125
+// replace them.
+//
+// The catalog sits on the room's own three counters rather than floating in
+// the middle of the floor, which is where the first pass put it. Vanilla's
+// own six stock positions - two rows of three on the left, at y=64 and
+// y=128 - are reused exactly, since those ARE the shelves the room was
+// drawn with; the remaining three go on the bottom-right counter. All nine
+// spots were checked against a live walkability dump: each sits on
+// non-walkable counter with open floor directly below it, so every item can
+// be lifted the way vanilla shop stock is.
+//
+// The merchant moves out of the counter she was standing inside (120,125 is
+// solid) and into the open lower room, just inside the door the player
+// arrives through, so she is the first thing they see and is reachable
+// without threading the aisle.
+#define QUICKSTART_SHOP_MERCHANT_X 144
+#define QUICKSTART_SHOP_MERCHANT_Y 152
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
-    { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
+    { 45, 64 },  { 64, 64 },  { 82, 64 },   // top-left counter (vanilla's own row)
+    { 45, 128 }, { 64, 128 }, { 82, 128 },  // bottom-left counter (vanilla's own row)
+    { 140, 128 }, { 159, 128 }, { 178, 128 }, // bottom-right counter
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -5333,6 +5347,15 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // for the same reason as the two rows above.
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, 0, 0x58, 0x40 },  // arrives (0x58,0x28)
     { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 0, 0x78, 0xb0 },               // arrives (0x78,0xc8)
+    // Lon Lon Ranch's house, both rooms. Unreachable until now: the west
+    // door is a scripted HOUSE_DOOR_EXT running vanilla's key gate, which
+    // nothing in this run satisfies, and the east room's route onward is
+    // barred by the interior door. Both are unlocked in game.c
+    // (QuickStartUnlockRanchHouseDoors and the HOUSE_DOOR_INT unk7d clear),
+    // so each room is a normal one-door "? room" now, entered by its own
+    // front door and left the same way.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 0, 0x68, 0x60 },  // arrives (0x68,0x78)
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 0, 0x78, 0x60 },  // arrives (0x78,0x78)
 };
 
 // Content sites are normally left alone - they're real vanilla rooms the
@@ -7221,6 +7244,43 @@ static void QuickStartOpenBoomerangChamber(void) {
     }
 }
 
+// Lon Lon Ranch's house doors.
+//
+// The player starts with the Lon Lon Key and still cannot open the
+// front-left door, which left both ranch house rooms unreachable. The cause
+// is not the key and not the interior door: both exterior doors are
+// HOUSE_DOOR_EXT objects, and the west one runs with ENT_SCRIPTED set, so
+// HouseDoorExterior_Type2 hands its open/closed state to a script instead
+// of to the ordinary "stand against it holding up" check
+// (sub_08086954). That script is vanilla's own key/story gate, and nothing
+// in this run ever satisfies it.
+//
+// Rather than fight the script, this does what vanilla's own sub_0808692C
+// does: drops ENT_SCRIPTED, puts the door back on the plain walk-up-to-open
+// type, and resets its timer. The door then behaves like every other house
+// door in the game. Per the user's own call this is unconditional for now -
+// the house is simply open - with the key or a minish-door route left as a
+// later change if it should be earned instead.
+static void QuickStartUnlockRanchHouseDoors(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind != OBJECT || ent->id != HOUSE_DOOR_EXT || !QuickStartEntityInCurrentRoom(ent)) {
+            continue;
+        }
+        if (ent->flags & ENT_SCRIPTED) {
+            ent->flags &= ~ENT_SCRIPTED;
+            ent->type2 = 2;
+            ent->action = (ent->frameIndex == 0) ? 1 : 2;
+            ent->subAction = 0;
+            ent->timer = 8;
+        }
+    }
+}
+
 // Unlocks the two vanilla fixtures that stand between the player and a
 // converted "? room": Castle Garden's two hidden ladders, and Link's House's
 // own front door.
@@ -7377,6 +7437,7 @@ static void QuickStartRoomMonitor(void) {
     // Same "make a vanilla fixture actually work" job, for the Boomerang
     // chamber's five entrances and its chest.
     QuickStartOpenBoomerangChamber();
+    QuickStartUnlockRanchHouseDoors();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
     // returns immediately without matching anything.
