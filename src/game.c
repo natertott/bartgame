@@ -166,6 +166,7 @@ static void QuickStartRandomizeDoorsOnce(void);
 static void QuickStartProcessLadderLinks(void);
 static void QuickStartSetupLadderRoomContent(s32);
 static void QuickStart2DoorClearRoomObstacles(u8, u8);
+static bool32 QuickStartIsBoomerangTree(u8, u8);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
@@ -1296,7 +1297,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // 26 sites the range is 266..603, and bank 12 has room up to offset 707
 // (the shop's own block sits just above it), so there is still headroom
 // before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 26
+#define QUICKSTART_CONTENT_SITE_COUNT 22
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -5170,6 +5171,11 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
 // below is therefore currently unreachable in play; it is kept because it
 // costs one table row and would start working the moment that inner door
 // is made to fire, not because it is reachable today.
+// The four Boomerang tree hollows are deliberately NOT in this table. Each
+// is a landing with a ladder down into the shared chamber, and the chamber
+// already carries one event per tree in the corner that tree arrives at -
+// so the events live down there rather than on top of the ladders.
+//
 // large: which of the two size-restricted kind pools this site rolls from,
 // the same split the retired ladder/door slots used (QuickStartPickSmallKind
 // vs QuickStartPickLargeKind). Small rooms get puzzle/dialogue content
@@ -5186,10 +5192,6 @@ typedef struct {
 } QuickStartContentSite;
 
 static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 0, 0x78, 0x60 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0, 0x78, 0x60 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0, 0x78, 0x60 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0, 0x78, 0x60 },
     // The event for this tree lives one floor DOWN, in the fairy fountain
     // cave its staircase leads to, not in the tree hollow itself - the
     // hollow is a landing with a staircase in it, and the event was sitting
@@ -5365,6 +5367,13 @@ static s32 QuickStartFindContentSiteForCurrentRoom(void) {
 // the region chain's own gating.
 static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     s32 i;
+    // The four Boomerang tree hollows. No longer content sites (their
+    // events moved down into the chamber), but still the rooms the player
+    // walks into from the field, so they need blessing here or the doors
+    // into them get cancelled.
+    if (QuickStartIsBoomerangTree(area, room)) {
+        return TRUE;
+    }
     // The dojo ante room and the dojo proper. Only the dojo is a content
     // site, but the ante room is the room the ladder actually lands in and
     // the two are joined by a scroll seam, so both have to be blessed or
@@ -7212,6 +7221,34 @@ static void QuickStartOpenBoomerangChamber(void) {
     }
 }
 
+// The engine's RNG state (0x03001150) is a plain scrambler with no entropy
+// input at all - state = ror(state * 3, 13) - and it resets to the fixed
+// constant 0x1234567 on every reset. Nothing ever seeds it. So the only
+// thing that makes one run differ from another is HOW MANY times Random()
+// happened to have been called before a given roll, and that is a function
+// of elapsed frames. Measured directly: booting with the same input
+// sequence produced byte-identical draws every time, and only changing the
+// number of idle frames changed them.
+//
+// That is why the same rooms kept rolling the same events playthrough after
+// playthrough. The boot sequence is effectively fixed - the player mashes
+// through the same menus - so every run arrived at each "? room" with the
+// generator in the same state.
+//
+// This folds the player's own timing in: every frame that carries new input
+// burns one extra Random(). The number of input frames before the player
+// reaches any given room is genuinely variable between playthroughs, so
+// every roll made after the player has started pressing buttons diverges.
+// It costs one call per input frame and needs no state of its own.
+//
+// Rolls made BEFORE any input - the ones in GameTask_Transition - are not
+// covered by this and are still fixed per build.
+static void QuickStartStirRandom(void) {
+    if (gPlayerState.playerInput.newInput != 0) {
+        Random();
+    }
+}
+
 // Lon Lon Ranch's house doors.
 //
 // The player starts with the Lon Lon Key and still cannot open the
@@ -7406,6 +7443,7 @@ static void QuickStartRoomMonitor(void) {
     // chamber's five entrances and its chest.
     QuickStartOpenBoomerangChamber();
     QuickStartUnlockRanchHouseDoors();
+    QuickStartStirRandom();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
     // returns immediately without matching anything.
