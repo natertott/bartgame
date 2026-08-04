@@ -2040,11 +2040,18 @@ static void PlayerRoll(PlayerEntity* this) {
     sPlayerRollStates[super->subAction](this);
 }
 
-// How many frames (gMain.ticks, main.c's free-running frame counter) must
-// separate two rolls before the roll sound plays again - same debounce
-// idea, and the same reasoning, as SWORD_SWING_SOUND_DEBOUNCE_FRAMES in
-// playerItem/playerItemSword.c.
-#define ROLL_SOUND_DEBOUNCE_FRAMES 20
+// The roll voice clip plays once every ROLL_SOUND_INTERVAL rolls rather
+// than on a time debounce. A debounce was the first attempt and it did not
+// go far enough: rolling is the fastest way to cross a screen, so a player
+// chaining rolls still cleared any reasonable frame gap between them and
+// the "HA!" kept firing. Counting rolls instead caps it regardless of how
+// fast they are strung together.
+// The count lives in gPlayerState.pad[1], the same scratch byte the old
+// time-based debounce used for its "ticks at last roll" value (pad[0] is
+// the sword swing's). A file-static would have been the obvious home, but
+// the linker script discards .bss for player.o, so it has to be a byte that
+// already exists in RAM.
+#define ROLL_SOUND_INTERVAL 4
 
 static void PlayerRollInit(PlayerEntity* this) {
     u32 playerFlags;
@@ -2075,8 +2082,8 @@ static void PlayerRollInit(PlayerEntity* this) {
     // scratch space (see player.h, and playerItem/playerItemSword.c's own
     // pad[0] use for the identical sword-swing debounce) reused here as a
     // rolling "ticks at last roll" byte.
-    playRollSound = (u8)(gMain.ticks - gPlayerState.pad[1]) >= ROLL_SOUND_DEBOUNCE_FRAMES;
-    gPlayerState.pad[1] = (u8)gMain.ticks;
+    gPlayerState.pad[1]++;
+    playRollSound = (gPlayerState.pad[1] % ROLL_SOUND_INTERVAL) == 0;
     if (playRollSound) {
         if (Random() & 1) {
             SoundReq(SFX_PLY_VO5);

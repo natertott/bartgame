@@ -266,7 +266,8 @@ static void HandlePlayerLife(Entity* this) {
         return;
 
 #ifdef EU
-    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 90 == 0) {
+    // 180, not vanilla's 90: the low-health warning beeps half as often.
+    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 180 == 0) {
         threshold = gSave.stats.maxHealth / 4;
         if (threshold > 24)
             threshold = 24;
@@ -288,7 +289,8 @@ static void HandlePlayerLife(Entity* this) {
 
     if (gSave.stats.health <= threshold) {
         gRoomVars.needHealthDrop = TRUE;
-        if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 90 == 0) {
+        // 180, not vanilla's 90: the low-health warning beeps half as often.
+    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 180 == 0) {
             EnqueueSFX(SFX_LOW_HEALTH);
         }
     }

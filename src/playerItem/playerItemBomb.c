@@ -90,7 +90,20 @@ void PlayerItemBomb_Init(PlayerItemBombEntity* this) {
     if (super->type == 0xff) {
         super->timer = 60;
     } else if (super->type == 0xfe) {
+#ifdef QUICKSTART
+        // The 9-pot lottery's trap bombs (see pot.c, QUICKSTART_POT_TRAP_FORM)
+        // detonate on contact instead of running a fuse. Vanilla's sequence
+        // here is a 15-frame timer and then an 80-frame flashing warning -
+        // about a second and a half of notice, which let the player throw
+        // the pot and simply walk away. Starting with the timer already
+        // expired and one frame left on the warning makes the blast land
+        // the moment the pot is broken, which is the risk the room is meant
+        // to carry.
+        super->timer = 0;
+        super->subtimer = 1;
+#else
         super->timer = 15;
+#endif
         super->type = 0xff;
     } else {
         super->timer = 150;

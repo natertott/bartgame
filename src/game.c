@@ -5365,7 +5365,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
 // whole point of putting the event there is that the arena is empty enough
 // to fight in.
 static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
-    return area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE;
+    if (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) {
+        return TRUE;
+    }
+    // Lon Lon Ranch's two house rooms. Both are packed with vanilla
+    // furniture, enough that a 9-pot lottery loses pots to it.
+    return area == AREA_HOUSE_INTERIORS_4 &&
+           (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST || room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
 }
 
 // -1 if the current room isn't a content site.
@@ -5827,7 +5833,10 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     // content" the user asked to have cleared out of it, and they take up
     // most of the arena a miniboss or wave gauntlet needs.
     bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT) ||
-                          (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE);
+                          (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) ||
+                          (area == AREA_HOUSE_INTERIORS_4 &&
+                           (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
+                            room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST));
     if (CheckRoomFlag(1)) {
         return;
     }
