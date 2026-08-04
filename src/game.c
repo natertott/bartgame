@@ -361,10 +361,10 @@ static void GameTask_Transition(void) {
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 526-558: the shop's own door draw and price rolls - re-rolled
+        // 578-610: the shop's own door draw and price rolls - re-rolled
         // every fresh boot like everything else here, so a new run gets the
         // shop somewhere else at different prices.
-        for (bit = 202; bit <= 558; bit++) {
+        for (bit = 202; bit <= 610; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1292,9 +1292,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 //
 // These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
 // (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At
-// 20 sites the range is 266..525, and bank 12 has room up to offset 707,
-// so there is headroom for ~14 more sites before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 20
+// 24 sites the range is 266..577, and bank 12 has room up to offset 707
+// (the shop's own block sits just above it), so there is still headroom
+// before this needs rethinking.
+#define QUICKSTART_CONTENT_SITE_COUNT 24
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1308,10 +1309,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // the shop as often as they like and find it in the same place at the same
 // prices.
 //
-// Range 526..558, immediately after the content sites' own 266..525.
-#define GF_SHOP_RANDOMIZED 526
-#define GF_SHOP_DOOR_BIT(b) (527 + (b))                  // b = 0..4
-#define GF_SHOP_PRICE_BIT(i, b) (532 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// Range 578..610, immediately after the content sites' own 266..577.
+#define GF_SHOP_RANDOMIZED 578
+#define GF_SHOP_DOOR_BIT(b) (579 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (584 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -4521,21 +4522,21 @@ static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16
 #define QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG 4
 #define QUICKSTART_WAVE_ROOM_WAVE_BIT(b) (5 + (b)) // b = 0,1
 
-static u8 QuickStartWaveRoomGetWave(void) {
-    return (CheckRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
-           (CheckRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1)) ? 2 : 0);
+static u8 QuickStartWaveRoomGetWave(u32 flagBase) {
+    return (CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
+           (CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1)) ? 2 : 0);
 }
 
-static void QuickStartWaveRoomSetWave(u8 wave) {
+static void QuickStartWaveRoomSetWave(u32 flagBase, u8 wave) {
     if (wave & 1) {
-        SetRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
     } else {
-        ClearRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+        ClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
     }
     if (wave & 2) {
-        SetRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
     } else {
-        ClearRoomFlag(QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+        ClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
     }
 }
 
@@ -4596,20 +4597,20 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
 // is finished, never spawn it again" - the caller owns the actual done
 // latch, because the two callers store it in different places (a retired
 // ladder/door slot vs. a content site's own GF_CONTENT_SITE_DONE bit).
-static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 contentY) {
+static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     u8 wave, difficulty;
-    if (CheckRoomFlag(2)) {
+    if (CheckRoomFlag(flagBase + 2)) {
         // All 3 waves cleared, reward already dropped - just watch for
         // pickup, same convention as the miniboss kind's own reward state.
         return !QuickStartGroundItemAt(contentX, contentY);
     }
-    if (!CheckRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
-        SetRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
+    if (!CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
+        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
     difficulty = QuickStartGetDifficulty();
-    wave = QuickStartWaveRoomGetWave();
-    if (CheckRoomFlag(0)) {
+    wave = QuickStartWaveRoomGetWave(flagBase);
+    if (CheckRoomFlag(flagBase + 0)) {
         // This wave's enemies are still out there somewhere.
         if (QuickStartCountRoomEnemies() > 0) {
             return FALSE;
@@ -4629,18 +4630,18 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(2);
+                SetRoomFlag(flagBase + 2);
             }
             return FALSE;
         }
-        // Advance to the next wave - ClearRoomFlag(0) lets the fallthrough
+        // Advance to the next wave - ClearRoomFlag(flagBase + 0) lets the fallthrough
         // below spawn it on the next frame.
-        QuickStartWaveRoomSetWave(wave + 1);
-        ClearRoomFlag(0);
+        QuickStartWaveRoomSetWave(flagBase, wave + 1);
+        ClearRoomFlag(flagBase + 0);
         return FALSE;
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
-    SetRoomFlag(0);
+    SetRoomFlag(flagBase + 0);
     return FALSE;
 }
 
@@ -4661,7 +4662,7 @@ static const s16 sQuickStartPotLotteryOffsetsX[9] = { -16, 0, 16, -16, 0, 16, -1
 static const s16 sQuickStartPotLotteryOffsetsY[9] = { -16, -16, -16, 0, 0, 0, 16, 16, 16 };
 #define QUICKSTART_POT_TRAP_FORM 0xFE
 
-static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 contentY) {
+static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     s32 winnerSlot, prizeIndex, winnerX, winnerY;
     winnerSlot = extra & 0xF;
     // QuickStartPickPotLotteryExtra only ever packs 0-8 here, but a site's
@@ -4673,12 +4674,12 @@ static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 cont
     prizeIndex = (extra >> 4) & 3;
     winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
     winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
-    if (CheckRoomFlag(0)) {
+    if (CheckRoomFlag(flagBase + 0)) {
         if (QuickStartGroundItemAt(winnerX, winnerY)) {
-            SetRoomFlag(3);
+            SetRoomFlag(flagBase + 3);
             return FALSE;
         }
-        return CheckRoomFlag(3);
+        return CheckRoomFlag(flagBase + 3);
     }
     {
         s32 i;
@@ -4693,7 +4694,7 @@ static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 cont
                 UpdateSpriteForCollisionLayer(pot);
             }
         }
-        SetRoomFlag(0);
+        SetRoomFlag(flagBase + 0);
     }
     return FALSE;
 }
@@ -4717,7 +4718,7 @@ static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 cont
 // to set (OpenSmallChest sets it on a successful, registered open) - no
 // ground-item polling needed here since that flag is itself an
 // unambiguous, persistent "was this actually opened" signal.
-static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 contentY) {
+static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     static const s16 offsets[3] = { -16, 0, 16 };
     s32 winnerSlot, prizeIndex;
     winnerSlot = extra & 3;
@@ -4727,7 +4728,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
         winnerSlot = 2;
     }
     prizeIndex = (extra >> 2) & 3;
-    if (CheckRoomFlag(0)) {
+    if (CheckRoomFlag(flagBase + 0)) {
         return CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot)) ? TRUE : FALSE;
     }
     {
@@ -4765,7 +4766,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
                 }
             }
         }
-        SetRoomFlag(0);
+        SetRoomFlag(flagBase + 0);
     }
     return FALSE;
 }
@@ -4778,10 +4779,10 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
 // ~10s if ignored" behavior, identical to any fairy found in the wild -
 // unlike the lottery kinds above, there's no lasting reward here to guard
 // against re-farming, so this doesn't bother with GF_LADDER_DONE at all.
-static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY) {
+static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flagBase) {
     static const s16 offsets[2] = { -16, 16 };
     s32 i;
-    if (CheckRoomFlag(0)) {
+    if (CheckRoomFlag(flagBase + 0)) {
         return;
     }
     for (i = 0; i < 2; i++) {
@@ -4793,7 +4794,7 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY) {
             UpdateSpriteForCollisionLayer(fairy);
         }
     }
-    SetRoomFlag(0);
+    SetRoomFlag(flagBase + 0);
 }
 
 // The single-door "? room" event itself, independent of who owns it.
@@ -4813,7 +4814,7 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY) {
 // this visit": these are all single-entrance dead ends, so there is no
 // leave-before-resolving recovery to do the way the multi-exit rooms
 // elsewhere in this file need.
-static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY) {
+static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     if (kind == LADDER_KIND_CHEST) {
         // Room flag 3: "confirmed present at least once this visit" -
         // distinct from flag 0 ("we've spawned it"), same two-flag "did it
@@ -4824,12 +4825,12 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         // function ever confirms it was actually there (e.g. the entity
         // slot getting reused some other way) reads as a genuine pickup on
         // the very next frame it's checked.
-        if (CheckRoomFlag(0)) {
+        if (CheckRoomFlag(flagBase + 0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
-                SetRoomFlag(3);
+                SetRoomFlag(flagBase + 3);
                 return FALSE;
             }
-            if (CheckRoomFlag(3)) {
+            if (CheckRoomFlag(flagBase + 3)) {
                 return TRUE;
             }
             // Never confirmed present - fall through and re-drop it.
@@ -4847,18 +4848,18 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 // overwrites it (confirmed in the emulator: direction read
                 // back as 0xFF, not IdleSouth, when set beforehand).
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
+                SetRoomFlag(flagBase + 0);
             }
         }
     } else if (kind == LADDER_KIND_MINIBOSS) {
-        if (CheckRoomFlag(2)) {
+        if (CheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
             // (same "did it vanish for real, or did the room just unload
             // before they grabbed it" distinction QuickStartGroundItemAt
             // exists for on the chest case above).
             return !QuickStartGroundItemAt(contentX, contentY);
         }
-        if (CheckRoomFlag(0)) {
+        if (CheckRoomFlag(flagBase + 0)) {
             s32 i;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
@@ -4892,8 +4893,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     itemEntity->flags |= ENT_PERSIST;
                     UpdateSpriteForCollisionLayer(itemEntity);
                     itemEntity->direction = IdleSouth;
-                    SetRoomFlag(2);
-                    // Tied to the same SetRoomFlag(2) success path so this
+                    SetRoomFlag(flagBase + 2);
+                    // Tied to the same SetRoomFlag(flagBase + 2) success path so this
                     // only ever counts once per miniboss, even if
                     // CreateObject fails and this branch legitimately
                     // retries on a later frame (see QuickStartComputeScore,
@@ -4913,17 +4914,17 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 enemy->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(enemy);
                 enemy->direction = IdleSouth;
-                SetRoomFlag(0);
+                SetRoomFlag(flagBase + 0);
             }
         }
     } else if (kind == LADDER_KIND_WAVES) {
-        return QuickStartSetupWaveRoomContent(extra, contentX, contentY);
+        return QuickStartSetupWaveRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
-        return QuickStartSetupPotLotteryContent(extra, contentX, contentY);
+        return QuickStartSetupPotLotteryContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
-        return QuickStartSetupChestLotteryContent(extra, contentX, contentY);
+        return QuickStartSetupChestLotteryContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_FAIRY) {
-        QuickStartSetupFairyRoomContent(contentX, contentY);
+        QuickStartSetupFairyRoomContent(contentX, contentY, flagBase);
     } else {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
@@ -4964,7 +4965,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
         return;
     }
     if (QuickStartSetupEventContent(QuickStartLadderGetKind(ladderIndex), QuickStartLadderGetExtra(ladderIndex),
-                                    contentX, contentY)) {
+                                    contentX, contentY, 0)) {
         QuickStartLadderSetDone(ladderIndex);
     }
 }
@@ -5239,7 +5240,25 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // mouth, nor the trees' doors down into it, nor its exit back to the
     // field are armed with door actTiles. Content is defined anyway so the
     // room is ready if that changes; it costs one row and one flag slot.
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0xa8, 0x98 },
+    // The Boomerang chamber. FIVE events live here, not one: all four
+    // trees' ladders come down into this same room at its four corners, and
+    // the staircase between the trees comes down into its middle, so per the
+    // user's own call each of those five entrances gets its own event in the
+    // corner it arrives at. Whoever comes down any one ladder can reach all
+    // five - that concentration is deliberate.
+    //
+    // The middle one replaces the vanilla Magical Boomerang chest, which is
+    // deleted on entry (QuickStartClearBoomerangChest).
+    //
+    // Spots are each entrance's own arrival point nudged onto open floor,
+    // read off a live actTile dump of the room rather than guessed: the
+    // chamber is a ring, and its middle band (y 152-216) and the two side
+    // columns are the only walkable parts.
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x48, 0x98 },   // northwest tree, arrives (72,136)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x108, 0x98 },  // northeast tree, arrives (264,136)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x48, 0x108 },  // southwest tree, arrives (72,248)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x108, 0x108 }, // southeast tree, arrives (264,248)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0xa8, 0xa8 },   // the staircase, where the chest was
     // Trilby Highlands' 4 converted doors - all true dead ends, same shape
     // as South Hyrule Field's. The Keese Chest and Fairy Fountain caves are
     // the two reached by bombing a wall open.
@@ -5457,6 +5476,19 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     QsSetFlag(GF_CONTENT_SITE_RANDOMIZED(site));
 }
 
+// How many other sites share this site's room and come before it - i.e.
+// which event this is within the room, 0 for the only one.
+static s32 QuickStartContentSiteSlotInRoom(s32 site) {
+    s32 i, slot = 0;
+    for (i = 0; i < site; i++) {
+        if (sQuickStartRoomContentSites[i].area == sQuickStartRoomContentSites[site].area &&
+            sQuickStartRoomContentSites[i].room == sQuickStartRoomContentSites[site].room) {
+            slot++;
+        }
+    }
+    return slot;
+}
+
 static void QuickStartSetupContentSite(s32 site) {
     const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
     u8 kind;
@@ -5483,7 +5515,16 @@ static void QuickStartSetupContentSite(s32 site) {
     if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
         QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
     }
-    if (QuickStartSetupEventContent(kind, extra, entry->contentX, entry->contentY)) {
+    // Room flags are per ROOM, but the Boomerang chamber holds five events
+    // at once, so they cannot all use flags 0-5 the way a lone event does -
+    // the first one to set "already spawned" would silence the other four
+    // (seen in the emulator: one event appeared out of five). Each site
+    // gets its own 8-flag window instead, based on its position among the
+    // sites sharing its room, starting well clear of the low flags the rest
+    // of this file uses. gRoomVars.flags is 52 bytes, so there is room for
+    // far more of these than any room will ever hold.
+    if (QuickStartSetupEventContent(kind, extra, entry->contentX, entry->contentY,
+                                    64 + QuickStartContentSiteSlotInRoom(site) * 8)) {
         QsSetFlag(GF_CONTENT_SITE_DONE(site));
     }
 }
@@ -5601,7 +5642,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
     difficulty = QuickStartGetDifficulty();
-    wave = QuickStartWaveRoomGetWave();
+    wave = QuickStartWaveRoomGetWave(0);
     if (CheckRoomFlag(0)) {
         if (QuickStartCountRoomEnemies() > 0) {
             return;
@@ -5621,7 +5662,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
             }
             return;
         }
-        QuickStartWaveRoomSetWave(wave + 1);
+        QuickStartWaveRoomSetWave(0, wave + 1);
         ClearRoomFlag(0);
         return;
     }
@@ -7083,6 +7124,103 @@ static void QuickStartProcessLinks(void) {
     }
 }
 
+// The Boomerang chamber and its five entrances.
+//
+// Vanilla builds this as a one-way prize room: you drop in, open the
+// Magical Boomerang chest, and the ladders back up appear as part of that
+// event. Under QUICKSTART nobody opens that chest - it is deleted - so
+// without this the room is a trap with two working exits out of five, and
+// the four tree ladders leading down into it never fire at all.
+//
+// Two different problems, both fixed by writing the tile the engine's own
+// door check reads:
+//
+//  - The trees. Each tree hollow draws a ladder going down, but it is
+//    tilemap art with nothing behind it: the tile at the door reads 0x00,
+//    and unlike Castle Garden's ladders there is no HIDDEN_LADDER_DOWN
+//    object to unlock, so there is nothing to reveal. TILE_TYPE_422 is the
+//    centre tile HiddenLadderDown itself lays down, and it maps to
+//    ACT_TILE_63 - one of the four values UpdateDoorTransition fires on.
+//
+//  - The chamber's own exits. Its northwest and northeast ladders are armed
+//    in the map data already (they read ACT_TILE_241), but the southwest
+//    and southeast ones and the staircase back up to the field are not.
+//    Note that LadderUp's own SetTile(SPECIAL_TILE_35) is NOT what arms
+//    these - that produces actTile 0x53, which is not door-capable; it is
+//    the map data that arms the two that already work.
+#define QUICKSTART_TREE_LADDER_DOWN_X 0x78
+#define QUICKSTART_TREE_LADDER_DOWN_Y 0x54
+
+static bool32 QuickStartIsBoomerangTree(u8 area, u8 room) {
+    return area == AREA_TREE_INTERIORS &&
+           (room == ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST || room == ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST ||
+            room == ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST || room == ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST);
+}
+
+// The full 3x3 patch HiddenLadderDown_Init lays down, not just the centre
+// tile. Arming the actTile alone is not enough: the first attempt set only
+// TILE_TYPE_422 and the doors read ACT_TILE_63 correctly but still never
+// fired, because the surrounding tiles were solid and the player could
+// never physically stand on the door tile to trigger it. The 9-tile patch
+// is what makes the ladder both walkable and door-capable.
+static void QuickStartArmLadderTiles(s32 localX, s32 localY) {
+    u32 pos = TILE_POS(localX >> 4, localY >> 4);
+    SetTileType(TILE_TYPE_418, pos + TILE_POS(-1, -1), 1);
+    SetTileType(TILE_TYPE_419, pos + TILE_POS(0, -1), 1);
+    SetTileType(TILE_TYPE_420, pos + TILE_POS(1, -1), 1);
+    SetTileType(TILE_TYPE_421, pos + TILE_POS(-1, 0), 1);
+    SetTileType(TILE_TYPE_422, pos + TILE_POS(0, 0), 1);
+    SetTileType(TILE_TYPE_423, pos + TILE_POS(1, 0), 1);
+    SetTileType(TILE_TYPE_424, pos + TILE_POS(-1, 1), 1);
+    SetTileType(TILE_TYPE_425, pos + TILE_POS(0, 1), 1);
+    SetTileType(TILE_TYPE_426, pos + TILE_POS(1, 1), 1);
+}
+
+// Room flag 6: tiles already written this visit. SetTileType records the
+// tile it replaced in gRoomVars' own special-tile table (tileEntityCount),
+// so calling it every frame would keep pushing entries into a fixed-size
+// buffer for no reason - the tiles only need writing once per room load.
+static void QuickStartOpenBoomerangChamber(void) {
+    if (CheckRoomFlag(6)) {
+        return;
+    }
+    if (QuickStartIsBoomerangTree(gRoomControls.area, gRoomControls.room)) {
+        SetRoomFlag(6);
+        // Two overlapping patches, not one. The tree's ladder is approached
+        // from BELOW, unlike Castle Garden's (which the player steps down
+        // onto from above), and a single patch centred on the door left a
+        // few pixels of solid lip at its bottom edge: forcing the player
+        // onto the door tile fired the transition every time, but walking
+        // up into it stopped dead at y=91. Extending the patch one tile
+        // further down gives a walkable run all the way onto the door.
+        // Lower patch first: its top row lands on the door tile, so writing
+        // it second would overwrite TILE_TYPE_422 with TILE_TYPE_419 and
+        // strip the door's ACT_TILE_63 right back off (measured: the tile
+        // read 0x00 again).
+        QuickStartArmLadderTiles(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y + 16);
+        QuickStartArmLadderTiles(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y);
+        return;
+    }
+    if (gRoomControls.area != AREA_CAVES || gRoomControls.room != ROOM_CAVES_BOOMERANG) {
+        return;
+    }
+    SetRoomFlag(6);
+    QuickStartArmLadderTiles(0x48, 0xd8);  // southwest ladder up
+    QuickStartArmLadderTiles(0x108, 0xd8); // southeast ladder up
+    QuickStartArmLadderTiles(0xa8, 0xb8);  // the staircase back up to the field
+    // The Magical Boomerang chest. Its spot is the fifth event's spot now,
+    // per the user's own request to replace it rather than keep both.
+    {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (ent->kind == OBJECT && ent->id == CHEST_SPAWNER && QuickStartEntityInCurrentRoom(ent)) {
+                DeleteEntity(ent);
+            }
+        }
+    }
+}
+
 // Unlocks the two vanilla fixtures that stand between the player and a
 // converted "? room": Castle Garden's two hidden ladders, and Link's House's
 // own front door.
@@ -7236,6 +7374,9 @@ static void QuickStartRoomMonitor(void) {
     // than per-room, so any other room's hidden ladder or stuck house door
     // gets the same treatment for free.
     QuickStartRevealHiddenLadders();
+    // Same "make a vanilla fixture actually work" job, for the Boomerang
+    // chamber's five entrances and its chest.
+    QuickStartOpenBoomerangChamber();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
     // returns immediately without matching anything.
@@ -7331,11 +7472,22 @@ static void QuickStartRoomMonitor(void) {
         // above, so this can never be the same physical room as either.
         QuickStartSetupCaveRoomContent();
     } else if (QuickStartFindContentSiteForCurrentRoom() >= 0) {
-        // PILOT: a real vanilla room, reached through its own real vanilla
-        // door, that simply has a randomized event spawned inside it. No
-        // pool draw, no synthetic entrance, no return-spot table - see
+        // A real vanilla room, reached through its own real vanilla door,
+        // that simply has a randomized event spawned inside it. No pool
+        // draw, no synthetic entrance, no return-spot table - see
         // sQuickStartRoomContentSites.
-        QuickStartSetupContentSite(QuickStartFindContentSiteForCurrentRoom());
+        //
+        // Every site keyed to this room runs, not just the first. Only the
+        // Boomerang chamber has more than one (five, one per entrance), but
+        // looping unconditionally means adding a second event to any room
+        // is one table row and nothing else.
+        s32 site;
+        for (site = 0; site < QUICKSTART_CONTENT_SITE_COUNT; site++) {
+            if (gRoomControls.area == sQuickStartRoomContentSites[site].area &&
+                gRoomControls.room == sQuickStartRoomContentSites[site].room) {
+                QuickStartSetupContentSite(site);
+            }
+        }
     } else {
         // Falls through to here for whichever pool room the Goron Cave
         // Stairs door (slot 3) currently resolves to - same generic
