@@ -7317,6 +7317,58 @@ static void QuickStartStirRandom(void) {
     }
 }
 
+// Trilby Highlands' boulder-and-hole crossing, solved on arrival.
+//
+// A large part of the region's south and west sits behind it, and the hole
+// ships open, so that ground was unreachable and any wave enemy placed
+// there could never be cleared. Vanilla's puzzle is to shove the boulder
+// one tile into the hole; under QUICKSTART it simply starts shoved.
+//
+// This does not fake the result - it drives vanilla's own mechanism.
+// PushableRock's init path (sub_0808A644, pushableRock.c) already contains
+// the whole "am I sitting on a hole" case: it checks its tile's actTile for
+// ACT_TILE_25/ACT_TILE_240, and if so lays SPECIAL_TILE_21 over the hole,
+// sets the puzzle's own flag and drops the rock into its settled state. So
+// moving the rock onto the hole and bouncing it back to action 0 makes the
+// game solve the puzzle itself, exactly as though the player had pushed it.
+//
+// The hole is found by scanning rather than hardcoded: the boulder sits at
+// (344,664) with its hole one tile north at (344,648), but a search of the
+// tiles around whatever rock is present costs nothing and keeps this
+// working if either moves.
+static void QuickStartFillBoulderHoles(void) {
+    s32 i, dx, dy;
+    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* rock = &gEntities[i].base;
+        if (rock->kind != OBJECT || rock->id != PUSHABLE_ROCK || !QuickStartEntityInCurrentRoom(rock)) {
+            continue;
+        }
+        // action 3 is "already settled into a hole" - leave those alone, or
+        // this would re-trigger the fill every frame.
+        if (rock->action == 0 || rock->action == 3) {
+            continue;
+        }
+        for (dy = -3; dy <= 3; dy++) {
+            for (dx = -3; dx <= 3; dx++) {
+                s32 lx = (rock->x.HALF.HI - gRoomControls.origin_x) + dx * 16;
+                s32 ly = (rock->y.HALF.HI - gRoomControls.origin_y) + dy * 16;
+                u32 tilePos = TILE_POS(lx >> 4, ly >> 4);
+                u32 actTile = GetActTileAtTilePos(tilePos, rock->collisionLayer);
+                if (actTile != ACT_TILE_25 && actTile != ACT_TILE_240) {
+                    continue;
+                }
+                rock->x.HALF.HI = gRoomControls.origin_x + ((lx >> 4) * 16 + 8);
+                rock->y.HALF.HI = gRoomControls.origin_y + ((ly >> 4) * 16 + 8);
+                rock->action = 0;
+                return;
+            }
+        }
+    }
+}
+
 // Lon Lon Ranch's house doors.
 //
 // The player starts with the Lon Lon Key and still cannot open the
@@ -7511,6 +7563,7 @@ static void QuickStartRoomMonitor(void) {
     // chamber's five entrances and its chest.
     QuickStartOpenBoomerangChamber();
     QuickStartUnlockRanchHouseDoors();
+    QuickStartFillBoulderHoles();
     QuickStartStirRandom();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
