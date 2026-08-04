@@ -355,7 +355,7 @@ static void GameTask_Transition(void) {
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
         // shape as the two hint-shown flags above.
-        for (bit = 202; bit <= 329; bit++) {
+        for (bit = 202; bit <= 337; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1272,7 +1272,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // room to grow; bank 0 is nearly exhausted at this point (this range ends
 // at 265 + 5*8 = 305), so the full rollout should move these to one of the
 // empty named banks rather than extending bank 0 further.
-#define QUICKSTART_CONTENT_SITE_COUNT 8
+#define QUICKSTART_CONTENT_SITE_COUNT 9
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 8)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i) (GF_CONTENT_SITE_BASE(i) + 1) // 0 = chest, 1 = NPC
@@ -4081,7 +4081,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         // pilot is meant to demonstrate: 5 pool rooms that used to be
         // consumed by these doors are now free for the entrances that
         // still need one, instead of being drawn and left unreachable.
-        if ((ladderIndex >= 5 && ladderIndex <= 7) || (ladderIndex >= 8 && ladderIndex <= 12)) {
+        if (ladderIndex >= 5 && ladderIndex <= 13) {
             continue;
         }
         pool = (u8)((s32)Random() % 2);
@@ -4244,7 +4244,18 @@ static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
     // GF_LADDER_* flag bit, sQuickStartDoorReturnSpots row, and pool draw
     // keeps the same meaning it had before (QuickStartRandomizeDoorsOnce
     // skips the retired ones explicitly rather than re-packing the range).
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 480, 528, 316, 364, 13 }, // Boomerang cave
+    // Index 13 (Boomerang cave) retired too - see the BUG FIX comment on
+    // that door in gExitList_HyruleField_NorthHyruleField (transitions.c):
+    // its box sat 4px from where the now-reachable cave hub's own exit
+    // lands, so walking out of the cave teleported the player away. The
+    // cave itself is not lost - it's a content site reached through the 4
+    // trees, which is how vanilla connects it.
+    //
+    // Index 14 (Heart Piece Hallway cave) deliberately stays synthetic: its
+    // real vanilla destination also connects onward to ROOM_CAVES_TO_GRAVEYARD,
+    // a genuine multi-exit through-cave that reaches Royal Valley - i.e. the
+    // "leads somewhere sprawling" case, which needs its own containment
+    // design before it can be converted.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 288, 336, 464, 512, 14 }, // Heart Piece Hallway cave
     // Trilby Highlands (4 doors)
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 40, 88, 880, 928, 15 },   // Percy's Treehouse
@@ -5038,10 +5049,13 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
 // reward/NPC is visible on arrival without being close enough to collide
 // with the player as they spawn in.
 //
-// Note the Boomerang trees are not dead ends - each also has a real
-// WARP_TYPE_AREA down into the shared ROOM_CAVES_BOOMERANG hub, left fully
-// vanilla. That's deliberate: the player gets a small explorable pocket
-// with an event in each of its 4 leaves, rather than 4 isolated closets.
+// The Boomerang trees each list a real WARP_TYPE_AREA down into the shared
+// ROOM_CAVES_BOOMERANG hub, left fully vanilla - but probing the live
+// actTile table shows those inner doors are not armed (0x00), so they do
+// not fire and the trees behave as plain one-room ? rooms. The hub row
+// below is therefore currently unreachable in play; it is kept because it
+// costs one table row and would start working the moment that inner door
+// is made to fire, not because it is reachable today.
 typedef struct {
     u8 area;
     u8 room;
@@ -5063,6 +5077,12 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, 0x78, 0x60 },
+    // The Boomerang cave hub. Currently UNREACHABLE in play (see above and
+    // the CORRECTION comment on its door in transitions.c): neither its own
+    // mouth, nor the trees' doors down into it, nor its exit back to the
+    // field are armed with door actTiles. Content is defined anyway so the
+    // room is ready if that changes; it costs one row and one flag slot.
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0xa8, 0x98 },
 };
 
 // -1 if the current room isn't a content site.
@@ -6256,7 +6276,7 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
         // pool/room bits were never rolled, so they read back as pool 0 /
         // room index 0 - which would otherwise falsely claim whichever real
         // room sits at small-pool index 0 and shadow its true owner.
-        if ((i >= 5 && i <= 7) || (i >= 8 && i <= 12)) {
+        if (i >= 5 && i <= 13) {
             continue;
         }
         rawIndex = QuickStartLadderGetRoomIndex(i);

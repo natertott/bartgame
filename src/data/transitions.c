@@ -442,12 +442,15 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
 // AREA_TREE_INTERIORS would have been cancelled the same frame, which is
 // indistinguishable from never firing.
 //
-// Note these are NOT dead-end rooms: all 4 Boomerang trees also connect
-// down into a shared ROOM_CAVES_BOOMERANG hub which links back up to each
-// of them and back out to this room, and the Fairy Fountain tree drops
-// into its own cave. That whole pocket is left working exactly as vanilla
-// - the "? room" randomization now happens INSIDE those rooms rather than
-// by rerouting the doors (see QuickStartRoomContentSites, game.c).
+// The transition data says these rooms are not dead ends - all 4 Boomerang
+// trees list a WARP_TYPE_AREA down into a shared ROOM_CAVES_BOOMERANG hub,
+// and the Fairy Fountain tree into its own cave. In practice those inner
+// doors do NOT fire: probing the live actTile table shows 0x00 at each
+// tree's hub door, so the trees behave as ordinary one-way-in, one-way-out
+// rooms whose only working exit is the border back to this field. That is
+// fine for the "? room" model (the randomization happens INSIDE each room -
+// see sQuickStartRoomContentSites, game.c), but do not rely on the pocket
+// being explorable; it isn't, and the hub is currently unreachable.
 //
 // Still retargeted below, deliberately: the Boomerang cave (0x1f8,0x154)
 // and Heart Piece Hallway cave (0x138,0x1e8) - both are still served by
@@ -468,7 +471,38 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x2f0, 0x138, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x1f8, 0x154, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
+    // BUG FIX (user report: "went into a tree, got the reward, but when I
+    // exited I returned up a ladder in vanilla Hyrule Castle Garden and was
+    // stuck"). This is the mouth of the very Boomerang cave hub the 4
+    // converted trees drop into. While it stayed retargeted it also kept its
+    // synthetic trigger box (entrance index 13, 480-528 x 316-364) - and the
+    // hub's own vanilla exit lands the player at (0x1f8,0x138) = (504,312),
+    // four pixels above that box's top edge. Before the pilot the hub was
+    // unreachable (every tree led to Castle Garden), so the box never
+    // mattered; once the trees opened it, walking out of the cave dropped
+    // the player straight onto a teleport into a drawn pool room, whose own
+    // exit is retargeted to Castle Garden Main - landing them at a Castle
+    // Garden ladder return spot, exactly as reported. Retiring that box
+    // (game.c, sQuickStartLadderEntrances) is what actually fixes it.
+    //
+    // CORRECTION, from probing the live actTile table rather than trusting
+    // the transition data: this door does NOT fire (0x09 everywhere around
+    // (504,340), no door-capable value), and neither does the hub's own
+    // exit back to this field (0x0a at (0xa8,0xb8)), nor the trees' exits
+    // down into the hub (0x00). Only the hub's two ladders up to trees
+    // NW/NE are armed (ACT_TILE_241).
+    //
+    // So the Boomerang cave hub is effectively unreachable in play, and the
+    // "walk out of the cave onto the trigger box" mechanism described above
+    // could not actually have occurred. Retiring the box is still correct -
+    // it removed a hazard that would bite the moment any of those doors
+    // became reachable - but it is NOT a confirmed explanation of the
+    // reported Castle Garden lockout, which remains undiagnosed.
+    //
+    // Pointing this at the real cave rather than Castle Garden is the safer
+    // of the two inert options: if it ever did fire it lands inside the
+    // pilot's own pocket instead of at a Castle Garden ladder spot.
+    { WARP_TYPE_AREA, 0x1f8, 0x154, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_BOOMERANG, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x138, 0x108, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
