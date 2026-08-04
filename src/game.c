@@ -5190,7 +5190,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0, 0x78, 0x60 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0, 0x78, 0x60 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0, 0x78, 0x60 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, 0x78, 0x60 },
+    // The event for this tree lives one floor DOWN, in the fairy fountain
+    // cave its staircase leads to, not in the tree hollow itself - the
+    // hollow is a landing with a staircase in it, and the event was sitting
+    // on top of that staircase. The tree is a pass-through now; its
+    // staircase tile reads ACT_TILE_40, so it opens on touch like any other
+    // vanilla door.
+    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, 0x78, 0x60 },
     // South Hyrule Field's 3 converted doors. Unlike the Boomerang trees
     // these are true dead ends - one room each, single border exit back to
     // the field - so they're the simplest possible shape for this model.
@@ -5372,9 +5378,12 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == QUICKSTART_SHOP_AREA && room == QUICKSTART_SHOP_ROOM) {
         return TRUE;
     }
-    // Reachable from the North Hyrule Field fairy fountain tree, and not
-    // itself a content site (it holds vanilla's own fountain).
-    if (area == AREA_CAVES && room == ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN) {
+    // The North Hyrule Field fairy fountain tree. It is no longer a content
+    // site itself - its event moved down the staircase into the cave, which
+    // IS a site and so gets blessed by the table scan below - but the tree
+    // is still the room the player walks into from the field, so it has to
+    // be blessed here or the door into it gets cancelled.
+    if (area == AREA_TREE_INTERIORS && room == ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN) {
         return TRUE;
     }
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
