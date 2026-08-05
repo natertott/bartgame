@@ -1297,7 +1297,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // 26 sites the range is 266..603, and bank 12 has room up to offset 707
 // (the shop's own block sits just above it), so there is still headroom
 // before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 22
+#define QUICKSTART_CONTENT_SITE_COUNT 23
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -5385,6 +5385,20 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // front door and left the same way.
     { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 0, 0x68, 0x60 },  // arrives (0x68,0x78)
     { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 0, 0x78, 0x60 },  // arrives (0x78,0x78)
+    // Lon Lon Ranch's through-cave, back on its own vanilla doors now that
+    // the synthetic connector that used to swallow them is retired. Still
+    // gated by vanilla's Mole Mitts dirt on the way in, which is the point -
+    // it reads as a real secret rather than an ordinary cave mouth.
+    //
+    // The event sits at (120,88), on the open upper floor. That is
+    // deliberately well clear of the diggable dirt block in the room's
+    // lower left (x 24-104, y 168-248, read off a live actTile dump) rather
+    // than clearing that dirt away: nothing here modifies tile data. Writing
+    // foreign tile types into a room's tileset is exactly what produced the
+    // graphical artifacts and invisible walls in the Boomerang chamber, and
+    // placing the event on floor that is already open makes the question
+    // moot.
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, 0, 0x78, 0x58 },
 };
 
 // Content sites are normally left alone - they're real vanilla rooms the
@@ -6031,6 +6045,21 @@ static void QuickStart2DoorSetupRoomContent(void) {
 // (QuickStart2DoorRandomizeOnce), so it's resolved here rather than a
 // static sQuickStartLinks entry, the same reasoning
 // QuickStartProcessLadderLinks already has for ladder 3's own entrance.
+// RETIRED. This trigger box sat directly on Lon Lon Ranch's real vanilla
+// cave mouth - the box is that door's own coordinates padded by six - so it
+// fired first every time and swallowed the door, sending the player to a
+// randomly drawn pool room instead of into the cave. That is the "broken
+// cave-ladder connection" the user reported.
+//
+// The cave itself never needed anything done to it: gExitList_Caves_LonLonRanch
+// is untouched vanilla, two borders straight back to the ranch, and the
+// room's own door tile reads ACT_TILE_41. Removing the box is the whole
+// restore - the vanilla door simply starts working again. The cave is a
+// content site now (sQuickStartRoomContentSites), so it holds a randomized
+// event, and it keeps vanilla's Mole Mitts dirt gate on the way in.
+//
+// The 2-door pool this fed is still used by North Hyrule Field's river
+// bridge and its cave mouth, so only this one entrance goes.
 static void QuickStartProcessCaveConnectorLink(void) {
     s16 localX, localY;
     u8 targetArea, targetRoom;
@@ -6038,6 +6067,7 @@ static void QuickStartProcessCaveConnectorLink(void) {
     if (gRoomTransition.transitioningOut) {
         return;
     }
+    return;
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
