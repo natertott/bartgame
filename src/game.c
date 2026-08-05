@@ -3488,6 +3488,30 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // not something confirmed by finding the cave itself, and it is a
     // one-word change here if it turns out to be another item.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 220, 314, 55, 119, ITEM_MOLE_MITTS },
+
+    // --- North Hyrule Field -------------------------------------------
+    // The whole western section. Reaching it needs bombs AND a trip through
+    // the 2-door "? room" that joins the two ladders, so bombs are the
+    // gating item - without them the route does not open at all.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, 172, 0, 1023, ITEM_BOMBS },
+    // The northeast pocket, above (884,156) and right of (876,103). Bombs
+    // again.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 876, 1023, 0, 156, ITEM_BOMBS },
+
+    // --- Lon Lon Ranch ------------------------------------------------
+    // Three Cane of Pacci ledges, walked by the user. The first two were
+    // given as lines with everything above them out of reach, so they run
+    // from the top of the room down to the line.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 38, 138, 0, 127, ITEM_PACCI_CANE },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 228, 475, 0, 167, ITEM_PACCI_CANE },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 267, 660, 222, 396, ITEM_PACCI_CANE },
+    // The southeast corner. Gated on Roc's Cape alone, deliberately, even
+    // though the Zora's Flippers also get the player across: the user
+    // reports that crossing is ONE WAY - swim over and you cannot swim
+    // back. Treating flippers as sufficient would put wave enemies somewhere
+    // a flippers-only player can reach but not leave, turning a stranded
+    // enemy into a stranded player.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 596, 683, 591, 782, ITEM_ROCS_CAPE },
 };
 
 // Whether something may be placed at this room-local spot in the current
@@ -5297,11 +5321,19 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // read off a live actTile dump of the room rather than guessed: the
     // chamber is a ring, and its middle band (y 152-216) and the two side
     // columns are the only walkable parts.
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x48, 0x98 },   // northwest tree, arrives (72,136)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x108, 0x98 },  // northeast tree, arrives (264,136)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x48, 0x108 },  // southwest tree, arrives (72,248)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0x108, 0x108 }, // southeast tree, arrives (264,248)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 0xa8, 0xa8 },   // the staircase, where the chest was
+    // Spots are the centres of boxes the user walked inside the chamber,
+    // replacing the earlier guesses derived from each entrance's arrival
+    // point. Walked ground truth beats derived coordinates here for the
+    // same reason it has everywhere else in this file.
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 72, 78 },    // northwest tree,  box (56,60)-(88,97)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 266, 58 },   // northeast tree,  box (249,38)-(283,78)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 72, 285 },   // southwest tree,  box (53,268)-(92,303)
+    // The southeast box came through as (246,183) (281,183) (281,229)
+    // (246,289) - three corners agree on y=229 and the fourth reads 289, so
+    // this takes the rectangle the three agree on. Easy to nudge if 289 was
+    // the intended one.
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 263, 206 },  // southeast tree,  box (246,183)-(281,229)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 170, 158 },  // the staircase,   box (153,143)-(188,173)
     // Trilby Highlands' 4 converted doors - all true dead ends, same shape
     // as South Hyrule Field's. The Keese Chest and Fairy Fountain caves are
     // the two reached by bombing a wall open.
