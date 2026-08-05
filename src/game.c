@@ -160,7 +160,6 @@ static void QuickStartRandomizeMelariEastOnce(void);
 static void QuickStartSetupMelariEastRoomContent(void);
 static void QuickStartRandomizeMelariSoutheastOnce(void);
 static void QuickStartSetupMelariSoutheastRoomContent(void);
-static void QuickStartApplyHeartContainerBonusOnce(void);
 static void QuickStartRandomizeLaddersOnce(void);
 static void QuickStartRandomizeDoorsOnce(void);
 static void QuickStartProcessLadderLinks(void);
@@ -355,8 +354,7 @@ static void GameTask_Transition(void) {
         // policy as the ladder/2door pools above. 229: GF_REGION_FINAL_HINT_SHOWN,
         // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
         // Melari's Mine East room's own randomized-once/kind/extra bits.
-        // 235: GF_HEART_CONTAINER_BONUS_APPLIED, same one-per-run latch
-        // shape as the two hint-shown flags above. 241-265: the river
+        // 235: free (was GF_HEART_CONTAINER_BONUS_APPLIED). 241-265: the river
         // bridge and cave connector draws. 266-525: the 20 room-keyed
         // content sites' randomized/kind/extra/done blocks
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
@@ -1220,12 +1218,9 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define GF_MELARI_EAST_RANDOMIZED 230
 #define GF_MELARI_EAST_KIND_BIT 231 // 0 = chest, 1 = NPC
 #define GF_MELARI_EAST_EXTRA_BIT(b) (232 + (b)) // b = 0..2, chest reward index or NPC script index
-// One-time latch for the maxHealth bonus a bought Heart Container should
-// grant - GiveItem's own metadata has no effect for this item (see
-// QuickStartUpdateItemChoice's phase==3 handler, which already grants it
-// by hand for the round-2 choice path); this generalizes that same grant
-// to also cover buying one from a shop instead of picking it.
-#define GF_HEART_CONTAINER_BONUS_APPLIED 235
+// 235 is free: it used to be GF_HEART_CONTAINER_BONUS_APPLIED, the latch
+// for a manual Heart Container maxHealth grant that turned out to be
+// double-counting vanilla's own (see QuickStartUpdateItemChoice's phase 3).
 #define GF_MELARI_SOUTHEAST_RANDOMIZED 236
 #define GF_MELARI_SOUTHEAST_KIND_BIT 237 // 0 = chest, 1 = NPC
 #define GF_MELARI_SOUTHEAST_EXTRA_BIT(b) (238 + (b)) // b = 0..2, chest reward index or NPC script index
@@ -1301,7 +1296,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // 26 sites the range is 266..603, and bank 12 has room up to offset 707
 // (the shop's own block sits just above it), so there is still headroom
 // before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 23
+#define QUICKSTART_CONTENT_SITE_COUNT 24
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1915,17 +1910,24 @@ static const QuickStartLink sQuickStartLinks[] = {
     // single-screen, and confirmed reachable from Melari's Mine's existing
     // walkable network (each door's immediate approach connects back to
     // already-verified ground within a few hundred frames of walking).
+    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
+      ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0x78, 0x64 },
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x228, 0x22e, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0x78, 0x64 },
     { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
-    // Melari's Mine's former Southwest door used to link here to the shop,
-    // and the shop's room linked back. Both are gone: the shop no longer
-    // lives in the Grimblade dojo, and is no longer reached from Melari's
-    // Mine at all - it hangs off one randomly drawn overworld door per run
-    // instead (see sQuickStartShopDoors). The dojo is a plain "? room" now,
-    // entered the way vanilla always intended: down Castle Garden's
-    // southeast ladder, through the ante room, north into the arena.
+    // The Southwest door (the first of the three rows above) spent a
+    // session pointing at the shop in the Grimblade dojo instead of at its
+    // own vanilla room, both here and in transitions.c. The shop has moved
+    // out to a randomly drawn overworld door (see sQuickStartShopDoors) and
+    // the dojo became a plain "? room" entered the way vanilla always
+    // intended - down Castle Garden's southeast ladder, through the ante
+    // room, north into the arena - but this door kept its old destination,
+    // which stranded anyone who walked into it: the dojo's own exit chain
+    // runs back out to Castle Garden's southeast ladder, into a Castle
+    // Garden that never went through the region chain's setup. Both ends
+    // are back on vanilla now, and the room it leads to is a content site
+    // like Melari's other two side rooms.
     // Castle Garden's real north door (gExitList_CastleGarden_Main[0], a
     // WARP_TYPE_AREA door left un-retargeted for the same ACT_TILE reason
     // documented above - local (504,40), the castle's own entrance
@@ -5540,22 +5542,86 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // placing the event on floor that is already open makes the question
     // moot.
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, 0, 0x78, 0x58 },
+    // Melari's Mine's southwest side room. Its two siblings (East and
+    // Southeast) have had bespoke content dispatchers since before this
+    // table existed; this one went the other way, because its door was
+    // pointed at the shop instead. With the door back on vanilla (see
+    // sQuickStartLinks and transitions.c) the room needs an event of its
+    // own, and the table is the right home for a new one rather than a
+    // third copy of the bespoke pair. Content at (152,83), the same spot
+    // its structurally identical Southeast sibling already uses.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0, 152, 83 },
 };
 
-// Content sites are normally left alone - they're real vanilla rooms the
-// player is meant to recognise, and their own furniture and payouts stay
-// put alongside the event. The dojo is the exception the user asked for:
-// it ships with a dojo-master NPC and its props filling the arena, and the
-// whole point of putting the event there is that the arena is empty enough
-// to fight in.
+// Whether a content site wants its FURNITURE gone as well as its payouts -
+// i.e. every OBJECT in the room, not just the reward-shaped ones
+// QuickStartClearVanillaRoomContent takes out of all of them. Only rooms
+// whose props actually get in the way of the event: the dojo ships with a
+// dojo-master NPC and six pillars filling the arena a miniboss needs, and
+// the ranch house rooms are packed tightly enough that a 9-pot lottery
+// loses pots to the furniture.
 static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
     if (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) {
         return TRUE;
     }
-    // Lon Lon Ranch's two house rooms. Both are packed with vanilla
-    // furniture, enough that a 9-pot lottery loses pots to it.
     return area == AREA_HOUSE_INTERIORS_4 &&
            (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST || room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
+}
+
+// Deletes a room's own vanilla payout - the reward it shipped with, before
+// it was repurposed as a "? room".
+//
+// Converting these rooms back onto their real vanilla doors brought their
+// real vanilla contents back with them, and nothing was taking those away:
+// the user reported tree interiors handing out a heart piece AND a random
+// event, fairy fountains with both their fairies and an event, and so on.
+// The event is meant to BE the room's reward, not a bonus on top of one.
+//
+// Deliberately narrower than "delete every OBJECT" (which is what
+// QuickStartContentSiteWantsClear asks for, and which is fine in the three
+// rooms that ask for it): most of these rooms keep their exit as a real
+// object - a LADDER_UP, a HOUSE_DOOR_INT, an ARCHWAY - and a blanket sweep
+// would take those with it. This list is the payout-shaped ids only, so a
+// room can lose its chest without losing its way out.
+//
+// Vanilla ENEMY and NPC entities go too: an NPC in one of these rooms is
+// vanilla's own reward-giver for it (Percy in his treehouse, say), which is
+// the same duplication as a leftover chest, and a vanilla enemy in a room
+// that is about to roll a miniboss just muddies the encounter.
+// Room flag 63 rather than one of the low ones: 0-6 are already spoken for
+// by the event content itself and by QuickStart2DoorClearRoomObstacles, and
+// 64 upward is where the per-site event flag windows start.
+#define QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG 63
+
+static void QuickStartClearVanillaRoomContent(void) {
+    s32 i;
+    if (CheckRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG)) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (!QuickStartEntityInCurrentRoom(ent) || ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == ENEMY || ent->kind == NPC) {
+            DeleteEntity(ent);
+            continue;
+        }
+        if (ent->kind != OBJECT) {
+            continue;
+        }
+        switch (ent->id) {
+            case GROUND_ITEM:
+            case CHEST_SPAWNER:
+            case SPECIAL_CHEST:
+            case HEART_CONTAINER:
+            case FAIRY:
+            case GREAT_FAIRY:
+                DeleteEntity(ent);
+                break;
+        }
+    }
+    SetRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG);
 }
 
 // -1 if the current room isn't a content site.
@@ -5717,6 +5783,14 @@ static void QuickStartSetupContentSite(s32 site) {
     u8 kind;
     s32 extra, b;
     QuickStartRandomizeContentSiteOnce(site);
+    // Above the "already collected" check on purpose. The vanilla payout has
+    // to go every time the room loads, not only on the visit that spawns the
+    // event - otherwise a room whose event is long since collected quietly
+    // goes back to handing out its original chest or heart piece.
+    QuickStartClearVanillaRoomContent();
+    if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
+        QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
+    }
     if (QsCheckFlag(GF_CONTENT_SITE_DONE(site))) {
         return;
     }
@@ -5732,12 +5806,6 @@ static void QuickStartSetupContentSite(s32 site) {
             extra |= (1 << b);
         }
     }
-    // See QuickStartContentSiteWantsClear: almost every site keeps its
-    // vanilla content alongside the event (the Rupee caves' 15 rupees, say);
-    // only the dojo gets swept.
-    if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
-        QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
-    }
     // Room flags are per ROOM, but the Boomerang chamber holds five events
     // at once, so they cannot all use flags 0-5 the way a lone event does -
     // the first one to set "already spawned" would silence the other four
@@ -5750,26 +5818,6 @@ static void QuickStartSetupContentSite(s32 site) {
                                     64 + QuickStartContentSiteSlotInRoom(site) * 8)) {
         QsSetFlag(GF_CONTENT_SITE_DONE(site));
     }
-}
-
-// Grants the Heart Container's actual +1 max heart effect (GiveItem has no
-// switch-case for this item - see QuickStartUpdateItemChoice's phase==3
-// handler, which already applies it by hand for the round-2 choice path)
-// regardless of how the player ended up owning one - picking it in round 2,
-// or now, buying it from the new Melari's Mine shop above. Idempotent via
-// its own one-time latch rather than re-deriving "was this just granted"
-// from inventory state, since GetInventoryValue alone can't tell "just
-// bought" apart from "already owned from a previous check this same run".
-static void QuickStartApplyHeartContainerBonusOnce(void) {
-    if (GetInventoryValue(ITEM_HEART_CONTAINER) == 0) {
-        return;
-    }
-    if (QsCheckFlag(GF_HEART_CONTAINER_BONUS_APPLIED)) {
-        return;
-    }
-    gSave.stats.maxHealth += 8;
-    gSave.stats.health = gSave.stats.maxHealth;
-    QsSetFlag(GF_HEART_CONTAINER_BONUS_APPLIED);
 }
 
 // One draw per save, same shape as QuickStartRandomizeLaddersOnce but for
@@ -6031,6 +6079,9 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
                           (area == AREA_HOUSE_INTERIORS_4 &&
                            (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
                             room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST));
+    // Every room that goes through here is a "? room" of some kind, so its
+    // own vanilla payout goes too - same reasoning as the content sites.
+    QuickStartClearVanillaRoomContent();
     if (CheckRoomFlag(1)) {
         return;
     }
@@ -7742,12 +7793,6 @@ static void QuickStartRoomMonitor(void) {
     QuickStartFixupCaveConnectorReturn();
     QuickStartFixupRiverBridgeReturn();
     QuickStartFixupCaveReturn();
-    // Unconditional for the same reason QuickStartEnforceContainment etc.
-    // are above - a Heart Container can now be gained either through the
-    // round-2 choice (already handled inline there) or by buying one from
-    // the new Melari's Mine shop, and this call is what actually applies
-    // the buy path's effect; idempotent either way via its own latch.
-    QuickStartApplyHeartContainerBonusOnce();
     // Rolled here rather than at a specific room so the draw exists before
     // the player can reach any of the candidate doors.
     QuickStartRandomizeShopOnce();
@@ -8175,17 +8220,19 @@ static void QuickStartUpdateItemChoice(void) {
             QuickStartSpawnItems(sQuickStartBonusItems);
             gRoomTransition.field_0x4[0] = 2;
         } else if (phase == 3) {
-            // ITEM_HEART_CONTAINER's own metadata has no GiveItem-switch
-            // effect (unk1 == 0) - it's normally a special boss-reward
-            // object (object/heartContainer.c) that spawns its own cutscene
-            // entity outside the generic pickup flow. Grant the actual
-            // effect ourselves: a full heart is 8 health units in this
-            // engine (see ui.c: gHUD.maxHealth = gSave.stats.maxHealth >> 1,
-            // with gHUD.maxHealth itself in quarter-heart units).
-            if (GetInventoryValue(ITEM_HEART_CONTAINER) != 0) {
-                gSave.stats.maxHealth += 8;
-                gSave.stats.health = gSave.stats.maxHealth;
-            }
+            // No manual maxHealth bump here any more. This used to add 8
+            // (one heart) on the belief that ITEM_HEART_CONTAINER has no
+            // pickup effect of its own, and QuickStartApplyHeartContainerBonusOnce
+            // added a second 8 on the same belief - but vanilla already
+            // grants it: a ground-item pickup runs
+            // itemOnGround.c's sub_08081420 -> CreateItemEntity and a shop
+            // purchase runs script.c's ScriptCommand_BuyShopItem ->
+            // InitItemGetSequence, and both build the same LINK_HOLDING_ITEM
+            // with timer 0, whose LinkHoldingItem_Action3 case 0 does
+            // `maxHealth += 8` for exactly this item. Three grants for one
+            // container is why the round-2 choice took the player from 2
+            // hearts to 5 (reported by the user).
+            //
             // Same reasoning as phase 1 above: reposition before the skill
             // item row spawns at the same reused coordinates.
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 135;

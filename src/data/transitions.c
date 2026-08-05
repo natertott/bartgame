@@ -960,22 +960,21 @@ const Transition gExitList_MelarisMine_Main[] = {
 #endif
     { WARP_TYPE_AREA, 0x70, 0x12c, 0xbc, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x6, 0x0, 0x0, 0x0 },
-#ifdef QUICKSTART
-    // Retargeted straight to the merchant's room (AREA_DOJOS,
-    // ROOM_DOJOS_GRIMBLADE, see game.c's sQuickStartLinks) instead of the
-    // old Minish House Interiors Southwest room. This real door's own box
-    // is the exact same spot game.c's own custom link already covers, so
-    // if it ever wins the race against that link (confirmed happening in
-    // practice, unlike most other WARP_TYPE_AREA doors this file relies on
-    // being unreachable), it now lands somewhere with a merchant either
-    // way instead of the old room, which no longer has one. Spawn
-    // (119,170) facing up (0x0), per the user's own request.
-    { WARP_TYPE_AREA, 0xa8, 0x220, 0x77, 0xaa, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1,
-      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#else
+    // Back on its vanilla destination. It spent one session retargeted to
+    // AREA_DOJOS/ROOM_DOJOS_GRIMBLADE, from when the shop lived in that
+    // dojo and this door was how the player reached it. The shop has since
+    // moved out to a randomly drawn overworld door and the dojo became an
+    // ordinary "? room" reached the vanilla way (down Castle Garden's
+    // southeast ladder), but this retarget was never undone - so walking
+    // into Melari's Mine's southwest door dropped the player in the dojo,
+    // and leaving the dojo ran its own vanilla chain out to Castle Garden's
+    // southeast ladder, arriving in a Castle Garden that had never been
+    // through the region chain's setup. Reported by the user as being
+    // trapped there. Same row as the #else branch used to hold, no
+    // QUICKSTART divergence left: the room it leads to is a content site
+    // now (sQuickStartRoomContentSites), like Melari's other two.
     { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#endif
     { WARP_TYPE_AREA, 0x228, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x280, 0x11c, 0x24, 0x56, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
