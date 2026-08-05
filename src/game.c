@@ -138,6 +138,38 @@ static void QsClearFlag(u32 flag) {
     ClearLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
 }
 
+// gRoomVars.flags is shared with whatever vanilla room logic runs in the
+// room, and vanilla uses the low bits. That is not a theoretical hazard: in
+// Dark Hyrule Castle's Triple Darknut room - a 2-door pool member - vanilla
+// clears room flag 0 while the player is standing there, which wiped the
+// "already spawned this visit" latch every kind of "? room" content relies
+// on. The result was one fresh spawn per frame until the entity table
+// saturated: 63 stacked reward items on the arrival tile (the player could
+// not stop picking them up), 21 minibosses, 61 fairies. Reported by the
+// user; reproduced by forcing the 2-door draw to that room, and confirmed
+// with a counter showing CheckRoomFlag(0) reading false on 36 of 51 calls
+// that had already set it.
+//
+// So QUICKSTART's own per-visit flags live in a private window instead,
+// exactly like its global flags do (QUICKSTART_FLAG_ORIGIN above). Offsets
+// used inside the window run 0..103 (the content sites' 64 + slot*8 windows
+// are the highest), and gRoomVars.flags holds 416 bits, so an origin of 256
+// clears every plausible vanilla flag while leaving the top of the range
+// unused.
+#define QUICKSTART_ROOM_FLAG_ORIGIN 256
+
+static u32 QsCheckRoomFlag(u32 flag) {
+    return CheckRoomFlag(QUICKSTART_ROOM_FLAG_ORIGIN + flag);
+}
+
+static void QsSetRoomFlag(u32 flag) {
+    SetRoomFlag(QUICKSTART_ROOM_FLAG_ORIGIN + flag);
+}
+
+static void QsClearRoomFlag(u32 flag) {
+    ClearRoomFlag(QUICKSTART_ROOM_FLAG_ORIGIN + flag);
+}
+
 static void QuickStartSpawnEnemies(void);
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnStarterChoice(void);
@@ -1388,7 +1420,7 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
         return;
     }
     // Refresh the existing Element's despawn timer FIRST, every frame,
-    // regardless of room flag 403 below - this used to be checked only
+    // regardless of room flag 43 below - this used to be checked only
     // inside the "not flagged yet" branch, so it only ever ran on the one
     // frame the item was first created; every frame after that hit flag
     // 403's early return before ever reaching this scan, leaving the
@@ -1408,7 +1440,7 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
             return;
         }
     }
-    // Room flag 403: "already created one this round" - GiveItem (the real
+    // Room flag 43: "already created one this round" - GiveItem (the real
     // vanilla pickup path, LinkHoldingItem_Action1 in
     // object/linkHoldingItem.c) isn't called until the pickup cutscene's own
     // held-item entity reaches a specific animation frame, several frames
@@ -1426,7 +1458,7 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
     // impractical to script). No manual clearing needed elsewhere: like
     // every other room flag in this file, it resets on its own the moment
     // the room reloads for a genuinely new round.
-    if (CheckRoomFlag(403)) {
+    if (QsCheckRoomFlag(43)) {
         return;
     }
     itemEntity = CreateObject(GROUND_ITEM, ITEM_EARTH_ELEMENT, 0);
@@ -1436,7 +1468,7 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
         itemEntity->collisionLayer = 1;
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
-        SetRoomFlag(403);
+        QsSetRoomFlag(43);
     }
 }
 
@@ -1560,7 +1592,8 @@ const u8* const gCustomStrings[] = {
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
-// Room flag 400 tracks "message already shown" across the few frames it's
+// Room flag 40 (in QUICKSTART's private room-flag window, see QsSetRoomFlag)
+// tracks "message already shown" across the few frames it's
 // up, the same idempotent-per-frame-check pattern this whole file already
 // uses elsewhere - a plain mutable static local doesn't work in this build:
 // agbcc emits it into .data, and this ROM's linker.ld doesn't map
@@ -1569,20 +1602,13 @@ const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 // for the same underlying reason, not just for the reset-on-reload
 // semantics).
 //
-// Deliberately a high flag number (gRoomVars.flags is 52 bytes = 416 valid
-// bits, and every OTHER QUICKSTART use of a room flag in this file is a
-// single-digit number) rather than reusing low flag 1 as this used to:
-// unlike Castle Garden/Melari's Mine/Castor Darknut, Lon Lon Ranch is a real,
-// content-heavy vanilla room (see sub_StateChange_HyruleField_LonLonRanch,
-// roomInit.c - Goron NPC, KINOKO/TABIDACHI/INLOCK checks, its own boulder
-// puzzle), so a low flag number is a real collision risk with whatever
-// vanilla script logic already runs in this room and happens to set/read the
-// same bit for its own unrelated purpose - which would make CheckRoomFlag
-// below read true before the win message ever actually shows, silently
+// A flag of its own rather than reusing flag 1 as this used to: a shared bit
+// would read true before the win message ever actually showed, silently
 // skipping straight to "already shown, waiting for dismissal" and hanging
-// forever. A number far outside vanilla's own low range sidesteps the whole
-// class of bug instead of having to prove which specific flag (if any)
-// collided.
+// forever. Collision with VANILLA's own room flags - the original reason
+// this one was pushed up into the 400s - is no longer a consideration for
+// any flag in this file: they all go through QsSetRoomFlag's private window
+// now (see QUICKSTART_ROOM_FLAG_ORIGIN).
 // Counts distinct items currently owned (GetInventoryValue != 0) across the
 // real item id range (ITEM_NONE=0 excluded; ids from 0xfc on are drop-table
 // markers, not real inventory slots - see item.h - so the loop stops well
@@ -1636,12 +1662,12 @@ static u32 QuickStartComputeScore(void) {
 
 static void QuickStartCheckWinCondition(void) {
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) == 0) {
-        ClearRoomFlag(400);
-        ClearRoomFlag(402);
-        ClearRoomFlag(404);
+        QsClearRoomFlag(40);
+        QsClearRoomFlag(42);
+        QsClearRoomFlag(44);
         return;
     }
-    // Room flag 404: "vanilla's own Earth Element get-message has started".
+    // Room flag 44: "vanilla's own Earth Element get-message has started".
     //
     // The "is a message up right now?" test below is necessary but not
     // sufficient on its own. GiveItem flips this item's inventory value a
@@ -1654,16 +1680,16 @@ static void QuickStartCheckWinCondition(void) {
     // and only then for it to finish, closes that window.
     //
     // Only required on the visit that actually dropped the Element (room
-    // flag 403): if the player picked it up and came back later, inventory
+    // flag 43): if the player picked it up and came back later, inventory
     // already reads nonzero with no cutscene pending, and waiting for a
     // message that will never arrive would hang the win outright.
-    if (CheckRoomFlag(403) && !CheckRoomFlag(404)) {
+    if (QsCheckRoomFlag(43) && !QsCheckRoomFlag(44)) {
         if (gMessage.state & MESSAGE_ACTIVE) {
-            SetRoomFlag(404);
+            QsSetRoomFlag(44);
         }
         return;
     }
-    if (!CheckRoomFlag(400)) {
+    if (!QsCheckRoomFlag(40)) {
         // Wait for the real vanilla "You got the Earth Element" pickup
         // cutscene to finish and be dismissed before starting our own
         // message - GetInventoryValue(ITEM_EARTH_ELEMENT) above already
@@ -1693,7 +1719,7 @@ static void QuickStartCheckWinCondition(void) {
         // own per-frame timing, so nothing else would otherwise drive it
         // forward the moment MessageRequest above sets state=1.
         MsgInit();
-        SetRoomFlag(400);
+        QsSetRoomFlag(40);
         return;
     }
     if (gMessage.state & MESSAGE_ACTIVE) {
@@ -1701,18 +1727,18 @@ static void QuickStartCheckWinCondition(void) {
     }
     // Second message: this run's score, shown once the difficulty message
     // above has been dismissed. Same room-flag-gated one-shot pattern as
-    // flag 400 itself. meta_xp/runs_completed are updated here too, exactly
+    // flag 40 itself. meta_xp/runs_completed are updated here too, exactly
     // once, right as the score they're derived from is computed and shown -
     // not in the branch below, which can run several frames later once the
     // player dismisses this message.
-    if (!CheckRoomFlag(402)) {
+    if (!QsCheckRoomFlag(42)) {
         u32 score = QuickStartComputeScore();
         gSave.meta_xp += score;
         gSave.runs_completed++;
         MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 8));
         gMessage.rupees = score;
         MsgInit();
-        SetRoomFlag(402);
+        QsSetRoomFlag(42);
         return;
     }
     if (gMessage.state & MESSAGE_ACTIVE) {
@@ -1722,7 +1748,7 @@ static void QuickStartCheckWinCondition(void) {
     // win message starts made GetInventoryValue(...) == 0 true again on
     // the very next frame, before the message ever finished or this
     // function ever reached DoSoftReset below: that early-returned via the
-    // very first check above, wiping room flag 400's "message already
+    // very first check above, wiping room flag 40's "message already
     // shown" bookkeeping and abandoning the win sequence entirely - and
     // QuickStartSpawnWinKeyOnce, seeing the same now-zeroed value, would
     // immediately drop a fresh Element, which is exactly the infinite
@@ -2025,12 +2051,12 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
     if (GetInventoryValue(ITEM_5A) != 0) {
         return;
     }
-    if (CheckRoomFlag(1)) {
+    if (QsCheckRoomFlag(1)) {
         return;
     }
     QuickStartSpawnEnemyGroup(sQuickStartMineEnemyOffsets, ARRAY_COUNT(sQuickStartMineEnemyOffsets),
                                QUICKSTART_MINE_ROOM_SQUARES, QUICKSTART_MINE_MAX_ENEMIES);
-    SetRoomFlag(1);
+    QsSetRoomFlag(1);
 }
 
 // Lon Lon Ranch (a single room inside AREA_HYRULE_FIELD - see
@@ -2478,7 +2504,7 @@ static void QuickStartRandomizeRegionChainOnce(void) {
 // against here the way the old Castle-Garden-only boss hook needed to.
 static bool32 QuickStartRegionWaveCleared(void) {
     s32 i;
-    if (!CheckRoomFlag(0)) {
+    if (!QsCheckRoomFlag(0)) {
         return FALSE;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -2610,23 +2636,23 @@ static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
 
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
     u8 wave = QuickStartRegionGetWaveCount(slot);
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         if (!QuickStartRegionWaveCleared()) {
             return;
         }
         if (wave < 255) {
             QuickStartRegionSetWaveCount(slot, wave + 1);
         }
-        ClearRoomFlag(0);
+        QsClearRoomFlag(0);
         return;
     }
     QuickStartSpawnRegionWave(region, wave);
-    SetRoomFlag(0);
+    QsSetRoomFlag(0);
     // Start (or restart) the stuck-wave clock for whichever wave the last
-    // region is currently gating the Earth Element behind. Room flag 403 is
+    // region is currently gating the Earth Element behind. Room flag 43 is
     // "an Element has already been dropped this visit", so once it is set
     // there is nothing left for the failsafe to protect.
-    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1 && !CheckRoomFlag(403)) {
+    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1 && !QsCheckRoomFlag(43)) {
         gSave.final_wave_frame = gSave.run_frames;
     }
 }
@@ -2662,7 +2688,7 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
         QuickStartSetRegionChainRewardState(slot, 1);
-        SetRoomFlag(1);
+        QsSetRoomFlag(1);
     }
 }
 
@@ -2689,13 +2715,13 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         // again. Two things then went wrong at once: the Element's despawn
         // timer stopped being refreshed (QuickStartSpawnWinKeyOnce is what
         // refreshes it), so it evaporated ~10 seconds after the wave clear
-        // and room flag 403 stopped it ever coming back; and even if the
+        // and room flag 43 stopped it ever coming back; and even if the
         // player did grab it in time, the win sequence could not start
         // until they also fully cleared the NEXT, harder wave. Room flag
         // 403 ("an Element was created this round") is the right gate for
         // the two follow-up steps, since it is set exactly when the drop
         // happens and cleared on a genuinely new room load.
-        if (QuickStartRegionWaveCleared() || CheckRoomFlag(403)) {
+        if (QuickStartRegionWaveCleared() || QsCheckRoomFlag(43)) {
             QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
         } else {
             QuickStartRescueStuckFinalWave(region);
@@ -2715,18 +2741,18 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         // same one-shot-per-visit shape as the WAVES room hint elsewhere in
         // this file; enough on its own since by the time this slot's
         // reward state leaves 0, this branch never runs again regardless.
-        if (!CheckRoomFlag(4)) {
-            SetRoomFlag(4);
+        if (!QsCheckRoomFlag(4)) {
+            QsSetRoomFlag(4);
             CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 11), 0);
         }
         QuickStartSpawnRegionRewardItem(region, slot);
         return;
     }
     if (QuickStartGroundItemAt(region->rewardX, region->rewardY)) {
-        SetRoomFlag(1);
+        QsSetRoomFlag(1);
         return;
     }
-    if (CheckRoomFlag(1)) {
+    if (QsCheckRoomFlag(1)) {
         QuickStartSetRegionChainRewardState(slot, 2);
         return;
     }
@@ -2767,7 +2793,7 @@ static void QuickStartSpawnMelarisMineRewardItem(void) {
         itemEntity->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(itemEntity);
         SetInventoryValue(ITEM_5A, 1);
-        SetRoomFlag(2);
+        QsSetRoomFlag(2);
     }
 }
 
@@ -2799,7 +2825,7 @@ static void QuickStartSpawnMelarisMineRewardOnce(void) {
         return;
     }
     if (GetInventoryValue(ITEM_5A) == 0) {
-        if (!CheckRoomFlag(1)) {
+        if (!QsCheckRoomFlag(1)) {
             return;
         }
         for (i = 0; i < MAX_ENTITIES; i++) {
@@ -2811,10 +2837,10 @@ static void QuickStartSpawnMelarisMineRewardOnce(void) {
         return;
     }
     if (QuickStartGroundItemAt(0x100, 0x100)) {
-        SetRoomFlag(2);
+        QsSetRoomFlag(2);
         return;
     }
-    if (CheckRoomFlag(2)) {
+    if (QsCheckRoomFlag(2)) {
         SetInventoryValue(ITEM_5A, 2);
         return;
     }
@@ -2901,7 +2927,7 @@ static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
 // emulator), with Stockwell's six sitting alongside them at vanilla prices.
 static void QuickStartClearShopObstacles(void) {
     s32 i;
-    bool32 sweepVanillaStock = !CheckRoomFlag(5);
+    bool32 sweepVanillaStock = !QsCheckRoomFlag(5);
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent->kind == NPC && ent->id != ZELDA) {
@@ -2914,7 +2940,7 @@ static void QuickStartClearShopObstacles(void) {
         }
     }
     if (sweepVanillaStock) {
-        SetRoomFlag(5);
+        QsSetRoomFlag(5);
     }
 }
 
@@ -3127,25 +3153,29 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // generic sweep clears the living entities and the merchant/stock below
 // replace them.
 //
-// The catalog sits on the room's own three counters rather than floating in
-// the middle of the floor, which is where the first pass put it. Vanilla's
-// own six stock positions - two rows of three on the left, at y=64 and
-// y=128 - are reused exactly, since those ARE the shelves the room was
-// drawn with; the remaining three go on the bottom-right counter. All nine
-// spots were checked against a live walkability dump: each sits on
-// non-walkable counter with open floor directly below it, so every item can
-// be lifted the way vanilla shop stock is.
+// The catalog sits on the open floor along the front of the room's counters.
 //
-// The merchant moves out of the counter she was standing inside (120,125 is
-// solid) and into the open lower room, just inside the door the player
-// arrives through, so she is the first thing they see and is reachable
-// without threading the aisle.
+// It used to sit ON the counters, at vanilla's own six stock positions
+// (y=64 and y=128 on the left) plus three on the bottom-right counter. That
+// was wrong in practice: the user reported the stock sitting too far back to
+// pick up. Re-checked in the emulator by poking the player onto each spot
+// and trying to walk off it - (45,64), (45,128), (140,128) and (178,128) are
+// all inside solid counter tiles, and the nearest floor is 16-24px away,
+// past the reach of the lift check. Vanilla can place stock there because
+// its own shop entities are talked to, not carried; ours have to be picked
+// up and walked to the merchant.
+//
+// These nine are all confirmed standable AND walkable off in all directions,
+// so the player can step onto each item and lift it. Two rows of three run
+// along the front edge of the upper shelving (y=104, the first open row
+// below the counters at y=112) and three more sit on the lower floor to the
+// merchant's left.
 #define QUICKSTART_SHOP_MERCHANT_X 144
 #define QUICKSTART_SHOP_MERCHANT_Y 152
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 45, 64 },  { 64, 64 },  { 82, 64 },   // top-left counter (vanilla's own row)
-    { 45, 128 }, { 64, 128 }, { 82, 128 },  // bottom-left counter (vanilla's own row)
-    { 140, 128 }, { 159, 128 }, { 178, 128 }, // bottom-right counter
+    { 40, 104 }, { 56, 104 }, { 72, 104 },    // in front of the upper-left shelving
+    { 136, 104 }, { 152, 104 }, { 168, 104 }, // in front of the upper-right shelving
+    { 40, 152 }, { 56, 152 }, { 72, 152 },    // lower floor, clear of the merchant at (144,152)
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -4098,10 +4128,17 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorSmallRoomPool[] = {
 static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI, 100, 100, 0, 0 },
     { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_RAIN, 100, 100, 0, 0 },
-    // The screenshot survey's (100,100) shot didn't clearly show Link here
-    // (likely tucked behind the room's big snail-shell centerpiece) -
-    // nudged to (80,110) as a guess pending real playtesting.
-    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 80, 110, 0, 0 },
+    // Entrance (144,112). The screenshot survey's (100,100) shot didn't
+    // clearly show Link here, and the guess that replaced it - (80,110) -
+    // turned out to be the exact spot one of this hallway's HUGE_ACORN
+    // props stands on, at (80,112). Spawning inside it left Link invisible
+    // and unable to move in any direction (reported by the user, then
+    // reproduced: an entity dump at the entrance shows four overlapping
+    // HUGE_ACORN entities there, and holding each direction for 15 frames
+    // moves the player 0px). (144,112) is the same height, 64px clear of
+    // that acorn, and confirmed standable and walkable in all four
+    // directions.
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 144, 112, 0, 0 },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_INN_EAST_2F, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_LIBRARY_1F, 100, 100, 0, -24 },
@@ -4701,7 +4738,7 @@ static Script* const sQuickStartLadderNpcScripts[2] = {
 // happened to contain.
 static void QuickStartClearLadderRoomObstacles(void) {
     s32 i;
-    if (CheckRoomFlag(1)) {
+    if (QsCheckRoomFlag(1)) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -4710,7 +4747,7 @@ static void QuickStartClearLadderRoomObstacles(void) {
             DeleteEntity(&gEntities[i].base);
         }
     }
-    SetRoomFlag(1);
+    QsSetRoomFlag(1);
 }
 
 // Every "? room" pool entry was confirmed walkable at the shared spawn
@@ -4754,20 +4791,20 @@ static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16
 #define QUICKSTART_WAVE_ROOM_WAVE_BIT(b) (5 + (b)) // b = 0,1
 
 static u8 QuickStartWaveRoomGetWave(u32 flagBase) {
-    return (CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
-           (CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1)) ? 2 : 0);
+    return (QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
+           (QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1)) ? 2 : 0);
 }
 
 static void QuickStartWaveRoomSetWave(u32 flagBase, u8 wave) {
     if (wave & 1) {
-        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+        QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
     } else {
-        ClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
+        QsClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0));
     }
     if (wave & 2) {
-        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+        QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
     } else {
-        ClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
+        QsClearRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(1));
     }
 }
 
@@ -4830,18 +4867,18 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
 // ladder/door slot vs. a content site's own GF_CONTENT_SITE_DONE bit).
 static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     u8 wave, difficulty;
-    if (CheckRoomFlag(flagBase + 2)) {
+    if (QsCheckRoomFlag(flagBase + 2)) {
         // All 3 waves cleared, reward already dropped - just watch for
         // pickup, same convention as the miniboss kind's own reward state.
         return !QuickStartGroundItemAt(contentX, contentY);
     }
-    if (!CheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
-        SetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
+    if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
+        QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
     difficulty = QuickStartGetDifficulty();
     wave = QuickStartWaveRoomGetWave(flagBase);
-    if (CheckRoomFlag(flagBase + 0)) {
+    if (QsCheckRoomFlag(flagBase + 0)) {
         // This wave's enemies are still out there somewhere.
         if (QuickStartCountRoomEnemies() > 0) {
             return FALSE;
@@ -4861,18 +4898,18 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(flagBase + 2);
+                QsSetRoomFlag(flagBase + 2);
             }
             return FALSE;
         }
-        // Advance to the next wave - ClearRoomFlag(flagBase + 0) lets the fallthrough
+        // Advance to the next wave - QsClearRoomFlag(flagBase + 0) lets the fallthrough
         // below spawn it on the next frame.
         QuickStartWaveRoomSetWave(flagBase, wave + 1);
-        ClearRoomFlag(flagBase + 0);
+        QsClearRoomFlag(flagBase + 0);
         return FALSE;
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
-    SetRoomFlag(flagBase + 0);
+    QsSetRoomFlag(flagBase + 0);
     return FALSE;
 }
 
@@ -4905,12 +4942,12 @@ static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 cont
     prizeIndex = (extra >> 4) & 3;
     winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
     winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
-    if (CheckRoomFlag(flagBase + 0)) {
+    if (QsCheckRoomFlag(flagBase + 0)) {
         if (QuickStartGroundItemAt(winnerX, winnerY)) {
-            SetRoomFlag(flagBase + 3);
+            QsSetRoomFlag(flagBase + 3);
             return FALSE;
         }
-        return CheckRoomFlag(flagBase + 3);
+        return QsCheckRoomFlag(flagBase + 3);
     }
     {
         s32 i;
@@ -4925,7 +4962,7 @@ static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 cont
                 UpdateSpriteForCollisionLayer(pot);
             }
         }
-        SetRoomFlag(flagBase + 0);
+        QsSetRoomFlag(flagBase + 0);
     }
     return FALSE;
 }
@@ -4959,7 +4996,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
         winnerSlot = 2;
     }
     prizeIndex = (extra >> 2) & 3;
-    if (CheckRoomFlag(flagBase + 0)) {
+    if (QsCheckRoomFlag(flagBase + 0)) {
         return CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot)) ? TRUE : FALSE;
     }
     {
@@ -4997,7 +5034,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
                 }
             }
         }
-        SetRoomFlag(flagBase + 0);
+        QsSetRoomFlag(flagBase + 0);
     }
     return FALSE;
 }
@@ -5013,7 +5050,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
 static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flagBase) {
     static const s16 offsets[2] = { -16, 16 };
     s32 i;
-    if (CheckRoomFlag(flagBase + 0)) {
+    if (QsCheckRoomFlag(flagBase + 0)) {
         return;
     }
     for (i = 0; i < 2; i++) {
@@ -5025,7 +5062,7 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flag
             UpdateSpriteForCollisionLayer(fairy);
         }
     }
-    SetRoomFlag(flagBase + 0);
+    QsSetRoomFlag(flagBase + 0);
 }
 
 // The single-door "? room" event itself, independent of who owns it.
@@ -5056,12 +5093,12 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         // function ever confirms it was actually there (e.g. the entity
         // slot getting reused some other way) reads as a genuine pickup on
         // the very next frame it's checked.
-        if (CheckRoomFlag(flagBase + 0)) {
+        if (QsCheckRoomFlag(flagBase + 0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
-                SetRoomFlag(flagBase + 3);
+                QsSetRoomFlag(flagBase + 3);
                 return FALSE;
             }
-            if (CheckRoomFlag(flagBase + 3)) {
+            if (QsCheckRoomFlag(flagBase + 3)) {
                 return TRUE;
             }
             // Never confirmed present - fall through and re-drop it.
@@ -5079,18 +5116,18 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 // overwrites it (confirmed in the emulator: direction read
                 // back as 0xFF, not IdleSouth, when set beforehand).
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(flagBase + 0);
+                QsSetRoomFlag(flagBase + 0);
             }
         }
     } else if (kind == LADDER_KIND_MINIBOSS) {
-        if (CheckRoomFlag(flagBase + 2)) {
+        if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
             // (same "did it vanish for real, or did the room just unload
             // before they grabbed it" distinction QuickStartGroundItemAt
             // exists for on the chest case above).
             return !QuickStartGroundItemAt(contentX, contentY);
         }
-        if (CheckRoomFlag(flagBase + 0)) {
+        if (QsCheckRoomFlag(flagBase + 0)) {
             s32 i;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
@@ -5124,8 +5161,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     itemEntity->flags |= ENT_PERSIST;
                     UpdateSpriteForCollisionLayer(itemEntity);
                     itemEntity->direction = IdleSouth;
-                    SetRoomFlag(flagBase + 2);
-                    // Tied to the same SetRoomFlag(flagBase + 2) success path so this
+                    QsSetRoomFlag(flagBase + 2);
+                    // Tied to the same QsSetRoomFlag(flagBase + 2) success path so this
                     // only ever counts once per miniboss, even if
                     // CreateObject fails and this branch legitimately
                     // retries on a later frame (see QuickStartComputeScore,
@@ -5145,7 +5182,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 enemy->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(enemy);
                 enemy->direction = IdleSouth;
-                SetRoomFlag(flagBase + 0);
+                QsSetRoomFlag(flagBase + 0);
             }
         }
     } else if (kind == LADDER_KIND_WAVES) {
@@ -5595,7 +5632,7 @@ static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
 
 static void QuickStartClearVanillaRoomContent(void) {
     s32 i;
-    if (CheckRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG)) {
+    if (QsCheckRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG)) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -5621,7 +5658,7 @@ static void QuickStartClearVanillaRoomContent(void) {
                 break;
         }
     }
-    SetRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG);
+    QsSetRoomFlag(QUICKSTART_VANILLA_CONTENT_CLEARED_FLAG);
 }
 
 // -1 if the current room isn't a content site.
@@ -5878,7 +5915,7 @@ static const s16 sQuickStart2DoorMinishVillageEnemyOffsets[12][2] = {
 #define QUICKSTART_2DOOR_OVERWORLD_MAX_ENEMIES 6
 
 static void QuickStart2DoorSpawnOverworldEnemiesOnce(u8 area, u8 room) {
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         return;
     }
     if (area == AREA_CRENEL_MINISH_PATHS && room == ROOM_CRENEL_MINISH_PATHS_MELARI) {
@@ -5892,7 +5929,7 @@ static void QuickStart2DoorSpawnOverworldEnemiesOnce(u8 area, u8 room) {
                                    ARRAY_COUNT(sQuickStart2DoorMinishVillageEnemyOffsets),
                                    QUICKSTART_2DOOR_OVERWORLD_ROOM_SQUARES, QUICKSTART_2DOOR_OVERWORLD_MAX_ENEMIES);
     }
-    SetRoomFlag(0);
+    QsSetRoomFlag(0);
 }
 
 // Same shape as QuickStartSetupWaveRoomContent, but keyed off the 2-door
@@ -5902,19 +5939,19 @@ static void QuickStart2DoorSpawnOverworldEnemiesOnce(u8 area, u8 room) {
 // already-shipped ladder system.
 static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
     u8 wave, difficulty;
-    if (CheckRoomFlag(2)) {
+    if (QsCheckRoomFlag(2)) {
         if (!QuickStartGroundItemAt(contentX, contentY)) {
             QsSetFlag(GF_2DOOR_DONE);
         }
         return;
     }
-    if (!CheckRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
-        SetRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
+    if (!QsCheckRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
+        QsSetRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
     difficulty = QuickStartGetDifficulty();
     wave = QuickStartWaveRoomGetWave(0);
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         if (QuickStartCountRoomEnemies() > 0) {
             return;
         }
@@ -5929,16 +5966,16 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(2);
+                QsSetRoomFlag(2);
             }
             return;
         }
         QuickStartWaveRoomSetWave(0, wave + 1);
-        ClearRoomFlag(0);
+        QsClearRoomFlag(0);
         return;
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
-    SetRoomFlag(0);
+    QsSetRoomFlag(0);
 }
 
 // 2-door pool counterparts of QuickStartSetupPotLotteryContent/
@@ -5957,12 +5994,12 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
     prizeIndex = (extra >> 4) & 3;
     winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
     winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         if (QuickStartGroundItemAt(winnerX, winnerY)) {
-            SetRoomFlag(3);
+            QsSetRoomFlag(3);
             return;
         }
-        if (CheckRoomFlag(3)) {
+        if (QsCheckRoomFlag(3)) {
             QsSetFlag(GF_2DOOR_DONE);
         }
         return;
@@ -5980,7 +6017,7 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
                 UpdateSpriteForCollisionLayer(pot);
             }
         }
-        SetRoomFlag(0);
+        QsSetRoomFlag(0);
     }
 }
 
@@ -5993,7 +6030,7 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
     extra = QuickStart2DoorGetExtra();
     winnerSlot = extra & 3;
     prizeIndex = (extra >> 2) & 3;
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         if (CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot))) {
             QsSetFlag(GF_2DOOR_DONE);
         }
@@ -6034,14 +6071,14 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
                 }
             }
         }
-        SetRoomFlag(0);
+        QsSetRoomFlag(0);
     }
 }
 
 static void QuickStart2DoorSetupFairyRoomContent(s32 contentX, s32 contentY) {
     static const s16 offsets[2] = { -16, 16 };
     s32 i;
-    if (CheckRoomFlag(0)) {
+    if (QsCheckRoomFlag(0)) {
         return;
     }
     for (i = 0; i < 2; i++) {
@@ -6053,7 +6090,7 @@ static void QuickStart2DoorSetupFairyRoomContent(s32 contentX, s32 contentY) {
             UpdateSpriteForCollisionLayer(fairy);
         }
     }
-    SetRoomFlag(0);
+    QsSetRoomFlag(0);
 }
 
 // Unlike QuickStartClearLadderRoomObstacles (which sweeps every pre-existing
@@ -6082,7 +6119,7 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     // Every room that goes through here is a "? room" of some kind, so its
     // own vanilla payout goes too - same reasoning as the content sites.
     QuickStartClearVanillaRoomContent();
-    if (CheckRoomFlag(1)) {
+    if (QsCheckRoomFlag(1)) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -6094,7 +6131,7 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
             DeleteEntity(entity);
         }
     }
-    SetRoomFlag(1);
+    QsSetRoomFlag(1);
 }
 
 // Dispatch for whichever room the save's one 2-door connector draw
@@ -6128,12 +6165,12 @@ static void QuickStart2DoorSetupRoomContent(void) {
     }
     kind = QuickStart2DoorGetKind();
     if (kind == LADDER_KIND_CHEST) {
-        if (CheckRoomFlag(0)) {
+        if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
-                SetRoomFlag(3);
+                QsSetRoomFlag(3);
                 return;
             }
-            if (CheckRoomFlag(3)) {
+            if (QsCheckRoomFlag(3)) {
                 QsSetFlag(GF_2DOOR_DONE);
                 return;
             }
@@ -6149,17 +6186,17 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
+                QsSetRoomFlag(0);
             }
         }
     } else if (kind == LADDER_KIND_MINIBOSS) {
-        if (CheckRoomFlag(2)) {
+        if (QsCheckRoomFlag(2)) {
             if (!QuickStartGroundItemAt(contentX, contentY)) {
                 QsSetFlag(GF_2DOOR_DONE);
             }
             return;
         }
-        if (CheckRoomFlag(0)) {
+        if (QsCheckRoomFlag(0)) {
             s32 i;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
@@ -6180,7 +6217,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
                     itemEntity->flags |= ENT_PERSIST;
                     UpdateSpriteForCollisionLayer(itemEntity);
                     itemEntity->direction = IdleSouth;
-                    SetRoomFlag(2);
+                    QsSetRoomFlag(2);
                     gSave.miniboss_kills++;
                 }
             }
@@ -6197,7 +6234,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 enemy->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(enemy);
                 enemy->direction = IdleSouth;
-                SetRoomFlag(0);
+                QsSetRoomFlag(0);
             }
         }
     } else if (kind == LADDER_KIND_WAVES) {
@@ -6475,12 +6512,12 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     kind = QuickStartRiverBridgeGetKind();
     extra = QuickStartRiverBridgeGetExtra();
     if (kind == LADDER_KIND_CHEST) {
-        if (CheckRoomFlag(0)) {
+        if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
-                SetRoomFlag(3);
+                QsSetRoomFlag(3);
                 return;
             }
-            if (CheckRoomFlag(3)) {
+            if (QsCheckRoomFlag(3)) {
                 QsSetFlag(GF_RIVER_DONE);
             }
             return;
@@ -6495,7 +6532,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
+                QsSetRoomFlag(0);
             }
         }
     } else {
@@ -6745,12 +6782,12 @@ static void QuickStartSetupCaveRoomContent(void) {
     kind = QuickStartCaveGetKind();
     extra = QuickStartCaveGetExtra();
     if (kind == LADDER_KIND_CHEST) {
-        if (CheckRoomFlag(0)) {
+        if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
-                SetRoomFlag(3);
+                QsSetRoomFlag(3);
                 return;
             }
-            if (CheckRoomFlag(3)) {
+            if (QsCheckRoomFlag(3)) {
                 QsSetFlag(GF_CAVE_DONE);
             }
             return;
@@ -6765,7 +6802,7 @@ static void QuickStartSetupCaveRoomContent(void) {
                 itemEntity->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
-                SetRoomFlag(0);
+                QsSetRoomFlag(0);
             }
         }
     } else {
@@ -7472,11 +7509,11 @@ static void QuickStartArmLadderTiles(s32 localX, s32 localY) {
 }
 
 static void QuickStartOpenBoomerangChamber(void) {
-    if (CheckRoomFlag(6)) {
+    if (QsCheckRoomFlag(6)) {
         return;
     }
     if (QuickStartIsBoomerangTree(gRoomControls.area, gRoomControls.room)) {
-        SetRoomFlag(6);
+        QsSetRoomFlag(6);
         // Two overlapping patches, not one. The tree's ladder is approached
         // from BELOW, unlike Castle Garden's (which the player steps down
         // onto from above), and a single patch centred on the door left a
@@ -7494,7 +7531,7 @@ static void QuickStartOpenBoomerangChamber(void) {
     if (gRoomControls.area != AREA_CAVES || gRoomControls.room != ROOM_CAVES_BOOMERANG) {
         return;
     }
-    SetRoomFlag(6);
+    QsSetRoomFlag(6);
     QuickStartArmLadderTiles(0x48, 0xd8);  // southwest ladder up
     QuickStartArmLadderTiles(0x108, 0xd8); // southeast ladder up
     QuickStartArmLadderTiles(0xa8, 0xb8);  // the staircase back up to the field
@@ -8277,7 +8314,7 @@ static void QuickStartUpdateItemChoice(void) {
         return;
     }
 
-    if (phase == 0 && !CheckRoomFlag(401)) {
+    if (phase == 0 && !QsCheckRoomFlag(41)) {
         // One-time custom Ezlo hint, moved here from QuickStartSpawnStarterChoice
         // (see its own comment) - that function runs during
         // GameMain_ChangeRoom's brief room-entry transition, before the
@@ -8286,12 +8323,12 @@ static void QuickStartUpdateItemChoice(void) {
         // every frame of real GAMEMAIN_UPDATE gameplay (see the QUICKSTART
         // block right after PausePlayer, below in this file), so the player
         // is guaranteed to actually be in a state that can process it. Room
-        // flag 401 (rather than a low number) for the same reason flag 400
-        // was picked for the Lon Lon Ranch win condition - low numbers are a
-        // real collision risk in a room this deeply tied to real vanilla
-        // content (Castor Wilds' own Darknut/Kinstone guardian fight).
+        // flag 41, like every other room flag in this file, is offset into
+        // QUICKSTART's own private window (QsSetRoomFlag) - it does not
+        // collide with the real vanilla content this room is tied to
+        // (Castor Wilds' own Darknut/Kinstone guardian fight).
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 5), 0);
-        SetRoomFlag(401);
+        QsSetRoomFlag(41);
     }
 
     if (phase == 0 || phase == 2 || phase == 4) {
