@@ -2311,15 +2311,26 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // Lon Lon Ranch - entrance/exit reused from the old static
     // sQuickStartLinks rows (Castle Garden's own north-door destination,
     // and Lon Lon's own return box), enemy grid unchanged from
-    // sQuickStartLonLonRanchEnemyOffsets above. Reward pool/spot reused
+    // sQuickStartLonLonRanchEnemyOffsets above. Reward pool reused
     // from Castle Garden's own sQuickStartGardenRewardPool - this region
     // never actually draws from it while it's the chain's last slot (the
     // Earth Element/win path takes over instead, see
     // QuickStartSpawnRegionRewardOnce below), only if a future, bigger
     // chain ever puts it somewhere other than last.
+    //
+    // Reward spot moved from (392,159) to (264,712). The old spot sits
+    // inside the Cane of Pacci ledge the user walked and fenced off in
+    // sQuickStartGatedZones ({228..475, 0..167}), so when Lon Lon Ranch
+    // came up as the chain's last slot the Earth Element - the run's whole
+    // objective - dropped somewhere a player without the Cane could not
+    // stand, and the Chuchu Boss and the normal loot drop landed there too.
+    // The new spot is on the open field north of the region's own entrance,
+    // walked in the emulator from (344,870) straight up to (344,711) and
+    // then west through (264,711), so it is provably in the same connected
+    // component as the point the player arrives at.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 287, 343, 966, 984,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
-      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 392, 159,
+      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 264, 712,
       QuickStartLonLonRanchQuirkHook },
     // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
     // both verified-open, non-water tiles from the collision scan. Exit box
