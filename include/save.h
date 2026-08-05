@@ -79,7 +79,11 @@ typedef struct {
 #ifdef QUICKSTART
     /*0x044*/ u32 run_frames;                /**< QUICKSTART: frames elapsed in the current run,
                                                * reset to 0 at the top of every run (GameTask_Transition) */
-    /*0x048*/ u8 filler44b[8];               /**< unused filler */
+    /*0x048*/ u32 final_wave_frame;          /**< QUICKSTART: run_frames at the moment the chain's LAST
+                                               * region spawned the wave that gates the Earth Element.
+                                               * Drives the stuck-wave failsafe in
+                                               * QuickStartSpawnRegionRewardOnce; reset per run. */
+    /*0x04C*/ u8 filler4c[4];                /**< unused filler */
 #else
     /*0x044*/ u8 filler44[12];               /**< unused filler */
 #endif

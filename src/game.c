@@ -398,6 +398,10 @@ static void GameTask_Transition(void) {
     // meta-progression currency the score feeds into at each win
     // (QuickStartCheckWinCondition), and must NOT be touched here.
     gSave.run_frames = 0;
+    // Must be reset alongside run_frames: the stuck-wave failsafe compares
+    // the two, and a stale value left over from the previous run would make
+    // that difference enormous the moment run_frames restarts at 0.
+    gSave.final_wave_frame = 0;
     gSave.enemies_killed = 0;
     gSave.miniboss_kills = 0;
     gSave.boss_kills = 0;
@@ -1639,6 +1643,29 @@ static void QuickStartCheckWinCondition(void) {
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) == 0) {
         ClearRoomFlag(400);
         ClearRoomFlag(402);
+        ClearRoomFlag(404);
+        return;
+    }
+    // Room flag 404: "vanilla's own Earth Element get-message has started".
+    //
+    // The "is a message up right now?" test below is necessary but not
+    // sufficient on its own. GiveItem flips this item's inventory value a
+    // few frames BEFORE the pickup cutscene actually posts its own text -
+    // measured at 6 frames in the emulator (walk-up pickup, gMessage.state
+    // and .textIndex sampled every frame): our custom message went up on
+    // frame 27 and vanilla's text index 0x540 replaced it on frame 33, so
+    // the "You win!" line was on screen for a tenth of a second and then
+    // silently overwritten. Waiting for a message to have appeared first,
+    // and only then for it to finish, closes that window.
+    //
+    // Only required on the visit that actually dropped the Element (room
+    // flag 403): if the player picked it up and came back later, inventory
+    // already reads nonzero with no cutscene pending, and waiting for a
+    // message that will never arrive would hang the win outright.
+    if (CheckRoomFlag(403) && !CheckRoomFlag(404)) {
+        if (gMessage.state & MESSAGE_ACTIVE) {
+            SetRoomFlag(404);
+        }
         return;
     }
     if (!CheckRoomFlag(400)) {
@@ -2525,6 +2552,49 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
 // already been earned. That reward (QuickStartSpawnRegionRewardOnce) still
 // only ever comes from wave 0's own clear, via its own once-only reward-
 // state gate, completely untouched by this loop continuing past it.
+// How long the chain's last region will wait for its Element-gating wave to
+// be finished before pulling any survivor to the reward spot - see
+// QuickStartRescueStuckFinalWave.
+#define QUICKSTART_STUCK_WAVE_FRAMES (90 * 60)
+
+// The win depends on one specific room going completely enemy-free, so a
+// single enemy the player cannot get at ends the run then and there. The
+// spawn tables cannot rule that out on their own: they were built from a
+// collision scan for open 3x3 neighbourhoods, which says a tile is standable
+// but nothing about whether it is connected to where the player comes in,
+// and even a perfectly connected spawn point is no guarantee once enemies
+// start moving - a Crow or a Peahat can drift somewhere with no route back.
+// sQuickStartGatedZones handles the cases that have been walked and written
+// down; this handles the rest, without needing any of them enumerated.
+//
+// If the wave that gates the Element has been up for
+// QUICKSTART_STUCK_WAVE_FRAMES and is still not clear, every surviving enemy
+// is moved to the reward spot, where the player necessarily can reach them.
+// The timer then restarts, so an enemy that somehow wanders off again gets
+// pulled back rather than stranding the run on the second attempt.
+//
+// Deliberately scoped to the chain's LAST region, and only while its first
+// wave is still the one being fought: everywhere else a stranded enemy costs
+// the player a loot drop at worst, which is not worth teleporting enemies
+// around for.
+static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
+    s32 i;
+    if (gSave.run_frames - gSave.final_wave_frame < QUICKSTART_STUCK_WAVE_FRAMES) {
+        return;
+    }
+    gSave.final_wave_frame = gSave.run_frames;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind != ENEMY || !QuickStartEntityInCurrentRoom(ent)) {
+            continue;
+        }
+        ent->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
+        ent->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+        ent->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(ent);
+    }
+}
+
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
     u8 wave = QuickStartRegionGetWaveCount(slot);
     if (CheckRoomFlag(0)) {
@@ -2539,6 +2609,13 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     }
     QuickStartSpawnRegionWave(region, wave);
     SetRoomFlag(0);
+    // Start (or restart) the stuck-wave clock for whichever wave the last
+    // region is currently gating the Earth Element behind. Room flag 403 is
+    // "an Element has already been dropped this visit", so once it is set
+    // there is nothing left for the failsafe to protect.
+    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1 && !CheckRoomFlag(403)) {
+        gSave.final_wave_frame = gSave.run_frames;
+    }
 }
 
 // Picks a random not-yet-owned reward from this region's own pool and
@@ -2585,10 +2662,31 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
 static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 slot) {
     u8 state;
     if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
-        if (!QuickStartRegionWaveCleared()) {
-            return;
+        // The wave-cleared test only gates the FIRST drop. Everything after
+        // it has to keep running every frame, cleared room or not.
+        //
+        // This used to early-return on !QuickStartRegionWaveCleared() for
+        // all three steps, which quietly broke the whole win the moment the
+        // endless-wave loop landed: on the frame the first wave goes clear
+        // the Element drops here, and then QuickStartSpawnRegionEnemiesOnce
+        // - called immediately after this in QuickStartRegionMonitor -
+        // clears room flag 0 and spawns the next wave. From the very next
+        // frame QuickStartRegionWaveCleared() reads false again, so this
+        // function returned before ever reaching QuickStartCheckWinCondition
+        // again. Two things then went wrong at once: the Element's despawn
+        // timer stopped being refreshed (QuickStartSpawnWinKeyOnce is what
+        // refreshes it), so it evaporated ~10 seconds after the wave clear
+        // and room flag 403 stopped it ever coming back; and even if the
+        // player did grab it in time, the win sequence could not start
+        // until they also fully cleared the NEXT, harder wave. Room flag
+        // 403 ("an Element was created this round") is the right gate for
+        // the two follow-up steps, since it is set exactly when the drop
+        // happens and cleared on a genuinely new room load.
+        if (QuickStartRegionWaveCleared() || CheckRoomFlag(403)) {
+            QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
+        } else {
+            QuickStartRescueStuckFinalWave(region);
         }
-        QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
         QuickStartCheckWinCondition();
         return;
     }
