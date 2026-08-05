@@ -7507,6 +7507,21 @@ static void QuickStartStirRandom(void) {
 // (344,664) with its hole one tile north at (344,648), but a search of the
 // tiles around whatever rock is present costs nothing and keeps this
 // working if either moves.
+// The tail of PushableRockEntity (src/object/pushableRock.c), mirrored here
+// because that struct lives in its own .c file with no header. Only the two
+// fields below are read: PushableRock_Init -> sub_0808A644 stashes the tile
+// that was under the rock before it stamped its own solid SPECIAL_TILE_27
+// over it, and that is exactly what has to be put back before the rock is
+// moved anywhere.
+typedef struct {
+    Entity base;
+    u8 unk_68[8];
+    u16 tileIndex;
+    u8 collisionData;
+    u8 unk_73;
+    u16 tilePos;
+} QuickStartPushableRock;
+
 static void QuickStartFillBoulderHoles(void) {
     s32 i, dx, dy;
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
@@ -7531,6 +7546,17 @@ static void QuickStartFillBoulderHoles(void) {
                 if (actTile != ACT_TILE_25 && actTile != ACT_TILE_240) {
                     continue;
                 }
+                // Put the rock's original tile back before moving it.
+                // PushableRock_Init stamps SPECIAL_TILE_27 - a solid tile -
+                // wherever the rock is standing, and vanilla only ever
+                // un-stamps it in PushableRock_Action1, on the frame a real
+                // push starts. Teleporting the rock skipped that, so the
+                // solid tile stayed behind at the rock's starting spot and
+                // read in play as an invisible wall right where the boulder
+                // used to be (reported by the user). This is the same
+                // SetTile(tileIndex, tilePos) call Action1 makes.
+                SetTile(((QuickStartPushableRock*)rock)->tileIndex, ((QuickStartPushableRock*)rock)->tilePos,
+                        rock->collisionLayer);
                 rock->x.HALF.HI = gRoomControls.origin_x + ((lx >> 4) * 16 + 8);
                 rock->y.HALF.HI = gRoomControls.origin_y + ((ly >> 4) * 16 + 8);
                 rock->action = 0;
