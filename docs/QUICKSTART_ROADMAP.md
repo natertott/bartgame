@@ -84,7 +84,7 @@ across leaving and returning (`FLAG_BANK_11`).
 
 ### 3.3 "? rooms" - three distinct systems
 
-1. **Content sites** (`sQuickStartRoomContentSites`, 24 rows) - the primary
+1. **Content sites** (`sQuickStartRoomContentSites`, 27 rows) - the primary
    model. A real vanilla room, entered through its own real vanilla door,
    with a randomized event placed inside it. Rooms can hold several events
    (the Boomerang chamber holds five, one per entrance).
@@ -97,8 +97,20 @@ across leaving and returning (`FLAG_BANK_11`).
 
 All three converge on `QuickStartSetupEventContent`, which places one of
 **seven kinds**: chest, miniboss, NPC, 3-wave gauntlet, pot lottery, chest
-lottery, fairy room. Small rooms draw from the puzzle/dialogue subset, large
-rooms from the combat subset.
+lottery, fairy room. A content site names which set it may roll:
+`QUICKSTART_KINDS_SMALL` (chest/NPC/both lotteries) for cramped tree hollows
+and cave nooks, `QUICKSTART_KINDS_LARGE` (miniboss/waves/fairy) for rooms
+with floor space, and `QUICKSTART_KINDS_ANY` for rooms big and clear enough
+to host anything. A room being large was never a reason to stop it rolling a
+pot lottery; it was only ever a reason to stop a cramped one rolling a
+miniboss, which is what ANY exists to say.
+
+Two of the sites are **Minish-gated**: the cave at (376,216) and the tiny
+door at (72,456), both in South Hyrule Field, both reachable only by
+shrinking. Every region has a vanilla Minish portal, and
+`QuickStartRevealHiddenLadders` uncovers the four that ship hidden under a
+stump - vanilla wants the player to roll into it, an unmarked secret with no
+hint, and this mode has no Ezlo hints.
 
 Every one of these rooms is swept on entry: vanilla enemies, NPCs, and
 payout-shaped objects (ground items, both chest kinds, heart containers,
@@ -138,8 +150,13 @@ not the source of truth.
 ### 3.7 Storage
 
 - Global flags: bank 12 from offset 700, `QsCheckFlag`/`QsSetFlag`. Bits
-  101-638 are cleared per run; `GF_DIFFICULTY_BIT` (174-177) deliberately is
-  not.
+  101-652 are cleared per run; `GF_DIFFICULTY_BIT` (174-177) deliberately is
+  not. Layout above the low block: content sites 266-616 (27 x 13 bits),
+  bridge 617, shop 618-650, Melari's two latches 651-652, ceiling 707.
+  **Raising the site count moves everything above it.** Getting that wrong is
+  silent: at 25 sites the smithy's block began at exactly 578, which was the
+  bridge flag, so throwing the bridge lever also gave the smithy an all-zero
+  roll and entering the smithy joined the bridge.
 - Room flags: `gRoomVars.flags` from offset **256**, `QsCheckRoomFlag` and
   friends. This window exists because vanilla uses the low bits and *does*
   clear them out from under us - the cause of the Triple Darknut room
@@ -228,6 +245,16 @@ thresholds.
 
 ## 5. Known open bugs and loose ends
 
+- The Minish shrink handshake is **unverified**. The reveal is confirmed
+  (stump deleted, `ACT_TILE_61` stamped where the manager expects it), but
+  vanilla's entry path wants the player pressed against the portal tile with
+  `base.subtimer >= 6`, and a position-poked bot never accumulates that.
+  Needs a human to walk into the stump and press R. If it turns out not to
+  fire, the two Minish rooms are simply never seen - nothing traps anyone.
+- Lon Lon Ranch has two `MINISH_SIZED_ENTRANCE` objects at (316,632) and
+  (436,632) whose destinations were never resolved; forcing `PL_MINISH` from
+  outside is not enough to make them fire in the harness. Two more ? rooms if
+  they check out.
 - Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
   north-west pocket. Not gated - the user paused Trilby zone-gating pending
   their own walk.
