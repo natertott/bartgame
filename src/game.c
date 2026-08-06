@@ -205,6 +205,7 @@ static void QuickStartClearLonLonRanchGoron(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartProcessRegionChainLinks(void);
+static void QuickStartSkipMelarisMine(void);
 static void QuickStartRandomizeRegionChainOnce(void);
 static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
@@ -7763,6 +7764,50 @@ static void QuickStartRevealHiddenLadders(void) {
 // region is next after the CURRENT room's own slot - or nowhere, if the
 // current room is already the chain's last slot, since winning happens at
 // the reward spot instead of by walking anywhere further.
+// Sends the player straight on to the run's first overworld region the
+// moment they set foot in Melari's Mine.
+//
+// The hub used to sit between Castor Darknut Hall and the overworld: clear
+// the Hall, walk through the mine, take its Door B into region slot 0. Per
+// the user's own request that middle step is skipped, so a playthrough
+// reaches the overworld - the part actually under test - immediately.
+//
+// Done on ARRIVAL rather than by rewriting the outbound destination. The
+// rewrite was tried first and does not hold: two separate things lead into
+// the mine (the Hall's sQuickStartLinks row and its real vanilla door,
+// deliberately pointed at the same place so whichever wins the race lands
+// somewhere sane), and neither reliably has its destination visible to this
+// function before the room load consumes it - measured, the player still
+// arrived in the mine. Reacting to "am I standing in the mine" has no
+// timing to get wrong. The cost is a brief look at the hub during the fade.
+//
+// Melari's Mine keeps all its own content (its reward, its enemies, its two
+// ? rooms); it is simply not on the route. Deleting this function is all it
+// takes to put the hub back.
+static void QuickStartSkipMelarisMine(void) {
+    const QuickStartRegion* first;
+    if (gRoomControls.area != AREA_MELARIS_MINE || gRoomControls.room != ROOM_MELARIS_MINE_MAIN) {
+        return;
+    }
+    if (gRoomTransition.transitioningOut) {
+        return;
+    }
+    // The chain draw is rolled unconditionally in QuickStartRoomMonitor, so
+    // it already exists by now - but this is the one place that would break
+    // silently (every run starting in the pool's first row) if that ever
+    // stopped being true, so ask for it explicitly. Idempotent.
+    QuickStartRandomizeRegionChainOnce();
+    first = QuickStartGetRegionAtChainSlot(0);
+    gRoomTransition.player_status.area_next = first->area;
+    gRoomTransition.player_status.room_next = first->room;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = first->entranceX;
+    gRoomTransition.player_status.start_pos_y = first->entranceY;
+    gRoomTransition.player_status.layer = 1;
+    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+    gRoomTransition.transitioningOut = 1;
+}
+
 static void QuickStartProcessRegionChainLinks(void) {
     s16 localX, localY;
     s32 slot;
@@ -7818,6 +7863,9 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartDrawDifficultyHUD();
+    // Before the containment checks, so they judge the onward hop this
+    // starts rather than cancelling it.
+    QuickStartSkipMelarisMine();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();
@@ -7830,8 +7878,30 @@ static void QuickStartRoomMonitor(void) {
     QuickStartFixupCaveConnectorReturn();
     QuickStartFixupRiverBridgeReturn();
     QuickStartFixupCaveReturn();
-    // Rolled here rather than at a specific room so the draw exists before
-    // the player can reach any of the candidate doors.
+    // Every per-run draw is rolled unconditionally, not in a specific room.
+    //
+    // These used to live in Melari's Mine's own branch, on the reasoning
+    // that the hub is always visited before anything they feed becomes
+    // reachable. That stopped being true the moment the hub was bypassed
+    // (QuickStartSkipMelarisMine): a draw that never runs leaves every
+    // pool index at 0, so every ? room in the run would resolve to the
+    // first row of its pool. Each of these is latched by its own
+    // GF_*_RANDOMIZED flag, so running them every frame from anywhere
+    // costs a handful of flag reads and removes the dependency on any one
+    // room being entered.
+    QuickStartRandomizeRegionChainOnce();
+    QuickStartRandomizeLaddersOnce();
+    // Must run after QuickStartRandomizeLaddersOnce (same frame, right
+    // after) - it reads back ladders 0/1/3's own just-rolled room
+    // assignments to make sure none of the 15 new door entrances ends up
+    // sharing a physical pool room with them (see
+    // QuickStartRandomizeDoorsOnce's own comment).
+    QuickStartRandomizeDoorsOnce();
+    QuickStart2DoorRandomizeOnce();
+    QuickStartRandomizeRiverBridgeOnce();
+    QuickStartRandomizeCaveOnce();
+    QuickStartRandomizeMelariEastOnce();
+    QuickStartRandomizeMelariSoutheastOnce();
     QuickStartRandomizeShopOnce();
     // Also unconditional: the two rooms that need it today are Castle
     // Garden Main and Link's House, but the checks are per-entity rather
@@ -7867,30 +7937,12 @@ static void QuickStartRoomMonitor(void) {
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
     } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
+        // Bypassed by QuickStartSkipMelarisMine on the normal route, but
+        // left whole: the room is one redirect away from being the hub
+        // again, and nothing here costs anything while it is unreachable.
         QuickStartClearMelarisMineObstacles();
         QuickStartSpawnMelarisMineRewardOnce();
         QuickStartSpawnMelarisMineEnemiesOnce();
-        // Rolled here (the hub, always visited before the chain's own
-        // first entrance is reachable) rather than in whichever region
-        // ends up first - unlike the old fixed Castle Garden -> Lon Lon
-        // Ranch order, the chain can now put either region first, and the
-        // ladder pool (Castle Garden's own 2 ladders) / 2-door pool (Lon
-        // Lon Ranch's cave connector) each need their own draw done before
-        // the player can possibly reach whichever one of those two rooms
-        // comes first this save.
-        QuickStartRandomizeRegionChainOnce();
-        QuickStartRandomizeLaddersOnce();
-        // Must run after QuickStartRandomizeLaddersOnce (same frame, right
-        // after) - it reads back ladders 0/1/3's own just-rolled room
-        // assignments to make sure none of the 15 new door entrances ends
-        // up sharing a physical pool room with them (see
-        // QuickStartRandomizeDoorsOnce's own comment).
-        QuickStartRandomizeDoorsOnce();
-        QuickStart2DoorRandomizeOnce();
-        QuickStartRandomizeRiverBridgeOnce();
-        QuickStartRandomizeCaveOnce();
-        QuickStartRandomizeMelariEastOnce();
-        QuickStartRandomizeMelariSoutheastOnce();
     } else if (gRoomControls.area == AREA_MINISH_HOUSE_INTERIORS &&
                gRoomControls.room == ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST) {
         QuickStartSetupMelariSoutheastRoomContent();

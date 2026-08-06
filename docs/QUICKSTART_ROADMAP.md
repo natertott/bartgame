@@ -1,447 +1,257 @@
-# QUICKSTART Long-Term Roadmap
+# QUICKSTART Roadmap
 
-This document captures the long-term design for the QUICKSTART roguelite mode:
-where it's going, the architectural decisions already validated in the engine,
-and the order we're building the rest of it in. It's meant to be read and
-revised over many sessions - update it as decisions change.
+Rewritten against the code as it actually stands. The previous version of
+this document described an architecture the code left behind ~30 commits
+ago - most of what runs today (the vanilla-door "? room" model, the 2-door
+pool, the relocated shop, the gated-zone table) was not in it at all.
 
-## 1. The vision, restated
+## 1. The vision
 
-A run looks like:
+A roguelite mode built inside the vanilla game: a short run through a
+handful of overworld regions, randomized every time, ending when the player
+takes the Earth Element. Wins raise a persistent difficulty counter and feed
+a meta-progression score. The vanilla world is the content - rooms, doors,
+enemies and props are reused rather than authored - so most work here is
+about *selecting* and *repurposing* what is already there, safely.
 
-1. **Spawn room** (Castor Darknut Main) - item-choice sequence, 3 waves of
-   enemies, chest reward. Difficulty tier 1. *(exists today)*
-2. **Hub room** (Melari's Mine) - shop + inn-style rest point, no combat.
-   Difficulty tier 1. *(exists today, no "inn/rest" feature yet)*
-3-7. **Four overworld regions**, drawn at random from a pool of seven and
-   played in random order. Each region: enemies scale up per its position in
-   the run, a full-clear item reward, then a boss fight, then one of the four
-   Elements. Difficulty rises with region position (region 1 harder than the
-   hub, region 4 hardest of all).
-8. **Win**: once all four Elements are collected, the run ends, a score is
-   shown, that score feeds a persistent meta-progression currency, and the
-   game loops back to a new run at a higher base difficulty.
+## 2. Guiding principle for this phase
 
-Over many runs, accumulated score unlocks: more of the seven regions
-appearing in the random pool, more items available to find, and buffs -
-making later runs both harder (base difficulty climbs every win, exactly as
-today) and *more random* (bigger pools to draw from).
+**Depth before breadth.** The pool stays at its current five overworld
+regions until a full playthrough is smooth and bug-free. Every problem
+solved between now and then should be solved with a *general mechanism*,
+not a per-room special case, so that adding regions later is mostly data
+entry.
 
-## 2. What's already validated and implemented
+The systems that already work this way, and are the model to follow:
 
-### 2.1 Region area/room IDs (verified against `include/roomid.h`/`area.h`)
+- `sQuickStartRoomContentSites` - a table row per room, not code per room.
+- `sQuickStartGatedZones` - a table of item-gated boxes, consulted by one
+  generic position filter, usable by anything that places something.
+- `QuickStartRegion` - a table row per region, driven by generic chain code.
+- `QsCheckRoomFlag`/`QsSetRoomFlag` - one private flag window, so no room's
+  vanilla logic can collide with ours.
 
-All seven named regions already exist as real, playable rooms in the base
-game - no new map content needed, only QUICKSTART logic:
+Every per-room special case still in the file (`QuickStartClearNorthFieldScrub`,
+`QuickStartLonLonRanchQuirkHook`, the Melari East/Southeast bespoke
+dispatchers) is a candidate for folding into a table as the same need
+appears a second time.
 
-| Region | Area | Room | Status |
-|---|---|---|---|
-| Hyrule Castle Gardens | `AREA_CASTLE_GARDEN` | `ROOM_CASTLE_GARDEN_MAIN` | **Done** |
-| Lon Lon Ranch | `AREA_HYRULE_FIELD` | `ROOM_HYRULE_FIELD_LON_LON_RANCH` | **Done** |
-| Castor Wilds | `AREA_CASTOR_WILDS` | `ROOM_CASTOR_WILDS_MAIN` | Not started |
-| Eastern Hills | `AREA_HYRULE_FIELD` | `ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER`\* | Not started |
-| Trilby Highlands | `AREA_HYRULE_FIELD` | `ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS` | Not started |
-| North Hyrule Field | `AREA_HYRULE_FIELD` | `ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD` | Not started |
-| South Hyrule Field | `AREA_HYRULE_FIELD` | `ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD` | Not started (MAPEXPLORE spawn point, camera bug already fixed here) |
+## 3. Current architecture
 
-\* Eastern Hills is actually 3 linked screens in vanilla
-(`..._EASTERN_HILLS_SOUTH/CENTER/NORTH`). v1 treats only CENTER as "the
-region," same footprint as every other single-room region below - folding
-in the other two screens as a bigger, multi-room region is a plausible
-future upgrade, not a v1 requirement.
-
-### 2.2 Persistent storage model (implemented, tested)
-
-The key open question was *where does progress live so it survives what*.
-Verified by reading `src/fileselect.c`/`src/save.c`:
-
-- `ResetSaveFile()` does `MemClear(save, sizeof(SaveFile))` - a **full wipe**
-  of every field, including all global flags, whenever a save slot is deleted
-  or a new file is started on it.
-- `DoSoftReset()` (the win-loop's own reset, used today for the
-  difficulty counter) does **not** touch `gSave` at all - it's explicitly
-  preserved in EWRAM, and `WriteSaveFile()` is called right before it to
-  persist to EEPROM too.
-
-Decision: **meta-progression (score, XP, unlocks) lives in `gSave`, the same
-struct the existing difficulty counter (`GF_DIFFICULTY_BIT`) already uses.**
-It survives the win-loop (the actual "get better, then go again" cycle this
-whole mode is built around) but resets if the player deletes the save file
-and starts fresh - consistent with how difficulty already behaves, and it
-required zero new EEPROM address plumbing (see below) rather than reverse-
-engineering a second save slot outside the per-file wipe boundary.
-
-**Storage budget**: `SaveFile` (`include/save.h`) is 0x4B4 bytes; its EEPROM
-slot is 0x500 - already ~76 bytes of headroom, on top of ~86 bytes of
-pre-existing `fillerNN[]` padding fields inside the struct. New fields were
-added by repurposing filler bytes exactly (same total size per block), so
-the struct's total size and every other field's offset is unchanged for
-non-QUICKSTART builds (each new field is `#ifdef QUICKSTART` / `#else
-fillerNN[]` / `#endif`) - zero risk to real-game save compatibility.
-
-Fields added (all `#ifdef QUICKSTART`, all reset to 0 in `GameTask_Transition`
-*except* the two marked persistent):
-
-- `run_frames` (u32) - frames elapsed this run, real-time clock for the
-  score's time bonus.
-- `enemies_killed` (u32, pre-existing field, now reset per-run under
-  QUICKSTART instead of accumulating for the whole save file's lifetime)
-- `miniboss_kills` (u32)
-- `boss_kills` (u32) - wired up, always 0 today (no region has a boss yet)
-- `meta_xp` (u32, **persistent**) - lifetime accumulated score
-- `runs_completed` (u32, **persistent**) - lifetime win count
-
-### 2.3 Scoring (implemented, tested end-to-end in emulator)
-
-`QuickStartComputeScore()` (`src/game.c`, right before `QuickStartCheckWinCondition`):
+### 3.1 Run flow
 
 ```
-score = enemies_killed*10 + miniboss_kills*100 + boss_kills*500
-      + (500 if run_frames <= 10 in-game minutes)
-      + (200 if rupees >= 200)
-      + (50 per heart gained beyond the starting 3)
-      + (20 per distinct item owned)
+Castor Darknut Main   item choice, 3 rounds (key item / bonus / skill)
+        |
+Castor Darknut Hall   one enemy wave
+        |
+   [Melari's Mine]    BYPASSED - QuickStartSkipMelarisMine warps the player
+        |             straight on to chain slot 0 on arrival
+        v
+   region slot 0      endless escalating waves; wave 0's clear drops the
+        |             region's one-time reward
+        | region exit box
+        v
+   region slot 1      same, except its wave-0 clear drops the EARTH ELEMENT
+        |
+      win: difficulty +1, score -> meta_xp, save, soft reset
 ```
 
-All thresholds are `#define`d placeholders at the top of the function,
-explicitly meant to be retuned once real playthrough data exists - not a
-final balance pass.
+Melari's Mine is skipped for playtest speed (the user's call - the overworld
+is what is under test). The room, its reward, its enemies and its two ? rooms
+are all still built; deleting `QuickStartSkipMelarisMine` restores the hub.
 
-Wired into `QuickStartCheckWinCondition` as a **second** message shown after
-the existing "Difficulty increased" message is dismissed ("Run score:
-`<N>`"), using the same `\x06\x01`/`gMessage.rupees` numeric-substitution
-mechanism the difficulty message already proven to use. `meta_xp` and
-`runs_completed` are updated at the moment this message is composed, so
-they're saved by the same `WriteSaveFile()` call already at the end of the
-win sequence.
+Because the hub is no longer guaranteed to be visited, **every per-run draw
+is rolled unconditionally** from `QuickStartRoomMonitor` (region chain,
+ladders, doors, 2-door, river bridge, cave, Melari rooms, shop), each latched
+by its own `GF_*_RANDOMIZED` flag.
 
-**Verified in-emulator** (`scratchpad/score_test1.py` this session): poked
-known values for every input, confirmed the displayed score and `meta_xp`
-matched the formula exactly, confirmed `meta_xp`/`runs_completed` survived
-`DoSoftReset` while `enemies_killed`/`miniboss_kills`/`run_frames` correctly
-reset to 0 for the next run.
+### 3.2 Regions
 
-### 2.4 Miniboss kill tracking (implemented)
+`sQuickStartRegionPool` - 5 rows: Castle Garden, Lon Lon Ranch, South
+Hyrule Field, North Hyrule Field, Trilby Highlands. Each row carries its
+entrance, its "onward" exit box, an enemy-offset grid, room size/enemy cap,
+a reward pool + reward spot, and an optional quirk hook.
 
-The one existing miniboss (`LADDER_KIND_MINIBOSS`, a `DARK_NUT` in a ? room -
-`QuickStartSetupLadderRoomContent`, `src/game.c`) now increments
-`gSave.miniboss_kills` at the exact point the code already detects "no
-matching enemy left in the room => it died" - tied to the same
-`SetRoomFlag(2)` success path that drops its reward, so it can't double-count
-even on a retry frame.
+`QUICKSTART_REGION_CHAIN_LENGTH` is **2**. The chain draws that many
+distinct rows at random, in random order, once per run. Owning Zora Flippers
+forces Trilby Highlands into the last slot; not owning them excludes it from
+the draw entirely (its only surveyed approach is across a canal).
 
-## 3. Not yet designed in code - open architecture questions
+Within a region: wave 0 is a plain tiered group; every wave after it has a
+20% chance of being a solo Chuchu Boss instead. Wave count persists per slot
+across leaving and returning (`FLAG_BANK_11`).
 
-### 3.1 Region system generalization
+### 3.3 "? rooms" - three distinct systems
 
-Today, Castle Garden and Lon Lon Ranch are each hand-written: their own
-enemy-offset grids, their own "spawn enemies once"/"spawn reward once"
-functions, their own containment logic, called individually from
-`QuickStartRoomMonitor`. Adding 5 more regions by copy-pasting that pattern
-5 more times is how this file already got to ~3000 lines: not recommended.
+1. **Content sites** (`sQuickStartRoomContentSites`, 24 rows) - the primary
+   model. A real vanilla room, entered through its own real vanilla door,
+   with a randomized event placed inside it. Rooms can hold several events
+   (the Boomerang chamber holds five, one per entrance).
+2. **2-door pool** (7 small + 13 large rooms) - rooms reached through a
+   synthetic connector that puts the same room behind both of two doors.
+   Fed by Lon Lon Ranch's cave mouth, North Hyrule Field's river bridge, and
+   North Hyrule Field's cave mouth, each with its own independent draw.
+3. **Ladder pool** - the original mechanism, now down to Castle Garden's
+   northwest ladder, which redirects to a drawn single-door room.
 
-**Plan**: introduce one `QuickStartRegion` table (area, room, enemy offset
-grid + count, room-square count for density, reward item pool, boss id,
-"cleared" global-flag bit) and one generic set of functions
-(`QuickStartSpawnRegionEnemiesOnce`, `QuickStartSpawnRegionRewardOnce`,
-`QuickStartSpawnRegionBossOnce`, `QuickStartCheckRegionCleared`) that take a
-`QuickStartRegion*` and do what the Castle Garden/Lon Lon-specific versions
-do today. Castle Garden and Lon Lon Ranch become the first two rows in that
-table (a refactor, not a behavior change - existing behavior must be
-reverified after, not just assumed preserved). The other five regions become
-new rows plus per-region emulator work to find each room's walkable bounds
-and a good enemy-offset grid (the same kind of survey already done for
-Castle Garden/Melari's Mine/Lon Lon Ranch - see the `sQuickStart*EnemyOffsets`
-tables and their "confirmed empirically" comments).
+All three converge on `QuickStartSetupEventContent`, which places one of
+**seven kinds**: chest, miniboss, NPC, 3-wave gauntlet, pot lottery, chest
+lottery, fairy room. Small rooms draw from the puzzle/dialogue subset, large
+rooms from the combat subset.
 
-Region-quirk logic that doesn't fit the generic shape (Lon Lon Ranch's boulder
-puzzle, its Goron NPC removal) stays as small region-specific hooks the table
-row can optionally point to, same pattern `QuickStartRoomMonitor` already uses
-for one-off cases.
+Every one of these rooms is swept on entry: vanilla enemies, NPCs, and
+payout-shaped objects (ground items, both chest kinds, heart containers,
+fairies) are deleted, so the event *is* the room's reward rather than a
+bonus on top of vanilla's.
 
-### 3.2 Region selection & difficulty-by-position
+### 3.4 The shop
 
-Once 7 regions exist in the table: at run start (or hub-room entry), pick 4
-distinct regions at random and shuffle their order. Map region position to a
-difficulty tier feeding `QuickStartPickEnemy`'s existing tier system (already
-data-driven 0-12): e.g. region 1 -> tier N, region 2 -> tier N+X, etc., where
-the overall base difficulty (`QuickStartGetDifficulty()`, already persistent
-across wins) shifts the whole curve up each time the player wins. Exact
-tier-per-position mapping is a balance question best settled after real
-playtests of the 2-region version, not guessed now.
+Its own room (Stockwell's), reached by redirecting one of eight candidate
+overworld doors, drawn per run. Nine-item catalog on the floor in front of
+the shelving, prices randomized per run, bought by carrying an item to the
+merchant (vanilla's own `BuyShopItem` path).
 
-The chosen order needs to persist for the whole run (survives room
-transitions, does not survive `DoSoftReset`) - same idiom as everything else
-in this section: a `gSave`-backed field (or a handful of global flags/bits),
-reset in `GameTask_Transition`'s existing per-run reset block.
+### 3.5 Win condition
 
-### 3.3 Per-region boss + Element reward
+The chain's last slot drops the Earth Element at its reward spot once wave 0
+is clear. Picking it up runs: vanilla's item-get message, then "You win!
+Difficulty increased", then "Run score", then `WriteSaveFile` and
+`DoSoftReset`.
 
-**Open research question, not yet answered**: which enemy IDs can actually
-serve as a standalone "boss" the way `DARK_NUT` already does for the ? room
-miniboss? Real dungeon bosses in this engine overwhelmingly need scripted
-arenas, cutscene triggers, or dungeon-specific room properties - the exact
-reason the regular enemy roster (`sQuickStartLevel1..5`) deliberately excluded
-anything beyond a bare `CreateEnemy(id, form)` call. This needs the same kind
-of one-by-one "does it crash, does it just sit there, does it work" audit
-already done for the regular roster, run against the real dungeon boss list,
-*before* committing to which bosses are usable.
+Robustness measures now in place:
+- The Element's despawn timer is refreshed every frame, and the win check
+  runs every frame, not only while the room is clear.
+- The win message waits for vanilla's own get-message to start *and* finish.
+- `QuickStartRescueStuckFinalWave` pulls any survivor to the reward spot if
+  the Element-gating wave is still alive after 90 seconds, so an enemy the
+  player cannot reach can no longer end a run.
 
-Fallback if few/no real bosses turn out to be standalone-spawnable: an
-"elite" encounter built from the existing roster instead of a new actor - a
-single higher-tier enemy with boosted stats/a `EM_FLAG`-style marker, or a
-small multi-enemy gauntlet - functionally a "boss" for scoring/reward
-purposes (counts toward `boss_kills`, drops an Element) without needing a
-new actor to work. This should be a fully acceptable fallback if the real-boss
-audit comes back thin, not a last resort.
+### 3.6 Reachability and gating
 
-### 3.4 Expanded "?" room types
+`sQuickStartGatedZones` - boxes in room-local coordinates, each with a
+required item (or "never"). Nothing gets placed inside a box whose item the
+player lacks. Populated from the user's own hand-walked coordinates; the
+emulator walk-flood harness (`scratchpad/reach_audit.py`) is a cross-check,
+not the source of truth.
 
-Currently: heart piece Darknut miniboss, +/- rupee NPC, random item chest,
-friendly NPC (Zelda). Planned additions:
+### 3.7 Storage
 
-- **More miniboss types**: same audit as 3.3 (which enemies work as a
-  standalone `CreateEnemy` fight), feeding a generalized version of
-  `LADDER_KIND_MINIBOSS` that picks from a small roster instead of always
-  `DARK_NUT`, each with its own reward.
-- **Restricted item pools per room kind**: today's chest pulls from
-  `sQuickStartLadderRewardPool` (6 items) unconditionally. This becomes
-  several named pools (e.g. "combat reward," "utility item," "quality of
-  life") and each ? room kind picks from the pool that fits its theme/
-  difficulty, rather than one pool for everything.
-- **Puzzle rooms**: a new `LADDER_KIND_PUZZLE`. Needs a concrete puzzle
-  mechanic decision - candidates: a pushable-block/switch room (engine
-  already has block-pushing and switch objects used elsewhere in the real
-  game, likely reusable), a "hit N crystal switches in the right state"
-  room, or a timed dash-through room using the same trigger-box technique
-  `QuickStartProcessLinks` already uses for the ? room return trip. Needs a
-  prototype + a playtest before committing to one - this is the single
-  most "needs a human to say whether it's actually fun/solvable" item in
-  the whole roadmap.
+- Global flags: bank 12 from offset 700, `QsCheckFlag`/`QsSetFlag`. Bits
+  101-638 are cleared per run; `GF_DIFFICULTY_BIT` (174-177) deliberately is
+  not.
+- Room flags: `gRoomVars.flags` from offset **256**, `QsCheckRoomFlag` and
+  friends. This window exists because vanilla uses the low bits and *does*
+  clear them out from under us - the cause of the Triple Darknut room
+  spawning content once per frame until the entity table saturated.
+- `gSave`: `run_frames`, `final_wave_frame`, `enemies_killed`,
+  `miniboss_kills`, `boss_kills` (per run); `meta_xp`, `runs_completed`
+  (persistent).
 
-### 3.5 Score-gated unlock tiers
+## 4. Priorities
 
-Bit storage is cheap and already reserved: `gSave.flags` is 512 bytes (4096
-bits); the named `Flag` enum only reaches bit 0x65 in bank 0, and this
-session's difficulty counter claimed up to bit 177 - `GF_UNLOCK_BASE = 178`
-onward in bank 0 is confirmed free and is the reserved range for every
-unlock bit this section needs (region unlocks, item unlocks, buff unlocks -
-comfortably under the ~78 remaining bits in bank 0 for a first cut; if that
-turns out to be too tight, the next bank up needs its own real-flag
-occupancy audit before claiming it, the same way bank 0 already was this
-session). **Specific bit assignments are deliberately not hardcoded yet** -
-they depend on the final region/item lists in 3.1/3.6, which aren't locked
-in. What's locked in is the mechanism (a threshold table keyed on
-`gSave.meta_xp`, checked the same way `QuickStartGetDifficultyTier` already
-turns a scalar into a tier) and the reserved bit range.
+Ordered as agreed. Nothing below the line gets started until everything
+above it is smooth.
 
-Open question for the user: roughly how many wins should it take to unlock
-the full 7-region pool and the full item pool? This sets the actual
-XP-per-threshold numbers once the score formula's real output range is
-known from playtesting (right now the formula in 2.3 produces ~1000-2000
-per run in a synthetic test - real full-run values from a human playthrough
-are needed before picking thresholds that feel like real progression rather
-than unlocking everything after 2 wins or nothing after 20).
+### Now
 
-### 3.6 First-playthrough vs. unlockable items, and delivery mechanism
+**P1. Puzzle rooms and ? rooms.** The largest slice of run-to-run variety,
+and the thing a playthrough spends most of its time in.
+- A real puzzle kind beyond the two lotteries. Candidates the engine
+  already supports: pushable blocks onto switches, hit-all-crystals, a timed
+  dash. Needs one prototype in front of a human before more is built.
+- Per-kind reward pools - today every kind draws from the same 4-item
+  `sQuickStartLadderRewardPool`.
+- More miniboss types; the roster audit only ever confirmed `DARK_NUT` and
+  `CHUCHU_BOSS`.
+- Fold the remaining bespoke room dispatchers (Melari East/Southeast) into
+  the content-site table.
+- Content-site coverage pass: several rows are for rooms that are currently
+  unreachable and are kept only against a future fix.
 
-Needs a concrete list from the user (or a first proposal for the user to
-edit) split into three buckets:
+**P2. Kinstone-fusion door gating.** Today every gated entrance in the pool
+is force-fused at boot - a stopgap that silently pre-solves them. The real
+feature: pieces drop from enemies/pots, lightweight fusion-partner sprites
+sit in each region, walking up with a matching piece clears one door
+permanently. Use a QUICKSTART-owned flag/check rather than vanilla's
+100-partner machinery. Open: pieces per region, 1:1 vs many-to-one, drop
+weighting, whether partners are visible before a piece is held.
 
-1. **Always available from run 1** (today's entire starter/bonus/skill
-   choice pools plus the 9-item shop catalog - already curated this
-   session).
-2. **Unlocked by `meta_xp` tier**, then folded into an existing delivery
-   path - the roadmap doesn't need a new delivery mechanism, just gating
-   which of these three existing pools a newly-unlocked item is added to:
-   - the starter/bonus/skill choice pools (`sQuickStartStarterItems` etc.)
-   - the shop catalog (`sQuickStartShopCatalog`)
-   - the ? room reward pools (3.4's restricted pools)
-3. **Prerequisite-gated items** (3.7) - conceptually a 4th bucket, but
-   mechanically just an extra filter applied to bucket 2's pools.
+**P3. Win conditions - establish and test.** The mechanism is fixed and
+verified end to end in the emulator; what is missing is *coverage*. Every
+spawn and item-selection path should be walked, not just the ones that
+happened to come up. Concretely: finish the reachability survey for Castle
+Garden, Lon Lon Ranch and North Hyrule Field (the three the harness could
+not measure), and confirm each region is winnable as the last slot.
 
-### 3.7 Item prerequisites and area-gating
+**P4. The bridge switch.** North Hyrule Field's `HITTABLE_LEVER` at local
+(56,456). Established: it toggles **room flag 100**, which resets on every
+room load, and nothing in the tile-entity system consumes it - so whatever
+it drives has to be ours. Remaining: decide what it opens, find the correct
+tile ids for this room's tileset (writing foreign tile types is what caused
+the Boomerang chamber's artifacts and invisible walls - see
+`QuickStartArmLadderTiles`, which was rewritten to touch actTiles only), and
+persist the switch state for the run in a Qs global flag.
 
-Two distinct mechanisms, same underlying shape (a small lookup table
-consulted before a reward pool is rolled):
+### Next
 
-- **Item-requires-item** (Roc's Cape -> Roc's Cape Scroll): a table mapping
-  item -> required prerequisite item (or none). Every reward-selection site
-  (ladder rewards, region-clear rewards, shop restock) filters its candidate
-  list against `GetInventoryValue(prereq) != 0` before rolling.
-- **Region-requires-item** (Castor Wilds needs Pegasus Boots or Roc's Cape
-  to traverse): a table mapping region -> a short list of "acceptable
-  traversal items." When the random region order (3.2) is generated, for
-  any selected region with a requirement the player doesn't already own one
-  of: inject one of the acceptable items into an earlier reward pool (e.g.
-  the region immediately before it, or the hub shop) so it's guaranteed
-  obtainable before arrival - not merely likely.
+**P5. Difficulty by chain position.** Map slot index to a tier offset on top
+of the persistent difficulty counter. Cheap once the curve is decided;
+the curve itself needs playtest data.
 
-Needs a concrete prerequisite list from the user before this can be more
-than a mechanism - which items gate which other items, and which regions
-need which traversal item, are content decisions, not engineering ones.
+**P6. Item pools and prerequisites.** Split the one reward pool into named
+pools per room kind and per difficulty; add an item-requires-item table
+consulted before any reward roll; give the other four key items real,
+surveyed paths the way Flippers/Trilby already has one.
 
-**Region-requires-item is now partially implemented** (this session), for
-the one case the emulator has actually confirmed: round 1 of the item
-choice (`sQuickStartKeyItems`, `game.c`) now offers 3 of 5 real traversal
-items - Pegasus Boots, Roc's Cape, Mole Mitts, Zora Flippers, Lantern -
-instead of the old fixed weapon choice (Green Sword/Bow/Boomerang, now
-retired). `QuickStartRandomizeRegionChainOnce` checks
-`GetInventoryValue(ITEM_FLIPPERS)` when rolling the run's 2-region chain:
-owning Flippers forces Trilby Highlands into the chain's last slot (where
-the Earth Element/win condition always drops), and excludes it entirely
-from the draw otherwise - matching the real, walk-tested obstacle found
-this session (a water canal blocks every direct approach to Trilby
-Highlands from Hyrule Town in a 36-point emulator survey; see
-`scratchpad/traversal_graph.py`). Verified in the emulator: with Flippers
-owned the chain's last slot always resolves to Trilby Highlands; without
-it, Trilby Highlands never appears in the chain at all.
+### After that
 
-The other 4 key items don't have a surveyed gate anywhere in the current
-5-region pool yet, so picking any of them currently just draws from the
-same plain 4-region pool as each other - giving each of them a real,
-distinct path (Pegasus Boots -> a gap-jump region, Mole Mitts -> a dig
-region, Lantern -> a dark-cave region) is the natural next step once those
-regions/obstacles get surveyed the same way Trilby's canal was.
+**P7. Expand the overworld pool.** Eastern Hills (3 sub-rooms, needs its own
+survey) and Castor Wilds, taking the pool to 7, then raise
+`QUICKSTART_REGION_CHAIN_LENGTH` from 2 to 4.
 
-### 3.8 Kinstone-fusion door gating (planned, not yet built)
+**P8. Score-gated unlocks.** `meta_xp` and `runs_completed` already
+accumulate and survive the reset. Needs a threshold table and a reserved
+unlock-bit range, plus real score data from human playthroughs to pick
+thresholds.
 
-Several real overworld entrances - trees that split open, ground that sinks
-into a cave mouth, a fountain that dries into a staircase - are gated behind
-vanilla's Kinstone Fusion mechanic rather than being plain doors. Today
-every one of these found in the current region pool (South Hyrule Field's
-Heart Piece tree and Rupee cave; North Hyrule Field's 4 Boomerang trees and
-Fairy Fountain tree; Trilby Highlands' Rupee cave; Lon Lon Ranch's Goron
-cave) is force-fused at boot (`WriteBit(&gSave.kinstones.fusedKinstones,
-KINSTONE_x)`, `game.c`, `GameTask_Transition`) - a stopgap that just
-silently pre-solves them so they're open from the start, with no player
-interaction at all. Two more real ones (Castle Garden Main's East and West
-Fountains) aren't in the pool yet, and Lon Lon Ranch has a second gated cave
-(a pool/sinkhole into `AREA_CAVES`/`ROOM_CAVES_LON_LON_RANCH_WALLET`)
-that's also currently unwired.
+## 5. Known open bugs and loose ends
 
-The real, player-facing feature this should become: Kinstone pieces drop
-randomly from enemies/pots/grass throughout a run (vanilla already resolves
-generic drops down to one of 3 colors/~8 shapes via a small weighted table -
-much simpler than vanilla's full 100-unique-piece system, and easy to tune
-with the same reward-pool pattern already used elsewhere in this codebase).
-Scattered around each region are a handful of lightweight fusion-partner
-sprites (a plain `OBJECT`-kind entity, not a full NPC with dialogue/
-animation states, to conserve the shared 72-entity/40-gfx-slot budget - see
-the emulator-measured enemy-kind-cap precedent in 2.x). Walking up to one
-with a matching piece performs the fusion and permanently clears whichever
-door's blocking obstacle - likely via a parallel, QUICKSTART-owned flag/
-check (bank 12 has ample free bits) rather than reusing vanilla's real
-`KinstoneId`/shape-matching/fuser-progression machinery, which is built for
-pairing 100 specific named partners and pieces and isn't a good fit for an
-arbitrary, randomized set of QUICKSTART-only gates.
+- Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
+  north-west pocket. Not gated - the user paused Trilby zone-gating pending
+  their own walk.
+- Lon Lon Ranch: the top-middle pocket the user described has no walked box
+  yet, so it is still unfenced.
+- `POT_MINISH` does not render multi-enemy content (long-standing).
+- Gentari's Room / Gentari's Main adjacency conflict (long-standing).
+- Lon Lon Ranch's second gated cave (the wallet sinkhole) is unwired.
+- Castle Garden Main's East and West Fountains are gated entrances not yet
+  in any pool.
+- The reachability harness crashes mgba after enough reboots; it now
+  chunks its work across processes to survive that, but it is slow.
 
-Not yet designed: exactly how many fusion sprites per region, whether one
-sprite can unlock multiple doors or it's strictly 1:1, how drop weighting
-should scale with difficulty/region, and whether the sprite should be
-visible before any piece is collected or only appear once the player holds
-a matching piece. All still open questions for the user before this moves
-from "researched" to "implementable."
+## 6. Testing
 
-## 4. Implementation order
+**Reliable to automate**: state/math changes via memory pokes; room
+transitions and spawn positions via scripted walks; standability and
+4-direction walkability of any specific coordinate; entity dumps for "what
+is actually in this room"; persistence across `DoSoftReset`.
 
-Roughly in dependency order - each phase should get its own build+commit,
-not one giant patch:
+**Not reliable to automate**: anything requiring an enemy to die from real
+combat; whether an encounter is fair; whether a puzzle is solvable or fun;
+pacing across a full run. These need a human playtest and should be handed
+over as such rather than approximated with a bot script.
 
-1. **~~Storage + scoring foundation~~** - done this session (2.2-2.4).
-2. **Region system generalization** (3.1) - refactor Castle Garden/Lon Lon
-   Ranch onto the generic table, reverify both still behave identically.
-   Highest-leverage single piece of work: every region added after this is
-   a data row, not a few hundred new lines.
-3. **Boss audit** (3.3) - spend a focused session just finding out which
-   enemy IDs can stand in as a boss, before designing anything further
-   around them.
-4. **Add the 5 remaining regions** (3.1's table + per-region emulator
-   surveys), one at a time, each independently verified in the emulator
-   before moving to the next - this is the single largest chunk of routine
-   work in the whole roadmap.
-5. **Region selection + difficulty-by-position** (3.2), once >2 regions
-   exist to actually select among.
-6. **Score-gated unlocks** (3.5) - mechanism first (generic threshold
-   table), specific thresholds once real playtest score data exists.
-7. **Item pool split + prerequisites** (3.6, 3.7) - needs the user's
-   concrete item lists.
-8. **Expanded ? room types** (3.4) - can happen in parallel with 4-7 once
-   the boss audit (3) is done, since new miniboss kinds reuse its findings.
-9. **Puzzle rooms** (3.4's last bullet) - explicitly saved for last: it's
-   the one feature that most needs a working prototype in front of a human
-   before more engineering effort goes in.
+**A note on ground truth**: where the user has hand-walked coordinates, those
+win over anything the harness reports. The harness has been wrong often
+enough - and the walked boxes right often enough - that this is the standing
+order, not a preference.
 
-## 5. Testing strategy
+## 7. Open questions
 
-### 5.1 What's reliably automatable in the emulator (mgba Python bindings)
-
-- **Any pure state/math change**: score formula, unlock threshold math,
-  difficulty tier weighting, drop-table odds, item price bounds - poke the
-  relevant `gSave`/`gRoomVars` memory directly to known values, run a few
-  frames, read back the result. This is how 2.3/2.4 were verified this
-  session and is by far the most reliable technique available - it doesn't
-  depend on scripted combat succeeding.
-- **Room transitions, spawn positions, containment boxes**: walk-and-check
-  via scripted input, screenshot comparison. Proven reliable all session
-  (camera fix, shop NPC placement, ladder room setup).
-- **Persistence across `DoSoftReset`**: proven reliable this session
-  (2.2-2.4) - poke pre-state, drive the win sequence via memory pokes,
-  mash through the reboot (`DoSoftReset` re-runs the *entire* boot/title
-  sequence - the same ~200-iteration A+START mash a cold boot needs, not a
-  short passive wait; this cost real debugging time this session and is
-  worth remembering for every future win-condition test).
-- **Text display correctness**: screenshot + read.
-
-### 5.2 What's historically NOT reliable to automate (established this
-### session, still true)
-
-- **Scripted bot combat** (mashing attack near enemies to force kills): this
-  session's own drop-rate verification attempts all failed for this reason -
-  enemies didn't reliably take damage or die from a naive input script, and
-  writing `health = 0` directly doesn't trigger real death/loot logic (it
-  silently resets). Anything whose verification *requires* an enemy to
-  actually die via real combat (not a memory poke standing in for "it died")
-  should be treated as **needs a human playtest**, not re-attempted with a
-  slightly different bot script. This applies directly to:
-  - Whether a new boss encounter is actually beatable/well-tuned.
-  - Whether enemy density at a new difficulty tier feels fair, not just
-    "spawns without crashing."
-  - Puzzle room solvability/intuitiveness - inherently a "does a human find
-    this fun and clear" question, no memory poke substitutes for it.
-- **Overall pacing across a full run** (does difficulty escalation feel
-  right region-to-region, does a full run take a reasonable amount of time) -
-  needs a human playing start to finish, ideally more than once as content
-  is added.
-- **Subjective balance calls** in general: exact score thresholds, exact
-  drop-rate numbers, exact enemy density curves. Code review + the automated
-  checks above confirm the mechanism *works as coded*; only playtesting
-  confirms it *feels right*. This mirrors exactly how this session already
-  handled the enemy drop-rate change (implemented and code-reviewed, but not
-  statistically re-verified, once bot combat proved unreliable) - not a new
-  problem, a known and accepted limitation of this testing setup.
-
-### 5.3 Suggested per-phase split
-
-| Phase | Automatable now | Needs your playtest |
-|---|---|---|
-| Region generalization refactor | Yes - identical behavior to today, verify via existing screenshot/memory-poke tests | Spot-check it still *feels* like the same two regions |
-| Boss audit | Partially - crash/no-crash and "does it move/attack at all" per candidate | Whether any candidate is actually a fun/fair fight |
-| New regions (enemy spawns, containment, reward) | Yes - same techniques as Castle Garden/Lon Lon Ranch | Difficulty/density feel once real combat is involved |
-| Region selection + difficulty curve | Yes - the selection/shuffle logic and tier math | Whether the curve across 4 regions feels right |
-| Unlock thresholds | Yes - mechanism and math | Whether unlock *pacing* (wins-to-unlock) feels right |
-| Puzzle rooms | Only "does it not crash" | Nearly everything else |
-
-## 6. Open questions for the user
-
-1. Roughly how many wins should it take to unlock the full region/item pool?
-   (Needed to convert the score formula's real output into unlock
-   thresholds - see 3.5.)
-2. Concrete first-playthrough item list vs. unlockable item list (3.6) -
-   this roadmap can propose a first cut, but the split is fundamentally a
-   content decision.
-3. Concrete item-prerequisite and region-traversal-requirement lists (3.7) -
-   the Roc's Cape Scroll and Castor Wilds/Pegasus Boots examples given are
-   understood as illustrative; the full list needs to come from the user.
-4. Preferred puzzle mechanic (3.4) - pushable blocks, switches, timed dash,
-   something else - to prototype first.
+1. What should the bridge switch open?
+2. Which puzzle mechanic to prototype first?
+3. Kinstone gating shape: how many partners per region, and should they be
+   visible before the player holds a matching piece?
+4. Item prerequisite and per-kind reward pool lists (content decisions).
+5. Unlock pacing - roughly how many wins to open the full pool.
