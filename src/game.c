@@ -1353,6 +1353,11 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define GF_MELARI_SOUTHEAST_DONE 638
 
 // Range 604..636, immediately after the content sites' own 266..603.
+// Switch-operated bridges (QuickStartUpdateSwitchBridges). 578 onward is
+// free: the content sites' 13-bit blocks end at 577 and the shop's own
+// range does not start until 604.
+#define GF_NHF_BRIDGE_JOINED 578
+
 #define GF_SHOP_RANDOMIZED 604
 #define GF_SHOP_DOOR_BIT(b) (605 + (b))                  // b = 0..4
 #define GF_SHOP_PRICE_BIT(i, b) (610 + (i) * 3 + (b))    // i = 0..8, b = 0..2
@@ -7611,6 +7616,102 @@ typedef struct {
     u16 tilePos;
 } QuickStartPushableRock;
 
+// Switch-operated bridges: a gap in a real vanilla structure that closes
+// when the room's own switch is thrown, and stays closed for the rest of
+// the run.
+//
+// North Hyrule Field ships with a wooden bridge over the river that is
+// built but not joined - two planks reaching out from either bank with
+// three tiles of open water between them. The room also has a HITTABLE_LEVER
+// at local (56,456), which vanilla wires to nothing this build can find:
+// it toggles ROOM flag 100 (its hitFlag reads 0x8064 - index 100, type 2)
+// and nothing in LoadRoomTileEntities consumes that flag. So the lever is
+// free for us to give a job to, and joining the bridge is the one the user
+// asked for.
+//
+// The fill is done by COPYING A NEIGHBOURING TILE rather than by writing a
+// tile type. That distinction matters and is the general method to reuse
+// for anything else that needs to extend a structure: SetTile takes a tile
+// index, GetTileIndex hands back the one already at a position, and a tile
+// lifted from two tiles away in the same room is by construction from that
+// room's own tileset - graphics, collision and act tile all consistent.
+// Writing a TILE_TYPE_* constant instead is what put foreign artwork and
+// invisible walls in the Boomerang chamber (see QuickStartArmLadderTiles,
+// which had to be rewritten to touch actTiles only). Measured here: the gap
+// reads collision 48 / actTile 16 (water) and the planks either side read
+// collision 0 / actTile 14, so a copied plank tile brings the walkable
+// collision with it and nothing has to be hardcoded.
+//
+// Two flags, because they answer different questions. armRoomFlag is
+// vanilla's own room flag - deliberately NOT run through QsCheckRoomFlag's
+// private window, since the lever writes it directly - and only says "the
+// switch is thrown right now"; room flags reset on every room load, so on
+// its own the bridge would come apart the moment the player left. doneFlag
+// is one of ours, so it survives the round trip. The per-visit flag stops
+// the copy re-running every frame.
+typedef struct {
+    u8 area;
+    u8 room;
+    u16 armRoomFlag; // vanilla's, set by the room's own switch
+    u16 doneFlag;    // ours, latched for the rest of the run
+    s16 donorX;      // an intact tile of the structure, on each filled row
+    s16 minX;
+    s16 maxX;
+    s16 minY;
+    s16 maxY;
+} QuickStartSwitchBridge;
+
+#define QUICKSTART_BRIDGE_APPLIED_FLAG 50
+
+static const QuickStartSwitchBridge sQuickStartSwitchBridges[] = {
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 100, GF_NHF_BRIDGE_JOINED, 144, 160, 192, 592, 608 },
+};
+
+static void QuickStartUpdateSwitchBridges(void) {
+    s32 i, x, y;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartSwitchBridges); i++) {
+        const QuickStartSwitchBridge* bridge = &sQuickStartSwitchBridges[i];
+        if (gRoomControls.area != bridge->area || gRoomControls.room != bridge->room) {
+            continue;
+        }
+        if (!QsCheckFlag(bridge->doneFlag)) {
+            // Raw CheckRoomFlag on purpose - this is the lever's own bit,
+            // written by vanilla code, not one of ours.
+            if (!CheckRoomFlag(bridge->armRoomFlag)) {
+                continue;
+            }
+            QsSetFlag(bridge->doneFlag);
+        }
+        if (QsCheckRoomFlag(QUICKSTART_BRIDGE_APPLIED_FLAG)) {
+            continue;
+        }
+        for (y = bridge->minY; y <= bridge->maxY; y += 16) {
+            // The donor's tile TYPE, not its raw tile index. SetTile(index)
+            // updates mapData and the collision/act maps - measured, the gap
+            // went from index 465-467 / collision 48 to the donor's index 23
+            // / collision 0 - but the player then walked across water that
+            // still looked like water, because nothing redrew the on-screen
+            // BG buffer. SetTileType is the path vanilla itself uses for a
+            // visible change (it is what HittableLever calls to flip its own
+            // tile), and going through the type keeps this donor-relative:
+            // still no tileset constant hardcoded anywhere.
+            u32 donor = GetTileTypeAtTilePos(TILE_POS(bridge->donorX >> 4, y >> 4), 1);
+            for (x = bridge->minX; x <= bridge->maxX; x += 16) {
+                SetTileType(donor, TILE_POS(x >> 4, y >> 4), 1);
+            }
+        }
+        // SetTile updates the map's collision and act tiles immediately, but
+        // the visible background is only re-streamed as the camera scrolls -
+        // so without this the player walks across water that still looks
+        // like water (confirmed by screenshot: collision read 0/14 across
+        // the gap while the tiles on screen were unchanged). Same one-byte
+        // "redraw what's on screen" request every other tile-editing site in
+        // the engine makes, e.g. cutscene.c.
+        gUpdateVisibleTiles = 1;
+        QsSetRoomFlag(QUICKSTART_BRIDGE_APPLIED_FLAG);
+    }
+}
+
 static void QuickStartFillBoulderHoles(void) {
     s32 i, dx, dy;
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
@@ -7913,6 +8014,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartOpenBoomerangChamber();
     QuickStartUnlockRanchHouseDoors();
     QuickStartFillBoulderHoles();
+    QuickStartUpdateSwitchBridges();
     QuickStartStirRandom();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it

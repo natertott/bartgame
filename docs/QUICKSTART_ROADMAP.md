@@ -184,14 +184,25 @@ happened to come up. Concretely: finish the reachability survey for Castle
 Garden, Lon Lon Ranch and North Hyrule Field (the three the harness could
 not measure), and confirm each region is winnable as the last slot.
 
-**P4. The bridge switch.** North Hyrule Field's `HITTABLE_LEVER` at local
-(56,456). Established: it toggles **room flag 100**, which resets on every
-room load, and nothing in the tile-entity system consumes it - so whatever
-it drives has to be ours. Remaining: decide what it opens, find the correct
-tile ids for this room's tileset (writing foreign tile types is what caused
-the Boomerang chamber's artifacts and invisible walls - see
-`QuickStartArmLadderTiles`, which was rewritten to touch actTiles only), and
-persist the switch state for the run in a Qs global flag.
+**P4. The bridge switch.** DONE - `QuickStartUpdateSwitchBridges`. North
+Hyrule Field's `HITTABLE_LEVER` at local (56,456) toggles room flag 100
+(vanilla's own, deliberately read raw rather than through our private
+window); throwing it fills the three-tile gap in the river bridge at local
+(160-207, 592-623), and a Qs global flag keeps it filled for the rest of the
+run across leaving and returning.
+
+The reusable part is **how** the gap is filled: copy the tile from an intact
+neighbour rather than naming a tile. `GetTileTypeAtTilePos` on a plank two
+tiles away, `SetTileType` onto each gap tile. A tile lifted from the same
+room is by construction from that room's own tileset, so graphics, collision
+and act tile all stay consistent and nothing is hardcoded - which is what
+went wrong when the Boomerang chamber was given literal `TILE_TYPE_*`
+constants from another area's tileset. Note `SetTile(index)` is NOT
+sufficient: it updates `mapData` and the collision/act maps (measured: the
+gap moved from index 465-467/collision 48 to the donor's 23/collision 0) but
+nothing redraws the on-screen BG buffer, so the player walks across water
+that still looks like water. `SetTileType` is the path vanilla itself uses
+for a visible change.
 
 ### Next
 
@@ -249,9 +260,8 @@ order, not a preference.
 
 ## 7. Open questions
 
-1. What should the bridge switch open?
-2. Which puzzle mechanic to prototype first?
-3. Kinstone gating shape: how many partners per region, and should they be
+1. Which puzzle mechanic to prototype first?
+2. Kinstone gating shape: how many partners per region, and should they be
    visible before the player holds a matching piece?
-4. Item prerequisite and per-kind reward pool lists (content decisions).
-5. Unlock pacing - roughly how many wins to open the full pool.
+3. Item prerequisite and per-kind reward pool lists (content decisions).
+4. Unlock pacing - roughly how many wins to open the full pool.
