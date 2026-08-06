@@ -1654,9 +1654,17 @@ const Transition gExitList_HouseInteriors2_Cucco[] = {
 // which is a separate fix in game.c (QuickStartRevealHiddenLadders):
 // this house's HOUSE_DOOR_INT ships with unk7d = 1, so it never opens by
 // being walked into, and without that fix this room is a trap.
+// The stairs lead upstairs again, exactly as vanilla. They were looped back
+// into this same room because the bedroom did not survive being entered
+// outside the opening sequence - it ran script_PlayerIntro and spat the
+// player out into South Hyrule Field, which read in play as "the stairs do
+// nothing". That was a symptom of the global START flag never being set,
+// which GameTask_Transition now does; with it set the bedroom loads
+// normally (verified: the player stays in (34,21) and its content site
+// spawns there). So this row is vanilla's again.
 const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
-    { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2,
-      ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x290, 0x19c, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,

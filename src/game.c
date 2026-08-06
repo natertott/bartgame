@@ -592,6 +592,14 @@ static void GameTask_Transition(void) {
     // state a real playthrough would be by the time any of these items are
     // obtainable.
     SetGlobalFlag(EZERO_1ST);
+    // "Met Zelda" - the flag the whole opening sequence hangs off. Without
+    // it the game still believes the run is in its first five minutes, which
+    // is what made Link's House unusable: the entrance and the smithy each
+    // load a cutscene-only entity list (roomInit.c,
+    // sub_StateChange_HouseInteriors2_LinksHouseEntrance/Smith), and the
+    // bedroom runs script_PlayerIntro outright, which is why the stairs
+    // appeared to dump the player back downstairs. One flag fixes all three.
+    SetGlobalFlag(START);
     // Pre-grant one empty bottle so the bonus-reward phase's Red Potion
     // pickup (GiveItem's bottle-fill path in itemUtils.c only fills a slot
     // already marked empty, 0x20) has somewhere to go - without this the
@@ -1329,7 +1337,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // 26 sites the range is 266..603, and bank 12 has room up to offset 707
 // (the shop's own block sits just above it), so there is still headroom
 // before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 24
+#define QUICKSTART_CONTENT_SITE_COUNT 25
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -3797,6 +3805,29 @@ static u8 QuickStartPickSmallKind(void) {
 // FAIRY as an occasional pure-reward breather between the combat-heavy
 // draws, since these rooms have the floor space for a couple of fairies to
 // wander without clutter.
+// Rooms with no restrictions at all - big, open, and free of anything the
+// event has to work around, so every kind is fair game. Distinct from the
+// large pool, which is combat-and-fairies only: a room being big is not a
+// reason to stop it rolling a pot lottery.
+static u8 QuickStartPickAnyKind(void) {
+    switch ((s32)Random() % 7) {
+        case 0:
+            return LADDER_KIND_CHEST;
+        case 1:
+            return LADDER_KIND_MINIBOSS;
+        case 2:
+            return LADDER_KIND_NPC;
+        case 3:
+            return LADDER_KIND_WAVES;
+        case 4:
+            return LADDER_KIND_POT_LOTTERY;
+        case 5:
+            return LADDER_KIND_CHEST_LOTTERY;
+        default:
+            return LADDER_KIND_FAIRY;
+    }
+}
+
 static u8 QuickStartPickLargeKind(void) {
     switch ((s32)Random() % 3) {
         case 0:
@@ -5432,10 +5463,17 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
 // space get combat (miniboss, 3-wave gauntlet) or a fairy pair. Almost
 // everything here is a cramped tree hollow or cave nook, so `large` is the
 // exception, not the rule.
+// Which set of event kinds a site may roll.
+enum {
+    QUICKSTART_KINDS_SMALL, // puzzle/dialogue only - cramped tree hollows, cave nooks
+    QUICKSTART_KINDS_LARGE, // combat and fairies - rooms with real floor space
+    QUICKSTART_KINDS_ANY,   // everything, for rooms big and clear enough to host anything
+};
+
 typedef struct {
     u8 area;
     u8 room;
-    u8 large;
+    u8 kinds;
     s16 contentX;
     s16 contentY;
 } QuickStartContentSite;
@@ -5447,15 +5485,15 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // on top of that staircase. The tree is a pass-through now; its
     // staircase tile reads ACT_TILE_40, so it opens on touch like any other
     // vanilla door.
-    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     // South Hyrule Field's 3 converted doors. Unlike the Boomerang trees
     // these are true dead ends - one room each, single border exit back to
     // the field - so they're the simplest possible shape for this model.
     // Content sits just north of each room's own (0x78,0x78) arrival spot,
     // same convention as the tree rooms above.
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 0, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, 0, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
     // The Boomerang cave hub. Currently UNREACHABLE in play (see above and
     // the CORRECTION comment on its door in transitions.c): neither its own
     // mouth, nor the trees' doors down into it, nor its exit back to the
@@ -5479,22 +5517,22 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // replacing the earlier guesses derived from each entrance's arrival
     // point. Walked ground truth beats derived coordinates here for the
     // same reason it has everywhere else in this file.
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 72, 78 },    // northwest tree,  box (56,60)-(88,97)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 266, 58 },   // northeast tree,  box (249,38)-(283,78)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 72, 285 },   // southwest tree,  box (53,268)-(92,303)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 72, 78 },    // northwest tree,  box (56,60)-(88,97)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 266, 58 },   // northeast tree,  box (249,38)-(283,78)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 72, 285 },   // southwest tree,  box (53,268)-(92,303)
     // The southeast box came through as (246,183) (281,183) (281,229)
     // (246,289) - three corners agree on y=229 and the fourth reads 289, so
     // this takes the rectangle the three agree on. Easy to nudge if 289 was
     // the intended one.
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 263, 206 },  // southeast tree,  box (246,183)-(281,229)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, 170, 158 },  // the staircase,   box (153,143)-(188,173)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 263, 206 },  // southeast tree,  box (246,183)-(281,229)
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 170, 158 },  // the staircase,   box (153,143)-(188,173)
     // Trilby Highlands' 4 converted doors - all true dead ends, same shape
     // as South Hyrule Field's. The Keese Chest and Fairy Fountain caves are
     // the two reached by bombing a wall open.
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, 0x78, 0x60 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     // --- The last 5 synthetic entrances, converted -------------------------
     //
     // Castle Garden's two ladders, Lon Lon Ranch's Goron Cave door, Link's
@@ -5530,7 +5568,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // moved clear of their ladder's block rather than sitting the usual
     // 24px off the arrival spot: further up the cellar, and off to one side
     // in the dojo (which is too short to go further up).
-    { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, 0, 0x98, 0x178 },  // arrives (0x68,0x1a8), ladder (104,412)
+    { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, QUICKSTART_KINDS_SMALL, 0x98, 0x178 },  // arrives (0x68,0x1a8), ladder (104,412)
     // Castle Garden's southeast ladder leads to this dojo's ante room, and
     // the ante room scroll-seams north into the dojo proper. The event goes
     // in the DOJO, not the ante room - the ante room is a corridor, and the
@@ -5543,8 +5581,8 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // This room was the shop until now. The shop has moved out entirely
     // (see sQuickStartShopDoors above) and the fixed Melari's Mine link
     // that used to reach it is gone with it.
-    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 1, 0x78, 0x88 },                         // arena floor, clear of the seam
-    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, 0x78, 0x60 },                  // arrives (0x78,0x78)
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, QUICKSTART_KINDS_LARGE, 0x78, 0x88 },                         // arena floor, clear of the seam
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },                  // arrives (0x78,0x78)
     // Goron Cave's main chamber - the one genuinely large room in this
     // batch, so it rolls from the large kind pool (miniboss / 3-wave
     // gauntlet / fairies). Currently UNREACHABLE, for the same kind of
@@ -5552,16 +5590,23 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // it (0x78,0x38) reads as solid wall, and walking into it does nothing.
     // The row is kept - it costs one table row and one flag block, and it
     // starts working the moment that door does.
-    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 1, 0x78, 0x260 },                   // arrives (0x78,0x278)
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 0, 0x78, 0x60 }, // arrives (0x78,0x78)
-    // Link's House bedroom. Also currently unreachable, and deliberately so
-    // - the room doesn't load correctly outside vanilla's opening sequence
-    // (it dumps the player into South Hyrule Field within a second), so the
-    // stairs that lead here are pointed back into the entrance instead
-    // (transitions.c, gExitList_HouseInteriors2_LinksHouseEntrance). Kept
-    // for the same reason as the two rows above.
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, 0, 0x58, 0x40 },  // arrives (0x58,0x28)
-    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 0, 0x78, 0xb0 },               // arrives (0x78,0xc8)
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_LARGE, 0x78, 0x260 },                   // arrives (0x78,0x278)
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
+    // The smithy, Link's House's right-hand room. Reachable and ordinary
+    // now that the global START flag is set - it used to load the opening
+    // cutscene's entity list (Link's father, Zelda, the orchestrator)
+    // instead of its own furniture. Content at (120,104), clear of the
+    // workbench row along the top wall and the anvil at (152,88).
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH, QUICKSTART_KINDS_ANY, 120, 104 },
+    // Link's House upstairs, reached by the stairs from the entrance. It was
+    // unreachable for a while because it ran script_PlayerIntro and dumped
+    // the player into South Hyrule Field within a second - a symptom of the
+    // global START flag never being set, which GameTask_Transition now does.
+    // The stairs point here again (transitions.c). Left on the SMALL pool on
+    // purpose: it is a cramped bedroom with a bed and a table, not an arena.
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, QUICKSTART_KINDS_SMALL, 0x58,
+      0x40 },  // arrives (0x58,0x28)
+    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, QUICKSTART_KINDS_SMALL, 0x78, 0xb0 },               // arrives (0x78,0xc8)
     // Lon Lon Ranch's house, both rooms. Unreachable until now: the west
     // door is a scripted HOUSE_DOOR_EXT running vanilla's key gate, which
     // nothing in this run satisfies, and the east room's route onward is
@@ -5569,8 +5614,8 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // (QuickStartUnlockRanchHouseDoors and the HOUSE_DOOR_INT unk7d clear),
     // so each room is a normal one-door "? room" now, entered by its own
     // front door and left the same way.
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 0, 0x68, 0x60 },  // arrives (0x68,0x78)
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 0, 0x78, 0x60 },  // arrives (0x78,0x78)
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, QUICKSTART_KINDS_SMALL, 0x68, 0x60 },  // arrives (0x68,0x78)
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },  // arrives (0x78,0x78)
     // Lon Lon Ranch's through-cave, back on its own vanilla doors now that
     // the synthetic connector that used to swallow them is retired. Still
     // gated by vanilla's Mole Mitts dirt on the way in, which is the point -
@@ -5584,7 +5629,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // graphical artifacts and invisible walls in the Boomerang chamber, and
     // placing the event on floor that is already open makes the question
     // moot.
-    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, 0, 0x78, 0x58 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, QUICKSTART_KINDS_SMALL, 0x78, 0x58 },
     // Melari's Mine's southwest side room. Its two siblings (East and
     // Southeast) have had bespoke content dispatchers since before this
     // table existed; this one went the other way, because its door was
@@ -5593,7 +5638,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // own, and the table is the right home for a new one rather than a
     // third copy of the bespoke pair. Content at (152,83), the same spot
     // its structurally identical Southeast sibling already uses.
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0, 152, 83 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, QUICKSTART_KINDS_SMALL, 152, 83 },
 };
 
 // Whether a content site wants its FURNITURE gone as well as its payouts -
@@ -5605,6 +5650,12 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
 // loses pots to the furniture.
 static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
     if (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) {
+        return TRUE;
+    }
+    // The smithy ships with a workbench row, an anvil, pots and a chest
+    // filling most of its floor, and it is an ANY-kind site now, so it has
+    // to be able to host a miniboss or a 3-wave gauntlet.
+    if (area == AREA_HOUSE_INTERIORS_2 && room == ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH) {
         return TRUE;
     }
     return area == AREA_HOUSE_INTERIORS_4 &&
@@ -5781,7 +5832,17 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     if (QsCheckFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
         return;
     }
-    kind = sQuickStartRoomContentSites[site].large ? QuickStartPickLargeKind() : QuickStartPickSmallKind();
+    switch (sQuickStartRoomContentSites[site].kinds) {
+        case QUICKSTART_KINDS_ANY:
+            kind = QuickStartPickAnyKind();
+            break;
+        case QUICKSTART_KINDS_LARGE:
+            kind = QuickStartPickLargeKind();
+            break;
+        default:
+            kind = QuickStartPickSmallKind();
+            break;
+    }
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
     } else if (kind == LADDER_KIND_NPC) {
@@ -6119,6 +6180,7 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     // most of the arena a miniboss or wave gauntlet needs.
     bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT) ||
                           (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) ||
+                          (area == AREA_HOUSE_INTERIORS_2 && room == ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH) ||
                           (area == AREA_HOUSE_INTERIORS_4 &&
                            (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
                             room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST));
