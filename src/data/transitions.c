@@ -1322,28 +1322,26 @@ const Transition gExitList_MinishHouseInteriors_HyruleFieldSouthwest[] = {
     TransitionListEnd,
 };
 #endif
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above
-// gExitList_MinishHouseInteriors_Red. transition_type also switches from
-// TRANSITION_TYPE_INSTANT_MINISH to TRANSITION_TYPE_NORMAL here - the
-// player is already normal-sized while exploring this pool (these rooms
-// are entered directly at normal size via the ladder warp, never through
-// the real minish-shrink trigger), and DoExitTransition copies
-// transition_type into player_status.spawn_type, so keeping
-// INSTANT_MINISH would hand Castle Garden a spawn_type meant for an
-// actual size-change animation.
-const Transition gExitList_MinishHouseInteriors_SouthHyruleField[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// Back on its real vanilla exit, and no longer a member of the ladder pool
+// (game.c, sQuickStartSmallRoomPool). It is one of only two Minish-gated
+// destinations in the whole five-region pool - the other is
+// ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE - and the player now has a way in:
+// South Hyrule Field's Minish portal is revealed on entry
+// (QuickStartRevealHiddenLadders), so this is a real "? room" entered the
+// way vanilla built it, by shrinking and walking through the tiny door at
+// (72,456).
+//
+// The retarget it replaces sent this room's south border to Castle Garden,
+// with the transition type flipped from INSTANT_MINISH to NORMAL, because
+// back then the only way in was a normal-size ladder warp. Both halves of
+// that have to go together: leaving INSTANT_MINISH in place while the room
+// was still poolable would trap a normal-size player here, since that type
+// only fires for a minish player.
 const Transition gExitList_MinishHouseInteriors_SouthHyruleField[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x48, 0x1d4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 #ifdef QUICKSTART
 const Transition gExitList_MinishHouseInteriors_NextToKnuckle[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,

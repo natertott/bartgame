@@ -388,16 +388,16 @@ static void GameTask_Transition(void) {
         // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: free (was GF_HEART_CONTAINER_BONUS_APPLIED). 241-265: the river
-        // bridge and cave connector draws. 266-525: the 20 room-keyed
+        // bridge and cave connector draws. 266-616: the 27 room-keyed
         // content sites' randomized/kind/extra/done blocks
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 604-636: the shop's own door draw and price rolls. 637-638:
-        // Melari's Mine's two rooms' collected latches - re-rolled
-        // every fresh boot like everything else here, so a new run gets the
-        // shop somewhere else at different prices.
-        for (bit = 202; bit <= 638; bit++) {
+        // 617: the North Hyrule Field bridge. 618-650: the shop's own door
+        // draw and price rolls. 651-652: Melari's Mine's two rooms' collected
+        // latches - re-rolled every fresh boot like everything else here, so a
+        // new run gets the shop somewhere else at different prices.
+        for (bit = 202; bit <= 652; bit++) {
             QsClearFlag(bit);
         }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
@@ -1333,11 +1333,19 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // wave room types from the game as the last doors were converted.
 //
 // These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
-// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At
-// 26 sites the range is 266..603, and bank 12 has room up to offset 707
-// (the shop's own block sits just above it), so there is still headroom
-// before this needs rethinking.
-#define QUICKSTART_CONTENT_SITE_COUNT 25
+// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 27
+// sites the range is 266..616, and everything above it - the bridge flag,
+// the shop's block, Melari's two latches - is laid out immediately after,
+// ending at 652. Bank 12 has room up to offset 707, so there are 4 more
+// sites' worth of headroom before this needs rethinking.
+//
+// IMPORTANT: raising this count moves the top of the range, so every
+// constant below it has to move too. Getting that wrong is silent and
+// nasty: at 25 sites, site 24's block started at exactly 578, which was
+// GF_NHF_BRIDGE_JOINED - so joining North Hyrule Field's bridge also marked
+// the smithy site "already randomized" with an all-zero roll, and entering
+// the smithy permanently joined the bridge.
+#define QUICKSTART_CONTENT_SITE_COUNT 27
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1357,18 +1365,17 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // indefinitely by walking out and back in. These are that latch. Every
 // other "? room" already had one: the generic content sites carry
 // GF_CONTENT_SITE_DONE.
-#define GF_MELARI_EAST_DONE 637
-#define GF_MELARI_SOUTHEAST_DONE 638
+#define GF_MELARI_EAST_DONE 651
+#define GF_MELARI_SOUTHEAST_DONE 652
 
-// Range 604..636, immediately after the content sites' own 266..603.
-// Switch-operated bridges (QuickStartUpdateSwitchBridges). 578 onward is
-// free: the content sites' 13-bit blocks end at 577 and the shop's own
-// range does not start until 604.
-#define GF_NHF_BRIDGE_JOINED 578
+// Switch-operated bridges (QuickStartUpdateSwitchBridges). Sits immediately
+// above the content sites' last block, which ends at 616.
+#define GF_NHF_BRIDGE_JOINED 617
 
-#define GF_SHOP_RANDOMIZED 604
-#define GF_SHOP_DOOR_BIT(b) (605 + (b))                  // b = 0..4
-#define GF_SHOP_PRICE_BIT(i, b) (610 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// Range 618..650, immediately after the bridge flag.
+#define GF_SHOP_RANDOMIZED 618
+#define GF_SHOP_DOOR_BIT(b) (619 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (624 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -4033,7 +4040,13 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
     // sQuickStart2DoorSmallRoomPool/LargeRoomPool), per the user's own
     // explicit request.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, -40 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 0, -40 },
+    // ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD used to sit here. It is
+    // a content site now, entered by shrinking at South Hyrule Field's Minish
+    // portal and walking through the tiny door at (72,456), with its own
+    // vanilla INSTANT_MINISH exit restored (transitions.c). Leaving it in
+    // this pool as well would be a trap: a ladder draw puts a NORMAL-size
+    // player in there, and an INSTANT_MINISH border only fires for a minish
+    // one, so there would be no way back out.
     // Not the shared Minish House Interiors template room, so not verified
     // against the same (120,120)/(120,80) convention - the user's own
     // testing harness (this file's synthetic-warp technique) can't reach
@@ -4046,7 +4059,12 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
     // already found elsewhere this run.
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, -16 },
 };
-#define QUICKSTART_SMALL_ROOM_POOL_SIZE 14
+// One less than the array holds, and always has been: draws are taken modulo
+// this, so the Veil Falls row above stays out of circulation until its
+// guessed content offset has been walked for real. Dropped from 14 to 13
+// along with South Hyrule Field's Minish house leaving the pool, precisely so
+// that removal doesn't promote Veil Falls into the draw as a side effect.
+#define QUICKSTART_SMALL_ROOM_POOL_SIZE 13
 
 // Medium/large pool: miniboss and (once built) puzzle/wave content needs
 // more room to work with than the small pool's shared generic template
@@ -5639,6 +5657,26 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // third copy of the bespoke pair. Content at (152,83), the same spot
     // its structurally identical Southeast sibling already uses.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, QUICKSTART_KINDS_SMALL, 152, 83 },
+    // The two Minish-gated rooms. These are the only destinations in the
+    // whole five-region pool that a normal-sized Link cannot reach, and both
+    // hang off South Hyrule Field: its exit list has always carried them
+    // (transitions.c, gExitList_HyruleField_SouthHyruleField), they were just
+    // unreachable because nothing in this mode ever shrank the player. Now
+    // that the field's Minish portal is revealed on entry
+    // (QuickStartRevealHiddenLadders) they are ordinary "? rooms" entered by
+    // their own real vanilla doors, same model as everything else here.
+    //
+    // The cave at (376,216) in the field; a wide open Minish-scale cavern,
+    // and its vanilla exit is a plain INSTANT_MINISH border straight back to
+    // the field, so it is a clean dead end. Content 40px north of its
+    // (0x78,0xb8) arrival spot.
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE, QUICKSTART_KINDS_ANY, 0x78, 0x50 },
+    // The tiny door at (72,456) in the field. One of the shared Minish House
+    // Interiors template rooms, so it takes the same (0x78,0x78) arrival and
+    // 40px-north content convention the rest of that family uses - and stays
+    // on the SMALL pool for the same reason they do: it is a one-screen
+    // mushroom interior, not an arena.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, QUICKSTART_KINDS_SMALL, 0x78, 0x50 },
 };
 
 // Whether a content site wants its FURNITURE gone as well as its payouts -
@@ -7855,9 +7893,9 @@ static void QuickStartUnlockRanchHouseDoors(void) {
     }
 }
 
-// Unlocks the two vanilla fixtures that stand between the player and a
-// converted "? room": Castle Garden's two hidden ladders, and Link's House's
-// own front door.
+// Unlocks the vanilla fixtures that stand between the player and a converted
+// "? room": Castle Garden's two hidden ladders, Link's House's own front
+// door, and every region's Minish portal.
 //
 // Castle Garden's two "? room" ladders are HIDDEN_LADDER_DOWN fixtures
 // (object.c id 87), not plain doors, and in vanilla they stay invisible -
@@ -7912,6 +7950,42 @@ static void QuickStartRevealHiddenLadders(void) {
             // in the game has, using vanilla's own mechanism rather than a
             // synthetic exit box.
             ((GenericEntity*)entity)->field_0x7c.BYTES.byte1 = 0;
+        } else if (entity->id == TREE_HIDING_PORTAL && entity->action == 1) {
+            // Every one of the five pool regions has a Minish portal, and
+            // four of them ship with it hidden under a tree stump. Surveyed
+            // live: Castle Garden (840,224), South Hyrule Field (88,528),
+            // Lon Lon Ranch (312,352), North Hyrule Field (808,512); Trilby
+            // Highlands' portal and two of Lon Lon's three are already open.
+            //
+            // In vanilla the stump is uncovered by rolling into it - the
+            // object waits for PLAYER_BOUNCE against its own ACT_TILE_84 -
+            // which is an unmarked secret with no hint anywhere, and this
+            // mode has no Ezlo hints at all. So it is revealed outright, the
+            // same stopgap shape as the boot-time Kinstone force-fuse.
+            //
+            // Same technique as the hidden ladders above: set the fixture's
+            // own flag and bounce it to action 0 so its own Init re-runs.
+            // That matters for correctness, not just tidiness -
+            // TreeHidingPortal_Init's reveal ends in DeleteThisEntity(),
+            // which deletes gUpdateContext.current_entity, so it is only
+            // safe when the tree itself is the entity being updated. Calling
+            // any of its reveal path from this sweep would delete whatever
+            // entity happens to be running instead.
+            //
+            // Uncovering it is what stamps the portal tiles at all
+            // (CreateMinishEntrance): until then the manager's ACT_TILE_61
+            // does not exist and walking north into the stump just bumps
+            // into it, which is exactly what the emulator showed.
+            SetFlag(((GenericEntity*)entity)->field_0x86.HWORD);
+            entity->action = 0;
+        } else if (entity->id == MINISH_PORTAL_STONE && entity->action == 1) {
+            // The other cover vanilla uses for the same thing, revealed by a
+            // Kinstone fusion rather than a roll. None of the five current
+            // regions has one, but it costs a branch and it means a region
+            // added later needs no new code. This one needs no action bounce
+            // - MinishPortalStone_Action1 polls its own flag every frame and
+            // runs the reveal animation itself once it is set.
+            SetFlag(((GenericEntity*)entity)->field_0x86.HWORD);
         }
     }
 }
