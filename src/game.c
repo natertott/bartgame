@@ -1020,6 +1020,32 @@ static bool32 QuickStartEntityInCurrentRoom(Entity* entity) {
 // reward, behind a 19-enemy gauntlet) - and that disappearance then reads
 // as a genuine pickup the very next frame, permanently marking the
 // reward collected even though nothing was ever actually handed over.
+// Same idea as QuickStartGroundItemAt below, but matched on the item's form
+// rather than its position.
+//
+// The pot room needs this because it cannot name a position. Its layout is
+// generated from the room's own collision map, and a pot WRITES collision
+// while it stands - so re-running the generator on a later frame to find out
+// where the winning pot went counts a completely different set of open cells
+// and lands somewhere else. Matching the prize by form sidesteps the whole
+// problem: the room's plain pots are form 0xFF (they drop nothing) and its
+// trap pots spawn bombs rather than ground items, so the only GROUND_ITEM
+// wearing a reward-pool form is the prize. Safe against enemy drops too -
+// sQuickStartLadderRewardPool is heart pieces, bomb bags, quivers and
+// ITEM_RUPEE200, none of which a bob-omb ever leaves behind.
+static bool32 QuickStartGroundItemOfForm(u16 form) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type == form &&
+            QuickStartEntityInCurrentRoom(ent)) {
+            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 static bool32 QuickStartGroundItemAt(s16 offsetX, s16 offsetY) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -1338,7 +1364,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // vocabulary the retired ladder/door slots had (LADDER_KIND_*: chest,
 // miniboss, npc, waves, pot lottery, chest lottery, fairy) - 3 kind bits -
 // and the same 8-bit extra, which the pot lottery needs in full (it packs
-// a 0-8 winner slot plus a prize index, see QuickStartPickPotLotteryExtra).
+// a 0-8 winner slot plus a prize index, see QuickStartPickPotRoomExtra).
 // Anything narrower would have silently deleted the lottery/fairy/miniboss/
 // wave room types from the game as the last doors were converted.
 //
@@ -4440,10 +4466,25 @@ static u8 QuickStartPickLotteryExtra(void) {
 // (0-8) instead of the 2 bits QuickStartPickLotteryExtra above packs for the
 // 3-chest case - still fits the same 8-bit "extra" scratch value every other
 // kind gets (4 bits winner + 2 bits prize = 6 of 8 bits used).
-static u8 QuickStartPickPotLotteryExtra(void) {
-    u8 winnerSlot = (u8)((s32)Random() % 9);
+#define QUICKSTART_POT_ROOM_PRESET_COUNT 3
+
+// The pot room's whole layout is derived from this one byte (see
+// QuickStartSetupPotRoomContent), so it has to carry everything that must
+// survive leaving the room and coming back:
+//
+//   bits 0-1  density preset: packed / mixed / sparse
+//   bits 2-3  prize index into sQuickStartLadderRewardPool
+//   bits 4-7  where in the fill order the winning pot sits
+//
+// Nothing here is re-rolled on re-entry, and that is the point. The layout
+// used to come straight from Random() at spawn time, which meant walking
+// out and back in reshuffled which pot held the prize - the room was a slot
+// machine you could re-pull instead of a puzzle you had to dig through.
+static u8 QuickStartPickPotRoomExtra(void) {
+    u8 preset = (u8)((s32)Random() % QUICKSTART_POT_ROOM_PRESET_COUNT);
     u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
-    return (u8)(winnerSlot | (prizeIndex << 4));
+    u8 winnerNibble = (u8)((s32)Random() % 16);
+    return (u8)(preset | (prizeIndex << 2) | (winnerNibble << 4));
 }
 
 // Runs every frame in Castle Garden Main but only ever does anything once
@@ -4503,7 +4544,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
         } else if (kind == LADDER_KIND_MINIBOSS) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
         } else if (kind == LADDER_KIND_POT_LOTTERY) {
-            QuickStartLadderSetExtra(i, QuickStartPickPotLotteryExtra());
+            QuickStartLadderSetExtra(i, QuickStartPickPotRoomExtra());
         } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
             QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
         }
@@ -4552,7 +4593,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
                 } else if (kind == LADDER_KIND_MINIBOSS) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
                 } else if (kind == LADDER_KIND_POT_LOTTERY) {
-                    QuickStartLadderSetExtra(i, QuickStartPickPotLotteryExtra());
+                    QuickStartLadderSetExtra(i, QuickStartPickPotRoomExtra());
                 } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
                     QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
                 }
@@ -4631,7 +4672,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         } else if (kind == LADDER_KIND_MINIBOSS) {
             QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
         } else if (kind == LADDER_KIND_POT_LOTTERY) {
-            QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotLotteryExtra());
+            QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotRoomExtra());
         } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
             QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
         }
@@ -4659,7 +4700,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
                 } else if (kind == LADDER_KIND_MINIBOSS) {
                     QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
                 } else if (kind == LADDER_KIND_POT_LOTTERY) {
-                    QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotLotteryExtra());
+                    QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotRoomExtra());
                 } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
                     QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
                 }
@@ -4996,57 +5037,281 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     return FALSE;
 }
 
-// 9 pots, 16px apart in a 3x3 grid centered on contentX/contentY - one (the
-// "extra" value's winnerSlot, now 0-8 since QuickStartPickPotLotteryExtra
-// packs 4 bits instead of QuickStartPickLotteryExtra's 2) shatters into a
-// real reward; the other 8 are QUICKSTART's own "trap" pot form
-// (QUICKSTART_POT_TRAP_FORM, pot.c's sub_0808288C) - a primed bomb that
-// explodes on contact instead of the plain empty crack the original 3-pot
-// version used, matching the user's own original vision for this room ("8
-// of them are filled with bombs or explode when the player interacts with
-// them"). Pots are OBJECT-kind, so QuickStartClearLadderRoomObstacles never
-// sweeps them mid-visit - the same "spawn once, then just watch for the
-// drop" two-flag shape LADDER_KIND_CHEST above uses (room flag 0 = spawned,
-// 3 = confirmed present at least once) is enough on its own to prevent a
-// reload from re-rolling/duplicating the prize.
-static const s16 sQuickStartPotLotteryOffsetsX[9] = { -16, 0, 16, -16, 0, 16, -16, 0, 16 };
-static const s16 sQuickStartPotLotteryOffsetsY[9] = { -16, -16, -16, 0, 0, 0, 16, 16, 16 };
+// The pot room.
+//
+// This replaced a fixed 3x3 grid of 9 pots centred on the site's own
+// contentX/contentY. That shape could not fit the rooms it had to live in:
+// measured live, the fully-open floor of a hosting room runs from 18 cells
+// (the Minish house off South Hyrule Field) to 220 (the Hyrule Castle
+// cellar), so one hand-placed offset was either swallowed by a wall or lost
+// in the middle of a field.
+//
+// What it builds instead: pots over most of the room's own walkable floor,
+// with a clear apron at the entrance. One holds the prize, some are plain,
+// some are QUICKSTART's trap form (QUICKSTART_POT_TRAP_FORM, pot.c's
+// sub_0808288C - a primed bomb rather than an empty crack). The point is
+// the cramping: with the floor packed there is nowhere safe to throw, so
+// clearing a path risks lobbing a live one into your own feet.
+//
+// Three things decide the shape, and each is forced by something real:
+//
+// 1. WALKABILITY comes from collisionData, not actTiles. A pot fills a
+//    whole tile, and collisionData == 0 means all four quadrants are free,
+//    which is exactly the question. actTiles only tracks solidity by luck
+//    in the overworld rooms - inside the Minish house it reads 0x00 nearly
+//    everywhere and claims 2 open cells against a true 18.
+//
+// 2. THE FILL STREAMS IN RINGS outward from the player, one pass per
+//    Chebyshev ring, instead of collecting candidate cells and sorting them
+//    by distance. game.o gets no .bss/.data (linker.ld is an absolute
+//    NOLOAD layout), so there is nowhere to put a candidate array, and a
+//    few hundred bytes of stack for one is not worth the risk on a GBA.
+//    Ring order earns its keep anyway: it puts the density where the player
+//    is standing, so a 220-cell room gets a dense plug to dig through
+//    rather than 30 pots sprinkled uselessly across it.
+//
+// 3. THE BUDGET IS TIGHT. MAX_ENTITIES is 72 for the whole game, and a
+//    trap pot spawns a real PLAYER_ITEM_BOMB when it breaks - so a chain
+//    reaction through a dense trap field can put a dozen live bombs in the
+//    room on top of every pot still standing, plus their explosion FX. The
+//    caps below leave room for that cascade, because the cascade is the
+//    entire appeal.
+//
+// The anchor is the player's own position when the room is set up, which is
+// where he arrived through the door. That is what retires the awkward
+// per-room offsets: no table, and the apron is always at the way in.
 #define QUICKSTART_POT_TRAP_FORM 0xFE
+// Pots and traps are capped separately, because they cost different things.
+// A pot is one entity. A TRAP pot is one entity now plus a live
+// PLAYER_ITEM_BOMB the moment it breaks - and in a packed field one blast
+// breaks its neighbours, so the traps are what can actually run the table
+// out. Splitting the caps is what lets the pot count go high enough to
+// cover almost the whole floor (which is the point of the room) while the
+// cascade stays bounded: 44 pots + at most 12 simultaneous bombs still
+// leaves ~16 slots for explosion FX, the prize and the player.
+#define QUICKSTART_POT_ROOM_MAX_POTS 44
+#define QUICKSTART_POT_ROOM_MAX_TRAPS 12
+#define QUICKSTART_POT_ROOM_MAX_ENEMIES 4
+// No room in the pool is anywhere near this wide in tiles; it only bounds
+// the ring loop so a malformed room can't spin.
+#define QUICKSTART_POT_ROOM_MAX_RING 40
 
-static bool32 QuickStartSetupPotLotteryContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
-    s32 winnerSlot, prizeIndex, winnerX, winnerY;
-    winnerSlot = extra & 0xF;
-    // QuickStartPickPotLotteryExtra only ever packs 0-8 here, but a site's
-    // extra bits are cleared to 0 and re-rolled on every boot, so guard the
-    // table lookup rather than trusting the stored value.
-    if (winnerSlot > 8) {
-        winnerSlot = 8;
+// Density preset: what fraction of the open floor gets a pot, how many of
+// those are live, and how many bob-ombs wander the gaps. 256 = every cell.
+typedef struct {
+    u8 fill;    // of 256
+    u8 trap;    // of 256
+    u8 enemies;
+} QuickStartPotRoomPreset;
+
+static const QuickStartPotRoomPreset sQuickStartPotRoomPresets[QUICKSTART_POT_ROOM_PRESET_COUNT] = {
+    { 243, 96, 0 },  // packed  - ~95% of the floor, no room to breathe, no enemies needed
+    { 179, 128, 2 }, // mixed   - ~70%, half of them live, a couple of bob-ombs in the gaps
+    { 115, 160, 4 }, // sparse  - ~45%, mostly live, and the gaps are patrolled
+};
+
+// Bob-omb walks up and detonates; Bombarossa lobs from a distance. Both
+// chosen over the tidier nuisances (ropes, leevers, sparks) on the user's
+// call - they are thematically right for a room already full of bombs, and
+// they are also the reason QUICKSTART_POT_ROOM_MAX_ENEMIES is only 4.
+static const u8 sQuickStartPotRoomEnemies[] = { BOBOMB, BOMBAROSSA };
+
+// xorshift32, seeded from the site's stored extra byte and the room's own
+// identity. Deliberately NOT Random(): the layout has to come out identical
+// every time the room is entered, or walking out and back in reshuffles
+// which pot holds the prize.
+static u32 QuickStartPotRoomRand(u32* state) {
+    u32 x = *state;
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    *state = x;
+    return x;
+}
+
+static u32 QuickStartPotRoomSeed(s32 extra) {
+    // The | 1 matters: xorshift is stuck at zero forever if it ever seeds
+    // there, and extra is legitimately 0 for one preset/prize combination.
+    return (u32)((extra * 2654435761u) ^ ((u32)gRoomControls.area << 16) ^ ((u32)gRoomControls.room << 8) ^
+                 0x9E3779B9u) |
+           1u;
+}
+
+static bool32 QuickStartPotRoomCellOpen(s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0 || tx >= (s32)(gRoomControls.width >> 4) || ty >= (s32)(gRoomControls.height >> 4)) {
+        return FALSE;
     }
-    prizeIndex = (extra >> 4) & 3;
-    winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
-    winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
+    return GetCollisionDataAtTilePos(TILE_POS(tx, ty), 1) == 0;
+}
+
+static s32 QuickStartPotRoomCountOpen(void) {
+    s32 tx, ty, count = 0;
+    for (ty = 0; ty < (s32)(gRoomControls.height >> 4); ty++) {
+        for (tx = 0; tx < (s32)(gRoomControls.width >> 4); tx++) {
+            if (QuickStartPotRoomCellOpen(tx, ty)) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+// The entrance apron: the clear ground the player is standing on when the
+// room builds itself. A full 3x3 costs 9 cells, which is half the floor of
+// the smallest hosting room, so below that size it degrades to a plus - the
+// player's own tile and its four cardinal neighbours. What it must never do
+// is degrade to nothing: sealing the player in on all four sides means he
+// has to break a pot before he can move at all, and if that one happens to
+// be live he eats the blast at point-blank with nowhere to retreat to.
+static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
+    s32 ax = (dx < 0) ? -dx : dx;
+    s32 ay = (dy < 0) ? -dy : dy;
+    if (apron > 0) {
+        return ax <= apron && ay <= apron;
+    }
+    return (ax + ay) <= 1;
+}
+
+// One fill pass. Returns how many pots it placed (or would have placed, with
+// spawn == FALSE). winnerIndex < 0 means "no prize this pass".
+//
+// It runs twice, and it has to. The number of pots that actually go down is
+// not the target: the apron, the room's walls and the per-cell skip roll all
+// eat into it, so a winnerIndex picked against the target can land past the
+// end and the prize never spawns at all - the room becomes unwinnable, which
+// is exactly what the first version did in the Minish house. So pass one
+// counts with spawning off, the index is chosen against that real count, and
+// pass two re-seeds and lays the room down for real. Both passes run before
+// a single pot exists, which matters: a pot WRITES collision, so a pass run
+// after any of them are standing would see a different map.
+static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed, s32 anchorTX, s32 anchorTY,
+                                 s32 apron, s32 target, s32 winnerIndex, s32 prizeIndex, bool32 spawn) {
+    u32 state = seed;
+    s32 ring, placed = 0, traps = 0, enemiesLeft = spawn ? preset->enemies : 0;
+
+    if (enemiesLeft > QUICKSTART_POT_ROOM_MAX_ENEMIES) {
+        enemiesLeft = QUICKSTART_POT_ROOM_MAX_ENEMIES;
+    }
+    for (ring = 0; ring < QUICKSTART_POT_ROOM_MAX_RING && placed < target; ring++) {
+        s32 dx, dy;
+        for (dy = -ring; dy <= ring; dy++) {
+            for (dx = -ring; dx <= ring; dx++) {
+                s32 tx, ty;
+                u32 roll;
+                // Ring, not disc: only the cells exactly `ring` away, so
+                // each cell is visited once across the whole loop.
+                if (dx != -ring && dx != ring && dy != -ring && dy != ring) {
+                    continue;
+                }
+                tx = anchorTX + dx;
+                ty = anchorTY + dy;
+                // Per CELL, not just per ring. The ring loop's own `placed <
+                // target` only stops it starting a new ring, and a single
+                // ring of a big room holds far more cells than the whole
+                // budget - the Fairy Fountain laid 43 pots against a cap of
+                // 30 before this was here.
+                if (placed >= target) {
+                    return placed;
+                }
+                if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartPotRoomCellOpen(tx, ty)) {
+                    continue;
+                }
+                roll = QuickStartPotRoomRand(&state);
+                if ((roll & 0xFF) >= preset->fill) {
+                    // A gap. Some of them get something unpleasant standing
+                    // in them.
+                    if (enemiesLeft > 0 && ((roll >> 8) & 3) == 0) {
+                        Entity* enemy = CreateEnemy(
+                            sQuickStartPotRoomEnemies[(roll >> 16) % ARRAY_COUNT(sQuickStartPotRoomEnemies)], 0);
+                        if (enemy != NULL) {
+                            enemy->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+                            enemy->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+                            enemy->collisionLayer = 1;
+                            UpdateSpriteForCollisionLayer(enemy);
+                            enemiesLeft--;
+                        }
+                    }
+                    continue;
+                }
+                {
+                    // Decided in both passes, not just the spawning one, so
+                    // the two passes stay in lockstep.
+                    bool32 isTrap = (roll >> 24) < preset->trap && traps < QUICKSTART_POT_ROOM_MAX_TRAPS;
+                    if (isTrap) {
+                        traps++;
+                    }
+                    if (spawn) {
+                        u32 form = (placed == winnerIndex)
+                                       ? sQuickStartLadderRewardPool[prizeIndex]
+                                       : (isTrap ? QUICKSTART_POT_TRAP_FORM : (u32)0xFF);
+                        Entity* pot = CreateObject(POT, form, 0);
+                        if (pot != NULL) {
+                            pot->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+                            pot->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+                            pot->collisionLayer = 1;
+                            pot->flags |= ENT_PERSIST;
+                            UpdateSpriteForCollisionLayer(pot);
+                        }
+                    }
+                }
+                placed++;
+            }
+        }
+    }
+    return placed;
+}
+
+static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY) {
+    const QuickStartPotRoomPreset* preset = &sQuickStartPotRoomPresets[(extra & 3) % QUICKSTART_POT_ROOM_PRESET_COUNT];
+    s32 prizeIndex = (extra >> 2) & 3;
+    s32 winnerNibble = (extra >> 4) & 0xF;
+    u32 seed = QuickStartPotRoomSeed(extra);
+    s32 open = QuickStartPotRoomCountOpen();
+    s32 target = (open * preset->fill) >> 8;
+    s32 apron, actual, winnerIndex;
+
+    if (target > QUICKSTART_POT_ROOM_MAX_POTS) {
+        target = QUICKSTART_POT_ROOM_MAX_POTS;
+    }
+    // A 3x3 apron costs 9 cells, which is half the floor of the smallest
+    // hosting room, so below that size QuickStartPotRoomInApron falls back to
+    // a plus shape instead.
+    apron = (open >= 24) ? 1 : 0;
+
+    actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, FALSE);
+    if (actual <= 0) {
+        return;
+    }
+    // Keep the winner in the far half of the fill order, so it sits deep in
+    // the field rather than in the first ring the player can reach.
+    winnerIndex = (actual / 2) + ((winnerNibble * (actual / 2)) >> 4);
+    if (winnerIndex >= actual) {
+        winnerIndex = actual - 1;
+    }
+    QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, winnerIndex, prizeIndex, TRUE);
+}
+
+// Pots are OBJECT-kind, so QuickStartClearVanillaRoomContent never sweeps
+// them mid-visit - the same "spawn once, then just watch for the drop"
+// two-flag shape LADDER_KIND_CHEST uses (room flag 0 = spawned, 3 =
+// confirmed present at least once) is enough on its own to stop a reload
+// re-rolling or duplicating the prize.
+static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
+    s32 anchorTX, anchorTY;
     if (QsCheckRoomFlag(flagBase + 0)) {
-        if (QuickStartGroundItemAt(winnerX, winnerY)) {
+        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[(extra >> 2) & 3])) {
             QsSetRoomFlag(flagBase + 3);
             return FALSE;
         }
         return QsCheckRoomFlag(flagBase + 3);
     }
-    {
-        s32 i;
-        for (i = 0; i < 9; i++) {
-            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : QUICKSTART_POT_TRAP_FORM;
-            Entity* pot = CreateObject(POT, form, 0);
-            if (pot != NULL) {
-                pot->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartPotLotteryOffsetsX[i];
-                pot->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartPotLotteryOffsetsY[i];
-                pot->collisionLayer = 1;
-                pot->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(pot);
-            }
-        }
-        QsSetRoomFlag(flagBase + 0);
-    }
+    // The player's own arrival spot anchors the layout. contentX/contentY -
+    // the site's hand-placed content offset - is deliberately ignored here;
+    // retiring it is the whole point of this rewrite.
+    anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY);
+    QsSetRoomFlag(flagBase + 0);
     return FALSE;
 }
 
@@ -5271,7 +5536,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
     } else if (kind == LADDER_KIND_WAVES) {
         return QuickStartSetupWaveRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
-        return QuickStartSetupPotLotteryContent(extra, contentX, contentY, flagBase);
+        return QuickStartSetupPotRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
         return QuickStartSetupChestLotteryContent(extra, contentX, contentY, flagBase);
     } else if (kind == LADDER_KIND_FAIRY) {
@@ -5916,7 +6181,7 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     } else if (kind == LADDER_KIND_MINIBOSS) {
         extra = (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE);
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
-        extra = QuickStartPickPotLotteryExtra();
+        extra = QuickStartPickPotRoomExtra();
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
         extra = QuickStartPickLotteryExtra();
     } else {
@@ -6016,7 +6281,7 @@ static void QuickStart2DoorRandomizeOnce(void) {
     } else if (kind == LADDER_KIND_MINIBOSS) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
-        QuickStart2DoorSetExtra(QuickStartPickPotLotteryExtra());
+        QuickStart2DoorSetExtra(QuickStartPickPotRoomExtra());
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
         QuickStart2DoorSetExtra(QuickStartPickLotteryExtra());
     }
@@ -6111,24 +6376,22 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
     QsSetRoomFlag(0);
 }
 
-// 2-door pool counterparts of QuickStartSetupPotLotteryContent/
+// 2-door pool counterparts of QuickStartSetupPotRoomContent/
 // QuickStartSetupChestLotteryContent/QuickStartSetupFairyRoomContent above -
 // same logic, GF_2DOOR_DONE/QuickStart2DoorGetExtra in place of the
 // ladder-indexed flags, duplicated rather than shared for the same reason
 // QuickStart2DoorSetupWaveRoomContent above is its own separate copy
 // instead of taking a ladderIndex.
-static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
-    s32 extra, winnerSlot, prizeIndex, winnerX, winnerY;
+// contentX/contentY are accepted and ignored, same as the content-site
+// version: the generator anchors on the player's own arrival spot instead.
+static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
+    s32 extra, anchorTX, anchorTY;
     if (QsCheckFlag(GF_2DOOR_DONE)) {
         return;
     }
     extra = QuickStart2DoorGetExtra();
-    winnerSlot = extra & 0xF;
-    prizeIndex = (extra >> 4) & 3;
-    winnerX = contentX + sQuickStartPotLotteryOffsetsX[winnerSlot];
-    winnerY = contentY + sQuickStartPotLotteryOffsetsY[winnerSlot];
     if (QsCheckRoomFlag(0)) {
-        if (QuickStartGroundItemAt(winnerX, winnerY)) {
+        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[(extra >> 2) & 3])) {
             QsSetRoomFlag(3);
             return;
         }
@@ -6137,21 +6400,10 @@ static void QuickStart2DoorSetupPotLotteryContent(s32 contentX, s32 contentY) {
         }
         return;
     }
-    {
-        s32 i;
-        for (i = 0; i < 9; i++) {
-            u32 form = (i == winnerSlot) ? sQuickStartLadderRewardPool[prizeIndex] : QUICKSTART_POT_TRAP_FORM;
-            Entity* pot = CreateObject(POT, form, 0);
-            if (pot != NULL) {
-                pot->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartPotLotteryOffsetsX[i];
-                pot->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartPotLotteryOffsetsY[i];
-                pot->collisionLayer = 1;
-                pot->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(pot);
-            }
-        }
-        QsSetRoomFlag(0);
-    }
+    anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY);
+    QsSetRoomFlag(0);
 }
 
 static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) {
@@ -6374,7 +6626,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
     } else if (kind == LADDER_KIND_WAVES) {
         QuickStart2DoorSetupWaveRoomContent(contentX, contentY);
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
-        QuickStart2DoorSetupPotLotteryContent(contentX, contentY);
+        QuickStart2DoorSetupPotRoomContent(contentX, contentY);
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
         QuickStart2DoorSetupChestLotteryContent(contentX, contentY);
     } else if (kind == LADDER_KIND_FAIRY) {
