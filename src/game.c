@@ -922,6 +922,16 @@ typedef struct QuickStartRegion_ {
     // Castle Garden -> Lon Lon Ranch sequence today; only the box's
     // destination becomes dynamic (whichever region is next in this save's
     // chain), not its position.
+    //
+    // The box MUST lie inside the room's own pixel bounds
+    // (gRoomControls.width/height), and it must beat the room's real border
+    // transition to the punch, which means not sharing the outermost pixel
+    // row. Lon Lon Ranch's box was (287-343, 966-984) in a 720x960 room -
+    // entirely past the bottom edge, so no amount of walking could put the
+    // player inside it, and it only ever fired on the frames a border
+    // transition carried his coordinates past the edge. Measured bounds:
+    // Castle Garden 1008x528, Lon Lon Ranch 720x960, South Hyrule Field
+    // 1008x688, North Hyrule Field 1008x800, Trilby Highlands 480x960.
     s16 exitMinX;
     s16 exitMaxX;
     s16 exitMinY;
@@ -2377,7 +2387,25 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // walked in the emulator from (344,870) straight up to (344,711) and
     // then west through (264,711), so it is provably in the same connected
     // component as the point the player arrives at.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 287, 343, 966, 984,
+    //
+    // Exit box moved from (287-343, 966-984) to (288-336, 928-956). The old
+    // box was OUTSIDE the room: Lon Lon Ranch is 720x960, so y 966-984 is
+    // past the bottom edge and no amount of walking could ever put the player
+    // inside it. That is a leftover from the hardwired Castle Garden -> Lon
+    // Lon ordering, when this region was always the chain's last slot and its
+    // onward box was never exercised. It only ever fired on the frames a
+    // border transition carried the player's coordinates past the edge, which
+    // is why the user saw "no exits work except the south one, and coming
+    // back UP into the ranch teleports me to the next region".
+    //
+    // The new box is the funnel into the same southern gap, measured off the
+    // room's own act tiles: the bottom row (y 944) is solid except tiles
+    // 18-21, i.e. x 288-336, and the corridor above it is open from x 240 to
+    // x 448. Sitting at y 928-956 it is 58px below the (344,870) arrival
+    // spot and 8px west of it, so arriving does not trip it but deliberately
+    // walking down the gap does - and it now fires before vanilla's own
+    // border transition rather than after.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 288, 336, 928, 956,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
       QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 264, 712,
       QuickStartLonLonRanchQuirkHook },
@@ -7281,8 +7309,39 @@ static bool32 QuickStartIsCurrentLadderTarget(u8 area, u8 room) {
     return FALSE;
 }
 
+// A "transition" whose destination is the room the player is already in.
+// Vanilla uses this shape for in-place respawns, and the Minish portal is
+// the one that matters here: enterPortalSubtask.c's sub_0804AD6C sets
+// area_next/room_next to gRoomControls' own values and flips
+// transitioningOut, to hand the player back to the same room at
+// PL_SPAWN_MINISH.
+//
+// It cannot escape a pocket by construction, so no containment rule has any
+// business cancelling it - and cancelling it is fatal rather than merely
+// wrong. By the time it fires, the portal sequence has already blanked the
+// screen, turned the player's collision and sprite off and taken his
+// priority; killing the transition leaves him invisible and uncontrollable
+// with nothing left to restore him, while the music plays on. That is the
+// "screen froze during the shrinking animation" report exactly.
+//
+// It also explains why shrinking worked in one region and not the next.
+// The FIRST use of a portal type runs the full falling-into-the-Minish-world
+// cutscene, which lives in its own gMain.substate - GameMain_Update, and so
+// this whole file's per-frame monitor, does not run during it, so the
+// transition survives. Every use after that skips the cutscene
+// (sub_0804AD18 gates on ENTRANCE_0 + portal_type, which the cutscene sets)
+// and respawns inline during ordinary gameplay, right where the monitor can
+// cancel it.
+static bool32 QuickStartTransitionStaysInSameRoom(void) {
+    return gRoomTransition.player_status.area_next == gRoomControls.area &&
+           gRoomTransition.player_status.room_next == gRoomControls.room;
+}
+
 static void QuickStartEnforceContainment(void) {
     if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
     if (!QuickStartAreaContained(gRoomControls.area)) {
@@ -7369,6 +7428,9 @@ static void QuickStartEnforceContainment(void) {
 static void QuickStartEnforceLonLonContainment(void) {
     u8 ladder3TargetArea, ladder3TargetRoom;
     if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
@@ -7462,6 +7524,9 @@ static void QuickStartEnforceLonLonContainment(void) {
 static void QuickStartEnforceFieldRegionContainment(void) {
     s32 i;
     if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
     if (gRoomControls.area != AREA_HYRULE_FIELD ||

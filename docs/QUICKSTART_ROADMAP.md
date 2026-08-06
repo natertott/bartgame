@@ -28,6 +28,10 @@ The systems that already work this way, and are the model to follow:
 - `sQuickStartGatedZones` - a table of item-gated boxes, consulted by one
   generic position filter, usable by anything that places something.
 - `QuickStartRegion` - a table row per region, driven by generic chain code.
+  One rule the table cannot express and nothing checks: a region's exit box
+  must lie **inside** the room's own pixel bounds, and off the outermost
+  pixel row so it beats the real border transition. Lon Lon Ranch's sat past
+  the bottom edge of a 720x960 room for as long as the chain has existed.
 - `QsCheckRoomFlag`/`QsSetRoomFlag` - one private flag window, so no room's
   vanilla logic can collide with ours.
 
@@ -245,16 +249,14 @@ thresholds.
 
 ## 5. Known open bugs and loose ends
 
-- The Minish shrink handshake is **unverified**. The reveal is confirmed
-  (stump deleted, `ACT_TILE_61` stamped where the manager expects it), but
-  vanilla's entry path wants the player pressed against the portal tile with
-  `base.subtimer >= 6`, and a position-poked bot never accumulates that.
-  Needs a human to walk into the stump and press R. If it turns out not to
-  fire, the two Minish rooms are simply never seen - nothing traps anyone.
-- Lon Lon Ranch has two `MINISH_SIZED_ENTRANCE` objects at (316,632) and
-  (436,632) whose destinations were never resolved; forcing `PL_MINISH` from
-  outside is not enough to make them fire in the harness. Two more ? rooms if
-  they check out.
+- Lon Lon Ranch's two `MINISH_SIZED_ENTRANCE` objects at (316,632) and
+  (436,632) are the ranch house's west and east Minish doors (the user's
+  own identification). They lead into rooms that are already content sites,
+  so they are a second route in rather than new ? rooms.
+- No Minish-sized entrance exists anywhere else in Lon Lon Ranch's room
+  data - the central "long hallway" the player expects after shrinking there
+  has no entrance object in this room. Where vanilla puts that entrance is
+  still unfound.
 - Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
   north-west pocket. Not gated - the user paused Trilby zone-gating pending
   their own walk.
