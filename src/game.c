@@ -449,7 +449,20 @@ static void GameTask_Transition(void) {
     gSave.stats.quiverType = 0;
     gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
-    gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
+    // The Red (White) Sword rather than the Smith's Sword, and only for one
+    // reason: it is what unlocks splitting into two Links.
+    //
+    // player.c's SurfaceAction_CloneTile switches on the equipped sword's
+    // item id to decide how many clones a spin-charge on a clone tile
+    // produces - ITEM_SMITH_SWORD (1) and ITEM_GREEN_SWORD (2) both give
+    // ZERO, ITEM_RED_SWORD (3) gives one (so two Links), BLUE gives two and
+    // the Four Sword three. Vanilla ties that to the first sword upgrade,
+    // which this mode never hands out, so the clone-block puzzles - Lon Lon
+    // Ranch's cave connector among them - were unsolvable.
+    //
+    // No other reason to upgrade: the difference in damage is incidental
+    // here, the clone count is the point.
+    gSave.stats.equipped[SLOT_B] = ITEM_RED_SWORD;
     // L item slot - the Bow, per the user's own request ("the player should
     // start with the bow equipped"). Ownership + arrows are granted below
     // alongside the other free starting gear, same pattern as Bombs.
@@ -475,7 +488,7 @@ static void GameTask_Transition(void) {
     // back to and was simply gone. Register ownership so both remain
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
-    SetInventoryValue(ITEM_SMITH_SWORD, 1);
+    SetInventoryValue(ITEM_RED_SWORD, 1);
     // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
@@ -3240,17 +3253,34 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // its own shop entities are talked to, not carried; ours have to be picked
 // up and walked to the merchant.
 //
-// These nine are all confirmed standable AND walkable off in all directions,
-// so the player can step onto each item and lift it. Two rows of three run
-// along the front edge of the upper shelving (y=104, the first open row
-// below the counters at y=112) and three more sit on the lower floor to the
-// merchant's left.
-#define QUICKSTART_SHOP_MERCHANT_X 144
-#define QUICKSTART_SHOP_MERCHANT_Y 152
+// SECOND CORRECTION, and this time from the room's own collision map rather
+// than from spot checks. Dumping every tile of the shop shows it is not one
+// space at all - it is two upper alcoves and a lower band, and the ONLY link
+// between them is a single-tile corridor at tile x=6, rows 112-128, hanging
+// off the LEFT alcove:
+//
+//        ..#####.####     tiles, # solid
+//      ##.....#...####    <- upper-left alcove | upper-RIGHT alcove
+//      ##.....#....###       tile 7 is solid: the two never meet
+//      ######.########    <- the only corridor, tile 6
+//      ######.########
+//      ##...........##    <- lower band, the room's real floor
+//      ##....###....##
+//
+// The upper-right alcove is a sealed pocket. Three of the nine items sat in
+// it, at tiles (8,6), (9,6) and (10,6), and no route to them exists - which
+// is the user's "some of them are behind the counter and inaccessible",
+// reported against coordinates the previous pass had called confirmed.
+//
+// All nine now sit in the lower band, the widest open run in the room and
+// the one the corridor actually feeds: row y=152, tiles x=2 through x=10.
+// Every one is in the same connected component as the entrance by
+// construction, because that band IS the entrance's component.
+#define QUICKSTART_SHOP_MERCHANT_X 192
+#define QUICKSTART_SHOP_MERCHANT_Y 168
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 40, 104 }, { 56, 104 }, { 72, 104 },    // in front of the upper-left shelving
-    { 136, 104 }, { 152, 104 }, { 168, 104 }, // in front of the upper-right shelving
-    { 40, 152 }, { 56, 152 }, { 72, 152 },    // lower floor, clear of the merchant at (144,152)
+    { 40, 152 },  { 56, 152 },  { 72, 152 },  { 88, 152 }, { 104, 152 },
+    { 120, 152 }, { 136, 152 }, { 152, 152 }, { 168, 152 },
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -5109,6 +5139,37 @@ static bool32 QuickStartFindOpenTileNear(s32 anchorX, s32 anchorY, s16* outX, s1
     return FALSE;
 }
 
+// The synthetic entrance every 2-door pool room shares is the literal
+// constant (100,100), which was never measured against any of them - it just
+// happens to be floor in most. In Dark Hyrule Castle's bridge room it is
+// not: that room is a 3-tile-wide walkway running down the middle of a void,
+// and (100,100) is tile (6,6), collision 0x0f, one tile off the west edge.
+// The player and the room's content both materialised in the gap beside the
+// bridge, which is the "spawns in midair with no ground beneath them"
+// report.
+//
+// Rather than measure an entrance for each of the twenty pool rooms and get
+// it wrong again, arrival is corrected against the room's own collision:
+// anything standing on a solid tile is moved to the nearest open one. Once
+// per room entry, and never mid-transition.
+#define QUICKSTART_PLAYER_RESCUED_FLAG 51
+static void QuickStartRescuePlayerOntoGround(void) {
+    s16 localX, localY, safeX, safeY;
+    if (gRoomTransition.transitioningOut || QsCheckRoomFlag(QUICKSTART_PLAYER_RESCUED_FLAG)) {
+        return;
+    }
+    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    QsSetRoomFlag(QUICKSTART_PLAYER_RESCUED_FLAG);
+    if (QuickStartTileIsOpen(localX >> 4, localY >> 4)) {
+        return;
+    }
+    if (QuickStartFindOpenTileNear(localX, localY, &safeX, &safeY)) {
+        gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + safeX;
+        gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + safeY;
+    }
+}
+
 // Places up to `count` enemies on distinct, open, spaced-out tiles, scanning
 // outward in Chebyshev rings from the requested spot so they cluster around
 // where the event wanted them without ever landing in a wall.
@@ -6733,9 +6794,21 @@ static void QuickStart2DoorSetupRoomContent(void) {
         return;
     }
     QuickStart2DoorClearRoomObstacles(area, room);
+    QuickStartRescuePlayerOntoGround();
     QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
     contentX = entranceX + contentDX;
     contentY = entranceY + contentDY;
+    // The content spot is derived from that same unmeasured (100,100), so it
+    // lands in the void alongside the player. Snap it to real ground before
+    // anything is placed on it.
+    {
+        s16 groundX, groundY;
+        if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
+            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            contentX = groundX;
+            contentY = groundY;
+        }
+    }
 
     if (QuickStart2DoorWantsOverworldEnemies(area, room)) {
         QuickStart2DoorSpawnOverworldEnemiesOnce(area, room);
@@ -7084,6 +7157,18 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     QuickStartRiverBridgeGetSpawnInfo(&entranceX, &entranceY);
     contentX = entranceX;
     contentY = entranceY + 20;
+    // Same unmeasured (100,100) entrance as the cave connector's pool - see
+    // QuickStartRescuePlayerOntoGround. Correct both the player and the
+    // content spot against the room's own collision.
+    QuickStartRescuePlayerOntoGround();
+    {
+        s16 groundX, groundY;
+        if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
+            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            contentX = groundX;
+            contentY = groundY;
+        }
+    }
     kind = QuickStartRiverBridgeGetKind();
     extra = QuickStartRiverBridgeGetExtra();
     if (kind == LADDER_KIND_CHEST) {
@@ -7354,6 +7439,18 @@ static void QuickStartSetupCaveRoomContent(void) {
     QuickStartCaveGetSpawnInfo(&entranceX, &entranceY);
     contentX = entranceX;
     contentY = entranceY + 20;
+    // Same unmeasured (100,100) entrance as the cave connector's pool - see
+    // QuickStartRescuePlayerOntoGround. Correct both the player and the
+    // content spot against the room's own collision.
+    QuickStartRescuePlayerOntoGround();
+    {
+        s16 groundX, groundY;
+        if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
+            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            contentX = groundX;
+            contentY = groundY;
+        }
+    }
     kind = QuickStartCaveGetKind();
     extra = QuickStartCaveGetExtra();
     if (kind == LADDER_KIND_CHEST) {
