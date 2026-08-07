@@ -210,6 +210,11 @@ static void QuickStartRandomizeRegionChainOnce(void);
 static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
+static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
+static s32 QuickStartFindSiteAt(s32, s32);
+static bool32 QuickStartTileBelongsToSite(s32, s32, s32);
+static void QuickStartSiteContentSpot(s32, s16*, s16*);
+static void QuickStartPotRoomGenerate(s32, s32, s32, s32);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
@@ -400,6 +405,25 @@ static void GameTask_Transition(void) {
         for (bit = 202; bit <= 652; bit++) {
             QsClearFlag(bit);
         }
+        // Wipe every per-area LOCAL flag, so each run gets a fresh world.
+        //
+        // gSave.flags is one 4096-bit array carved into banks (flags.h,
+        // gLocalFlagBanks). Bank 0 is the global flags - story progress, the
+        // items and entrances this mode forces open at boot - and stays.
+        // Everything from FLAG_BANK_1 (bit 0x100) up to the start of
+        // QUICKSTART's own block is per-area state, and that is where the
+        // world records what the player did to it: bombed walls, smashed
+        // destructible tiles, opened chests, revealed portals, and (once they
+        // are back) kinstone fusions. Vanilla wants those permanent. A
+        // roguelite does not - a wall the previous run blew open should be
+        // whole again, so the bombs still matter.
+        //
+        // Upper bound is exclusive of QUICKSTART's range: its flag n lives at
+        // FLAG_BANK_12 (0xA80) + QUICKSTART_FLAG_ORIGIN (700) + n, i.e. bit
+        // 3388 onward, and the loop above owns that.
+        for (bit = FLAG_BANK_1; bit < FLAG_BANK_12 + QUICKSTART_FLAG_ORIGIN; bit++) {
+            ClearGlobalFlag(bit); // bank 0 == raw bit index into gSave.flags
+        }
         // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
         // counter (GF_REGION_WAVE_COUNT_BIT) - deliberately persists across
         // leaving/re-entering a region within a run (that's the whole
@@ -449,20 +473,15 @@ static void GameTask_Transition(void) {
     gSave.stats.quiverType = 0;
     gSave.stats.arrowCount = 0;
     gSave.stats.equipped[SLOT_A] = ITEM_SHIELD;
-    // The Red (White) Sword rather than the Smith's Sword, and only for one
-    // reason: it is what unlocks splitting into two Links.
-    //
-    // player.c's SurfaceAction_CloneTile switches on the equipped sword's
-    // item id to decide how many clones a spin-charge on a clone tile
-    // produces - ITEM_SMITH_SWORD (1) and ITEM_GREEN_SWORD (2) both give
-    // ZERO, ITEM_RED_SWORD (3) gives one (so two Links), BLUE gives two and
-    // the Four Sword three. Vanilla ties that to the first sword upgrade,
-    // which this mode never hands out, so the clone-block puzzles - Lon Lon
-    // Ranch's cave connector among them - were unsolvable.
-    //
-    // No other reason to upgrade: the difference in damage is incidental
-    // here, the clone count is the point.
-    gSave.stats.equipped[SLOT_B] = ITEM_RED_SWORD;
+    // Level 1 on purpose. Upgrading to ITEM_RED_SWORD does make
+    // SurfaceAction_CloneTile hand out one clone (player.c switches on the
+    // equipped sword: Smith's and Green give zero, Red one, Blue two, Four
+    // Sword three), but the sword is only half of it - the duplication
+    // technique also needs the spin-attack skill scroll, which this mode
+    // does not grant either. Giving the sword alone bought nothing, so the
+    // clone-block puzzles stay unsolvable for now and the whole mechanic is
+    // parked on the roadmap rather than half-wired here.
+    gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
     // L item slot - the Bow, per the user's own request ("the player should
     // start with the bow equipped"). Ownership + arrows are granted below
     // alongside the other free starting gear, same pattern as Bombs.
@@ -488,7 +507,7 @@ static void GameTask_Transition(void) {
     // back to and was simply gone. Register ownership so both remain
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
-    SetInventoryValue(ITEM_RED_SWORD, 1);
+    SetInventoryValue(ITEM_SMITH_SWORD, 1);
     // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
     // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
     // that name refers to) so they're available in the item menu for
@@ -2712,11 +2731,22 @@ static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
     gSave.final_wave_frame = gSave.run_frames;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
+        s16 spotX, spotY;
         if (ent->kind != ENEMY || !QuickStartEntityInCurrentRoom(ent)) {
             continue;
         }
-        ent->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
-        ent->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+        // Spread them, don't stack them. Every survivor used to be dropped on
+        // the reward spot itself - the same single tile - so a rescue of five
+        // stranded enemies produced five sprites occupying one square, which
+        // is unreadable and unfightable. QuickStartFindOpenTileNear spirals
+        // out from the reward spot and refuses any tile with another enemy
+        // within two, so they land spaced across the open ground around it.
+        if (!QuickStartFindOpenTileNear(region->rewardX, region->rewardY, 2, &spotX, &spotY)) {
+            spotX = region->rewardX;
+            spotY = region->rewardY;
+        }
+        ent->x.HALF.HI = gRoomControls.origin_x + spotX;
+        ent->y.HALF.HI = gRoomControls.origin_y + spotY;
         ent->collisionLayer = 1;
         UpdateSpriteForCollisionLayer(ent);
     }
@@ -3253,34 +3283,35 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // its own shop entities are talked to, not carried; ours have to be picked
 // up and walked to the merchant.
 //
-// SECOND CORRECTION, and this time from the room's own collision map rather
-// than from spot checks. Dumping every tile of the shop shows it is not one
-// space at all - it is two upper alcoves and a lower band, and the ONLY link
-// between them is a single-tile corridor at tile x=6, rows 112-128, hanging
-// off the LEFT alcove:
+// THIRD PASS, and this one follows the user's own description of the room
+// rather than my reading of it, because I have now got this wrong twice
+// from data.
 //
-//        ..#####.####     tiles, # solid
-//      ##.....#...####    <- upper-left alcove | upper-RIGHT alcove
-//      ##.....#....###       tile 7 is solid: the two never meet
-//      ######.########    <- the only corridor, tile 6
-//      ######.########
-//      ##...........##    <- lower band, the room's real floor
-//      ##....###....##
+// Attempt 1 put the stock deep on the shelving, where it could be seen but
+// not picked up. Attempt 2 read the collision map, decided the upper-right
+// alcove was a sealed pocket, and moved all nine into the lower band - which
+// dumped them in a line right where the player walks in, and is what the
+// user saw as "all the items are on the first tiles when you enter".
 //
-// The upper-right alcove is a sealed pocket. Three of the nine items sat in
-// it, at tiles (8,6), (9,6) and (10,6), and no route to them exists - which
-// is the user's "some of them are behind the counter and inaccessible",
-// reported against coordinates the previous pass had called confirmed.
+// What they actually want: back on the shelving where attempt 1 had them,
+// nudged FORWARD - toward the player - so they are in reach. Forward is +y
+// here: the shelves run along the top of the room and the door is at the
+// bottom. y=104 sat in the middle of the shelf; y=120 is its front edge,
+// the row whose collision reads 0x03 rather than 0x0f, i.e. solid on top
+// and open along the bottom where the player stands.
 //
-// All nine now sit in the lower band, the widest open run in the room and
-// the one the corridor actually feeds: row y=152, tiles x=2 through x=10.
-// Every one is in the same connected component as the entrance by
-// construction, because that band IS the entrance's component.
+// Standing caveat, recorded rather than acted on: my collision read still
+// says the upper-RIGHT alcove (tiles 8-11) has no route to the entrance -
+// tile 7 is 0x0f across rows 80-112 and row 128 below it is solid the whole
+// way. If the right-hand three still cannot be picked up, that is why, and
+// the fix needs a walked coordinate from inside the room rather than
+// another guess from me.
 #define QUICKSTART_SHOP_MERCHANT_X 192
 #define QUICKSTART_SHOP_MERCHANT_Y 168
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 40, 152 },  { 56, 152 },  { 72, 152 },  { 88, 152 }, { 104, 152 },
-    { 120, 152 }, { 136, 152 }, { 152, 152 }, { 168, 152 },
+    { 40, 120 },  { 56, 120 },  { 72, 120 },  // front edge of the upper-left shelving
+    { 136, 120 }, { 152, 120 }, { 168, 120 }, // front edge of the upper-right shelving
+    { 40, 152 },  { 56, 152 },  { 72, 152 },  // lower floor, clear of the merchant
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -5116,7 +5147,7 @@ static bool32 QuickStartEnemyNearTile(s32 tx, s32 ty, s32 dist) {
 
 // Nearest open tile to a room-local spot, returned as a tile centre. Same
 // ring scan as the placer, without creating anything.
-static bool32 QuickStartFindOpenTileNear(s32 anchorX, s32 anchorY, s16* outX, s16* outY) {
+static bool32 QuickStartFindOpenTileNear(s32 anchorX, s32 anchorY, s32 spacing, s16* outX, s16* outY) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 ring;
@@ -5128,7 +5159,7 @@ static bool32 QuickStartFindOpenTileNear(s32 anchorX, s32 anchorY, s16* outX, s1
                     continue;
                 }
                 if (QuickStartTileIsOpen(anchorTX + dx, anchorTY + dy) &&
-                    !QuickStartEnemyNearTile(anchorTX + dx, anchorTY + dy, 1)) {
+                    !QuickStartEnemyNearTile(anchorTX + dx, anchorTY + dy, spacing)) {
                     *outX = (s16)((anchorTX + dx) * 16 + 8);
                     *outY = (s16)((anchorTY + dy) * 16 + 8);
                     return TRUE;
@@ -5164,7 +5195,7 @@ static void QuickStartRescuePlayerOntoGround(void) {
     if (QuickStartTileIsOpen(localX >> 4, localY >> 4)) {
         return;
     }
-    if (QuickStartFindOpenTileNear(localX, localY, &safeX, &safeY)) {
+    if (QuickStartFindOpenTileNear(localX, localY, 1, &safeX, &safeY)) {
         gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + safeX;
         gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + safeY;
     }
@@ -5391,6 +5422,20 @@ static u32 QuickStartPotRoomSeed(s32 extra) {
 // is degrade to nothing: sealing the player in on all four sides means he
 // has to break a pot before he can move at all, and if that one happens to
 // be live he eats the blast at point-blank with nowhere to retreat to.
+// Does this tile belong to the event we are building, or to a neighbouring
+// one?
+//
+// Most rooms hold a single content site and this always answers yes. The
+// Boomerang chamber holds five - one per tree ladder - in a single connected
+// cave, and the pot room's flood does not care about walls it cannot see: it
+// spread straight out of its own alcove and across the other four, which is
+// the user's report that the pot puzzle "expanded across several of the
+// sub-areas".
+//
+// The division is a plain nearest-site test against the sites' own content
+// spots. No new table and no per-room boxes: a tile is ours only if our
+// site is the closest one to it, which carves the shared room into one
+// region per event exactly where the events themselves sit.
 static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
     s32 ax = (dx < 0) ? -dx : dx;
     s32 ay = (dy < 0) ? -dy : dy;
@@ -5413,7 +5458,8 @@ static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
 // a single pot exists, which matters: a pot WRITES collision, so a pass run
 // after any of them are standing would see a different map.
 static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed, s32 anchorTX, s32 anchorTY,
-                                 s32 apron, s32 target, s32 winnerIndex, s32 prizeIndex, bool32 spawn) {
+                                 s32 apron, s32 target, s32 winnerIndex, s32 prizeIndex, s32 ownerSite,
+                                 bool32 spawn) {
     u32 state = seed;
     s32 ring, placed = 0, traps = 0, enemiesLeft = spawn ? preset->enemies : 0;
 
@@ -5441,7 +5487,8 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
                 if (placed >= target) {
                     return placed;
                 }
-                if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartTileIsOpen(tx, ty)) {
+                if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartTileIsOpen(tx, ty) ||
+                    !QuickStartTileBelongsToSite(tx, ty, ownerSite)) {
                     continue;
                 }
                 roll = QuickStartPotRoomRand(&state);
@@ -5489,7 +5536,7 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
     return placed;
 }
 
-static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY) {
+static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32 ownerSite) {
     const QuickStartPotRoomPreset* preset = &sQuickStartPotRoomPresets[(extra & 3) % QUICKSTART_POT_ROOM_PRESET_COUNT];
     s32 prizeIndex = (extra >> 2) & 3;
     s32 winnerNibble = (extra >> 4) & 0xF;
@@ -5506,7 +5553,21 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY) {
     // a plus shape instead.
     apron = (open >= 24) ? 1 : 0;
 
-    actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, FALSE);
+    actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
+                                   FALSE);
+    if (actual <= 0 && ownerSite >= 0) {
+        // The player arrived outside this site's own region - re-anchor on
+        // the site itself rather than giving up, so the room still gets its
+        // event and still keeps it local.
+        {
+            s16 siteX, siteY;
+            QuickStartSiteContentSpot(ownerSite, &siteX, &siteY);
+            anchorTX = siteX >> 4;
+            anchorTY = siteY >> 4;
+        }
+        actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
+                                       FALSE);
+    }
     if (actual <= 0) {
         return;
     }
@@ -5516,7 +5577,8 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY) {
     if (winnerIndex >= actual) {
         winnerIndex = actual - 1;
     }
-    QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, winnerIndex, prizeIndex, TRUE);
+    QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, winnerIndex, prizeIndex, ownerSite,
+                          TRUE);
 }
 
 // Pots are OBJECT-kind, so QuickStartClearVanillaRoomContent never sweeps
@@ -5538,7 +5600,7 @@ static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 content
     // retiring it is the whole point of this rewrite.
     anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
     anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY);
+    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, QuickStartFindSiteAt(contentX, contentY));
     QsSetRoomFlag(flagBase + 0);
     return FALSE;
 }
@@ -5738,7 +5800,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         // pinning it anywhere.
                         if (!QuickStartEntityInCurrentRoom(enemy)) {
                             s16 backX, backY;
-                            if (QuickStartFindOpenTileNear(contentX, contentY, &backX, &backY)) {
+                            if (QuickStartFindOpenTileNear(contentX, contentY, 1, &backX, &backY)) {
                                 enemy->x.HALF.HI = gRoomControls.origin_x + backX;
                                 enemy->y.HALF.HI = gRoomControls.origin_y + backY;
                             }
@@ -6227,6 +6289,53 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // mushroom interior, not an arena.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, QUICKSTART_KINDS_SMALL, 0x78, 0x50 },
 };
+// Where a content site wants its event. Wrapped so the pot room, which is
+// compiled above the table, can ask without reaching into it directly.
+static void QuickStartSiteContentSpot(s32 site, s16* x, s16* y) {
+    *x = sQuickStartRoomContentSites[site].contentX;
+    *y = sQuickStartRoomContentSites[site].contentY;
+}
+
+// Which content site this contentX/contentY belongs to, or -1 if the caller
+// is not a content site at all (the 2-door pools pass their own coordinates
+// and want no restriction).
+static s32 QuickStartFindSiteAt(s32 contentX, s32 contentY) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (sQuickStartRoomContentSites[i].area == gRoomControls.area &&
+            sQuickStartRoomContentSites[i].room == gRoomControls.room &&
+            sQuickStartRoomContentSites[i].contentX == contentX && sQuickStartRoomContentSites[i].contentY == contentY) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+static bool32 QuickStartTileBelongsToSite(s32 tx, s32 ty, s32 ownerSite) {
+    s32 i, ownerDist, px, py;
+    if (ownerSite < 0) {
+        return TRUE;
+    }
+    px = tx * 16 + 8 - sQuickStartRoomContentSites[ownerSite].contentX;
+    py = ty * 16 + 8 - sQuickStartRoomContentSites[ownerSite].contentY;
+    ownerDist = px * px + py * py;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        s32 dist;
+        if (i == ownerSite || sQuickStartRoomContentSites[i].area != gRoomControls.area ||
+            sQuickStartRoomContentSites[i].room != gRoomControls.room) {
+            continue;
+        }
+        px = tx * 16 + 8 - sQuickStartRoomContentSites[i].contentX;
+        py = ty * 16 + 8 - sQuickStartRoomContentSites[i].contentY;
+        dist = px * px + py * py;
+        if (dist < ownerDist) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+
 
 // Whether a content site wants its FURNITURE gone as well as its payouts -
 // i.e. every OBJECT in the room, not just the reward-shaped ones
@@ -6658,7 +6767,7 @@ static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
     }
     anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
     anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY);
+    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, -1);
     QsSetRoomFlag(0);
 }
 
@@ -6804,7 +6913,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
     {
         s16 groundX, groundY;
         if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
-            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            QuickStartFindOpenTileNear(contentX, contentY, 1, &groundX, &groundY)) {
             contentX = groundX;
             contentY = groundY;
         }
@@ -7164,7 +7273,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     {
         s16 groundX, groundY;
         if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
-            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            QuickStartFindOpenTileNear(contentX, contentY, 1, &groundX, &groundY)) {
             contentX = groundX;
             contentY = groundY;
         }
@@ -7446,7 +7555,7 @@ static void QuickStartSetupCaveRoomContent(void) {
     {
         s16 groundX, groundY;
         if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
-            QuickStartFindOpenTileNear(contentX, contentY, &groundX, &groundY)) {
+            QuickStartFindOpenTileNear(contentX, contentY, 1, &groundX, &groundY)) {
             contentX = groundX;
             contentY = groundY;
         }

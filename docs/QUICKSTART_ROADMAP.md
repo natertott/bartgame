@@ -165,6 +165,14 @@ not the source of truth.
   friends. This window exists because vanilla uses the low bits and *does*
   clear them out from under us - the cause of the Triple Darknut room
   spawning content once per frame until the entity table saturated.
+- **Per-area local flags are wiped every run.** `gSave.flags` is one
+  4096-bit array split into banks: bank 0 is the global flags (story
+  progress, the entrances this mode forces open) and survives; everything
+  from `FLAG_BANK_1` up to QUICKSTART's own block is per-area state, and
+  that is where the world records bombed walls, smashed tiles, opened
+  chests, revealed portals and kinstone fusions. Vanilla wants those
+  permanent; a roguelite does not, so `GameTask_Transition` clears the whole
+  range. A wall the last run blew open is whole again.
 - `gSave`: `run_frames`, `final_wave_frame`, `enemies_killed`,
   `miniboss_kills`, `boss_kills` (per run); `meta_xp`, `runs_completed`
   (persistent).
@@ -230,6 +238,14 @@ for a visible change.
 **P5. Difficulty by chain position.** Map slot index to a tier offset on top
 of the persistent difficulty counter. Cheap once the curve is decided;
 the curve itself needs playtest data.
+
+**P5b. The duplication technique (low priority).** Clone-block puzzles -
+Lon Lon Ranch's cave connector among them - are unsolvable in this mode. It
+needs BOTH halves: a sword of at least ITEM_RED_SWORD (player.c's
+`SurfaceAction_CloneTile` switches on the equipped sword, and the Smith's
+and Green swords both give zero clones) AND the spin-attack skill scroll.
+Granting only the sword buys nothing, which is why the run is back on level
+1 for now. Parked until someone wants that ledge.
 
 **P6. Item pools and prerequisites.** Split the one reward pool into named
 pools per room kind and per difficulty; add an item-requires-item table
