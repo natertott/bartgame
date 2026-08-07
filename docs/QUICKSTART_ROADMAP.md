@@ -273,6 +273,12 @@ thresholds.
   data - the central "long hallway" the player expects after shrinking there
   has no entrance object in this room. Where vanilla puts that entrance is
   still unfound.
+- **The 2-door pool's door transitions are wrong in both directions.** All
+  40 doors (20 rooms x 2) are retargeted to one destination and one landing
+  spot, so leaving by either door returns the player to the same overworld
+  side and B -> A is impossible; entry teleports them to the middle of the
+  room rather than to the matching door. Surveyed and planned in
+  `docs/QUICKSTART_2DOOR_MAP.md`; the rewiring itself is not implemented.
 - **Hyrule Castle Cellar's content site never fires.** Forcing its kind and
   entering the room produces nothing at all. Its configured content spot is
   `y=376` in a room only 192 tall - outside its own room, the same class of
