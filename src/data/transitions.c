@@ -992,8 +992,8 @@ const Transition* const gExitLists_MelarisMine[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_MinishPaths_ToMinishVillage[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -1054,8 +1054,8 @@ const Transition gExitList_CrenelMinishPaths_CrenelWater[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -1074,8 +1074,8 @@ const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -1142,8 +1142,8 @@ const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_MinishHouseInteriors_Festari[] = {
-    { WARP_TYPE_AREA, 0xe8, 0xe8, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0xe8, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xe8, 0xe8, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xe8, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -1935,8 +1935,8 @@ const Transition gExitList_HouseInteriors1_PostOffice[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_HouseInteriors1_Library2F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x78, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -1955,8 +1955,8 @@ const Transition gExitList_HouseInteriors1_Library2F[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_HouseInteriors1_Library1F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x68, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2008,8 +2008,8 @@ const Transition gExitList_HouseInteriors1_InnWest2F[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_HouseInteriors1_InnEast2F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0xb8, 0x178, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xb8, 0x178, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2028,8 +2028,8 @@ const Transition gExitList_HouseInteriors1_InnEast2F[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_HouseInteriors1_SchoolWest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x78, 0x48, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x48, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2468,8 +2468,8 @@ const Transition gExitList_CrenelCaves_PillarCave[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x38, 0x28, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2512,8 +2512,8 @@ const Transition gExitList_CrenelCaves_SpinyChuPuzzle[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x38, 0x28, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2542,8 +2542,8 @@ const Transition gExitList_CrenelCaves_RupeeFairyFountain[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x68, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2569,8 +2569,8 @@ const Transition gExitList_CrenelCaves_MushroomKeese[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -2648,8 +2648,8 @@ const Transition gExitList_CastorCaves_WindRuins[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_CastorCaves_Darknut[] = {
-    { WARP_TYPE_AREA, 0x68, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -3156,8 +3156,8 @@ const Transition gExitList_VeilFallsCaves_Entrance[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_VeilFallsCaves_Exit[] = {
-    { WARP_TYPE_AREA, 0x58, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x58, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -3181,8 +3181,8 @@ const Transition gExitList_VeilFallsCaves_SecretChest[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
-    { WARP_TYPE_AREA, 0x58, 0x38, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x98, 0x38, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x58, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x98, 0x38, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -3208,8 +3208,8 @@ const Transition gExitList_VeilFallsCaves_BlockPuzzle[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_VeilFallsCaves_RupeePath[] = {
-    { WARP_TYPE_AREA, 0x98, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x98, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -4028,8 +4028,8 @@ const Transition* const gExitLists_TempleOfDroplets[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_61_0[] = {
-    { WARP_TYPE_AREA, 0x78, 0x58, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x58, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -4311,8 +4311,8 @@ const Transition gExitList_DarkHyruleCastle_3FKeatonHallToVaati[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
-    { WARP_TYPE_AREA, 0xa8, 0x28, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xa8, 0x28, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -4604,8 +4604,8 @@ const Transition* const gExitLists_VaatisArms[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
-    { WARP_TYPE_AREA, 0x88, 0x18, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else
@@ -4666,8 +4666,8 @@ const Transition* const gExitLists_HyruleCastle[] = {
 // uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
 // startX/startY/shape/warp_type kept as-is - only destination changes.
 const Transition gExitList_SanctuaryEntrance_Main[] = {
-    { WARP_TYPE_AREA, 0x88, 0x38, 0xb8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x138, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
 #else

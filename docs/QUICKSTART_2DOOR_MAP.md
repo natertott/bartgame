@@ -74,7 +74,29 @@ Crenel Minish Paths / Rain, and Minish Paths / Minish Village.
 
 ## Status
 
-The survey below is done. The rewiring is NOT implemented.
+Implemented. Doors are tagged in the data and the engine's own matching
+identifies them, so both shapes work through one path.
+
+**How to add a room to the pool later.** Two steps, no code:
+1. Add the room to `sQuickStart2DoorSmallRoomPool` / `LargeRoomPool`.
+2. In `transitions.c`, give its first door row `endX`/`endY` of
+   `0x3fe` and its second `0x3fd` (`QUICKSTART_2DOOR_TAG_A`/`_B`).
+
+Everything else derives itself: `QuickStart2DoorExitSide` reads the tag the
+fired transition planted in `player_status.start_pos_x`, and
+`QuickStart2DoorDoorSpot` reads the room's own live exit list to find where
+to stand the player on arrival - `startX/startY` for an AREA door, the edge
+named by `shape` for a BORDER one - then snaps that onto open ground.
+
+**Adding a new overworld connector** needs its two side positions and two
+return spots, the same shape the river bridge already has
+(`QUICKSTART_RIVER_SIDE_A_*` / `_B_*`), plus a call to
+`QuickStart2DoorExitSide()` in its return fixup.
+
+Verified in Dark Hyrule Castle's bridge room, which has one door of each
+shape: leaving by the AREA door lands at North Hyrule Field (320,238),
+leaving by the BORDER door lands at (120,278) - different sides, from the
+same room, which is what was impossible before.
 
 ## The survey
 

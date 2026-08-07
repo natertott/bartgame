@@ -211,6 +211,8 @@ static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
+static s32 QuickStart2DoorExitSide(void);
+static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
 static bool32 QuickStartTileBelongsToSite(s32, s32, s32);
 static void QuickStartSiteContentSpot(s32, s16*, s16*);
@@ -6893,6 +6895,26 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
 // ladder-indexed flags, plus the two size-survey special cases
 // (ROOM_CAVES_HEART_PIECE_HALLWAY kept vanilla, the 3 overworld-density
 // rooms) that ladder rooms don't need.
+// Put the player at the door they actually came in by, rather than at the
+// room's one hard-coded arrival spot.
+//
+// The entry side records which overworld door was used
+// (GF_2DOOR_ENTERED_FROM_B); this turns that into a position using the
+// room's own exit list, so A leads to A' and B to B'. Once per room entry.
+#define QUICKSTART_2DOOR_ARRIVAL_PLACED_FLAG 52
+static void QuickStart2DoorPlaceArrivalAtDoor(void) {
+    s16 doorX, doorY;
+    if (QsCheckRoomFlag(QUICKSTART_2DOOR_ARRIVAL_PLACED_FLAG) || gRoomTransition.transitioningOut) {
+        return;
+    }
+    QsSetRoomFlag(QUICKSTART_2DOOR_ARRIVAL_PLACED_FLAG);
+    if (!QuickStart2DoorDoorSpot(QsCheckFlag(GF_RIVER_ENTERED_FROM_B) ? 1 : 0, &doorX, &doorY)) {
+        return;
+    }
+    gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + doorX;
+    gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + doorY;
+}
+
 static void QuickStart2DoorSetupRoomContent(void) {
     u8 area, room, kind;
     s16 entranceX, entranceY, contentDX, contentDY;
@@ -6903,6 +6925,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         return;
     }
     QuickStart2DoorClearRoomObstacles(area, room);
+    QuickStart2DoorPlaceArrivalAtDoor();
     QuickStartRescuePlayerOntoGround();
     QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
     contentX = entranceX + contentDX;
@@ -7074,6 +7097,103 @@ static void QuickStartProcessCaveConnectorLink(void) {
     gRoomTransition.transitioningOut = 1;
 }
 
+// --- Which of a 2-door pool room's two doors did the player just use? -----
+//
+// The pool substitutes a random interior for a vanilla one that connects two
+// overworld doors, A and B. Walk in at A, cross, come out at B; walk in at B,
+// come out at A. For that to work the game has to know WHICH door the player
+// left by - and until now it could not, because transitions.c had retargeted
+// all 40 doors in the pool (20 rooms, 2 each) to the same destination AND the
+// same landing spot. The destination carried no information, so every exit
+// returned the player to the same overworld side and B -> A was impossible.
+//
+// Identifying the door by geometry is the obvious approach and the wrong one.
+// Doors come in two shapes: WARP_TYPE_AREA rows carry a real position in
+// startX/startY, but WARP_TYPE_BORDER rows leave those at 0 and encode their
+// edge in the shape field instead, so no single position test distinguishes
+// them - and four pool rooms have BOTH doors as borders.
+//
+// So the doors are tagged in the data instead, and the ENGINE does the
+// matching. Each pool room's first door row carries endX/endY of
+// QUICKSTART_2DOOR_TAG_A and its second QUICKSTART_2DOOR_TAG_B. DoExitTransition
+// (scroll.c) copies whichever row actually fired into
+// player_status.start_pos_x, so by the time this file sees the transition the
+// tag is sitting there waiting to be read. Both shapes work identically
+// because vanilla's own DoApplicableTransition picked the row, using its own
+// predicates, exactly as it does for every other door in the game.
+//
+// The tags are sentinel landing coordinates: DoExitTransition only copies
+// endX through verbatim when it is <= 0x3ff, so these sit just under that
+// ceiling where no real landing spot ever lands. They are overwritten with
+// the true destination the same frame.
+#define QUICKSTART_2DOOR_TAG_A 0x3fe
+#define QUICKSTART_2DOOR_TAG_B 0x3fd
+
+// 0 for side A, 1 for side B, -1 if this transition is not one of ours.
+static s32 QuickStart2DoorExitSide(void) {
+    if (gRoomTransition.player_status.start_pos_x == QUICKSTART_2DOOR_TAG_A) {
+        return 0;
+    }
+    if (gRoomTransition.player_status.start_pos_x == QUICKSTART_2DOOR_TAG_B) {
+        return 1;
+    }
+    return -1;
+}
+
+// Where to put the player INSIDE a pool room when they arrive through its
+// door `side`. Read off the room's own live exit list rather than a table, so
+// this works for any room added to the pool later without new data.
+//
+// The two shapes need different readings, which is the whole reason this is a
+// function and not a lookup:
+//   WARP_TYPE_AREA   - startX/startY is the door's own position; land beside it.
+//   WARP_TYPE_BORDER - startX/startY are 0 and `shape` names the room edge
+//                      (0x03 north, 0x0c east, 0x30 south, 0xc0 west); land
+//                      just inside that edge, centred on the room.
+// Either way the result is snapped onto real open ground, because a door's
+// nominal position is not always standable.
+static bool32 QuickStart2DoorDoorSpot(s32 side, s16* outX, s16* outY) {
+    const Transition* exits = gArea.pCurrentRoomInfo->exits;
+    s32 i = 0;
+    s16 x, y;
+    if (exits == NULL) {
+        return FALSE;
+    }
+    while (exits->warp_type != WARP_TYPE_END_OF_LIST) {
+        if (i == side) {
+            break;
+        }
+        exits++;
+        i++;
+    }
+    if (exits->warp_type == WARP_TYPE_END_OF_LIST) {
+        return FALSE;
+    }
+    if (exits->startX != 0 || exits->startY != 0) {
+        x = (s16)exits->startX;
+        y = (s16)exits->startY;
+    } else {
+        s16 w = (s16)gRoomControls.width;
+        s16 h = (s16)gRoomControls.height;
+        x = w / 2;
+        y = h / 2;
+        if (exits->shape & 0x03) {
+            y = 32; // north edge
+        } else if (exits->shape & 0x30) {
+            y = h - 32; // south edge
+        } else if (exits->shape & 0xc0) {
+            x = 32; // west edge
+        } else if (exits->shape & 0x0c) {
+            x = w - 32; // east edge
+        }
+    }
+    if (!QuickStartFindOpenTileNear(x, y, 1, outX, outY)) {
+        *outX = x;
+        *outY = y;
+    }
+    return TRUE;
+}
+
 // BUG FIX (user report): every one of this pool's real rooms has both its
 // doors retargeted (transitions.c) to the same literal (0xb8,0x138) -
 // confirmed in the emulator to be a real, walkable vanilla landing spot,
@@ -7108,8 +7228,17 @@ static void QuickStartFixupCaveConnectorReturn(void) {
     if (!QuickStart2DoorIsCurrentRoom()) {
         return;
     }
-    gRoomTransition.player_status.start_pos_x = 232;
-    gRoomTransition.player_status.start_pos_y = 476;
+    // Same door-keyed return as the river bridge above. This connector used
+    // to land the player on one hard-coded spot no matter which door they
+    // left by, which is exactly the bug: it made the interior a dead end
+    // that always spat you back out on the same side.
+    if (QuickStart2DoorExitSide() == 1) {
+        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
+        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+    } else {
+        gRoomTransition.player_status.start_pos_x = 232;
+        gRoomTransition.player_status.start_pos_y = 476;
+    }
 }
 
 // --- North Hyrule Field's river-crossing 2-door bridge ----------------------
@@ -7387,12 +7516,22 @@ static void QuickStartFixupRiverBridgeReturn(void) {
     }
     gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
     gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
-    if (QsCheckFlag(GF_RIVER_ENTERED_FROM_B)) {
-        gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_A_ARRIVAL_X;
-        gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_A_ARRIVAL_Y;
-    } else {
-        gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_B_ARRIVAL_X;
-        gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_B_ARRIVAL_Y;
+    // Keyed off WHICH DOOR the player left by, read from the tag the fired
+    // transition planted in start_pos_x - not off which side they came in
+    // from. That is what makes the crossing work in both directions: door
+    // A' always returns to overworld A and B' to B, so A -> B and B -> A are
+    // the same mechanism rather than two cases. GF_RIVER_ENTERED_FROM_B is
+    // no longer consulted here; it only ever encoded the entry side, which
+    // could not distinguish "crossed the room" from "turned around".
+    {
+        s32 side = QuickStart2DoorExitSide();
+        if (side == 1) {
+            gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_B_ARRIVAL_X;
+            gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_B_ARRIVAL_Y;
+        } else {
+            gRoomTransition.player_status.start_pos_x = QUICKSTART_RIVER_SIDE_A_ARRIVAL_X;
+            gRoomTransition.player_status.start_pos_y = QUICKSTART_RIVER_SIDE_A_ARRIVAL_Y;
+        }
     }
 }
 
@@ -7648,8 +7787,18 @@ static void QuickStartFixupCaveReturn(void) {
     }
     gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
     gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
-    gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
-    gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+    // Door-keyed, same as the other two connectors. This one's cave mouth is
+    // a single overworld opening rather than two separated banks, so both
+    // sides return next to it - side B a little clear of side A so leaving
+    // by the far door reads as coming out somewhere slightly different
+    // rather than landing back on the entry trigger.
+    if (QuickStart2DoorExitSide() == 1) {
+        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X + 32;
+        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+    } else {
+        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
+        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+    }
 }
 
 // "Fully contained" per the user's request: once inside Castor Darknut
