@@ -4944,12 +4944,15 @@ static void QuickStartWaveRoomSetWave(u32 flagBase, u8 wave) {
 // playtesting, and also stands in for the user's own "no more than 1 enemy
 // per 4 tiles" density cap until these rooms get their own measured
 // squares the way Castle Garden/Melari's Mine/Lon Lon Ranch did earlier.
+// Caps how many enemies one wave can ask for. The fixed offset table this
+// replaced is gone: it placed enemies at hand-picked pixel offsets with no
+// idea what was under them, which is what put a Darknut inside Link's House's
+// wall and stacked three of them into adjacent tiles in Grimblade's dojo.
+// QuickStartSpawnEnemiesOnOpenTiles finds the ground instead.
 #define QUICKSTART_WAVE_ROOM_OFFSET_COUNT 12
-static const s16 sQuickStartWaveRoomOffsets[QUICKSTART_WAVE_ROOM_OFFSET_COUNT][2] = {
-    { 0, 0 },     { -24, 0 },  { 24, 0 },   { 0, -24 },  { 0, 24 },
-    { -24, -24 }, { 24, -24 }, { -24, 24 }, { 24, 24 },
-    { -48, 0 },   { 48, 0 },   { 0, -48 },
-};
+// No room in the pool is anywhere near this many tiles across; it only
+// bounds the outward scan so a walled-in anchor cannot spin.
+#define QUICKSTART_SPAWN_MAX_RING 40
 
 static s32 QuickStartCountRoomEnemies(void) {
     s32 i, count;
@@ -4965,6 +4968,124 @@ static s32 QuickStartCountRoomEnemies(void) {
 // One enemy TYPE per wave (a single QuickStartPickEnemy roll, not one per
 // enemy), scaled up per wave and by the overall difficulty counter, capped
 // to this room's own offset-grid size.
+// --- Spawning on ground that actually exists ---------------------------
+//
+// Every enemy spawner in this file used to place entities at fixed pixel
+// offsets from a hand-picked spot and hope. That produced exactly the two
+// failures the user reported in the Dojos and Link's House: measured in the
+// emulator, a 4-enemy wave in Link's House entrance put one of them INSIDE
+// the wall block (which reads in play as "trapped in the door"), and in
+// Grimblade's dojo it stacked three into adjacent tiles, where they shove
+// each other every frame and read as stuttering and glitching around.
+//
+// A tile is open when its collisionData is 0 - all four quadrants free.
+// That is the same test the pot room uses, and it is the portable one:
+// actTiles only tracks solidity by luck outside the overworld rooms.
+static bool32 QuickStartTileIsOpen(s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0 || tx >= (s32)(gRoomControls.width >> 4) || ty >= (s32)(gRoomControls.height >> 4)) {
+        return FALSE;
+    }
+    return GetCollisionDataAtTilePos(TILE_POS(tx, ty), 1) == 0;
+}
+
+static s32 QuickStartCountOpenTiles(void) {
+    s32 tx, ty, count = 0;
+    for (ty = 0; ty < (s32)(gRoomControls.height >> 4); ty++) {
+        for (tx = 0; tx < (s32)(gRoomControls.width >> 4); tx++) {
+            if (QuickStartTileIsOpen(tx, ty)) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+// Open, and open on all four sides. A Darknut is a full tile wide and walks
+// and charges; dropped into a one-tile alcove it spends the fight grinding
+// against the walls. Preferred for combat spawns, relaxed only if the room
+// cannot supply enough such tiles.
+static bool32 QuickStartTileHasElbowRoom(s32 tx, s32 ty) {
+    return QuickStartTileIsOpen(tx, ty) && QuickStartTileIsOpen(tx - 1, ty) && QuickStartTileIsOpen(tx + 1, ty) &&
+           QuickStartTileIsOpen(tx, ty - 1) && QuickStartTileIsOpen(tx, ty + 1);
+}
+
+// Is some other enemy already within `dist` tiles? Doubles as the spacing
+// rule and as dedup between the two placement passes, which is why the
+// placer needs no record of where it has already put things - the entities
+// themselves are the record.
+static bool32 QuickStartEnemyNearTile(s32 tx, s32 ty, s32 dist) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        s32 ex, ey;
+        if (ent->kind != ENEMY || !QuickStartEntityInCurrentRoom(ent)) {
+            continue;
+        }
+        ex = ((ent->x.HALF.HI - gRoomControls.origin_x) >> 4) - tx;
+        ey = ((ent->y.HALF.HI - gRoomControls.origin_y) >> 4) - ty;
+        if (ex < 0) {
+            ex = -ex;
+        }
+        if (ey < 0) {
+            ey = -ey;
+        }
+        if (ex <= dist && ey <= dist) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Places up to `count` enemies on distinct, open, spaced-out tiles, scanning
+// outward in Chebyshev rings from the requested spot so they cluster around
+// where the event wanted them without ever landing in a wall.
+//
+// Two passes: the first insists on elbow room and two tiles of separation,
+// the second (only reached if the room is too cramped to supply that) takes
+// any open tile one clear of its neighbours. Small rooms therefore still
+// fill, they just fill tighter. Returns how many actually went down.
+static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count) {
+    s32 anchorTX = anchorX >> 4;
+    s32 anchorTY = anchorY >> 4;
+    s32 relax, ring, placed = 0;
+    for (relax = 0; relax < 2 && placed < count; relax++) {
+        for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING && placed < count; ring++) {
+            s32 dx, dy;
+            for (dy = -ring; dy <= ring; dy++) {
+                for (dx = -ring; dx <= ring; dx++) {
+                    s32 tx, ty;
+                    Entity* enemy;
+                    if (dx != -ring && dx != ring && dy != -ring && dy != ring) {
+                        continue;
+                    }
+                    if (placed >= count) {
+                        return placed;
+                    }
+                    tx = anchorTX + dx;
+                    ty = anchorTY + dy;
+                    if (relax == 0 ? !QuickStartTileHasElbowRoom(tx, ty) : !QuickStartTileIsOpen(tx, ty)) {
+                        continue;
+                    }
+                    if (QuickStartEnemyNearTile(tx, ty, relax == 0 ? 2 : 1)) {
+                        continue;
+                    }
+                    enemy = CreateEnemy(id, form);
+                    if (enemy == NULL) {
+                        return placed;
+                    }
+                    enemy->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+                    enemy->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+                    enemy->collisionLayer = 1;
+                    enemy->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(enemy);
+                    placed++;
+                }
+            }
+        }
+    }
+    return placed;
+}
+
 static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty) {
     u8 id, form;
     s32 i, count;
@@ -4973,16 +5094,7 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
     }
-    for (i = 0; i < count; i++) {
-        Entity* enemy = CreateEnemy(id, form);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + contentX + sQuickStartWaveRoomOffsets[i][0];
-            enemy->y.HALF.HI = gRoomControls.origin_y + contentY + sQuickStartWaveRoomOffsets[i][1];
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
-        }
-    }
+    QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count);
 }
 
 // Returns TRUE once the room's payoff has been collected, i.e. "this event
@@ -5137,24 +5249,6 @@ static u32 QuickStartPotRoomSeed(s32 extra) {
            1u;
 }
 
-static bool32 QuickStartPotRoomCellOpen(s32 tx, s32 ty) {
-    if (tx < 0 || ty < 0 || tx >= (s32)(gRoomControls.width >> 4) || ty >= (s32)(gRoomControls.height >> 4)) {
-        return FALSE;
-    }
-    return GetCollisionDataAtTilePos(TILE_POS(tx, ty), 1) == 0;
-}
-
-static s32 QuickStartPotRoomCountOpen(void) {
-    s32 tx, ty, count = 0;
-    for (ty = 0; ty < (s32)(gRoomControls.height >> 4); ty++) {
-        for (tx = 0; tx < (s32)(gRoomControls.width >> 4); tx++) {
-            if (QuickStartPotRoomCellOpen(tx, ty)) {
-                count++;
-            }
-        }
-    }
-    return count;
-}
 
 // The entrance apron: the clear ground the player is standing on when the
 // room builds itself. A full 3x3 costs 9 cells, which is half the floor of
@@ -5213,7 +5307,7 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
                 if (placed >= target) {
                     return placed;
                 }
-                if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartPotRoomCellOpen(tx, ty)) {
+                if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartTileIsOpen(tx, ty)) {
                     continue;
                 }
                 roll = QuickStartPotRoomRand(&state);
@@ -5266,7 +5360,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY) {
     s32 prizeIndex = (extra >> 2) & 3;
     s32 winnerNibble = (extra >> 4) & 0xF;
     u32 seed = QuickStartPotRoomSeed(extra);
-    s32 open = QuickStartPotRoomCountOpen();
+    s32 open = QuickStartCountOpenTiles();
     s32 target = (open * preset->fill) >> 8;
     s32 apron, actual, winnerIndex;
 
@@ -5521,15 +5615,13 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             return FALSE;
         }
         {
+            // Through the placer, not straight onto contentX/contentY. A
+            // site's content spot is hand-picked and several are simply
+            // wrong (Hyrule Castle Cellar's is 184px below its own floor),
+            // and even a good one can be a tile a Darknut cannot turn
+            // around in.
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
-            Entity* enemy = CreateEnemy(pick->id, pick->form);
-            if (enemy != NULL) {
-                enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
-                enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
-                enemy->collisionLayer = 1;
-                enemy->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(enemy);
-                enemy->direction = IdleSouth;
+            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY, 1) > 0) {
                 QsSetRoomFlag(flagBase + 0);
             }
         }
@@ -6612,14 +6704,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         {
             s32 extra = QuickStart2DoorGetExtra();
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
-            Entity* enemy = CreateEnemy(pick->id, pick->form);
-            if (enemy != NULL) {
-                enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
-                enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
-                enemy->collisionLayer = 1;
-                enemy->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(enemy);
-                enemy->direction = IdleSouth;
+            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY, 1) > 0) {
                 QsSetRoomFlag(0);
             }
         }
