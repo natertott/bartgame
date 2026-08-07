@@ -273,6 +273,19 @@ thresholds.
   data - the central "long hallway" the player expects after shrinking there
   has no entrance object in this room. Where vanilla puts that entrance is
   still unfound.
+- **Hyrule Castle Cellar's content site never fires.** Forcing its kind and
+  entering the room produces nothing at all. Its configured content spot is
+  `y=376` in a room only 192 tall - outside its own room, the same class of
+  error as Lon Lon's old exit box - which suggests it has never worked. The
+  generator ignores content offsets now, so it should start working the
+  moment the site actually dispatches; why it doesn't is unchased.
+- **The shop's upper-right alcove may still be unreachable.** Three of the
+  nine catalog items sit there. Reading the collision map, tile 7 is solid
+  across every row above the corridor and the row below it is solid too, so
+  there is no route from the entrance; the stock was placed there anyway on
+  the user's description of the room, after I got the placement wrong twice
+  from data. If those three still cannot be picked up, it needs a walked
+  coordinate from inside the room rather than another guess.
 - Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
   north-west pocket. Not gated - the user paused Trilby zone-gating pending
   their own walk.
