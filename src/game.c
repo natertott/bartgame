@@ -4954,11 +4954,59 @@ static void QuickStartWaveRoomSetWave(u32 flagBase, u8 wave) {
 // bounds the outward scan so a walled-in anchor cannot spin.
 #define QUICKSTART_SPAWN_MAX_RING 40
 
+// Is this one of the enemies THIS file spawned, and still alive?
+//
+// The position test alone is not enough, and the failure is not theoretical:
+// traced in Grimblade's dojo, a Wizzrobe's vanish phase teleports it to
+// (216,216) in a room that is 240x192 - outside the room's own bounds. Every
+// "is the fight over?" check then read it as dead and dropped the reward at
+// frame 127 with nobody having touched it, which is the "the wizzrobe
+// disappears and the item drops" report exactly.
+//
+// ENT_PERSIST is the reliable marker: every enemy this file spawns gets it,
+// and no vanilla enemy sets it. Position stays as a fallback so anything
+// spawned by some other path still counts while it is in the room.
+// A Wizzrobe fights by vanishing, so it needs company and it needs to be
+// left alone. One on its own spends most of the encounter invisible, which
+// is dead time; a group keeps pressure on while any individual is away.
+static bool32 QuickStartEnemyIsWizzrobe(u8 id) {
+    return id == WIZZROBE_WIND || id == WIZZROBE_FIRE || id == WIZZROBE_ICE;
+}
+
+// How many of this miniboss to put in the room. Three Wizzrobes minimum on
+// the user's call, climbing with the difficulty counter.
+//
+// The ceiling is entity budget, not taste. MAX_ENTITIES is 72 for the whole
+// game and each Wizzrobe carries a projectile child of its own from Init
+// (wizzrobeFire.c) plus another while it is firing, so six of them is
+// already around 18 slots before anything else in the room exists. Anything
+// else stays a solo fight.
+#define QUICKSTART_WIZZROBE_MIN 3
+#define QUICKSTART_WIZZROBE_MAX 6
+static s32 QuickStartMinibossCount(u8 id) {
+    s32 count;
+    if (!QuickStartEnemyIsWizzrobe(id)) {
+        return 1;
+    }
+    count = QUICKSTART_WIZZROBE_MIN + QuickStartGetDifficulty() / 2;
+    if (count > QUICKSTART_WIZZROBE_MAX) {
+        count = QUICKSTART_WIZZROBE_MAX;
+    }
+    return count;
+}
+
+static bool32 QuickStartEnemyIsOurs(Entity* ent) {
+    if (ent->kind != ENEMY) {
+        return FALSE;
+    }
+    return (ent->flags & ENT_PERSIST) || QuickStartEntityInCurrentRoom(ent);
+}
+
 static s32 QuickStartCountRoomEnemies(void) {
     s32 i, count;
     count = 0;
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+        if (QuickStartEnemyIsOurs(&gEntities[i].base)) {
             count++;
         }
     }
@@ -5031,6 +5079,31 @@ static bool32 QuickStartEnemyNearTile(s32 tx, s32 ty, s32 dist) {
         }
         if (ex <= dist && ey <= dist) {
             return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Nearest open tile to a room-local spot, returned as a tile centre. Same
+// ring scan as the placer, without creating anything.
+static bool32 QuickStartFindOpenTileNear(s32 anchorX, s32 anchorY, s16* outX, s16* outY) {
+    s32 anchorTX = anchorX >> 4;
+    s32 anchorTY = anchorY >> 4;
+    s32 ring;
+    for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING; ring++) {
+        s32 dx, dy;
+        for (dy = -ring; dy <= ring; dy++) {
+            for (dx = -ring; dx <= ring; dx++) {
+                if (dx != -ring && dx != ring && dy != -ring && dy != ring) {
+                    continue;
+                }
+                if (QuickStartTileIsOpen(anchorTX + dx, anchorTY + dy) &&
+                    !QuickStartEnemyNearTile(anchorTX + dx, anchorTY + dy, 1)) {
+                    *outX = (s16)((anchorTX + dx) * 16 + 8);
+                    *outY = (s16)((anchorTY + dy) * 16 + 8);
+                    return TRUE;
+                }
+            }
         }
     }
     return FALSE;
@@ -5570,10 +5643,12 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             return !QuickStartGroundItemAt(contentX, contentY);
         }
         if (QsCheckRoomFlag(flagBase + 0)) {
-            s32 i;
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            s32 i, alive = 0;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
-                if (enemy->kind == ENEMY && QuickStartEntityInCurrentRoom(enemy)) {
+                if (QuickStartEnemyIsOurs(enemy)) {
+                    alive++;
                     // Keep it parked exactly on its spawn spot until the
                     // player gets close enough to actually engage - the
                     // same 56px "notice the player" radius its own AI
@@ -5586,12 +5661,39 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     // dropped at this same spot never has this problem
                     // (no AI to wander with), which is the whole
                     // discrepancy this was chasing.
-                    if (!PlayerInRange(enemy, 1, 56)) {
+                    //
+                    // Never for a Wizzrobe. Vanishing and reappearing
+                    // somewhere else IS its behaviour, so parking it fights
+                    // its own AI every frame - and with a whole coven of
+                    // them it would stack the lot onto one tile.
+                    if (QuickStartEnemyIsWizzrobe(pick->id)) {
+                        // What a Wizzrobe DOES need is a leash. Traced in
+                        // Grimblade's dojo, its reappear step happily picks
+                        // spots like (264,504) in a room that is 240x192 -
+                        // so it vanishes and simply never comes back, which
+                        // is the other half of "it appears once and is
+                        // gone". Snapping it to open ground inside the room
+                        // while it is away keeps it in the fight without
+                        // pinning it anywhere.
+                        if (!QuickStartEntityInCurrentRoom(enemy)) {
+                            s16 backX, backY;
+                            if (QuickStartFindOpenTileNear(contentX, contentY, &backX, &backY)) {
+                                enemy->x.HALF.HI = gRoomControls.origin_x + backX;
+                                enemy->y.HALF.HI = gRoomControls.origin_y + backY;
+                            }
+                        }
+                    } else if (!PlayerInRange(enemy, 1, 56)) {
                         enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
                         enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
                     }
-                    return FALSE;
                 }
+            }
+            // Every one of them, not just the first. This used to return
+            // from inside the loop, which was harmless while a miniboss was
+            // always a single enemy and silently left the other Wizzrobes
+            // unleashed the moment there were three.
+            if (alive > 0) {
+                return FALSE;
             }
             // Dead - drop the reward and start watching for pickup.
             {
@@ -5621,7 +5723,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // and even a good one can be a tile a Darknut cannot turn
             // around in.
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
-            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY, 1) > 0) {
+            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
+                                                  QuickStartMinibossCount(pick->id)) > 0) {
                 QsSetRoomFlag(flagBase + 0);
             }
         }
@@ -6704,7 +6807,8 @@ static void QuickStart2DoorSetupRoomContent(void) {
         {
             s32 extra = QuickStart2DoorGetExtra();
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
-            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY, 1) > 0) {
+            if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
+                                                  QuickStartMinibossCount(pick->id)) > 0) {
                 QsSetRoomFlag(0);
             }
         }
