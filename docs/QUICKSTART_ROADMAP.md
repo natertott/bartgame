@@ -265,6 +265,9 @@ thresholds.
 
 ## 5. Known open bugs and loose ends
 
+Full per-room measurements (walkability grids, components, entity headroom,
+special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
+
 - Lon Lon Ranch's two `MINISH_SIZED_ENTRANCE` objects at (316,632) and
   (436,632) are the ranch house's west and east Minish doors (the user's
   own identification). They lead into rooms that are already content sites,

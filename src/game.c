@@ -4341,9 +4341,14 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // Darknut and its drop spawning inside it. This room's own walkable
     // path runs south from the entrance, not north; (0,+24) instead
     // confirmed clean, still on the open path.
+    // Retired from the draw (the size constant below excludes this last
+    // row). The full-room survey measured it at 10 open tiles in a 15x15
+    // room - a sliver of corridor in an area literally named NULL. A LARGE
+    // pool draw puts wave gauntlets and minibosses in here, and ten tiles
+    // cannot host either. Row kept so nothing renumbers.
     { AREA_NULL_61, ROOM_NULL_61_0, 100, 100, 0, 24 },
 };
-#define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 13
+#define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 12
 
 // Same flag-bank convention as GF_LADDER_*/GF_DIFFICULTY_BIT above - picks
 // up right after GF_CAVE_CONNECTOR_DONE (183), the highest bit previously
@@ -5550,6 +5555,22 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     if (target > QUICKSTART_POT_ROOM_MAX_POTS) {
         target = QUICKSTART_POT_ROOM_MAX_POTS;
     }
+    // Cap by real entity headroom, minus a margin for the trap pots' bombs
+    // and their FX. Without this the counting pass and the spawning pass
+    // disagree the moment CreateObject starts returning NULL - the room
+    // survey measured the Boomerang chamber at just 28 free slots (five
+    // events' worth of content lives there), and a winner index past the
+    // last pot that actually spawned is an unwinnable room: the prize
+    // simply never exists.
+    {
+        s32 slots = (s32)(MAX_ENTITIES - gEntCount) - 12;
+        if (slots < 1) {
+            slots = 1;
+        }
+        if (target > slots) {
+            target = slots;
+        }
+    }
     // A 3x3 apron costs 9 cells, which is half the floor of the smallest
     // hosting room, so below that size QuickStartPotRoomInApron falls back to
     // a plus shape instead.
@@ -5723,6 +5744,21 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flag
 // leave-before-resolving recovery to do the way the multi-exit rooms
 // elsewhere in this file need.
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
+    // One correction for every kind: if the table's content spot is solid
+    // or out of bounds, snap it to the nearest open tile before anything is
+    // placed. Miniboss, waves and the pot room already derive their own
+    // ground; chest, NPC and fairy used the spot raw, so a single bad table
+    // row (the class of error behind Lon Lon's exit box and the 2-door
+    // entrances) silently broke those kinds.
+    {
+        s16 fixedX, fixedY;
+        if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
+            QuickStartFindOpenTileNear(contentX, contentY, 1, &fixedX, &fixedY)) {
+            contentX = fixedX;
+            contentY = fixedY;
+        }
+    }
+
     if (kind == LADDER_KIND_CHEST) {
         // Room flag 3: "confirmed present at least once this visit" -
         // distinct from flag 0 ("we've spawned it"), same two-flag "did it
