@@ -223,14 +223,14 @@ data being wrong (exit boxes, content spots, entrances, shelf items - six
 systems). The cure each time was measuring at runtime. Phase A turns that
 cure into a standing tool instead of a per-incident scramble.
 
-- **A1. The invariant checker.** One emulator script, run after every
-  build, that asserts for EVERY table row: content spots open and
-  in-bounds; region exit boxes inside room bounds and off the border row;
-  every pool room reachable and both door tags firing; every site able to
-  spawn every kind it can roll, with the reward landing in the entrance's
-  reachable component. The sweep tooling from the room survey is 80% of
-  this already. This is the answer to "how do we debug thoroughly without
-  hand-engineering": the game is tables, so validate the tables by machine.
+- **A1. The invariant checker.** DONE - `tools/quickstart/invariant_check.py`
+  (see `tools/quickstart/README.md`). Three tiers: static (door tags, pool
+  size constants), regions (entrance/reward/exit-box geometry, 5 boots),
+  rooms (~45 boots: landing, spot openness/segment membership, forced
+  chest spawns). Multi-site rooms are held to one-distinct-segment-per-site.
+  Full run green: 0 FAIL, 4 WARN (Castle Garden path tiles, two edge-
+  clipped exit boxes, the shadowed cellar). Run it after every build that
+  touches placement data; it is the regression gate.
 - **A2. Burn down the survey's open findings** (cellar shadowing decision,
   shop right-shelf Minish check, Lon Lon Minish doors).
 - **A3. Deterministic playtest switch**: a debug toggle that pins the RNG
@@ -238,15 +238,21 @@ cure into a standing tool instead of a per-incident scramble.
 
 ### Phase B - The meta layer (the vision's spine)
 
-- **B1. Unlock registry.** One threshold table (meta_xp benchmarks, win
-  counts) -> unlock bits in the save; one gate function
-  `QuickStartIsUnlocked(x)`; consulted by every draw: kind rolls, reward
-  pools, region draw, shop catalog. This single mechanism IS the
-  "universal approach" for progression - everything later (new kinds,
-  quests, regions) ships as a table row plus an unlock bit.
-- **B2. Chain length scales with wins**: 2 -> 3 -> 4 chain slots (5 rooms
-  counting the start). Storage already sized; the work is win-condition
-  generalization, not plumbing.
+- **B1. Unlock registry.** DONE - `sQuickStartUnlockRules` +
+  `QuickStartIsUnlocked()` in game.c, thresholds on meta_xp (pot lottery
+  500, chest lottery 1500) and runs_completed (fairy 1, Lon Lon Ranch 1,
+  Trilby Highlands 2). Consulted by the kind pick functions (locked draws
+  degrade to CHEST/WAVES) and the region chain draw (locked pool rows
+  rejected; Trilby's Flippers-forced-last path also requires its unlock).
+  New content still ships as a table row plus a rule row. Shop catalog and
+  reward pools stay ungated for now - add rows there when there's content
+  worth gating.
+- **B2. Chain length scales with wins.** DONE - `QuickStartRegionChainLength()`
+  = 2 + 1 per win, capped at `QUICKSTART_REGION_CHAIN_MAX` (4). Verified
+  in the emulator at 0/1/2 wins: slot distinctness, locked-region
+  exclusion, and Trilby forced last only with Flippers + unlock. The 5th
+  region ("start + 4, each with its own element") waits on B3's per-region
+  elements.
 - **B3. Per-region elements.** Each chain slot's region holds its own
   element; collecting it is what un-gates that region's onward exit. Win =
   the final region's element. (Today only the last slot drops an element

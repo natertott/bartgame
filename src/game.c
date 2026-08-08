@@ -923,21 +923,24 @@ extern Script script_QuickStartMerchant;
 // GameTask_Transition alongside the ladder/2door ranges.
 #define GF_REGION_INTRO_HINT_SHOWN 207
 
-// The overworld-region chain: at the hub (Melari's Mine), QUICKSTART_REGION_CHAIN_LENGTH
-// distinct regions are drawn at random from sQuickStartRegionPool and put in
-// a random order, replacing the old fixed Castle Garden -> Lon Lon Ranch
-// sequence. QUICKSTART_REGION_CHAIN_LENGTH is 2 for now per the user's own
-// request ("for now, there should only be two overworld regions maximum") -
-// a hardcoded constant rather than something read from gSave, since the
-// later unlock system that raises it to 4 doesn't exist yet; when it does,
-// this becomes a runtime value instead (same shape as
-// QuickStartGetDifficulty already has for a persistent, run-independent
-// number). GF_REGION_CHAIN_POOL_BIT reserves 3 bits/slot (pool indices
-// 0-7) and GF_REGION_CHAIN_REWARD_STATE_BIT 2 bits/slot (0/1/2, same
-// 3-state shape Castle Garden's old ITEM_32 marker used) - both sized for
-// 4 slots even though only 2 are used today, so the later 4-region unlock
-// doesn't need new flag plumbing, just a bigger QUICKSTART_REGION_CHAIN_LENGTH.
-#define QUICKSTART_REGION_CHAIN_LENGTH 2
+// The overworld-region chain: at the hub (Melari's Mine),
+// QuickStartRegionChainLength() distinct regions are drawn at random from
+// sQuickStartRegionPool and put in a random order, replacing the old fixed
+// Castle Garden -> Lon Lon Ranch sequence. The length is a RUNTIME value
+// now (roadmap B2): 2 on a fresh save, +1 at the first win, +1 at the
+// second, capped at QUICKSTART_REGION_CHAIN_MAX - the "winning extends the
+// win condition" loop from the meta-progression vision. It reads
+// gSave.runs_completed, which only ever changes at the win screen
+// (immediately before WriteSaveFile + DoSoftReset), so the length is
+// stable for the whole of any one run and every flag written under the old
+// length is wiped before the new one is consulted.
+// GF_REGION_CHAIN_POOL_BIT reserves 3 bits/slot (pool indices 0-7) and
+// GF_REGION_CHAIN_REWARD_STATE_BIT 2 bits/slot (0/1/2, same 3-state shape
+// Castle Garden's old ITEM_32 marker used) - both were sized for 4 slots
+// from the start, so this needed no new flag plumbing. The cap stays at 4
+// until the 5th region ("the region they start in plus 4 regions") gets
+// its own hub-region treatment.
+#define QUICKSTART_REGION_CHAIN_MAX 4
 #define GF_REGION_CHAIN_RANDOMIZED 208
 #define GF_REGION_CHAIN_POOL_BIT(slot, b) (209 + (slot) * 3 + (b))         // b = 0..2, slot = 0..3 -> 209-220
 #define GF_REGION_CHAIN_REWARD_STATE_BIT(slot, b) (221 + (slot) * 2 + (b)) // b = 0..1, slot = 0..3 -> 221-228
@@ -1818,14 +1821,15 @@ static void QuickStartCheckWinCondition(void) {
     }
     // Second message: this run's score, shown once the difficulty message
     // above has been dismissed. Same room-flag-gated one-shot pattern as
-    // flag 40 itself. meta_xp/runs_completed are updated here too, exactly
-    // once, right as the score they're derived from is computed and shown -
-    // not in the branch below, which can run several frames later once the
-    // player dismisses this message.
+    // flag 40 itself. meta_xp is banked here, exactly once, right as the
+    // score it's derived from is computed and shown, so the number on
+    // screen is the number saved. It's safe this early because nothing
+    // meta_xp gates (kind unlocks) can roll while the message holds the
+    // player in place. runs_completed is NOT incremented here - see the
+    // save/reset branch below.
     if (!QsCheckRoomFlag(42)) {
         u32 score = QuickStartComputeScore();
         gSave.meta_xp += score;
-        gSave.runs_completed++;
         MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 8));
         gMessage.rupees = score;
         MsgInit();
@@ -1847,6 +1851,16 @@ static void QuickStartCheckWinCondition(void) {
     // so it only happens once, right before the save that's supposed to
     // record it, not mid-message.
     SetInventoryValue(ITEM_EARTH_ELEMENT, 0);
+    // Incremented on the same frame as the save and the reset, NOT up in
+    // the score-message branch with meta_xp: QuickStartRegionChainLength()
+    // reads runs_completed every frame, so a win count that ticks over
+    // while the score message is still up shifts which chain slot counts
+    // as "last" mid-win-sequence (the region monitor keeps running under
+    // the message) and the real last region briefly stops testing as last
+    // - stray normal-reward drop, stalled failsafe clock. Here the new
+    // value is visible for zero gameplay frames: the very next thing that
+    // happens is the reset that rebuilds the run around it.
+    gSave.runs_completed++;
     WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     DoSoftReset();
 }
@@ -2277,7 +2291,7 @@ static void QuickStartSolveLonLonBoulder(void) {
 // Generalizes what used to be Castle Garden and Lon Lon Ranch's own
 // separately hand-written implementations into one data table
 // (sQuickStartRegionPool below) plus one generic set of dispatch functions,
-// per docs/QUICKSTART_ROADMAP.md sec 3.1. QUICKSTART_REGION_CHAIN_LENGTH
+// per docs/QUICKSTART_ROADMAP.md sec 3.1. QuickStartRegionChainLength()
 // distinct regions are drawn at random from the pool and put in a random
 // order at the hub (Melari's Mine); whichever region ends up last drops an
 // Earth Element and ends the run (QuickStartSpawnWinKeyOnce/
@@ -2413,8 +2427,8 @@ static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
 // surveyed this pass - see the block comment above their data). Castor
 // Wilds and Eastern Hills (the latter split across 3 real rooms - South/
 // Center/North - needing its own separate look) are still not in the pool
-// yet and get appended in a later pass. QUICKSTART_REGION_CHAIN_LENGTH
-// stays independent of pool size (a distinct-draw, same as the ladder/
+// yet and get appended in a later pass. The chain length
+// (QuickStartRegionChainLength) stays independent of pool size (a distinct-draw, same as the ladder/
 // 2door pools already do), so growing the pool alone doesn't change how
 // many regions a single run visits.
 static const QuickStartRegion sQuickStartRegionPool[] = {
@@ -2504,15 +2518,92 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
 // bare literal so QuickStartRandomizeRegionChainOnce's "exclude/force this
 // one" logic stays readable if the pool order ever changes.
 #define QUICKSTART_TRILBY_POOL_INDEX (QUICKSTART_REGION_POOL_SIZE - 1)
+// Lon Lon Ranch's pool row - the one other region with an unlock gate (see
+// sQuickStartUnlockRules below). Named for the same "stays readable if the
+// pool order changes" reason as QUICKSTART_TRILBY_POOL_INDEX.
+#define QUICKSTART_LONLON_POOL_INDEX 1
 
-// Which chain slot (0..QUICKSTART_REGION_CHAIN_LENGTH-1) the current room
+// --- The meta-progression unlock registry (roadmap B1) ---------------------
+// One table every randomized draw consults, so "what this save has earned"
+// lives in exactly one place. Two currencies, both persistent u32s in gSave
+// (see save.h): meta_xp (each win's score, ~800-2000 per win, added at the
+// win screen) and runs_completed (wins). A rule is satisfied once its
+// counter reaches its threshold - unlocks never re-lock, since neither
+// counter ever decreases.
+//
+// Content this save has NOT earned yet must never be drawn - the pick
+// functions fall back to an always-unlocked kind, and the region chain
+// draw rejects locked pool rows. The draw math that makes the rejection
+// loop safe: at 0 wins the chain is 2 and 3 regions are unlocked (Castle
+// Garden/South Field/North Field); 1 win -> chain 3, Lon Lon joins (4);
+// 2 wins -> chain 4, exactly the 4 non-Trilby regions, with Trilby only
+// ever entering via the forced-last Flippers path. Unlocked count >= chain
+// length at every step.
+enum {
+    QUICKSTART_UNLOCK_KIND_POT_LOTTERY,
+    QUICKSTART_UNLOCK_KIND_CHEST_LOTTERY,
+    QUICKSTART_UNLOCK_KIND_FAIRY,
+    QUICKSTART_UNLOCK_REGION_LON_LON,
+    QUICKSTART_UNLOCK_REGION_TRILBY,
+    QUICKSTART_UNLOCK_COUNT,
+};
+
+typedef struct {
+    u8 byWins;     // 1: threshold counts runs_completed; 0: counts meta_xp
+    u16 threshold;
+} QuickStartUnlockRule;
+
+// Thresholds calibrated against the measured score range (~800-2000 per
+// winning run): the pot lottery arrives with the first decent score, the
+// chest lottery a win or two later, everything else is win-gated.
+static const QuickStartUnlockRule sQuickStartUnlockRules[QUICKSTART_UNLOCK_COUNT] = {
+    { 0, 500 },  // QUICKSTART_UNLOCK_KIND_POT_LOTTERY
+    { 0, 1500 }, // QUICKSTART_UNLOCK_KIND_CHEST_LOTTERY
+    { 1, 1 },    // QUICKSTART_UNLOCK_KIND_FAIRY
+    { 1, 1 },    // QUICKSTART_UNLOCK_REGION_LON_LON
+    { 1, 2 },    // QUICKSTART_UNLOCK_REGION_TRILBY
+};
+
+static bool32 QuickStartIsUnlocked(u32 unlockId) {
+    const QuickStartUnlockRule* rule = &sQuickStartUnlockRules[unlockId];
+    if (rule->byWins) {
+        return gSave.runs_completed >= rule->threshold;
+    }
+    return gSave.meta_xp >= rule->threshold;
+}
+
+static bool32 QuickStartRegionPoolIndexUnlocked(s32 poolIndex) {
+    if (poolIndex == QUICKSTART_LONLON_POOL_INDEX) {
+        return QuickStartIsUnlocked(QUICKSTART_UNLOCK_REGION_LON_LON);
+    }
+    if (poolIndex == QUICKSTART_TRILBY_POOL_INDEX) {
+        return QuickStartIsUnlocked(QUICKSTART_UNLOCK_REGION_TRILBY);
+    }
+    return TRUE;
+}
+
+// Roadmap B2: how many regions this save's runs chain through. See the
+// QUICKSTART_REGION_CHAIN_MAX comment for why reading runs_completed here
+// is race-free (it only moves at the win screen, right before the reset).
+static s32 QuickStartRegionChainLength(void) {
+    s32 length = 2;
+    if (gSave.runs_completed >= 1) {
+        length++;
+    }
+    if (gSave.runs_completed >= 2) {
+        length++;
+    }
+    return length; // == QUICKSTART_REGION_CHAIN_MAX from the 2nd win on
+}
+
+// Which chain slot (0..QuickStartRegionChainLength()-1) the current room
 // is standing in for, or -1 if it isn't part of the chain at all - same
 // "check against each one's current runtime assignment" idea as
 // QuickStartFindLadderForCurrentRoom, needed here because which physical
 // region backs which slot varies per save.
 static s32 QuickStartGetCurrentRegionChainPosition(void) {
     s32 slot;
-    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH; slot++) {
+    for (slot = 0; slot < QuickStartRegionChainLength(); slot++) {
         // Plain s32 local, then %= on it - not an inline (s32) cast
         // expression - matches QuickStart2DoorGetTarget's own established
         // convention (see its comment) for avoiding an __umodsi3 (unsigned
@@ -2534,11 +2625,11 @@ static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
     return &sQuickStartRegionPool[poolIndex];
 }
 
-// One draw per save - QUICKSTART_REGION_CHAIN_LENGTH distinct pool indices,
+// One draw per save - QuickStartRegionChainLength() distinct pool indices,
 // order matters (it IS the run's region order). Same distinct-draw shape
 // QuickStartRandomizeLaddersOnce/QuickStart2DoorRandomizeOnce already use;
-// safe as long as the pool is at least as big as the chain (true today,
-// 2 == 2, and stays true as the pool only grows from here). Called from
+// safe as long as the UNLOCKED part of the pool is at least as big as the
+// chain (proven step by step in the unlock-registry comment). Called from
 // Melari's Mine's own dispatch (QuickStartRoomMonitor) - the hub is always
 // visited before the chain's own first entrance trigger is reachable, same
 // "roll it well before the player can reach it" reasoning the ladder/2door
@@ -2558,31 +2649,45 @@ static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
 // docs/QUICKSTART_ROADMAP.md).
 static void QuickStartRandomizeRegionChainOnce(void) {
     s32 slot, j;
-    u8 usedPool[QUICKSTART_REGION_CHAIN_LENGTH];
-    bool32 hasFlippers;
+    u8 usedPool[QUICKSTART_REGION_CHAIN_MAX];
+    s32 chainLength;
+    bool32 trilbyForced;
     if (QsCheckFlag(GF_REGION_CHAIN_RANDOMIZED)) {
         return;
     }
-    hasFlippers = GetInventoryValue(ITEM_FLIPPERS) != 0;
-    if (hasFlippers) {
-        // Force Trilby Highlands into the chain's last slot - the slot
-        // whose reward is always the Earth Element/win condition (see
-        // QuickStartSpawnRegionRewardOnce) - so a Flippers run always ends
-        // there. Every earlier slot is drawn from the remaining 4 plain
-        // regions only.
-        usedPool[QUICKSTART_REGION_CHAIN_LENGTH - 1] = QUICKSTART_TRILBY_POOL_INDEX;
-        QuickStartSetRegionChainPoolIndex(QUICKSTART_REGION_CHAIN_LENGTH - 1, QUICKSTART_TRILBY_POOL_INDEX);
+    chainLength = QuickStartRegionChainLength();
+    // Force Trilby Highlands into the chain's last slot - the slot whose
+    // reward is always the Earth Element/win condition (see
+    // QuickStartSpawnRegionRewardOnce) - so a Flippers run always ends
+    // there. Every earlier slot is drawn from the remaining 4 plain
+    // regions only. Requires the region to be UNLOCKED too (B1): before
+    // the 2nd win, picking the Flippers just means a plain chain, same as
+    // any other key item.
+    trilbyForced = GetInventoryValue(ITEM_FLIPPERS) != 0 &&
+                   QuickStartIsUnlocked(QUICKSTART_UNLOCK_REGION_TRILBY);
+    if (trilbyForced) {
+        usedPool[chainLength - 1] = QUICKSTART_TRILBY_POOL_INDEX;
+        QuickStartSetRegionChainPoolIndex(chainLength - 1, QUICKSTART_TRILBY_POOL_INDEX);
     }
-    for (slot = 0; slot < QUICKSTART_REGION_CHAIN_LENGTH - (hasFlippers ? 1 : 0); slot++) {
+    for (slot = 0; slot < chainLength - (trilbyForced ? 1 : 0); slot++) {
         s32 draw;
         u8 poolIndex;
         for (;;) {
             draw = (s32)Random();
-            // Without Flippers, Trilby Highlands (the pool's last entry)
-            // is unreachable, so it's excluded from every other slot's
-            // draw entirely, not just guarded against as a duplicate.
+            // Trilby Highlands (the pool's last entry) only ever enters
+            // via the forced-last Flippers path above - without Flippers
+            // its canal is impassable - so it's excluded from every open
+            // slot's draw entirely, not just guarded against as a
+            // duplicate.
             draw %= (QUICKSTART_REGION_POOL_SIZE - 1);
             poolIndex = (u8)draw;
+            // B1: regions this save hasn't earned are rejected the same
+            // way duplicates are. Terminates because the unlocked count
+            // is >= the chain length at every win count (see the
+            // unlock-registry comment).
+            if (!QuickStartRegionPoolIndexUnlocked(poolIndex)) {
+                continue;
+            }
             for (j = 0; j < slot; j++) {
                 if (usedPool[j] == poolIndex) {
                     break;
@@ -2631,8 +2736,7 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // per the user's own request, the wave/difficulty level a region has
 // reached must survive leaving for another region and coming back, not
 // reset to wave 0 on every fresh room load the way a room flag would.
-// Sized for 4 slots even though QUICKSTART_REGION_CHAIN_LENGTH is 2 today,
-// matching GF_REGION_CHAIN_POOL_BIT/REWARD_STATE_BIT's own forward-looking
+// Sized for 4 slots (QUICKSTART_REGION_CHAIN_MAX), matching GF_REGION_CHAIN_POOL_BIT/REWARD_STATE_BIT's own forward-looking
 // sizing. Room flag 0 (this visit's current wave still in progress) still
 // resets per visit, same as before - that's correct: a fresh room load has
 // no enemies out yet regardless of which wave number it's about to spawn.
@@ -2772,7 +2876,7 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     // region is currently gating the Earth Element behind. Room flag 43 is
     // "an Element has already been dropped this visit", so once it is set
     // there is nothing left for the failsafe to protect.
-    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1 && !QsCheckRoomFlag(43)) {
+    if (slot == QuickStartRegionChainLength() - 1 && !QsCheckRoomFlag(43)) {
         gSave.final_wave_frame = gSave.run_frames;
     }
 }
@@ -2820,7 +2924,7 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
 // already region-agnostic, so nothing about them needed to change).
 static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 slot) {
     u8 state;
-    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+    if (slot == QuickStartRegionChainLength() - 1) {
         // The wave-cleared test only gates the FIRST drop. Everything after
         // it has to keep running every frame, cleared room or not.
         //
@@ -2894,7 +2998,7 @@ static void QuickStartRegionMonitor(s32 slot) {
     if (slot == 0) {
         QuickStartShowRegionIntroHintOnce();
     }
-    if (slot == QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+    if (slot == QuickStartRegionChainLength() - 1) {
         QuickStartShowRegionFinalHintOnce();
     }
     QuickStartSpawnRegionRewardOnce(region, slot);
@@ -3910,19 +4014,48 @@ enum {
     LADDER_KIND_FAIRY,
 };
 
+// B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
+// here, next to the enum, and is consulted as a FALLBACK inside the three
+// pick functions below rather than by reweighting their draws - every
+// caller (ladder, door, and 2-door randomizers all call these) inherits
+// the gating automatically, and a locked draw degrades to the pool's
+// bread-and-butter kind instead of rerolling (no termination concerns, no
+// skew among the still-locked kinds to reason about).
+static bool32 QuickStartKindUnlocked(u8 kind) {
+    switch (kind) {
+        case LADDER_KIND_POT_LOTTERY:
+            return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_POT_LOTTERY);
+        case LADDER_KIND_CHEST_LOTTERY:
+            return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_CHEST_LOTTERY);
+        case LADDER_KIND_FAIRY:
+            return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_FAIRY);
+        default:
+            return TRUE;
+    }
+}
+
 // Small pool: puzzle/dialogue content, no combat needed - CHEST/NPC (the
 // original two) plus the two new lottery puzzles.
 static u8 QuickStartPickSmallKind(void) {
+    u8 kind;
     switch ((s32)Random() % 4) {
         case 0:
-            return LADDER_KIND_CHEST;
+            kind = LADDER_KIND_CHEST;
+            break;
         case 1:
-            return LADDER_KIND_NPC;
+            kind = LADDER_KIND_NPC;
+            break;
         case 2:
-            return LADDER_KIND_POT_LOTTERY;
+            kind = LADDER_KIND_POT_LOTTERY;
+            break;
         default:
-            return LADDER_KIND_CHEST_LOTTERY;
+            kind = LADDER_KIND_CHEST_LOTTERY;
+            break;
     }
+    if (!QuickStartKindUnlocked(kind)) {
+        kind = LADDER_KIND_CHEST;
+    }
+    return kind;
 }
 
 // Large pool: combat-capable rooms - MINIBOSS/WAVES (the original two) plus
@@ -3934,33 +4067,55 @@ static u8 QuickStartPickSmallKind(void) {
 // large pool, which is combat-and-fairies only: a room being big is not a
 // reason to stop it rolling a pot lottery.
 static u8 QuickStartPickAnyKind(void) {
+    u8 kind;
     switch ((s32)Random() % 7) {
         case 0:
-            return LADDER_KIND_CHEST;
+            kind = LADDER_KIND_CHEST;
+            break;
         case 1:
-            return LADDER_KIND_MINIBOSS;
+            kind = LADDER_KIND_MINIBOSS;
+            break;
         case 2:
-            return LADDER_KIND_NPC;
+            kind = LADDER_KIND_NPC;
+            break;
         case 3:
-            return LADDER_KIND_WAVES;
+            kind = LADDER_KIND_WAVES;
+            break;
         case 4:
-            return LADDER_KIND_POT_LOTTERY;
+            kind = LADDER_KIND_POT_LOTTERY;
+            break;
         case 5:
-            return LADDER_KIND_CHEST_LOTTERY;
+            kind = LADDER_KIND_CHEST_LOTTERY;
+            break;
         default:
-            return LADDER_KIND_FAIRY;
+            kind = LADDER_KIND_FAIRY;
+            break;
     }
+    if (!QuickStartKindUnlocked(kind)) {
+        kind = LADDER_KIND_CHEST;
+    }
+    return kind;
 }
 
 static u8 QuickStartPickLargeKind(void) {
+    u8 kind;
     switch ((s32)Random() % 3) {
         case 0:
-            return LADDER_KIND_MINIBOSS;
+            kind = LADDER_KIND_MINIBOSS;
+            break;
         case 1:
-            return LADDER_KIND_WAVES;
+            kind = LADDER_KIND_WAVES;
+            break;
         default:
-            return LADDER_KIND_FAIRY;
+            kind = LADDER_KIND_FAIRY;
+            break;
     }
+    if (!QuickStartKindUnlocked(kind)) {
+        // The large pool's rooms are combat rooms first - WAVES is the one
+        // kind of its three that's always unlocked.
+        kind = LADDER_KIND_WAVES;
+    }
+    return kind;
 }
 
 static u8 QuickStartLadderGetKind(s32 ladderIndex) {
@@ -8225,7 +8380,7 @@ static void QuickStartEnforceContainment(void) {
     }
     {
         s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
             const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
             if (gRoomTransition.player_status.area_next == next->area &&
                 gRoomTransition.player_status.room_next == next->room) {
@@ -8271,13 +8426,13 @@ static void QuickStartEnforceLonLonContainment(void) {
     // Leaving Lon Lon Ranch to whichever region is next in this save's
     // chain (or nowhere further, if Lon Lon Ranch is the chain's own last
     // slot - QuickStartGetCurrentRegionChainPosition then returns
-    // QUICKSTART_REGION_CHAIN_LENGTH-1, so the check below is simply
+    // QuickStartRegionChainLength()-1, so the check below is simply
     // skipped) - replaces the old fixed AREA_CASTLE_GARDEN check, since
     // Lon Lon Ranch's own position (and so which region comes after it)
     // now varies per save.
     {
         s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
             const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
             if (gRoomTransition.player_status.area_next == next->area &&
                 gRoomTransition.player_status.room_next == next->room) {
@@ -8369,7 +8524,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     }
     {
         s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
             const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
             if (gRoomTransition.player_status.area_next == next->area &&
                 gRoomTransition.player_status.room_next == next->room) {
@@ -8964,7 +9119,7 @@ static void QuickStartProcessRegionChainLinks(void) {
         return;
     }
     slot = QuickStartGetCurrentRegionChainPosition();
-    if (slot >= 0 && slot < QUICKSTART_REGION_CHAIN_LENGTH - 1) {
+    if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
         const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
         if (localX >= region->exitMinX && localX <= region->exitMaxX && localY >= region->exitMinY &&
             localY <= region->exitMaxY) {
