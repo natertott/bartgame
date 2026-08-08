@@ -5,14 +5,31 @@ this document described an architecture the code left behind ~30 commits
 ago - most of what runs today (the vanilla-door "? room" model, the 2-door
 pool, the relocated shop, the gated-zone table) was not in it at all.
 
-## 1. The vision
+## 1. The vision (as agreed, in full)
 
-A roguelite mode built inside the vanilla game: a short run through a
-handful of overworld regions, randomized every time, ending when the player
-takes the Earth Element. Wins raise a persistent difficulty counter and feed
-a meta-progression score. The vanilla world is the content - rooms, doors,
-enemies and props are reused rather than authored - so most work here is
-about *selecting* and *repurposing* what is already there, safely.
+A roguelite inside the vanilla Minish Cap world. Each run: an item-selection
+phase, then out into the overworld to explore, power up, and collect the
+run's required objectives; heavy randomization around a small mandatory
+spine; LOTS of optional ? events.
+
+**The meta loop is the game.** Early save-file: limited item variety,
+limited regions, limited ? event kinds, capped difficulty - room to learn
+the vocabulary. Aggregated score across runs crosses benchmarks that
+unlock: new items, new powerups, new ? event kinds, new quests, new
+regions. Wins raise difficulty AND lengthen the run: the region chain grows
+from 2 toward the cap of 5 total (the start region plus up to 4 element
+regions, each holding its own element the player must find inside it).
+
+**Kinstones are the key economy.** Enemies drop kinstone pieces; fusing at
+a gated door opens a new ? room for the rest of the run. Every region also
+keeps a set of always-open doors so some ? events are reachable no matter
+what. The economy tightens as difficulty rises: abundant drops early,
+grind-worthy scarcity later.
+
+**The overworld keeps its vanilla layout**; the randomization lives behind
+the doors - which room a door leads to (the 2-door pool model, now on
+sound footing) and what happens inside it (the event kinds). Same map every
+run, different world behind it.
 
 ## 2. Guiding principle for this phase
 
@@ -177,91 +194,103 @@ not the source of truth.
   `miniboss_kills`, `boss_kills` (per run); `meta_xp`, `runs_completed`
   (persistent).
 
-## 4. Priorities
+## 4. The plan: five phases, each shippable
 
-Ordered as agreed. Nothing below the line gets started until everything
-above it is smooth.
+Reconciled with the full vision. Ordering principle: build the RAILS that
+make polish cheap first, then the META LAYER that is the vision's spine,
+then spend everything else on content breadth - because once the rails and
+the meta layer exist, content is data entry into unlock-gated tables, which
+is exactly the "universal method" being asked for.
 
-### Now
+What the vision needs that already exists (verified, not hoped):
+- Item selection phase: built (Castor Darknut, 3 rounds).
+- Region chain: built; length is one constant, and the flag layout already
+  reserves per-slot state for 4 slots ("just a bigger CHAIN_LENGTH", per
+  the layout comment at GF_REGION_CHAIN_*).
+- Persistent score: `meta_xp` and `runs_completed` accumulate in the save
+  and survive the soft reset. Benchmarks have storage waiting.
+- Difficulty counter: built, feeds enemy tiers.
+- ? events: 7 kinds, 3 delivery systems, 46 rooms measured
+  (QUICKSTART_ROOM_SURVEY.md).
+- World reset per run: built (local-flag wipe) - bombable walls, portals
+  and future kinstone fusions all re-arm by construction.
+- Both-direction 2-door doors: built (tag mechanism, QUICKSTART_2DOOR_MAP.md).
 
-**P1. Puzzle rooms and ? rooms.** The largest slice of run-to-run variety,
-and the thing a playthrough spends most of its time in.
-- A real puzzle kind beyond the two lotteries. Candidates the engine
-  already supports: pushable blocks onto switches, hit-all-crystals, a timed
-  dash. Needs one prototype in front of a human before more is built.
-- Per-kind reward pools - today every kind draws from the same 4-item
-  `sQuickStartLadderRewardPool`.
-- More miniboss types; the roster audit only ever confirmed `DARK_NUT` and
-  `CHUCHU_BOSS`.
-- Fold the remaining bespoke room dispatchers (Melari East/Southeast) into
-  the content-site table.
-- Content-site coverage pass: several rows are for rooms that are currently
-  unreachable and are kept only against a future fix.
+### Phase A - Rails (short; do before anything else)
 
-**P2. Kinstone-fusion door gating.** Today every gated entrance in the pool
-is force-fused at boot - a stopgap that silently pre-solves them. The real
-feature: pieces drop from enemies/pots, lightweight fusion-partner sprites
-sit in each region, walking up with a matching piece clears one door
-permanently. Use a QUICKSTART-owned flag/check rather than vanilla's
-100-partner machinery. Open: pieces per region, 1:1 vs many-to-one, drop
-weighting, whether partners are visible before a piece is held.
+The recurring failure class this project has actually had is hand-placed
+data being wrong (exit boxes, content spots, entrances, shelf items - six
+systems). The cure each time was measuring at runtime. Phase A turns that
+cure into a standing tool instead of a per-incident scramble.
 
-**P3. Win conditions - establish and test.** The mechanism is fixed and
-verified end to end in the emulator; what is missing is *coverage*. Every
-spawn and item-selection path should be walked, not just the ones that
-happened to come up. Concretely: finish the reachability survey for Castle
-Garden, Lon Lon Ranch and North Hyrule Field (the three the harness could
-not measure), and confirm each region is winnable as the last slot.
+- **A1. The invariant checker.** One emulator script, run after every
+  build, that asserts for EVERY table row: content spots open and
+  in-bounds; region exit boxes inside room bounds and off the border row;
+  every pool room reachable and both door tags firing; every site able to
+  spawn every kind it can roll, with the reward landing in the entrance's
+  reachable component. The sweep tooling from the room survey is 80% of
+  this already. This is the answer to "how do we debug thoroughly without
+  hand-engineering": the game is tables, so validate the tables by machine.
+- **A2. Burn down the survey's open findings** (cellar shadowing decision,
+  shop right-shelf Minish check, Lon Lon Minish doors).
+- **A3. Deterministic playtest switch**: a debug toggle that pins the RNG
+  seed so a reported bug's run can be reproduced exactly.
 
-**P4. The bridge switch.** DONE - `QuickStartUpdateSwitchBridges`. North
-Hyrule Field's `HITTABLE_LEVER` at local (56,456) toggles room flag 100
-(vanilla's own, deliberately read raw rather than through our private
-window); throwing it fills the three-tile gap in the river bridge at local
-(160-207, 592-623), and a Qs global flag keeps it filled for the rest of the
-run across leaving and returning.
+### Phase B - The meta layer (the vision's spine)
 
-The reusable part is **how** the gap is filled: copy the tile from an intact
-neighbour rather than naming a tile. `GetTileTypeAtTilePos` on a plank two
-tiles away, `SetTileType` onto each gap tile. A tile lifted from the same
-room is by construction from that room's own tileset, so graphics, collision
-and act tile all stay consistent and nothing is hardcoded - which is what
-went wrong when the Boomerang chamber was given literal `TILE_TYPE_*`
-constants from another area's tileset. Note `SetTile(index)` is NOT
-sufficient: it updates `mapData` and the collision/act maps (measured: the
-gap moved from index 465-467/collision 48 to the donor's 23/collision 0) but
-nothing redraws the on-screen BG buffer, so the player walks across water
-that still looks like water. `SetTileType` is the path vanilla itself uses
-for a visible change.
+- **B1. Unlock registry.** One threshold table (meta_xp benchmarks, win
+  counts) -> unlock bits in the save; one gate function
+  `QuickStartIsUnlocked(x)`; consulted by every draw: kind rolls, reward
+  pools, region draw, shop catalog. This single mechanism IS the
+  "universal approach" for progression - everything later (new kinds,
+  quests, regions) ships as a table row plus an unlock bit.
+- **B2. Chain length scales with wins**: 2 -> 3 -> 4 chain slots (5 rooms
+  counting the start). Storage already sized; the work is win-condition
+  generalization, not plumbing.
+- **B3. Per-region elements.** Each chain slot's region holds its own
+  element; collecting it is what un-gates that region's onward exit. Win =
+  the final region's element. (Today only the last slot drops an element
+  and exits are ungated.) Element theming per region is a content decision
+  - see Decisions.
+- **B4. Unlocks viewer** (research task #52) so the player can see the
+  progression the whole design hangs on.
 
-### Next
+### Phase C - The kinstone economy
 
-**P5. Difficulty by chain position.** Map slot index to a tier offset on top
-of the persistent difficulty counter. Cheap once the curve is decided;
-the curve itself needs playtest data.
+- **C1. Bounded research task**: vanilla's enemy drop path (the death-drop
+  roll), so pieces drop through the real mechanism.
+- **C2. Kinstone drops** with a difficulty-scaled rate table: abundant
+  early, scarce later.
+- **C3. Fusion-gated doors**: a per-region table {door, required piece};
+  approach with a matching piece consumes it and opens the door for the
+  run (a Qs flag - the per-run wipe re-locks it next run automatically).
+  Guarantee >=1 always-open site per region in the same table.
+- **C4. The curve**: drop rate and piece specificity by difficulty tier.
 
-**P5b. The duplication technique (low priority).** Clone-block puzzles -
-Lon Lon Ranch's cave connector among them - are unsolvable in this mode. It
-needs BOTH halves: a sword of at least ITEM_RED_SWORD (player.c's
-`SurfaceAction_CloneTile` switches on the equipped sword, and the Smith's
-and Green swords both give zero clones) AND the spin-attack skill scroll.
-Granting only the sword buys nothing, which is why the run is back on level
-1 for now. Parked until someone wants that ledge.
+### Phase D - Content breadth (all unlock-gated, all data entry once B1 lands)
 
-**P6. Item pools and prerequisites.** Split the one reward pool into named
-pools per room kind and per difficulty; add an item-requires-item table
-consulted before any reward roll; give the other four key items real,
-surveyed paths the way Flippers/Trilby already has one.
+New events assembled from proven vanilla parts, cheapest first:
 
-### After that
+- *Cheap (mechanisms already proven in this codebase)*: lever-opens-path
+  rooms (HittableLever + the bridge's donor-tile fill); bombable-wall
+  treasure rooms (walls reset every run now); pot-room variants (timed
+  prize, gauntlet-then-lottery); boss-rush rooms (sequential roster
+  minibosses); survive-N-seconds wave rooms.
+- *Medium (one new mechanism each)*: kill-quota bounties per region
+  (kill counters exist; needs a quest NPC handout); carry-item-to-NPC
+  quests (the shop's carry-to-merchant flow, pointed across rooms);
+  Great Fairy fountain gamble (GREAT_FAIRIES rooms + script reuse);
+  Mole Mitts dig rooms (DIG_CAVES areas exist and are surveyed
+  candidates); Minish-layer ? rooms beyond SHF's two.
+- *Hard (new AI or heavy scripting - defer)*: escort/herding events,
+  bespoke new enemy behaviours, fully new scripted questlines.
 
-**P7. Expand the overworld pool.** Eastern Hills (3 sub-rooms, needs its own
-survey) and Castor Wilds, taking the pool to 7, then raise
-`QUICKSTART_REGION_CHAIN_LENGTH` from 2 to 4.
+### Phase E - World breadth
 
-**P8. Score-gated unlocks.** `meta_xp` and `runs_completed` already
-accumulate and survive the reset. Needs a threshold table and a reserved
-unlock-bit range, plus real score data from human playthroughs to pick
-thresholds.
+Regions 6-7 (Eastern Hills needs its sub-room survey; Castor Wilds), the
+Minish layer as a parallel network, pool capacity already modeled. Adding a
+region = region-table row + survey + invariant-checker pass, which by then
+is routine.
 
 ## 5. Known open bugs and loose ends
 
@@ -308,27 +337,36 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 - The reachability harness crashes mgba after enough reboots; it now
   chunks its work across processes to survive that, but it is slow.
 
-## 6. Testing
+## 6. Testing doctrine (how we get polish without hand-engineering)
 
-**Reliable to automate**: state/math changes via memory pokes; room
-transitions and spawn positions via scripted walks; standability and
-4-direction walkability of any specific coordinate; entity dumps for "what
-is actually in this room"; persistence across `DoSoftReset`.
+1. **Tables are the game; the checker validates the tables.** Every
+   placement-bearing row (sites, exits, doors, spots, shop, kinstone doors)
+   gets machine-checked per build (Phase A1). The six coordinate bugs this
+   project has already paid for would all have been caught by it.
+2. **Runtime self-correction stays on** (snap-to-open-ground everywhere) as
+   the second line, so a bad row degrades instead of breaking.
+3. **Measured docs are the source of truth for placement**:
+   QUICKSTART_ROOM_SURVEY.md (rooms), QUICKSTART_2DOOR_MAP.md (doors).
+   Guessed coordinates don't go into tables anymore.
+4. **Humans test feel, machines test truth.** Emulator verifies state,
+   spawns, transitions, persistence; playtests (with the A3 fixed seed)
+   judge fairness, fun, pacing. Neither substitutes for the other.
+5. **The decomp's hard limits, so plans stay honest**: 72 entities
+   game-wide (measured per room in the survey); no new .bss/.data in
+   game.o; VRAM/gfx-slots not directly measurable in the harness (one
+   known failure class: POT_MINISH multi-enemy); new graphics/maps/AI are
+   expensive, new LOGIC over existing assets is cheap - which is why the
+   whole plan leans on recombination.
 
-**Not reliable to automate**: anything requiring an enemy to die from real
-combat; whether an encounter is fair; whether a puzzle is solvable or fun;
-pacing across a full run. These need a human playtest and should be handed
-over as such rather than approximated with a bot script.
+## 7. Decisions needed (content calls, not engineering)
 
-**A note on ground truth**: where the user has hand-walked coordinates, those
-win over anything the harness reports. The harness has been wrong often
-enough - and the walked boxes right often enough - that this is the standing
-order, not a preference.
-
-## 7. Open questions
-
-1. Which puzzle mechanic to prototype first?
-2. Kinstone gating shape: how many partners per region, and should they be
-   visible before the player holds a matching piece?
-3. Item prerequisite and per-kind reward pool lists (content decisions).
-4. Unlock pacing - roughly how many wins to open the full pool.
+1. Element theming: which element belongs to which region, and does the
+   start region carry one?
+2. Unlock benchmark values (first pass can be placeholder and tuned from
+   real playthrough scores).
+3. Kinstone specificity model: exact-piece matching vs. color-tier
+   matching, and pieces-per-region counts.
+4. Cellar site: exempt from the NW-ladder redirect, or retire.
+5. Shop right shelf: Minish-only shelf (lean in) or move the trio.
+6. Which Phase D cheap events to prototype first (one in front of a human
+   before building more).
