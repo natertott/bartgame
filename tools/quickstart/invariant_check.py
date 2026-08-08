@@ -1,0 +1,268 @@
+"""QUICKSTART invariant checker (roadmap Phase A1).
+
+Machine-validates every placement-bearing table after a build. The failure
+class it exists for: hand-placed coordinates that are wrong for the room
+they name - the cause of six separate shipped bugs (region exit box outside
+its room, content spots below the floor, unmeasured shared entrances, shop
+stock in a sealed alcove, spawn offsets inside walls).
+
+Tiers:
+  static    source-only: door tags on every 2-door pool room, pool size
+            constants consistent with their arrays. Always runs.
+  regions   5 emulator boots: each region row's entrance/reward on open
+            ground, exit box inside room bounds and off the border row.
+  rooms     ~45 emulator boots: every ? room lands; every content site's
+            spot is open, in bounds, and in the entrance's reachable
+            component (multi-site rooms instead require one distinct floor
+            segment per site - the Boomerang chamber's ladder layout);
+            AND a forced chest-kind spawn drops a GROUND_ITEM near the spot
+            (folded into the same boot, so it costs nothing extra).
+
+Usage:  python3 tools/quickstart/invariant_check.py [--rom tmc.gba]
+                 [--static-only | --regions | --rooms]
+Runs everything by default. Batches emulator work across subprocesses
+because mgba leaks a core per boot and corrupts the allocator eventually.
+Exit code 0 = all PASS/WARN, 1 = any FAIL.
+"""
+import sys, os, json, subprocess, collections
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import parse_tables as P
+
+# Rooms that are expected not to be reachable and why - reported WARN.
+KNOWN = {
+    ('AREA_HYRULE_CASTLE_CELLAR', 'ROOM_HYRULE_CASTLE_CELLAR_0'):
+        'shadowed by the Castle Garden NW ladder redirect (survey finding #1)',
+}
+GROUND_ITEM_ID = 0
+LADDER_KIND_CHEST = 0
+
+
+def check_static():
+    out = []
+    for (an, rn), d in P.pool_doors().items():
+        doors = d['doors']
+        if len(doors) < 2:
+            out.append(('FAIL', f'{rn}: fewer than 2 door rows'))
+            continue
+        tags = (doors[0]['ex'], doors[1]['ex'])
+        if tags != (0x3fe, 0x3fd):
+            out.append(('FAIL', f'{rn}: door tags {tags[0]:#x}/{tags[1]:#x}, want 0x3fe/0x3fd'))
+        else:
+            out.append(('PASS', f'{rn}: door tags OK'))
+    game = P.GAME
+    import re
+    for const, arr in (('QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE', 'sQuickStart2DoorSmallRoomPool'),
+                       ('QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE', 'sQuickStart2DoorLargeRoomPool')):
+        m = re.search(r'#define ' + const + r' (\d+)', game)
+        i = game.find(arr + '[] = {')
+        j = game.find('\n};', i)
+        rows = len(re.findall(r'\{ AREA_\w+,', game[i:j]))
+        n = int(m.group(1))
+        lvl = 'PASS' if n <= rows else 'FAIL'
+        out.append((lvl, f'{const}={n} vs {rows} rows'))
+    return out
+
+
+def emu_regions(rom):
+    from emu import boot, warp, here, room_dims, coll_at
+    out = []
+    for r in P.region_pool():
+        c = boot(rom)
+        c.memory.u8[0x03000bf0 + 4] = 0
+        warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
+        if here(c) != (r['area'], r['room']):
+            out.append(('FAIL', f"{r['roomName']}: did not land ({here(c)})"))
+            continue
+        W, H = room_dims(c)
+        x0, x1, y0, y1 = r['exitBox']
+        fails, warns = [], []
+        # The Lon Lon lesson, encoded precisely: a box CLIPPED by the room
+        # edge still has reachable interior and fires (SHF's north band,
+        # Trilby's east band both work in play); a box whose intersection
+        # with the room is EMPTY can never fire (Lon Lon's old y 966-984 in
+        # a 960-tall room).
+        ix0, ix1 = max(x0, 0), min(x1, W - 1)
+        iy0, iy1 = max(y0, 0), min(y1, H - 1)
+        if ix0 > ix1 or iy0 > iy1:
+            fails.append(f'exit box {r["exitBox"]} has NO overlap with room {W}x{H}')
+        elif (x0, x1, y0, y1) != (ix0, ix1, iy0, iy1):
+            warns.append(f'exit box {r["exitBox"]} clipped by room {W}x{H} edge')
+        for label, (px, py) in (('entrance', r['entrance']), ('reward', r['reward'])):
+            if not (0 <= px < W and 0 <= py < H):
+                fails.append(f'{label} ({px},{py}) out of bounds')
+            else:
+                v = coll_at(c, px // 16, py // 16)
+                if v == 0x0f:
+                    fails.append(f'{label} ({px},{py}) on fully solid tile')
+                elif v != 0:
+                    # Partial/special collision (stair edges, path tiles like
+                    # Castle Garden's 0x5f) - standable in practice, so worth
+                    # eyes, not a build failure.
+                    warns.append(f'{label} ({px},{py}) on special tile {v:#x}')
+        if fails:
+            out.append(('FAIL', f"{r['roomName']}: " + '; '.join(fails + warns)))
+        elif warns:
+            out.append(('WARN', f"{r['roomName']}: " + '; '.join(warns)))
+        else:
+            out.append(('PASS', f"{r['roomName']}: entrance/reward/exit box OK"))
+    return out
+
+
+def emu_rooms(rom, start, end):
+    from emu import boot, warp, here, room_dims, coll_at, qs_set, GENT, STRIDE, MAX_ENT, r16
+    sites = P.content_sites()
+    rooms = []
+    seen = set()
+    for idx, (an, rn, a, rm, cx, cy) in enumerate(sites):
+        key = (a, rm)
+        if key not in seen:
+            seen.add(key)
+            rooms.append({'an': an, 'rn': rn, 'a': a, 'r': rm, 'spots': []})
+        for rec in rooms:
+            if (rec['a'], rec['r']) == key:
+                rec['spots'].append((idx, cx, cy))
+    for (an, rn), d in P.pool_doors().items():
+        rooms.append({'an': an, 'rn': rn, 'a': d['area'], 'r': d['room'], 'spots': []})
+    out = []
+    for rec in rooms[start:end]:
+        an, rn = rec['an'], rec['rn']
+        if (an, rn) in KNOWN:
+            out.append(('WARN', f'{rn}: skipped - {KNOWN[(an, rn)]}'))
+            continue
+        c = boot(rom)
+        c.memory.u8[0x03000bf0 + 4] = 0
+        # Force every site in this room to the chest kind before entering, so
+        # the same boot verifies both geometry and a live spawn.
+        for idx, _cx, _cy in rec['spots']:
+            base = 266 + idx * 13
+            qs_set(c, base, 1)
+            for b in range(3):
+                qs_set(c, base + 1 + b, (LADDER_KIND_CHEST >> b) & 1)
+            for b in range(8):
+                qs_set(c, base + 4 + b, 0)
+            qs_set(c, base + 12, 0)
+        sx, sy = (rec['spots'][0][1], rec['spots'][0][2] + 24) if rec['spots'] else (120, 120)
+        warp(c, rec['a'], rec['r'], sx, sy)
+        for _ in range(150):
+            c.run_frame()
+        if here(c) != (rec['a'], rec['r']):
+            out.append(('FAIL', f'{rn}: did not land ({here(c)})'))
+            continue
+        W, H = room_dims(c)
+        msgs = []
+        # BFS from the player over fully-open tiles.
+        px = r16(c, 0x03001160 + 0x2e) - r16(c, 0x03000bf0 + 6)
+        py = r16(c, 0x03001160 + 0x32) - r16(c, 0x03000bf0 + 8)
+        tw, th = W // 16, H // 16
+        grid = [[coll_at(c, tx, ty) for tx in range(tw)] for ty in range(th)]
+        seedt = (max(0, min(px // 16, tw - 1)), max(0, min(py // 16, th - 1)))
+        if grid[seedt[1]][seedt[0]] != 0:
+            best = None
+            for ty in range(th):
+                for tx in range(tw):
+                    if grid[ty][tx] == 0:
+                        dd = abs(tx - seedt[0]) + abs(ty - seedt[1])
+                        if best is None or dd < best[0]:
+                            best = (dd, tx, ty)
+            seedt = (best[1], best[2]) if best else None
+        reach = set()
+        if seedt:
+            q = collections.deque([seedt])
+            reach.add(seedt)
+            while q:
+                tx, ty = q.popleft()
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nt = (tx + dx, ty + dy)
+                    if nt not in reach and 0 <= nt[0] < tw and 0 <= nt[1] < th and grid[nt[1]][nt[0]] == 0:
+                        reach.add(nt)
+                        q.append(nt)
+        # Full component labeling, needed for multi-site rooms (below).
+        comp = {}
+        for ty in range(th):
+            for tx in range(tw):
+                if grid[ty][tx] == 0 and (tx, ty) not in comp:
+                    cid = len(comp)
+                    q = collections.deque([(tx, ty)])
+                    comp[(tx, ty)] = cid
+                    while q:
+                        x, y = q.popleft()
+                        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                            nt = (x + dx, y + dy)
+                            if nt not in comp and 0 <= nt[0] < tw and 0 <= nt[1] < th and grid[nt[1]][nt[0]] == 0:
+                                comp[nt] = comp[(x, y)]
+                                q.append(nt)
+        items = [(r16(c, GENT + i * STRIDE + 0x2e) - r16(c, 0x03000bf0 + 6),
+                  r16(c, GENT + i * STRIDE + 0x32) - r16(c, 0x03000bf0 + 8))
+                 for i in range(MAX_ENT)
+                 if c.memory.u8[GENT + i * STRIDE + 8] == 6 and c.memory.u8[GENT + i * STRIDE + 9] == GROUND_ITEM_ID]
+        # Reachability semantics depend on how many sites share the room.
+        # Single-site rooms: the spot must sit in the component the player
+        # arrives in. Multi-site rooms (the Boomerang chamber): each site is
+        # entered by its OWN ladder into its own sealed segment, so instead
+        # every spot must land in a DISTINCT open component - two sites
+        # sharing a segment would put two events in one sub-area, which is
+        # exactly the containment bug the per-site ownership code fixed.
+        multi = len(rec['spots']) > 1
+        seen_comps = {}
+        for idx, cx, cy in rec['spots']:
+            if not (0 <= cx < W and 0 <= cy < H):
+                msgs.append(f'site {idx} spot ({cx},{cy}) out of bounds {W}x{H}')
+                continue
+            if grid[cy // 16][cx // 16] != 0:
+                msgs.append(f'site {idx} spot ({cx},{cy}) on solid tile')
+            elif multi:
+                cid = comp.get((cx // 16, cy // 16))
+                if cid in seen_comps:
+                    msgs.append(f'site {idx} spot ({cx},{cy}) shares a floor segment with site {seen_comps[cid]}')
+                else:
+                    seen_comps[cid] = idx
+            elif (cx // 16, cy // 16) not in reach:
+                msgs.append(f'site {idx} spot ({cx},{cy}) not in entrance component')
+            if not any(abs(ix - cx) <= 48 and abs(iy - cy) <= 48 for ix, iy in items):
+                msgs.append(f'site {idx}: forced chest spawned no GROUND_ITEM within 48px of ({cx},{cy})')
+        out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
+                   else ('PASS', f'{rn}: landed, spots OK'
+                                 + (f', {len(rec["spots"])} chest spawn(s) verified' if rec['spots'] else '')))
+    return out
+
+
+def main():
+    rom = 'tmc.gba'
+    args = sys.argv[1:]
+    if '--rom' in args:
+        rom = args[args.index('--rom') + 1]
+    if '--batch-rooms' in args:
+        i = args.index('--batch-rooms')
+        res = emu_rooms(rom, int(args[i + 1]), int(args[i + 2]))
+        print(json.dumps(res))
+        return 0
+    results = [('static', check_static())]
+    if '--static-only' not in args:
+        if '--rooms' not in args:
+            results.append(('regions', emu_regions(rom)))
+        if '--regions' not in args:
+            n_rooms = len({(a, r) for _, _, a, r, _, _ in P.content_sites()}) + len(P.pool_doors()) + 1
+            batch = []
+            for s in range(0, n_rooms + 6, 6):
+                pr = subprocess.run([sys.executable, os.path.abspath(__file__), '--rom', rom,
+                                     '--batch-rooms', str(s), str(s + 6)],
+                                    capture_output=True, text=True)
+                try:
+                    batch += json.loads(pr.stdout.strip().split('\n')[-1])
+                except Exception:
+                    batch.append(('FAIL', f'batch {s}: subprocess error: {pr.stderr[-300:]}'))
+            results.append(('rooms', batch))
+    fails = 0
+    for tier, res in results:
+        print(f'== {tier} ==')
+        for lvl, msg in res:
+            print(f'  [{lvl}] {msg}')
+            fails += (lvl == 'FAIL')
+    print(f'\n{"FAILED" if fails else "OK"}: {fails} failure(s)')
+    return 1 if fails else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
