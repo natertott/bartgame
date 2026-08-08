@@ -34,3 +34,4 @@ Thumbs.db
 *.ss7
 *.ss8
 *.ss9
+__pycache__/
