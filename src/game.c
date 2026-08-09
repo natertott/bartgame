@@ -3440,18 +3440,36 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // the row whose collision reads 0x03 rather than 0x0f, i.e. solid on top
 // and open along the bottom where the player stands.
 //
-// Standing caveat, recorded rather than acted on: my collision read still
-// says the upper-RIGHT alcove (tiles 8-11) has no route to the entrance -
-// tile 7 is 0x0f across rows 80-112 and row 128 below it is solid the whole
-// way. If the right-hand three still cannot be picked up, that is why, and
-// the fix needs a walked coordinate from inside the room rather than
-// another guess from me.
+// Attempt 4 (this one) stops guessing and measures. Each candidate spot was
+// tested in the emulator by parking a real SHOP_ITEM there, standing the
+// player on the adjacent floor tile, and pressing R - recording whether the
+// lift actually fires (gPlayerState.heldObject == 4). Results:
+//
+//   left shelf  y=120, player in the red room at y=104   -> LIFTS
+//   top shelf   y=72,  player on the red room floor y=88 -> LIFTS
+//   right shelf y=136, player in the lower room at y=152 -> LIFTS
+//   right shelf y=120, player in the lower room at y=148 -> does NOT lift
+//
+// That last line is the bug the user kept reporting. The caveat recorded in
+// attempt 3 was right about the cause and wrong about the consequence: the
+// upper-RIGHT alcove really is a sealed pocket (its own 8-tile component,
+// reachable only through the Minish portal tiles at 184-200,72-88), so
+// nothing at y=120 over there can ever be reached from the red room the way
+// the left-hand three are. But it does not need to be: the shelf's FRONT
+// row at y=136 sits directly above the lower room's own floor at y=152,
+// which is ordinary reachable ground, and from there the lift fires.
+//
+// So the three groups now match the three shelves the user circled, each
+// approached from the floor that actually touches it:
+//   - top-left shelf, reached from the red room floor below it
+//   - left shelf front, reached from the red room (unchanged - it worked)
+//   - right shelf front, reached from the lower room below it
 #define QUICKSTART_SHOP_MERCHANT_X 192
 #define QUICKSTART_SHOP_MERCHANT_Y 168
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 40, 120 },  { 56, 120 },  { 72, 120 },  // front edge of the upper-left shelving
-    { 136, 120 }, { 152, 120 }, { 168, 120 }, // front edge of the upper-right shelving
-    { 40, 152 },  { 56, 152 },  { 72, 152 },  // lower floor, clear of the merchant
+    { 40, 72 },   { 56, 72 },   { 72, 72 },   // top-left shelf, lifted from the red room floor at y=88
+    { 40, 120 },  { 56, 120 },  { 72, 120 },  // left shelf front, lifted from the red room at y=104
+    { 136, 136 }, { 152, 136 }, { 168, 136 }, // right shelf front, lifted from the lower room at y=152
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -4500,7 +4518,14 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // that acorn, and confirmed standable and walkable in all four
     // directions.
     { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 144, 112, 0, 0 },
-    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 100, 100, 0, -24 },
+    // Entrance measured, not the shared (100,100) default: this room is a
+    // 240x320 hallway with THREE 4x5 water pools in a zigzag (collision
+    // 0x30), and (100,100) is tile (6,6) - dead centre of the top-left one.
+    // The player materialised in the water and could not get out; the
+    // content spot 24px above it was in the same pool. (104,200) is tile
+    // (6,12), the open corridor that runs between the pools, and the
+    // content spot lands on (6,11), also open.
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 104, 200, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_INN_EAST_2F, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_LIBRARY_1F, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_LIBRARY_2F, 100, 100, 0, -24 },
@@ -4519,7 +4544,12 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // this bridge corridor has pillar rows repeating roughly every ~12-24px,
     // and 76 lands right on one. (0,-48) instead confirmed clean in the
     // gap between pillar rows.
-    { AREA_DARK_HYRULE_CASTLE_BRIDGE, ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 100, 100, 0, -48 },
+    // Also measured. The bridge is a 3-tile walkway (tiles 7-9, x 112-159)
+    // running down a void of 0x21 tiles, and the shared (100,100) default
+    // is tile (6,6) - one tile off its west edge, i.e. the "spawns in
+    // midair" report. (136,152) is the middle of the walkway; the content
+    // spot 48px above it stays on it.
+    { AREA_DARK_HYRULE_CASTLE_BRIDGE, ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 136, 152, 0, -48 },
     // Vanilla's own locked-door precondition (ITEM_GREEN_SWORD +
     // NAKANIWA_00_EZERO) is forced open every visit (roomInit.c:
     // sub_StateChange_SanctuaryEntrance_Main, under #ifdef QUICKSTART).
@@ -4535,7 +4565,12 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // room - a sliver of corridor in an area literally named NULL. A LARGE
     // pool draw puts wave gauntlets and minibosses in here, and ten tiles
     // cannot host either. Row kept so nothing renumbers.
-    { AREA_NULL_61, ROOM_NULL_61_0, 100, 100, 0, 24 },
+    // Retired from the draw (QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE stops one
+    // short of this row) but measured anyway so the row is not a trap if it
+    // is ever re-enabled: the room is a 240x240 pool of water with a single
+    // one-tile causeway at tile x=7. (120,168) is on the causeway and the
+    // content spot 24px below it stays on it.
+    { AREA_NULL_61, ROOM_NULL_61_0, 120, 168, 0, 24 },
 };
 #define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 12
 
@@ -7262,12 +7297,14 @@ static void QuickStart2DoorSetupRoomContent(void) {
     s32 contentX, contentY;
 
     QuickStart2DoorGetTarget(&area, &room);
+    QuickStart2DoorPlaceArrivalAtDoor();
+    // Above the kept-vanilla return too: a room we otherwise leave alone
+    // still got its player placed by our own entrance coordinates.
+    QuickStartRescuePlayerOntoGround();
     if (QuickStart2DoorIsKeptVanilla(area, room)) {
         return;
     }
     QuickStart2DoorClearRoomObstacles(area, room);
-    QuickStart2DoorPlaceArrivalAtDoor();
-    QuickStartRescuePlayerOntoGround();
     QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
     contentX = entranceX + contentDX;
     contentY = entranceY + contentDY;
@@ -7734,6 +7771,14 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     u8 area, room, kind, extra;
     s16 entranceX, entranceY;
     s32 contentX, contentY;
+    // Before the DONE check, not after. Getting the player off a bad tile
+    // is about the player's body, not about whether this room still owes
+    // them a reward - and it used to sit below the early return, so once
+    // the reward had been collected a return visit left them standing
+    // wherever the entrance dropped them. In the Veil Falls rupee-path
+    // hallway that is the middle of a water pool, which is exactly the
+    // "spawns into water and gets stuck" report.
+    QuickStartRescuePlayerOntoGround();
     if (QsCheckFlag(GF_RIVER_DONE)) {
         return;
     }
@@ -7742,10 +7787,8 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     QuickStartRiverBridgeGetSpawnInfo(&entranceX, &entranceY);
     contentX = entranceX;
     contentY = entranceY + 20;
-    // Same unmeasured (100,100) entrance as the cave connector's pool - see
-    // QuickStartRescuePlayerOntoGround. Correct both the player and the
-    // content spot against the room's own collision.
-    QuickStartRescuePlayerOntoGround();
+    // The entrance spots are measured per room now (see the pool table),
+    // but keep snapping the content spot against live collision anyway.
     {
         s16 groundX, groundY;
         if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
@@ -8032,6 +8075,8 @@ static void QuickStartSetupCaveRoomContent(void) {
     u8 area, room, kind, extra;
     s16 entranceX, entranceY;
     s32 contentX, contentY;
+    // Before the DONE check - same reasoning as the river bridge above.
+    QuickStartRescuePlayerOntoGround();
     if (QsCheckFlag(GF_CAVE_DONE)) {
         return;
     }
@@ -8040,10 +8085,7 @@ static void QuickStartSetupCaveRoomContent(void) {
     QuickStartCaveGetSpawnInfo(&entranceX, &entranceY);
     contentX = entranceX;
     contentY = entranceY + 20;
-    // Same unmeasured (100,100) entrance as the cave connector's pool - see
-    // QuickStartRescuePlayerOntoGround. Correct both the player and the
-    // content spot against the room's own collision.
-    QuickStartRescuePlayerOntoGround();
+    // Content spot still snapped against live collision.
     {
         s16 groundX, groundY;
         if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&

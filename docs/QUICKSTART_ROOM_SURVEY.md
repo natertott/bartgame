@@ -1289,14 +1289,17 @@ ooooooooooooooo
    collision (0x61/0x63/0xf1) that this survey counts as walls, so floors
    joined by a staircase read as separate components. Trust the flagged
    notes over raw component counts in those rooms.
-5b. **The shop's right shelf is the vanilla MINISH shelf.** The survey
-   found 4 Minish-portal act tiles (0x3d) at (184-200, 72-88), inside the
-   8-tile right alcove, and special collision on its northern approach. In
-   vanilla that shelf is explored as mini Link. The three catalog items on
-   the right shelf front may therefore be reachable only via the Minish
-   route - or not at all at normal size. Needs one in-game check; if they
-   are unreachable, the honest options are moving that trio to the lower
-   floor or leaning into it as a Minish-only shop shelf.
+5b. **The shop's right shelf is the vanilla MINISH shelf** - RESOLVED.
+   The survey found 4 Minish-portal act tiles (0x3d) at (184-200, 72-88)
+   inside the 8-tile right alcove; the in-game check confirmed the alcove
+   is its own component with no normal-size route, so the three catalog
+   items sitting on its shelf at y=120 could not be picked up. Measured
+   fix: the shelf's FRONT row at y=136 sits directly above the lower
+   room's floor at y=152, which is ordinary reachable ground, and the lift
+   fires from there. All nine catalog items are now on the three shelves
+   the user marked, each verified liftable in the emulator (park a real
+   SHOP_ITEM, stand on the adjacent floor, press R, assert
+   gPlayerState.heldObject == 4).
 6. **Boomerang chamber is the busiest room in the game**: 44 entities on
    entry, 28 free slots, five events. It works, but it is the room to test
    first after any change that spawns more.

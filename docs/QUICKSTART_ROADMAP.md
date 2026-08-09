@@ -144,9 +144,12 @@ bonus on top of vanilla's.
 ### 3.4 The shop
 
 Its own room (Stockwell's), reached by redirecting one of eight candidate
-overworld doors, drawn per run. Nine-item catalog on the floor in front of
-the shelving, prices randomized per run, bought by carrying an item to the
-merchant (vanilla's own `BuyShopItem` path).
+overworld doors, drawn per run. Nine-item catalog spread across the room's
+three shelves - top-left and left (both reached from the red room's floor)
+and the right shelf's front row (reached from the lower room below it, the
+only normal-size approach, since the alcove above it is Minish-only).
+Every spot is emulator-verified liftable. Prices randomized per run, bought
+by carrying an item to the merchant (vanilla's own `BuyShopItem` path).
 
 ### 3.5 Win condition
 
@@ -234,8 +237,11 @@ cure into a standing tool instead of a per-incident scramble.
   Full run green: 0 FAIL, 4 WARN (Castle Garden path tiles, two edge-
   clipped exit boxes, the shadowed cellar). Run it after every build that
   touches placement data; it is the regression gate.
-- **A2. Burn down the survey's open findings** (cellar shadowing decision,
-  shop right-shelf Minish check, Lon Lon Minish doors).
+- **A2. Burn down the survey's open findings.** Shop right-shelf Minish
+  check: DONE (finding 5b - the alcove really is Minish-only, and the fix
+  was the shelf's front row, reachable from the lower room; all nine items
+  verified liftable). Still open: the cellar shadowing decision and the Lon
+  Lon Minish doors.
 - **A3. Deterministic playtest switch**: a debug toggle that pins the RNG
   seed so a reported bug's run can be reproduced exactly.
 

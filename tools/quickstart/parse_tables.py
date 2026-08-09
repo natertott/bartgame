@@ -133,3 +133,15 @@ def site_index_of(area_name, room_name):
         if an == area_name and rn == room_name:
             return idx
     return -1
+
+
+def pool_rows():
+    """The 2-door pool tables: {area, room, ex, ey, dx, dy} per row, resolved
+    to numeric ids. Source of truth for the pool-entrance checker tier."""
+    out = []
+    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+), (-?\d+), (-?\d+), (-?\d+), (-?\d+) \}', GAME):
+        an, rn, ex, ey, dx, dy = m.groups()
+        if an in AREAS and rn in ROOMS:
+            out.append({'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
+                        'ex': int(ex), 'ey': int(ey), 'dx': int(dx), 'dy': int(dy)})
+    return out

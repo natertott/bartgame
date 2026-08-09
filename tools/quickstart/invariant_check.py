@@ -11,6 +11,8 @@ Tiers:
             constants consistent with their arrays. Always runs.
   regions   5 emulator boots: each region row's entrance/reward on open
             ground, exit box inside room bounds and off the border row.
+  pool      20 boots: every 2-door pool row's entrance is real open floor
+  entrances (not solid, not water) and its content spot is in bounds.
   rooms     ~45 emulator boots: every ? room lands; every content site's
             spot is open, in bounds, and in the entrance's reachable
             component (multi-site rooms instead require one distinct floor
@@ -107,6 +109,40 @@ def emu_regions(rom):
             out.append(('WARN', f"{r['roomName']}: " + '; '.join(warns)))
         else:
             out.append(('PASS', f"{r['roomName']}: entrance/reward/exit box OK"))
+    return out
+
+
+def emu_pool_entrances(rom):
+    """Every 2-door pool row's entrance must be on open ground (collision 0).
+
+    The failure this exists for: the shared, unmeasured (100,100) default.
+    It is floor in most pool rooms and NOT floor in some - solid in the Dark
+    Hyrule Castle bridge (spawns in midair), water (0x30) in the Veil Falls
+    rupee-path hallway (spawns in a pool and gets stuck). Both shipped.
+    """
+    from emu import boot, warp, here, room_dims, coll_at
+    out = []
+    for row in P.pool_rows():
+        c = boot(rom)
+        c.memory.u8[0x03000bf0 + 4] = 0
+        warp(c, row['area'], row['room'], row['ex'], row['ey'])
+        if here(c) != (row['area'], row['room']):
+            out.append(('FAIL', f"{row['roomName']}: did not land ({here(c)})"))
+            continue
+        W, H = room_dims(c)
+        msgs = []
+        for label, x, y in (('entrance', row['ex'], row['ey']),
+                            ('content spot', row['ex'] + row['dx'], row['ey'] + row['dy'])):
+            if not (0 <= x < W and 0 <= y < H):
+                msgs.append(f'{label} ({x},{y}) out of bounds {W}x{H}')
+                continue
+            v = coll_at(c, x // 16, y // 16)
+            if v != 0 and label == 'entrance':
+                msgs.append(f'{label} ({x},{y}) on collision {v:#04x}, want open floor')
+        if msgs:
+            out.append(('FAIL', f"{row['roomName']}: " + '; '.join(msgs)))
+        else:
+            out.append(('PASS', f"{row['roomName']}: entrance on open ground"))
     return out
 
 
@@ -242,6 +278,7 @@ def main():
     if '--static-only' not in args:
         if '--rooms' not in args:
             results.append(('regions', emu_regions(rom)))
+            results.append(('pool entrances', emu_pool_entrances(rom)))
         if '--regions' not in args:
             n_rooms = len({(a, r) for _, _, a, r, _, _ in P.content_sites()}) + len(P.pool_doors()) + 1
             batch = []
