@@ -395,16 +395,16 @@ static void GameTask_Transition(void) {
         // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: free (was GF_HEART_CONTAINER_BONUS_APPLIED). 241-265: the river
-        // bridge and cave connector draws. 266-616: the 27 room-keyed
+        // bridge and cave connector draws. 266-629: the 28 room-keyed
         // content sites' randomized/kind/extra/done blocks
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 617: the North Hyrule Field bridge. 618-650: the shop's own door
-        // draw and price rolls. 651-652: Melari's Mine's two rooms' collected
+        // 630: the North Hyrule Field bridge. 631-663: the shop's own door
+        // draw and price rolls. 664-665: Melari's Mine's two rooms' collected
         // latches - re-rolled every fresh boot like everything else here, so a
         // new run gets the shop somewhere else at different prices.
-        for (bit = 202; bit <= 652; bit++) {
+        for (bit = 202; bit <= 665; bit++) {
             QsClearFlag(bit);
         }
         // Wipe every per-area LOCAL flag, so each run gets a fresh world.
@@ -1406,19 +1406,21 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // wave room types from the game as the last doors were converted.
 //
 // These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
-// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 27
-// sites the range is 266..616, and everything above it - the bridge flag,
+// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 28
+// sites the range is 266..629, and everything above it - the bridge flag,
 // the shop's block, Melari's two latches - is laid out immediately after,
-// ending at 652. Bank 12 has room up to offset 707, so there are 4 more
+// ending at 665. Bank 12 has room up to offset 707, so there are 3 more
 // sites' worth of headroom before this needs rethinking.
 //
 // IMPORTANT: raising this count moves the top of the range, so every
-// constant below it has to move too. Getting that wrong is silent and
-// nasty: at 25 sites, site 24's block started at exactly 578, which was
+// constant below it has to move too (GF_NHF_BRIDGE_JOINED, the shop block,
+// the Melari latches, AND the boot-time clear loop's upper bound in
+// GameTask_Transition). Getting that wrong is silent and nasty: at 25
+// sites, site 24's block started at exactly 578, which was
 // GF_NHF_BRIDGE_JOINED - so joining North Hyrule Field's bridge also marked
 // the smithy site "already randomized" with an all-zero roll, and entering
 // the smithy permanently joined the bridge.
-#define QUICKSTART_CONTENT_SITE_COUNT 27
+#define QUICKSTART_CONTENT_SITE_COUNT 28
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1438,17 +1440,17 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // indefinitely by walking out and back in. These are that latch. Every
 // other "? room" already had one: the generic content sites carry
 // GF_CONTENT_SITE_DONE.
-#define GF_MELARI_EAST_DONE 651
-#define GF_MELARI_SOUTHEAST_DONE 652
+#define GF_MELARI_EAST_DONE 664
+#define GF_MELARI_SOUTHEAST_DONE 665
 
 // Switch-operated bridges (QuickStartUpdateSwitchBridges). Sits immediately
-// above the content sites' last block, which ends at 616.
-#define GF_NHF_BRIDGE_JOINED 617
+// above the content sites' last block, which ends at 629.
+#define GF_NHF_BRIDGE_JOINED 630
 
-// Range 618..650, immediately after the bridge flag.
-#define GF_SHOP_RANDOMIZED 618
-#define GF_SHOP_DOOR_BIT(b) (619 + (b))                  // b = 0..4
-#define GF_SHOP_PRICE_BIT(i, b) (624 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// Range 631..663, immediately after the bridge flag.
+#define GF_SHOP_RANDOMIZED 631
+#define GF_SHOP_DOOR_BIT(b) (632 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (637 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -1683,6 +1685,10 @@ const u8* const gCustomStrings[] = {
     // more) per the user's own request for a hint about what causes the
     // Earth Element to drop.
     [12] = (const u8*)"Ezlo: The Earth Element\nis here! Clear the foes!",
+    // The rare miniboss Red Sword grant (see the LADDER_KIND_MINIBOSS
+    // reward drop). Delivered via GiveItem, which is silent on its own, so
+    // this message is the whole pickup moment.
+    [13] = (const u8*)"You won the Red Sword!\nEquip it from the menu.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2107,6 +2113,34 @@ static const QuickStartLink sQuickStartLinks[] = {
     // startX=0xe8, startY=0x1b4, AREA_12x12 -> box +6/+6 - at trigger time
     // instead of a static table entry here, the same reason ladder 3's own
     // entrance isn't in this table either).
+    //
+    // The four Boomerang tree hollows' ladders DOWN into the chamber. Their
+    // real WARP_TYPE_AREA rows (gExitList_TreeInteriors_Boomerang*) never
+    // fire in play: the ladder tile at (120,84) is armed with a door
+    // actTile (QuickStartOpenBoomerangChamber), but the vanilla collision
+    // under the ladder art is solid, so a player walking up presses against
+    // its lip at y~95 and never actually stands ON the tile the door check
+    // reads. Measured directly - 300 frames of holding up, position pinned
+    // at (120,95), no transition. This is the one leg of the chamber's five
+    // round trips that stayed broken (all four ladders/staircase UP out of
+    // the chamber fire fine - they're approached over open floor).
+    //
+    // So the down legs are position boxes instead, the same mechanism as
+    // every other row here: the box is exactly where the blocked player
+    // ends up pressing (x 112-128, y 84-98), and each destination is its
+    // own vanilla row's arrival corner in the chamber. The chamber's four
+    // up-rows' arrival spot is moved from (120,56) to (120,104) in
+    // transitions.c to sit just SOUTH of this box - at the vanilla spot the
+    // arriving player materialized inside the box's walk-through path and
+    // bounced straight back down.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 112, 128, 84, 98,
+      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x48, 0x88 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 112, 128, 84, 98,
+      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x108, 0x88 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 112, 128, 84, 98,
+      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x48, 0xf8 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 112, 128, 84, 98,
+      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x108, 0xf8 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -5073,6 +5107,36 @@ static Script* const sQuickStartLadderNpcScripts[2] = {
     &script_QuickStartLadderNpc1,
 };
 
+// The NPC event's one-time gate and friendly/evil split both live INSIDE
+// the .inc script, on raw bank-0 global flags - script files cannot see C
+// state, so flags are the only channel. Bank 0 is deliberately exempt from
+// the per-run world reset (real story flags live there), which is exactly
+// how these used to leak: resolve any NPC event once and the "resolved"
+// bit stayed set in the save forever, so every NPC event in every later
+// run - and any second NPC event in the same run sharing the script -
+// greeted the player with "There's nothing left for you here" (confirmed,
+// exactly as the user suspected). Meanwhile nothing ever SET the evil bit,
+// so the rupee-stealing variant could never fire at all.
+//
+// Only one NPC event can be live at a time (one ZELDA per room, one room
+// loaded), so the pair is a per-event SCRATCH REGISTER now: loaded from
+// the event's own rolled extra when its NPC spawns, and the script's own
+// "SetGlobalFlag resolved" is folded back into the event's DONE latch by
+// whoever owns one. Scripts 1/2's flag pairs (0x75/0x7d, 0x81/0x89) are
+// retired along with the multi-script indexing - script 0 serves every
+// event, since the flags are what vary now, not the script.
+#define QUICKSTART_NPC_EVIL_FLAG 0x69
+#define QUICKSTART_NPC_RESOLVED_FLAG 0x71
+
+static void QuickStartLoadNpcScratchFlags(u8 extra) {
+    if (extra & 1) {
+        SetGlobalFlag(QUICKSTART_NPC_EVIL_FLAG);
+    } else {
+        ClearGlobalFlag(QUICKSTART_NPC_EVIL_FLAG);
+    }
+    ClearGlobalFlag(QUICKSTART_NPC_RESOLVED_FLAG);
+}
+
 // These "orphaned" rooms were never actually emptied - they still carry
 // their own original static object data (the exact bug report: a room
 // packed full of real pre-existing chests, furniture etc., on top of
@@ -5959,7 +6023,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             return !QuickStartGroundItemAt(contentX, contentY);
         }
         if (QsCheckRoomFlag(flagBase + 0)) {
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             s32 i, alive = 0;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
@@ -6012,8 +6076,34 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 return FALSE;
             }
             // Dead - drop the reward and start watching for pickup.
+            // A non-elite miniboss rolled with extra bit 6 pays the Red
+            // Sword - once: if the sword is already owned the kill falls
+            // through to the ordinary heart piece, so repeat encounters
+            // stay worth fighting without stacking dead swords. The sword
+            // CANNOT be a floor item: CreateObject(GROUND_ITEM,
+            // ITEM_RED_SWORD) never creates an entity at all (traced
+            // frame-by-frame in the emulator - equipment has no
+            // ground-item form in vanilla; it only ever arrives through
+            // chests and scripts). So it goes through the real GiveItem
+            // path (inventory + item slot + sfx) with an explicit message,
+            // the same shape the skill-scroll pickup already uses. Setting
+            // room flag +2 with no item on the floor is correct: the
+            // pickup-watch above reads "no ground item left" as collected
+            // and latches DONE.
+            if (!(extra & 0x80) && (extra & 0x40) && GetInventoryValue(ITEM_RED_SWORD) == 0) {
+                GiveItem(ITEM_RED_SWORD, 0);
+                MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 13));
+                MsgInit();
+                QsSetRoomFlag(flagBase + 2);
+                gSave.miniboss_kills++;
+                return FALSE;
+            }
             {
-                Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_PIECE, 0);
+                // Elite sites (extra bit 7, see QuickStartRandomizeContentSiteOnce)
+                // pay a full Heart Container; everything else the ordinary
+                // heart piece.
+                Entity* itemEntity =
+                    CreateObject(GROUND_ITEM, (extra & 0x80) ? ITEM_HEART_CONTAINER : ITEM_HEART_PIECE, 0);
                 if (itemEntity != NULL) {
                     itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
                     itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
@@ -6038,7 +6128,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // wrong (Hyrule Castle Cellar's is 184px below its own floor),
             // and even a good one can be a tile a Darknut cannot turn
             // around in.
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
                                                   QuickStartMinibossCount(pick->id)) > 0) {
                 QsSetRoomFlag(flagBase + 0);
@@ -6056,6 +6146,22 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
             if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                // The NPC is live - watch for the script's own "resolved"
+                // write and fold it back into the caller's DONE latch, so
+                // the event stays resolved for the run but rolls fresh next
+                // run (see QUICKSTART_NPC_RESOLVED_FLAG's comment).
+                //
+                // Only if this Zelda is THIS event's own, though: rooms
+                // with several sites (the Boomerang chamber) can roll NPC
+                // for more than one of them, and the one-Zelda-per-room
+                // rule means only the first spawns - without the distance
+                // scope, resolving that one would falsely latch every
+                // other NPC site in the room DONE too.
+                s32 dx = gEntities[i].base.x.HALF.HI - (gRoomControls.origin_x + contentX);
+                s32 dy = gEntities[i].base.y.HALF.HI - (gRoomControls.origin_y + contentY);
+                if (dx >= -64 && dx <= 64 && dy >= -64 && dy <= 64) {
+                    return CheckGlobalFlag(QUICKSTART_NPC_RESOLVED_FLAG) != 0;
+                }
                 return FALSE;
             }
         }
@@ -6067,11 +6173,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
-                // Bit 0 of extra picks which of the 2 NPC scripts this room
-                // runs (the friendly one vs. the one who takes 100 rupees).
-                // Neither script references which physical room it's running
-                // in, so the same 2 serve every site.
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra & 1]);
+                // Bit 0 of extra is the friendly/evil roll, delivered to
+                // the (single, shared) script via the scratch flags.
+                QuickStartLoadNpcScratchFlags((u8)extra);
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
             }
         }
     }
@@ -6290,6 +6395,12 @@ enum {
     QUICKSTART_KINDS_SMALL, // puzzle/dialogue only - cramped tree hollows, cave nooks
     QUICKSTART_KINDS_LARGE, // combat and fairies - rooms with real floor space
     QUICKSTART_KINDS_ANY,   // everything, for rooms big and clear enough to host anything
+    // High-risk, high-reward, for sites the player pays to reach (item
+    // gates, Minish routes): no roll at all - ALWAYS a miniboss from the
+    // level-5 roster, and its kill drops a HEART CONTAINER instead of the
+    // normal heart piece (the elite bit rides in the extra byte's top bit;
+    // see QuickStartRandomizeContentSiteOnce and the miniboss reward drop).
+    QUICKSTART_KINDS_ELITE,
 };
 
 typedef struct {
@@ -6465,10 +6576,12 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // whole five-region pool that a normal-sized Link cannot reach, and both
     // hang off South Hyrule Field: its exit list has always carried them
     // (transitions.c, gExitList_HyruleField_SouthHyruleField), they were just
-    // unreachable because nothing in this mode ever shrank the player. Now
-    // that the field's Minish portal is revealed on entry
-    // (QuickStartRevealHiddenLadders) they are ordinary "? rooms" entered by
-    // their own real vanilla doors, same model as everything else here.
+    // unreachable because nothing in this mode ever shrank the player. The
+    // field's Minish portal opens the route - hidden under its tree stump
+    // until a Pegasus Boots dash reveals it (vanilla's own PLAYER_BOUNCE
+    // path; the old force-reveal is gone per the user's call), so these two
+    // rooms are part of what a boots run buys. Once shrunk, they are
+    // ordinary "? rooms" entered by their own real vanilla doors.
     //
     // The cave at (376,216) in the field; a wide open Minish-scale cavern,
     // and its vanilla exit is a plain INSTANT_MINISH border straight back to
@@ -6481,6 +6594,22 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // on the SMALL pool for the same reason they do: it is a one-screen
     // mushroom interior, not an arena.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, QUICKSTART_KINDS_SMALL, 0x78, 0x50 },
+    // Castle Garden's northeast wall hole - the third Minish-gated site, and
+    // the most expensive route in the game so far: it takes the Pegasus
+    // Boots (dash the stump tree open), the Minish portal (shrink), and then
+    // the hole in the garden's north wall at x~776. Inside is the East
+    // wall-passage room: a small walled chamber over an entry strip, joined
+    // by a climbable column at tile x=8 (collision-scanned live; the room's
+    // one vanilla exit is an INSTANT_MINISH south border straight back to
+    // the garden, so it is a clean dead end). Priced accordingly: ELITE -
+    // always a level-5 miniboss, and the kill pays a Heart Container.
+    // Content spot (136,104) is the chamber's centre tile (8,6), open with
+    // all four neighbours open.
+    //
+    // Its West twin (the hole at x~232, ROOM_CASTLE_GARDEN_MINISH_HOLES_1)
+    // is left vanilla for now - one elite room per region reads as special,
+    // two reads as a farm. Adding it later is one table row.
+    { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, QUICKSTART_KINDS_ELITE, 136, 104 },
 };
 // Where a content site wants its event. Wrapped so the pot room, which is
 // compiled above the table, can ask without reaching into it directly.
@@ -6728,6 +6857,11 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
         case QUICKSTART_KINDS_LARGE:
             kind = QuickStartPickLargeKind();
             break;
+        case QUICKSTART_KINDS_ELITE:
+            // No roll and no unlock fallback: an elite site is always a
+            // miniboss fight, and its (item-gated) door is the gate.
+            kind = LADDER_KIND_MINIBOSS;
+            break;
         default:
             kind = QuickStartPickSmallKind();
             break;
@@ -6738,6 +6872,22 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
         extra = (u8)((s32)Random() % 2); // bit 0: 1 = evil, 0 = friendly
     } else if (kind == LADDER_KIND_MINIBOSS) {
         extra = (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE);
+        // The elite bit rides in the extra byte's top bit, well clear of
+        // the 0-4 roster index: the spawn reads the index with & 0x7f, and
+        // the reward drop upgrades on & 0x80. Packing it here means the
+        // whole elite treatment survives leaving and re-entering the room
+        // for free, exactly like every other kind parameter.
+        if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_ELITE) {
+            extra |= 0x80;
+        } else if ((s32)Random() % 4 == 0) {
+            // Bit 6: this (non-elite) miniboss carries the Red Sword - the
+            // blade player.c's SurfaceAction_CloneTile hands one clone out
+            // for, i.e. the user's "level two sword", rare on purpose:
+            // roughly 1 in 4 miniboss sites, and miniboss is itself one
+            // roll among several. The drop only materializes if the sword
+            // isn't owned yet (see the reward drop), so it can't pile up.
+            extra |= 0x40;
+        }
     } else if (kind == LADDER_KIND_POT_LOTTERY) {
         extra = QuickStartPickPotRoomExtra();
     } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
@@ -7202,7 +7352,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         }
         {
             s32 extra = QuickStart2DoorGetExtra();
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[extra % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
                                                   QuickStartMinibossCount(pick->id)) > 0) {
                 QsSetRoomFlag(0);
@@ -7220,6 +7370,11 @@ static void QuickStart2DoorSetupRoomContent(void) {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
             if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                // Fold the script's own "resolved" write into this room's
+                // run latch (see QUICKSTART_NPC_RESOLVED_FLAG's comment).
+                if (CheckGlobalFlag(QUICKSTART_NPC_RESOLVED_FLAG)) {
+                    QsSetFlag(GF_2DOOR_DONE);
+                }
                 return;
             }
         }
@@ -7231,6 +7386,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
+                QuickStartLoadNpcScratchFlags((u8)QuickStart2DoorGetExtra());
                 QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
             }
         }
@@ -7628,6 +7784,11 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
             if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                // Fold the script's own "resolved" write into this room's
+                // run latch (see QUICKSTART_NPC_RESOLVED_FLAG's comment).
+                if (CheckGlobalFlag(QUICKSTART_NPC_RESOLVED_FLAG)) {
+                    QsSetFlag(GF_RIVER_DONE);
+                }
                 return;
             }
         }
@@ -7639,7 +7800,8 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+                QuickStartLoadNpcScratchFlags((u8)extra);
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
             }
         }
     }
@@ -7920,6 +8082,11 @@ static void QuickStartSetupCaveRoomContent(void) {
         s32 i;
         for (i = 0; i < MAX_ENTITIES; i++) {
             if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA) {
+                // Fold the script's own "resolved" write into this room's
+                // run latch (see QUICKSTART_NPC_RESOLVED_FLAG's comment).
+                if (CheckGlobalFlag(QUICKSTART_NPC_RESOLVED_FLAG)) {
+                    QsSetFlag(GF_CAVE_DONE);
+                }
                 return;
             }
         }
@@ -7931,7 +8098,8 @@ static void QuickStartSetupCaveRoomContent(void) {
                 npc->collisionLayer = 1;
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[extra % 2]);
+                QuickStartLoadNpcScratchFlags((u8)extra);
+                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
             }
         }
     }
@@ -8945,47 +9113,39 @@ static void QuickStartUnlockRanchHouseDoors(void) {
     }
 }
 
-// Unlocks the vanilla fixtures that stand between the player and a converted
-// "? room": Castle Garden's two hidden ladders, Link's House's own front
-// door, and every region's Minish portal.
+// Unlocks the vanilla fixtures that genuinely have no working vanilla path
+// under QUICKSTART: Link's House's own front door (its story-driven lock
+// has no story to open it) and any Kinstone-fusion portal stone (no
+// kinstone economy yet).
 //
-// Castle Garden's two "? room" ladders are HIDDEN_LADDER_DOWN fixtures
-// (object.c id 87), not plain doors, and in vanilla they stay invisible -
-// and their tiles stay ordinary ground - until the pot on top of them is
-// smashed. That is exactly the pot-lift-and-throw reveal step the user
-// asked to be rid of, so this reveals both of them outright the moment the
-// player sets foot in the garden.
+// What this deliberately does NOT touch any more - both used to be
+// force-revealed here, and the user reversed that call ("The ladders and
+// tree stump should be hidden, initially"):
 //
-// It matters mechanically, not just visually. HiddenLadderDown_Init is what
-// lays down TILE_TYPE_418..426 over the fixture, and TILE_TYPE_422 (the
-// centre) is what maps to ACT_TILE_63 - one of the four actTile values
-// UpdateDoorTransition will actually fire a door on. Probing the live
-// actTile table before this existed showed 0x14 (ordinary ground) at both
-// spots, i.e. the real vanilla transitions in gExitList_CastleGarden_Main
-// simply had nothing to trigger them. With the fixture revealed they read
-// ACT_TILE_63 and the vanilla door fires on contact, same as every other
-// converted "? room" door.
+//  - HIDDEN_LADDER_DOWN (Castle Garden's two "? room" ladders): in vanilla
+//    they stay invisible - ordinary ground, no door actTile - until the
+//    cover on top (the garden's grass tufts) is cleared. That reveal path
+//    is entirely self-contained and works under QUICKSTART:
+//    HiddenLadderDown_Action1 polls its own tile every frame and latches
+//    its flag the moment the cover is gone, and its Init then lays down
+//    TILE_TYPE_418..426, whose centre (422) is the ACT_TILE_63 the vanilla
+//    door transition fires on. Cut the grass, get a ladder.
 //
-// Done by setting each fixture's own flag and bouncing it back to action 0
-// so its own Init re-runs and does the reveal, rather than re-laying the 9
-// tiles here: the flag is the same thing smashing the pot would have set,
-// so the ladder stays revealed for the rest of the save on its own terms.
-static void QuickStartRevealHiddenLadders(void) {
+//  - TREE_HIDING_PORTAL (the tree stump hiding each region's Minish
+//    portal): vanilla reveals it on PLAYER_BOUNCE against its own
+//    ACT_TILE_84 - a Pegasus Boots dash into the tree. That makes every
+//    stump portal (and everything behind it: South Hyrule Field's two
+//    Minish rooms, Castle Garden's northeast wall hole) an item-gated
+//    route that only a run that CHOSE the boots can open, which is now the
+//    intended design, mirroring how the Flippers gate Trilby Highlands.
+static void QuickStartFixupRoomFixtures(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* entity = &gEntities[i].base;
         if (entity->kind != OBJECT || !QuickStartEntityInCurrentRoom(entity)) {
             continue;
         }
-        if (entity->id == HIDDEN_LADDER_DOWN && entity->action == 1) {
-            // The fixture's own flag lives at +0x86, past the base Entity -
-            // the same slot HiddenLadderDownEntity::flag names in
-            // src/object/hiddenLadderDown.c. GenericEntity is the base plus
-            // exactly that trailing block, so this reaches it without
-            // dragging that file's private struct in here.
-            SetFlag(((GenericEntity*)entity)->field_0x86.HWORD);
-            entity->action = 0;
-        } else if (entity->id == HOUSE_DOOR_INT && entity->action == 1) {
+        if (entity->id == HOUSE_DOOR_INT && entity->action == 1) {
             // Link's House has the same problem one level down. Its front
             // door is a HOUSE_DOOR_INT, and HouseDoorInterior_Action1
             // (src/object/houseDoorInterior.c) only opens on "stand against
@@ -9002,34 +9162,6 @@ static void QuickStartRevealHiddenLadders(void) {
             // in the game has, using vanilla's own mechanism rather than a
             // synthetic exit box.
             ((GenericEntity*)entity)->field_0x7c.BYTES.byte1 = 0;
-        } else if (entity->id == TREE_HIDING_PORTAL && entity->action == 1) {
-            // Every one of the five pool regions has a Minish portal, and
-            // four of them ship with it hidden under a tree stump. Surveyed
-            // live: Castle Garden (840,224), South Hyrule Field (88,528),
-            // Lon Lon Ranch (312,352), North Hyrule Field (808,512); Trilby
-            // Highlands' portal and two of Lon Lon's three are already open.
-            //
-            // In vanilla the stump is uncovered by rolling into it - the
-            // object waits for PLAYER_BOUNCE against its own ACT_TILE_84 -
-            // which is an unmarked secret with no hint anywhere, and this
-            // mode has no Ezlo hints at all. So it is revealed outright, the
-            // same stopgap shape as the boot-time Kinstone force-fuse.
-            //
-            // Same technique as the hidden ladders above: set the fixture's
-            // own flag and bounce it to action 0 so its own Init re-runs.
-            // That matters for correctness, not just tidiness -
-            // TreeHidingPortal_Init's reveal ends in DeleteThisEntity(),
-            // which deletes gUpdateContext.current_entity, so it is only
-            // safe when the tree itself is the entity being updated. Calling
-            // any of its reveal path from this sweep would delete whatever
-            // entity happens to be running instead.
-            //
-            // Uncovering it is what stamps the portal tiles at all
-            // (CreateMinishEntrance): until then the manager's ACT_TILE_61
-            // does not exist and walking north into the stump just bumps
-            // into it, which is exactly what the emulator showed.
-            SetFlag(((GenericEntity*)entity)->field_0x86.HWORD);
-            entity->action = 0;
         } else if (entity->id == MINISH_PORTAL_STONE && entity->action == 1) {
             // The other cover vanilla uses for the same thing, revealed by a
             // Kinstone fusion rather than a roll. None of the five current
@@ -9196,7 +9328,7 @@ static void QuickStartRoomMonitor(void) {
     // Garden Main and Link's House, but the checks are per-entity rather
     // than per-room, so any other room's hidden ladder or stuck house door
     // gets the same treatment for free.
-    QuickStartRevealHiddenLadders();
+    QuickStartFixupRoomFixtures();
     // Same "make a vanilla fixture actually work" job, for the Boomerang
     // chamber's five entrances and its chest.
     QuickStartOpenBoomerangChamber();

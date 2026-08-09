@@ -94,10 +94,12 @@ Hyrule Field, North Hyrule Field, Trilby Highlands. Each row carries its
 entrance, its "onward" exit box, an enemy-offset grid, room size/enemy cap,
 a reward pool + reward spot, and an optional quirk hook.
 
-`QUICKSTART_REGION_CHAIN_LENGTH` is **2**. The chain draws that many
-distinct rows at random, in random order, once per run. Owning Zora Flippers
-forces Trilby Highlands into the last slot; not owning them excludes it from
-the draw entirely (its only surveyed approach is across a canal).
+`QuickStartRegionChainLength()` is **2 + 1 per win, capped at 4** (B2). The
+chain draws that many distinct UNLOCKED rows at random, in random order,
+once per run (B1: Lon Lon Ranch joins at 1 win, Trilby Highlands at 2).
+Owning Zora Flippers (with Trilby unlocked) forces Trilby into the last
+slot; otherwise it is excluded from the draw entirely (its only surveyed
+approach is across a canal).
 
 Within a region: wave 0 is a plain tiered group; every wave after it has a
 20% chance of being a solo Chuchu Boss instead. Wave count persists per slot
@@ -126,12 +128,13 @@ to host anything. A room being large was never a reason to stop it rolling a
 pot lottery; it was only ever a reason to stop a cramped one rolling a
 miniboss, which is what ANY exists to say.
 
-Two of the sites are **Minish-gated**: the cave at (376,216) and the tiny
-door at (72,456), both in South Hyrule Field, both reachable only by
-shrinking. Every region has a vanilla Minish portal, and
-`QuickStartRevealHiddenLadders` uncovers the four that ship hidden under a
-stump - vanilla wants the player to roll into it, an unmarked secret with no
-hint, and this mode has no Ezlo hints.
+Three of the sites are **Minish-gated**: the cave at (376,216) and the tiny
+door at (72,456) in South Hyrule Field, and Castle Garden's northeast wall
+hole. Every region has a vanilla Minish portal hidden under a tree stump,
+and the stump only opens on a Pegasus Boots dash into the tree (vanilla's
+own PLAYER_BOUNCE reveal - the old force-reveal is gone per the user's
+call), so Minish content is what a boots run buys, the same way Trilby
+Highlands is what a Flippers run buys.
 
 Every one of these rooms is swept on entry: vanilla enemies, NPCs, and
 payout-shaped objects (ground items, both chest kinds, heart containers,

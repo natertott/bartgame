@@ -98,8 +98,9 @@ fairies) are deleted. Props (pots, furniture, acorns, signs) stay unless
 the room is on the `clearObjects` list (arena rooms). Tile-level state -
 bombable walls, smashed tiles, opened chests' local flags, revealed portals
 - is per-area LOCAL flags, and since the world-reset change every run wipes
-those: walls re-seal, portals re-hide (then re-reveal via
-QuickStartRevealHiddenLadders where we force them), chests re-arm. Kinstone
+those: walls re-seal, portals re-hide (and stay hidden until their vanilla
+uncover step - grass cut for hidden ladders, boots dash for stumps), chests
+re-arm. Kinstone
 gates will behave the same way when re-enabled.
 
 ---

@@ -2936,6 +2936,23 @@ const Transition* const gExitLists_WindTribeTowerRoof[] = {
 };
 
 const Transition gExitList_Caves_Boomerang[] = {
+#ifdef QUICKSTART
+    // Arrival in each tree hollow moved from (0x78,0x38) to (0x78,0x68):
+    // the hollows' ladders DOWN are position-box links now (sQuickStartLinks,
+    // game.c - the vanilla down-rows' door tile has solid collision and
+    // never fires), and the box sits at y 84-98 right under the ladder. The
+    // old (120,56) arrival spot put the freshly-arrived player on a
+    // walk-through path straight into that box, bouncing them back down the
+    // moment they moved; (120,104) is open floor just south of it.
+    { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x48, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
@@ -2944,6 +2961,7 @@ const Transition gExitList_Caves_Boomerang[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0xa8, 0xb8, 0x1f8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,

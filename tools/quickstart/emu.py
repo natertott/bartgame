@@ -41,6 +41,7 @@ def boot(rom=ROM):
     img = mgba.image.Image(240, 160)
     c = mgba.core.load_path(rom)
     c.set_video_buffer(img)
+    c.qs_video = img  # kept reachable so callers can screenshot (see snap())
     c.reset()
     for _ in range(120):
         c.run_frame()
@@ -85,3 +86,9 @@ def room_dims(c):
 
 def coll_at(c, tx, ty):
     return c.memory.u8[COLL + tx + (ty << 6)]
+
+
+def snap(c, path):
+    """Save the current frame as a PNG (rendering ground truth - the one way
+    to catch the sprites-never-render VRAM failure class)."""
+    c.qs_video.to_pil().convert('RGB').save(path)
