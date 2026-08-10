@@ -5152,14 +5152,34 @@ static u16 QuickStartPickRareReward(s32 extra) {
 // fresh roster from scratch.
 #define QUICKSTART_MINIBOSS_POOL_SIZE 5
 
-// Shared "extra" packing for the two new lottery kinds: which of the 3
-// pot/chest slots holds the real prize (bits 0-1, 0-2) and which reward
-// pool entry it is (bits 2-3, 0-3) - both packed into the same 8-bit extra
-// value every other kind already gets one Random() draw's worth of.
+// --- The lottery "extra" byte -------------------------------------------
+//
+// Both lottery kinds pack their whole state into the single 8-bit `extra`
+// value every kind gets, because that is what survives leaving the room and
+// coming back (GF_CONTENT_SITE_EXTRA_BIT / GF_2DOOR_EXTRA_BIT, 8 bits each).
+//
+// The prize field is THREE bits, and the mask below is the only place that
+// number is written down. It used to be two, which was correct while
+// sQuickStartLadderRewardPool had four entries and silently wrong the moment
+// it grew to eight: the writer emitted a 3-bit index into a 2-bit slot, so
+// indices 4-7 folded onto 0-3 (lotteries could never award the Boomerang,
+// Gust Jar, Bomb Bag or Large Quiver) and, in the pot room, the spilled bit
+// landed in the winner field and perturbed which pot held the prize.
+//
+// Tie the mask to the pool size and neither can drift again.
+#define QUICKSTART_LOTTERY_PRIZE_SHIFT 2
+#define QUICKSTART_LOTTERY_PRIZE_MASK (QUICKSTART_LADDER_REWARD_POOL_SIZE - 1)
+
+static s32 QuickStartLotteryPrizeIndex(s32 extra) {
+    return (extra >> QUICKSTART_LOTTERY_PRIZE_SHIFT) & QUICKSTART_LOTTERY_PRIZE_MASK;
+}
+
+// Chest lottery: winner slot in bits 0-1 (0-2, three chests), prize in bits
+// 2-4. Bits 5-7 are unused and always were.
 static u8 QuickStartPickLotteryExtra(void) {
     u8 winnerSlot = (u8)((s32)Random() % 3);
     u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
-    return (u8)(winnerSlot | (prizeIndex << 2));
+    return (u8)(winnerSlot | ((prizeIndex & QUICKSTART_LOTTERY_PRIZE_MASK) << QUICKSTART_LOTTERY_PRIZE_SHIFT));
 }
 
 // Pot lottery only: 9 pots instead of chests' 3, so winnerSlot needs 4 bits
@@ -5173,18 +5193,28 @@ static u8 QuickStartPickLotteryExtra(void) {
 // survive leaving the room and coming back:
 //
 //   bits 0-1  density preset: packed / mixed / sparse
-//   bits 2-3  prize index into sQuickStartLadderRewardPool
-//   bits 4-7  where in the fill order the winning pot sits
+//   bits 2-4  prize index into sQuickStartLadderRewardPool
+//   bits 5-7  where in the fill order the winning pot sits
 //
 // Nothing here is re-rolled on re-entry, and that is the point. The layout
 // used to come straight from Random() at spawn time, which meant walking
 // out and back in reshuffled which pot held the prize - the room was a slot
 // machine you could re-pull instead of a puzzle you had to dig through.
+//
+// The winner field gave up a bit to the widened prize field, going from 16
+// buckets to 8. It is not a slot index, it is a position along the far half
+// of the fill order (see the winnerIndex arithmetic in
+// QuickStartPotRoomGenerate), and that half is only ~10-22 pots deep - so
+// eight buckets still land the prize somewhere different nearly every time,
+// while four bits were finer than the thing being addressed.
+#define QUICKSTART_POT_WINNER_SHIFT 5
+#define QUICKSTART_POT_WINNER_BUCKETS 8
 static u8 QuickStartPickPotRoomExtra(void) {
     u8 preset = (u8)((s32)Random() % QUICKSTART_POT_ROOM_PRESET_COUNT);
     u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
-    u8 winnerNibble = (u8)((s32)Random() % 16);
-    return (u8)(preset | (prizeIndex << 2) | (winnerNibble << 4));
+    u8 winnerBucket = (u8)((s32)Random() % QUICKSTART_POT_WINNER_BUCKETS);
+    return (u8)(preset | ((prizeIndex & QUICKSTART_LOTTERY_PRIZE_MASK) << QUICKSTART_LOTTERY_PRIZE_SHIFT) |
+                (winnerBucket << QUICKSTART_POT_WINNER_SHIFT));
 }
 
 // Runs every frame in Castle Garden Main but only ever does anything once
@@ -6950,8 +6980,8 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
 
 static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32 ownerSite) {
     const QuickStartPotRoomPreset* preset = &sQuickStartPotRoomPresets[(extra & 3) % QUICKSTART_POT_ROOM_PRESET_COUNT];
-    s32 prizeIndex = (extra >> 2) & 3;
-    s32 winnerNibble = (extra >> 4) & 0xF;
+    s32 prizeIndex = QuickStartLotteryPrizeIndex(extra);
+    s32 winnerBucket = (extra >> QUICKSTART_POT_WINNER_SHIFT) & (QUICKSTART_POT_WINNER_BUCKETS - 1);
     u32 seed = QuickStartPotRoomSeed(extra);
     s32 open = QuickStartCountOpenTiles();
     s32 target = (open * preset->fill) >> 8;
@@ -7008,7 +7038,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     }
     // Keep the winner in the far half of the fill order, so it sits deep in
     // the field rather than in the first ring the player can reach.
-    winnerIndex = (actual / 2) + ((winnerNibble * (actual / 2)) >> 4);
+    winnerIndex = (actual / 2) + ((winnerBucket * (actual / 2)) >> 3);
     if (winnerIndex >= actual) {
         winnerIndex = actual - 1;
     }
@@ -7024,7 +7054,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
 static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     s32 anchorTX, anchorTY;
     if (QsCheckRoomFlag(flagBase + 0)) {
-        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[(extra >> 2) & 3])) {
+        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[QuickStartLotteryPrizeIndex(extra)])) {
             QsSetRoomFlag(flagBase + 3);
             return FALSE;
         }
@@ -7068,7 +7098,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
     if (winnerSlot > 2) {
         winnerSlot = 2;
     }
-    prizeIndex = (extra >> 2) & 3;
+    prizeIndex = QuickStartLotteryPrizeIndex(extra);
     if (QsCheckRoomFlag(flagBase + 0)) {
         return CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot)) ? TRUE : FALSE;
     }
@@ -8351,7 +8381,7 @@ static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
     }
     extra = QuickStart2DoorGetExtra();
     if (QsCheckRoomFlag(0)) {
-        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[(extra >> 2) & 3])) {
+        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[QuickStartLotteryPrizeIndex(extra)])) {
             QsSetRoomFlag(3);
             return;
         }
@@ -8374,7 +8404,7 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
     }
     extra = QuickStart2DoorGetExtra();
     winnerSlot = extra & 3;
-    prizeIndex = (extra >> 2) & 3;
+    prizeIndex = QuickStartLotteryPrizeIndex(extra);
     if (QsCheckRoomFlag(0)) {
         if (CheckLocalFlag(QUICKSTART_CHEST_LOTTERY_FLAG(winnerSlot))) {
             QsSetFlag(GF_2DOOR_DONE);

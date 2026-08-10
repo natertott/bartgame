@@ -190,24 +190,57 @@ because lotteries can only reach the first four pool entries.
 
 ---
 
-## 4. Defect found during this audit
+## 4. Defect found during this audit - FIXED
 
-`QuickStartPickLotteryExtra` and `QuickStartPickPotRoomExtra` pack the prize
-index as `prizeIndex << 2`, and every reader unpacks it as `(extra >> 2) & 3`
+`QuickStartPickLotteryExtra` and `QuickStartPickPotRoomExtra` packed the prize
+index as `prizeIndex << 2`, and every reader unpacked it as `(extra >> 2) & 3`
 — a **2-bit** field. That was correct while the pool had 4 entries. Growing it
-to 8 in `935b8b7` means the writer now emits 3 bits into a 2-bit slot:
+to 8 in `935b8b7` made the writer emit 3 bits into a 2-bit slot:
 
-- **Chest lottery:** prize indices 4-7 fold onto 0-3. Lotteries can never
-  award the Boomerang, Gust Jar, Bomb Bag or Large Quiver.
-- **Pot lottery:** the spilled bit lands in `winnerNibble` (bits 4-7), so the
-  prize roll perturbs *which pot* holds the prize. Self-consistent, so it is
-  not visible in play, but the two fields are no longer independent.
+- **Chest lottery:** prize indices 4-7 folded onto 0-3, so lotteries could
+  never award the Boomerang, Gust Jar, Bomb Bag or Large Quiver.
+- **Pot lottery:** the spilled bit landed in the winner field (bits 4-7), so
+  the prize roll perturbed *which pot* held the prize. Self-consistent, so
+  invisible in play, but the two fields were no longer independent.
 
-Neither crashes and neither hands out a dud. The one-line fix is to mask the
-write (`(prizeIndex & 3) << 2`) and accept that lotteries draw from the first
-four entries, or widen the field and re-pack. **Not applied — this is a
-balance decision, and the numbers in §3 are reported as the game behaves
-today.**
+**Fixed by widening the prize field to 3 bits and re-packing.** The chest
+lottery had bits 5-7 free and simply uses them. The pot lottery was fully
+packed, so its winner field gave up one bit — 16 buckets down to 8. That field
+is not a slot index but a position along the far half of the fill order, and
+that half is only ~10-22 pots deep, so four bits were finer than the thing
+being addressed; eight buckets still land the prize somewhere different nearly
+every time.
+
+New layout, with the mask derived from the pool size so the two cannot drift
+apart again:
+
+| field | chest lottery | pot lottery |
+|---|---|---|
+| bits 0-1 | winning chest (0-2) | density preset (0-2) |
+| bits 2-4 | prize index (0-7) | prize index (0-7) |
+| bits 5-7 | unused | winner bucket (0-7) |
+
+Verified by exhaustively round-tripping all 216 pot-lottery and 24
+chest-lottery combinations, and by checking the derived winner index stays in
+range for pot counts of 10/20/30/44. The invariant checker now asserts the
+prize field is derived from the pool size, does not overlap the winner field,
+and fits in the 8 stored bits.
+
+**The §3 tables were measured before this fix.** The kind distribution is
+unchanged; the item expectations under "fully unlocked" are now:
+
+| item | before fix | after fix |
+|---|---|---|
+| Heart Piece | 6.38 | 4.91 |
+| 200 Rupees | 4.10 | 2.64 |
+| Bow / Bombs | 3.85 each | 2.39 each |
+| Boomerang / Gust Jar / Bomb Bag / Large Quiver | 0.92 each | 2.39 each |
+| Magical Boomerang / Mirror Shield / Heart Container | 0.25 each | 0.25 each |
+
+The fresh-save numbers are untouched — no lottery can roll on a fresh save,
+so nothing there ever read the truncated field. The distortion the audit
+called out is gone: every ladder-pool item is now equally likely, and
+unlocking the lotteries no longer makes four of the eight rarer.
 
 ---
 

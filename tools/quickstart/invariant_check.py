@@ -100,6 +100,34 @@ def check_static():
         out.append(('FAIL', 'reward pool lists ITEM_LARGE_QUIVER before ITEM_BOW'))
     else:
         out.append(('PASS', f'reward pool: {n} entries, power of two, Bow present'))
+
+    # The lottery prize field has to be wide enough for the pool. It is
+    # derived from the pool size rather than written out, so this is really
+    # checking that nobody has un-derived it - which is exactly how it went
+    # wrong before: the mask was a literal 3, the pool doubled, and the two
+    # silently disagreed. A too-narrow field does not fail to build, it just
+    # makes the top half of the pool unreachable from lotteries and, in the
+    # pot room, bleeds the spilled bit into the winner field.
+    src = game[game.find('#define QUICKSTART_LOTTERY_PRIZE_MASK'):][:200]
+    if 'QUICKSTART_LADDER_REWARD_POOL_SIZE - 1' not in src:
+        out.append(('FAIL', 'QUICKSTART_LOTTERY_PRIZE_MASK is not derived from the pool size'))
+    else:
+        # Prize occupies bits [shift, shift+bits); the pot room's winner field
+        # starts at QUICKSTART_POT_WINNER_SHIFT. They must not overlap, and
+        # the whole thing must fit in the 8-bit stored `extra`.
+        shift = int(re.search(r'#define QUICKSTART_LOTTERY_PRIZE_SHIFT (\d+)', game).group(1))
+        win = int(re.search(r'#define QUICKSTART_POT_WINNER_SHIFT (\d+)', game).group(1))
+        buckets = int(re.search(r'#define QUICKSTART_POT_WINNER_BUCKETS (\d+)', game).group(1))
+        bits = n.bit_length() - 1
+        top = win + (buckets.bit_length() - 1)
+        if shift + bits > win:
+            out.append(('FAIL', f'lottery prize field (bits {shift}-{shift+bits-1}) '
+                                f'overlaps the pot winner field at bit {win}'))
+        elif top > 8:
+            out.append(('FAIL', f'pot lottery extra needs {top} bits, only 8 are stored'))
+        else:
+            out.append(('PASS', f'lottery extra: prize bits {shift}-{shift+bits-1}, '
+                                f'pot winner bits {win}-{top-1}, fits in 8'))
     return out
 
 
