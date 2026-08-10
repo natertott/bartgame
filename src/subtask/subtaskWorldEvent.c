@@ -60,10 +60,20 @@ void Subtask_WorldEvent_Update(void) {
 void Subtask_WorldEvent_End(void) {
     MessageInitialize();
     sub_0806F38C();
+#ifndef QUICKSTART
     if (gKinstoneWorldEvents[gFuseInfo.kinstoneId].mapMarkerIcon != 0) {
         // Show the map hint.
         MenuFadeIn(SUBTASK_LOCALMAPHINT, gUI.field_0x3);
-    } else {
+    } else
+#endif
+    {
+        // QUICKSTART always takes this branch. The world-event cutscene
+        // itself is worth keeping - it pans to the door the fusion opened and
+        // shows it open, which is the payoff - but the local map hint that
+        // vanilla chases it with is a second full-screen interruption that
+        // only says where on the overworld map that door was. In a mode whose
+        // whole map is five rooms the player already knows, it is a pause
+        // between them and playing.
         gUI.nextToLoad = 3; // Subtask_FadeOut
         SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 0x10);
     }

@@ -15,10 +15,13 @@ Tiers:
   entrances (not solid, not water) and its content spot is in bounds.
   gfx       20 boots: no region runs the 44-slot GFX table below its
   budget    reserve at any difficulty (a full table drops sprites).
-  fusers    5 boots: every Kinstone fuser stands on open ground inside the
-            region entrance's own reachable component, its gate reads
-            un-fused on a fresh run, and the sprite is really there. A fuser
-            behind the very obstacle its fusion removes is unwinnable.
+  fusers    5 boots: every spot in a region's fuser scatter list is open
+            ground inside the entrance's own reachable component, every gate
+            reads un-fused on a fresh run, and the sprites this boot placed
+            are standing on spots from that list. Checks the whole list, not
+            just the spots the run's scatter roll happened to pick - a bad
+            spot would otherwise only surface on some runs. A fuser behind
+            the very obstacle its fusion removes is unwinnable.
   rooms     ~45 emulator boots: every ? room lands; every content site's
             spot is open, in bounds, and in the entrance's reachable
             component (multi-site rooms instead require one distinct floor
@@ -248,21 +251,36 @@ def emu_fusers(rom):
                 and c.memory.u8[GENT + i * STRIDE + 9] == ZELDA}
         msgs = []
         for f in rows:
-            kid, x, y = f['kinstone'], f['x'], f['y']
-            tag = 'KINSTONE_%02X' % kid
+            kid = f['kinstone']
             if (c.memory.u8[KIN + (kid >> 3)] >> (kid & 7)) & 1:
-                msgs.append(f'{tag} is already fused on a fresh run - its fuser can never be used')
+                msgs.append('KINSTONE_%02X is already fused on a fresh run - '
+                            'its fuser can never be used' % kid)
+        # Every spot the per-run scatter roll can hand out, not just the ones
+        # this boot happened to use - the roll is a run-time value, so a bad
+        # spot would only surface on some runs.
+        spots = next((x['spots'] for x in P.fuser_spots()
+                      if (x['area'], x['room']) == (area, room)), None)
+        if spots is None:
+            msgs.append('no scatter list for this region')
+            spots = []
+        for x, y in spots:
             if not (0 <= x < W and 0 <= y < H):
-                msgs.append(f'{tag} at ({x},{y}) out of bounds {W}x{H}')
-                continue
-            if grid[y // 16][x // 16] != 0:
-                msgs.append(f'{tag} at ({x},{y}) on non-open tile {grid[y // 16][x // 16]:#x}')
+                msgs.append(f'scatter spot ({x},{y}) out of bounds {W}x{H}')
+            elif grid[y // 16][x // 16] != 0:
+                msgs.append(f'scatter spot ({x},{y}) on non-open tile {grid[y // 16][x // 16]:#x}')
             elif (x // 16, y // 16) not in reach:
-                msgs.append(f'{tag} at ({x},{y}) not in the entrance component')
-            if (x, y) not in live:
-                msgs.append(f'{tag} at ({x},{y}) spawned no sprite')
+                msgs.append(f'scatter spot ({x},{y}) not in the entrance component')
+        # And every un-fused fuser has to be standing on one of those spots,
+        # one each. Counted by occupied spots rather than by total sprites:
+        # the fusers borrow the ZELDA entity kind, and so do the ? room signs
+        # and the region hint NPC, so "how many Zeldas are in the room" is not
+        # the same question.
+        used = [p for p in spots if p in live]
+        if len(used) != len(rows):
+            msgs.append(f'{len(rows)} un-fused fuser(s) but {len(used)} scatter spot(s) occupied')
         out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
-                   else ('PASS', f'{rn}: {len(rows)} fuser(s) un-fused, reachable, spawned'))
+                   else ('PASS', f'{rn}: {len(rows)} fuser(s) un-fused, on {len(spots)} '
+                                 f'verified scatter spots, spawned'))
     return out
 
 

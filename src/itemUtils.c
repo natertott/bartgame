@@ -555,11 +555,16 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 // are abundant while the player is learning and become
                 // something to grind for later. Weights are relative to the
                 // whole summed table (the rupee bumps above are 100-300),
-                // so ~180 down to ~60 puts kinstones in the same band as a
-                // common rupee early and a rarer one late.
-                kinstoneWeight = 180 - (s32)QuickStartDifficultyForDrops() * 10;
-                if (kinstoneWeight < 60) {
-                    kinstoneWeight = 60;
+                // so this puts kinstones in the same band as a common rupee
+                // early and a rarer one late.
+                //
+                // Cut 30% from the original 180/-10/60 after play-testing:
+                // collecting every piece a run needed was turning out to be
+                // no real challenge, which is the opposite of what the
+                // economy is for.
+                kinstoneWeight = 126 - (s32)QuickStartDifficultyForDrops() * 7;
+                if (kinstoneWeight < 42) {
+                    kinstoneWeight = 42;
                 }
                 // ASSIGNED, not added. Vanilla's "this enemy never drops
                 // this" sentinel is -999, not 0 (see gEnemyDroptables), and

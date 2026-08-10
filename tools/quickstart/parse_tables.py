@@ -148,10 +148,24 @@ def pool_rows():
 
 
 def fusers():
-    """sQuickStartFusers: {areaName, roomName, area, room, kinstone, x, y}."""
+    """sQuickStartFusers: {areaName, roomName, area, room, kinstone}."""
     i = GAME.find('sQuickStartFusers[] = {')
     j = GAME.find('\n};', i)
-    rows = re.findall(r'\{ (AREA_\w+), (ROOM_\w+), KINSTONE_([0-9A-F]+), (-?\d+), (-?\d+) \}', GAME[i:j])
+    rows = re.findall(r'\{ (AREA_\w+), (ROOM_\w+), KINSTONE_([0-9A-F]+) \}', GAME[i:j])
     return [{'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
-             'kinstone': int(k, 16), 'x': int(x), 'y': int(y)}
-            for an, rn, k, x, y in rows]
+             'kinstone': int(k, 16)}
+            for an, rn, k in rows]
+
+
+def fuser_spots():
+    """sQuickStartFuserSpots: per region, the list of (x, y) a fuser can take."""
+    i = GAME.find('sQuickStartFuserSpots[] = {')
+    j = GAME.find('\n};', i)
+    body = GAME[i:j]
+    out = []
+    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+),\s*\{(.*?)\} \},', body, re.S):
+        an, rn, spots = m.group(1), m.group(2), m.group(3)
+        pts = [(int(a), int(b)) for a, b in re.findall(r'\{ *(-?\d+), *(-?\d+) *\}', spots)]
+        out.append({'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
+                    'spots': pts})
+    return out

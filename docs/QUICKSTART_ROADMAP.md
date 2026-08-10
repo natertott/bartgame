@@ -278,7 +278,10 @@ cure into a standing tool instead of a per-incident scramble.
   additive weight bump can never escape it - kinstone weights are
   *assigned*, not added.
 - **C2. DONE.** Difficulty-scaled piece weights:
-  `180 - difficulty * 10`, floored at 60, on red/blue/green alike.
+  `126 - difficulty * 7`, floored at 42, on red/blue/green alike. Cut 30%
+  from the original 180/-10/60 after play-testing: collecting every piece a
+  run needed was no real challenge, which is the opposite of what the economy
+  is for.
 - **C3. DONE.** Not a new table after all - the gates already exist. Vanilla
   wires 91 fusions to world events (staircases drawn over water, tree
   canopies, cracked walls, treasure chests); 29 of them fire in a room this
@@ -304,6 +307,21 @@ cure into a standing tool instead of a per-incident scramble.
   on a 7-bit "already reloaded for this fusion" id
   (`GF_FUSION_RELOADED_ID_BIT`) so it fires exactly once, and gated on the
   player having control back so it cannot interleave with the cutscene.
+
+  The world-event cutscene is kept - it pans to the door and shows it open,
+  which is the payoff - but the local map hint vanilla chases it with is
+  skipped (`Subtask_WorldEvent_End`, QUICKSTART branch). In a mode whose
+  whole map is five rooms the player already knows, a second full-screen
+  interruption saying where on the map that door was is just a pause.
+
+  Fusers do not stand next to their gates. Each region has nine scatter
+  spots (`sQuickStartFuserSpots`), farthest-point sampled over its reachable
+  open tiles by `find_fuser_spots.py` with the entrance, the reward drop and
+  every gate seeded as taken, so the set covers the whole walkable map and no
+  two spots are within six tiles. A single 4-bit per-run roll
+  (`GF_FUSER_SCATTER_BIT`) plus a step of 4 through the list of 9 - coprime,
+  so no two fusers in a region can collide - places all eighteen without
+  storing eighteen positions.
 - **C4. The curve**: piece specificity by difficulty tier. Drop rate is
   done (C2); what is left is which shapes are obtainable when. Today every
   gate's shape maps to exactly one droppable piece id (0x6E-0x75), so a run

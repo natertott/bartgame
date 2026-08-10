@@ -32,13 +32,13 @@ GATES = [
     ('ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS', [0x3F, 0x22, 0x52, 0x5E]),
 ]
 
-# How far from its own gate a fuser is allowed to end up. Close enough that
-# the player reads the two as connected, far enough that the search has room
-# to get around the obstacle the gate itself puts there.
-MAX_TILES = 9
-# Keep fusers off the tile the gate occupies and its immediate ring, so the
-# sprite never overlaps the staircase/stump art the fusion draws.
-MIN_TILES = 2
+# How many scatter spots to propose per region. Has to be at least as many as
+# the region has fusers (North Hyrule Field has six), with enough spare that
+# the per-run rotation actually moves them somewhere different.
+SPOTS_PER_REGION = 10
+# Minimum separation, in tiles, between any two spots and between a spot and
+# anything already placed. Big enough that two fusers never read as a pair.
+MIN_SPACING = 6
 
 
 def sym(name):
@@ -63,9 +63,18 @@ def gate_positions():
 
 
 def main():
+    """Propose a well-spread set of fuser spots per region.
+
+    The fusers used to stand next to the gate they open, which made them easy
+    to read but put every one of them in the same corner of the map as its
+    door. These are scattered instead: farthest-point sampling over the
+    reachable open tiles, so the set covers the whole walkable map rather than
+    clustering, with the region entrance and reward spot seeded as already-
+    taken so nothing lands on top of them.
+    """
     gates = gate_positions()
     regions = {r['roomName']: r for r in P.region_pool()}
-    print('static const QuickStartFuser sQuickStartFusers[] = {')
+    print('static const QuickStartFuserSpots sQuickStartFuserSpots[] = {')
     problems = []
     for room_name, kids in GATES:
         r = regions[room_name]
@@ -79,9 +88,6 @@ def main():
         tw, th = W // 16, H // 16
         grid = [[coll_at(c, tx, ty) for tx in range(tw)] for ty in range(th)]
         seed = (r['entrance'][0] // 16, r['entrance'][1] // 16)
-        # Walkable = fully open. Special tiles (stairs, garden paths) are
-        # standable but a fuser on one reads as misplaced, so they are only
-        # used to traverse, never to land on.
         walk = lambda t: 0 <= t[0] < tw and 0 <= t[1] < th and grid[t[1]][t[0]] != 0x0f
         open_ = lambda t: 0 <= t[0] < tw and 0 <= t[1] < th and grid[t[1]][t[0]] == 0
         if not walk(seed):
@@ -97,37 +103,33 @@ def main():
                 if n not in reach and walk(n):
                     reach.add(n)
                     q.append(n)
-        print('    // %s - room %dx%d, %d reachable tiles from the entrance'
-              % (room_name, W, H, len(reach)))
-        taken = []
-        for kid in kids:
-            gx, gy = gates[kid]
-            gt = (gx // 16, gy // 16)
-            cands = []
-            for t in reach:
-                if not open_(t):
+        # A fuser needs open ground on every side so the player can walk up
+        # and face it from any direction.
+        cands = [t for t in sorted(reach)
+                 if all(open_((t[0] + dx, t[1] + dy)) for dx in (-1, 0, 1) for dy in (-1, 0, 1))]
+        # Seeded as taken: the arrival point, the reward drop, and every gate
+        # this region owns - a fuser standing on a staircase reads as a bug.
+        taken = [(r['entrance'][0] // 16, r['entrance'][1] // 16),
+                 (r['reward'][0] // 16, r['reward'][1] // 16)]
+        taken += [(gates[k][0] // 16, gates[k][1] // 16) for k in kids]
+        picked = []
+        for _ in range(SPOTS_PER_REGION):
+            best, bestd = None, -1
+            for t in cands:
+                if t in picked:
                     continue
-                d = max(abs(t[0] - gt[0]), abs(t[1] - gt[1]))
-                if d < MIN_TILES or d > MAX_TILES:
-                    continue
-                # Spread fusers apart so two gates in one corner do not put
-                # two sprites on the same tile.
-                if any(max(abs(t[0] - o[0]), abs(t[1] - o[1])) < 3 for o in taken):
-                    continue
-                # Prefer a spot with open ground all around it: the player
-                # has to be able to walk up and face it from any side.
-                room = sum(1 for dx in (-1, 0, 1) for dy in (-1, 0, 1) if open_((t[0] + dx, t[1] + dy)))
-                cands.append((-room, d, t))
-            if not cands:
-                problems.append('%s KINSTONE_%02X: no reachable spot within %d tiles of (%d,%d)'
-                                % (room_name, kid, MAX_TILES, gx, gy))
-                continue
-            cands.sort()
-            t = cands[0][2]
-            taken.append(t)
-            px, py = t[0] * 16 + 8, t[1] * 16 + 8
-            print('    { %-28s %-38s KINSTONE_%02X, %4d, %4d },'
-                  % (r['areaName'] + ',', room_name + ',', kid, px, py))
+                d = min(max(abs(t[0] - o[0]), abs(t[1] - o[1])) for o in taken + picked)
+                if d > bestd:
+                    best, bestd = t, d
+            if best is None or bestd < MIN_SPACING:
+                problems.append('%s: only %d spots at least %d tiles apart'
+                                % (room_name, len(picked), MIN_SPACING))
+                break
+            picked.append(best)
+        print('    // %s - room %dx%d, %d reachable tiles, %d candidate spots'
+              % (room_name, W, H, len(reach), len(cands)))
+        print('    { %s, %s,' % (r['areaName'], room_name))
+        print('      { ' + ', '.join('{ %d, %d }' % (t[0] * 16 + 8, t[1] * 16 + 8) for t in picked) + ' } },')
     print('};')
     if problems:
         print('\nPROBLEMS:')

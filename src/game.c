@@ -405,10 +405,11 @@ static void GameTask_Transition(void) {
         // exactly the same reason the ladder/door slots they replaced did.
         // 656: the North Hyrule Field bridge. 657-689: the shop's own door
         // draw and price rolls. 692-698: which fusion this run has already
-        // re-loaded its room for. 690-691: Melari's Mine's two rooms' collected
+        // re-loaded its room for. 699-703: where this run scatters the
+        // Kinstone fusers. 690-691: Melari's Mine's two rooms' collected
         // latches - re-rolled every fresh boot like everything else here, so a
         // new run gets the shop somewhere else at different prices.
-        for (bit = 202; bit <= 698; bit++) {
+        for (bit = 202; bit <= 703; bit++) {
             QsClearFlag(bit);
         }
         // Wipe every per-area LOCAL flag, so each run gets a fresh world.
@@ -1465,6 +1466,12 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // it is exactly what the player is doing manually today by stepping into a
 // house and back out.
 #define GF_FUSION_RELOADED_ID_BIT(b) (692 + (b)) // b = 0..6
+
+// Where the fusers stand this run. One roll, four bits, shared by every
+// region - see QuickStartFuserSpot for how one number moves eighteen sprites
+// to different places without a flag each.
+#define GF_FUSER_SCATTER_ROLLED 699
+#define GF_FUSER_SCATTER_BIT(b) (700 + (b)) // b = 0..3
 
 // Switch-operated bridges (QuickStartUpdateSwitchBridges). Sits immediately
 // above the content sites' last block, which ends at 655.
@@ -9937,46 +9944,121 @@ typedef struct {
     u8 area;
     u8 room;
     u8 kinstoneId;
-    // Local to the room, and NOT hand-picked: tools/quickstart/
-    // find_fuser_spots.py boots this ROM, floods the walkable graph from the
-    // region's own entrance with the gates still shut, and takes the closest
-    // fully-open tile to the gate that has open ground on every side. The
-    // invariant checker's fuser tier re-verifies each one.
-    s16 x;
-    s16 y;
 } QuickStartFuser;
 
 extern Script script_QuickStartFuser;
 
+// Which gate each fuser opens. No coordinates: where it stands is a per-run
+// roll over the region's own scatter list below.
 static const QuickStartFuser sQuickStartFusers[] = {
     // Castle Garden - the two fountain staircases at the north end. Both
     // read as water until fused; the fusion lays the stairs over the pond.
-    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_18, 728, 136 },
-    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_35, 168, 88 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_18 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_35 },
     // Lon Lon Ranch - staircase, the wall-punching Goron over the cave
     // entrance, and a fusion treasure chest.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_1E, 504, 488 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_29, 120, 728 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_60, 56, 136 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_1E },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_29 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_60 },
     // North Hyrule Field - the four middle tree stumps are one fusion each,
     // and those four ladders are the only way into the Boomerang chamber's
     // four quadrants. Plus the fairy fountain tree and a chest.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_40, 552, 328 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_4D, 408, 424 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_59, 408, 328 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5A, 552, 424 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_2D, 728, 344 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5F, 248, 216 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_40 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_4D },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_59 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5A },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_2D },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5F },
     // South Hyrule Field - heart piece tree, staircase, chest.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_32, 904, 584 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_58, 72, 248 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_53, 808, 328 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_32 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_58 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_53 },
     // Trilby Highlands - rupee cave, an obstacle patch, two chests.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_3F, 40, 648 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_22, 216, 344 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_52, 360, 88 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_5E, 296, 472 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_3F },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_22 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_52 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_5E },
 };
+
+// Nine places per region a fuser can stand, and NOT hand-picked:
+// tools/quickstart/find_fuser_spots.py boots this ROM, floods the walkable
+// graph from the region entrance with every gate still shut, keeps only
+// tiles with open ground on all eight sides, and then farthest-point samples
+// them - seeding the region's arrival point, its reward drop and every one
+// of its gates as already taken. The result covers the whole walkable map
+// instead of clustering, and no two spots are within six tiles of each
+// other. The invariant checker re-verifies every one.
+//
+// Nine rather than ten because Castle Garden and Trilby Highlands run out of
+// room at that spacing, and a uniform row is worth more than one extra spot
+// in three of the five regions.
+#define QUICKSTART_FUSER_SPOTS_PER_REGION 9
+
+typedef struct {
+    u8 area;
+    u8 room;
+    s16 spots[QUICKSTART_FUSER_SPOTS_PER_REGION][2];
+} QuickStartFuserSpots;
+
+static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      { { 776, 328 }, { 248, 280 }, { 328, 488 }, { 424, 104 }, { 584, 104 },
+        { 664, 488 }, { 488, 376 }, { 408, 216 }, { 600, 216 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+      { { 56, 376 }, { 680, 248 }, { 424, 152 }, { 648, 760 }, { 696, 440 },
+        { 88, 552 }, { 56, 200 }, { 120, 696 }, { 648, 616 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
+      { { 24, 600 }, { 312, 744 }, { 552, 744 }, { 792, 744 }, { 504, 104 },
+        { 984, 632 }, { 472, 600 }, { 904, 216 }, { 264, 616 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+      { { 56, 632 }, { 840, 72 }, { 312, 632 }, { 488, 56 }, { 56, 88 },
+        { 312, 88 }, { 424, 456 }, { 664, 88 }, { 472, 632 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
+      { { 392, 888 }, { 24, 408 }, { 344, 744 }, { 248, 136 }, { 280, 888 },
+        { 40, 584 }, { 136, 584 }, { 360, 152 }, { 456, 552 } } },
+};
+
+// One 4-bit roll for the whole run, rolled lazily the first time a fuser
+// needs a position. Eighteen fusers would want eighteen stored positions;
+// this stores one number and derives all of them, which is the only shape
+// that fits - there are five free flag offsets left below 707.
+static u32 QuickStartFuserScatter(void) {
+    s32 b;
+    u32 value = 0;
+    if (!QsCheckFlag(GF_FUSER_SCATTER_ROLLED)) {
+        u32 roll = (u32)((s32)Random() & 0xf);
+        for (b = 0; b < 4; b++) {
+            if (roll & (1 << b)) {
+                QsSetFlag(GF_FUSER_SCATTER_BIT(b));
+            }
+        }
+        QsSetFlag(GF_FUSER_SCATTER_ROLLED);
+    }
+    for (b = 0; b < 4; b++) {
+        if (QsCheckFlag(GF_FUSER_SCATTER_BIT(b))) {
+            value |= 1 << b;
+        }
+    }
+    return value;
+}
+
+// Step 4 through a list of 9 is injective for the first nine callers (4 and 9
+// are coprime), so the fusers in a region can never be handed the same spot -
+// North Hyrule Field's six included. The region index is folded in as well so
+// the five regions do not all rotate in lockstep between runs.
+static bool32 QuickStartFuserSpot(const QuickStartFuser* fuser, s32 indexInRegion, s16* x, s16* y) {
+    s32 r;
+    for (r = 0; r < (s32)ARRAY_COUNT(sQuickStartFuserSpots); r++) {
+        if (sQuickStartFuserSpots[r].area == fuser->area && sQuickStartFuserSpots[r].room == fuser->room) {
+            s32 slot = (indexInRegion * 4 + (s32)QuickStartFuserScatter() + r * 2) %
+                       QUICKSTART_FUSER_SPOTS_PER_REGION;
+            *x = sQuickStartFuserSpots[r].spots[slot][0];
+            *y = sQuickStartFuserSpots[r].spots[slot][1];
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 // Reads/writes the 7-bit "already reloaded for this fusion" id. Zero means
 // no fusion has needed one yet, which is safe: KINSTONE_NONE is 0 and no
@@ -10015,9 +10097,8 @@ static void QuickStartReloadRoomAfterFusion(void) {
         return;
     }
     // Wait for the fusion's own cutscene to finish handing control back.
-    // Firing a room transition while the world-event subtask (or the local
-    // map hint that follows it) is still up interleaves two screen changes
-    // and leaves the map hint stranded over the new room.
+    // Firing a room transition while the world-event subtask is still up
+    // interleaves two screen changes.
     if (gPlayerState.controlMode != CONTROL_1 || (gMessage.state & MESSAGE_ACTIVE) != 0) {
         return;
     }
@@ -10079,24 +10160,32 @@ static void QuickStartMakeNpcFuser(Entity* npc, u32 kinstoneId) {
 // rejects all but this region's own rows immediately, and CheckKinstoneFused
 // retires each one for good the moment its gate opens.
 static void QuickStartSpawnRegionFusers(void) {
-    s32 i;
+    s32 i, indexInRegion = 0;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
         const QuickStartFuser* fuser = &sQuickStartFusers[i];
         s32 worldX, worldY, e;
+        s16 localX, localY;
         bool32 alreadyThere;
         if (gRoomControls.area != fuser->area || gRoomControls.room != fuser->room) {
             continue;
         }
+        // Counted over the rows for THIS room only, and counted before the
+        // fused check - so opening one gate does not shuffle the fusers that
+        // are still standing.
+        indexInRegion++;
         if (CheckKinstoneFused(fuser->kinstoneId)) {
             continue;
         }
-        worldX = gRoomControls.origin_x + fuser->x;
-        worldY = gRoomControls.origin_y + fuser->y;
-        // Position is the identity check. Every fuser in a room is at least
-        // three tiles from every other one (find_fuser_spots.py enforces
-        // that), so an exact coordinate match can only ever be this row's
-        // own sprite - and it survives the entity list being rebuilt, which
-        // a "did I spawn yet" flag would not.
+        if (!QuickStartFuserSpot(fuser, indexInRegion - 1, &localX, &localY)) {
+            continue;
+        }
+        worldX = gRoomControls.origin_x + localX;
+        worldY = gRoomControls.origin_y + localY;
+        // Position is the identity check. No two spots in a region are within
+        // six tiles of each other (find_fuser_spots.py enforces that), so an
+        // exact coordinate match can only ever be this row's own sprite - and
+        // it survives the entity list being rebuilt, which a "did I spawn
+        // yet" flag would not.
         alreadyThere = FALSE;
         for (e = 0; e < MAX_ENTITIES; e++) {
             if (gEntities[e].base.kind == NPC && gEntities[e].base.id == ZELDA &&
