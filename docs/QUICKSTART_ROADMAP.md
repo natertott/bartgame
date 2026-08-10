@@ -272,15 +272,30 @@ cure into a standing tool instead of a per-incident scramble.
 
 ### Phase C - The kinstone economy
 
-- **C1. Bounded research task**: vanilla's enemy drop path (the death-drop
-  roll), so pieces drop through the real mechanism.
-- **C2. Kinstone drops** with a difficulty-scaled rate table: abundant
-  early, scarce later.
-- **C3. Fusion-gated doors**: a per-region table {door, required piece};
-  approach with a matching piece consumes it and opens the door for the
-  run (a Qs flag - the per-run wipe re-locks it next run automatically).
-  Guarantee >=1 always-open site per region in the same table.
-- **C4. The curve**: drop rate and piece specificity by difficulty tier.
+- **C1. DONE.** Vanilla's death-drop roll (`CreateRandomItemDrop`,
+  itemUtils.c). Note the sentinel: a `Droptable` field of **-999** means
+  "never", and `SumDropProbabilities2` clamps negatives to zero, so an
+  additive weight bump can never escape it - kinstone weights are
+  *assigned*, not added.
+- **C2. DONE.** Difficulty-scaled piece weights:
+  `180 - difficulty * 10`, floored at 60, on red/blue/green alike.
+- **C3. DONE.** Not a new table after all - the gates already exist. Vanilla
+  wires 91 fusions to world events (staircases drawn over water, tree
+  canopies, cracked walls, treasure chests); 29 of them fire in a room this
+  mode visits, and `tools/quickstart/kinstone_audit.py` derives that list
+  from the ROM rather than a survey. 18 that open a gate or place a chest
+  have a fuser placed in the same overworld map (`sQuickStartFusers`,
+  positions proposed by `find_fuser_spots.py`, verified by the checker's
+  fusers tier). The fuser reuses `AddInteractableObject` with our own
+  kinstone id, bypassing vanilla's ROM-table-driven `GetFusionToOffer`
+  entirely; `script_QuickStartFuser` drives the fuse state machine.
+  `gSave.kinstones` is wiped per run, so gates re-lock and the bag empties.
+  Castle Garden's two fountain chambers became content sites in the same
+  change - they are what its two staircase fusions now open.
+- **C4. The curve**: piece specificity by difficulty tier. Drop rate is
+  done (C2); what is left is which shapes are obtainable when. Today every
+  gate's shape maps to exactly one droppable piece id (0x6E-0x75), so a run
+  can in principle stall on one unlucky shape - measure before tuning.
 
 ### Phase D - Content breadth (all unlock-gated, all data entry once B1 lands)
 

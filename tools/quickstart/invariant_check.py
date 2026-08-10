@@ -15,6 +15,10 @@ Tiers:
   entrances (not solid, not water) and its content spot is in bounds.
   gfx       20 boots: no region runs the 44-slot GFX table below its
   budget    reserve at any difficulty (a full table drops sprites).
+  fusers    5 boots: every Kinstone fuser stands on open ground inside the
+            region entrance's own reachable component, its gate reads
+            un-fused on a fresh run, and the sprite is really there. A fuser
+            behind the very obstacle its fusion removes is unwinnable.
   rooms     ~45 emulator boots: every ? room lands; every content site's
             spot is open, in bounds, and in the entrance's reachable
             component (multi-site rooms instead require one distinct floor
@@ -190,6 +194,78 @@ def emu_pool_entrances(rom):
     return out
 
 
+def emu_fusers(rom):
+    """Every Kinstone fuser must be reachable while its own gate is still shut.
+
+    The failure this exists for is specific and unwinnable: a fuser placed
+    behind the very obstacle its fusion removes. So the boot deliberately
+    does NOT pre-fuse anything - it walks in on a fresh run and floods the
+    walkable graph from the region entrance, exactly as the player would.
+    """
+    from emu import boot, warp, here, room_dims, coll_at, GENT, MAX_ENT, STRIDE, ROOM_CONTROLS, r16
+    KIN = 0x02002a40 + 0x114 + 301  # gSave.kinstones.fusedKinstones
+    ZELDA, NPC_KIND = 0x28, 7
+    by_room = collections.OrderedDict()
+    for f in P.fusers():
+        by_room.setdefault((f['areaName'], f['roomName'], f['area'], f['room']), []).append(f)
+    out = []
+    for (an, rn, area, room), rows in by_room.items():
+        r = next((x for x in P.region_pool() if x['area'] == area and x['room'] == room), None)
+        if r is None:
+            out.append(('FAIL', f'{rn}: fusers placed in a room that is not a region'))
+            continue
+        c = boot(rom)
+        c.memory.u8[ROOM_CONTROLS + 4] = 0
+        warp(c, area, room, r['entrance'][0], r['entrance'][1])
+        if here(c) != (area, room):
+            out.append(('FAIL', f'{rn}: did not land ({here(c)})'))
+            continue
+        W, H = room_dims(c)
+        tw, th = W // 16, H // 16
+        grid = [[coll_at(c, tx, ty) for tx in range(tw)] for ty in range(th)]
+        seed = (r['entrance'][0] // 16, r['entrance'][1] // 16)
+        if grid[seed[1]][seed[0]] == 0x0f:
+            seed = min(((abs(x - seed[0]) + abs(y - seed[1]), x, y)
+                        for y in range(th) for x in range(tw) if grid[y][x] == 0))[1:]
+        reach = {seed}
+        q = collections.deque([seed])
+        while q:
+            t = q.popleft()
+            for d in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                n = (t[0] + d[0], t[1] + d[1])
+                if n not in reach and 0 <= n[0] < tw and 0 <= n[1] < th and grid[n[1]][n[0]] != 0x0f:
+                    reach.add(n)
+                    q.append(n)
+        # Give the room monitor a moment to place them, then read the sprites
+        # back out of the entity list - the table saying where a fuser goes
+        # is not proof one is standing there.
+        for _ in range(120):
+            c.run_frame()
+        live = {(r16(c, GENT + i * STRIDE + 0x2e) - r16(c, ROOM_CONTROLS + 6),
+                 r16(c, GENT + i * STRIDE + 0x32) - r16(c, ROOM_CONTROLS + 8))
+                for i in range(MAX_ENT)
+                if c.memory.u8[GENT + i * STRIDE + 8] == NPC_KIND
+                and c.memory.u8[GENT + i * STRIDE + 9] == ZELDA}
+        msgs = []
+        for f in rows:
+            kid, x, y = f['kinstone'], f['x'], f['y']
+            tag = 'KINSTONE_%02X' % kid
+            if (c.memory.u8[KIN + (kid >> 3)] >> (kid & 7)) & 1:
+                msgs.append(f'{tag} is already fused on a fresh run - its fuser can never be used')
+            if not (0 <= x < W and 0 <= y < H):
+                msgs.append(f'{tag} at ({x},{y}) out of bounds {W}x{H}')
+                continue
+            if grid[y // 16][x // 16] != 0:
+                msgs.append(f'{tag} at ({x},{y}) on non-open tile {grid[y // 16][x // 16]:#x}')
+            elif (x // 16, y // 16) not in reach:
+                msgs.append(f'{tag} at ({x},{y}) not in the entrance component')
+            if (x, y) not in live:
+                msgs.append(f'{tag} at ({x},{y}) spawned no sprite')
+        out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
+                   else ('PASS', f'{rn}: {len(rows)} fuser(s) un-fused, reachable, spawned'))
+    return out
+
+
 def emu_rooms(rom, start, end):
     from emu import boot, warp, here, room_dims, coll_at, qs_set, GENT, STRIDE, MAX_ENT, r16
     sites = P.content_sites()
@@ -323,6 +399,7 @@ def main():
         if '--rooms' not in args:
             results.append(('regions', emu_regions(rom)))
             results.append(('pool entrances', emu_pool_entrances(rom)))
+            results.append(('fusers', emu_fusers(rom)))
         if '--gfx' in args or ('--rooms' not in args and '--regions' not in args):
             results.append(('gfx budget', emu_gfx_budget(rom)))
         if '--regions' not in args:

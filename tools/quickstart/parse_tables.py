@@ -145,3 +145,13 @@ def pool_rows():
             out.append({'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
                         'ex': int(ex), 'ey': int(ey), 'dx': int(dx), 'dy': int(dy)})
     return out
+
+
+def fusers():
+    """sQuickStartFusers: {areaName, roomName, area, room, kinstone, x, y}."""
+    i = GAME.find('sQuickStartFusers[] = {')
+    j = GAME.find('\n};', i)
+    rows = re.findall(r'\{ (AREA_\w+), (ROOM_\w+), KINSTONE_([0-9A-F]+), (-?\d+), (-?\d+) \}', GAME[i:j])
+    return [{'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
+             'kinstone': int(k, 16), 'x': int(x), 'y': int(y)}
+            for an, rn, k, x, y in rows]

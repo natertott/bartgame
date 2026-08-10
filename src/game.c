@@ -172,6 +172,7 @@ static void QsClearRoomFlag(u32 flag) {
 
 static void QuickStartSpawnEnemies(void);
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
+static void QuickStartSpawnRegionFusers(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
@@ -316,6 +317,7 @@ static const u8 sMapExploreItems[] = {
     ITEM_SKILL_FAST_SPLIT,  ITEM_SKILL_LONG_SPIN,   ITEM_QST_LONLON_KEY,   ITEM_QST_GRAVEYARD_KEY,
     ITEM_QST_TINGLE_TROPHY, ITEM_QST_CARLOV_MEDAL,
 };
+
 #endif
 
 static void GameTask_Transition(void) {
@@ -397,16 +399,16 @@ static void GameTask_Transition(void) {
         // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: free (was GF_HEART_CONTAINER_BONUS_APPLIED). 241-265: the river
-        // bridge and cave connector draws. 266-629: the 28 room-keyed
+        // bridge and cave connector draws. 266-655: the 30 room-keyed
         // content sites' randomized/kind/extra/done blocks
         // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
-        // 630: the North Hyrule Field bridge. 631-663: the shop's own door
-        // draw and price rolls. 664-665: Melari's Mine's two rooms' collected
+        // 656: the North Hyrule Field bridge. 657-689: the shop's own door
+        // draw and price rolls. 690-691: Melari's Mine's two rooms' collected
         // latches - re-rolled every fresh boot like everything else here, so a
         // new run gets the shop somewhere else at different prices.
-        for (bit = 202; bit <= 665; bit++) {
+        for (bit = 202; bit <= 691; bit++) {
             QsClearFlag(bit);
         }
         // Wipe every per-area LOCAL flag, so each run gets a fresh world.
@@ -574,44 +576,26 @@ static void GameTask_Transition(void) {
     // so any "? room" NPC/kinstone-fusion content would otherwise be
     // silently unusable from the very first run.
     SetInventoryValue(ITEM_KINSTONE_BAG, 1);
-    // Fuses the Lon Lon Ranch kinstone piece at boot. In vanilla,
-    // sub_StateChange_HyruleField_LonLonRanch (roomInit.c) only loads the
-    // wall-punching Goron's entity list (and draws the wall-crack tiles at
-    // local (128,864)/(128,880)) while !CheckKinstoneFused(KINSTONE_29) -
-    // pre-fusing it here means that never happens, so the Goron and its
-    // crack are simply never there, and the cave entrance behind it (the
-    // real door at local (136,852), gExitList_HyruleField_LonLonRanch[4])
-    // is open from the start. See QuickStartClearLonLonRanchGoron below for
-    // a defensive backstop in case any of that understanding is incomplete.
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_29);
-    // Same treatment for the 8 other real Kinstone-gated entrances that turn
-    // out to sit among the 15 single-door "? room" candidates surveyed for
-    // South Hyrule Field, North Hyrule Field, and Trilby Highlands
-    // (sQuickStartLadderEntrances below) - discovered only after wiring them
-    // up and hitting an emulator-vs-real-gameplay mismatch: teleporting the
-    // player directly onto a trigger box (this project's own test
-    // methodology) skips real tile collision entirely, so it never caught
-    // that several of these real doors are still standing behind an
-    // un-fused vanilla tree/pond obstacle exactly like the Goron above -
-    // walking there normally would just hit solid terrain. Same fix, same
-    // reasoning: pre-fuse each one at boot so roomInit.c's own
-    // !CheckKinstoneFused(...) guards skip loading the blocking
-    // entity/tiles, leaving the door open from the start. This is a stopgap
-    // (see docs/QUICKSTART_ROADMAP.md's own note on the real, player-facing
-    // Kinstone-fusion-sprite feature planned to eventually replace it -
-    // walking up to a placed sprite with the right piece, rather than every
-    // gate being silently pre-solved) - not a permanent design choice.
-    //   South Hyrule Field: Heart Piece tree, Rupee cave
-    //   North Hyrule Field: all 4 Boomerang trees, Fairy Fountain tree
-    //   Trilby Highlands: Rupee cave
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_32);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_58);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_59);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_40);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_4D);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_5A);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_2D);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_3F);
+    // Nine gates used to be force-fused right here, as a stopgap so their
+    // doors stood open with no way for the player to open them. The fusion
+    // economy replaces that: they are earned back through a placed fuser
+    // now (sQuickStartFusers / QuickStartSpawnRegionFusers).
+    //
+    // Nothing else was ever pre-fused in this mode. The blanket "fuse all
+    // 100" pass lives in the MAPEXPLORE branch below - it is a dev mode for
+    // walking a finished world - so with those nine gone, a QUICKSTART save
+    // starts with the entire fusion table clear on its own.
+    //
+    // Except across runs. gSave.kinstones is not part of gSave.flags, so the
+    // per-run world reset above does not touch it: fuse a gate in run 1 and
+    // it would still be open in run 2, and the pieces would still be in the
+    // bag. Wipe the whole block per run, same "no carry-over between rounds"
+    // policy as rupees, hearts and the inventory.
+    //
+    // (tools/quickstart/kinstone_audit.py enumerates which fusions actually
+    // change a room this mode visits - 29 of the 91 that have a world event
+    // at all, of which the 18 that open a gate or place a chest have fusers.)
+    MemClear(&gSave.kinstones, sizeof(gSave.kinstones));
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -755,8 +739,9 @@ static void GameTask_Transition(void) {
     // The fusion economy needs the supply side working, so it stays clear.
     // The 100 fused bits above are kept: they are what holds the overworld
     // in its post-fusion shape (roomInit.c gates dozens of bridges, NPCs
-    // and obstacles on CheckKinstoneFused), and the gates we actually want
-    // the player to open get un-fused individually once their fusers exist.
+    // and obstacles on CheckKinstoneFused), and MAPEXPLORE is a dev mode for
+    // walking a finished world, not for playing the fusion economy - that
+    // lives in the QUICKSTART branch above.
     gSave.kinstones.didAllFusions = 0;
 #endif
     gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
@@ -1421,11 +1406,11 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // wave room types from the game as the last doors were converted.
 //
 // These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
-// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 28
-// sites the range is 266..629, and everything above it - the bridge flag,
+// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 30
+// sites the range is 266..655, and everything above it - the bridge flag,
 // the shop's block, Melari's two latches - is laid out immediately after,
-// ending at 665. Bank 12 has room up to offset 707, so there are 3 more
-// sites' worth of headroom before this needs rethinking.
+// ending at 691. Bank 12 has room up to offset 707, so there is 1 more
+// site's worth of headroom before this needs rethinking.
 //
 // IMPORTANT: raising this count moves the top of the range, so every
 // constant below it has to move too (GF_NHF_BRIDGE_JOINED, the shop block,
@@ -1435,7 +1420,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // GF_NHF_BRIDGE_JOINED - so joining North Hyrule Field's bridge also marked
 // the smithy site "already randomized" with an all-zero roll, and entering
 // the smithy permanently joined the bridge.
-#define QUICKSTART_CONTENT_SITE_COUNT 28
+#define QUICKSTART_CONTENT_SITE_COUNT 30
 #define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1455,17 +1440,17 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // indefinitely by walking out and back in. These are that latch. Every
 // other "? room" already had one: the generic content sites carry
 // GF_CONTENT_SITE_DONE.
-#define GF_MELARI_EAST_DONE 664
-#define GF_MELARI_SOUTHEAST_DONE 665
+#define GF_MELARI_EAST_DONE 690
+#define GF_MELARI_SOUTHEAST_DONE 691
 
 // Switch-operated bridges (QuickStartUpdateSwitchBridges). Sits immediately
-// above the content sites' last block, which ends at 629.
-#define GF_NHF_BRIDGE_JOINED 630
+// above the content sites' last block, which ends at 655.
+#define GF_NHF_BRIDGE_JOINED 656
 
-// Range 631..663, immediately after the bridge flag.
-#define GF_SHOP_RANDOMIZED 631
-#define GF_SHOP_DOOR_BIT(b) (632 + (b))                  // b = 0..4
-#define GF_SHOP_PRICE_BIT(i, b) (637 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// Range 657..689, immediately after the bridge flag.
+#define GF_SHOP_RANDOMIZED 657
+#define GF_SHOP_DOOR_BIT(b) (658 + (b))                  // b = 0..4
+#define GF_SHOP_PRICE_BIT(i, b) (663 + (i) * 3 + (b))    // i = 0..8, b = 0..2
 #define QUICKSTART_CAVE_X 264
 #define QUICKSTART_CAVE_Y 304
 #define QUICKSTART_CAVE_RETURN_X 264
@@ -4087,7 +4072,14 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 // hard floor on every frame at difficulties 0/4/8/12, while leaving the
 // low-difficulty counts (where sprites are cheap) untouched.
 #define QUICKSTART_GFX_SPAWN_CAP_BASE 64
-#define QUICKSTART_GFX_SPAWN_CAP_SLOPE 4
+// Raised from 4 to 5 when the Kinstone fusers arrived. Every region now
+// carries a permanent extra sprite sheet (the fusers all share one, but one
+// is still one), and South Hyrule Field - which was already the tightest
+// region at difficulty 8 - went one slot under the hard floor because of it.
+// Steepening the slope pays for the fusers out of the high-difficulty wave
+// count, where sprites are most expensive, and leaves the low-difficulty
+// counts alone.
+#define QUICKSTART_GFX_SPAWN_CAP_SLOPE 5
 #define QUICKSTART_GFX_SPAWN_CAP_MIN 16
 
 #define QUICKSTART_MAX_ENEMY_KINDS 3
@@ -7052,6 +7044,21 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // is left vanilla for now - one elite room per region reads as special,
     // two reads as a farm. Adding it later is one table row.
     { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, QUICKSTART_KINDS_ELITE, 136, 104 },
+    // Castle Garden's two fountain chambers, behind the north-end
+    // staircases. These are the rooms the KINSTONE_18 / KINSTONE_35 fusions
+    // open - the staircases read as water until fused - and they are what
+    // makes those two fusers worth walking to. Being content sites also
+    // blesses them past containment automatically
+    // (QuickStartIsPocketInteriorRoom scans this table), which is what the
+    // "still blocked by containment" note on their doors in transitions.c
+    // used to describe.
+    //
+    // Measured: both are a single 240x160 screen whose entire floor is one
+    // 11x6-tile open rectangle, local (32,32)-(207,127), with the player
+    // arriving at (120,120). 66 clear tiles is small-pool territory - room
+    // for a puzzle or a conversation, not for a wave.
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, QUICKSTART_KINDS_SMALL, 120, 80 },
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, QUICKSTART_KINDS_SMALL, 120, 80 },
 };
 // Where a content site wants its event. Wrapped so the pot room, which is
 // compiled above the table, can ask without reaching into it directly.
@@ -9808,6 +9815,14 @@ static void QuickStartRoomMonitor(void) {
     // (Melari's Mine's Door B, and each region's own "onward" exit box)
     // both target a different real room every save.
     QuickStartProcessRegionChainLinks();
+    // Deliberately outside the region-chain dispatch below, and ahead of the
+    // wave spawner: the fusers are a handful of entities sharing one sprite
+    // sheet, while a wave is dozens that can pull the gfx table down to the
+    // reserve, so claiming the slot first means a difficulty-12 wave can
+    // never be the reason a gate has no fuser standing at it. Being outside
+    // the dispatch also means a region's gates are live whether or not this
+    // save's chain happens to include it.
+    QuickStartSpawnRegionFusers();
     regionSlot = QuickStartGetCurrentRegionChainPosition();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
@@ -9935,6 +9950,152 @@ static void QuickStartMakeNpcTalkable(Entity* npc, Script* script) {
         // deleted them. Force it open from every direction.
         gPossibleInteraction.candidates[index].interactDirections = 0;
         gPossibleInteraction.candidates[index].customHitbox = &sQuickStartNpcInteractHitbox;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Kinstone fusers
+//
+// The supply side of the economy is enemy drops (see itemUtils.c's QUICKSTART
+// hook). This is the demand side: a placed sprite the player walks up to and
+// presses L at, which opens the gate its fusion is wired to in vanilla.
+//
+// Vanilla decides what a fuser offers through GetFusionToOffer (common.c),
+// which is driven entirely by gUnk_08001DCC - a ROM table keyed by a fuser id
+// that GetFuserId derives from the entity's own kind/id/type triple. That is
+// useless for arbitrary placement: it can only ever offer what the table says
+// that particular NPC offers, and it has no row for an entity we invented.
+// So we skip it. AddInteractableObject takes the kinstone id directly, and
+// the fusion trigger in playerUtils.c (CheckPlayerInteractions) only asks
+// whether the candidate's kinstoneId is in 1..100 - it never consults the
+// fuser tables. Passing our own id there is all it takes.
+//
+// Everything downstream then works unmodified: the kinstone menu matches on
+// shape (KinstoneMenu_Type3_Overlay1), writes the fused bit, fires the
+// world-event cutscene that redraws the room, and NotifyFusersOnFusionDone
+// retires this candidate so the fuser stops offering.
+typedef struct {
+    u8 area;
+    u8 room;
+    u8 kinstoneId;
+    // Local to the room, and NOT hand-picked: tools/quickstart/
+    // find_fuser_spots.py boots this ROM, floods the walkable graph from the
+    // region's own entrance with the gates still shut, and takes the closest
+    // fully-open tile to the gate that has open ground on every side. The
+    // invariant checker's fuser tier re-verifies each one.
+    s16 x;
+    s16 y;
+} QuickStartFuser;
+
+extern Script script_QuickStartFuser;
+
+static const QuickStartFuser sQuickStartFusers[] = {
+    // Castle Garden - the two fountain staircases at the north end. Both
+    // read as water until fused; the fusion lays the stairs over the pond.
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_18, 728, 136 },
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, KINSTONE_35, 168, 88 },
+    // Lon Lon Ranch - staircase, the wall-punching Goron over the cave
+    // entrance, and a fusion treasure chest.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_1E, 504, 488 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_29, 120, 728 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_60, 56, 136 },
+    // North Hyrule Field - the four middle tree stumps are one fusion each,
+    // and those four ladders are the only way into the Boomerang chamber's
+    // four quadrants. Plus the fairy fountain tree and a chest.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_40, 552, 328 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_4D, 408, 424 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_59, 408, 328 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5A, 552, 424 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_2D, 728, 344 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, KINSTONE_5F, 248, 216 },
+    // South Hyrule Field - heart piece tree, staircase, chest.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_32, 904, 584 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_58, 72, 248 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_53, 808, 328 },
+    // Trilby Highlands - rupee cave, an obstacle patch, two chests.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_3F, 40, 648 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_22, 216, 344 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_52, 360, 88 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_5E, 296, 472 },
+};
+
+static void QuickStartMakeNpcFuser(Entity* npc, u32 kinstoneId) {
+    s32 index;
+
+    npc->action = 0;
+    npc->animationState = IdleSouth;
+    StartCutscene(npc, &script_QuickStartFuser);
+    // INTERACTION_FUSE as the candidate type, not INTERACTION_TALK: the A
+    // button's switch in CheckPlayerInteractions has no case for it, so it
+    // falls to the default and does nothing at all. That matters - the TALK
+    // case parks the player in PL_STATE_TALKEZLO waiting for a script that
+    // would never answer, since script_QuickStartFuser only ever handles
+    // INTERACTION_FUSE. L still works, because the fusion branch runs
+    // before that switch and keys off the kinstone id alone.
+    index = AddInteractableObject(npc, INTERACTION_FUSE, kinstoneId);
+    if (index >= 0) {
+        // Same stale-candidate-slot reasoning as QuickStartMakeNpcTalkable
+        // above, and the same oversized hitbox: an 8x8 interact window is
+        // no way to find a fusion stone in an open field.
+        gPossibleInteraction.candidates[index].interactDirections = 0;
+        gPossibleInteraction.candidates[index].customHitbox = &sQuickStartNpcInteractHitbox;
+    }
+}
+
+// Called every frame from QuickStartRegionMonitor. Cheap: the area/room test
+// rejects all but this region's own rows immediately, and CheckKinstoneFused
+// retires each one for good the moment its gate opens.
+static void QuickStartSpawnRegionFusers(void) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
+        const QuickStartFuser* fuser = &sQuickStartFusers[i];
+        s32 worldX, worldY, e;
+        bool32 alreadyThere;
+        if (gRoomControls.area != fuser->area || gRoomControls.room != fuser->room) {
+            continue;
+        }
+        if (CheckKinstoneFused(fuser->kinstoneId)) {
+            continue;
+        }
+        worldX = gRoomControls.origin_x + fuser->x;
+        worldY = gRoomControls.origin_y + fuser->y;
+        // Position is the identity check. Every fuser in a room is at least
+        // three tiles from every other one (find_fuser_spots.py enforces
+        // that), so an exact coordinate match can only ever be this row's
+        // own sprite - and it survives the entity list being rebuilt, which
+        // a "did I spawn yet" flag would not.
+        alreadyThere = FALSE;
+        for (e = 0; e < MAX_ENTITIES; e++) {
+            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == ZELDA &&
+                gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
+                alreadyThere = TRUE;
+                break;
+            }
+        }
+        if (alreadyThere) {
+            continue;
+        }
+        if (!QuickStartGfxBudgetForSpawn()) {
+            return;
+        }
+        {
+            // ZELDA for the same reason the merchant and the ? room signs
+            // use her: her entity kind is the one proven to work with the
+            // generic StartCutscene script attachment. Every fuser in a
+            // room shares the one sheet, so the whole set costs a single
+            // gfx slot. Cosmetic placeholder, per the "reuse a resident
+            // sprite" call - a real fusion-stone sprite is the follow-up.
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc == NULL) {
+                return;
+            }
+            npc->x.HALF.HI = worldX;
+            npc->y.HALF.HI = worldY;
+            npc->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcFuser(npc, fuser->kinstoneId);
+        }
     }
 }
 
