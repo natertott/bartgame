@@ -452,6 +452,12 @@ static void GameTask_Transition(void) {
         for (bit = 40; bit <= 42; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
+        // Bits 43-58: the live wave-gauntlet record (GF_SEAM_GAUNTLET_*).
+        // A run that ends mid-gauntlet must not leave the next one thinking
+        // some room already has a fight in progress in it.
+        for (bit = 43; bit <= 58; bit++) {
+            ClearLocalFlagByBank(FLAG_BANK_11, bit);
+        }
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -5014,6 +5020,36 @@ static const u16 sQuickStartLadderRewardPool[] = {
 // the sizeof-derived expression even when cast to (s32) on both sides.
 #define QUICKSTART_LADDER_REWARD_POOL_SIZE 4
 
+// The RARE tier, for the handful of sites that pay one guaranteed
+// (QUICKSTART_KINDS_RARE). Drawn from docs/QUICKSTART_ITEM_TIERS.md's rare
+// rows, restricted to things that are (a) real droppable GROUND_ITEMs and
+// (b) useful the moment they land - so no rare SKILL scrolls here, because
+// Great Spin needs Spin Attack and Down Thrust needs Roc's Cape, and a rare
+// drop that does nothing because the prerequisite never rolled is worse than
+// no rare drop at all.
+static const u16 sQuickStartRareRewardPool[] = {
+    ITEM_MAGIC_BOOMERANG,
+    ITEM_MIRROR_SHIELD,
+    ITEM_HEART_CONTAINER,
+    ITEM_RUPEE200,
+};
+#define QUICKSTART_RARE_REWARD_POOL_SIZE 4
+
+// The two one-shot entries above are dead picks once owned, so the roll is
+// a starting point rather than the answer: walk forward from it and take
+// the first thing the player can still use. Rupees and heart containers are
+// never "already owned", so this always terminates on something real.
+static u16 QuickStartPickRareReward(s32 extra) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_RARE_REWARD_POOL_SIZE; i++) {
+        u16 item = sQuickStartRareRewardPool[(extra + i) % QUICKSTART_RARE_REWARD_POOL_SIZE];
+        if (item == ITEM_RUPEE200 || item == ITEM_HEART_CONTAINER || GetInventoryValue(item) == 0) {
+            return item;
+        }
+    }
+    return ITEM_RUPEE200;
+}
+
 // Miniboss variety: LADDER_KIND_MINIBOSS/QuickStart2Door's own miniboss case
 // used to always spawn a plain CreateEnemy(DARK_NUT, 0). sQuickStartLevel5
 // (above) is already this file's own curated, emulator-confirmed "tough
@@ -5873,6 +5909,118 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count);
 }
 
+// --- Why a wave gauntlet in the Grimblade dojo could never be finished ---
+//
+// Rooms inside one area share a pixel grid, and two rooms whose rectangles
+// touch along an edge are joined by a SCROLL SEAM: the player crosses by
+// walking, with no door and no fade. The engine wipes gRoomVars.flags on the
+// way across - and gRoomVars.flags is where every "? room" event keeps its
+// per-visit state.
+//
+// Measured live: ROOM_DOJOS_GRIMBLADE is 240x192 at (1280,0) and its ante
+// room (ROOM_DOJOS_TO_GRIMBLADE, where the ladder from Castle Garden comes
+// up) is 240x160 directly below it at (1280,192). Walking south from the
+// arena floor crosses in 43 frames, and a room flag set before the crossing
+// reads back as 0 both in the ante room and on returning.
+//
+// For a wave gauntlet that is fatal. Back up 24px during a fight and come
+// forward again and the "this wave is already spawned" latch AND the wave
+// counter are both gone, so the room spawns a fresh wave 1 on top of every
+// enemy still alive. Do it a few times and the arena fills with more enemies
+// than can be cleared - the user's "impossible to kill all of the enemies".
+//
+// tools/quickstart/seam_audit.py enumerates this from gAreaRoomHeaders:
+// five QUICKSTART rooms have a seam, and Grimblade is the only one that
+// hosts combat, which is why only it was reported.
+//
+// The fix keeps the gauntlet's own state outside the room flags, in
+// FLAG_BANK_11, tagged with the room it belongs to. Only one gauntlet can be
+// in progress at a time, so one record is enough. A seam crossing no longer
+// resets anything: the fight simply carries on.
+#define GF_SEAM_GAUNTLET_LIVE 43
+#define GF_SEAM_GAUNTLET_AREA_BIT(b) (44 + (b)) // b = 0..6
+#define GF_SEAM_GAUNTLET_ROOM_BIT(b) (51 + (b)) // b = 0..4
+#define GF_SEAM_GAUNTLET_WAVE_BIT(b) (56 + (b)) // b = 0..1
+// Separate from LIVE on purpose. LIVE means "a gauntlet is running in the
+// recorded room"; SPAWNED means "the wave it is on has had its enemies
+// created". Between clearing a wave and spawning the next there is one frame
+// where the gauntlet is live but nothing is out - folding the two together
+// would lose the wave counter in exactly that frame if the player happened
+// to cross the seam during it.
+#define GF_SEAM_GAUNTLET_SPAWNED 58
+
+static void QuickStartGauntletWriteBits(s32 base, s32 count, u32 value) {
+    s32 b;
+    for (b = 0; b < count; b++) {
+        if (value & (1 << b)) {
+            SetLocalFlagByBank(FLAG_BANK_11, base + b);
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, base + b);
+        }
+    }
+}
+
+static u32 QuickStartGauntletReadBits(s32 base, s32 count) {
+    s32 b;
+    u32 value = 0;
+    for (b = 0; b < count; b++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, base + b)) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+// Is the live gauntlet record this room's? Room ids only reach 15 in the
+// areas that host events, so five bits is ample.
+static bool32 QuickStartGauntletIsHere(void) {
+    return CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_LIVE) != 0 &&
+           QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_AREA_BIT(0), 7) == gRoomControls.area &&
+           QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_ROOM_BIT(0), 5) == gRoomControls.room;
+}
+
+static void QuickStartGauntletRemember(u8 wave, bool32 spawned) {
+    SetLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_LIVE);
+    QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_AREA_BIT(0), 7, gRoomControls.area);
+    QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_ROOM_BIT(0), 5, gRoomControls.room);
+    QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_WAVE_BIT(0), 2, wave);
+    if (spawned) {
+        SetLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED);
+    } else {
+        ClearLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED);
+    }
+}
+
+static void QuickStartGauntletForget(void) {
+    ClearLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_LIVE);
+    ClearLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED);
+}
+
+// The other half of the seam problem: enemies chase, and the seam is open,
+// so a wave walks itself out of the arena and camps the ante room. They
+// still COUNT (QuickStartEnemyIsOurs matches on ENT_PERSIST, not on room
+// bounds), so the gauntlet stalls with nothing visible left to kill.
+//
+// Same leash the miniboss kind already puts on a Wizzrobe that teleports
+// out of bounds, generalized: anything of ours that is outside the room gets
+// snapped back to open ground near the event. Only ever called while the
+// monitor is on the event's own room, so "outside the room" cannot mean
+// "the player walked away and the enemy is legitimately elsewhere".
+static void QuickStartLeashStrayEnemies(s32 contentX, s32 contentY) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* enemy = &gEntities[i].base;
+        s16 backX, backY;
+        if (!QuickStartEnemyIsOurs(enemy) || QuickStartEntityInCurrentRoom(enemy)) {
+            continue;
+        }
+        if (QuickStartFindOpenTileNear(contentX, contentY, 1, &backX, &backY)) {
+            enemy->x.HALF.HI = gRoomControls.origin_x + backX;
+            enemy->y.HALF.HI = gRoomControls.origin_y + backY;
+        }
+    }
+}
+
 // Returns TRUE once the room's payoff has been collected, i.e. "this event
 // is finished, never spawn it again" - the caller owns the actual done
 // latch, because the two callers store it in different places (a retired
@@ -5889,9 +6037,27 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
     difficulty = QuickStartGetDifficulty();
-    wave = QuickStartWaveRoomGetWave(flagBase);
+    // The seam record outranks the room flags, because the room flags are
+    // exactly what a seam crossing destroys. When it is this room's, it is
+    // both the wave counter AND the "already spawned" latch; the room flags
+    // are still written below so a room without a seam behaves identically
+    // whether or not the record survives.
+    if (QuickStartGauntletIsHere()) {
+        wave = (u8)QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_WAVE_BIT(0), 2);
+        QuickStartWaveRoomSetWave(flagBase, wave);
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED)) {
+            QsSetRoomFlag(flagBase + 0);
+        } else {
+            QsClearRoomFlag(flagBase + 0);
+        }
+    } else {
+        wave = QuickStartWaveRoomGetWave(flagBase);
+    }
     if (QsCheckRoomFlag(flagBase + 0)) {
-        // This wave's enemies are still out there somewhere.
+        // This wave's enemies are still out there somewhere - possibly
+        // literally, if they chased the player over a seam, so haul them
+        // back before deciding the wave is clear.
+        QuickStartLeashStrayEnemies(contentX, contentY);
         if (QuickStartCountRoomEnemies() > 0) {
             return FALSE;
         }
@@ -5911,6 +6077,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
                 UpdateSpriteForCollisionLayer(itemEntity);
                 itemEntity->direction = IdleSouth;
                 QsSetRoomFlag(flagBase + 2);
+                QuickStartGauntletForget();
             }
             return FALSE;
         }
@@ -5918,10 +6085,12 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         // below spawn it on the next frame.
         QuickStartWaveRoomSetWave(flagBase, wave + 1);
         QsClearRoomFlag(flagBase + 0);
+        QuickStartGauntletRemember(wave + 1, FALSE);
         return FALSE;
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
     QsSetRoomFlag(flagBase + 0);
+    QuickStartGauntletRemember(wave, TRUE);
     return FALSE;
 }
 
@@ -6469,7 +6638,13 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // Never confirmed present - fall through and re-drop it.
         }
         {
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            // Extra bit 7 marks a RARE site (QUICKSTART_KINDS_RARE). The
+            // ordinary chest roll only ever fills bits 0-1, so the top bit is
+            // free to say which pool to draw from - the same trick the miniboss
+            // kind already uses for its elite and Red Sword bits.
+            u16 rewardItem = (extra & 0x80)
+                                 ? QuickStartPickRareReward(extra & 0x7f)
+                                 : sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -6871,6 +7046,11 @@ enum {
     // normal heart piece (the elite bit rides in the extra byte's top bit;
     // see QuickStartRandomizeContentSiteOnce and the miniboss reward drop).
     QUICKSTART_KINDS_ELITE,
+    // No roll either: always a plain item drop, always off the RARE pool
+    // (sQuickStartRareRewardPool). For sites that are meant to be worth
+    // finding in themselves rather than worth fighting - the Boomerang
+    // chamber's central staircase is the one that has it today.
+    QUICKSTART_KINDS_RARE,
 };
 
 typedef struct {
@@ -6928,7 +7108,11 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // this takes the rectangle the three agree on. Easy to nudge if 289 was
     // the intended one.
     { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 263, 206 },  // southeast tree,  box (246,183)-(281,229)
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_SMALL, 170, 158 },  // the staircase,   box (153,143)-(188,173)
+    // The staircase in the middle of the chamber - the one entrance that is
+    // NOT the bottom of a Boomerang tree, and the only way in that costs a
+    // deliberate trip rather than a tree the player was passing anyway. Per
+    // the user, it always pays a RARE drop instead of rolling with the rest.
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG, QUICKSTART_KINDS_RARE, 170, 158 },   // the staircase,   box (153,143)-(188,173)
     // Trilby Highlands' 4 converted doors - all true dead ends, same shape
     // as South Hyrule Field's. The Keese Chest and Fairy Fountain caves are
     // the two reached by bombing a wall open.
@@ -7356,12 +7540,24 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             // miniboss fight, and its (item-gated) door is the gate.
             kind = LADDER_KIND_MINIBOSS;
             break;
+        case QUICKSTART_KINDS_RARE:
+            // Always the plain item drop; the rare pool is selected below
+            // by forcing extra bit 7.
+            kind = LADDER_KIND_CHEST;
+            break;
         default:
             kind = QuickStartPickSmallKind();
             break;
     }
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_RARE) {
+            // Bit 7 = draw the drop from sQuickStartRareRewardPool instead.
+            // Rolled into the stored extra rather than checked at drop time
+            // so the whole treatment survives leaving and re-entering the
+            // room, exactly like the miniboss kind's elite bit.
+            extra = (u8)(((s32)Random() % QUICKSTART_RARE_REWARD_POOL_SIZE) | 0x80);
+        }
     } else if (kind == LADDER_KIND_NPC) {
         extra = (u8)((s32)Random() % 2); // bit 0: 1 = evil, 0 = friendly
     } else if (kind == LADDER_KIND_MINIBOSS) {
