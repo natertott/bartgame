@@ -73,6 +73,33 @@ def check_static():
         n = int(m.group(1))
         lvl = 'PASS' if n <= rows else 'FAIL'
         out.append((lvl, f'{const}={n} vs {rows} rows'))
+
+    # The reward pool, which had two separate ways to go quietly wrong.
+    #
+    # 1. The size must be a POWER OF TWO. agbcc turns "% 8" into a mask but
+    #    emits __umodsi3 for "% 6", and its runtime lib has no such symbol -
+    #    so a non-power-of-two size does not misbehave at runtime, it fails
+    #    to link, with an error pointing at an unrelated function.
+    # 2. ITEM_BOW must be in it, and must come before ITEM_LARGE_QUIVER. The
+    #    quiver is a pure quiverType++ upgrade (itemUtils.c case 0xa) and does
+    #    nothing at all without a Bow, so a pool carrying the upgrade and not
+    #    the weapon hands out dud rewards - which is exactly what shipped
+    #    once the Bow stopped being a boot grant.
+    m = re.search(r'#define QUICKSTART_LADDER_REWARD_POOL_SIZE (\d+)', game)
+    i = game.find('sQuickStartLadderRewardPool[] = {')
+    j = game.find('\n};', i)
+    entries = re.findall(r'ITEM_\w+', game[i:j])
+    n = int(m.group(1))
+    if n != len(entries):
+        out.append(('FAIL', f'QUICKSTART_LADDER_REWARD_POOL_SIZE={n} vs {len(entries)} entries'))
+    elif n & (n - 1):
+        out.append(('FAIL', f'reward pool size {n} is not a power of two (agbcc has no __umodsi3)'))
+    elif 'ITEM_BOW' not in entries:
+        out.append(('FAIL', 'reward pool has no ITEM_BOW; quivers would be dud drops'))
+    elif 'ITEM_LARGE_QUIVER' in entries and entries.index('ITEM_LARGE_QUIVER') < entries.index('ITEM_BOW'):
+        out.append(('FAIL', 'reward pool lists ITEM_LARGE_QUIVER before ITEM_BOW'))
+    else:
+        out.append(('PASS', f'reward pool: {n} entries, power of two, Bow present'))
     return out
 
 

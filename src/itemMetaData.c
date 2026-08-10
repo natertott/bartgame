@@ -136,9 +136,24 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_BLUE_SWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4) },
     [ITEM_UNUSED_SWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5) },
     [ITEM_FOURSWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x6) },
+#ifdef QUICKSTART
+    // Bombs and the Bow are shop stock under QUICKSTART. Vanilla never sold
+    // either (Link finds them in dungeons), so both shipped with price 0 and
+    // no confirm-purchase text - which would have made them free and left the
+    // sale with nothing to say. Priced with the other weapons and given the
+    // shield's confirm text, the same borrow the Fairy bottle below documents.
+    //
+    // These two matter more than the rest of the catalog: the bomb bag and
+    // the large quiver are useless without them, and until now neither weapon
+    // was reachable anywhere in the mode.
+    [ITEM_BOMBS] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x1c) },
+    [ITEM_REMOTE_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x8) },
+    [ITEM_BOW] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x9) },
+#else
     [ITEM_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x1c) },
     [ITEM_REMOTE_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x8) },
     [ITEM_BOW] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x9) },
+#endif
     [ITEM_LIGHT_ARROW] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xa) },
     [ITEM_BOOMERANG] = { 300, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x24), TEXT_INDEX(TEXT_ITEM_GET, 0xb) },
     [ITEM_MAGIC_BOOMERANG] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xc) },

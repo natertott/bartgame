@@ -1513,6 +1513,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // progression. Filtered at drop time to whichever the player doesn't
 // already have.
 static const u16 sQuickStartGardenRewardPool[] = {
+    ITEM_BOW,               ITEM_BOMBS,
     ITEM_BOOMERANG,         ITEM_MAGIC_BOOMERANG,   ITEM_LANTERN_OFF,      ITEM_GUST_JAR,
     ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,        ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
     ITEM_REMOTE_BOMBS,      ITEM_OCARINA,           ITEM_MIRROR_SHIELD,    ITEM_SKILL_SPIN_ATTACK,
@@ -3424,9 +3425,17 @@ static void QuickStartClearShopObstacles(void) {
 // up with the item's value - the two upgrades priced 600 in vanilla (bomb
 // bag, large quiver) already clear that bar unmodified. Shared by both shop
 // rooms - same wares everywhere the merchant appears.
+//
+// Two slots changed hands once the starting loadout became "sword and shield
+// only": ITEM_SHIELD and ITEM_WALLET are both boot grants now, so both were
+// dead stock - money spent on something already owned. They are the Bow and
+// Bombs instead, which is where the shelf next to them was pointing all
+// along: the shop already sold arrows, bombs-by-the-ten, a bomb bag and a
+// large quiver, and not one of those four does anything for a run that never
+// found the weapon.
 static const u16 sQuickStartShopCatalog[] = {
-    ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_SHIELD,     ITEM_HEART_PIECE,
-    ITEM_BOTTLE_FAIRY,     ITEM_WALLET,   ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
+    ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_BOMBS,      ITEM_HEART_PIECE,
+    ITEM_BOTTLE_FAIRY,     ITEM_BOW,      ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
     ITEM_SKILL_SPIN_ATTACK,
 };
 // Placed by the user directly (Lua position script) - two rows across
@@ -5039,14 +5048,70 @@ static bool32 QuickStart2DoorWantsOverworldEnemies(u8 area, u8 room) {
 // ITEM_WALLET and ITEM_KINSTONE_BAG removed - both are granted for free at
 // boot now (GameTask_Transition), so either one dropping here would just be
 // a dead pick that does nothing.
+// The Bow and Bombs lead the list for two reasons. They are COMMON
+// WEAPON/TOOL items per docs/QUICKSTART_ITEM_TIERS.md and were reachable
+// NOWHERE in the mode - not in a pool, not in the shop, not in a starter
+// choice - ever since they stopped being boot grants; the comments claiming
+// they were "drops and shop stock now" described an intention, not code.
+// And the lottery kinds only get a 2-bit slice of `extra` to name a prize
+// with (QuickStartPickLotteryExtra), so they can only reach the first four
+// entries - which makes the first four the right place for things that are
+// always worth finding, and pushes the two capacity upgrades past it.
+//
+// Eight entries, not six, and the count has to STAY a power of two: agbcc
+// turns "% 8" into a mask but emits __umodsi3 for "% 6", and its runtime lib
+// does not provide one. Going to eight is not padding either - it is what
+// finally makes this the common WEAPON/TOOL tier plus common REWARDS,
+// instead of two capacity upgrades and two consolation prizes.
 static const u16 sQuickStartLadderRewardPool[] = {
-    ITEM_HEART_PIECE, ITEM_BOMBBAG, ITEM_LARGE_QUIVER, ITEM_RUPEE200,
+    ITEM_BOW,       ITEM_BOMBS,   ITEM_HEART_PIECE, ITEM_RUPEE200,
+    ITEM_BOOMERANG, ITEM_GUST_JAR, ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
 };
 // A plain literal (matching this file's other enemy/reward pool modulos,
 // e.g. "% 3"/"% 4" above) rather than a sizeof-based macro - agbcc emits an
 // unsigned modulo helper (__umodsi3, not provided by its runtime lib) for
 // the sizeof-derived expression even when cast to (s32) on both sides.
-#define QUICKSTART_LADDER_REWARD_POOL_SIZE 4
+#define QUICKSTART_LADDER_REWARD_POOL_SIZE 8
+
+// Capacity upgrades are worthless without the weapon they hold ammunition
+// for, and the two do not behave the same way in vanilla:
+//
+//   ITEM_BOMBBAG  (itemUtils.c case 8)   - the FIRST one grants ITEM_BOMBS
+//                                          outright and puts it on a slot.
+//                                          It bootstraps itself.
+//   ITEM_LARGE_QUIVER (case 0xa)         - only ever does quiverType++. It
+//                                          does NOT grant the Bow, so a run
+//                                          without one gets a dead pickup.
+//
+// That asymmetry is what the user saw: quivers kept dropping and none of
+// them did anything. The rule here is theirs - "always drop the bow and the
+// smallest quiver first, then subsequently upgrade the quiver size" - and it
+// falls out for free, because picking up the Bow (case 0xb) already sets
+// ITEM_LARGE_QUIVER without touching quiverType. So the Bow IS "bow plus the
+// smallest quiver", and every later quiver is a real upgrade.
+//
+// Applied at every point a pool entry becomes a floor item, so it covers
+// chests, wave payouts, minibosses, lotteries and the hunt alike.
+static u16 QuickStartResolveReward(u16 item) {
+    if (item == ITEM_LARGE_QUIVER && GetInventoryValue(ITEM_BOW) == 0) {
+        return ITEM_BOW;
+    }
+    // Kept for symmetry and for the text: the bomb bag does bootstrap
+    // bombs, but "you got a Bomb Bag" as the way a player first learns they
+    // can use bombs reads as a bug even when it works.
+    if (item == ITEM_BOMBBAG && GetInventoryValue(ITEM_BOMBS) == 0) {
+        return ITEM_BOMBS;
+    }
+    // The other half of the same complaint: a one-shot weapon the player
+    // already owns is just as dead as a quiver they cannot use. The capacity
+    // upgrades are deliberately NOT in this list - they stack to type 3, so a
+    // second bag or quiver is still a real upgrade.
+    if ((item == ITEM_BOW || item == ITEM_BOMBS || item == ITEM_BOOMERANG || item == ITEM_GUST_JAR) &&
+        GetInventoryValue(item) != 0) {
+        return ITEM_HEART_PIECE;
+    }
+    return item;
+}
 
 // The RARE tier, for the handful of sites that pay one guaranteed
 // (QUICKSTART_KINDS_RARE). Drawn from docs/QUICKSTART_ITEM_TIERS.md's rare
@@ -6104,7 +6169,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
             // pickup (same reward pool a chest room draws from, so a wave
             // room's payoff has the same variety instead of a single fixed
             // item).
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -6515,8 +6580,8 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
                 Entity* itemEntity =
                     CreateObject(GROUND_ITEM,
                                  CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
-                                     ? QuickStartPickRareReward((s32)Random())
-                                     : sQuickStartLadderRewardPool[(s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE],
+                                     ? QuickStartResolveReward(QuickStartPickRareReward((s32)Random()))
+                                     : QuickStartResolveReward(sQuickStartLadderRewardPool[(s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE]),
                                  0);
                 if (itemEntity != NULL) {
                     itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
@@ -7132,8 +7197,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // free to say which pool to draw from - the same trick the miniboss
             // kind already uses for its elite and Red Sword bits.
             u16 rewardItem = (extra & 0x80)
-                                 ? QuickStartPickRareReward(extra & 0x7f)
-                                 : sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+                                 ? QuickStartResolveReward(QuickStartPickRareReward(extra & 0x7f))
+                                 : QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -8250,7 +8315,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         }
         if (wave >= 2) {
             s32 extra = QuickStart2DoorGetExtra();
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -8493,7 +8558,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         }
         {
             s32 extra = QuickStart2DoorGetExtra();
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -8968,7 +9033,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
             return;
         }
         {
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -9252,7 +9317,7 @@ static void QuickStartSetupCaveRoomContent(void) {
             return;
         }
         {
-            u16 rewardItem = sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE];
+            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
