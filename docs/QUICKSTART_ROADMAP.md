@@ -103,7 +103,10 @@ approach is across a canal).
 
 Within a region: wave 0 is a plain tiered group; every wave after it has a
 20% chance of being a solo Chuchu Boss instead. Wave count persists per slot
-across leaving and returning (`FLAG_BANK_11`).
+across leaving and returning (`FLAG_BANK_11`). The boss is beatable without
+the Gust Jar - conventional weapons peel the jelly as well as the gust stream
+does (`sub_08027AA4`, chuchuBoss.c) - which is what lets the Gust Jar be an
+ordinary drop rather than a boot grant.
 
 ### 3.3 "? rooms" - three distinct systems
 

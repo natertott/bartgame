@@ -1703,6 +1703,38 @@ void sub_08027A60(ChuchuBossEntity* this) {
     }
 }
 
+#ifdef QUICKSTART
+// How far one conventional weapon hit peels the jelly, in units of the gust
+// stream's own per-contact step. The gust needs 48 steps; a weapon hit is
+// worth 6, so eight hits do what a held Gust Jar does. Contacts are ~17
+// frames apart either way (the collision matrix hands the boss -16 iframes on
+// a weapon hit, the gust path sets 3), which puts eight sword swings at
+// roughly the same 2-3 seconds as holding the jar - deliberate, so the Gust
+// Jar stays the cleanest answer without being the only one.
+#define QUICKSTART_CHUCHU_WEAPON_PEEL 6
+#endif
+
+// QUICKSTART lets conventional weapons peel the jelly, not just the Gust Jar.
+//
+// The vanilla fight is two halves. First the Gust Jar stream (contact source
+// 19) stretches the jelly off the body; then the bare core - super->child,
+// hitType 123 - is an ordinary damage exchange, and already takes the sword,
+// a thrown pot, a bomb or a Fire Rod blast. So only the first half ever
+// needed the jar.
+//
+// That mattered once the Gust Jar stopped being a boot grant and became a
+// WEAPON/TOOL drop: this boss rolls into every region's wave loop, a wave has
+// to go completely clear for the region to progress, and a run that never
+// found a jar could not clear the first half. The cases below feed the same
+// counter the gust stream feeds, so a sword swing, arrow, boomerang, thrown
+// object, Fire Rod blast or Pacci Cane shot peels it too.
+//
+// The list is exactly the set that reaches the armoured body: gCollisionMtx
+// row 125 routes those hurtTypes through CollisionDefault for zero damage,
+// which is enough to set contactFlags. Bombs and the shield are absent on
+// purpose - row 125 maps them to CollisionNoOp, so they never register a
+// contact here at all. Bombs still work on the exposed core, where they are
+// the hardest hit in the table.
 bool32 sub_08027AA4(ChuchuBossEntity* this) {
     u32 uVar3;
     s32 iVar4;
@@ -1712,13 +1744,36 @@ bool32 sub_08027AA4(ChuchuBossEntity* this) {
         return FALSE;
     }
     switch (super->contactFlags & 0x7f) {
+#ifdef QUICKSTART
+        case 4:  // sword
+        case 16: // dash sword
+        case 20: // boomerang
+        case 21: // arrow
+        case 23: // thrown object
+        case 28: // Gust Jar's charged shot
+        case 29: // Pacci Cane projectile
+        case 32: // sword beam / Fire Rod blast
+        case 33: // spiral beam
+#endif
         case 19:
             SoundReq(SFX_WATER_SPLASH);
             CreateObjectWithParent(super, CHUCHU_BOSS_START_PARTICLE, 9, super->type2);
             SoundReq(SFX_155);
             pHelper = this->unk_84;
+#ifdef QUICKSTART
+            if ((super->contactFlags & 0x7f) == 19) {
+                super->iframes = 3;
+                pHelper->unk_06++;
+            } else {
+                // Leave iframes alone - CollisionDefault has already set them
+                // from the matrix, which is what spaces the hits out to one
+                // per swing instead of one per frame of overlap.
+                pHelper->unk_06 += QUICKSTART_CHUCHU_WEAPON_PEEL;
+            }
+#else
             super->iframes = 3;
             pHelper->unk_06++;
+#endif
             iVar4 = pHelper->unk_06;
             uVar3 = (iVar4 / 3);
             if (((u8)uVar3 << 3) != (u8)pHelper->unk_05) {

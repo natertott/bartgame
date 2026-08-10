@@ -36,7 +36,7 @@ prerequisite here.
 | | |
 |---|---|
 | Common | Bow, bombs, boomerang |
-| Uncommon | Big bomb bag, big quiver, remote bombs, bottle, gust jar |
+| Uncommon | Big bomb bag, big quiver, remote bombs, bottle, gust jar, fire rod |
 | Rare | Magical boomerang, mirror shield, bow of light, sword upgrade |
 
 Sword upgrades are WEAPON/TOOL items, not a category of their own, and keep
@@ -263,27 +263,68 @@ first number to reach for, ahead of enemy health or wave size.
 
 ## 7. Starting loadout - DONE
 
-**Sword and shield only.** The Bow, its arrows, Bombs, the Fire Rod and the
-Light Arrow are no longer granted at boot, `equippedExtra[0]` (the L slot)
-starts empty, and `arrowCount`/`bombCount` start at zero. Verified at boot:
-owned items are Smith's Sword, Shield, Gust Jar; A = shield, B = sword,
-L = nothing, 0 arrows, 0 bombs.
+**Sword and shield only.** The Bow, its arrows, Bombs, the Fire Rod, the Light
+Arrow and the Gust Jar are no longer granted at boot, `equippedExtra[0]` (the
+L slot) starts empty, and `arrowCount`/`bombCount` start at zero.
 
-**The Gust Jar is a deliberate exception and needs a decision.** It is the
-only thing that can damage `CHUCHU_BOSS` - Castle Garden's boss, whose core is
-vulnerable to being sucked in and slammed, not to sword hits, exactly as in
-its vanilla Deepwood Shrine fight. Taking it away makes Castle Garden
-unwinnable. Three ways out, none of them free:
+The Gust Jar was the last holdout, because it used to be the only way to get
+`CHUCHU_BOSS` open. That is fixed rather than worked around - see §7a - so it
+is now an ordinary uncommon WEAPON/TOOL drop like everything else.
 
-1. Leave it free, as now. Cheapest, but "sword and shield only" is not quite
-   true.
-2. Give the boss a second answer - make its core take sword damage. Changes a
-   vanilla fight.
-3. Guarantee a Gust Jar before Castle Garden can come up in the chain. Most
-   in keeping with the design, most work, and it needs the region progression
-   system that key items are already waiting on.
+### 7a. The Chuchu boss no longer needs the Gust Jar - DONE
 
-## 8. The Fire Rod as a drop
+Two corrections to what this project previously wrote down. The boss is **not**
+Castle Garden's: `QuickStartSpawnRegionWave` rolls `CreateEnemy(CHUCHU_BOSS, 0)`
+in every region's wave loop, so any region could have stranded a jar-less run.
+And the Gust Jar was never what damaged it.
+
+The vanilla fight is two halves:
+
+1. **Peel the jelly.** The Gust Jar's stream (`PlayerItemGust`, hurtType 19)
+   contacts the armoured body, and `sub_08027AA4` in `chuchuBoss.c` counts
+   those contacts into `Helper.unk_06`. At 48 the derived `unk_05` - which is
+   also the jelly's on-screen stretch - wraps negative, the body's `hitType`
+   drops to 0, and the core is exposed.
+2. **Kill the core.** The core is `super->child`, a plain form-1 entity with
+   `hitType` 123 and 255 health, and `sub_08027C54` just watches that health
+   fall past 249/247/249 three times. Nothing about it is Gust-Jar-specific:
+   `gCollisionMtx` row 123 already gives the sword 2 damage, a thrown object
+   2, a Fire Rod blast 2, and a bomb 4.
+
+So only step 1 was gated. The fix adds the other weapon contact sources to the
+same case in `sub_08027AA4`, worth `QUICKSTART_CHUCHU_WEAPON_PEEL` (6) steps
+each against the gust's 1, so eight hits peel what a held jar peels in 48
+contacts. Both take roughly 2-3 seconds, so suck-and-slam stays the cleanest
+route without being the only one.
+
+The accepted list is exactly what can reach the armoured body - `gCollisionMtx`
+row 125 routes these through `CollisionDefault` for zero damage, which is
+enough to set `contactFlags`:
+
+| hurtType | source |
+|---|---|
+| 4, 16 | sword, dash sword |
+| 20, 21 | boomerang, arrow |
+| 23 | thrown object (pot, bush) |
+| 28, 29 | charged Gust Jar shot, Pacci Cane shot |
+| 32, 33 | sword beam / Fire Rod blast, spiral beam |
+
+**Bombs and the shield are deliberately absent.** Row 125 maps both to
+`CollisionNoOp`, so they return `RESULT_NO_COLLISION` and never set
+`contactFlags` on the armoured body at all - the case would be dead code.
+Including them would mean editing `gCollisionMtx` itself, which is a shared
+binary blob keyed on `hitType` alone, so the edit would leak to every other
+enemy using row 125. Not worth it: bombs are still the single hardest hit
+against the exposed core.
+
+Not verified on a live boss - this is read off the collision matrix and the
+boss's own counters, not a playtest. The thing to watch when it does come up
+in a wave is the hit spacing: the matrix hands the body -16 iframes on a
+weapon hit, which should mean one peel step per swing rather than one per
+frame of overlap, and `QUICKSTART_CHUCHU_WEAPON_PEEL` is the one number to
+turn if eight hits feels wrong.
+
+## 8. The Fire Rod as a drop - DECIDED: uncommon WEAPON/TOOL
 
 Easy, and the slot problem is our own, not vanilla's.
 

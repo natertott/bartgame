@@ -546,14 +546,11 @@ static void GameTask_Transition(void) {
     // that round is that owning it (or not) actually changes which region
     // the run's chain routes through (QuickStartRandomizeRegionChainOnce).
     // Bombs are no longer free either, same reasoning as the Bow above.
-    // Gust Jar. DELIBERATELY still free, and the one exception to "start with
-    // a sword and shield only" - it is the only way to damage CHUCHU_BOSS
-    // (Castle Garden's own boss, QuickStartSpawnGardenBossOnce): its core is
-    // vulnerable to being sucked in and slammed, not to sword hits, matching
-    // its vanilla Deepwood Shrine fight. Taking it away makes that region
-    // unwinnable, so it stays until the boss has a second answer or the Gust
-    // Jar is guaranteed to drop before Castle Garden comes up in the chain.
-    SetInventoryValue(ITEM_GUST_JAR, 1);
+    // The Gust Jar used to be granted here, because peeling CHUCHU_BOSS was
+    // the one thing nothing else could do and that boss rolls into every
+    // region's wave loop. It is an uncommon WEAPON/TOOL drop now like
+    // everything else - conventional weapons peel the jelly too, see
+    // sub_08027AA4 in chuchuBoss.c.
     // Lon Lon Ranch house key, granted at boot per the user's request ("Link
     // should start the game with the Lon Lon ranch house key already in his
     // inventory"). Note this doesn't actually gate anything under
@@ -2836,6 +2833,13 @@ static void QuickStartRegionSetWaveCount(s32 slot, u8 value) {
 // one sitting the player gets.
 static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     s32 escalated;
+    // This boss rolls in every region's wave loop, not just Castle Garden as
+    // an earlier comment here claimed - so it needs no Gust Jar interlock but
+    // it would need one if it were still jar-only. It isn't: sub_08027AA4
+    // (chuchuBoss.c) now lets a sword, arrow, boomerang, thrown object, Fire
+    // Rod blast or Pacci Cane shot peel the jelly, and the bare core already
+    // took ordinary damage in vanilla. Suck-and-slam is untouched and still
+    // the cleanest way through.
     if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE) {
         Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
         if (boss != NULL) {
