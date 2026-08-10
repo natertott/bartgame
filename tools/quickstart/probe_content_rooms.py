@@ -8,6 +8,10 @@ holds a ground item.
 Written for the open "item-drop ? rooms appear empty" bug - see section 5 of
 docs/QUICKSTART_ROADMAP.md. Run from the repo root.
 """
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from emu import boot, warp, here, GENT, MAX_ENT, STRIDE, SAVE_FLAGS, QS_BIT0, room_dims
 import parse_tables as P
 KIND={0:'CHEST',1:'MINIBOSS',2:'NPC',3:'WAVES',4:'POT_LOT',5:'CHEST_LOT',6:'FAIRY'}
