@@ -440,6 +440,18 @@ static void GameTask_Transition(void) {
         for (bit = 0; bit <= 31; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
+        // Charms are run-long now (see QuickStartCharmMask), which means
+        // nothing expires them - so the run boundary has to. Both the vanilla
+        // single-charm byte, used for Link's palette tint, and our own
+        // "which charms are owned" bits.
+        gSave.stats.charm = 0;
+        gSave.stats.charmTimer = 0;
+        // Literal 40-42 rather than QUICKSTART_CHARM_BIT: like every other
+        // number in this block, the defines live further down the file than
+        // GameTask_Transition does.
+        for (bit = 40; bit <= 42; bit++) {
+            ClearLocalFlagByBank(FLAG_BANK_11, bit);
+        }
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -3073,6 +3085,18 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
 #define GF_QUEST_SLOT_BIT(b) (33 + (b)) // b = 0..1, which chain slot hosts it
 #define GF_QUEST_HIDE_BIT(b) (35 + (b)) // b = 0..3, which pot holds the prize
 #define GF_QUEST_DONE 39
+
+// Which charms this run owns. FLAG_BANK_11 again (bits 40-42), for the same
+// reason the quest state is here: QUICKSTART's own flag window is nearly
+// full and this bank has 150+ bits untouched.
+//
+// Vanilla stores exactly one charm, in gSave.stats.charm, because a charm is
+// a 60-second drink - a second one replacing the first is the intended
+// behaviour there. Ours are rare permanent pickups, and a rare pickup that
+// deletes the last rare pickup is a bad trade, so ownership is tracked
+// separately and CalculateDamage applies every charm held. The vanilla byte
+// is still set, purely so GetPlayerPalette keeps tinting Link.
+#define QUICKSTART_CHARM_BIT(n) (40 + (n)) // n = 0..2: Nayru, Farore, Din
 
 #define QUICKSTART_QUEST_POTS 8
 #define QUICKSTART_QUEST_REWARD ITEM_HEART_PIECE
@@ -10121,6 +10145,37 @@ static void QuickStartReloadRoomAfterFusion(void) {
         gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
         gRoomTransition.transitioningOut = 1;
         return;
+    }
+}
+
+// Bit 0 Nayru, bit 1 Farore, bit 2 Din - read by CalculateDamage
+// (collision.c) instead of the single gSave.stats.charm byte, so more than
+// one charm can be in effect at a time.
+u8 QuickStartCharmMask(void) {
+    s32 n;
+    u8 mask = 0;
+    for (n = 0; n < 3; n++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(n))) {
+            mask |= 1 << n;
+        }
+    }
+    return mask;
+}
+
+// Called from playerItemBottle.c the moment a charm is drunk. Vanilla sets
+// gSave.stats.charm and a 3600-frame timer there and lets it run out; this
+// records the charm as owned for the rest of the run on top of that.
+void QuickStartNoteCharm(u32 bottleContent) {
+    switch (bottleContent) {
+        case BOTTLE_CHARM_NAYRU:
+            SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(0));
+            break;
+        case BOTTLE_CHARM_FARORE:
+            SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(1));
+            break;
+        case BOTTLE_CHARM_DIN:
+            SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(2));
+            break;
     }
 }
 

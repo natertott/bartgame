@@ -298,10 +298,18 @@ static void HandlePlayerLife(Entity* this) {
 
     if (gSave.stats.charm == 0) {
         gSave.stats.charmTimer = 0;
-    } else if ((gSave.stats.charmTimer == 0) || --gSave.stats.charmTimer == 0) {
+    }
+#ifndef QUICKSTART
+    else if ((gSave.stats.charmTimer == 0) || --gSave.stats.charmTimer == 0) {
         gSave.stats.charm = 0;
         SoundReq(SFX_ICE_BLOCK_MELT);
     }
+#endif
+    // QUICKSTART: charms do not expire. They are rare permanent pickups here
+    // rather than a 60-second drink, so the timer is simply never ticked -
+    // which also keeps it above the 0xb4 threshold GetPlayerPalette uses to
+    // blink the tint when a charm is about to run out. The run boundary
+    // clears both this and the ownership bits (GameTask_Transition, game.c).
 
     if (gSave.stats.picolyteType == 0) {
         gSave.stats.picolyteTimer = 0;

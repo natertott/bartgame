@@ -1,8 +1,10 @@
 # Item tiers, sources, and status effects
 
-Design notes for the item system. Nothing here is implemented yet - this is
-the categorization written down, plus answers to the two feasibility
-questions, plus the engineering constraints that will shape the build.
+Design notes for the item system: the categorization written down, answers to
+the two feasibility questions, and the engineering constraints that will shape
+the build.
+
+Only §6 (run-long charms) is built. Everything else is still a plan.
 
 ---
 
@@ -12,9 +14,15 @@ questions, plus the engineering constraints that will shape the build.
 Mole Mitts, Cane of Pacci, Lantern, Pegasus Boots, Roc's Cape, Grip Ring /
 Power Bracelets, Zora's Flippers.
 
-No tier split given, and they probably do not want one: each is a movement or
-access verb, and the run either has it or does not. Seven items, one shop slot
-per run, no ? room source - see the open question in §5.
+No tier split: each is a movement or access verb, and the run either has it or
+does not.
+
+**Two sources, for now:** the opening item-selection rounds (round one is
+drawn from this category) and the shop's key-item slot. More sources - side
+quests, new ? room types - come later, and they are blocked on the overworld
+region progression system, which first needs a map of which items are required
+to traverse which regions. That map does not exist yet and is the real
+prerequisite here.
 
 ### REWARDS
 | | |
@@ -30,6 +38,10 @@ per run, no ? room source - see the open question in §5.
 | Uncommon | Big bomb bag, big quiver, remote bombs, bottle, gust jar |
 | Rare | Magical boomerang, mirror shield, bow of light, sword upgrade |
 
+Sword upgrades are WEAPON/TOOL items, not a category of their own, and keep
+every source: the shop, ? room rewards, item drops, and the miniboss reward
+that already grants the Red Sword.
+
 ### SKILL UPGRADES
 | | |
 |---|---|
@@ -38,9 +50,13 @@ per run, no ? room source - see the open question in §5.
 | Rare | Down thrust (requires Roc's Cape), great spin (requires spin attack) |
 
 ### STAT UPGRADES
-Din's Charm, Farore's Charm, Nayru's Charm, the three Joy Butterflies.
-**Needs a tier split** - six items with no common/uncommon/rare assigned.
-Suggestion below in §5.
+| | |
+|---|---|
+| Common | *(none - deliberately empty)* |
+| Uncommon | Joy Butterflies (arrow, dig, swim) |
+| Rare | Din's Charm, Farore's Charm, Nayru's Charm |
+
+Charms are permanent for the run - see §6.
 
 ### EXCLUDED
 Wallet, Big Wallet.
@@ -53,7 +69,7 @@ Wallet, Big Wallet.
 |---|---|
 | Shop, always stocked | Arrows, bombs, shields, heart pieces |
 | Shop, one rolled slot each | KEY ITEM, WEAPON/TOOL, SKILL UPGRADE, STAT UPGRADE, REWARD x2 |
-| ? rooms | Everything except KEY ITEMS |
+| ? rooms | Any category except KEY ITEMS |
 | Pot-breaking overworld quest | REWARDS only |
 | Later side quests | To be decided per quest |
 
@@ -66,7 +82,8 @@ Shop rules:
   999. Needs a per-run purchase counter (§4).
 - The six rolled slots draw from their category by tier weight: common often,
   uncommon less, rare rarely.
-- Buying a rolled slot retires it - that slot stays empty afterwards.
+- Buying a rolled slot retires it **for the rest of that run**. A new run
+  starts with a full shop again.
 
 ---
 
@@ -194,26 +211,15 @@ should live there from the start rather than squeezing into bank 12. There
 are also six flags deliberately held in reserve at 255-260
 (`GF_CAVE_POOL_BIT`, `GF_CAVE_ROOM_BIT`) if a bank-12 slot is ever wanted.
 
-### Questions before I build anything
+### Answered
 
-1. **"That slot is not filled for the rest of the game"** - the rest of the
-   *run*, or permanently across runs? Permanent means a veteran save has a
-   near-empty shop, which I doubt is the intent. I will assume per-run unless
-   told otherwise.
-2. **Key items have exactly one source** - the shop's one key-item slot. Seven
-   key items, one slot, and buying it empties the slot. So a run gets at most
-   one key item, only if the player can afford it. Deliberate? It makes key
-   items feel enormous, but it also means a run can be locked out of a
-   movement verb entirely by price.
-3. **Sword upgrade appears twice.** It is listed as a WEAPON/TOOL rare, but
-   the Red Sword is already a rare miniboss reward. Keep both sources, or make
-   the shop the only one?
-4. **STAT UPGRADES need a tier split.** Suggestion: charms common (they are
-   timed and consumable in feel), butterflies uncommon (permanent but narrow),
-   leaving rare empty - or promote one charm to rare and make it run-long.
-5. **How long do effects last?** Vanilla charms are 60 seconds. For a
-   roguelite, run-long is more interesting than a 60-second window, but that
-   is a different feel and a different storage cost.
+1. **Sold-out slots are per-run.** A new run restocks the shop completely.
+2. **Key items: opening selection + shop only, for now.** More sources wait on
+   the region progression system and its item-to-region requirement map.
+3. **Sword upgrades stay WEAPON/TOOL** and keep all their sources, miniboss
+   reward included.
+4. **? room rewards draw from every category except key items.**
+5. **STAT UPGRADES: no common tier.** Butterflies uncommon, charms rare.
 
 ### Suggested build order
 
@@ -224,3 +230,30 @@ are also six flags deliberately held in reserve at 255-260
 4. Quest-item effects on the charm and picolyte frameworks - three or four to
    start, one of each shape (buff, curse, find-rate, immunity).
 5. Elemental weapons via the knockback-stun version, if 4 lands well.
+
+Step 4's foundation is already in - see §6.
+
+---
+
+## 6. Run-long charms - DONE
+
+Priced and built, because the cost turned out to be small.
+
+| Piece | Cost |
+|---|---|
+| Stop them expiring | One `#ifndef QUICKSTART` around the tick in `interrupts.c`. The timer is simply never decremented, which also keeps it above the `0xb4` threshold `GetPlayerPalette` uses to blink the tint when a charm is about to lapse. |
+| Clear them per run | Two lines in `GameTask_Transition`, alongside rupees and health. Charms live in `gSave.stats`, which persists across runs, so with nothing expiring them the run boundary has to. |
+| Hold more than one | `gSave.stats.charm` is a single byte, so vanilla's second charm replaces the first - correct for a 60-second drink, wrong for a rare permanent pickup. Ownership moved to three bits in `FLAG_BANK_11` (40-42), and `CalculateDamage` reads that mask instead. ~20 lines, all `#ifdef`-guarded. |
+| Grant path | Free. `BOTTLE_CHARM_NAYRU/FARORE/DIN` are values in the same enum as `ITEM_BOTTLE_*`, so a charm is granted by filling a bottle exactly like the "fairy in a bottle" reward already on the list. The player drinks it to activate. |
+| Palette | Free. `gSave.stats.charm` is still set to the most recent charm purely so `GetPlayerPalette` keeps tinting Link. |
+
+Verified in the emulator: bits clear at boot; drinking Din sets its bit and
+the vanilla byte; after 1200 frames the timer still reads 3600 where vanilla
+would read 2400; drinking Nayru afterwards leaves Din's bit set.
+
+**Balance note.** Charms now stack, and the multipliers were written for a
+one-at-a-time drink. Nayru and Farore together divide incoming damage by 8;
+Din and Farore together triple outgoing. That is a large swing for a mode
+whose difficulty is a wave counter. It is deliberate - they are the rarest
+tier - but if the late game starts feeling trivial, these multipliers are the
+first number to reach for, ahead of enemy health or wave size.

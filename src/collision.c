@@ -217,12 +217,36 @@ bool32 IsCollidingPlayer(Entity* this) {
     return FALSE;
 }
 
+#ifdef QUICKSTART
+extern u8 QuickStartCharmMask(void);
+#define QUICKSTART_CHARM_NAYRU 1
+#define QUICKSTART_CHARM_FARORE 2
+#define QUICKSTART_CHARM_DIN 4
+#endif
+
+// QUICKSTART reads its own ownership mask rather than gSave.stats.charm here,
+// because charms are permanent pickups in that mode and more than one can be
+// held. Every charm the player owns applies, which stacks: Nayru and Farore
+// together divide incoming damage by 8, Din and Farore together triple
+// outgoing. Deliberate - they are the rarest tier of stat upgrade - but it is
+// the number to reach for first if the late game starts feeling trivial.
 s32 CalculateDamage(Entity* org, Entity* tgt) {
     s32 damage;
     s32 health;
+#ifdef QUICKSTART
+    u8 charms = QuickStartCharmMask();
+#endif
 
     if (org->kind == PLAYER) {
         damage = tgt->damage;
+#ifdef QUICKSTART
+        if (charms & QUICKSTART_CHARM_NAYRU) {
+            damage /= 4;
+        }
+        if (charms & QUICKSTART_CHARM_FARORE) {
+            damage /= 2;
+        }
+#else
         switch (gSave.stats.charm) {
             case BOTTLE_CHARM_NAYRU:
                 damage /= 4;
@@ -231,6 +255,7 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
                 damage /= 2;
                 break;
         }
+#endif
         if (damage <= 0)
             damage = 1;
         health = ModHealth(-damage);
@@ -238,6 +263,14 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
     } else {
         damage = tgt->damage;
         if (tgt->kind == PLAYER_ITEM) {
+#ifdef QUICKSTART
+            if (charms & QUICKSTART_CHARM_FARORE) {
+                damage = 3 * damage / 2;
+            }
+            if (charms & QUICKSTART_CHARM_DIN) {
+                damage *= 2;
+            }
+#else
             switch (gSave.stats.charm) {
                 case BOTTLE_CHARM_FARORE:
                     damage = 3 * damage / 2;
@@ -246,6 +279,7 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
                     damage *= 2;
                     break;
             }
+#endif
         }
         health = org->health - damage;
         if (org->kind == ENEMY) {
