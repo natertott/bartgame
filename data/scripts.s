@@ -600,4 +600,5 @@
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc1.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc2.inc"
 	.include "data/scripts/quickstart/script_QuickStartFuser.inc"
+	.include "data/scripts/quickstart/script_QuickStartHunt.inc"
 .endif

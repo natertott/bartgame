@@ -574,10 +574,64 @@ void DrawChargeBar(void) {
     DmaSet(3, gUnk_080C8F7C[chargeState], BufferPos, 0x84000030);
 }
 
+#ifdef QUICKSTART
+// Seconds left on the hunt quest's clock, or -1 when no hunt is running.
+// game.c owns it; see QuickStartHuntMonitor.
+extern s32 QuickStartHuntSecondsLeft(void);
+#endif
+
 void DrawKeys(void) {
     u16* row1;
     u16* row2;
     u32 temp;
+
+#ifdef QUICKSTART
+    // The hunt quest's countdown borrows this counter outright. QUICKSTART
+    // has no dungeons, so AreaHasKeys() is false everywhere it can be
+    // reached and the small-key display is dead weight - which makes its BG0
+    // cells, its icon and its two digit tiles the cheapest numeric readout in
+    // the build, already wired and costing no new VRAM.
+    //
+    // The icon stays the key. It reads as "a thing you are being timed on"
+    // well enough for now; a proper hourglass tile is the follow-up.
+    {
+        s32 huntSeconds = QuickStartHuntSecondsLeft();
+        if (huntSeconds >= 0 && (gHUD.hideFlags & HUD_HIDE_KEYS) == 0) {
+            if (gHUD.unk_10 == 0) {
+                row1 = &gBG0Buffer[0x219];
+                row2 = &gBG0Buffer[0x239];
+                temp = 0xf01c;
+                row1[0] = temp;
+                row1[1] = temp + 1;
+                row2[0] = temp + 2;
+                row2[1] = temp + 3;
+                temp = 0xf076;
+                row1[2] = temp;
+                row2[2] = temp + 1;
+                row1[3] = temp + 2;
+                row2[3] = temp + 3;
+                gScreen.bg0.updated = 1;
+            }
+            // dungeonKeys is the vanilla cache of "what is currently drawn";
+            // reusing it means the digits are only re-rendered when the
+            // number actually changes, i.e. once a second rather than 60
+            // times. Yellow under ten seconds, the same "you are in trouble"
+            // colour an over-cap rupee count uses.
+            if (gHUD.dungeonKeys != (u8)huntSeconds || gHUD.unk_10 == 0) {
+                gHUD.unk_10 = 2;
+                gHUD.dungeonKeys = (u8)huntSeconds;
+                RenderDigits(0x76, (u32)huntSeconds, huntSeconds <= 10, 2);
+            }
+            return;
+        }
+        // Falling through with a stale cache would leave the clock's last
+        // value frozen on screen once the hunt ends, because the vanilla
+        // path only redraws when its own value differs from the cache.
+        if (huntSeconds < 0 && gHUD.unk_10 != 0 && !AreaHasKeys()) {
+            gHUD.dungeonKeys = 0xff;
+        }
+    }
+#endif
 
     if (!(((gHUD.hideFlags & HUD_HIDE_KEYS) == 0) && (AreaHasKeys()))) {
         if (gHUD.unk_10 != 0) {

@@ -31,6 +31,7 @@
 #include "npc.h"
 #include "object.h"
 #include "object/itemOnGround.h"
+#include "script.h"
 #include "object/itemForSale.h"
 #include "itemMetaData.h"
 #include "script.h"
@@ -455,9 +456,19 @@ static void GameTask_Transition(void) {
         // Bits 43-58: the live wave-gauntlet record (GF_SEAM_GAUNTLET_*).
         // A run that ends mid-gauntlet must not leave the next one thinking
         // some room already has a fight in progress in it.
-        for (bit = 43; bit <= 58; bit++) {
+        // Bits 59-73: the handicap record (GF_HANDICAP_*).
+        // Bits 74-84: the hunt quest (GF_HUNT_*), which is one attempt per
+        // run, so a new run has to get its attempt back.
+        for (bit = 43; bit <= 84; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
+        // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
+        // above is what actually ends a handicap, but leaving a stale
+        // snapshot behind would hand the next run a pile of free items the
+        // first time anything called QuickStartHandicapRestore.
+        gSave.timer4 = 0;
+        gSave.timer5 = 0;
+        gSave.timer6 = 0;
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -906,6 +917,7 @@ static void GameMain_InitRoom(void) {
 #ifdef QUICKSTART
 extern Script script_QuickStartChooseOne;
 extern Script script_QuickStartMerchant;
+extern Script script_QuickStartHunt;
 
 // Per-run (not per-visit, not permanent) - "has the region-intro Ezlo hint
 // already been shown this run". Only the run's first overworld region ever
@@ -1714,6 +1726,16 @@ const u8* const gCustomStrings[] = {
     [13] = (const u8*)"You won the Red Sword!\nEquip it from the menu.",
     // The hidden-item quest's completion line (QuickStartSetupRegionQuest).
     [14] = (const u8*)"You found what was\nhidden here!",
+    // The hunt quest (QuickStartHunt*, below). One giver NPC per run, in one
+    // region of the chain. 15 is the offer, 16 the handicap offer, 17 the
+    // win, 18 the loss, 19 what the NPC says once the run has burned its one
+    // attempt. The clock shows in the key slot on the HUD (DrawKeys, ui.c),
+    // so the text does not have to keep quoting the time.
+    [15] = (const u8*)"Hunters! Clear them out\nbefore my hourglass runs!",
+    [16] = (const u8*)"A true test: leave your\nkit with me. Just one weapon!",
+    [17] = (const u8*)"Cleared, and with time\nto spare! This is yours.",
+    [18] = (const u8*)"Too slow. The pack has\nscattered - I'm off.",
+    [19] = (const u8*)"You had your chance at\nthem. Maybe next time.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3204,6 +3226,11 @@ static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot)
     }
 }
 
+// Defined further down, next to the wave/gauntlet code they share their
+// enemy placer and flag bank with.
+static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot);
+static void QuickStartHandicapMonitor(void);
+
 static void QuickStartRegionMonitor(s32 slot) {
     const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
     if (region->quirkHook != NULL) {
@@ -3216,6 +3243,7 @@ static void QuickStartRegionMonitor(s32 slot) {
         QuickStartShowRegionFinalHintOnce();
     }
     QuickStartSetupRegionQuest(region, slot);
+    QuickStartHuntMonitor(region, slot);
     QuickStartSpawnRegionRewardOnce(region, slot);
     QuickStartSpawnRegionEnemiesOnce(region, slot);
 }
@@ -6021,6 +6049,15 @@ static void QuickStartLeashStrayEnemies(s32 contentX, s32 contentY) {
     }
 }
 
+// Defined just below, with the rest of the handicap; declared here because
+// the stripped-kit gauntlet variant is applied and undone from inside the
+// wave state machine.
+static u8 QuickStartHandicapApply(void);
+static void QuickStartHandicapRestore(void);
+// Defined at the bottom of the file, next to the charm pickup hook that
+// collision.c also reaches through.
+u8 QuickStartCharmMask(void);
+
 // Returns TRUE once the room's payoff has been collected, i.e. "this event
 // is finished, never spawn it again" - the caller owns the actual done
 // latch, because the two callers store it in different places (a retired
@@ -6078,6 +6115,9 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
                 itemEntity->direction = IdleSouth;
                 QsSetRoomFlag(flagBase + 2);
                 QuickStartGauntletForget();
+                // Kit back before the reward is picked up, so a stripped-kit
+                // gauntlet's payout lands in a full inventory.
+                QuickStartHandicapRestore();
             }
             return FALSE;
         }
@@ -6088,10 +6128,459 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         QuickStartGauntletRemember(wave + 1, FALSE);
         return FALSE;
     }
+    // Extra bit 6 makes this a stripped-kit gauntlet. Applied on the way into
+    // wave 1 only - QuickStartHandicapApply is idempotent, but taking the
+    // snapshot once is what makes "give it all back" mean the right thing.
+    // The kit comes back when the reward drops (above) or the moment the
+    // player leaves the room (QuickStartHandicapMonitor), so there is no way
+    // to end up permanently stripped.
+    if ((extra & 0x40) && wave == 0) {
+        QuickStartHandicapApply();
+    }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty);
     QsSetRoomFlag(flagBase + 0);
     QuickStartGauntletRemember(wave, TRUE);
     return FALSE;
+}
+
+// ======================= The handicap ==================================
+//
+// "Take away all of the player's items, buffs and upgrades and leave them
+// with ONE weapon" - used by the hunt quest below and, as a rarer variant,
+// by the ? room wave gauntlet. Everything comes back afterwards whether the
+// challenge is won or lost.
+//
+// WHERE THE SNAPSHOT LIVES. game.o gets no .bss or .data (linker.ld is an
+// absolute NOLOAD layout), so there is nowhere in this file to put one. It
+// goes in gSave instead, in the three u32s the engine itself documents as
+// unused - "timer4", "timer5", "timer6" (save.h). They are already saved,
+// restored and zeroed with everything else, which is exactly the lifetime a
+// snapshot needs, and nothing anywhere in the tree reads them.
+//
+//   timer5 - one bit per entry of sQuickStartHandicapItems that was owned
+//            and has been taken. That is why the list is capped at 32.
+//   timer6 - equipped[0] | equipped[1] << 8 | equippedExtra[0] << 16 |
+//            charm mask << 24. The three equip slots have to be saved
+//            because taking the item out from under them leaves the HUD
+//            pointing at something the player no longer has.
+//   timer4 - the hunt's own countdown, in frames. Not part of the snapshot.
+//
+// WHAT IS NOT TAKEN: bomb and arrow COUNTS. Zeroing the item is already
+// enough to make a weapon unusable, so the counts can be left alone, which
+// saves two bytes of snapshot and one class of bug. The kept weapon is
+// topped up to a working supply instead - see QuickStartHandicapApply.
+#define QUICKSTART_HANDICAP_AMMO 30
+
+// Which room the handicap belongs to, so that walking out of it gives the
+// player their kit back rather than stranding them stripped for the run.
+// FLAG_BANK_11 again, straight after the seam-gauntlet record.
+#define GF_HANDICAP_ACTIVE 59
+#define GF_HANDICAP_AREA_BIT(b) (60 + (b)) // b = 0..6
+#define GF_HANDICAP_ROOM_BIT(b) (67 + (b)) // b = 0..4
+
+// The kit. Everything here is either a weapon, a tool, a movement upgrade or
+// a learned sword skill - i.e. everything the player has EARNED this run.
+// Deliberately absent: the Kinstone Bag and Wallet (bookkeeping, taking them
+// would strand rupees and pieces), bottles (a bottled fairy is a life, and
+// taking lives away is a different and much crueller mechanic than taking
+// weapons away), and the Lon Lon key.
+//
+// Order matters only in that it is the bit order of the timer5 snapshot, so
+// rows must never be reordered or removed without clearing that word - which
+// GameTask_Transition does at every run boundary anyway.
+static const u8 sQuickStartHandicapItems[] = {
+    ITEM_SMITH_SWORD,       ITEM_RED_SWORD,         ITEM_BOMBS,            ITEM_REMOTE_BOMBS,
+    ITEM_BOW,               ITEM_LIGHT_ARROW,       ITEM_BOOMERANG,        ITEM_MAGIC_BOOMERANG,
+    ITEM_SHIELD,            ITEM_MIRROR_SHIELD,     ITEM_LANTERN_OFF,      ITEM_GUST_JAR,
+    ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,        ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
+    ITEM_FIRE_ROD,          ITEM_OCARINA,           ITEM_GRIP_RING,        ITEM_POWER_BRACELETS,
+    ITEM_FLIPPERS,          ITEM_SKILL_SPIN_ATTACK, ITEM_SKILL_ROLL_ATTACK, ITEM_SKILL_DASH_ATTACK,
+    ITEM_SKILL_ROCK_BREAKER, ITEM_SKILL_SWORD_BEAM, ITEM_SKILL_GREAT_SPIN, ITEM_SKILL_DOWN_THRUST,
+    ITEM_SKILL_PERIL_BEAM,  ITEM_BOMBBAG,           ITEM_LARGE_QUIVER,
+};
+#define QUICKSTART_HANDICAP_ITEM_COUNT 31
+
+// The four weapons a handicap may leave you with, in the order the roll
+// indexes them.
+static const u8 sQuickStartHandicapWeapons[] = {
+    ITEM_SMITH_SWORD,
+    ITEM_BOMBS,
+    ITEM_BOW,
+    ITEM_FIRE_ROD,
+};
+
+static bool32 QuickStartHandicapActive(void) {
+    return CheckLocalFlagByBank(FLAG_BANK_11, GF_HANDICAP_ACTIVE) != 0;
+}
+
+// Which weapon this run's handicap challenges leave behind. Rolled fresh at
+// the moment the handicap is applied rather than at run start, because it
+// has to be something the player actually owns - a "bombs only" challenge
+// handed to a run that never found bombs is not hard, it is unplayable.
+// Falls back to the sword, which every run has.
+static u8 QuickStartHandicapPickWeapon(void) {
+    s32 i;
+    s32 roll = (s32)Random() % 4;
+    for (i = 0; i < 4; i++) {
+        u8 item = sQuickStartHandicapWeapons[(roll + i) % 4];
+        if (GetInventoryValue(item) != 0) {
+            return item;
+        }
+    }
+    return ITEM_SMITH_SWORD;
+}
+
+static u8 QuickStartHandicapApply(void) {
+    u8 kept = QuickStartHandicapPickWeapon();
+    u32 taken = 0;
+    s32 i;
+    if (QuickStartHandicapActive()) {
+        return kept; // already stripped; never snapshot on top of a snapshot
+    }
+    gSave.timer6 = (u32)gSave.stats.equipped[0] | ((u32)gSave.stats.equipped[1] << 8) |
+                   ((u32)gSave.stats.equippedExtra[0] << 16) | ((u32)QuickStartCharmMask() << 24);
+    for (i = 0; i < QUICKSTART_HANDICAP_ITEM_COUNT; i++) {
+        u8 item = sQuickStartHandicapItems[i];
+        if (item == kept) {
+            continue;
+        }
+        if (GetInventoryValue(item) != 0) {
+            taken |= (1u << i);
+            SetInventoryValue(item, 0);
+        }
+    }
+    gSave.timer5 = taken;
+    // Charms are ours, not vanilla's, so they are suspended by clearing our
+    // own ownership bits (CalculateDamage reads QuickStartCharmMask) and the
+    // vanilla byte GetPlayerPalette tints from.
+    for (i = 0; i < 3; i++) {
+        ClearLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(i));
+    }
+    gSave.stats.charm = 0;
+    // Put the one weapon where the player's hands already are. A stripped
+    // kit with nothing on A or B reads as a bug, not as a challenge.
+    gSave.stats.equipped[0] = kept;
+    gSave.stats.equipped[1] = kept;
+    gSave.stats.equippedExtra[0] = ITEM_NONE;
+    // Ammo, for the two weapons that need it. Not clawed back afterwards:
+    // that would need two more bytes of snapshot to know what to claw back
+    // to, and leaving the player a few spare bombs is a fair trade for
+    // having taken everything else.
+    if (kept == ITEM_BOMBS && gSave.stats.bombCount < QUICKSTART_HANDICAP_AMMO) {
+        ModBombs(QUICKSTART_HANDICAP_AMMO - gSave.stats.bombCount);
+    }
+    if (kept == ITEM_BOW && gSave.stats.arrowCount < QUICKSTART_HANDICAP_AMMO) {
+        ModArrows(QUICKSTART_HANDICAP_AMMO - gSave.stats.arrowCount);
+    }
+    SetLocalFlagByBank(FLAG_BANK_11, GF_HANDICAP_ACTIVE);
+    QuickStartGauntletWriteBits(GF_HANDICAP_AREA_BIT(0), 7, gRoomControls.area);
+    QuickStartGauntletWriteBits(GF_HANDICAP_ROOM_BIT(0), 5, gRoomControls.room);
+    return kept;
+}
+
+static void QuickStartHandicapRestore(void) {
+    u32 taken = gSave.timer5;
+    u32 slots = gSave.timer6;
+    s32 i;
+    if (!QuickStartHandicapActive()) {
+        return;
+    }
+    for (i = 0; i < QUICKSTART_HANDICAP_ITEM_COUNT; i++) {
+        if (taken & (1u << i)) {
+            SetInventoryValue(sQuickStartHandicapItems[i], 1);
+        }
+    }
+    for (i = 0; i < 3; i++) {
+        if ((slots >> 24) & (1u << i)) {
+            SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(i));
+            // Any one of them will do for the tint; the real effect comes
+            // from the mask, and vanilla only has room for one.
+            gSave.stats.charm = BOTTLE_CHARM_NAYRU + i;
+        }
+    }
+    gSave.stats.equipped[0] = (u8)(slots & 0xff);
+    gSave.stats.equipped[1] = (u8)((slots >> 8) & 0xff);
+    gSave.stats.equippedExtra[0] = (u8)((slots >> 16) & 0xff);
+    gSave.timer5 = 0;
+    gSave.timer6 = 0;
+    ClearLocalFlagByBank(FLAG_BANK_11, GF_HANDICAP_ACTIVE);
+}
+
+// Run every frame from the room monitor. The one job is the safety net:
+// a handicap belongs to the room that applied it, so leaving that room -
+// by any route, including dying - hands the kit straight back. Without it a
+// player who walks out of a stripped-kit fight spends the rest of the run
+// with one weapon and no way to get the rest back.
+static void QuickStartHandicapMonitor(void) {
+    if (!QuickStartHandicapActive()) {
+        return;
+    }
+    if (QuickStartGauntletReadBits(GF_HANDICAP_AREA_BIT(0), 7) != gRoomControls.area ||
+        QuickStartGauntletReadBits(GF_HANDICAP_ROOM_BIT(0), 5) != gRoomControls.room) {
+        QuickStartHandicapRestore();
+    }
+}
+
+// ======================= The hunt quest ================================
+//
+// One giver per run, standing in one region of the chain. Talk to it and a
+// pack of enemies appears with a clock; kill them all before it runs out and
+// it pays. Miss and the giver leaves for good - one attempt per run, per the
+// user's brief.
+//
+// The clock is drawn in the HUD's key slot (DrawKeys, ui.c): QUICKSTART has
+// no dungeons and therefore never any small keys, so that counter, its BG0
+// cells and its digit tiles are all sitting idle and already wired.
+//
+// Telling hunt enemies apart from the region's own endless waves matters,
+// because both are in the same room at the same time. They are marked with
+// enemyFlags bit 7, the one bit of that field vanilla never defines (enemy.h
+// stops at EM_FLAG_MONITORED, 1 << 6).
+#define QUICKSTART_EM_FLAG_HUNT (1 << 7)
+// Two digits is what the key counter draws, so the limit has to stay under
+// 100 seconds. 45 is enough to cross most of a region and fight, and short
+// enough that dawdling loses.
+#define QUICKSTART_HUNT_SECONDS 45
+#define QUICKSTART_HUNT_FRAMES (QUICKSTART_HUNT_SECONDS * 60)
+#define QUICKSTART_HUNT_MIN_ENEMIES 4
+#define QUICKSTART_HUNT_MAX_ENEMIES 8
+
+#define GF_HUNT_ROLLED 74
+#define GF_HUNT_SLOT_BIT(b) (75 + (b))  // b = 0..1, which chain slot hosts it
+#define GF_HUNT_SPOT_BIT(b) (77 + (b))  // b = 0..4, index into the region's own offsets
+#define GF_HUNT_HANDICAP 82             // this run's hunt is the stripped-kit variant
+#define GF_HUNT_STATE_BIT(b) (83 + (b)) // b = 0..1
+#define QUICKSTART_HUNT_OFFERED 0
+#define QUICKSTART_HUNT_RUNNING 1
+#define QUICKSTART_HUNT_WON 2
+#define QUICKSTART_HUNT_FAILED 3
+
+static s32 QuickStartHuntState(void) {
+    return (s32)QuickStartGauntletReadBits(GF_HUNT_STATE_BIT(0), 2);
+}
+
+static void QuickStartHuntSetState(s32 state) {
+    QuickStartGauntletWriteBits(GF_HUNT_STATE_BIT(0), 2, (u32)state);
+}
+
+// One draw per run, from the region monitor like every other per-run draw.
+// One in three hunts is the handicap variant - uncommon enough to be a
+// surprise, common enough to be worth building.
+static void QuickStartHuntRollOnce(void) {
+    if (CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_ROLLED)) {
+        return;
+    }
+    QuickStartGauntletWriteBits(GF_HUNT_SLOT_BIT(0), 2, (u32)((s32)Random() % QuickStartRegionChainLength()));
+    QuickStartGauntletWriteBits(GF_HUNT_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
+    if ((s32)Random() % 3 == 0) {
+        SetLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP);
+    }
+    QuickStartHuntSetState(QUICKSTART_HUNT_OFFERED);
+    SetLocalFlagByBank(FLAG_BANK_11, GF_HUNT_ROLLED);
+}
+
+// Where the giver stands. The region's own enemy-offset table is used for
+// the same reason the pot quest uses it: every entry is a pre-verified
+// walkable spot in that room, already filtered for item-gated zones by
+// QuickStartPositionAllowed. Walks forward from the rolled index so a
+// blocked spot falls through to the next rather than dropping the quest.
+static bool32 QuickStartHuntSpot(const QuickStartRegion* region, s16* outX, s16* outY) {
+    s32 i;
+    s32 start;
+    if (region->enemyOffsetCount <= 0) {
+        return FALSE;
+    }
+    start = (s32)QuickStartGauntletReadBits(GF_HUNT_SPOT_BIT(0), 5) % region->enemyOffsetCount;
+    for (i = 0; i < region->enemyOffsetCount; i++) {
+        s32 idx = (start + i) % region->enemyOffsetCount;
+        s16 x = region->enemyOffsets[idx][0];
+        s16 y = region->enemyOffsets[idx][1];
+        if (QuickStartPositionAllowed(x, y)) {
+            *outX = x;
+            *outY = y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static s32 QuickStartCountHuntEnemies(void) {
+    s32 i, count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && (((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+static void QuickStartHuntClearPack(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && (((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
+// The pack. One enemy type, at the run's difficulty plus a tier - a hunt is
+// meant to be a step up from the wave the player is already fighting - and
+// placed through the normal open-tile placer around the giver, so the fight
+// starts where the conversation did rather than somewhere across the map.
+static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
+    u8 id, form;
+    s32 count, i;
+    QuickStartPickEnemy(QuickStartGetDifficulty() + 2, &id, &form);
+    count = QUICKSTART_HUNT_MIN_ENEMIES + QuickStartGetDifficulty() / 2;
+    if (count > QUICKSTART_HUNT_MAX_ENEMIES) {
+        count = QUICKSTART_HUNT_MAX_ENEMIES;
+    }
+    // Marked after the fact rather than by the placer, which has no idea what
+    // it is placing for. Anything unmarked in the room at this instant is a
+    // wave enemy and stays that way, so the two sets never mix.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY) {
+            ((Enemy*)ent)->enemyFlags &= ~QUICKSTART_EM_FLAG_HUNT;
+        }
+    }
+    QuickStartSpawnEnemiesOnOpenTiles(id, form, spotX, spotY, count);
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && ent->id == id && ent->type == form &&
+            !(((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+            ((Enemy*)ent)->enemyFlags |= QUICKSTART_EM_FLAG_HUNT;
+        }
+    }
+}
+
+// Seconds left, or -1 when no hunt is running. ui.c's DrawKeys reads this
+// every frame to decide whether the key slot shows a clock.
+s32 QuickStartHuntSecondsLeft(void) {
+    if (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING || gSave.timer4 == 0) {
+        return -1;
+    }
+    // Round up, so the last second is shown as 1 rather than 0. Signed on
+    // purpose: agbcc turns a division by a signed constant into shifts, but
+    // emits __udivsi3 - which its runtime lib does not provide - for the
+    // unsigned form, and gSave.timer4 is a u32.
+    return ((s32)gSave.timer4 + 59) / 60;
+}
+
+// --- The three script hooks (data/scripts/quickstart/script_QuickStartHunt.inc)
+//
+// ScriptCommand_Call invokes its target as (Entity*, ScriptExecutionContext*)
+// and the target answers a JumpIf by writing context->condition, which is why
+// these take the pair rather than returning a value.
+void QuickStartHuntCanStart(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = (QuickStartHuntState() == QUICKSTART_HUNT_OFFERED);
+}
+
+void QuickStartHuntIsHandicap(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP) != 0;
+}
+
+void QuickStartHuntBegin(Entity* entity, ScriptExecutionContext* context) {
+    if (QuickStartHuntState() != QUICKSTART_HUNT_OFFERED) {
+        return;
+    }
+    if (CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)) {
+        QuickStartHandicapApply();
+    }
+    QuickStartHuntSpawnPack(entity->x.HALF.HI - gRoomControls.origin_x, entity->y.HALF.HI - gRoomControls.origin_y);
+    gSave.timer4 = QUICKSTART_HUNT_FRAMES;
+    QuickStartHuntSetState(QUICKSTART_HUNT_RUNNING);
+    SoundReq(SFX_SECRET);
+}
+
+// Called every frame from QuickStartRegionMonitor for the hosting slot.
+static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
+    s32 state;
+    s16 spotX, spotY;
+    QuickStartHuntRollOnce();
+    if (slot != (s32)QuickStartGauntletReadBits(GF_HUNT_SLOT_BIT(0), 2)) {
+        return;
+    }
+    state = QuickStartHuntState();
+    if (state == QUICKSTART_HUNT_RUNNING) {
+        if (QuickStartCountHuntEnemies() == 0) {
+            // Won. The handicap comes off first, so the reward lands in a
+            // full kit rather than being picked up by a stripped one.
+            QuickStartHandicapRestore();
+            QuickStartHuntSetState(QUICKSTART_HUNT_WON);
+            gSave.timer4 = 0;
+            if (QuickStartHuntSpot(region, &spotX, &spotY)) {
+                Entity* itemEntity =
+                    CreateObject(GROUND_ITEM,
+                                 CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
+                                     ? QuickStartPickRareReward((s32)Random())
+                                     : sQuickStartLadderRewardPool[(s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE],
+                                 0);
+                if (itemEntity != NULL) {
+                    itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
+                    itemEntity->y.HALF.HI = gRoomControls.origin_y + spotY;
+                    itemEntity->collisionLayer = 1;
+                    itemEntity->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(itemEntity);
+                    itemEntity->direction = IdleSouth;
+                }
+            }
+            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 17));
+            MsgInit();
+            return;
+        }
+        if (gSave.timer4 != 0) {
+            gSave.timer4--;
+        }
+        if (gSave.timer4 == 0) {
+            // Out of time. The pack goes, the kit comes back, and the giver
+            // is done with this run.
+            QuickStartHuntClearPack();
+            QuickStartHandicapRestore();
+            QuickStartHuntSetState(QUICKSTART_HUNT_FAILED);
+            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 18));
+            MsgInit();
+        }
+        return;
+    }
+    if (state != QUICKSTART_HUNT_OFFERED) {
+        // Won or failed: the giver has nothing left to offer, and a failed
+        // one has walked off, so neither gets re-spawned.
+        return;
+    }
+    if (!QuickStartHuntSpot(region, &spotX, &spotY)) {
+        return;
+    }
+    {
+        // Position is the identity check, exactly as it is for the kinstone
+        // fusers: it survives the entity list being rebuilt on every room
+        // load, which a "did I spawn yet" flag would not.
+        s32 worldX = gRoomControls.origin_x + spotX;
+        s32 worldY = gRoomControls.origin_y + spotY;
+        s32 e;
+        Entity* npc;
+        for (e = 0; e < MAX_ENTITIES; e++) {
+            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == ZELDA &&
+                gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
+                return;
+            }
+        }
+        if (!QuickStartGfxBudgetForSpawn()) {
+            return;
+        }
+        npc = CreateNPC(ZELDA, 0, 0);
+        if (npc == NULL) {
+            return;
+        }
+        npc->x.HALF.HI = worldX;
+        npc->y.HALF.HI = worldY;
+        npc->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(npc);
+        npc->direction = IdleSouth;
+        QuickStartMakeNpcTalkable(npc, &script_QuickStartHunt);
+    }
 }
 
 // The pot room.
@@ -7551,6 +8040,14 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     }
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
         extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        // Bit 6 on a WAVES site: the stripped-kit variant (see
+        // QuickStartHandicapApply). One gauntlet in four, which lands it
+        // between "uncommon" and "rare" once you account for WAVES itself
+        // being one roll among several - the user asked for that band.
+        // Chest sites never read bit 6, so sharing the field is free.
+        if (kind == LADDER_KIND_WAVES && (s32)Random() % 4 == 0) {
+            extra |= 0x40;
+        }
         if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_RARE) {
             // Bit 7 = draw the drop from sQuickStartRareRewardPool instead.
             // Rolled into the stored extra rather than checked at drop time
@@ -9913,6 +10410,10 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartDrawDifficultyHUD();
+    // Every room, not just the ones that can apply a handicap: its whole job
+    // is to notice that the player has LEFT the room that stripped them and
+    // hand the kit back.
+    QuickStartHandicapMonitor();
     // Before the containment checks, so they judge the onward hop this
     // starts rather than cancelling it.
     QuickStartSkipMelarisMine();
