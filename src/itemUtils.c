@@ -561,9 +561,18 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 if (kinstoneWeight < 60) {
                     kinstoneWeight = 60;
                 }
-                droptable.s.kinstoneRed += kinstoneWeight;
-                droptable.s.kinstoneBlue += kinstoneWeight;
-                droptable.s.kinstoneGreen += kinstoneWeight;
+                // ASSIGNED, not added. Vanilla's "this enemy never drops
+                // this" sentinel is -999, not 0 (see gEnemyDroptables), and
+                // SumDropProbabilities2 clamps negatives to zero - so
+                // "+= 180" on a -999 field is -819, still clamps to zero,
+                // and the piece never drops. That is exactly why the first
+                // attempt at this produced no kinstones at all in play.
+                // Assigning overrides the sentinel, which is the point:
+                // in this mode every enemy pays kinstones, regardless of
+                // whether its vanilla table allowed them.
+                droptable.s.kinstoneRed = kinstoneWeight;
+                droptable.s.kinstoneBlue = kinstoneWeight;
+                droptable.s.kinstoneGreen = kinstoneWeight;
             }
 #endif
             ptr2 = &gDroptableModifiers[DROPTABLE_NONE];
