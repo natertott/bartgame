@@ -211,6 +211,8 @@ static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
+static bool32 QuickStartPositionAllowed(s16, s16);
+static bool32 QuickStartGfxBudgetForSpawn(void);
 static s32 QuickStart2DoorExitSide(void);
 static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
@@ -1689,6 +1691,8 @@ const u8* const gCustomStrings[] = {
     // reward drop). Delivered via GiveItem, which is silent on its own, so
     // this message is the whole pickup moment.
     [13] = (const u8*)"You won the Red Sword!\nEquip it from the menu.",
+    // The hidden-item quest's completion line (QuickStartSetupRegionQuest).
+    [14] = (const u8*)"You found what was\nhidden here!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3024,6 +3028,142 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
 // convention elsewhere (Melari's Mine/Castle Garden already call their
 // reward spawner before their enemy spawner, so a full room doesn't cost
 // the reward its entity slot).
+// --- Overworld side-quests: the hidden-item quest -------------------------
+//
+// The first of the quest kinds, and deliberately the cheapest one, chosen
+// to prove the framework rather than to show off (see
+// docs/QUICKSTART_QUEST_RESEARCH.md): scattered pots across one region,
+// exactly one of which hides a real reward. Search them to find it.
+//
+// It costs essentially nothing in the currency that actually binds. Pots
+// share a single sprite sheet - measured repeatedly, 40+ of them render
+// fine anywhere - and the reward is a GROUND_ITEM whose sheet is resident
+// in every region already, so the quest adds ~0 to the GFX table that
+// South and North Hyrule Field were saturating. That is the whole reason
+// this one goes first.
+//
+// State lives in FLAG_BANK_11, which has 160 free bits (we use 32 for the
+// region wave counters). QUICKSTART's own flag window is down to 42 free
+// offsets, so quests are deliberately housed away from it.
+#define GF_QUEST_ROLLED 32
+#define GF_QUEST_SLOT_BIT(b) (33 + (b)) // b = 0..1, which chain slot hosts it
+#define GF_QUEST_HIDE_BIT(b) (35 + (b)) // b = 0..3, which pot holds the prize
+#define GF_QUEST_DONE 39
+
+#define QUICKSTART_QUEST_POTS 8
+#define QUICKSTART_QUEST_REWARD ITEM_HEART_PIECE
+
+static bool32 QuickStartQuestFlag(s32 bit) {
+    return CheckLocalFlagByBank(FLAG_BANK_11, bit) != 0;
+}
+
+static void QuickStartQuestSetFlag(s32 bit) {
+    SetLocalFlagByBank(FLAG_BANK_11, bit);
+}
+
+// One draw per run, rolled unconditionally from the room monitor like every
+// other per-run draw (the hub is bypassed, so nothing may depend on a
+// particular room being entered).
+static void QuickStartRandomizeQuestOnce(void) {
+    s32 slot, hide, b;
+    if (QuickStartQuestFlag(GF_QUEST_ROLLED)) {
+        return;
+    }
+    slot = (s32)Random() % QuickStartRegionChainLength();
+    hide = (s32)Random() % QUICKSTART_QUEST_POTS;
+    for (b = 0; b < 2; b++) {
+        if (slot & (1 << b)) {
+            QuickStartQuestSetFlag(GF_QUEST_SLOT_BIT(b));
+        }
+    }
+    for (b = 0; b < 4; b++) {
+        if (hide & (1 << b)) {
+            QuickStartQuestSetFlag(GF_QUEST_HIDE_BIT(b));
+        }
+    }
+    QuickStartQuestSetFlag(GF_QUEST_ROLLED);
+}
+
+static s32 QuickStartQuestSlot(void) {
+    return (QuickStartQuestFlag(GF_QUEST_SLOT_BIT(0)) ? 1 : 0) | (QuickStartQuestFlag(GF_QUEST_SLOT_BIT(1)) ? 2 : 0);
+}
+
+static s32 QuickStartQuestHiddenIndex(void) {
+    s32 b, value = 0;
+    for (b = 0; b < 4; b++) {
+        if (QuickStartQuestFlag(GF_QUEST_HIDE_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+// Pots go on the region's OWN enemy-offset table rather than anywhere
+// derived: every entry in it is a pre-verified walkable spot in that room,
+// which is exactly the property a searchable pot needs, and it is already
+// filtered for item-gated zones by QuickStartPositionAllowed. Spread by
+// striding through the table so the search covers the region instead of
+// clustering in one corner.
+static void QuickStartSpawnQuestPots(const QuickStartRegion* region) {
+    s32 i, placed = 0, stride, hidden;
+    if (region->enemyOffsetCount <= 0) {
+        return;
+    }
+    hidden = QuickStartQuestHiddenIndex() % QUICKSTART_QUEST_POTS;
+    stride = region->enemyOffsetCount / QUICKSTART_QUEST_POTS;
+    if (stride < 1) {
+        stride = 1;
+    }
+    for (i = 0; i < region->enemyOffsetCount && placed < QUICKSTART_QUEST_POTS; i += stride) {
+        s16 x = region->enemyOffsets[i][0];
+        s16 y = region->enemyOffsets[i][1];
+        Entity* pot;
+        if (!QuickStartPositionAllowed(x, y)) {
+            continue;
+        }
+        // Honour the same reserve every other spawner does, even though pots
+        // are cheap - the point of the reserve is that nothing gets to be
+        // the exception.
+        if (!QuickStartGfxBudgetForSpawn()) {
+            return;
+        }
+        // Form 0xFF is an ordinary empty pot; the hidden one carries the
+        // reward, which is exactly how the pot lottery already hides its
+        // prize (QuickStartPotRoomFill).
+        pot = CreateObject(POT, (placed == hidden) ? QUICKSTART_QUEST_REWARD : (u32)0xFF, 0);
+        if (pot != NULL) {
+            pot->x.HALF.HI = gRoomControls.origin_x + x;
+            pot->y.HALF.HI = gRoomControls.origin_y + y;
+            pot->collisionLayer = 1;
+            pot->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(pot);
+        }
+        placed++;
+    }
+}
+
+// Room flag 53: pots laid out this visit. Room flag 54: the prize has been
+// seen on the floor, so its disappearance means "picked up" rather than
+// "never spawned" - the same distinction QuickStartGroundItemAt exists for
+// everywhere else in this file.
+static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot) {
+    if (QuickStartQuestFlag(GF_QUEST_DONE) || slot != QuickStartQuestSlot()) {
+        return;
+    }
+    if (!QsCheckRoomFlag(53)) {
+        QsSetRoomFlag(53);
+        QuickStartSpawnQuestPots(region);
+        return;
+    }
+    if (QuickStartGroundItemOfForm(QUICKSTART_QUEST_REWARD)) {
+        QsSetRoomFlag(54);
+    } else if (QsCheckRoomFlag(54)) {
+        QuickStartQuestSetFlag(GF_QUEST_DONE);
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 14));
+        MsgInit();
+    }
+}
+
 static void QuickStartRegionMonitor(s32 slot) {
     const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
     if (region->quirkHook != NULL) {
@@ -3035,6 +3175,7 @@ static void QuickStartRegionMonitor(s32 slot) {
     if (slot == QuickStartRegionChainLength() - 1) {
         QuickStartShowRegionFinalHintOnce();
     }
+    QuickStartSetupRegionQuest(region, slot);
     QuickStartSpawnRegionRewardOnce(region, slot);
     QuickStartSpawnRegionEnemiesOnce(region, slot);
 }
@@ -3870,7 +4011,66 @@ static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
 // bounded. Measured in the emulator: without this cap, a 50-enemy Lon Lon
 // Ranch wave at difficulty 8 held only 31 live enemies (GFX slots ran out
 // partway through); with it, 33 - and at difficulty 12, 29 vs 36.
-#define QUICKSTART_MAX_ENEMY_KINDS 5
+// --- The GFX-slot budget -------------------------------------------------
+//
+// MAX_GFX_SLOTS is 44 for the whole game, and it - not MAX_ENTITIES - is
+// what the overworld actually runs out of. Measured with
+// tools/quickstart/measure_budget.py on the build before this change:
+// South Hyrule Field and North Hyrule Field both reach 44/44 by difficulty
+// 8-12, i.e. ZERO free slots, and North Hyrule Field at difficulty 12
+// spawns FEWER enemies (27) than at difficulty 4 (50) because allocation
+// starts failing partway through the wave.
+//
+// The kind cap below bounds how many sprite SHEETS a wave asks for, which
+// helped, but it is not sufficient on its own: a slot dump at difficulty 12
+// showed 4 palette slots, 6 shared sheets, and ELEVEN per-instance
+// allocations (refCount 1 each) that scale with the enemies themselves
+// rather than with the number of kinds. So the sheet count alone cannot
+// guarantee headroom - only looking at the live table can.
+//
+// Hence a runtime reserve, per the user's own call: never occupy the last
+// slots, because a full table both drops sprites and costs frame time.
+//
+// Two mechanisms, because one is not enough. The spawn-time checks below
+// are necessary but NOT sufficient: CreateEnemy only allocates the entity,
+// and each enemy loads its own sheet later from its own Init, so during a
+// burst spawn the table still reads empty and every check passes. Measured
+// - adding the spawn-time guard alone changed the curve by exactly nothing.
+// QuickStartEnforceGfxReserve below is what actually holds the invariant,
+// by checking every frame after the cost has been paid.
+#define QUICKSTART_GFX_RESERVE 4
+#define QUICKSTART_GFX_HARD_FLOOR 2
+
+static s32 QuickStartFreeGfxSlots(void) {
+    s32 i, freeSlots = 0;
+    for (i = 0; i < MAX_GFX_SLOTS; i++) {
+        if (gGFXSlots.slots[i].status == GFX_SLOT_FREE) {
+            freeSlots++;
+        }
+    }
+    return freeSlots;
+}
+
+// Is there room to load a sprite sheet we have not already paid for?
+static bool32 QuickStartGfxBudgetForNewKind(void) {
+    return QuickStartFreeGfxSlots() > QUICKSTART_GFX_RESERVE;
+}
+
+// Is there room to put ANY further entity on screen?
+static bool32 QuickStartGfxBudgetForSpawn(void) {
+    return QuickStartFreeGfxSlots() > QUICKSTART_GFX_HARD_FLOOR;
+}
+
+// Spawn-count ceiling as a function of difficulty, in service of the GFX
+// reserve (see QUICKSTART_GFX_RESERVE). Tuned by measurement, not theory:
+// the numbers below are the first set that kept every region above the
+// hard floor on every frame at difficulties 0/4/8/12, while leaving the
+// low-difficulty counts (where sprites are cheap) untouched.
+#define QUICKSTART_GFX_SPAWN_CAP_BASE 64
+#define QUICKSTART_GFX_SPAWN_CAP_SLOPE 4
+#define QUICKSTART_GFX_SPAWN_CAP_MIN 16
+
+#define QUICKSTART_MAX_ENEMY_KINDS 3
 
 // Shared by every QUICKSTART enemy spawner: picks `count` distinct spots
 // out of this room's own pre-verified-walkable offset pool (a partial
@@ -4015,10 +4215,41 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     if (count > cap) {
         count = cap;
     }
+    // A second cap, this one paid in GFX rather than in floor space. The
+    // level-4/5 roster costs far more sprite table per enemy than the
+    // level-1/2 one (a slot dump at difficulty 12 showed eleven
+    // per-instance allocations that simply do not exist at difficulty 0),
+    // so the SAME enemy count gets more expensive as difficulty climbs.
+    //
+    // This has to be a spawn-time cap rather than left to
+    // QuickStartEnforceGfxReserve, because that runs after the fact: for
+    // the frames between a burst spawn and the reserve's next pass the
+    // table really is full, and anything trying to load a sheet in that
+    // window - a quest sprite, a reward, a fuser - silently gets nothing.
+    // The invariant checker's gfx tier samples every frame and catches
+    // exactly that transient.
+    {
+        s32 gfxCap = QUICKSTART_GFX_SPAWN_CAP_BASE - difficulty * QUICKSTART_GFX_SPAWN_CAP_SLOPE;
+        if (gfxCap < QUICKSTART_GFX_SPAWN_CAP_MIN) {
+            gfxCap = QUICKSTART_GFX_SPAWN_CAP_MIN;
+        }
+        if (count > gfxCap) {
+            count = gfxCap;
+        }
+    }
 
     for (i = 0; i < count; i++) {
         j = indices[i];
-        if (kindCount < QUICKSTART_MAX_ENEMY_KINDS) {
+        // Stop entirely rather than spend the last slots (see
+        // QUICKSTART_GFX_RESERVE): a full table drops sprites and costs
+        // frame time.
+        if (!QuickStartGfxBudgetForSpawn()) {
+            break;
+        }
+        // A brand-new kind costs a sheet; an already-used one is free. Roll
+        // a new kind only while the budget can pay for it - below the
+        // reserve we keep the density and reuse what is already loaded.
+        if (kindCount < QUICKSTART_MAX_ENEMY_KINDS && (kindCount == 0 || QuickStartGfxBudgetForNewKind())) {
             QuickStartPickEnemy(difficulty, &id, &form);
             kindIds[kindCount] = id;
             kindForms[kindCount] = form;
@@ -5324,6 +5555,71 @@ static bool32 QuickStartEnemyIsOurs(Entity* ent) {
     return (ent->flags & ENT_PERSIST) || QuickStartEntityInCurrentRoom(ent);
 }
 
+// Holds the GFX reserve after the fact, which is the only point at which
+// the true cost is visible (see the QUICKSTART_GFX_RESERVE comment). Run
+// every frame from the room monitor: while the table is below the reserve,
+// delete our own surplus enemies, FARTHEST FROM THE PLAYER first, so the
+// thing that disappears is off-screen rather than the one being fought.
+//
+// Two safeties. It only ever touches enemies WE spawned
+// (QuickStartEnemyIsOurs), never vanilla room content and never the
+// player. And it refuses to act at all below a floor of live enemies, so a
+// miniboss pack, a wave-room fight or a quest group - all small, all
+// deliberately placed - can never be eaten by it; only the big overworld
+// density fills are ever trimmed.
+//
+// One per pass, one pass every 64 frames: deleting an entity does not
+// release its slot immediately (the gfx table is reference-counted and
+// cleaned up later), so trimming greedily would delete far more than the
+// reserve actually needs.
+#define QUICKSTART_GFX_REAP_FLOOR 10
+
+static void QuickStartEnforceGfxReserve(void) {
+    s32 reaped;
+    // Only act on one frame in 64. A deleted entity does not release its
+    // gfx slot on the same frame, so an unthrottled reaper keeps reading
+    // "still below the reserve" and trims all the way to the floor -
+    // measured: North Hyrule Field at difficulty 8 fell from 63 live
+    // enemies to 10. Spacing the passes out lets the table settle between
+    // them, so it removes what the reserve needs and then stops. 16 frames
+    // was still too eager at difficulty 12; 64 leaves the count intact
+    // wherever the reserve is already satisfied.
+    if ((gRoomTransition.frameCount & 63) != 0) {
+        return;
+    }
+    for (reaped = 0; reaped < 1; reaped++) {
+        s32 i, worst = -1, worstDist = -1, ours = 0;
+        if (QuickStartFreeGfxSlots() >= QUICKSTART_GFX_RESERVE) {
+            return;
+        }
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* enemy = &gEntities[i].base;
+            s32 dx, dy, dist;
+            if (!QuickStartEnemyIsOurs(enemy)) {
+                continue;
+            }
+            ours++;
+            dx = enemy->x.HALF.HI - gPlayerEntity.base.x.HALF.HI;
+            dy = enemy->y.HALF.HI - gPlayerEntity.base.y.HALF.HI;
+            if (dx < 0) {
+                dx = -dx;
+            }
+            if (dy < 0) {
+                dy = -dy;
+            }
+            dist = dx + dy;
+            if (dist > worstDist) {
+                worstDist = dist;
+                worst = i;
+            }
+        }
+        if (worst < 0 || ours <= QUICKSTART_GFX_REAP_FLOOR) {
+            return;
+        }
+        DeleteEntity(&gEntities[worst].base);
+    }
+}
+
 static s32 QuickStartCountRoomEnemies(void) {
     s32 i, count;
     count = 0;
@@ -5494,6 +5790,12 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
                     }
                     if (QuickStartEnemyNearTile(tx, ty, relax == 0 ? 2 : 1)) {
                         continue;
+                    }
+                    // Same GFX reserve every other spawner honours - a
+                    // miniboss pack or a quest group must not be what
+                    // fills the last slots.
+                    if (!QuickStartGfxBudgetForSpawn()) {
+                        return placed;
                     }
                     enemy = CreateEnemy(id, form);
                     if (enemy == NULL) {
@@ -9366,6 +9668,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartRandomizeMelariEastOnce();
     QuickStartRandomizeMelariSoutheastOnce();
     QuickStartRandomizeShopOnce();
+    QuickStartRandomizeQuestOnce();
     // Also unconditional: the two rooms that need it today are Castle
     // Garden Main and Link's House, but the checks are per-entity rather
     // than per-room, so any other room's hidden ladder or stuck house door
@@ -9377,6 +9680,9 @@ static void QuickStartRoomMonitor(void) {
     QuickStartUnlockRanchHouseDoors();
     QuickStartFillBoulderHoles();
     QuickStartUpdateSwitchBridges();
+    // Global invariant, so it runs everywhere rather than only in the
+    // regions that spawn: keep free GFX slots above the reserve.
+    QuickStartEnforceGfxReserve();
     QuickStartStirRandom();
     // Retired along with sQuickStartLadderEntrances itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it

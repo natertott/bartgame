@@ -13,6 +13,8 @@ Tiers:
             ground, exit box inside room bounds and off the border row.
   pool      20 boots: every 2-door pool row's entrance is real open floor
   entrances (not solid, not water) and its content spot is in bounds.
+  gfx       20 boots: no region runs the 44-slot GFX table below its
+  budget    reserve at any difficulty (a full table drops sprites).
   rooms     ~45 emulator boots: every ? room lands; every content site's
             spot is open, in bounds, and in the entrance's reachable
             component (multi-site rooms instead require one distinct floor
@@ -109,6 +111,48 @@ def emu_regions(rom):
             out.append(('WARN', f"{r['roomName']}: " + '; '.join(warns)))
         else:
             out.append(('PASS', f"{r['roomName']}: entrance/reward/exit box OK"))
+    return out
+
+
+def emu_gfx_budget(rom):
+    """No region may run the GFX table down to nothing, at any difficulty.
+
+    MAX_GFX_SLOTS is 44 game-wide and it is the overworld's real ceiling -
+    a full table drops sprites (entities exist, nothing renders) and costs
+    frame time. Before the reserve existed, South and North Hyrule Field
+    both sat at 44/44 from difficulty 8 up. QuickStartEnforceGfxReserve now
+    holds a floor; this tier is what stops it regressing.
+    """
+    from emu import boot, warp, here, qs_set, GENT, STRIDE, MAX_ENT
+    MAX_GFX, GFXBASE, DIFF0 = 44, 0x02024490, 174
+    FLOOR = 2  # the hard floor QUICKSTART_GFX_HARD_FLOOR promises
+    out = []
+    for r in P.region_pool():
+        worst_free, worst_diff = MAX_GFX, None
+        landed_any = False
+        for diff in (0, 4, 8, 12):
+            c = boot(rom)
+            for b in range(4):
+                qs_set(c, DIFF0 + b, (diff >> b) & 1)
+            c.memory.u8[0x03000bf0 + 4] = 0
+            warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
+            if here(c) != (r['area'], r['room']):
+                continue
+            landed_any = True
+            for _ in range(600):
+                c.run_frame()
+                used = sum(1 for i in range(MAX_GFX)
+                           if (c.memory.u8[GFXBASE + 4 + i * 12] & 0x0F) not in (0, 1, 2))
+                if MAX_GFX - used < worst_free:
+                    worst_free, worst_diff = MAX_GFX - used, diff
+            del c
+        if not landed_any:
+            out.append(('WARN', f"{r['roomName']}: never landed, GFX not measured"))
+        elif worst_free < FLOOR:
+            out.append(('FAIL', f"{r['roomName']}: only {worst_free} free GFX slots at "
+                                f"difficulty {worst_diff} (floor is {FLOOR})"))
+        else:
+            out.append(('PASS', f"{r['roomName']}: >= {worst_free} free GFX slots at every difficulty"))
     return out
 
 
@@ -279,6 +323,8 @@ def main():
         if '--rooms' not in args:
             results.append(('regions', emu_regions(rom)))
             results.append(('pool entrances', emu_pool_entrances(rom)))
+        if '--gfx' in args or ('--rooms' not in args and '--regions' not in args):
+            results.append(('gfx budget', emu_gfx_budget(rom)))
         if '--regions' not in args:
             n_rooms = len({(a, r) for _, _, a, r, _, _ in P.content_sites()}) + len(P.pool_doors()) + 1
             batch = []
