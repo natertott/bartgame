@@ -6040,9 +6040,86 @@ static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
 // pass two re-seeds and lays the room down for real. Both passes run before
 // a single pot exists, which matters: a pot WRITES collision, so a pass run
 // after any of them are standing would see a different map.
+// --- Pot placement reachability ------------------------------------------
+//
+// "Open" is not the same as "the player can get there". The Lon Lon Ranch
+// through-cave is the case that proved it: a 15x16 room split by a solid
+// wall across row 8, with the arrival chamber above it and a second chamber
+// below. Both halves are open floor, both fall inside the fill's rings, so
+// the generator happily laid pots in the lower half - which the player
+// cannot reach from where they come in. The reported symptom was pots
+// "spawning outside the walkable space".
+//
+// So the fill is restricted to the anchor's own connected component. The
+// set is computed ONCE, before any pot exists, which matters: a pot writes
+// collision onto its own tile as it spawns, so a set computed later would
+// see the fill walling itself off and shrink as it went.
+//
+// Flood fill by repeated sweeps rather than a queue: a queue big enough for
+// the worst-case room is far more stack than this is worth, while the
+// bitmap is 512 bytes and the rooms that host pot lotteries are small. It
+// runs once per room entry, not per frame.
+#define QUICKSTART_REACH_BYTES (64 * 64 / 8)
+#define QUICKSTART_REACH_GET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] & (1 << ((((y) << 6) | (x)) & 7)))
+#define QUICKSTART_REACH_SET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] |= (1 << ((((y) << 6) | (x)) & 7)))
+
+static void QuickStartMarkReachableTiles(u8* bits, s32 anchorTX, s32 anchorTY) {
+    s32 w = (s32)(gRoomControls.width >> 4);
+    s32 h = (s32)(gRoomControls.height >> 4);
+    s32 x, y, i, changed;
+    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
+        bits[i] = 0;
+    }
+    if (w > 64) {
+        w = 64;
+    }
+    if (h > 64) {
+        h = 64;
+    }
+    if (anchorTX < 0 || anchorTY < 0 || anchorTX >= w || anchorTY >= h || !QuickStartTileIsOpen(anchorTX, anchorTY)) {
+        return; // no seed - caller treats an empty set as "no restriction"
+    }
+    QUICKSTART_REACH_SET(bits, anchorTX, anchorTY);
+    do {
+        changed = 0;
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w; x++) {
+                if (QUICKSTART_REACH_GET(bits, x, y) || !QuickStartTileIsOpen(x, y)) {
+                    continue;
+                }
+                if ((x > 0 && QUICKSTART_REACH_GET(bits, x - 1, y)) ||
+                    (y > 0 && QUICKSTART_REACH_GET(bits, x, y - 1)) ||
+                    (x + 1 < w && QUICKSTART_REACH_GET(bits, x + 1, y)) ||
+                    (y + 1 < h && QUICKSTART_REACH_GET(bits, x, y + 1))) {
+                    QUICKSTART_REACH_SET(bits, x, y);
+                    changed = 1;
+                }
+            }
+        }
+    } while (changed);
+}
+
+// An empty set means the seed was unusable, in which case the old
+// unrestricted behaviour is better than placing nothing at all.
+static bool32 QuickStartReachAllows(const u8* bits, s32 tx, s32 ty) {
+    s32 i;
+    if (tx < 0 || ty < 0 || tx >= 64 || ty >= 64) {
+        return FALSE;
+    }
+    if (QUICKSTART_REACH_GET(bits, tx, ty)) {
+        return TRUE;
+    }
+    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
+        if (bits[i] != 0) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed, s32 anchorTX, s32 anchorTY,
                                  s32 apron, s32 target, s32 winnerIndex, s32 prizeIndex, s32 ownerSite,
-                                 bool32 spawn) {
+                                 bool32 spawn, const u8* reach) {
     u32 state = seed;
     s32 ring, placed = 0, traps = 0, enemiesLeft = spawn ? preset->enemies : 0;
 
@@ -6071,6 +6148,7 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
                     return placed;
                 }
                 if (QuickStartPotRoomInApron(dx, dy, apron) || !QuickStartTileIsOpen(tx, ty) ||
+                    !QuickStartReachAllows(reach, tx, ty) ||
                     !QuickStartTileBelongsToSite(tx, ty, ownerSite)) {
                     continue;
                 }
@@ -6127,6 +6205,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     s32 open = QuickStartCountOpenTiles();
     s32 target = (open * preset->fill) >> 8;
     s32 apron, actual, winnerIndex;
+    u8 reach[QUICKSTART_REACH_BYTES];
 
     if (target > QUICKSTART_POT_ROOM_MAX_POTS) {
         target = QUICKSTART_POT_ROOM_MAX_POTS;
@@ -6152,8 +6231,12 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     // a plus shape instead.
     apron = (open >= 24) ? 1 : 0;
 
+    // Computed here, once, and shared by both passes - and deliberately
+    // before a single pot exists, since pots write their own collision.
+    QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
+
     actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
-                                   FALSE);
+                                   FALSE, reach);
     if (actual <= 0 && ownerSite >= 0) {
         // The player arrived outside this site's own region - re-anchor on
         // the site itself rather than giving up, so the room still gets its
@@ -6164,8 +6247,10 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
             anchorTX = siteX >> 4;
             anchorTY = siteY >> 4;
         }
+        // Re-anchoring moves the component too, so the set is rebuilt.
+        QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
         actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
-                                       FALSE);
+                                       FALSE, reach);
     }
     if (actual <= 0) {
         return;
@@ -6177,7 +6262,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
         winnerIndex = actual - 1;
     }
     QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, winnerIndex, prizeIndex, ownerSite,
-                          TRUE);
+                          TRUE, reach);
 }
 
 // Pots are OBJECT-kind, so QuickStartClearVanillaRoomContent never sweeps
