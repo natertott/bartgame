@@ -360,6 +360,31 @@ is routine.
 Full per-room measurements (walkability grids, components, entity headroom,
 special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 
+- **OPEN, HIGH PRIORITY: item-drop "? rooms" appear empty.** The user has
+  never seen one pay out; they read as blank rooms. Reproduced by probing all
+  26 content-site rooms with the player parked away from the content spot:
+  **23 of 26 show no ground item**, and the three that pass are the ones
+  whose kind is not the item drop (two WAVES, one MINIBOSS). The item-drop
+  kind is ~61% of sites on a fresh save, so this is most of a run's rooms.
+  Two contributing defects are fixed (the placed-reward timer refresh was
+  never wired to content sites; a vanished item was assumed to be a collected
+  one, which permanently consumed the site - `done` now correctly stays 0),
+  but **the item still does not appear and the cause is not yet found**.
+  Next step: instrument `CreateObject(GROUND_ITEM, ...)` in the item-drop
+  branch to log whether it returns NULL, and if not, watch the entity slot
+  frame by frame to see what clears it. Suspects ruled out so far:
+  `QuickStartClearVanillaRoomContent` and `QuickStart2DoorClearRoomObstacles`
+  (both room-flag guarded, confirmed running once), and the ground-item
+  expiry timer (now refreshed every frame for our own items).
+- **TODO: add the sword upgrades to the reward/item pools.** Only the Red
+  Sword is reachable today, and only as a miniboss payout via `GiveItem` -
+  `CreateObject(GROUND_ITEM, ITEM_RED_SWORD)` never creates an entity,
+  because equipment has no ground-item form in vanilla. So putting sword
+  upgrades in the tier table needs a grant path that is not a floor item:
+  either a scripted pickup like the skill scrolls use, or a small "pedestal"
+  NPC that hands the sword over on interaction. Applies to the Green, Blue
+  and Four Sword as well as the Red.
+
 - Lon Lon Ranch's two `MINISH_SIZED_ENTRANCE` objects at (316,632) and
   (436,632) are the ranch house's west and east Minish doors (the user's
   own identification). They lead into rooms that are already content sites,

@@ -178,6 +178,7 @@ static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
+static void QuickStartRefreshPlacedItemTimers(void);
 static void QuickStartDeleteGroundItemsAndSigns(void);
 static void QuickStartSpawnChest(void);
 static void QuickStartUpdateItemChoice(void);
@@ -1091,6 +1092,23 @@ static bool32 QuickStartGroundItemOfForm(u16 form) {
         }
     }
     return FALSE;
+}
+
+// Is the player standing close enough to a room-local spot to have just
+// picked something up off it? A tile and a half either way - generous enough
+// that the pickup animation's own drift cannot fail the test, tight enough
+// that a player across the room cannot pass it.
+#define QUICKSTART_PICKUP_RADIUS 24
+static bool32 QuickStartPlayerNearSpot(s16 offsetX, s16 offsetY) {
+    s32 dx = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) - offsetX;
+    s32 dy = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) - offsetY;
+    if (dx < 0) {
+        dx = -dx;
+    }
+    if (dy < 0) {
+        dy = -dy;
+    }
+    return dx <= QUICKSTART_PICKUP_RADIUS && dy <= QUICKSTART_PICKUP_RADIUS;
 }
 
 static bool32 QuickStartGroundItemAt(s16 offsetX, s16 offsetY) {
@@ -6378,9 +6396,18 @@ u8 QuickStartCharmMask(void);
 static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     u8 wave, difficulty;
     if (QsCheckRoomFlag(flagBase + 2)) {
-        // All 3 waves cleared, reward already dropped - just watch for
-        // pickup, same convention as the miniboss kind's own reward state.
-        return !QuickStartGroundItemAt(contentX, contentY);
+        // All 3 waves cleared, reward already dropped - watch for the
+        // pickup. Same "gone is not the same as taken" rule as the item-drop
+        // kind above: if the player is not standing where it was, the item
+        // was removed rather than collected, so put it back.
+        if (QuickStartGroundItemAt(contentX, contentY)) {
+            return FALSE;
+        }
+        if (QuickStartPlayerNearSpot(contentX, contentY)) {
+            return TRUE;
+        }
+        QsClearRoomFlag(flagBase + 2);
+        return FALSE;
     }
     if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
@@ -7434,10 +7461,23 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 3);
                 return FALSE;
             }
-            if (QsCheckRoomFlag(flagBase + 3)) {
+            // The item is gone. That used to be taken as proof the player
+            // took it, and it is not: a ground item can also be deleted out
+            // from under this room, and when it was, the site latched DONE
+            // having shown the player nothing. Probing all 26 content-site
+            // rooms found EVERY item-drop site in that state - which is why
+            // "? rooms" so often turned out empty, since the item-drop kind
+            // is 61% of sites on a fresh save.
+            //
+            // A pickup means the player was standing on the thing. If they
+            // are not within a tile and a half of where it was, this was not
+            // a pickup: forget the whole attempt and place it again.
+            if (QsCheckRoomFlag(flagBase + 3) && QuickStartPlayerNearSpot(contentX, contentY)) {
                 return TRUE;
             }
-            // Never confirmed present - fall through and re-drop it.
+            QsClearRoomFlag(flagBase + 0);
+            QsClearRoomFlag(flagBase + 3);
+            // Fall through and re-drop it.
         }
         {
             // Extra bit 7 marks a RARE site (QUICKSTART_KINDS_RARE). The
@@ -10727,6 +10767,10 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartDrawDifficultyHUD();
+    // Before any content runs, so a reward placed on an earlier frame is
+    // already immortal by the time this frame's "is it still there?" check
+    // looks for it.
+    QuickStartRefreshPlacedItemTimers();
     // Every room, not just the ones that can apply a handicap: its whole job
     // is to notice that the player has LEFT the room that stripped them and
     // hand the kit back.
@@ -11410,6 +11454,41 @@ static void QuickStartRefreshItemTimers(void) {
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent->kind == OBJECT && ent->id == GROUND_ITEM) {
+            ((ItemOnGroundEntity*)ent)->unk_6c = 600;
+        }
+    }
+}
+
+// THE reason "? rooms" kept turning up empty.
+//
+// Every ground item in this engine is on a self-destruct: itemOnGround.c's
+// sub_080814A4 sets unk_6c to 600 frames (ten seconds), or 120 if unk_69 is
+// 10, and sub_080814C0 deletes the item when it reaches zero. That is right
+// for an enemy's rupee drop and completely wrong for a reward deliberately
+// placed in a room for the player to come and find.
+//
+// QuickStartRefreshItemTimers above exists precisely to stop that, and until
+// now it was called from exactly ONE place: the hub's item-choice rows. It
+// was written when the hub was the whole game, and never extended when the
+// "? room" content sites were built - so every site reward, region reward,
+// miniboss drop, wave payout and hunt prize has been quietly expiring.
+//
+// The consequence was worse than a vanishing item, because the "did it really
+// get picked up, or did it just disappear?" guard reads the disappearance as
+// a pickup and latches the site DONE forever. Sixty-one percent of content
+// sites roll the item-drop kind, so most "? rooms" in a run were being
+// permanently marked as looted having never shown anything at all. Confirmed
+// by probing all 26 content-site rooms: every item-drop site read done=1 with
+// zero ground items in the room.
+//
+// Only OUR items are refreshed, matched on ENT_PERSIST - which every reward
+// this file places sets and no vanilla drop does. Refreshing everything would
+// make enemy drops immortal and fill the 72-entity table during a wave.
+static void QuickStartRefreshPlacedItemTimers(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && (ent->flags & ENT_PERSIST)) {
             ((ItemOnGroundEntity*)ent)->unk_6c = 600;
         }
     }
