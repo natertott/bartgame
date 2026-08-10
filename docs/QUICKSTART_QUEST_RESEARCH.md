@@ -51,10 +51,15 @@ hosts multi-enemy content, entities exist in RAM, sprites never render."
 That is GFX-slot exhaustion, and it is a *general* failure mode, not a
 property of that one room.
 
-**What spends it:** distinct enemy *types*, not enemy *count*. SHF at
-difficulty 12 had 56 enemies of **13 distinct types**; NHF at difficulty 12
-had only 27 enemies but still hit 44/44. Roughly 2–3 slots per additional
-type, on top of a ~18–25 slot baseline of terrain, player and effects.
+**What spends it** — *corrected after implementation, see §6.1; the original
+claim on this line was wrong and is kept visible rather than rewritten.*
+The first reading was "distinct enemy types, ~13 of them at difficulty 12".
+That count came from reading a runtime field rather than the spawn form:
+the true figure is **5 distinct enemy ids**, already capped. The real
+consumer is **per-instance** allocation — a slot dump at difficulty 12
+shows 4 palette slots, 6 shared sheets, and **eleven refCount-1
+allocations** that do not exist at difficulty 0. Sheets are not what fills
+the table; enemies are.
 
 Note the inversion in the tables: NHF at difficulty 12 shows *fewer*
 entities (35) than at difficulty 4 (58). Spawning is being throttled by
