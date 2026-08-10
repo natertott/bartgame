@@ -384,6 +384,29 @@ bool32 sub_08081420(ItemOnGroundEntity* this) {
 }
 
 bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
+#ifdef QUICKSTART
+    // Kinstones are a currency in this mode, not a discovery. Vanilla sets
+    // the "always narrate" bit (unk3 & 2) on them, so every single piece
+    // stops the game with "You found a Kinstone!" - fine when there are a
+    // hundred fusions across a whole playthrough, intolerable when enemies
+    // drop them by the handful.
+    //
+    // Dropping the always-narrate bit for these four types leaves vanilla's
+    // OWN rule in place - !GetInventoryValue(type), i.e. narrate the first
+    // one only - which is exactly how hearts, bombs and arrows already
+    // behave. GiveItem sets the inventory value on that first pickup, and
+    // the per-run reset clears the inventory, so the message comes back
+    // once per run and then stays quiet.
+    switch (super->type) {
+        case ITEM_KINSTONE:
+        case ITEM_KINSTONE_RED:
+        case ITEM_KINSTONE_BLUE:
+        case ITEM_KINSTONE_GREEN:
+            return !GetInventoryValue(super->type);
+        default:
+            break;
+    }
+#endif
     return ((gItemMetaData[super->type].unk3 & 0x2) || !GetInventoryValue(super->type));
 }
 

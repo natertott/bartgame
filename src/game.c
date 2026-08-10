@@ -744,7 +744,20 @@ static void GameTask_Transition(void) {
         }
     }
     gSave.kinstones.fusedCount = 100;
-    gSave.kinstones.didAllFusions = 1;
+    // NOT didAllFusions, despite the 100 above. That field is not just a
+    // menu counter: itemUtils.c's drop roll applies DROPTABLE_NO_KINSTONES
+    // whenever it is set, which suppresses kinstone drops from every enemy
+    // in the game. It was set here as part of the "pretend the save is
+    // complete" block, and it is why enemies dropped no pieces at all -
+    // measured: six waves killed in South Hyrule Field produced zero
+    // kinstone drops and an empty bag.
+    //
+    // The fusion economy needs the supply side working, so it stays clear.
+    // The 100 fused bits above are kept: they are what holds the overworld
+    // in its post-fusion shape (roomInit.c gates dozens of bridges, NPCs
+    // and obstacles on CheckKinstoneFused), and the gates we actually want
+    // the player to open get un-fused individually once their fusers exist.
+    gSave.kinstones.didAllFusions = 0;
 #endif
     gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
     ResetTmpFlags();
@@ -3742,6 +3755,13 @@ static void QuickStartLadderSetDone(s32 ladderIndex) {
 // WriteSaveFile below makes sure it's actually on the save file the
 // title/file-select flow reloads from, not just sitting in EWRAM.
 #define GF_DIFFICULTY_BIT(b) (174 + (b)) // b = 0..3
+
+// Exposed (non-static) for src/itemUtils.c's drop-table hook, which needs
+// the run's difficulty to scale kinstone weights. Kept as a function rather
+// than a shared variable: game.c must not add .bss/.data.
+u8 QuickStartDifficultyForDrops(void) {
+    return QuickStartGetDifficulty();
+}
 
 static u8 QuickStartGetDifficulty(void) {
     return (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |

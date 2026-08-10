@@ -466,6 +466,7 @@ void EnableRandomDrops(void) {
     gRoomVars.randomDropsDisabled = FALSE;
 }
 
+extern u8 QuickStartDifficultyForDrops(void);
 extern void SumDropProbabilities(s16*, const s16*, const s16*, const s16*);
 extern u32 SumDropProbabilities2(s16*, const s16*, const s16*, const s16*);
 u32 CreateItemDrop(Entity* arg0, u32 itemId, u32 itemParameter);
@@ -538,12 +539,31 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
 #ifdef QUICKSTART
             // r3 in [1, 12] is the enemy-table range (excludes grass/pot/area/crit tables).
             if (r3 >= 1 && r3 <= 12) {
+                s32 kinstoneWeight;
                 droptable.s.rupee1 += 300;
                 droptable.s.rupee5 += 250;
                 droptable.s.rupee20 += 100;
                 if (droptable.s.hearts > 0) {
                     droptable.s.hearts = 2;
                 }
+                // Kinstone pieces are the fusion economy's currency, so
+                // enemies have to actually pay it out - vanilla's own
+                // weights here are tuned for a hundred fusions spread over
+                // a whole playthrough, not for a single run.
+                //
+                // The rate DECAYS with difficulty, per the design: pieces
+                // are abundant while the player is learning and become
+                // something to grind for later. Weights are relative to the
+                // whole summed table (the rupee bumps above are 100-300),
+                // so ~180 down to ~60 puts kinstones in the same band as a
+                // common rupee early and a rarer one late.
+                kinstoneWeight = 180 - (s32)QuickStartDifficultyForDrops() * 10;
+                if (kinstoneWeight < 60) {
+                    kinstoneWeight = 60;
+                }
+                droptable.s.kinstoneRed += kinstoneWeight;
+                droptable.s.kinstoneBlue += kinstoneWeight;
+                droptable.s.kinstoneGreen += kinstoneWeight;
             }
 #endif
             ptr2 = &gDroptableModifiers[DROPTABLE_NONE];
