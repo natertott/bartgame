@@ -34,6 +34,11 @@
 @ shopItemType was never cleared) it instead resets the prop back to its
 @ original pedestal position - the item is handed back rather than lost.
 @
+@ Both branches follow the vanilla DisablePauseMenu helpers with
+@ QuickStartShopShowRupees (game.c), which puts the rupee counter back: those
+@ helpers blank the entire HUD, and the rupee count is the one number the
+@ player needs while deciding whether to buy.
+@
 @ Text: genuine custom dialogue via TEXT_CUSTOM (see gCustomStrings, game.c;
 @ TEXT_CUSTOM/sub_0805EEB4, message.h/text.c). The greeting used to show
 @ TEXT_BURLOV,30, the same borrowed, unrelated mid-sentence Carlov/Burlov
@@ -48,12 +53,14 @@ script_QuickStartMerchant_loop:
 	JumpIf script_QuickStartMerchant_sell
 	SetPlayerIdle
 	Call DisablePauseMenuAndPutAwayItems
+	Call QuickStartShopShowRupees
 	FacePlayer
 	MessageNoOverlap TEXT_CUSTOM, 6
 	Jump script_QuickStartMerchant_done
 script_QuickStartMerchant_sell:
 	SetPlayerIdle
 	Call DisablePauseMenu
+	Call QuickStartShopShowRupees
 	FacePlayer
 	CallWithArg ScriptCommand_SaleItemConfirmMessage, 0x00000000
 	WaitUntilTextboxCloses

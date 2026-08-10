@@ -292,6 +292,18 @@ cure into a standing tool instead of a per-incident scramble.
   `gSave.kinstones` is wiped per run, so gates re-lock and the bag empties.
   Castle Garden's two fountain chambers became content sites in the same
   change - they are what its two staircase fusions now open.
+
+  One wrinkle worth remembering: vanilla applies a fusion's world event to
+  the LIVE room only on room load (`sub_080186EC`, room.c). The cutscene
+  runs against an auxiliary copy, so the player watched a staircase appear
+  and came back to a room that still did not have one - it only landed the
+  next time they walked in. Re-applying the event by hand does not cover the
+  whole class either: a type 4 or type 7 gate is "shut" because tiles were
+  PAINTED OVER the room at load time, and nothing in vanilla erases them.
+  `QuickStartReloadRoomAfterFusion` re-enters the room once instead, latched
+  on a 7-bit "already reloaded for this fusion" id
+  (`GF_FUSION_RELOADED_ID_BIT`) so it fires exactly once, and gated on the
+  player having control back so it cannot interleave with the cutscene.
 - **C4. The curve**: piece specificity by difficulty tier. Drop rate is
   done (C2); what is left is which shapes are obtainable when. Today every
   gate's shape maps to exactly one droppable piece id (0x6E-0x75), so a run

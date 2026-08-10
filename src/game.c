@@ -173,6 +173,7 @@ static void QsClearRoomFlag(u32 flag) {
 static void QuickStartSpawnEnemies(void);
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
+static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
@@ -405,10 +406,11 @@ static void GameTask_Transition(void) {
         // "? room" assignments now, so they re-roll every fresh boot for
         // exactly the same reason the ladder/door slots they replaced did.
         // 656: the North Hyrule Field bridge. 657-689: the shop's own door
-        // draw and price rolls. 690-691: Melari's Mine's two rooms' collected
+        // draw and price rolls. 692-698: which fusion this run has already
+        // re-loaded its room for. 690-691: Melari's Mine's two rooms' collected
         // latches - re-rolled every fresh boot like everything else here, so a
         // new run gets the shop somewhere else at different prices.
-        for (bit = 202; bit <= 691; bit++) {
+        for (bit = 202; bit <= 698; bit++) {
             QsClearFlag(bit);
         }
         // Wipe every per-area LOCAL flag, so each run gets a fresh world.
@@ -1442,6 +1444,24 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // GF_CONTENT_SITE_DONE.
 #define GF_MELARI_EAST_DONE 690
 #define GF_MELARI_SOUTHEAST_DONE 691
+
+// Which Kinstone fusion this run has already re-loaded its room for, stored
+// as a 7-bit id (kinstone ids run 1..100) rather than a flag per fuser -
+// there are 18 fusers and only 16 free offsets left below 707.
+//
+// The problem it solves: vanilla applies a fusion's world event to the LIVE
+// room only on room load (sub_080186EC, room.c). The fusion cutscene itself
+// runs against an auxiliary copy of the room (sub_08054974 ->
+// LoadAuxiliaryRoom), so the player watches the staircase appear and then
+// returns to a room where it still is not there - the change only lands the
+// next time they walk in. Re-applying the event by hand does not fix the
+// whole class either: the "blocked" state of a type 4 or type 7 gate is
+// tiles PAINTED OVER the room at load time while un-fused, and nothing in
+// vanilla erases them, because a room load simply does not paint them.
+// Reloading the room is the one operation that covers every gate type, and
+// it is exactly what the player is doing manually today by stepping into a
+// house and back out.
+#define GF_FUSION_RELOADED_ID_BIT(b) (692 + (b)) // b = 0..6
 
 // Switch-operated bridges (QuickStartUpdateSwitchBridges). Sits immediately
 // above the content sites' last block, which ends at 655.
@@ -9823,6 +9843,7 @@ static void QuickStartRoomMonitor(void) {
     // the dispatch also means a region's gates are live whether or not this
     // save's chain happens to include it.
     QuickStartSpawnRegionFusers();
+    QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartGetCurrentRegionChainPosition();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
@@ -10018,6 +10039,80 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_52, 360, 88 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_5E, 296, 472 },
 };
+
+// Reads/writes the 7-bit "already reloaded for this fusion" id. Zero means
+// no fusion has needed one yet, which is safe: KINSTONE_NONE is 0 and no
+// real fusion uses it.
+static u32 QuickStartFusionReloadedId(void) {
+    s32 b;
+    u32 id = 0;
+    for (b = 0; b < 7; b++) {
+        if (QsCheckFlag(GF_FUSION_RELOADED_ID_BIT(b))) {
+            id |= 1 << b;
+        }
+    }
+    return id;
+}
+
+static void QuickStartSetFusionReloadedId(u32 id) {
+    s32 b;
+    for (b = 0; b < 7; b++) {
+        if (id & (1 << b)) {
+            QsSetFlag(GF_FUSION_RELOADED_ID_BIT(b));
+        } else {
+            QsClearFlag(GF_FUSION_RELOADED_ID_BIT(b));
+        }
+    }
+}
+
+// Walk back into the room we are already standing in, so the map is rebuilt
+// with the fusion applied. gFuseInfo.kinstoneId survives the cutscene (only
+// the next InitializeFuseInfo clears it), which is what identifies the
+// fusion that just completed; the stored id stops this from firing again on
+// the reload it causes, and again on every later visit.
+static void QuickStartReloadRoomAfterFusion(void) {
+    s32 i;
+    u32 fused = gFuseInfo.kinstoneId;
+    if (gRoomTransition.transitioningOut || fused == KINSTONE_NONE) {
+        return;
+    }
+    // Wait for the fusion's own cutscene to finish handing control back.
+    // Firing a room transition while the world-event subtask (or the local
+    // map hint that follows it) is still up interleaves two screen changes
+    // and leaves the map hint stranded over the new room.
+    if (gPlayerState.controlMode != CONTROL_1 || (gMessage.state & MESSAGE_ACTIVE) != 0) {
+        return;
+    }
+    if (QuickStartFusionReloadedId() == fused || !CheckKinstoneFused(fused)) {
+        return;
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
+        const QuickStartFuser* fuser = &sQuickStartFusers[i];
+        if (fuser->kinstoneId != fused || gRoomControls.area != fuser->area ||
+            gRoomControls.room != fuser->room) {
+            continue;
+        }
+        QuickStartSetFusionReloadedId(fused);
+        gRoomTransition.player_status.area_next = gRoomControls.area;
+        gRoomTransition.player_status.room_next = gRoomControls.room;
+        gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+        gRoomTransition.player_status.start_pos_x = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+        gRoomTransition.player_status.start_pos_y = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+        gRoomTransition.player_status.layer = 1;
+        gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+        gRoomTransition.transitioningOut = 1;
+        return;
+    }
+}
+
+// Called from the merchant script right after the vanilla DisablePauseMenu
+// helpers, which blank the whole HUD (hideFlags = HUD_HIDE_ALL). Deciding
+// whether to buy something is exactly a "can I afford this" question, so the
+// one number that must not vanish for the length of that conversation is the
+// rupee count. Everything else stays hidden.
+void QuickStartShopShowRupees(void) {
+    gHUD.hideFlags &= ~HUD_HIDE_RUPEES;
+}
 
 static void QuickStartMakeNpcFuser(Entity* npc, u32 kinstoneId) {
     s32 index;
