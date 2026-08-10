@@ -1313,3 +1313,32 @@ ooooooooooooooo
    the entered floor - fine - but reward pools should avoid placing the
    payout across a stair boundary; the reco spots listed here are all in
    the entrance component.
+
+
+## North Hyrule Field's through-cave (ROOM_CAVES_TO_GRAVEYARD)
+
+Corrected finding. This file and two comment blocks in transitions.c used to
+say this cave "reaches Royal Valley and so escapes the run", and treated both
+ends of it as things to neutralize. Its exit list says otherwise:
+
+    (0x38,0x38)  -> North Hyrule Field (0x88,0xd8)
+    (0x118,0x38) -> North Hyrule Field (0x118,0xd8)
+    (0x138,0x98) -> ROOM_CAVES_HEART_PIECE_HALLWAY (0x78,0x48)
+    border south -> North Hyrule Field (0x108,0x148)
+
+Three mouths back into the same field and one door into the Heart Piece
+Hallway, whose own only other exit is that same field. The two caves are a
+closed pocket and always were, so there was never anything to contain.
+
+It is reached by its own vanilla mouth now (the synthetic teleport box at
+local (264,304), six pixels short of the real mouth at (264,312), is gone),
+hosts a ? event through the old connector's kind/extra roll, and is blessed
+past containment by name in QuickStartIsPocketInteriorRoom. The hallway's
+onward door is vanilla again.
+
+Verified: walking into the field mouth lands in the cave (368x240) with its
+event live; walking up through the hallway's onward door lands in the cave.
+The cave-side door back into the hallway reads act tile 0x28 (armed) with a
+staircase tile arrangement around it - confirmed in data, not yet walked,
+because the scripted harness cannot land on a staircase tile the way a
+player does.

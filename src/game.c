@@ -236,8 +236,6 @@ static void QuickStartFixupRiverBridgeReturn(void);
 static bool32 QuickStartRiverBridgeIsCurrentRoom(void);
 static void QuickStartRandomizeCaveOnce(void);
 static void QuickStartSetupCaveRoomContent(void);
-static void QuickStartProcessCaveLink(void);
-static void QuickStartFixupCaveReturn(void);
 static bool32 QuickStartCaveIsCurrentRoom(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
@@ -1375,6 +1373,11 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // door(s) always lands back at the same fixed, walkable spot just south of
 // the cave mouth (264,344) - confirmed in the emulator: open ground in
 // every direction, walking back north re-enters the cave's own trigger box.
+// Where that mouth actually leads. See QuickStartCaveGetTarget for why this
+// is a fixed room now rather than a pool draw.
+#define QUICKSTART_CAVE_AREA AREA_CAVES
+#define QUICKSTART_CAVE_ROOM ROOM_CAVES_TO_GRAVEYARD
+
 #define GF_CAVE_RANDOMIZED 254
 #define GF_CAVE_POOL_BIT 255
 #define GF_CAVE_ROOM_BIT(b) (256 + (b)) // b = 0..4
@@ -1471,10 +1474,6 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define GF_SHOP_RANDOMIZED 657
 #define GF_SHOP_DOOR_BIT(b) (658 + (b))                  // b = 0..4
 #define GF_SHOP_PRICE_BIT(i, b) (663 + (i) * 3 + (b))    // i = 0..8, b = 0..2
-#define QUICKSTART_CAVE_X 264
-#define QUICKSTART_CAVE_Y 304
-#define QUICKSTART_CAVE_RETURN_X 264
-#define QUICKSTART_CAVE_RETURN_Y 344
 
 // Room-local coordinates, walked/confirmed walkable in the emulator (4-way
 // movement check from each point, no wall/water immediately blocking any
@@ -7260,6 +7259,15 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == QUICKSTART_SHOP_AREA && room == QUICKSTART_SHOP_ROOM) {
         return TRUE;
     }
+    // North Hyrule Field's through-cave and the Heart Piece Hallway it opens
+    // into. The cave is not a content site (its event comes from the cave
+    // connector's own kind/extra roll, see QuickStartSetupCaveRoomContent),
+    // so unlike the hallway it does not get blessed by the table scan below
+    // and needs naming here - otherwise its three field mouths and the door
+    // between the two caves all get cancelled the frame they fire.
+    if (area == QUICKSTART_CAVE_AREA && room == QUICKSTART_CAVE_ROOM) {
+        return TRUE;
+    }
     // The North Hyrule Field fairy fountain tree. It is no longer a content
     // site itself - its event moved down the staircase into the cave, which
     // IS a site and so gets blessed by the table scan below - but the tree
@@ -8051,8 +8059,13 @@ static void QuickStartFixupCaveConnectorReturn(void) {
     // left by, which is exactly the bug: it made the interior a dead end
     // that always spat you back out on the same side.
     if (QuickStart2DoorExitSide() == 1) {
-        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
-        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
+        // Written out rather than borrowed. These used to read
+        // QUICKSTART_CAVE_RETURN_X/Y - constants named for, and measured in,
+        // North Hyrule Field's cave mouth, being applied to a Lon Lon Ranch
+        // return purely because the numbers happened to suit. That connector
+        // is gone now; the values stay, under their own roof.
+        gRoomTransition.player_status.start_pos_x = 264;
+        gRoomTransition.player_status.start_pos_y = 344;
     } else {
         gRoomTransition.player_status.start_pos_x = 232;
         gRoomTransition.player_status.start_pos_y = 476;
@@ -8416,32 +8429,33 @@ static u8 QuickStartCaveGetExtra(void) {
     return value;
 }
 
+// This connector is no longer a draw. It used to intercept the player at
+// North Hyrule Field local (264,304) - six pixels short of the field's own
+// real cave mouth at (264,312) - and teleport them into a room drawn from
+// the 2-door pool. The room that mouth actually leads to is
+// ROOM_CAVES_TO_GRAVEYARD, and re-reading its exit list settles something
+// this file used to claim twice: it does NOT escape to Royal Valley. All
+// four of its doors are two mouths back into North Hyrule Field, a border
+// south back into the same field, and one into
+// ROOM_CAVES_HEART_PIECE_HALLWAY - which is itself a ? room whose only
+// other exit is that same field. The pair is a closed pocket and always
+// was, so there was never anything to contain it from.
+//
+// So the mouth goes back to being an ordinary vanilla door, and the room
+// behind it hosts a ? event like every other pocket interior. Everything
+// below this point - the kind/extra roll, the content spawn, the DONE latch
+// - is the connector's own machinery, unchanged; only where it points is
+// fixed now instead of drawn.
 static void QuickStartCaveGetTarget(u8* area, u8* room) {
-    u8 pool = QuickStartCaveGetPool();
-    s32 poolIndex = QuickStartCaveGetRoomIndex();
-    if (pool == 0) {
-        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
-        *area = sQuickStart2DoorSmallRoomPool[poolIndex].area;
-        *room = sQuickStart2DoorSmallRoomPool[poolIndex].room;
-    } else {
-        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
-        *area = sQuickStart2DoorLargeRoomPool[poolIndex].area;
-        *room = sQuickStart2DoorLargeRoomPool[poolIndex].room;
-    }
+    *area = QUICKSTART_CAVE_AREA;
+    *room = QUICKSTART_CAVE_ROOM;
 }
 
 static void QuickStartCaveGetSpawnInfo(s16* entranceX, s16* entranceY) {
-    u8 pool = QuickStartCaveGetPool();
-    s32 poolIndex = QuickStartCaveGetRoomIndex();
-    if (pool == 0) {
-        poolIndex %= QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE;
-        *entranceX = sQuickStart2DoorSmallRoomPool[poolIndex].entranceX;
-        *entranceY = sQuickStart2DoorSmallRoomPool[poolIndex].entranceY;
-    } else {
-        poolIndex %= QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
-        *entranceX = sQuickStart2DoorLargeRoomPool[poolIndex].entranceX;
-        *entranceY = sQuickStart2DoorLargeRoomPool[poolIndex].entranceY;
-    }
+    // The arrival point of the field's own mouth
+    // (gExitList_HyruleField_NorthHyruleField, endX/endY 0x108,0xd8).
+    *entranceX = 0x108;
+    *entranceY = 0xd8;
 }
 
 static bool32 QuickStartCaveIsCurrentRoom(void) {
@@ -8457,29 +8471,15 @@ static bool32 QuickStartCaveIsCurrentRoom(void) {
 // (both already rolled earlier this same frame - see the call order in
 // QuickStartRoomMonitor) so this third draw can't collide with either.
 static void QuickStartRandomizeCaveOnce(void) {
-    u8 pool, kind, roomIdx, poolSize;
-    u8 pool2, pool3;
-    s32 poolSize2, resolvedIdx2, poolSize3, resolvedIdx3;
+    u8 kind;
     if (QsCheckFlag(GF_CAVE_RANDOMIZED)) {
         return;
     }
-    pool2 = QuickStart2DoorGetPool();
-    poolSize2 = (pool2 == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
-    resolvedIdx2 = (s32)QuickStart2DoorGetRoomIndex() % poolSize2;
-    pool3 = QuickStartRiverBridgeGetPool();
-    poolSize3 = (pool3 == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
-    resolvedIdx3 = (s32)QuickStartRiverBridgeGetRoomIndex() % poolSize3;
-    pool = (u8)((s32)Random() % 2);
-    poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
-    for (;;) {
-        roomIdx = (u8)((s32)Random() % poolSize);
-        if ((pool == pool2 && (s32)roomIdx == resolvedIdx2) || (pool == pool3 && (s32)roomIdx == resolvedIdx3)) {
-            continue;
-        }
-        break;
-    }
-    QuickStartCaveSetPool(pool);
-    QuickStartCaveSetRoomIndex(roomIdx);
+    // No pool draw to deconflict any more - the room is fixed, so this only
+    // rolls what is IN it. GF_CAVE_POOL_BIT and GF_CAVE_ROOM_BIT are left
+    // defined but unwritten; they are 6 contiguous flags held in reserve
+    // rather than reshuffled, because moving anything in this block is the
+    // silent-collision hazard its own comment warns about.
     kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
     if (kind == LADDER_KIND_NPC) {
         QsSetFlag(GF_CAVE_KIND_BIT);
@@ -8585,57 +8585,6 @@ static void QuickStartSetupCaveRoomContent(void) {
 // check, same technique as QuickStartProcessCaveConnectorLink/
 // QuickStartProcessRiverBridgeLink above, not dependent on the real cave
 // door's own transition data at all.
-static void QuickStartProcessCaveLink(void) {
-    s16 localX, localY;
-    u8 targetArea, targetRoom;
-    s16 entranceX, entranceY;
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
-        return;
-    }
-    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    if (localX < QUICKSTART_CAVE_X - 6 || localX > QUICKSTART_CAVE_X + 6 || localY < QUICKSTART_CAVE_Y - 6 ||
-        localY > QUICKSTART_CAVE_Y + 6) {
-        return;
-    }
-    QuickStartCaveGetTarget(&targetArea, &targetRoom);
-    QuickStartCaveGetSpawnInfo(&entranceX, &entranceY);
-    gRoomTransition.player_status.area_next = targetArea;
-    gRoomTransition.player_status.room_next = targetRoom;
-    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    gRoomTransition.player_status.start_pos_x = entranceX;
-    gRoomTransition.player_status.start_pos_y = entranceY;
-    gRoomTransition.player_status.layer = 1;
-    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-    gRoomTransition.transitioningOut = 1;
-}
-
-static void QuickStartFixupCaveReturn(void) {
-    if (!gRoomTransition.transitioningOut) {
-        return;
-    }
-    if (!QuickStartCaveIsCurrentRoom()) {
-        return;
-    }
-    gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
-    gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD;
-    // Door-keyed, same as the other two connectors. This one's cave mouth is
-    // a single overworld opening rather than two separated banks, so both
-    // sides return next to it - side B a little clear of side A so leaving
-    // by the far door reads as coming out somewhere slightly different
-    // rather than landing back on the entry trigger.
-    if (QuickStart2DoorExitSide() == 1) {
-        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X + 32;
-        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
-    } else {
-        gRoomTransition.player_status.start_pos_x = QUICKSTART_CAVE_RETURN_X;
-        gRoomTransition.player_status.start_pos_y = QUICKSTART_CAVE_RETURN_Y;
-    }
-}
-
 // "Fully contained" per the user's request: once inside Castor Darknut
 // (Hall or Main), Melari's Mine, Castle Garden, or the Minish House
 // Interiors rooms opened off Melari's Mine, no transition - real or our
@@ -9211,15 +9160,6 @@ static void QuickStartEnforceFieldRegionContainment(void) {
                                      gRoomTransition.player_status.room_next)) {
         return;
     }
-    // Same reasoning again - the cave mouth's own single entrance
-    // (QuickStartProcessCaveLink).
-    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && QsCheckFlag(GF_CAVE_RANDOMIZED)) {
-        u8 targetArea, targetRoom;
-        QuickStartCaveGetTarget(&targetArea, &targetRoom);
-        if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
-            return;
-        }
-    }
     gRoomTransition.transitioningOut = 0;
 }
 
@@ -9774,7 +9714,6 @@ static void QuickStartRoomMonitor(void) {
     QuickStartProcessDoorRedirects();
     QuickStartFixupCaveConnectorReturn();
     QuickStartFixupRiverBridgeReturn();
-    QuickStartFixupCaveReturn();
     // Every per-run draw is rolled unconditionally, not in a specific room.
     //
     // These used to live in Melari's Mine's own branch, on the reasoning
@@ -9830,7 +9769,6 @@ static void QuickStartRoomMonitor(void) {
     // save.
     QuickStartProcessRiverBridgeLink();
     // Same reasoning again - North Hyrule Field's cave mouth (264,304).
-    QuickStartProcessCaveLink();
     // Same reasoning again - the region chain's own two kinds of link
     // (Melari's Mine's Door B, and each region's own "onward" exit box)
     // both target a different real room every save.

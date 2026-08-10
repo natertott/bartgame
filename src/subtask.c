@@ -18,6 +18,9 @@ extern u8 gPaletteBufferBackup[];
 extern u8 gUnk_03000420[];
 
 void sub_080A70AC(const KeyButtonLayout* layout);
+#ifdef QUICKSTART
+void QuickStartAddMenuExtraItemSlot(void);
+#endif
 void sub_080A5F48(u32, u32);
 
 extern void sub_0805E974(void);
@@ -133,6 +136,12 @@ void sub_080A70AC(const KeyButtonLayout* layout) {
         CreateUIElement(layout->aButtonX, layout->aButtonY);
         layout = (KeyButtonLayout*)&layout->aButtonText;
     } while ((s8)layout->aButtonX != -1);
+#ifdef QUICKSTART
+    // See QuickStartAddMenuExtraItemSlot (ui.c): the layout table above is
+    // ROM asset data and lists only A and B, so the extra L item slot has to
+    // be added back by hand on every menu screen that shows equipped items.
+    QuickStartAddMenuExtraItemSlot();
+#endif
 }
 
 void SetMenuType(u32 menuType) {

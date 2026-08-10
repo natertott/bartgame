@@ -617,6 +617,38 @@ void DrawKeys(void) {
     }
 }
 
+#ifdef QUICKSTART
+// The pause menu does not keep the HUD's element set - sub_080A70AC
+// (subtask.c) MemClears it and rebuilds it from a KeyButtonLayout table that
+// lives in raw incbin'd ROM asset data, so it cannot simply be given another
+// row. What that table lists is A and B: their button plates and their item
+// icons survive into the menu, and everything else (R, and with it the
+// mirrored L plate and the extra L item icon added in InitUI) does not. The
+// player could see what was on A and B while browsing items but never what
+// was on L.
+//
+// So re-create exactly the pair InitUI creates, right after the vanilla
+// rebuild. Guarded on the A item icon existing, because a screen that shows
+// no equipped items at all (the map, the kinstone bag) should not sprout a
+// lone L icon.
+void QuickStartAddMenuExtraItemSlot(void) {
+    UIElement* element;
+    if (FindUIElementByType2(UI_ELEMENT_ITEM_A, 0) == NULL) {
+        return;
+    }
+    // Same two elements, same reasoning, as InitUI: a second BUTTON_R
+    // instance (type2=1) is the mirrored L plate, and a second ITEM_A
+    // instance (type2=1) is the icon that anchors to it. The VRAM tile
+    // override is not optional - without it the L icon renders into the real
+    // A icon's tiles.
+    CreateUIElement(UI_ELEMENT_BUTTON_R, 1);
+    element = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+    if (element != NULL) {
+        element->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
+    }
+}
+#endif
+
 UIElement* CreateUIElement(u32 type, u32 type2) {
     u32 index;
     UIElement* element;

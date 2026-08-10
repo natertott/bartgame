@@ -3079,17 +3079,20 @@ const Transition gExitList_Caves_BottleBusinessScrub[] = {
 // a 2-door pool room, so the old "both doors lead back to the Lon Lon
 // Ranch connector ledge" retarget is gone.
 //
-// Only the FIRST entry still differs from vanilla, and only in its
-// destination: vanilla sends it onward to ROOM_CAVES_TO_GRAVEYARD, a
-// multi-exit through-cave that reaches Royal Valley and so escapes the
-// run entirely. Pointing it back at this cave's own mouth in North Hyrule
-// Field neutralizes it without removing the door (removing the entry
-// would leave the player walking into an unresponsive wall tile; sending
-// them back outside reads as a dead end, which is what it now is).
-// The border below is vanilla's own, untouched.
+// CORRECTION. The first entry used to be pointed back at this cave's own
+// mouth, on the belief that vanilla's destination - ROOM_CAVES_TO_GRAVEYARD
+// - was a through-cave reaching Royal Valley and so escaping the run. That
+// is wrong, and reading its exit list settles it: all four of its doors are
+// two mouths back into North Hyrule Field, a border south into the same
+// field, and one back into this hallway. The two caves are a closed pocket
+// between them, and always were.
+//
+// So this entry is vanilla again, and the pair connects the way the map
+// suggests it should. ROOM_CAVES_TO_GRAVEYARD is blessed past containment
+// in game.c (QuickStartIsPocketInteriorRoom) and hosts its own ? event.
 const Transition gExitList_Caves_HeartPieceHallway[] = {
-    { WARP_TYPE_AREA, 0x78, 0x38, 0x138, 0x1f8, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x38, 0x138, 0x88, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD,
       ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
