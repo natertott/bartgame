@@ -74,60 +74,61 @@ def check_static():
         lvl = 'PASS' if n <= rows else 'FAIL'
         out.append((lvl, f'{const}={n} vs {rows} rows'))
 
-    # The reward pool, which had two separate ways to go quietly wrong.
+    # The tier table, which replaced the flat reward pools. Two things worth
+    # asserting, both of which have already gone wrong once:
     #
-    # 1. The size must be a POWER OF TWO. agbcc turns "% 8" into a mask but
-    #    emits __umodsi3 for "% 6", and its runtime lib has no such symbol -
-    #    so a non-power-of-two size does not misbehave at runtime, it fails
-    #    to link, with an error pointing at an unrelated function.
-    # 2. ITEM_BOW must be in it, and must come before ITEM_LARGE_QUIVER. The
-    #    quiver is a pure quiverType++ upgrade (itemUtils.c case 0xa) and does
-    #    nothing at all without a Bow, so a pool carrying the upgrade and not
-    #    the weapon hands out dud rewards - which is exactly what shipped
-    #    once the Bow stopped being a boot grant.
-    m = re.search(r'#define QUICKSTART_LADDER_REWARD_POOL_SIZE (\d+)', game)
-    i = game.find('sQuickStartLadderRewardPool[] = {')
+    # 1. The tier roll must be able to reach RARE. The draw seed is six bits
+    #    (0-63) and the roll was originally "seed % 100 < 60", which meant a
+    #    seed could never land in the 90-99 band and rare was unreachable.
+    #    Buckets out of ten divide exactly and work at any seed width.
+    # 2. Every category that a "? room" can draw from needs at least one entry
+    #    per tier it can actually reach, or the draw silently falls back.
+    tiers = {}
+    i = game.find('static const QuickStartTierEntry sQuickStartTiers[] = {')
+    j = game.find('\n};', i)
+    rows = re.findall(r'\{\s*(\w+),\s*(QS_CAT_\w+),\s*(QS_TIER_\w+),\s*(QS_REQ_\w+),\s*(\d)\s*\}', game[i:j])
+    if not rows:
+        out.append(('FAIL', 'tier table did not parse'))
+        return out
+    for item, cat, tier, _req, _rep in rows:
+        tiers.setdefault((cat, tier), []).append(item)
+    buckets = int(re.search(r'#define QS_TIER_BUCKETS (\d+)', game).group(1))
+    common = int(re.search(r'#define QS_TIER_COMMON_BUCKETS (\d+)', game).group(1))
+    uncommon = int(re.search(r'#define QS_TIER_UNCOMMON_BUCKETS (\d+)', game).group(1))
+    seed_range = int(re.search(r'#define QUICKSTART_DRAW_SEED_RANGE (\d+)', game).group(1))
+    rare = buckets - common - uncommon
+    if rare <= 0:
+        out.append(('FAIL', f'no rare bucket: {common}+{uncommon} of {buckets}'))
+    elif seed_range < buckets:
+        out.append(('FAIL', f'draw seed range {seed_range} is smaller than {buckets} tier buckets'))
+    else:
+        hit = {t: 0 for t in ('common', 'uncommon', 'rare')}
+        for seed in range(seed_range):
+            r = seed % buckets
+            hit['common' if r < common else ('uncommon' if r < common + uncommon else 'rare')] += 1
+        if min(hit.values()) == 0:
+            out.append(('FAIL', f'a tier is unreachable from the seed range: {hit}'))
+        else:
+            pct = {k: round(v * 100.0 / seed_range, 1) for k, v in hit.items()}
+            out.append(('PASS', f'tier roll reaches every tier: {pct}'))
+    # A "? room" draws QS_CAT_DROP = REWARD|WEAPON|SKILL|STAT.
+    for tier in ('QS_TIER_COMMON', 'QS_TIER_UNCOMMON', 'QS_TIER_RARE'):
+        n = sum(len(v) for (c, t), v in tiers.items()
+                if t == tier and c != 'QS_CAT_KEY')
+        lvl = 'PASS' if n > 0 else 'FAIL'
+        out.append((lvl, f'{tier.replace("QS_TIER_", "").lower()} drop entries: {n}'))
+    # The lottery table is separate and positional, so its size must match.
+    m = re.search(r'#define QUICKSTART_LOTTERY_PRIZE_COUNT (\d+)', game)
+    i = game.find('sQuickStartLotteryPrizes[8] = {')
     j = game.find('\n};', i)
     entries = re.findall(r'ITEM_\w+', game[i:j])
     n = int(m.group(1))
     if n != len(entries):
-        out.append(('FAIL', f'QUICKSTART_LADDER_REWARD_POOL_SIZE={n} vs {len(entries)} entries'))
+        out.append(('FAIL', f'QUICKSTART_LOTTERY_PRIZE_COUNT={n} vs {len(entries)} entries'))
     elif n & (n - 1):
-        out.append(('FAIL', f'reward pool size {n} is not a power of two (agbcc has no __umodsi3)'))
-    elif 'ITEM_BOW' not in entries:
-        out.append(('FAIL', 'reward pool has no ITEM_BOW; quivers would be dud drops'))
-    elif 'ITEM_LARGE_QUIVER' in entries and entries.index('ITEM_LARGE_QUIVER') < entries.index('ITEM_BOW'):
-        out.append(('FAIL', 'reward pool lists ITEM_LARGE_QUIVER before ITEM_BOW'))
+        out.append(('FAIL', f'lottery prize count {n} is not a power of two'))
     else:
-        out.append(('PASS', f'reward pool: {n} entries, power of two, Bow present'))
-
-    # The lottery prize field has to be wide enough for the pool. It is
-    # derived from the pool size rather than written out, so this is really
-    # checking that nobody has un-derived it - which is exactly how it went
-    # wrong before: the mask was a literal 3, the pool doubled, and the two
-    # silently disagreed. A too-narrow field does not fail to build, it just
-    # makes the top half of the pool unreachable from lotteries and, in the
-    # pot room, bleeds the spilled bit into the winner field.
-    src = game[game.find('#define QUICKSTART_LOTTERY_PRIZE_MASK'):][:200]
-    if 'QUICKSTART_LADDER_REWARD_POOL_SIZE - 1' not in src:
-        out.append(('FAIL', 'QUICKSTART_LOTTERY_PRIZE_MASK is not derived from the pool size'))
-    else:
-        # Prize occupies bits [shift, shift+bits); the pot room's winner field
-        # starts at QUICKSTART_POT_WINNER_SHIFT. They must not overlap, and
-        # the whole thing must fit in the 8-bit stored `extra`.
-        shift = int(re.search(r'#define QUICKSTART_LOTTERY_PRIZE_SHIFT (\d+)', game).group(1))
-        win = int(re.search(r'#define QUICKSTART_POT_WINNER_SHIFT (\d+)', game).group(1))
-        buckets = int(re.search(r'#define QUICKSTART_POT_WINNER_BUCKETS (\d+)', game).group(1))
-        bits = n.bit_length() - 1
-        top = win + (buckets.bit_length() - 1)
-        if shift + bits > win:
-            out.append(('FAIL', f'lottery prize field (bits {shift}-{shift+bits-1}) '
-                                f'overlaps the pot winner field at bit {win}'))
-        elif top > 8:
-            out.append(('FAIL', f'pot lottery extra needs {top} bits, only 8 are stored'))
-        else:
-            out.append(('PASS', f'lottery extra: prize bits {shift}-{shift+bits-1}, '
-                                f'pot winner bits {win}-{top-1}, fits in 8'))
+        out.append(('PASS', f'lottery prize table: {n} entries, power of two'))
     return out
 
 

@@ -10,23 +10,9 @@ Commit audited: `935b8b7`.
 
 ## 0. The headline
 
-**There is no tier system in the code.** No item carries a tier, nothing rolls
-a tier and then an item within it, and the words common / uncommon / rare do
-not appear in any drop path. What exists instead is **three unrelated flat
-pools plus a handful of fixed rewards**, every one of them drawn uniformly:
-
-| pool | size | drawn by |
-|---|---|---|
-| `sQuickStartLadderRewardPool` | 8 | ? chests, wave gauntlets, both lotteries, the hunt |
-| `sQuickStartRareRewardPool` | 4 | the one `QUICKSTART_KINDS_RARE` site (Boomerang staircase) |
-| `sQuickStartGardenRewardPool` | 23 | all five region clear-rewards |
-| `sQuickStartShopCatalog` | 9 | the shop |
-
-So the honest answer to "what % of the time is each tier chosen" is: **the
-question does not have an answer yet, because tiers are not implemented.**
-Section 3 gives the real distribution that exists in their place.
-
----
+**A tier system now exists.** Sections 1-3 below describe the state this audit
+originally found and are kept as the "before" record; section 6 describes what
+replaced it. Where they disagree, section 6 is current.
 
 ## 1. What is obtainable, and how
 
@@ -261,3 +247,92 @@ unlocking the lotteries no longer makes four of the eight rarer.
 8. **Enemies never drop equipment** — only rupees, hearts and kinstones.
 9. **A fresh save is 61% chests**, because three of the seven kinds are
    meta-locked and every locked roll degrades to CHEST.
+
+---
+
+## 6. What changed after the audit
+
+The audit's findings were implemented. `sQuickStartTiers` is now the single
+source of every drop, replacing the three flat pools.
+
+### The curve
+
+**60 / 30 / 10** common / uncommon / rare, expressed as buckets out of ten
+(`QS_TIER_BUCKETS`). Buckets rather than percentages because the stored draw
+seed is only six bits: the first attempt used `seed % 100 < 60`, which made
+rare literally unreachable, since a seed of 0-63 never lands in the 90-99
+band. Quantised against 64 seeds the realised split is **62.5 / 28.1 / 9.4**.
+The checker asserts every tier stays reachable.
+
+### The table
+
+| category | common | uncommon | rare |
+|---|---|---|---|
+| REWARDS | 50 rupees, heart piece, blue potion, empty bottle | 100 rupees, red potion | 200 rupees, heart container, bottled fairy |
+| WEAPONS / TOOLS | Bow, Bombs, Boomerang | bomb bag, large quiver, remote bombs, bottle, Gust Jar, **Fire Rod** | Magical Boomerang, Mirror Shield |
+| SKILL UPGRADES | spin attack, rock breaker, roll attack | dash attack, peril beam, sword beam | down thrust, great spin |
+| STAT UPGRADES | *(none, by design)* | **arrow / dig / swim butterfly** | **Nayru's / Farore's / Din's Charm** |
+| KEY ITEMS | *(none)* | boots, cape, mitts, flippers, lantern, ocarina | Cane of Pacci, grip ring, power bracelets |
+
+A "? room" draws `QS_CAT_DROP` — everything except KEY. A region clear reward
+draws `QS_CAT_ALL`, because that is where the Cane, the Ocarina and the key
+items the opening selection did not offer have always come from.
+
+### Prerequisites
+
+Checked at draw time, not roll time, so a prize decided on the first visit
+still resolves correctly on a later one:
+
+| requirement | applies to |
+|---|---|
+| owns Bow | large quiver, arrow butterfly |
+| owns Bombs | bomb bag, remote bombs |
+| owns Boomerang | Magical Boomerang |
+| owns Mole Mitts / Flippers | dig / swim butterfly |
+| owns Spin Attack / Roc's Cape | Great Spin / Down Thrust |
+| has an **empty bottle** | all potions, bottled fairy, all three charms |
+| has a **free bottle slot** | a new empty bottle |
+| does **not** own the Cane of Pacci | Fire Rod |
+| does **not** own the Fire Rod | Cane of Pacci |
+
+Non-repeatable entries also drop out once owned. Rupees, hearts, bottle fills
+and the two capacity upgrades are repeatable.
+
+### The four gaps, closed
+
+1. **Tiers** — implemented, as above.
+2. **Stat upgrades** — butterflies need only the item they upgrade (their
+   effect is read straight off the inventory bit by `itemBow.c`,
+   `itemMoleMitts.c` and `playerUtils.c`, so no new code). Charms arrive
+   bottled and become permanent when drunk, which finally makes the run-long
+   stacking charm framework reachable instead of dead code.
+3. **Fire Rod** — uncommon WEAPON/TOOL, mutually exclusive with the Cane of
+   Pacci because `itemMetaData.c` gives both `MENU_SLOT_CANE` and the 4x3 item
+   grid has no free cell. Whichever the run finds first locks the other out.
+4. **Bottles** — an empty bottle is a common REWARD and an uncommon
+   WEAPON/TOOL, gated on having a free slot. Bottles were the hidden blocker
+   on charms.
+
+### Still not obtainable, deliberately
+
+- `ITEM_RED_SWORD` — `CreateObject(GROUND_ITEM, ITEM_RED_SWORD)` never makes an
+  entity, so it stays a `GiveItem`-only miniboss payout.
+- `ITEM_LIGHT_ARROW` (Bow of Light) — same risk, unverified as a floor item.
+- Green / Blue / Four Sword — no drop path.
+- Two loose fairies — that is the FAIRY room kind, not an item.
+
+### Lotteries are separate on purpose
+
+`sQuickStartLotteryPrizes` is a fixed 8-entry table (5 common / 2 uncommon /
+1 rare) with no prerequisites and no already-owned filter. A lottery decides
+its prize on the first visit and must recognise that exact item on the floor
+later (`QuickStartGroundItemOfForm`), so its draw has to be a pure function of
+the stored seed — a tier draw filters on current inventory and could answer
+differently the second time, leaving the room permanently unsolved.
+
+### Not verified in play
+
+The table, the curve and the prerequisite logic are verified statically and by
+the invariant checker. **No drop has been watched landing in the emulator** —
+in particular the charm route (bottle -> drink -> permanent) and the
+Fire Rod / Cane exclusion are reasoned, not observed.

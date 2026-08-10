@@ -1078,7 +1078,7 @@ static bool32 QuickStartEntityInCurrentRoom(Entity* entity) {
 // problem: the room's plain pots are form 0xFF (they drop nothing) and its
 // trap pots spawn bombs rather than ground items, so the only GROUND_ITEM
 // wearing a reward-pool form is the prize. Safe against enemy drops too -
-// sQuickStartLadderRewardPool is heart pieces, bomb bags, quivers and
+// The tier table's REWARD rows are heart pieces, rupees and bottles, and
 // ITEM_RUPEE200, none of which a bob-omb ever leaves behind.
 static bool32 QuickStartGroundItemOfForm(u16 form) {
     s32 i;
@@ -2970,29 +2970,307 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     }
 }
 
-// Picks a random not-yet-owned reward from this region's own pool and
-// drops it at its reward spot, marking this chain slot "earned" (1) and
-// room flag 1 "now watching this visit's drop" - shared by both the
-// initial grant and the re-drop path in QuickStartSpawnRegionRewardOnce
-// below. 32 is comfortably bigger than the one shared reward pool this
-// file has today (21 entries) - a plain fixed-size stack buffer rather
-// than a VLA, since agbcc doesn't support C99 VLAs.
-static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 slot) {
+// ======================= The item tier system ==========================
+//
+// Every drop in the mode comes through here. It replaces three unrelated flat
+// pools (a 4-then-8 entry "ladder" pool, a 4-entry rare pool, and a 23-entry
+// region pool) that had no tiers at all, so an item's rarity used to be an
+// accident of which pool it happened to sit in and how big that pool was.
+//
+// A draw is two steps: roll a TIER, then pick uniformly among the entries of
+// that tier that the run can actually use. Category is a mask so a caller can
+// say "anything but key items" (the ? rooms) or "anything at all" (a region
+// clear reward).
+#define QS_CAT_KEY (1 << 0)
+#define QS_CAT_REWARD (1 << 1)
+#define QS_CAT_WEAPON (1 << 2)
+#define QS_CAT_SKILL (1 << 3)
+#define QS_CAT_STAT (1 << 4)
+// What a "? room" may pay: everything except key items, per the user's rule
+// that those come from the opening selection and the shop.
+#define QS_CAT_DROP (QS_CAT_REWARD | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT)
+#define QS_CAT_ALL (QS_CAT_DROP | QS_CAT_KEY)
+
+#define QS_TIER_COMMON 0
+#define QS_TIER_UNCOMMON 1
+#define QS_TIER_RARE 2
+
+// 60 / 30 / 10, expressed as buckets out of ten. This is the one place the
+// mode's rarity curve is written down.
+#define QS_TIER_BUCKETS 10
+#define QS_TIER_COMMON_BUCKETS 6
+#define QS_TIER_UNCOMMON_BUCKETS 3 // rare is the remaining bucket
+
+// How wide a seed an event stores to describe its prize. Six bits, because a
+// content site's `extra` is eight and the top two carry flags (bit 7 = this
+// site always pays rare, bit 6 = this wave gauntlet is the stripped-kit
+// variant). Sixty-four values is far more than the tier table needs and
+// costs nothing.
+#define QUICKSTART_DRAW_SEED_RANGE 64
+
+// Why an item might not be drawable yet. Checked at DRAW time, not at roll
+// time, so a prize decided on the first visit still resolves correctly when
+// the player comes back holding different things.
+enum {
+    QS_REQ_NONE,
+    QS_REQ_BOW,          // a quiver or an arrow butterfly is nothing without it
+    QS_REQ_BOMBS,        // ditto the bomb bag and remote bombs
+    QS_REQ_BOOMERANG,    // the magical one is an upgrade, not a replacement
+    QS_REQ_MOLE_MITTS,   // the dig butterfly only speeds up digging
+    QS_REQ_FLIPPERS,     // the swim butterfly only speeds up swimming
+    QS_REQ_SPIN_ATTACK,  // Great Spin is an upgrade to it
+    QS_REQ_ROCS_CAPE,    // Down Thrust needs something to come down from
+    QS_REQ_EMPTY_BOTTLE, // potions, fairies and charms all FILL a bottle
+    QS_REQ_BOTTLE_ROOM,  // a new empty bottle needs a free bottle slot
+    QS_REQ_NO_PACCI,     // the Fire Rod shares the Cane's inventory cell
+    QS_REQ_NO_FIRE_ROD,  // ...and vice versa
+};
+
+typedef struct {
+    u16 item;
+    u8 cat;
+    u8 tier;
+    u8 req;
+    u8 repeatable; // may drop again when already owned (rupees, hearts, fills)
+} QuickStartTierEntry;
+
+// The tier table. Ordering is irrelevant - unlike the flat pools it replaces,
+// nothing indexes this positionally, so rows can be added or moved freely.
+//
+// Deliberately absent:
+//   ITEM_RED_SWORD    - CreateObject(GROUND_ITEM, ITEM_RED_SWORD) never makes
+//                       an entity (equipment has no ground-item form in
+//                       vanilla), so it stays a GiveItem-only miniboss payout.
+//   ITEM_LIGHT_ARROW  - same risk, unverified as a floor item.
+//   two loose fairies - that is the FAIRY room kind, not an item.
+static const QuickStartTierEntry sQuickStartTiers[] = {
+    // --- REWARDS ---------------------------------------------------------
+    { ITEM_RUPEE50, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
+    { ITEM_HEART_PIECE, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
+    { ITEM_BOTTLE_BLUE_POTION, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_EMPTY_BOTTLE, 1 },
+    { ITEM_BOTTLE1, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_BOTTLE_ROOM, 1 },
+    { ITEM_RUPEE100, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_NONE, 1 },
+    { ITEM_BOTTLE_RED_POTION, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_EMPTY_BOTTLE, 1 },
+    { ITEM_RUPEE200, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
+    { ITEM_HEART_CONTAINER, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
+    { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    // --- WEAPONS / TOOLS -------------------------------------------------
+    { ITEM_BOW, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_BOMBS, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    // Bag and quiver stack to type 3, so they stay drawable once owned.
+    { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 1 },
+    { ITEM_LARGE_QUIVER, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOW, 1 },
+    { ITEM_REMOTE_BOMBS, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
+    { ITEM_BOTTLE1, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOTTLE_ROOM, 1 },
+    { ITEM_GUST_JAR, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_FIRE_ROD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NO_PACCI, 0 },
+    { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
+    { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    // --- SKILL UPGRADES --------------------------------------------------
+    { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_ROCK_BREAKER, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_ROLL_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_DASH_ATTACK, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_PERIL_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_SWORD_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_DOWN_THRUST, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_ROCS_CAPE, 0 },
+    { ITEM_SKILL_GREAT_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    // --- STAT UPGRADES ---------------------------------------------------
+    // No common tier, per the design. The butterflies each speed up exactly
+    // one thing (arrows/digging/swimming) and are read straight off the
+    // inventory bit by itemBow.c, itemMoleMitts.c and playerUtils.c, so they
+    // need no new code - only the item they upgrade.
+    { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
+    { ITEM_DIG_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_MOLE_MITTS, 0 },
+    { ITEM_SWIM_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_FLIPPERS, 0 },
+    // Charms arrive bottled and become permanent when drunk
+    // (QuickStartNoteCharm -> QUICKSTART_CHARM_BIT -> CalculateDamage). That
+    // framework has been live and unreachable since it was built: nothing
+    // granted a charm, and almost nothing granted a bottle to put one in.
+    { BOTTLE_CHARM_NAYRU, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    { BOTTLE_CHARM_FARORE, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    { BOTTLE_CHARM_DIN, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    // --- KEY ITEMS -------------------------------------------------------
+    // Never drawn by a ? room (QS_CAT_DROP excludes them); reachable from the
+    // opening selection and from a region clear reward.
+    { ITEM_PEGASUS_BOOTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_ROCS_CAPE, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_MOLE_MITTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_FLIPPERS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_LANTERN_OFF, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_OCARINA, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_PACCI_CANE, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NO_FIRE_ROD, 0 },
+    { ITEM_GRIP_RING, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    { ITEM_POWER_BRACELETS, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
+};
+#define QUICKSTART_TIER_COUNT (s32)(sizeof(sQuickStartTiers) / sizeof(QuickStartTierEntry))
+
+// Is there a bottle standing empty? Charms, potions and bottled fairies all
+// go through GiveItem case 4, which looks for a bottle whose contents are
+// 0x20 (empty) and silently does NOTHING if it finds none - so without this
+// check a rare charm drop would be a pickup that vanishes and gives nothing.
+static bool32 QuickStartHasEmptyBottle(void) {
     s32 i;
-    u16 available[32];
-    s32 availableCount = 0;
-    u16 chosenItem;
-    Entity* itemEntity;
-    for (i = 0; i < region->rewardPoolSize && availableCount < 32; i++) {
-        if (GetInventoryValue(region->rewardPool[i]) == 0) {
-            available[availableCount] = region->rewardPool[i];
-            availableCount++;
+    for (i = 0; i < 4; i++) {
+        if (gSave.stats.bottles[i] == 0x20) {
+            return TRUE;
         }
     }
-    // Everything in the pool is already owned (unlikely, but possible after
-    // repeated testing) - fall back to a rupee pile so clearing the room
-    // still has something to show for it.
-    chosenItem = (availableCount != 0) ? available[(s32)Random() % availableCount] : ITEM_RUPEE100;
+    return FALSE;
+}
+
+// Room for one more bottle? GiveItem case 3 walks ITEM_BOTTLE1..4 for the
+// first one not yet owned, and returns without doing anything if all four
+// are taken.
+static bool32 QuickStartHasBottleRoom(void) {
+    s32 i;
+    for (i = 0; i < 4; i++) {
+        if (GetInventoryValue(ITEM_BOTTLE1 + i) == 0) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
+    if (!e->repeatable && GetInventoryValue(e->item) != 0) {
+        return FALSE;
+    }
+    switch (e->req) {
+        case QS_REQ_BOW:
+            return GetInventoryValue(ITEM_BOW) != 0;
+        case QS_REQ_BOMBS:
+            return GetInventoryValue(ITEM_BOMBS) != 0;
+        case QS_REQ_BOOMERANG:
+            return GetInventoryValue(ITEM_BOOMERANG) != 0;
+        case QS_REQ_MOLE_MITTS:
+            return GetInventoryValue(ITEM_MOLE_MITTS) != 0;
+        case QS_REQ_FLIPPERS:
+            return GetInventoryValue(ITEM_FLIPPERS) != 0;
+        case QS_REQ_SPIN_ATTACK:
+            return GetInventoryValue(ITEM_SKILL_SPIN_ATTACK) != 0;
+        case QS_REQ_ROCS_CAPE:
+            return GetInventoryValue(ITEM_ROCS_CAPE) != 0;
+        case QS_REQ_EMPTY_BOTTLE:
+            return QuickStartHasEmptyBottle();
+        case QS_REQ_BOTTLE_ROOM:
+            return QuickStartHasBottleRoom();
+        // itemMetaData.c gives ITEM_FIRE_ROD and ITEM_PACCI_CANE the same
+        // MENU_SLOT_CANE, because the 4x3 item grid has no free cell. Rather
+        // than fight the menu art, the two are made mutually exclusive in the
+        // draw: whichever the run finds first locks the other out.
+        case QS_REQ_NO_PACCI:
+            return GetInventoryValue(ITEM_PACCI_CANE) == 0;
+        case QS_REQ_NO_FIRE_ROD:
+            return GetInventoryValue(ITEM_FIRE_ROD) == 0;
+        default:
+            return TRUE;
+    }
+}
+
+// Pick the `pick`-th usable entry of (catMask, tier), or ITEM_NONE if the run
+// has exhausted that tier. No modulo: `pick` is reduced by subtraction
+// because the count is a runtime value, and agbcc emits __umodsi3 (which its
+// runtime lib does not provide) for a division by anything but a constant.
+static u16 QuickStartTierPick(u8 catMask, u8 tier, s32 pick) {
+    s32 i, count = 0;
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        const QuickStartTierEntry* e = &sQuickStartTiers[i];
+        if ((e->cat & catMask) && e->tier == tier && QuickStartTierEntryUsable(e)) {
+            count++;
+        }
+    }
+    if (count == 0) {
+        return ITEM_NONE;
+    }
+    if (pick < 0) {
+        pick = -pick;
+    }
+    while (pick >= count) {
+        pick -= count;
+    }
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        const QuickStartTierEntry* e = &sQuickStartTiers[i];
+        if ((e->cat & catMask) && e->tier == tier && QuickStartTierEntryUsable(e)) {
+            if (pick == 0) {
+                return e->item;
+            }
+            pick--;
+        }
+    }
+    return ITEM_NONE;
+}
+
+// Draw at a FORCED tier, stepping down if that tier is exhausted and finally
+// falling back to a heart piece - which is always usable, so a draw can never
+// come back empty and leave a "? room" with nothing in it.
+static u16 QuickStartDrawAtTier(s32 pick, u8 catMask, s32 tier) {
+    s32 t;
+    for (t = tier; t >= 0; t--) {
+        u16 item = QuickStartTierPick(catMask, (u8)t, pick);
+        if (item != ITEM_NONE) {
+            return item;
+        }
+    }
+    for (t = tier + 1; t <= QS_TIER_RARE; t++) {
+        u16 item = QuickStartTierPick(catMask, (u8)t, pick);
+        if (item != ITEM_NONE) {
+            return item;
+        }
+    }
+    return ITEM_HEART_PIECE;
+}
+
+// The ordinary draw: roll a tier 60/30/10, then pick within it.
+//
+// `seed` is whatever the caller had stored for this event (a content site's
+// `extra`, a lottery's prize field). Deriving both the tier and the pick from
+// it - rather than calling Random() at drop time - is what makes a prize
+// stable across leaving the room and coming back, which every "? room" here
+// depends on.
+static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
+    s32 roll = seed;
+    s32 tier;
+    if (roll < 0) {
+        roll = -roll;
+    }
+    // TEN buckets, not a percentage out of 100. The seed is only six bits
+    // (QUICKSTART_DRAW_SEED_RANGE), so "roll % 100 < 60" would have made rare
+    // literally unreachable and uncommon a 4-in-64 accident - a seed of 0-63
+    // never lands in the 90-99 band at all. Ten buckets divide exactly into
+    // the 60/30/10 curve and work at any seed width.
+    roll = roll % QS_TIER_BUCKETS;
+    if (roll < QS_TIER_COMMON_BUCKETS) {
+        tier = QS_TIER_COMMON;
+    } else if (roll < QS_TIER_COMMON_BUCKETS + QS_TIER_UNCOMMON_BUCKETS) {
+        tier = QS_TIER_UNCOMMON;
+    } else {
+        tier = QS_TIER_RARE;
+    }
+    // The pick comes off the OTHER end of the seed, so which item is drawn is
+    // not locked to which tier was rolled.
+    return QuickStartDrawAtTier(seed / QS_TIER_BUCKETS, catMask, tier);
+}
+
+// Draws this region's clear reward and drops it at the reward spot, marking
+// this chain slot "earned" (1) and room flag 1 "now watching this visit's
+// drop" - shared by both the initial grant and the re-drop path in
+// QuickStartSpawnRegionRewardOnce below.
+static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 slot) {
+    u16 chosenItem;
+    Entity* itemEntity;
+    // The region reward is the one draw that includes KEY items, because it
+    // is where the Cane of Pacci, the Ocarina and the two key items the
+    // opening selection did not offer have always come from. Rolled fresh
+    // (not seeded) - unlike a "? room" prize this is placed once and never
+    // re-derived, so it has nothing to stay consistent with.
+    //
+    // region->rewardPool / rewardPoolSize are now unused: the flat 23-entry
+    // list they pointed at has been replaced by the tier table, which already
+    // filters on what the run owns. The struct fields are left in place
+    // rather than removing them from five table rows.
+    chosenItem = QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_ALL);
     itemEntity = CreateObject(GROUND_ITEM, chosenItem, 0);
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
@@ -5063,85 +5341,8 @@ static bool32 QuickStart2DoorWantsOverworldEnemies(u8 area, u8 room) {
 // does not provide one. Going to eight is not padding either - it is what
 // finally makes this the common WEAPON/TOOL tier plus common REWARDS,
 // instead of two capacity upgrades and two consolation prizes.
-static const u16 sQuickStartLadderRewardPool[] = {
-    ITEM_BOW,       ITEM_BOMBS,   ITEM_HEART_PIECE, ITEM_RUPEE200,
-    ITEM_BOOMERANG, ITEM_GUST_JAR, ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
-};
-// A plain literal (matching this file's other enemy/reward pool modulos,
-// e.g. "% 3"/"% 4" above) rather than a sizeof-based macro - agbcc emits an
-// unsigned modulo helper (__umodsi3, not provided by its runtime lib) for
-// the sizeof-derived expression even when cast to (s32) on both sides.
-#define QUICKSTART_LADDER_REWARD_POOL_SIZE 8
 
-// Capacity upgrades are worthless without the weapon they hold ammunition
-// for, and the two do not behave the same way in vanilla:
-//
-//   ITEM_BOMBBAG  (itemUtils.c case 8)   - the FIRST one grants ITEM_BOMBS
-//                                          outright and puts it on a slot.
-//                                          It bootstraps itself.
-//   ITEM_LARGE_QUIVER (case 0xa)         - only ever does quiverType++. It
-//                                          does NOT grant the Bow, so a run
-//                                          without one gets a dead pickup.
-//
-// That asymmetry is what the user saw: quivers kept dropping and none of
-// them did anything. The rule here is theirs - "always drop the bow and the
-// smallest quiver first, then subsequently upgrade the quiver size" - and it
-// falls out for free, because picking up the Bow (case 0xb) already sets
-// ITEM_LARGE_QUIVER without touching quiverType. So the Bow IS "bow plus the
-// smallest quiver", and every later quiver is a real upgrade.
-//
-// Applied at every point a pool entry becomes a floor item, so it covers
-// chests, wave payouts, minibosses, lotteries and the hunt alike.
-static u16 QuickStartResolveReward(u16 item) {
-    if (item == ITEM_LARGE_QUIVER && GetInventoryValue(ITEM_BOW) == 0) {
-        return ITEM_BOW;
-    }
-    // Kept for symmetry and for the text: the bomb bag does bootstrap
-    // bombs, but "you got a Bomb Bag" as the way a player first learns they
-    // can use bombs reads as a bug even when it works.
-    if (item == ITEM_BOMBBAG && GetInventoryValue(ITEM_BOMBS) == 0) {
-        return ITEM_BOMBS;
-    }
-    // The other half of the same complaint: a one-shot weapon the player
-    // already owns is just as dead as a quiver they cannot use. The capacity
-    // upgrades are deliberately NOT in this list - they stack to type 3, so a
-    // second bag or quiver is still a real upgrade.
-    if ((item == ITEM_BOW || item == ITEM_BOMBS || item == ITEM_BOOMERANG || item == ITEM_GUST_JAR) &&
-        GetInventoryValue(item) != 0) {
-        return ITEM_HEART_PIECE;
-    }
-    return item;
-}
 
-// The RARE tier, for the handful of sites that pay one guaranteed
-// (QUICKSTART_KINDS_RARE). Drawn from docs/QUICKSTART_ITEM_TIERS.md's rare
-// rows, restricted to things that are (a) real droppable GROUND_ITEMs and
-// (b) useful the moment they land - so no rare SKILL scrolls here, because
-// Great Spin needs Spin Attack and Down Thrust needs Roc's Cape, and a rare
-// drop that does nothing because the prerequisite never rolled is worse than
-// no rare drop at all.
-static const u16 sQuickStartRareRewardPool[] = {
-    ITEM_MAGIC_BOOMERANG,
-    ITEM_MIRROR_SHIELD,
-    ITEM_HEART_CONTAINER,
-    ITEM_RUPEE200,
-};
-#define QUICKSTART_RARE_REWARD_POOL_SIZE 4
-
-// The two one-shot entries above are dead picks once owned, so the roll is
-// a starting point rather than the answer: walk forward from it and take
-// the first thing the player can still use. Rupees and heart containers are
-// never "already owned", so this always terminates on something real.
-static u16 QuickStartPickRareReward(s32 extra) {
-    s32 i;
-    for (i = 0; i < QUICKSTART_RARE_REWARD_POOL_SIZE; i++) {
-        u16 item = sQuickStartRareRewardPool[(extra + i) % QUICKSTART_RARE_REWARD_POOL_SIZE];
-        if (item == ITEM_RUPEE200 || item == ITEM_HEART_CONTAINER || GetInventoryValue(item) == 0) {
-            return item;
-        }
-    }
-    return ITEM_RUPEE200;
-}
 
 // Miniboss variety: LADDER_KIND_MINIBOSS/QuickStart2Door's own miniboss case
 // used to always spawn a plain CreateEnemy(DARK_NUT, 0). sQuickStartLevel5
@@ -5152,6 +5353,24 @@ static u16 QuickStartPickRareReward(s32 extra) {
 // fresh roster from scratch.
 #define QUICKSTART_MINIBOSS_POOL_SIZE 5
 
+// Lottery prizes are drawn from their own small fixed table rather than the
+// tier system, and that is deliberate. A lottery decides its prize on the
+// first visit and then has to recognise that exact item on the floor when the
+// player comes back (QuickStartGroundItemOfForm), but a tier draw filters on
+// what the run currently owns - so the answer could change between placing
+// the prize and checking for it, and the room would never register as solved.
+//
+// These eight rows have no prerequisites and are all repeatable, so the draw
+// is a pure function of the stored seed. Weighted 5/2/1 = 62.5 / 25 / 12.5,
+// the closest an eight-entry table gets to the mode's 60/30/10 curve.
+static const u16 sQuickStartLotteryPrizes[8] = {
+    ITEM_RUPEE50,  ITEM_HEART_PIECE, ITEM_RUPEE50,  ITEM_HEART_PIECE, // common
+    ITEM_RUPEE50,                                                     // common
+    ITEM_RUPEE100, ITEM_RUPEE100,                                     // uncommon
+    ITEM_HEART_CONTAINER,                                             // rare
+};
+#define QUICKSTART_LOTTERY_PRIZE_COUNT 8
+
 // --- The lottery "extra" byte -------------------------------------------
 //
 // Both lottery kinds pack their whole state into the single 8-bit `extra`
@@ -5160,15 +5379,14 @@ static u16 QuickStartPickRareReward(s32 extra) {
 //
 // The prize field is THREE bits, and the mask below is the only place that
 // number is written down. It used to be two, which was correct while
-// sQuickStartLadderRewardPool had four entries and silently wrong the moment
-// it grew to eight: the writer emitted a 3-bit index into a 2-bit slot, so
-// indices 4-7 folded onto 0-3 (lotteries could never award the Boomerang,
-// Gust Jar, Bomb Bag or Large Quiver) and, in the pot room, the spilled bit
-// landed in the winner field and perturbed which pot held the prize.
+// the shared reward pool had four entries and silently wrong the moment it
+// grew to eight: the writer emitted a 3-bit index into a 2-bit slot, so
+// indices 4-7 folded onto 0-3 and, in the pot room, the spilled bit landed in
+// the winner field and perturbed which pot held the prize.
 //
 // Tie the mask to the pool size and neither can drift again.
 #define QUICKSTART_LOTTERY_PRIZE_SHIFT 2
-#define QUICKSTART_LOTTERY_PRIZE_MASK (QUICKSTART_LADDER_REWARD_POOL_SIZE - 1)
+#define QUICKSTART_LOTTERY_PRIZE_MASK (QUICKSTART_LOTTERY_PRIZE_COUNT - 1)
 
 static s32 QuickStartLotteryPrizeIndex(s32 extra) {
     return (extra >> QUICKSTART_LOTTERY_PRIZE_SHIFT) & QUICKSTART_LOTTERY_PRIZE_MASK;
@@ -5178,7 +5396,7 @@ static s32 QuickStartLotteryPrizeIndex(s32 extra) {
 // 2-4. Bits 5-7 are unused and always were.
 static u8 QuickStartPickLotteryExtra(void) {
     u8 winnerSlot = (u8)((s32)Random() % 3);
-    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LOTTERY_PRIZE_COUNT);
     return (u8)(winnerSlot | ((prizeIndex & QUICKSTART_LOTTERY_PRIZE_MASK) << QUICKSTART_LOTTERY_PRIZE_SHIFT));
 }
 
@@ -5193,7 +5411,7 @@ static u8 QuickStartPickLotteryExtra(void) {
 // survive leaving the room and coming back:
 //
 //   bits 0-1  density preset: packed / mixed / sparse
-//   bits 2-4  prize index into sQuickStartLadderRewardPool
+//   bits 2-4  prize index into sQuickStartLotteryPrizes
 //   bits 5-7  where in the fill order the winning pot sits
 //
 // Nothing here is re-rolled on re-entry, and that is the point. The layout
@@ -5211,7 +5429,7 @@ static u8 QuickStartPickLotteryExtra(void) {
 #define QUICKSTART_POT_WINNER_BUCKETS 8
 static u8 QuickStartPickPotRoomExtra(void) {
     u8 preset = (u8)((s32)Random() % QUICKSTART_POT_ROOM_PRESET_COUNT);
-    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+    u8 prizeIndex = (u8)((s32)Random() % QUICKSTART_LOTTERY_PRIZE_COUNT);
     u8 winnerBucket = (u8)((s32)Random() % QUICKSTART_POT_WINNER_BUCKETS);
     return (u8)(preset | ((prizeIndex & QUICKSTART_LOTTERY_PRIZE_MASK) << QUICKSTART_LOTTERY_PRIZE_SHIFT) |
                 (winnerBucket << QUICKSTART_POT_WINNER_SHIFT));
@@ -5248,7 +5466,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
             kind = (u8)((s32)Random() % 3);
             QuickStartLadderSetKind(i, kind);
             if (kind == LADDER_KIND_CHEST) {
-                QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+                QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
             } else if (kind == LADDER_KIND_NPC) {
                 QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
             }
@@ -5263,14 +5481,14 @@ static void QuickStartRandomizeLaddersOnce(void) {
         }
         QuickStartLadderSetKind(i, kind);
         if (kind == LADDER_KIND_CHEST) {
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
         } else if (kind == LADDER_KIND_NPC) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
         } else if (kind == LADDER_KIND_WAVES) {
             // Reuses the ladder chest reward pool for the wave room's own
             // 3-waves-cleared drop, same reward variety a chest room gets
             // instead of a single fixed item.
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
         } else if (kind == LADDER_KIND_MINIBOSS) {
             QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
         } else if (kind == LADDER_KIND_POT_LOTTERY) {
@@ -5317,7 +5535,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
                 }
                 QuickStartLadderSetKind(i, kind);
                 if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
                 } else if (kind == LADDER_KIND_NPC) {
                     QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
                 } else if (kind == LADDER_KIND_MINIBOSS) {
@@ -5396,7 +5614,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         }
         QuickStartLadderSetKind(ladderIndex, kind);
         if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-            QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+            QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
         } else if (kind == LADDER_KIND_NPC) {
             QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
         } else if (kind == LADDER_KIND_MINIBOSS) {
@@ -5424,7 +5642,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
                 }
                 QuickStartLadderSetKind(ladderIndex, kind);
                 if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-                    QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+                    QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
                 } else if (kind == LADDER_KIND_NPC) {
                     QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2));
                 } else if (kind == LADDER_KIND_MINIBOSS) {
@@ -5663,7 +5881,7 @@ static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16
 
 // LADDER_KIND_WAVES: a 3-wave gauntlet (one enemy type per wave, per the
 // user's own brief), an Ezlo hint the first time a ladder resolves to this
-// kind, and a reward off sQuickStartLadderRewardPool once all 3 are
+// kind, and a tier draw once all 3 are
 // cleared. Room flags used, all distinct from the other kinds' own (they
 // never run in the same room at once, so there's no collision reusing low
 // numbers): flag 0 = the current wave's enemies have been spawned and at
@@ -6199,7 +6417,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
             // pickup (same reward pool a chest room draws from, so a wave
             // room's payoff has the same variety instead of a single fixed
             // item).
-            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -6610,8 +6828,8 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
                 Entity* itemEntity =
                     CreateObject(GROUND_ITEM,
                                  CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
-                                     ? QuickStartResolveReward(QuickStartPickRareReward((s32)Random()))
-                                     : QuickStartResolveReward(sQuickStartLadderRewardPool[(s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE]),
+                                     ? QuickStartDrawAtTier(((s32)Random() & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE)
+                                     : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
                                  0);
                 if (itemEntity != NULL) {
                     itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
@@ -6959,7 +7177,7 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
                     }
                     if (spawn) {
                         u32 form = (placed == winnerIndex)
-                                       ? sQuickStartLadderRewardPool[prizeIndex]
+                                       ? sQuickStartLotteryPrizes[prizeIndex]
                                        : (isTrap ? QUICKSTART_POT_TRAP_FORM : (u32)0xFF);
                         Entity* pot = CreateObject(POT, form, 0);
                         if (pot != NULL) {
@@ -7054,7 +7272,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
 static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     s32 anchorTX, anchorTY;
     if (QsCheckRoomFlag(flagBase + 0)) {
-        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[QuickStartLotteryPrizeIndex(extra)])) {
+        if (QuickStartGroundItemOfForm(sQuickStartLotteryPrizes[QuickStartLotteryPrizeIndex(extra)])) {
             QsSetRoomFlag(flagBase + 3);
             return FALSE;
         }
@@ -7129,7 +7347,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
                 if (slot != NULL) {
                     slot->type = SMALL_CHEST;
                     slot->localFlag = (u8)QUICKSTART_CHEST_LOTTERY_FLAG(i);
-                    slot->_2 = (u8)sQuickStartLadderRewardPool[prizeIndex];
+                    slot->_2 = (u8)sQuickStartLotteryPrizes[prizeIndex];
                     slot->_3 = 0;
                     slot->tilePos = (u16)(((localX >> 4) & 0x3F) | (((contentY >> 4) & 0x3F) << 6));
                     slot->_6 = 1;
@@ -7227,8 +7445,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // free to say which pool to draw from - the same trick the miniboss
             // kind already uses for its elite and Red Sword bits.
             u16 rewardItem = (extra & 0x80)
-                                 ? QuickStartResolveReward(QuickStartPickRareReward(extra & 0x7f))
-                                 : QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+                                 ? QuickStartDrawAtTier((extra & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE)
+                                 : QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -7493,7 +7711,7 @@ static void QuickStartRandomizeMelariEastOnce(void) {
         QsSetFlag(GF_MELARI_EAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
-        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);
     }
     for (b = 0; b < 3; b++) {
         if (extra & (1 << b)) {
@@ -7516,7 +7734,7 @@ static void QuickStartRandomizeMelariSoutheastOnce(void) {
         QsSetFlag(GF_MELARI_SOUTHEAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
-        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);
     }
     for (b = 0; b < 3; b++) {
         if (extra & (1 << b)) {
@@ -7546,7 +7764,7 @@ static void QuickStartClearMelariRoomObstacles(void) {
 }
 
 // East room's own content dispatch - a plain chest (one reward off the
-// same sQuickStartLadderRewardPool the ladder/2-door chests already draw
+// same tier draw the ladder/2-door chests already use
 // from) or a talking NPC (same 2 canned scripts sQuickStartLadderNpcScripts
 // already uses), whichever QuickStartRandomizeMelariEastOnce rolled.
 // Simpler double-flag-free version of the ladder system's own chest/NPC
@@ -7631,7 +7849,7 @@ enum {
     // see QuickStartRandomizeContentSiteOnce and the miniboss reward drop).
     QUICKSTART_KINDS_ELITE,
     // No roll either: always a plain item drop, always off the RARE pool
-    // (sQuickStartRareRewardPool). For sites that are meant to be worth
+    // (QS_TIER_RARE). For sites that are meant to be worth
     // finding in themselves rather than worth fighting - the Boomerang
     // chamber's central staircase is the one that has it today.
     QUICKSTART_KINDS_RARE,
@@ -8134,7 +8352,11 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             break;
     }
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-        extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        // A draw seed, not an index: QuickStartDrawItem derives both the tier
+        // and the pick from it, and storing it (rather than calling Random()
+        // at drop time) is what keeps a prize the same after leaving the room
+        // and coming back.
+        extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);
         // Bit 6 on a WAVES site: the stripped-kit variant (see
         // QuickStartHandicapApply). One gauntlet in four, which lands it
         // between "uncommon" and "rare" once you account for WAVES itself
@@ -8144,11 +8366,11 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             extra |= 0x40;
         }
         if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_RARE) {
-            // Bit 7 = draw the drop from sQuickStartRareRewardPool instead.
+            // Bit 7 = force the drop to the RARE tier.
             // Rolled into the stored extra rather than checked at drop time
             // so the whole treatment survives leaving and re-entering the
             // room, exactly like the miniboss kind's elite bit.
-            extra = (u8)(((s32)Random() % QUICKSTART_RARE_REWARD_POOL_SIZE) | 0x80);
+            extra = (u8)(((s32)Random() % QUICKSTART_DRAW_SEED_RANGE) | 0x80);
         }
     } else if (kind == LADDER_KIND_NPC) {
         extra = (u8)((s32)Random() % 2); // bit 0: 1 = evil, 0 = friendly
@@ -8265,7 +8487,7 @@ static void QuickStart2DoorRandomizeOnce(void) {
     }
     QuickStart2DoorSetKind(kind);
     if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-        QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE));
+        QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
     } else if (kind == LADDER_KIND_NPC) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % 2));
     } else if (kind == LADDER_KIND_MINIBOSS) {
@@ -8345,7 +8567,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         }
         if (wave >= 2) {
             s32 extra = QuickStart2DoorGetExtra();
-            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -8381,7 +8603,7 @@ static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
     }
     extra = QuickStart2DoorGetExtra();
     if (QsCheckRoomFlag(0)) {
-        if (QuickStartGroundItemOfForm(sQuickStartLadderRewardPool[QuickStartLotteryPrizeIndex(extra)])) {
+        if (QuickStartGroundItemOfForm(sQuickStartLotteryPrizes[QuickStartLotteryPrizeIndex(extra)])) {
             QsSetRoomFlag(3);
             return;
         }
@@ -8438,7 +8660,7 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
                 if (slot != NULL) {
                     slot->type = SMALL_CHEST;
                     slot->localFlag = (u8)QUICKSTART_CHEST_LOTTERY_FLAG(i);
-                    slot->_2 = (u8)sQuickStartLadderRewardPool[prizeIndex];
+                    slot->_2 = (u8)sQuickStartLotteryPrizes[prizeIndex];
                     slot->_3 = 0;
                     slot->tilePos = (u16)(((localX >> 4) & 0x3F) | (((contentY >> 4) & 0x3F) << 6));
                     slot->_6 = 1;
@@ -8588,7 +8810,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         }
         {
             s32 extra = QuickStart2DoorGetExtra();
-            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -9005,7 +9227,7 @@ static void QuickStartRandomizeRiverBridgeOnce(void) {
         }
     } else {
         s32 b;
-        u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        u8 extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);
         for (b = 0; b < 3; b++) {
             if (extra & (1 << b)) {
                 QsSetFlag(GF_RIVER_EXTRA_BIT(b));
@@ -9063,7 +9285,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
             return;
         }
         {
-            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
@@ -9299,7 +9521,7 @@ static void QuickStartRandomizeCaveOnce(void) {
         }
     } else {
         s32 b;
-        u8 extra = (u8)((s32)Random() % QUICKSTART_LADDER_REWARD_POOL_SIZE);
+        u8 extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);
         for (b = 0; b < 3; b++) {
             if (extra & (1 << b)) {
                 QsSetFlag(GF_CAVE_EXTRA_BIT(b));
@@ -9347,7 +9569,7 @@ static void QuickStartSetupCaveRoomContent(void) {
             return;
         }
         {
-            u16 rewardItem = QuickStartResolveReward(sQuickStartLadderRewardPool[extra % QUICKSTART_LADDER_REWARD_POOL_SIZE]);
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
             Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             if (itemEntity != NULL) {
                 itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
