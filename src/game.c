@@ -501,10 +501,10 @@ static void GameTask_Transition(void) {
     // clone-block puzzles stay unsolvable for now and the whole mechanic is
     // parked on the roadmap rather than half-wired here.
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
-    // L item slot - the Bow, per the user's own request ("the player should
-    // start with the bow equipped"). Ownership + arrows are granted below
-    // alongside the other free starting gear, same pattern as Bombs.
-    gSave.stats.equippedExtra[0] = ITEM_BOW;
+    // L item slot starts empty. It used to hold the Bow, back when the Bow
+    // was free gear; now that bow, arrows and bombs are all things the run
+    // has to find, there is nothing to put here at boot.
+    gSave.stats.equippedExtra[0] = ITEM_NONE;
     // Start with every wallet upgrade already owned (walletType 3 ==
     // gWalletSizes[3] == 999 rupee cap, itemUtils.c). walletType is the
     // field gameplay actually reads (gWalletSizes[walletType].size, see
@@ -527,50 +527,32 @@ static void GameTask_Transition(void) {
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
     SetInventoryValue(ITEM_SMITH_SWORD, 1);
-    // Dev-only: also pre-grant the Fire Rod and Light Arrow (the upgraded
-    // Bow ammo - there's no separate "Light Bow" item, Light Arrow is what
-    // that name refers to) so they're available in the item menu for
-    // testing without needing to actually find them in the world.
+    // The Fire Rod and Light Arrow used to be pre-granted here for testing.
+    // Both are droppable now (WEAPON/TOOL, see docs/QUICKSTART_ITEM_TIERS.md),
+    // so handing them out at boot would defeat the point.
     //
-    // ITEM_FIRE_ROD is a real, working item again as of this session: it
-    // used to be a non-functional leftover (item.c mapped it to ItemDebug,
-    // the same stub used for ITEM_NONE and the unused debug orb items, and
-    // its itemMetaData menuSlot was 0x63 - nowhere near a real slot). Now
-    // wired up for real: src/item/itemFireRod.c (a new ItemFireRod handler,
-    // modeled on ItemPacciCane's simple "raise it, spawn a projectile
-    // partway through the animation, delete when done" shape) creates
-    // PLAYER_ITEM_FIRE_ROD_PROJECTILE (src/playerItem/playerItemFireRodProjectile.c
-    // - already a complete, working projectile implementation, just never
-    // reachable from any real item before), and itemMetaData.c/
-    // itemDefinitions.c now give it MENU_SLOT_CANE's grid position (never
-    // granted under QUICKSTART, so no collision) and a real playerItemId/
-    // animation instead of their old debug placeholders.
-    SetInventoryValue(ITEM_FIRE_ROD, 1);
-    SetInventoryValue(ITEM_LIGHT_ARROW, 1);
-    // Bow, granted and equipped (L slot, see equippedExtra[0] above) at
-    // boot per the user's own request. ModArrows(99) mirrors ModBombs(99)
-    // just below - gQuiverSizes[0] is the smallest real quiver, so this
-    // just fills it rather than granting some inflated capacity.
-    SetInventoryValue(ITEM_BOW, 1);
-    ModArrows(99);
+    // Note for whoever adds the Fire Rod to a drop table: it shares
+    // MENU_SLOT_CANE with the Cane of Pacci (itemMetaData.c). That is our own
+    // doing, not vanilla's - the rod ships with menuSlot 0x63, the "not on
+    // the grid" sentinel, and was given the cane's cell precisely because the
+    // cane was never granted. The item grid has twelve cells and all twelve
+    // are spoken for, so the fix is not a new cell: it is making the two
+    // mutually exclusive in the roll.
+    // The Bow and its arrows are no longer free. They are WEAPON/TOOL drops
+    // and shop stock now, so a run that wants a ranged option has to find or
+    // buy one.
     // ITEM_FLIPPERS is no longer a free grant - it's one of the round-1
     // key-item choices now (sQuickStartKeyItems), and the whole point of
     // that round is that owning it (or not) actually changes which region
     // the run's chain routes through (QuickStartRandomizeRegionChainOnce).
-    // Bombs, granted at boot per the user's request. bombBagType stays 0
-    // (reset just above) - gBombBagSizes[0] == 10 (itemUtils.c), so this
-    // isn't a "0-capacity, can't carry any" state, it's just the smallest
-    // real bag. ModBombs(99) mirrors the real first-time Bombs pickup path
-    // (GiveItem's own case 8), which also just calls ModBombs(99) and lets
-    // it clamp to whatever the current bag size is - same clamp applies
-    // here, filling to 10.
-    SetInventoryValue(ITEM_BOMBS, 1);
-    ModBombs(99);
-    // Gust Jar, granted at boot per the user's request - it's the only way
-    // to actually damage CHUCHU_BOSS (Castle Garden's own boss - see
-    // QuickStartSpawnGardenBossOnce): its core is only vulnerable to being
-    // sucked in and slammed, not sword hits, matching its vanilla Deepwood
-    // Shrine fight.
+    // Bombs are no longer free either, same reasoning as the Bow above.
+    // Gust Jar. DELIBERATELY still free, and the one exception to "start with
+    // a sword and shield only" - it is the only way to damage CHUCHU_BOSS
+    // (Castle Garden's own boss, QuickStartSpawnGardenBossOnce): its core is
+    // vulnerable to being sucked in and slammed, not to sword hits, matching
+    // its vanilla Deepwood Shrine fight. Taking it away makes that region
+    // unwinnable, so it stays until the boss has a second answer or the Gust
+    // Jar is guaranteed to drop before Castle Garden comes up in the chain.
     SetInventoryValue(ITEM_GUST_JAR, 1);
     // Lon Lon Ranch house key, granted at boot per the user's request ("Link
     // should start the game with the Lon Lon ranch house key already in his
