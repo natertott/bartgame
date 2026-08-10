@@ -255,11 +255,22 @@ Suggested order:
    types. Cap distinct types per region (6 is a reasonable first trial) and
    re-measure the curve. Expected to free a large block of GFX; the number
    should be measured, not assumed.
-2. **Add a GFX-slot tier to the invariant checker** — assert free slots
-   remain at each difficulty in each region, so exhaustion becomes a build
-   failure instead of a play-test mystery.
-3. **Build the item-finding quest first** (cheapest, near-zero GFX) to
-   prove the quest framework, flags, and reset behaviour.
+2. ~~**Add a GFX-slot tier to the invariant checker**~~ **DONE** - the
+   `gfx budget` tier samples every frame at difficulties 0/4/8/12 in every
+   region and fails if free slots drop below the floor. It caught a
+   transient the max-based probe missed: right after a wave spawns, before
+   the reserve's next pass, the table really was full.
+3. ~~**Build the item-finding quest first**~~ **DONE** - the hidden-item
+   quest (`QuickStartSetupRegionQuest`): eight pots scattered over one
+   region on that region's own pre-verified walkable offsets, exactly one
+   hiding the reward. State lives in FLAG_BANK_11. Measured cost: it takes
+   North Hyrule Field's worst-case free-slot margin from 6 to 3, still
+   above the floor - i.e. **one quest costs about 3 slots of margin in the
+   tightest region**, which is the number to budget future quests against.
+   Not yet verified: smashing the prize pot with an actual sword swing (the
+   test harness could not land a hit). The pot-break path is vanilla and is
+   the same one the pot-lottery ? rooms use in play; the quest's own logic -
+   roll, spread, single prize, completion latch - is verified.
 4. **Then kinstone fusions** — the highest-value feature, mostly already
    built in vanilla, and the one that turns nine pre-solved stopgap gates
    back into real content.
