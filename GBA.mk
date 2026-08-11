@@ -59,8 +59,11 @@ CUSTOM ?=
 # Dev-only hook: boot straight into a chosen room with full equipment instead
 # of the title/file-select flow, for fast iteration. See src/game.c.
 QUICKSTART ?=
-QUICKSTART_AREA ?= AREA_CASTOR_DARKNUT
-QUICKSTART_ROOM ?= ROOM_CASTOR_DARKNUT_MAIN
+# The hub: Home of the Wind Tribe, third floor. See docs/QUICKSTART_HUB.md.
+# Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN - keep that pair here,
+# because reverting the hub move is exactly these two lines.
+QUICKSTART_AREA ?= AREA_WIND_TRIBE_TOWER
+QUICKSTART_ROOM ?= ROOM_WIND_TRIBE_TOWER_FLOOR_3
 # Dev-only hook: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM with the entire
 # main quest done except the Vaati fight, for walking the full overworld and
 # recording coordinates. See src/game.c. Mutually exclusive with QUICKSTART.

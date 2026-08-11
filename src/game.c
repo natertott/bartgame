@@ -125,6 +125,13 @@ static void sub_08051DCC(void);
 // progress flags (LV1_CLEAR, TABIDACHI, ZELDA_CHASE, ...) still go through
 // the real CheckGlobalFlag/SetGlobalFlag and stay in bank 0, where the rest
 // of the engine expects to find them.
+// Where the player stands in the hub's third-floor hall. Used by the initial
+// spawn and by the two inter-phase repositions, which have to agree with it -
+// they exist to move the player OFF the item row before the next row spawns,
+// so a stale copy of this number would put them straight back on it.
+#define QUICKSTART_HUB_SPAWN_X 120
+#define QUICKSTART_HUB_SPAWN_Y 120
+
 #define QUICKSTART_FLAG_ORIGIN 700
 
 static bool32 QsCheckFlag(u32 flag) {
@@ -342,15 +349,20 @@ static void GameTask_Transition(void) {
     gRoomTransition.player_status.area_next = QUICKSTART_AREA;
     gRoomTransition.player_status.room_next = QUICKSTART_ROOM;
     gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    // Castor Darknut Main (the room one screen north of Hall, connected to
-    // it, and the one that actually contains the Darknut) is a single
-    // enclosed room whose safe walkable area - verified by actually walking
-    // the player through it in the emulator - is roughly a 199x135 box from
-    // world (36,39) to (235,174), origin (0,0). Spawn point placed directly
-    // by the user (via the room-local position Lua script, Tools/Scripting
-    // in mGBA) rather than this file's own emulator survey.
-    gRoomTransition.player_status.start_pos_x = 135;
-    gRoomTransition.player_status.start_pos_y = 0x9b;
+    // The hub's third floor - Home of the Wind Tribe. Measured, not guessed
+    // (docs/QUICKSTART_HUB.md sec 2): the floor is 240x336 and its open hall
+    // is rows 3-7 by columns 2-12, i.e. the pixel box (32,48)-(207,127).
+    // Everything the item-selection phase places lives in that hall, stacked
+    // vertically with 32px between rows so nothing is picked up by accident:
+    //
+    //     y=56    the sign NPC   (QuickStartSpawnStarterChoice)
+    //     y=88    the item row   (sQuickStartItemOffsets)
+    //     y=120   the player     (here)
+    //
+    // The floor below the hall (rows 8-12) is the stair column alone, so
+    // there is nowhere further south to stand - this is the bottom row.
+    gRoomTransition.player_status.start_pos_x = QUICKSTART_HUB_SPAWN_X;
+    gRoomTransition.player_status.start_pos_y = QUICKSTART_HUB_SPAWN_Y;
     gRoomTransition.player_status.layer = 1;
     // Every fresh boot is meant to be its own clean round - none of last
     // round's starter/bonus/skill choice, ladder/gauntlet reward pickups, or
@@ -11195,7 +11207,13 @@ static void QuickStartSpawnRegionFusers(void) {
 // same 3-slot item row; the single instructive sign sits in its own row
 // well above it (75px vertical separation), so browsing never risks an
 // accidental pickup.
-static const s16 sQuickStartItemOffsets[QUICKSTART_ITEM_CHOICES] = { 100, 136, 170 };
+// Columns 4, 7 and 10 of the hub's third-floor hall, which is 11 tiles wide
+// (columns 2-12). Evenly spread with two clear tiles between each, so a
+// player walking the row cannot brush the neighbouring item.
+static const s16 sQuickStartItemOffsets[QUICKSTART_ITEM_CHOICES] = { 72, 120, 168 };
+// The hall row the items sit on - see the spawn comment in GameTask_Transition
+// for the full vertical layout.
+#define QUICKSTART_ITEM_ROW_Y 88
 
 // Called exactly once per phase (QuickStartSpawnStarterChoiceOnce's own NPC
 // scan guards the phase-0 call, and the phase==1/phase==3 reload handlers
@@ -11221,7 +11239,7 @@ static void QuickStartSpawnItems(const QuickStartItemChoice* choices) {
         Entity* itemEntity = CreateObject(GROUND_ITEM, choices[order[i]].itemId, 0);
         if (itemEntity != NULL) {
             itemEntity->x.HALF.HI = gRoomControls.origin_x + sQuickStartItemOffsets[i];
-            itemEntity->y.HALF.HI = gRoomControls.origin_y + 105;
+            itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_ITEM_ROW_Y;
             itemEntity->collisionLayer = 1;
             itemEntity->flags |= ENT_PERSIST;
             UpdateSpriteForCollisionLayer(itemEntity);
@@ -11293,8 +11311,8 @@ static void QuickStartSpawnStarterChoice(void) {
 
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
-        npc->x.HALF.HI = gRoomControls.origin_x + 135;
-        npc->y.HALF.HI = gRoomControls.origin_y + 70;
+        npc->x.HALF.HI = gRoomControls.origin_x + 120;
+        npc->y.HALF.HI = gRoomControls.origin_y + 56;
         npc->collisionLayer = 1;
         npc->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(npc);
@@ -11465,8 +11483,8 @@ static void QuickStartUpdateItemChoice(void) {
             // through this phase (and the next) unintended. Send the player
             // back to the room's spawn point, which is clear of every
             // item-row x-offset, before spawning the next set of items.
-            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 135;
-            gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + 0x9b;
+            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
+            gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnItems(sQuickStartBonusItems);
             gRoomTransition.field_0x4[0] = 2;
         } else if (phase == 3) {
@@ -11485,8 +11503,8 @@ static void QuickStartUpdateItemChoice(void) {
             //
             // Same reasoning as phase 1 above: reposition before the skill
             // item row spawns at the same reused coordinates.
-            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + 135;
-            gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + 0x9b;
+            gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
+            gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnItems(sQuickStartSkillItems);
             gRoomTransition.field_0x4[0] = 4;
         } else {

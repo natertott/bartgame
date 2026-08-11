@@ -84,6 +84,34 @@ def room_dims(c):
     return r16(c, ROOM_CONTROLS + 0x1e), r16(c, ROOM_CONTROLS + 0x20)
 
 
+# Entity field offsets. kind is at +8 and id at +9 - NOT +0/+1, which is a
+# mistake worth naming here because it was made repeatedly: reading +0 returns
+# a field whose values are multiples of 8, so a scan looks plausible, finds
+# nothing, and reads as "the room is empty" rather than as a broken probe.
+ENT_KIND = 8
+ENT_ID = 9
+ENT_TYPE = 10
+ENT_X = 0x2e
+ENT_Y = 0x32
+KIND_PLAYER, KIND_ENEMY, KIND_PROJECTILE, KIND_OBJECT, KIND_NPC = 1, 3, 4, 6, 7
+GROUND_ITEM_ID = 0
+
+
+def entities(c, kind=None, ident=None):
+    """(index, kind, id, type, worldX, worldY) for every live entity."""
+    out = []
+    for i in range(MAX_ENT):
+        b = GENT + i * STRIDE
+        k = c.memory.u8[b + ENT_KIND]
+        if k == 0 or (kind is not None and k != kind):
+            continue
+        if ident is not None and c.memory.u8[b + ENT_ID] != ident:
+            continue
+        out.append((i, k, c.memory.u8[b + ENT_ID], c.memory.u8[b + ENT_TYPE],
+                    r16(c, b + ENT_X), r16(c, b + ENT_Y)))
+    return out
+
+
 def coll_at(c, tx, ty):
     return c.memory.u8[COLL + tx + (ty << 6)]
 

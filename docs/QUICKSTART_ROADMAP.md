@@ -365,22 +365,34 @@ is routine.
 Full per-room measurements (walkability grids, components, entity headroom,
 special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 
-- **OPEN, HIGH PRIORITY: item-drop "? rooms" appear empty.** The user has
-  never seen one pay out; they read as blank rooms. Reproduced by probing all
-  26 content-site rooms with the player parked away from the content spot:
-  **23 of 26 show no ground item**, and the three that pass are the ones
-  whose kind is not the item drop (two WAVES, one MINIBOSS). The item-drop
-  kind is ~61% of sites on a fresh save, so this is most of a run's rooms.
-  Two contributing defects are fixed (the placed-reward timer refresh was
-  never wired to content sites; a vanished item was assumed to be a collected
-  one, which permanently consumed the site - `done` now correctly stays 0),
-  but **the item still does not appear and the cause is not yet found**.
-  Next step: instrument `CreateObject(GROUND_ITEM, ...)` in the item-drop
-  branch to log whether it returns NULL, and if not, watch the entity slot
-  frame by frame to see what clears it. Suspects ruled out so far:
-  `QuickStartClearVanillaRoomContent` and `QuickStart2DoorClearRoomObstacles`
-  (both room-flag guarded, confirmed running once), and the ground-item
-  expiry timer (now refreshed every frame for our own items).
+- **CORRECTED: item-drop "? rooms" are NOT empty.** An earlier entry here
+  claimed 23 of 26 content-site rooms held no ground item. That was wrong,
+  and the cause was the measuring tool, not the game: the probe read the
+  entity `kind` field at offset +0 when it lives at **+8** (`id` is at +9,
+  not +1). Reading +0 returns a field whose values are all multiples of 8, so
+  the scan looked plausible, matched nothing anywhere, and reported every
+  room as empty. `tools/quickstart/probe_content_rooms.py` with the correct
+  offsets reports **26 OK / 0 EMPTY** - every item-drop site places its item.
+  The invariant checker's own rooms tier had been saying so all along
+  ("1 chest spawn(s) verified"); that contradiction should have been chased
+  instead of explained away. `emu.entities()` now wraps the offsets so no
+  probe has to know them.
+
+  Two changes were made while chasing the phantom. Both stand on their own,
+  but neither was fixing what it was said to be fixing:
+  - Placed rewards are now covered by the ground-item timer refresh. The gap
+    was real - `QuickStartRefreshItemTimers` was only ever called for the
+    hub's item rows - but items evidently survived long enough regardless.
+  - A vanished item no longer counts as a collected one unless the player is
+    near where it was. Defensive and cheap; not a bug that was firing.
+
+  **The user's report is still unexplained**: they have never seen an
+  item-drop "? room" pay out. Since the items demonstrably spawn, the next
+  thing to check is live play rather than a warp-in - and note the kind was
+  called "chest" until the cleanup pass while only ever placing a ground
+  item, so part of the report may be that a heart piece on the floor does not
+  read as "a treasure chest room".
+
 - **TODO: add the sword upgrades to the reward/item pools.** Only the Red
   Sword is reachable today, and only as a miniboss payout via `GiveItem` -
   `CreateObject(GROUND_ITEM, ITEM_RED_SWORD)` never creates an entity,

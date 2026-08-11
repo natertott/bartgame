@@ -12,18 +12,17 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from emu import boot, warp, here, GENT, MAX_ENT, STRIDE, SAVE_FLAGS, QS_BIT0, room_dims
+from emu import (boot, warp, here, entities, SAVE_FLAGS, QS_BIT0, room_dims,
+                 KIND_OBJECT, GROUND_ITEM_ID)
 import parse_tables as P
 KIND={0:'CHEST',1:'MINIBOSS',2:'NPC',3:'WAVES',4:'POT_LOT',5:'CHEST_LOT',6:'FAIRY'}
 def qs(c,n):
     b=QS_BIT0+n; return (c.memory.u8[SAVE_FLAGS+(b>>3)]>>(b&7))&1
 def items(c):
-    out=[]
-    for i in range(MAX_ENT):
-        b=GENT+i*STRIDE
-        if c.memory.u8[b+0]==6 and c.memory.u8[b+1]==0:
-            out.append(c.memory.u8[b+2])
-    return out
+    # kind at +8, id at +9 - see emu.entities(). An earlier version of this
+    # probe read +0/+1, found nothing anywhere, and produced a confident and
+    # completely wrong "23 of 26 rooms are empty" result.
+    return [e[3] for e in entities(c, KIND_OBJECT, GROUND_ITEM_ID)]
 sites=P.content_sites()
 rooms={}
 for idx,(_k,_l,a,r,cx,cy) in enumerate(sites):
