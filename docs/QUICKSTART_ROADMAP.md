@@ -494,13 +494,37 @@ reclaiming its 13 bits closes two open bugs and costs nothing.
   kinds already exist - it is holding each piece inside its own segment, which
   needs the room's chambers surveyed as separate collision components and the
   content gated on the specific fusion flag that opens each one.
-- **Hyrule Castle Garden's Minish rooms.** Unblocked now - the flag
-  renumbering above left room for 31 more sites. Three: above the east fountain
-  (works, but a vanilla treasure chest needs sweeping), above the west
-  fountain (its door does not fire - the same class as the Entrance's walled
-  doorway and NHF's tree doors, both of which turned out to be solvable), and
-  the hole behind a shrub that only Minish Link can reach. All three want to
-  be "?" rooms.
+- **Hyrule Castle Garden's Minish rooms.** Done. All three are `?` rooms now:
+  the east wall hole (already elite), the west wall hole, and the crack behind
+  the shrubs at (936,72).
+
+  The reported symptom - "the west door does not fire" - was ours, not
+  vanilla's. All three are driven by the same mechanism: `SpecialWarpManager`
+  (manager subtype 6, room property 8) walks the garden's three exit regions
+  every frame and calls `DoExitTransition` for whichever one a MINISH-sized
+  player is standing in. The three regions are symmetric in the room data.
+  What differed was containment: `QuickStartEnforceContainment` cancels any
+  transition leaving Castle Garden unless the destination is a pocket
+  interior, and the pocket interior set IS the content-site table. The east
+  hole was in the table, so it opened; the other two were cancelled on the
+  frame they fired, which in play is indistinguishable from a dead door.
+  Wiring content and opening the door are the same act here.
+
+  Measured before/after against two builds: east OPEN / west CANCELLED /
+  crack CANCELLED, then all three OPEN.
+
+  Kinds: east stays ELITE (guaranteed level-5 miniboss, heart container).
+  West is ANY - identical 80-tile footprint, but a second guaranteed
+  miniboss in one region reads as a farm. The crack is SMALL: 31 reachable
+  tiles in three narrow passages, the smallest hosting room in the game. All
+  seven kinds were driven in both rooms; the pot lottery fits 23 pots in the
+  crack, since it already scales its fill to the open-tile count.
+
+  No vanilla chest needed sweeping in the end - the generic
+  `QuickStartClearVanillaRoomContent` pass every site room runs already
+  covers chests, and the only vanilla occupant left anywhere in the three was
+  the crack's Minish NPC, which it deletes. The crack's four FURNITURE props
+  are scenery and deliberately stay.
 
 ### Phase D2 - Queued, in the user's own priority order
 

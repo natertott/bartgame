@@ -1569,7 +1569,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 30
+#define QUICKSTART_CONTENT_SITE_COUNT 32
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -8023,10 +8023,45 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // Content spot (136,104) is the chamber's centre tile (8,6), open with
     // all four neighbours open.
     //
-    // Its West twin (the hole at x~232, ROOM_CASTLE_GARDEN_MINISH_HOLES_1)
-    // is left vanilla for now - one elite room per region reads as special,
-    // two reads as a farm. Adding it later is one table row.
     { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, QUICKSTART_KINDS_ELITE, 136, 104 },
+    // Its West twin, the hole at x~232 above the west fountain. Physically
+    // identical to East - measured, both are 240x240 with the same 11x9
+    // open rectangle (local 48-176 x 48-176) and the same single pillar at
+    // tile (7,5), 80 reachable tiles from the (120,184) arrival - so it
+    // takes the same content spot. NOT elite: one guaranteed miniboss per
+    // region reads as special, two reads as a farm, so this one gets the
+    // full roll instead. ANY rather than SMALL because East proves the
+    // footprint hosts a level-5 miniboss comfortably.
+    //
+    // This row is also what makes the west hole ENTERABLE, which is the
+    // actual bug the user reported ("its door does not fire"). Both holes
+    // are driven by the same mechanism - SpecialWarpManager (manager
+    // subtype 6, room property 8) walks Castle Garden Main's three exit
+    // regions and calls DoExitTransition when a MINISH-sized player stands
+    // in one - and the two are byte-for-byte symmetric in the room data.
+    // What differed was us: containment consults this table
+    // (QuickStartIsPocketInteriorRoom), so East was blessed and West was
+    // cancelled the frame its transition fired. Wiring content and opening
+    // the door are the same act here.
+    { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1, QUICKSTART_KINDS_ANY, 136, 104 },
+    // The third of Castle Garden's Minish-only rooms: the crack behind the
+    // shrubs at (936,72), the garden's own exit region index 9 (the holes
+    // are 0xa and 0xb). Same containment story as the West hole above - the
+    // warp fired and was cancelled - so this row both opens it and fills it.
+    //
+    // Much smaller and more broken up than the holes: 240x160, and only 31
+    // tiles are reachable from the (152,48) arrival, in a Y of three narrow
+    // passages. SMALL accordingly - the pot lottery already scales its fill
+    // to QuickStartCountOpenTiles and drops to a plus-shaped apron under 24
+    // tiles, so it degrades rather than failing here.
+    //
+    // Content at (152,104), tile (9,6): reachable, all four neighbours
+    // open, 56px south of the arrival spot so it is visible on entry
+    // without standing on the player, and clear of the four FURNITURE props
+    // the room keeps (tiles (9,2), (7,2), (2,5), (12,3) - scenery, not
+    // swept). The vanilla Minish NPC at (168,88) IS swept, like every other
+    // site room's vanilla occupants.
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN, QUICKSTART_KINDS_SMALL, 152, 104 },
     // Castle Garden's two fountain chambers, behind the north-end
     // staircases. These are the rooms the KINSTONE_18 / KINSTONE_35 fusions
     // open - the staircases read as water until fused - and they are what
