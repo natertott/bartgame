@@ -64,11 +64,40 @@ for line in ROOM_H.split('\n'):
         n += 1
 
 
+KINSTONES = {}
+for _line in open(os.path.join(ROOT, 'build/USA/enum_include/kinstone.inc')):
+    _m = re.match(r'\.set (KINSTONE_\w+), (\d+)', _line.strip())
+    if _m:
+        KINSTONES[_m.group(1)] = int(_m.group(2))
+
+
 def content_sites():
+    """(areaName, roomName, area, room, contentX, contentY) per row."""
+    return [r[:6] for r in content_sites_full()]
+
+
+def content_sites_full():
+    """As content_sites(), plus the row's gating kinstone id (0 = ungated).
+
+    Goron Cave's four chambers are each sealed behind the fusion that opens
+    them, so anything driving a site in that room has to fuse its gate first
+    or the site correctly refuses to spawn.
+    """
     i = GAME.find('sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {')
     j = GAME.find('\n};', i)
-    rows = re.findall(r'\{ (AREA_\w+), (ROOM_\w+), \w+, ([0-9xa-fA-F]+),\s*\n?\s*([0-9xa-fA-F]+)', GAME[i:j])
-    return [(an, rn, AREAS[an], ROOMS[rn], int(cx, 0), int(cy, 0)) for an, rn, cx, cy in rows]
+    rows = re.findall(
+        r'\{ (AREA_\w+), (ROOM_\w+), \w+, ([0-9xa-fA-F]+),\s*\n?\s*([0-9xa-fA-F]+)'
+        r'(?:\s*,\s*(\w+))?', GAME[i:j])
+    out = []
+    for an, rn, cx, cy, gate in rows:
+        if not gate or gate == '0':
+            gid = 0
+        elif gate.startswith('KINSTONE_'):
+            gid = KINSTONES[gate]
+        else:
+            gid = 0
+        out.append((an, rn, AREAS[an], ROOMS[rn], int(cx, 0), int(cy, 0), gid))
+    return out
 
 
 def region_pool():

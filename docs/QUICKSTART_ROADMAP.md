@@ -485,18 +485,47 @@ slot was dead twice over - unreachable behind the Castle Garden northwest
 ladder's redirect, and its content spot was `y=376` in a room 192 tall - so
 reclaiming its 13 bits closes two open bugs and costs nothing.
 
-- **Lon Lon Ranch: the Goron cave's full kinstone progression.** Vanilla has
-  several fusions there, each removing another interior wall; this mode only
-  wires the one that opens the entrance. Wanted, in order:
-  `? event -> ? event -> miniboss -> COMMON -> miniboss -> UNCOMMON ->
-  miniboss -> RARE`, each confined to its own chamber and reachable only once
-  the wall before it is gone. The hard part is not the content - all seven
-  kinds already exist - it is holding each piece inside its own segment, which
-  needs the room's chambers surveyed as separate collision components and the
-  content gated on the specific fusion flag that opens each one.
-- **Hyrule Castle Garden's Minish rooms.** Done. All three are `?` rooms now:
-  the east wall hole (already elite), the west wall hole, and the crack behind
-  the shrubs at (936,72).
+- **Lon Lon Ranch: the Goron cave's kinstone progression.** Built, four
+  stages, verified - but the cave is still not enterable, see below.
+
+  The room is a 240x720 vertical shaft that vanilla cuts into chambers with
+  `sub_StateChange_GoronCave_Main`: five kinstone fusions, only THREE of
+  which paint a wall open. Measured reachable tiles per state: 36, +51
+  (KINSTONE_25), +0 (2A), +89 (26), +0 (2B), +60 (2F). So the room supports
+  four sealed chambers, not the eight stages first sketched - 2A and 2B buy
+  no floor. Per the user's call the chain is four stages, strictly one per
+  chamber: a free `?` roll, then three minibosses paying COMMON, UNCOMMON
+  and RARE off the shared tier table. Each row is gated on the fusion that
+  opens its own chamber (new `gateKinstone` field), and the payout comes
+  from a new `rewardTier` field.
+
+  All five fusions are now offered by fusers in Lon Lon Ranch - in vanilla
+  the wall-punching Gorons offer them, but they are NPCs and every content
+  site room sweeps its vanilla NPCs, so nothing in this mode offered them
+  and the chain could not be advanced at all. That takes the ranch to 8 of
+  its 9 fuser scatter spots. 2A and 2B gate no content; they are there so
+  the room's own state machine can still be walked to its last state.
+
+  Two real bugs surfaced in the shared miniboss code, both invisible until a
+  room held more than one miniboss site, and both fixed with the Voronoi
+  tile-ownership test the pot lottery already used:
+  - the "is my miniboss dead" headcount counted every enemy in the room, so
+    no stage paid out until every stage's fight was over, and then all four
+    paid at once;
+  - the leash that parks a not-yet-engaged miniboss on its spawn spot ran
+    against every enemy in the room, so each frame all four sites yanked all
+    four fights to their own spot in turn. Last writer won and the whole
+    cave's minibosses ended up stacked on one tile. Measured frame by frame:
+    they spawn correctly at four distinct anchors and are collapsed onto one
+    the very next frame.
+
+  **Still not enterable.** The stairs room's door up (0x78,0x38) sits on a
+  solid tile and does not fire however it is approached - Link was walked
+  into it from every open column and swept across the whole top row he can
+  stand on. The precedented fix is a position box (`sQuickStartLinks`), the
+  mode's standard answer to a vanilla door that will not fire; the user has
+  parked that as separate work. Until then the chain is built, gated and
+  verified but unreachable in play.
 
   The reported symptom - "the west door does not fire" - was ours, not
   vanilla's. All three are driven by the same mechanism: `SpecialWarpManager`

@@ -595,10 +595,10 @@ def emu_fusers(rom):
 
 def emu_rooms(rom, start, end):
     from emu import boot, warp, here, room_dims, coll_at, qs_set, qs_site_set, GENT, STRIDE, MAX_ENT, r16
-    sites = P.content_sites()
+    sites = P.content_sites_full()
     rooms = []
     seen = set()
-    for idx, (an, rn, a, rm, cx, cy) in enumerate(sites):
+    for idx, (an, rn, a, rm, cx, cy, gate) in enumerate(sites):
         key = (a, rm)
         if key not in seen:
             seen.add(key)
@@ -606,6 +606,9 @@ def emu_rooms(rom, start, end):
         for rec in rooms:
             if (rec['a'], rec['r']) == key:
                 rec['spots'].append((idx, cx, cy))
+                rec.setdefault('gates', set())
+                if gate:
+                    rec['gates'].add(gate)
     for (an, rn), d in P.pool_doors().items():
         rooms.append({'an': an, 'rn': rn, 'a': d['area'], 'r': d['room'], 'spots': []})
     out = []
@@ -616,6 +619,14 @@ def emu_rooms(rom, start, end):
             continue
         c = boot(rom)
         c.memory.u8[0x03000bf0 + 4] = 0
+        # A gated site does not exist until its fusion is done (Goron Cave's
+        # four chambers), so fuse every gate this room needs before entering
+        # or the site correctly refuses to spawn and the check reads as a
+        # missing event. gSave.kinstones.fusedKinstones, which is
+        # CheckKinstoneFused's own bitfield.
+        for _g in sorted(rec.get('gates', ())):
+            _b = 0x02002a40 + 0x114 + 301 + (_g >> 3)
+            c.memory.u8[_b] |= 1 << (_g & 7)
         # Force every site in this room to the chest kind before entering, so
         # the same boot verifies both geometry and a live spawn.
         for idx, _cx, _cy in rec['spots']:
@@ -687,6 +698,18 @@ def emu_rooms(rom, start, end):
         # every spot must land in a DISTINCT open component - two sites
         # sharing a segment would put two events in one sub-area, which is
         # exactly the containment bug the per-site ownership code fixed.
+        #
+        # GATED sites are the exception, and they are why this rule cannot
+        # simply be tightened. Goron Cave's four chambers are one room whose
+        # sites are separated in TIME, not in topology: each is sealed until
+        # its kinstone fusion punches the wall open, and this boot has fused
+        # all of them so the player can be walked to every spot. Once fused
+        # they are deliberately one connected shaft, so the distinct-segment
+        # rule is meaningless for them. What keeps their content apart is the
+        # gate plus per-site tile ownership, both checked directly elsewhere.
+        gated = {idx for idx, _cx, _cy in rec['spots']} & {
+            i for i, r in enumerate(P.content_sites_full())
+            if r[6] and (r[2], r[3]) == (rec['a'], rec['r'])}
         multi = len(rec['spots']) > 1
         seen_comps = {}
         for idx, cx, cy in rec['spots']:
@@ -695,7 +718,7 @@ def emu_rooms(rom, start, end):
                 continue
             if grid[cy // 16][cx // 16] != 0:
                 msgs.append(f'site {idx} spot ({cx},{cy}) on solid tile')
-            elif multi:
+            elif multi and not gated:
                 cid = comp.get((cx // 16, cy // 16))
                 if cid in seen_comps:
                     msgs.append(f'site {idx} spot ({cx},{cy}) shares a floor segment with site {seen_comps[cid]}')

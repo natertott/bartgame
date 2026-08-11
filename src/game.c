@@ -273,6 +273,7 @@ static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
 static bool32 QuickStartTileBelongsToSite(s32, s32, s32);
 static void QuickStartSiteContentSpot(s32, s16*, s16*);
+static u8 QuickStartSiteRewardTier(s32);
 static void QuickStartPotRoomGenerate(s32, s32, s32, s32);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
@@ -1569,7 +1570,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 32
+#define QUICKSTART_CONTENT_SITE_COUNT 35
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -3118,6 +3119,18 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
 #define QS_TIER_COMMON 0
 #define QS_TIER_UNCOMMON 1
 #define QS_TIER_RARE 2
+
+// What a content site's kill/pickup pays, when the row wants to override
+// its kind's usual payout (QuickStartContentSite.rewardTier, defined with
+// the site table much further down - these live up here beside the tiers
+// they name because the miniboss reward drop is compiled above that table).
+// DEFAULT keeps the old behaviour exactly - a miniboss pays a heart piece,
+// or a heart container if the site is elite - so every row that omits the
+// field is unchanged. The others are QS_TIER_* + 1.
+#define QS_SITE_REWARD_DEFAULT 0
+#define QS_SITE_REWARD_COMMON 1
+#define QS_SITE_REWARD_UNCOMMON 2
+#define QS_SITE_REWARD_RARE 3
 
 // 60 / 30 / 10, expressed as buckets out of ten. This is the one place the
 // mode's rarity curve is written down.
@@ -6109,7 +6122,25 @@ static void QuickStartRescuePlayerOntoGround(void) {
 // the second (only reached if the room is too cramped to supply that) takes
 // any open tile one clear of its neighbours. Small rooms therefore still
 // fill, they just fill tighter. Returns how many actually went down.
-static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count) {
+// The ring search is deliberately wide - QUICKSTART_SPAWN_MAX_RING is 40,
+// larger than any room - because several hand-placed content spots are
+// simply wrong and this is what rescues them.
+//
+// That is exactly wrong in a room that holds more than one site. The
+// relax==0 pass scans all 40 rings looking for elbow room before relax==1
+// tries anything, so a strict tile thirty rings away beats a merely-open
+// tile next to the anchor. In Goron Cave, whose four chambers are stacked
+// in one 15x45 shaft, that put all four stages' minibosses in the top
+// chamber on a single tile - measured: four separate entities, each
+// carrying its own site's roll, all at the last row's spot.
+//
+// `ownerSite` fixes it with the rule the pot lottery already uses: a tile
+// belongs to whichever site in this room is nearest to it, so the search
+// can range as far as it likes and still never cross into another site's
+// half of the room. Pass -1 to opt out (the wave, quest and 2-door
+// spawners, none of which belong to a site). In a single-site room the test
+// is always true, so nothing about the old behaviour changes.
+static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
@@ -6129,6 +6160,9 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
                     tx = anchorTX + dx;
                     ty = anchorTY + dy;
                     if (relax == 0 ? !QuickStartTileHasElbowRoom(tx, ty) : !QuickStartTileIsOpen(tx, ty)) {
+                        continue;
+                    }
+                    if (!QuickStartTileBelongsToSite(tx, ty, ownerSite)) {
                         continue;
                     }
                     if (QuickStartEnemyNearTile(tx, ty, relax == 0 ? 2 : 1)) {
@@ -6165,7 +6199,7 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
     }
-    QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count);
+    QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1);
 }
 
 // --- Why a wave gauntlet in the Grimblade dojo could never be finished ---
@@ -6686,7 +6720,7 @@ static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
             ((Enemy*)ent)->enemyFlags &= ~QUICKSTART_EM_FLAG_HUNT;
         }
     }
-    QuickStartSpawnEnemiesOnOpenTiles(id, form, spotX, spotY, count);
+    QuickStartSpawnEnemiesOnOpenTiles(id, form, spotX, spotY, count, -1);
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent->kind == ENEMY && ent->id == id && ent->type == form &&
@@ -7411,10 +7445,30 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         }
         if (QsCheckRoomFlag(flagBase + 0)) {
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
+            // Which of this room's sites owns an enemy, for both the
+            // headcount and the leash below. In a room with a single site
+            // this is every enemy, so nothing changes; in Goron Cave, whose
+            // four chambers are four sites in one room, it is what stops
+            // each site speaking for all four fights.
+            //
+            // Both halves were wrong without it, and badly. The headcount
+            // is how a site decides its miniboss is dead, so with four
+            // sites sharing it NO stage paid out until every stage's fight
+            // was over, and then all four paid at once. The leash below
+            // snaps a not-yet-engaged miniboss back to contentX/contentY,
+            // and ran against every enemy in the room, so each frame all
+            // four sites yanked all four fights to their own spot in turn -
+            // last writer won, and the whole cave's worth of minibosses
+            // ended up stacked on the last chamber's tile. Measured
+            // frame-by-frame: they spawn correctly at four distinct anchors
+            // and are collapsed onto one the very next frame.
+            s32 ownerSite = QuickStartFindSiteAt(contentX, contentY);
             s32 i, alive = 0;
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
-                if (QuickStartEnemyIsOurs(enemy)) {
+                if (QuickStartEnemyIsOurs(enemy) &&
+                    QuickStartTileBelongsToSite((enemy->x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                                (enemy->y.HALF.HI - gRoomControls.origin_y) >> 4, ownerSite)) {
                     alive++;
                     // Keep it parked exactly on its spawn spot until the
                     // player gets close enough to actually engage - the
@@ -7489,8 +7543,23 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 // Elite sites (extra bit 7, see QuickStartRandomizeContentSiteOnce)
                 // pay a full Heart Container; everything else the ordinary
                 // heart piece.
-                Entity* itemEntity =
-                    CreateObject(GROUND_ITEM, (extra & 0x80) ? ITEM_HEART_CONTAINER : ITEM_HEART_PIECE, 0);
+                //
+                // Unless the site's own row names a reward tier, which the
+                // Goron cave's chain uses to make each chamber pay better
+                // than the last. The tier is a static property of the row,
+                // not of the roll, so it is read from the table here rather
+                // than packed into `extra` - there is no bit left in that
+                // byte anyway (0-5 roster index, 6 Red Sword, 7 elite).
+                // Which item WITHIN the tier still varies per run: the pick
+                // is the same roll that chose the miniboss.
+                s32 ownerSite = QuickStartFindSiteAt(contentX, contentY);
+                u8 tier = (ownerSite >= 0) ? QuickStartSiteRewardTier(ownerSite) : QS_SITE_REWARD_DEFAULT;
+                u16 payout = (extra & 0x80) ? ITEM_HEART_CONTAINER : ITEM_HEART_PIECE;
+                Entity* itemEntity;
+                if (tier != QS_SITE_REWARD_DEFAULT) {
+                    payout = QuickStartDrawAtTier(extra & 0x3f, QS_CAT_DROP, tier - 1);
+                }
+                itemEntity = CreateObject(GROUND_ITEM, payout, 0);
                 if (itemEntity != NULL) {
                     itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
                     itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
@@ -7516,8 +7585,12 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // and even a good one can be a tile a Darknut cannot turn
             // around in.
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
+            // Owned by this site, so a room with several of them - Goron
+            // Cave's four chambers, the Boomerang chamber's five quadrants -
+            // keeps each fight where it belongs.
             if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
-                                                  QuickStartMinibossCount(pick->id)) > 0) {
+                                                  QuickStartMinibossCount(pick->id),
+                                                  QuickStartFindSiteAt(contentX, contentY)) > 0) {
                 QsSetRoomFlag(flagBase + 0);
             }
         }
@@ -7793,7 +7866,13 @@ enum {
     // finding in themselves rather than worth fighting - the Boomerang
     // chamber's central staircase is the one that has it today.
     QUICKSTART_KINDS_RARE,
+    // Always a miniboss, with no elite upgrade and no Red Sword roll. Only
+    // useful paired with a row's rewardTier, which then decides what the
+    // kill pays - that pairing is what builds the Goron cave's escalating
+    // chain (common, then uncommon, then rare) out of one kind.
+    QUICKSTART_KINDS_MINIBOSS,
 };
+
 
 typedef struct {
     u8 area;
@@ -7801,6 +7880,16 @@ typedef struct {
     u8 kinds;
     s16 contentX;
     s16 contentY;
+    // Both optional, and deliberately last: C zero-fills the fields a short
+    // initializer omits, so every row that predates them keeps its exact
+    // meaning without being touched.
+    //
+    // gateKinstone: this site does not exist until that kinstone fusion is
+    // done. 0 = always present. Only the Goron cave uses it, to keep each
+    // stage of its chain sealed behind the wall the fusion punches open.
+    u8 gateKinstone;
+    // rewardTier: QS_SITE_REWARD_*, overriding the kind's usual payout.
+    u8 rewardTier;
 } QuickStartContentSite;
 
 static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {
@@ -7933,14 +8022,48 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // that used to reach it is gone with it.
     { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, QUICKSTART_KINDS_LARGE, 0x78, 0x88 },                         // arena floor, clear of the seam
     { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },                  // arrives (0x78,0x78)
-    // Goron Cave's main chamber - the one genuinely large room in this
-    // batch, so it rolls from the large kind pool (miniboss / 3-wave
-    // gauntlet / fairies). Currently UNREACHABLE, for the same kind of
-    // reason as the Boomerang hub above: the stairs room's own door up to
-    // it (0x78,0x38) reads as solid wall, and walking into it does nothing.
-    // The row is kept - it costs one table row and one flag block, and it
-    // starts working the moment that door does.
-    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_LARGE, 0x78, 0x260 },                   // arrives (0x78,0x278)
+    // --- Goron Cave's main chamber: a four-stage kinstone progression ----
+    //
+    // The one room in this file that is a dungeon rather than a single
+    // event. It is a 240x720 vertical shaft, and vanilla cuts it into
+    // chambers with sub_StateChange_GoronCave_Main (roomInit.c): five
+    // kinstone fusions, three of which also paint a wall open. Measured
+    // reachable tiles from the (0x78,0x278) arrival spot, per state:
+    //
+    //   no fusions   36 tiles, rows 34-41   the entry chamber
+    //   KINSTONE_25  +51 tiles, rows 23-33
+    //   KINSTONE_2A  +0                     adds a Goron, opens no wall
+    //   KINSTONE_26  +89 tiles, rows 13-22
+    //   KINSTONE_2B  +0                     adds a Goron, opens no wall
+    //   KINSTONE_2F  +60 tiles, rows 3-12   the top chamber
+    //
+    // So the room supports FOUR sealed chambers, not the eight stages the
+    // chain was first sketched as - 2A and 2B buy no floor. Per the user's
+    // own call the chain is four stages, strictly one per chamber:
+    // a free "? room" roll to open, then three minibosses paying an
+    // escalating tier. Each row is gated on the fusion that opens its own
+    // chamber, so nothing is visible or reachable before its wall is.
+    //
+    // Content spots are the central column of each chamber, taken from the
+    // per-state reachable sets rather than guessed: every one is reachable
+    // from the arrival spot in its own state and has all eight neighbours
+    // open, which is what a miniboss needs to turn around in.
+    //
+    // STILL UNREACHABLE IN PLAY, deliberately, and this is not a new
+    // problem: the stairs room's own door up (0x78,0x38) sits on a solid
+    // tile and does not fire however it is approached - measured by walking
+    // Link into it from every open column, and by sweeping the whole top
+    // row he can actually stand on. The mode's usual fix for a vanilla door
+    // that will not fire is a position box (see sQuickStartLinks); the user
+    // has parked that as separate work, so the chain is built and verified
+    // and waits for a way in.
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_LARGE, 120, 600, 0, QS_SITE_REWARD_DEFAULT },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_MINIBOSS, 120, 440, KINSTONE_25,
+      QS_SITE_REWARD_COMMON },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_MINIBOSS, 152, 280, KINSTONE_26,
+      QS_SITE_REWARD_UNCOMMON },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_MINIBOSS, 120, 72, KINSTONE_2F,
+      QS_SITE_REWARD_RARE },
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
     // The smithy, Link's House's right-hand room. Reachable and ordinary
     // now that the global START flag is set - it used to load the opening
@@ -8078,6 +8201,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, QUICKSTART_KINDS_SMALL, 120, 80 },
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, QUICKSTART_KINDS_SMALL, 120, 80 },
 };
+// What this site's kill pays, if its row overrides the default. Same
+// wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
+// drop is compiled above the table.
+static u8 QuickStartSiteRewardTier(s32 site) {
+    return sQuickStartRoomContentSites[site].rewardTier;
+}
+
 // Where a content site wants its event. Wrapped so the pot room, which is
 // compiled above the table, can ask without reaching into it directly.
 static void QuickStartSiteContentSpot(s32 site, s16* x, s16* y) {
@@ -8343,6 +8473,11 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             // by forcing extra bit 7.
             kind = QS_EVENT_ITEM_DROP;
             break;
+        case QUICKSTART_KINDS_MINIBOSS:
+            // Always a fight, but an ordinary one - no elite bit. What the
+            // kill pays comes from the row's rewardTier instead.
+            kind = QS_EVENT_MINIBOSS;
+            break;
         default:
             kind = QuickStartPickSmallKind();
             break;
@@ -8379,6 +8514,11 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
         // for free, exactly like every other kind parameter.
         if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_ELITE) {
             extra |= 0x80;
+        } else if (sQuickStartRoomContentSites[site].rewardTier != QS_SITE_REWARD_DEFAULT) {
+            // A site that promises a tier must actually pay it. The Red
+            // Sword branch of the reward drop returns before the item drop
+            // ever happens, so letting bit 6 roll here would silently swap
+            // the promised reward for a sword the player may already own.
         } else if ((s32)Random() % 4 == 0) {
             // Bit 6: this (non-elite) miniboss carries the Red Sword - the
             // blade player.c's SurfaceAction_CloneTile hands one clone out
@@ -8433,6 +8573,16 @@ static void QuickStartSetupContentSite(s32 site) {
     QuickStartClearVanillaRoomContent();
     if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
         QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
+    }
+    // A gated site does not exist until its fusion is done. This is what
+    // keeps the Goron cave's four stages one-per-chamber: each stage's
+    // event is behind the wall its own fusion punches open, so the player
+    // cannot see or reach the next one early. Checked here rather than in
+    // the randomizer above on purpose - the roll is latched once per run
+    // either way, and doing it here means a chamber that opens mid-run
+    // spawns on the next room load with the roll it always had.
+    if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
+        return;
     }
     if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
         return;
@@ -8856,7 +9006,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
             s32 extra = QuickStart2DoorGetExtra();
             const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
-                                                  QuickStartMinibossCount(pick->id)) > 0) {
+                                                  QuickStartMinibossCount(pick->id), -1) > 0) {
                 QsSetRoomFlag(0);
             }
         }
@@ -11209,6 +11359,28 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_1E },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_29 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_60 },
+    // The Goron cave's own five interior fusions. In vanilla these are
+    // offered by the wall-punching Gorons standing inside the cave, but
+    // those are NPCs and every content-site room sweeps its vanilla NPCs,
+    // so nothing in this mode offered them and the cave's chain could not
+    // be advanced at all. Per the user's call they move out to the ranch's
+    // own fuser scatter, which puts all five within reach of the region the
+    // cave belongs to. That takes Lon Lon Ranch to 8 of its 9 scatter
+    // spots - the most crowded region in the game, and the reason the
+    // spot list is 9 long rather than 8.
+    //
+    // 25, 26 and 2F are the three that punch a wall open, and are what the
+    // content sites gate on. 2A and 2B open no wall - in vanilla they only
+    // add another Goron to the line - so with the four-stage chain they
+    // gate nothing. They are here so the room's own vanilla state machine
+    // can still be walked all the way to its last state, and so a later
+    // chain with more stages has them available; a player who never fuses
+    // them loses nothing.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_25 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2A },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_26 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2B },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2F },
     // North Hyrule Field - the four middle tree stumps are one fusion each,
     // and those four ladders are the only way into the Boomerang chamber's
     // four quadrants. Plus the fairy fountain tree and a chest.
