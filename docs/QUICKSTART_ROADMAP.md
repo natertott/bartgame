@@ -177,6 +177,15 @@ overworld doors drawn per run. That retired two standing problems with it -
 the drawn door's own "? room" event was displaced for that run, and three of
 the nine catalog spots sat on a shelf in a sealed Minish-only pocket.
 
+### 3.4b The hub's roof
+
+Optional content, one flight above the item selection. One wave at the run's
+difficulty + 2, from 14 hand-placed offsets inside the roof's measured
+reachable component; clearing it drops a REWARD-category item, RARE one time
+in four and UNCOMMON otherwise. The draw seed is stored so leaving and
+returning re-places the same item rather than rerolling it. Leaving mid-fight
+and returning gives a fresh wave.
+
 ### 3.5 Win condition
 
 The chain's last slot drops the Earth Element at its reward spot once wave 0

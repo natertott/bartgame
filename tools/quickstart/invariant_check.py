@@ -15,8 +15,10 @@ Tiers:
   entrances (not solid, not water) and its content spot is in bounds.
   gfx       20 boots: no region runs the 44-slot GFX table below its
   budget    reserve at any difficulty (a full table drops sprites).
-  hub       10 boots: every shop item on the hub's Floor 1 spawns where
-            its table says and lifts from the walkway in front of it.
+  hub       11 boots: every shop item on the hub's Floor 1 spawns where
+            its table says and lifts from the walkway in front of it; the
+            roof wave spawns entirely inside the component the player can
+            reach from its arrival spot, and drops its reward on clearing.
   fusers    5 boots: every spot in a region's fuser scatter list is open
             ground inside the entrance's own reachable component, every gate
             reads un-fused on a fresh run, and the sprites this boot placed
@@ -470,6 +472,9 @@ HUB_SHOP_SPOTS = [(48, 88), (80, 88), (112, 88), (144, 88), (176, 88),
 HUB_SHOP_WALKWAY_Y = 104
 HUB_MERCHANT = (192, 104)
 PLAYER_STATE = 0x03003f80
+# Where the player arrives on the roof from Floor 3, and where its reward goes.
+ROOF_ARRIVAL = (184, 328)
+ROOF_REWARD = (120, 200)
 
 
 def emu_hub(rom):
@@ -525,6 +530,50 @@ def emu_hub(rom):
         out.append(('FAIL', f'shop stock that will not lift from the walkway: {unliftable}'))
     else:
         out.append(('PASS', 'every shop item lifts from the walkway in front of it'))
+
+    # The roof wave. Its offsets are hand-placed inside one measured component,
+    # and the failure that matters is an enemy landing outside it - the roof's
+    # top rows are open tiles the player cannot reach, so a spot that drifts up
+    # there is a wave that can never be cleared and a reward never earned.
+    cc = emu.boot(rom)
+    emu.warp(cc, 49, 0, ROOF_ARRIVAL[0], ROOF_ARRIVAL[1], frames=90)
+    if emu.here(cc) != (49, 0):
+        out.append(('FAIL', f'could not reach the tower roof, landed in {emu.here(cc)}'))
+        return out
+    ox = cc.memory.u8[emu.ROOM_CONTROLS + 6] | (cc.memory.u8[emu.ROOM_CONTROLS + 7] << 8)
+    oy = cc.memory.u8[emu.ROOM_CONTROLS + 8] | (cc.memory.u8[emu.ROOM_CONTROLS + 9] << 8)
+    w, h = emu.room_dims(cc)
+    tw, th = w // 16, h // 16
+    grid = [[emu.coll_at(cc, tx, ty) for tx in range(tw)] for ty in range(th)]
+    seen = {(ROOF_ARRIVAL[0] // 16, ROOF_ARRIVAL[1] // 16)}
+    queue = collections.deque(seen)
+    while queue:
+        x, y = queue.popleft()
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < tw and 0 <= ny < th and (nx, ny) not in seen and grid[ny][nx] == 0:
+                seen.add((nx, ny))
+                queue.append((nx, ny))
+    foes = [(e[4] - ox, e[5] - oy) for e in emu.entities(cc, emu.KIND_ENEMY)]
+    if not foes:
+        out.append(('FAIL', 'the roof wave did not spawn'))
+    else:
+        stray = [p for p in foes if (p[0] // 16, p[1] // 16) not in seen]
+        if stray:
+            out.append(('FAIL', f'roof enemies outside the reachable component: {stray}'))
+        else:
+            out.append(('PASS', f'roof wave: {len(foes)} enemies, all inside the '
+                                f'{len(seen)}-tile reachable component'))
+    # And the reward lands on its spot once the wave is gone.
+    for e in emu.entities(cc, emu.KIND_ENEMY):
+        cc.memory.u8[emu.GENT + e[0] * emu.STRIDE + emu.ENT_KIND] = 0
+    for _ in range(120):
+        cc.run_frame()
+    drops = [(e[4] - ox, e[5] - oy) for e in emu.entities(cc, emu.KIND_OBJECT, emu.GROUND_ITEM_ID)]
+    if ROOF_REWARD not in drops:
+        out.append(('FAIL', f'no roof reward at {ROOF_REWARD} after the clear; ground items: {drops}'))
+    else:
+        out.append(('PASS', f'roof reward dropped at {ROOF_REWARD}'))
     return out
 
 

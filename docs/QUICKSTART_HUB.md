@@ -3,11 +3,11 @@
 Scope and build plan for the structural change that replaces Castor Darknut
 Hall as the run's start and pulls the shop out of the "? room" pool.
 
-**Status: steps 1-4 of §6 are built and verified.** The run spawns on Floor
+**Status: steps 1-5 of §6 are built and verified.** The run spawns on Floor
 3, walks down and out, and drops through the pit in Cloud Tops into its first
 overworld region past the shop on Floor 1; Castor Darknut and Melari's Mine
-are off the route. Steps 5-8 (roof wave, inn, wind crest, content sites) are
-still to do. Every
+are off the route, and the roof runs its wave. Steps 6-8 (inn, wind crest,
+content sites) are still to do. Every
 coordinate below is measured off the live ROM, not read from a map dump - the
 survey is in §2 and is the part that makes the build cheap.
 
@@ -209,13 +209,44 @@ only way in or out. `QuickStartClearHubRoom` already handles the floor's
 enemies and NPCs while sparing the ZELDA-kind merchant, which is all that is
 needed.
 
-### 3.4 The roof wave
+### 3.4 The roof wave - BUILT
 
-`QuickStartSpawnWave(contentX, contentY, wave, difficulty)` with difficulty
-one tier above the run's own, cleared-detection via
-`QuickStartCountRoomEnemies`, and on clear a
-`QuickStartDrawAtTier(..., QS_CAT_REWARD, ...)` split between UNCOMMON and
-RARE. All four pieces exist; this is assembly.
+One wave at `QuickStartGetDifficulty() + 2` (clamped to 12), cleared-detection
+via `QuickStartCountRoomEnemies`, and on clear a
+`QuickStartDrawAtTier(seed, QS_CAT_REWARD, tier)` that is RARE one time in
+four and UNCOMMON otherwise.
+
+**Hand-placed offsets, not the open-tile spawner.** Flooding the roof from the
+arrival spot (184,328) gives a 121-tile component spanning rows 10-24: a north
+band (rows 11-13, columns 1-13), a west corridor (rows 14-19, columns 1-5),
+and a south arena (rows 20-24). Rows 0-5 - the tower's peak and its two wings
+- are open tiles that are **not** in that component.
+`QuickStartSpawnEnemiesOnOpenTiles` rings outward over any open tile within 40
+rings, so it would put part of every wave up there, where the player cannot
+follow and the fight can never be cleared. `sQuickStartRoofEnemyOffsets` is 14
+interior tiles of the component instead, each with all four neighbours open
+and none within a tile of the arrival.
+
+The roof is also **exempt from `QuickStartClearHubRoom`'s enemy sweep** - that
+runs every frame on every hub room and would delete the wave on the frame it
+appeared. Its NPC half still runs. Safe because a live entity dump of the roof
+found no vanilla enemies, only objects.
+
+Density: the arena is 30 of the 32x32 squares the density formula counts in,
+and the code passes 60. That is tuning, stated as such - at the honest 30 the
+wave is two enemies at difficulty 2 and six at 12, which is not worth climbing
+for; at 60 it runs 4 to 10.
+
+**The reward's draw seed is stored** (`GF_ROOF_SEED_BIT`, six bits). The
+reward has a re-drop arm - state "cleared" with nothing on the floor means the
+player left and came back - and rolling fresh there turned the roof into a
+slot machine: the same cleared roof handed over ITEM_RUPEE100 and then
+ITEM_BOTTLE_RED_POTION on consecutive visits. Rolling once and replaying the
+seed fixes which item that roof gives.
+
+Leaving mid-fight and returning gives a *fresh wave*, by keeping the
+"spawned this visit" latch in room flags: the fight is one visit's work rather
+than something to whittle down over several trips.
 
 ### 3.5 The hole to the overworld - BUILT
 
@@ -312,7 +343,9 @@ Each step is separately verifiable and leaves the game playable.
    `hub` tier in `invariant_check.py`: 10 boots that check every catalog prop
    spawns on its table spot and actually lifts (press R, read
    `gPlayerState.heldObject`) rather than trusting the collision map.
-5. **The roof wave and its reward.**
+5. ~~**The roof wave and its reward.**~~ DONE - see §3.4. Covered by the
+   `hub` invariant tier, which floods the component and fails if any enemy
+   lands outside it.
 6. **The inn.** Last because it is the only genuinely new mechanic and the
    only one with an unresolved question (the chests).
 7. **Wind crest**, which is data once the rest works.
@@ -352,6 +385,12 @@ Each step is separately verifiable and leaves the game playable.
   around y=250. The `ARCHWAY` objects at (136,216)/(184,216) sit on them.
 - **Floor 1 arrivals**: (184,248) coming up from the Entrance, (136,248)
   coming down from Floor 2.
+- **On every tower floor the WEST archway (136,232) goes up and the EAST one
+  (184,232) goes down.** On Floor 3 the west archway is the way onto the roof.
+- **The roof is not convex.** Its north band is reached from the arrival only
+  through the west corridor at columns 1-5; walking straight north from the
+  arrival hits a wall at row 19. Anything that has to cross the roof needs a
+  route, not a heading.
 - The exit-list names in `transitions.c` are off by one against the room they
   serve (`gExitList_WindTribeTower_Floor2` is Floor 1's list, and so on).
   Read `gExitLists_WindTribeTower` rather than the names.

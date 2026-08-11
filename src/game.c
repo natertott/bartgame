@@ -473,7 +473,10 @@ static void GameTask_Transition(void) {
         // Bits 85-88: the hub item-selection phase mirror (GF_HUB_PHASE_BIT).
         // Stale bits here would tell the next run it had already picked its
         // item and skip the whole selection.
-        for (bit = 43; bit <= 88; bit++) {
+        // Bits 89-96: the roof wave's state (GF_ROOF_STATE_BIT) and the seed
+        // its reward is drawn from (GF_ROOF_SEED_BIT), so each run gets its
+        // own rooftop fight and its own reward.
+        for (bit = 43; bit <= 96; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -10403,17 +10406,25 @@ static bool32 QuickStartIsHubRoom(void) {
 // So: enemies and NPCs only, every frame, and never our own sign. ZELDA is
 // the entity kind every QUICKSTART NPC borrows (the sign, the merchant, the
 // kinstone fusers, the hunt giver), so skipping it protects all of them.
+//
+// The ROOF is exempt from the enemy half, and has to be: it is the one hub
+// room that spawns a wave of its own (QuickStartRoofMonitor below), and an
+// every-frame enemy sweep would delete that wave on the frame it appeared.
+// Nothing is lost by the exemption - a live entity dump of the roof found no
+// vanilla enemies on it, only objects.
 static void QuickStartClearHubRoom(void) {
     s32 i;
+    bool32 sweepEnemies;
     if (!QuickStartIsHubRoom()) {
         return;
     }
+    sweepEnemies = gRoomControls.area != AREA_WIND_TRIBE_TOWER_ROOF;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent == gRoomControls.camera_target) {
             continue;
         }
-        if (ent->kind == ENEMY || (ent->kind == NPC && ent->id != ZELDA)) {
+        if ((sweepEnemies && ent->kind == ENEMY) || (ent->kind == NPC && ent->id != ZELDA)) {
             DeleteEntity(ent);
         }
     }
@@ -10498,6 +10509,190 @@ static void QuickStartProcessHubHoleLink(void) {
     gRoomTransition.player_status.start_pos_x = first->entranceX;
     gRoomTransition.player_status.start_pos_y = first->entranceY;
     gRoomTransition.player_status.layer = 1;
+}
+
+// --- The hub's roof: one wave, one uncommon-or-rare reward ---------------
+//
+// Per the user: "roof = enemies at slightly higher difficulty than the run,
+// clearing them gives an uncommon-or-rare REWARD." Optional content - the run
+// never routes through here, the player climbs one more flight because they
+// want to.
+//
+// GEOMETRY, flooded from the arrival tile rather than eyeballed off the
+// collision map (tools/quickstart/emu.py; the flood is what caught that the
+// roof's top rows are a separate component). The roof is 240x416 and the
+// player arrives from Floor 3 at (184,328). The component reachable from
+// there is 121 tiles spanning rows 10-24:
+//
+//   rows 11-13  a wide north band, columns 1-13
+//   rows 14-19  a west corridor, columns 1-5
+//   rows 20-24  the south arena, narrowing from columns 1-13 to 4-10
+//
+// Rows 0-5 (the tower's peak and its two wings) are NOT in that component,
+// which is exactly why this uses a hand-placed offset table rather than
+// QuickStartSpawnEnemiesOnOpenTiles: that spawner rings outward from an
+// anchor over ANY open tile within 40 rings, and would happily put a third of
+// the wave somewhere the player cannot follow.
+//
+// Every offset below is an interior tile of that component - open, with all
+// four neighbours open, at least three tiles from its neighbours in the list,
+// and none within a tile of the arrival spot so the player is not dropped
+// into the middle of the fight.
+static const s16 sQuickStartRoofEnemyOffsets[14][2] = {
+    { 40, 184 },  { 104, 184 }, { 200, 184 }, { 72, 200 },  { 136, 200 },
+    { 40, 232 },  { 72, 248 },  { 40, 280 },  { 72, 296 },  { 40, 328 },
+    { 88, 328 },  { 120, 344 }, { 88, 376 },  { 136, 376 },
+};
+// The arena is 121 tiles, i.e. 30 of the 32x32 squares this density figure is
+// measured in. 60 is deliberately double that, and is tuning rather than a
+// survey result: at the honest 30 the formula (squares / tier density) yields
+// two enemies at difficulty 2 and six at difficulty 12, which is not a fight
+// worth climbing for. At 60 it runs 4 -> 10 across the difficulty range, and
+// the cap below holds the top end.
+#define QUICKSTART_ROOF_ROOM_SQUARES 60
+#define QUICKSTART_ROOF_MAX_ENEMIES 10
+// "Slightly higher difficulty than the run", clamped to the table's top row.
+#define QUICKSTART_ROOF_DIFFICULTY_BONUS 2
+// Centre of the north band, 128px from the arrival spot, so the reward is
+// something the player walks to rather than lands on.
+#define QUICKSTART_ROOF_REWARD_X 120
+#define QUICKSTART_ROOF_REWARD_Y 200
+
+// Two bits of run-scoped state, because the roof is its own AREA: leaving it
+// for Floor 3 unloads the room and resets every room flag, so nothing keyed
+// on those can remember that the wave was already beaten.
+//   0 - not cleared
+//   1 - cleared, reward is on the floor
+//   2 - reward collected; the roof is finished for this run
+#define GF_ROOF_STATE_BIT(b) (89 + (b)) // b = 0..1
+// The reward's own draw seed, six bits, stored alongside the state.
+//
+// Not a cosmetic detail: the reward has a re-drop arm (state 1 with nothing on
+// the floor means the player left and came back), and rolling a fresh seed
+// there turns the roof into a slot machine - clear it once, then walk down a
+// flight and back up until the draw hands over a Heart Container. Measured
+// doing exactly that: the same cleared roof produced ITEM_RUPEE100 and then
+// ITEM_BOTTLE_RED_POTION on consecutive visits. Rolling once, at the clear,
+// and replaying it makes every re-drop the same item.
+#define GF_ROOF_SEED_BIT(b) (91 + (b)) // b = 0..5
+
+static u8 QuickStartRoofGetState(void) {
+    return (u8)((CheckLocalFlagByBank(FLAG_BANK_11, GF_ROOF_STATE_BIT(0)) ? 1 : 0) |
+                (CheckLocalFlagByBank(FLAG_BANK_11, GF_ROOF_STATE_BIT(1)) ? 2 : 0));
+}
+
+static void QuickStartRoofSetState(u8 state) {
+    s32 b;
+    for (b = 0; b < 2; b++) {
+        if (state & (1 << b)) {
+            SetLocalFlagByBank(FLAG_BANK_11, GF_ROOF_STATE_BIT(b));
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, GF_ROOF_STATE_BIT(b));
+        }
+    }
+}
+
+static s32 QuickStartRoofGetSeed(void) {
+    s32 b, seed = 0;
+    for (b = 0; b < 6; b++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_ROOF_SEED_BIT(b))) {
+            seed |= (1 << b);
+        }
+    }
+    return seed;
+}
+
+static void QuickStartRoofSetSeed(s32 seed) {
+    s32 b;
+    for (b = 0; b < 6; b++) {
+        if (seed & (1 << b)) {
+            SetLocalFlagByBank(FLAG_BANK_11, GF_ROOF_SEED_BIT(b));
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, GF_ROOF_SEED_BIT(b));
+        }
+    }
+}
+
+// UNCOMMON three times in four, RARE the fourth - "an uncommon or rare
+// REWARD", weighted so the rare end stays a treat. Four is a power of two on
+// purpose: agbcc has no __umodsi3, and a modulus by anything else in this
+// tree fails to LINK rather than to compile.
+//
+// The seed is rolled on the first drop only and replayed on every re-drop, so
+// which item this roof gives is decided once - see GF_ROOF_SEED_BIT.
+static void QuickStartRoofSpawnReward(void) {
+    s32 seed, tier;
+    Entity* itemEntity;
+    if (QuickStartRoofGetState() == 0) {
+        seed = (s32)Random() & 0x3f;
+        QuickStartRoofSetSeed(seed);
+    } else {
+        seed = QuickStartRoofGetSeed();
+    }
+    tier = ((seed & 3) == 0) ? QS_TIER_RARE : QS_TIER_UNCOMMON;
+    itemEntity = CreateObject(GROUND_ITEM, QuickStartDrawAtTier(seed / QS_TIER_BUCKETS, QS_CAT_REWARD, tier), 0);
+    if (itemEntity != NULL) {
+        itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_ROOF_REWARD_X;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_ROOF_REWARD_Y;
+        itemEntity->collisionLayer = 1;
+        itemEntity->flags |= ENT_PERSIST;
+        UpdateSpriteForCollisionLayer(itemEntity);
+        itemEntity->direction = IdleSouth;
+        QuickStartRoofSetState(1);
+        QsSetRoomFlag(1);
+    }
+}
+
+// Same earned/dropped/confirmed shape as QuickStartSpawnRegionRewardOnce,
+// including its re-drop arm: state 1 with no item on the floor and room flag 1
+// unset means the player left and came back, so the reward is placed again
+// rather than counted as taken.
+//
+// Room flag 0 is "this visit's wave is out", and it lives in room flags on
+// purpose. Leaving the roof mid-fight and returning gives a fresh wave, which
+// is the honest reading of "clearing them gives a reward" - the fight is one
+// visit's work, not something to whittle down over several trips.
+static void QuickStartRoofMonitor(void) {
+    u8 state;
+    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER_ROOF || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_ROOF_0) {
+        return;
+    }
+    state = QuickStartRoofGetState();
+    if (state >= 2) {
+        return;
+    }
+    if (state == 1) {
+        if (QuickStartGroundItemAt(QUICKSTART_ROOF_REWARD_X, QUICKSTART_ROOF_REWARD_Y)) {
+            QsSetRoomFlag(1);
+            return;
+        }
+        if (QsCheckRoomFlag(1)) {
+            QuickStartRoofSetState(2);
+            return;
+        }
+        QuickStartRoofSpawnReward();
+        return;
+    }
+    if (!QsCheckRoomFlag(0)) {
+        u8 difficulty = QuickStartGetDifficulty() + QUICKSTART_ROOF_DIFFICULTY_BONUS;
+        if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
+            difficulty = QUICKSTART_MAX_DIFFICULTY;
+        }
+        QuickStartSpawnEnemyGroupAtDifficulty(sQuickStartRoofEnemyOffsets, ARRAY_COUNT(sQuickStartRoofEnemyOffsets),
+                                              QUICKSTART_ROOF_ROOM_SQUARES, QUICKSTART_ROOF_MAX_ENEMIES, difficulty);
+        // Latch only if something actually came out. The spawner gives up
+        // when the GFX table is at its reserve, and without this check an
+        // empty spawn would read as an instantly-cleared wave on the very
+        // next frame and hand over the reward for nothing.
+        if (QuickStartCountRoomEnemies() > 0) {
+            QsSetRoomFlag(0);
+        }
+        return;
+    }
+    if (QuickStartCountRoomEnemies() > 0) {
+        return;
+    }
+    QuickStartRoofSpawnReward();
 }
 
 // Polled every frame regardless of item-choice phase (unlike
@@ -10602,6 +10797,7 @@ static void QuickStartRoomMonitor(void) {
     regionSlot = QuickStartGetCurrentRegionChainPosition();
     QuickStartClearHubRoom();
     QuickStartProcessHubHoleLink();
+    QuickStartRoofMonitor();
     // Melari's Mine and its three side rooms are DORMANT, not deleted. The
     // mine was the hub and nothing routes into it any more (its one remaining
     // inbound pointer, Castle Garden's south border, is walled by containment
