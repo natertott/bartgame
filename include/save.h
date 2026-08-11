@@ -83,7 +83,11 @@ typedef struct {
                                                * region spawned the wave that gates the Earth Element.
                                                * Drives the stuck-wave failsafe in
                                                * QuickStartSpawnRegionRewardOnce; reset per run. */
-    /*0x04C*/ u8 filler4c[4];                /**< unused filler */
+    /*0x04C*/ u32 run_seed;                  /**< QUICKSTART: the RNG seed this run is playing on.
+                                               * Written at run start and NOT reset per run, so it
+                                               * survives into the save file and identifies the run
+                                               * after the fact. Doubles as the input when the run
+                                               * is pinned - see GF_SEED_PINNED in game.c. */
 #else
     /*0x044*/ u8 filler44[12];               /**< unused filler */
 #endif

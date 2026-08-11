@@ -197,6 +197,18 @@ static void QsSetSiteFlag(u32 flag) {
     SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
+// A3's pin. Set it and the next run reuses gSave.run_seed verbatim instead
+// of deriving a fresh seed, which makes a run reproducible turn for turn:
+// same region chain, same shop, same "? room" contents, same fuser scatter.
+//
+// FLAG_BANK_11 offset 174, which is in that bank's uncleared tail alongside
+// nothing else - deliberately, for the same reason GF_DIFFICULTY_BIT sits
+// outside the run-start wipes. A pin that a new run cleared would pin
+// nothing, since the pin's whole job is to survive into the next run.
+// Declared up here rather than with the other GF_* blocks because
+// GameTask_Transition, the only thing that reads it, is compiled above them.
+#define GF_SEED_PINNED 174
+
 // gRoomVars.flags is shared with whatever vanilla room logic runs in the
 // room, and vanilla uses the low bits. That is not a theoretical hazard: in
 // Dark Hyrule Castle's Triple Darknut room - a 2-door pool member - vanilla
@@ -598,7 +610,28 @@ static void GameTask_Transition(void) {
     // Bits 178-183 are the counter. They sit in the gap between
     // GF_DIFFICULTY_BIT (174-177) and the 184-201 clear loop, so no run-start
     // clear touches them, which is exactly the property needed.
-    {
+    //
+    // A3, the fixed-seed playtest switch. Whatever this block decides, the
+    // seed it settles on is written to gSave.run_seed - so every run is
+    // identifiable after the fact, from a save file alone, without anyone
+    // having had to turn anything on first. That is the half that makes a
+    // user's bug report reproducible: they send the .sav, the seed is in it.
+    //
+    // And if FLAG_BANK_11 bit 174 (GF_SEED_PINNED) is set, the derivation is
+    // skipped entirely and run_seed is used as-is. Both halves therefore run
+    // through one field: it records the seed normally, and dictates it when
+    // pinned. The pin bit lives in bank 11's uncleared tail, beside the
+    // difficulty counter's own reasoning - a pin that a new run wiped would
+    // pin nothing.
+    //
+    // The record happens AFTER the stirring below, not before, so the value
+    // stored is exactly the gRand the run actually starts from and the
+    // pinned path can restore it with no further mixing. Storing the
+    // pre-stir value would make the two paths diverge by eight turns of the
+    // generator, which is the kind of thing that looks like it works.
+    if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SEED_PINNED)) {
+        gRand = gSave.run_seed;
+    } else {
         u32 counter = 0;
         s32 b;
         for (b = 0; b < 6; b++) {
@@ -624,6 +657,7 @@ static void GameTask_Transition(void) {
         for (b = 0; b < 8; b++) {
             Random();
         }
+        gSave.run_seed = gRand;
         // And commit the counter, because otherwise it does not survive.
         // gSave lives in EWRAM but InitSaveData reloads it from SRAM on every
         // boot - including the soft reset a won run ends with - so a counter
@@ -632,8 +666,11 @@ static void GameTask_Transition(void) {
         // three identical runs. The win path already calls WriteSaveFile at
         // exactly this level (QuickStartCheckWinCondition), so the cost is one
         // more save write per run, on a mode whose runs last minutes.
-        WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     }
+    // Outside the if: the pinned path writes no counter but still wants the
+    // save flushed, and the unpinned path's run_seed is only useful if it
+    // reaches SRAM.
+    WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
     // here - confirmed via emulator testing (dirty rupees to a known value,

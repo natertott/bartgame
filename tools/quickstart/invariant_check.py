@@ -38,7 +38,10 @@ Tiers:
             (folded into the same boot, so it costs nothing extra).
 
 Usage:  python3 tools/quickstart/invariant_check.py [--rom tmc.gba]
-                 [--static-only | --regions | --rooms]
+                 [--static-only | --regions | --rooms] [--seed N]
+--seed pins the run's RNG (roadmap A3, tools/quickstart/seed.py) so a
+failure can be reproduced, or so a sweep can test seeds other than the one
+a blank-save boot always derives.
 Runs everything by default. Batches emulator work across subprocesses
 because mgba leaks a core per boot and corrupts the allocator eventually.
 Exit code 0 = all PASS/WARN, 1 = any FAIL.
@@ -50,6 +53,13 @@ sys.path.insert(0, HERE)
 import parse_tables as P
 
 GAME_C = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'src', 'game.c')
+
+# Roadmap A3. None = let the run derive its own seed, which for a harness
+# boot (no .sav behind it) is always the SAME seed - so the emulator tiers
+# have only ever exercised one run's worth of content. --seed N pins a
+# different one, which is how a seed-dependent placement bug gets found, and
+# how a failure gets reproduced once it is.
+SEED = None
 
 # Rooms that are expected not to be reachable and why - reported WARN.
 KNOWN = {}
@@ -81,6 +91,7 @@ FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
 # family is declared here rather than inferred from usage.
 FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
+    ('GF_SEED_PINNED', 11, 0),
     ('GF_REGION_WAVE_COUNT_BIT', 11, 0),
     ('GF_QUEST_', 11, 0),
     ('QUICKSTART_CHARM_BIT', 11, 0),
@@ -111,8 +122,9 @@ FLAG_PARAM_RANGES = {
 # whole block as a self-collision.
 FLAG_BASE_MACROS = ('GF_CONTENT_SITE_BASE', 'GF_SLOT_BASE')
 
-# Bits that are deliberately NOT cleared at the start of a run.
-FLAG_PERSISTENT = ('GF_DIFFICULTY_BIT',)
+# Bits that are deliberately NOT cleared at the start of a run. The seed pin
+# is the clearest case: its entire job is to survive into the next run.
+FLAG_PERSISTENT = ('GF_DIFFICULTY_BIT', 'GF_SEED_PINNED')
 
 DEFINE_RE = re.compile(r'^#define\s+(\w+)(\([^)]*\))?\s+(.*?)\s*(?://\s*(.*))?$')
 
@@ -375,7 +387,7 @@ def emu_regions(rom):
     from emu import boot, warp, here, room_dims, coll_at
     out = []
     for r in P.region_pool():
-        c = boot(rom)
+        c = boot(rom, seed=SEED)
         c.memory.u8[0x03000bf0 + 4] = 0
         warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
         if here(c) != (r['area'], r['room']):
@@ -433,7 +445,7 @@ def emu_gfx_budget(rom):
         worst_free, worst_diff = MAX_GFX, None
         landed_any = False
         for diff in (0, 4, 8, 12):
-            c = boot(rom)
+            c = boot(rom, seed=SEED)
             for b in range(4):
                 qs_set(c, DIFF0 + b, (diff >> b) & 1)
             c.memory.u8[0x03000bf0 + 4] = 0
@@ -469,7 +481,7 @@ def emu_pool_entrances(rom):
     from emu import boot, warp, here, room_dims, coll_at
     out = []
     for row in P.pool_rows():
-        c = boot(rom)
+        c = boot(rom, seed=SEED)
         c.memory.u8[0x03000bf0 + 4] = 0
         warp(c, row['area'], row['room'], row['ex'], row['ey'])
         if here(c) != (row['area'], row['room']):
@@ -512,7 +524,7 @@ def emu_fusers(rom):
         if r is None:
             out.append(('FAIL', f'{rn}: fusers placed in a room that is not a region'))
             continue
-        c = boot(rom)
+        c = boot(rom, seed=SEED)
         c.memory.u8[ROOM_CONTROLS + 4] = 0
         warp(c, area, room, r['entrance'][0], r['entrance'][1])
         if here(c) != (area, room):
@@ -617,7 +629,7 @@ def emu_rooms(rom, start, end):
         if (an, rn) in KNOWN:
             out.append(('WARN', f'{rn}: skipped - {KNOWN[(an, rn)]}'))
             continue
-        c = boot(rom)
+        c = boot(rom, seed=SEED)
         c.memory.u8[0x03000bf0 + 4] = 0
         # A gated site does not exist until its fusion is done (Goron Cave's
         # four chambers), so fuse every gate this room needs before entering
@@ -760,7 +772,7 @@ def emu_hub(rom):
     """
     import emu
     out = []
-    c = emu.boot(rom)
+    c = emu.boot(rom, seed=SEED)
     emu.warp(c, 48, 1, 120, HUB_SHOP_WALKWAY_Y, frames=300)
     if emu.here(c) != (48, 1):
         return [('FAIL', f'could not reach the hub shop floor, landed in {emu.here(c)}')]
@@ -780,7 +792,7 @@ def emu_hub(rom):
 
     unliftable = []
     for (ix, iy) in HUB_SHOP_SPOTS:
-        cc = emu.boot(rom)
+        cc = emu.boot(rom, seed=SEED)
         emu.warp(cc, 48, 1, ix, HUB_SHOP_WALKWAY_Y, frames=240)
         if emu.here(cc) != (48, 1):
             unliftable.append((ix, iy))
@@ -807,7 +819,7 @@ def emu_hub(rom):
     # and the failure that matters is an enemy landing outside it - the roof's
     # top rows are open tiles the player cannot reach, so a spot that drifts up
     # there is a wave that can never be cleared and a reward never earned.
-    cc = emu.boot(rom)
+    cc = emu.boot(rom, seed=SEED)
     emu.warp(cc, 49, 0, ROOF_ARRIVAL[0], ROOF_ARRIVAL[1], frames=90)
     if emu.here(cc) != (49, 0):
         out.append(('FAIL', f'could not reach the tower roof, landed in {emu.here(cc)}'))
@@ -854,6 +866,9 @@ def main():
     args = sys.argv[1:]
     if '--rom' in args:
         rom = args[args.index('--rom') + 1]
+    global SEED
+    if '--seed' in args:
+        SEED = int(args[args.index('--seed') + 1], 0)
     if '--batch-rooms' in args:
         i = args.index('--batch-rooms')
         res = emu_rooms(rom, int(args[i + 1]), int(args[i + 2]))
@@ -872,15 +887,19 @@ def main():
             n_rooms = len({(a, r) for _, _, a, r, _, _ in P.content_sites()}) + len(P.pool_doors()) + 1
             batch = []
             for s in range(0, n_rooms + 6, 6):
-                pr = subprocess.run([sys.executable, os.path.abspath(__file__), '--rom', rom,
-                                     '--batch-rooms', str(s), str(s + 6)],
-                                    capture_output=True, text=True)
+                cmd = [sys.executable, os.path.abspath(__file__), '--rom', rom,
+                       '--batch-rooms', str(s), str(s + 6)]
+                if SEED is not None:
+                    cmd += ['--seed', str(SEED)]
+                pr = subprocess.run(cmd, capture_output=True, text=True)
                 try:
                     batch += json.loads(pr.stdout.strip().split('\n')[-1])
                 except Exception:
                     batch.append(('FAIL', f'batch {s}: subprocess error: {pr.stderr[-300:]}'))
             results.append(('rooms', batch))
     fails = 0
+    if any(t != 'static' and t != 'flags' for t, _ in results):
+        print(f'seed: {"0x%08x (pinned)" % SEED if SEED is not None else "derived (re-run with --seed to vary)"}')
     for tier, res in results:
         print(f'== {tier} ==')
         for lvl, msg in res:

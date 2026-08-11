@@ -38,7 +38,19 @@ def press(c, k, h=3, r=3):
         c.run_frame()
 
 
-def boot(rom=ROM):
+def boot(rom=ROM, seed=None):
+    """Boot to the start of a run.
+
+    `seed` pins the run's RNG (roadmap A3) - see seed.py, which owns the
+    mechanism. Worth knowing when reading results: a boot with no .sav
+    behind it always derives the SAME seed, because the seed is mixed from
+    save state and a blank save has none. So an unpinned harness run is not
+    a random sample of the game, it is one specific run, and anything that
+    only breaks on other seeds will not show up until someone passes one.
+    """
+    if seed is not None:
+        import seed as seedmod
+        return seedmod.boot_pinned(rom, seed)
     img = mgba.image.Image(240, 160)
     c = mgba.core.load_path(rom)
     c.set_video_buffer(img)

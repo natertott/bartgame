@@ -361,8 +361,32 @@ cure into a standing tool instead of a per-incident scramble.
   was the shelf's front row, reachable from the lower room; all nine items
   verified liftable). Still open: the cellar shadowing decision and the Lon
   Lon Minish doors.
-- **A3. Deterministic playtest switch**: a debug toggle that pins the RNG
-  seed so a reported bug's run can be reproduced exactly.
+- **A3. Deterministic playtest switch.** DONE - `gSave.run_seed` (the old
+  `filler4c`, save.h) plus `GF_SEED_PINNED` (bank 11 offset 174, outside
+  every run-start wipe, for the same reason the difficulty counter is) and
+  `tools/quickstart/seed.py`.
+
+  The seed is RECORDED on every run whether or not anyone armed anything,
+  which is the half that makes a player's report reproducible: the value is
+  in their .sav, and `seed.py show --sav` reads it without booting. Setting
+  the pin makes the next run reuse that value verbatim instead of deriving a
+  fresh one; one field does both jobs. `seed.py check` is the self-test -
+  same seed reproduces the run (shop stock AND fuser scatter identical), a
+  different seed changes it.
+
+  The pin never has to reach SRAM. Within one boot the order is: AgbMain
+  sets gRand, InitSaveData loads gSave from SRAM, then GameTask_Transition
+  reads the pin - so EWRAM between those two points is enough, and a soft
+  reset would actively destroy it (the reset reloads gSave from SRAM). The
+  harness therefore rewrites pin+seed on every frame of the title sequence
+  rather than guessing which frame the load lands on.
+
+  The finding that came with it, and it narrows what every green checker run
+  has ever meant: **a harness boot has no .sav behind it, so it always
+  derives the SAME seed.** The emulator tiers have only ever exercised one
+  run's worth of drawn content. `invariant_check.py --seed N` fixes that -
+  it is how a seed-dependent placement bug (a shop draw in an awkward spot, a
+  fuser scatter that lands badly) gets found rather than waited for.
 
 ### Phase B - The meta layer (the vision's spine)
 

@@ -19,6 +19,15 @@
   region entrance, and picks the closest fully-open tile to each gate that
   has open ground on every side. Prints C table rows; the checker
   re-verifies whatever ends up in the source.
+- `seed.py` - the Phase A3 fixed-seed playtest switch. Every run records
+  its RNG seed in `gSave.run_seed`, so a reported bug is reproducible from
+  the player's save file alone (`seed.py show --sav tmc.sav`); pinning makes
+  the next run replay that seed exactly (`seed.py pin 0xDEADBEEF`, self-test
+  with `seed.py check`). `emu.boot(rom, seed=N)` and
+  `invariant_check.py --seed N` both go through it. Note what it exposes: a
+  harness boot has no save behind it and therefore always derives the SAME
+  seed, so an unpinned checker run only ever tests one run's worth of drawn
+  content.
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every
   build that touches placement data:
 
