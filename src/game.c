@@ -470,7 +470,10 @@ static void GameTask_Transition(void) {
         // Bits 59-73: the handicap record (GF_HANDICAP_*).
         // Bits 74-84: the hunt quest (GF_HUNT_*), which is one attempt per
         // run, so a new run has to get its attempt back.
-        for (bit = 43; bit <= 84; bit++) {
+        // Bits 85-88: the hub item-selection phase mirror (GF_HUB_PHASE_BIT).
+        // Stale bits here would tell the next run it had already picked its
+        // item and skip the whole selection.
+        for (bit = 43; bit <= 88; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -10645,6 +10648,10 @@ static void QuickStartProcessRegionChainLinks(void) {
 
 // Is this one of the hub's rooms? The tower is one area (four floors) and
 // its roof is another; both are ours end to end.
+// Room flag for the one-shot door unblock below. Well clear of the low
+// numbers vanilla room logic uses (see QUICKSTART_ROOM_FLAG_ORIGIN).
+#define QUICKSTART_HUB_DOOR_OPENED_FLAG 55
+
 static bool32 QuickStartIsHubRoom(void) {
     return gRoomControls.area == AREA_WIND_TRIBE_TOWER || gRoomControls.area == AREA_WIND_TRIBE_TOWER_ROOF;
 }
@@ -10677,6 +10684,28 @@ static void QuickStartClearHubRoom(void) {
         }
         if (ent->kind == ENEMY || (ent->kind == NPC && ent->id != ZELDA)) {
             DeleteEntity(ent);
+        }
+    }
+    // The front door needs more than the NPC standing in it removed.
+    //
+    // Measured: the Entrance room's doorway tiles (columns 6-8, row 18) read
+    // 0x5f - walkable, the same path-tile value Castle Garden uses - but the
+    // two rows BELOW them, 19 and 20, read 0x0f, fully solid. So the player
+    // walks into the doorway, stops at y=302, and the south border transition
+    // to Cloud Tops (which fires on crossing the room's edge at y=336) can
+    // never trigger. The Wind Tribe's ARCHWAY object sits at (120,328), on
+    // the far side of that wall.
+    //
+    // This is the same shape as the Castle Garden guard blocks: vanilla walls
+    // an early-game player out of late-game content with solid tiles, keyed
+    // on a plot flag this mode never sets. Clearing the collision opens it.
+    // Only the three doorway columns, so the rest of the south wall stays.
+    if (gRoomControls.area == AREA_WIND_TRIBE_TOWER && gRoomControls.room == ROOM_WIND_TRIBE_TOWER_ENTRANCE &&
+        !QsCheckRoomFlag(QUICKSTART_HUB_DOOR_OPENED_FLAG)) {
+        QsSetRoomFlag(QUICKSTART_HUB_DOOR_OPENED_FLAG);
+        for (i = 6; i <= 8; i++) {
+            SetTileType(TILE_TYPE_0, TILE_POS(i, 19), LAYER_BOTTOM);
+            SetTileType(TILE_TYPE_0, TILE_POS(i, 20), LAYER_BOTTOM);
         }
     }
 }
@@ -11514,6 +11543,41 @@ static void QuickStartSpawnHallReward(void) {
     }
 }
 
+// The item-selection phase, mirrored somewhere it survives leaving the room.
+//
+// gRoomTransition.field_0x4[0] is transient: it is reset when a room loads.
+// That was invisible in Castor Darknut, where the player had no reason to
+// walk out mid-selection, and became a real bug the moment the hub gave them
+// four floors to wander - stepping downstairs and back restarted the whole
+// selection, handing out a second and third set of items.
+//
+// FLAG_BANK_11 bits 85-88 hold the same value (0-10 fits in four bits). The
+// mirror is written by QuickStartHubSetPhase and read back on room entry.
+#define GF_HUB_PHASE_BIT(b) (85 + (b)) // b = 0..3
+
+static u8 QuickStartHubGetPhase(void) {
+    s32 b;
+    u8 v = 0;
+    for (b = 0; b < 4; b++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_HUB_PHASE_BIT(b))) {
+            v |= (1 << b);
+        }
+    }
+    return v;
+}
+
+static void QuickStartHubSetPhase(u8 phase) {
+    s32 b;
+    gRoomTransition.field_0x4[0] = phase;
+    for (b = 0; b < 4; b++) {
+        if (phase & (1 << b)) {
+            SetLocalFlagByBank(FLAG_BANK_11, GF_HUB_PHASE_BIT(b));
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, GF_HUB_PHASE_BIT(b));
+        }
+    }
+}
+
 // Phase progression for gRoomTransition.field_0x4[0]:
 //   0 - choosing the run's key item (3 of 5: Pegasus Boots/Roc's Cape/Mole
 //       Mitts/Zora Flippers/Lantern) - decides which region the chain
@@ -11542,6 +11606,11 @@ static void QuickStartUpdateItemChoice(void) {
     // the player returns keeps every wave anchored to the right room.
     if (gRoomControls.area != QUICKSTART_AREA || gRoomControls.room != QUICKSTART_ROOM) {
         return;
+    }
+    // Re-entering the room zeroed the transient copy; take the mirror back.
+    if (QuickStartHubGetPhase() > phase) {
+        phase = QuickStartHubGetPhase();
+        gRoomTransition.field_0x4[0] = phase;
     }
 
     if (phase == 1 || phase == 3 || phase == 5) {
@@ -11588,7 +11657,7 @@ static void QuickStartUpdateItemChoice(void) {
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnItems(sQuickStartBonusItems);
-            gRoomTransition.field_0x4[0] = 2;
+            QuickStartHubSetPhase(2);
         } else if (phase == 3) {
             // No manual maxHealth bump here any more. This used to add 8
             // (one heart) on the belief that ITEM_HEART_CONTAINER has no
@@ -11608,7 +11677,7 @@ static void QuickStartUpdateItemChoice(void) {
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnItems(sQuickStartSkillItems);
-            gRoomTransition.field_0x4[0] = 4;
+            QuickStartHubSetPhase(4);
         } else {
             // UpdatePlayerSkills (playerUtils.c) is what actually turns the
             // ITEM_SKILL_* inventory flag into a usable gPlayerState.skills
@@ -11616,6 +11685,13 @@ static void QuickStartUpdateItemChoice(void) {
             // which this mid-game reload doesn't trigger (the player entity
             // persists across RELOAD_ALL, unlike a real area transition).
             UpdatePlayerSkills();
+            // Phase 10 = "the hub is finished with this run", not 6. Phases
+            // 6-9 were Castle Darknut's three waves and the chest that
+            // followed them, and with the waves retired phase 6 found an
+            // empty room, fell straight through 7 and 8, and dropped that
+            // chest's HEART PIECE on the floor the instant the third item
+            // was taken - the stray heart piece the user reported. The whole
+            // combat tail is skipped instead of being left to run dry.
             // RETIRED: this used to spawn wave 1 the moment the third item
             // was taken - Castor Darknut Main's third act, back when the
             // selection room was also a combat room. The hub has no combat
@@ -11626,7 +11702,7 @@ static void QuickStartUpdateItemChoice(void) {
             // polled, in case a hub wave is ever wanted: an idempotent
             // "spawn if the room is empty" poll resurrected enemies the
             // player had already killed every time they walked back in.
-            gRoomTransition.field_0x4[0] = 6;
+            QuickStartHubSetPhase(10);
             // reload_flags alone is not self-executing: it's only consumed by
             // UpdateScroll's Scroll0/Scroll2 handlers (see scroll.c), which are
             // what actually clear it back to 0 and let GameMain_ChangeRoom hand
@@ -11695,7 +11771,7 @@ static void QuickStartUpdateItemChoice(void) {
                     }
                 }
             }
-            gRoomTransition.field_0x4[0] = phase + 1;
+            QuickStartHubSetPhase(phase + 1);
         }
         return;
     }
@@ -11756,13 +11832,13 @@ static void QuickStartUpdateItemChoice(void) {
             }
         }
         QuickStartSpawnHallReward();
-        gRoomTransition.field_0x4[0] = 9;
+        QuickStartHubSetPhase(9);
         return;
     }
 
     if (phase == 9) {
         if (GetInventoryValue(ITEM_HEART_PIECE) != 0) {
-            gRoomTransition.field_0x4[0] = 10;
+            QuickStartHubSetPhase(10);
         }
         return;
     }
@@ -11793,7 +11869,15 @@ static void QuickStartUpdate(void) {
     // QuickStartUpdateItemChoice), so it can no longer come back to life
     // just because some later reload finds the room empty (e.g. simply
     // walking back into Main after already defeating wave 1).
-    if (gRoomTransition.field_0x4[0] == 0) {
+    // Read the persistent mirror, not gRoomTransition.field_0x4[0]. That
+    // byte is transient RAM that a room load zeroes, so walking downstairs
+    // and back up put phase 0 back in front of this check and respawned the
+    // starter row - a fresh set of three free key items every trip, and the
+    // whole selection running a second time. Harmless in Castor Darknut
+    // Main, where the player never left the room before the phase was over;
+    // fatal in a four-floor hub. QuickStartUpdateItemChoice below restores
+    // the transient copy from the same mirror, but it runs after this.
+    if (QuickStartHubGetPhase() == 0) {
         QuickStartSpawnStarterChoiceOnce();
     }
     QuickStartUpdateItemChoice();
