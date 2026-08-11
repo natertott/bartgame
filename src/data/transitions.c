@@ -3026,20 +3026,26 @@ const Transition gExitList_Caves_TrilbyHighlands[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_Caves_LonLonRanchWallet[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA, in both branches again. This is the cave under Lon Lon Ranch's
+// shallow water - the one a Kinstone fusion reveals a staircase down into.
+//
+// It spent a long time retargeted at Castle Garden Main, which is the landing
+// spot every room in the old "? room" pool shared. The room was never actually
+// added to that pool, though (nothing in game.c so much as named it), so the
+// retarget was all cost and no benefit: the player fused the Kinstone, walked
+// down the revealed stairs into an empty cave, and its only exit deposited
+// them in Castle Garden. Reported by the user as "this staircase leads
+// nowhere, the player just warps back to the overworld map" - the warp they
+// saw was this exit firing.
+//
+// Back on vanilla, it returns to Lon Lon Ranch at (0x1f8,0x218), just south of
+// the staircase it came from, and the room is a content site now
+// (sQuickStartRoomContentSites, game.c) so there is something down there.
 const Transition gExitList_Caves_LonLonRanchWallet[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x218, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_Caves_SouthHyruleFieldRupee[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x58, 0x128, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },

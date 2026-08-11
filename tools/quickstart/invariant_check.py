@@ -46,10 +46,7 @@ sys.path.insert(0, HERE)
 import parse_tables as P
 
 # Rooms that are expected not to be reachable and why - reported WARN.
-KNOWN = {
-    ('AREA_HYRULE_CASTLE_CELLAR', 'ROOM_HYRULE_CASTLE_CELLAR_0'):
-        'shadowed by the Castle Garden NW ladder redirect (survey finding #1)',
-}
+KNOWN = {}
 GROUND_ITEM_ID = 0
 QS_EVENT_ITEM_DROP = 0
 

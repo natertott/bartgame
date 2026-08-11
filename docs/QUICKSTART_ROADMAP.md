@@ -442,15 +442,25 @@ New events assembled from proven vanilla parts, cheapest first:
 
 ### Phase D1 - Overworld fixes the user reported, still open
 
-Three of the five are done (the boomerang-cave ladder flag, the stuck-wave
-rescue, and the roadmap entries below). These are not:
+Done: the boomerang-cave ladder flag, the stuck-wave rescue, and Lon Lon's
+shallow-water staircase (below). These are not:
 
-- **Lon Lon Ranch: the kinstone staircase under the shallow water leads
-  nowhere.** The fusion reveals it and the player warps straight back to the
-  overworld. Wanted: restore the vanilla connection and make the room a "?"
-  room. Shape is known - it is the same job already done for the Goron Cave
-  door and the ranch houses (a `transitions.c` destination plus a
-  `sQuickStartRoomContentSites` row), so this is the cheapest of the three.
+**DONE - Lon Lon Ranch's shallow-water cave.** The Kinstone fusion revealed the
+staircase, the player walked down, and the cave's only exit put them in Castle
+Garden - which is what "leads nowhere, just warps back to the overworld" was.
+The exit had been retargeted at Castle Garden Main, the shared landing spot of
+the old "? room" pool, but the room was never added to that pool, so the
+retarget was all cost and no benefit. Exit back on vanilla, and the room is a
+content site now.
+
+That site REPLACES the Hyrule Castle Cellar one rather than being a 31st. The
+comment on `QUICKSTART_CONTENT_SITE_COUNT` claims a site of headroom; that was
+true when written, before `GF_FUSION_RELOADED_ID_BIT` and
+`GF_FUSER_SCATTER_ROLLED` took 692-703 against a ceiling of 707. The cellar
+slot was dead twice over - unreachable behind the Castle Garden northwest
+ladder's redirect, and its content spot was `y=376` in a room 192 tall - so
+reclaiming its 13 bits closes two open bugs and costs nothing.
+
 - **Lon Lon Ranch: the Goron cave's full kinstone progression.** Vanilla has
   several fusions there, each removing another interior wall; this mode only
   wires the one that opens the entrance. Wanted, in order:
@@ -556,12 +566,6 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   side and B -> A is impossible; entry teleports them to the middle of the
   room rather than to the matching door. Surveyed and planned in
   `docs/QUICKSTART_2DOOR_MAP.md`; the rewiring itself is not implemented.
-- **Hyrule Castle Cellar's content site never fires.** Forcing its kind and
-  entering the room produces nothing at all. Its configured content spot is
-  `y=376` in a room only 192 tall - outside its own room, the same class of
-  error as Lon Lon's old exit box - which suggests it has never worked. The
-  generator ignores content offsets now, so it should start working the
-  moment the site actually dispatches; why it doesn't is unchased.
 - Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
   north-west pocket. Not gated - the user paused Trilby zone-gating pending
   their own walk.
@@ -569,7 +573,6 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   yet, so it is still unfenced.
 - `POT_MINISH` does not render multi-enemy content (long-standing).
 - Gentari's Room / Gentari's Main adjacency conflict (long-standing).
-- Lon Lon Ranch's second gated cave (the wallet sinkhole) is unwired.
 - Castle Garden Main's East and West Fountains are gated entrances not yet
   in any pool.
 - The reachability harness crashes mgba after enough reboots; it now

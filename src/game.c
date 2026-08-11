@@ -8000,7 +8000,28 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // moved clear of their ladder's block rather than sitting the usual
     // 24px off the arrival spot: further up the cellar, and off to one side
     // in the dojo (which is too short to go further up).
-    { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, QUICKSTART_KINDS_SMALL, 0x98, 0x178 },  // arrives (0x68,0x1a8), ladder (104,412)
+    // Lon Lon Ranch's shallow-water cave - the one a Kinstone fusion reveals
+    // the staircase down into. Its exit is back on vanilla (transitions.c), so
+    // the stairs now lead somewhere instead of dumping the player in Castle
+    // Garden. Measured: 240x160, one chamber of 59 tiles reachable from the
+    // (120,120) arrival, and the site's own sweep takes care of the vanilla
+    // big-wallet chest sitting at (120,40).
+    //
+    // This row REPLACES the Hyrule Castle Cellar site rather than adding a
+    // 31st. The site block is 13 flag bits each from offset 266, and the
+    // constants stacked above it now run to 703 against a bank ceiling of 707
+    // - a 31st site would need all of them shifted 13 higher, which does not
+    // fit. (The comment on QUICKSTART_CONTENT_SITE_COUNT still says there is
+    // one site of headroom; that was true when it was written, before
+    // GF_FUSION_RELOADED_ID_BIT and GF_FUSER_SCATTER_ROLLED took 692-703.)
+    //
+    // The cellar slot was dead twice over and is no loss: its room is
+    // unreachable, shadowed by the Castle Garden northwest ladder's redirect
+    // to a drawn pool room, and its content spot was y=376 in a room only 192
+    // tall - outside its own room, so it could never have worked even if the
+    // room were reachable. Both facts are in the roadmap's open-bugs list;
+    // this closes them by reclaiming the bits for a room that does work.
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, QUICKSTART_KINDS_SMALL, 120, 72 },
     // Castle Garden's southeast ladder leads to this dojo's ante room, and
     // the ante room scroll-seams north into the dojo proper. The event goes
     // in the DOJO, not the ante room - the ante room is a corridor, and the
@@ -10064,6 +10085,15 @@ static void QuickStartEnforceLonLonContainment(void) {
     }
     if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
         gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    // The shallow-water cave, down the staircase a Kinstone fusion reveals.
+    // A real vanilla WARP_TYPE_AREA door, same situation as the ranch houses
+    // below: this only has to avoid cancelling it. The way back needs nothing
+    // - AREA_CAVES is not a contained area, so the cave's own exit is not
+    // policed at all.
+    if (gRoomTransition.player_status.area_next == AREA_CAVES &&
+        gRoomTransition.player_status.room_next == ROOM_CAVES_LON_LON_RANCH_WALLET) {
         return;
     }
     // Talon and Malon's house, reset to vanilla (see sQuickStartLinks' own
