@@ -60,8 +60,10 @@ CUSTOM ?=
 # of the title/file-select flow, for fast iteration. See src/game.c.
 QUICKSTART ?=
 # The hub: Home of the Wind Tribe, third floor. See docs/QUICKSTART_HUB.md.
-# Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN - keep that pair here,
-# because reverting the hub move is exactly these two lines.
+# Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN. Pointing these back
+# there no longer restores the old start: Castor Darknut's waves, its reward
+# chest and its link out to Melari's Mine have all been retired from game.c,
+# so the rooms are empty and have no way onward.
 QUICKSTART_AREA ?= AREA_WIND_TRIBE_TOWER
 QUICKSTART_ROOM ?= ROOM_WIND_TRIBE_TOWER_FLOOR_3
 # Dev-only hook: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM with the entire

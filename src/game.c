@@ -178,7 +178,6 @@ static void QsClearRoomFlag(u32 flag) {
     ClearRoomFlag(QUICKSTART_ROOM_FLAG_ORIGIN + flag);
 }
 
-static void QuickStartSpawnEnemies(void);
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
 static void QuickStartReloadRoomAfterFusion(void);
@@ -187,10 +186,8 @@ static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
 static void QuickStartRefreshPlacedItemTimers(void);
 static void QuickStartDeleteGroundItemsAndSigns(void);
-static void QuickStartSpawnHallReward(void);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
-static void QuickStartSpawnHallEnemiesOnce(void);
 static void QuickStartClearCastleGuards(void);
 static void QuickStartShowRegionIntroHintOnce(void);
 static void QuickStartClearMelarisMineObstacles(void);
@@ -215,7 +212,6 @@ static void QuickStartClearLonLonRanchGoron(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartProcessRegionChainLinks(void);
-static void QuickStartSkipMelarisMine(void);
 static void QuickStartRandomizeRegionChainOnce(void);
 static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
@@ -955,8 +951,8 @@ extern Script script_QuickStartHunt;
 // GameTask_Transition alongside the ladder/2door ranges.
 #define GF_REGION_INTRO_HINT_SHOWN 207
 
-// The overworld-region chain: at the hub (Melari's Mine),
-// QuickStartRegionChainLength() distinct regions are drawn at random from
+// The overworld-region chain: drawn once per run at the hub (Home of the
+// Wind Tribe). QuickStartRegionChainLength() distinct regions are taken from
 // sQuickStartRegionPool and put in a random order, replacing the old fixed
 // Castle Garden -> Lon Lon Ranch sequence. The length is a RUNTIME value
 // now (roadmap B2): 2 on a fresh save, +1 at the first win, +1 at the
@@ -1143,96 +1139,16 @@ static bool32 QuickStartGroundItemAt(s16 offsetX, s16 offsetY) {
     return FALSE;
 }
 
-// Castor Darknut Main's safe walkable box (world (36,39)-(235,174), origin
-// (0,0)) is ~199x135px -> 24 32x32 squares. The original 9 hand-verified
-// spots (3 from the old wave1, 4 from wave2, 2 from wave3) plus 26 more
-// found the same way (a full room collision-data scan for open 3x3-tile
-// neighborhoods, then an in-emulator movement check on every candidate) -
-// comfortably more than the ~5 the density curve ever asks for here, with
-// room to spare for variety across boots. Shared by all 3 combat waves
-// since they run in the same room, never simultaneously.
-#define QUICKSTART_MAIN_ROOM_SQUARES 24
-static const s16 sQuickStartMainEnemyOffsets[35][2] = {
-    { 0x6e, 0x87 },  { 0x96, 0x87 },  { 0xbe, 0x87 },  { 0x5a, 0x60 },  { 0x82, 0x9c },  { 0xaa, 0x60 },
-    { 0xd2, 0x9c },  { 0x6e, 0x60 },  { 0xbe, 0x60 },  { 48, 51 },      { 72, 51 },      { 96, 51 },
-    { 120, 51 },     { 144, 51 },     { 168, 51 },     { 192, 51 },     { 216, 51 },     { 48, 75 },
-    { 72, 75 },      { 96, 75 },      { 120, 75 },     { 144, 75 },     { 168, 75 },     { 192, 75 },
-    { 216, 75 },     { 48, 99 },      { 216, 99 },     { 72, 111 },     { 156, 111 },    { 48, 123 },
-    { 216, 123 },    { 72, 135 },     { 48, 147 },     { 168, 147 },    { 96, 159 },
-};
-
-static void QuickStartSpawnEnemies(void) {
-    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
-                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
-}
-
-// Wave 2: same room, same pool, just rolled independently - the density
-// curve (not a fixed "more than wave 1" rule) decides how many show up.
-static void QuickStartSpawnWave2(void) {
-    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
-                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
-}
-
-// Wave 3: the climactic wave - regular enemies from the same pool, plus a
-// real Darknut as a fixed mini-boss (mini-bosses sit outside the 5-level
-// difficulty system entirely, per the brief - always exactly 1). This room
-// is Castor Darknut Main, the Darknut's own vanilla arena (see
-// object/bossDoor.c and object/cutsceneOrchestrator.c), so its sprite
-// assets are already loaded here regardless of our own cutscene removal.
-static void QuickStartSpawnWave3(void) {
-    Entity* enemy;
-    QuickStartSpawnEnemyGroup(sQuickStartMainEnemyOffsets, ARRAY_COUNT(sQuickStartMainEnemyOffsets),
-                               QUICKSTART_MAIN_ROOM_SQUARES, QUICKSTART_MAIN_ROOM_SQUARES);
-    enemy = CreateEnemy(DARK_NUT, 0);
-    if (enemy != NULL) {
-        enemy->x.HALF.HI = gRoomControls.origin_x + 0x96;
-        enemy->y.HALF.HI = gRoomControls.origin_y + 0x9c;
-        enemy->collisionLayer = 1;
-        enemy->flags |= ENT_PERSIST;
-        UpdateSpriteForCollisionLayer(enemy);
-    }
-}
-
-// Castor Darknut Hall - the wide corridor south of Main, reachable now that
-// BossDoor is disabled for QUICKSTART (see object/bossDoor.c) - is much
-// wider than Main (512px vs Main's ~200px), spanning roughly local x
-// [70,420] at local y ~94 (verified by walking it in the emulator). Spread
-// a few Octoroks across that width so the room isn't empty.
+// RETIRED: Castor Darknut Main's and Hall's enemy waves.
 //
-// Two bugs fixed here together:
-// 1) Hall is reachable by simply wandering south out of Main, without ever
-//    finishing (or even starting) the item-choice/combat/chest sequence -
-//    these ambient Octoroks are only supposed to appear once that's fully
-//    done, so gate on field_0x4[0] == 10 (QuickStartUpdateItemChoice's
-//    "done" phase) rather than spawning unconditionally the instant the
-//    player sets foot in the room.
-// 2) Hall turns out to scroll gRoomControls.origin_x/y as the player walks
-//    through it (it's one large room, not several), so the old "scan for
-//    an Octorok already in QuickStartEntityInCurrentRoom bounds" check
-//    would stop matching the first wave the moment the origin shifted
-//    (their position no longer being described as within the "current"
-//    equation, on the other hand) creating a second full wave at the new
-//    origin - verified in the emulator: two complete sets of 3, 208px
-//    apart. ITEM_33 (another bare unused Item enum slot) is a fixed,
-//    scroll-independent "already spawned" marker instead.
-// Hall's own verified-safe width is local x [70,420] at y~94 (see file
-// header comment above) -> ~350x32px -> ~10 32x32 squares.
-#define QUICKSTART_HALL_ROOM_SQUARES 10
-#define QUICKSTART_HALL_MAX_ENEMIES 4
-static void QuickStartSpawnHallEnemiesOnce(void) {
-    static const s16 sQuickStartHallEnemyOffsets[4][2] = {
-        { 0x96, 0x5e }, { 0xfa, 0x5e }, { 0x15e, 0x5e }, { 0x19a, 0x5e },
-    };
-    if (gRoomTransition.field_0x4[0] != 10) {
-        return;
-    }
-    if (GetInventoryValue(ITEM_33) != 0) {
-        return;
-    }
-    QuickStartSpawnEnemyGroup(sQuickStartHallEnemyOffsets, ARRAY_COUNT(sQuickStartHallEnemyOffsets),
-                               QUICKSTART_HALL_ROOM_SQUARES, QUICKSTART_HALL_MAX_ENEMIES);
-    SetInventoryValue(ITEM_33, 1);
-}
+// Main was the item-selection room and Hall the one-wave gate south of it,
+// back when the run started in Castor Darknut. The hub moved to Home of the
+// Wind Tribe and, per the user, "after item selection, no enemies spawn" -
+// so the three Main waves (QuickStartSpawnEnemies/Wave2/Wave3, a fixed
+// Darknut mini-boss among them), Hall's ambient Octoroks, and the 35-spot
+// offset table they all shared are gone. Nothing routes into either room any
+// more; the roof wave is what replaces them in the hub design.
+
 
 // Hyrule Castle Garden is the gauntlet - the vanilla guards standing watch
 // here would otherwise stand around (and can trigger vanilla guard-chase
@@ -2023,9 +1939,6 @@ static void QuickStartCheckWinCondition(void) {
 // i.e. ordinary vanilla doors already spawn the player with
 // PL_SPAWN_DEFAULT, same as this file always has).
 //
-// Castor Darknut Hall's link is on real door coordinates end to end
-// (confirmed reachable by walking straight up from around local x=390).
-//
 // Castle Garden -> Melari's Mine (leaving through the bottom) is NOT in
 // this table - Castle Garden's south edge is a real WARP_TYPE_BORDER
 // transition (src/data/transitions.c, gExitList_CastleGarden_Main's last
@@ -2053,59 +1966,15 @@ typedef struct {
 } QuickStartLink;
 
 static const QuickStartLink sQuickStartLinks[] = {
-    // Castor Darknut Hall -> Melari's Mine, arriving at the corridor's west
-    // end (Door A). Trigger box is Hall's own (only) real door,
-    // gExitList_CastorDarknut_Hall[0] (startX=0x188, startY=0x18,
-    // AREA_12x12 -> box +6/+6), which is now retargeted (under #ifdef
-    // QUICKSTART, transitions.c) to the exact same destination as this
-    // link - that real door's own position is this trigger box, and it was
-    // found winning the race against this link in practice (landing the
-    // player in the old vanilla destination, Castor Caves, instead), so
-    // both now agree regardless of which one actually fires.
+    // RETIRED: the two Castor Darknut Hall <-> Melari's Mine rows. Hall was
+    // the gate between the old start room and the old hub, and both ends are
+    // off the route now.
     //
-    // Landing spot (150,70): the user reported (120,120) - this link's
-    // original spot, picked purely to dodge a drift bug near the OTHER
-    // direction's own trigger box (108-126,50-62) - didn't read as "near
-    // the door" (it's a fair way further south, in open floor). Re-surveyed
-    // in the emulator directly against the door archway instead of drift-
-    // avoidance alone: (150,70) sits right at the corridor's north wall,
-    // visually at the door, well clear of the return box in X (108-126)
-    // even though it's close in Y - confirmed stable over 350+ idle frames
-    // (zero drift) and walkable down/left/right (blocked north by the wall
-    // it's placed against, as expected for a spot right at the archway).
-    { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0x188, 0x18e, 0x18, 0x1e, AREA_MELARIS_MINE,
-      ROOM_MELARIS_MINE_MAIN, 150, 70 },
-    // Melari's Mine, Door A (west end of the corridor) -> back to Castor
-    // Darknut Hall. Box is centered on the real Crenel Minish Paths door's
-    // own coordinates (gExitList_MelarisMine_Main[0]: startX=0x78,
-    // startY=0x38, AREA_12x12 -> box +6/+6) - tightened from the much
-    // larger area this used before (which fired the instant the player
-    // took one step off the Hall-arrival spawn point, before ever visually
-    // reaching the archway) - but widened slightly northwest of the real
-    // box, to (0x6c-0x7e, 0x32-0x3e): walking directly at the real box
-    // stops just short of it at local (115, 55), a few px northwest of
-    // (120-126, 56-62), confirmed a hard wall (600 frames of holding
-    // toward it made no further progress) rather than a slow creep like
-    // Hall's own door had. The real box alone is therefore unreachable on
-    // foot; this is the smallest box that both contains it and reaches
-    // the actual walkable corner. This same real door was found winning
-    // the race against this link too (landing in Crenel Minish Paths
-    // instead of Hall), so it's now retargeted the same way as Hall's own
-    // door above - transitions.c, gExitList_MelarisMine_Main[0].
-    // Landing spot placed by the user directly (Lua position script) at
-    // (119,74), facing down - confirmed open and walkable in all 4
-    // directions (see the IdleSouth start_anim special-case in
-    // QuickStartProcessLinks below for the facing).
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x6c, 0x7e, 0x32, 0x3e, AREA_CASTOR_DARKNUT,
-      ROOM_CASTOR_DARKNUT_HALL, 119, 74 },
     // Melari's Mine's own Door B (near the real Mt Crenel Cavern of Flames
-    // door, gExitList_MelarisMine_Main[1] - box widened to 0x64-0x8c x,
-    // 0x128-0x136 y for the same overshoot reason documented on other links
-    // in this file) used to be a static row here leading to Castle Garden.
-    // Now dynamic instead - it leads to whichever region this save's chain
-    // put in slot 0 (see QuickStartProcessRegionChainLinks below), since
-    // that varies per save just like the ladder/2-door pool destinations
-    // already do.
+    // door) is retired too. It was the hub's way into region slot 0 - first
+    // as a static row here, then as a dynamic box in
+    // QuickStartProcessRegionChainLinks - and the pit in Cloud Tops does that
+    // job now.
     //
     // Melari's Mine's two remaining real doors (Minish House Interiors -
     // Southeast, East), opened for future NPCs. Each trigger box is that
@@ -2398,7 +2267,7 @@ static void QuickStartSolveLonLonBoulder(void) {
 // (sQuickStartRegionPool below) plus one generic set of dispatch functions,
 // per docs/QUICKSTART_ROADMAP.md sec 3.1. QuickStartRegionChainLength()
 // distinct regions are drawn at random from the pool and put in a random
-// order at the hub (Melari's Mine); whichever region ends up last drops an
+// order once per run; whichever region ends up last drops an
 // Earth Element and ends the run (QuickStartSpawnWinKeyOnce/
 // QuickStartCheckWinCondition above, both already region-agnostic - neither
 // references any specific area/room), every other region drops an ordinary
@@ -2734,11 +2603,12 @@ static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
 // order matters (it IS the run's region order). Same distinct-draw shape
 // QuickStartRandomizeSlotsOnce/QuickStart2DoorRandomizeOnce already use;
 // safe as long as the UNLOCKED part of the pool is at least as big as the
-// chain (proven step by step in the unlock-registry comment). Called from
-// Melari's Mine's own dispatch (QuickStartRoomMonitor) - the hub is always
-// visited before the chain's own first entrance trigger is reachable, same
-// "roll it well before the player can reach it" reasoning the ladder/2door
-// draws already use.
+// chain (proven step by step in the unlock-registry comment). Called
+// unconditionally from QuickStartRoomMonitor. It used to hang off the old
+// hub room's own dispatch, which stopped being safe the moment that room
+// left the route, so it is rolled from anywhere instead - same "roll it
+// well before the player can reach it" reasoning the ladder/2door draws
+// already use.
 //
 // This is also where the run's key-item choice (round 1, phase 0 of
 // QuickStartUpdateItemChoice) actually becomes a real path: Trilby
@@ -9558,32 +9428,38 @@ static void QuickStartSetupCaveRoomContent(void) {
 // check, same technique as the retired cave-connector trigger/
 // QuickStartProcessRiverBridgeLink above, not dependent on the real cave
 // door's own transition data at all.
-// "Fully contained" per the user's request: once inside Castor Darknut
-// (Hall or Main), Melari's Mine, Castle Garden, or the Minish House
-// Interiors rooms opened off Melari's Mine, no transition - real or our
-// own - is allowed to land anywhere else. This is a blanket safety net on
-// top of the specific links above, not a replacement for them: it catches
-// every OTHER real exit these rooms have (Castle Garden alone has 5 more
-// WARP_TYPE_AREA doors and a WARP_TYPE_BORDER one to Hyrule Field; Hall's
-// only other content is the one real door already repurposed above)
-// regardless of whether a given one currently fires under QUICKSTART -
-// checked every frame, right after UpdateDoorTransition and UpdateScroll
-// (see the call site in QuickStartRoomMonitor, itself called after both of
-// those every frame) so a same-frame cancel always lands before the fade
-// actually starts. AREA_TREE_INTERIORS is included too, since
-// the retired ladder-link trigger' own transition into it would otherwise get
-// cancelled by this same function the instant it fires - it's listed here
-// as a whole area (rather than per-room) because Minish House Interiors
-// already needed to be, for Melari's Mine. The "? room" pool's other areas
-// (Caves, Great Fairies, Royal Valley Graves) deliberately AREN'T added
-// here: each pool room was selected specifically for having exactly one
-// real exit (see sQuickStartQuestionRoomPool above), so there's no "every
-// OTHER real exit" left for a blanket area-wide net to catch - the one
-// real exit each has is already individually retargeted in
-// transitions.c, same mechanism as Tree Interiors' ladder rooms below.
+// "Fully contained" per the user's request: once inside Castle Garden or the
+// Minish House Interiors rooms, no transition - real or our own - is allowed
+// to land anywhere else. This is a blanket safety net on top of the specific
+// links above, not a replacement for them: it catches every OTHER real exit
+// these rooms have (Castle Garden alone has 5 more WARP_TYPE_AREA doors and a
+// WARP_TYPE_BORDER one to Hyrule Field) regardless of whether a given one
+// currently fires under QUICKSTART - checked every frame, right after
+// UpdateDoorTransition and UpdateScroll (see the call site in
+// QuickStartRoomMonitor, itself called after both of those every frame) so a
+// same-frame cancel always lands before the fade actually starts.
+// AREA_TREE_INTERIORS is included too, since the retired ladder-link trigger'
+// own transition into it would otherwise get cancelled by this same function
+// the instant it fires - it's listed here as a whole area (rather than
+// per-room) because Minish House Interiors already needed to be. The "? room"
+// pool's other areas (Caves, Great Fairies, Royal Valley Graves) deliberately
+// AREN'T added here: each pool room was selected specifically for having
+// exactly one real exit (see sQuickStartQuestionRoomPool above), so there's
+// no "every OTHER real exit" left for a blanket area-wide net to catch - the
+// one real exit each has is already individually retargeted in transitions.c,
+// same mechanism as Tree Interiors' ladder rooms below.
+//
+// AREA_CASTOR_DARKNUT and AREA_MELARIS_MINE were on this list and are not any
+// more, and dropping them is load-bearing rather than cosmetic. Castle
+// Garden's south border still points at Melari's Mine (transitions.c) from
+// when the mine was the hub; with the mine no longer contained, a transition
+// from contained Castle Garden to non-contained Melari's Mine is exactly what
+// the cancel at the bottom of QuickStartEnforceContainment is for, so that
+// edge is now a wall - which is what it should be, since walking out of the
+// bottom of Castle Garden used to hand the player a free warp to region slot
+// 0. Putting either area back on the route means putting it back on this list.
 static bool32 QuickStartAreaContained(u8 area) {
-    return area == AREA_CASTOR_DARKNUT || area == AREA_MELARIS_MINE || area == AREA_CASTLE_GARDEN ||
-           area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
+    return area == AREA_CASTLE_GARDEN || area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
 }
 
 // Which ladder slot (0, 1, or 3 - slot 2 is retired, see sQuickStartLinks'
@@ -9932,11 +9808,13 @@ static void QuickStartEnforceContainment(void) {
     // this case without a separate fixed constant.
     //
     // The region chain's own two dynamic destinations from a contained
-    // area: the hub (Melari's Mine) leaving to whichever region is chain
-    // slot 0, or a contained region (Castle Garden) leaving to whichever
-    // region is next after its own slot. Both vary per save, same reason
-    // the old fixed AREA_CASTLE_GARDEN/AREA_HYRULE_FIELD checks this
-    // replaced couldn't just stay static.
+    // area: anything leaving for whichever region is chain slot 0, or a
+    // contained region (Castle Garden) leaving for whichever region is next
+    // after its own slot. Both vary per save, same reason the old fixed
+    // AREA_CASTLE_GARDEN/AREA_HYRULE_FIELD checks this replaced couldn't
+    // just stay static. Nothing contained aims at slot 0 any more now that
+    // the mine is off the route, but the arm costs nothing and is the right
+    // general rule.
     {
         const QuickStartRegion* first = QuickStartGetRegionAtChainSlot(0);
         if (gRoomTransition.player_status.area_next == first->area &&
@@ -10145,12 +10023,9 @@ static void QuickStartProcessLinks(void) {
             gRoomTransition.player_status.layer = 1;
             // start_anim doubles as the spawn facing (gameUtils.c copies it
             // straight into the player's animationState/direction on
-            // arrival) - only these two destinations need an explicit one
-            // (per the user's own requests); every other link leaves it
-            // alone, matching this function's prior behavior.
-            if (link->toArea == AREA_CASTOR_DARKNUT && link->toRoom == ROOM_CASTOR_DARKNUT_HALL) {
-                gRoomTransition.player_status.start_anim = IdleSouth;
-            }
+            // arrival). The one link that set it explicitly aimed at Castor
+            // Darknut Hall and is retired with it; every remaining link
+            // leaves it alone, matching this function's prior behavior.
             gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
             gRoomTransition.transitioningOut = 1;
             return;
@@ -10556,57 +10431,27 @@ static void QuickStartFixupRoomFixtures(void) {
 // the region chain's own two kinds of transition, both needing a
 // destination resolved at trigger time instead of a fixed table row, same
 // reasoning as the retired ladder-link trigger/the retired cave-connector trigger:
-// (1) Melari's Mine's Door B, now leading to whichever region this save's
-// chain drew for slot 0; (2) each region's own "onward" exit box
-// (sQuickStartRegionPool's exitMinX/MaxX/MinY/MaxY, reused verbatim from
-// the old static Castle Garden/Lon Lon Ranch rows), leading to whichever
-// region is next after the CURRENT room's own slot - or nowhere, if the
-// current room is already the chain's last slot, since winning happens at
-// the reward spot instead of by walking anywhere further.
-// Sends the player straight on to the run's first overworld region the
-// moment they set foot in Melari's Mine.
+// each region's own "onward" exit box (sQuickStartRegionPool's
+// exitMinX/MaxX/MinY/MaxY, reused verbatim from the old static Castle
+// Garden/Lon Lon Ranch rows), leading to whichever region is next after the
+// CURRENT room's own slot - or nowhere, if the current room is already the
+// chain's last slot, since winning happens at the reward spot instead of by
+// walking anywhere further.
 //
-// The hub used to sit between Castor Darknut Hall and the overworld: clear
-// the Hall, walk through the mine, take its Door B into region slot 0. Per
-// the user's own request that middle step is skipped, so a playthrough
-// reaches the overworld - the part actually under test - immediately.
+// There used to be a second kind here: Melari's Mine's Door B, the hub's own
+// way into region slot 0. That job belongs to the pit in Cloud Tops now
+// (QuickStartProcessHubHoleLink), and the mine is off the route, so the box
+// is gone with it.
 //
-// Done on ARRIVAL rather than by rewriting the outbound destination. The
-// rewrite was tried first and does not hold: two separate things lead into
-// the mine (the Hall's sQuickStartLinks row and its real vanilla door,
-// deliberately pointed at the same place so whichever wins the race lands
-// somewhere sane), and neither reliably has its destination visible to this
-// function before the room load consumes it - measured, the player still
-// arrived in the mine. Reacting to "am I standing in the mine" has no
-// timing to get wrong. The cost is a brief look at the hub during the fade.
-//
-// Melari's Mine keeps all its own content (its reward, its enemies, its two
-// ? rooms); it is simply not on the route. Deleting this function is all it
-// takes to put the hub back.
-static void QuickStartSkipMelarisMine(void) {
-    const QuickStartRegion* first;
-    if (gRoomControls.area != AREA_MELARIS_MINE || gRoomControls.room != ROOM_MELARIS_MINE_MAIN) {
-        return;
-    }
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    // The chain draw is rolled unconditionally in QuickStartRoomMonitor, so
-    // it already exists by now - but this is the one place that would break
-    // silently (every run starting in the pool's first row) if that ever
-    // stopped being true, so ask for it explicitly. Idempotent.
-    QuickStartRandomizeRegionChainOnce();
-    first = QuickStartGetRegionAtChainSlot(0);
-    gRoomTransition.player_status.area_next = first->area;
-    gRoomTransition.player_status.room_next = first->room;
-    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    gRoomTransition.player_status.start_pos_x = first->entranceX;
-    gRoomTransition.player_status.start_pos_y = first->entranceY;
-    gRoomTransition.player_status.layer = 1;
-    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-    gRoomTransition.transitioningOut = 1;
-}
-
+// RETIRED: QuickStartSkipMelarisMine. Melari's Mine was the hub, and this
+// warped the player straight out of it to region slot 0 the moment they
+// arrived, so a playthrough reached the overworld without walking the hub.
+// Home of the Wind Tribe is the hub now and the pit in Cloud Tops is how a
+// run reaches slot 0, so the mine is off the route entirely - which also
+// retires the free warp this handed anyone who walked out of the bottom of
+// Castle Garden (whose south border still points at the mine; see
+// transitions.c). The mine's own content is left intact per the user - the
+// area comes back when the region pool grows.
 static void QuickStartProcessRegionChainLinks(void) {
     s16 localX, localY;
     s32 slot;
@@ -10615,19 +10460,6 @@ static void QuickStartProcessRegionChainLinks(void) {
     }
     localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
     localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN && localX >= 0x64 &&
-        localX <= 0x8c && localY >= 0x128 && localY <= 0x136) {
-        const QuickStartRegion* first = QuickStartGetRegionAtChainSlot(0);
-        gRoomTransition.player_status.area_next = first->area;
-        gRoomTransition.player_status.room_next = first->room;
-        gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-        gRoomTransition.player_status.start_pos_x = first->entranceX;
-        gRoomTransition.player_status.start_pos_y = first->entranceY;
-        gRoomTransition.player_status.layer = 1;
-        gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-        gRoomTransition.transitioningOut = 1;
-        return;
-    }
     slot = QuickStartGetCurrentRegionChainPosition();
     if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
         const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
@@ -10713,59 +10545,64 @@ static void QuickStartClearHubRoom(void) {
 // --- The hub's way out: the hole in Cloud Tops ---------------------------
 //
 // Cloud Tops has exactly ONE Transition row (gExitList_CloudTops_House, back
-// into the tower at 488,344), so the hole down to vanilla's lower cloud
-// levels is a pit TILE handled by holeManager.c, not an exit this file could
-// retarget. A position box is used instead, the same technique every other
-// synthetic entrance in this file uses, and it runs from the room monitor
-// ahead of the hole manager so it wins.
+// into the tower at 488,344), so the pit down to vanilla's lower cloud levels
+// is a TILE handled by holeManager.c, not an exit that could be retargeted in
+// transitions.c.
 //
-// Measured (docs/QUICKSTART_HUB.md): the room is 1008x1008, the tower door
-// is at (488,344) and the WINDCREST object stands at (488,424) - 80px south
-// of the door, on the same centre line. The pit is the wide band of special
-// tiles at rows 34-36, columns 25-37, which is directly "in front of" the
-// crest exactly as the design describes. The box covers its middle.
-#define QUICKSTART_HUB_HOLE_MIN_X 440
-#define QUICKSTART_HUB_HOLE_MAX_X 540
-#define QUICKSTART_HUB_HOLE_MIN_Y 552
-#define QUICKSTART_HUB_HOLE_MAX_Y 600
-
+// This started as a position box, the same technique every other synthetic
+// entrance in this file uses, and it did not work in play: the user walked
+// into the pit and fell to the vanilla cloud level below. The box was written
+// off a survey of "special" tiles at rows 34-36, which are not the pit at all.
+// The real geometry is in holeManager.c's own gHoleTransitions table, which is
+// the authority and should have been read first: the pit in front of the wind
+// crest is the row `{ 0x01, 0x08, 0x01, 0x01, ..., 0x1d, 0x1d, 0x03, 0x03 }` -
+// tiles (29,29) 3x3, i.e. pixels (464,464)-(512,512). The box sat at y
+// 552-600, a good 40px SOUTH of it, so the player fell through the real pit
+// before ever reaching the trigger.
+//
+// Rather than move the box onto the right coordinates, catch the fall itself.
+// DoHoleTransition (holeManager.c) sets gRoomTransition.transitioningOut and
+// fills player_status exactly the way a real door does, so the same
+// rewrite-the-destination idiom QuickStartProcessDoorRedirects uses works
+// here, and works for EVERY pit in the room rather than one hand-measured
+// rectangle. Cloud Tops' only non-pit exit is the tower door (area 48), so
+// "a transition out of here that is heading to another Cloud Tops room" is an
+// exact description of a pit fall.
+//
+// The drop is left as the hole manager set it up - TRANSITION_CUT, start_anim
+// 4, PL_SPAWN_DROP - so the player really does fall out of the sky into the
+// region, which is what the design asks for. Only where they land is ours.
+//
 // Where the hole drops you does NOT need storing. The region chain is drawn
 // once per run (GF_REGION_CHAIN_*), so slot 0 is already fixed for the whole
 // run - which is exactly the "same place every time this run" the design
 // asks for, for free.
 static void QuickStartProcessHubHoleLink(void) {
     const QuickStartRegion* first;
-    s16 localX, localY;
     if (gRoomControls.area != AREA_CLOUD_TOPS || gRoomControls.room != ROOM_CLOUD_TOPS_CLOUD_TOPS) {
         return;
     }
-    if (gRoomTransition.transitioningOut) {
+    if (!gRoomTransition.transitioningOut) {
         return;
     }
-    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    if (localX < QUICKSTART_HUB_HOLE_MIN_X || localX > QUICKSTART_HUB_HOLE_MAX_X ||
-        localY < QUICKSTART_HUB_HOLE_MIN_Y || localY > QUICKSTART_HUB_HOLE_MAX_Y) {
+    if (gRoomTransition.player_status.area_next != AREA_CLOUD_TOPS) {
         return;
     }
-    // Same explicit-and-idempotent call the Melari skip makes, for the same
-    // reason: the draw is rolled unconditionally elsewhere, but this is a
+    // Same explicit-and-idempotent call the region-chain links make, for the
+    // same reason: the draw is rolled unconditionally elsewhere, but this is a
     // place that would fail silently (every run landing in the pool's first
     // row) if that ever stopped being true.
     QuickStartRandomizeRegionChainOnce();
     first = QuickStartGetRegionAtChainSlot(0);
     gRoomTransition.player_status.area_next = first->area;
     gRoomTransition.player_status.room_next = first->room;
-    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
     gRoomTransition.player_status.start_pos_x = first->entranceX;
     gRoomTransition.player_status.start_pos_y = first->entranceY;
     gRoomTransition.player_status.layer = 1;
-    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-    gRoomTransition.transitioningOut = 1;
 }
 
 // Polled every frame regardless of item-choice phase (unlike
-// QuickStartUpdateItemChoice, which is specific to Castor Darknut Main) so
+// QuickStartUpdateItemChoice, which is specific to the hub's spawn floor) so
 // that leaving the starting room still gets QUICKSTART treatment.
 static void QuickStartRoomMonitor(void) {
     s32 regionSlot;
@@ -10788,9 +10625,6 @@ static void QuickStartRoomMonitor(void) {
     // is to notice that the player has LEFT the room that stripped them and
     // hand the kit back.
     QuickStartHandicapMonitor();
-    // Before the containment checks, so they judge the onward hop this
-    // starts rather than cancelling it.
-    QuickStartSkipMelarisMine();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();
@@ -10806,8 +10640,8 @@ static void QuickStartRoomMonitor(void) {
     //
     // These used to live in Melari's Mine's own branch, on the reasoning
     // that the hub is always visited before anything they feed becomes
-    // reachable. That stopped being true the moment the hub was bypassed
-    // (QuickStartSkipMelarisMine): a draw that never runs leaves every
+    // reachable. That stopped being true the moment the mine stopped being
+    // the hub: a draw that never runs leaves every
     // pool index at 0, so every ? room in the run would resolve to the
     // first row of its pool. Each of these is latched by its own
     // GF_*_RANDOMIZED flag, so running them every frame from anywhere
@@ -10870,12 +10704,14 @@ static void QuickStartRoomMonitor(void) {
     regionSlot = QuickStartGetCurrentRegionChainPosition();
     QuickStartClearHubRoom();
     QuickStartProcessHubHoleLink();
-    if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
-        QuickStartSpawnHallEnemiesOnce();
-    } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
-        // Bypassed by QuickStartSkipMelarisMine on the normal route, but
-        // left whole: the room is one redirect away from being the hub
-        // again, and nothing here costs anything while it is unreachable.
+    // Melari's Mine and its three side rooms are DORMANT, not deleted. The
+    // mine was the hub and nothing routes into it any more (its one remaining
+    // inbound pointer, Castle Garden's south border, is walled by containment
+    // now that the area is off the contained list), so none of these branches
+    // can fire today. They are kept whole per the user: the area comes back
+    // when the region pool grows, and re-pointing one transition is all it
+    // takes. Nothing here costs anything while it is unreachable.
+    if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
         QuickStartClearMelarisMineObstacles();
         QuickStartSpawnMelarisMineRewardOnce();
         QuickStartSpawnMelarisMineEnemiesOnce();
@@ -11332,12 +11168,9 @@ static void QuickStartSpawnRegionFusers(void) {
     }
 }
 
-// Castor Darknut Main's safe walkable area - verified by actually walking
-// the player through it in the emulator - is roughly a 199x135 box from
-// world (36,39) to (235,174), origin (0,0). Every choice phase reuses this
-// same 3-slot item row; the single instructive sign sits in its own row
-// well above it (75px vertical separation), so browsing never risks an
-// accidental pickup.
+// Every choice phase reuses this same 3-slot item row; the single
+// instructive sign sits in its own row well above it (75px vertical
+// separation), so browsing never risks an accidental pickup.
 // Columns 4, 7 and 10 of the hub's third-floor hall, which is 11 tiles wide
 // (columns 2-12). Evenly spread with two clear tiles between each, so a
 // player walking the row cannot brush the neighbouring item.
@@ -11522,26 +11355,6 @@ static void QuickStartDeleteGroundItemsAndSigns(void) {
     }
 }
 
-static void QuickStartSpawnHallReward(void) {
-    // Not a literal treasure-chest sprite/tile (the room was never authored
-    // with one, and the real chest objects - ChestSpawner/SpecialChest -
-    // resolve their contents through room-authored tile data we don't have),
-    // just the same reliable ground-item pickup used everywhere else in this
-    // room, placed at the room's center. ITEM_HEART_PIECE is the actual
-    // vanilla "quarter of a heart container" item - object/linkHoldingItem.c
-    // (LinkHoldingItem_Action3) already handles it correctly on its own
-    // (increments gSave.stats.heartPieces, only turning into a permanent
-    // +1 max heart once 4 have been collected), so no extra bookkeeping is
-    // needed here.
-    Entity* itemEntity = CreateObject(GROUND_ITEM, ITEM_HEART_PIECE, 0);
-    if (itemEntity != NULL) {
-        itemEntity->x.HALF.HI = gRoomControls.origin_x + 0x87;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + 0x6a;
-        itemEntity->collisionLayer = 1;
-        itemEntity->flags |= ENT_PERSIST;
-        UpdateSpriteForCollisionLayer(itemEntity);
-    }
-}
 
 // The item-selection phase, mirrored somewhere it survives leaving the room.
 //
@@ -11587,23 +11400,19 @@ static void QuickStartHubSetPhase(u8 phase) {
 //   3 - pending bonus reward pickup cutscene
 //   4 - choosing tiger scroll (spin attack/roll attack/peril beam)
 //   5 - pending tiger scroll pickup cutscene
-//   6 - combat wave 1: 3 Octoroks are up
-//   7 - combat wave 2: 4 Octoroks are up
-//   8 - combat wave 3: 2 Octoroks + a Darknut are up
-//   9 - reward chest is up, waiting to be collected
+//   6-9 - retired (Castor Darknut Main's three combat waves and the chest
+//         that followed them); phase 5 now jumps straight to 10
 //   10 - done
 static void QuickStartUpdateItemChoice(void) {
     u8 phase = gRoomTransition.field_0x4[0];
 
-    // This whole state machine (item choices, then all 3 combat waves, then
-    // the chest) is scoped to Castor Darknut Main alone. Without this guard,
-    // once BossDoor stopped blocking the south exit, wandering into Hall
-    // (or beyond) right as the current wave's last enemy died would spawn
-    // the next wave wherever the player currently stood (using whatever
-    // room's gRoomControls.origin_x/y happened to be active at that
-    // moment), instead of back in Main where it belongs. Simply pausing
-    // everything outside Main - no spawning, no phase advancement - until
-    // the player returns keeps every wave anchored to the right room.
+    // Scoped to the hub's spawn floor alone. The guard mattered more when
+    // this machine still ran combat waves - wandering out of the room right
+    // as a wave's last enemy died spawned the next one wherever the player
+    // happened to be standing, using whatever room's
+    // gRoomControls.origin_x/y was active - but it is still what stops the
+    // item rows being placed against another room's origin. Nothing spawns
+    // and no phase advances outside this room.
     if (gRoomControls.area != QUICKSTART_AREA || gRoomControls.room != QUICKSTART_ROOM) {
         return;
     }
@@ -11776,72 +11585,13 @@ static void QuickStartUpdateItemChoice(void) {
         return;
     }
 
-    if (phase == 6) {
-        // Wave 1 was already spawned synchronously by the phase 5 handler,
-        // before it even set phase to 6 and triggered the reload - so by
-        // construction the wave 1 enemies already exist (having survived the
-        // reload via ENT_PERSIST) by the time this branch is reached at all.
-        // A same-frame "none found" reading here always means they've
-        // genuinely all been defeated, never that they simply haven't
-        // spawned yet.
-        s32 i;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            // Checked against Main's own absolute world box (same bounds
-            // used throughout this file for Main's offsets - world
-            // (36,39)-(235,174)) rather than by enemy id: every wave now
-            // rolls its enemies from the same shared random level pool as
-            // Hall's ambient enemies (QuickStartSpawnHallEnemiesOnce), so an
-            // id-based filter (this used to just check for OCTOROK, back
-            // when wave 1 was always literally Octoroks) can no longer tell
-            // "mine" apart from "Hall's" - only position still can.
-            if (gEntities[i].base.kind == ENEMY && gEntities[i].base.x.HALF.HI >= 36 &&
-                gEntities[i].base.x.HALF.HI <= 235 && gEntities[i].base.y.HALF.HI >= 39 &&
-                gEntities[i].base.y.HALF.HI <= 174) {
-                return;
-            }
-        }
-        QuickStartSpawnWave2();
-        gRoomTransition.field_0x4[0] = 7;
-        return;
-    }
-
-    // Phases 7 and 8 don't go through a room reload like phase 6 did coming
-    // from phase 5 - there's no player reposition or entity persistence
-    // concern here, the previous wave's enemies are already gone (defeated),
-    // so we can spawn the next wave directly the moment this phase is
-    // reached, no idempotent "Once" gating required.
-    if (phase == 7) {
-        s32 i;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            // Same Main-only bounds check as phase 6 above.
-            if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-                return;
-            }
-        }
-        QuickStartSpawnWave3();
-        gRoomTransition.field_0x4[0] = 8;
-        return;
-    }
-
-    if (phase == 8) {
-        s32 i;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            // Same Main-only bounds check as phase 6 above.
-            if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
-                return;
-            }
-        }
-        QuickStartSpawnHallReward();
-        QuickStartHubSetPhase(9);
-        return;
-    }
-
-    if (phase == 9) {
-        if (GetInventoryValue(ITEM_HEART_PIECE) != 0) {
-            QuickStartHubSetPhase(10);
-        }
-        return;
-    }
+    // RETIRED: phases 6-9, Castor Darknut Main's three combat waves and the
+    // heart-piece chest that followed them. Finishing the third item pick now
+    // jumps straight to phase 10 (see the phase 5 handler above), so nothing
+    // can reach these any more - and while they were still reachable, the
+    // retired waves left phase 6 looking at an empty room, which fell through
+    // 7 and 8 and dropped that chest's heart piece on the floor the instant
+    // selection ended. The hub's combat lives on the roof instead.
 }
 
 static void QuickStartUpdate(void) {
@@ -11860,15 +11610,10 @@ static void QuickStartUpdate(void) {
     // monitor here too closes that window.
     QuickStartRoomMonitor();
     // Same reasoning as the guard in QuickStartUpdateItemChoice: this runs
-    // during every room-entry reload, not just ones in Castor Darknut Main.
+    // during every room-entry reload, not just ones on the hub's spawn floor.
     if (gRoomControls.area != QUICKSTART_AREA || gRoomControls.room != QUICKSTART_ROOM) {
         return;
     }
-    // Wave 1 used to be (re)spawned here, once per reload - moved to a
-    // direct one-time call in the phase 5 handler instead (see
-    // QuickStartUpdateItemChoice), so it can no longer come back to life
-    // just because some later reload finds the room empty (e.g. simply
-    // walking back into Main after already defeating wave 1).
     // Read the persistent mirror, not gRoomTransition.field_0x4[0]. That
     // byte is transient RAM that a room load zeroes, so walking downstairs
     // and back up put phase 0 back in front of this check and respawned the

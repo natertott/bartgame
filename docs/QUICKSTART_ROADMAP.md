@@ -62,12 +62,14 @@ appears a second time.
 ### 3.1 Run flow
 
 ```
-Castor Darknut Main   item choice, 3 rounds (key item / bonus / skill)
+Wind Tribe Tower F3   item choice, 3 rounds (key item / bonus / skill)
+        |             then the phase machine parks at 10 - no combat here
+        | stairs down (vanilla, F3 -> F2 -> F1 -> Entrance)
+        v
+Tower Entrance        walk out the front door (its solid tiles are cleared)
         |
-Castor Darknut Hall   one enemy wave
-        |
-   [Melari's Mine]    BYPASSED - QuickStartSkipMelarisMine warps the player
-        |             straight on to chain slot 0 on arrival
+   Cloud Tops         the wind crest, and the pit in front of it
+        | pit fall, redirected by QuickStartProcessHubHoleLink
         v
    region slot 0      endless escalating waves; wave 0's clear drops the
         |             region's one-time reward
@@ -78,14 +80,23 @@ Castor Darknut Hall   one enemy wave
       win: difficulty +1, score -> meta_xp, save, soft reset
 ```
 
-Melari's Mine is skipped for playtest speed (the user's call - the overworld
-is what is under test). The room, its reward, its enemies and its two ? rooms
-are all still built; deleting `QuickStartSkipMelarisMine` restores the hub.
+The hub is Home of the Wind Tribe - see `docs/QUICKSTART_HUB.md` for the
+survey, the build order and what is still to do (shop on Floor 1, roof wave,
+inn on Floor 2, wind crest data).
 
-Because the hub is no longer guaranteed to be visited, **every per-run draw
-is rolled unconditionally** from `QuickStartRoomMonitor` (region chain,
-ladders, doors, 2-door, river bridge, cave, Melari rooms, shop), each latched
-by its own `GF_*_RANDOMIZED` flag.
+**Castor Darknut and Melari's Mine are retired.** Castor Darknut's waves,
+heart-piece chest and links are deleted outright. Melari's Mine keeps all its
+own content (reward, enemies, three side rooms, the Southwest content site)
+but is off the route and off `QuickStartAreaContained`'s list - which is what
+walls Castle Garden's south border, since that border still points at the mine
+from when the mine was the hub. The area comes back when the region pool
+grows.
+
+**Every per-run draw is rolled unconditionally** from `QuickStartRoomMonitor`
+(region chain, ladders, doors, 2-door, river bridge, cave, Melari rooms,
+shop), each latched by its own `GF_*_RANDOMIZED` flag - they used to hang off
+the old hub room's dispatch, which stopped being safe when that room left the
+route.
 
 ### 3.2 Regions
 
@@ -217,7 +228,7 @@ the meta layer exist, content is data entry into unlock-gated tables, which
 is exactly the "universal method" being asked for.
 
 What the vision needs that already exists (verified, not hoped):
-- Item selection phase: built (Castor Darknut, 3 rounds).
+- Item selection phase: built (Wind Tribe Tower Floor 3, 3 rounds).
 - Region chain: built; length is one constant, and the flag layout already
   reserves per-slot state for 4 slots ("just a bigger CHAIN_LENGTH", per
   the layout comment at GF_REGION_CHAIN_*).

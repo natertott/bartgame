@@ -3,9 +3,12 @@
 Scope and build plan for the structural change that replaces Castor Darknut
 Hall as the run's start and pulls the shop out of the "? room" pool.
 
-**Status: scoped, not implemented.** Every coordinate below is measured off
-the live ROM, not read from a map dump - the survey is in §2 and is the part
-that makes the build cheap. Implementation order is §6.
+**Status: steps 1-3 of §6 are built and verified.** The run spawns on Floor
+3, walks down and out, and drops through the pit in Cloud Tops into its first
+overworld region; Castor Darknut and Melari's Mine are off the route. Steps
+4-8 (shop, roof wave, inn, wind crest, content sites) are still to do. Every
+coordinate below is measured off the live ROM, not read from a map dump - the
+survey is in §2 and is the part that makes the build cheap.
 
 ---
 
@@ -192,14 +195,32 @@ one tier above the run's own, cleared-detection via
 `QuickStartDrawAtTier(..., QS_CAT_REWARD, ...)` split between UNCOMMON and
 RARE. All four pieces exist; this is assembly.
 
-### 3.5 The hole to the overworld
+### 3.5 The hole to the overworld - BUILT
 
-Behaviourally identical to what `QuickStartSkipMelarisMine` already does -
-warp to chain slot 0 - so the mechanism is proven. Two differences:
-- It fires from a position box on the hole rather than on room entry.
-- **The destination is fixed for the whole run.** That is already true: the
-  region chain is drawn once per run (`GF_REGION_CHAIN_*`), so slot 0 does
-  not move. Nothing extra to store.
+Destination is chain slot 0, which is already fixed for the whole run (the
+chain is drawn once per run, `GF_REGION_CHAIN_*`), so nothing extra is stored.
+
+**A position box on the hole does not work, and this is the interesting part.**
+The first build put a box at (440-540, 552-600), measured off a survey of
+"special" tiles at rows 34-36. Those are not the pit. The pit's real geometry
+is in `holeManager.c`'s own `gHoleTransitions` table - the row
+`{ 0x01, 0x08, 0x01, 0x01, ..., 0x1d, 0x1d, 0x03, 0x03 }` is tiles (29,29)
+3x3, i.e. pixels **(464,464)-(512,512)**, a good 40px north of where the box
+was. The player fell through the real pit before ever reaching the trigger,
+landed on the vanilla cloud level, and the feature looked simply absent.
+
+`QuickStartProcessHubHoleLink` catches the fall instead of the position:
+`DoHoleTransition` sets `gRoomTransition.transitioningOut` and fills
+`player_status` exactly the way a real door does, so the same
+rewrite-the-destination idiom `QuickStartProcessDoorRedirects` uses works, and
+works for *every* pit in the room rather than one hand-measured rectangle.
+Cloud Tops' only non-pit exit is the tower door (area 48), so "a transition
+out of here heading to another Cloud Tops room" is an exact description of a
+pit fall. The drop animation is left as the hole manager set it up, so the
+player really does fall out of the sky into the region.
+
+**Lesson for the rest of this build: when vanilla already has a table for a
+thing, read the table.** A tile survey is a guess about what the table says.
 
 ### 3.6 The wind crest
 
@@ -213,16 +234,29 @@ one of the eight is data.
 
 ## 4. What gets retired
 
-- **Castor Darknut Main and Hall.** Main is the current item-selection room,
-  Hall the one-wave gate after it. Both stop being visited once
-  `QUICKSTART_AREA`/`QUICKSTART_ROOM` point at the tower. The Hall's wave is
-  not worth preserving - the roof wave replaces it and is optional.
-- **Melari's Mine.** Already bypassed by `QuickStartSkipMelarisMine`; the
-  skip and the room's own content can go. Per the user this area comes back
-  when the region pool grows, so **delete the routing, keep the room tables**
-  (`QuickStartSetupMelariEastRoomContent` and friends) rather than ripping
-  them out.
-- **The shop's door-draw machinery**, as above.
+- **Castor Darknut Main and Hall - DONE.** Gone: the three Main waves
+  (`QuickStartSpawnEnemies`/`Wave2`/`Wave3` and the 35-spot offset table they
+  shared), Hall's ambient Octoroks, `QuickStartSpawnHallReward`'s heart piece,
+  phases 6-9 of the item-choice machine, both `sQuickStartLinks` rows into and
+  out of Hall, and `AREA_CASTOR_DARKNUT` from `QuickStartAreaContained`.
+- **Melari's Mine - ROUTING DONE, CONTENT KEPT.** `QuickStartSkipMelarisMine`
+  and the Door B region-chain box are gone; the mine's own content
+  (`QuickStartClearMelarisMineObstacles`, its reward, its enemies, the three
+  side rooms and their dispatchers, the Southwest content site) is kept whole
+  per the user, dormant until the area comes back.
+
+  The load-bearing detail: **Castle Garden's south border still points at
+  Melari's Mine** (`transitions.c`), from when the mine was the hub. With the
+  skip deleted that row would have stranded the player; with the skip still in
+  place it was a free warp straight to region slot 0. Dropping
+  `AREA_MELARIS_MINE` from `QuickStartAreaContained` turns it into a wall
+  instead - contained Castle Garden may not leave for a non-contained area, so
+  `QuickStartEnforceContainment` cancels it and the player just stops at the
+  edge, no fade, no bounce. The row is deliberately *not* reverted to vanilla's
+  North Hyrule Field, which containment would sometimes allow (whenever this
+  save's chain puts NHF at slot 0 or right after Castle Garden) - that would
+  make the edge a wall on some runs and a shortcut on others.
+- **The shop's door-draw machinery**, as above - still to do (step 4).
 
 ---
 
@@ -244,12 +278,14 @@ one of the eight is data.
 
 Each step is separately verifiable and leaves the game playable.
 
-1. **Move the spawn.** Point the build defines at 48/3, relocate the item row
-   to the measured hall, confirm the three rounds still run. *This alone is a
-   shippable change and the riskiest one - do it first and alone.*
-2. **Wire the hole.** Position box in Cloud Tops -> chain slot 0. The run is
-   then fully playable through the new hub.
-3. **Retire Castor Darknut and the Melari skip.**
+1. ~~**Move the spawn.**~~ DONE. Build defines point at 48/3, item row in the
+   measured hall, three rounds confirmed. Needed two follow-ups found in play:
+   the vanilla Wind Tribe NPCs stand in doorways (`QuickStartClearHubRoom`
+   sweeps enemies and non-ZELDA NPCs every frame), and the tower's front door
+   is walled by solid tiles on rows 19-20 that the same function clears once.
+2. ~~**Wire the hole.**~~ DONE - see §3.5, including why the first attempt
+   silently did nothing.
+3. ~~**Retire Castor Darknut and the Melari skip.**~~ DONE - see §4.
 4. **Move the shop to Floor 1.**
 5. **The roof wave and its reward.**
 6. **The inn.** Last because it is the only genuinely new mechanic and the
