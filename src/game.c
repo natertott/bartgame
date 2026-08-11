@@ -180,7 +180,7 @@ static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
 static void QuickStartRefreshPlacedItemTimers(void);
 static void QuickStartDeleteGroundItemsAndSigns(void);
-static void QuickStartSpawnChest(void);
+static void QuickStartSpawnHallReward(void);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartSpawnHallEnemiesOnce(void);
@@ -196,10 +196,9 @@ static void QuickStartRandomizeMelariEastOnce(void);
 static void QuickStartSetupMelariEastRoomContent(void);
 static void QuickStartRandomizeMelariSoutheastOnce(void);
 static void QuickStartSetupMelariSoutheastRoomContent(void);
-static void QuickStartRandomizeLaddersOnce(void);
+static void QuickStartRandomizeSlotsOnce(void);
 static void QuickStartRandomizeDoorsOnce(void);
-static void QuickStartProcessLadderLinks(void);
-static void QuickStartSetupLadderRoomContent(s32);
+static void QuickStartSetupSlotRoomContent(s32);
 static void QuickStart2DoorClearRoomObstacles(u8, u8);
 static bool32 QuickStartIsBoomerangTree(u8, u8);
 static void QuickStartEnforceContainment(void);
@@ -228,7 +227,6 @@ static void QuickStartIncrementDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
 static void QuickStart2DoorRandomizeOnce(void);
 static void QuickStart2DoorSetupRoomContent(void);
-static void QuickStartProcessCaveConnectorLink(void);
 static void QuickStartFixupCaveConnectorReturn(void);
 static bool32 QuickStart2DoorIsCurrentRoom(void);
 static void QuickStartRandomizeRiverBridgeOnce(void);
@@ -368,7 +366,7 @@ static void GameTask_Transition(void) {
     // individual item/marker (ITEM_32/33/5A, all three choice categories,
     // every ladder-room reward) by hand.
     MemClear(gSave.inventory, sizeof(gSave.inventory));
-    // The ladder pool's assignments (GF_LADDERS_RANDOMIZED=101 through the
+    // The ladder pool's assignments (GF_SLOTS_RANDOMIZED=101 through the
     // last ladder's own block, 173) and the 2-door cave connector's own
     // draw (GF_2DOOR_RANDOMIZED=184 through GF_2DOOR_DONE=201) need to be
     // re-rolled every fresh boot too, same "no carry-over between rounds"
@@ -388,8 +386,8 @@ static void GameTask_Transition(void) {
         for (bit = 184; bit <= 201; bit++) {
             QsClearFlag(bit);
         }
-        // 202-206: GF_LADDER_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2, the 3rd kind
-        // bit added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
+        // 202-206: GF_SLOT_KIND_BIT2(0..3)/GF_2DOOR_KIND_BIT2, the 3rd kind
+        // bit added for QS_EVENT_POT_LOTTERY/CHEST_LOTTERY/FAIRY, stored
         // outside the two contiguous blocks above since inserting it inline
         // would have shifted every bit after it (colliding with
         // GF_DIFFICULTY_BIT below). 207: GF_REGION_INTRO_HINT_SHOWN, same
@@ -994,8 +992,6 @@ typedef struct QuickStartRegion_ {
     // always has today. Also where the Chuchu Boss (one of the possible
     // endless-wave rolls, QuickStartSpawnRegionWave) and each wave's
     // enemy group both spawn/center.
-    const u16* rewardPool;
-    s32 rewardPoolSize;
     s16 rewardX;
     s16 rewardY;
     // Optional per-region "quirk" logic that doesn't fit the generic shape
@@ -1351,7 +1347,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // simplest existing "?" room kinds (chest / talking NPC) - the other
 // kinds (miniboss/waves/fairy/lotteries) either need more room than these
 // small interiors have (this session's own "combat needs big rooms"
-// rule) or the ladderIndex-keyed state these standalone rooms don't have.
+// rule) or the slotIndex-keyed state these standalone rooms don't have.
 // Southeast was originally hardcoded to always be a guaranteed Shop, but
 // the user later pointed out Melari's Mine already has a real shop (Door
 // 3, retargeted to Dojos Grimblade) - a second, forced one here was
@@ -1431,7 +1427,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // only ever rolled chest-or-NPC. It has to carry the full roll now: with
 // the last 5 synthetic entrances retired, content sites are the ONLY way a
 // single-door "? room" gets its contents, so they need the same 7-kind
-// vocabulary the retired ladder/door slots had (LADDER_KIND_*: chest,
+// vocabulary the retired ladder/door slots had (QS_EVENT_*: chest,
 // miniboss, npc, waves, pot lottery, chest lottery, fairy) - 3 kind bits -
 // and the same 8-bit extra, which the pot lottery needs in full (it packs
 // a 0-8 winner slot plus a prize index, see QuickStartPickPotRoomExtra).
@@ -1526,20 +1522,6 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 #define QUICKSTART_RIVER_SIDE_B_ARRIVAL_X 120
 #define QUICKSTART_RIVER_SIDE_B_ARRIVAL_Y 278
 
-// The pool of "not guaranteed by the earlier starter/bonus/skill choices"
-// rewards the gauntlet can drop - tools, upgrades, skills, and heart
-// progression. Filtered at drop time to whichever the player doesn't
-// already have.
-static const u16 sQuickStartGardenRewardPool[] = {
-    ITEM_BOW,               ITEM_BOMBS,
-    ITEM_BOOMERANG,         ITEM_MAGIC_BOOMERANG,   ITEM_LANTERN_OFF,      ITEM_GUST_JAR,
-    ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,        ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
-    ITEM_REMOTE_BOMBS,      ITEM_OCARINA,           ITEM_MIRROR_SHIELD,    ITEM_SKILL_SPIN_ATTACK,
-    ITEM_SKILL_ROLL_ATTACK, ITEM_SKILL_ROCK_BREAKER, ITEM_SKILL_SWORD_BEAM, ITEM_SKILL_GREAT_SPIN,
-    ITEM_SKILL_DOWN_THRUST, ITEM_SKILL_PERIL_BEAM,  ITEM_SKILL_DASH_ATTACK, ITEM_HEART_PIECE,
-    ITEM_HEART_CONTAINER,
-};
-#define QUICKSTART_GARDEN_REWARD_POOL_SIZE (sizeof(sQuickStartGardenRewardPool) / sizeof(u16))
 
 // Win condition: an Earth Element dropped at whichever region ends up last
 // in this save's region chain (see QuickStartSpawnRegionRewardOnce) - at
@@ -1714,7 +1696,7 @@ const u8* const gCustomStrings[] = {
     // substitute per message).
     [8] = (const u8*)"Run score: \x06\x01\nKeep it up!",
     // Shown once, the moment a "? room" ladder resolves to the new
-    // LADDER_KIND_WAVES content (QuickStartSetupWaveRoomContent) - the
+    // QS_EVENT_WAVES content (QuickStartSetupWaveRoomContent) - the
     // player's only warning that this room wants 3 waves cleared before it
     // drops a reward, since nothing else about the room looks different
     // from a single-miniboss room until the first wave spawns.
@@ -1739,7 +1721,7 @@ const u8* const gCustomStrings[] = {
     // more) per the user's own request for a hint about what causes the
     // Earth Element to drop.
     [12] = (const u8*)"Ezlo: The Earth Element\nis here! Clear the foes!",
-    // The rare miniboss Red Sword grant (see the LADDER_KIND_MINIBOSS
+    // The rare miniboss Red Sword grant (see the QS_EVENT_MINIBOSS
     // reward drop). Delivered via GiveItem, which is silent on its own, so
     // this message is the whole pickup moment.
     [13] = (const u8*)"You won the Red Sword!\nEquip it from the menu.",
@@ -2165,8 +2147,8 @@ static const QuickStartLink sQuickStartLinks[] = {
     // GameTask_Transition above) is NOT wired up here - it leads to a
     // random "? room" pool draw now (ladder slot 3), same as Castle
     // Garden's two ladders, so its destination varies per save and can't be
-    // a static entry in this table. See sQuickStartLadderEntrances below
-    // instead, which (like QuickStartProcessLadderLinks) resolves the
+    // a static entry in this table. That mechanism is gone;
+    // the room-keyed content sites resolve the
     // target at the moment the trigger fires.
     //
     // Lon Lon Ranch's cave connector used to live here as a fixed
@@ -2174,7 +2156,7 @@ static const QuickStartLink sQuickStartLinks[] = {
     // entirely per the user's own request - the connector now draws a
     // random physical room from a real 2-door pool every save instead (see
     // sQuickStart2DoorSmallRoomPool/LargeRoomPool, QuickStart2DoorRandomizeOnce,
-    // and QuickStartProcessCaveConnectorLink, which resolves this same real
+    // and the retired cave-connector trigger, which resolves this same real
     // vanilla cave-mouth box - gExitList_HyruleField_LonLonRanch:
     // startX=0xe8, startY=0x1b4, AREA_12x12 -> box +6/+6 - at trigger time
     // instead of a static table entry here, the same reason ladder 3's own
@@ -2481,7 +2463,7 @@ static void QuickStartClearNorthFieldScrub(void) {
 // perpendicular to the edge for a workable trigger box) - which real
 // neighbor it used to lead to doesn't matter now that the chain always
 // portals to whichever region comes next (see QuickStartProcessRegionChainLinks).
-// Reward pool/spot reused from Castle Garden's generic sQuickStartGardenRewardPool,
+// Reward spot reused from Castle Garden's; the reward itself is a tier draw,
 // same as Lon Lon Ranch. No boss hook for any of the three yet, per the
 // "boss-less for now" plan - only Castle Garden has one so far.
 static const s16 sQuickStartSouthFieldEnemyOffsets[][2] = {
@@ -2539,13 +2521,13 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // functions/data above.
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0, 488, 520, 16, 56, sQuickStartGardenEnemyOffsets,
       ARRAY_COUNT(sQuickStartGardenEnemyOffsets), QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES,
-      sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 0x1f8, 0x108,
+      0x1f8, 0x108,
       QuickStartClearCastleGuards },
     // Lon Lon Ranch - entrance/exit reused from the old static
     // sQuickStartLinks rows (Castle Garden's own north-door destination,
     // and Lon Lon's own return box), enemy grid unchanged from
     // sQuickStartLonLonRanchEnemyOffsets above. Reward pool reused
-    // from Castle Garden's own sQuickStartGardenRewardPool - this region
+    // from the shared tier table (QuickStartDrawItem) - this region
     // never actually draws from it while it's the chain's last slot (the
     // Earth Element/win path takes over instead, see
     // QuickStartSpawnRegionRewardOnce below), only if a future, bigger
@@ -2581,7 +2563,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // border transition rather than after.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 288, 336, 928, 956,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
-      QUICKSTART_LONLON_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 264, 712,
+      QUICKSTART_LONLON_MAX_ENEMIES, 264, 712,
       QuickStartLonLonRanchQuirkHook },
     // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
     // both verified-open, non-water tiles from the collision scan. Exit box
@@ -2590,7 +2572,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // destination doesn't matter, see the block comment above).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 504, 264, 460, 546, 0, 30,
       sQuickStartSouthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartSouthFieldEnemyOffsets), QUICKSTART_SOUTHFIELD_ROOM_SQUARES,
-      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 648, 552,
+      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, 648, 552,
       NULL },
     // North Hyrule Field - entrance (504,456) and reward spot (744,504) are
     // verified-open. Exit box is the user-surveyed bottom edge
@@ -2599,7 +2581,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // BUSINESS_SCRUB_PROLOGUE that otherwise blocks wave-clear detection.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 456, 478, 530, 770, 800,
       sQuickStartNorthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartNorthFieldEnemyOffsets), QUICKSTART_NORTHFIELD_ROOM_SQUARES,
-      QUICKSTART_NORTHFIELD_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 744, 504,
+      QUICKSTART_NORTHFIELD_MAX_ENEMIES, 744, 504,
       QuickStartClearNorthFieldScrub },
     // Trilby Highlands - entrance (360,360) and reward spot (360,504) are
     // both spot-checked with screenshots (dry land next to the room's
@@ -2608,7 +2590,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // band (room width is only 480px, so this sits right at the edge).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
-      QUICKSTART_TRILBY_MAX_ENEMIES, sQuickStartGardenRewardPool, QUICKSTART_GARDEN_REWARD_POOL_SIZE, 360, 504,
+      QUICKSTART_TRILBY_MAX_ENEMIES, 360, 504,
       NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
@@ -2699,7 +2681,7 @@ static s32 QuickStartRegionChainLength(void) {
 // Which chain slot (0..QuickStartRegionChainLength()-1) the current room
 // is standing in for, or -1 if it isn't part of the chain at all - same
 // "check against each one's current runtime assignment" idea as
-// QuickStartFindLadderForCurrentRoom, needed here because which physical
+// QuickStartFindSlotForCurrentRoom, needed here because which physical
 // region backs which slot varies per save.
 static s32 QuickStartGetCurrentRegionChainPosition(void) {
     s32 slot;
@@ -2727,7 +2709,7 @@ static const QuickStartRegion* QuickStartGetRegionAtChainSlot(s32 slot) {
 
 // One draw per save - QuickStartRegionChainLength() distinct pool indices,
 // order matters (it IS the run's region order). Same distinct-draw shape
-// QuickStartRandomizeLaddersOnce/QuickStart2DoorRandomizeOnce already use;
+// QuickStartRandomizeSlotsOnce/QuickStart2DoorRandomizeOnce already use;
 // safe as long as the UNLOCKED part of the pool is at least as big as the
 // chain (proven step by step in the unlock-registry comment). Called from
 // Melari's Mine's own dispatch (QuickStartRoomMonitor) - the hub is always
@@ -3284,10 +3266,6 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
     // (not seeded) - unlike a "? room" prize this is placed once and never
     // re-derived, so it has nothing to stay consistent with.
     //
-    // region->rewardPool / rewardPoolSize are now unused: the flat 23-entry
-    // list they pointed at has been replaced by the tier table, which already
-    // filters on what the run owns. The struct fields are left in place
-    // rather than removing them from five table rows.
     chosenItem = QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_ALL);
     itemEntity = CreateObject(GROUND_ITEM, chosenItem, 0);
     if (itemEntity != NULL) {
@@ -4006,36 +3984,36 @@ static const s16 sQuickStartShopRoomItemOffsets[][2] = {
 // flags are the one primitive that's both save-persistent AND has room to
 // spare - the named Flag enum (flags.h) only goes up to END=0x65, leaving
 // 0x65-0xFF (155 bits) completely unclaimed in FLAG_BANK_0.
-#define GF_LADDERS_RANDOMIZED 0x65
-#define GF_LADDER_BASE(i) (0x66 + (i) * 18)
+#define GF_SLOTS_RANDOMIZED 0x65
+#define GF_SLOT_BASE(i) (0x66 + (i) * 18)
 // Bit +0 of each ladder's block used to be unused - it was GF_LADDER_REVEALED,
 // tracking whether the marker pot had been broken yet (removed along with
-// the whole pot mechanic). Repurposed now as GF_LADDER_POOL_BIT: which of
+// the whole pot mechanic). Repurposed now as GF_SLOT_POOL_BIT: which of
 // the two size-restricted room pools (sQuickStartSmallRoomPool/
 // sQuickStartMediumRoomPool below) this ladder drew from, so its kind roll
 // and room draw both stay inside that pool's own rules (see
-// QuickStartRandomizeLaddersOnce).
-#define GF_LADDER_POOL_BIT(i) (GF_LADDER_BASE(i) + 0)
-#define GF_LADDER_KIND_BIT(i, b) (GF_LADDER_BASE(i) + 1 + (b))  // b = 0,1
-// 3rd kind bit, added for LADDER_KIND_POT_LOTTERY/CHEST_LOTTERY/FAIRY - see
+// QuickStartRandomizeSlotsOnce).
+#define GF_SLOT_POOL_BIT(i) (GF_SLOT_BASE(i) + 0)
+#define GF_SLOT_KIND_BIT(i, b) (GF_SLOT_BASE(i) + 1 + (b))  // b = 0,1
+// 3rd kind bit, added for QS_EVENT_POT_LOTTERY/CHEST_LOTTERY/FAIRY - see
 // GameTask_Transition's own comment on why this lives outside the
 // contiguous per-ladder block instead of widening it in place.
-#define GF_LADDER_KIND_BIT2(i) (202 + (i))
-#define GF_LADDER_EXTRA_BIT(i, b) (GF_LADDER_BASE(i) + 3 + (b)) // b = 0..7
-#define GF_LADDER_DONE(i) (GF_LADDER_BASE(i) + 11)
+#define GF_SLOT_KIND_BIT2(i) (202 + (i))
+#define GF_SLOT_EXTRA_BIT(i, b) (GF_SLOT_BASE(i) + 3 + (b)) // b = 0..7
+#define GF_SLOT_DONE(i) (GF_SLOT_BASE(i) + 11)
 // Which pool entry backs this ladder this save - a second independent
 // Random() draw from the kind/extra above, so the physical room and the
 // reward/challenge it holds vary separately. 6 bits covers indices 0-31,
 // comfortably more than either pool's size.
-#define GF_LADDER_ROOM_BIT(i, b) (GF_LADDER_BASE(i) + 12 + (b)) // b = 0..5
+#define GF_SLOT_ROOM_BIT(i, b) (GF_SLOT_BASE(i) + 12 + (b)) // b = 0..5
 
 // New single-door "? room" entrances (South Hyrule Field, North Hyrule
-// Field, Trilby Highlands - see sQuickStartLadderEntrances, now empty, for the
+// Field, Trilby Highlands - those entrances are retired; see the content-site table for the
 // actual 15 entries) reuse this exact same slot shape (pool/kind/extra/done/
 // room bits) but can't fit in FLAG_BANK_0 - bank 0 only has ~27 bits left
 // after the ladder/2-door/difficulty/region-chain bits above, nowhere near
 // enough for 15 more 19-bit slots. Storage for entrance indices
-// QUICKSTART_LADDER_COUNT.. lives in FLAG_BANK_12 instead - the bank
+// QUICKSTART_LEGACY_LADDER_SLOTS.. lives in FLAG_BANK_12 instead - the bank
 // gLocalFlagBanks/areaMetadata.c assign to Royal Crypt, a real but tiny
 // (9-room) side dungeon. An exhaustive grep of every CheckLocalFlag/
 // SetLocalFlag literal touching that dungeon (src/roomInit.c) tops out at
@@ -4047,7 +4025,7 @@ static const s16 sQuickStartShopRoomItemOffsets[][2] = {
 // has no named entries and nothing references it anywhere) was the other
 // candidate, but it's only 192 bits wide, not quite enough on its own for
 // all 15 door slots at this shape's 19 bits/slot.
-#define QUICKSTART_LADDER_COUNT 4
+#define QUICKSTART_LEGACY_LADDER_SLOTS 4
 #define QUICKSTART_DOOR_COUNT 15
 #define GF_DOORS_RANDOMIZED 300
 #define GF_DOOR_BASE(i) (301 + (i) * 19)
@@ -4058,16 +4036,16 @@ static const s16 sQuickStartShopRoomItemOffsets[][2] = {
 #define GF_DOOR_DONE(i) (GF_DOOR_BASE(i) + 12)
 #define GF_DOOR_ROOM_BIT(i, b) (GF_DOOR_BASE(i) + 13 + (b)) // b = 0..5
 
-static u8 QuickStartLadderGetPool(s32 ladderIndex) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(ladderIndex - QUICKSTART_LADDER_COUNT)) ? 1 : 0;
+static u8 QuickStartSlotGetPool(s32 slotIndex) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS)) ? 1 : 0;
     }
-    return QsCheckFlag(GF_LADDER_POOL_BIT(ladderIndex)) ? 1 : 0;
+    return QsCheckFlag(GF_SLOT_POOL_BIT(slotIndex)) ? 1 : 0;
 }
 
-static void QuickStartLadderSetPool(s32 ladderIndex, u8 pool) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+static void QuickStartSlotSetPool(s32 slotIndex, u8 pool) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         if (pool) {
             SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(doorSlot));
         } else {
@@ -4076,36 +4054,36 @@ static void QuickStartLadderSetPool(s32 ladderIndex, u8 pool) {
         return;
     }
     if (pool) {
-        QsSetFlag(GF_LADDER_POOL_BIT(ladderIndex));
+        QsSetFlag(GF_SLOT_POOL_BIT(slotIndex));
     } else {
-        QsClearFlag(GF_LADDER_POOL_BIT(ladderIndex));
+        QsClearFlag(GF_SLOT_POOL_BIT(slotIndex));
     }
 }
 
-// Check/set wrapper for GF_LADDER_DONE(ladderIndex), widened the same way as
+// Check/set wrapper for GF_SLOT_DONE(slotIndex), widened the same way as
 // the accessors above - every call site that used to do
-// QsCheckFlag(GF_LADDER_DONE(ladderIndex))/QsSetFlag(GF_LADDER_DONE(ladderIndex))
+// QsCheckFlag(GF_SLOT_DONE(slotIndex))/QsSetFlag(GF_SLOT_DONE(slotIndex))
 // directly now goes through these instead, so door-slot "done" state lands
 // in FLAG_BANK_12 too.
-static u32 QuickStartLadderCheckDone(s32 ladderIndex) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(ladderIndex - QUICKSTART_LADDER_COUNT));
+static u32 QuickStartLadderCheckDone(s32 slotIndex) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS));
     }
-    return QsCheckFlag(GF_LADDER_DONE(ladderIndex));
+    return QsCheckFlag(GF_SLOT_DONE(slotIndex));
 }
 
-static void QuickStartLadderSetDone(s32 ladderIndex) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(ladderIndex - QUICKSTART_LADDER_COUNT));
+static void QuickStartSlotSetDone(s32 slotIndex) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS));
         return;
     }
-    QsSetFlag(GF_LADDER_DONE(ladderIndex));
+    QsSetFlag(GF_SLOT_DONE(slotIndex));
 }
 
 // Difficulty counter for the win/reset loop below - well clear of the
-// ladder bits above (highest in use is GF_LADDER_ROOM_BIT(3,5) = 173, the
+// ladder bits above (highest in use is GF_SLOT_ROOM_BIT(3,5) = 173, the
 // 4th ladder slot being the Goron Cave Stairs door's own pool draw - see
-// QuickStartRandomizeLaddersOnce below).
+// QuickStartRandomizeSlotsOnce below).
 // 4 bits -> 0..15 (only 0..QUICKSTART_MAX_DIFFICULTY are ever produced by
 // QuickStartIncrementDifficulty, but the extra headroom over the previous
 // 2-bit counter costs nothing and leaves room to extend the curve later).
@@ -4269,7 +4247,7 @@ static const QuickStartEnemyPick sQuickStartLevel3[] = {
 // "Darknut Miniboss" room and the Castor Wilds encounter this file's own
 // fixed-room setup already spawns) is already a proven, crash-free
 // CreateEnemy(DARK_NUT, form) call elsewhere in this file (see the Castor
-// Darknut room setup and the ladder-room LADDER_KIND_MINIBOSS spawn code
+// Darknut room setup and the ladder-room QS_EVENT_MINIBOSS spawn code
 // below) - gEnemyDefinition_5 (enemy.c) gives it 4 forms with increasing
 // health (12/12/20/26), so the two weaker forms are grouped here with the
 // rest of level 4 and the two tougher ones go in level 5 below.
@@ -4661,27 +4639,27 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
     QuickStartSpawnEnemyGroupAtDifficulty(offsets, offsetCount, roomSquares, maxEnemies, QuickStartGetDifficulty());
 }
 
-// LADDER_KIND_WAVES (see QuickStartSetupWaveRoomContent) is new - a 3-wave
+// QS_EVENT_WAVES (see QuickStartSetupWaveRoomContent) is new - a 3-wave
 // combat room, single enemy type per wave, only ever assigned to a
-// medium/large pool room (QuickStartRandomizeLaddersOnce) alongside
-// LADDER_KIND_MINIBOSS, per the user's own room-size split: chest/NPC
+// medium/large pool room (QuickStartRandomizeSlotsOnce) alongside
+// QS_EVENT_MINIBOSS, per the user's own room-size split: chest/NPC
 // content stays in the small pool, miniboss/waves (and puzzles, later) stay
 // in the medium/large one.
 // POT_LOTTERY/CHEST_LOTTERY/FAIRY added this session, alongside pot-lottery
 // and chest-lottery puzzle rooms and free-heal fairy rooms - see
 // QuickStartPickSmallKind/QuickStartPickLargeKind below for which pool
-// draws which subset. Needed a 3rd kind bit (GF_LADDER_KIND_BIT2/
+// draws which subset. Needed a 3rd kind bit (GF_SLOT_KIND_BIT2/
 // GF_2DOOR_KIND_BIT2) since the original 2-bit field's 4 raw values were
 // already fully spoken for once you count both pools sharing one field
 // (small: CHEST/NPC, large: MINIBOSS/WAVES).
 enum {
-    LADDER_KIND_CHEST,
-    LADDER_KIND_MINIBOSS,
-    LADDER_KIND_NPC,
-    LADDER_KIND_WAVES,
-    LADDER_KIND_POT_LOTTERY,
-    LADDER_KIND_CHEST_LOTTERY,
-    LADDER_KIND_FAIRY,
+    QS_EVENT_ITEM_DROP,
+    QS_EVENT_MINIBOSS,
+    QS_EVENT_NPC,
+    QS_EVENT_WAVES,
+    QS_EVENT_POT_LOTTERY,
+    QS_EVENT_CHEST_LOTTERY,
+    QS_EVENT_FAIRY,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -4693,11 +4671,11 @@ enum {
 // skew among the still-locked kinds to reason about).
 static bool32 QuickStartKindUnlocked(u8 kind) {
     switch (kind) {
-        case LADDER_KIND_POT_LOTTERY:
+        case QS_EVENT_POT_LOTTERY:
             return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_POT_LOTTERY);
-        case LADDER_KIND_CHEST_LOTTERY:
+        case QS_EVENT_CHEST_LOTTERY:
             return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_CHEST_LOTTERY);
-        case LADDER_KIND_FAIRY:
+        case QS_EVENT_FAIRY:
             return QuickStartIsUnlocked(QUICKSTART_UNLOCK_KIND_FAIRY);
         default:
             return TRUE;
@@ -4710,20 +4688,20 @@ static u8 QuickStartPickSmallKind(void) {
     u8 kind;
     switch ((s32)Random() % 4) {
         case 0:
-            kind = LADDER_KIND_CHEST;
+            kind = QS_EVENT_ITEM_DROP;
             break;
         case 1:
-            kind = LADDER_KIND_NPC;
+            kind = QS_EVENT_NPC;
             break;
         case 2:
-            kind = LADDER_KIND_POT_LOTTERY;
+            kind = QS_EVENT_POT_LOTTERY;
             break;
         default:
-            kind = LADDER_KIND_CHEST_LOTTERY;
+            kind = QS_EVENT_CHEST_LOTTERY;
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
-        kind = LADDER_KIND_CHEST;
+        kind = QS_EVENT_ITEM_DROP;
     }
     return kind;
 }
@@ -4740,29 +4718,29 @@ static u8 QuickStartPickAnyKind(void) {
     u8 kind;
     switch ((s32)Random() % 7) {
         case 0:
-            kind = LADDER_KIND_CHEST;
+            kind = QS_EVENT_ITEM_DROP;
             break;
         case 1:
-            kind = LADDER_KIND_MINIBOSS;
+            kind = QS_EVENT_MINIBOSS;
             break;
         case 2:
-            kind = LADDER_KIND_NPC;
+            kind = QS_EVENT_NPC;
             break;
         case 3:
-            kind = LADDER_KIND_WAVES;
+            kind = QS_EVENT_WAVES;
             break;
         case 4:
-            kind = LADDER_KIND_POT_LOTTERY;
+            kind = QS_EVENT_POT_LOTTERY;
             break;
         case 5:
-            kind = LADDER_KIND_CHEST_LOTTERY;
+            kind = QS_EVENT_CHEST_LOTTERY;
             break;
         default:
-            kind = LADDER_KIND_FAIRY;
+            kind = QS_EVENT_FAIRY;
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
-        kind = LADDER_KIND_CHEST;
+        kind = QS_EVENT_ITEM_DROP;
     }
     return kind;
 }
@@ -4771,38 +4749,38 @@ static u8 QuickStartPickLargeKind(void) {
     u8 kind;
     switch ((s32)Random() % 3) {
         case 0:
-            kind = LADDER_KIND_MINIBOSS;
+            kind = QS_EVENT_MINIBOSS;
             break;
         case 1:
-            kind = LADDER_KIND_WAVES;
+            kind = QS_EVENT_WAVES;
             break;
         default:
-            kind = LADDER_KIND_FAIRY;
+            kind = QS_EVENT_FAIRY;
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
         // The large pool's rooms are combat rooms first - WAVES is the one
         // kind of its three that's always unlocked.
-        kind = LADDER_KIND_WAVES;
+        kind = QS_EVENT_WAVES;
     }
     return kind;
 }
 
-static u8 QuickStartLadderGetKind(s32 ladderIndex) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+static u8 QuickStartSlotGetKind(s32 slotIndex) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         return (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 0)) ? 1 : 0) |
                (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 1)) ? 2 : 0) |
                (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT2(doorSlot)) ? 4 : 0);
     }
-    return (QsCheckFlag(GF_LADDER_KIND_BIT(ladderIndex, 0)) ? 1 : 0) |
-           (QsCheckFlag(GF_LADDER_KIND_BIT(ladderIndex, 1)) ? 2 : 0) |
-           (QsCheckFlag(GF_LADDER_KIND_BIT2(ladderIndex)) ? 4 : 0);
+    return (QsCheckFlag(GF_SLOT_KIND_BIT(slotIndex, 0)) ? 1 : 0) |
+           (QsCheckFlag(GF_SLOT_KIND_BIT(slotIndex, 1)) ? 2 : 0) |
+           (QsCheckFlag(GF_SLOT_KIND_BIT2(slotIndex)) ? 4 : 0);
 }
 
-static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+static void QuickStartSlotSetKind(s32 slotIndex, u8 kind) {
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         if (kind & 1) {
             SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 0));
         }
@@ -4815,24 +4793,24 @@ static void QuickStartLadderSetKind(s32 ladderIndex, u8 kind) {
         return;
     }
     if (kind & 1) {
-        QsSetFlag(GF_LADDER_KIND_BIT(ladderIndex, 0));
+        QsSetFlag(GF_SLOT_KIND_BIT(slotIndex, 0));
     }
     if (kind & 2) {
-        QsSetFlag(GF_LADDER_KIND_BIT(ladderIndex, 1));
+        QsSetFlag(GF_SLOT_KIND_BIT(slotIndex, 1));
     }
     if (kind & 4) {
-        QsSetFlag(GF_LADDER_KIND_BIT2(ladderIndex));
+        QsSetFlag(GF_SLOT_KIND_BIT2(slotIndex));
     }
 }
 
 // Generic 8-bit scratch value per ladder, packed as 8 global flag bits -
 // which specific meaning it holds depends on that ladder's kind: a reward
 // pool index (chest), or bit 0 alone as a friendly/evil boolean (NPC).
-static u8 QuickStartLadderGetExtra(s32 ladderIndex) {
+static u8 QuickStartSlotGetExtra(s32 slotIndex) {
     u8 value = 0;
     s32 b;
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         for (b = 0; b < 8; b++) {
             if (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_EXTRA_BIT(doorSlot, b))) {
                 value |= (1 << b);
@@ -4841,17 +4819,17 @@ static u8 QuickStartLadderGetExtra(s32 ladderIndex) {
         return value;
     }
     for (b = 0; b < 8; b++) {
-        if (QsCheckFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b))) {
+        if (QsCheckFlag(GF_SLOT_EXTRA_BIT(slotIndex, b))) {
             value |= (1 << b);
         }
     }
     return value;
 }
 
-static void QuickStartLadderSetExtra(s32 ladderIndex, u8 value) {
+static void QuickStartSlotSetExtra(s32 slotIndex, u8 value) {
     s32 b;
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         for (b = 0; b < 8; b++) {
             if (value & (1 << b)) {
                 SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_EXTRA_BIT(doorSlot, b));
@@ -4861,16 +4839,16 @@ static void QuickStartLadderSetExtra(s32 ladderIndex, u8 value) {
     }
     for (b = 0; b < 8; b++) {
         if (value & (1 << b)) {
-            QsSetFlag(GF_LADDER_EXTRA_BIT(ladderIndex, b));
+            QsSetFlag(GF_SLOT_EXTRA_BIT(slotIndex, b));
         }
     }
 }
 
-static u8 QuickStartLadderGetRoomIndex(s32 ladderIndex) {
+static u8 QuickStartSlotGetRoomIndex(s32 slotIndex) {
     u8 value = 0;
     s32 b;
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         for (b = 0; b < 6; b++) {
             if (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_ROOM_BIT(doorSlot, b))) {
                 value |= (1 << b);
@@ -4879,17 +4857,17 @@ static u8 QuickStartLadderGetRoomIndex(s32 ladderIndex) {
         return value;
     }
     for (b = 0; b < 6; b++) {
-        if (QsCheckFlag(GF_LADDER_ROOM_BIT(ladderIndex, b))) {
+        if (QsCheckFlag(GF_SLOT_ROOM_BIT(slotIndex, b))) {
             value |= (1 << b);
         }
     }
     return value;
 }
 
-static void QuickStartLadderSetRoomIndex(s32 ladderIndex, u8 value) {
+static void QuickStartSlotSetRoomIndex(s32 slotIndex, u8 value) {
     s32 b;
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         for (b = 0; b < 6; b++) {
             if (value & (1 << b)) {
                 SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_ROOM_BIT(doorSlot, b));
@@ -4899,7 +4877,7 @@ static void QuickStartLadderSetRoomIndex(s32 ladderIndex, u8 value) {
     }
     for (b = 0; b < 6; b++) {
         if (value & (1 << b)) {
-            QsSetFlag(GF_LADDER_ROOM_BIT(ladderIndex, b));
+            QsSetFlag(GF_SLOT_ROOM_BIT(slotIndex, b));
         }
     }
 }
@@ -4937,7 +4915,7 @@ typedef struct {
 } QuickStartQuestionRoomEntry;
 
 // Same shape as QuickStartQuestionRoomEntry above, plus entranceX/entranceY
-// - the 2-door pool's synthetic entrance (see QuickStartProcessCaveConnectorLink
+// - the 2-door pool's synthetic entrance (see the retired cave-connector trigger
 // below) has to land the player somewhere sensible inside whichever real
 // room got drawn, unlike the 1-door pool's rooms which all share one
 // generic template's (0x78,0x78) convention.
@@ -4953,14 +4931,14 @@ typedef struct {
 // Split into two pools per the user's own room-size survey: small rooms get
 // item/sprite-event content only (chest/NPC); medium/large rooms get
 // combat/puzzle content only (miniboss/waves, and puzzles later). See
-// QuickStartRandomizeLaddersOnce for how a ladder picks a pool and a kind
-// together, and QuickStartLadderGetPool/SetPool for the per-ladder bit that
+// QuickStartRandomizeSlotsOnce for how a ladder picks a pool and a kind
+// together, and QuickStartSlotGetPool/SetPool for the per-ladder bit that
 // remembers which pool it drew from.
 //
 // Small pool: content placed by the user directly (Lua position script) at
 // a single shared spot, (120,80) - 40px north of the (120,120) shared
 // spawn, facing back down toward the door (see
-// QuickStartSetupLadderRoomContent's direction = IdleSouth) - rather than
+// QuickStartSetupSlotRoomContent's direction = IdleSouth) - rather than
 // each room's own individually-walked offset. Confirmed in the emulator for
 // the item and NPC kinds (both land exactly on (120,80), direction sticks
 // for the NPC).
@@ -5013,7 +4991,7 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
 // rooms.
 //
 // ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH deliberately left OUT: verified in
-// the emulator that LADDER_KIND_WAVES there spawns entities with correct
+// the emulator that QS_EVENT_WAVES there spawns entities with correct
 // positions/sprite indices (confirmed via direct memory reads) but they
 // never actually render on screen - a real bug, not a placement issue (the
 // exact same enemy type/position combo rendered fine in the Gina room
@@ -5051,7 +5029,7 @@ static const QuickStartQuestionRoomEntry sQuickStartMediumRoomPool[] = {
     // Chest/Gina-ghost cleanup still pending (the user asked for the room's
     // own treasure chest to be removed/replaced and possibly the Gina
     // sprite removed). Verified in the emulator: a full 3-wave
-    // LADDER_KIND_WAVES encounter here renders correctly end to end (hint,
+    // QS_EVENT_WAVES encounter here renders correctly end to end (hint,
     // 4/6/8-enemy waves, reward drop).
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, 0, -20 },
     // All 3 Dojo rooms share the exact same tilemap/layout (confirmed via
@@ -5195,13 +5173,13 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
 // Same flag-bank convention as GF_LADDER_*/GF_DIFFICULTY_BIT above - picks
 // up right after GF_CAVE_CONNECTOR_DONE (183), the highest bit previously
 // allocated (now free, GENTARI_EXIT's whole mechanism is gone). Only one
-// connector slot exists today, so unlike GF_LADDER_BASE(i) this doesn't
+// connector slot exists today, so unlike GF_SLOT_BASE(i) this doesn't
 // need a per-index base - a single flat set of bits is enough.
 #define GF_2DOOR_RANDOMIZED 184
 #define GF_2DOOR_POOL_BIT 185
 #define GF_2DOOR_ROOM_BIT(b) (186 + (b)) // b = 0..4, up to 32 rooms/pool
 #define GF_2DOOR_KIND_BIT(b) (191 + (b)) // b = 0,1
-#define GF_2DOOR_KIND_BIT2 206 // 3rd kind bit - see GF_LADDER_KIND_BIT2(i)
+#define GF_2DOOR_KIND_BIT2 206 // 3rd kind bit - see GF_SLOT_KIND_BIT2(i)
 #define GF_2DOOR_EXTRA_BIT(b) (193 + (b)) // b = 0..7
 #define GF_2DOOR_DONE 201
 
@@ -5274,7 +5252,7 @@ static void QuickStart2DoorSetRoomIndex(u8 value) {
 
 static void QuickStart2DoorGetTarget(u8* area, u8* room) {
     // (s32) cast before % - a plain u8 %= (this file's established
-    // convention, e.g. QuickStartGetLadderTarget's rawIndex % poolSize)
+    // convention, e.g. QuickStartGetSlotTarget's rawIndex % poolSize)
     // pulls in __umodsi3 (unsigned modulo), which this build doesn't link.
     s32 poolIndex = QuickStart2DoorGetRoomIndex();
     if (QuickStart2DoorGetPool() == 0) {
@@ -5362,7 +5340,7 @@ static bool32 QuickStart2DoorWantsOverworldEnemies(u8 area, u8 room) {
 
 
 
-// Miniboss variety: LADDER_KIND_MINIBOSS/QuickStart2Door's own miniboss case
+// Miniboss variety: QS_EVENT_MINIBOSS/QuickStart2Door's own miniboss case
 // used to always spawn a plain CreateEnemy(DARK_NUT, 0). sQuickStartLevel5
 // (above) is already this file's own curated, emulator-confirmed "tough
 // solo enemy" tier for the wave/density spawner (Ball and Chain Soldier,
@@ -5454,13 +5432,13 @@ static u8 QuickStartPickPotRoomExtra(void) {
 }
 
 // Runs every frame in Castle Garden Main but only ever does anything once
-// per save (GF_LADDERS_RANDOMIZED) - exactly once, each of 4 "? room" slots
+// per save (GF_SLOTS_RANDOMIZED) - exactly once, each of 4 "? room" slots
 // is assigned a pool (small vs medium/large, per the user's own room-size
 // split), a kind restricted to whatever that pool allows, and (for
 // chest/NPC kinds) which specific reward or disposition, all via Random().
 // Slots 0, 1, and 3 each additionally draw which room within that pool they
 // lead to - slots 0-1 are Castle Garden's own two real ladders, slot 3 is
-// the Goron Cave Stairs door in Lon Lon Ranch (see sQuickStartLadderEntrances
+// the Goron Cave Stairs door in Lon Lon Ranch (see the retired ladder-entrance table
 // below), a fixed entrance but a random destination, same as the other two.
 // Slot 2 (Ranch House West) predates the Ranch House's full vanilla reset
 // earlier this session - it still rolls a kind/extra for save-flag-layout
@@ -5470,11 +5448,11 @@ static u8 QuickStartPickPotRoomExtra(void) {
 // entry rather than in GameTask_Transition avoids touching the boot
 // sequence at all - the persistent flags this writes make the choice stick
 // for the rest of this save regardless of when it first ran.
-static void QuickStartRandomizeLaddersOnce(void) {
+static void QuickStartRandomizeSlotsOnce(void) {
     s32 i, j, drawCount;
     u8 usedPool[3];
     u8 usedRoom[3];
-    if (QsCheckFlag(GF_LADDERS_RANDOMIZED)) {
+    if (QsCheckFlag(GF_SLOTS_RANDOMIZED)) {
         return;
     }
     drawCount = 0;
@@ -5482,37 +5460,37 @@ static void QuickStartRandomizeLaddersOnce(void) {
         u8 pool, kind, roomIdx, poolSize;
         if (i == 2) {
             kind = (u8)((s32)Random() % 3);
-            QuickStartLadderSetKind(i, kind);
-            if (kind == LADDER_KIND_CHEST) {
-                QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-            } else if (kind == LADDER_KIND_NPC) {
-                QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
+            QuickStartSlotSetKind(i, kind);
+            if (kind == QS_EVENT_ITEM_DROP) {
+                QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+            } else if (kind == QS_EVENT_NPC) {
+                QuickStartSlotSetExtra(i, (u8)((s32)Random() % 2));
             }
             continue;
         }
         pool = (u8)((s32)Random() % 2);
-        QuickStartLadderSetPool(i, pool);
+        QuickStartSlotSetPool(i, pool);
         if (pool == 0) {
             kind = QuickStartPickSmallKind();
         } else {
             kind = QuickStartPickLargeKind();
         }
-        QuickStartLadderSetKind(i, kind);
-        if (kind == LADDER_KIND_CHEST) {
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-        } else if (kind == LADDER_KIND_NPC) {
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
-        } else if (kind == LADDER_KIND_WAVES) {
+        QuickStartSlotSetKind(i, kind);
+        if (kind == QS_EVENT_ITEM_DROP) {
+            QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+        } else if (kind == QS_EVENT_NPC) {
+            QuickStartSlotSetExtra(i, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
+        } else if (kind == QS_EVENT_WAVES) {
             // Reuses the ladder chest reward pool for the wave room's own
             // 3-waves-cleared drop, same reward variety a chest room gets
             // instead of a single fixed item.
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-        } else if (kind == LADDER_KIND_MINIBOSS) {
-            QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-        } else if (kind == LADDER_KIND_POT_LOTTERY) {
-            QuickStartLadderSetExtra(i, QuickStartPickPotRoomExtra());
-        } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
-            QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
+            QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+        } else if (kind == QS_EVENT_MINIBOSS) {
+            QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+        } else if (kind == QS_EVENT_POT_LOTTERY) {
+            QuickStartSlotSetExtra(i, QuickStartPickPotRoomExtra());
+        } else if (kind == QS_EVENT_CHEST_LOTTERY) {
+            QuickStartSlotSetExtra(i, QuickStartPickLotteryExtra());
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
         // Distinct room per slot - two slots sharing one physical "? room"
@@ -5525,7 +5503,7 @@ static void QuickStartRandomizeLaddersOnce(void) {
         // any 2 of the 3 slots rolling "medium" (a 50/50 coin flip each,
         // ~50% chance overall) were forced to share that one room, and
         // leaving through it via whichever slot iterates later in
-        // QuickStartFindLadderForCurrentRoom's fixed {0,1,3} order got
+        // QuickStartFindSlotForCurrentRoom's fixed {0,1,3} order got
         // misattributed to the earlier slot instead - reported as leaving
         // the Goron Cave Stairs door's (slot 3) room landing back at slot
         // 1's own Castle Garden spot instead of Lon Lon Ranch. The medium
@@ -5545,23 +5523,23 @@ static void QuickStartRandomizeLaddersOnce(void) {
             }
             if (usedInThisPool >= poolSize) {
                 pool = 1 - pool;
-                QuickStartLadderSetPool(i, pool);
+                QuickStartSlotSetPool(i, pool);
                 if (pool == 0) {
                     kind = QuickStartPickSmallKind();
                 } else {
                     kind = QuickStartPickLargeKind();
                 }
-                QuickStartLadderSetKind(i, kind);
-                if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-                } else if (kind == LADDER_KIND_NPC) {
-                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % 2));
-                } else if (kind == LADDER_KIND_MINIBOSS) {
-                    QuickStartLadderSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-                } else if (kind == LADDER_KIND_POT_LOTTERY) {
-                    QuickStartLadderSetExtra(i, QuickStartPickPotRoomExtra());
-                } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
-                    QuickStartLadderSetExtra(i, QuickStartPickLotteryExtra());
+                QuickStartSlotSetKind(i, kind);
+                if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
+                    QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+                } else if (kind == QS_EVENT_NPC) {
+                    QuickStartSlotSetExtra(i, (u8)((s32)Random() % 2));
+                } else if (kind == QS_EVENT_MINIBOSS) {
+                    QuickStartSlotSetExtra(i, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+                } else if (kind == QS_EVENT_POT_LOTTERY) {
+                    QuickStartSlotSetExtra(i, QuickStartPickPotRoomExtra());
+                } else if (kind == QS_EVENT_CHEST_LOTTERY) {
+                    QuickStartSlotSetExtra(i, QuickStartPickLotteryExtra());
                 }
                 poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
             }
@@ -5580,15 +5558,15 @@ static void QuickStartRandomizeLaddersOnce(void) {
         usedPool[drawCount] = pool;
         usedRoom[drawCount] = roomIdx;
         drawCount++;
-        QuickStartLadderSetRoomIndex(i, roomIdx);
+        QuickStartSlotSetRoomIndex(i, roomIdx);
     }
-    QsSetFlag(GF_LADDERS_RANDOMIZED);
+    QsSetFlag(GF_SLOTS_RANDOMIZED);
 }
 
-// Rolls pool/kind/extra/room for the 15 new door entrances (ladderIndex
-// 4-18), same per-slot rules QuickStartRandomizeLaddersOnce uses for its own
+// Rolls pool/kind/extra/room for the 15 new door entrances (slotIndex
+// 4-18), same per-slot rules QuickStartRandomizeSlotsOnce uses for its own
 // non-special-cased slots (0-1) - no per-slot quirks needed here, all 15
-// doors are uniform. Must run after QuickStartRandomizeLaddersOnce (same
+// doors are uniform. Must run after QuickStartRandomizeSlotsOnce (same
 // call site, right after it) so any active ladder slots' own room draws
 // already exist to seed this function's own "used" tracking - 3 ladders +
 // 15 doors = 18 draws total against an 18-room pool (14 small + 4 medium).
@@ -5608,39 +5586,39 @@ static void QuickStartRandomizeDoorsOnce(void) {
     drawCount = 0;
     for (i = 0; i < 3; i++) {
         s32 seedIndex = sLadderSeedIndices[i];
-        usedPool[drawCount] = QuickStartLadderGetPool(seedIndex);
-        usedRoom[drawCount] = QuickStartLadderGetRoomIndex(seedIndex);
+        usedPool[drawCount] = QuickStartSlotGetPool(seedIndex);
+        usedRoom[drawCount] = QuickStartSlotGetRoomIndex(seedIndex);
         drawCount++;
     }
     for (i = 0; i < QUICKSTART_DOOR_COUNT; i++) {
-        s32 ladderIndex = QUICKSTART_LADDER_COUNT + i;
+        s32 slotIndex = QUICKSTART_LEGACY_LADDER_SLOTS + i;
         u8 pool, kind, roomIdx, poolSize;
         // Every door entrance (4-18) is retired now - they're real vanilla
         // doors again, with content spawned inside their real destination
-        // rooms instead (see sQuickStartLadderEntrances' comment). The loop
+        // rooms instead (see the retired ladder-entrance table' comment). The loop
         // is kept, rather than deleted, alongside the rest of the dormant
         // synthetic machinery; it simply draws nothing.
-        if (ladderIndex >= QUICKSTART_LADDER_COUNT && ladderIndex <= 18) {
+        if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS && slotIndex <= 18) {
             continue;
         }
         pool = (u8)((s32)Random() % 2);
-        QuickStartLadderSetPool(ladderIndex, pool);
+        QuickStartSlotSetPool(slotIndex, pool);
         if (pool == 0) {
             kind = QuickStartPickSmallKind();
         } else {
             kind = QuickStartPickLargeKind();
         }
-        QuickStartLadderSetKind(ladderIndex, kind);
-        if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-            QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-        } else if (kind == LADDER_KIND_NPC) {
-            QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
-        } else if (kind == LADDER_KIND_MINIBOSS) {
-            QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-        } else if (kind == LADDER_KIND_POT_LOTTERY) {
-            QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotRoomExtra());
-        } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
-            QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
+        QuickStartSlotSetKind(slotIndex, kind);
+        if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
+            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+        } else if (kind == QS_EVENT_NPC) {
+            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
+        } else if (kind == QS_EVENT_MINIBOSS) {
+            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+        } else if (kind == QS_EVENT_POT_LOTTERY) {
+            QuickStartSlotSetExtra(slotIndex, QuickStartPickPotRoomExtra());
+        } else if (kind == QS_EVENT_CHEST_LOTTERY) {
+            QuickStartSlotSetExtra(slotIndex, QuickStartPickLotteryExtra());
         }
         poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
         {
@@ -5652,23 +5630,23 @@ static void QuickStartRandomizeDoorsOnce(void) {
             }
             if (usedInThisPool >= poolSize) {
                 pool = 1 - pool;
-                QuickStartLadderSetPool(ladderIndex, pool);
+                QuickStartSlotSetPool(slotIndex, pool);
                 if (pool == 0) {
                     kind = QuickStartPickSmallKind();
                 } else {
                     kind = QuickStartPickLargeKind();
                 }
-                QuickStartLadderSetKind(ladderIndex, kind);
-                if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
-                    QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-                } else if (kind == LADDER_KIND_NPC) {
-                    QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % 2));
-                } else if (kind == LADDER_KIND_MINIBOSS) {
-                    QuickStartLadderSetExtra(ladderIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-                } else if (kind == LADDER_KIND_POT_LOTTERY) {
-                    QuickStartLadderSetExtra(ladderIndex, QuickStartPickPotRoomExtra());
-                } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
-                    QuickStartLadderSetExtra(ladderIndex, QuickStartPickLotteryExtra());
+                QuickStartSlotSetKind(slotIndex, kind);
+                if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
+                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
+                } else if (kind == QS_EVENT_NPC) {
+                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % 2));
+                } else if (kind == QS_EVENT_MINIBOSS) {
+                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
+                } else if (kind == QS_EVENT_POT_LOTTERY) {
+                    QuickStartSlotSetExtra(slotIndex, QuickStartPickPotRoomExtra());
+                } else if (kind == QS_EVENT_CHEST_LOTTERY) {
+                    QuickStartSlotSetExtra(slotIndex, QuickStartPickLotteryExtra());
                 }
                 poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
             }
@@ -5687,7 +5665,7 @@ static void QuickStartRandomizeDoorsOnce(void) {
         usedPool[drawCount] = pool;
         usedRoom[drawCount] = roomIdx;
         drawCount++;
-        QuickStartLadderSetRoomIndex(ladderIndex, roomIdx);
+        QuickStartSlotSetRoomIndex(slotIndex, roomIdx);
     }
     SetLocalFlagByBank(FLAG_BANK_12, GF_DOORS_RANDOMIZED);
 }
@@ -5711,24 +5689,15 @@ static void QuickStartRandomizeDoorsOnce(void) {
 // above for how that corridor was traced) rather than a HIDDEN_LADDER_DOWN
 // fixture. Unlike the fixed 3-room mapping this replaced, or Ranch House
 // West's own single fixed room, ladder index 3's destination is a pool
-// draw exactly like ladders 0-1 (QuickStartRandomizeLaddersOnce above), so
+// draw exactly like ladders 0-1 (QuickStartRandomizeSlotsOnce above), so
 // its target has to be resolved at trigger time rather than being a static
 // entry in sQuickStartLinks - hence this table (fromArea/fromRoom/trigger
-// box/ladder index) and QuickStartProcessLadderLinks below, rather than
+// box/ladder index) and the retired ladder-link trigger, rather than
 // folding it into sQuickStartLinks. Unlike ladders 0-1, though, it's
 // entered from a different room than it returns to - see
-// QuickStartFixupQuestionRoomReturn's own ladderIndex == 3 special case
+// QuickStartFixupQuestionRoomReturn's own slotIndex == 3 special case
 // below for why leaving the pool room lands back in Lon Lon Ranch instead
 // of Castle Garden Main.
-typedef struct {
-    u8 fromArea;
-    u8 fromRoom;
-    s16 triggerMinX;
-    s16 triggerMaxX;
-    s16 triggerMinY;
-    s16 triggerMaxY;
-    s32 ladderIndex;
-} QuickStartLadderEntrance;
 
 // EMPTY. Every synthetic "walk into an invisible box and get teleported to
 // a randomly drawn pool room" entrance has been retired in favour of the
@@ -5747,24 +5716,21 @@ typedef struct {
 //
 // The sentinel row exists only because C has no zero-length arrays. Area
 // 0xff is not a real area, so the three loops that still walk this table
-// (QuickStartProcessLadderLinks, QuickStartEnforceFieldRegionContainment,
+// (the retired ladder-link trigger, QuickStartEnforceFieldRegionContainment,
 // and QuickStartRandomizeDoorsOnce's seeding) iterate once and match
 // nothing. The rest of the synthetic machinery - the two room pools, the
-// per-slot flag blocks, QuickStartSetupLadderRoomContent - is left intact
+// per-slot flag blocks, QuickStartSetupSlotRoomContent - is left intact
 // and still referenced, so the retired system reads as a coherent whole
 // rather than a half-deleted one; nothing reaches it in play.
-static const QuickStartLadderEntrance sQuickStartLadderEntrances[] = {
-    { 0xff, 0xff, 0, 0, 0, 0, 0 },
-};
 
 // Which "? room" pool entry backs a given ladder this save, and where the
 // player lands inside it - every pool room was verified walkable at the
 // same default (0x78,0x78) spawn (see the pool comment above), so unlike
 // the old fixed 3-room mapping this doesn't need a per-ladder spawn
 // override.
-static void QuickStartGetLadderTarget(s32 ladderIndex, u8* area, u8* room) {
-    s32 rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
-    if (QuickStartLadderGetPool(ladderIndex) == 0) {
+static void QuickStartGetSlotTarget(s32 slotIndex, u8* area, u8* room) {
+    s32 rawIndex = QuickStartSlotGetRoomIndex(slotIndex);
+    if (QuickStartSlotGetPool(slotIndex) == 0) {
         s32 poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
         *area = sQuickStartSmallRoomPool[poolIndex].area;
         *room = sQuickStartSmallRoomPool[poolIndex].room;
@@ -5775,43 +5741,10 @@ static void QuickStartGetLadderTarget(s32 ladderIndex, u8* area, u8* room) {
     }
 }
 
-// Checked every frame regardless of area (called unconditionally from
-// QuickStartRoomMonitor, alongside QuickStartEnforceContainment) since its
-// three entrances now span two different rooms (Castle Garden Main and
-// Lon Lon Ranch) - unlike the old pot-based version, there's no reveal
-// state to gate on any more, the real ladder fixtures (and the Goron Cave
-// door corridor) are simply always live.
-static void QuickStartProcessLadderLinks(void) {
-    s32 i;
-    s16 localX, localY;
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    for (i = 0; i < ARRAY_COUNT(sQuickStartLadderEntrances); i++) {
-        const QuickStartLadderEntrance* entrance = &sQuickStartLadderEntrances[i];
-        if (gRoomControls.area == entrance->fromArea && gRoomControls.room == entrance->fromRoom &&
-            localX >= entrance->triggerMinX && localX <= entrance->triggerMaxX && localY >= entrance->triggerMinY &&
-            localY <= entrance->triggerMaxY) {
-            u8 targetArea, targetRoom;
-            QuickStartGetLadderTarget(entrance->ladderIndex, &targetArea, &targetRoom);
-            gRoomTransition.player_status.area_next = targetArea;
-            gRoomTransition.player_status.room_next = targetRoom;
-            gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-            gRoomTransition.player_status.start_pos_x = 0x78;
-            gRoomTransition.player_status.start_pos_y = 0x78;
-            gRoomTransition.player_status.layer = 1;
-            gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-            gRoomTransition.transitioningOut = 1;
-            return;
-        }
-    }
-}
 
 extern Script script_QuickStartLadderNpc0;
 extern Script script_QuickStartLadderNpc1;
-static Script* const sQuickStartLadderNpcScripts[2] = {
+static Script* const sQuickStartEventNpcScripts[2] = {
     &script_QuickStartLadderNpc0,
     &script_QuickStartLadderNpc1,
 };
@@ -5883,10 +5816,10 @@ static void QuickStartClearLadderRoomObstacles(void) {
 // reward was observed picking itself up automatically the instant the
 // room loads, with no discovery moment at all.
 //
-static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16* contentY) {
+static void QuickStartGetLadderContentOffset(s32 slotIndex, s16* contentX, s16* contentY) {
     s32 rawIndex, poolIndex;
-    rawIndex = QuickStartLadderGetRoomIndex(ladderIndex);
-    if (QuickStartLadderGetPool(ladderIndex) == 0) {
+    rawIndex = QuickStartSlotGetRoomIndex(slotIndex);
+    if (QuickStartSlotGetPool(slotIndex) == 0) {
         poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
         *contentX = 0x78 + sQuickStartSmallRoomPool[poolIndex].contentDX;
         *contentY = 0x78 + sQuickStartSmallRoomPool[poolIndex].contentDY;
@@ -5897,14 +5830,14 @@ static void QuickStartGetLadderContentOffset(s32 ladderIndex, s16* contentX, s16
     }
 }
 
-// LADDER_KIND_WAVES: a 3-wave gauntlet (one enemy type per wave, per the
+// QS_EVENT_WAVES: a 3-wave gauntlet (one enemy type per wave, per the
 // user's own brief), an Ezlo hint the first time a ladder resolves to this
 // kind, and a tier draw once all 3 are
 // cleared. Room flags used, all distinct from the other kinds' own (they
 // never run in the same room at once, so there's no collision reusing low
 // numbers): flag 0 = the current wave's enemies have been spawned and at
 // least one is still alive; flag 2 = all 3 waves cleared, reward dropped,
-// watching for pickup (same flag/meaning LADDER_KIND_MINIBOSS uses for its
+// watching for pickup (same flag/meaning QS_EVENT_MINIBOSS uses for its
 // own reward-drop state); flag 4 = the one-time hint has been shown; flags
 // 5-6 = which wave is in progress, 0-2 (wave 1/2/3).
 #define QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG 4
@@ -7293,7 +7226,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
 
 // Pots are OBJECT-kind, so QuickStartClearVanillaRoomContent never sweeps
 // them mid-visit - the same "spawn once, then just watch for the drop"
-// two-flag shape LADDER_KIND_CHEST uses (room flag 0 = spawned, 3 =
+// two-flag shape QS_EVENT_ITEM_DROP uses (room flag 0 = spawned, 3 =
 // confirmed present at least once) is enough on its own to stop a reload
 // re-rolling or duplicating the prize.
 static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
@@ -7394,7 +7327,7 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
 // type2=0 gives the default "pop up, wander, heal on contact, vanish after
 // ~10s if ignored" behavior, identical to any fairy found in the wild -
 // unlike the lottery kinds above, there's no lasting reward here to guard
-// against re-farming, so this doesn't bother with GF_LADDER_DONE at all.
+// against re-farming, so this doesn't bother with GF_SLOT_DONE at all.
 static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flagBase) {
     static const s16 offsets[2] = { -16, 16 };
     s32 i;
@@ -7419,7 +7352,7 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flag
 // drop taken / lottery decided), which is the caller's cue to set whatever
 // "done" latch it keeps so nothing ever spawns here again.
 //
-// Split out of QuickStartSetupLadderRoomContent so the room-keyed content
+// Split out of QuickStartSetupSlotRoomContent so the room-keyed content
 // sites (QuickStartSetupContentSite) can run the exact same seven event
 // kinds. Those sites are the only live caller now - every synthetic ladder
 // and door entrance has been retired in favour of real vanilla doors - but
@@ -7446,7 +7379,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         }
     }
 
-    if (kind == LADDER_KIND_CHEST) {
+    if (kind == QS_EVENT_ITEM_DROP) {
         // Room flag 3: "confirmed present at least once this visit" -
         // distinct from flag 0 ("we've spawned it"), same two-flag "did it
         // vanish for real, or was it wiped before ever really settling"
@@ -7501,7 +7434,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 0);
             }
         }
-    } else if (kind == LADDER_KIND_MINIBOSS) {
+    } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
             // (same "did it vanish for real, or did the room just unload
@@ -7621,13 +7554,13 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 0);
             }
         }
-    } else if (kind == LADDER_KIND_WAVES) {
+    } else if (kind == QS_EVENT_WAVES) {
         return QuickStartSetupWaveRoomContent(extra, contentX, contentY, flagBase);
-    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+    } else if (kind == QS_EVENT_POT_LOTTERY) {
         return QuickStartSetupPotRoomContent(extra, contentX, contentY, flagBase);
-    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+    } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         return QuickStartSetupChestLotteryContent(extra, contentX, contentY, flagBase);
-    } else if (kind == LADDER_KIND_FAIRY) {
+    } else if (kind == QS_EVENT_FAIRY) {
         QuickStartSetupFairyRoomContent(contentX, contentY, flagBase);
     } else {
         s32 i;
@@ -7663,7 +7596,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 // Bit 0 of extra is the friendly/evil roll, delivered to
                 // the (single, shared) script via the scratch flags.
                 QuickStartLoadNpcScratchFlags((u8)extra);
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
+                QuickStartMakeNpcTalkable(npc, sQuickStartEventNpcScripts[0]);
             }
         }
     }
@@ -7671,21 +7604,21 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
 }
 
 // The retired synthetic-entrance path's own wrapper. Every ladder and door
-// entrance is gone now (sQuickStartLadderEntrances is empty and
-// QuickStartFindLadderForCurrentRoom always returns -1), so this is
+// entrance is gone now (the retired ladder-entrance table is empty and
+// QuickStartFindSlotForCurrentRoom always returns -1), so this is
 // unreachable in play - it is kept, and still called from the dispatcher,
 // so the retired system stays a coherent whole rather than a half-removed
 // one.
-static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
+static void QuickStartSetupSlotRoomContent(s32 slotIndex) {
     s16 contentX, contentY;
-    QuickStartGetLadderContentOffset(ladderIndex, &contentX, &contentY);
+    QuickStartGetLadderContentOffset(slotIndex, &contentX, &contentY);
     QuickStartClearLadderRoomObstacles();
-    if (QuickStartLadderCheckDone(ladderIndex)) {
+    if (QuickStartLadderCheckDone(slotIndex)) {
         return;
     }
-    if (QuickStartSetupEventContent(QuickStartLadderGetKind(ladderIndex), QuickStartLadderGetExtra(ladderIndex),
+    if (QuickStartSetupEventContent(QuickStartSlotGetKind(slotIndex), QuickStartSlotGetExtra(slotIndex),
                                     contentX, contentY, 0)) {
-        QuickStartLadderSetDone(ladderIndex);
+        QuickStartSlotSetDone(slotIndex);
     }
 }
 
@@ -7708,7 +7641,7 @@ static void QuickStartSetupLadderRoomContent(s32 ladderIndex) {
 #define QUICKSTART_MELARI_SOUTHEAST_CONTENT_Y 83
 
 static u8 QuickStartMelariEastGetKind(void) {
-    return QsCheckFlag(GF_MELARI_EAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_MELARI_EAST_KIND_BIT) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
 }
 
 static u8 QuickStartMelariEastGetExtra(void) {
@@ -7723,7 +7656,7 @@ static u8 QuickStartMelariEastGetExtra(void) {
 }
 
 static u8 QuickStartMelariSoutheastGetKind(void) {
-    return QsCheckFlag(GF_MELARI_SOUTHEAST_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_MELARI_SOUTHEAST_KIND_BIT) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
 }
 
 static u8 QuickStartMelariSoutheastGetExtra(void) {
@@ -7746,8 +7679,8 @@ static void QuickStartRandomizeMelariEastOnce(void) {
     if (QsCheckFlag(GF_MELARI_EAST_RANDOMIZED)) {
         return;
     }
-    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
-    if (kind == LADDER_KIND_NPC) {
+    kind = ((s32)Random() % 2) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
+    if (kind == QS_EVENT_NPC) {
         QsSetFlag(GF_MELARI_EAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
@@ -7769,8 +7702,8 @@ static void QuickStartRandomizeMelariSoutheastOnce(void) {
     if (QsCheckFlag(GF_MELARI_SOUTHEAST_RANDOMIZED)) {
         return;
     }
-    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
-    if (kind == LADDER_KIND_NPC) {
+    kind = ((s32)Random() % 2) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
+    if (kind == QS_EVENT_NPC) {
         QsSetFlag(GF_MELARI_SOUTHEAST_KIND_BIT);
         extra = (u8)((s32)Random() % 2);
     } else {
@@ -7805,10 +7738,10 @@ static void QuickStartClearMelariRoomObstacles(void) {
 
 // East room's own content dispatch - a plain chest (one reward off the
 // same tier draw the ladder/2-door chests already use
-// from) or a talking NPC (same 2 canned scripts sQuickStartLadderNpcScripts
+// from) or a talking NPC (same 2 canned scripts sQuickStartEventNpcScripts
 // already uses), whichever QuickStartRandomizeMelariEastOnce rolled.
 // Simpler double-flag-free version of the ladder system's own chest/NPC
-// handling above: this room doesn't need a ladderIndex, so there's no
+// handling above: this room doesn't need a slotIndex, so there's no
 // generic accessor plumbing to reuse, just a direct room-flag check.
 static void QuickStartSetupMelariEastRoomContent(void) {
     QuickStartClearMelariRoomObstacles();
@@ -8380,18 +8313,18 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
         case QUICKSTART_KINDS_ELITE:
             // No roll and no unlock fallback: an elite site is always a
             // miniboss fight, and its (item-gated) door is the gate.
-            kind = LADDER_KIND_MINIBOSS;
+            kind = QS_EVENT_MINIBOSS;
             break;
         case QUICKSTART_KINDS_RARE:
             // Always the plain item drop; the rare pool is selected below
             // by forcing extra bit 7.
-            kind = LADDER_KIND_CHEST;
+            kind = QS_EVENT_ITEM_DROP;
             break;
         default:
             kind = QuickStartPickSmallKind();
             break;
     }
-    if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
+    if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
         // and the pick from it, and storing it (rather than calling Random()
         // at drop time) is what keeps a prize the same after leaving the room
@@ -8402,7 +8335,7 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
         // between "uncommon" and "rare" once you account for WAVES itself
         // being one roll among several - the user asked for that band.
         // Chest sites never read bit 6, so sharing the field is free.
-        if (kind == LADDER_KIND_WAVES && (s32)Random() % 4 == 0) {
+        if (kind == QS_EVENT_WAVES && (s32)Random() % 4 == 0) {
             extra |= 0x40;
         }
         if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_RARE) {
@@ -8412,9 +8345,9 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             // room, exactly like the miniboss kind's elite bit.
             extra = (u8)(((s32)Random() % QUICKSTART_DRAW_SEED_RANGE) | 0x80);
         }
-    } else if (kind == LADDER_KIND_NPC) {
+    } else if (kind == QS_EVENT_NPC) {
         extra = (u8)((s32)Random() % 2); // bit 0: 1 = evil, 0 = friendly
-    } else if (kind == LADDER_KIND_MINIBOSS) {
+    } else if (kind == QS_EVENT_MINIBOSS) {
         extra = (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE);
         // The elite bit rides in the extra byte's top bit, well clear of
         // the 0-4 roster index: the spawn reads the index with & 0x7f, and
@@ -8432,12 +8365,12 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
             // isn't owned yet (see the reward drop), so it can't pile up.
             extra |= 0x40;
         }
-    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+    } else if (kind == QS_EVENT_POT_LOTTERY) {
         extra = QuickStartPickPotRoomExtra();
-    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+    } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         extra = QuickStartPickLotteryExtra();
     } else {
-        extra = 0; // LADDER_KIND_FAIRY takes no parameter.
+        extra = 0; // QS_EVENT_FAIRY takes no parameter.
     }
     for (b = 0; b < 3; b++) {
         if (kind & (1 << b)) {
@@ -8507,7 +8440,7 @@ static void QuickStartSetupContentSite(s32 site) {
     }
 }
 
-// One draw per save, same shape as QuickStartRandomizeLaddersOnce but for
+// One draw per save, same shape as QuickStartRandomizeSlotsOnce but for
 // a single slot - no cross-slot dedup needed, there's only one connector.
 // Placed here rather than alongside QuickStart2DoorGetTarget/GetSpawnInfo
 // above (which don't need it) because it reads QUICKSTART_LADDER_REWARD_POOL_SIZE,
@@ -8526,15 +8459,15 @@ static void QuickStart2DoorRandomizeOnce(void) {
         kind = QuickStartPickLargeKind();
     }
     QuickStart2DoorSetKind(kind);
-    if (kind == LADDER_KIND_CHEST || kind == LADDER_KIND_WAVES) {
+    if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-    } else if (kind == LADDER_KIND_NPC) {
+    } else if (kind == QS_EVENT_NPC) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % 2));
-    } else if (kind == LADDER_KIND_MINIBOSS) {
+    } else if (kind == QS_EVENT_MINIBOSS) {
         QuickStart2DoorSetExtra((u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+    } else if (kind == QS_EVENT_POT_LOTTERY) {
         QuickStart2DoorSetExtra(QuickStartPickPotRoomExtra());
-    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+    } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         QuickStart2DoorSetExtra(QuickStartPickLotteryExtra());
     }
     poolSize = (pool == 0) ? QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE : QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE;
@@ -8583,7 +8516,7 @@ static void QuickStart2DoorSpawnOverworldEnemiesOnce(u8 area, u8 room) {
 }
 
 // Same shape as QuickStartSetupWaveRoomContent, but keyed off the 2-door
-// connector's own GF_2DOOR_* flags instead of a ladderIndex - this file's
+// connector's own GF_2DOOR_* flags instead of a slotIndex - this file's
 // established idiom (duplicate small per-context functions rather than
 // thread an extra parameter through a shared one) rather than refactor the
 // already-shipped ladder system.
@@ -8633,7 +8566,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
 // same logic, GF_2DOOR_DONE/QuickStart2DoorGetExtra in place of the
 // ladder-indexed flags, duplicated rather than shared for the same reason
 // QuickStart2DoorSetupWaveRoomContent above is its own separate copy
-// instead of taking a ladderIndex.
+// instead of taking a slotIndex.
 // contentX/contentY are accepted and ignored, same as the content-site
 // version: the generator anchors on the player's own arrival spot instead.
 static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
@@ -8775,7 +8708,7 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
 // Dispatch for whichever room the save's one 2-door connector draw
 // resolved to (see QuickStart2DoorRandomizeOnce/GetTarget above) - called
 // every frame the player is standing in it (QuickStartRoomMonitor below).
-// Same CHEST/MINIBOSS/NPC/WAVES shape as QuickStartSetupLadderRoomContent,
+// Same CHEST/MINIBOSS/NPC/WAVES shape as QuickStartSetupSlotRoomContent,
 // duplicated with GF_2DOOR_*/QuickStart2DoorGetExtra in place of the
 // ladder-indexed flags, plus the two size-survey special cases
 // (ROOM_CAVES_HEART_PIECE_HALLWAY kept vanilla, the 3 overworld-density
@@ -8837,7 +8770,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         return;
     }
     kind = QuickStart2DoorGetKind();
-    if (kind == LADDER_KIND_CHEST) {
+    if (kind == QS_EVENT_ITEM_DROP) {
         if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
                 QsSetRoomFlag(3);
@@ -8862,7 +8795,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 QsSetRoomFlag(0);
             }
         }
-    } else if (kind == LADDER_KIND_MINIBOSS) {
+    } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(2)) {
             if (!QuickStartGroundItemAt(contentX, contentY)) {
                 QsSetFlag(GF_2DOOR_DONE);
@@ -8904,13 +8837,13 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 QsSetRoomFlag(0);
             }
         }
-    } else if (kind == LADDER_KIND_WAVES) {
+    } else if (kind == QS_EVENT_WAVES) {
         QuickStart2DoorSetupWaveRoomContent(contentX, contentY);
-    } else if (kind == LADDER_KIND_POT_LOTTERY) {
+    } else if (kind == QS_EVENT_POT_LOTTERY) {
         QuickStart2DoorSetupPotRoomContent(contentX, contentY);
-    } else if (kind == LADDER_KIND_CHEST_LOTTERY) {
+    } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         QuickStart2DoorSetupChestLotteryContent(contentX, contentY);
-    } else if (kind == LADDER_KIND_FAIRY) {
+    } else if (kind == QS_EVENT_FAIRY) {
         QuickStart2DoorSetupFairyRoomContent(contentX, contentY);
     } else {
         s32 i;
@@ -8933,62 +8866,12 @@ static void QuickStart2DoorSetupRoomContent(void) {
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
                 QuickStartLoadNpcScratchFlags((u8)QuickStart2DoorGetExtra());
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
+                QuickStartMakeNpcTalkable(npc, sQuickStartEventNpcScripts[0]);
             }
         }
     }
 }
 
-// The cave-connector's Lon Lon Ranch-side entrance - the real vanilla cave
-// door's own box (gExitList_HyruleField_LonLonRanch: startX=0xe8,
-// startY=0x1b4, AREA_12x12 -> box +6/+6), same trigger-box-position
-// technique used elsewhere in this file for WARP_TYPE_AREA doors that
-// don't reliably fire under QUICKSTART alone. Destination varies per save
-// (QuickStart2DoorRandomizeOnce), so it's resolved here rather than a
-// static sQuickStartLinks entry, the same reasoning
-// QuickStartProcessLadderLinks already has for ladder 3's own entrance.
-// RETIRED. This trigger box sat directly on Lon Lon Ranch's real vanilla
-// cave mouth - the box is that door's own coordinates padded by six - so it
-// fired first every time and swallowed the door, sending the player to a
-// randomly drawn pool room instead of into the cave. That is the "broken
-// cave-ladder connection" the user reported.
-//
-// The cave itself never needed anything done to it: gExitList_Caves_LonLonRanch
-// is untouched vanilla, two borders straight back to the ranch, and the
-// room's own door tile reads ACT_TILE_41. Removing the box is the whole
-// restore - the vanilla door simply starts working again. The cave is a
-// content site now (sQuickStartRoomContentSites), so it holds a randomized
-// event, and it keeps vanilla's Mole Mitts dirt gate on the way in.
-//
-// The 2-door pool this fed is still used by North Hyrule Field's river
-// bridge and its cave mouth, so only this one entrance goes.
-static void QuickStartProcessCaveConnectorLink(void) {
-    s16 localX, localY;
-    u8 targetArea, targetRoom;
-    s16 entranceX, entranceY, contentDX, contentDY;
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    return;
-    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
-        return;
-    }
-    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    if (localX < 0xe2 || localX > 0xee || localY < 0x1ae || localY > 0x1ba) {
-        return;
-    }
-    QuickStart2DoorGetTarget(&targetArea, &targetRoom);
-    QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
-    gRoomTransition.player_status.area_next = targetArea;
-    gRoomTransition.player_status.room_next = targetRoom;
-    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-    gRoomTransition.player_status.start_pos_x = entranceX;
-    gRoomTransition.player_status.start_pos_y = entranceY;
-    gRoomTransition.player_status.layer = 1;
-    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-    gRoomTransition.transitioningOut = 1;
-}
 
 // --- Which of a 2-door pool room's two doors did the player just use? -----
 //
@@ -9177,7 +9060,7 @@ static void QuickStartRiverBridgeSetRoomIndex(u8 value) {
 }
 
 static u8 QuickStartRiverBridgeGetKind(void) {
-    return QsCheckFlag(GF_RIVER_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_RIVER_KIND_BIT) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
 }
 
 static u8 QuickStartRiverBridgeGetExtra(void) {
@@ -9253,8 +9136,8 @@ static void QuickStartRandomizeRiverBridgeOnce(void) {
     }
     QuickStartRiverBridgeSetPool(pool);
     QuickStartRiverBridgeSetRoomIndex(roomIdx);
-    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
-    if (kind == LADDER_KIND_NPC) {
+    kind = ((s32)Random() % 2) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
+    if (kind == QS_EVENT_NPC) {
         QsSetFlag(GF_RIVER_KIND_BIT);
         {
             s32 b;
@@ -9313,7 +9196,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
     }
     kind = QuickStartRiverBridgeGetKind();
     extra = QuickStartRiverBridgeGetExtra();
-    if (kind == LADDER_KIND_CHEST) {
+    if (kind == QS_EVENT_ITEM_DROP) {
         if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
                 QsSetRoomFlag(3);
@@ -9358,7 +9241,7 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
                 QuickStartLoadNpcScratchFlags((u8)extra);
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
+                QuickStartMakeNpcTalkable(npc, sQuickStartEventNpcScripts[0]);
             }
         }
     }
@@ -9482,7 +9365,7 @@ static void QuickStartCaveSetRoomIndex(u8 value) {
 }
 
 static u8 QuickStartCaveGetKind(void) {
-    return QsCheckFlag(GF_CAVE_KIND_BIT) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
+    return QsCheckFlag(GF_CAVE_KIND_BIT) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
 }
 
 static u8 QuickStartCaveGetExtra(void) {
@@ -9547,8 +9430,8 @@ static void QuickStartRandomizeCaveOnce(void) {
     // defined but unwritten; they are 6 contiguous flags held in reserve
     // rather than reshuffled, because moving anything in this block is the
     // silent-collision hazard its own comment warns about.
-    kind = ((s32)Random() % 2) ? LADDER_KIND_NPC : LADDER_KIND_CHEST;
-    if (kind == LADDER_KIND_NPC) {
+    kind = ((s32)Random() % 2) ? QS_EVENT_NPC : QS_EVENT_ITEM_DROP;
+    if (kind == QS_EVENT_NPC) {
         QsSetFlag(GF_CAVE_KIND_BIT);
         {
             s32 b;
@@ -9597,7 +9480,7 @@ static void QuickStartSetupCaveRoomContent(void) {
     }
     kind = QuickStartCaveGetKind();
     extra = QuickStartCaveGetExtra();
-    if (kind == LADDER_KIND_CHEST) {
+    if (kind == QS_EVENT_ITEM_DROP) {
         if (QsCheckRoomFlag(0)) {
             if (QuickStartGroundItemAt(contentX, contentY)) {
                 QsSetRoomFlag(3);
@@ -9642,14 +9525,14 @@ static void QuickStartSetupCaveRoomContent(void) {
                 UpdateSpriteForCollisionLayer(npc);
                 npc->direction = IdleSouth;
                 QuickStartLoadNpcScratchFlags((u8)extra);
-                QuickStartMakeNpcTalkable(npc, sQuickStartLadderNpcScripts[0]);
+                QuickStartMakeNpcTalkable(npc, sQuickStartEventNpcScripts[0]);
             }
         }
     }
 }
 
 // The cave's own real-world entrance box - a plain synthetic position
-// check, same technique as QuickStartProcessCaveConnectorLink/
+// check, same technique as the retired cave-connector trigger/
 // QuickStartProcessRiverBridgeLink above, not dependent on the real cave
 // door's own transition data at all.
 // "Fully contained" per the user's request: once inside Castor Darknut
@@ -9665,7 +9548,7 @@ static void QuickStartSetupCaveRoomContent(void) {
 // (see the call site in QuickStartRoomMonitor, itself called after both of
 // those every frame) so a same-frame cancel always lands before the fade
 // actually starts. AREA_TREE_INTERIORS is included too, since
-// QuickStartProcessLadderLinks' own transition into it would otherwise get
+// the retired ladder-link trigger' own transition into it would otherwise get
 // cancelled by this same function the instant it fires - it's listed here
 // as a whole area (rather than per-room) because Minish House Interiors
 // already needed to be, for Melari's Mine. The "? room" pool's other areas
@@ -9682,7 +9565,7 @@ static bool32 QuickStartAreaContained(u8 area) {
 
 // Which ladder slot (0, 1, or 3 - slot 2 is retired, see sQuickStartLinks'
 // own comment on the Ranch House reset) or new single-door entrance (4-18,
-// see sQuickStartLadderEntrances, now empty) the current room is standing in
+// see the retired ladder-entrance table, now empty) the current room is standing in
 // for, or -1 if it isn't one of them. The pool spans several real areas
 // (Minish House Interiors, Tree Interiors, Caves, Great Fairies, Royal
 // Valley Graves, plus South/North Hyrule Field and Trilby Highlands now)
@@ -9692,7 +9575,7 @@ static bool32 QuickStartAreaContained(u8 area) {
 // 15 doors = 18 entries, exactly the pool's whole 14+4 room capacity - see
 // QuickStartRandomizeDoorsOnce for why that's an exact fit rather than a
 // coincidence.
-static s32 QuickStartFindLadderForCurrentRoom(void) {
+static s32 QuickStartFindSlotForCurrentRoom(void) {
     static const u8 sPoolDrawLadderIndices[3 + QUICKSTART_DOOR_COUNT] = { 0,  1,  3,  4,  5,  6,  7,  8,
                                                                            9,  10, 11, 12, 13, 14, 15, 16,
                                                                            17, 18 };
@@ -9710,8 +9593,8 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
         if (i >= 1 && i <= 18) {
             continue;
         }
-        rawIndex = QuickStartLadderGetRoomIndex(i);
-        if (QuickStartLadderGetPool(i) == 0) {
+        rawIndex = QuickStartSlotGetRoomIndex(i);
+        if (QuickStartSlotGetPool(i) == 0) {
             poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
             area = sQuickStartSmallRoomPool[poolIndex].area;
             room = sQuickStartSmallRoomPool[poolIndex].room;
@@ -9742,12 +9625,12 @@ static s32 QuickStartFindLadderForCurrentRoom(void) {
 // inside a different hedge, matching the user's own bug report of
 // spawning "inside a shrubbery"); (935,311), well north at the same x, is
 // the closest confirmed-walkable point, open in every direction except
-// the hedge immediately east. Indexed directly by ladderIndex (0-3), not by
+// the hedge immediately east. Indexed directly by slotIndex (0-3), not by
 // draw order, so indices 2 and 3 are unused placeholders here: index 2 is
 // retired entirely (see sQuickStartLinks' own comment on the Ranch House
 // reset), and index 3 (Goron Cave Stairs door)'s pool room is redirected
 // back to Lon Lon Ranch entirely (not just repositioned within Castle
-// Garden) by QuickStartFixupQuestionRoomReturn's own ladderIndex == 3
+// Garden) by QuickStartFixupQuestionRoomReturn's own slotIndex == 3
 // special case below - both are skipped before this array is ever read
 // with that index.
 static const s16 sQuickStartLadderReturnSpots[4][2] = {
@@ -9757,20 +9640,20 @@ static const s16 sQuickStartLadderReturnSpots[4][2] = {
     { 0, 0 },
 };
 
-// Return destination for each of the 15 new door entrances (ladderIndex
-// 4-18, doorSlot = ladderIndex-4) - unlike ladders 0-1, which both enter and
+// Return destination for each of the 15 new door entrances (slotIndex
+// 4-18, doorSlot = slotIndex-4) - unlike ladders 0-1, which both enter and
 // leave through Castle Garden, these enter from (and must return to) their
 // own region, not Castle Garden Main (where every pool room's own
 // retargeted exit actually points, same shared literal spot ladders 0-1
 // use). QuickStartFixupQuestionRoomReturn below overrides the whole
-// destination for these, same as ladderIndex == 3's own Lon Lon Ranch
+// destination for these, same as slotIndex == 3's own Lon Lon Ranch
 // special case.
 //
 // BUG FIX (user report): the first version of this table used each door's
 // own real startX/startY - i.e. its trigger box's own center - as the
 // return spot too. That's guaranteed to sit inside the same box
-// sQuickStartLadderEntrances defines for that entrance (+-24px), so landing
-// there immediately re-satisfied QuickStartProcessLadderLinks' own box
+// the retired ladder-entrance table defines for that entrance (+-24px), so landing
+// there immediately re-satisfied the retired ladder-link trigger' own box
 // check on the very next frame, sending the player straight back into the
 // ? room - confirmed in practice on Link's House (idx4/doorSlot 0): an
 // infinite back-and-forth warp loop. Fixed by moving y +40 past the box's
@@ -9781,7 +9664,7 @@ static const s16 sQuickStartLadderReturnSpots[4][2] = {
 // faces. x is unchanged, still centered on the real door. Still a
 // first-pass estimate for actual walkable terrain (not yet emulator-walked
 // the way Castle Garden's/Lon Lon Ranch's own return spots were after
-// their own initial misses - see sQuickStartLadderEntrances' own comment on
+// their own initial misses - see the retired ladder-entrance table' own comment on
 // that same unfinished verification pass), but no longer inside the
 // re-trigger box regardless.
 static const struct {
@@ -9816,7 +9699,7 @@ static const struct {
 // ladder 0's spot no matter which ladder's room they actually left
 // through.
 static void QuickStartFixupQuestionRoomReturn(void) {
-    s32 ladderIndex;
+    s32 slotIndex;
     if (!gRoomTransition.transitioningOut) {
         return;
     }
@@ -9824,11 +9707,11 @@ static void QuickStartFixupQuestionRoomReturn(void) {
         gRoomTransition.player_status.room_next != ROOM_CASTLE_GARDEN_MAIN) {
         return;
     }
-    ladderIndex = QuickStartFindLadderForCurrentRoom();
-    if (ladderIndex < 0) {
+    slotIndex = QuickStartFindSlotForCurrentRoom();
+    if (slotIndex < 0) {
         return;
     }
-    if (ladderIndex == 3) {
+    if (slotIndex == 3) {
         // Goron Cave Stairs door - entered from Lon Lon Ranch, not Castle
         // Garden (unlike ladders 0-1, which both enter and leave through
         // Castle Garden), so it should return there too, rather than to
@@ -9843,21 +9726,21 @@ static void QuickStartFixupQuestionRoomReturn(void) {
         gRoomTransition.player_status.start_pos_y = 870;
         return;
     }
-    if (ladderIndex >= QUICKSTART_LADDER_COUNT) {
-        // One of the 15 new door entrances - same reasoning as ladderIndex
+    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
+        // One of the 15 new door entrances - same reasoning as slotIndex
         // == 3 above: this pool room's own retargeted exit points at Castle
         // Garden Main regardless of which entrance drew it, but a door
         // entered from South/North Hyrule Field or Trilby Highlands needs
         // to return there instead, not to Castle Garden.
-        s32 doorSlot = ladderIndex - QUICKSTART_LADDER_COUNT;
+        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
         gRoomTransition.player_status.area_next = sQuickStartDoorReturnSpots[doorSlot].area;
         gRoomTransition.player_status.room_next = sQuickStartDoorReturnSpots[doorSlot].room;
         gRoomTransition.player_status.start_pos_x = sQuickStartDoorReturnSpots[doorSlot].x;
         gRoomTransition.player_status.start_pos_y = sQuickStartDoorReturnSpots[doorSlot].y;
         return;
     }
-    gRoomTransition.player_status.start_pos_x = sQuickStartLadderReturnSpots[ladderIndex][0];
-    gRoomTransition.player_status.start_pos_y = sQuickStartLadderReturnSpots[ladderIndex][1];
+    gRoomTransition.player_status.start_pos_x = sQuickStartLadderReturnSpots[slotIndex][0];
+    gRoomTransition.player_status.start_pos_y = sQuickStartLadderReturnSpots[slotIndex][1];
 }
 
 // Two real vanilla doors whose far side is decided per save rather than by
@@ -9885,7 +9768,7 @@ static void QuickStartProcessDoorRedirects(void) {
     if (gRoomTransition.player_status.area_next == AREA_HYRULE_CASTLE_CELLAR &&
         gRoomTransition.player_status.room_next == ROOM_HYRULE_CASTLE_CELLAR_0) {
         u8 targetArea, targetRoom;
-        QuickStartGetLadderTarget(0, &targetArea, &targetRoom);
+        QuickStartGetSlotTarget(0, &targetArea, &targetRoom);
         gRoomTransition.player_status.area_next = targetArea;
         gRoomTransition.player_status.room_next = targetRoom;
         gRoomTransition.player_status.start_pos_x = 0x78;
@@ -9939,7 +9822,7 @@ static void QuickStartFixupShopReturn(void) {
 // blanket-containing them would block every one of THOSE rooms' own real
 // exits back to the ordinary overworld, a regression far bigger than this
 // feature. Instead, this checks the one specific transition
-// QuickStartProcessLadderLinks itself is about to make - into whichever
+// the retired ladder-link trigger itself is about to make - into whichever
 // pool room the ladder the player just stepped into currently resolves
 // to - and lets that one through regardless of which area it's in, same
 // as the fixed-area escape hatch does for Tree Interiors/Minish House
@@ -9948,7 +9831,7 @@ static bool32 QuickStartIsCurrentLadderTarget(u8 area, u8 room) {
     s32 i;
     for (i = 0; i < 2; i++) {
         u8 targetArea, targetRoom;
-        QuickStartGetLadderTarget(i, &targetArea, &targetRoom);
+        QuickStartGetSlotTarget(i, &targetArea, &targetRoom);
         if (area == targetArea && room == targetRoom) {
             return TRUE;
         }
@@ -10069,7 +9952,7 @@ static void QuickStartEnforceContainment(void) {
 // fire under QUICKSTART at all (same ACT_TILE gap the Castle Garden/Lon
 // Lon Ranch link itself works around), so this check is mostly a no-op
 // safety net for those, not their only defense - our own sQuickStartLinks
-// position box into the two ranch house rooms, and QuickStartProcessLadderLinks'
+// position box into the two ranch house rooms, and the retired ladder-link trigger'
 // own transition into whichever pool room ladder 3 (the Goron Cave Stairs
 // door) currently resolves to, are both explicitly allowed through below.
 static void QuickStartEnforceLonLonContainment(void) {
@@ -10115,7 +9998,7 @@ static void QuickStartEnforceLonLonContainment(void) {
          gRoomTransition.player_status.room_next == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST)) {
         return;
     }
-    // The cave connector's own synthetic entrance (QuickStartProcessCaveConnectorLink)
+    // The cave connector's own synthetic entrance (the retired cave-connector trigger)
     // fires from right here in Lon Lon Ranch, targeting whichever real
     // 2-door pool room the save's draw resolved to - varies per save, so
     // (unlike the fixed exceptions above) this has to be resolved at check
@@ -10130,7 +10013,7 @@ static void QuickStartEnforceLonLonContainment(void) {
             return;
         }
     }
-    QuickStartGetLadderTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
+    QuickStartGetSlotTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
     if (gRoomTransition.player_status.area_next == ladder3TargetArea &&
         gRoomTransition.player_status.room_next == ladder3TargetRoom) {
         return;
@@ -10160,9 +10043,9 @@ static void QuickStartEnforceLonLonContainment(void) {
 // chain's own "next" region (varies per save, same dynamic lookup Lon
 // Lon's version already uses), and whichever pool room any of the 15
 // single-door "? room" entrances physically inside the room being left
-// currently resolves to (sQuickStartLadderEntrances - these fire their
+// currently resolves to (the retired ladder-entrance table - these fire their
 // own real transition later this same frame via
-// QuickStartProcessLadderLinks, but this containment check runs first
+// the retired ladder-link trigger, but this containment check runs first
 // and would otherwise cancel them out from under themselves during the
 // multi-frame transition-out window, exactly the bug this function
 // exists to prevent for illegitimate transitions). Cancels anything else
@@ -10188,17 +10071,6 @@ static void QuickStartEnforceFieldRegionContainment(void) {
             const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
             if (gRoomTransition.player_status.area_next == next->area &&
                 gRoomTransition.player_status.room_next == next->room) {
-                return;
-            }
-        }
-    }
-    for (i = 0; i < ARRAY_COUNT(sQuickStartLadderEntrances); i++) {
-        const QuickStartLadderEntrance* entrance = &sQuickStartLadderEntrances[i];
-        if (entrance->fromArea == gRoomControls.area && entrance->fromRoom == gRoomControls.room) {
-            u8 targetArea, targetRoom;
-            QuickStartGetLadderTarget(entrance->ladderIndex, &targetArea, &targetRoom);
-            if (gRoomTransition.player_status.area_next == targetArea &&
-                gRoomTransition.player_status.room_next == targetRoom) {
                 return;
             }
         }
@@ -10660,7 +10532,7 @@ static void QuickStartFixupRoomFixtures(void) {
 // Dynamic counterpart to sQuickStartLinks/QuickStartProcessLinks above -
 // the region chain's own two kinds of transition, both needing a
 // destination resolved at trigger time instead of a fixed table row, same
-// reasoning as QuickStartProcessLadderLinks/QuickStartProcessCaveConnectorLink:
+// reasoning as the retired ladder-link trigger/the retired cave-connector trigger:
 // (1) Melari's Mine's Door B, now leading to whichever region this save's
 // chain drew for slot 0; (2) each region's own "onward" exit box
 // (sQuickStartRegionPool's exitMinX/MaxX/MinY/MaxY, reused verbatim from
@@ -10801,8 +10673,8 @@ static void QuickStartRoomMonitor(void) {
     // costs a handful of flag reads and removes the dependency on any one
     // room being entered.
     QuickStartRandomizeRegionChainOnce();
-    QuickStartRandomizeLaddersOnce();
-    // Must run after QuickStartRandomizeLaddersOnce (same frame, right
+    QuickStartRandomizeSlotsOnce();
+    // Must run after QuickStartRandomizeSlotsOnce (same frame, right
     // after) - it reads back ladders 0/1/3's own just-rolled room
     // assignments to make sure none of the 15 new door entrances ends up
     // sharing a physical pool room with them (see
@@ -10830,15 +10702,12 @@ static void QuickStartRoomMonitor(void) {
     // regions that spawn: keep free GFX slots above the reserve.
     QuickStartEnforceGfxReserve();
     QuickStartStirRandom();
-    // Retired along with sQuickStartLadderEntrances itself (now empty) -
+    // Retired along with the retired ladder-entrance table itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
     // returns immediately without matching anything.
-    QuickStartProcessLadderLinks();
-    // Same reasoning as QuickStartProcessLadderLinks above - the 2-door
+    // Same reasoning as the retired ladder-link trigger above - the 2-door
     // pool's one entrance (Lon Lon Ranch's cave mouth) targets a different
     // real room every save, so it can't be folded into a specific room's
-    // branch below either.
-    QuickStartProcessCaveConnectorLink();
     // Same reasoning again - North Hyrule Field's river bridge has two
     // entrances (either bank), each targeting a different real room every
     // save.
@@ -10935,9 +10804,9 @@ static void QuickStartRoomMonitor(void) {
         // Falls through to here for whichever pool room the Goron Cave
         // Stairs door (slot 3) currently resolves to - same generic
         // dispatch as Castle Garden's own two ladders (slots 0-1).
-        s32 ladderIndex = QuickStartFindLadderForCurrentRoom();
-        if (ladderIndex >= 0) {
-            QuickStartSetupLadderRoomContent(ladderIndex);
+        s32 slotIndex = QuickStartFindSlotForCurrentRoom();
+        if (slotIndex >= 0) {
+            QuickStartSetupSlotRoomContent(slotIndex);
         }
     }
     QuickStartProcessLinks();
@@ -11504,7 +11373,7 @@ static void QuickStartDeleteGroundItemsAndSigns(void) {
     }
 }
 
-static void QuickStartSpawnChest(void) {
+static void QuickStartSpawnHallReward(void) {
     // Not a literal treasure-chest sprite/tile (the room was never authored
     // with one, and the real chest objects - ChestSpawner/SpecialChest -
     // resolve their contents through room-authored tile data we don't have),
@@ -11766,7 +11635,7 @@ static void QuickStartUpdateItemChoice(void) {
                 return;
             }
         }
-        QuickStartSpawnChest();
+        QuickStartSpawnHallReward();
         gRoomTransition.field_0x4[0] = 9;
         return;
     }

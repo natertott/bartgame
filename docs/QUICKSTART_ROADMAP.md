@@ -118,12 +118,17 @@ ordinary drop rather than a boot grant.
    synthetic connector that puts the same room behind both of two doors.
    Fed by Lon Lon Ranch's cave mouth, North Hyrule Field's river bridge, and
    North Hyrule Field's cave mouth, each with its own independent draw.
-3. **Ladder pool** - the original mechanism, now down to Castle Garden's
-   northwest ladder, which redirects to a drawn single-door room.
+3. **Drawn-door slots** - the original mechanism (once literal ladders in
+   Castle Garden, which is where the retired `LADDER_*` naming came from),
+   now down to Castle Garden's northwest door, which redirects to a drawn
+   single-door room. Named `QuickStartSlot*` / `GF_SLOT_*` since the
+   cleanup pass; the entrance table and its trigger are deleted.
 
 All three converge on `QuickStartSetupEventContent`, which places one of
-**seven kinds**: chest, miniboss, NPC, 3-wave gauntlet, pot lottery, chest
-lottery, fairy room. A content site names which set it may roll:
+**seven kinds** (`QS_EVENT_*`): item drop, miniboss, NPC, 3-wave gauntlet,
+pot lottery, chest lottery, fairy room. Note the item-drop kind places a
+GROUND_ITEM, not a chest - it was called "chest" for a long time and never
+was one. A content site names which set it may roll:
 `QUICKSTART_KINDS_SMALL` (chest/NPC/both lotteries) for cramped tree hollows
 and cave nooks, `QUICKSTART_KINDS_LARGE` (miniboss/waves/fairy) for rooms
 with floor space, and `QUICKSTART_KINDS_ANY` for rooms big and clear enough

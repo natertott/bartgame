@@ -47,7 +47,7 @@ KNOWN = {
         'shadowed by the Castle Garden NW ladder redirect (survey finding #1)',
 }
 GROUND_ITEM_ID = 0
-LADDER_KIND_CHEST = 0
+QS_EVENT_ITEM_DROP = 0
 
 
 def check_static():
@@ -369,7 +369,7 @@ def emu_rooms(rom, start, end):
             base = 266 + idx * 13
             qs_set(c, base, 1)
             for b in range(3):
-                qs_set(c, base + 1 + b, (LADDER_KIND_CHEST >> b) & 1)
+                qs_set(c, base + 1 + b, (QS_EVENT_ITEM_DROP >> b) & 1)
             for b in range(8):
                 qs_set(c, base + 4 + b, 0)
             qs_set(c, base + 12, 0)
