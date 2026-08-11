@@ -323,10 +323,24 @@ def emu_fusers(rom):
         if spots is None:
             msgs.append('no scatter list for this region')
             spots = []
+        # Tiles a live entity is standing on. A pot or an enemy STAMPS collision
+        # onto the map, so a spot can read solid purely because something is
+        # sitting on it - and which spot that is moves with the run's RNG, so
+        # the check passed or failed by luck. Measured: Castle Garden's
+        # (776,328) reads 0x00 on a bare room load and 0x1d once a hidden-
+        # ladder grass pot has spawned on it. The map is the question here;
+        # what is standing on it is not.
+        occupied = set()
+        for i in range(MAX_ENT):
+            if c.memory.u8[GENT + i * STRIDE + 8] in (3, 6):  # ENEMY, OBJECT
+                ex = r16(c, GENT + i * STRIDE + 0x2e) - r16(c, ROOM_CONTROLS + 6)
+                ey = r16(c, GENT + i * STRIDE + 0x32) - r16(c, ROOM_CONTROLS + 8)
+                occupied.add((ex // 16, ey // 16))
         for x, y in spots:
+            tile = (x // 16, y // 16)
             if not (0 <= x < W and 0 <= y < H):
                 msgs.append(f'scatter spot ({x},{y}) out of bounds {W}x{H}')
-            elif grid[y // 16][x // 16] != 0:
+            elif grid[y // 16][x // 16] != 0 and tile not in occupied:
                 msgs.append(f'scatter spot ({x},{y}) on non-open tile {grid[y // 16][x // 16]:#x}')
             elif (x // 16, y // 16) not in reach:
                 msgs.append(f'scatter spot ({x},{y}) not in the entrance component')

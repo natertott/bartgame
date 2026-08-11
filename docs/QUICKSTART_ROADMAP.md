@@ -160,12 +160,58 @@ payout-shaped objects (ground items, both chest kinds, heart containers,
 fairies) are deleted, so the event *is* the room's reward rather than a
 bonus on top of vanilla's.
 
+### 3.3b Every run was the same run
+
+`gRand` is set to the literal `0x1234567` in `AgbMain` (`src/main.c`) and never
+touched again, and `DoSoftReset` - how a won run starts the next one - goes
+back through `AgbMain`. Every per-run draw compounds it: they are all rolled
+unconditionally from `QuickStartRoomMonitor`, which first runs on frame ONE,
+before the player has pressed anything, so `QuickStartStirRandom` (one extra
+`Random()` per input frame) has had nothing to stir.
+
+Result: same region chain, same shop, same prices, same "? room" contents,
+every single run. Reported by the user as "the same items every time" in the
+shop; the shop was just where it showed.
+
+`GameTask_Transition` now reseeds per run from a persistent 6-bit counter
+(flag bits 178-183, in the gap between `GF_DIFFICULTY_BIT` and the 184-201
+clear loop) plus the previous run's length and kill counts, then stirs. The
+counter is committed with a `WriteSaveFile` at run start, without which it
+does not survive: `gSave` lives in EWRAM but `InitSaveData` reloads it from
+SRAM on every boot. Verified across four consecutive soft resets: four
+different `gRand` values and four different shop stock lists.
+
+The first run on a brand-new save is still fixed - nothing has happened yet to
+vary it - which is fine.
+
 ### 3.4 The shop
 
 **Floor 1 of the hub**, one flight up from the tower entrance - walked to,
-not drawn. Nine-item catalog in two rows across the upper hall (y=88 and
+not drawn. Nine shelf slots in two rows across the upper hall (y=88 and
 y=120) with a walkway between them at y=104, and the merchant at its east
-end. Every spot is emulator-verified liftable (`invariant_check.py`'s `hub`
+end.
+
+**Stock is drawn per run**, from `sQuickStartShopPool` (23 rows tagged with
+the same `QS_CAT_*` categories the tier table uses). Slots 0-5 are one weapon,
+one weapon, one reward, one reward, one key item and one skill; slots 6-8 are
+wildcards. The draw is by rejection so nothing appears twice, and eligibility
+is `QuickStartTierEntryUsable` - the same test every other draw uses - so ammo
+is never stocked without its weapon and a potion never without a bottle.
+
+That test is re-applied at *display* time too, which makes the shelf tidy
+itself: buy the Pegasus Boots and the slot goes bare instead of restocking
+them for a second, pointless purchase, which is what the old fixed catalog
+did.
+
+The pool is separate from `sQuickStartTiers` on purpose. An item is only
+sellable with a nonzero price AND a confirm-purchase text in `gItemMetaData`,
+and an audit of the two against each other found **21 of the 40 tier rows at
+price 0** - every butterfly, most skills, the rare weapons and rare key items.
+Drawing the shop straight from the tier table would have stocked shelves of
+free items whose sale could not complete. Everything in the pool has been
+given a real price in the [51, 299] band (`src/itemMetaData.c`); several were
+sitting at **1 rupee** from the retired "guaranteed ? room shop" design, which
+`QuickStartGetShopPrice` floors to 5. Every spot is emulator-verified liftable (`invariant_check.py`'s `hub`
 tier presses R and reads `gPlayerState.heldObject`, rather than reasoning
 from the collision map - which is what made the previous layout take four
 attempts). Prices randomized per run, bought by carrying an item to the

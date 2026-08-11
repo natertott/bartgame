@@ -248,6 +248,11 @@ static s32 QuickStartCountItemsHeld(void);
 static u32 QuickStartComputeScore(void);
 #endif
 
+// The engine's RNG state (src/main.c). Reseeded per run in
+// GameTask_Transition below - see the comment there for why that is
+// necessary rather than cosmetic.
+extern u32 gRand;
+
 void sub_08054974(u32 worldEventId, bool32 param_2);
 
 void GameTask(void) {
@@ -476,7 +481,12 @@ static void GameTask_Transition(void) {
         // Bits 89-96: the roof wave's state (GF_ROOF_STATE_BIT) and the seed
         // its reward is drawn from (GF_ROOF_SEED_BIT), so each run gets its
         // own rooftop fight and its own reward.
-        for (bit = 43; bit <= 96; bit++) {
+        // Bits 97-141: the shop's drawn stock, five bits per shelf slot
+        // (GF_SHOP_SLOT_BIT). Cleared with the rest so a new run redraws -
+        // GF_SHOP_RANDOMIZED, the latch that decides whether to redraw at all,
+        // lives in the QUICKSTART flag window and is cleared by the 202-703
+        // loop further up.
+        for (bit = 43; bit <= 141; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -486,6 +496,66 @@ static void GameTask_Transition(void) {
         gSave.timer4 = 0;
         gSave.timer5 = 0;
         gSave.timer6 = 0;
+    }
+    // --- Reseed the RNG for this run ------------------------------------
+    //
+    // THE reason two runs looked identical. gRand is set to the literal
+    // 0x1234567 in AgbMain (src/main.c) and never touched again, and
+    // DoSoftReset - which is how a won run starts the next one - goes back
+    // through AgbMain, so every run began from the same RNG state. Every
+    // per-run draw then compounds it: they are all rolled unconditionally
+    // from QuickStartRoomMonitor, which first runs on frame ONE, before the
+    // player has pressed anything, so QuickStartStirRandom (one extra
+    // Random() per input frame) has had nothing to stir. Same region chain,
+    // same shop, same prices, same "? room" contents, every single run.
+    // Reported by the user about the shop specifically; the shop was just
+    // the most visible instance.
+    //
+    // Mixed from state that survives a soft reset and genuinely differs run
+    // to run: a persistent 6-bit run counter, plus the previous run's length
+    // and kill counts (read here, before the resets below zero them). The
+    // very first run on a brand-new save is still fixed - nothing has
+    // happened yet to vary - which is fine, and arguably good for a first
+    // impression. Every run after it differs.
+    //
+    // Bits 178-183 are the counter. They sit in the gap between
+    // GF_DIFFICULTY_BIT (174-177) and the 184-201 clear loop, so no run-start
+    // clear touches them, which is exactly the property needed.
+    {
+        u32 counter = 0;
+        s32 b;
+        for (b = 0; b < 6; b++) {
+            if (QsCheckFlag(178 + b)) {
+                counter |= (1u << b);
+            }
+        }
+        counter++;
+        for (b = 0; b < 6; b++) {
+            if (counter & (1u << b)) {
+                QsSetFlag(178 + b);
+            } else {
+                QsClearFlag(178 + b);
+            }
+        }
+        // Knuth's multiplicative constant, then a few turns of the engine's
+        // own generator so the low bits - which is all most draws look at,
+        // via `% n` on a small n - are properly mixed rather than tracking
+        // the counter.
+        gRand ^= counter * 2654435761u;
+        gRand += gSave.run_frames + gSave.enemies_killed * 7 + gSave.miniboss_kills * 131 +
+                 gSave.boss_kills * 1009;
+        for (b = 0; b < 8; b++) {
+            Random();
+        }
+        // And commit the counter, because otherwise it does not survive.
+        // gSave lives in EWRAM but InitSaveData reloads it from SRAM on every
+        // boot - including the soft reset a won run ends with - so a counter
+        // that is only incremented in RAM is thrown away the moment the run
+        // ends. Measured: without this, three soft resets in a row produced
+        // three identical runs. The win path already calls WriteSaveFile at
+        // exactly this level (QuickStartCheckWinCondition), so the cost is one
+        // more save write per run, on a mode whose runs last minutes.
+        WriteSaveFile(gSaveHeader->saveFileId, &gSave);
     }
     gSave.stats.heartPieces = 0;
     // Unlike maxHealth/health/inventory just below, rupees was never reset
@@ -1695,6 +1765,22 @@ const u8* const gCustomStrings[] = {
     [17] = (const u8*)"Cleared, and with time\nto spare! This is yours.",
     [18] = (const u8*)"Too slow. The pack has\nscattered - I'm off.",
     [19] = (const u8*)"You had your chance at\nthem. Maybe next time.",
+    // The hub's hint sprites (sQuickStartHubHints below). Six Wind Tribe
+    // wanderers scattered through the parts of the hub that are not doing a
+    // job of their own - the tower entrance, Floor 2, and the clifftop by the
+    // wind crest. Deliberately NOT in the spawn room, the shop or the roof,
+    // per the user: those three rooms already have something to say.
+    //
+    // Between them they cover the six things a new run has no other way to
+    // learn: kinstone fusion, what the run is actually for, that doors and
+    // holes are worth trying, that winning raises the stakes, that some rooms
+    // fight back in waves, and that clearing an area pays.
+    [20] = (const u8*)"Fuse Kinstones with the\nwanderers you meet!",
+    [21] = (const u8*)"The Earth Element waits\nin the final area.",
+    [22] = (const u8*)"Doors and holes hide\nsurprises. Try them all!",
+    [23] = (const u8*)"Each win raises the\ndifficulty and the loot.",
+    [24] = (const u8*)"Some rooms send waves.\nClear each wave for loot.",
+    [25] = (const u8*)"Clear an area of foes\nand a reward will drop.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3581,11 +3667,115 @@ static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
 // along: the shop already sold arrows, bombs-by-the-ten, a bomb bag and a
 // large quiver, and not one of those four does anything for a run that never
 // found the weapon.
-static const u16 sQuickStartShopCatalog[] = {
-    ITEM_BOMBS10,          ITEM_ARROWS10, ITEM_BOMBS,      ITEM_HEART_PIECE,
-    ITEM_BOTTLE_FAIRY,     ITEM_BOW,      ITEM_BOMBBAG,    ITEM_LARGE_QUIVER,
-    ITEM_SKILL_SPIN_ATTACK,
+// --- What the shop stocks -------------------------------------------------
+//
+// It used to be a hardcoded nine-item list, identical every run - only the
+// PRICES were rolled. The user noticed ("it seems like they are the same items
+// every time right now") and asked for the stock to be drawn from the item
+// categories instead. This is that pool.
+//
+// It is a separate table from sQuickStartTiers, and deliberately so: an item
+// is only sellable if it has a nonzero price AND a confirm-purchase text in
+// gItemMetaData, and most of the tier table has neither. Auditing the two
+// against each other found 21 of the 40 tier rows with price 0 - every
+// butterfly, most skills, the rare weapons, the rare key items - so drawing
+// the shop straight from the tier table would have stocked shelves of free
+// items whose sale could not complete. Everything below has been given a real
+// price in the [51, 299] band this mode uses (src/itemMetaData.c).
+//
+// Reusing QuickStartTierEntry rather than inventing a struct: the fields line
+// up exactly, and it means QuickStartTierEntryUsable - which already knows
+// about ammo without its weapon, potions without a bottle, and the Fire Rod /
+// Pacci Cane inventory-cell clash - is the shop's eligibility test for free.
+// `tier` is unused here; the slot table below decides the shape of the stock.
+static const QuickStartTierEntry sQuickStartShopPool[] = {
+    // Weapons and tools. The two ammo rows are the only repeatable ones -
+    // everything else here is a one-off purchase.
+    { ITEM_BOW, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_BOMBS, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_GUST_JAR, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_FIRE_ROD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NO_PACCI, 0 },
+    { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
+    { ITEM_LARGE_QUIVER, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
+    { ITEM_BOMBS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOMBS, 1 },
+    { ITEM_ARROWS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOW, 1 },
+    // Rewards.
+    { ITEM_HEART_PIECE, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
+    { ITEM_HEART_CONTAINER, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
+    { ITEM_BOTTLE1, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_BOTTLE_ROOM, 1 },
+    { ITEM_BOTTLE_BLUE_POTION, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_EMPTY_BOTTLE, 1 },
+    { ITEM_BOTTLE_RED_POTION, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_EMPTY_BOTTLE, 1 },
+    { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    // Key items - the five the opening selection offers, so the shop is the
+    // second chance at whichever two the player turned down.
+    { ITEM_PEGASUS_BOOTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_ROCS_CAPE, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_MOLE_MITTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_FLIPPERS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_LANTERN_OFF, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    // Skills.
+    { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_ROLL_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_PERIL_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
 };
+#define QUICKSTART_SHOP_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartShopPool))
+#define QUICKSTART_SHOP_SLOTS 9
+
+// What each shelf slot is for. Two weapons, two rewards, a key item and a
+// skill are always on offer; the last three are wildcards, so no two runs
+// stock the same nine even when the fixed six happen to repeat. Slot order is
+// display order (sQuickStartShopRoomItemOffsets), so the back row is weapons
+// and rewards and the front row is the rest.
+static const u8 sQuickStartShopSlotCategories[QUICKSTART_SHOP_SLOTS] = {
+    QS_CAT_WEAPON, QS_CAT_WEAPON, QS_CAT_REWARD, QS_CAT_REWARD, QS_CAT_KEY,
+    QS_CAT_SKILL,  QS_CAT_ALL,    QS_CAT_ALL,    QS_CAT_ALL,
+};
+
+// Five bits per slot, nine slots. The pool is 23 rows, so five bits covers it
+// with room to grow; QUICKSTART_SHOP_POOL_SIZE is asserted against 32 by the
+// invariant checker rather than here, since a static assert would need a
+// header this file does not include.
+#define GF_SHOP_SLOT_BIT(i, b) (97 + (i) * 5 + (b)) // i = 0..8, b = 0..4
+#define QUICKSTART_SHOP_SLOT_EMPTY 31
+
+static s32 QuickStartShopSlotEntry(s32 slot) {
+    s32 b, index = 0;
+    for (b = 0; b < 5; b++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SHOP_SLOT_BIT(slot, b))) {
+            index |= (1 << b);
+        }
+    }
+    return index;
+}
+
+static void QuickStartShopSetSlotEntry(s32 slot, s32 index) {
+    s32 b;
+    for (b = 0; b < 5; b++) {
+        if (index & (1 << b)) {
+            SetLocalFlagByBank(FLAG_BANK_11, GF_SHOP_SLOT_BIT(slot, b));
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, GF_SHOP_SLOT_BIT(slot, b));
+        }
+    }
+}
+
+// The item on a given shelf this run, or ITEM_NONE for a slot whose draw came
+// up empty or whose item is no longer sellable - bought already, or gated on
+// something the player does not have. Re-checked rather than cached, which is
+// what makes the shelf tidy itself: buy the Pegasus Boots and the slot goes
+// quiet instead of restocking them for a second, pointless purchase, which is
+// what the old fixed catalog did.
+static u16 QuickStartShopSlotItem(s32 slot) {
+    s32 index = QuickStartShopSlotEntry(slot);
+    if (index >= QUICKSTART_SHOP_POOL_SIZE) {
+        return ITEM_NONE;
+    }
+    if (!QuickStartTierEntryUsable(&sQuickStartShopPool[index])) {
+        return ITEM_NONE;
+    }
+    return sQuickStartShopPool[index].item;
+}
 // Placed by the user directly (Lua position script) - two rows across
 // Grimblade's open floor.
 static const s16 sQuickStartShopItemOffsets[][2] = {
@@ -3635,13 +3825,19 @@ static void QuickStartSpawnShopItem(u16 itemId, s16 offsetX, s16 offsetY) {
 // pedestal prop gets restocked - vanilla's real pedestal shops (Goron
 // Merchant etc.) have their own manager entity to do this; we don't have
 // that infrastructure, so just re-check and re-spawn missing entries here
-// instead. `offsets` must have exactly ARRAY_COUNT(sQuickStartShopCatalog)
-// entries, one per catalog item in the same order.
+// instead. `offsets` must have exactly QUICKSTART_SHOP_SLOTS entries, one per
+// shelf slot in the same order.
+//
+// A slot whose item is ITEM_NONE is simply left bare: either its draw came up
+// empty, or the item is no longer sellable (bought, or gated on something the
+// player lacks). That is the intended read - the shelf empties as the player
+// clears it out.
 static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
     s32 i;
-    for (i = 0; i < ARRAY_COUNT(sQuickStartShopCatalog); i++) {
-        if (!QuickStartShopItemExists(sQuickStartShopCatalog[i])) {
-            QuickStartSpawnShopItem(sQuickStartShopCatalog[i], offsets[i][0], offsets[i][1]);
+    for (i = 0; i < QUICKSTART_SHOP_SLOTS; i++) {
+        u16 item = QuickStartShopSlotItem(i);
+        if (item != ITEM_NONE && !QuickStartShopItemExists(item)) {
+            QuickStartSpawnShopItem(item, offsets[i][0], offsets[i][1]);
         }
     }
 }
@@ -3672,18 +3868,55 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 #define QUICKSTART_SHOP_AREA AREA_WIND_TRIBE_TOWER
 #define QUICKSTART_SHOP_ROOM ROOM_WIND_TRIBE_TOWER_FLOOR_1
 
-// Rolled once per run: what everything in the catalog costs. (This used to
-// draw the shop's host door as well - the shop has a fixed room now.)
+// Rolled once per run: WHAT each shelf holds, and what it costs. (This used
+// to draw the shop's host door as well - the shop has a fixed room now.)
+//
+// Each slot draws from its own category (sQuickStartShopSlotCategories), and
+// the draw is by rejection so no item appears twice: pick a usable pool row of
+// the right category, reject it if an earlier slot already took it, try again.
+// Bounded rather than looped forever - if a category is exhausted (a run that
+// already owns every key item, say) the slot is left empty, which the shelf
+// simply shows as bare floor.
+//
+// "Usable" is QuickStartTierEntryUsable, the same test every other draw in
+// this file uses, so ammo is never stocked without its weapon and a potion is
+// never stocked without a bottle to put it in.
 static void QuickStartRandomizeShopOnce(void) {
-    s32 i, b;
+    s32 i, j, b, attempt;
     if (QsCheckFlag(GF_SHOP_RANDOMIZED)) {
         return;
     }
-    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartShopCatalog); i++) {
-        u8 roll = (u8)((s32)Random() % 8);
-        for (b = 0; b < 3; b++) {
-            if (roll & (1 << b)) {
-                QsSetFlag(GF_SHOP_PRICE_BIT(i, b));
+    for (i = 0; i < QUICKSTART_SHOP_SLOTS; i++) {
+        s32 chosen = QUICKSTART_SHOP_SLOT_EMPTY;
+        for (attempt = 0; attempt < 64; attempt++) {
+            s32 pick = (s32)Random() % QUICKSTART_SHOP_POOL_SIZE;
+            const QuickStartTierEntry* e = &sQuickStartShopPool[pick];
+            if (!(e->cat & sQuickStartShopSlotCategories[i])) {
+                continue;
+            }
+            if (!QuickStartTierEntryUsable(e)) {
+                continue;
+            }
+            for (j = 0; j < i; j++) {
+                if (QuickStartShopSlotEntry(j) == pick) {
+                    break;
+                }
+            }
+            if (j < i) {
+                continue;
+            }
+            chosen = pick;
+            break;
+        }
+        QuickStartShopSetSlotEntry(i, chosen);
+        // The price roll is per SLOT, not per item, so it stays valid however
+        // the draw came out.
+        {
+            u8 roll = (u8)((s32)Random() % 8);
+            for (b = 0; b < 3; b++) {
+                if (roll & (1 << b)) {
+                    QsSetFlag(GF_SHOP_PRICE_BIT(i, b));
+                }
             }
         }
     }
@@ -3698,16 +3931,23 @@ static void QuickStartRandomizeShopOnce(void) {
 // floored at 5 so nothing lands on 0.
 //
 // Called from GetItemPrice (itemUtils.c) for EVERY item lookup in the game,
-// so it has to be cheap and has to say "not mine" quickly - hence the
-// catalog scan and the negative return for everything else. Vanilla shops
+// so it has to be cheap and has to say "not mine" quickly - hence the nine-
+// slot scan and the negative return for everything else. Vanilla shops
 // elsewhere keep their own prices untouched.
+//
+// Reads the slot's drawn pool row directly rather than through
+// QuickStartShopSlotItem: that one also applies the usability test, and an
+// item being priced is not the same question as it being stocked - the price
+// has to keep answering while the sale completes, which is exactly when the
+// player is about to own it.
 s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
     s32 i, b, roll, price;
     if (basePrice <= 0 || !QsCheckFlag(GF_SHOP_RANDOMIZED)) {
         return -1;
     }
-    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartShopCatalog); i++) {
-        if (sQuickStartShopCatalog[i] != item) {
+    for (i = 0; i < QUICKSTART_SHOP_SLOTS; i++) {
+        s32 index = QuickStartShopSlotEntry(i);
+        if (index >= QUICKSTART_SHOP_POOL_SIZE || sQuickStartShopPool[index].item != item) {
             continue;
         }
         roll = 0;
@@ -10464,6 +10704,94 @@ static void QuickStartClearHubRoom(void) {
     }
 }
 
+// --- The hub's hint sprites ----------------------------------------------
+//
+// Six Wind Tribe wanderers standing around the hub, each with one line about
+// how this mode works (gCustomStrings 20-25, script_QuickStartHubHints.inc).
+// Per the user they stay OUT of the spawn room, the shop and the roof - those
+// three already have a job - and go in the rooms that are otherwise just
+// corridors: the tower entrance, Floor 2, and the clifftop by the wind crest.
+//
+// Every spot below is an interior tile of the component the player actually
+// walks, flooded from that room's own arrival point rather than read off the
+// collision map (tools/quickstart/emu.py). Worth naming, because the tower's
+// two interior rooms are each split in two:
+//
+//   Entrance  arrival (136,248); the reachable block is rows 13-18, and the
+//             front door out to Cloud Tops is columns 6-8. The two hints
+//             flank that walk at x=88 and x=152, leaving the middle clear.
+//   Floor 2   same shape, same flanking pair. (Its bed alcoves are up in the
+//             other block - that is the inn's floor, still to be built.)
+//   Cloud Tops arrival (488,360) from the tower door; the crest is at
+//             (488,424) and the pit just south of it. The two hints sit level
+//             with the crest at x=392 and x=536, well clear of both, so the
+//             player passes between them on the way down to the pit.
+extern Script script_QuickStartHubHint0;
+extern Script script_QuickStartHubHint1;
+extern Script script_QuickStartHubHint2;
+extern Script script_QuickStartHubHint3;
+extern Script script_QuickStartHubHint4;
+extern Script script_QuickStartHubHint5;
+
+typedef struct {
+    u8 area;
+    u8 room;
+    s16 x;
+    s16 y;
+    Script* script;
+} QuickStartHubHint;
+
+static const QuickStartHubHint sQuickStartHubHints[] = {
+    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 88, 264, &script_QuickStartHubHint0 },
+    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 152, 264, &script_QuickStartHubHint1 },
+    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_2, 88, 264, &script_QuickStartHubHint2 },
+    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_2, 152, 264, &script_QuickStartHubHint3 },
+    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 392, 408, &script_QuickStartHubHint4 },
+    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 536, 408, &script_QuickStartHubHint5 },
+};
+
+// Idempotent by position rather than by flag, the same way
+// QuickStartSpawnStarterChoiceOnce is: these rooms are re-entered constantly,
+// and a room flag would be wiped by the reload while a global flag would have
+// to be cleared per run for no benefit. A hint already standing on its own
+// tile is the only evidence needed that it does not want spawning again.
+//
+// ZELDA is the entity kind every QUICKSTART NPC borrows, which also means
+// QuickStartClearHubRoom's every-frame NPC sweep spares these - it only
+// deletes NPCs whose id is something else.
+static void QuickStartSpawnHubHintsOnce(void) {
+    s32 i, j;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubHints); i++) {
+        const QuickStartHubHint* hint = &sQuickStartHubHints[i];
+        Entity* npc;
+        bool32 present = FALSE;
+        if (gRoomControls.area != hint->area || gRoomControls.room != hint->room) {
+            continue;
+        }
+        for (j = 0; j < MAX_ENTITIES; j++) {
+            Entity* ent = &gEntities[j].base;
+            if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == gRoomControls.origin_x + hint->x &&
+                ent->y.HALF.HI == gRoomControls.origin_y + hint->y) {
+                present = TRUE;
+                break;
+            }
+        }
+        if (present) {
+            continue;
+        }
+        npc = CreateNPC(ZELDA, 0, 0);
+        if (npc != NULL) {
+            npc->x.HALF.HI = gRoomControls.origin_x + hint->x;
+            npc->y.HALF.HI = gRoomControls.origin_y + hint->y;
+            npc->collisionLayer = 1;
+            npc->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcTalkable(npc, hint->script);
+        }
+    }
+}
+
 // --- The hub's way out: the hole in Cloud Tops ---------------------------
 //
 // Cloud Tops has exactly ONE Transition row (gExitList_CloudTops_House, back
@@ -10810,6 +11138,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartClearHubRoom();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
+    QuickStartSpawnHubHintsOnce();
     // Melari's Mine and its three side rooms are DORMANT, not deleted. The
     // mine was the hub and nothing routes into it any more (its one remaining
     // inbound pointer, Castle Garden's south border, is walled by containment
