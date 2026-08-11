@@ -11398,27 +11398,25 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_1E },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_29 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_60 },
-    // The Goron cave's own five interior fusions. In vanilla these are
-    // offered by the wall-punching Gorons standing inside the cave, but
-    // those are NPCs and every content-site room sweeps its vanilla NPCs,
-    // so nothing in this mode offered them and the cave's chain could not
-    // be advanced at all. Per the user's call they move out to the ranch's
-    // own fuser scatter, which puts all five within reach of the region the
-    // cave belongs to. That takes Lon Lon Ranch to 8 of its 9 scatter
-    // spots - the most crowded region in the game, and the reason the
-    // spot list is 9 long rather than 8.
+    // The Goron cave's three wall fusions. In vanilla these are offered by
+    // the wall-punching Gorons standing inside the cave, but those are NPCs
+    // and every content-site room sweeps its vanilla NPCs, so nothing in
+    // this mode offered them and the cave's chain could not be advanced at
+    // all. They live on the ranch's own fuser scatter instead, which puts
+    // them within reach of the region the cave belongs to.
     //
-    // 25, 26 and 2F are the three that punch a wall open, and are what the
-    // content sites gate on. 2A and 2B open no wall - in vanilla they only
-    // add another Goron to the line - so with the four-stage chain they
-    // gate nothing. They are here so the room's own vanilla state machine
-    // can still be walked all the way to its last state, and so a later
-    // chain with more stages has them available; a player who never fuses
-    // them loses nothing.
+    // Only these three exist as fusers. Vanilla's state machine also knows
+    // KINSTONE_2A and 2B, and both were briefly listed here, but neither
+    // opens a wall - in vanilla they only add another Goron to the line, and
+    // the main chamber is a content site so those Gorons are swept anyway.
+    // They gated nothing, they were indistinguishable in play from a fusion
+    // that does nothing at all, and each one cost a scatter spot that the
+    // fusions people actually need were competing against. Dropping them
+    // takes Lon Lon Ranch from 8 of its 9 spots to 6, which is the point:
+    // KINSTONE_29 alone decides whether the cave opens, so it should not be
+    // one of eight things hiding in the same field.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_25 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2A },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_26 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2B },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2F },
     // North Hyrule Field - the four middle tree stumps are one fusion each,
     // and those four ladders are the only way into the Boomerang chamber's

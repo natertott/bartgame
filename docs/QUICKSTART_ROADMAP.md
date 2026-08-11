@@ -499,12 +499,16 @@ reclaiming its 13 bits closes two open bugs and costs nothing.
   opens its own chamber (new `gateKinstone` field), and the payout comes
   from a new `rewardTier` field.
 
-  All five fusions are now offered by fusers in Lon Lon Ranch - in vanilla
+  The three wall fusions are offered by fusers in Lon Lon Ranch - in vanilla
   the wall-punching Gorons offer them, but they are NPCs and every content
   site room sweeps its vanilla NPCs, so nothing in this mode offered them
-  and the chain could not be advanced at all. That takes the ranch to 8 of
-  its 9 fuser scatter spots. 2A and 2B gate no content; they are there so
-  the room's own state machine can still be walked to its last state.
+  and the chain could not be advanced at all. KINSTONE_2A and 2B were
+  briefly listed alongside them and have been dropped: neither opens a wall,
+  the Gorons they add are swept anyway, so in play they were fusions that
+  did nothing while each consumed a scatter spot. The ranch is at 6 of its 9
+  spots now rather than 8, which matters because KINSTONE_29 alone decides
+  whether the cave opens at all. Measured across four real runs: 3 distinct
+  layouts, six non-colliding spots every time.
 
   Two real bugs surfaced in the shared miniboss code, both invisible until a
   room held more than one miniboss site, and both fixed with the Voronoi
