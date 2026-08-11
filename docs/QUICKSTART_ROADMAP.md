@@ -162,13 +162,20 @@ bonus on top of vanilla's.
 
 ### 3.4 The shop
 
-Its own room (Stockwell's), reached by redirecting one of eight candidate
-overworld doors, drawn per run. Nine-item catalog spread across the room's
-three shelves - top-left and left (both reached from the red room's floor)
-and the right shelf's front row (reached from the lower room below it, the
-only normal-size approach, since the alcove above it is Minish-only).
-Every spot is emulator-verified liftable. Prices randomized per run, bought
-by carrying an item to the merchant (vanilla's own `BuyShopItem` path).
+**Floor 1 of the hub**, one flight up from the tower entrance - walked to,
+not drawn. Nine-item catalog in two rows across the upper hall (y=88 and
+y=120) with a walkway between them at y=104, and the merchant at its east
+end. Every spot is emulator-verified liftable (`invariant_check.py`'s `hub`
+tier presses R and reads `gPlayerState.heldObject`, rather than reasoning
+from the collision map - which is what made the previous layout take four
+attempts). Prices randomized per run, bought by carrying an item to the
+merchant (vanilla's own `BuyShopItem` path).
+
+It used to be a "? room": first in the Grimblade dojo behind a fixed link,
+then in Stockwell's store reached by redirecting one of eight candidate
+overworld doors drawn per run. That retired two standing problems with it -
+the drawn door's own "? room" event was displaced for that run, and three of
+the nine catalog spots sat on a shelf in a sealed Minish-only pocket.
 
 ### 3.5 Win condition
 
@@ -433,13 +440,6 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   error as Lon Lon's old exit box - which suggests it has never worked. The
   generator ignores content offsets now, so it should start working the
   moment the site actually dispatches; why it doesn't is unchased.
-- **The shop's upper-right alcove may still be unreachable.** Three of the
-  nine catalog items sit there. Reading the collision map, tile 7 is solid
-  across every row above the corridor and the row below it is solid too, so
-  there is no route from the entrance; the stock was placed there anyway on
-  the user's description of the room, after I got the placement wrong twice
-  from data. If those three still cannot be picked up, it needs a walked
-  coordinate from inside the room rather than another guess.
 - Trilby Highlands: one enemy offset, `(120,24)`, sits in an isolated
   north-west pocket. Not gated - the user paused Trilby zone-gating pending
   their own walk.

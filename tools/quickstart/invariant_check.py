@@ -15,6 +15,8 @@ Tiers:
   entrances (not solid, not water) and its content spot is in bounds.
   gfx       20 boots: no region runs the 44-slot GFX table below its
   budget    reserve at any difficulty (a full table drops sprites).
+  hub       10 boots: every shop item on the hub's Floor 1 spawns where
+            its table says and lifts from the walkway in front of it.
   fusers    5 boots: every spot in a region's fuser scatter list is open
             ground inside the entrance's own reachable component, every gate
             reads un-fused on a fresh run, and the sprites this boot placed
@@ -458,6 +460,74 @@ def emu_rooms(rom, start, end):
     return out
 
 
+
+# Tower Floor 1's shop catalog, mirrored from game.c's own table. Kept here
+# deliberately rather than parsed: this tier's job is to catch the table
+# drifting off the floor it was measured against, and a parser that reads the
+# same numbers it is checking cannot do that.
+HUB_SHOP_SPOTS = [(48, 88), (80, 88), (112, 88), (144, 88), (176, 88),
+                  (64, 120), (96, 120), (128, 120), (160, 120)]
+HUB_SHOP_WALKWAY_Y = 104
+HUB_MERCHANT = (192, 104)
+PLAYER_STATE = 0x03003f80
+
+
+def emu_hub(rom):
+    """10 boots: the hub's shop floor.
+
+    Every catalog prop must spawn where the table says AND actually lift from
+    the walkway tile in front of it. Reasoning from the collision map is what
+    made the old Stockwell layout take four attempts - two of them shipped
+    with stock the player could see and not pick up - so this tier presses R
+    and reads gPlayerState.heldObject instead.
+    """
+    import emu
+    out = []
+    c = emu.boot(rom)
+    emu.warp(c, 48, 1, 120, HUB_SHOP_WALKWAY_Y, frames=300)
+    if emu.here(c) != (48, 1):
+        return [('FAIL', f'could not reach the hub shop floor, landed in {emu.here(c)}')]
+    ox = c.memory.u8[emu.ROOM_CONTROLS + 6] | (c.memory.u8[emu.ROOM_CONTROLS + 7] << 8)
+    oy = c.memory.u8[emu.ROOM_CONTROLS + 8] | (c.memory.u8[emu.ROOM_CONTROLS + 9] << 8)
+    placed = {(e[4] - ox, e[5] - oy) for e in emu.entities(c, emu.KIND_OBJECT)}
+    missing = [s for s in HUB_SHOP_SPOTS if s not in placed]
+    if missing:
+        out.append(('FAIL', f'shop props missing from {missing}'))
+    else:
+        out.append(('PASS', f'all {len(HUB_SHOP_SPOTS)} shop props spawned on their table spots'))
+    npcs = [(e[4] - ox, e[5] - oy) for e in emu.entities(c, emu.KIND_NPC)]
+    if HUB_MERCHANT not in npcs:
+        out.append(('FAIL', f'merchant not at {HUB_MERCHANT}; NPCs at {npcs}'))
+    else:
+        out.append(('PASS', f'merchant standing at {HUB_MERCHANT}'))
+
+    unliftable = []
+    for (ix, iy) in HUB_SHOP_SPOTS:
+        cc = emu.boot(rom)
+        emu.warp(cc, 48, 1, ix, HUB_SHOP_WALKWAY_Y, frames=240)
+        if emu.here(cc) != (48, 1):
+            unliftable.append((ix, iy))
+            continue
+        key = cc.KEY_UP if iy < HUB_SHOP_WALKWAY_Y else cc.KEY_DOWN
+        for _ in range(10):
+            cc.set_keys(key)
+            cc.run_frame()
+        cc.clear_keys(key)
+        for _ in range(10):
+            cc.run_frame()
+        for _ in range(10):
+            emu.press(cc, cc.KEY_R, 4, 6)
+            if cc.memory.u8[PLAYER_STATE + 5]:
+                break
+        if not cc.memory.u8[PLAYER_STATE + 5]:
+            unliftable.append((ix, iy))
+    if unliftable:
+        out.append(('FAIL', f'shop stock that will not lift from the walkway: {unliftable}'))
+    else:
+        out.append(('PASS', 'every shop item lifts from the walkway in front of it'))
+    return out
+
+
 def main():
     rom = 'tmc.gba'
     args = sys.argv[1:]
@@ -474,6 +544,7 @@ def main():
             results.append(('regions', emu_regions(rom)))
             results.append(('pool entrances', emu_pool_entrances(rom)))
             results.append(('fusers', emu_fusers(rom)))
+            results.append(('hub', emu_hub(rom)))
         if '--gfx' in args or ('--rooms' not in args and '--regions' not in args):
             results.append(('gfx budget', emu_gfx_budget(rom)))
         if '--regions' not in args:

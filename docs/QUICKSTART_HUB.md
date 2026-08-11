@@ -3,10 +3,11 @@
 Scope and build plan for the structural change that replaces Castor Darknut
 Hall as the run's start and pulls the shop out of the "? room" pool.
 
-**Status: steps 1-3 of §6 are built and verified.** The run spawns on Floor
+**Status: steps 1-4 of §6 are built and verified.** The run spawns on Floor
 3, walks down and out, and drops through the pit in Cloud Tops into its first
-overworld region; Castor Darknut and Melari's Mine are off the route. Steps
-4-8 (shop, roof wave, inn, wind crest, content sites) are still to do. Every
+overworld region past the shop on Floor 1; Castor Darknut and Melari's Mine
+are off the route. Steps 5-8 (roof wave, inn, wind crest, content sites) are
+still to do. Every
 coordinate below is measured off the live ROM, not read from a map dump - the
 survey is in §2 and is the part that makes the build cheap.
 
@@ -176,16 +177,37 @@ answer is to sweep them and place ground items on the same tiles, which is
 what every other reward in this mode does. Decide by measuring, not by
 guessing.
 
-### 3.3 The shop (Floor 1)
+### 3.3 The shop (Floor 1) - BUILT
 
-The shop stops being a "? room". Delete `sQuickStartShopDoors` and the
-per-run door draw (`QuickStartShopRandomizeOnce` and its redirect); keep
-`sQuickStartShopCatalog`, the per-run price roll, the merchant NPC and
-`script_QuickStartMerchant` verbatim. Only the placement table changes: nine
-new offsets inside Floor 1's connected floor.
+Gone: `sQuickStartShopDoors`, `QuickStartShopGetDoor`, the `GF_SHOP_DOOR_BIT`
+draw, the redirect in `QuickStartProcessDoorRedirects`, and
+`QuickStartFixupShopReturn`. Kept verbatim: `sQuickStartShopCatalog`, the
+per-run price roll, the merchant NPC and `script_QuickStartMerchant`.
 
-**This retires two open bugs at once** - the unreachable right-shelf alcove
+**This retired two open bugs at once** - the unreachable right-shelf alcove
 (roadmap §5) and the shop's dependency on a drawn door.
+
+Layout, measured: Floor 1 is two blocks joined by the stair column at tile
+column 3, and they really are one connected component (walked it: (56,112)
+down to (56,302), and (56,216) back up to (56,87)). The catalog goes in the
+UPPER hall, rows 5-7 -
+
+```
+y=88    five items    (row 5)
+y=104   the walkway   (row 6), merchant at its east end (192,104)
+y=120   four items    (row 7)
+```
+
+- because the lower block is where the traffic is: arriving from the Entrance
+lands at (184,248) and from Floor 2 at (136,248), and stock strewn across the
+arrival tiles is exactly the complaint the Stockwell layout drew.
+
+**No obstacle sweep here.** The Stockwell room's blanket "delete every OBJECT
+that isn't a SHOP_ITEM" would have taken Floor 1's two `ARCHWAY` objects with
+it, and those sit on the stair doors at (136,216) and (184,216) - the room's
+only way in or out. `QuickStartClearHubRoom` already handles the floor's
+enemies and NPCs while sparing the ZELDA-kind merchant, which is all that is
+needed.
 
 ### 3.4 The roof wave
 
@@ -286,7 +308,10 @@ Each step is separately verifiable and leaves the game playable.
 2. ~~**Wire the hole.**~~ DONE - see §3.5, including why the first attempt
    silently did nothing.
 3. ~~**Retire Castor Darknut and the Melari skip.**~~ DONE - see §4.
-4. **Move the shop to Floor 1.**
+4. ~~**Move the shop to Floor 1.**~~ DONE - see §3.3. Covered by a new
+   `hub` tier in `invariant_check.py`: 10 boots that check every catalog prop
+   spawns on its table spot and actually lifts (press R, read
+   `gPlayerState.heldObject`) rather than trusting the collision map.
 5. **The roof wave and its reward.**
 6. **The inn.** Last because it is the only genuinely new mechanic and the
    only one with an unresolved question (the chests).
@@ -309,3 +334,24 @@ Each step is separately verifiable and leaves the game playable.
 - **The hub is six rooms of new surface** in a mode whose recurring failure
   is hand-placed coordinates. Every table row added here should get an
   invariant-checker tier before it is trusted.
+
+
+---
+
+## 8. Measured facts worth not re-deriving
+
+- **The tower stairs work, in both directions, on every floor.** A probe that
+  warped onto Floor 3's stair tiles and found nothing firing looked for a
+  while like the spawn floor was a dead end. It is not: Floor 3 is
+  `QUICKSTART_ROOM`, so the arrival Ezlo hint is on screen, and an open
+  message box blocks all player input. Dismiss it first. Walked end to end
+  afterwards: Floor 3 -> Floor 2 -> Floor 1 -> Entrance -> Cloud Tops -> the
+  pit -> the run's first region.
+- **The stair doors' trigger tiles are (136,232) and (184,232)** on every
+  floor, approached from the lower block by holding toward the archway from
+  around y=250. The `ARCHWAY` objects at (136,216)/(184,216) sit on them.
+- **Floor 1 arrivals**: (184,248) coming up from the Entrance, (136,248)
+  coming down from Floor 2.
+- The exit-list names in `transitions.c` are off by one against the room they
+  serve (`gExitList_WindTribeTower_Floor2` is Floor 1's list, and so on).
+  Read `gExitLists_WindTribeTower` rather than the names.

@@ -662,37 +662,28 @@ const Transition gExitList_CastleGarden_Main[] = {
     // end - ROOM_DOJOS_TO_GRIMBLADE's only exit is straight back here.
     { WARP_TYPE_AREA, 0x3a8, 0x184, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
-#ifdef QUICKSTART
-    // Retargeted so leaving through the bottom of the contained-game's
-    // Castle Garden doesn't escape to the wider overworld (Hyrule Field).
-    // Unlike the WARP_TYPE_AREA doors elsewhere in this file, this
+    // VANILLA, in both branches, per the user's own call. This row spent most
+    // of the mode's life retargeted: first to Melari's Mine (back when the
+    // mine was the hub and this was how the player walked back to it), then
+    // briefly as a deliberate wall once the mine left the route. Neither is
+    // right now - Castle Garden and North Hyrule Field are physically
+    // adjacent screens and both are regions in the same pool, so the honest
+    // behaviour is the vanilla one: walking off the bottom of Castle Garden
+    // puts you in North Hyrule Field, and NHF's own north border and
+    // WARP_TYPE_AREA door (gExitList_HyruleField_NorthHyruleField, both
+    // already vanilla in both branches) bring you back.
+    //
+    // Unlike the WARP_TYPE_AREA doors elsewhere in this file, a
     // WARP_TYPE_BORDER entry doesn't depend on GetActTileAtTilePos at all
     // (IsPosInBorderTransitionRegion, scroll.c, only checks facing direction
-    // and room-half) - confirmed to still fire under QUICKSTART, so
-    // retargeting it (rather than reproducing it as a position-box
-    // QuickStartLink in game.c) covers the whole south edge with the same
-    // mechanism real doors use.
+    // and room-half), so it fires reliably under QUICKSTART.
     //
-    // This edge is now a WALL, and the destination below is how it is walled.
-    // Melari's Mine was the hub, and this row let the player walk out of the
-    // bottom of Castle Garden into it; with the mine retired from the route,
-    // that turned into a free warp straight to the run's first region (the
-    // skip that used to fire on arrival there). Melari's Mine is off
-    // QuickStartAreaContained's list now, so QuickStartEnforceContainment
-    // cancels this transition outright - contained Castle Garden is not
-    // allowed to leave for a non-contained area - and the player simply
-    // stops at the edge, with no fade and no bounce. The row is deliberately
-    // left pointing at the mine rather than reverted to vanilla's North
-    // Hyrule Field, which containment would sometimes ALLOW (whenever this
-    // save's chain happens to put NHF at slot 0 or right after Castle
-    // Garden), making the edge a wall on some runs and a shortcut on others.
-    // Putting Melari's Mine back on the route means this edge opens again.
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x98, 0x12f, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#else
+    // Both containment functions need an explicit exception for this pair -
+    // see QuickStartIsGardenFieldCrossing (game.c). Without it the crossing
+    // would work only on the runs where this save's chain happened to put
+    // the far side next, i.e. a wall on some runs and a door on others.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x48, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#endif
     TransitionListEnd,
 };
 const Transition gUnk_08134FBC[] = {
