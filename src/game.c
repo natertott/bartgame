@@ -10635,6 +10635,44 @@ static void QuickStartProcessRegionChainLinks(void) {
     }
 }
 
+// Is this one of the hub's rooms? The tower is one area (four floors) and
+// its roof is another; both are ours end to end.
+static bool32 QuickStartIsHubRoom(void) {
+    return gRoomControls.area == AREA_WIND_TRIBE_TOWER || gRoomControls.area == AREA_WIND_TRIBE_TOWER_ROOF;
+}
+
+// The hub's vanilla population, swept every frame.
+//
+// Home of the Wind Tribe is full of Wind Tribe members - NPC ids 0x49 and
+// 0x4a, measured one per floor plus three clustered on Floor 1 - and they
+// stand in doorways. The user could not get off the first floor to reach the
+// wind crest or the hole because of them.
+//
+// Not folded into QuickStartClearVanillaRoomContent for two reasons. That
+// one is latched to run once per room visit, and the tower's own NPCs arrive
+// on a script rather than at load - the chief reappeared after the item
+// selection finished, which a one-shot sweep cannot catch. And it deletes
+// ground items, which would take the item-choice row with it.
+//
+// So: enemies and NPCs only, every frame, and never our own sign. ZELDA is
+// the entity kind every QUICKSTART NPC borrows (the sign, the merchant, the
+// kinstone fusers, the hunt giver), so skipping it protects all of them.
+static void QuickStartClearHubRoom(void) {
+    s32 i;
+    if (!QuickStartIsHubRoom()) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == ENEMY || (ent->kind == NPC && ent->id != ZELDA)) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
 // Polled every frame regardless of item-choice phase (unlike
 // QuickStartUpdateItemChoice, which is specific to Castor Darknut Main) so
 // that leaving the starting room still gets QUICKSTART treatment.
@@ -10739,6 +10777,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartSpawnRegionFusers();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartGetCurrentRegionChainPosition();
+    QuickStartClearHubRoom();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
     } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
@@ -11514,16 +11553,16 @@ static void QuickStartUpdateItemChoice(void) {
             // which this mid-game reload doesn't trigger (the player entity
             // persists across RELOAD_ALL, unlike a real area transition).
             UpdatePlayerSkills();
-            // Spawn wave 1 directly here, edge-triggered exactly like waves
-            // 2 and 3 - NOT via a "spawn during this reload's fade-in"
-            // idempotent poll (as this used to work). That indirection meant
-            // ANY later reload while still on phase 6 - including simply
-            // walking back into Main after leaving before wave 1 was fully
-            // cleared - would find zero Octoroks alive and spawn a fresh
-            // set, resurrecting enemies the player had already defeated.
-            // These have ENT_PERSIST, so they survive the RELOAD_ALL below
-            // just fine without needing to be (re)created during it.
-            QuickStartSpawnEnemies();
+            // RETIRED: this used to spawn wave 1 the moment the third item
+            // was taken - Castor Darknut Main's third act, back when the
+            // selection room was also a combat room. The hub has no combat
+            // phase: the player picks three items and walks downstairs. Per
+            // the user, "after item selection, no enemies spawn".
+            //
+            // Worth keeping the reason it was edge-triggered rather than
+            // polled, in case a hub wave is ever wanted: an idempotent
+            // "spawn if the room is empty" poll resurrected enemies the
+            // player had already killed every time they walked back in.
             gRoomTransition.field_0x4[0] = 6;
             // reload_flags alone is not self-executing: it's only consumed by
             // UpdateScroll's Scroll0/Scroll2 handlers (see scroll.c), which are
