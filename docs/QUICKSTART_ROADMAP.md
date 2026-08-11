@@ -440,6 +440,59 @@ New events assembled from proven vanilla parts, cheapest first:
 - *Hard (new AI or heavy scripting - defer)*: escort/herding events,
   bespoke new enemy behaviours, fully new scripted questlines.
 
+### Phase D1 - Overworld fixes the user reported, still open
+
+Three of the five are done (the boomerang-cave ladder flag, the stuck-wave
+rescue, and the roadmap entries below). These are not:
+
+- **Lon Lon Ranch: the kinstone staircase under the shallow water leads
+  nowhere.** The fusion reveals it and the player warps straight back to the
+  overworld. Wanted: restore the vanilla connection and make the room a "?"
+  room. Shape is known - it is the same job already done for the Goron Cave
+  door and the ranch houses (a `transitions.c` destination plus a
+  `sQuickStartRoomContentSites` row), so this is the cheapest of the three.
+- **Lon Lon Ranch: the Goron cave's full kinstone progression.** Vanilla has
+  several fusions there, each removing another interior wall; this mode only
+  wires the one that opens the entrance. Wanted, in order:
+  `? event -> ? event -> miniboss -> COMMON -> miniboss -> UNCOMMON ->
+  miniboss -> RARE`, each confined to its own chamber and reachable only once
+  the wall before it is gone. The hard part is not the content - all seven
+  kinds already exist - it is holding each piece inside its own segment, which
+  needs the room's chambers surveyed as separate collision components and the
+  content gated on the specific fusion flag that opens each one.
+- **Hyrule Castle Garden's Minish rooms.** Three: above the east fountain
+  (works, but a vanilla treasure chest needs sweeping), above the west
+  fountain (its door does not fire - the same class as the Entrance's walled
+  doorway and NHF's tree doors, both of which turned out to be solvable), and
+  the hole behind a shrub that only Minish Link can reach. All three want to
+  be "?" rooms.
+
+### Phase D2 - Queued, in the user's own priority order
+
+Named work, deferred deliberately rather than not yet thought about:
+
+- **The hub's inn (Floor 2).** `docs/QUICKSTART_HUB.md` §3.2 and §6 step 6.
+  Three beds at 50 / 200 / 500 rupees healing 25% / 50% / 100% (minimum 1 / 2
+  hearts / full), and the chests between them holding nothing / a COMMON
+  REWARD / an UNCOMMON REWARD, never rare. Paused at the user's request in
+  favour of overworld fixes; it is the only genuinely new mechanic left in the
+  hub, and the only one with an open question (whether Floor 2's
+  `SPECIAL_CHEST` objects can be filled, or whether the contents have to be
+  ground items on the same tiles like every other reward in this mode).
+- **Persistent living-enemy count.** Today a wave is re-spawned whole every
+  time the region room loads, so killing 10 of 20, stepping into a "? room"
+  and stepping back out puts all 20 back. That makes leaving mid-wave a
+  punishment and effectively forbids using a "? room" during a fight. What is
+  wanted: the count of enemies *still alive* survives leaving the area, and
+  only resets to the wave maximum when a wave is actually wiped. Storage
+  exists for it (the region chain already keeps a per-slot wave counter in
+  FLAG_BANK_11); the work is in the spawner, which currently keys off "is the
+  room empty" rather than off a remembered count.
+- **More hints, drawn per run.** Six today, fixed, one per spot
+  (`sQuickStartHubHints`). Wanted: a larger pool, with which hints appear
+  drawn per run - the same shape the shop's stock now uses, and cheap now that
+  the per-run RNG actually varies (§3.3b).
+
 ### Phase E - World breadth
 
 Regions 6-7 (Eastern Hills needs its sub-room survey; Castor Wilds), the

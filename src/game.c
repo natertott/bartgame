@@ -663,6 +663,22 @@ static void GameTask_Transition(void) {
     // is exactly where the WINDCREST object stands in the room - so the warp
     // lands on the crest itself with no new data needed.
     gSave.windcrests |= 1 << 26;
+    // North Hyrule Field's boomerang cave: the ladder in the middle of the
+    // four tree entrances is vanilla's own four-torch puzzle - light one torch
+    // in each of the four Boomerang tree rooms and the ladder appears
+    // (sub_StateChange_Caves_Boomerang, roomInit.c, keyed on
+    // SOUGEN_06_HASHIGO). A RARE drop sits at the bottom of it.
+    //
+    // That flag is a BANK-0 global, and the per-run wipe below starts at
+    // FLAG_BANK_1 - deliberately, because bank 0 is where the meta layer and
+    // this file's own boot grants live. So the ladder stayed open for every
+    // later run: light the torches once, and the rare drop is a free walk down
+    // a hole from then on. Reported by the user.
+    //
+    // Cleared here so the puzzle has to be solved again each run. The torches
+    // themselves need nothing - they are ordinary room-local flags in Tree
+    // Interiors' own bank, which the FLAG_BANK_1..12 wipe already resets.
+    ClearGlobalFlag(SOUGEN_06_HASHIGO);
     // The Ocarina of Wind, granted at boot per the user's request, so the
     // hub's shop, inn and roof are reachable from anywhere in the run rather
     // than only on the way out. It does NOT need removing from the tier table:
@@ -2912,10 +2928,18 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
 // The timer then restarts, so an enemy that somehow wanders off again gets
 // pulled back rather than stranding the run on the second attempt.
 //
-// Deliberately scoped to the chain's LAST region, and only while its first
-// wave is still the one being fought: everywhere else a stranded enemy costs
-// the player a loot drop at worst, which is not worth teleporting enemies
-// around for.
+// Runs in EVERY region, not just the chain's last.
+//
+// It was scoped to the last slot on the reasoning that elsewhere a stranded
+// enemy only costs a loot drop. That was wrong about how the mode plays: a
+// region's wave gates its reward AND its onward exit, so an enemy the player
+// cannot reach stalls the whole run, not one item. Lon Lon Ranch is where the
+// user hit it - its waves could not be cleared at all, because some spawn
+// ground there is not connected to where the player walks in.
+//
+// The last slot keeps its own separate clock (gSave.final_wave_frame, started
+// when the Element-gating wave spawns) because the win depends on that exact
+// room going empty; every other region shares the run-scoped one below.
 static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
     s32 i;
     if (gSave.run_frames - gSave.final_wave_frame < QUICKSTART_STUCK_WAVE_FRAMES) {
@@ -2945,10 +2969,18 @@ static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
     }
 }
 
+// gSave.final_wave_frame is the stuck-wave clock, and one is enough for all
+// the regions: only one is ever loaded, so the last slot's use of it and every
+// other region's cannot overlap.
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
     u8 wave = QuickStartRegionGetWaveCount(slot);
     if (QsCheckRoomFlag(0)) {
         if (!QuickStartRegionWaveCleared()) {
+            // A wave that will not clear stalls the region's reward AND its
+            // onward exit, so pull stranded enemies back to the reward spot
+            // wherever it happens - this used to run only in the chain's last
+            // region. See QuickStartRescueStuckFinalWave.
+            QuickStartRescueStuckFinalWave(region);
             return;
         }
         if (wave < 255) {
@@ -2959,11 +2991,11 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     }
     QuickStartSpawnRegionWave(region, wave);
     QsSetRoomFlag(0);
-    // Start (or restart) the stuck-wave clock for whichever wave the last
-    // region is currently gating the Earth Element behind. Room flag 43 is
-    // "an Element has already been dropped this visit", so once it is set
-    // there is nothing left for the failsafe to protect.
-    if (slot == QuickStartRegionChainLength() - 1 && !QsCheckRoomFlag(43)) {
+    // Start (or restart) the stuck-wave clock for the wave just spawned. Room
+    // flag 43 is "an Element has already been dropped this visit"; once it is
+    // set the last region has nothing left for the failsafe to protect, but
+    // every other region still wants its clock running for the next wave.
+    if (slot != QuickStartRegionChainLength() - 1 || !QsCheckRoomFlag(43)) {
         gSave.final_wave_frame = gSave.run_frames;
     }
 }
