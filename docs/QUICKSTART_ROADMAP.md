@@ -177,6 +177,20 @@ overworld doors drawn per run. That retired two standing problems with it -
 the drawn door's own "? room" event was displaced for that run, and three of
 the nine catalog spots sat on a shelf in a sealed Minish-only pocket.
 
+### 3.4a Getting back to the hub: the Ocarina of Wind
+
+Granted at boot, and it goes to exactly one place: the wind crest outside the
+Home of the Wind Tribe (`gUnk_08128024` row 2, Cloud Tops at (488,424), which
+is where the WINDCREST object stands). The crest-picking map is skipped -
+`Subtask_FastTravel_0` jumps straight to state 4 under QUICKSTART, the state
+vanilla reaches after a confirmed pick, so the ocarina animation, the bird
+that carries the player off, the fade and the arrival bird are all vanilla and
+all still play.
+
+No tier-table change was needed: `QuickStartTierEntryUsable` already refuses
+non-repeatable items the player owns, so a granted ocarina stops being
+drawable on its own.
+
 ### 3.4b The hub's roof
 
 Optional content, one flight above the item selection. One wave at the run's

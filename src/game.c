@@ -593,6 +593,18 @@ static void GameTask_Transition(void) {
     // is exactly where the WINDCREST object stands in the room - so the warp
     // lands on the crest itself with no new data needed.
     gSave.windcrests |= 1 << 26;
+    // The Ocarina of Wind, granted at boot per the user's request, so the
+    // hub's shop, inn and roof are reachable from anywhere in the run rather
+    // than only on the way out. It does NOT need removing from the tier table:
+    // QuickStartTierEntryUsable already refuses any non-repeatable item the
+    // player already owns, and the ocarina's row is non-repeatable, so it
+    // simply stops being drawable. It is not in sQuickStartKeyItems either, so
+    // the opening selection is unaffected.
+    //
+    // Where it takes the player is fixed - see Subtask_FastTravel_0
+    // (src/subtask/subtaskFastTravel.c), which skips the crest-picking map
+    // entirely under QUICKSTART.
+    SetInventoryValue(ITEM_OCARINA, 1);
     // Lon Lon Ranch house key, granted at boot per the user's request ("Link
     // should start the game with the Lon Lon ranch house key already in his
     // inventory"). Note this doesn't actually gate anything under

@@ -32,13 +32,51 @@ void Subtask_FastTravel(void) {
     CopyOAM();
 }
 
+#ifdef QUICKSTART
+// The hub's own windcrest, Cloud Tops, is row 2 of gUnk_08128024
+// (src/menu/kinstoneMenu.c). Its destination there is (0x1e8,0x1a8) =
+// (488,424), exactly where the WINDCREST object stands outside the Home of
+// the Wind Tribe.
+#define QUICKSTART_WINDCREST_INDEX 2
+#endif
+
+// State 0 of the fast-travel subtask: vanilla loads the overworld map, picks
+// the first revealed crest as the cursor's starting point, and hands over to
+// state 1 - the interactive map where the player scrolls between crests and
+// confirms.
+//
+// Under QUICKSTART there is exactly one place to go. Per the user: "the player
+// uses the ocarina, the animation of a bird picking them up plays, then the
+// player arrives at the Home of the Wind Tribe wind crest" - no map, no
+// choosing. So this jumps straight to state 4, which is the state
+// Subtask_FastTravel_3 hands to after a confirmed pick: it waits out the fade
+// and then performs the transition through the same sub_080A71F4 the vanilla
+// path uses.
+//
+// The map-loading calls are skipped along with the menu, deliberately. They
+// only exist to paint the screen state 1 draws on, and running them would put
+// a frame of the crest map on screen - a flash of exactly the mechanic this is
+// meant to remove. Nothing downstream reads what they set up: sub_080A6E70
+// (the cursor and crest markers) is gated on gMenu.field_0x0, which only
+// leaves 0 inside state 1.
+//
+// Everything either side of the menu is untouched. The ocarina animation, the
+// bird that carries the player off (Bird_Type8, src/object/bird.c), the fade,
+// and the bird that sets them down on arrival (sub_0809D738 via
+// sub_0807B2F8, src/playerUtils.c) are all vanilla and all still run.
 void Subtask_FastTravel_0(void) {
+#ifdef QUICKSTART
+    gMenu.field_0x3 = QUICKSTART_WINDCREST_INDEX;
+    SetMenuType(4);
+    SetFade(FADE_IN_OUT | FADE_INSTANT, 8);
+#else
     sub_080A4D34();
     sub_080A4DB8(0xd);
     sub_080A6290();
     gMenu.field_0x3 = sub_080A6D74(0);
     SetMenuType(1);
     SetFade(FADE_INSTANT, 8);
+#endif
 }
 
 void Subtask_FastTravel_1(void) {

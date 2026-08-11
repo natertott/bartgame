@@ -3,11 +3,11 @@
 Scope and build plan for the structural change that replaces Castor Darknut
 Hall as the run's start and pulls the shop out of the "? room" pool.
 
-**Status: steps 1-5 of §6 are built and verified.** The run spawns on Floor
+**Status: steps 1-5 and 7 of §6 are built and verified.** The run spawns on Floor
 3, walks down and out, and drops through the pit in Cloud Tops into its first
 overworld region past the shop on Floor 1; Castor Darknut and Melari's Mine
-are off the route, and the roof runs its wave. Steps 6-8 (inn, wind crest,
-content sites) are still to do. Every
+are off the route, the roof runs its wave, and the Ocarina of Wind warps the
+player home. Steps 6 (the inn) and 8 (content sites) are still to do. Every
 coordinate below is measured off the live ROM, not read from a map dump - the
 survey is in §2 and is the part that makes the build cheap.
 
@@ -275,13 +275,21 @@ player really does fall out of the sky into the region.
 **Lesson for the rest of this build: when vanilla already has a table for a
 thing, read the table.** A tile survey is a guess about what the table says.
 
-### 3.6 The wind crest
+### 3.6 The wind crest - BUILT
 
-`gSave.windcrests` bit for Cloud Tops, set at run start next to the other
-boot grants. The eight fast-travel destinations are ordinary `Transition`
-rows in `gUnk_08128024` (`src/menu/kinstoneMenu.c`) - see
-`QUICKSTART_ITEM_TIERS.md` §9, which already researched this. Making the hub
-one of the eight is data.
+`gSave.windcrests |= 1 << 26` at run start reveals Cloud Tops, row 2 of
+`gUnk_08128024` (`src/menu/kinstoneMenu.c`), whose destination (0x1e8,0x1a8) =
+(488,424) is exactly where the WINDCREST object stands - so the warp lands on
+the crest with no new data.
+
+The **Ocarina of Wind is granted at boot** and takes the player only there.
+`Subtask_FastTravel_0` jumps straight to state 4 under QUICKSTART - the state
+vanilla reaches after a confirmed pick on the map - so no crest is chosen and
+no map is drawn, while the ocarina animation, the bird that carries the player
+off (`Bird_Type8`), the fade and the arrival bird (`sub_0809D738`) are all
+vanilla and all still play. The map-loading calls in state 0 are skipped along
+with the menu, deliberately: they only paint the screen state 1 draws on, and
+running them would flash a frame of exactly the mechanic this removes.
 
 ---
 
@@ -348,7 +356,9 @@ Each step is separately verifiable and leaves the game playable.
    lands outside it.
 6. **The inn.** Last because it is the only genuinely new mechanic and the
    only one with an unresolved question (the chests).
-7. **Wind crest**, which is data once the rest works.
+7. ~~**Wind crest.**~~ DONE - see §3.6, done early because the Ocarina of
+   Wind (granted at boot, fixed destination) is what makes the hub's shop and
+   inn reachable from the middle of a run rather than only on the way out.
 8. Content sites for the hub rooms if wanted later - the tower floors are
    good candidates once they are cleared.
 
