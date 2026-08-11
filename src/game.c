@@ -113,18 +113,48 @@ static void sub_08051DCC(void);
 // aliasing each other.
 //
 // So QUICKSTART's flags move out of bank 0 into a private window inside
-// FLAG_BANK_12. Bank 12 is by far the largest (0xA80..0xFFF = 1408 bits) and
-// QUICKSTART already owns part of it for the 15 door slots
-// (GF_DOORS_RANDOMIZED/GF_DOOR_BASE, offsets 300-585). ORIGIN 700 starts
-// clear of that block, leaving offsets 700-1407 (708 bits) for the flag
-// numbers below, which currently span 101-305.
+// FLAG_BANK_12. Bank 12 is by far the largest (0xA80..0xFFF = 1408 bits).
+// ORIGIN 700 puts the window at raw offsets 700-1407 (708 bits) for the
+// flag numbers below, which run 101-707.
 //
-// The flag NUMBERS are deliberately unchanged - only the accessor moves - so
-// every GF_* definition, comment and bit-packing layout keeps its existing
-// meaning, and this stays a relocation rather than a renumbering. Vanilla
-// progress flags (LV1_CLEAR, TABIDACHI, ZELDA_CHASE, ...) still go through
-// the real CheckGlobalFlag/SetGlobalFlag and stay in bank 0, where the rest
-// of the engine expects to find them.
+// The flag NUMBERS in that window are deliberately unchanged - only the
+// accessor moved - so every GF_* definition, comment and bit-packing layout
+// keeps its existing meaning. Vanilla progress flags (LV1_CLEAR, TABIDACHI,
+// ZELDA_CHASE, ...) still go through the real CheckGlobalFlag/SetGlobalFlag
+// and stay in bank 0, where the rest of the engine expects to find them.
+//
+// --- The whole of FLAG_BANK_12, one map ----------------------------------
+//
+// This bank is effectively QUICKSTART's: gAreaMetadata hands LOCAL_BANK_12
+// to nothing but the eight Royal Crypt areas, a side dungeon this mode
+// never enters (no region, pool room or content site names it - the
+// invariant checker's "flags" tier asserts that, so it stays true).
+//
+//   raw 0            unusable - SetLocalFlagByBank drops offset 0 in every
+//                    bank (flags.c reserves it as "no flag").
+//   raw 1    - 793   the room-keyed content sites (GF_CONTENT_SITE_BASE),
+//                    13 bits each, room for 61 sites. Raw-addressed, NOT
+//                    through QsCheckFlag - see its own comment below.
+//   raw 794  - 800   spare (the tail of the site block's ceiling).
+//   raw 801  - 1407  the QUICKSTART window, i.e. QsCheckFlag offsets
+//                    101-707. Everything else in this file lives here.
+//
+// Raw 0-585 used to hold GF_DOOR_*, 15 synthetic door entrances at 19 bits
+// each that were all retired without their storage being reclaimed. That
+// dead block is what the site block now occupies. Before that reclaim the
+// sites lived at QsCheckFlag offsets 266-655, wedged between the region
+// chain below them and the bridge/shop/Melari flags above, with room for
+// exactly ONE more site - which is why adding the 31st was impossible until
+// this move. Their old range, offsets 266-655, is free now.
+//
+// The rule this layout exists to enforce: no two blocks may overlap, and
+// none may run past raw 1407. invariant_check.py's "flags" tier parses
+// every GF_* define out of this file and asserts both, so the next person
+// to grow a block finds out at check time instead of in play. (The last
+// time this went wrong it was silent and nasty: at 25 sites, site 24's
+// block started at exactly GF_NHF_BRIDGE_JOINED, so joining North Hyrule
+// Field's bridge also marked the smithy site "already randomized" with an
+// all-zero roll, and entering the smithy permanently joined the bridge.)
 // Where the player stands in the hub's third-floor hall. Used by the initial
 // spawn and by the two inter-phase repositions, which have to agree with it -
 // they exist to move the player OFF the item row before the next row spawns,
@@ -144,6 +174,27 @@ static void QsSetFlag(u32 flag) {
 
 static void QsClearFlag(u32 flag) {
     ClearLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
+}
+
+// The content sites' own block sits BELOW the QUICKSTART window rather than
+// inside it (see the bank map above), so it needs its own accessor - passing
+// its offsets to QsCheckFlag would add ORIGIN 700 and land somewhere else
+// entirely. Same bank, raw addressing.
+//
+// Origin 1, not 0: SetLocalFlagByBank (flags.c) is `if (flag != 0)
+// WriteBit(...)`, i.e. vanilla reserves offset 0 in every bank as "no
+// flag". A block based at 0 loses its first bit silently - measured, with
+// the site block briefly based at 0: site 0's kind and extra bits wrote
+// fine and its RANDOMIZED latch never stuck, so North Hyrule Field's fairy
+// fountain re-rolled its contents on every single entry.
+#define QUICKSTART_SITE_FLAG_ORIGIN 1
+
+static bool32 QsCheckSiteFlag(u32 flag) {
+    return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
+}
+
+static void QsSetSiteFlag(u32 flag) {
+    SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
 // gRoomVars.flags is shared with whatever vanilla room logic runs in the
@@ -200,7 +251,6 @@ static void QuickStartSetupMelariEastRoomContent(void);
 static void QuickStartRandomizeMelariSoutheastOnce(void);
 static void QuickStartSetupMelariSoutheastRoomContent(void);
 static void QuickStartRandomizeSlotsOnce(void);
-static void QuickStartRandomizeDoorsOnce(void);
 static void QuickStartSetupSlotRoomContent(s32);
 static void QuickStart2DoorClearRoomObstacles(u8, u8);
 static bool32 QuickStartIsBoomerangTree(u8, u8);
@@ -415,11 +465,10 @@ static void GameTask_Transition(void) {
         // same one-per-run reasoning as GF_REGION_INTRO_HINT_SHOWN. 230-234:
         // Melari's Mine East room's own randomized-once/kind/extra bits.
         // 235: free (was GF_HEART_CONTAINER_BONUS_APPLIED). 241-265: the river
-        // bridge and cave connector draws. 266-655: the 30 room-keyed
-        // content sites' randomized/kind/extra/done blocks
-        // (GF_CONTENT_SITE_BASE, 13 bits each) - these ARE the single-door
-        // "? room" assignments now, so they re-roll every fresh boot for
-        // exactly the same reason the ladder/door slots they replaced did.
+        // bridge and cave connector draws. 266-655: free (this is where the
+        // room-keyed content sites used to live, before they moved down to
+        // their own raw block at the bottom of the bank - see the bank map
+        // at the top of this file; they are cleared separately below).
         // 656: the North Hyrule Field bridge. 657-689: the shop's own door
         // draw and price rolls. 692-698: which fusion this run has already
         // re-loaded its room for. 699-703: where this run scatters the
@@ -448,13 +497,30 @@ static void GameTask_Transition(void) {
         for (bit = FLAG_BANK_1; bit < FLAG_BANK_12 + QUICKSTART_FLAG_ORIGIN; bit++) {
             ClearGlobalFlag(bit); // bank 0 == raw bit index into gSave.flags
         }
-        // FLAG_BANK_11 bits 0-31: the region chain's per-slot endless-wave
+        // The room-keyed content sites, whose block is FLAG_BANK_12 raw
+        // 1..793 (GF_CONTENT_SITE_BASE - it is raw-addressed, below the
+        // QUICKSTART window rather than inside it). They re-roll every
+        // fresh boot for the same reason everything above does.
+        //
+        // The loop above ALMOST covers them - it sweeps absolute bits
+        // 0x100..3387, and this block is absolute 2688..3480 - but it stops
+        // at the start of the QUICKSTART window, which cuts the block off
+        // at raw 699. The top ~7 sites would carry over. So clear the whole
+        // block explicitly, sized to its ceiling (1 + 61 sites * 13 bits) and
+        // not to the current count, so adding a site row stays a one-line
+        // change. Literal rather than QUICKSTART_CONTENT_SITE_MAX * ...
+        // because, like every other number in this block, the defines live
+        // further down the file than GameTask_Transition does.
+        for (bit = 0; bit < 794; bit++) {
+            ClearLocalFlagByBank(FLAG_BANK_12, bit);
+        }
+        // FLAG_BANK_11 bits 142-173: the region chain's per-slot endless-wave
         // counter (GF_REGION_WAVE_COUNT_BIT) - deliberately persists across
         // leaving/re-entering a region within a run (that's the whole
         // point, per the user's own request), but still needs to start
         // fresh at 0 for a brand new run, same "no carry-over between
         // rounds" policy as everything else in this block.
-        for (bit = 0; bit <= 31; bit++) {
+        for (bit = 142; bit <= 173; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // Charms are run-long now (see QuickStartCharmMask), which means
@@ -463,10 +529,20 @@ static void GameTask_Transition(void) {
         // "which charms are owned" bits.
         gSave.stats.charm = 0;
         gSave.stats.charmTimer = 0;
-        // Literal 40-42 rather than QUICKSTART_CHARM_BIT: like every other
-        // number in this block, the defines live further down the file than
-        // GameTask_Transition does.
-        for (bit = 40; bit <= 42; bit++) {
+        // Literal 32-42 rather than GF_QUEST_*/QUICKSTART_CHARM_BIT: like
+        // every other number in this block, the defines live further down
+        // the file than GameTask_Transition does.
+        //
+        // 32-39 is the pot quest (GF_QUEST_ROLLED through GF_QUEST_DONE),
+        // which its own comment calls "one draw per run" but which nothing
+        // was actually clearing - the old bank 11 wipes covered 0-31 and
+        // 40-141 and stepped straight over it. So the quest was pinned to
+        // whatever it rolled on the first-ever run, and once GF_QUEST_DONE
+        // latched it stayed latched: the quest disappeared from every run
+        // after the one that completed it. Found by the invariant checker's
+        // flags tier, which now asserts every per-run bit in this bank is
+        // covered by one of these loops.
+        for (bit = 32; bit <= 42; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // Bits 43-58: the live wave-gauntlet record (GF_SEAM_GAUNTLET_*).
@@ -1478,27 +1554,38 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // Anything narrower would have silently deleted the lottery/fairy/miniboss/
 // wave room types from the game as the last doors were converted.
 //
-// These are QsCheckFlag/QsSetFlag offsets, i.e. FLAG_BANK_12 + 700 + n
-// (see the QUICKSTART_FLAG_ORIGIN comment near the top of this file). At 30
-// sites the range is 266..655, and everything above it - the bridge flag,
-// the shop's block, Melari's two latches - is laid out immediately after,
-// ending at 691. Bank 12 has room up to offset 707, so there is 1 more
-// site's worth of headroom before this needs rethinking.
+// These are QsCheckSiteFlag/QsSetSiteFlag offsets - RAW FLAG_BANK_12
+// offsets from 0, not the +700 QUICKSTART window every other GF_* in this
+// file uses. That is the whole point of the block: it sits below the
+// window, in the 586 bits the retired GF_DOOR_* entrances used to squat on,
+// so it can grow without shoving anything else along in front of it.
 //
-// IMPORTANT: raising this count moves the top of the range, so every
-// constant below it has to move too (GF_NHF_BRIDGE_JOINED, the shop block,
-// the Melari latches, AND the boot-time clear loop's upper bound in
-// GameTask_Transition). Getting that wrong is silent and nasty: at 25
-// sites, site 24's block started at exactly 578, which was
-// GF_NHF_BRIDGE_JOINED - so joining North Hyrule Field's bridge also marked
-// the smithy site "already randomized" with an all-zero roll, and entering
-// the smithy permanently joined the bridge.
+// Ceiling is QUICKSTART_CONTENT_SITE_MAX = 61 sites (61 * 13 = 793 bits,
+// raw 1..793), short of raw 801 where the QUICKSTART window itself begins. Adding a site is now one table row and nothing else - no constant
+// below it moves, because there is nothing below it. The compile-time
+// assertion under the count is what makes that promise enforceable: blow
+// past 61 and the build stops instead of quietly aliasing the window.
+//
+// They also have to be cleared per run explicitly - see the site-block
+// clear in GameTask_Transition, and its comment on why the bank-wide wipe
+// there does not reach the top of this block on its own.
 #define QUICKSTART_CONTENT_SITE_COUNT 30
-#define GF_CONTENT_SITE_BASE(i) (266 + (i) * 13)
+#define QUICKSTART_CONTENT_SITE_BITS 13
+#define QUICKSTART_CONTENT_SITE_MAX 61
+#define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
 #define GF_CONTENT_SITE_EXTRA_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 4 + (b))   // b = 0..7
 #define GF_CONTENT_SITE_DONE(i) (GF_CONTENT_SITE_BASE(i) + 12)
+// Build breaks here if the site table outgrows the space between raw 0 and
+// the start of the QUICKSTART window. C89 has no static_assert; a negative
+// array dimension is the portable stand-in agbcc accepts.
+typedef char QuickStartContentSiteBlockFits[(QUICKSTART_CONTENT_SITE_COUNT <= QUICKSTART_CONTENT_SITE_MAX) ? 1 : -1];
+typedef char QuickStartContentSiteBlockClearsWindow[(QUICKSTART_SITE_FLAG_ORIGIN +
+                                                         QUICKSTART_CONTENT_SITE_MAX * QUICKSTART_CONTENT_SITE_BITS <=
+                                                     QUICKSTART_FLAG_ORIGIN + 101)
+                                                        ? 1
+                                                        : -1];
 // --- The shop, as a randomly-placed "? room" -------------------------------
 //
 // Which overworld door leads to the shop this run (5 bits, an index into
@@ -2836,7 +2923,14 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // sizing. Room flag 0 (this visit's current wave still in progress) still
 // resets per visit, same as before - that's correct: a fresh room load has
 // no enemies out yet regardless of which wave number it's about to spawn.
-#define GF_REGION_WAVE_COUNT_BIT(slot, b) ((slot) * 8 + (b)) // slot=0..3, b=0..7 -> 0-31 within bank 11
+// Based at 142, not 0. Offset 0 is unwritable - SetLocalFlagByBank is
+// `if (flag != 0) WriteBit(...)`, vanilla's "no flag" convention - so with
+// this block based at 0, chain slot 0's counter silently lost its low bit
+// and could only ever hold even wave numbers. 142 is the first free offset
+// above the shop's drawn stock (97-141); bank 11 is 192 bits wide, so
+// 142-173 fits with 18 spare. The invariant checker's flags tier now fails
+// any block that claims offset 0 in any bank.
+#define GF_REGION_WAVE_COUNT_BIT(slot, b) (142 + (slot) * 8 + (b)) // slot=0..3, b=0..7 -> 142-173 in bank 11
 // Out of 100 - the chance any wave AFTER the first (wave 0 is always a
 // plain group, see QuickStartSpawnRegionWave) rolls as a solo Chuchu Boss
 // encounter instead. Never concurrent with a normal wave's own enemies -
@@ -4077,52 +4171,24 @@ static const s16 sQuickStartShopRoomItemOffsets[][2] = {
 // comfortably more than either pool's size.
 #define GF_SLOT_ROOM_BIT(i, b) (GF_SLOT_BASE(i) + 12 + (b)) // b = 0..5
 
-// New single-door "? room" entrances (South Hyrule Field, North Hyrule
-// Field, Trilby Highlands - those entrances are retired; see the content-site table for the
-// actual 15 entries) reuse this exact same slot shape (pool/kind/extra/done/
-// room bits) but can't fit in FLAG_BANK_0 - bank 0 only has ~27 bits left
-// after the ladder/2-door/difficulty/region-chain bits above, nowhere near
-// enough for 15 more 19-bit slots. Storage for entrance indices
-// QUICKSTART_LEGACY_LADDER_SLOTS.. lives in FLAG_BANK_12 instead - the bank
-// gLocalFlagBanks/areaMetadata.c assign to Royal Crypt, a real but tiny
-// (9-room) side dungeon. An exhaustive grep of every CheckLocalFlag/
-// SetLocalFlag literal touching that dungeon (src/roomInit.c) tops out at
-// bit 0xc5 (197); starting this block at 300 leaves >100 bits of margin
-// above that confirmed high-water mark, inside a bank that's 1408 bits wide
-// in total (FLAG_BANK_12 through the end of gSave.flags) - vastly more than
-// bank 0's remaining budget could ever offer, with plenty spare for future
-// 2-door work too. FLAG_BANK_11 (also completely unclaimed - LocalFlags11
-// has no named entries and nothing references it anywhere) was the other
-// candidate, but it's only 192 bits wide, not quite enough on its own for
-// all 15 door slots at this shape's 19 bits/slot.
+// There used to be a second, parallel copy of this whole slot shape here:
+// GF_DOOR_*, 15 synthetic door entrances at 19 bits each, living at
+// FLAG_BANK_12 raw offsets 300-585. Every one of those 15 entrances was
+// retired when the single-door "? rooms" moved to the room-keyed content
+// site table below - QuickStartRandomizeDoorsOnce skipped all 15, and
+// QuickStartFindSlotForCurrentRoom skipped slots 1-18 - so the block was
+// written by nothing and read by nothing, but it still SAT on 286 bits in
+// the middle of the one bank this mode has room to grow in. Deleting it is
+// what makes the content site block below able to expand; see the flag map
+// there. The accessors below lost their "is this a door slot?" branch with
+// it, because slotIndex can only ever be 0-3 now.
 #define QUICKSTART_LEGACY_LADDER_SLOTS 4
-#define QUICKSTART_DOOR_COUNT 15
-#define GF_DOORS_RANDOMIZED 300
-#define GF_DOOR_BASE(i) (301 + (i) * 19)
-#define GF_DOOR_POOL_BIT(i) (GF_DOOR_BASE(i) + 0)
-#define GF_DOOR_KIND_BIT(i, b) (GF_DOOR_BASE(i) + 1 + (b)) // b = 0,1
-#define GF_DOOR_KIND_BIT2(i) (GF_DOOR_BASE(i) + 3)
-#define GF_DOOR_EXTRA_BIT(i, b) (GF_DOOR_BASE(i) + 4 + (b)) // b = 0..7
-#define GF_DOOR_DONE(i) (GF_DOOR_BASE(i) + 12)
-#define GF_DOOR_ROOM_BIT(i, b) (GF_DOOR_BASE(i) + 13 + (b)) // b = 0..5
 
 static u8 QuickStartSlotGetPool(s32 slotIndex) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS)) ? 1 : 0;
-    }
     return QsCheckFlag(GF_SLOT_POOL_BIT(slotIndex)) ? 1 : 0;
 }
 
 static void QuickStartSlotSetPool(s32 slotIndex, u8 pool) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        if (pool) {
-            SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(doorSlot));
-        } else {
-            ClearLocalFlagByBank(FLAG_BANK_12, GF_DOOR_POOL_BIT(doorSlot));
-        }
-        return;
-    }
     if (pool) {
         QsSetFlag(GF_SLOT_POOL_BIT(slotIndex));
     } else {
@@ -4136,17 +4202,10 @@ static void QuickStartSlotSetPool(s32 slotIndex, u8 pool) {
 // directly now goes through these instead, so door-slot "done" state lands
 // in FLAG_BANK_12 too.
 static u32 QuickStartLadderCheckDone(s32 slotIndex) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        return CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS));
-    }
     return QsCheckFlag(GF_SLOT_DONE(slotIndex));
 }
 
 static void QuickStartSlotSetDone(s32 slotIndex) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_DONE(slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS));
-        return;
-    }
     QsSetFlag(GF_SLOT_DONE(slotIndex));
 }
 
@@ -4837,31 +4896,12 @@ static u8 QuickStartPickLargeKind(void) {
 }
 
 static u8 QuickStartSlotGetKind(s32 slotIndex) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        return (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 0)) ? 1 : 0) |
-               (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 1)) ? 2 : 0) |
-               (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT2(doorSlot)) ? 4 : 0);
-    }
     return (QsCheckFlag(GF_SLOT_KIND_BIT(slotIndex, 0)) ? 1 : 0) |
            (QsCheckFlag(GF_SLOT_KIND_BIT(slotIndex, 1)) ? 2 : 0) |
            (QsCheckFlag(GF_SLOT_KIND_BIT2(slotIndex)) ? 4 : 0);
 }
 
 static void QuickStartSlotSetKind(s32 slotIndex, u8 kind) {
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        if (kind & 1) {
-            SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 0));
-        }
-        if (kind & 2) {
-            SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT(doorSlot, 1));
-        }
-        if (kind & 4) {
-            SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_KIND_BIT2(doorSlot));
-        }
-        return;
-    }
     if (kind & 1) {
         QsSetFlag(GF_SLOT_KIND_BIT(slotIndex, 0));
     }
@@ -4879,15 +4919,6 @@ static void QuickStartSlotSetKind(s32 slotIndex, u8 kind) {
 static u8 QuickStartSlotGetExtra(s32 slotIndex) {
     u8 value = 0;
     s32 b;
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        for (b = 0; b < 8; b++) {
-            if (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_EXTRA_BIT(doorSlot, b))) {
-                value |= (1 << b);
-            }
-        }
-        return value;
-    }
     for (b = 0; b < 8; b++) {
         if (QsCheckFlag(GF_SLOT_EXTRA_BIT(slotIndex, b))) {
             value |= (1 << b);
@@ -4898,15 +4929,6 @@ static u8 QuickStartSlotGetExtra(s32 slotIndex) {
 
 static void QuickStartSlotSetExtra(s32 slotIndex, u8 value) {
     s32 b;
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        for (b = 0; b < 8; b++) {
-            if (value & (1 << b)) {
-                SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_EXTRA_BIT(doorSlot, b));
-            }
-        }
-        return;
-    }
     for (b = 0; b < 8; b++) {
         if (value & (1 << b)) {
             QsSetFlag(GF_SLOT_EXTRA_BIT(slotIndex, b));
@@ -4917,15 +4939,6 @@ static void QuickStartSlotSetExtra(s32 slotIndex, u8 value) {
 static u8 QuickStartSlotGetRoomIndex(s32 slotIndex) {
     u8 value = 0;
     s32 b;
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        for (b = 0; b < 6; b++) {
-            if (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOOR_ROOM_BIT(doorSlot, b))) {
-                value |= (1 << b);
-            }
-        }
-        return value;
-    }
     for (b = 0; b < 6; b++) {
         if (QsCheckFlag(GF_SLOT_ROOM_BIT(slotIndex, b))) {
             value |= (1 << b);
@@ -4936,15 +4949,6 @@ static u8 QuickStartSlotGetRoomIndex(s32 slotIndex) {
 
 static void QuickStartSlotSetRoomIndex(s32 slotIndex, u8 value) {
     s32 b;
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        for (b = 0; b < 6; b++) {
-            if (value & (1 << b)) {
-                SetLocalFlagByBank(FLAG_BANK_12, GF_DOOR_ROOM_BIT(doorSlot, b));
-            }
-        }
-        return;
-    }
     for (b = 0; b < 6; b++) {
         if (value & (1 << b)) {
             QsSetFlag(GF_SLOT_ROOM_BIT(slotIndex, b));
@@ -5633,113 +5637,6 @@ static void QuickStartRandomizeSlotsOnce(void) {
     QsSetFlag(GF_SLOTS_RANDOMIZED);
 }
 
-// Rolls pool/kind/extra/room for the 15 new door entrances (slotIndex
-// 4-18), same per-slot rules QuickStartRandomizeSlotsOnce uses for its own
-// non-special-cased slots (0-1) - no per-slot quirks needed here, all 15
-// doors are uniform. Must run after QuickStartRandomizeSlotsOnce (same
-// call site, right after it) so any active ladder slots' own room draws
-// already exist to seed this function's own "used" tracking - 3 ladders +
-// 15 doors = 18 draws total against an 18-room pool (14 small + 4 medium).
-// All 19 slots are retired now, so this draws nothing at all,
-// so every single pool room wins exactly one entrance and the "distinct
-// room, retry across both pools" logic below can never run out of options
-// as long as it starts from an accurate picture of what the ladders already
-// claimed.
-static void QuickStartRandomizeDoorsOnce(void) {
-    static const u8 sLadderSeedIndices[3] = { 0, 1, 3 };
-    s32 i, j, drawCount;
-    u8 usedPool[3 + QUICKSTART_DOOR_COUNT];
-    u8 usedRoom[3 + QUICKSTART_DOOR_COUNT];
-    if (CheckLocalFlagByBank(FLAG_BANK_12, GF_DOORS_RANDOMIZED)) {
-        return;
-    }
-    drawCount = 0;
-    for (i = 0; i < 3; i++) {
-        s32 seedIndex = sLadderSeedIndices[i];
-        usedPool[drawCount] = QuickStartSlotGetPool(seedIndex);
-        usedRoom[drawCount] = QuickStartSlotGetRoomIndex(seedIndex);
-        drawCount++;
-    }
-    for (i = 0; i < QUICKSTART_DOOR_COUNT; i++) {
-        s32 slotIndex = QUICKSTART_LEGACY_LADDER_SLOTS + i;
-        u8 pool, kind, roomIdx, poolSize;
-        // Every door entrance (4-18) is retired now - they're real vanilla
-        // doors again, with content spawned inside their real destination
-        // rooms instead (see the retired ladder-entrance table' comment). The loop
-        // is kept, rather than deleted, alongside the rest of the dormant
-        // synthetic machinery; it simply draws nothing.
-        if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS && slotIndex <= 18) {
-            continue;
-        }
-        pool = (u8)((s32)Random() % 2);
-        QuickStartSlotSetPool(slotIndex, pool);
-        if (pool == 0) {
-            kind = QuickStartPickSmallKind();
-        } else {
-            kind = QuickStartPickLargeKind();
-        }
-        QuickStartSlotSetKind(slotIndex, kind);
-        if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
-            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-        } else if (kind == QS_EVENT_NPC) {
-            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % 2)); // bit 0: 1 = evil, 0 = friendly
-        } else if (kind == QS_EVENT_MINIBOSS) {
-            QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-        } else if (kind == QS_EVENT_POT_LOTTERY) {
-            QuickStartSlotSetExtra(slotIndex, QuickStartPickPotRoomExtra());
-        } else if (kind == QS_EVENT_CHEST_LOTTERY) {
-            QuickStartSlotSetExtra(slotIndex, QuickStartPickLotteryExtra());
-        }
-        poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
-        {
-            s32 usedInThisPool = 0;
-            for (j = 0; j < drawCount; j++) {
-                if (usedPool[j] == pool) {
-                    usedInThisPool++;
-                }
-            }
-            if (usedInThisPool >= poolSize) {
-                pool = 1 - pool;
-                QuickStartSlotSetPool(slotIndex, pool);
-                if (pool == 0) {
-                    kind = QuickStartPickSmallKind();
-                } else {
-                    kind = QuickStartPickLargeKind();
-                }
-                QuickStartSlotSetKind(slotIndex, kind);
-                if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
-                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE));
-                } else if (kind == QS_EVENT_NPC) {
-                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % 2));
-                } else if (kind == QS_EVENT_MINIBOSS) {
-                    QuickStartSlotSetExtra(slotIndex, (u8)((s32)Random() % QUICKSTART_MINIBOSS_POOL_SIZE));
-                } else if (kind == QS_EVENT_POT_LOTTERY) {
-                    QuickStartSlotSetExtra(slotIndex, QuickStartPickPotRoomExtra());
-                } else if (kind == QS_EVENT_CHEST_LOTTERY) {
-                    QuickStartSlotSetExtra(slotIndex, QuickStartPickLotteryExtra());
-                }
-                poolSize = (pool == 0) ? QUICKSTART_SMALL_ROOM_POOL_SIZE : QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
-            }
-            for (;;) {
-                roomIdx = (u8)((s32)Random() % poolSize);
-                for (j = 0; j < drawCount; j++) {
-                    if (usedPool[j] == pool && usedRoom[j] == roomIdx) {
-                        break;
-                    }
-                }
-                if (j == drawCount) {
-                    break;
-                }
-            }
-        }
-        usedPool[drawCount] = pool;
-        usedRoom[drawCount] = roomIdx;
-        drawCount++;
-        QuickStartSlotSetRoomIndex(slotIndex, roomIdx);
-    }
-    SetLocalFlagByBank(FLAG_BANK_12, GF_DOORS_RANDOMIZED);
-}
-
 // No pot, no "reveal" step any more - the user didn't want the pot-lift-and-
 // throw mechanic at all, just Link descending the real vanilla ladder
 // fixture as he would in vanilla. Castle Garden Main has exactly two real
@@ -5786,8 +5683,8 @@ static void QuickStartRandomizeDoorsOnce(void) {
 //
 // The sentinel row exists only because C has no zero-length arrays. Area
 // 0xff is not a real area, so the three loops that still walk this table
-// (the retired ladder-link trigger, QuickStartEnforceFieldRegionContainment,
-// and QuickStartRandomizeDoorsOnce's seeding) iterate once and match
+// (the retired ladder-link trigger and
+// QuickStartEnforceFieldRegionContainment) iterate once and match
 // nothing. The rest of the synthetic machinery - the two room pools, the
 // per-slot flag blocks, QuickStartSetupSlotRoomContent - is left intact
 // and still referenced, so the retired system reads as a coherent whole
@@ -8391,7 +8288,7 @@ static bool32 QuickStartIsPocketTransition(u8 fromArea, u8 fromRoom, u8 toArea, 
 static void QuickStartRandomizeContentSiteOnce(s32 site) {
     u8 kind, extra;
     s32 b;
-    if (QsCheckFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
+    if (QsCheckSiteFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
         return;
     }
     switch (sQuickStartRoomContentSites[site].kinds) {
@@ -8465,15 +8362,15 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     }
     for (b = 0; b < 3; b++) {
         if (kind & (1 << b)) {
-            QsSetFlag(GF_CONTENT_SITE_KIND_BIT(site, b));
+            QsSetSiteFlag(GF_CONTENT_SITE_KIND_BIT(site, b));
         }
     }
     for (b = 0; b < 8; b++) {
         if (extra & (1 << b)) {
-            QsSetFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
+            QsSetSiteFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
         }
     }
-    QsSetFlag(GF_CONTENT_SITE_RANDOMIZED(site));
+    QsSetSiteFlag(GF_CONTENT_SITE_RANDOMIZED(site));
 }
 
 // How many other sites share this site's room and come before it - i.e.
@@ -8502,18 +8399,18 @@ static void QuickStartSetupContentSite(s32 site) {
     if (QuickStartContentSiteWantsClear(entry->area, entry->room)) {
         QuickStart2DoorClearRoomObstacles(entry->area, entry->room);
     }
-    if (QsCheckFlag(GF_CONTENT_SITE_DONE(site))) {
+    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
         return;
     }
     kind = 0;
     for (b = 0; b < 3; b++) {
-        if (QsCheckFlag(GF_CONTENT_SITE_KIND_BIT(site, b))) {
+        if (QsCheckSiteFlag(GF_CONTENT_SITE_KIND_BIT(site, b))) {
             kind |= (1 << b);
         }
     }
     extra = 0;
     for (b = 0; b < 8; b++) {
-        if (QsCheckFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
+        if (QsCheckSiteFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
             extra |= (1 << b);
         }
     }
@@ -8527,7 +8424,7 @@ static void QuickStartSetupContentSite(s32 site) {
     // far more of these than any room will ever hold.
     if (QuickStartSetupEventContent(kind, extra, entry->contentX, entry->contentY,
                                     64 + QuickStartContentSiteSlotInRoom(site) * 8)) {
-        QsSetFlag(GF_CONTENT_SITE_DONE(site));
+        QsSetSiteFlag(GF_CONTENT_SITE_DONE(site));
     }
 }
 
@@ -9660,49 +9557,34 @@ static bool32 QuickStartAreaContained(u8 area) {
     return area == AREA_CASTLE_GARDEN || area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
 }
 
-// Which ladder slot (0, 1, or 3 - slot 2 is retired, see sQuickStartLinks'
-// own comment on the Ranch House reset) or new single-door entrance (4-18,
-// see the retired ladder-entrance table, now empty) the current room is standing in
-// for, or -1 if it isn't one of them. The pool spans several real areas
-// (Minish House Interiors, Tree Interiors, Caves, Great Fairies, Royal
-// Valley Graves, plus South/North Hyrule Field and Trilby Highlands now)
-// and which physical room maps to which entrance varies per save, so a
-// plain area/room comparison against fixed constants doesn't work - this
-// checks against each one's current runtime assignment instead. 3 ladders +
-// 15 doors = 18 entries, exactly the pool's whole 14+4 room capacity - see
-// QuickStartRandomizeDoorsOnce for why that's an exact fit rather than a
-// coincidence.
+// Which ladder slot the current room is standing in for, or -1 if it isn't
+// one of them. Only slot 0 is live - it backs Castle Garden's northwest
+// ladder, the one door still served by a pool draw (see
+// QuickStartProcessDoorRedirects). Slots 1-3 and the 15 retired door
+// entrances that used to follow them are all gone; they had to be skipped
+// rather than merely ignored, and that is not cosmetic: a retired slot's
+// pool/room bits are never rolled, so they read back as pool 0 / room
+// index 0, and a loop over them would falsely claim whichever real room
+// sits at small-pool index 0 - a room another system owns now.
+//
+// Which physical room slot 0 maps to still varies per save, so a plain
+// area/room comparison against fixed constants doesn't work; this checks
+// against its current runtime assignment instead.
 static s32 QuickStartFindSlotForCurrentRoom(void) {
-    static const u8 sPoolDrawLadderIndices[3 + QUICKSTART_DOOR_COUNT] = { 0,  1,  3,  4,  5,  6,  7,  8,
-                                                                           9,  10, 11, 12, 13, 14, 15, 16,
-                                                                           17, 18 };
-    s32 k, i, rawIndex, poolIndex;
+    s32 rawIndex, poolIndex;
     u8 area, room;
-    for (k = 0; k < 3 + QUICKSTART_DOOR_COUNT; k++) {
-        i = sPoolDrawLadderIndices[k];
-        // Slot 0 is live again - it backs Castle Garden's northwest ladder,
-        // the one door still served by a pool draw (see
-        // QuickStartProcessDoorRedirects). Every other slot is retired, and
-        // skipping them is not cosmetic: a retired slot's pool/room bits
-        // were never rolled, so they read back as pool 0 / room index 0,
-        // and without this the function would falsely claim whichever real
-        // room sits at small-pool index 0 - a room another system owns now.
-        if (i >= 1 && i <= 18) {
-            continue;
-        }
-        rawIndex = QuickStartSlotGetRoomIndex(i);
-        if (QuickStartSlotGetPool(i) == 0) {
-            poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
-            area = sQuickStartSmallRoomPool[poolIndex].area;
-            room = sQuickStartSmallRoomPool[poolIndex].room;
-        } else {
-            poolIndex = rawIndex % QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
-            area = sQuickStartMediumRoomPool[poolIndex].area;
-            room = sQuickStartMediumRoomPool[poolIndex].room;
-        }
-        if (gRoomControls.area == area && gRoomControls.room == room) {
-            return i;
-        }
+    rawIndex = QuickStartSlotGetRoomIndex(0);
+    if (QuickStartSlotGetPool(0) == 0) {
+        poolIndex = rawIndex % QUICKSTART_SMALL_ROOM_POOL_SIZE;
+        area = sQuickStartSmallRoomPool[poolIndex].area;
+        room = sQuickStartSmallRoomPool[poolIndex].room;
+    } else {
+        poolIndex = rawIndex % QUICKSTART_MEDIUM_ROOM_POOL_SIZE;
+        area = sQuickStartMediumRoomPool[poolIndex].area;
+        room = sQuickStartMediumRoomPool[poolIndex].room;
+    }
+    if (gRoomControls.area == area && gRoomControls.room == room) {
+        return 0;
     }
     return -1;
 }
@@ -9737,56 +9619,6 @@ static const s16 sQuickStartLadderReturnSpots[4][2] = {
     { 0, 0 },
 };
 
-// Return destination for each of the 15 new door entrances (slotIndex
-// 4-18, doorSlot = slotIndex-4) - unlike ladders 0-1, which both enter and
-// leave through Castle Garden, these enter from (and must return to) their
-// own region, not Castle Garden Main (where every pool room's own
-// retargeted exit actually points, same shared literal spot ladders 0-1
-// use). QuickStartFixupQuestionRoomReturn below overrides the whole
-// destination for these, same as slotIndex == 3's own Lon Lon Ranch
-// special case.
-//
-// BUG FIX (user report): the first version of this table used each door's
-// own real startX/startY - i.e. its trigger box's own center - as the
-// return spot too. That's guaranteed to sit inside the same box
-// the retired ladder-entrance table defines for that entrance (+-24px), so landing
-// there immediately re-satisfied the retired ladder-link trigger' own box
-// check on the very next frame, sending the player straight back into the
-// ? room - confirmed in practice on Link's House (idx4/doorSlot 0): an
-// infinite back-and-forth warp loop. Fixed by moving y +40 past the box's
-// own southern edge (boxMaxY = center+24, so +40 clears it with 16px to
-// spare) for every entry - these are all doors/cave mouths/tree stumps
-// entered by walking up into them from below, so the open approach ground
-// is south of the doorway, same side these boxes' own south edge already
-// faces. x is unchanged, still centered on the real door. Still a
-// first-pass estimate for actual walkable terrain (not yet emulator-walked
-// the way Castle Garden's/Lon Lon Ranch's own return spots were after
-// their own initial misses - see the retired ladder-entrance table' own comment on
-// that same unfinished verification pass), but no longer inside the
-// re-trigger box regardless.
-static const struct {
-    u8 area;
-    u8 room;
-    s16 x;
-    s16 y;
-} sQuickStartDoorReturnSpots[QUICKSTART_DOOR_COUNT] = {
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 656, 432 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 928, 592 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 280, 208 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 88, 320 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 336 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 336 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 432, 432 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 576, 432 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 752, 352 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 380 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 312, 528 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 64, 944 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 136, 586 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 56, 720 },
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 408, 730 },
-};
-
 // Runs every frame regardless of area (like QuickStartEnforceContainment,
 // called alongside it below) so it catches the outgoing transition while
 // still standing in the "? room" itself, the same frame the real engine
@@ -9806,34 +9638,6 @@ static void QuickStartFixupQuestionRoomReturn(void) {
     }
     slotIndex = QuickStartFindSlotForCurrentRoom();
     if (slotIndex < 0) {
-        return;
-    }
-    if (slotIndex == 3) {
-        // Goron Cave Stairs door - entered from Lon Lon Ranch, not Castle
-        // Garden (unlike ladders 0-1, which both enter and leave through
-        // Castle Garden), so it should return there too, rather than to
-        // the literal Castle Garden spot every pool room's own retargeted
-        // exit shares. Overrides the whole destination, not just position:
-        // (344,870) is the same proven-safe landing spot the Castle
-        // Garden -> Lon Lon Ranch link itself uses, clear of the Goron
-        // Cave door's own trigger box (120-152,836-868).
-        gRoomTransition.player_status.area_next = AREA_HYRULE_FIELD;
-        gRoomTransition.player_status.room_next = ROOM_HYRULE_FIELD_LON_LON_RANCH;
-        gRoomTransition.player_status.start_pos_x = 344;
-        gRoomTransition.player_status.start_pos_y = 870;
-        return;
-    }
-    if (slotIndex >= QUICKSTART_LEGACY_LADDER_SLOTS) {
-        // One of the 15 new door entrances - same reasoning as slotIndex
-        // == 3 above: this pool room's own retargeted exit points at Castle
-        // Garden Main regardless of which entrance drew it, but a door
-        // entered from South/North Hyrule Field or Trilby Highlands needs
-        // to return there instead, not to Castle Garden.
-        s32 doorSlot = slotIndex - QUICKSTART_LEGACY_LADDER_SLOTS;
-        gRoomTransition.player_status.area_next = sQuickStartDoorReturnSpots[doorSlot].area;
-        gRoomTransition.player_status.room_next = sQuickStartDoorReturnSpots[doorSlot].room;
-        gRoomTransition.player_status.start_pos_x = sQuickStartDoorReturnSpots[doorSlot].x;
-        gRoomTransition.player_status.start_pos_y = sQuickStartDoorReturnSpots[doorSlot].y;
         return;
     }
     gRoomTransition.player_status.start_pos_x = sQuickStartLadderReturnSpots[slotIndex][0];
@@ -11144,12 +10948,6 @@ static void QuickStartRoomMonitor(void) {
     // room being entered.
     QuickStartRandomizeRegionChainOnce();
     QuickStartRandomizeSlotsOnce();
-    // Must run after QuickStartRandomizeSlotsOnce (same frame, right
-    // after) - it reads back ladders 0/1/3's own just-rolled room
-    // assignments to make sure none of the 15 new door entrances ends up
-    // sharing a physical pool room with them (see
-    // QuickStartRandomizeDoorsOnce's own comment).
-    QuickStartRandomizeDoorsOnce();
     QuickStart2DoorRandomizeOnce();
     QuickStartRandomizeRiverBridgeOnce();
     QuickStartRandomizeCaveOnce();
@@ -11741,8 +11539,8 @@ static bool32 QuickStartAnyKeyItemPickedUp(void) {
 
 // Draws 3 distinct items from the 5-item key-item pool (fresh every run,
 // same Fisher-Yates-adjacent "reject and redraw on collision" shape
-// QuickStartRandomizeRegionChainOnce/QuickStartRandomizeDoorsOnce already
-// use elsewhere in this file) and hands them to QuickStartSpawnItems, which
+// QuickStartRandomizeRegionChainOnce already
+// uses elsewhere in this file) and hands them to QuickStartSpawnItems, which
 // itself shuffles their left-to-right display order. `choices` is a plain
 // stack-local array - fine here since it's only read synchronously within
 // this same call, unlike any state that needs to survive across frames.

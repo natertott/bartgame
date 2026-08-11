@@ -271,14 +271,38 @@ not the source of truth.
 
 ### 3.7 Storage
 
-- Global flags: bank 12 from offset 700, `QsCheckFlag`/`QsSetFlag`. Bits
-  101-652 are cleared per run; `GF_DIFFICULTY_BIT` (174-177) deliberately is
-  not. Layout above the low block: content sites 266-616 (27 x 13 bits),
-  bridge 617, shop 618-650, Melari's two latches 651-652, ceiling 707.
-  **Raising the site count moves everything above it.** Getting that wrong is
-  silent: at 25 sites the smithy's block began at exactly 578, which was the
-  bridge flag, so throwing the bridge lever also gave the smithy an all-zero
-  roll and entering the smithy joined the bridge.
+- Bank 12 is effectively QUICKSTART's whole address space: `gAreaMetadata`
+  gives `LOCAL_BANK_12` only to the eight Royal Crypt areas, which this mode
+  never enters. Its 1408 bits are laid out as:
+
+  | raw offset | what |
+  |---|---|
+  | 0 | unusable - `SetLocalFlagByBank` is `if (flag != 0)`, so vanilla reserves offset 0 in every bank |
+  | 1-793 | the room-keyed content sites, 13 bits each, room for **61**. `QsCheckSiteFlag`/`QsSetSiteFlag` |
+  | 794-800 | spare |
+  | 801-1407 | the QUICKSTART window, i.e. `QsCheckFlag` offsets 101-707 |
+
+  Offsets 101-703 in the window are cleared per run, plus the whole site
+  block; `GF_DIFFICULTY_BIT` (174-177) deliberately is not. Adding a content
+  site is now **one table row and nothing else** - the block grows downward
+  into its own reserved space instead of shoving the bridge/shop/Melari
+  flags along in front of it, and a compile-time assertion stops the build
+  if it ever reaches the window. Raw 1-585 is space reclaimed from
+  `GF_DOOR_*`, 15 synthetic door entrances retired long ago whose 286 bits
+  were never given back - that dead block is why the site table was stuck at
+  30 and a 31st was impossible.
+
+  Getting this wrong used to be silent: at 25 sites the smithy's block began
+  at exactly 578, which was the bridge flag, so throwing the bridge lever
+  also gave the smithy an all-zero roll and entering the smithy joined the
+  bridge. The checker's `flags` tier now expands every `GF_*` define over its
+  declared parameter range and asserts no bit is claimed twice, nothing sits
+  at offset 0, nothing overruns its bank, and every per-run bit is actually
+  covered by a run-start clear loop. It found two live bugs the moment it
+  was written: chain slot 0's wave counter was based at bank-11 offset 0 (so
+  it could only ever hold even wave numbers), and the pot quest's block was
+  never cleared between runs (so it was pinned to its first-ever roll, and
+  vanished for good once completed).
 - Room flags: `gRoomVars.flags` from offset **256**, `QsCheckRoomFlag` and
   friends. This window exists because vanilla uses the low bits and *does*
   clear them out from under us - the cause of the Triple Darknut room
@@ -470,7 +494,8 @@ reclaiming its 13 bits closes two open bugs and costs nothing.
   kinds already exist - it is holding each piece inside its own segment, which
   needs the room's chambers surveyed as separate collision components and the
   content gated on the specific fusion flag that opens each one.
-- **Hyrule Castle Garden's Minish rooms.** Three: above the east fountain
+- **Hyrule Castle Garden's Minish rooms.** Unblocked now - the flag
+  renumbering above left room for 31 more sites. Three: above the east fountain
   (works, but a vanilla treasure chest needs sweeping), above the west
   fountain (its door does not fire - the same class as the Entrance's walled
   doorway and NHF's tree doors, both of which turned out to be solvable), and

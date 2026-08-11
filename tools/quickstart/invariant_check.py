@@ -9,6 +9,10 @@ stock in a sealed alcove, spawn offsets inside walls).
 Tiers:
   static    source-only: door tags on every 2-door pool room, pool size
             constants consistent with their arrays. Always runs.
+  flags     source-only: every GF_* bit block expanded over its declared
+            parameter range - no bit claimed twice, nothing at a bank's
+            unwritable offset 0, nothing past the end of its bank, and every
+            per-run bit covered by a run-start clear loop. Always runs.
   regions   5 emulator boots: each region row's entrance/reward on open
             ground, exit box inside room bounds and off the border row.
   pool      20 boots: every 2-door pool row's entrance is real open floor
@@ -39,16 +43,250 @@ Runs everything by default. Batches emulator work across subprocesses
 because mgba leaks a core per boot and corrupts the allocator eventually.
 Exit code 0 = all PASS/WARN, 1 = any FAIL.
 """
-import sys, os, json, subprocess, collections
+import sys, os, re, json, subprocess, collections, itertools
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import parse_tables as P
 
+GAME_C = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'src', 'game.c')
+
 # Rooms that are expected not to be reachable and why - reported WARN.
 KNOWN = {}
 GROUND_ITEM_ID = 0
 QS_EVENT_ITEM_DROP = 0
+
+# --- flags tier ------------------------------------------------------------
+#
+# QUICKSTART packs its whole persistent state into two of vanilla's local
+# flag banks as hand-numbered bit blocks. Every block is a range of literals
+# in a #define, and the ranges are only kept apart by arithmetic in comments.
+# That has failed silently at least twice - once when the content site block
+# grew into GF_NHF_BRIDGE_JOINED (joining North Hyrule Field's bridge marked
+# the smithy "already randomized"), once when 286 bits of retired GF_DOOR_*
+# storage sat unreclaimed and blocked the site table from growing past 30.
+#
+# So: parse every GF_* / QUICKSTART_*_BIT define out of game.c, expand it
+# over its whole declared parameter range, resolve each to an absolute bit
+# in gSave.flags, and assert no bit is claimed twice and no block runs past
+# the end of its bank.
+
+# bank -> (first absolute bit, one past last) from include/flags.h.
+FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
+
+# Macro-name prefix -> (bank, origin). Ordered; first match wins. Origin is
+# either a literal or the name of a define parsed out of game.c. Many of
+# these are read through helper functions (QuickStartGauntletReadBits,
+# QuickStartQuestFlag, ...) rather than at the macro's own call site, so the
+# family is declared here rather than inferred from usage.
+FLAG_FAMILIES = [
+    ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
+    ('GF_REGION_WAVE_COUNT_BIT', 11, 0),
+    ('GF_QUEST_', 11, 0),
+    ('QUICKSTART_CHARM_BIT', 11, 0),
+    ('GF_SEAM_GAUNTLET_', 11, 0),
+    ('GF_HANDICAP_', 11, 0),
+    ('GF_HUNT_', 11, 0),
+    ('GF_HUB_PHASE_BIT', 11, 0),
+    ('GF_ROOF_', 11, 0),
+    ('GF_SHOP_SLOT_BIT', 11, 0),
+    ('GF_', 12, 'QUICKSTART_FLAG_ORIGIN'),  # default: the QUICKSTART window
+]
+
+# Parameter ranges that aren't stated in the define's own trailing comment.
+# (prefix, param) -> (lo, hi) inclusive, or (lo, 'NAME - 1') to resolve a
+# define. Anything left undeclared is a FAIL, not a skip - a new macro must
+# say how wide it is before this tier can vouch for the layout.
+FLAG_PARAM_RANGES = {
+    ('GF_CONTENT_SITE_', 'i'): (0, 'QUICKSTART_CONTENT_SITE_MAX - 1'),
+    ('GF_SLOT_', 'i'): (0, 3),
+    ('GF_SHOP_PRICE_BIT', 'i'): (0, 8),
+    ('GF_SHOP_SLOT_BIT', 'i'): (0, 8),
+    ('GF_REGION_CHAIN_', 'slot'): (0, 3),
+    ('GF_REGION_WAVE_COUNT_BIT', 'slot'): (0, 3),
+}
+
+# Macros that only exist to be composed into the ones above; their own range
+# is covered by their users, and expanding them separately would report the
+# whole block as a self-collision.
+FLAG_BASE_MACROS = ('GF_CONTENT_SITE_BASE', 'GF_SLOT_BASE')
+
+# Bits that are deliberately NOT cleared at the start of a run.
+FLAG_PERSISTENT = ('GF_DIFFICULTY_BIT',)
+
+DEFINE_RE = re.compile(r'^#define\s+(\w+)(\([^)]*\))?\s+(.*?)\s*(?://\s*(.*))?$')
+
+
+def _parse_defines(src):
+    """name -> (params, body, trailing comment) for every #define in game.c."""
+    out = {}
+    for line in src.split('\n'):
+        m = DEFINE_RE.match(line.strip())
+        if not m:
+            continue
+        name, params, body, comment = m.groups()
+        params = [p.strip() for p in params[1:-1].split(',')] if params else []
+        out[name] = (params, body.strip(), comment or '')
+    return out
+
+
+def _build_namespace(defines):
+    """Evaluate every define into a Python value or lambda, best effort."""
+    ns = {}
+    for _ in range(4):  # a few passes: bodies reference other defines
+        for name, (params, body, _c) in defines.items():
+            if name in ns:
+                continue
+            try:
+                if params:
+                    src = 'lambda %s: %s' % (', '.join(params), body)
+                    fn = eval(src, dict(ns))
+                    fn(*([0] * len(params)))  # smoke-test it resolves
+                    ns[name] = fn
+                else:
+                    ns[name] = eval(body, dict(ns))
+            except Exception:
+                pass
+    return ns
+
+
+def _param_range(name, param, comment, ns):
+    """(lo, hi) inclusive for one macro parameter."""
+    m = re.search(r'\b%s\s*=\s*(\d+)\.\.(\d+)' % re.escape(param), comment)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+    m = re.search(r'\b%s\s*=\s*(\d+)\s*,\s*(\d+)\b' % re.escape(param), comment)
+    if m:  # "b = 0,1" - an enumeration, not a range
+        return int(m.group(1)), int(m.group(2))
+    for (prefix, p), rng in FLAG_PARAM_RANGES.items():
+        if name.startswith(prefix) and p == param:
+            lo, hi = rng
+            return (lo if isinstance(lo, int) else eval(lo, dict(ns)),
+                    hi if isinstance(hi, int) else eval(hi, dict(ns)))
+    return None
+
+
+def check_flags():
+    out = []
+    src = open(GAME_C).read()
+    defines = _parse_defines(src)
+    ns = _build_namespace(defines)
+
+    claimed = {}  # absolute bit -> macro name
+    blocks = collections.defaultdict(list)  # macro -> [absolute bits]
+    for name, (params, _body, comment) in sorted(defines.items()):
+        if not (name.startswith('GF_') or name == 'QUICKSTART_CHARM_BIT'):
+            continue
+        if name in FLAG_BASE_MACROS:
+            continue
+        fam = next((f for f in FLAG_FAMILIES if name.startswith(f[0])), None)
+        if fam is None:
+            out.append(('FAIL', f'{name}: no FLAG_FAMILIES entry - which bank does it live in?'))
+            continue
+        _prefix, bank, origin = fam
+        origin = origin if isinstance(origin, int) else ns.get(origin)
+        if origin is None:
+            out.append(('FAIL', f'{name}: could not resolve its origin constant'))
+            continue
+        if name not in ns:
+            out.append(('FAIL', f'{name}: could not evaluate its definition'))
+            continue
+        ranges = []
+        for p in params:
+            r = _param_range(name, p, comment, ns)
+            if r is None:
+                out.append(('FAIL', f'{name}: parameter "{p}" has no declared range '
+                                    f'(say "// {p} = 0..N" on the define, or add it to '
+                                    f'FLAG_PARAM_RANGES)'))
+                break
+            ranges.append(range(r[0], r[1] + 1))
+        else:
+            values = ([ns[name](*combo) for combo in itertools.product(*ranges)]
+                      if params else [ns[name]])
+            for v in values:
+                blocks[name].append(FLAG_BANKS[bank][0] + origin + v)
+
+    # 1. no bit claimed by two different macros
+    for name, bits in sorted(blocks.items()):
+        for b in bits:
+            if b in claimed and claimed[b] != name:
+                out.append(('FAIL', f'{name} and {claimed[b]} both claim absolute bit {b} '
+                                    f'(0x{b:x}) - overlapping flag blocks'))
+            claimed[b] = name
+
+    # 2. nothing may claim offset 0 of a bank: SetLocalFlagByBank (flags.c)
+    #    is `if (flag != 0) WriteBit(...)`, so vanilla reserves offset 0
+    #    everywhere as "no flag" and a block based there silently loses its
+    #    first bit. This has bitten twice - the content site block's
+    #    RANDOMIZED latch, and chain slot 0's wave counter.
+    for name, bits in sorted(blocks.items()):
+        for bank, (lo, _hi) in FLAG_BANKS.items():
+            if lo in bits:
+                out.append(('FAIL', f'{name} claims offset 0 of bank {bank} - '
+                                    f'SetLocalFlagByBank silently drops it'))
+
+    # 3. no block runs past the end of its bank
+    for name, bits in sorted(blocks.items()):
+        fam = next(f for f in FLAG_FAMILIES if name.startswith(f[0]))
+        lo, hi = FLAG_BANKS[fam[1]]
+        if min(bits) < lo or max(bits) >= hi:
+            out.append(('FAIL', f'{name} spans {min(bits)}..{max(bits)}, outside bank '
+                                f'{fam[1]} ({lo}..{hi - 1})'))
+        if max(bits) >= 4096:
+            out.append(('FAIL', f'{name} runs past the end of gSave.flags (4096 bits)'))
+
+    # 4. the run-start wipes actually cover what they claim to
+    m = re.search(r'for \(bit = 0; bit < (\d+); bit\+\+\) \{\s*'
+                  r'ClearLocalFlagByBank\(FLAG_BANK_12, bit\);', src)
+    site_max = (ns.get('QUICKSTART_SITE_FLAG_ORIGIN', 0) +
+                ns.get('QUICKSTART_CONTENT_SITE_MAX', 0) * ns.get('QUICKSTART_CONTENT_SITE_BITS', 0))
+    if not m:
+        out.append(('FAIL', 'no run-start clear loop found for the content site block'))
+    elif int(m.group(1)) < site_max:
+        out.append(('FAIL', f'the content site block is {site_max} bits but the run-start '
+                            f'clear only covers {m.group(1)} - the top sites carry over'))
+    else:
+        out.append(('PASS', f'run-start clear covers all {site_max} bits of the site block'))
+
+    b11 = [b for n, bits in blocks.items() for b in bits
+           if FLAG_BANKS[11][0] <= b < FLAG_BANKS[11][1] and not n.startswith(FLAG_PERSISTENT)]
+    cleared11 = set()
+    for lo, hi in re.findall(r'for \(bit = (\d+); bit <= (\d+); bit\+\+\) \{\s*'
+                             r'ClearLocalFlagByBank\(FLAG_BANK_11, bit\);', src):
+        cleared11 |= set(range(int(lo), int(hi) + 1))
+    missed = sorted({b - FLAG_BANKS[11][0] for b in b11} - cleared11)
+    if not cleared11:
+        out.append(('FAIL', 'no run-start clear loop found for FLAG_BANK_11'))
+    elif missed:
+        out.append(('FAIL', f'FLAG_BANK_11 offsets {missed[:8]} are used but never cleared '
+                            f'at the start of a run'))
+    else:
+        out.append(('PASS', f'run-start clear covers all {len(set(b11))} per-run bank 11 bits'))
+
+    # 5. the site block clear must not be undone
+
+    # 6. no area QUICKSTART actually enters may share bank 12 with the site
+    #    block, which is raw-addressed from 0 and would collide with that
+    #    area's own vanilla local flags.
+    b12_areas = set()
+    meta = open(os.path.join(os.path.dirname(GAME_C), 'data', 'areaMetadata.c')).read()
+    rows = re.findall(r'^\s*\{[^}]*LOCAL_BANK_(\d+)[^}]*\},', meta, re.M)
+    for idx, bank in enumerate(rows):
+        if bank == '12':
+            b12_areas.add(idx)
+    used = {row[2] for row in P.content_sites()} | {P.AREAS[an] for an, _rn in P.pool_doors()}
+    clash = sorted(used & b12_areas)
+    if clash:
+        out.append(('FAIL', f'areas {clash} use LOCAL_BANK_12 and are reachable in this mode - '
+                            f'their vanilla flags alias the content site block'))
+    else:
+        out.append(('PASS', f'no reachable area shares FLAG_BANK_12 '
+                            f'({len(b12_areas)} bank-12 areas, all unreachable)'))
+
+    span = max(claimed) if claimed else 0
+    out.append(('PASS', f'{len(claimed)} flag bits claimed by {len(blocks)} blocks, '
+                        f'no overlaps, highest bit {span} of 4095'))
+    return out
 
 
 def check_static():
@@ -356,7 +594,7 @@ def emu_fusers(rom):
 
 
 def emu_rooms(rom, start, end):
-    from emu import boot, warp, here, room_dims, coll_at, qs_set, GENT, STRIDE, MAX_ENT, r16
+    from emu import boot, warp, here, room_dims, coll_at, qs_set, qs_site_set, GENT, STRIDE, MAX_ENT, r16
     sites = P.content_sites()
     rooms = []
     seen = set()
@@ -381,13 +619,13 @@ def emu_rooms(rom, start, end):
         # Force every site in this room to the chest kind before entering, so
         # the same boot verifies both geometry and a live spawn.
         for idx, _cx, _cy in rec['spots']:
-            base = 266 + idx * 13
-            qs_set(c, base, 1)
+            base = idx * 13  # raw FLAG_BANK_12 offset - see qs_site_set
+            qs_site_set(c, base, 1)
             for b in range(3):
-                qs_set(c, base + 1 + b, (QS_EVENT_ITEM_DROP >> b) & 1)
+                qs_site_set(c, base + 1 + b, (QS_EVENT_ITEM_DROP >> b) & 1)
             for b in range(8):
-                qs_set(c, base + 4 + b, 0)
-            qs_set(c, base + 12, 0)
+                qs_site_set(c, base + 4 + b, 0)
+            qs_site_set(c, base + 12, 0)
         sx, sy = (rec['spots'][0][1], rec['spots'][0][2] + 24) if rec['spots'] else (120, 120)
         warp(c, rec['a'], rec['r'], sx, sy)
         for _ in range(150):
@@ -598,7 +836,7 @@ def main():
         res = emu_rooms(rom, int(args[i + 1]), int(args[i + 2]))
         print(json.dumps(res))
         return 0
-    results = [('static', check_static())]
+    results = [('static', check_static()), ('flags', check_flags())]
     if '--static-only' not in args:
         if '--rooms' not in args:
             results.append(('regions', emu_regions(rom)))

@@ -14,6 +14,7 @@ MAX_ENT = 72
 STRIDE = 0x88
 COLL = 0x02025eb0 + 0x2004
 SAVE_FLAGS = 0x02002a40 + 0x25C
+FLAG_BANK_12 = 0xA80  # gSave.flags bit of FLAG_BANK_12 offset 0
 QS_BIT0 = 3388  # gSave.flags bit of QUICKSTART flag 0 (FLAG_BANK_12 + 700)
 
 
@@ -74,7 +75,21 @@ def here(c):
 
 
 def qs_set(c, n, v=1):
-    b = QS_BIT0 + n
+    _flag_set(c, QS_BIT0 + n, v)
+
+
+# The room-keyed content sites are the one QUICKSTART block that does NOT
+# live in the +700 window - they are raw FLAG_BANK_12 offsets, based at 1
+# (offset 0 is unwritable; SetLocalFlagByBank drops it). See the bank map at
+# the top of src/game.c.
+SITE_ORIGIN = 1
+
+
+def qs_site_set(c, n, v=1):
+    _flag_set(c, FLAG_BANK_12 + SITE_ORIGIN + n, v)
+
+
+def _flag_set(c, b, v):
     a = SAVE_FLAGS + (b >> 3)
     m = 1 << (b & 7)
     c.memory.u8[a] = (c.memory.u8[a] | m) if v else (c.memory.u8[a] & ~m)
