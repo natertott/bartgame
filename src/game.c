@@ -579,6 +579,14 @@ static void GameTask_Transition(void) {
     // region's wave loop. It is an uncommon WEAPON/TOOL drop now like
     // everything else - conventional weapons peel the jelly too, see
     // sub_08027AA4 in chuchuBoss.c.
+    // The hub's own windcrest, revealed from the start so the player can warp
+    // home from anywhere. gUnk_08128024 (src/menu/kinstoneMenu.c) is the
+    // eight-row fast-travel table and gSave.windcrests bits 24-31 are its
+    // availability flags, one per row in order; Cloud Tops is row 2, so bit
+    // 26. Its destination in that table is (0x1e8,0x1a8) = (488,424), which
+    // is exactly where the WINDCREST object stands in the room - so the warp
+    // lands on the crest itself with no new data needed.
+    gSave.windcrests |= 1 << 26;
     // Lon Lon Ranch house key, granted at boot per the user's request ("Link
     // should start the game with the Lon Lon ranch house key already in his
     // inventory"). Note this doesn't actually gate anything under
@@ -10673,6 +10681,60 @@ static void QuickStartClearHubRoom(void) {
     }
 }
 
+// --- The hub's way out: the hole in Cloud Tops ---------------------------
+//
+// Cloud Tops has exactly ONE Transition row (gExitList_CloudTops_House, back
+// into the tower at 488,344), so the hole down to vanilla's lower cloud
+// levels is a pit TILE handled by holeManager.c, not an exit this file could
+// retarget. A position box is used instead, the same technique every other
+// synthetic entrance in this file uses, and it runs from the room monitor
+// ahead of the hole manager so it wins.
+//
+// Measured (docs/QUICKSTART_HUB.md): the room is 1008x1008, the tower door
+// is at (488,344) and the WINDCREST object stands at (488,424) - 80px south
+// of the door, on the same centre line. The pit is the wide band of special
+// tiles at rows 34-36, columns 25-37, which is directly "in front of" the
+// crest exactly as the design describes. The box covers its middle.
+#define QUICKSTART_HUB_HOLE_MIN_X 440
+#define QUICKSTART_HUB_HOLE_MAX_X 540
+#define QUICKSTART_HUB_HOLE_MIN_Y 552
+#define QUICKSTART_HUB_HOLE_MAX_Y 600
+
+// Where the hole drops you does NOT need storing. The region chain is drawn
+// once per run (GF_REGION_CHAIN_*), so slot 0 is already fixed for the whole
+// run - which is exactly the "same place every time this run" the design
+// asks for, for free.
+static void QuickStartProcessHubHoleLink(void) {
+    const QuickStartRegion* first;
+    s16 localX, localY;
+    if (gRoomControls.area != AREA_CLOUD_TOPS || gRoomControls.room != ROOM_CLOUD_TOPS_CLOUD_TOPS) {
+        return;
+    }
+    if (gRoomTransition.transitioningOut) {
+        return;
+    }
+    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    if (localX < QUICKSTART_HUB_HOLE_MIN_X || localX > QUICKSTART_HUB_HOLE_MAX_X ||
+        localY < QUICKSTART_HUB_HOLE_MIN_Y || localY > QUICKSTART_HUB_HOLE_MAX_Y) {
+        return;
+    }
+    // Same explicit-and-idempotent call the Melari skip makes, for the same
+    // reason: the draw is rolled unconditionally elsewhere, but this is a
+    // place that would fail silently (every run landing in the pool's first
+    // row) if that ever stopped being true.
+    QuickStartRandomizeRegionChainOnce();
+    first = QuickStartGetRegionAtChainSlot(0);
+    gRoomTransition.player_status.area_next = first->area;
+    gRoomTransition.player_status.room_next = first->room;
+    gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+    gRoomTransition.player_status.start_pos_x = first->entranceX;
+    gRoomTransition.player_status.start_pos_y = first->entranceY;
+    gRoomTransition.player_status.layer = 1;
+    gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+    gRoomTransition.transitioningOut = 1;
+}
+
 // Polled every frame regardless of item-choice phase (unlike
 // QuickStartUpdateItemChoice, which is specific to Castor Darknut Main) so
 // that leaving the starting room still gets QUICKSTART treatment.
@@ -10778,6 +10840,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartGetCurrentRegionChainPosition();
     QuickStartClearHubRoom();
+    QuickStartProcessHubHoleLink();
     if (gRoomControls.area == AREA_CASTOR_DARKNUT && gRoomControls.room == ROOM_CASTOR_DARKNUT_HALL) {
         QuickStartSpawnHallEnemiesOnce();
     } else if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
