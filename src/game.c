@@ -257,7 +257,7 @@ static bool32 QuickStartIsBoomerangTree(u8, u8);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
-static void QuickStartClearLonLonRanchGoron(void);
+static void QuickStartClearLonLonRanchAnimals(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartProcessRegionChainLinks(void);
@@ -2244,8 +2244,8 @@ static const QuickStartLink sQuickStartLinks[] = {
     // ifdef divergence, no ladder/shop content dispatch).
     //
     // Lon Lon Ranch's Goron Cave door itself (the real vanilla door the
-    // wall-punching Goron used to block - see the KINSTONE_29 fuse in
-    // GameTask_Transition above) is NOT wired up here - it leads to a
+    // wall-punching Goron blocks until KINSTONE_29 is fused at its fuser)
+    // is NOT wired up here - it leads to a
     // random "? room" pool draw now (ladder slot 3), same as Castle
     // Garden's two ladders, so its destination varies per save and can't be
     // a static entry in this table. That mechanism is gone;
@@ -2374,24 +2374,43 @@ static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
     { 152, 504 },
 };
 
-// Defensive backstop for the KINSTONE_29 fuse-at-boot in GameTask_Transition:
-// that flag is what makes sub_StateChange_HyruleField_LonLonRanch
-// (roomInit.c) skip loading the wall-punching Goron's entity list in the
-// first place, so this should never actually find one - but it costs
-// nothing to also delete any GORON-kind NPC that turns up here regardless,
-// the same idempotent per-frame backstop QuickStartClearMelarisMineObstacles
-// already uses elsewhere in this file.
+// Deletes the ranch's ambient animals (COW, CUCCO, CUCCO_CHICK) per the
+// user's own explicit request ("the cows are back... but they should be
+// gone").
 //
-// Also deletes the ranch's own ambient animals (COW, CUCCO, CUCCO_CHICK) per
-// the user's own explicit request ("the cows are back... but they should be
-// gone") - this was here earlier this session, then removed when the
-// density-reduction pass it was originally bundled with got reverted, but
-// the user wants the animals gone regardless of that unrelated reasoning.
-static void QuickStartClearLonLonRanchGoron(void) {
+// It used to delete the wall-punching GORON too, and that was the reason the
+// Goron cave could not be entered from the overworld. Vanilla's
+// sub_StateChange_HyruleField_LonLonRanch (roomInit.c) does this on every
+// room load:
+//
+//     if (!CheckKinstoneFused(KINSTONE_29)) {
+//         LoadRoomEntityList(&gUnk_080F7860);            // the Goron
+//         SetTile(SPECIAL_TILE_114, TILE_POS(8, 54), LAYER_BOTTOM);
+//         SetTile(SPECIAL_TILE_150, TILE_POS(8, 55), LAYER_BOTTOM);
+//     }
+//
+// The Goron and the two blocking tiles are ONE gate, and the fusion is what
+// lifts both. Deleting only the NPC left the tiles painted over the cave
+// mouth - a barrier with nothing standing in front of it, which is exactly
+// how the user found it: "there is still an invisible barrier where the
+// Goron stood".
+//
+// The deletion made sense when this file also fused KINSTONE_29 at boot, so
+// the gate was meant to be open from the start and any Goron that appeared
+// was a leftover. That boot-time fuse is gone - it was removed when
+// KINSTONE_29 became a real fuser in the kinstone economy (sQuickStartFusers)
+// - and only the deletion and a few comments describing it survived. Three
+// of those comments have been corrected with this change.
+//
+// So the Goron stays. It stands at the wall as vanilla intends, visibly
+// explaining why the cave is shut, and fusing KINSTONE_29 at its fuser plays
+// the punch-through cutscene and opens it - which the user confirmed already
+// works in play.
+static void QuickStartClearLonLonRanchAnimals(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         if (gEntities[i].base.kind == NPC &&
-            (gEntities[i].base.id == GORON || gEntities[i].base.id == COW || gEntities[i].base.id == CUCCO ||
+            (gEntities[i].base.id == COW || gEntities[i].base.id == CUCCO ||
              gEntities[i].base.id == CUCCO_CHICK)) {
             DeleteEntity(&gEntities[i].base);
         }
@@ -2532,7 +2551,7 @@ static void QuickStartSetRegionChainRewardState(s32 slot, u8 value) {
 // unconditional every frame, exactly as today, just folded into one hook
 // so the table row only needs the one function pointer.
 static void QuickStartLonLonRanchQuirkHook(void) {
-    QuickStartClearLonLonRanchGoron();
+    QuickStartClearLonLonRanchAnimals();
     QuickStartSolveLonLonBoulder();
 }
 
@@ -5663,7 +5682,7 @@ static void QuickStartRandomizeSlotsOnce(void) {
 // undecompiled logic settling the player at a slightly different anchor).
 // These trigger boxes are centered on those user-verified positions rather
 // than the raw entity coordinates. The Goron Cave Stairs door (Lon Lon
-// Ranch, see the KINSTONE_29 fuse in GameTask_Transition) is a third
+// Ranch, shut behind the KINSTONE_29 fusion) is a third
 // entrance into this same "? room" system now, ladder index 3, with its
 // own real-door-adjacent trigger box (see the sQuickStartLinks comment
 // above for how that corridor was traced) rather than a HIDDEN_LADDER_DOWN
@@ -8049,14 +8068,34 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // from the arrival spot in its own state and has all eight neighbours
     // open, which is what a miniboss needs to turn around in.
     //
-    // STILL UNREACHABLE IN PLAY, deliberately, and this is not a new
-    // problem: the stairs room's own door up (0x78,0x38) sits on a solid
-    // tile and does not fire however it is approached - measured by walking
-    // Link into it from every open column, and by sweeping the whole top
-    // row he can actually stand on. The mode's usual fix for a vanilla door
-    // that will not fire is a position box (see sQuickStartLinks); the user
-    // has parked that as separate work, so the chain is built and verified
-    // and waits for a way in.
+    // REACHABLE. This was written as "unreachable, waiting on a position
+    // box" and that was wrong twice over; both errors were mine, not the
+    // game's.
+    //
+    // The first was the overworld gate. Vanilla's
+    // sub_StateChange_HyruleField_LonLonRanch paints two blocking tiles over
+    // the cave mouth AND spawns the wall-punching Goron in front of them,
+    // both only while KINSTONE_29 is unfused - one gate, lifted by one
+    // fusion. This file deleted the Goron NPC but could not delete the
+    // tiles, so the barrier stayed with nothing standing in front of it.
+    // The user found it in play: "there is still an invisible barrier where
+    // the Goron stood". The Goron is left alone now, and the fusion opens
+    // the cave exactly as vanilla intends.
+    //
+    // The second was the stairs room's own door up (0x78,0x38), reported
+    // here as sitting on a solid tile and never firing. It fires. The
+    // trigger is at the FOOT of the staircase fixture, around (120,72) -
+    // measured: standing anywhere in (112-128, 72-80) opens the main
+    // chamber immediately. Two bad probes hid it. Walking up the middle
+    // column stalls at y=101 because that is where this room's own content
+    // site drops its reward, and picking it up opens a message box that
+    // blocks all input - the same trap this file has already been caught by
+    // twice. Walking up a side column instead overshoots to the top row and
+    // passes above the trigger entirely. Mash through the pickup and the
+    // walk continues into the chamber.
+    //
+    // So the whole route is walkable: ranch -> fuse KINSTONE_29 -> cave
+    // stairs -> main chamber, verified end to end with real input.
     { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_LARGE, 120, 600, 0, QS_SITE_REWARD_DEFAULT },
     { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, QUICKSTART_KINDS_MINIBOSS, 120, 440, KINSTONE_25,
       QS_SITE_REWARD_COMMON },

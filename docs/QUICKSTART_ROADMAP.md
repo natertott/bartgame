@@ -485,8 +485,8 @@ slot was dead twice over - unreachable behind the Castle Garden northwest
 ladder's redirect, and its content spot was `y=376` in a room 192 tall - so
 reclaiming its 13 bits closes two open bugs and costs nothing.
 
-- **Lon Lon Ranch: the Goron cave's kinstone progression.** Built, four
-  stages, verified - but the cave is still not enterable, see below.
+- **DONE - Lon Lon Ranch: the Goron cave's kinstone progression.** Four
+  stages, verified, and reachable in play.
 
   The room is a 240x720 vertical shaft that vanilla cuts into chambers with
   `sub_StateChange_GoronCave_Main`: five kinstone fusions, only THREE of
@@ -519,13 +519,33 @@ reclaiming its 13 bits closes two open bugs and costs nothing.
     they spawn correctly at four distinct anchors and are collapsed onto one
     the very next frame.
 
-  **Still not enterable.** The stairs room's door up (0x78,0x38) sits on a
-  solid tile and does not fire however it is approached - Link was walked
-  into it from every open column and swept across the whole top row he can
-  stand on. The precedented fix is a position box (`sQuickStartLinks`), the
-  mode's standard answer to a vanilla door that will not fire; the user has
-  parked that as separate work. Until then the chain is built, gated and
-  verified but unreachable in play.
+  **Enterable - and the earlier "unreachable" verdict here was wrong twice
+  over, both times because of the measurement, not the game.**
+
+  The real blocker was the overworld gate, and the user found it in play:
+  "there is still an invisible barrier where the Goron stood".
+  `sub_StateChange_HyruleField_LonLonRanch` paints two blocking tiles over
+  the cave mouth AND spawns the wall-punching Goron in front of them, both
+  only while KINSTONE_29 is unfused - one gate, lifted by one fusion. This
+  mode deleted the Goron NPC but could not delete the tiles, so the barrier
+  stayed with nothing standing in front of it. That deletion was a leftover:
+  it made sense while the mode also fused KINSTONE_29 at boot, and that
+  boot-time fuse was removed when KINSTONE_29 became a real fuser in C3.
+  Only the deletion and four stale comments survived it. The Goron stays
+  now, and fusing KINSTONE_29 at its fuser opens the cave with the vanilla
+  punch-through cutscene.
+
+  The second error was the stairs room's inner door, reported here as
+  sitting on a solid tile and never firing. It fires - the trigger is at the
+  FOOT of the staircase fixture, and standing anywhere in (112-128, 72-80)
+  opens the main chamber at once. Two bad probes hid it: walking up the
+  middle column stalls at y=101, which is where this room's own content site
+  drops its reward, and the pickup's message box blocks all input (the trap
+  this project has now been caught by three times); walking up a side column
+  instead overshoots to the top row and passes above the trigger.
+
+  Verified end to end with real input: ranch -> fuse KINSTONE_29 -> cave
+  stairs -> main chamber. No position box needed.
 
   The reported symptom - "the west door does not fire" - was ours, not
   vanilla's. All three are driven by the same mechanism: `SpecialWarpManager`
