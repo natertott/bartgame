@@ -278,6 +278,21 @@ A "? room" draws `QS_CAT_DROP` — everything except KEY. A region clear reward
 draws `QS_CAT_ALL`, because that is where the Cane, the Ocarina and the key
 items the opening selection did not offer have always come from.
 
+The hub's three selection rounds draw from this table too, superseding §2's
+`sQuickStartKeyItems` / `sQuickStartBonusItems` / `sQuickStartSkillItems` rows
+— those arrays are gone. Each round takes a slice, and unlike a "? room" it
+picks a *band* rather than rolling the 60/30/10 curve:
+
+| round | categories | tiers | pool on a fresh run |
+|---|---|---|---|
+| 1 | KEY | any | 8 (all 9, less the boot-granted Ocarina) |
+| 2 | REWARDS + STAT UPGRADES | rare only | 6 |
+| 3 | SKILL UPGRADES | rare excluded | 6 |
+
+Round 1's array had held 5 of the 9 KEY entries, so the Cane, the grip ring
+and the power bracelets could not open a run; rounds 2 and 3 were fixed
+triples with no randomness at all.
+
 ### Prerequisites
 
 Checked at draw time, not roll time, so a prize decided on the first visit

@@ -62,7 +62,7 @@ appears a second time.
 ### 3.1 Run flow
 
 ```
-Wind Tribe Tower F3   item choice, 3 rounds (key item / bonus / skill)
+Wind Tribe Tower F3   item choice, 3 rounds (key item / rare reward / skill)
         |             then the phase machine parks at 10 - no combat here
         | stairs down (vanilla, F3 -> F2 -> F1 -> Entrance)
         v
@@ -183,6 +183,46 @@ different `gRand` values and four different shop stock lists.
 
 The first run on a brand-new save is still fixed - nothing has happened yet to
 vary it - which is fine.
+
+### 3.3c The hub's three selection rounds
+
+Floor 3 offers three items, three times. Each round now **draws from the tier
+table** (`QuickStartSpawnChoiceRow`), where all three used to be hardcoded
+arrays:
+
+| Round | Categories | Tiers | Pool size on a fresh run |
+|---|---|---|---|
+| 1 | `QS_CAT_KEY` | any | 8 |
+| 2 | `QS_CAT_REWARD \| QS_CAT_STAT` | rare only | 6 |
+| 3 | `QS_CAT_SKILL` | rare excluded | 6 |
+
+Round 1's array had listed **5 of the table's 9** key items, so the Cane of
+Pacci, the Grip Ring and the Power Bracelets could never open a run; the 9th,
+the Ocarina of Wind, is granted at boot and so is filtered out by
+`QuickStartTierEntryUsable` like any other item already owned. Rounds 2 and 3
+were not randomized at all - the same heart container / 100 rupees / red
+potion and the same three skills, every run.
+
+All four bottled entries in round 2's band (the fairy and the three charms)
+need an empty bottle, which the boot grant already provides
+(`gSave.stats.bottles[0] = 0x20`), so the full 6 are live from the first run.
+`QuickStartSpawnChoiceRow` still widens to every tier of the same categories
+if a band cannot fill three slots, but nothing reaches that path today.
+
+**How a round detects the choice changed with it.** The old check scanned the
+inventory for the three items it had offered; nothing persists which three are
+drawn now, and the pickup is not uniformly observable anyway (a rupee goes to
+the wallet, a charm into a bottle). Detection is now "an item left the row" -
+`QuickStartChoiceRowRemaining` counts ground items at the three row
+coordinates. That fires several frames EARLIER than the old check, on the
+frame the vanilla item-get cutscene starts rather than when `GiveItem` runs, so
+the next phase additionally waits on `QuickStartItemGetCutsceneRunning`;
+without it, tearing the row down and reloading the room would cancel the
+pickup the player just made.
+
+`tools/quickstart/hub_rounds.py` is the regression probe: per seed it prints
+each round's drawn set and then, on a fresh boot per item, walks onto that item
+and checks the round actually advanced.
 
 ### 3.4 The shop
 

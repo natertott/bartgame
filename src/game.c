@@ -438,10 +438,11 @@ static void GameTask_Transition(void) {
     // difficulty counter, ladder assignments, EZERO_1ST, etc.) live in a
     // separate array and are untouched by this, but ownership itself
     // (gSave.inventory, 2 bits/item) persists across DoSoftReset same as
-    // everything else in gSave - left alone, QuickStartAnyPickedUp would see
-    // last round's picks as already-owned and silently skip straight past
-    // the choice phases with the old loadout, which is exactly what was
-    // happening. Wiping it here, before any of the fixed starting gear below
+    // everything else in gSave. Left alone, last run's picks stay owned,
+    // and `QuickStartTierEntryUsable` refuses any non-repeatable item the
+    // player already has - so the three selection rounds would draw from a
+    // pool that shrinks every run and eventually cannot fill a row, on top
+    // of handing the player a loadout they never chose. Wiping it here, before any of the fixed starting gear below
     // gets (re-)granted, is simpler and more robust than re-clearing every
     // individual item/marker (ITEM_32/33/5A, all three choice categories,
     // every ladder-room reward) by hand.
@@ -760,7 +761,7 @@ static void GameTask_Transition(void) {
     // and shop stock now, so a run that wants a ranged option has to find or
     // buy one.
     // ITEM_FLIPPERS is no longer a free grant - it's one of the round-1
-    // key-item choices now (sQuickStartKeyItems), and the whole point of
+    // key-item choices now (QS_CAT_KEY in the tier table), and the point of
     // that round is that owning it (or not) actually changes which region
     // the run's chain routes through (QuickStartRandomizeRegionChainOnce).
     // Bombs are no longer free either, same reasoning as the Bow above.
@@ -798,8 +799,9 @@ static void GameTask_Transition(void) {
     // than only on the way out. It does NOT need removing from the tier table:
     // QuickStartTierEntryUsable already refuses any non-repeatable item the
     // player already owns, and the ocarina's row is non-repeatable, so it
-    // simply stops being drawable. It is not in sQuickStartKeyItems either, so
-    // the opening selection is unaffected.
+    // simply stops being drawable - including by round 1 of the opening
+    // selection, which draws the whole QS_CAT_KEY category and so would
+    // otherwise offer a "choice" the player already holds.
     //
     // Where it takes the player is fixed - see Subtask_FastTravel_0
     // (src/subtask/subtaskFastTravel.c), which skips the crest-picking map
@@ -866,10 +868,13 @@ static void GameTask_Transition(void) {
     // bedroom runs script_PlayerIntro outright, which is why the stairs
     // appeared to dump the player back downstairs. One flag fixes all three.
     SetGlobalFlag(START);
-    // Pre-grant one empty bottle so the bonus-reward phase's Red Potion
-    // pickup (GiveItem's bottle-fill path in itemUtils.c only fills a slot
-    // already marked empty, 0x20) has somewhere to go - without this the
-    // pickup would silently do nothing.
+    // Pre-grant one empty bottle. GiveItem's bottle-fill path (itemUtils.c)
+    // only fills a slot already marked empty (0x20) and silently does
+    // nothing otherwise, so anything that arrives bottled needs this to
+    // exist first. Originally it was here for the fixed Red Potion the
+    // second selection round used to offer; now that round draws the rare
+    // REWARD/STAT band, and this one bottle is what makes four of its six
+    // entries - the bottled fairy and the three charms - drawable at all.
     gSave.stats.bottles[0] = 0x20;
     SetInventoryValue(ITEM_BOTTLE1, 1);
 #elif defined(MAPEXPLORE)
@@ -1245,34 +1250,16 @@ typedef struct {
 
 #define QUICKSTART_ITEM_CHOICES 3
 
-// Round 1 is now the run's key-item choice, per the user's own redesign:
-// this determines which overworld path the player must take to reach the
-// Earth Element (see QuickStartRandomizeRegionChainOnce below). All 5 are
-// offered as candidates; only 3 are drawn per run (QuickStartSpawnKeyItemChoice)
-// so the player never knows in advance which 3 they'll see. Zora Flippers
-// is the only one with a real, confirmed gate behind it today (the canal
-// blocking Trilby Highlands' west border - see scratchpad/traversal_graph.py,
-// TRILBY_HIGHLANDS<->HYRULE_TOWN edge) - the other 4 don't have a surveyed
-// gate yet, so picking them currently just routes to the plain 4-region
-// pool below, same as each other for now.
-static const QuickStartItemChoice sQuickStartKeyItems[] = {
-    { ITEM_PEGASUS_BOOTS },
-    { ITEM_ROCS_CAPE },
-    { ITEM_MOLE_MITTS },
-    { ITEM_FLIPPERS },
-    { ITEM_LANTERN_OFF },
-};
-#define QUICKSTART_KEY_ITEM_POOL_SIZE (s32)(sizeof(sQuickStartKeyItems) / sizeof(QuickStartItemChoice))
-static const QuickStartItemChoice sQuickStartBonusItems[QUICKSTART_ITEM_CHOICES] = {
-    { ITEM_HEART_CONTAINER },
-    { ITEM_RUPEE100 },
-    { ITEM_BOTTLE_RED_POTION },
-};
-static const QuickStartItemChoice sQuickStartSkillItems[QUICKSTART_ITEM_CHOICES] = {
-    { ITEM_SKILL_SPIN_ATTACK },
-    { ITEM_SKILL_ROLL_ATTACK },
-    { ITEM_SKILL_PERIL_BEAM },
-};
+// RETIRED: three hardcoded 3-to-5 entry arrays (sQuickStartKeyItems,
+// sQuickStartBonusItems, sQuickStartSkillItems). Every hub round now draws
+// from the one tier table further down this file - see
+// QuickStartSpawnChoiceRow, and the three QUICKSTART_CHOICE_ROW_* masks
+// beside it that say what each round may offer. The old arrays had drifted
+// out of sync with that table (the key-item array listed 5 of its 9
+// QS_CAT_KEY entries, so the Cane of Pacci, the Grip Ring and the Power
+// Bracelets could never open a run) and rounds 2 and 3 were not randomized
+// at all: the same heart container / 100 rupees / red potion and the same
+// three skills, every single run.
 
 // Whether an entity's position falls within the CURRENT room's bounds
 // (gRoomControls.origin_x/y/width/height, which update per-room regardless
@@ -3175,6 +3162,14 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
 #define QS_TIER_COMMON 0
 #define QS_TIER_UNCOMMON 1
 #define QS_TIER_RARE 2
+
+// A set of tiers, for callers that pick from a band rather than rolling the
+// 60/30/10 curve - today the hub's three selection rounds
+// (QuickStartSpawnChoiceRow), which are a deliberate choice between three
+// visible items, not a random drop.
+#define QS_TIER_BIT(t) (1 << (t))
+#define QS_TIER_ANY (QS_TIER_BIT(QS_TIER_COMMON) | QS_TIER_BIT(QS_TIER_UNCOMMON) | QS_TIER_BIT(QS_TIER_RARE))
+#define QS_TIER_NOT_RARE (QS_TIER_BIT(QS_TIER_COMMON) | QS_TIER_BIT(QS_TIER_UNCOMMON))
 
 // What a content site's kill/pickup pays, when the row wants to override
 // its kind's usual payout (QuickStartContentSite.rewardTier, defined with
@@ -11790,48 +11785,126 @@ static void QuickStartSpawnItems(const QuickStartItemChoice* choices) {
     }
 }
 
-static bool32 QuickStartAnyPickedUp(const QuickStartItemChoice* choices) {
+// How many of a round's item entities are still sitting on the row.
+//
+// This, and not an inventory scan, is how a round now detects "the player
+// chose". The three items are drawn from the tier table at spawn time and
+// nothing persists WHICH three were drawn (this file's statics don't
+// survive - see the .data/linker.ld note elsewhere in this file - so
+// remembering them would cost gSave.flags bits), and the pickup itself is
+// not uniformly observable anyway: a rupee adds to the wallet rather than
+// setting an inventory slot, and a bottled charm lands in a bottle. What IS
+// uniform is that ItemOnGround deletes itself the moment it's taken
+// (ItemOnGround_SetFlagAndDelete), so counting what's left on the row works
+// for every item the table can produce.
+static s32 QuickStartChoiceRowRemaining(void) {
+    s32 i, j, count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (e->kind != OBJECT || e->id != GROUND_ITEM || (e->flags & ENT_DELETED)) {
+            continue;
+        }
+        if (e->y.HALF.HI - gRoomControls.origin_y != QUICKSTART_ITEM_ROW_Y) {
+            continue;
+        }
+        for (j = 0; j < QUICKSTART_ITEM_CHOICES; j++) {
+            if (e->x.HALF.HI - gRoomControls.origin_x == sQuickStartItemOffsets[j]) {
+                count++;
+                break;
+            }
+        }
+    }
+    return count;
+}
+
+// Is vanilla's "Link holds the item overhead" cutscene on screen?
+//
+// Scanned by entity rather than read off gPriorityHandler: AnyPrioritySet()
+// would also be true for anything else in the room that happens to raise a
+// priority, and this gates a phase advance - a false positive here would be
+// a soft-lock, not a glitch. CreateItemEntity builds exactly this pair
+// (LINK_HOLDING_ITEM plus the LINK_ANIMATION that drives its frames, both
+// kind OBJECT), and both are deleted when the sequence ends.
+static bool32 QuickStartItemGetCutsceneRunning(void) {
     s32 i;
-    for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
-        if (GetInventoryValue(choices[i].itemId) != 0) {
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (e->kind != OBJECT || (e->flags & ENT_DELETED)) {
+            continue;
+        }
+        if (e->id == LINK_HOLDING_ITEM || e->id == LINK_ANIMATION) {
             return TRUE;
         }
     }
     return FALSE;
 }
 
-// Same idea as QuickStartAnyPickedUp, but scoped to the full 5-item key-item
-// pool rather than a fixed 3 - only 3 are ever actually spawned in the room
-// per run (QuickStartSpawnKeyItemChoice), so at most one of these 5 can ever
-// have a nonzero inventory value; scanning the superset just costs a couple
-// of always-false checks and avoids needing to persist "which 3 were shown"
-// anywhere (this file's own statics don't survive - see the .data/linker.ld
-// note on QUICKSTART_MAIN_ROOM_SQUARES's neighboring comments elsewhere in
-// this file - so any such tracking would need its own gSave.flags bits).
-static bool32 QuickStartAnyKeyItemPickedUp(void) {
-    s32 i;
-    for (i = 0; i < QUICKSTART_KEY_ITEM_POOL_SIZE; i++) {
-        if (GetInventoryValue(sQuickStartKeyItems[i].itemId) != 0) {
-            return TRUE;
+// Every entry of (catMask, tierMask) the run can actually use right now,
+// deduplicated. The dedup matters: ITEM_BOTTLE1 is listed twice in the tier
+// table (once as a REWARD, once as a WEAPON), and a row that offered the
+// same item in two of its three slots would be a round with two real
+// choices, not three.
+#define QUICKSTART_CHOICE_POOL_MAX 16
+static s32 QuickStartCollectChoiceCandidates(u8 catMask, u8 tierMask, u16* out, s32 max) {
+    s32 i, j, n = 0;
+    for (i = 0; i < QUICKSTART_TIER_COUNT && n < max; i++) {
+        const QuickStartTierEntry* e = &sQuickStartTiers[i];
+        if ((e->cat & catMask) == 0 || (tierMask & QS_TIER_BIT(e->tier)) == 0) {
+            continue;
+        }
+        if (!QuickStartTierEntryUsable(e)) {
+            continue;
+        }
+        for (j = 0; j < n; j++) {
+            if (out[j] == e->item) {
+                break;
+            }
+        }
+        if (j == n) {
+            out[n++] = e->item;
         }
     }
-    return FALSE;
+    return n;
 }
 
-// Draws 3 distinct items from the 5-item key-item pool (fresh every run,
-// same Fisher-Yates-adjacent "reject and redraw on collision" shape
-// QuickStartRandomizeRegionChainOnce already
-// uses elsewhere in this file) and hands them to QuickStartSpawnItems, which
-// itself shuffles their left-to-right display order. `choices` is a plain
-// stack-local array - fine here since it's only read synchronously within
-// this same call, unlike any state that needs to survive across frames.
-static void QuickStartSpawnKeyItemChoice(void) {
+// Draws 3 distinct items for one hub round out of the tier table and hands
+// them to QuickStartSpawnItems, which shuffles their left-to-right order.
+//
+// If the requested band cannot supply 3 usable entries the draw WIDENS to
+// every tier of the same categories rather than showing a short row. No
+// round needs that today - the narrowest band is round 2's six rare
+// REWARD/STAT entries, and all six are usable at run start because the boot
+// grant hands out one empty bottle (see gSave.stats.bottles[0] = 0x20
+// above), which is what the bottled fairy and the three charms require. It
+// is the safety net for a band that runs dry later, not a live path.
+//
+// The pick is `Random() & 0x3F` reduced by subtraction, not a modulo:
+// `count` is a runtime value and agbcc emits a call to __umodsi3 for
+// division by anything but a constant, which its runtime library does not
+// provide (the same constraint QuickStartTierPick documents). Six bits
+// keeps that subtraction loop to at most 63 steps - reducing a full 32-bit
+// Random() the same way would take hundreds of millions.
+static void QuickStartSpawnChoiceRow(u8 catMask, u8 tierMask) {
     QuickStartItemChoice choices[QUICKSTART_ITEM_CHOICES];
-    s32 i, j, draw;
+    u16 pool[QUICKSTART_CHOICE_POOL_MAX];
     u8 used[QUICKSTART_ITEM_CHOICES];
+    s32 count, i, j, draw;
+
+    count = QuickStartCollectChoiceCandidates(catMask, tierMask, pool, QUICKSTART_CHOICE_POOL_MAX);
+    if (count < QUICKSTART_ITEM_CHOICES) {
+        count = QuickStartCollectChoiceCandidates(catMask, QS_TIER_ANY, pool, QUICKSTART_CHOICE_POOL_MAX);
+    }
+    // A heart piece is always usable (repeatable, no requirement), so a row
+    // can never come up empty even if the categories somehow run dry.
     for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
+        choices[i].itemId = ITEM_HEART_PIECE;
+    }
+    for (i = 0; i < QUICKSTART_ITEM_CHOICES && i < count; i++) {
         for (;;) {
-            draw = (s32)Random() % QUICKSTART_KEY_ITEM_POOL_SIZE;
+            draw = (s32)(Random() & 0x3f);
+            while (draw >= count) {
+                draw -= count;
+            }
             for (j = 0; j < i; j++) {
                 if (used[j] == draw) {
                     break;
@@ -11842,15 +11915,33 @@ static void QuickStartSpawnKeyItemChoice(void) {
             }
         }
         used[i] = (u8)draw;
-        choices[i] = sQuickStartKeyItems[draw];
+        choices[i].itemId = pool[draw];
     }
     QuickStartSpawnItems(choices);
 }
 
+// Round 1: the run's key item. Which one the player takes is what decides
+// the overworld path to the Earth Element (see
+// QuickStartRandomizeRegionChainOnce below). All 9 QS_CAT_KEY entries are
+// candidates - the previous hardcoded array listed only 5 - though the
+// Ocarina of Wind is granted at boot and so is never usable here, leaving 8
+// in practice.
+#define QUICKSTART_CHOICE_ROW_1_CATS QS_CAT_KEY
+#define QUICKSTART_CHOICE_ROW_1_TIERS QS_TIER_ANY
+// Round 2: rare rewards and stat upgrades, per the user - the round that
+// used to be a fixed heart container / 100 rupees / red potion.
+#define QUICKSTART_CHOICE_ROW_2_CATS (QS_CAT_REWARD | QS_CAT_STAT)
+#define QUICKSTART_CHOICE_ROW_2_TIERS QS_TIER_BIT(QS_TIER_RARE)
+// Round 3: skills, rare excluded - the two rare skills (Down Thrust, Great
+// Spin) both have prerequisites the player is unlikely to hold this early
+// anyway, and holding them back leaves something for a "? room" to pay out.
+#define QUICKSTART_CHOICE_ROW_3_CATS QS_CAT_SKILL
+#define QUICKSTART_CHOICE_ROW_3_TIERS QS_TIER_NOT_RARE
+
 static void QuickStartSpawnStarterChoice(void) {
     Entity* npc;
 
-    QuickStartSpawnKeyItemChoice();
+    QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_1_CATS, QUICKSTART_CHOICE_ROW_1_TIERS);
 
     npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
@@ -12010,6 +12101,20 @@ static void QuickStartUpdateItemChoice(void) {
         if (gPlayerEntity.base.action != PLAYER_NORMAL) {
             return;
         }
+        // ...and on the vanilla item-get cutscene, if one is running.
+        //
+        // A round now ends the frame its chosen item ENTITY disappears (see
+        // QuickStartChoiceRowRemaining), which for a cutscene item is the
+        // frame the cutscene starts: itemOnGround.c's sub_08081420 creates
+        // the Link-animation/holding-item pair and only then deletes the
+        // ground item. GiveItem doesn't run until LinkHoldingItem_Action1
+        // several frames later, so tearing the row down and reloading the
+        // room here would cancel the pickup the player just made. The old
+        // inventory-based detection never saw this window because it
+        // couldn't fire until GiveItem had already run.
+        if (QuickStartItemGetCutsceneRunning()) {
+            return;
+        }
         // Phase 5 additionally waits on the skill-get message triggered
         // above (phase 4's handler) actually being dismissed - unlike the
         // starter/bonus rows' vanilla pickup cutscene, showing this message
@@ -12044,7 +12149,7 @@ static void QuickStartUpdateItemChoice(void) {
             // item-row x-offset, before spawning the next set of items.
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
-            QuickStartSpawnItems(sQuickStartBonusItems);
+            QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_2_CATS, QUICKSTART_CHOICE_ROW_2_TIERS);
             QuickStartHubSetPhase(2);
         } else if (phase == 3) {
             // No manual maxHealth bump here any more. This used to add 8
@@ -12064,7 +12169,7 @@ static void QuickStartUpdateItemChoice(void) {
             // item row spawns at the same reused coordinates.
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
-            QuickStartSpawnItems(sQuickStartSkillItems);
+            QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_3_CATS, QUICKSTART_CHOICE_ROW_3_TIERS);
             QuickStartHubSetPhase(4);
         } else {
             // UpdatePlayerSkills (playerUtils.c) is what actually turns the
@@ -12129,8 +12234,16 @@ static void QuickStartUpdateItemChoice(void) {
     }
 
     if (phase == 0 || phase == 2 || phase == 4) {
-        const QuickStartItemChoice* choices = (phase == 2) ? sQuickStartBonusItems : sQuickStartSkillItems;
-        bool32 pickedUp = (phase == 0) ? QuickStartAnyKeyItemPickedUp() : QuickStartAnyPickedUp(choices);
+        // "One of the three is gone" - see QuickStartChoiceRowRemaining for
+        // why the round is no longer detected by scanning inventory for the
+        // items it offered.
+        //
+        // The `> 0` half is not redundant. This function also runs during
+        // GameMain_ChangeRoom (QuickStartUpdate), which can be a frame or
+        // two ahead of the row actually being spawned; an empty row must
+        // read as "not spawned yet", not as "all three taken".
+        s32 remaining = QuickStartChoiceRowRemaining();
+        bool32 pickedUp = (remaining > 0 && remaining < QUICKSTART_ITEM_CHOICES);
         QuickStartRefreshItemTimers();
         if (pickedUp) {
             // Bombs/bow/boomerang and the heart/rupee/potion row both show a
@@ -12149,11 +12262,19 @@ static void QuickStartUpdateItemChoice(void) {
             // Firing the message explicitly here, rather than trying to
             // coax the vanilla cutscene into cooperating, means this
             // doesn't depend on figuring out exactly why it skips itself.
+            //
+            // Which skill was taken is found by scanning the tier table's
+            // QS_CAT_SKILL rows for one the player now owns, rather than by
+            // scanning the three that were offered - nothing persists which
+            // three those were (see QuickStartChoiceRowRemaining). At most
+            // one can match: the per-run reset clears the inventory, and
+            // rounds 1 and 2 hand out key items and rewards, so round 3 is
+            // the first skill of the run.
             if (phase == 4) {
                 s32 i;
-                for (i = 0; i < QUICKSTART_ITEM_CHOICES; i++) {
-                    u16 skillItem = sQuickStartSkillItems[i].itemId;
-                    if (GetInventoryValue(skillItem) != 0) {
+                for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+                    u16 skillItem = sQuickStartTiers[i].item;
+                    if ((sQuickStartTiers[i].cat & QS_CAT_SKILL) && GetInventoryValue(skillItem) != 0) {
                         MessageRequest(TEXT_INDEX(TEXT_ITEM_GET, gItemMetaData[skillItem].textId));
                         break;
                     }

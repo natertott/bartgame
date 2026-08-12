@@ -28,6 +28,17 @@
   harness boot has no save behind it and therefore always derives the SAME
   seed, so an unpinned checker run only ever tests one run's worth of drawn
   content.
+- `hub_rounds.py` - the hub's three selection rounds, per seed:
+
+      python3 tools/quickstart/hub_rounds.py 0xDEADBEEF
+
+  Prints each round's drawn set (checking the three are distinct and come
+  from the band that round is supposed to draw from) and then, on a fresh
+  boot per item so one pickup cannot mask another, walks onto that item and
+  reports whether the round advanced. Worth re-running after anything that
+  touches the tier table or the row-teardown path: rounds are detected by an
+  item leaving the row, which fires on the frame the item-get cutscene
+  starts, so a mistimed teardown shows up here as a STUCK round.
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every
   build that touches placement data:
 
