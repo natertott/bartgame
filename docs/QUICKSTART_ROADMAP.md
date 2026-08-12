@@ -139,10 +139,21 @@ only its main walkable component, not the small SHF-seam pocket.
 Their six real doors are content sites now (the farm house, the Eastern
 Hills cave, the Western Wood heart-piece tree, Percy's house, and the two
 Minish houses - the last two pulled OUT of the drawn small-room pool so a
-walk-in room is never also a teleport target). STILL OPEN for the new
-regions: kinstone fusers/fusion gates (no fuser scatter rows yet - their
-vanilla fusion world-events need auditing first) - everything else
-(waves, rewards, element eligibility, pot quest, hunt) is live in them.
+walk-in room is never also a teleport target).
+
+**Kinstone fusers are live in the new regions too.** The audit found nine
+vanilla fusions whose world events land in EH/WW rooms; seven are wired
+as fusers (EH-North: KINSTONE_16 and the golden-enemy KINSTONE_55;
+WW-Center: KINSTONE_3D; WW-North: KINSTONE_11/21/3A/48/4C - the ring's
+densest fusion room). The two BEANSTALK fusions (KINSTONE_2E in
+EH-Center, KINSTONE_24 in WW-South) are deliberately NOT offered: a
+beanstalk's payoff is climbing out of the ring to the cloud rooms, which
+containment cancels, and a fusion that grows an unusable ladder reads as
+a bug. Scatter spots for the three hosting rooms were generated with the
+region's enemy grid, gates, entrance and reward spot seeded as taken, so
+a fuser can never stand on a wave spawn point or the reward drop.
+With this, the new regions are at full feature parity with the original
+five.
 
 **The ordered chain is retired.** The run is a free-roam hunt now, per the
 user: "the Earth Element is SOMEWHERE. Go find it." Every pool region is

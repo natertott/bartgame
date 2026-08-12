@@ -2825,8 +2825,15 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 264, 88, 0, 0, 0, 0,
       sQuickStartWesternWoodsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsCenterEnemyOffsets), 121, 9,
       264, 88, NULL },
+    // Max 24, not the squares/13 = 46 the survey formula suggests. This
+    // room carries the ring's heaviest fixed sheet load - five fusers plus
+    // its own vanilla object clutter - and the gfx tier measured the wave's
+    // one-frame spawn burst dipping to 1 free sprite slot at difficulty 8
+    // against the checker's floor of 2 (the burst reads a stale free count,
+    // and the reaper only settles it a few dozen frames later). 24 keeps
+    // the burst small enough that the worst frame stays above the floor.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 248, 360, 0, 0, 0, 0,
-      sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607, 46,
+      sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607, 24,
       248, 360, NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
@@ -4782,7 +4789,17 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 // Steepening the slope pays for the fusers out of the high-difficulty wave
 // count, where sprites are most expensive, and leaves the low-difficulty
 // counts alone.
-#define QUICKSTART_GFX_SPAWN_CAP_SLOPE 5
+//
+// Raised again, 5 to 6, when the overworld expansion's regions arrived:
+// Western Wood North carries the ring's heaviest fixed sheet load (five
+// fusers plus its own vanilla object clutter) and measured 1 free slot at
+// difficulty 8 with the slope at 5 - the wave's high-tier kinds pass the
+// stale-count spawn gates during the burst and their projectile sheets
+// load ungated once they start shooting. Same lever, same reasoning as the
+// first bump: pay for the new fixed load out of the difficulty-8+ wave
+// count (24 -> 16 enemies at difficulty 8), where each enemy costs the
+// most sprite table, and leave difficulty 0-4 untouched.
+#define QUICKSTART_GFX_SPAWN_CAP_SLOPE 6
 #define QUICKSTART_GFX_SPAWN_CAP_MIN 16
 
 #define QUICKSTART_MAX_ENEMY_KINDS 3
@@ -11613,6 +11630,29 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_22 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_52 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_5E },
+    // --- The overworld expansion's regions --------------------------------
+    // Discovered from the data, not guessed: every kinstone whose
+    // gKinstoneWorldEvents row is a real world event (subtask 8) with its
+    // gWorldEvents area/room inside Eastern Hills or Western Wood. Nine
+    // fusions qualified; the two BEANSTALK-type ones (KINSTONE_2E in EH
+    // Center, KINSTONE_24 in WW South) are deliberately left out - a
+    // beanstalk's whole payoff is climbing OUT of the ring to the cloud
+    // rooms, which containment cancels, and a fusion that grows a ladder
+    // the player cannot use reads as a bug. The other seven all resolve
+    // inside their own room (a golden enemy, fusion chests, a cave patch).
+    //
+    // Eastern Hills North: KINSTONE_16 (world event at (200,376)) and
+    // KINSTONE_55 (the golden enemy at (120,440), OUGONTEKI_D).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, KINSTONE_16 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, KINSTONE_55 },
+    // Western Wood Center: KINSTONE_3D (world event at (312,88)).
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, KINSTONE_3D },
+    // Western Wood North: five fusions, the densest room in the ring.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_11 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_21 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_3A },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_48 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_4C },
 };
 
 // Nine places per region a fuser can stand, and NOT hand-picked:
@@ -11651,6 +11691,22 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       { { 392, 888 }, { 24, 408 }, { 344, 744 }, { 248, 136 }, { 280, 888 },
         { 40, 584 }, { 136, 584 }, { 360, 152 }, { 456, 552 } } },
+    // The three expansion rooms that host fusers, generated the same way
+    // (flood + farthest-point sample) with the region's enemy-offset grid,
+    // its gates, its entrance and its reward spot all seeded as taken, so a
+    // fuser can never stand on a wave spawn point or the reward drop.
+    // Western Wood Center is a 30x10 corridor, so its nine spots sit closer
+    // together than the six-tile spacing the big rooms keep - it hosts one
+    // fuser, so only one of them is ever occupied.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH,
+      { { 136, 120 }, { 136, 296 }, { 168, 264 }, { 168, 328 }, { 296, 248 },
+        { 328, 104 }, { 328, 376 }, { 360, 424 }, { 376, 232 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER,
+      { { 280, 56 }, { 280, 104 }, { 296, 72 }, { 328, 120 }, { 344, 104 },
+        { 392, 104 }, { 408, 40 }, { 408, 88 }, { 408, 120 } } },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH,
+      { { 248, 360 }, { 264, 504 }, { 280, 408 }, { 376, 72 }, { 392, 328 },
+        { 56, 248 }, { 296, 536 }, { 344, 136 }, { 376, 168 } } },
 };
 
 // One 4-bit roll for the whole run, rolled lazily the first time a fuser

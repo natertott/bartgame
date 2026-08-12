@@ -30,6 +30,13 @@ GATES = [
     ('ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD', [0x40, 0x4D, 0x59, 0x5A, 0x2D, 0x5F]),
     ('ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD', [0x32, 0x58, 0x53]),
     ('ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS', [0x3F, 0x22, 0x52, 0x5E]),
+    # The overworld expansion. Kinstones 0x2E (EH Center) and 0x24 (WW South)
+    # are real world events here too but are BEANSTALKS, deliberately not
+    # fused in this mode (the climb leaves the ring and containment cancels
+    # it), so neither room hosts a fuser at all.
+    ('ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH', [0x16, 0x55]),
+    ('ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER', [0x3D]),
+    ('ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH', [0x11, 0x21, 0x3A, 0x48, 0x4C]),
 ]
 
 # How many scatter spots to propose per region. Has to be at least as many as
