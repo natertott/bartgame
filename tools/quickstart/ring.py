@@ -73,17 +73,27 @@ BLOCKED = [
 ]
 
 
+# gSave.stats.health - pinned to full for the whole walk. The free-roam
+# structure spawns waves in EVERY region now, so a probe that just walks
+# through them takes hits; one death ends the session's usefulness (the
+# game-over screen eats every later warp) and shows up as a cascade of
+# warp-bounced results, which is exactly how it was found.
+HEALTH = 0x02002a40 + 0xA8 + 2
+
+
 def attempt(c, src, lx, ly, key, frames=240):
     warp(c, src[0], src[1], lx, ly, frames=180)
     if here(c) != src:
         return ('warp-bounced', here(c))
     for _ in range(90):
+        c.memory.u8[HEALTH] = c.memory.u8[HEALTH + 1]
         c.set_keys(c.KEY_A)
         c.run_frame()
         c.clear_keys(c.KEY_A)
         c.run_frame()
     k = getattr(c, key)
     for _ in range(frames):
+        c.memory.u8[HEALTH] = c.memory.u8[HEALTH + 1]
         c.set_keys(k)
         c.run_frame()
         if here(c) != src:
@@ -100,7 +110,12 @@ def main(argv):
     c = boot_pinned('tmc.gba', sd)
     fails = 0
     for label, src, lx, ly, key, want in CROSSINGS:
+        # Two attempts: the walk happens through live waves now, and a
+        # well-timed knockback can stall one try without the seam being
+        # closed. A wall stays a wall on both attempts.
         st, got = attempt(c, src, lx, ly, key)
+        if not (st == 'crossed' and got == want):
+            st, got = attempt(c, src, lx, ly, key)
         ok = st == 'crossed' and got == want
         fails += 0 if ok else 1
         print(f'  [{"PASS" if ok else "FAIL"}] {label:24s} -> {st} {got}')
