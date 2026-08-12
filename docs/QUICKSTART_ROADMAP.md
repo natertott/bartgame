@@ -71,12 +71,13 @@ Tower Entrance        walk out the front door (its solid tiles are cleared)
    Cloud Tops         the wind crest, and the pit in front of it
         | pit fall, redirected by QuickStartProcessHubHoleLink
         v
-   region slot 0      endless escalating waves; wave 0's clear drops the
-        |             region's one-time reward
-        | region exit box
+   Castle Garden      the ring's fixed start; from here the player WALKS
+        |             the seven-region ring freely (sec 3.2)
         v
-   region slot 1      same, except its wave-0 clear drops the EARTH ELEMENT
-        |
+   any region         endless escalating waves everywhere; each region's
+        |             wave-0 clear drops its one-time reward - except the
+        |             run's drawn ELEMENT REGION, whose wave-0 clear drops
+        v             the EARTH ELEMENT ("it's SOMEWHERE - go find it")
       win: difficulty +1, score -> meta_xp, save, soft reset
 ```
 
@@ -129,12 +130,23 @@ Hyrule Field, North Hyrule Field, Trilby Highlands. Each row carries its
 entrance, its (retired) "onward" exit box, an enemy-offset grid, room
 size/enemy cap, a reward pool + reward spot, and an optional quirk hook.
 
-`QuickStartRegionChainLength()` is **2 + 1 per win, capped at 4** (B2). The
-chain draws that many distinct UNLOCKED rows at random, in random order,
-once per run (B1: Lon Lon Ranch joins at 1 win, Trilby Highlands at 2).
-Owning Zora Flippers (with Trilby unlocked) forces Trilby into the last
-slot; otherwise it is excluded from the draw entirely (its only surveyed
-approach is across a canal).
+**The ordered chain is retired.** The run is a free-roam hunt now, per the
+user: "the Earth Element is SOMEWHERE. Go find it." Every pool region is
+live every run - endless escalating waves, a one-time reward on the first
+wave clear, quests - and ONE region, drawn uniformly per run
+(`QuickStartRollElementRegionOnce`), drops the Earth Element in place of
+its normal reward. Entering that region fires the Ezlo "the Earth Element
+is here!" hint (`GF_REGION_FINAL_HINT_SHOWN`, kept from the chain era);
+the run's intro hint fires in whichever region is entered first. The hub's
+Cloud Tops pit always drops into Castle Garden, the ring's fixed start.
+
+Consequences: the two REGION unlock rules (Lon Lon at 1 win, Trilby at 2)
+are retired - a freely walkable region cannot be locked - and so is the
+Zora Flippers force-Trilby-last routing. Per-region state is keyed by POOL
+INDEX in the QS window now (`GF_REGION_WAVE_BIT` 362-457,
+`GF_REGION_REWARD_STATE_BIT` 338-361, element draw 332-336, quest/hunt
+host region 458-465, all sized for 12 regions); the old bank-11 wave
+counters (142-173) and chain flags (208-228) are free.
 
 Within a region: wave 0 is a plain tiered group; every wave after it has a
 20% chance of being a solo Chuchu Boss instead. Wave count persists per slot

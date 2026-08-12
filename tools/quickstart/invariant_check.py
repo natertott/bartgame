@@ -92,7 +92,6 @@ FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
 FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
     ('GF_SEED_PINNED', 11, 0),
-    ('GF_REGION_WAVE_COUNT_BIT', 11, 0),
     ('GF_QUEST_', 11, 0),
     ('QUICKSTART_CHARM_BIT', 11, 0),
     ('GF_SEAM_GAUNTLET_', 11, 0),
@@ -116,8 +115,10 @@ FLAG_PARAM_RANGES = {
     ('GF_SHOP_HEART_PIECE_BUYS_BIT', 'b'): (0, 4),
     ('GF_SHOP_SLOT_SOLD_BIT', 'i'): (0, 3),
     ('GF_SHOP_SLOT_BIT', 'i'): (0, 3),
-    ('GF_REGION_CHAIN_', 'slot'): (0, 3),
-    ('GF_REGION_WAVE_COUNT_BIT', 'slot'): (0, 3),
+    ('GF_REGION_REWARD_STATE_BIT', 'i'): (0, 'QUICKSTART_REGION_STATE_MAX - 1'),
+    ('GF_REGION_REWARD_STATE_BIT', 'b'): (0, 1),
+    ('GF_REGION_WAVE_BIT', 'i'): (0, 'QUICKSTART_REGION_STATE_MAX - 1'),
+    ('GF_REGION_WAVE_BIT', 'b'): (0, 7),
 }
 
 # Macros that only exist to be composed into the ones above; their own range

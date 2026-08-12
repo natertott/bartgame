@@ -59,6 +59,12 @@
   containment functions, or ring-room collision:
 
       python3 tools/quickstart/ring.py [seed]
+- `freeroam.py` - the free-roam hunt's structure, per seed: which region
+  drew the Earth Element, that a non-element region's first wave clear pays
+  a normal reward at its reward spot, and that the element region's pays
+  the Element itself:
+
+      python3 tools/quickstart/freeroam.py 0xDEADBEEF
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every
   build that touches placement data:
 
