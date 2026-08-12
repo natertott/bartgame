@@ -100,10 +100,34 @@ route.
 
 ### 3.2 Regions
 
+**The overworld is a seven-region ring now** (the overworld expansion):
+Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills (3 rooms),
+South Hyrule Field, Western Wood (3 rooms), and Trilby Highlands circle the
+missing Hyrule Town. Travel between them is free and vanilla-shaped - every
+seam and border between two ring rooms works exactly as vanilla built it.
+Two synthetic "town bridge" borders stitch the gap the town leaves (NHF
+south <-> SHF north; LLR west <-> Trilby east), each landing at the exact
+coordinates vanilla's own town exits delivered a through-traveler to.
+Every border OUT of the ring (Veil Falls, Lake Hylia, Minish Woods, Castor
+Wilds, Royal Valley, Mt Crenel) is compiled away under QUICKSTART - walking
+that edge just stops. The old per-run warp boxes between regions
+(`QuickStartProcessRegionChainLinks`) are retired.
+
+Ring facts a maintainer needs (all emulator-verified, `tools/quickstart/ring.py`):
+- SHF's east seam opens into Eastern Hills **North**, not South - the south
+  rooms' west edges are vanilla walls. SHF's west edge is fully walled too:
+  Western Wood is entered from Trilby, through WW-North.
+- The ring's walking order: CG - NHF - (bridge) - SHF - EH-N - {EH-C - EH-S}
+  - LLR - (bridge) - Trilby - WW-N - WW-C - WW-S.
+- Containment collapsed to one rule: any transition between two ring rooms
+  passes (`QuickStartIsRingCrossing`); pockets/? rooms keep their own
+  allowances; everything else cancels as a safety net behind the data-level
+  blocks.
+
 `sQuickStartRegionPool` - 5 rows: Castle Garden, Lon Lon Ranch, South
 Hyrule Field, North Hyrule Field, Trilby Highlands. Each row carries its
-entrance, its "onward" exit box, an enemy-offset grid, room size/enemy cap,
-a reward pool + reward spot, and an optional quirk hook.
+entrance, its (retired) "onward" exit box, an enemy-offset grid, room
+size/enemy cap, a reward pool + reward spot, and an optional quirk hook.
 
 `QuickStartRegionChainLength()` is **2 + 1 per win, capped at 4** (B2). The
 chain draws that many distinct UNLOCKED rows at random, in random order,

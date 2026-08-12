@@ -369,15 +369,28 @@ const Transition gExitList_HyruleField_SouthHyruleField[] = {
 #endif
     { WARP_TYPE_AREA, 0x48, 0x1c8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, north half - see the matching row in
+    // gExitList_HyruleField_NorthHyruleField. Walking out SHF's north gate
+    // lands at NHF's south gate, at the arrival coordinates vanilla's town
+    // north exit used (endX 0x1f8, endY 0x318).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x318, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x3b8, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_EasternHillsSouth[] = {
     { WARP_TYPE_AREA, 0x38, 0x28, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifndef QUICKSTART
+    // Minish Woods is outside the seven-region ring: BLOCKED under
+    // QUICKSTART, no row.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x3c8, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_EasternHillsCenter[] = {
@@ -388,8 +401,11 @@ const Transition gExitList_HyruleField_EasternHillsCenter[] = {
 const Transition gExitList_HyruleField_EasternHillsNorth[] = {
     { WARP_TYPE_AREA, 0x40, 0x48, 0x78, 0x88, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifndef QUICKSTART
+    // Minish Woods again: BLOCKED under QUICKSTART, no row.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_LonLonRanch[] = {
@@ -405,6 +421,18 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0xb8, 0x154, 0x38, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, east half. In vanilla the ranch's west border enters
+    // Hyrule Town and the town's west gate exits into Trilby Highlands; the
+    // town is gone here, so this row joins those two journeys into one -
+    // walking out the ranch's west side lands at Trilby's east edge, at the
+    // arrival coordinates vanilla's own town west exit used (endX 0x1d8,
+    // endY 0x230).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x230, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
+      1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    // Veil Falls (both north borders) and Lake Hylia (east) are outside the
+    // ring: BLOCKED, no rows.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1c8, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_EAST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
@@ -413,6 +441,7 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xf0, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 #ifdef QUICKSTART
@@ -542,12 +571,29 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
 #endif
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, south half. Hyrule Town does not exist in this mode,
+    // but in vanilla it is the connective tissue of the whole ring - walk in
+    // the north gate, out the south gate, and you are in South Hyrule Field.
+    // This row keeps that journey and drops the town from the middle of it:
+    // the south border lands directly at SHF's north gate, at the exact
+    // arrival coordinates vanilla's own town south exit used
+    // (gExitList_HyruleTown_Main: endX 0x1f8, endY 0x10), so the far end is
+    // a spot vanilla itself vouches for.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x10, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    // Veil Falls (east) and Royal Valley (west) are outside the seven-region
+    // ring and BLOCKED: no border row, no crossing -
+    // IsPosInBorderTransitionRegion fires only on a matching row, so walking
+    // that edge simply stops at it.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST_NORTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x260, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 #ifdef QUICKSTART
@@ -596,19 +642,34 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x118, 0x284, 0x128, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, west half - see the matching row in
+    // gExitList_HyruleField_LonLonRanch. Walking out Trilby's east edge
+    // lands at the ranch's west side, at the arrival coordinates vanilla's
+    // town east exit used (endX 0x8, endY 0x230).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x230, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+      1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    // Royal Valley (northwest) and Mt Crenel (west) are outside the ring:
+    // BLOCKED, no rows.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xf0, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_WesternWoodsNorth[] = {
     { WARP_TYPE_AREA, 0xa0, 0x1e8, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifndef QUICKSTART
+    // Castor Wilds is outside the seven-region ring: BLOCKED under
+    // QUICKSTART, no row.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_WesternWoodsCenter[] = {

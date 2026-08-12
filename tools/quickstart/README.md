@@ -50,6 +50,15 @@
   a real purchase end to end - lift, carry, confirm, pay - and re-reports, so
   the heart piece's price ramp and a one-off slot retiring itself are both
   observable rather than argued from the source.
+- `ring.py` - the seven-region overworld ring's connectivity test. Walks
+  all 20 region crossings (vanilla seams, the CG<->NHF border/door pair, and
+  the two "town bridge" borders that replace the missing Hyrule Town) in
+  both directions, and pushes on the 9 blocked outside edges (Veil Falls,
+  Lake Hylia, Minish Woods, Castor Wilds, Royal Valley, Mt Crenel) to
+  confirm they hold. Run after anything that touches transitions.c, the
+  containment functions, or ring-room collision:
+
+      python3 tools/quickstart/ring.py [seed]
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every
   build that touches placement data:
 

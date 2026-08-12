@@ -298,7 +298,6 @@ static void QuickStartEnforceFieldRegionContainment(void);
 static void QuickStartClearLonLonRanchAnimals(void);
 static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
-static void QuickStartProcessRegionChainLinks(void);
 static void QuickStartRandomizeRegionChainOnce(void);
 static s32 QuickStartGetCurrentRegionChainPosition(void);
 static void QuickStartRegionMonitor(s32 position);
@@ -10195,35 +10194,51 @@ static bool32 QuickStartTransitionStaysInSameRoom(void) {
            gRoomTransition.player_status.room_next == gRoomControls.room;
 }
 
-// Castle Garden <-> North Hyrule Field, in either direction.
+// The overworld RING: the seven regions circling the missing Hyrule Town -
+// Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills (3 rooms),
+// South Hyrule Field, Western Wood (3 rooms), and Trilby Highlands. Per the
+// user's overworld-expansion redesign, travel between these is FREE and
+// vanilla-shaped: every border between two ring rooms works exactly as
+// vanilla built it, plus the two "town bridge" borders that stitch the gap
+// the missing town leaves (NHF south <-> SHF north, LLR west <-> Trilby
+// east - see transitions.c). The old per-run warp boxes between regions are
+// retired with this.
 //
-// These are physically adjacent screens in vanilla and both are rows in
-// sQuickStartRegionPool, so per the user the vanilla connection stands:
-// Castle Garden's south border down into the field, and the field's own north
-// border and WARP_TYPE_AREA door back up (all three rows are vanilla in both
-// branches of transitions.c now).
-//
-// It needs an exception in BOTH containment functions rather than falling out
-// of their existing chain-slot checks. Those only allow a hop to whichever
-// region this save's chain put next, so the crossing would open and close
-// depending on the draw - a wall on most runs and a door on the few where the
-// chain happens to pair these two. A fixed rule is what makes it read as a
-// piece of the map instead of a random one.
-//
-// Consequence worth naming: if both are in the chain and the field is the
-// later slot, this lets the player reach it before clearing Castle Garden.
-// That is a shortcut, not a break - the run still ends on the last slot's
-// wave-0 clear, wherever the player got to it from.
-static bool32 QuickStartIsGardenFieldCrossing(u8 fromArea, u8 fromRoom, u8 toArea, u8 toRoom) {
-    if (fromArea == AREA_CASTLE_GARDEN && fromRoom == ROOM_CASTLE_GARDEN_MAIN && toArea == AREA_HYRULE_FIELD &&
-        toRoom == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD) {
+// Everything OUTSIDE the ring is blocked in the data itself: the border
+// rows to Veil Falls, Lake Hylia, Minish Woods, Castor Wilds, Royal Valley
+// and Mt Crenel are compiled out under QUICKSTART, so those edges simply
+// stop the player. The containment functions below are the safety net for
+// door-type transitions, not the primary wall.
+static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room) {
+    if (area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN) {
         return TRUE;
     }
-    if (fromArea == AREA_HYRULE_FIELD && fromRoom == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD &&
-        toArea == AREA_CASTLE_GARDEN && toRoom == ROOM_CASTLE_GARDEN_MAIN) {
-        return TRUE;
+    if (area != AREA_HYRULE_FIELD) {
+        return FALSE;
     }
-    return FALSE;
+    switch (room) {
+        case ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD:
+        case ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD:
+        case ROOM_HYRULE_FIELD_LON_LON_RANCH:
+        case ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS:
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH:
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER:
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH:
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH:
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER:
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH:
+            return TRUE;
+        default:
+            return FALSE;
+    }
+}
+
+// A transition between two ring rooms, in either direction - always allowed,
+// unconditionally, so the ring reads as one connected map rather than
+// opening and closing per run. (Replaces QuickStartIsGardenFieldCrossing,
+// which allowed exactly one such pair.)
+static bool32 QuickStartIsRingCrossing(u8 fromArea, u8 fromRoom, u8 toArea, u8 toRoom) {
+    return QuickStartIsRingRegionRoom(fromArea, fromRoom) && QuickStartIsRingRegionRoom(toArea, toRoom);
 }
 
 static void QuickStartEnforceContainment(void) {
@@ -10259,45 +10274,12 @@ static void QuickStartEnforceContainment(void) {
                                      gRoomTransition.player_status.room_next)) {
         return;
     }
-    // Castle Garden's south border down into North Hyrule Field - vanilla,
-    // and always open regardless of what this save's chain drew.
-    if (QuickStartIsGardenFieldCrossing(gRoomControls.area, gRoomControls.room,
-                                        gRoomTransition.player_status.area_next,
-                                        gRoomTransition.player_status.room_next)) {
+    // A contained ring room (Castle Garden) leaving for any other ring room
+    // - free travel across the whole ring, per the overworld expansion.
+    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+                                 gRoomTransition.player_status.area_next,
+                                 gRoomTransition.player_status.room_next)) {
         return;
-    }
-    // AREA_HYRULE_FIELD isn't on QuickStartAreaContained's list (it's a huge
-    // overworld area, same reasoning as QuickStartEnforceLonLonContainment's
-    // own comment) - Lon Lon Ranch living there used to need its own fixed
-    // exception here. Now folded into the two dynamic checks below instead: Lon Lon
-    // Ranch is always either this save's chain slot 0 or the region "next"
-    // after Castle Garden, so whichever one it resolves to already covers
-    // this case without a separate fixed constant.
-    //
-    // The region chain's own two dynamic destinations from a contained
-    // area: anything leaving for whichever region is chain slot 0, or a
-    // contained region (Castle Garden) leaving for whichever region is next
-    // after its own slot. Both vary per save, same reason the old fixed
-    // AREA_CASTLE_GARDEN/AREA_HYRULE_FIELD checks this replaced couldn't
-    // just stay static. Nothing contained aims at slot 0 any more now that
-    // the mine is off the route, but the arm costs nothing and is the right
-    // general rule.
-    {
-        const QuickStartRegion* first = QuickStartGetRegionAtChainSlot(0);
-        if (gRoomTransition.player_status.area_next == first->area &&
-            gRoomTransition.player_status.room_next == first->room) {
-            return;
-        }
-    }
-    {
-        s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
-            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
-            if (gRoomTransition.player_status.area_next == next->area &&
-                gRoomTransition.player_status.room_next == next->room) {
-                return;
-            }
-        }
     }
     if (!QuickStartAreaContained(gRoomTransition.player_status.area_next)) {
         gRoomTransition.transitioningOut = 0;
@@ -10334,25 +10316,13 @@ static void QuickStartEnforceLonLonContainment(void) {
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
-    // Leaving Lon Lon Ranch to whichever region is next in this save's
-    // chain (or nowhere further, if Lon Lon Ranch is the chain's own last
-    // slot - QuickStartGetCurrentRegionChainPosition then returns
-    // QuickStartRegionChainLength()-1, so the check below is simply
-    // skipped) - replaces the old fixed AREA_CASTLE_GARDEN check, since
-    // Lon Lon Ranch's own position (and so which region comes after it)
-    // now varies per save.
-    {
-        s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
-            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
-            if (gRoomTransition.player_status.area_next == next->area &&
-                gRoomTransition.player_status.room_next == next->room) {
-                return;
-            }
-        }
-    }
-    if (gRoomTransition.player_status.area_next == AREA_HYRULE_FIELD &&
-        gRoomTransition.player_status.room_next == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+    // Any other ring room - free travel, including the west "town bridge"
+    // border into Trilby Highlands and the ranch's own seam down into
+    // Eastern Hills North. (Also covers a transition back into the ranch
+    // itself, which the old self-room check allowed explicitly.)
+    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+                                 gRoomTransition.player_status.area_next,
+                                 gRoomTransition.player_status.room_next)) {
         return;
     }
     // The shallow-water cave, down the staircase a Kinstone fusion reveals.
@@ -10436,28 +10406,20 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
+    // Every AREA_HYRULE_FIELD ring room is policed here now - the ranch
+    // keeps its own function below only because its exception list (wallet
+    // cave, ranch houses, Goron cave, the 2-door connector) is longer.
     if (gRoomControls.area != AREA_HYRULE_FIELD ||
-        (gRoomControls.room != ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD &&
-         gRoomControls.room != ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD &&
-         gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS)) {
+        gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH ||
+        !QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
-    {
-        s32 slot = QuickStartGetCurrentRegionChainPosition();
-        if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
-            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
-            if (gRoomTransition.player_status.area_next == next->area &&
-                gRoomTransition.player_status.room_next == next->room) {
-                return;
-            }
-        }
-    }
-    // North Hyrule Field's north border and its WARP_TYPE_AREA door back up
-    // into Castle Garden - vanilla, and always open. Mirror of the exception
-    // in QuickStartEnforceContainment; see QuickStartIsGardenFieldCrossing.
-    if (QuickStartIsGardenFieldCrossing(gRoomControls.area, gRoomControls.room,
-                                        gRoomTransition.player_status.area_next,
-                                        gRoomTransition.player_status.room_next)) {
+    // Any other ring room - free travel across the whole ring, including
+    // the two "town bridge" borders and Castle Garden. See
+    // QuickStartIsRingCrossing.
+    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+                                 gRoomTransition.player_status.area_next,
+                                 gRoomTransition.player_status.room_next)) {
         return;
     }
     // The river bridge's own two entrances (QuickStartProcessRiverBridgeLink)
@@ -10936,31 +10898,13 @@ static void QuickStartFixupRoomFixtures(void) {
 // Castle Garden (whose south border still points at the mine; see
 // transitions.c). The mine's own content is left intact per the user - the
 // area comes back when the region pool grows.
-static void QuickStartProcessRegionChainLinks(void) {
-    s16 localX, localY;
-    s32 slot;
-    if (gRoomTransition.transitioningOut) {
-        return;
-    }
-    localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-    localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-    slot = QuickStartGetCurrentRegionChainPosition();
-    if (slot >= 0 && slot < QuickStartRegionChainLength() - 1) {
-        const QuickStartRegion* region = QuickStartGetRegionAtChainSlot(slot);
-        if (localX >= region->exitMinX && localX <= region->exitMaxX && localY >= region->exitMinY &&
-            localY <= region->exitMaxY) {
-            const QuickStartRegion* next = QuickStartGetRegionAtChainSlot(slot + 1);
-            gRoomTransition.player_status.area_next = next->area;
-            gRoomTransition.player_status.room_next = next->room;
-            gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-            gRoomTransition.player_status.start_pos_x = next->entranceX;
-            gRoomTransition.player_status.start_pos_y = next->entranceY;
-            gRoomTransition.player_status.layer = 1;
-            gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-            gRoomTransition.transitioningOut = 1;
-        }
-    }
-}
+// RETIRED: QuickStartProcessRegionChainLinks, the per-run warp boxes that
+// teleported the player from each region's "onward" exit box to whichever
+// region the chain drew next. The ring's regions connect by their real
+// vanilla borders now (plus the two "town bridge" borders in transitions.c),
+// so walking between regions needs no synthetic trigger at all - see
+// QuickStartIsRingRegionRoom. The struct's exit box fields go with the next
+// region-table reshape.
 
 // Is this one of the hub's rooms? The tower is one area (four floors) and
 // its roof is another; both are ours end to end.
@@ -11444,11 +11388,9 @@ static void QuickStartRoomMonitor(void) {
     // entrances (either bank), each targeting a different real room every
     // save.
     QuickStartProcessRiverBridgeLink();
-    // Same reasoning again - North Hyrule Field's cave mouth (264,304).
-    // Same reasoning again - the region chain's own two kinds of link
-    // (Melari's Mine's Door B, and each region's own "onward" exit box)
-    // both target a different real room every save.
-    QuickStartProcessRegionChainLinks();
+    // (The region chain's own "onward" exit boxes used to be processed
+    // here too - retired with the overworld expansion, the ring's regions
+    // connect by their real vanilla borders now.)
     // Deliberately outside the region-chain dispatch below, and ahead of the
     // wave spawner: the fusers are a handful of entities sharing one sprite
     // sheet, while a wave is dozens that can pull the gfx table down to the
