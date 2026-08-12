@@ -1598,7 +1598,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 35
+#define QUICKSTART_CONTENT_SITE_COUNT 41
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -2681,6 +2681,52 @@ static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
 // Wilds and Eastern Hills (the latter split across 3 real rooms - South/
 // Center/North - needing its own separate look) are still not in the pool
 // yet and get appended in a later pass.
+// --- Eastern Hills and Western Wood: the overworld expansion's six rooms --
+// Surveyed the same way as the three field regions above: the live
+// collision grid read in the emulator, flooded from a seam the ring tests
+// proved walkable, offsets farthest-point sampled over open 3x3
+// neighbourhoods so they spread across the reachable component instead of
+// clustering. Entrance and reward share the central open tile - nothing
+// warps a player to a region entrance any more, so the field only anchors
+// tooling, the wave centre and the rescue failsafe.
+//
+// Eastern Hills North is TWO components: a small southwest pocket (the SHF
+// seam) and the main body (the LLR gap and everything east). The grid uses
+// the main body only - an enemy in the pocket would be unreachable from
+// the region's own through-routes.
+static const s16 sQuickStartEasternHillsSouthEnemyOffsets[][2] = {
+    { 72, 168 },  { 168, 24 },  { 408, 168 }, { 152, 152 }, { 328, 24 },
+    { 344, 152 }, { 376, 120 }, { 120, 136 }, { 360, 88 },
+};
+static const s16 sQuickStartEasternHillsCenterEnemyOffsets[][2] = {
+    { 72, 216 },  { 328, 232 }, { 104, 56 },  { 200, 200 }, { 168, 88 },
+    { 264, 24 },  { 280, 184 }, { 56, 88 },   { 120, 184 }, { 216, 56 },
+    { 152, 216 }, { 120, 88 },  { 152, 56 },  { 232, 184 }, { 312, 200 },
+};
+static const s16 sQuickStartEasternHillsNorthEnemyOffsets[][2] = {
+    { 328, 24 },  { 40, 216 },  { 344, 456 }, { 168, 104 }, { 120, 328 },
+    { 424, 248 }, { 152, 232 }, { 280, 120 }, { 312, 344 }, { 184, 296 },
+    { 328, 232 }, { 264, 56 },  { 104, 216 }, { 120, 264 }, { 200, 216 },
+    { 280, 216 }, { 296, 296 }, { 312, 72 },  { 312, 408 }, { 360, 264 },
+};
+static const s16 sQuickStartWesternWoodsSouthEnemyOffsets[][2] = {
+    { 424, 24 },  { 40, 56 },   { 328, 152 }, { 296, 40 },  { 72, 152 },
+    { 360, 72 },  { 168, 152 }, { 40, 120 },  { 72, 88 },   { 312, 88 },
+    { 184, 72 },  { 328, 56 },  { 392, 56 },  { 424, 72 },
+};
+static const s16 sQuickStartWesternWoodsCenterEnemyOffsets[][2] = {
+    { 424, 24 },  { 376, 120 }, { 296, 24 },  { 296, 136 }, { 328, 72 },
+    { 392, 72 },  { 424, 104 }, { 248, 120 }, { 264, 40 },  { 312, 104 },
+    { 360, 88 },
+};
+static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
+    { 72, 88 },   { 40, 552 },  { 408, 136 }, { 296, 616 }, { 40, 296 },
+    { 200, 520 }, { 360, 280 }, { 104, 440 }, { 184, 152 }, { 344, 24 },
+    { 312, 456 }, { 72, 200 },  { 136, 568 }, { 312, 104 }, { 328, 200 },
+    { 344, 376 }, { 40, 392 },  { 200, 408 }, { 248, 568 }, { 408, 232 },
+    { 40, 472 },  { 88, 504 },  { 104, 152 }, { 232, 456 },
+};
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -2760,6 +2806,28 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
       QUICKSTART_TRILBY_MAX_ENEMIES, 360, 504,
       NULL },
+    // The six overworld-expansion rooms. Exit boxes are dead fields (the
+    // warp mechanic is retired) and zeroed. No quirk hooks: the outdoor
+    // entity dumps found only OBJECT-kind scenery, no enemy-kind blockers.
+    // Squares/max from the flood: reachable tiles, cap ~ squares/13.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 328, 104, 0, 0, 0, 0,
+      sQuickStartEasternHillsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsSouthEnemyOffsets), 265, 20,
+      328, 104, NULL },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER, 248, 104, 0, 0, 0, 0,
+      sQuickStartEasternHillsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsCenterEnemyOffsets), 285, 21,
+      248, 104, NULL },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 264, 264, 0, 0, 0, 0,
+      sQuickStartEasternHillsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsNorthEnemyOffsets), 458, 35,
+      264, 264, NULL },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 200, 104, 0, 0, 0, 0,
+      sQuickStartWesternWoodsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsSouthEnemyOffsets), 217, 16,
+      200, 104, NULL },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 264, 88, 0, 0, 0, 0,
+      sQuickStartWesternWoodsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsCenterEnemyOffsets), 121, 9,
+      264, 88, NULL },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 248, 360, 0, 0, 0, 0,
+      sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607, 46,
+      248, 360, NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // (QUICKSTART_TRILBY_POOL_INDEX / QUICKSTART_LONLON_POOL_INDEX retired with
@@ -5173,8 +5241,10 @@ static const QuickStartQuestionRoomEntry sQuickStartSmallRoomPool[] = {
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, -40 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 0, -40 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 0, -40 },
+    // (HYRULE_FIELD_EXIT and HYRULE_FIELD_SOUTHWEST left this pool for the
+    // overworld expansion: their real doors in Eastern Hills South and
+    // Western Wood South are open now, so each is a dedicated content site
+    // - see sQuickStartRoomContentSites.)
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, -40 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, 0, -40 },
@@ -8379,6 +8449,31 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // for a puzzle or a conversation, not for a wave.
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, QUICKSTART_KINDS_SMALL, 120, 80 },
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, QUICKSTART_KINDS_SMALL, 120, 80 },
+    // --- The overworld expansion's six new door interiors -----------------
+    // One per real door in Eastern Hills and Western Wood, surveyed the
+    // same way as everything above (collision grid read live in the
+    // emulator; content spot is the open-3x3 tile nearest each room's
+    // centre). Being rows here is also what OPENS the doors:
+    // QuickStartIsPocketInteriorRoom scans this table, so the containment
+    // that walls untracked interiors admits these the moment they land.
+    //
+    // Eastern Hills South's Minish house (Hyrule Field Exit) and Western
+    // Wood South's Minish house came OUT of the drawn small-room pool for
+    // this - a room reachable through its own real door must not also be a
+    // pool draw's teleport target, or its retargeted exit strands whoever
+    // walked in (the Boomerang-cave lesson).
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, QUICKSTART_KINDS_SMALL, 120, 88 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, QUICKSTART_KINDS_SMALL, 120, 88 },
+    // Eastern Hills Center's cave. 23 open-3x3 tiles, and vanilla's own
+    // Keese ambush + chest are swept like every other site's occupants.
+    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST, QUICKSTART_KINDS_SMALL, 120, 72 },
+    // The Eastern Hills farm house. Furniture-heavy (4 open-3x3 tiles), so
+    // the spot sits west of centre where the floor is actually clear.
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE, QUICKSTART_KINDS_SMALL, 88, 72 },
+    // Western Wood North's heart-piece tree.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, QUICKSTART_KINDS_SMALL, 120, 72 },
+    // Percy's house in Western Wood Center.
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY, QUICKSTART_KINDS_SMALL, 120, 104 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward

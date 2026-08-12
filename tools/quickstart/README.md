@@ -61,8 +61,11 @@
       python3 tools/quickstart/ring.py [seed]
 - `freeroam.py` - the free-roam hunt's structure, per seed: which region
   drew the Earth Element, that a non-element region's first wave clear pays
-  a normal reward at its reward spot, and that the element region's pays
-  the Element itself:
+  a normal reward at its reward spot, and that the element region's clear
+  runs the whole win end to end (the element drops at the wave centre where
+  the probe's player stands, so it is auto-collected and the win sequence -
+  score, save, soft reset - completes; `gSave.runs_completed` ticking up is
+  the assertion):
 
       python3 tools/quickstart/freeroam.py 0xDEADBEEF
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every

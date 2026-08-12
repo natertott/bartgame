@@ -25,6 +25,12 @@ POOL = [  # (area, room, entrance x, y, reward x, y) from sQuickStartRegionPool
     (3, 1, 504, 264, 648, 552),
     (3, 6, 504, 456, 744, 504),
     (3, 7, 360, 360, 360, 504),
+    (3, 2, 328, 104, 328, 104),
+    (3, 3, 248, 104, 248, 104),
+    (3, 4, 264, 264, 264, 264),
+    (3, 0, 200, 104, 200, 104),
+    (3, 9, 264, 88, 264, 88),
+    (3, 8, 248, 360, 248, 360),
 ]
 
 def qs(c, off):
@@ -100,7 +106,22 @@ for sd in seeds:
     warp(c, a, r, ex, ey, frames=300)
     for _ in range(120):
         c.set_keys(c.KEY_A); c.run_frame(); c.clear_keys(c.KEY_A); c.run_frame()
+    wins_before = c.memory.u32[0x02002a40 + 0x4B0]
     ok = kill_wave(c)
     items = ground_items(c)
     got = [names.get(t, hex(t)) for t, x, y in items]
-    print(f'  element region {er}: cleared={ok}, ground items: {got}')
+    # The element drops at the wave centre - which is where the probe's
+    # player is standing - so it is usually auto-picked-up the frame it
+    # lands, and the WIN sequence (score, save, soft reset) runs to
+    # completion. gSave.runs_completed ticking up is that whole chain
+    # having worked end to end; an ITEM_EARTH_ELEMENT still on the ground
+    # counts too (the player happened not to be on the spot).
+    for _ in range(600):
+        if c.memory.u32[0x02002a40 + 0x4B0] > wins_before:
+            break
+        c.set_keys(c.KEY_A); c.run_frame(); c.clear_keys(c.KEY_A); c.run_frame()
+    wins_after = c.memory.u32[0x02002a40 + 0x4B0]
+    won = wins_after > wins_before
+    has_elem = any(t == 64 for t, x, y in items)
+    verdict = 'WIN SEQUENCE COMPLETED' if won else ('element on ground' if has_elem else 'NO ELEMENT, NO WIN')
+    print(f'  element region {er}: cleared={ok}, {verdict} (wins {wins_before}->{wins_after}), ground: {got[:6]}')

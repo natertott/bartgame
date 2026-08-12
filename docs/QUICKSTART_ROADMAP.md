@@ -125,10 +125,24 @@ Ring facts a maintainer needs (all emulator-verified, `tools/quickstart/ring.py`
   allowances; everything else cancels as a safety net behind the data-level
   blocks.
 
-`sQuickStartRegionPool` - 5 rows: Castle Garden, Lon Lon Ranch, South
-Hyrule Field, North Hyrule Field, Trilby Highlands. Each row carries its
-entrance, its (retired) "onward" exit box, an enemy-offset grid, room
-size/enemy cap, a reward pool + reward spot, and an optional quirk hook.
+`sQuickStartRegionPool` - **11 rows now**: Castle Garden, Lon Lon Ranch,
+South Hyrule Field, North Hyrule Field, Trilby Highlands, plus the
+overworld expansion's six - Eastern Hills South/Center/North and Western
+Wood South/Center/North. Each row carries its entrance, its (retired)
+"onward" exit box, an enemy-offset grid, room size/enemy cap, a reward
+spot, and an optional quirk hook. The six new rows were surveyed with the
+same live-collision flood as the original three field regions (offsets
+farthest-point sampled over open 3x3 neighbourhoods; act tile 0x9 - plain
+grass - verified on every reward spot); Eastern Hills North's grid uses
+only its main walkable component, not the small SHF-seam pocket.
+
+Their six real doors are content sites now (the farm house, the Eastern
+Hills cave, the Western Wood heart-piece tree, Percy's house, and the two
+Minish houses - the last two pulled OUT of the drawn small-room pool so a
+walk-in room is never also a teleport target). STILL OPEN for the new
+regions: kinstone fusers/fusion gates (no fuser scatter rows yet - their
+vanilla fusion world-events need auditing first) - everything else
+(waves, rewards, element eligibility, pot quest, hunt) is live in them.
 
 **The ordered chain is retired.** The run is a free-roam hunt now, per the
 user: "the Earth Element is SOMEWHERE. Go find it." Every pool region is
