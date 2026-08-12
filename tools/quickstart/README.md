@@ -39,6 +39,17 @@
   touches the tier table or the row-teardown path: rounds are detected by an
   item leaving the row, which fires on the frame the item-get cutscene
   starts, so a mistimed teardown shows up here as a STUCK round.
+- `shop.py` - what the hub shop is stocking this run, and for how much:
+
+      python3 tools/quickstart/shop.py --arm 0xDEADBEEF
+      python3 tools/quickstart/shop.py --buy 3 0xDEADBEEF
+
+  Prints all eight slots with their rolled prices, read straight out of the
+  flag bank. `--arm` grants the Bow and Bombs first so the two ammo slots
+  stock (they are correctly bare without the weapons). `--buy <slot>` drives
+  a real purchase end to end - lift, carry, confirm, pay - and re-reports, so
+  the heart piece's price ramp and a one-off slot retiring itself are both
+  observable rather than argued from the source.
 - `invariant_check.py` - the Phase A1 invariant checker. Run after every
   build that touches placement data:
 

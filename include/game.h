@@ -381,5 +381,10 @@ void ModShells(s32);
 // here rather than in a QUICKSTART-only header because its one caller,
 // GetItemPrice in itemUtils.c, already includes this file.
 s32 QuickStartGetShopPrice(u32 item, s32 basePrice);
+// Also defined in game.c. Called by ScriptCommand_BuyShopItem (script.c) the
+// moment a sale actually completes, so the shop can advance the heart piece's
+// escalating price and retire a one-off slot. Nothing observable about the
+// shelf itself distinguishes a purchase from a room unload.
+void QuickStartNoteShopPurchase(u32 item);
 #endif
 #endif // GAME_H

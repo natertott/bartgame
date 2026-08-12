@@ -176,6 +176,32 @@ static void QsClearFlag(u32 flag) {
     ClearLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + flag);
 }
 
+// A little-endian run of `bits` flags starting at `base`, read and written as
+// one number. Most of this file's multi-bit state (a pool index, a 3-bit
+// price roll) open-codes this loop at its own site; the shop's prices are
+// nine bits wide and there are eight of them, which is where open-coding
+// stops being readable.
+static s32 QsReadField(u32 base, s32 bits) {
+    s32 b, value = 0;
+    for (b = 0; b < bits; b++) {
+        if (QsCheckFlag(base + b)) {
+            value |= 1 << b;
+        }
+    }
+    return value;
+}
+
+static void QsWriteField(u32 base, s32 bits, s32 value) {
+    s32 b;
+    for (b = 0; b < bits; b++) {
+        if (value & (1 << b)) {
+            QsSetFlag(base + b);
+        } else {
+            QsClearFlag(base + b);
+        }
+    }
+}
+
 // The content sites' own block sits BELOW the QUICKSTART window rather than
 // inside it (see the bank map above), so it needs its own accessor - passing
 // its offsets to QsCheckFlag would add ORIGIN 700 and land somewhere else
@@ -1656,10 +1682,37 @@ typedef char QuickStartContentSiteBlockClearsWindow[(QUICKSTART_SITE_FLAG_ORIGIN
 // above the content sites' last block, which ends at 655.
 #define GF_NHF_BRIDGE_JOINED 656
 
-// Range 657..689, immediately after the bridge flag.
 #define GF_SHOP_RANDOMIZED 657
-// 658-662: the retired shop-door draw. Free; see QUICKSTART_SHOP_AREA.
-#define GF_SHOP_PRICE_BIT(i, b) (663 + (i) * 3 + (b))    // i = 0..8, b = 0..2
+// 658-689: the retired shop-door draw (658-662) and the retired 9-slot
+// 3-bit price roll (663-689). Both free; see QUICKSTART_SHOP_AREA and the
+// shop price block below.
+
+// --- Shop prices and purchase state ---------------------------------------
+//
+// Prices are absolute rupee amounts rolled per run, not a scale factor on the
+// vanilla table any more, so they need real width. These live in the range
+// the retired content-site block left free (QsCheckFlag offsets 266-655; see
+// the FLAG_BANK_12 map at the top of this file), which is cleared per run
+// along with the rest of 202-703.
+//
+//   refill price   7 bits x 3 slots   value 0-99  -> 1-100 rupees
+//   one-off price  9 bits x 4 slots   value 0-499 -> 1-500 rupees
+//   heart pieces   5 bits             purchases so far this run
+//   sold           1 bit  x 4 slots   a drawn slot that has been bought
+#define GF_SHOP_REFILL_PRICE_BIT(i, b) (266 + (i) * 7 + (b)) // i = 0..2, b = 0..6 -> 266-286
+#define GF_SHOP_ONEOFF_PRICE_BIT(i, b) (287 + (i) * 9 + (b)) // i = 0..3, b = 0..8 -> 287-322
+#define GF_SHOP_HEART_PIECE_BUYS_BIT(b) (323 + (b))          // b = 0..4      -> 323-327
+#define GF_SHOP_SLOT_SOLD_BIT(i) (328 + (i))                 // i = 0..3      -> 328-331
+#define QUICKSTART_SHOP_REFILL_PRICE_BITS 7
+#define QUICKSTART_SHOP_ONEOFF_PRICE_BITS 9
+#define QUICKSTART_SHOP_REFILL_PRICE_MAX 100
+#define QUICKSTART_SHOP_ONEOFF_PRICE_MAX 500
+// The heart piece: 50 rupees the first time in every run, +25 for each one
+// bought since. The counter is 5 bits and saturates rather than wrapping - at
+// 31 purchases the price is already 825, well past what a run can carry.
+#define QUICKSTART_SHOP_HEART_PIECE_BASE 50
+#define QUICKSTART_SHOP_HEART_PIECE_STEP 25
+#define QUICKSTART_SHOP_HEART_PIECE_BUYS_MAX 31
 
 // Room-local coordinates, walked/confirmed walkable in the emulator (4-way
 // movement check from each point, no wall/water immediately blocking any
@@ -3864,14 +3917,22 @@ static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
 // every time right now") and asked for the stock to be drawn from the item
 // categories instead. This is that pool.
 //
-// It is a separate table from sQuickStartTiers, and deliberately so: an item
-// is only sellable if it has a nonzero price AND a confirm-purchase text in
-// gItemMetaData, and most of the tier table has neither. Auditing the two
-// against each other found 21 of the 40 tier rows with price 0 - every
-// butterfly, most skills, the rare weapons, the rare key items - so drawing
-// the shop straight from the tier table would have stocked shelves of free
-// items whose sale could not complete. Everything below has been given a real
-// price in the [51, 299] band this mode uses (src/itemMetaData.c).
+// It is a separate table from sQuickStartTiers because the two answer
+// different questions. The tier table says what a run may FIND; this says
+// what the merchant may SELL, and selling has requirements finding does not:
+// an item needs a confirm-purchase message id in gItemMetaData or the sale
+// script has nothing to say and the purchase cannot complete. Every row below
+// has been given one (src/itemMetaData.c, TEXT_STOCKWELL 0x02 as the generic
+// borrow).
+//
+// It also lets the shop leave out things the tier table is right to include.
+// Rupees are the clear case: paying rupees for rupees is not a choice, and at
+// a low price roll a 200-rupee bundle is just free money. The heart piece is
+// left out too - it has its own permanent slot below, on its own escalating
+// price - and so is the Ocarina of Wind, which the boot grant already hands
+// out. Everything else in QS_CAT_KEY / WEAPON / REWARD / SKILL / STAT is
+// here, at every tier, per the user: "the items should be randomly chosen at
+// the start of each run and can come from any of the rarity tiers".
 //
 // Reusing QuickStartTierEntry rather than inventing a struct: the fields line
 // up exactly, and it means QuickStartTierEntryUsable - which already knows
@@ -3879,8 +3940,16 @@ static void QuickStartSpawnShopMerchantOnce(s16 npcOffsetX, s16 npcOffsetY) {
 // Pacci Cane inventory-cell clash - is the shop's eligibility test for free.
 // `tier` is unused here; the slot table below decides the shape of the stock.
 static const QuickStartTierEntry sQuickStartShopPool[] = {
-    // Weapons and tools. The two ammo rows are the only repeatable ones -
-    // everything else here is a one-off purchase.
+    // --- KEY ITEMS (8) ---------------------------------------------------
+    { ITEM_PEGASUS_BOOTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_ROCS_CAPE, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_MOLE_MITTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_FLIPPERS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_LANTERN_OFF, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_PACCI_CANE, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NO_FIRE_ROD, 0 },
+    { ITEM_GRIP_RING, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    { ITEM_POWER_BRACELETS, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    // --- WEAPONS / TOOLS (10) --------------------------------------------
     { ITEM_BOW, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOMBS, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
@@ -3888,50 +3957,92 @@ static const QuickStartTierEntry sQuickStartShopPool[] = {
     { ITEM_FIRE_ROD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NO_PACCI, 0 },
     { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
     { ITEM_LARGE_QUIVER, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
-    { ITEM_BOMBS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOMBS, 1 },
-    { ITEM_ARROWS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOW, 1 },
-    // Rewards.
-    { ITEM_HEART_PIECE, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
-    { ITEM_HEART_CONTAINER, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
-    { ITEM_BOTTLE1, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_BOTTLE_ROOM, 1 },
+    { ITEM_REMOTE_BOMBS, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
+    { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
+    { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    // --- REWARDS (5) -----------------------------------------------------
+    // No rupees (see above) and no heart piece (its own slot).
+    { ITEM_BOTTLE1, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_BOTTLE_ROOM, 1 },
     { ITEM_BOTTLE_BLUE_POTION, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_EMPTY_BOTTLE, 1 },
     { ITEM_BOTTLE_RED_POTION, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_EMPTY_BOTTLE, 1 },
+    { ITEM_HEART_CONTAINER, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
     { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
-    // Key items - the five the opening selection offers, so the shop is the
-    // second chance at whichever two the player turned down.
-    { ITEM_PEGASUS_BOOTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
-    { ITEM_ROCS_CAPE, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
-    { ITEM_MOLE_MITTS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
-    { ITEM_FLIPPERS, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
-    { ITEM_LANTERN_OFF, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
-    // Skills.
+    // --- SKILL UPGRADES (8) ----------------------------------------------
     { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_ROCK_BREAKER, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_ROLL_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_DASH_ATTACK, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_PERIL_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_SWORD_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_SKILL_DOWN_THRUST, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_ROCS_CAPE, 0 },
+    { ITEM_SKILL_GREAT_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    // --- STAT UPGRADES (6) -----------------------------------------------
+    { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
+    { ITEM_DIG_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_MOLE_MITTS, 0 },
+    { ITEM_SWIM_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_FLIPPERS, 0 },
+    { BOTTLE_CHARM_NAYRU, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    { BOTTLE_CHARM_FARORE, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    { BOTTLE_CHARM_DIN, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
 };
 #define QUICKSTART_SHOP_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartShopPool))
-#define QUICKSTART_SHOP_SLOTS 9
 
-// What each shelf slot is for. Two weapons, two rewards, a key item and a
-// skill are always on offer; the last three are wildcards, so no two runs
-// stock the same nine even when the fixed six happen to repeat. Slot order is
-// display order (sQuickStartShopRoomItemOffsets), so the back row is weapons
-// and rewards and the front row is the rest.
-static const u8 sQuickStartShopSlotCategories[QUICKSTART_SHOP_SLOTS] = {
-    QS_CAT_WEAPON, QS_CAT_WEAPON, QS_CAT_REWARD, QS_CAT_REWARD, QS_CAT_KEY,
-    QS_CAT_SKILL,  QS_CAT_ALL,    QS_CAT_ALL,    QS_CAT_ALL,
+// --- The shape of the stock, per the user's spec --------------------------
+//
+// Eight shelf slots, in two kinds.
+//
+// FOUR are permanent and repeatable - the player can come back and buy them
+// all run, as long as the rupees hold out:
+//
+//   a recovery heart, ten arrows, ten bombs   fixed price, rolled once per
+//                                             run in [1, 100]
+//   a heart piece                             50 rupees, +25 per purchase
+//                                             within the run
+//
+// The two ammo rows carry their weapon requirement (QS_REQ_BOW /
+// QS_REQ_BOMBS), which is the user's "if the player hasn't received the bomb
+// bag or the bow/quiver yet, then they can't get these items": the slot sits
+// bare until the run finds the weapon, then stocks itself.
+//
+// FOUR are drawn from the pool above and can be bought exactly ONCE - one
+// KEY ITEM, one WEAPON/TOOL, one REWARD, and one that is either a SKILL or a
+// STAT upgrade. Their prices are rolled per run in [1, 500]. Once bought, the
+// slot stays empty for the rest of the run: nothing restocks it. That is what
+// GF_SHOP_SLOT_SOLD_BIT is for - the "is it still sellable" test alone cannot
+// express it, because several of these (potions, a bottled charm) are
+// repeatable items that stay usable after the first purchase.
+#define QUICKSTART_SHOP_FIXED_SLOTS 4
+#define QUICKSTART_SHOP_DRAWN_SLOTS 4
+#define QUICKSTART_SHOP_SLOTS (QUICKSTART_SHOP_FIXED_SLOTS + QUICKSTART_SHOP_DRAWN_SLOTS)
+
+static const QuickStartTierEntry sQuickStartShopFixed[QUICKSTART_SHOP_FIXED_SLOTS] = {
+    { ITEM_HEART, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
+    { ITEM_ARROWS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOW, 1 },
+    { ITEM_BOMBS10, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOMBS, 1 },
+    { ITEM_HEART_PIECE, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
 };
 
-// Five bits per slot, nine slots. The pool is 23 rows, so five bits covers it
-// with room to grow; QUICKSTART_SHOP_POOL_SIZE is asserted against 32 by the
-// invariant checker rather than here, since a static assert would need a
-// header this file does not include.
-#define GF_SHOP_SLOT_BIT(i, b) (97 + (i) * 5 + (b)) // i = 0..8, b = 0..4
-#define QUICKSTART_SHOP_SLOT_EMPTY 31
+// What each drawn slot may hold. The last one is deliberately two categories
+// at once - "one SKILL upgrade OR STAT upgrade" - so it is not predictable
+// which of the two a run will offer.
+static const u8 sQuickStartShopSlotCategories[QUICKSTART_SHOP_DRAWN_SLOTS] = {
+    QS_CAT_KEY,
+    QS_CAT_WEAPON,
+    QS_CAT_REWARD,
+    QS_CAT_SKILL | QS_CAT_STAT,
+};
+
+// Six bits per drawn slot, four slots: bank 11 offsets 97-120. Six because
+// the pool is 37 rows now and five bits stopped covering it - the old nine
+// 5-bit slots ran to 141, so this shrinks the block rather than growing it.
+// QUICKSTART_SHOP_POOL_SIZE is asserted against 64 by the invariant checker
+// rather than here, since a static assert would need a header this file does
+// not include.
+#define GF_SHOP_SLOT_BIT(i, b) (97 + (i) * 6 + (b)) // i = 0..3, b = 0..5
+#define QUICKSTART_SHOP_SLOT_EMPTY 63
 
 static s32 QuickStartShopSlotEntry(s32 slot) {
     s32 b, index = 0;
-    for (b = 0; b < 5; b++) {
+    for (b = 0; b < 6; b++) {
         if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SHOP_SLOT_BIT(slot, b))) {
             index |= (1 << b);
         }
@@ -3941,7 +4052,7 @@ static s32 QuickStartShopSlotEntry(s32 slot) {
 
 static void QuickStartShopSetSlotEntry(s32 slot, s32 index) {
     s32 b;
-    for (b = 0; b < 5; b++) {
+    for (b = 0; b < 6; b++) {
         if (index & (1 << b)) {
             SetLocalFlagByBank(FLAG_BANK_11, GF_SHOP_SLOT_BIT(slot, b));
         } else {
@@ -3950,28 +4061,42 @@ static void QuickStartShopSetSlotEntry(s32 slot, s32 index) {
     }
 }
 
-// The item on a given shelf this run, or ITEM_NONE for a slot whose draw came
-// up empty or whose item is no longer sellable - bought already, or gated on
-// something the player does not have. Re-checked rather than cached, which is
-// what makes the shelf tidy itself: buy the Pegasus Boots and the slot goes
-// quiet instead of restocking them for a second, pointless purchase, which is
-// what the old fixed catalog did.
-static u16 QuickStartShopSlotItem(s32 slot) {
-    s32 index = QuickStartShopSlotEntry(slot);
-    if (index >= QUICKSTART_SHOP_POOL_SIZE) {
-        return ITEM_NONE;
-    }
-    if (!QuickStartTierEntryUsable(&sQuickStartShopPool[index])) {
-        return ITEM_NONE;
-    }
-    return sQuickStartShopPool[index].item;
+// Has this drawn slot already been bought this run? Distinct from "is the
+// item still usable": several of the drawn items are repeatable (potions, a
+// bottled charm), so usability alone would happily restock them.
+static bool32 QuickStartShopSlotSold(s32 drawn) {
+    return QsCheckFlag(GF_SHOP_SLOT_SOLD_BIT(drawn));
 }
-// Placed by the user directly (Lua position script) - two rows across
-// Grimblade's open floor.
-static const s16 sQuickStartShopItemOffsets[][2] = {
-    { 60, 57 }, { 90, 57 }, { 120, 57 }, { 150, 57 }, { 180, 57 },
-    { 170, 85 }, { 140, 85 }, { 110, 85 }, { 80, 85 },
-};
+
+// The item on a given shelf right now, or ITEM_NONE for a shelf that should
+// stand bare. Re-derived rather than cached, which is what makes the shelf
+// keep itself honest: a slot goes quiet the moment its item stops being
+// sellable, instead of restocking something the player cannot use or has
+// already bought.
+//
+// Three ways a shelf comes up empty:
+//   - a drawn slot whose item has been bought (GF_SHOP_SLOT_SOLD_BIT);
+//   - a drawn slot whose draw came up empty (its category was exhausted);
+//   - either kind whose item is not currently usable - arrows with no bow, a
+//     potion with no empty bottle, a key item the run has since found
+//     elsewhere.
+static u16 QuickStartShopSlotItem(s32 slot) {
+    const QuickStartTierEntry* e;
+    if (slot < QUICKSTART_SHOP_FIXED_SLOTS) {
+        e = &sQuickStartShopFixed[slot];
+    } else {
+        s32 drawn = slot - QUICKSTART_SHOP_FIXED_SLOTS;
+        s32 index = QuickStartShopSlotEntry(drawn);
+        if (index >= QUICKSTART_SHOP_POOL_SIZE || QuickStartShopSlotSold(drawn)) {
+            return ITEM_NONE;
+        }
+        e = &sQuickStartShopPool[index];
+    }
+    if (!QuickStartTierEntryUsable(e)) {
+        return ITEM_NONE;
+    }
+    return e->item;
+}
 // Whether one of our own SHOP_ITEM props for the given catalog item still
 // exists in the current room - false while it's off being carried, on the
 // pedestal, or (per sub_080819B4 in itemForSale.c) has just been consumed
@@ -4053,30 +4178,59 @@ static void QuickStartMaintainShop(const s16 (*offsets)[2]) {
 // (QuickStartGetShopPrice), the merchant NPC and script_QuickStartMerchant,
 // and vanilla's own lift-and-carry pedestal sale.
 //
-// GF_SHOP_DOOR_BIT's five flag bits (658-662) are free now. Left unreused so
-// the price block below keeps the indices it has always had.
+// GF_SHOP_DOOR_BIT's five flag bits (658-662) are free now, as is the whole
+// of the retired 3-bit price roll (663-689).
 #define QUICKSTART_SHOP_AREA AREA_WIND_TRIBE_TOWER
 #define QUICKSTART_SHOP_ROOM ROOM_WIND_TRIBE_TOWER_FLOOR_1
 
-// Rolled once per run: WHAT each shelf holds, and what it costs. (This used
-// to draw the shop's host door as well - the shop has a fixed room now.)
+// A rupee price in [1, limit], drawn uniformly.
 //
-// Each slot draws from its own category (sQuickStartShopSlotCategories), and
-// the draw is by rejection so no item appears twice: pick a usable pool row of
-// the right category, reject it if an earlier slot already took it, try again.
-// Bounded rather than looped forever - if a category is exhausted (a run that
-// already owns every key item, say) the slot is left empty, which the shelf
-// simply shows as bare floor.
+// Rejection rather than a modulo, for the reason QuickStartTierPick
+// documents: `limit` is a compile-time constant at every call site today, but
+// agbcc emits a call to __umodsi3 for a division by a non-constant and its
+// runtime library does not provide one, so the whole file keeps to masks and
+// rejection. The mask is the smallest power of two above the limit, so at
+// worst (limit 100, mask 127) a draw is accepted 78% of the time; sixteen
+// tries makes a fallthrough vanishingly unlikely, and the fallthrough itself
+// is still a valid price rather than a wrong one.
+static s32 QuickStartRollShopPrice(s32 limit, s32 mask) {
+    s32 attempt, roll = 0;
+    for (attempt = 0; attempt < 16; attempt++) {
+        roll = (s32)Random() & mask;
+        if (roll < limit) {
+            return roll + 1;
+        }
+    }
+    return (roll & (limit - 1)) + 1;
+}
+
+// Rolled once per run: what the four drawn shelves hold, and what everything
+// costs.
+//
+// Each drawn slot takes its own category (sQuickStartShopSlotCategories) by
+// rejection so no item appears twice: pick a usable pool row of the right
+// category, reject it if an earlier slot already took it, try again. Bounded
+// rather than looped forever - if a category is exhausted (a run that already
+// owns every key item, say) the slot is left empty, which the shelf shows as
+// bare floor.
 //
 // "Usable" is QuickStartTierEntryUsable, the same test every other draw in
 // this file uses, so ammo is never stocked without its weapon and a potion is
-// never stocked without a bottle to put it in.
+// never stocked without a bottle to put it in. Note what that means for the
+// draw specifically: a category is filtered by what the player holds AT RUN
+// START, which is right after the three selection rounds - so the shop will
+// not offer back the key item they just chose.
+//
+// The four permanent slots need no draw, only prices. The heart piece needs
+// not even that: its price is a function of how many have been bought this
+// run, and the counter starts every run at zero with the rest of the QS
+// window.
 static void QuickStartRandomizeShopOnce(void) {
-    s32 i, j, b, attempt;
+    s32 i, j, attempt;
     if (QsCheckFlag(GF_SHOP_RANDOMIZED)) {
         return;
     }
-    for (i = 0; i < QUICKSTART_SHOP_SLOTS; i++) {
+    for (i = 0; i < QUICKSTART_SHOP_DRAWN_SLOTS; i++) {
         s32 chosen = QUICKSTART_SHOP_SLOT_EMPTY;
         for (attempt = 0; attempt < 64; attempt++) {
             s32 pick = (s32)Random() % QUICKSTART_SHOP_POOL_SIZE;
@@ -4101,57 +4255,99 @@ static void QuickStartRandomizeShopOnce(void) {
         QuickStartShopSetSlotEntry(i, chosen);
         // The price roll is per SLOT, not per item, so it stays valid however
         // the draw came out.
-        {
-            u8 roll = (u8)((s32)Random() % 8);
-            for (b = 0; b < 3; b++) {
-                if (roll & (1 << b)) {
-                    QsSetFlag(GF_SHOP_PRICE_BIT(i, b));
-                }
-            }
-        }
+        QsWriteField(GF_SHOP_ONEOFF_PRICE_BIT(i, 0), QUICKSTART_SHOP_ONEOFF_PRICE_BITS,
+                     QuickStartRollShopPrice(QUICKSTART_SHOP_ONEOFF_PRICE_MAX, 0x1ff) - 1);
+    }
+    for (i = 0; i < QUICKSTART_SHOP_FIXED_SLOTS - 1; i++) {
+        QsWriteField(GF_SHOP_REFILL_PRICE_BIT(i, 0), QUICKSTART_SHOP_REFILL_PRICE_BITS,
+                     QuickStartRollShopPrice(QUICKSTART_SHOP_REFILL_PRICE_MAX, 0x7f) - 1);
     }
     QsSetFlag(GF_SHOP_RANDOMIZED);
 }
 
-
-// Scales each catalog item's vanilla price by its own 3-bit roll: 0 gives
-// half price, 7 gives just under 1.4x, so a run can be a bargain or a
-// squeeze without any item ever becoming free or absurd. Rounded down to a
-// multiple of 5 so the numbers read like shop prices rather than noise, and
-// floored at 5 so nothing lands on 0.
+// Records a completed sale. Called from ScriptCommand_BuyShopItem (script.c),
+// which is the one place a purchase actually goes through - the confirm
+// message and the affordability check both run before it and can still be
+// declined.
 //
-// Called from GetItemPrice (itemUtils.c) for EVERY item lookup in the game,
-// so it has to be cheap and has to say "not mine" quickly - hence the nine-
-// slot scan and the negative return for everything else. Vanilla shops
-// elsewhere keep their own prices untouched.
+// Two things follow from a sale: a heart piece pushes the NEXT heart piece 25
+// rupees higher, and one of the four drawn slots empties for good. Neither
+// can be inferred from the shelf itself. The prop deleting itself is not the
+// signal - a prop is also deleted when the room unloads, and
+// QuickStartMaintainShop respawns it either way, which is exactly what makes
+// the four permanent slots work.
+void QuickStartNoteShopPurchase(u32 item) {
+    s32 i;
+    if (!QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+        return;
+    }
+    if (item == ITEM_HEART_PIECE) {
+        s32 buys = QsReadField(GF_SHOP_HEART_PIECE_BUYS_BIT(0), 5);
+        if (buys < QUICKSTART_SHOP_HEART_PIECE_BUYS_MAX) {
+            QsWriteField(GF_SHOP_HEART_PIECE_BUYS_BIT(0), 5, buys + 1);
+        }
+        return;
+    }
+    for (i = 0; i < QUICKSTART_SHOP_DRAWN_SLOTS; i++) {
+        s32 index = QuickStartShopSlotEntry(i);
+        if (index < QUICKSTART_SHOP_POOL_SIZE && sQuickStartShopPool[index].item == item) {
+            QsSetFlag(GF_SHOP_SLOT_SOLD_BIT(i));
+            return;
+        }
+    }
+}
+
+
+// This run's price for one of the shop's own wares, or a negative value for
+// anything the run isn't pricing itself.
+//
+// These are ABSOLUTE amounts now, not a scale factor on the vanilla table.
+// That was the only way to honour the user's spec ("a fixed price between 1
+// and 100 rupees", "randomly assigned between 1 and 500") - a multiplier on
+// whatever gUnk_080FD964 happened to list cannot hit a stated range, and half
+// this shelf (the recovery heart, the butterflies, the charms) has a vanilla
+// price of zero to scale in the first place. The old 3-bit (4+roll)/8 roll is
+// retired with it.
+//
+// `basePrice` is now unused for the same reason: it was the thing being
+// scaled, and it was also the fast reject - a zero-priced item was assumed
+// not to be shop stock. It is exactly the recovery heart, so the reject is
+// GF_SHOP_RANDOMIZED plus the slot scan instead. The parameter stays in the
+// signature because GetItemPrice (itemUtils.c) has it to hand and a future
+// price rule may want it again.
+//
+// Called from GetItemPrice for EVERY item lookup in the game, so it has to be
+// cheap and has to say "not mine" quickly. Vanilla shops elsewhere keep their
+// own prices untouched.
 //
 // Reads the slot's drawn pool row directly rather than through
-// QuickStartShopSlotItem: that one also applies the usability test, and an
-// item being priced is not the same question as it being stocked - the price
-// has to keep answering while the sale completes, which is exactly when the
-// player is about to own it.
+// QuickStartShopSlotItem: that one also applies the usability and sold tests,
+// and an item being priced is not the same question as it being stocked - the
+// price has to keep answering while the sale completes, which is exactly when
+// the slot is being marked sold and the player is about to own it.
 s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
-    s32 i, b, roll, price;
-    if (basePrice <= 0 || !QsCheckFlag(GF_SHOP_RANDOMIZED)) {
+    s32 i;
+    if (!QsCheckFlag(GF_SHOP_RANDOMIZED)) {
         return -1;
     }
-    for (i = 0; i < QUICKSTART_SHOP_SLOTS; i++) {
+    // The heart piece: 50 rupees, then 25 more for each one already bought
+    // this run. Derived on every lookup rather than stored, so the displayed
+    // price and the charged price cannot drift apart across a purchase.
+    if (item == ITEM_HEART_PIECE) {
+        return QUICKSTART_SHOP_HEART_PIECE_BASE +
+               QUICKSTART_SHOP_HEART_PIECE_STEP * QsReadField(GF_SHOP_HEART_PIECE_BUYS_BIT(0), 5);
+    }
+    for (i = 0; i < QUICKSTART_SHOP_FIXED_SLOTS - 1; i++) {
+        if (sQuickStartShopFixed[i].item == item) {
+            return QsReadField(GF_SHOP_REFILL_PRICE_BIT(i, 0), QUICKSTART_SHOP_REFILL_PRICE_BITS) + 1;
+        }
+    }
+    for (i = 0; i < QUICKSTART_SHOP_DRAWN_SLOTS; i++) {
         s32 index = QuickStartShopSlotEntry(i);
         if (index >= QUICKSTART_SHOP_POOL_SIZE || sQuickStartShopPool[index].item != item) {
             continue;
         }
-        roll = 0;
-        for (b = 0; b < 3; b++) {
-            if (QsCheckFlag(GF_SHOP_PRICE_BIT(i, b))) {
-                roll |= (1 << b);
-            }
-        }
-        price = (basePrice * (4 + roll)) / 8;
-        price -= price % 5;
-        if (price < 5) {
-            price = 5;
-        }
-        return price;
+        return QsReadField(GF_SHOP_ONEOFF_PRICE_BIT(i, 0), QUICKSTART_SHOP_ONEOFF_PRICE_BITS) + 1;
     }
     return -1;
 }
@@ -4169,27 +4365,39 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 // emulator, (56,112) down the column to (56,302) and (56,216) back up to
 // (56,87).
 //
-// The catalog goes in the UPPER hall, all nine of it, because the lower block
-// is where the traffic is: arriving from the Entrance lands the player at
-// (184,248) and arriving from Floor 2 at (136,248), and stock strewn across
-// the arrival tiles is exactly the complaint the Stockwell layout drew
+// The catalog goes in the UPPER hall, all eight of it, because the lower
+// block is where the traffic is: arriving from the Entrance lands the player
+// at (184,248) and arriving from Floor 2 at (136,248), and stock strewn
+// across the arrival tiles is exactly the complaint the Stockwell layout drew
 // ("all the items are on the first tiles when you enter").
 //
 // Two rows with a walkway between them, so every item is approached from open
 // floor rather than over a counter - the thing that made Stockwell's shelves
 // take four attempts to lay out:
 //
-//   y=88    five items      (row 5)
-//   y=104   the walkway     (row 6) - and the merchant, at the east end
-//   y=120   four items      (row 7)
+//   y=88    the four one-off items   (row 5, slots 4-7)
+//   y=104   the walkway              (row 6) - and the merchant, east end
+//   y=120   the four permanent ones  (row 7, slots 0-3)
+//
+// Slot order is display order, and the split is deliberate: the four
+// permanent slots (heart, arrows, bombs, heart piece) are the ones a player
+// comes back to over and over, so they sit on the near row, and the run's
+// four one-off wares sit behind them where they read as the special stock.
+//
+// The x offsets are the SAME ones the nine-slot layout used - the near row is
+// its old front row unchanged, the far row its old back row with the last
+// entry dropped. Re-spacing the eight evenly across the hall was tried first
+// and the checker caught it: at (176,120) the heart piece spawned fine and
+// then would not lift from the walkway tile in front of it. These eight are
+// each emulator-verified liftable, so they are what the layout keeps.
 //
 // Nothing here is on a shelf, in an alcove, or in a separate collision
 // component, which is the whole reason for moving the shop into the hub.
 #define QUICKSTART_SHOP_MERCHANT_X 192
 #define QUICKSTART_SHOP_MERCHANT_Y 104
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 48, 88 },  { 80, 88 },  { 112, 88 }, { 144, 88 }, { 176, 88 }, // back row
-    { 64, 120 }, { 96, 120 }, { 128, 120 },{ 160, 120 },              // front row
+    { 64, 120 }, { 96, 120 }, { 128, 120 }, { 160, 120 }, // near row, the permanent four
+    { 48, 88 },  { 80, 88 },  { 112, 88 },  { 144, 88 },  // far row, the one-off four
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------

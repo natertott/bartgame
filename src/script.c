@@ -1924,6 +1924,12 @@ void ScriptCommand_BuyShopItem(Entity* entity, ScriptExecutionContext* context) 
 
     price = GetItemPrice(item);
     ModRupees(-price);
+#ifdef QUICKSTART
+    // The one place a QUICKSTART shop sale is definitely going through - the
+    // confirm message and the affordability check both run before this and
+    // can still end without a purchase. See QuickStartNoteShopPurchase.
+    QuickStartNoteShopPurchase(item);
+#endif
     InitItemGetSequence(item, 0, 0);
     gRoomVars.shopItemType = 0;
     gActiveScriptInfo.flags |= 1;

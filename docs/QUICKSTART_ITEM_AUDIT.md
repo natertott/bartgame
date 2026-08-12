@@ -278,6 +278,12 @@ A "? room" draws `QS_CAT_DROP` — everything except KEY. A region clear reward
 draws `QS_CAT_ALL`, because that is where the Cane, the Ocarina and the key
 items the opening selection did not offer have always come from.
 
+The shop's stock (§2's `sQuickStartShopCatalog` row) is also superseded: the
+merchant now keeps four permanent, repeatable slots (recovery heart, ten
+arrows, ten bombs, heart piece) and draws four one-off wares per run — one
+KEY, one WEAPON/TOOL, one REWARD, and one SKILL-or-STAT — from a 37-row pool
+covering every tier. See roadmap §3.4 for the prices.
+
 The hub's three selection rounds draw from this table too, superseding §2's
 `sQuickStartKeyItems` / `sQuickStartBonusItems` / `sQuickStartSkillItems` rows
 — those arrays are gone. Each round takes a slice, and unlike a "? room" it

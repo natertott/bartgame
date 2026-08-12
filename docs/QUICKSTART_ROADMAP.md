@@ -227,35 +227,54 @@ and checks the round actually advanced.
 ### 3.4 The shop
 
 **Floor 1 of the hub**, one flight up from the tower entrance - walked to,
-not drawn. Nine shelf slots in two rows across the upper hall (y=88 and
-y=120) with a walkway between them at y=104, and the merchant at its east
-end.
+not drawn. **Eight** shelf slots in two rows across the upper hall, the
+permanent four nearest the player at y=120 and the run's four one-off wares
+behind them at y=88, with a walkway between at y=104 and the merchant at its
+east end.
 
-**Stock is drawn per run**, from `sQuickStartShopPool` (23 rows tagged with
-the same `QS_CAT_*` categories the tier table uses). Slots 0-5 are one weapon,
-one weapon, one reward, one reward, one key item and one skill; slots 6-8 are
-wildcards. The draw is by rejection so nothing appears twice, and eligibility
-is `QuickStartTierEntryUsable` - the same test every other draw uses - so ammo
-is never stocked without its weapon and a potion never without a bottle.
+| slot | stock | price |
+|---|---|---|
+| 0 | recovery heart | rolled per run in [1, 100] |
+| 1 | ten arrows *(needs the Bow)* | rolled per run in [1, 100] |
+| 2 | ten bombs *(needs Bombs)* | rolled per run in [1, 100] |
+| 3 | heart piece | **50, +25 per purchase this run** |
+| 4 | one KEY ITEM | rolled per run in [1, 500] |
+| 5 | one WEAPON/TOOL | rolled per run in [1, 500] |
+| 6 | one REWARD | rolled per run in [1, 500] |
+| 7 | one SKILL **or** STAT upgrade | rolled per run in [1, 500] |
 
-That test is re-applied at *display* time too, which makes the shelf tidy
-itself: buy the Pegasus Boots and the slot goes bare instead of restocking
-them for a second, pointless purchase, which is what the old fixed catalog
-did.
+Slots 0-3 are **permanent and repeatable** - buy them as often as the rupees
+last. Slots 4-7 are drawn once per run from `sQuickStartShopPool` (37 rows,
+every tier) and can be bought **once each**; the slot then stands empty for
+the rest of the run, tracked by `GF_SHOP_SLOT_SOLD_BIT` because several of
+them are repeatable items that a usability test alone would happily restock.
 
-The pool is separate from `sQuickStartTiers` on purpose. An item is only
-sellable with a nonzero price AND a confirm-purchase text in `gItemMetaData`,
-and an audit of the two against each other found **21 of the 40 tier rows at
-price 0** - every butterfly, most skills, the rare weapons and rare key items.
-Drawing the shop straight from the tier table would have stocked shelves of
-free items whose sale could not complete. Everything in the pool has been
-given a real price in the [51, 299] band (`src/itemMetaData.c`); several were
-sitting at **1 rupee** from the retired "guaranteed ? room shop" design, which
-`QuickStartGetShopPrice` floors to 5. Every spot is emulator-verified liftable (`invariant_check.py`'s `hub`
-tier presses R and reads `gPlayerState.heldObject`, rather than reasoning
-from the collision map - which is what made the previous layout take four
-attempts). Prices randomized per run, bought by carrying an item to the
-merchant (vanilla's own `BuyShopItem` path).
+The draw is by rejection so nothing appears twice, and eligibility is
+`QuickStartTierEntryUsable` - the same test every other draw uses. That test
+is re-applied at *display* time too, which is what makes the shelf tidy
+itself in both directions: buy the Pegasus Boots elsewhere and the slot goes
+bare, and buy the Bow at slot 5 and the arrows at slot 1 stock themselves.
+
+Prices are **absolute amounts** now, not the old `(4 + roll) / 8` scale on the
+vanilla table. A multiplier cannot hit a stated range, and half this shelf
+(the recovery heart, the butterflies, the charms) has a vanilla price of zero
+to scale in the first place.
+
+The pool stays separate from `sQuickStartTiers`, but for a narrower reason
+than before: an item is only sellable with a confirm-purchase message id in
+`gItemMetaData`, and 17 of these have none. Rather than write 17 QUICKSTART
+overrides into that table, `GetSaleItemConfirmMessageID` (`src/itemUtils.c`)
+now falls back to one generic line for anything `QuickStartGetShopPrice` is
+pricing. What the pool table is still *for* is leaving out what the shop
+should not sell: rupees (paying rupees for rupees), the heart piece (its own
+slot), and the boot-granted Ocarina.
+
+Every spot is emulator-verified liftable (`invariant_check.py`'s `hub` tier
+presses R and reads `gPlayerState.heldObject`, rather than reasoning from the
+collision map - which is what made the previous layout take four attempts;
+re-spacing the eight evenly was tried and that tier caught one of the new
+offsets spawning stock that would not lift). `tools/quickstart/shop.py` prints
+the run's stock and prices and can drive a real purchase end to end.
 
 It used to be a "? room": first in the Grimblade dojo behind a fixed link,
 then in Stockwell's store reached by redirecting one of eight candidate

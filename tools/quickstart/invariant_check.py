@@ -111,8 +111,11 @@ FLAG_FAMILIES = [
 FLAG_PARAM_RANGES = {
     ('GF_CONTENT_SITE_', 'i'): (0, 'QUICKSTART_CONTENT_SITE_MAX - 1'),
     ('GF_SLOT_', 'i'): (0, 3),
-    ('GF_SHOP_PRICE_BIT', 'i'): (0, 8),
-    ('GF_SHOP_SLOT_BIT', 'i'): (0, 8),
+    ('GF_SHOP_REFILL_PRICE_BIT', 'i'): (0, 2),
+    ('GF_SHOP_ONEOFF_PRICE_BIT', 'i'): (0, 3),
+    ('GF_SHOP_HEART_PIECE_BUYS_BIT', 'b'): (0, 4),
+    ('GF_SHOP_SLOT_SOLD_BIT', 'i'): (0, 3),
+    ('GF_SHOP_SLOT_BIT', 'i'): (0, 3),
     ('GF_REGION_CHAIN_', 'slot'): (0, 3),
     ('GF_REGION_WAVE_COUNT_BIT', 'slot'): (0, 3),
 }
@@ -751,8 +754,11 @@ def emu_rooms(rom, start, end):
 # deliberately rather than parsed: this tier's job is to catch the table
 # drifting off the floor it was measured against, and a parser that reads the
 # same numbers it is checking cannot do that.
-HUB_SHOP_SPOTS = [(48, 88), (80, 88), (112, 88), (144, 88), (176, 88),
-                  (64, 120), (96, 120), (128, 120), (160, 120)]
+HUB_SHOP_SPOTS = [(64, 120), (96, 120), (128, 120), (160, 120),
+                  (48, 88), (80, 88), (112, 88), (144, 88)]
+# Slots 1 and 2 - ten arrows and ten bombs. Gated on owning the Bow / Bombs,
+# so on a fresh run these two shelves are correctly empty.
+HUB_SHOP_AMMO_SPOTS = [(96, 120), (128, 120)]
 HUB_SHOP_WALKWAY_Y = 104
 HUB_MERCHANT = (192, 104)
 PLAYER_STATE = 0x03003f80
@@ -779,11 +785,21 @@ def emu_hub(rom):
     ox = c.memory.u8[emu.ROOM_CONTROLS + 6] | (c.memory.u8[emu.ROOM_CONTROLS + 7] << 8)
     oy = c.memory.u8[emu.ROOM_CONTROLS + 8] | (c.memory.u8[emu.ROOM_CONTROLS + 9] << 8)
     placed = {(e[4] - ox, e[5] - oy) for e in emu.entities(c, emu.KIND_OBJECT)}
-    missing = [s for s in HUB_SHOP_SPOTS if s not in placed]
+    missing = [s for s in HUB_SHOP_SPOTS if s not in placed and s not in HUB_SHOP_AMMO_SPOTS]
     if missing:
         out.append(('FAIL', f'shop props missing from {missing}'))
     else:
-        out.append(('PASS', f'all {len(HUB_SHOP_SPOTS)} shop props spawned on their table spots'))
+        out.append(('PASS', f'all {len(HUB_SHOP_SPOTS) - len(HUB_SHOP_AMMO_SPOTS)} '
+                            'always-stocked shop props spawned on their table spots'))
+    # The two ammo slots carry QS_REQ_BOW / QS_REQ_BOMBS and a fresh run holds
+    # neither weapon, so they are SUPPOSED to be bare here. Asserting that is
+    # the only cheap check available that the requirement is wired at all - if
+    # they spawn, ten arrows are on sale to a player with no bow.
+    early = [s for s in HUB_SHOP_AMMO_SPOTS if s in placed]
+    if early:
+        out.append(('FAIL', f'ammo on sale with no weapon to use it: {early}'))
+    else:
+        out.append(('PASS', 'the two ammo slots stand bare until the run finds the weapon'))
     npcs = [(e[4] - ox, e[5] - oy) for e in emu.entities(c, emu.KIND_NPC)]
     if HUB_MERCHANT not in npcs:
         out.append(('FAIL', f'merchant not at {HUB_MERCHANT}; NPCs at {npcs}'))
@@ -792,6 +808,8 @@ def emu_hub(rom):
 
     unliftable = []
     for (ix, iy) in HUB_SHOP_SPOTS:
+        if (ix, iy) in HUB_SHOP_AMMO_SPOTS:
+            continue
         cc = emu.boot(rom, seed=SEED)
         emu.warp(cc, 48, 1, ix, HUB_SHOP_WALKWAY_Y, frames=240)
         if emu.here(cc) != (48, 1):

@@ -40,6 +40,28 @@ const u16 gUnk_080FD5A8[] = { 1, 5, 20, 50, 100, 200 };
 
 u32 GetSaleItemConfirmMessageID(u32 item) {
     const struct_080FD964* ptr = &gUnk_080FD964[item];
+#ifdef QUICKSTART
+    // The QUICKSTART shop sells things vanilla never sold - skill scrolls,
+    // butterflies, bottled charms, the rare weapons, a recovery heart - and
+    // an item vanilla never sold has no "buy this for X rupees?" message id
+    // at all (0). MessageNoOverlap(0) opens no textbox, so
+    // ScriptCommand_SaleItemConfirmMessage has nothing to confirm and the
+    // sale stalls with the item still in the player's hands.
+    //
+    // Borrow one generic line for anything the run is pricing itself, rather
+    // than hand-writing a QUICKSTART override into gUnk_080FD964 for each of
+    // the seventeen items involved. TEXT_STOCKWELL 0x02 is already the
+    // confirm text this mode gives the Bow, the Bombs, the boots and the
+    // heart piece: it reads as a plain "is X rupees OK?" and substitutes the
+    // number from gMessage.rupees like every other shop line.
+    //
+    // Gated on QuickStartGetShopPrice rather than applied to every priceless
+    // item, so this cannot make something sellable that the shop is not
+    // actually stocking.
+    if (ptr->saleItemConfirmMessageId == 0 && QuickStartGetShopPrice(item, ptr->itemPrice) >= 0) {
+        return TEXT_INDEX(TEXT_STOCKWELL, 0x02);
+    }
+#endif
     return ptr->saleItemConfirmMessageId;
 }
 
