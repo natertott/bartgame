@@ -1051,12 +1051,20 @@ sequencing lives in section 8.
   the table to 0 and the boss fails to spawn; the reaper frees a dead
   sheet after a median 11 SECONDS; and CPU never lags for normal
   content - only gang AIs (the acro class) ever moved the ratio.
-  Still open from (b): the EWRAM map diff (what is dead under QUICKSTART
-  and reclaimable). *(a) path:* doc work over the decomp tree: walk
-  `src/enemy/`, `src/npc/`, `src/object/`, `scripts/`, the item and
-  room tables; produce `docs/QUICKSTART_VANILLA_INVENTORY.md` with a
-  reuse-difficulty grade per row (the miniboss audit #26 and kinstone
-  audit are small worked examples of the shape).
+  **(a) and the EWRAM audit are DONE too - see
+  `docs/QUICKSTART_VANILLA_INVENTORY.md`**: every enemy graded with its
+  roster status (A in-use / B drop-in / C needs-audit / D arena-bound /
+  X excluded), the NPC/object/item/area/system toolboxes, the boss
+  ladder (Octorok Boss is the next-cheapest after the chuchus), and the
+  EWRAM map. EWRAM headlines: ~31 KB simply free at the top,
+  gDungeonMap is 28 KB of dead state that is ALSO the pause-map's own
+  buffer (so F10 repurposes it rather than reclaiming it), and RAM is
+  not the scarce resource - the GFX table remains the wall. The
+  cheapest unexploited content per the grades: the golden-enemy trio
+  (KINSTONE_55 is wired with no payoff today), the switch-puzzle object
+  vocabulary, FLYING_POT ambushes, CUCCO_AGGR as an F1c stake, and
+  WIZZROBE_WIND completing the wizzrobe family. With this F8 is
+  complete.
 
 - **F10. The MAP and COMPASS items (user, Aug 2026).** Two findable
   items, listed under rare WEAPONS/TOOLS in the tier table. Today the
