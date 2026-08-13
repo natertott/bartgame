@@ -1002,24 +1002,39 @@ sequencing lives in section 8.
   because the staged death cutscene and the QUICKSTART death sweeps
   assume one family per room.
 
-- **F7. Win-condition variety: the element as a drawn payout.** Instead of
-  the element always replacing the element region's wave-0 reward, draw
-  per run WHICH event pays it: a wave clear (today's), a boss fight, an
-  overworld quest, or a ? room. *Path:* the element already has exactly
-  one paying edge (`QuickStartSpawnRegionRewardOnce` swaps the reward for
-  the element when the region matches). Generalize to a per-run 2-bit
-  "carrier" draw next to the element-region draw, and teach each payout
-  path to ask "am I the carrier and am I in/for the element region?":
-  wave clear (exists), boss kill (the boss death already pays nothing -
-  add a payout hook; requires the region to be boss-capable, so the draw
-  must respect the allowlist), quest completion (the quest reward swap -
-  pot quest already places QUICKSTART_QUEST_REWARD, swap it), ? room
-  (the site payout in the element region's pocket rooms). Ezlo's hint
-  text then needs a variant per carrier ("the element is here... a boss
-  guards it / it's hidden in a pot / seek the hidden room") - which is
-  also exactly the hint-pool work of F5. Keep the rescue logic in mind:
-  each new carrier needs its own "cannot stall the run" argument the way
-  QuickStartRescueStuckFinalWave covers waves today.
+- **F7. Win-condition variety: PAUSED (user, Aug 2026) - the KEY ITEM
+  reachability logic comes first.** The stopping reason, in the user's
+  own terms: some ? rooms are still unreachable to the player at the
+  current moment, and no event may carry the win until the run can
+  GUARANTEE the player is able to reach it. The wave clears are (almost)
+  always guaranteed to work - so they stay the sole carrier until then.
+  The prerequisite is its own piece of design work: the key-item logic -
+  which items gate which content, and how a run proves "this goal is
+  reachable with the kit this player can actually obtain" before hanging
+  the element on it.
+
+  Design banked from the paused implementation attempt (reverted cleanly,
+  nothing shipped), for whenever this resumes:
+  - a per-run 2-bit CARRIER draw (wave / boss / quest / ? room) rolled
+    with the element region, each carrier restricting the element draw to
+    regions where it can pay out (boss -> the CG/NHF/SHF allowlist -
+    every ring's within-two set was checked to contain one; ? room -> a
+    hand-curated table of UNGATED walk-in sites, one per ring, with Lon
+    Lon Ranch excluded because all its interiors are gated);
+  - BOSS carrier: every post-0 wave in the element region is the forced
+    boss until beaten; the drop gate is the wave counter reaching 2, so
+    a boss that fails to spawn still counts up and the run self-heals;
+  - QUEST carrier: the pot quest forced to the element region with the
+    Element in the hidden pot - no fail state, pots respawn per visit
+    until the Element is in hand;
+  - a global per-frame Element ground-item despawn refresh, so the item
+    survives wherever a carrier drops it (pot, interior, field);
+  - per-carrier Ezlo final-hint variants, so "it's here!" never lies
+    about HOW ("a BOSS guards it" / "hides in a pot" / "behind a door").
+  Every carrier resumed later must clear the same bar the pause names:
+  a "cannot stall the run" argument (the way
+  QuickStartRescueStuckFinalWave covers waves) AND a "provably reachable
+  with the guaranteed kit" argument from the key-item logic.
 
 - **F8. The full vanilla sweep + the budget audit.** Two standing research
   deliverables: (a) a catalog of ALL vanilla content re-purposable for
