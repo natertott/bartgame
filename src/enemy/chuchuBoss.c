@@ -280,7 +280,13 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
     Entity* child;
     Entity* parent;
 
+#ifndef QUICKSTART
+    // Death-flash freeze. With the camera staying on the player (see the
+    // killing-blow site), freezing them for a beat happening possibly
+    // offscreen serves nothing - and this same line was the old
+    // proxy-at-health-0 permafreeze before the proxy got a delete edge.
     PausePlayer();
+#endif
     if (super->type == 0) {
         if (super->subAction != 12) {
             super->subAction = 12;
@@ -517,12 +523,28 @@ void sub_08026060(ChuchuBossEntity* this) {
 }
 
 void sub_08026090(ChuchuBossEntity* this) {
+#ifdef QUICKSTART
+    // Orphan guard: everything below mirrors fields out of super->child
+    // (the core). Nothing in the vanilla arena could delete the core out
+    // from under this proxy; in the open overworld several things can
+    // (room unload edges, sweeps), and a proxy mirroring a cleared or
+    // recycled slot is garbage-in-garbage-out with a PausePlayer attached.
+    if (super->child == NULL || super->child->kind != ENEMY || super->child->id != CHUCHU_BOSS) {
+        DeleteThisEntity();
+    }
+#endif
     if (super->subAction == 0) {
         if (super->child->health == 0) {
             super->flags &= ~0x80;
             super->subAction = 1;
             super->timer = 250;
+#ifndef QUICKSTART
+            // Parks the camera on THIS piece - which is invisible and sits
+            // at the original spawn point, wherever the fight wandered.
+            // QUICKSTART leaves the camera with the player for the death
+            // beat too.
             gRoomControls.camera_target = super;
+#endif
         }
         super->flags = super->child->flags;
         super->hitbox = super->child->hitbox;
@@ -533,9 +555,13 @@ void sub_08026090(ChuchuBossEntity* this) {
         }
         CopyPosition(super->child, super);
     } else {
+#ifndef QUICKSTART
         PausePlayer();
+#endif
         if (super->timer-- == 0) {
+#ifndef QUICKSTART
             gRoomControls.camera_target = &gPlayerEntity.base;
+#endif
             DeleteThisEntity();
         }
     }
@@ -609,11 +635,23 @@ void sub_08026110(ChuchuBossEntity* this) {
 }
 
 void sub_0802626C(ChuchuBossEntity* this) {
+#ifdef QUICKSTART
+    // The intro stays as a spawn-animation sequencer (particles, fall,
+    // shake, boss theme) but stops being a CUTSCENE: no menu lock and no
+    // per-frame player freeze. In its Temple arena the player had just
+    // walked through a boss door and had nowhere to be; spawned mid-room
+    // by a region wave this froze them for the intro's full length - in
+    // North Hyrule Field that measured ~21 seconds, most of it watching
+    // the camera crawl (see sub_08026358) - which is the player-facing
+    // half of the user's "camera got really confused" report.
+    gUnk_080CC20C[this->unk_84->unk_03](this);
+#else
     gPauseMenuOptions.disabled = 1;
     gUnk_080CC20C[this->unk_84->unk_03](this);
     if (gPlayerEntity.base.action != PLAYER_ROOMTRANSITION && gPlayerEntity.base.action != PLAYER_ROOM_EXIT) {
         PausePlayer();
     }
+#endif
 }
 
 void sub_080262A8(ChuchuBossEntity* this) {
@@ -665,15 +703,26 @@ void sub_08026358(ChuchuBossEntity* this) {
             this->unk_7c = 0;
             this->unk_7d = 0x1e;
             this->unk_84->unk_03++;
+#ifndef QUICKSTART
+            // The camera grab, at scroll speed 1. In the Temple's little
+            // arena that is a short dolly; in an overworld region it is a
+            // frame-per-pixel crawl across the whole map and back
+            // (measured ~900 frames each way in North Hyrule Field, the
+            // player frozen throughout). QUICKSTART leaves the camera on
+            // the player; the flash (stage 1) and the boss theme (stage
+            // 7) still announce the spawn.
             gPlayerEntity.base.animationState = 0;
             gRoomControls.camera_target = super;
             gRoomControls.scrollSpeed = 1;
+#endif
         } else if (bVar1 < 0x61) {
+#ifndef QUICKSTART
             if (bVar1 < 0x5c) {
                 gPlayerEntity.base.animationState = 4;
             } else {
                 gPlayerEntity.base.animationState = 2;
             }
+#endif
         }
     }
 }
@@ -738,14 +787,21 @@ void sub_080264D4(ChuchuBossEntity* this) {
 void sub_0802650C(ChuchuBossEntity* this) {
     if (((ChuchuBossEntity*)super->child)->unk_81 == 0) {
         this->unk_84->unk_03++;
+#ifndef QUICKSTART
+        // Hands back a camera QUICKSTART never took (sub_08026358).
         gRoomControls.camera_target = &gPlayerEntity.base;
+#endif
     }
     sub_08027870(this);
 }
 
 void sub_0802653C(ChuchuBossEntity* this) {
     if (gRoomControls.reload_flags == 0) {
+#ifndef QUICKSTART
+        // Restores a scroll speed QUICKSTART never changed - and stomping
+        // it here would overwrite whatever another system had set.
         gRoomControls.scrollSpeed = 4;
+#endif
         sub_08027B98(this, 0x90, 0xb0, 4, 0xff);
         sub_08027548(this, 0);
         InitAnimationForceUpdate(super->child, 0);
@@ -1442,11 +1498,22 @@ void sub_080272D4(ChuchuBossEntity* this) {
                     if (sub_08027C54(super->child) == 0 || ((ChuchuBossEntity*)super->child)->unk_84->unk_04 != 2) {
                         SoundReq(SFX_BOSS_HIT);
                     } else {
+#ifdef QUICKSTART
+                        // The killing blow. Keep the functional half (the
+                        // core's death subAction and the fanfare); drop
+                        // the cutscene half (player freeze, camera pan to
+                        // the corpse, menu lock) for the same reason as
+                        // the intro - the corpse can be anywhere in an
+                        // overworld region.
+                        super->child->subAction = 9;
+                        SoundReq(SFX_BOSS_DIE);
+#else
                         PausePlayer();
                         gRoomControls.camera_target = super->child;
                         gPauseMenuOptions.disabled = 1;
                         gRoomControls.camera_target->subAction = 9;
                         SoundReq(SFX_BOSS_DIE);
+#endif
                     }
                 }
             }

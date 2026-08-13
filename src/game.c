@@ -306,6 +306,8 @@ static void QuickStartRoomMonitor(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
+static s32 QuickStartFreeGfxSlots(void);
+static s32 QuickStartReclaimableGfxSlots(void);
 static s32 QuickStart2DoorExitSide(void);
 static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
@@ -3151,6 +3153,15 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // only pairing to "boss alone" in the first place (docs/QUICKSTART_ROADMAP.md
 // sec 3.3, this session's scratchpad/test_gfx_boss_cost.py).
 #define QUICKSTART_REGION_BOSS_WAVE_CHANCE 20
+// GFX slots (free-or-evictable - QuickStartReclaimableGfxSlots, since
+// the loader reclaims unreferenced sheets on demand) a room must offer
+// before the boss roll may fire. The family + start particles cost 14
+// slots (measured in a quiet dojo: 21 free -> 7 after a full 5-piece
+// spawn). Below the cost, pieces fail to spawn - a PARTIAL family whose
+// survivors deref dangling parent/child pointers - which is the "boss
+// started spawning and never finished" half of the user's NHF report.
+// 16 = cost + margin. Below the gate, the wave loop deals a normal wave.
+#define QUICKSTART_BOSS_SPAWN_MIN_GFX 16
 
 static u8 QuickStartRegionGetWaveCount(s32 poolIndex) {
     u8 value = 0;
@@ -3209,7 +3220,19 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     //
     // The Random() consume stays unconditional so the RNG stream does not
     // depend on WHICH region the player happens to be standing in.
-    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) {
+    //
+    // The GFX gate is the user's NHF bug (see docs/QUICKSTART_ROADMAP.md,
+    // boss camera/freeze entry): the boss family plus its spawn particles
+    // cost ~6 sheets, and rolling it into a room that cannot pay left the
+    // table below the reserve - which used to hand the boss straight to
+    // the reserve trimmer (one piece eaten per pass, measured 5->0 in 320
+    // frames, camera_target left dangling on a cleared slot). The trimmer
+    // now refuses boss pieces outright, but the right fix at the source
+    // is to not deal a boss the room can't afford: fall through to an
+    // ordinary wave instead. 6 measured (2 fit a 12-free cleared room,
+    // budget doc finding 4) + the reserve of 4 the spawn must not eat.
+    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region) &&
+        QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
         // F3: the boss is Green OR Electric (blue), an even coin flip per
         // spawn. Both forms are one chuchuBoss.c state machine selected by
         // the spawn type: type 0 records type2=0 (green palette 0x2b),
@@ -4975,6 +4998,22 @@ static s32 QuickStartFreeGfxSlots(void) {
     return freeSlots;
 }
 
+// The strict counter above undercounts what a spawn can actually claim:
+// GFX_SLOT_UNLOADED/GFX_SLOT_STATUS2 slots hold sheets nothing references
+// any more, and the loader evicts them on demand. For "can this big spawn
+// fit at all" questions that is the honest number (measured: a full boss
+// family landed fine in North Hyrule Field with only ~8 strictly-free
+// slots, because cleared-wave sheets were evictable).
+static s32 QuickStartReclaimableGfxSlots(void) {
+    s32 i, freeSlots = 0;
+    for (i = 0; i < MAX_GFX_SLOTS; i++) {
+        if (gGFXSlots.slots[i].status <= GFX_SLOT_STATUS2) {
+            freeSlots++;
+        }
+    }
+    return freeSlots;
+}
+
 // Is there room to load a sprite sheet we have not already paid for?
 static bool32 QuickStartGfxBudgetForNewKind(void) {
     return QuickStartFreeGfxSlots() > QUICKSTART_GFX_RESERVE;
@@ -6507,6 +6546,19 @@ static void QuickStartEnforceGfxReserve(void) {
                 continue;
             }
             ours++;
+            // Never a live boss piece, never the camera's current target.
+            // The boss spawns at the region reward spot - far from
+            // wherever the player walked in, i.e. exactly the FARTHEST
+            // enemy this loop hunts - and with a live fill pushing 'ours'
+            // over the floor, this trimmer ate the whole family one piece
+            // per pass, mid-intro (measured: 5 pieces to 0 in 320 frames,
+            // the user's NHF report). A deleted intro core also strands
+            // gRoomControls.camera_target on a cleared slot at (0,0),
+            // which is the black screen half of that report. Setpieces
+            // are not density fill; only the fill is ever surplus.
+            if (enemy->id == CHUCHU_BOSS || enemy == gRoomControls.camera_target) {
+                continue;
+            }
             dx = enemy->x.HALF.HI - gPlayerEntity.base.x.HALF.HI;
             dy = enemy->y.HALF.HI - gPlayerEntity.base.y.HALF.HI;
             if (dx < 0) {
@@ -6526,6 +6578,27 @@ static void QuickStartEnforceGfxReserve(void) {
         }
         DeleteEntity(&gEntities[worst].base);
     }
+}
+
+// Armor for every camera seizure in the game: if whatever entity the
+// camera was following is GONE (its slot cleared - kind 0 marks a freed
+// slot), hand the camera back to the player and restore the normal
+// scroll speed. A vanilla cutscene always returns the camera itself, but
+// anything that deletes the followed entity out from under it - a room
+// unload mid-cutscene, a sweep, the (now boss-proof) reserve trimmer -
+// left camera_target dangling; measured after the trimmer ate a boss
+// core mid-intro, the camera sat aimed at a cleared slot reading
+// position (0,0), i.e. panning into the void off the room's corner.
+static void QuickStartRescueDanglingCamera(void) {
+    Entity* target = gRoomControls.camera_target;
+    if (target == NULL || target == &gPlayerEntity.base) {
+        return;
+    }
+    if (target >= &gEntities[0].base && target <= &gEntities[MAX_ENTITIES - 1].base && target->kind != 0) {
+        return;
+    }
+    gRoomControls.camera_target = &gPlayerEntity.base;
+    gRoomControls.scrollSpeed = 4;
 }
 
 static s32 QuickStartCountRoomEnemies(void) {
@@ -12460,6 +12533,9 @@ static void QuickStartRoomMonitor(void) {
     // Global invariant, so it runs everywhere rather than only in the
     // regions that spawn: keep free GFX slots above the reserve.
     QuickStartEnforceGfxReserve();
+    // Global invariant too: a camera following a deleted entity follows
+    // garbage (see the function's comment for the measured NHF case).
+    QuickStartRescueDanglingCamera();
     // Inert in play (one guarded compare); the measurement harness's spawn
     // hook - see the mailbox comment above QuickStartMeasureMailbox.
     QuickStartMeasureMailbox();

@@ -1182,6 +1182,42 @@ sequencing lives in section 8.
 Full per-room measurements (walkability grids, components, entity headroom,
 special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 
+- **DONE - boss "started spawning", camera swung between the spawn and the
+  player, black screen + freeze crossing back toward Trilby
+  (user-reported, Aug 2026, save file attached).** Root cause, reproduced
+  end to end in the emulator: `QuickStartEnforceGfxReserve` (the GFX
+  trimmer) had no boss exclusion, and the boss - spawned at the region
+  reward spot, far from wherever the player walked in - is exactly the
+  FARTHEST enemy that trimmer hunts. Whenever the boss family (measured
+  cost: 14 GFX slots) plus a live fill pushed free slots below the
+  reserve with more than 10 enemies alive, the trimmer ate the family one
+  piece per 64-frame pass (measured 5 -> 0 in 320 frames), mid-intro.
+  A bare-deleted intro core strands `gRoomControls.camera_target` on a
+  cleared entity slot reading position (0,0): the camera chases recycled
+  slots and the void, at the intro's scrollSpeed of 1 - the swinging and
+  the black screen. Four fixes, each independently verified:
+  1. The trimmer refuses live boss pieces and the current camera target
+     (setpieces are not density fill).
+  2. The boss roll is gated on free-or-evictable GFX slots >= 16
+     (`QUICKSTART_BOSS_SPAWN_MIN_GFX`; family costs 14) so a room that
+     cannot afford a full 5-piece family deals a normal wave instead -
+     partial families were the other latent failure (orphan pieces
+     dereferencing dangling parent/child pointers).
+  3. `QuickStartRescueDanglingCamera` in the room monitor: a camera
+     following a cleared entity slot is handed back to the player at
+     scroll speed 4. Armor for every seizure in the game, not just this
+     one.
+  4. The boss intro/death stopped being a CUTSCENE under QUICKSTART
+     (chuchuBoss.c): no camera grab (the vanilla grab pans at 1 px/frame
+     - ~900 frames each way across North Hyrule Field), no per-frame
+     PausePlayer (~21 measured seconds of frozen player), no pause-menu
+     lock; the spawn flash, particles, fall, shake and boss theme all
+     stay, and the proxy's death-watch gained an orphan guard. Probes:
+     full family under the gate, zero camera-not-player frames, player
+     mobile through the intro, trimmer under pressure eats fill (12 -> 5
+     beetles) while the boss keeps 5/5 pieces, clean death, clean seam
+     exits mid-intro and mid-fight.
+
 - **CORRECTED: item-drop "? rooms" are NOT empty.** An earlier entry here
   claimed 23 of 26 content-site rooms held no ground item. That was wrong,
   and the cause was the measuring tool, not the game: the probe read the
