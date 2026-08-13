@@ -1863,10 +1863,12 @@ const u8* const gCustomStrings[] = {
     // Ezlo's one-time round-start greeting (see the phase==0 branch of
     // QuickStartUpdateItemChoice below) - CreateEzloHint funnels through the
     // same sub_0805EEB4 resolver as every other TEXT_INDEX use, so
-    // TEXT_CUSTOM works here too. Rewritten for the round-1 key-item
-    // redesign - this choice isn't just flavor, it actually decides which
-    // region the run's chain routes through (QuickStartRandomizeRegionChainOnce).
-    [5] = (const u8*)"Ezlo: Choose wisely -\nyour item picks your path!",
+    // TEXT_CUSTOM works here too. Reworded for the F1b dialogue pass: the
+    // old "your item picks your path" described the retired region-chain
+    // routing and had become a false promise under free-roam; what the
+    // player actually needs to know is that there are THREE rounds and
+    // each gives exactly one pick.
+    [5] = (const u8*)"Ezlo: Choose wisely!\nTake one gift per round.",
     // Shop merchant (data/scripts/quickstart/script_QuickStartMerchant.inc) -
     // shared by both shop rooms (Dojos Grimblade and Lon Lon Ranch's east
     // house room, see QuickStartSpawnShopMerchantOnce). Used to show
@@ -1890,18 +1892,19 @@ const u8* const gCustomStrings[] = {
     [9] = (const u8*)"Ezlo: Get ready! Defeat\nthree waves of enemies!",
     // Shown once per run, the moment the player first sets foot in the
     // run's first overworld region (see QuickStartShowRegionIntroHintOnce) -
-    // the game's actual goal statement now that the region chain leads
-    // somewhere specific (an Earth Element at the last slot), not just a
-    // generic "clear the room" tutorial line.
-    [10] = (const u8*)"Ezlo: Seek the Earth\nElement out there!",
-    // Shown once per region-clear (see QuickStartSpawnGardenRewardOnce's own
-    // GF_REGION_CLEAR_HINT-gated call) right as the actual reward item
-    // drops - only ever the chain's non-last slot(s), since the last slot's
-    // own clear goes through the separate Earth Element/win path instead
-    // (QuickStartSpawnRegionRewardOnce). Reworded per the user's own
-    // feedback to point onward rather than imply this reward IS the goal -
-    // the Element is always still further ahead from here.
-    [11] = (const u8*)"Ezlo: Well done! Now\npress on to the next area.",
+    // the game's actual goal statement. Under free-roam that statement is
+    // "it is hidden in ONE of the areas, go search", which is a real
+    // instruction; the old "seek it out there" told a new player nothing
+    // about HOW.
+    [10] = (const u8*)"Ezlo: The Earth Element\nhides in ONE area. Search!",
+    // Shown when a NON-element region's first wave clear drops its reward
+    // (QuickStartSpawnRegionRewardOnce's state-0 branch; the element
+    // region's clear goes through the separate win-key path and never
+    // shows this). Reworded for the F1b pass: "press on to the next area"
+    // was chain-era phrasing - free-roam has no next area - and the one
+    // genuinely useful fact this moment can teach is that THIS region is
+    // not the element's hiding place, so cross it off.
+    [11] = (const u8*)"Ezlo: A prize! But the\nElement is elsewhere...",
     // Shown once per run, the moment the player first sets foot in the
     // chain's LAST region (see QuickStartShowRegionFinalHintOnce) - directly
     // names the actual trigger (clearing this region's first wave, nothing
@@ -1914,15 +1917,21 @@ const u8* const gCustomStrings[] = {
     [13] = (const u8*)"You won the Red Sword!\nEquip it from the menu.",
     // The hidden-item quest's completion line (QuickStartSetupRegionQuest).
     [14] = (const u8*)"You found what was\nhidden here!",
-    // The hunt quest (QuickStartHunt*, below). One giver NPC per run, in one
-    // region of the chain. 15 is the offer, 16 the handicap offer, 17 the
-    // win, 18 the loss, 19 what the NPC says once the run has burned its one
-    // attempt. The clock shows in the key slot on the HUD (DrawKeys, ui.c),
-    // so the text does not have to keep quoting the time.
-    [15] = (const u8*)"Hunters! Clear them out\nbefore my hourglass runs!",
-    [16] = (const u8*)"A true test: leave your\nkit with me. Just one weapon!",
+    // The hunt quest (QuickStartHunt*, below). One giver NPC per run, in
+    // one region. 15 is the offer, 16 the handicap offer, 17 the win, 18
+    // the loss, 19 what the NPC says once the run has burned its one
+    // attempt. Reworded for the F1b pass so a first-timer learns the rules
+    // from the text alone: the offer names the task and the exact time
+    // limit (the countdown also shows in the HUD's key slot - DrawKeys,
+    // ui.c - but a number the player has already read is easier to
+    // recognize there); the handicap offer says the kit COMES BACK, which
+    // the old line left terrifyingly open; the loss line says the attempt
+    // is spent for the run, so "why won't he talk to me" never needs
+    // asking. Keep the "45" literal in sync with QUICKSTART_HUNT_SECONDS.
+    [15] = (const u8*)"My quarry! Slay ALL of\nthem in 45 seconds. Go!",
+    [16] = (const u8*)"One weapon, no kit -\nall returned after. Deal?",
     [17] = (const u8*)"Cleared, and with time\nto spare! This is yours.",
-    [18] = (const u8*)"Too slow. The pack has\nscattered - I'm off.",
+    [18] = (const u8*)"Too slow - they fled.\nThat was my only hunt.",
     [19] = (const u8*)"You had your chance at\nthem. Maybe next time.",
     // The hub's hint sprites (sQuickStartHubHints below). Six Wind Tribe
     // wanderers scattered through the parts of the hub that are not doing a
@@ -1935,11 +1944,18 @@ const u8* const gCustomStrings[] = {
     // holes are worth trying, that winning raises the stakes, that some rooms
     // fight back in waves, and that clearing an area pays.
     [20] = (const u8*)"Fuse Kinstones with the\nwanderers you meet!",
-    [21] = (const u8*)"The Earth Element waits\nin the final area.",
+    // 21 reworded for the F1b pass: "waits in the final area" was the
+    // chain era's geography and is simply false under free-roam.
+    [21] = (const u8*)"The Element hides in a\ndifferent area each run.",
     [22] = (const u8*)"Doors and holes hide\nsurprises. Try them all!",
     [23] = (const u8*)"Each win raises the\ndifficulty and the loot.",
     [24] = (const u8*)"Some rooms send waves.\nClear each wave for loot.",
     [25] = (const u8*)"Clear an area of foes\nand a reward will drop.",
+    // The pot quest's own give line (see QuickStartSetupRegionQuest and
+    // GF_QUEST_HINT_SHOWN): before the F1b pass this quest had NO intro at
+    // all - pots simply appeared in one region and the completion line
+    // ([14]) was the first the player ever heard of it.
+    [26] = (const u8*)"Ezlo: One pot in this\narea hides a prize!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2578,6 +2594,11 @@ static void QuickStartSolveLonLonBoulder(void) {
 #define GF_REGION_HUNT_HOST_BIT(b) (462 + (b))                                // b = 0..3 -> 462-465
 #define GF_DROP_REGION_ROLLED 466
 #define GF_DROP_REGION_BIT(b) (467 + (b))                                     // b = 0..3 -> 467-470
+// The pot quest's one-per-run give line (custom string 26, fired by
+// QuickStartSetupRegionQuest). Lives here rather than with the quest's own
+// bank-11 block because that block's neighbours (QUICKSTART_CHARM_BIT at
+// 40-42) left it no room to grow.
+#define GF_REGION_QUEST_HINT 471
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -3795,6 +3816,14 @@ static void QuickStartSpawnQuestPots(const QuickStartRegion* region) {
 static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot) {
     if (QuickStartQuestFlag(GF_QUEST_DONE) || slot != QuickStartQuestSlot()) {
         return;
+    }
+    // The give line (custom string 26), once per run, the first time the
+    // player stands in the host region while the quest is live - before
+    // this the pots just appeared unannounced and the completion line was
+    // the quest's first words (the F1b dialogue pass).
+    if (!QsCheckFlag(GF_REGION_QUEST_HINT)) {
+        QsSetFlag(GF_REGION_QUEST_HINT);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 26), 0);
     }
     if (!QsCheckRoomFlag(53)) {
         QsSetRoomFlag(53);
@@ -5016,6 +5045,34 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
     return TRUE;
 }
 
+// F9 (docs/QUICKSTART_ROADMAP.md): ACRO_BANDIT is not one enemy, it is a
+// GANG. The placed leader bursts into five more of itself the moment its
+// pop-up animation finishes (acroBandits.c, Type0Action5), so every
+// placement is eventually SIX live entities of one of the heavier per-frame
+// AIs - which is why the user sees the frame rate fall over at 3-4 on
+// screen. The cap: a new placement is allowed only while fewer than two
+// ACRO_BANDITs are live. That passes exactly two fresh leaders (0 live,
+// then 1) and blocks everything after (one burst gang alone reads 6 live).
+// Only OUR spawners consult this - the gang's own follower spawns are
+// vanilla behaviour and stay untouched, since capping a gang mid-burst
+// would leave a half-formed formation.
+#define QUICKSTART_ACRO_BANDIT_LIVE_CAP 2
+
+static bool32 QuickStartAcroBanditCapReached(void) {
+    s32 i;
+    s32 count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && ent->id == ACRO_BANDIT) {
+            count++;
+            if (count >= QUICKSTART_ACRO_BANDIT_LIVE_CAP) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
+
 static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
                                                    s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
@@ -5104,6 +5161,22 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
             r = (s32)Random() % kindCount;
             id = kindIds[r];
             form = kindForms[r];
+        }
+        // The gang cap (QuickStartAcroBanditCapReached above). A capped
+        // draw is swapped for a kind this wave already paid the sheet for,
+        // so the wave keeps its density; if the acro is the only kind
+        // loaded, the placement is skipped instead.
+        if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
+            for (r = 0; r < kindCount; r++) {
+                if (kindIds[r] != ACRO_BANDIT) {
+                    id = kindIds[r];
+                    form = kindForms[r];
+                    break;
+                }
+            }
+            if (id == ACRO_BANDIT) {
+                continue;
+            }
         }
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
@@ -6515,6 +6588,14 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
                     if (!QuickStartGfxBudgetForSpawn()) {
                         return placed;
                     }
+                    // The gang cap (QuickStartAcroBanditCapReached). This
+                    // placer is single-kind, so there is nothing to swap
+                    // to - a capped acro group just stops here, and the
+                    // two gangs it did place are 12 entities once burst,
+                    // a full-sized fight already.
+                    if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
+                        return placed;
+                    }
                     enemy = CreateEnemy(id, form);
                     if (enemy == NULL) {
                         return placed;
@@ -6536,6 +6617,14 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     u8 id, form;
     s32 i, count;
     QuickStartPickEnemy(difficulty, &id, &form);
+    // Single-kind spawn + the gang cap = a capped acro pick would place
+    // nothing and the empty wave would read as instantly cleared. Trade
+    // the pick for a beetle instead of consuming another Random() so the
+    // RNG stream stays put.
+    if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
+        id = BEETLE;
+        form = 0;
+    }
     count = 4 + difficulty / 2 + wave * 2;
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
@@ -7059,6 +7148,12 @@ static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
     u8 id, form;
     s32 count, i;
     QuickStartPickEnemy(QuickStartGetDifficulty() + 2, &id, &form);
+    // Same capped-acro substitution as QuickStartSpawnWave: an empty pack
+    // would hand the hunt an instant win.
+    if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
+        id = BEETLE;
+        form = 0;
+    }
     count = QUICKSTART_HUNT_MIN_ENEMIES + QuickStartGetDifficulty() / 2;
     if (count > QUICKSTART_HUNT_MAX_ENEMIES) {
         count = QUICKSTART_HUNT_MAX_ENEMIES;

@@ -825,15 +825,20 @@ sequencing lives in section 8.
   existing swap. Drop-location scoping is the survey + checker pattern:
   buried/bush spots become table rows the invariant checker walks.
 
-- **F1b. Quest dialogue quality bar.** The user's finding: current quest
-  text (one-liners like the hunt's "Clear them out before my hourglass
-  runs!") is not enough for an inexperienced player to know what to do.
-  Every quest needs: what to do, where roughly to do it, what the timer is,
-  and what went wrong on failure. *Path:* the custom-text table
-  (`gCustomStrings`, resolved via TEXT_CUSTOM ids) already delivers
-  arbitrary text from giver NPCs and Ezlo; this is writing, not
-  engineering. Rule going forward: a quest ships with give/win/lose/reminder
-  lines, and a playtester who has never seen the code reads them cold.
+- **F1b. DONE (first pass) - quest dialogue quality bar.** The user's
+  finding: current quest text is not enough for an inexperienced player to
+  know what to do. The pass rewrote every line that failed that bar: the
+  hunt offer now names the task and the 45-second limit, the handicap
+  offer says the kit comes back, the loss line says the run's one attempt
+  is spent; the pot quest - which had NO intro at all, pots just appeared -
+  got a give line (custom string 26, latched once per run on
+  `GF_REGION_QUEST_HINT`); and four chain-era lines that had become false
+  under free-roam were corrected (the selection greeting's "your item
+  picks your path", the intro hint, the region-clear hint - which now
+  teaches "the Element is NOT here", the only useful fact that moment
+  has - and hub hint 21's "final area"). Rule going forward: a quest ships
+  with give/win/lose/reminder lines, and a playtester who has never seen
+  the code reads them cold.
 
 - **F2. Hide-and-seek (stealth) quest.** Borrow vanilla's
   dodge-the-guards mechanic: cross a space without entering guard line of
@@ -891,7 +896,8 @@ sequencing lives in section 8.
   per-run mask (`QUICKSTART_CHARM_BIT` -> `QuickStartCharmMask()`), read
   at the point of effect (`CalculateDamage`), suspended/restored around
   vanilla's own charm machinery. Generalize: one `QuickStartStatusMask()`
-  over a block of QS-window bits (471-655 are free; ~16 effects fit
+  over a block of QS-window bits (472-655 are free - 471 became the pot
+  quest's give-line latch; ~16 effects fit
   easily), items enter the reward/? tier tables as ordinary rows with a
   new QS_CAT or reuse of QS_CAT_STAT, and the pickup path fires a custom
   text (the item-get message hook already exists for the win sequence).
@@ -982,17 +988,21 @@ sequencing lives in section 8.
   QUICKSTART). Output: a budget table the roadmap can cite per feature
   ("a second simultaneous boss costs N slots; we have M").
 
-- **F9 (small, do soon). Cap simultaneous Acro-Bandits.** 3-4 on screen
-  visibly tanks the frame rate. Likely mechanism: ACRO_BANDIT (46) is a
-  GANG - acroBandits.c spawns five entities per placement (leader + four),
-  so a wave that draws 3 "acro bandits" is 15 live entities of one of the
-  heavier AIs, and the slowdown is CPU, not GFX. *Path:* count live
-  ACRO_BANDIT entities in the spawn path and stop drawing that kind past
-  ~2 placements (the wave fills with the next roster kind instead); same
-  guard belongs on any other gang/macro kind that reaches the tier table.
-  Verify by measuring frame time in the harness (mgba exposes frame
-  timing; a probe that spawns N gangs and reports frames-per-wallclock
-  will show the knee).
+- **F9. DONE - cap simultaneous Acro-Bandits.** The user's report: 3-4 on
+  screen visibly tanks the frame rate. Confirmed mechanism: ACRO_BANDIT
+  (46) is a GANG - the placed leader bursts into FIVE more of itself when
+  its pop-up animation finishes (acroBandits.c, Type0Action5), so each
+  placement is eventually six live entities of a heavy per-frame AI, and
+  the slowdown is CPU, not GFX. The cap
+  (`QuickStartAcroBanditCapReached`): a placement is allowed only while
+  fewer than 2 acros are live, checked at all three of our spawn edges -
+  the multi-kind group spawner substitutes a kind the wave already loaded
+  (or skips), the single-kind open-tile placer stops, and the two
+  single-pick callers (3-wave rooms, the hunt pack) trade a capped pick
+  for a beetle so an empty spawn can't read as an instant clear. Vanilla's
+  own follower spawns are untouched - capping a gang mid-burst would leave
+  a half-formed formation. The same guard pattern belongs on any future
+  gang/macro kind that reaches the tier table.
 
 ## 5. Known open bugs and loose ends
 
