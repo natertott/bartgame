@@ -71,7 +71,8 @@ Tower Entrance        walk out the front door (its solid tiles are cleared)
    Cloud Tops         the wind crest, and the pit in front of it
         | pit fall, redirected by QuickStartProcessHubHoleLink
         v
-   Castle Garden      the ring's fixed start; from here the player WALKS
+   DROP REGION        one of the 11 pool rooms, drawn per run; the same
+        |             every fall within a run. From here the player WALKS
         |             the seven-region ring freely (sec 3.2)
         v
    any region         endless escalating waves everywhere; each region's
@@ -158,12 +159,27 @@ five.
 **The ordered chain is retired.** The run is a free-roam hunt now, per the
 user: "the Earth Element is SOMEWHERE. Go find it." Every pool region is
 live every run - endless escalating waves, a one-time reward on the first
-wave clear, quests - and ONE region, drawn uniformly per run
-(`QuickStartRollElementRegionOnce`), drops the Earth Element in place of
+wave clear, quests - and ONE region drops the Earth Element in place of
 its normal reward. Entering that region fires the Ezlo "the Earth Element
 is here!" hint (`GF_REGION_FINAL_HINT_SHOWN`, kept from the chain era);
-the run's intro hint fires in whichever region is entered first. The hub's
-Cloud Tops pit always drops into Castle Garden, the ring's fixed start.
+the run's intro hint fires in whichever region is entered first.
+
+**Where the pit drops you, and where the element hides**
+(`QuickStartRollElementRegionOnce`, both latched per run): the hub's Cloud
+Tops pit lands in a DROP REGION drawn uniformly over the 11 pool rooms
+(`GF_DROP_REGION_BIT` 467-470, rolled-latch 466) - the same room on every
+fall within a run, rerolled between runs
+(`QuickStartProcessHubHoleLink` reads it). The element region is then
+drawn by rejection so it lies within TWO named regions of the drop, where
+"named region" collapses the 11 pool rooms to the seven ring names
+(`QuickStartRingRegionOfPoolIndex`) and distance is counted on the ring's
+adjacency map (`sQuickStartRingAdjacency`: map edges plus the two town
+bridges, so NHF touches LLR and Trilby). The user's worked example, which
+the tables reproduce exactly: land in Castle Garden and the element can be
+in CG (0 away), NHF (1), or LLR / SHF / Trilby (2) - never EH or WW (3).
+Verified over 8 seeds (`tools/quickstart/freeroam.py` plus a pit-fall
+probe): drop varies, every element draw is within distance 2, every pit
+fall lands in the drawn room.
 
 Consequences: the two REGION unlock rules (Lon Lon at 1 win, Trilby at 2)
 are retired - a freely walkable region cannot be locked - and so is the
@@ -174,8 +190,14 @@ host region 458-465, all sized for 12 regions); the old bank-11 wave
 counters (142-173) and chain flags (208-228) are free.
 
 Within a region: wave 0 is a plain tiered group; every wave after it has a
-20% chance of being a solo Chuchu Boss instead. Wave count persists per slot
-across leaving and returning (`FLAG_BANK_11`). The boss is beatable without
+20% chance of being a solo Chuchu Boss instead - but ONLY in Castle Garden,
+North Hyrule Field and South Hyrule Field (`QuickStartRegionAllowsBoss`).
+The small rooms cannot host the boss (it locked the game up scrolling into
+Eastern Hills South), and the rest of the ring is paused-not-vetted, so
+it's an allowlist: a region gets bosses when someone has watched one work
+there. The roll's `Random()` consume is unconditional so the RNG stream
+does not depend on where the player is standing. Wave count persists per
+slot across leaving and returning (`FLAG_BANK_11`). The boss is beatable without
 the Gust Jar - conventional weapons peel the jelly as well as the gust stream
 does (`sub_08027AA4`, chuchuBoss.c) - which is what lets the Gust Jar be an
 ordinary drop rather than a boot grant.
@@ -362,14 +384,19 @@ drawable on its own.
 Optional content, one flight above the item selection. One wave at the run's
 difficulty + 2, from 14 hand-placed offsets inside the roof's measured
 reachable component; clearing it drops a REWARD-category item, RARE one time
-in four and UNCOMMON otherwise. The draw seed is stored so leaving and
-returning re-places the same item rather than rerolling it. Leaving mid-fight
-and returning gives a fresh wave.
+in four and UNCOMMON otherwise. The reward drops ONCE per run: any revisit
+that finds the spot empty in state 1 promotes straight to "done" (the old
+re-drop arm could not tell "left it behind" from "grabbed it on the way
+out", which paid a second copy - the state-1 comment in
+`QuickStartRoofMonitor` has the full story). Leaving mid-fight and
+returning still gives a fresh wave. The roof's vanilla `BIG_VORTEX` (the
+Palace of Winds warp) is deleted on entry by `QuickStartClearHubRoom` -
+the roof leads nowhere but back down the stairs.
 
 ### 3.5 Win condition
 
-The chain's last slot drops the Earth Element at its reward spot once wave 0
-is clear. Picking it up runs: vanilla's item-get message, then "You win!
+The run's element region drops the Earth Element at its reward spot once
+wave 0 is clear. Picking it up runs: vanilla's item-get message, then "You win!
 Difficulty increased", then "Run score", then `WriteSaveFile` and
 `DoSoftReset`.
 
@@ -541,10 +568,12 @@ cure into a standing tool instead of a per-incident scramble.
   additive weight bump can never escape it - kinstone weights are
   *assigned*, not added.
 - **C2. DONE.** Difficulty-scaled piece weights:
-  `126 - difficulty * 7`, floored at 42, on red/blue/green alike. Cut 30%
-  from the original 180/-10/60 after play-testing: collecting every piece a
-  run needed was no real challenge, which is the opposite of what the economy
-  is for.
+  `63 - difficulty * 4`, floored at 21, on red/blue/green alike. Two cuts
+  from the original 180/-10/60 after play-testing: 30% off (126/-7/42)
+  because collecting every piece a run needed was no real challenge, then
+  halved again after the overworld expansion - seven regions' worth of
+  waves made the right fusions too easy to hit. The proper drop-curve
+  analysis is still future work; both cuts are flat.
 - **C3. DONE.** Not a new table after all - the gates already exist. Vanilla
   wires 91 fusions to world events (staircases drawn over water, tree
   canopies, cracked walls, treasure chests); 29 of them fire in a room this

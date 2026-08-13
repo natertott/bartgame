@@ -2576,6 +2576,8 @@ static void QuickStartSolveLonLonBoulder(void) {
 #define GF_REGION_WAVE_BIT(i, b) (362 + (i) * 8 + (b))                   // i = 0..11 -> 362-457
 #define GF_REGION_QUEST_HOST_BIT(b) (458 + (b))                               // b = 0..3 -> 458-461
 #define GF_REGION_HUNT_HOST_BIT(b) (462 + (b))                                // b = 0..3 -> 462-465
+#define GF_DROP_REGION_ROLLED 466
+#define GF_DROP_REGION_BIT(b) (467 + (b))                                     // b = 0..3 -> 467-470
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -2914,23 +2916,115 @@ static s32 QuickStartElementRegionIndex(void) {
     return value % QUICKSTART_REGION_POOL_SIZE;
 }
 
-// One draw per run: which region hides the Earth Element. Uniform over the
-// pool - every region is otherwise identical in structure now, so there is
-// nothing to weight. Rolled unconditionally from QuickStartRoomMonitor,
-// same "roll it well before the player can reach it" reasoning every other
-// per-run draw uses.
+// Which pool region the hub's pit drops the player into this run - drawn
+// once per run, so every fall within a run lands in the same place, and a
+// new run lands somewhere new (per the user, bringing the randomness back
+// after the fixed-Castle-Garden interim).
+static s32 QuickStartDropRegionIndex(void) {
+    s32 b, value = 0;
+    for (b = 0; b < 4; b++) {
+        if (QsCheckFlag(GF_DROP_REGION_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value % QUICKSTART_REGION_POOL_SIZE;
+}
+
+// --- The NAMED regions and their map adjacency -----------------------------
 //
-// The old chain draw's Zora Flippers special case (force Trilby last) is
-// retired with the chain: Trilby is walked into over the LLR bridge or
-// through Western Wood now, so no key item re-routes the run.
+// The pool is 11 rooms but the ring is SEVEN named regions (Eastern Hills
+// and Western Wood are three rooms each), and the element-distance rule
+// below is stated in named regions. Adjacency is the vanilla MAP's - two
+// regions sharing an edge, plus the two town bridges - which is exactly the
+// metric the user's own example uses ("if the player lands in Hyrule Castle
+// Garden, the element could be in HCG (0), NHF (1), Lon Lon Ranch (2), SHF
+// (2) or Trilby Highlands (2)"): NHF touches LLR and Trilby on the map even
+// though those particular seams are cliff-walled in play, so walking
+// distance can exceed map distance. That is fine - the rule shapes where
+// the element may HIDE, not a route.
+enum {
+    QS_RING_CG,
+    QS_RING_NHF,
+    QS_RING_SHF,
+    QS_RING_EH,
+    QS_RING_LLR,
+    QS_RING_TRIL,
+    QS_RING_WW,
+    QS_RING_COUNT
+};
+
+static const u8 sQuickStartRingAdjacency[QS_RING_COUNT] = {
+    /* CG   */ (1 << QS_RING_NHF),
+    /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL),
+    /* SHF  */ (1 << QS_RING_NHF) | (1 << QS_RING_EH) | (1 << QS_RING_WW),
+    /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR),
+    /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
+    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW),
+    /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF),
+};
+
+// Which named region a pool row belongs to. By position: the pool's row
+// order is CG, LLR, SHF, NHF, TRIL, then EH South/Center/North, then WW
+// South/Center/North.
+static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
+    static const u8 byPool[] = {
+        QS_RING_CG, QS_RING_LLR, QS_RING_SHF, QS_RING_NHF, QS_RING_TRIL,
+        QS_RING_EH, QS_RING_EH, QS_RING_EH,
+        QS_RING_WW, QS_RING_WW, QS_RING_WW,
+    };
+    return byPool[poolIndex % QUICKSTART_REGION_POOL_SIZE];
+}
+
+// Every named region within two map steps of `ring`, as a bitmask
+// (including itself).
+static u32 QuickStartRingWithinTwo(u8 ring) {
+    u32 one = (1u << ring) | sQuickStartRingAdjacency[ring];
+    u32 two = one;
+    s32 r;
+    for (r = 0; r < QS_RING_COUNT; r++) {
+        if (one & (1u << r)) {
+            two |= sQuickStartRingAdjacency[r];
+        }
+    }
+    return two;
+}
+
+// Two draws per run, and they are COUPLED - this is the chain's return in
+// its new form, per the user.
+//
+// First the pit's DROP region: uniform over the whole pool, so a run can
+// begin anywhere in the ring. Then the ELEMENT region: uniform over the
+// pool rows whose named region is within TWO map steps of the drop's
+// (QuickStartRingWithinTwo) - close enough that finding it is a hunt, not
+// a tour. The rejection loop terminates because the drop's own region is
+// always within its own two steps.
+//
+// Rolled unconditionally from QuickStartRoomMonitor, same "roll it well
+// before the player can reach it" reasoning every other per-run draw uses.
+// The old chain draw's Zora Flippers special case (force Trilby last)
+// stays retired: no key item re-routes the run.
 static void QuickStartRollElementRegionOnce(void) {
-    s32 draw, b;
+    s32 drop, elem, b;
+    u32 allowed;
     if (QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
         return;
     }
-    draw = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+    drop = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
     for (b = 0; b < 4; b++) {
-        if (draw & (1 << b)) {
+        if (drop & (1 << b)) {
+            QsSetFlag(GF_DROP_REGION_BIT(b));
+        }
+    }
+    QsSetFlag(GF_DROP_REGION_ROLLED);
+    allowed = QuickStartRingWithinTwo(QuickStartRingRegionOfPoolIndex(drop));
+    for (;;) {
+        elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+        if (allowed & (1u << QuickStartRingRegionOfPoolIndex(elem))) {
+            break;
+        }
+    }
+    for (b = 0; b < 4; b++) {
+        if (elem & (1 << b)) {
             QsSetFlag(GF_ELEMENT_REGION_BIT(b));
         }
     }
@@ -3008,6 +3102,23 @@ static void QuickStartRegionSetWaveCount(s32 poolIndex, u8 value) {
 // (sQuickStartDifficultyTiers/QuickStartSpawnEnemyGroupAtDifficulty) a
 // normal wave already draws from, just at a higher tier the deeper into
 // one sitting the player gets.
+// Whether a region may roll the Chuchu Boss wave at all. Per the user, only
+// the three rooms where the boss has been SEEN working: Castle Garden,
+// North Hyrule Field and South Hyrule Field. The small rooms cannot host it
+// - the boss locked the whole game up in Eastern Hills South (the seam
+// scroll into a 480x208 room mid-spawn) - and the rest of the ring is
+// paused, not vetted, so the list is an allowlist rather than a blocklist:
+// a new region gets bosses when someone has watched one work there.
+static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
+    if (region->area == AREA_CASTLE_GARDEN && region->room == ROOM_CASTLE_GARDEN_MAIN) {
+        return TRUE;
+    }
+    if (region->area != AREA_HYRULE_FIELD) {
+        return FALSE;
+    }
+    return region->room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || region->room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD;
+}
+
 static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     s32 escalated;
     // This boss rolls in every region's wave loop, not just Castle Garden as
@@ -3017,7 +3128,10 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     // Rod blast or Pacci Cane shot peel the jelly, and the bare core already
     // took ordinary damage in vanilla. Suck-and-slam is untouched and still
     // the cleanest way through.
-    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE) {
+    //
+    // The Random() consume stays unconditional so the RNG stream does not
+    // depend on WHICH region the player happens to be standing in.
+    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) {
         Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
         if (boss != NULL) {
             boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
@@ -10965,6 +11079,14 @@ static void QuickStartClearHubRoom(void) {
         }
         if ((sweepEnemies && ent->kind == ENEMY) || (ent->kind == NPC && ent->id != ZELDA)) {
             DeleteEntity(ent);
+            continue;
+        }
+        // The roof's vanilla BIG_VORTEX at (120,72) - the whirlwind that
+        // carries the player to the Palace of Winds. That is a whole
+        // dungeon outside this mode's world, so the warp goes; per the
+        // user, the roof is a combat bonus room, not a door.
+        if (ent->kind == OBJECT && ent->id == BIG_VORTEX) {
+            DeleteEntity(ent);
         }
     }
     // The front door needs more than the NPC standing in it removed.
@@ -11110,10 +11232,10 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // 4, PL_SPAWN_DROP - so the player really does fall out of the sky into the
 // region, which is what the design asks for. Only where they land is ours.
 //
-// The hole drops the player into the pool's first row - Castle Garden, the
-// ring's fixed start region. With the chain retired there is no "slot 0" to
-// vary per run, and a fixed start is the right shape for a hunt: the player
-// always knows where they begin, never where the Element is.
+// The hole drops the player into this run's drawn DROP region - the same
+// place every fall within a run (the draw is latched), somewhere new each
+// run. The Element is guaranteed within two map regions of it (see
+// QuickStartRollElementRegionOnce).
 static void QuickStartProcessHubHoleLink(void) {
     const QuickStartRegion* first;
     if (gRoomControls.area != AREA_CLOUD_TOPS || gRoomControls.room != ROOM_CLOUD_TOPS_CLOUD_TOPS) {
@@ -11127,9 +11249,9 @@ static void QuickStartProcessHubHoleLink(void) {
     }
     // Explicit-and-idempotent, same reasoning the retired chain roll used:
     // the draw is rolled unconditionally elsewhere, but a run must never
-    // begin with the element region undrawn.
+    // begin with the drop/element regions undrawn.
     QuickStartRollElementRegionOnce();
-    first = &sQuickStartRegionPool[0];
+    first = &sQuickStartRegionPool[QuickStartDropRegionIndex()];
     gRoomTransition.player_status.area_next = first->area;
     gRoomTransition.player_status.room_next = first->room;
     gRoomTransition.player_status.start_pos_x = first->entranceX;
@@ -11270,9 +11392,8 @@ static void QuickStartRoofSpawnReward(void) {
 }
 
 // Same earned/dropped/confirmed shape as QuickStartSpawnRegionRewardOnce,
-// including its re-drop arm: state 1 with no item on the floor and room flag 1
-// unset means the player left and came back, so the reward is placed again
-// rather than counted as taken.
+// minus the re-drop arm - see the state-1 comment below for why the roof
+// treats any absence of the item as "done".
 //
 // Room flag 0 is "this visit's wave is out", and it lives in room flags on
 // purpose. Leaving the roof mid-fight and returning gives a fresh wave, which
@@ -11288,15 +11409,21 @@ static void QuickStartRoofMonitor(void) {
         return;
     }
     if (state == 1) {
+        // The reward drops ONCE, at the first wave's clear, and that is
+        // the end of the roof's generosity - per the user. There used to
+        // be a re-drop arm here (state 1 + nothing on the floor + a fresh
+        // visit -> place it again), meant for "left without picking it
+        // up", but it could not tell that apart from "picked it up on the
+        // way out": grabbing the reward on the same frame as the stair
+        // transition means this monitor never runs again in the roof room
+        // to see the item vanish, state sticks at 1, and the next visit's
+        // re-drop hands out a second copy (the user's report). Now any
+        // absence promotes straight to 2: taken or abandoned, the roof is
+        // finished for the run.
         if (QuickStartGroundItemAt(QUICKSTART_ROOF_REWARD_X, QUICKSTART_ROOF_REWARD_Y)) {
-            QsSetRoomFlag(1);
             return;
         }
-        if (QsCheckRoomFlag(1)) {
-            QuickStartRoofSetState(2);
-            return;
-        }
-        QuickStartRoofSpawnReward();
+        QuickStartRoofSetState(2);
         return;
     }
     if (!QsCheckRoomFlag(0)) {

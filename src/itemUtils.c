@@ -584,9 +584,16 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 // collecting every piece a run needed was turning out to be
                 // no real challenge, which is the opposite of what the
                 // economy is for.
-                kinstoneWeight = 126 - (s32)QuickStartDifficultyForDrops() * 7;
-                if (kinstoneWeight < 42) {
-                    kinstoneWeight = 42;
+                //
+                // Then HALVED again (126/-7/42 -> 63/-4/21) for the same
+                // reason, per the user, after the overworld expansion: with
+                // seven regions of endless waves all paying pieces, the
+                // right fusions were still coming too easily. The full
+                // curve analysis is future work; this is the flat cut in
+                // the meantime.
+                kinstoneWeight = 63 - (s32)QuickStartDifficultyForDrops() * 4;
+                if (kinstoneWeight < 21) {
+                    kinstoneWeight = 21;
                 }
                 // ASSIGNED, not added. Vanilla's "this enemy never drops
                 // this" sentinel is -999, not 0 (see gEnemyDroptables), and
