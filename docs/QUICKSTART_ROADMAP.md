@@ -659,10 +659,23 @@ New events assembled from proven vanilla parts, cheapest first:
      tiles stay phantom-solid and the re-close finds no room to spawn.
      Probe-verified end to end: cage 8/8 on arrival, lever strike arms
      the clock and opens the ring, prize collectable, lapse re-closes.
-  2. *The decoy lever* - three identical levers: prize, trap (ambush or
-     primed trap-pot), dud - and the room SELLS the answer to players
-     who look (an eye switch gazing at the true lever). The pot
-     lottery's risk-with-information spirit, ported to switches.
+  2. *The decoy lever* - **DONE (Aug 2026), revised per the user: NO
+     eye-switch tell - a total gamble.** Three identical levers dealt
+     prize/trap/dud blind. Shares `QS_EVENT_GATE` with the closing gate
+     (the 3-bit kind field is full) via a per-visit coin flip stored in
+     room flag +1; re-entering may deal the other puzzle, which suits a
+     gamble room since all state rebuilds per visit anyway. The deal is
+     one of the six permutations, stamped lever-by-lever into entity
+     `type2` (hittableLever.c never touches it; bit 0x80 marks a
+     resolved pull so re-flipping a spent lever is inert) - entity
+     storage because the site's room-flag window had only 3 free bits,
+     not enough for a permutation plus per-lever state. Prize lever:
+     cage opens permanently, no countdown. Trap lever: the cage
+     machinery aimed at the *player* - a ring of primed trap pots
+     around their feet (lift one and eat the blast, or hope for a
+     gap), with the menu-error sting. Dud: the lever's own clack and
+     nothing else. Probe-verified all four resolutions plus the
+     closing-gate regression (coin flip left puzzle #1 intact).
   3. *Hold everything down* - 2-3 pressure plates depressed at once:
      player on one, thrown/pushed weights on the rest; the room holds
      exactly enough pots, and one plate is throw-only across a gap.
