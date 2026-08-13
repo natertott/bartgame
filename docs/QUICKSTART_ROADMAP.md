@@ -552,11 +552,13 @@ cure into a standing tool instead of a per-incident scramble.
   exclusion, and Trilby forced last only with Flippers + unlock. The 5th
   region ("start + 4, each with its own element") waits on B3's per-region
   elements.
-- **B3. Per-region elements.** Each chain slot's region holds its own
-  element; collecting it is what un-gates that region's onward exit. Win =
-  the final region's element. (Today only the last slot drops an element
-  and exits are ungated.) Element theming per region is a content decision
-  - see Decisions.
+- **B3. Per-region elements.** RESHAPED by the free-roam rework: there is
+  no chain and no gated onward exits anymore, so "each slot's element
+  un-gates its exit" no longer describes anything. What survives of the
+  idea is *element variety* - more than one element per run, or different
+  elements as different event payouts - which now lives in F7
+  (win-condition variety). Element theming per region remains a content
+  decision - see Decisions.
 - **B4. Unlocks viewer** (research task #52) so the player can see the
   progression the whole design hangs on.
 
@@ -773,17 +775,224 @@ Named work, deferred deliberately rather than not yet thought about:
   exists for it (the region chain already keeps a per-slot wave counter in
   FLAG_BANK_11); the work is in the spawner, which currently keys off "is the
   room empty" rather than off a remembered count.
-- **More hints, drawn per run.** Six today, fixed, one per spot
-  (`sQuickStartHubHints`). Wanted: a larger pool, with which hints appear
-  drawn per run - the same shape the shop's stock now uses, and cheap now that
-  the per-run RNG actually varies (§3.3b).
+- **More hints, drawn per run.** Superseded by F5 below, which carries the
+  current thinking.
 
 ### Phase E - World breadth
 
-Regions 6-7 (Eastern Hills needs its sub-room survey; Castor Wilds), the
-Minish layer as a parallel network, pool capacity already modeled. Adding a
-region = region-table row + survey + invariant-checker pass, which by then
-is routine.
+Largely landed: Eastern Hills and Western Wood joined the pool with the
+overworld expansion (six new rows, surveys, fusers, quests - see 3.2), so
+"adding a region = table row + survey + checker pass" is now demonstrated
+routine. What remains under this heading: regions beyond the ring (Castor
+Wilds, Royal Valley - both currently blocked borders, so adding one means
+un-blocking an edge and extending containment), and the Minish layer as a
+parallel network (tasks #102/#103 - the transform rendering bug blocks it).
+
+### Phase F - Expansion topics (user, Aug 2026)
+
+Each entry carries its own speculated implementation path; the cross-item
+sequencing lives in section 8.
+
+- **F1. Overworld quests v2: the timed scavenger hunt.** A timed "go find
+  the item" event. The item hides one of three ways: carried by a marked
+  enemy (dropped on its death), buried in the map (requires Mole Mitts to
+  dig up), or under a bush/grass tile (revealed by cutting it). While the
+  event runs, the region's current enemies are DESPAWNED and replaced by as
+  large a swarm as the budget allows of enemies whose whole job is slowing
+  the player down: BEETLE (7) / SPIKED_BEETLE (30) / SPINY_BEETLE (53),
+  chuchu variants, all three wizzrobes (WIZZROBE_WIND/FIRE/ICE 39-41), and
+  SPARK (28).
+
+  *Path:* this is the third sibling of two quests that already exist and
+  prove every mechanism needed. The pot quest (`GF_QUEST_*`,
+  `QuickStartSpawnQuestPots`) proves per-run host-region draw + hidden-index
+  draw + "prize appears at a drawn spot"; the hunt quest (`GF_HUNT_*`,
+  `QuickStartHuntMonitor`) proves a giver NPC, a 45-second frame timer
+  (`QUICKSTART_HUNT_FRAMES`), a live enemy-group swap mid-room, and win/lose
+  states in 2 bits. New pieces, in order of risk: (a) *buried* items - find
+  vanilla's dig-spot mechanism (Mole Mitts digs fire a tile action; survey
+  which act tiles in ring rooms are diggable, or paint our own the way the
+  bridge's donor-tile fill paints tiles); (b) *under-bush* items - hook the
+  grass-cut drop path (`CreateRandomItemDrop` is already ours in
+  itemUtils.c; a per-run drawn tile in the host region overrides the roll
+  with the quest item when cut); (c) *carrier enemy* - spawn one swarm
+  member with a mark, hook its death the way wave-clear detection already
+  watches enemy counts, drop the item where it died. The swarm itself is
+  `QuickStartSpawnEnemyGroupAtDifficulty` with a bespoke roster table
+  instead of the tier table, sized by the GFX heuristics (few DISTINCT
+  kinds, many instances - instance count is nearly free, each new kind
+  costs sheet slots). Despawn/restore of the normal wave is the hunt's
+  existing swap. Drop-location scoping is the survey + checker pattern:
+  buried/bush spots become table rows the invariant checker walks.
+
+- **F1b. Quest dialogue quality bar.** The user's finding: current quest
+  text (one-liners like the hunt's "Clear them out before my hourglass
+  runs!") is not enough for an inexperienced player to know what to do.
+  Every quest needs: what to do, where roughly to do it, what the timer is,
+  and what went wrong on failure. *Path:* the custom-text table
+  (`gCustomStrings`, resolved via TEXT_CUSTOM ids) already delivers
+  arbitrary text from giver NPCs and Ezlo; this is writing, not
+  engineering. Rule going forward: a quest ships with give/win/lose/reminder
+  lines, and a playtester who has never seen the code reads them cold.
+
+- **F2. Hide-and-seek (stealth) quest.** Borrow vanilla's
+  dodge-the-guards mechanic: cross a space without entering guard line of
+  sight; spotted = warped back to the start. Our version bounds it with a
+  timer or a fixed number of tries.
+
+  *Path:* research-first. Vanilla's implementation lives with the Hyrule
+  Castle sneak sequence - find the guard entity's LOS check and its
+  "spotted" handler (the warp-back is a scripted transition we would
+  retarget at our own start tile). Two open questions decide feasibility:
+  whether the guard AI runs outside its scripted vanilla room (precedent
+  says yes - most entities run anywhere if spawned with the right sheet
+  loaded), and whether LOS reads room-specific data. If the vanilla AI
+  transplants, the quest is: pick a host room (interior ? rooms are better
+  than open overworld - LOS in a 1008-wide field is meaningless), place
+  guards on patrol rows from a table, gate a prize behind the far side.
+  If it does not transplant, fake it: ZELDA-kind NPCs on patrol paths +
+  a cone check in our own monitor (we already run per-frame monitors), and
+  our own warp-back. Either way the fail budget (tries/timer) is 2-3 bits
+  of QS-window state next to the other quests'.
+
+- **F3. More vanilla bosses; first the Electric (blue) Chuchu.** Vanilla
+  bosses are gated on specific tools (Chuchus: Gust Jar; Big Octorok:
+  Lantern...). The Green Chuchu precedent (sub_08027AA4 widened to sword /
+  arrow / boomerang / thrown object / Fire Rod / Pacci Cane) shows the
+  gate can be widened per boss. The Electric Chuchu should be nearly free:
+  `chuchuBoss.c` already drives form differences off `super->type` (role
+  in the low bits - the jelly segments are `type|1..3` children - with a
+  variant selector above them), so the first experiment is spawning
+  CHUCHU_BOSS with the blue form's type value in the harness and watching
+  palette + behaviour. The electric twist (touching it while charged hurts)
+  needs no new counter if the Gust Jar peel still works, but the same
+  widening pass as the green one should be verified against the charged
+  state. *Path:* harness-spawn the type variants of CHUCHU_BOSS to find
+  the blue form -> verify damage sources -> add a variant field to the
+  boss roll (today it hardcodes CHUCHU_BOSS type 0) -> extend
+  `QuickStartRegionAllowsBoss` reasoning per boss (the blue form's GFX
+  cost may differ; measure with measure_budget.py before allowlisting).
+  Bosses beyond that (Gleerok, Mazaal, Big Octorok) each need: a damage
+  audit, an arena audit (Mazaal is a multi-entity macro - MAZAAL_MACRO 55
+  - and almost certainly wants a dedicated room, not an open field), and
+  a budget measurement. Treat each as its own task; none are "just spawn
+  it".
+
+- **F4. Charms and curses on the unused quest items.** Assign our own
+  run-long status effects to vanilla's unused quest items (the books, the
+  pies, the medals...). Receiving one announces its effect in dialogue and
+  applies it for the rest of the run. Candidate effects the user named:
+  player walk speed up/down, enemy speed up/down, enemy projectile rate
+  up, elemental immunities (fire/ice/shock), drop-rate shifts, cheap-shop,
+  rare-reward chance up, boss-spawn chance up/down.
+
+  *Path:* the bottled charms (Nayru/Farore/Din) are the working precedent
+  for every piece of this: granted through the tier table, latched into a
+  per-run mask (`QUICKSTART_CHARM_BIT` -> `QuickStartCharmMask()`), read
+  at the point of effect (`CalculateDamage`), suspended/restored around
+  vanilla's own charm machinery. Generalize: one `QuickStartStatusMask()`
+  over a block of QS-window bits (471-655 are free; ~16 effects fit
+  easily), items enter the reward/? tier tables as ordinary rows with a
+  new QS_CAT or reuse of QS_CAT_STAT, and the pickup path fires a custom
+  text (the item-get message hook already exists for the win sequence).
+  Each effect is then one read at one point, and the points all exist:
+  walk speed (the Pegasus Boots / swiftness path sets player speed),
+  enemy speed/projectile rate (enemy update reads per-kind constants - a
+  global multiplier needs a shim at CreateEnemy or in the shared enemy
+  tick), immunities (CalculateDamage, same as charms), drop rates
+  (itemUtils.c QUICKSTART block already modifies the droptable), shop
+  prices (the per-run price roll), boss chance
+  (QUICKSTART_REGION_BOSS_WAVE_CHANCE becomes a function). Curses ride
+  the same mask; the only design rule is that a curse must come attached
+  to something the player chose to take (a cursed shop bargain, a cursed
+  quest reward) so it reads as a gamble, not a gotcha. Start with the
+  four cheapest reads (immunities, drop rate, shop, boss chance), ship,
+  then do the speed family which needs the enemy-tick shim.
+
+- **F5. More hub hints, drawn per run.** (Supersedes the D2 entry.) The
+  hint table (`sQuickStartHubHints`) is six fixed rows, one per spot.
+  Wanted: a pool much larger than the spot count, drawn per run, so every
+  run teaches something. *Path:* exactly the shop-stock shape: keep the
+  six spots, grow the script pool (each hint is a script pointing at a
+  custom text - writing more is data entry), and add a per-run draw
+  (6 draws without replacement from N; a few QS-window bits per spot,
+  or re-derive from the run seed the way fuser scatter does with zero
+  storage). The hint CONTENT should lean on what tests keep proving
+  players miss: the quests' rules, the kinstone economy, charm/curse
+  gambles, the distance-2 element rule.
+
+- **F6. Boss + wave combinations (research).** What can run alongside a
+  boss within 72 entities / 44 GFX slots, and which combos are fun?
+  Candidates named: Electric Chuchu + fire/ice wizzrobes; BOMB_PEAHAT
+  (27) raining bombs during any boss; sparks orbiting the arena. *Path:*
+  this is measurement first, opinion second. Extend
+  `tools/quickstart/measure_budget.py` to spawn boss + roster
+  combinations at difficulty 8-12 and report peak entity and GFX use, the
+  same way the WW-N failure was diagnosed. The cost model to verify: a
+  boss is a multi-entity macro (green chuchu = core + 3 jelly + helper),
+  each DISTINCT enemy kind costs sheet slots, instances are cheap.
+  Combos that share sheets with the boss (more chuchus during a chuchu
+  boss) will measure cheapest; wizzrobes carry projectile sheets that
+  load ungated (the WW-N lesson), so wizzrobe combos need headroom. The
+  interesting-first shortlist to measure: blue chuchu + ice wizzrobes
+  (thematic, shared palette family), any boss + 2 bomb peahats (indirect
+  pressure that doesn't crowd the melee), any boss + sparks (pure
+  positioning tax, sparks are cheap singles). Ship as: a per-boss
+  "escort roster" field in the boss roll, gated by measured budget.
+
+- **F7. Win-condition variety: the element as a drawn payout.** Instead of
+  the element always replacing the element region's wave-0 reward, draw
+  per run WHICH event pays it: a wave clear (today's), a boss fight, an
+  overworld quest, or a ? room. *Path:* the element already has exactly
+  one paying edge (`QuickStartSpawnRegionRewardOnce` swaps the reward for
+  the element when the region matches). Generalize to a per-run 2-bit
+  "carrier" draw next to the element-region draw, and teach each payout
+  path to ask "am I the carrier and am I in/for the element region?":
+  wave clear (exists), boss kill (the boss death already pays nothing -
+  add a payout hook; requires the region to be boss-capable, so the draw
+  must respect the allowlist), quest completion (the quest reward swap -
+  pot quest already places QUICKSTART_QUEST_REWARD, swap it), ? room
+  (the site payout in the element region's pocket rooms). Ezlo's hint
+  text then needs a variant per carrier ("the element is here... a boss
+  guards it / it's hidden in a pot / seek the hidden room") - which is
+  also exactly the hint-pool work of F5. Keep the rescue logic in mind:
+  each new carrier needs its own "cannot stall the run" argument the way
+  QuickStartRescueStuckFinalWave covers waves today.
+
+- **F8. The full vanilla sweep + the budget audit.** Two standing research
+  deliverables: (a) a catalog of ALL vanilla content re-purposable for
+  this mode - enemies, NPCs, scripts, minigames, rooms, objects, items,
+  cutscene machinery - so content planning draws from an inventory
+  instead of memory; (b) a RAM/VRAM/GFX/entity budget analysis measuring
+  where headroom actually is, what each system costs, and what could be
+  freed (vanilla systems this mode never uses - the figurine gallery, the
+  mailbox, Tingle siblings - may pin assets or state we can reclaim), so
+  event density per run can be maximized against measured walls rather
+  than discovered ones. *Path:* (a) is doc work over the decomp tree:
+  walk `src/enemy/`, `src/npc/`, `src/object/`, `scripts/`, the item and
+  room tables; produce `docs/QUICKSTART_VANILLA_INVENTORY.md` with a
+  reuse-difficulty grade per row (the miniboss audit #26 and kinstone
+  audit are small worked examples of the shape). (b) extends the
+  measurement stack we already trust: `measure_budget.py` for
+  entity/GFX peaks per region per difficulty; add a sheet-slot lifetime
+  tracer (who loads what, when does the reaper actually free) since the
+  stale-count spawn gates and the ungated projectile sheets are both
+  already-paid-for lessons; add an EWRAM map diff (gSave is 0x1420 bytes
+  in a 256K EWRAM - what else lives there and what is dead under
+  QUICKSTART). Output: a budget table the roadmap can cite per feature
+  ("a second simultaneous boss costs N slots; we have M").
+
+- **F9 (small, do soon). Cap simultaneous Acro-Bandits.** 3-4 on screen
+  visibly tanks the frame rate. Likely mechanism: ACRO_BANDIT (46) is a
+  GANG - acroBandits.c spawns five entities per placement (leader + four),
+  so a wave that draws 3 "acro bandits" is 15 live entities of one of the
+  heavier AIs, and the slowdown is CPU, not GFX. *Path:* count live
+  ACRO_BANDIT entities in the spawn path and stop drawing that kind past
+  ~2 placements (the wave fills with the next roster kind instead); same
+  guard belongs on any other gang/macro kind that reaches the tier table.
+  Verify by measuring frame time in the harness (mgba exposes frame
+  timing; a probe that spawns N gangs and reports frames-per-wallclock
+  will show the knee).
 
 ## 5. Known open bugs and loose ends
 
@@ -846,6 +1055,11 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   their own walk.
 - Lon Lon Ranch: the top-middle pocket the user described has no walked box
   yet, so it is still unfenced.
+- **Acro-Bandit slowdown (user-reported).** 3-4 on screen visibly slows
+  the game. Suspected cause: each ACRO_BANDIT placement is a 5-entity gang
+  (acroBandits.c spawns leader + four), so a few draws of the kind is 15+
+  live heavy AIs - a CPU wall, not a GFX one, and other gang/macro kinds
+  likely share it. Fix sketch and verification plan: Phase F9.
 - `POT_MINISH` does not render multi-enemy content (long-standing).
 - Gentari's Room / Gentari's Main adjacency conflict (long-standing).
 - Castle Garden Main's East and West Fountains are gated entrances not yet
@@ -886,3 +1100,151 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 5. Shop right shelf: Minish-only shelf (lean in) or move the trio.
 6. Which Phase D cheap events to prototype first (one in front of a human
    before building more).
+
+## 8. Implementation paths for the whole open backlog (speculative)
+
+Phase F entries carry their own paths inline; this section covers
+everything ELSE still open, then proposes one sequencing across all of it.
+"Speculative" means: grounded in code that exists, but nothing here has
+been prototyped unless it says so.
+
+### 8.1 The standing backlog, item by item
+
+- **B4 / task #52 - unlocks viewer.** The pause menu and the figurine
+  gallery both prove full-screen owned UIs are possible, but a new screen
+  is the expensive road. Cheap road: an NPC in the hub (ZELDA-kind, like
+  every other QUICKSTART NPC) that speaks the unlock table -
+  `sQuickStartUnlockRules` is data, so a script that walks it and prints
+  "LOCKED (needs N wins)" / "UNLOCKED" lines into a custom text is pure
+  data-to-dialogue. Ship the NPC first; only build a real screen if the
+  dialogue version reads badly in playtests.
+- **C4 - the kinstone drop curve** (user: "curve analysis later"). Two
+  measurable questions: (1) pieces-per-run at current weights - instrument
+  a probe that plays N seeds' worth of waves with the real droptable and
+  counts kinstone drops by shape; (2) stall risk - which gates' shapes
+  can fail to drop in a plausible run length. Then set the curve so the
+  EXPECTED pieces cover ~60-70% of a region's gates per run (scarcity with
+  agency). The flat halvings so far are placeholders for exactly this
+  probe.
+- **Phase D cheap events** (lever rooms, bombable-wall treasure, pot-room
+  variants, boss-rush, survive-N-seconds). All five are one-mechanism
+  recombinations; the decision needed is which ONE to prototype first
+  (Decision 6). Recommendation: survive-N-seconds - it reuses the hunt's
+  timer + the wave spawner verbatim, so it is the smallest diff, and it
+  doubles as the template for F1's timed structure.
+- **Phase D medium events** (kill-quota bounty, carry-to-NPC, Great Fairy
+  gamble, dig rooms, more Minish sites). Kill-quota: kill counters exist
+  (`miniboss_kills` etc.) - needs only a giver NPC + threshold + payout.
+  Carry-to-NPC: the shop's lift-carry-confirm flow is the donor; the open
+  question is carrying across a room transition (vanilla drops held
+  objects on transition - if so, keep giver and receiver in one region).
+  Dig rooms and F1's buried items share the Mole Mitts research - do them
+  together. Great Fairy: rooms exist, script reuse was scoped in #25.
+- **D2 - the inn.** Fully specced in QUICKSTART_HUB.md; the one unknown is
+  whether Floor 2's SPECIAL_CHEST objects can be given contents. Probe
+  that first in the harness (spawn one, set its item field, open it); if
+  it fights back, ground items on the beds' tiles do the job with zero
+  new mechanisms - the shop already sells items lying on furniture.
+- **D2 - persistent living-enemy count.** The spawner keys off "room has
+  no enemies" today. Path: on wave spawn, write the spawned count into
+  the region's wave-state byte neighborhood (bank 11 has free ranges);
+  decrement on enemy death (the wave-clear watcher already counts
+  deaths); on room re-entry spawn only the REMEMBERED remainder, placed
+  by the same grid draw. The subtlety is what "remainder" means for a
+  wave whose roster was random: store the count only and redraw kinds -
+  close enough, and infinitely cheaper than storing the roster.
+- **E - regions beyond the ring.** Castor Wilds / Royal Valley each mean:
+  un-block a border in transitions.c, extend `QuickStartIsRingRegionRoom`,
+  survey (grid + reward + entrance), add fusers, re-run ring.py + checker.
+  The ring adjacency map (`sQuickStartRingAdjacency`) and the distance-2
+  element rule absorb new named regions by adding one enum row and its
+  edges. No new mechanism anywhere - this is the "routine by now" path E
+  was always meant to be.
+- **E - the Minish layer** (tasks #102, #103). Blocked behind #103 (the
+  transform rendering bug and the NHF vine) - fix that first or every
+  Minish site stays theoretical. After it: Minish rooms are content sites
+  like any other; the survey tool already reads their collision.
+- **Sword upgrades in the pools** (section 5 TODO). Equipment has no
+  ground-item form, so the grant path must be scripted. Cheapest shape:
+  the skill-scroll pickup script pattern, or a pedestal NPC
+  (ZELDA-kind, AddInteractableObject like the fusers) whose interaction
+  runs GiveItem + a custom text. The pedestal doubles as F4's charm/curse
+  delivery for items that also lack ground forms - build it once, use it
+  twice.
+- **The 2-door pool's door rewiring** (section 5). Surveyed and planned in
+  QUICKSTART_2DOOR_MAP.md; the work is mechanical retargeting of 40 exit
+  rows to per-door destinations + landings, then a checker tier that
+  walks A->B and B->A for every pair. No design questions left - this is
+  an afternoon of data entry plus verification, and it removes a
+  standing player-visible wart.
+- **Item-drop ? rooms "never pay" (user report, unexplained).** Items
+  demonstrably spawn (26/26 in the probe). Next step is live-play shaped:
+  a probe that walks in through the real door (not a warp), waits, and
+  watches the item's entity lifetime; plus one playtest asking whether a
+  floor heart-piece simply doesn't read as a payout (the kind was called
+  "chest" forever and never was one). Cheap insurance regardless: give
+  item-drop sites the sparkle effect the hub's selection items use.
+- **POT_MINISH multi-enemy rendering (#17)** - the known VRAM failure
+  class. Fold into F8's sheet-slot lifetime tracer; it is the same
+  investigation, and #17 is its best-documented reproducer.
+- **Gentari adjacency (#19), Trilby NW pocket, Lon Lon top-middle
+  pocket** - all three are survey/data fixes waiting on the reachability
+  harness (#81) being pleasant to run. #81's mgba-crash workaround
+  (process chunking) is done but slow; F8's budget work will touch the
+  same harness, so batch them.
+- **Boss spawns for the paused regions.** The allowlist is explicitly
+  "vetted regions only". Path per region: measure (F6's extended
+  measure_budget.py) -> watch one full boss fight there in the harness
+  (spawn, fight envelope, death, payout) -> add the room to
+  `QuickStartRegionAllowsBoss`. EH-N and LLR are the plausible next
+  candidates (large rooms); the EH-S/EH-C seam scrollers likely stay
+  boss-free forever, and that is fine.
+- **The excluded beanstalk fusions.** Only worth revisiting if cloud rooms
+  ever become content; the path would be a containment exception plus a
+  return transition, i.e. a new pocket type. Default: leave excluded.
+- **Research #51 (difficulty option)** - an options-menu entry writing a
+  save field the difficulty getter reads is small; the design question
+  (does difficulty still auto-escalate on wins?) is the real content.
+  **#53 (hint sprites)** - effectively DONE (the hub hint NPCs); close it
+  in favour of F5.
+
+### 8.2 One suggested sequencing
+
+Orderings below try to respect: user-visible wins early, research that
+unblocks other work before the work, measurement before allowlists.
+
+1. **F9 Acro-Bandit cap** + the item-drop sparkle - both small, both
+   user-visible polish on things already reported.
+2. **F1b dialogue pass** over the EXISTING quests (pot hunt, timed hunt) -
+   writing only, immediate clarity payoff, and it builds the text
+   patterns F1/F2/F7 will reuse.
+3. **F3 Electric Chuchu** - one harness experiment away from knowing its
+   cost; if the type-variant theory holds it ships in days and refreshes
+   the boss roster cheaply.
+4. **F5 hint pool + per-run draw** - small, and its content immediately
+   teaches the mechanics the deeper features depend on players knowing.
+5. **F8 budget audit first half** (the measurement extensions: sheet
+   tracer, frame-time probe, boss-combo harness) - this UNBLOCKS F6
+   (combos), the boss-region vetting, #17, and honest sizing of F1's
+   swarms. Do it before the content that needs its numbers.
+6. **F1 timed scavenger hunt** (with the dig research shared with the
+   Mole Mitts rooms), then **F7 win-condition variety** - F7 wants F1
+   in place so "quest pays the element" has a quest worth paying.
+7. **F4 charms/curses**, cheapest four effects first (immunity, drop
+   rate, shop, boss chance), then the speed family.
+8. **F6 boss+wave combos** and boss-region expansion, now data-driven.
+9. **F2 stealth quest** after its vanilla-LOS research spike - park it
+   early as a one-day research question ("does guard AI transplant?"),
+   schedule the build only once answered.
+10. **F8 second half** (the vanilla inventory doc) as background work -
+    it has no dependencies and improves every future content decision;
+    slot it into gaps.
+11. The standing structural debts on their own clock: 2-door rewiring
+    (mechanical, any time), persistent enemy count (real design win),
+    the inn (waits on its chest probe), C4 curve (waits on its probe),
+    Minish layer (waits on #103).
+
+The through-line: measurement tooling (F8/F9/F6 harness work) is the
+next real rail. Nearly everything else on this list either needs its
+numbers or ships faster once they exist - which is the same lesson Phase
+A taught with placement data.
