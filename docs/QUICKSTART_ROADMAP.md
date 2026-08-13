@@ -981,24 +981,23 @@ sequencing lives in section 8.
   deliverables: (a) a catalog of ALL vanilla content re-purposable for
   this mode - enemies, NPCs, scripts, minigames, rooms, objects, items,
   cutscene machinery - so content planning draws from an inventory
-  instead of memory; (b) a RAM/VRAM/GFX/entity budget analysis measuring
-  where headroom actually is, what each system costs, and what could be
-  freed (vanilla systems this mode never uses - the figurine gallery, the
-  mailbox, Tingle siblings - may pin assets or state we can reclaim), so
-  event density per run can be maximized against measured walls rather
-  than discovered ones. *Path:* (a) is doc work over the decomp tree:
-  walk `src/enemy/`, `src/npc/`, `src/object/`, `scripts/`, the item and
+  instead of memory; (b) a RAM/VRAM/GFX/entity budget analysis.
+
+  **(b)'s measurement half is DONE - see `docs/QUICKSTART_BUDGET.md`**
+  for the tools (the measurement mailbox in game.c, measure_budget.py's
+  combo mode, gfx_trace.py, cpu_probe.py's lag ratio) and the first
+  measured findings: the tightest rooms sit at 5-7 free GFX slots at
+  difficulty 12; waves chain themselves and accumulate sheets past the
+  per-wave kind cap; a boss+wizzrobe escort on a live diff-12 wave fills
+  the table to 0 and the boss fails to spawn; the reaper frees a dead
+  sheet after a median 11 SECONDS; and CPU never lags for normal
+  content - only gang AIs (the acro class) ever moved the ratio.
+  Still open from (b): the EWRAM map diff (what is dead under QUICKSTART
+  and reclaimable). *(a) path:* doc work over the decomp tree: walk
+  `src/enemy/`, `src/npc/`, `src/object/`, `scripts/`, the item and
   room tables; produce `docs/QUICKSTART_VANILLA_INVENTORY.md` with a
   reuse-difficulty grade per row (the miniboss audit #26 and kinstone
-  audit are small worked examples of the shape). (b) extends the
-  measurement stack we already trust: `measure_budget.py` for
-  entity/GFX peaks per region per difficulty; add a sheet-slot lifetime
-  tracer (who loads what, when does the reaper actually free) since the
-  stale-count spawn gates and the ungated projectile sheets are both
-  already-paid-for lessons; add an EWRAM map diff (gSave is 0x1420 bytes
-  in a 256K EWRAM - what else lives there and what is dead under
-  QUICKSTART). Output: a budget table the roadmap can cite per feature
-  ("a second simultaneous boss costs N slots; we have M").
+  audit are small worked examples of the shape).
 
 - **F9. DONE - cap simultaneous Acro-Bandits.** The user's report: 3-4 on
   screen visibly tanks the frame rate. Confirmed mechanism: ACRO_BANDIT
@@ -1077,6 +1076,21 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   their own walk.
 - Lon Lon Ranch: the top-middle pocket the user described has no walked box
   yet, so it is still unfenced.
+- **Roof pot fairies respawn (user-reported).** The two fairies in pots
+  on the hub roof come back every time the player leaves and returns;
+  once used or caught they should stay gone for the run. Fix sketch: a
+  bank-11 per-run bit per pot, consulted by the roof room's setup so the
+  spent pots are deleted on re-entry.
+- **Some ? room exits warp to the Castle Garden cellar ladder
+  (user-reported).** Exiting certain ? rooms (seen from a Minish house in
+  Eastern Hills) lands the player at the cellar ladder in Castle Garden -
+  always exactly there, which is the OLD drawn-room pool's shared landing
+  spot. Leading hypothesis: the rooms promoted to walk-in content sites
+  in the overworld expansion still have exit transitions covered by the
+  old 1/2-door pool's generic retarget instead of their vanilla returns.
+  Audit which exit rows cover those doors before touching anything - the
+  always-the-same-spot symptom should make the guilty table row easy to
+  find.
 - **Acro-Bandit slowdown (user-reported).** 3-4 on screen visibly slows
   the game. Suspected cause: each ACRO_BANDIT placement is a 5-entity gang
   (acroBandits.c spawns leader + four), so a few draws of the kind is 15+
@@ -1167,6 +1181,21 @@ been prototyped unless it says so.
   that first in the harness (spawn one, set its item field, open it); if
   it fights back, ground items on the beds' tiles do the job with zero
   new mechanisms - the shop already sells items lying on furniture.
+- **Research (user, Aug 2026): can we control chest contents game-wide?**
+  Can vanilla chests be given OUR items - both the chests already sitting
+  in rooms this mode visits and chests we might place ourselves? What is
+  known so far: a CHEST object's item comes from its room-data entity
+  definition (kind/id/type plus an item parameter), and the ? room
+  item-drop kind deliberately places GROUND_ITEMs instead because that
+  path was proven first; the inn's SPECIAL_CHEST question above is one
+  sub-case. The research task: read the chest object's open handler to
+  find where the item id and the "already opened" flag live, then probe
+  (a) overwriting a vanilla chest's item parameter at room load, (b)
+  spawning a fresh CHEST with a chosen item, (c) what GiveItem-only
+  equipment (swords - see the pedestal note) does when a chest tries to
+  hold it. If (a)/(b) work, chests become a delivery option for every
+  reward system in the mode - and the chest-lottery's prize could
+  finally live IN its chest.
 - **D2 - persistent living-enemy count.** The spawner keys off "room has
   no enemies" today. Path: on wave spawn, write the spawned count into
   the region's wave-state byte neighborhood (bank 11 has free ranges);

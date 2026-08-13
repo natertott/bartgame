@@ -6,7 +6,20 @@
 - `measure_budget.py` - overworld budget probe: peak entity slots (of 72)
   and GFX slots (of 44) per region per difficulty. The GFX table is the
   binding constraint above difficulty 8; run this before adding anything
-  that spawns a new sprite. See docs/QUICKSTART_QUEST_RESEARCH.md.
+  that spawns a new sprite. `--combo id:form:count+...` stages a boss +
+  escort roster through the in-game measurement mailbox
+  (QuickStartMeasureMailbox, game.c: 12 bytes at 0x0203FF00 that spawn
+  raw CreateEnemy calls past every cap) and prices it. Findings live in
+  docs/QUICKSTART_BUDGET.md.
+- `gfx_trace.py` - per-frame GFX slot table tracer: sheet loads and
+  lifetimes, refcount-0-to-freed reaper latency, zero-free windows. The
+  tool that shows WHY a spawn burst failed, where measure_budget only
+  shows THAT the table peaked.
+- `cpu_probe.py` - CPU cost per staged scenario, measured two ways: the
+  lag ratio (game main-loop frames per video frame - cycle-accurate,
+  1.000 = full speed, this is the reading to trust) and host wallclock
+  per frame (proxy; only comparable within one run on an idle host). Run
+  it alone. Reproduces the uncapped acro pile the F9 cap prevents.
 - `kinstone_audit.py` - which vanilla Kinstone fusions actually change a
   room this mode visits. Reads `gKinstoneWorldEvents[]` and `gWorldEvents[]`
   out of the built ROM and intersects them with the region pool, the ? room

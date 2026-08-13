@@ -6362,6 +6362,52 @@ static bool32 QuickStartEnemyIsOurs(Entity* ent) {
 // reserve actually needs.
 #define QUICKSTART_GFX_REAP_FLOOR 10
 
+// --- Measurement mailbox (F8, docs/QUICKSTART_BUDGET.md) -------------------
+//
+// A fixed EWRAM mailbox the emulator harness writes, to stage measurement
+// scenarios that normal play cannot be steered into on demand: a specific
+// boss + escort combination, an uncapped acro pile for the CPU knee.
+// 0x0203FF00 sits far above everything the linker places (the last data
+// symbol ends at 0x02033A90 and the 4K zMalloc heap at 0x02036540) and is
+// guarded by a magic word besides, so in normal play these twelve bytes
+// are one inert compare per frame. Layout:
+//   +0 u32 magic 0x51534D42 - command pending; cleared when serviced
+//   +4 u32 arg0  enemy id | form << 8 | count << 16
+//   +8 u32 arg1  x | y << 16 (room-local pixels; 0 = at the player)
+// Spawns are raw CreateEnemy calls - deliberately NOT routed through the
+// wave spawners, their kind caps or the GFX reserve gates, because the
+// whole point of a measurement spawn is to see what those guards would
+// have prevented.
+#define QUICKSTART_MEASURE_MAILBOX 0x0203FF00
+#define QUICKSTART_MEASURE_MAGIC 0x51534D42
+
+static void QuickStartMeasureMailbox(void) {
+    vu32* box = (vu32*)QUICKSTART_MEASURE_MAILBOX;
+    u32 arg, pos;
+    s32 i, count, bx, by;
+    if (box[0] != QUICKSTART_MEASURE_MAGIC) {
+        return;
+    }
+    arg = box[1];
+    pos = box[2];
+    count = (arg >> 16) & 0xFF;
+    bx = (pos & 0xFFFF) ? (s32)(pos & 0xFFFF) : (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x);
+    by = (pos >> 16) ? (s32)(pos >> 16) : (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y);
+    for (i = 0; i < count; i++) {
+        Entity* e = CreateEnemy(arg & 0xFF, (arg >> 8) & 0xFF);
+        if (e != NULL) {
+            // A loose grid around the anchor so a pile does not stack on
+            // one pixel - overlap changes both AI and collision cost.
+            e->x.HALF.HI = gRoomControls.origin_x + bx + ((i & 3) * 24) - 36;
+            e->y.HALF.HI = gRoomControls.origin_y + by + ((i >> 2) * 24) - 24;
+            e->collisionLayer = 1;
+            e->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(e);
+        }
+    }
+    box[0] = 0;
+}
+
 static void QuickStartEnforceGfxReserve(void) {
     s32 reaped;
     // Only act on one frame in 64. A deleted entity does not release its
@@ -11629,6 +11675,9 @@ static void QuickStartRoomMonitor(void) {
     // Global invariant, so it runs everywhere rather than only in the
     // regions that spawn: keep free GFX slots above the reserve.
     QuickStartEnforceGfxReserve();
+    // Inert in play (one guarded compare); the measurement harness's spawn
+    // hook - see the mailbox comment above QuickStartMeasureMailbox.
+    QuickStartMeasureMailbox();
     QuickStartStirRandom();
     // Retired along with the retired ladder-entrance table itself (now empty) -
     // kept as a call so the dormant synthetic-entrance path stays whole; it
