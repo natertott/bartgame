@@ -853,6 +853,31 @@ sequencing lives in section 8.
   with give/win/lose/reminder lines, and a playtester who has never seen
   the code reads them cold.
 
+- **F1c. Difficulty-scaled failure stakes (user, Aug 2026).** Today,
+  failing a quest costs only the missed reward. Wanted: as the run's
+  difficulty climbs, failure starts to HURT - lose the Keaton and maybe
+  you lose health, or an item is taken, or a previously acquired buff, or
+  rupees. Explicitly cross-feature: the same stakes system should serve
+  every timed-or-conditioned goal - the scavenger chase, the hunt, the
+  wave gauntlet, the future stealth quest's spotted-out, and whatever F7
+  hangs an element on.
+
+  *Path:* one shared `QuickStartApplyFailureStake()` called from every
+  quest's FAILED transition, rolling a punishment from a menu whose every
+  entry already has working machinery: rupees (`ModRupees` - the trap
+  ladder NPC already takes 100), health (the stat write every probe
+  uses), a charm/buff (clear a `QUICKSTART_CHARM_BIT` - and later an F4
+  status bit), an item (the handicap system already knows how to take
+  and track items; a stake is the same take without the give-back).
+  Scale by `QuickStartGetDifficulty()`: nothing at low difficulty (the
+  learning runs stay kind), rupees at mid, health/buff at high, item
+  loss reserved for the top tiers. Two design rules carried over from
+  the curse work and F1b: the stakes are ANNOUNCED in the offer text at
+  the difficulties where they apply ("fail me and I take something" -
+  the player chose the gamble), and the failure text SAYS what was
+  taken, never leaves it to be discovered. The scavenger hunt's FAILED
+  branch is the natural pilot site.
+
 - **F2. Hide-and-seek (stealth) quest.** Borrow vanilla's
   dodge-the-guards mechanic: cross a space without entering guard line of
   sight; spotted = warped back to the start. Our version bounds it with a
