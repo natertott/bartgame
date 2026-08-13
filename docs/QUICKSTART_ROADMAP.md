@@ -908,8 +908,8 @@ sequencing lives in section 8.
   per-run mask (`QUICKSTART_CHARM_BIT` -> `QuickStartCharmMask()`), read
   at the point of effect (`CalculateDamage`), suspended/restored around
   vanilla's own charm machinery. Generalize: one `QuickStartStatusMask()`
-  over a block of QS-window bits (472-655 are free - 471 became the pot
-  quest's give-line latch; ~16 effects fit
+  over a block of QS-window bits (474-655 are free - 471 became the pot
+  quest's give-line latch, 472-473 the roof fairy pots; ~16 effects fit
   easily), items enter the reward/? tier tables as ordinary rows with a
   new QS_CAT or reuse of QS_CAT_STAT, and the pickup path fires a custom
   text (the item-get message hook already exists for the win sequence).
@@ -957,6 +957,12 @@ sequencing lives in section 8.
   pressure that doesn't crowd the melee), any boss + sparks (pure
   positioning tax, sparks are cheap singles). Ship as: a per-boss
   "escort roster" field in the boss roll, gated by measured budget.
+  Multi-boss (user question): measured - two bosses fit a CLEARED room
+  comfortably, three are marginal, none fit on a live diff-12 wave
+  (QUICKSTART_BUDGET.md finding 3). Blocked on family-scoping the boss
+  death machinery first: a simultaneous dual kill currently softlocks,
+  because the staged death cutscene and the QUICKSTART death sweeps
+  assume one family per room.
 
 - **F7. Win-condition variety: the element as a drawn payout.** Instead of
   the element always replacing the element region's wave-0 reward, draw
@@ -1076,21 +1082,26 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   their own walk.
 - Lon Lon Ranch: the top-middle pocket the user described has no walked box
   yet, so it is still unfenced.
-- **Roof pot fairies respawn (user-reported).** The two fairies in pots
-  on the hub roof come back every time the player leaves and returns;
-  once used or caught they should stay gone for the run. Fix sketch: a
-  bank-11 per-run bit per pot, consulted by the roof room's setup so the
-  spent pots are deleted on re-entry.
-- **Some ? room exits warp to the Castle Garden cellar ladder
-  (user-reported).** Exiting certain ? rooms (seen from a Minish house in
-  Eastern Hills) lands the player at the cellar ladder in Castle Garden -
-  always exactly there, which is the OLD drawn-room pool's shared landing
-  spot. Leading hypothesis: the rooms promoted to walk-in content sites
-  in the overworld expansion still have exit transitions covered by the
-  old 1/2-door pool's generic retarget instead of their vanilla returns.
-  Audit which exit rows cover those doors before touching anything - the
-  always-the-same-spot symptom should make the guilty table row easy to
-  find.
+- **DONE - roof pot fairies respawned every visit (user-reported).** One
+  life each per run now: room flags record "this visit saw the pot
+  standing", a later absence latches `GF_FAIRY_POT_BIT` (QS window
+  472-473), and every later visit's respawn is deleted on sight
+  (`QuickStartRoofFairyPotsOnce`). The two plain pots beside them stay
+  vanilla. Verified: take the left pot, leave, return - it stays gone,
+  the other three respawn.
+- **DONE - ? room exits warped to the Castle Garden cellar ladder
+  (user-reported).** Two stacked causes, both fixed:
+  (1) three rooms promoted to walk-in content sites in the overworld
+  expansion - the two Minish houses (EH-S, WW-S doors) and the Western
+  Wood heart-piece tree - still carried their pool-era exit retargets to
+  Castle Garden's shared ladder landing in transitions.c; restored to
+  their vanilla exits (same treatment as the SouthHyruleField precedent).
+  (2) underneath, `QuickStartIsPocketOverworldRoom` was still the
+  pre-expansion five-room list, so a correctly-targeted exit into an
+  EH/WW room would have been CANCELLED by containment - invisible while
+  the retargets pointed at Castle Garden, surfaced the moment they were
+  fixed. It now accepts every ring room. Verified: all three rooms exit
+  to their real fields (EH-S / WW-S / WW-N).
 - **Acro-Bandit slowdown (user-reported).** 3-4 on screen visibly slows
   the game. Suspected cause: each ACRO_BANDIT placement is a 5-entity gang
   (acroBandits.c spawns leader + four), so a few draws of the kind is 15+

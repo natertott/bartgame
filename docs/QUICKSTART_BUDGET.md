@@ -132,6 +132,30 @@ have M").
   - Bomb peahats and sparks are cheap escorts (2-3 slots over the boss)
     and stay affordable everywhere measured.
 
+  **Multiple simultaneous bosses** (user question, measured):
+
+    combo                        staging        peak gfx  min free
+    2 bosses (green+green)       cleared, CG 8     32        12
+    2 bosses (green+blue)        cleared, CG 8     32        12
+    3 bosses (green x3)          cleared, CG 8     38         6
+    2 bosses (green+blue)        live, CG 8        42         2
+    2 bosses (green+blue)        live, NHF 12      38         0 spawned
+
+  Budget verdict: TWO bosses fit comfortably in a cleared room - both
+  families fully assembled, same or mixed form (the forms share the
+  sheet; only palettes differ). Three is marginal (into the reserve, one
+  family already losing pieces). On a live high-difficulty wave, none.
+
+  But budget is not the whole answer: **the death machinery does not
+  survive two families yet.** Killing both at once left 5 boss pieces
+  stuck and the player frozen (measured) - the staged death cutscene was
+  written for one family (vanilla could never have two), and the
+  QUICKSTART death-completion sweep fells every boss piece in the room,
+  which cross-fires into the second family mid-cutscene. Single-boss
+  play is unaffected (the roll spawns one). Prerequisite for shipping
+  multi-boss waves: make the fell sweep and the proxy self-delete
+  family-scoped, then re-run the dual-kill probe.
+
 ### 4. The reaper is slow by design - and measurably
 
   `gfx_trace.py` on the blue-boss-plus-wizzrobes combo: slots sat at

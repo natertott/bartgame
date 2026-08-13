@@ -1358,26 +1358,19 @@ const Transition gExitList_MinishHouseInteriors_MelariMinesEast[] = {
     TransitionListEnd,
 };
 #endif
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above
-// gExitList_MinishHouseInteriors_Red. This room was never a pool member
-// before this session (added along with LIBRARI per the user's own room
-// survey), so unlike its siblings it never got this treatment at the time -
-// confirmed missing after the user reported walking to the bottom of the
-// screen here does nothing: TRANSITION_TYPE_INSTANT_MINISH needs the player
-// to actually be minish-sized to fire, which never happens in QUICKSTART.
-const Transition gExitList_MinishHouseInteriors_HyruleFieldSouthwest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// Back on its real vanilla exit (WW-South), same treatment as
+// gExitList_MinishHouseInteriors_SouthHyruleField below and for the same
+// reason: this room left the drawn small-room pool when it became a
+// walk-in content site (the Western Wood Minish door), but its pool-era
+// retarget - south border to Castle Garden at the shared ladder landing -
+// was left behind, which is the user's "exit a ? room, appear at the
+// cellar ladder" report. A walk-in player is minish-sized in here, so
+// vanilla's INSTANT_MINISH type is the correct one again.
 const Transition gExitList_MinishHouseInteriors_HyruleFieldSouthwest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x35, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 // Back on its real vanilla exit, and no longer a member of the ladder pool
 // (game.c, sQuickStartSmallRoomPool). It is one of only two Minish-gated
 // destinations in the whole five-region pool - the other is
@@ -1428,19 +1421,14 @@ const Transition gExitList_MinishHouseInteriors_Librari[] = {
     TransitionListEnd,
 };
 #endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_HyruleFieldExit[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// Back on its real vanilla exit (EH-South) - the second half of the same
+// fix as gExitList_MinishHouseInteriors_HyruleFieldSouthwest above; this
+// is the Eastern Hills Minish house the user's report actually named.
 const Transition gExitList_MinishHouseInteriors_HyruleFieldExit[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x35, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 #ifdef QUICKSTART
 const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
@@ -2218,20 +2206,15 @@ const Transition gExitList_TreeInteriors_BoomerangSoutheast[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_TreeInteriors_WesternWoodsHeartPiece[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// Back on its real vanilla exit (WW-North) - third room of the same fix
+// as the two Minish houses above: promoted to a walk-in content site (the
+// Western Wood heart-piece tree door) but still carrying its pool-era
+// retarget to Castle Garden's shared ladder landing.
 const Transition gExitList_TreeInteriors_WesternWoodsHeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xa0, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_TreeInteriors_NorthHyruleFieldFairyFountain[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },

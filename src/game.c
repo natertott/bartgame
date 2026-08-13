@@ -2599,6 +2599,10 @@ static void QuickStartSolveLonLonBoulder(void) {
 // bank-11 block because that block's neighbours (QUICKSTART_CHARM_BIT at
 // 40-42) left it no room to grow.
 #define GF_REGION_QUEST_HINT 471
+// The roof's two fairy pots, one life each per run (the user's report:
+// vanilla respawns them every room load, which was a free fairy top-up
+// per hub visit). See QuickStartRoofFairyPotsOnce.
+#define GF_FAIRY_POT_BIT(b) (472 + (b))                                  // b = 0..1 -> 472-473
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -8979,13 +8983,18 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
 
 // The overworld rooms that own those interiors - i.e. every room a pocket
 // interior's own real exit can legitimately put the player back in.
+static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room);
+
 static bool32 QuickStartIsPocketOverworldRoom(u8 area, u8 room) {
-    if (area == AREA_HYRULE_FIELD &&
-        (room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD ||
-         room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS || room == ROOM_HYRULE_FIELD_LON_LON_RANCH)) {
-        return TRUE;
-    }
-    return area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN;
+    // Every ring room owns pocket doors now - the overworld expansion put
+    // content sites in all seven named regions - so the owning-overworld
+    // set IS the ring. This was a hardcoded five-room list from before the
+    // expansion, which silently cancelled walking OUT of any site whose
+    // door lives in Eastern Hills or Western Wood; the failure stayed
+    // invisible as long as those sites' exits were still mis-retargeted at
+    // Castle Garden (a destination the old list allowed), and surfaced the
+    // moment the retargets were fixed back to their vanilla fields.
+    return QuickStartIsRingRegionRoom(area, room);
 }
 
 // Is this transition a legitimate move inside the pocket? Two shapes are
@@ -11558,11 +11567,51 @@ static void QuickStartRoofSpawnReward(void) {
 // purpose. Leaving the roof mid-fight and returning gives a fresh wave, which
 // is the honest reading of "clearing them gives a reward" - the fight is one
 // visit's work, not something to whittle down over several trips.
+// The roof's two fairy pots (vanilla room data: POT type 96 at local x 24
+// and 216; the two type-0 pots beside them stay vanilla). Vanilla
+// respawns them on every room load, which under QUICKSTART meant a free
+// fairy top-up per hub visit - the user's report. One life each per run:
+// room flags 5/6 record "this visit saw the pot standing", so a later
+// absence within the same visit means the player took it (broke it, or
+// lifted it and walked off - either way it is spent). That latches the
+// per-run GF_FAIRY_POT_BIT, and every later visit's respawn is
+// deleted the frame it appears - the same every-frame delete shape
+// QuickStartClearHubRoom already uses.
+#define QUICKSTART_ROOF_FAIRY_POT_TYPE 96
+
+static void QuickStartRoofFairyPotsOnce(void) {
+    static const s16 potX[2] = { 24, 216 };
+    s32 i, j;
+    for (i = 0; i < 2; i++) {
+        Entity* pot = NULL;
+        for (j = 0; j < MAX_ENTITIES; j++) {
+            Entity* ent = &gEntities[j].base;
+            if (ent->kind == OBJECT && ent->id == POT && ent->type == QUICKSTART_ROOF_FAIRY_POT_TYPE &&
+                ent->x.HALF.HI - gRoomControls.origin_x == potX[i]) {
+                pot = ent;
+                break;
+            }
+        }
+        if (QsCheckFlag(GF_FAIRY_POT_BIT(i))) {
+            if (pot != NULL) {
+                DeleteEntity(pot);
+            }
+            continue;
+        }
+        if (pot != NULL) {
+            QsSetRoomFlag(5 + i);
+        } else if (QsCheckRoomFlag(5 + i)) {
+            QsSetFlag(GF_FAIRY_POT_BIT(i));
+        }
+    }
+}
+
 static void QuickStartRoofMonitor(void) {
     u8 state;
     if (gRoomControls.area != AREA_WIND_TRIBE_TOWER_ROOF || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_ROOF_0) {
         return;
     }
+    QuickStartRoofFairyPotsOnce();
     state = QuickStartRoofGetState();
     if (state >= 2) {
         return;

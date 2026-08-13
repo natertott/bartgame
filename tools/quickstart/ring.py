@@ -51,7 +51,12 @@ CROSSINGS = [
     ('EH-S -> EH-C (seam)',   (3, 2), 168, 40,  'KEY_UP',    (3, 3)),
     ('EH-N -> LLR (seam)',    (3, 4), 312, 40,  'KEY_UP',    (3, 5)),
     ('LLR -> EH-N (seam)',    (3, 5), 312, 920, 'KEY_DOWN',  (3, 4)),
-    ('TRIL -> WW-N (seam)',   (3, 7), 312, 920, 'KEY_DOWN',  (3, 8)),
+    # x inside the seam's real open corridor (tiles 21-23 = x 336-383; the
+    # measured collision row at tile y 59 is wall everywhere else). The old
+    # 312 sat ON wall and only ever crossed via corner-sliding, which is
+    # start-position-sensitive - it wedged when this session's RNG-stream
+    # changes moved the room's obstacles, and read as a broken seam.
+    ('TRIL -> WW-N (seam)',   (3, 7), 360, 920, 'KEY_DOWN',  (3, 8)),
     ('WW-N -> TRIL (seam)',   (3, 8), 312, 40,  'KEY_UP',    (3, 7)),
     ('WW-N -> WW-C (seam)',   (3, 8), 264, 600, 'KEY_DOWN',  (3, 9)),
     ('WW-C -> WW-N (seam)',   (3, 9), 24, 40,   'KEY_UP',    (3, 8)),
