@@ -630,6 +630,34 @@ New events assembled from proven vanilla parts, cheapest first:
   treasure rooms (walls reset every run now); pot-room variants (timed
   prize, gauntlet-then-lottery); boss-rush rooms (sequential roster
   minibosses); survive-N-seconds wave rooms.
+
+  **Switch-puzzle room designs (sketched with the user, Aug 2026)** -
+  new QS_EVENT_SWITCH_* kinds in the existing content framework; state
+  in room flags, reward through the standard once-latch, objects at
+  surveyed spots with their own checker tier. The rule the F7 pause
+  taught applies from day one: general-pool rooms must be solvable with
+  sword+shield alone; gated variants wait for the key-item logic and
+  then become drawn-only-when-guaranteed. In pilot order:
+  1. *The closing gate* - pull a lever, a shutter across the room opens
+     for N seconds on the shared HUD clock; dash before the re-latch.
+     Difficulty shortens the window and litters the lane.
+  2. *The decoy lever* - three identical levers: prize, trap (ambush or
+     primed trap-pot), dud - and the room SELLS the answer to players
+     who look (an eye switch gazing at the true lever). The pot
+     lottery's risk-with-information spirit, ported to switches.
+  3. *Hold everything down* - 2-3 pressure plates depressed at once:
+     player on one, thrown/pushed weights on the rest; the room holds
+     exactly enough pots, and one plate is throw-only across a gap.
+  4. *Watch the eyes* - eye switches blink a sequence; hit them in
+     order (sword adjacency keeps it kit-free); wrong order resets, and
+     at high difficulty an F1c stake bites.
+  5. *The burning wick* (HELD until key-item logic) - light all torches
+     before the first burns out; fire-gated, and deliberately the first
+     client of the "drawn only when the kit is guaranteed" rule.
+  6. *Overworld switch links* (ambitious) - a plate in one ring region
+     opens a grate in another, reusing the proven NHF bridge machinery;
+     the free-roam ring becomes the puzzle box, and the compass gets
+     something to point at.
 - *Medium (one new mechanism each)*: kill-quota bounties per region
   (kill counters exist; needs a quest NPC handout); carry-item-to-NPC
   quests (the shop's carry-to-merchant flow, pointed across rooms);

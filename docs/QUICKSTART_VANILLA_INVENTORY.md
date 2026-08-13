@@ -78,7 +78,7 @@ forms; the boss roll spawns CHUCHU_BOSS (both forms).
 | OCTOROK_BOSS (57) | D | the lantern-gated ice boss; damage audit + arena |
 | FLYING_POT (58) | B | ambush prop-enemy; pairs with the pot quest |
 | GOBDO (59) | A (m) | level 4 |
-| GOLDEN OCTOROK/TEKTITE/ROPE (60/61/62) | B | the golden-enemy fusion (KINSTONE_55 is wired!) - rare-spawn payoff waiting to exist |
+| GOLDEN OCTOROK/TEKTITE/ROPE (60/61/62) | A (m) | LIVE: the wired KINSTONE_55 fusion manifests them - golden Rope seen in Eastern Hills North by the user in play |
 | CLOUD_PIRANHA (63) | C | cloud-terrain; hub-top only |
 | SCISSORS_BEETLE (64) | A (m) | level 4 |
 | CUCCO_AGGR (65) | B | the full revenge swarm; F1c stake or comedy event |
@@ -112,7 +112,7 @@ custom scripts (givers, fusers, hints, merchant). Reusable machinery:
 | ZELDA as generic interactable | A (m) | every giver/fuser/hint |
 | stockwell shop machinery | A (m) | the hub shop's carry-to-buy flow |
 | greatFairy | A (m) | fairy-room content kind |
-| bladeBrothers (dojo masters) | B | skill-teaching NPCs - the sword-skill grant path (pairs with the pedestal idea) |
+| bladeBrothers (dojo masters) | X | per the user: not implementing the skill-teacher mechanic; their rooms stay ? combat rooms |
 | guard / guardWithSpear | C | THE F2 stealth quest's line-of-sight AI - research spike target |
 | syrup / picolyteBottle | B | potion-brewing flavor for a shop variant |
 | dampe / ghostBrothers / gina | B | graveyard flavor; Gina already hosts a ? room |
@@ -220,8 +220,9 @@ From the linker map, blocks ≥1KB (89 layout symbols total; last symbol
 
 ## Where to start when content is wanted
 
-Cheapest real wins by grade-B density: the golden-enemy trio (a wired
-fusion with no payoff today), the switch-puzzle object vocabulary
-(Phase D's lever rooms), FLYING_POT ambushes in pot-heavy rooms,
-CUCCO_AGGR as an F1c stake, and WIZZROBE_WIND to round out the wizzrobe
-family. The boss ladder starts at OCTOROK_BOSS when F6 resumes.
+Cheapest real wins by grade-B density: the switch-puzzle object
+vocabulary (Phase D's lever rooms - design sketch in the roadmap's
+Phase D entry), FLYING_POT ambushes in pot-heavy rooms, CUCCO_AGGR as
+an F1c stake, and WIZZROBE_WIND to round out the wizzrobe family. (The
+golden-enemy trio turned out to already be live - user-confirmed in
+play.) The boss ladder starts at OCTOROK_BOSS when F6 resumes.
