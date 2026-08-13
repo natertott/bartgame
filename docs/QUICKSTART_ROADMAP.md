@@ -1043,6 +1043,42 @@ sequencing lives in section 8.
   reuse-difficulty grade per row (the miniboss audit #26 and kinstone
   audit are small worked examples of the shape).
 
+- **F10. The MAP and COMPASS items (user, Aug 2026).** Two findable
+  items, listed under rare WEAPONS/TOOLS in the tier table. Today the
+  player has NO overworld map at all - the START screen's map feature is
+  not even active in this mode. The MAP item activates it, showing ONLY
+  the regions visited so far this run. The COMPASS re-appropriates
+  vanilla's unclaimed-fusion-treasure map icon, inverted: it marks every
+  kinstone fusion NOT yet fused, and the icon clears when the player
+  enters the unlocked room / claims the reward. The compass also marks
+  WHICH REGION holds the Earth Element - the region only, never the spot,
+  so it sharpens the hunt without ending it.
+
+  *Path, in dependency order:*
+  1. *Research spike first* - why the START-screen map is inactive here
+     (story-flag gating? the pause menu screen set?), how vanilla decides
+     map visibility per area (there is per-area visited state in the
+     save), and where vanilla's fusion-treasure icons come from (the
+     gKinstoneWorldEvents -> gWorldEvents chain the kinstone audit
+     already reads has the coordinates; the icon renderer is what needs
+     finding). The pause menu is vanilla UI code this mode has touched
+     only lightly (the L-slot work) - budget the spike accordingly.
+  2. *Items*: vanilla's dungeon MAP and COMPASS item ids already exist
+     with icons and pickup plumbing - repurpose them rather than minting
+     new ids, and add them as rare WEAPON/TOOL tier rows (the unlock
+     registry can gate them later if wanted).
+  3. *MAP half*: a per-run visited-regions bitfield (11 bits, QS window
+     486+, set where the intro-hint path already detects first entry) and
+     a pause-map draw filter: no item = screen stays inactive; item =
+     visited regions drawn, unvisited masked.
+  4. *COMPASS half*: draw icons at each unfused fuser's host-region map
+     position (sQuickStartFusers x kinstone-fused state, all readable),
+     clear per the user's rule (room entered / reward claimed - the
+     fusion-reload latch and site-claimed flags already know); plus a
+     region-level marker over QuickStartElementRegionIndex()'s region.
+  5. Checker tier: every icon's map position lands inside its region's
+     rectangle; map masks exactly the unvisited set.
+
 - **F9. DONE - cap simultaneous Acro-Bandits.** The user's report: 3-4 on
   screen visibly tanks the frame rate. Confirmed mechanism: ACRO_BANDIT
   (46) is a GANG - the placed leader bursts into FIVE more of itself when
@@ -1145,6 +1181,12 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   (acroBandits.c spawns leader + four), so a few draws of the kind is 15+
   live heavy AIs - a CPU wall, not a GFX one, and other gang/macro kinds
   likely share it. Fix sketch and verification plan: Phase F9.
+- **Inactive Minish hole, North Hyrule Field's very eastern edge
+  (user-reported).** A small Minish hole there does nothing. Likely the
+  same family as the Minish-layer blockers (tasks #102/#103 - transform
+  rendering, portal wiring); check whether it is an unwired
+  MINISH_SIZED_ENTRANCE like Lon Lon's ranch-house pair or a portal whose
+  destination was never containment-blessed. Fold into the #102 survey.
 - `POT_MINISH` does not render multi-enemy content (long-standing).
 - Gentari's Room / Gentari's Main adjacency conflict (long-standing).
 - Castle Garden Main's East and West Fountains are gated entrances not yet
