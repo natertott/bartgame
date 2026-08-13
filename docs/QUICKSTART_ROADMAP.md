@@ -860,28 +860,40 @@ sequencing lives in section 8.
   our own warp-back. Either way the fail budget (tries/timer) is 2-3 bits
   of QS-window state next to the other quests'.
 
-- **F3. More vanilla bosses; first the Electric (blue) Chuchu.** Vanilla
-  bosses are gated on specific tools (Chuchus: Gust Jar; Big Octorok:
-  Lantern...). The Green Chuchu precedent (sub_08027AA4 widened to sword /
-  arrow / boomerang / thrown object / Fire Rod / Pacci Cane) shows the
-  gate can be widened per boss. The Electric Chuchu should be nearly free:
-  `chuchuBoss.c` already drives form differences off `super->type` (role
-  in the low bits - the jelly segments are `type|1..3` children - with a
-  variant selector above them), so the first experiment is spawning
-  CHUCHU_BOSS with the blue form's type value in the harness and watching
-  palette + behaviour. The electric twist (touching it while charged hurts)
-  needs no new counter if the Gust Jar peel still works, but the same
-  widening pass as the green one should be verified against the charged
-  state. *Path:* harness-spawn the type variants of CHUCHU_BOSS to find
-  the blue form -> verify damage sources -> add a variant field to the
-  boss roll (today it hardcodes CHUCHU_BOSS type 0) -> extend
-  `QuickStartRegionAllowsBoss` reasoning per boss (the blue form's GFX
-  cost may differ; measure with measure_budget.py before allowlisting).
+- **F3. More vanilla bosses; DONE for the Electric (blue) Chuchu.** The
+  boss roll now flips a fair coin per spawn: CHUCHU_BOSS type 0 (green)
+  or type 4 (blue/electric). What the experiment actually found, since
+  the type mechanics were subtler than the theory:
+  - The spawn type is a FORM, and the init consumes it: the base captures
+    it into `type2` (0 green / 4 blue - the one reliable runtime marker;
+    probes must read type2, not type, which ends up role-only) and the
+    EnemyDefinition rows 0-3 vs 4-8 carry the two palette families.
+  - The blue intro is Temple-of-Droplets STAGE machinery, not fight
+    logic - it seizes the camera, waits on a player room-transition that
+    never comes, and paints an arena tile at a hardcoded position. In an
+    open region the pieces sat invisible at the spawn point forever.
+    QUICKSTART routes both forms through the green intro; type2 keeps
+    palettes, particles and moveset blue.
+  - Two aftermath bugs bit BOTH forms and were latent in every boss kill
+    to date: the invisible hitbox proxy (the type-8 spawn) is never felled
+    by the core's death (vanilla's arena transition wiped it), leaving an
+    immortal invisible enemy that blocked the wave loop - and once dead it
+    ran ChuchuBoss_OnDeath (whose first act is PausePlayer) every frame
+    forever, freezing the player for the rest of the run. The core's
+    death completion now fells every family piece, and a dead piece with
+    no living family deletes itself.
+  Verified end to end (blue_chuchu_probe2): both forms spawn, assemble
+  visibly (screenshots), die, the next wave arrives, and control returns.
+  The electric contact damage rides the blue moveset unchanged; the
+  sub_08027AA4 weapon-peel widening keys on contact flags, not form, so
+  it covers both.
+
   Bosses beyond that (Gleerok, Mazaal, Big Octorok) each need: a damage
   audit, an arena audit (Mazaal is a multi-entity macro - MAZAAL_MACRO 55
   - and almost certainly wants a dedicated room, not an open field), and
   a budget measurement. Treat each as its own task; none are "just spawn
-  it".
+  it" - the blue chuchu, the CHEAPEST possible case, still surfaced three
+  latent bugs.
 
 - **F4. Charms and curses on the unused quest items.** Assign our own
   run-long status effects to vanilla's unused quest items (the books, the

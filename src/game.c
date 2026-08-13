@@ -3153,7 +3153,14 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     // The Random() consume stays unconditional so the RNG stream does not
     // depend on WHICH region the player happens to be standing in.
     if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) {
-        Entity* boss = CreateEnemy(CHUCHU_BOSS, 0);
+        // F3: the boss is Green OR Electric (blue), an even coin flip per
+        // spawn. Both forms are one chuchuBoss.c state machine selected by
+        // the spawn type: type 0 records type2=0 (green palette 0x2b),
+        // type 4 records type2=4 (blue palette 0x2c, the electric attack
+        // set). The weapon-peel widening (sub_08027AA4) keys on contact
+        // flags, not type2, so it covers both forms - and it even passes
+        // type2 to the splash particle so the effects match the palette.
+        Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
         if (boss != NULL) {
             boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
             boss->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
@@ -6320,6 +6327,17 @@ static s32 QuickStartMinibossCount(u8 id) {
 
 static bool32 QuickStartEnemyIsOurs(Entity* ent) {
     if (ent->kind != ENEMY) {
+        return FALSE;
+    }
+    // The chuchu boss's invisible hitbox-proxy piece (the type-8 spawn)
+    // survives the boss's own death sequence parked at health 0 - its
+    // delete condition is part of the vanilla arena flow that never runs
+    // here. Counting it kept the room reading "enemies present" after
+    // every boss kill, which froze the wave loop until the player left
+    // and re-entered (measured: core + jelly gone 180 frames after the
+    // kill, proxy still there at +900). A dead boss piece is not an
+    // enemy for any purpose this predicate serves.
+    if (ent->id == CHUCHU_BOSS && ent->health == 0) {
         return FALSE;
     }
     return (ent->flags & ENT_PERSIST) || QuickStartEntityInCurrentRoom(ent);

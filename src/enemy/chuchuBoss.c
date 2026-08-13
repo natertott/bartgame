@@ -303,6 +303,27 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
                         this->unk_68->base.health = 0;
                         child->health = 0;
                         parent->health = 0;
+#ifdef QUICKSTART
+                        // Vanilla fells the three jelly segments here but
+                        // NOT the invisible hitbox proxy (the type-8
+                        // spawn) - its arena's post-boss room transition
+                        // wiped it, so nothing ever needed to. Spawned in
+                        // the open overworld there is no transition, and
+                        // an invisible, immortal, full-health enemy kept
+                        // the region reading "wave still up" after every
+                        // boss kill. Fell every family piece; the dead
+                        // proxy then removes itself in the else branch
+                        // below.
+                        {
+                            s32 i;
+                            for (i = 0; i < MAX_ENTITIES; i++) {
+                                Entity* ent = &gEntities[i].base;
+                                if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS) {
+                                    ent->health = 0;
+                                }
+                            }
+                        }
+#endif
                         gPauseMenuOptions.disabled = 0;
                         SoundReq(SFX_BOSS_DIE);
                         GenericDeath(super);
@@ -330,6 +351,24 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
             this->unk_6d.unk1 = 1;
             DeleteThisEntity();
         }
+#ifdef QUICKSTART
+        // The hitbox proxy has no delete edge outside the vanilla arena
+        // flow: nothing sets its unk1, so at health 0 it sat in this
+        // handler - whose first act is PausePlayer - every frame, freezing
+        // the player for the rest of the run the moment a region boss
+        // died (measured). Once no family piece is left alive, this piece
+        // has no job: let it go.
+        else {
+            s32 i;
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* ent = &gEntities[i].base;
+                if (ent != super && ent->kind == ENEMY && ent->id == CHUCHU_BOSS && ent->health != 0) {
+                    return;
+                }
+            }
+            DeleteThisEntity();
+        }
+#endif
     }
 }
 
@@ -379,7 +418,19 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                 this->unk_84->unk_03 = 0;
                 this->unk_84->unk_04 = 0;
                 this->unk_84->unk_0e = super->x.HALF.HI;
+#ifdef QUICKSTART
+                // The segments' form decides which EnemyDefinition row
+                // (and so which palette family, 43 green / 44 blue) they
+                // load. `super->type` reads 0 by this point even for a
+                // type-4 spawn (measured - type2 keeps the form, type does
+                // not survive to here), so composing the children from
+                // `type` silently dressed a blue boss in green jelly.
+                // type2 was captured from the spawn type above and is 0
+                // for green / 4 for blue, exactly the row offset needed.
+                this->unk_68 = (ChuchuBossEntity*)CreateEnemy(CHUCHU_BOSS, super->type2 | 3);
+#else
                 this->unk_68 = (ChuchuBossEntity*)CreateEnemy(CHUCHU_BOSS, super->type | 3);
+#endif
                 if (this->unk_68) {
                     this->unk_68->base.collisionLayer = super->collisionLayer;
                     this->unk_68->base.x.HALF.HI = super->x.HALF.HI;
@@ -389,7 +440,11 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                     MEMORY_BARRIER;
                     this->unk_68->unk_68 = this;
                 }
+#ifdef QUICKSTART
+                super->parent = CreateEnemy(CHUCHU_BOSS, super->type2 | 2);
+#else
                 super->parent = CreateEnemy(CHUCHU_BOSS, super->type | 2);
+#endif
                 if (super->parent) {
                     super->parent->collisionLayer = super->collisionLayer;
                     super->parent->x.HALF.HI = super->x.HALF.HI;
@@ -400,7 +455,11 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                     this->unk_68->base.child = super->parent;
                     ((ChuchuBossEntity*)super->parent)->unk_68 = this;
                 }
+#ifdef QUICKSTART
+                super->child = CreateEnemy(CHUCHU_BOSS, super->type2 | 1);
+#else
                 super->child = CreateEnemy(CHUCHU_BOSS, super->type | 1);
+#endif
                 if (super->child) {
                     super->child->collisionLayer = super->collisionLayer;
                     super->child->x.HALF.HI = super->x.HALF.HI;
@@ -563,7 +622,19 @@ void sub_080262A8(ChuchuBossEntity* this) {
     this->unk_80 = 8;
     super->timer = 1;
     sub_080276F4(super, 6, 1);
+#ifdef QUICKSTART
+    // The blue form's intro is Temple-of-Droplets STAGE machinery, not
+    // fight logic: it seizes the camera (camera_target + scrollSpeed),
+    // waits on the player's room-transition action, and paints its arena
+    // tile at a hardcoded TILE_POS(8,11). Spawned mid-room by a region
+    // wave, none of those cues ever arrive, and the measured result was
+    // the boss pieces parked invisible at the spawn point forever. Both
+    // forms take the green intro here; type2 still carries the form, so
+    // the palettes, particles and moveset stay the blue ones.
+    if (1) {
+#else
     if (super->type2 == 0) {
+#endif
         gPlayerState.animation = ANIM_WALK;
         this->unk_84->unk_03 = 1;
     } else {
