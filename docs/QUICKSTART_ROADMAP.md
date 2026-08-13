@@ -793,15 +793,28 @@ parallel network (tasks #102/#103 - the transform rendering bug blocks it).
 Each entry carries its own speculated implementation path; the cross-item
 sequencing lives in section 8.
 
-- **F1. Overworld quests v2: the timed scavenger hunt.** A timed "go find
-  the item" event. The item hides one of three ways: carried by a marked
-  enemy (dropped on its death), buried in the map (requires Mole Mitts to
-  dig up), or under a bush/grass tile (revealed by cutting it). While the
-  event runs, the region's current enemies are DESPAWNED and replaced by as
-  large a swarm as the budget allows of enemies whose whole job is slowing
-  the player down: BEETLE (7) / SPIKED_BEETLE (30) / SPINY_BEETLE (53),
-  chuchu variants, all three wizzrobes (WIZZROBE_WIND/FIRE/ICE 39-41), and
-  SPARK (28).
+- **F1. Overworld quests v2: the timed scavenger hunt. CARRIER MODE
+  SHIPPED** - the Keaton chase (`QuickStartScav*`, game.c;
+  `script_QuickStartScav.inc`). One giver NPC per run in a drawn region
+  (never the hunt quest's own - the two share the HUD clock and the enemy
+  mark bit, and guard each other's RUNNING state). Talking to it despawns
+  the region's wave and releases a Keaton thief at the region's REWARD
+  spot - across the map, so the chase crosses the region - plus a
+  slow-you-down swarm around the giver (beetles for bodies, sparks for a
+  positioning tax, ice wizzrobes for ranged pressure: instance-heavy,
+  kind-light, the measured-cheap shape). Kill the Keaton inside 60
+  seconds and a RARE prize drops at the giver's spot; run out and the
+  pack scatters - one attempt per run. Leaving the region mid-chase
+  pauses the clock and re-releases the pack on return (room flag 7 tells
+  a reload apart from a kill). All three endings emulator-verified
+  through the real NPC conversation. One lesson for every future spawner:
+  a just-created enemy's health is 0 until its own init tick, so
+  completion counters must count by mark, never by health.
+
+  Still open from the F1 brief - the other two hide modes: buried
+  (Mole Mitts) and under-bush items. Both need per-region tile surveys
+  (diggable spots, cuttable bushes) before they can be drawn safely;
+  the quest's mode field and state machine are ready for them.
 
   *Path:* this is the third sibling of two quests that already exist and
   prove every mechanism needed. The pot quest (`GF_QUEST_*`,

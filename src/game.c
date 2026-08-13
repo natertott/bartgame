@@ -1180,6 +1180,7 @@ static void GameMain_InitRoom(void) {
 extern Script script_QuickStartChooseOne;
 extern Script script_QuickStartMerchant;
 extern Script script_QuickStartHunt;
+extern Script script_QuickStartScav;
 
 // Per-run (not per-visit, not permanent) - "has the region-intro Ezlo hint
 // already been shown this run". Only the run's first overworld region ever
@@ -1956,6 +1957,16 @@ const u8* const gCustomStrings[] = {
     // all - pots simply appeared in one region and the completion line
     // ([14]) was the first the player ever heard of it.
     [26] = (const u8*)"Ezlo: One pot in this\narea hides a prize!",
+    // The scavenger hunt (QuickStartScav*, below). 27 the offer - names
+    // the target, the task and the exact time limit, per the F1b bar
+    // (keep the "60" in sync with QUICKSTART_SCAV_SECONDS); 28 the win -
+    // says where the prize is, since it drops at the giver rather than
+    // where the Keaton died; 29 the loss - says the attempt is spent; 30
+    // the spent line for later visits.
+    [27] = (const u8*)"A Keaton stole my prize!\nSlay it! 60 seconds!",
+    [28] = (const u8*)"My prize is back - and\nnow it's yours. Take it!",
+    [29] = (const u8*)"The Keaton got away...\nThat was my only chance.",
+    [30] = (const u8*)"The chase is done for\nthis run. Travel safe!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2603,6 +2614,22 @@ static void QuickStartSolveLonLonBoulder(void) {
 // vanilla respawns them every room load, which was a free fairy top-up
 // per hub visit). See QuickStartRoofFairyPotsOnce.
 #define GF_FAIRY_POT_BIT(b) (472 + (b))                                  // b = 0..1 -> 472-473
+// The scavenger hunt (F1, QuickStartScav* below): one giver per run, in a
+// drawn region that is never the hunt quest's own - the two share the HUD
+// clock (gSave.timer4), so they must never run at once.
+#define GF_SCAV_ROLLED 474
+#define GF_SCAV_HOST_BIT(b) (475 + (b))                                  // b = 0..3 -> 475-478
+#define GF_SCAV_SPOT_BIT(b) (479 + (b))                                  // b = 0..4 -> 479-483
+#define GF_SCAV_STATE_BIT(b) (484 + (b))                                 // b = 0..1 -> 484-485
+// State values + clock, up here rather than with the quest's own code
+// because the hunt quest's guards (defined earlier in the file) read them.
+#define QUICKSTART_SCAV_SECONDS 60
+#define QUICKSTART_SCAV_FRAMES (QUICKSTART_SCAV_SECONDS * 60)
+#define QUICKSTART_SCAV_OFFERED 0
+#define QUICKSTART_SCAV_RUNNING 1
+#define QUICKSTART_SCAV_WON 2
+#define QUICKSTART_SCAV_FAILED 3
+static s32 QuickStartScavState(void);
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -3853,6 +3880,7 @@ static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot)
 // Defined further down, next to the wave/gauntlet code they share their
 // enemy placer and flag bank with.
 static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot);
+static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartHandicapMonitor(void);
 
 static void QuickStartRegionMonitor(s32 poolIndex) {
@@ -3870,6 +3898,7 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     }
     QuickStartSetupRegionQuest(region, poolIndex);
     QuickStartHuntMonitor(region, poolIndex);
+    QuickStartScavMonitor(region, poolIndex);
     QuickStartSpawnRegionRewardOnce(region, poolIndex);
     QuickStartSpawnRegionEnemiesOnce(region, poolIndex);
 }
@@ -7248,7 +7277,10 @@ static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
 // Seconds left, or -1 when no hunt is running. ui.c's DrawKeys reads this
 // every frame to decide whether the key slot shows a clock.
 s32 QuickStartHuntSecondsLeft(void) {
-    if (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING || gSave.timer4 == 0) {
+    // The scavenger hunt shares the clock, so the key slot shows it for
+    // whichever of the two timed quests is running.
+    if ((QuickStartHuntState() != QUICKSTART_HUNT_RUNNING && QuickStartScavState() != QUICKSTART_SCAV_RUNNING) ||
+        gSave.timer4 == 0) {
         return -1;
     }
     // Round up, so the last second is shown as 1 rather than 0. Signed on
@@ -7264,7 +7296,10 @@ s32 QuickStartHuntSecondsLeft(void) {
 // and the target answers a JumpIf by writing context->condition, which is why
 // these take the pair rather than returning a value.
 void QuickStartHuntCanStart(Entity* entity, ScriptExecutionContext* context) {
-    context->condition = (QuickStartHuntState() == QUICKSTART_HUNT_OFFERED);
+    // The scavenger hunt shares the HUD clock (gSave.timer4) and the enemy
+    // mark bit, so neither quest may start while the other is running.
+    context->condition =
+        (QuickStartHuntState() == QUICKSTART_HUNT_OFFERED) && (QuickStartScavState() != QUICKSTART_SCAV_RUNNING);
 }
 
 void QuickStartHuntIsHandicap(Entity* entity, ScriptExecutionContext* context) {
@@ -7377,6 +7412,286 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
         UpdateSpriteForCollisionLayer(npc);
         npc->direction = IdleSouth;
         QuickStartMakeNpcTalkable(npc, &script_QuickStartHunt);
+    }
+}
+
+// ======================= The scavenger hunt (F1) ========================
+//
+// The third quest sibling, and the first with the F1 "timed find-the-item"
+// shape: a giver NPC's prize has been STOLEN by a Keaton, which is loose
+// somewhere in the region - it is released at the region's reward spot,
+// across the map from the giver, so the chase crosses the whole region.
+// Starting the chase despawns the region's wave and releases a swarm whose
+// only job is slowing the player down (many instances, few kinds - the
+// measured-cheap shape, docs/QUICKSTART_BUDGET.md): beetles for bodies,
+// sparks for a positioning tax, one wizzrobe kind for ranged pressure.
+// Kill the Keaton inside the clock and the prize drops back at the giver's
+// spot as a RARE draw; run out and the pack scatters - one attempt per
+// run, like the hunt.
+//
+// The clock is gSave.timer4 in the HUD's key slot, SHARED with the hunt
+// quest - which is why the two guard against each other's RUNNING state
+// (QuickStartScavCanStart / QuickStartHuntCanStart) and why the scavenger
+// roll never picks the hunt's own host region. The pack is marked with the
+// same QUICKSTART_EM_FLAG_HUNT bit (bit 7 is the only enemyFlags bit
+// vanilla leaves free); mutual exclusion is what keeps the two quests'
+// marked sets from ever coexisting.
+//
+// Leaving the region mid-chase unloads the pack with the room; room flag 7
+// ("the pack is out this visit") is what tells that apart from a kill -
+// a fresh visit with the chase RUNNING re-releases the pack instead of
+// counting an empty room as a win. The clock only ticks inside the host
+// region, so stepping out pauses the chase rather than silently losing it.
+//
+// The buried and under-bush hide modes from the F1 brief are follow-ups:
+// both need per-region tile surveys (diggable spots, cuttable bushes)
+// before they can be drawn safely - see the roadmap. (State values and
+// the clock length live with the flag block above - the hunt's guards
+// read them.)
+
+static u32 QuickStartScavReadBits(s32 first, s32 count) {
+    u32 v = 0;
+    s32 b;
+    for (b = 0; b < count; b++) {
+        if (QsCheckFlag(first + b)) {
+            v |= 1u << b;
+        }
+    }
+    return v;
+}
+
+static void QuickStartScavWriteBits(s32 first, s32 count, u32 v) {
+    s32 b;
+    for (b = 0; b < count; b++) {
+        if (v & (1u << b)) {
+            QsSetFlag(first + b);
+        } else {
+            QsClearFlag(first + b);
+        }
+    }
+}
+
+static s32 QuickStartScavState(void) {
+    return (s32)QuickStartScavReadBits(GF_SCAV_STATE_BIT(0), 2);
+}
+
+static void QuickStartScavSetState(s32 state) {
+    QuickStartScavWriteBits(GF_SCAV_STATE_BIT(0), 2, (u32)state);
+}
+
+static void QuickStartScavRollOnce(void) {
+    s32 scavRegion, huntRegion;
+    if (QsCheckFlag(GF_SCAV_ROLLED)) {
+        return;
+    }
+    // The hunt's own roll has to land first so this draw can avoid its
+    // host - the two givers must never share a region (shared clock,
+    // shared enemy mark).
+    QuickStartHuntRollOnce();
+    huntRegion = 0;
+    {
+        s32 b;
+        for (b = 0; b < 4; b++) {
+            if (QsCheckFlag(GF_REGION_HUNT_HOST_BIT(b))) {
+                huntRegion |= (1 << b);
+            }
+        }
+    }
+    scavRegion = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+    if (scavRegion == huntRegion) {
+        scavRegion = (scavRegion + 1) % QUICKSTART_REGION_POOL_SIZE;
+    }
+    QuickStartScavWriteBits(GF_SCAV_HOST_BIT(0), 4, (u32)scavRegion);
+    QuickStartScavWriteBits(GF_SCAV_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
+    QuickStartScavSetState(QUICKSTART_SCAV_OFFERED);
+    QsSetFlag(GF_SCAV_ROLLED);
+}
+
+// Same walkable-spot walk as the hunt giver's, from this quest's own roll.
+static bool32 QuickStartScavSpot(const QuickStartRegion* region, s16* outX, s16* outY) {
+    s32 i, start;
+    if (region->enemyOffsetCount <= 0) {
+        return FALSE;
+    }
+    start = (s32)QuickStartScavReadBits(GF_SCAV_SPOT_BIT(0), 5) % region->enemyOffsetCount;
+    for (i = 0; i < region->enemyOffsetCount; i++) {
+        s32 idx = (start + i) % region->enemyOffsetCount;
+        s16 x = region->enemyOffsets[idx][0];
+        s16 y = region->enemyOffsets[idx][1];
+        if (QuickStartPositionAllowed(x, y)) {
+            *outX = x;
+            *outY = y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static s32 QuickStartCountMarked(u8 id) {
+    s32 i, count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        // No health filter, deliberately - same as the hunt's own counter.
+        // A just-created enemy's health is 0 until its own init tick has
+        // run, so filtering on health here reads a freshly released Keaton
+        // as already dead and hands out an instant win (measured). A dying
+        // one keeps counting through its death animation instead, which
+        // only delays the win by those few frames.
+        if (ent->kind == ENEMY && ent->id == id && (((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Release (or re-release, after a room reload) the thief and its swarm.
+// The wave is despawned first per the F1 brief - which also pays for the
+// pack: measured, a cleared room affords far more than a live wave does.
+static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 giverX, s16 giverY) {
+    s32 i, beetles;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (QuickStartEnemyIsOurs(ent)) {
+            DeleteEntity(ent);
+        } else if (ent->kind == ENEMY) {
+            ((Enemy*)ent)->enemyFlags &= ~QUICKSTART_EM_FLAG_HUNT;
+        }
+    }
+    // The thief, across the region at the reward spot.
+    QuickStartSpawnEnemiesOnOpenTiles(KEATON, 0, region->rewardX, region->rewardY, 1, -1);
+    // The swarm, around the conversation: bodies, a positioning tax, and
+    // one ranged kind - instance-heavy, kind-light on purpose.
+    beetles = 6 + QuickStartGetDifficulty() / 2;
+    if (beetles > 10) {
+        beetles = 10;
+    }
+    QuickStartSpawnEnemiesOnOpenTiles(BEETLE, 0, giverX, giverY, beetles, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(SPARK, 0, giverX, giverY, 3, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(WIZZROBE_ICE, 0, giverX, giverY, 2, -1);
+    // Everything standing after a despawn is the pack: mark it all.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY) {
+            ((Enemy*)ent)->enemyFlags |= QUICKSTART_EM_FLAG_HUNT;
+        }
+    }
+    QsSetRoomFlag(7);
+}
+
+// --- Script hooks (data/scripts/quickstart/script_QuickStartScav.inc) ---
+
+void QuickStartScavCanStart(Entity* entity, ScriptExecutionContext* context) {
+    context->condition =
+        (QuickStartScavState() == QUICKSTART_SCAV_OFFERED) && (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING);
+}
+
+void QuickStartScavBegin(Entity* entity, ScriptExecutionContext* context) {
+    const QuickStartRegion* region;
+    s32 slot = (s32)QuickStartScavReadBits(GF_SCAV_HOST_BIT(0), 4) % QUICKSTART_REGION_POOL_SIZE;
+    if (QuickStartScavState() != QUICKSTART_SCAV_OFFERED || QuickStartHuntState() == QUICKSTART_HUNT_RUNNING) {
+        return;
+    }
+    region = &sQuickStartRegionPool[slot];
+    QuickStartScavReleasePack(region, entity->x.HALF.HI - gRoomControls.origin_x,
+                              entity->y.HALF.HI - gRoomControls.origin_y);
+    gSave.timer4 = QUICKSTART_SCAV_FRAMES;
+    QuickStartScavSetState(QUICKSTART_SCAV_RUNNING);
+    SoundReq(SFX_SECRET);
+}
+
+// Called every frame from QuickStartRegionMonitor for the hosting slot.
+static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
+    s32 state;
+    s16 spotX, spotY;
+    QuickStartScavRollOnce();
+    if (slot != (s32)QuickStartScavReadBits(GF_SCAV_HOST_BIT(0), 4) % QUICKSTART_REGION_POOL_SIZE) {
+        return;
+    }
+    state = QuickStartScavState();
+    if (state == QUICKSTART_SCAV_RUNNING) {
+        if (!QsCheckRoomFlag(7)) {
+            // Fresh visit mid-chase: the room reload unloaded the pack.
+            // Re-release it rather than reading the empty room as a kill.
+            if (QuickStartScavSpot(region, &spotX, &spotY)) {
+                QuickStartScavReleasePack(region, spotX, spotY);
+            }
+            return;
+        }
+        if (QuickStartCountMarked(KEATON) == 0) {
+            // The thief is down - the prize returns to the giver's spot.
+            s32 i;
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* ent = &gEntities[i].base;
+                if (ent->kind == ENEMY && (((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+                    DeleteEntity(ent);
+                }
+            }
+            QuickStartScavSetState(QUICKSTART_SCAV_WON);
+            gSave.timer4 = 0;
+            if (QuickStartScavSpot(region, &spotX, &spotY)) {
+                Entity* itemEntity = CreateObject(
+                    GROUND_ITEM, QuickStartDrawAtTier(((s32)Random() & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE),
+                    0);
+                if (itemEntity != NULL) {
+                    itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
+                    itemEntity->y.HALF.HI = gRoomControls.origin_y + spotY;
+                    itemEntity->collisionLayer = 1;
+                    itemEntity->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(itemEntity);
+                    itemEntity->direction = IdleSouth;
+                }
+            }
+            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 28));
+            MsgInit();
+            return;
+        }
+        if (gSave.timer4 != 0) {
+            gSave.timer4--;
+        }
+        if (gSave.timer4 == 0) {
+            s32 i;
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* ent = &gEntities[i].base;
+                if (ent->kind == ENEMY && (((Enemy*)ent)->enemyFlags & QUICKSTART_EM_FLAG_HUNT)) {
+                    DeleteEntity(ent);
+                }
+            }
+            QuickStartScavSetState(QUICKSTART_SCAV_FAILED);
+            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 29));
+            MsgInit();
+        }
+        return;
+    }
+    if (state != QUICKSTART_SCAV_OFFERED) {
+        return;
+    }
+    if (!QuickStartScavSpot(region, &spotX, &spotY)) {
+        return;
+    }
+    {
+        s32 worldX = gRoomControls.origin_x + spotX;
+        s32 worldY = gRoomControls.origin_y + spotY;
+        s32 e;
+        Entity* npc;
+        for (e = 0; e < MAX_ENTITIES; e++) {
+            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == ZELDA &&
+                gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
+                return;
+            }
+        }
+        if (!QuickStartGfxBudgetForSpawn()) {
+            return;
+        }
+        npc = CreateNPC(ZELDA, 0, 0);
+        if (npc == NULL) {
+            return;
+        }
+        npc->x.HALF.HI = worldX;
+        npc->y.HALF.HI = worldY;
+        npc->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(npc);
+        npc->direction = IdleSouth;
+        QuickStartMakeNpcTalkable(npc, &script_QuickStartScav);
     }
 }
 
