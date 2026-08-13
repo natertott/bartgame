@@ -638,9 +638,27 @@ New events assembled from proven vanilla parts, cheapest first:
   taught applies from day one: general-pool rooms must be solvable with
   sword+shield alone; gated variants wait for the key-item logic and
   then become drawn-only-when-guaranteed. In pilot order:
-  1. *The closing gate* - pull a lever, a shutter across the room opens
-     for N seconds on the shared HUD clock; dash before the re-latch.
-     Difficulty shortens the window and litters the lane.
+  1. *The closing gate* - **DONE (Aug 2026).** `QS_EVENT_GATE` (kind 7,
+     filling the site table's 3-bit kind field) in the LARGE pool at 25%
+     and ANY at 12.5%. The prize (standard tier draw) sits at the site's
+     content spot behind a 3x3 ring of eight primed trap pots; a
+     HittableLever spawns near the room entrance; Ezlo says "Strike the
+     lever, then RUN for the prize!". Any lever flip opens the cage and
+     arms a 10-bit QS-window countdown (`GF_GATE_TIMER_BIT` 486-495) of
+     480 − difficulty×20 frames (floor 240); at zero the cage re-closes
+     around whatever the player didn't grab. Two pivots worth
+     remembering: (a) the original tile-painted shutter had working
+     collision but was *invisible* in interior rooms - wall art lives on
+     a different BG layer than the sampled tile type - so the cage
+     became trap-pot entities, which carry their own sprites and render
+     everywhere (and, being liftable at a price, can never jail the
+     player); (b) a pot stamps SPECIAL_TILE_0 collision over its tile at
+     init and only restores the saved original through its own
+     lift/break paths, so the gate's open path must `SetTile` the saved
+     index (entity offset 0x70) back before `DeleteEntity`, or the ring
+     tiles stay phantom-solid and the re-close finds no room to spawn.
+     Probe-verified end to end: cage 8/8 on arrival, lever strike arms
+     the clock and opens the ring, prize collectable, lapse re-closes.
   2. *The decoy lever* - three identical levers: prize, trap (ambush or
      primed trap-pot), dud - and the room SELLS the answer to players
      who look (an eye switch gazing at the true lever). The pot

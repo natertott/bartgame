@@ -1967,6 +1967,8 @@ const u8* const gCustomStrings[] = {
     [28] = (const u8*)"My prize is back - and\nnow it's yours. Take it!",
     [29] = (const u8*)"The Keaton got away...\nThat was my only chance.",
     [30] = (const u8*)"The chase is done for\nthis run. Travel safe!",
+    // The closing gate's one-shot room hint (QS_EVENT_GATE).
+    [31] = (const u8*)"Ezlo: Strike the lever,\nthen RUN for the prize!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2630,6 +2632,16 @@ static void QuickStartSolveLonLonBoulder(void) {
 #define QUICKSTART_SCAV_WON 2
 #define QUICKSTART_SCAV_FAILED 3
 static s32 QuickStartScavState(void);
+// The closing gate's countdown, in frames (QS_EVENT_GATE - see the branch
+// in QuickStartSetupEventContent). Global bits rather than room state
+// because room flags are bits and this needs a number; only one gate room
+// can be live at a time (the player is standing in it), and the branch
+// zeroes it on every fresh visit, so sharing one field is safe. 10 bits =
+// 17 seconds max, twice the widest window.
+#define GF_GATE_TIMER_BIT(b) (486 + (b))                                 // b = 0..9 -> 486-495
+#define QUICKSTART_GATE_WINDOW_BASE 480
+#define QUICKSTART_GATE_WINDOW_SLOPE 20
+#define QUICKSTART_GATE_WINDOW_MIN 240
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -5254,6 +5266,12 @@ enum {
     QS_EVENT_POT_LOTTERY,
     QS_EVENT_CHEST_LOTTERY,
     QS_EVENT_FAIRY,
+    // The closing gate (Phase D switch puzzle #1): a caged prize and a
+    // lever across the room; the lever opens the cage for a shrinking
+    // window. Sword-only by design (the lever answers any hit), so it
+    // needs no unlock and no kit check. Value 7 fills the kind field's
+    // 3-bit range exactly.
+    QS_EVENT_GATE,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -5310,7 +5328,7 @@ static u8 QuickStartPickSmallKind(void) {
 // reason to stop it rolling a pot lottery.
 static u8 QuickStartPickAnyKind(void) {
     u8 kind;
-    switch ((s32)Random() % 7) {
+    switch ((s32)Random() % 8) {
         case 0:
             kind = QS_EVENT_ITEM_DROP;
             break;
@@ -5329,6 +5347,9 @@ static u8 QuickStartPickAnyKind(void) {
         case 5:
             kind = QS_EVENT_CHEST_LOTTERY;
             break;
+        case 6:
+            kind = QS_EVENT_GATE;
+            break;
         default:
             kind = QS_EVENT_FAIRY;
             break;
@@ -5341,12 +5362,15 @@ static u8 QuickStartPickAnyKind(void) {
 
 static u8 QuickStartPickLargeKind(void) {
     u8 kind;
-    switch ((s32)Random() % 3) {
+    switch ((s32)Random() % 4) {
         case 0:
             kind = QS_EVENT_MINIBOSS;
             break;
         case 1:
             kind = QS_EVENT_WAVES;
+            break;
+        case 2:
+            kind = QS_EVENT_GATE;
             break;
         default:
             kind = QS_EVENT_FAIRY;
@@ -8202,6 +8226,128 @@ static void QuickStartSetupFairyRoomContent(s32 contentX, s32 contentY, u32 flag
 // this visit": these are all single-entrance dead ends, so there is no
 // leave-before-resolving recovery to do the way the multi-exit rooms
 // elsewhere in this file need.
+// --- The closing gate (QS_EVENT_GATE) helpers -----------------------------
+
+static u32 QuickStartGateReadTimer(void) {
+    u32 v = 0;
+    s32 b;
+    for (b = 0; b < 10; b++) {
+        if (QsCheckFlag(GF_GATE_TIMER_BIT(b))) {
+            v |= 1u << b;
+        }
+    }
+    return v;
+}
+
+static void QuickStartGateWriteTimer(u32 v) {
+    s32 b;
+    for (b = 0; b < 10; b++) {
+        if (v & (1u << b)) {
+            QsSetFlag(GF_GATE_TIMER_BIT(b));
+        } else {
+            QsClearFlag(GF_GATE_TIMER_BIT(b));
+        }
+    }
+}
+
+// The cage is a ring of PRIMED TRAP POTS (QUICKSTART_POT_TRAP_FORM, the
+// pot lottery's bomb form). The first cut painted tiles instead, with the
+// bridge's proven donor discipline - and the collision flipped while the
+// ART did not: in interior rooms the walls' visible art lives on another
+// background layer, so the sampled 'solid' type draws nothing, and the
+// result was an invisible fence (screenshotted; the exact artifact class
+// the user has reported before). Pots carry their own sprite, so they are
+// visible in every room by construction - and a trap-pot cage is BETTER
+// roguelite besides: a player may force entry by lifting a primed pot and
+// eating the blast, paying in health for what the lever gives free.
+static s32 QuickStartGateRingPots(s32 ptx, s32 pty, Entity** firstOut) {
+    s32 i, count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        s32 tx, ty;
+        if (ent->kind != OBJECT || ent->id != POT) {
+            continue;
+        }
+        tx = (ent->x.HALF.HI - gRoomControls.origin_x) >> 4;
+        ty = (ent->y.HALF.HI - gRoomControls.origin_y) >> 4;
+        if (tx >= ptx - 1 && tx <= ptx + 1 && ty >= pty - 1 && ty <= pty + 1 && !(tx == ptx && ty == pty)) {
+            if (firstOut != NULL && count == 0) {
+                *firstOut = ent;
+            }
+            count++;
+        }
+    }
+    return count;
+}
+
+static void QuickStartGateClose(s32 ptx, s32 pty) {
+    s32 dx, dy;
+    s32 playerTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    s32 playerTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    for (dy = -1; dy <= 1; dy++) {
+        for (dx = -1; dx <= 1; dx++) {
+            s32 tx = ptx + dx;
+            s32 ty = pty + dy;
+            Entity* pot;
+            s32 e;
+            bool32 taken = FALSE;
+            if (dx == 0 && dy == 0) {
+                continue;
+            }
+            // Never under the player, never on solid ground, never doubled.
+            if (tx == playerTX && ty == playerTY) {
+                continue;
+            }
+            if (!QuickStartTileIsOpen(tx, ty)) {
+                continue;
+            }
+            for (e = 0; e < MAX_ENTITIES; e++) {
+                Entity* ent = &gEntities[e].base;
+                if (ent->kind == OBJECT && ent->id == POT &&
+                    (ent->x.HALF.HI - gRoomControls.origin_x) >> 4 == tx &&
+                    (ent->y.HALF.HI - gRoomControls.origin_y) >> 4 == ty) {
+                    taken = TRUE;
+                    break;
+                }
+            }
+            if (taken) {
+                continue;
+            }
+            pot = CreateObject(POT, QUICKSTART_POT_TRAP_FORM, 0);
+            if (pot != NULL) {
+                pot->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+                pot->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+                pot->collisionLayer = 1;
+                pot->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(pot);
+            }
+        }
+    }
+}
+
+static void QuickStartGateOpen(s32 ptx, s32 pty) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        s32 tx, ty;
+        if (ent->kind != OBJECT || ent->id != POT) {
+            continue;
+        }
+        tx = (ent->x.HALF.HI - gRoomControls.origin_x) >> 4;
+        ty = (ent->y.HALF.HI - gRoomControls.origin_y) >> 4;
+        if (tx >= ptx - 1 && tx <= ptx + 1 && ty >= pty - 1 && ty <= pty + 1 && !(tx == ptx && ty == pty)) {
+            // A pot stamps SPECIAL_TILE_0 over its tile at init and saves
+            // the original index at entity offset 0x70 (pot.c, unk_70),
+            // restoring it only through its own lift/break paths. A bare
+            // DeleteEntity skips that restore and leaves phantom map
+            // collision behind - measured: the ring read solid forever and
+            // the re-close skipped every "occupied" tile, spawning nothing.
+            SetTile(*(u16*)((u8*)ent + 0x70), TILE_POS(tx, ty), ent->collisionLayer);
+            DeleteEntity(ent);
+        }
+    }
+}
+
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     // One correction for every kind: if the table's content spot is solid
     // or out of bounds, snap it to the nearest open tile before anything is
@@ -8273,6 +8419,123 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 0);
             }
         }
+    } else if (kind == QS_EVENT_GATE) {
+        // ---- The closing gate ----
+        // Room-flag windows (per visit): +0 initialized, +3 prize seen,
+        // +4 lever's last-seen type bit, +5 hint shown, +6 cage open.
+        s32 ptx = contentX >> 4;
+        s32 pty = contentY >> 4;
+        Entity* lever = NULL;
+        s32 i;
+        u32 t;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (ent->kind == OBJECT && ent->id == HITTABLE_LEVER && QuickStartEntityInCurrentRoom(ent)) {
+                lever = ent;
+                break;
+            }
+        }
+        if (!QsCheckRoomFlag(flagBase + 0)) {
+            // First frame of a visit: prize into the cage spot, lever near
+            // where the player is standing (they just walked in, so "near
+            // the player" IS "near the entrance" - and the dash length is
+            // whatever this room's geometry gives), cage shut, clock zero.
+            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
+            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+            if (itemEntity == NULL) {
+                return FALSE;
+            }
+            itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+            itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+            itemEntity->collisionLayer = 1;
+            itemEntity->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(itemEntity);
+            itemEntity->direction = IdleSouth;
+            if (lever == NULL) {
+                s16 lx, ly;
+                if (QuickStartFindOpenTileNear(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x,
+                                               gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y, 1, &lx, &ly)) {
+                    Entity* newLever = CreateObject(HITTABLE_LEVER, 0, 0);
+                    if (newLever != NULL) {
+                        newLever->x.HALF.HI = gRoomControls.origin_x + lx;
+                        newLever->y.HALF.HI = gRoomControls.origin_y + ly;
+                        newLever->collisionLayer = 1;
+                        UpdateSpriteForCollisionLayer(newLever);
+                        lever = newLever;
+                    }
+                }
+            }
+            QuickStartGateWriteTimer(0);
+            QuickStartGateClose(ptx, pty);
+            QsClearRoomFlag(flagBase + 6);
+            if (lever != NULL && (lever->type & 1)) {
+                QsSetRoomFlag(flagBase + 4);
+            }
+            if (!QsCheckRoomFlag(flagBase + 5)) {
+                QsSetRoomFlag(flagBase + 5);
+                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 31), 0);
+            }
+            QsSetRoomFlag(flagBase + 0);
+            return FALSE;
+        }
+        // Pickup watch - same earned/vanished semantics as the item drop.
+        if (QuickStartGroundItemAt(contentX, contentY)) {
+            QsSetRoomFlag(flagBase + 3);
+        } else if (QsCheckRoomFlag(flagBase + 3)) {
+            if (QuickStartPlayerNearSpot(contentX, contentY)) {
+                return TRUE;
+            }
+            // Despawned unclaimed (the cage held the player off past the
+            // ground-item timer) - put it back and keep playing.
+            QsClearRoomFlag(flagBase + 3);
+            {
+                u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
+                Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+                if (itemEntity != NULL) {
+                    itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                    itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    itemEntity->collisionLayer = 1;
+                    itemEntity->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(itemEntity);
+                    itemEntity->direction = IdleSouth;
+                }
+            }
+        }
+        // Any flip of the lever (either direction) restarts the window.
+        if (lever != NULL) {
+            u32 lt = lever->type & 1;
+            u32 seen = QsCheckRoomFlag(flagBase + 4) ? 1 : 0;
+            if (lt != seen) {
+                s32 window;
+                if (lt) {
+                    QsSetRoomFlag(flagBase + 4);
+                } else {
+                    QsClearRoomFlag(flagBase + 4);
+                }
+                window = QUICKSTART_GATE_WINDOW_BASE - (s32)QuickStartGetDifficulty() * QUICKSTART_GATE_WINDOW_SLOPE;
+                if (window < QUICKSTART_GATE_WINDOW_MIN) {
+                    window = QUICKSTART_GATE_WINDOW_MIN;
+                }
+                QuickStartGateWriteTimer((u32)window);
+                if (!QsCheckRoomFlag(flagBase + 6)) {
+                    QuickStartGateOpen(ptx, pty);
+                    QsSetRoomFlag(flagBase + 6);
+                }
+                SoundReq(SFX_SECRET);
+            }
+        }
+        t = QuickStartGateReadTimer();
+        if (t > 0) {
+            QuickStartGateWriteTimer(t - 1);
+        } else if (QsCheckRoomFlag(flagBase + 6)) {
+            // Clock ran out: shut it again. Per-tile the close skips the
+            // player's own tile, and a trap-pot cage is liftable from the
+            // inside anyway (at the price of the primed pot), so it can
+            // never become a jail.
+            QuickStartGateClose(ptx, pty);
+            QsClearRoomFlag(flagBase + 6);
+        }
+        return FALSE;
     } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
