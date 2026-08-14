@@ -8384,8 +8384,20 @@ static void QuickStartGateClose(s32 ptx, s32 pty) {
             if (dx == 0 && dy == 0) {
                 continue;
             }
-            // Never under the player, never on solid ground, never doubled.
+            // Never under the player, never on solid ground, never doubled -
+            // and never in the room's outer THREE tile rows/columns. Doors,
+            // seams and ladder mouths live in the outer walls, and their
+            // one-tile approach corridors sit directly inboard of them: the
+            // dojo lockout was a cage row landing on the seam-approach tile
+            // at row 9 of 12, which an outer-2 band would not have caught.
+            // In a room too small to give the ring 3 tiles of clearance the
+            // cage comes out with a gap - a free prize is the safe failure;
+            // a walled-off entrance is the one the user got locked out by.
             if (tx == playerTX && ty == playerTY) {
+                continue;
+            }
+            if (tx < 3 || ty < 3 || tx >= (s32)(gRoomControls.width >> 4) - 3 ||
+                ty >= (s32)(gRoomControls.height >> 4) - 3) {
                 continue;
             }
             if (!QuickStartTileIsOpen(tx, ty)) {
@@ -8449,6 +8461,29 @@ static const u8 sQuickStartLeverRoles[6][3] = {
     { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 },
 };
 
+// Pull a room-local pixel anchor at least 3 tiles inboard of every wall.
+// Levers spawn "near the player", and at a seam or door the player IS the
+// entrance corridor: measured in the dojo, the decoy deal put its middle
+// lever on the corridor's own column at the seam mouth, and a lever is a
+// solid, collidable fixture - the room was walled shut exactly the way
+// the mis-placed cage had walled it (user-reported class). Anchoring the
+// search inboard keeps every lever off the doorstep; the player walked
+// in, so a spot a few tiles ahead of them is always reachable.
+static void QuickStartClampInboard(s32* x, s32* y) {
+    s32 maxX = (s32)gRoomControls.width - 0x38;
+    s32 maxY = (s32)gRoomControls.height - 0x38;
+    if (*x < 0x38) {
+        *x = 0x38;
+    } else if (*x > maxX) {
+        *x = maxX;
+    }
+    if (*y < 0x38) {
+        *y = 0x38;
+    } else if (*y > maxY) {
+        *y = maxY;
+    }
+}
+
 static bool32 QuickStartLeverAtTile(s32 tx, s32 ty) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -8511,7 +8546,12 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             QsClearRoomFlag(flagBase + 3);
             // Fall through and re-drop it.
         }
-        {
+        if (QuickStartGroundItemAt(contentX, contentY)) {
+            // Same persistent-leftover adoption as the switch-puzzle kind:
+            // ENT_PERSIST outlives a scroll-seam re-entry, room flags don't.
+            QsSetRoomFlag(flagBase + 0);
+            QsSetRoomFlag(flagBase + 3);
+        } else {
             // Extra bit 7 marks a RARE site (QUICKSTART_KINDS_RARE). The
             // ordinary chest roll only ever fills bits 0-1, so the top bit is
             // free to say which pool to draw from - the same trick the miniboss
@@ -8558,18 +8598,25 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // whole room state (levers, cage, unclaimed prize) rebuilds
             // per visit anyway, so re-entering may deal a different
             // puzzle, which suits a gamble room.
-            u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
             bool32 decoy;
-            if (itemEntity == NULL) {
-                return FALSE;
+            // A prize from a previous visit can still be sitting on the
+            // spot: the item carries ENT_PERSIST, scroll-seam re-entries
+            // do not clear persistent entities, and the per-visit room
+            // flags (which say "drop one") DO reset. Adopt it rather than
+            // stacking a second prize on top.
+            if (!QuickStartGroundItemAt(contentX, contentY)) {
+                u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
+                Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
+                if (itemEntity == NULL) {
+                    return FALSE;
+                }
+                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
+                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
+                itemEntity->collisionLayer = 1;
+                itemEntity->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(itemEntity);
+                itemEntity->direction = IdleSouth;
             }
-            itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-            itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-            itemEntity->collisionLayer = 1;
-            itemEntity->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(itemEntity);
-            itemEntity->direction = IdleSouth;
             decoy = ((s32)Random() & 1) != 0;
             if (decoy) {
                 QsSetRoomFlag(flagBase + 1);
@@ -8578,8 +8625,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             }
             if (!decoy && lever == NULL) {
                 s16 lx, ly;
-                if (QuickStartFindOpenTileNear(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x,
-                                               gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y, 1, &lx, &ly)) {
+                s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+                s32 ay = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+                QuickStartClampInboard(&ax, &ay);
+                if (QuickStartFindOpenTileNear(ax, ay, 1, &lx, &ly)) {
                     Entity* newLever = CreateObject(HITTABLE_LEVER, 0, 0);
                     if (newLever != NULL) {
                         newLever->x.HALF.HI = gRoomControls.origin_x + lx;
@@ -8599,6 +8648,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
                 s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
                 s32 k;
+                QuickStartClampInboard(&px, &py);
                 for (k = 0; k < 3; k++) {
                     s16 lx, ly;
                     s32 attempt;
@@ -8620,6 +8670,14 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         // spawn right after this and skip occupied tiles.
                         if ((lx >> 4) >= ptx - 1 && (lx >> 4) <= ptx + 1 && (ly >> 4) >= pty - 1 &&
                             (ly >> 4) <= pty + 1) {
+                            continue;
+                        }
+                        // Never in the outer wall band either - the search
+                        // can wander back out of the clamped anchor's zone,
+                        // and a lever on a door's approach tile is a wall
+                        // (see QuickStartClampInboard).
+                        if ((lx >> 4) < 3 || (ly >> 4) < 3 || (lx >> 4) >= (s32)(gRoomControls.width >> 4) - 3 ||
+                            (ly >> 4) >= (s32)(gRoomControls.height >> 4) - 3) {
                             continue;
                         }
                         placed = TRUE;
@@ -9364,7 +9422,12 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // This room was the shop until now. The shop has moved out entirely
     // (retired; the shop is a fixed hub room now) and the Melari's Mine link
     // that used to reach it is gone with it.
-    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, QUICKSTART_KINDS_LARGE, 0x78, 0x88 },                         // arena floor, clear of the seam
+    // Arena CENTER (row 5 of the 2-9 arena band), not the old (0x78,0x88):
+    // that spot sat two tiles from the seam mouth at the room's south edge,
+    // and the closing gate's 3x3 pot cage around it walled the entrance
+    // shut - the player could not reach the room, let alone the lever
+    // (user-reported; measured 0px of northward progress from the seam).
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, QUICKSTART_KINDS_LARGE, 0x78, 0x58 },
     { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },                  // arrives (0x78,0x78)
     // --- Goron Cave's main chamber: a four-stage kinstone progression ----
     //
@@ -9959,6 +10022,21 @@ static void QuickStartSetupContentSite(s32 site) {
     const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
     u8 kind;
     s32 extra, b;
+    // Never during a room scroll or reload. The Grimblade dojo joins its
+    // ante room by a scroll seam, and mid-scroll there are frames where
+    // gRoomControls.room already names the dojo while origin still points
+    // at the ante screen (the flip happens mid-frame; per-frame sampling
+    // shows them changing "together", but this dispatcher runs between
+    // the two writes). Every room-local coordinate this function touches
+    // is wrong in that window - measured: the gate's prize re-dropped
+    // INTO THE ANTE ROOM (with a partial pot cage around it), free to
+    // take without ever striking the lever - the user's phantom-prize
+    // report. Settled state is reload_flags == 0, scrollAction == 1 in
+    // every room class (measured overworld, full-load interior, and both
+    // sides of the dojo seam); anything else means the ground is moving.
+    if (gRoomControls.reload_flags != 0 || gRoomControls.scrollAction != 1) {
+        return;
+    }
     QuickStartRandomizeContentSiteOnce(site);
     // Above the "already collected" check on purpose. The vanilla payout has
     // to go every time the room loads, not only on the visit that spawns the

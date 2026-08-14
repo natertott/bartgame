@@ -1182,6 +1182,39 @@ sequencing lives in section 8.
 Full per-room measurements (walkability grids, components, entity headroom,
 special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 
+- **DONE - switch-puzzle cage walled the dojo shut + phantom prize in the
+  ante room (user-reported, Aug 2026).** Two independent defects, both
+  reproduced via the real ante-room -> seam -> dojo path:
+  1. The dojo site's content spot (0x78,0x88) sat two tiles from the seam
+     mouth, so the gate's 3x3 pot cage walled the room's only entrance
+     (measured: 0px of progress). Fixed three ways: the spot moved to the
+     arena center (0x78,0x58); `QuickStartGateClose` refuses cage tiles in
+     the room's outer THREE rows/columns (doors and their approach
+     corridors live there - in a room too cramped for clearance the cage
+     comes out with a gap, the safe failure); and both variants' levers
+     (solid, collidable fixtures) now spawn from an anchor clamped 3 tiles
+     inboard (`QuickStartClampInboard`) with the same outer-band rejection,
+     because the decoy deal had put its middle lever on the seam
+     corridor's own column - the same lockout by other means.
+  2. The phantom prize: mid-scroll through the dojo seam there are frames
+     where `gRoomControls.room` already names the dojo while the origin
+     still points at the ante screen (they flip mid-frame), and the
+     content-site dispatcher ran in that window - every room-local
+     coordinate wrong - re-dropping the prize INTO the ante room, partial
+     pot cage and all, free to take without touching the lever.
+     `QuickStartSetupContentSite` now refuses to run unless the room is
+     settled (`reload_flags == 0 && scrollAction == 1`, measured as the
+     settled state in every room class). Two adjacent holes closed with
+     it: the prize carries ENT_PERSIST and scroll-seam re-entries don't
+     clear it while per-visit room flags do reset, so both the gate and
+     the plain item-drop inits now ADOPT an item already sitting on the
+     spot instead of stacking a duplicate.
+  Probe-verified end to end: entry never blocked (player crosses the
+  lever row's open flank into the arena), a mid-puzzle round trip to the
+  ante room yields zero items there and exactly one prize total, re-entry
+  keeps one prize and a full cage, and the gate cycle (strike, open,
+  take) works at the new center spot.
+
 - **DONE - boss "started spawning", camera swung between the spawn and the
   player, black screen + freeze crossing back toward Trilby
   (user-reported, Aug 2026, save file attached).** Root cause, reproduced
