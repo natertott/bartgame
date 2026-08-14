@@ -1601,7 +1601,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 41
+#define QUICKSTART_CONTENT_SITE_COUNT 43
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -9283,6 +9283,18 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    // Trilby's through-cave - the room behind the two exposed ladders at
+    // (0x98,0x284) and (0x118,0x284). Deferred at the pilot as a "future
+    // 2-door candidate" and then never wired, which left its two vanilla
+    // ladder transitions being cancelled by containment (nothing blessed
+    // the destination) - the user's "connections seem to have been cut
+    // off" report. The collision survey says the name lies: the room is
+    // TWO separate dead-end chambers that happen to share one room id
+    // (left, tiles 2-9; right, tiles 12-23; the ornate doorframe between
+    // them is walled off on this layer), so each ladder gets its own
+    // site, the same multi-site-per-room shape as Goron Cave's chambers.
+    { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 0x58, 0x48 },   // left chamber
+    { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 0x118, 0x48 },  // right chamber
     // --- The last 5 synthetic entrances, converted -------------------------
     //
     // Castle Garden's two ladders, Lon Lon Ranch's Goron Cave door, Link's
