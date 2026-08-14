@@ -2037,6 +2037,17 @@ const u8* const gCustomStrings[] = {
     [48] = (const u8*)"A royal bed.\nOne night: 500 Rupees.\nPress R again to sleep.",
     [49] = (const u8*)"You can't afford\nthis bed.",
     [50] = (const u8*)"You wake up\nfeeling rested!",
+    // F10: the MAP and COMPASS receipts. The compass names the Element's
+    // REGION - never the spot - so [52]-[58] follow the ring enum order
+    // (QS_RING_CG..QS_RING_WW, see QuickStartRingRegionOfPoolIndex).
+    [51] = (const u8*)"The world map!\nPress START to see\nwhere you stand.",
+    [52] = (const u8*)"The compass hums...\nthe Element waits in\nthe Castle Garden!",
+    [53] = (const u8*)"The compass hums...\nthe Element waits in\nNorth Hyrule Field!",
+    [54] = (const u8*)"The compass hums...\nthe Element waits in\nSouth Hyrule Field!",
+    [55] = (const u8*)"The compass hums...\nthe Element waits in\nthe Eastern Hills!",
+    [56] = (const u8*)"The compass hums...\nthe Element waits in\nLon Lon Ranch!",
+    [57] = (const u8*)"The compass hums...\nthe Element waits in\nTrilby Highlands!",
+    [58] = (const u8*)"The compass hums...\nthe Element waits in\nthe Western Wood!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3837,6 +3848,13 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_JABBERNUT, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: kinstone drops up
     { ITEM_QST_CARLOV_MEDAL, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: heart drops up
     { ITEM_QST_BROKEN_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: cheap shop
+    // F10: the two findable tools. The MAP activates the START-screen map
+    // (the pause menu already gates that screen on GetInventoryValue(ITEM_MAP)
+    // - see pauseMenu.c PauseMenu_Variant2); the COMPASS turns on the map's
+    // unfused-fusion markers and names the Element's region (see
+    // pauseMenuScreen6.c's QUICKSTART block + QuickStartNoteFoodItem).
+    { ITEM_MAP, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    { ITEM_COMPASS, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
     // --- KEY ITEMS -------------------------------------------------------
     // Never drawn by a ? room (QS_CAT_DROP excludes them); reachable from the
     // opening selection and from a region clear reward.
@@ -13437,6 +13455,42 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_4C },
 };
 
+// --- F10: the COMPASS's pause-map feeds (called from pauseMenuScreen6.c) --
+//
+// Is this kinstone one a fuser in this mode actually offers? The compass's
+// marker loop is scoped to these, not to all 91 vanilla fusions - a marker
+// for a fusion no fuser will ever offer would be a lie.
+u32 QuickStartCompassKinstone(u32 kinstoneId) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
+        if (sQuickStartFusers[i].kinstoneId == kinstoneId) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The Element-region marker: TRUE + world coordinates when the compass is
+// owned and the run's element region is rolled. Deliberately the CENTER of
+// the region's room, never the reward spot - the compass narrows the hunt
+// to a region, it does not end it (the user's rule). The vanilla map screen
+// only ever shows the page for the location the player is standing in, so
+// in play this marker appears once the player is in the right region -
+// confirmation on arrival; the pickup receipt (QuickStartNoteFoodItem) is
+// what names the region from anywhere.
+u32 QuickStartElementMapMarker(u16* x, u16* y) {
+    const QuickStartRegion* region;
+    RoomHeader* hdr;
+    if (GetInventoryValue(ITEM_COMPASS) == 0 || !QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+        return FALSE;
+    }
+    region = &sQuickStartRegionPool[QuickStartElementRegionIndex()];
+    hdr = gAreaRoomHeaders[region->area] + region->room;
+    *x = hdr->map_x + (hdr->pixel_width / 2);
+    *y = hdr->map_y + (hdr->pixel_height / 2);
+    return TRUE;
+}
+
 // Nine places per region a fuser can stand, and NOT hand-picked:
 // tools/quickstart/find_fuser_spots.py boots this ROM, floods the walkable
 // graph from the region entrance with every gate still shut, keeps only
@@ -13651,6 +13705,24 @@ u32 QuickStartFoodMask(void) {
 // a pastry, which tells the player nothing about what it did to them.
 void QuickStartNoteFoodItem(u32 item) {
     s32 n;
+    // F10's two tools ride this same GiveItem chokepoint for their pickup
+    // receipts (this runs BEFORE GiveItem sets the inventory bit, so a zero
+    // read means "first grant" - the once-latch for free). The compass
+    // receipt names the Element's REGION, never the spot: strings 52-58 in
+    // ring-enum order.
+    if (item == ITEM_MAP || item == ITEM_COMPASS) {
+        if (GetInventoryValue(item) == 0) {
+            if (item == ITEM_MAP) {
+                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 51), 0);
+            } else {
+                CreateEzloHint(
+                    TEXT_INDEX(TEXT_CUSTOM,
+                               (52 + QuickStartRingRegionOfPoolIndex(QuickStartElementRegionIndex()))),
+                    0);
+            }
+        }
+        return;
+    }
     switch (item) {
         case ITEM_BRIOCHE:
             n = 0;

@@ -87,15 +87,6 @@ can actually obtain.
   path: a hub NPC that speaks `sQuickStartUnlockRules` as dialogue
   ("LOCKED - needs N wins"); build a real screen only if the dialogue
   version reads badly in playtests.
-- **MAP and COMPASS items (F10 / #127).** Two findable rare tools. MAP
-  activates the START-screen map showing only regions visited this run.
-  COMPASS marks unfused kinstone fusions (icons clear on unlock/claim)
-  and marks WHICH region holds the Earth Element - the region, never the
-  spot. Path is specced: research spike into the inactive pause map and
-  vanilla's fusion-icon renderer, then repurpose the dungeon MAP/COMPASS
-  item ids, an 11-bit visited bitfield, icon draws from `sQuickStartFusers`
-  x fused-state, and a checker tier. `gDungeonMap`'s 28 KB buffer is the
-  pause map's own and gets repurposed, not reclaimed.
 - **Unlock benchmark values.** Storage and registry exist; the actual
   thresholds are placeholder. Needs real playthrough scores to tune
   (Decision 2).
@@ -258,19 +249,13 @@ Open defects and unexplained reports, roughly by player impact.
   functions. The user is collecting a list of the non-working entrances
   and will report them; fix them as they land, then the Minish-layer
   survey (#102) can finish.
-- **POT_MINISH doesn't render multi-enemy content (#17).** The
-  best-documented reproducer of the VRAM sheet-slot failure class. Fold
-  into the existing sheet-lifetime tracer work; solving it teaches the
-  budget rule for every crowded room.
-- **Gentari's Room / Gentari's Main adjacency conflict (#19).** Survey /
-  data fix, waiting on the reachability harness being pleasant to run.
 - **Trilby's NW enemy offset (120,24) sits in an isolated pocket**; **Lon
   Lon Ranch's top-middle pocket is unfenced** (no walked gating box yet -
   the user paused zone-gating pending their own walk). Both are data
   fixes waiting on the same harness.
 - **The reachability harness (#81) is slow and crashes mgba** after
   enough reboots (worked around by process chunking, still slow). It
-  gates the three items above; batch the fix with the next budget-harness
+  gates the two items above; batch the fix with the next budget-harness
   work.
 - **First run on a brand-new save is fixed** (nothing has happened yet to
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a

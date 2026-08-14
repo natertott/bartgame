@@ -424,6 +424,12 @@ bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
         case ITEM_QST_CARLOV_MEDAL:
         case ITEM_QST_BROKEN_SWORD:
         case ITEM_JABBERNUT:
+        // F10's two tools take the same plain-GiveItem path: their pickup
+        // receipt (the Ezlo line naming what the tool does / where the
+        // Element region is) lives in QuickStartNoteFoodItem, which only
+        // the plain path reaches reliably.
+        case ITEM_MAP:
+        case ITEM_COMPASS:
             return FALSE;
         default:
             break;
