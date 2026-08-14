@@ -2029,6 +2029,14 @@ const u8* const gCustomStrings[] = {
     [43] = (const u8*)"The Jabber Nut! Foes\nwill drop more kinstones.",
     [44] = (const u8*)"Carlov's medal! Foes\nwill drop more hearts.",
     [45] = (const u8*)"A broken sword... shops\npity you: 50 rupee cap!",
+    // The inn (Wind Tribe Tower Floor 2): the three beds' offers, the
+    // refusal, and the wake-up line. Prices repeated in the text on
+    // purpose - the offer IS the price tag.
+    [46] = (const u8*)"A comfy bed.\nOne night: 50 Rupees.\nPress R again to sleep.",
+    [47] = (const u8*)"A plush bed.\nOne night: 200 Rupees.\nPress R again to sleep.",
+    [48] = (const u8*)"A royal bed.\nOne night: 500 Rupees.\nPress R again to sleep.",
+    [49] = (const u8*)"You can't afford\nthis bed.",
+    [50] = (const u8*)"You wake up\nfeeling rested!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -12579,6 +12587,106 @@ static void QuickStartClearHubRoom(void) {
     }
 }
 
+// --- The inn (Floor 2) ----------------------------------------------------
+//
+// Three bed alcoves at tiles (4,3) / (7,3) / (10,3) (QUICKSTART_HUB.md's
+// Floor 2 survey - each alcove is its own one-tile-wide recess in the north
+// wall, so standing in one is an unambiguous, deliberate act). Rest is a
+// two-step R interaction handled entirely in C - no script, no interaction
+// registration: the first R press in an alcove quotes that bed's price
+// (which arms it, room flags 9-11, per visit), the second R press takes the
+// rupees, heals, and plays a sleep fade. Walking out of the alcove disarms,
+// so an armed state always describes the bed the player is standing at,
+// and a stray R elsewhere can never charge anyone. The R button is free
+// here: nothing on this floor is liftable and R's other jobs all need a
+// target. Healing per the agreed spec: 50 rupees = 25% of max (min 1
+// heart), 200 = 50% (min 2 hearts), 500 = full. A heart is 4 units
+// (gSave.stats.maxHealth), and ModHealth clamps at max on its own. Beds
+// are repeatable - the inn is a rupee sink, not a once-latch. The two
+// chest props between the alcoves are the still-open half of the inn spec
+// (COMMON/UNCOMMON rewards) and are wired separately via the small-chest
+// table (see the chest research note in the roadmap).
+#define QUICKSTART_INN_ARMED_FLAG(i) (9 + (i))
+
+static void QuickStartInnMonitor(void) {
+    static const u8 sBedTileX[3] = { 4, 7, 10 };
+    static const u16 sBedPrice[3] = { 50, 200, 500 };
+    s32 i, tx, ty, heal;
+    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_FLOOR_2) {
+        return;
+    }
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    tx = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    ty = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    for (i = 0; i < 3; i++) {
+        if (tx == sBedTileX[i] && (ty == 3 || ty == 4)) {
+            break;
+        }
+    }
+    if (i == 3) {
+        // Not at any bed: disarm whatever was armed.
+        for (i = 0; i < 3; i++) {
+            if (QsCheckRoomFlag(QUICKSTART_INN_ARMED_FLAG(i))) {
+                QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
+            }
+        }
+        return;
+    }
+    // Never process R while any textbox is up (the offer itself included) -
+    // a plain message box doesn't necessarily move the player off
+    // PLAYER_NORMAL, so the action check alone is not enough.
+    if (gMessage.state & MESSAGE_ACTIVE) {
+        return;
+    }
+    if (gPlayerEntity.base.action != PLAYER_NORMAL) {
+        return;
+    }
+    if (!(gInput.newKeys & R_BUTTON)) {
+        return;
+    }
+    if (!QsCheckRoomFlag(QUICKSTART_INN_ARMED_FLAG(i))) {
+        s32 j;
+        for (j = 0; j < 3; j++) {
+            QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(j));
+        }
+        QsSetRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (46 + i)));
+        MsgInit();
+        return;
+    }
+    if (gSave.stats.rupees < sBedPrice[i]) {
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 49));
+        MsgInit();
+        return;
+    }
+    ModRupees(-(s32)sBedPrice[i]);
+    if (i == 0) {
+        heal = (s32)gSave.stats.maxHealth / 4;
+        if (heal < 4) {
+            heal = 4;
+        }
+    } else if (i == 1) {
+        heal = (s32)gSave.stats.maxHealth / 2;
+        if (heal < 8) {
+            heal = 8;
+        }
+    } else {
+        heal = gSave.stats.maxHealth;
+    }
+    ModHealth(heal);
+    // Disarm so the next R quotes the price again rather than instantly
+    // charging for a second night.
+    QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
+    // The sleep read: the same proven fade the win/reset path uses, behind
+    // the wake-up line's textbox.
+    SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 8);
+    SoundReq(SFX_SECRET);
+    MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 50));
+    MsgInit();
+}
+
 // --- The hub's hint sprites ----------------------------------------------
 //
 // Six Wind Tribe wanderers standing around the hub, each with one line about
@@ -13087,6 +13195,7 @@ static void QuickStartRoomMonitor(void) {
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
     QuickStartClearHubRoom();
+    QuickStartInnMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();

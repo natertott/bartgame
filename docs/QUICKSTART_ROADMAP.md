@@ -180,20 +180,32 @@ can actually obtain.
 - **Last unused charm idea (F4).** Rare-reward-chance-up is the only
   item from the original wish list not implemented (boss-chance-up was
   deliberately rejected). Framework is ready; one bit, one read.
-- **Chest-contents research.** Can vanilla chests be given OUR items -
-  overwriting a placed chest's item parameter at load, spawning a fresh
-  CHEST with a chosen item, and what GiveItem-only equipment does inside
-  one? If it works, chests become a delivery option for every reward
-  system, and the chest-lottery's prize could finally live IN its chest.
-  The inn's SPECIAL_CHEST question below is a sub-case.
+- **Chests as a reward delivery channel (research DONE, wiring
+  outstanding).** The answer is yes on every front. Small chests
+  (SPECIAL_CHEST): contents come from the per-room `gSmallChests` RAM
+  table (8 rows: tile, item, subtype, opened-flag) - inject a row and
+  spawn the chest, which is exactly what the shipped chest lottery
+  already does; a vanilla small chest's contents can be overwritten by
+  rewriting its row after room load. Big chests (CHEST_SPAWNER,
+  including every kinstone-fusion-revealed chest): the open handler
+  (`sub_08084074`, chestSpawner.c) resolves the item from a BIG_CHEST
+  tile-entity row in ROM room data matched by local flag - one
+  QUICKSTART override table consulted there puts any fusion chest's
+  contents under our control, and spawning a fresh always-open big chest
+  is CHEST_SPAWNER type 4 plus an override row. Remaining work: the
+  override hook, the injection helper, and one probe check that
+  CreateItemEntity-granted equipment (swords) survives the chest path.
 
 ### 2.7 The hub
 
-- **The inn (Floor 2, D2).** Fully specced in `docs/QUICKSTART_HUB.md`:
-  three beds at 50/200/500 rupees healing 25%/50%/100%, chests between
-  them holding nothing / COMMON / UNCOMMON. The one unknown: whether
-  SPECIAL_CHEST objects can be filled - probe first; if not, ground items
-  on the bed tiles need zero new mechanisms.
+- **The inn's two chests (Floor 2).** The REST half shipped (Aug 2026):
+  three beds at 50/200/500 rupees healing 25%/50%/100% (min 1 heart / 2
+  hearts / full), a two-step R interaction that quotes the price first.
+  What remains is the chest half of the spec - the two chest props
+  between the alcoves holding a COMMON and an UNCOMMON reward - which
+  now rides the answered chest research above (inject two `gSmallChests`
+  rows + spawn two SPECIAL_CHESTs, the chest lottery's own proven
+  recipe).
 - **Hint pool drawn per run (F5).** Six fixed hint spots today; wanted: a
   pool much larger than the spot count, drawn per run without
   replacement, so every run teaches something. Content should lean on
@@ -236,9 +248,12 @@ Open defects and unexplained reports, roughly by player impact.
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future
   content double-spawns.
-- **Minish transform rendering + the NHF vine (#103).** Blocks the whole
-  Minish layer (#102) and the inactive-Minish-hole reports. Fix first or
-  every Minish site stays theoretical.
+- **Some Minish holes/entrances don't work (#103, narrowed - user, Aug
+  2026).** The transform RENDERING works fine now and the Minish world is
+  broadly incorporated; what remains is that not every hole/entrance
+  functions. The user is collecting a list of the non-working entrances
+  and will report them; fix them as they land, then the Minish-layer
+  survey (#102) can finish.
 - **POT_MINISH doesn't render multi-enemy content (#17).** The
   best-documented reproducer of the VRAM sheet-slot failure class. Fold
   into the existing sheet-lifetime tracer work; solving it teaches the
