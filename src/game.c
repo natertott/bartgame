@@ -309,6 +309,7 @@ static bool32 QuickStartGfxBudgetForSpawn(void);
 static s32 QuickStartFreeGfxSlots(void);
 static s32 QuickStartReclaimableGfxSlots(void);
 static void QuickStartApplyFoodEffects(void);
+u32 QuickStartFoodMask(void);
 static s32 QuickStart2DoorExitSide(void);
 static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
@@ -1986,6 +1987,14 @@ const u8* const gCustomStrings[] = {
     [36] = (const u8*)"Humble Pie... a curse!\nBlows send YOU flying.",
     [37] = (const u8*)"Dog Food?! A curse! The\nenemies quicken...",
     [38] = (const u8*)"Odd Mushroom... a curse!\nFoes fire twice as fast.",
+    // Batch two of the receipts: the tomes, the trinkets, the pity sword.
+    [39] = (const u8*)"A scorched tome! Flame\ncannot burn you now.",
+    [40] = (const u8*)"A frosted tome! Ice\ncannot freeze you now.",
+    [41] = (const u8*)"A crackling tome! No\nspark can shock you now.",
+    [42] = (const u8*)"Tingle's trophy! Foes\nwill spill more rupees.",
+    [43] = (const u8*)"The Jabber Nut! Foes\nwill drop more kinstones.",
+    [44] = (const u8*)"Carlov's medal! Foes\nwill drop more hearts.",
+    [45] = (const u8*)"A broken sword... shops\npity you: 50 rupee cap!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2682,16 +2691,34 @@ static s32 QuickStartScavState(void);
 //   bit 3  PIE       curse: blows knock Link twice as far ("humble pie")
 //   bit 4  DOGFOOD   curse: enemies move half again as fast
 //   bit 5  MUSHROOM  curse: shooter enemies fire ~1.5x as often
+// Batch two, on the rest of the unused quest items (all charms):
+//   bit 6  BOOK1         fire cannot burn you (no ignite, no contact damage)
+//   bit 7  BOOK2         ice cannot freeze you
+//   bit 8  BOOK3         sparks cannot shock you
+//   bit 9  TINGLE_TROPHY enemies spill more rupees
+//   bit 10 JABBERNUT     enemies drop more kinstones
+//   bit 11 CARLOV_MEDAL  enemies drop more hearts
+//   bit 12 BROKEN_SWORD  cheap shop: everything capped at 50 rupees
+//                        (except the heart piece, whose price still climbs)
 // Persistent for the run in the QS window (per-run bits, cleared with the
 // rest of the window at run start). CAKE beats PIE when both are held -
 // the immunity check runs last.
-#define GF_FOOD_BIT(n) (496 + (n)) // n = 0..5 -> 496-501
+#define GF_FOOD_BIT(n) (496 + (n)) // n = 0..12 -> 496-508
 #define QUICKSTART_FOOD_SWORD_KNOCKBACK (1 << 0)
 #define QUICKSTART_FOOD_WALK_SPEED (1 << 1)
 #define QUICKSTART_FOOD_STEADFAST (1 << 2)
 #define QUICKSTART_FOOD_CURSE_KNOCKBACK (1 << 3)
 #define QUICKSTART_FOOD_CURSE_ENEMY_SPEED (1 << 4)
 #define QUICKSTART_FOOD_CURSE_FIRE_RATE (1 << 5)
+#define QUICKSTART_FOOD_IMMUNE_FIRE (1 << 6)
+#define QUICKSTART_FOOD_IMMUNE_ICE (1 << 7)
+#define QUICKSTART_FOOD_IMMUNE_SHOCK (1 << 8)
+#define QUICKSTART_FOOD_DROP_RUPEES (1 << 9)
+#define QUICKSTART_FOOD_DROP_KINSTONES (1 << 10)
+#define QUICKSTART_FOOD_DROP_HEARTS (1 << 11)
+#define QUICKSTART_FOOD_CHEAP_SHOP (1 << 12)
+#define QUICKSTART_FOOD_COUNT 13
+#define QUICKSTART_CHEAP_SHOP_PRICE 50
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -3186,7 +3213,10 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // reopen the GFX-slot budget question that capped the old Castle-Garden-
 // only pairing to "boss alone" in the first place (docs/QUICKSTART_ROADMAP.md
 // sec 3.3, this session's scratchpad/test_gfx_boss_cost.py).
-#define QUICKSTART_REGION_BOSS_WAVE_CHANCE 20
+// 20 -> 10 per the user, alongside the second charm batch: with the ring
+// fully populated and every region's wave loop rolling this, one in five
+// was making bosses routine rather than an event.
+#define QUICKSTART_REGION_BOSS_WAVE_CHANCE 10
 // GFX slots (free-or-evictable - QuickStartReclaimableGfxSlots, since
 // the loader reclaims unreferenced sheets on demand) a room must offer
 // before the boss roll may fire. The family + start particles cost 14
@@ -3548,6 +3578,14 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_PIE, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },          // curse: Link knocked further
     { ITEM_QST_DOGFOOD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },  // curse: enemies faster
     { ITEM_QST_MUSHROOM, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // curse: foes fire faster
+    // Batch two - all charms, on the rest of the unused quest items.
+    { ITEM_QST_BOOK1, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: fire immunity
+    { ITEM_QST_BOOK2, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: ice immunity
+    { ITEM_QST_BOOK3, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: shock immunity
+    { ITEM_QST_TINGLE_TROPHY, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },// charm: rupee drops up
+    { ITEM_JABBERNUT, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: kinstone drops up
+    { ITEM_QST_CARLOV_MEDAL, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: heart drops up
+    { ITEM_QST_BROKEN_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: cheap shop
     // --- KEY ITEMS -------------------------------------------------------
     // Never drawn by a ? room (QS_CAT_DROP excludes them); reachable from the
     // opening selection and from a region clear reward.
@@ -4572,21 +4610,36 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
     // The heart piece: 50 rupees, then 25 more for each one already bought
     // this run. Derived on every lookup rather than stored, so the displayed
     // price and the charged price cannot drift apart across a purchase.
+    // Deliberately ABOVE the Broken Sword cap below, per the user: the
+    // heart piece's climbing price is the one thing the pity discount
+    // does not touch.
     if (item == ITEM_HEART_PIECE) {
         return QUICKSTART_SHOP_HEART_PIECE_BASE +
                QUICKSTART_SHOP_HEART_PIECE_STEP * QsReadField(GF_SHOP_HEART_PIECE_BUYS_BIT(0), 5);
     }
     for (i = 0; i < QUICKSTART_SHOP_FIXED_SLOTS - 1; i++) {
         if (sQuickStartShopFixed[i].item == item) {
-            return QsReadField(GF_SHOP_REFILL_PRICE_BIT(i, 0), QUICKSTART_SHOP_REFILL_PRICE_BITS) + 1;
+            s32 price = QsReadField(GF_SHOP_REFILL_PRICE_BIT(i, 0), QUICKSTART_SHOP_REFILL_PRICE_BITS) + 1;
+            // The Broken Sword charm: merchants take pity - nothing costs
+            // more than 50. A CAP, not an assignment, so a lucky cheap
+            // roll stays cheap.
+            if ((QuickStartFoodMask() & QUICKSTART_FOOD_CHEAP_SHOP) && price > QUICKSTART_CHEAP_SHOP_PRICE) {
+                price = QUICKSTART_CHEAP_SHOP_PRICE;
+            }
+            return price;
         }
     }
     for (i = 0; i < QUICKSTART_SHOP_DRAWN_SLOTS; i++) {
         s32 index = QuickStartShopSlotEntry(i);
+        s32 price;
         if (index >= QUICKSTART_SHOP_POOL_SIZE || sQuickStartShopPool[index].item != item) {
             continue;
         }
-        return QsReadField(GF_SHOP_ONEOFF_PRICE_BIT(i, 0), QUICKSTART_SHOP_ONEOFF_PRICE_BITS) + 1;
+        price = QsReadField(GF_SHOP_ONEOFF_PRICE_BIT(i, 0), QUICKSTART_SHOP_ONEOFF_PRICE_BITS) + 1;
+        if ((QuickStartFoodMask() & QUICKSTART_FOOD_CHEAP_SHOP) && price > QUICKSTART_CHEAP_SHOP_PRICE) {
+            price = QUICKSTART_CHEAP_SHOP_PRICE;
+        }
+        return price;
     }
     return -1;
 }
@@ -13162,10 +13215,10 @@ void QuickStartNoteCharm(u32 bottleContent) {
 // The six effects the player currently carries, as
 // QUICKSTART_FOOD_* bits. Read by QuickStartApplyFoodEffects each frame
 // and by UpdatePlayerMovement (playerUtils.c) for the walk-speed charm.
-u8 QuickStartFoodMask(void) {
+u32 QuickStartFoodMask(void) {
     s32 n;
-    u8 mask = 0;
-    for (n = 0; n < 6; n++) {
+    u32 mask = 0;
+    for (n = 0; n < QUICKSTART_FOOD_COUNT; n++) {
         if (QsCheckFlag(GF_FOOD_BIT(n))) {
             mask |= 1 << n;
         }
@@ -13198,6 +13251,27 @@ void QuickStartNoteFoodItem(u32 item) {
             break;
         case ITEM_QST_MUSHROOM:
             n = 5;
+            break;
+        case ITEM_QST_BOOK1:
+            n = 6;
+            break;
+        case ITEM_QST_BOOK2:
+            n = 7;
+            break;
+        case ITEM_QST_BOOK3:
+            n = 8;
+            break;
+        case ITEM_QST_TINGLE_TROPHY:
+            n = 9;
+            break;
+        case ITEM_JABBERNUT:
+            n = 10;
+            break;
+        case ITEM_QST_CARLOV_MEDAL:
+            n = 11;
+            break;
+        case ITEM_QST_BROKEN_SWORD:
+            n = 12;
             break;
         default:
             return;

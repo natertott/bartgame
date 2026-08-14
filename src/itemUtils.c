@@ -91,6 +91,12 @@ s32 GetItemPrice(u32 item) {
 // grant path shares - ground pickups, chests, scripts - so hooking here
 // covers all of them; it is a no-op for every non-food item id.
 extern void QuickStartNoteFoodItem(u32 item);
+// And the effect mask, for the three drop-rate charms in
+// CreateRandomItemDrop below.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_DROP_RUPEES (1 << 9)
+#define QUICKSTART_FOOD_DROP_KINSTONES (1 << 10)
+#define QUICKSTART_FOOD_DROP_HEARTS (1 << 11)
 #endif
 
 u32 GiveItem(Item item, u32 param_2) {
@@ -604,6 +610,28 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 kinstoneWeight = 63 - (s32)QuickStartDifficultyForDrops() * 4;
                 if (kinstoneWeight < 21) {
                     kinstoneWeight = 21;
+                }
+                {
+                    // The drop-rate charms (game.c food charms). Each one
+                    // roughly doubles its category's share of the summed
+                    // table: rupees get a second helping of the flat bumps
+                    // above, kinstones double their decayed weight, and
+                    // hearts jump from the clamped 2 to a real seat at the
+                    // table (30 sits between a common and an uncommon
+                    // rupee). Weights, not guarantees - the roll below is
+                    // still one draw over everything.
+                    u32 foodMask = QuickStartFoodMask();
+                    if (foodMask & QUICKSTART_FOOD_DROP_RUPEES) {
+                        droptable.s.rupee1 += 300;
+                        droptable.s.rupee5 += 250;
+                        droptable.s.rupee20 += 100;
+                    }
+                    if (foodMask & QUICKSTART_FOOD_DROP_KINSTONES) {
+                        kinstoneWeight *= 2;
+                    }
+                    if (foodMask & QUICKSTART_FOOD_DROP_HEARTS) {
+                        droptable.s.hearts = 30;
+                    }
                 }
                 // ASSIGNED, not added. Vanilla's "this enemy never drops
                 // this" sentinel is -999, not 0 (see gEnemyDroptables), and

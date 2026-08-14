@@ -1017,10 +1017,32 @@ sequencing lives in section 8.
   probe-verified numerically (walk 75->113 px/60f; knockback 640->1281
   both directions; cake zeroes; octorok cadence x1.5).
 
-  Still open from the user's original wish list: elemental immunities
-  (fire/ice/shock), drop-rate shifts, cheap-shop, rare-reward chance up,
-  boss-spawn chance up/down - the mask/receipt framework now exists for
-  all of them, one read at one point each.
+  **BATCH 2 SHIPPED (Aug 2026): seven more charms + boss rate cut.**
+  Same framework, `GF_FOOD_BIT` 502-508 (mask widened to u32, 13
+  effects): the three elemental Tomes - BOOK1/2/3 as the Scorched,
+  Frosted, and Crackling Tome - grant fire/ice/shock immunity via early
+  returns at the top of the three elemental contact handlers in
+  collision.c (`sub_08017BBC`/`sub_08017C40`/`sub_08017D28`; the hit
+  still registers as plain knockback + iframes, just no burn/freeze/
+  paralysis or elemental damage). Tingle's Trophy / the Jabber Nut /
+  Carlov's Medal are drop-rate charms read inside `CreateRandomItemDrop`
+  (rupees get a second helping of the flat QUICKSTART bumps, kinstones
+  double their decayed weight, hearts jump from the clamped 2 to weight
+  30). The Broken Sword is the pity discount: every shop price is capped
+  at 50 rupees in `QuickStartGetShopPrice` - EXCEPT the heart piece,
+  whose escalating 50+25n price is deliberately exempt. Receipts are
+  custom strings 39-45. The Carlov Medal's vanilla metadata class (0x3)
+  minted a free bottle on pickup, overridden to 0 under QUICKSTART; all
+  seven ids joined the pastries' cutscene-skip list in itemOnGround.c
+  (same broken item-get presentation). Verified: tome pickup sets its
+  bit + receipt on screen; 120-kill drop trial went 0 -> 8 hearts and
+  47 -> 53 kinstones; immunity early-returns, shop cap, and receipt
+  indexing confirmed in the compiled ELF's disassembly.
+
+  Also in this batch: `QUICKSTART_REGION_BOSS_WAVE_CHANCE` cut 20 -> 10
+  (per the user), and the boss-spawn-chance-UP charm from the original
+  wish list is deliberately NOT implemented (user's call). Still unused
+  from the wish list: rare-reward chance up.
 
   *Path:* the bottled charms (Nayru/Farore/Din) are the working precedent
   for every piece of this: granted through the tier table, latched into a

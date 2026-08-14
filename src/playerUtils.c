@@ -2432,7 +2432,7 @@ void sub_08079DCC(void) {
 // fast. Applied here because the walk state re-derives speed every frame
 // before this runs, so a multiplicative bump cannot compound - the same
 // reason the slope modifier above it is safe.
-extern u8 QuickStartFoodMask(void);
+extern u32 QuickStartFoodMask(void);
 #define QUICKSTART_FOOD_WALK_SPEED 2
 #endif
 

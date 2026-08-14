@@ -222,6 +222,15 @@ extern u8 QuickStartCharmMask(void);
 #define QUICKSTART_CHARM_NAYRU 1
 #define QUICKSTART_CHARM_FARORE 2
 #define QUICKSTART_CHARM_DIN 4
+// The food charms (game.c, QuickStartFoodMask): the three tomes grant
+// elemental immunities, consulted by the fire/ice/shock contact handlers
+// below. Immune means the whole exchange is refused - no status, no
+// damage - and only the knockback/iframes shrug remains, so being immune
+// still LOOKS like something bounced off.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_IMMUNE_FIRE (1 << 6)
+#define QUICKSTART_FOOD_IMMUNE_ICE (1 << 7)
+#define QUICKSTART_FOOD_IMMUNE_SHOCK (1 << 8)
 #endif
 
 // QUICKSTART reads its own ownership mask rather than gSave.stats.charm here,
@@ -444,6 +453,17 @@ CollisionResult sub_08017B58(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017BBC(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The scorched tome: fire cannot burn (or hurt) its holder.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_FIRE) {
+        org->knockbackDuration = 12;
+        org->iframes = 30;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     if ((gPlayerState.flags & (PL_BUSY | PL_MINISH | PL_BURNING | PL_IN_MINECART)) == 0) {
         Entity* e = CreateObject(LINK_FIRE, 1, 0);
         if (e != NULL) {
@@ -463,6 +483,17 @@ CollisionResult sub_08017BBC(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017C40(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The frosted tome: ice cannot freeze (or hurt) its holder.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_ICE) {
+        org->knockbackDuration = 12;
+        org->iframes = 16;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     if ((gPlayerState.flags & (PL_BUSY | PL_MINISH | PL_FROZEN | PL_IN_MINECART)) == 0 &&
         gPlayerState.queued_action == PLAYER_INIT) {
         if (org->action == 1 || org->action == 24) {
@@ -498,6 +529,19 @@ CollisionResult sub_08017CBC(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017D28(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The crackling tome: sparks cannot paralyze their holder. The
+    // knockback shrug stays; the mobility lock and its 600-frame timer -
+    // the shock itself - are what the immunity refuses.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_SHOCK) {
+        org->knockbackDuration = 12;
+        org->iframes = 16;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     gPlayerState.mobility = 1;
     ((GenericEntity*)org)->field_0x7a.HWORD = 600;
     org->knockbackDuration = 12;

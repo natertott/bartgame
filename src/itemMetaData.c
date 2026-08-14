@@ -69,7 +69,12 @@ const ItemMetaData gItemMetaData[] = {
     [ITEM_QST_BOOK3] = { 0x1u, 0u, 0u, 0u, 0x3bu, TEXT_ITEM_GET, 0x3bu, 0x5u },
     [ITEM_QST_GRAVEYARD_KEY] = { 0x1u, 0u, 0u, 0u, 0x3du, TEXT_ITEM_GET, 0x3du, 0x5u },
     [ITEM_QST_TINGLE_TROPHY] = { 0u, 0u, 0u, 0u, 0x95u, TEXT_ITEM_GET, 0x95u, 0x5u },
+#ifdef QUICKSTART
+    /* The medal is the heart-drop charm; vanilla's class 0x3 minted a free bottle on pickup. */
+    [ITEM_QST_CARLOV_MEDAL] = { 0x0u, 0u, 0u, 0u, 0x96u, TEXT_ITEM_GET, 0x96u, 0x5u },
+#else
     [ITEM_QST_CARLOV_MEDAL] = { 0x3u, 0u, 0u, 0u, 0x96u, TEXT_ITEM_GET, 0x96u, 0x5u },
+#endif
     [ITEM_SHELLS] = { 0x3u, 0xeu, 0x1u, 0u, 0x3eu, TEXT_ITEM_GET, 0x77u, 0x5u },
     [ITEM_EARTH_ELEMENT] = { 0x9u, 0u, 0u, 0x2u, 0x40u, TEXT_ITEM_GET, 0x40u, 0x5u },
     [ITEM_FIRE_ELEMENT] = { 0xau, 0u, 0u, 0x2u, 0x41u, TEXT_ITEM_GET, 0x41u, 0x5u },

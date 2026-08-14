@@ -417,6 +417,13 @@ bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
         case ITEM_CAKE:
         case ITEM_QST_DOGFOOD:
         case ITEM_QST_MUSHROOM:
+        case ITEM_QST_BOOK1:
+        case ITEM_QST_BOOK2:
+        case ITEM_QST_BOOK3:
+        case ITEM_QST_TINGLE_TROPHY:
+        case ITEM_QST_CARLOV_MEDAL:
+        case ITEM_QST_BROKEN_SWORD:
+        case ITEM_JABBERNUT:
             return FALSE;
         default:
             break;
