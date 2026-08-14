@@ -267,6 +267,40 @@ static void QsClearRoomFlag(u32 flag) {
     ClearRoomFlag(QUICKSTART_ROOM_FLAG_ORIGIN + flag);
 }
 
+// Is the current room fully loaded and coherent - id, origin, room vars all
+// describing the same room? Every QUICKSTART per-frame spawner/monitor that
+// mixes gRoomControls.room, gRoomControls.origin_* and room flags must gate
+// on this, because transitions tear those apart for a few frames:
+//
+//  - seam SCROLLS flip room id and origin mid-frame while scrollAction sits
+//    at 2 and reload_flags at 1 (measured for the dojo dispatcher bug) -
+//    the first two clauses catch those;
+//  - border WALKS (including the town bridges) flip gRoomControls.room a
+//    frame or two BEFORE the engine's room reset runs, while scrollAction
+//    still reads the OLD room's settled 1 - measured on the Trilby -> Lon
+//    Lon bridge, where the region monitor saw Lon Lon's room id with
+//    Trilby's origin and Trilby's room flags and dropped the region reward
+//    at wrong-origin coordinates on arrival. The tracker-pointer clause
+//    catches that window exactly: sub_08052EA0 (the room reset that also
+//    wipes gRoomVars) is what re-points gArea.pCurrentRoomInfo at the new
+//    room's info via UpdateRoomTracker, so until it has run the pointer
+//    still names the OLD room. Once it matches, the flags are known fresh
+//    and the origin check below confirms the origin was refreshed too
+//    (sub_0807BFA8 copies it from this very info record).
+static bool32 QuickStartRoomSettled(void) {
+    if (gRoomControls.reload_flags != 0 || gRoomControls.scrollAction != 1) {
+        return FALSE;
+    }
+    if (gArea.pCurrentRoomInfo != &gArea.roomResInfos[gRoomControls.room]) {
+        return FALSE;
+    }
+    if (gRoomControls.origin_x != gArea.pCurrentRoomInfo->map_x ||
+        gRoomControls.origin_y != gArea.pCurrentRoomInfo->map_y) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
 static void QuickStartReloadRoomAfterFusion(void);
@@ -296,7 +330,6 @@ static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
 static void QuickStartClearLonLonRanchAnimals(void);
-static void QuickStartSolveLonLonBoulder(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRollElementRegionOnce(void);
 static s32 QuickStartCurrentRegionPoolIndex(void);
@@ -2527,77 +2560,83 @@ static void QuickStartClearLonLonRanchAnimals(void) {
     }
 }
 
-typedef struct {
-    s16 srcXMin;
-    s16 srcXMax;
-    s16 srcYMin;
-    s16 srcYMax;
-    s16 destX;
-    s16 destY;
-    u8 oldTileX;
-    u8 oldTileY;
-    u8 holeTileX;
-    u8 holeTileY;
-} QuickStartLonLonBoulder;
-
-// Lon Lon Ranch has three PUSHABLE_ROCK entities (object.h), each resting
-// one tile from its own SURFACE_HOLE act-tile - all confirmed by dumping
-// the room's full act-tile grid and cross-referencing every PUSHABLE_ROCK
-// entity's live position: (488,904)/tile(30,56) next to the hole at
-// tile(29,56) (right by our entrance); (184,200)/tile(11,12) next to the
-// hole at tile(10,12); and (216,904)/tile(13,56) next to the hole at
-// tile(14,56) (this one's hole is EAST of the rock, not west - direction
-// doesn't matter, only ending up centered on the hole tile does). Normally
-// the player pushes each rock onto its hole; its own vanilla code
-// (object/pushableRock.c: sub_0808A644) then settles it into action 3 and
-// overwrites the hole's tile with SPECIAL_TILE_21 ("Boulder in Hole", a
-// walkable bridge). This can't rely on the player ever pushing them
-// itself, so force that same end state directly every frame - same
-// idempotent per-frame pattern as QuickStartClearCastleGuards.
-static const QuickStartLonLonBoulder sQuickStartLonLonBoulders[] = {
-    { 448, 528, 864, 944, 472, 904, 30, 56, 29, 56 },
-    { 144, 224, 160, 240, 168, 200, 11, 12, 10, 12 },
-    { 176, 256, 864, 944, 232, 904, 13, 56, 14, 56 },
-};
-
-static void QuickStartSolveLonLonBoulder(void) {
-    s32 i, j;
-    // Each rock's source box is tight around its own starting spot only
-    // (not the other two rocks' spots), so this can't drag the wrong rock
-    // onto the wrong hole.
+// Eastern Hills ships vanilla story NPCs (the farmers and their visitors)
+// whose spawn is keyed on story/fusion flags a run can end up setting, and
+// whose scripted spots sit ON the walkway - the user's screenshot has a
+// pair of them standing in the stair gap by the farmhouse, walling off the
+// descent. This mode's ? regions are supposed to be swept of vanilla
+// population anyway, so: every frame, any NPC that is not one of ours goes.
+// ZELDA is the entity id every QUICKSTART NPC borrows (fusers, hunt/scav
+// givers, signs, the merchant), same protection rule as
+// QuickStartClearHubRoom's sweep.
+static void QuickStartClearEasternHillsNpcs(void) {
+    s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        s32 localX;
-        s32 localY;
-        if (ent->kind != OBJECT || ent->id != PUSHABLE_ROCK) {
+        if (ent == gRoomControls.camera_target) {
             continue;
         }
-        localX = ent->x.HALF.HI - gRoomControls.origin_x;
-        localY = ent->y.HALF.HI - gRoomControls.origin_y;
-        for (j = 0; j < ARRAY_COUNT(sQuickStartLonLonBoulders); j++) {
-            const QuickStartLonLonBoulder* b = &sQuickStartLonLonBoulders[j];
-            if (localX < b->srcXMin || localX > b->srcXMax || localY < b->srcYMin || localY > b->srcYMax) {
-                continue;
-            }
-            ent->x.HALF.HI = gRoomControls.origin_x + b->destX;
-            ent->y.HALF.HI = gRoomControls.origin_y + b->destY;
-            ent->action = 3;
-            break;
+        if (ent->kind == NPC && ent->id != ZELDA) {
+            DeleteEntity(ent);
         }
     }
-    // Each rock's ORIGINAL resting tile was already marked solid by its own
-    // vanilla init code (object/pushableRock.c: sub_0808A644, the non-hole
-    // branch) the moment the room loaded, independent of the entity itself
-    // - confirmed via a live collision-grid dump showing the first rock's
-    // tile still blocked after the entity was relocated. Clear each one
-    // explicitly with the same TILE_TYPE_0 "fix collision only" trick
-    // already used in QuickStartClearCastleGuards above.
-    for (i = 0; i < ARRAY_COUNT(sQuickStartLonLonBoulders); i++) {
-        const QuickStartLonLonBoulder* b = &sQuickStartLonLonBoulders[i];
-        SetTileType(TILE_TYPE_0, TILE_POS(b->oldTileX, b->oldTileY), LAYER_BOTTOM);
-        SetTileType(SPECIAL_TILE_21, TILE_POS(b->holeTileX, b->holeTileY), LAYER_BOTTOM);
+}
+
+// Trilby Highlands' southwest field - the 10x10-tile pocket at tiles
+// (1,35)-(10,44) that the solved boulder crossing and the restored
+// through-cave opened up (flood-verified open, and ringed by solid tiles
+// on every side; the only ways in are the cave mouth and ledge hops, which
+// enemies don't take). Per the user it hosts wave spawns now and is the
+// region's boss arena, "so long as they are contained to just that part of
+// the map" - the solid ring already does that for tile-collision movement,
+// and this clamp is the hard guarantee on top of it: any boss piece that
+// somehow ends up outside (knockback through a seam frame, a future
+// movement change) is pulled back to the pocket's edge. Idempotent, cheap,
+// runs only while a boss exists.
+#define QUICKSTART_TRILBY_POCKET_MIN_X 32
+#define QUICKSTART_TRILBY_POCKET_MAX_X 160
+#define QUICKSTART_TRILBY_POCKET_MIN_Y 576
+#define QUICKSTART_TRILBY_POCKET_MAX_Y 704
+
+static void QuickStartTrilbyQuirkHook(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        s32 lx, ly;
+        if (ent->kind != ENEMY || ent->id != CHUCHU_BOSS) {
+            continue;
+        }
+        lx = ent->x.HALF.HI - gRoomControls.origin_x;
+        ly = ent->y.HALF.HI - gRoomControls.origin_y;
+        if (lx < QUICKSTART_TRILBY_POCKET_MIN_X) {
+            lx = QUICKSTART_TRILBY_POCKET_MIN_X;
+        }
+        if (lx > QUICKSTART_TRILBY_POCKET_MAX_X) {
+            lx = QUICKSTART_TRILBY_POCKET_MAX_X;
+        }
+        if (ly < QUICKSTART_TRILBY_POCKET_MIN_Y) {
+            ly = QUICKSTART_TRILBY_POCKET_MIN_Y;
+        }
+        if (ly > QUICKSTART_TRILBY_POCKET_MAX_Y) {
+            ly = QUICKSTART_TRILBY_POCKET_MAX_Y;
+        }
+        ent->x.HALF.HI = gRoomControls.origin_x + lx;
+        ent->y.HALF.HI = gRoomControls.origin_y + ly;
     }
 }
+
+// RETIRED: QuickStartSolveLonLonBoulder + sQuickStartLonLonBoulders, the
+// hand-measured teleport-and-stamp solver for Lon Lon Ranch's three
+// boulder-hole crossings. It forced the end state directly - rock moved,
+// action=3, SPECIAL_TILE_21 written over the hole with SetTileType - and
+// writing that tile-type constant is exactly what left the ugly black
+// square over each filled hole the user reported (foreign artwork, the
+// same failure mode the Boomerang chamber hit; see
+// QuickStartUpdateSwitchBridges' donor-tile comment). Trilby's
+// QuickStartFillBoulderHoles does the same job by driving vanilla's own
+// PushableRock settle path, which lays the correct art - so that function
+// now covers every ring region (Lon Lon's three rocks included) and this
+// solver is gone.
 
 // ---- The overworld regions (free-roam) ----
 // One data table (sQuickStartRegionPool below) plus one generic set of
@@ -2741,12 +2780,10 @@ static void QuickStartSetRegionRewardState(s32 poolIndex, u8 value) {
     }
 }
 
-// Lon Lon Ranch's own quirks (boulder puzzle + Goron/animal removal) -
-// unconditional every frame, exactly as today, just folded into one hook
-// so the table row only needs the one function pointer.
+// Lon Lon Ranch's own quirks (Goron/animal removal; its boulder-hole
+// crossings are handled by the generalized QuickStartFillBoulderHoles now).
 static void QuickStartLonLonRanchQuirkHook(void) {
     QuickStartClearLonLonRanchAnimals();
-    QuickStartSolveLonLonBoulder();
 }
 
 // North Hyrule Field has one native BUSINESS_SCRUB_PROLOGUE (a one-time
@@ -2812,6 +2849,12 @@ static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
     { 120, 24 },  { 360, 120}, { 408, 120}, { 456, 120}, { 360, 168}, { 312, 360}, { 360, 360},
     { 24, 408 },  { 360, 408}, { 360, 456}, { 312, 504}, { 360, 504}, { 408, 504}, { 360, 552},
     { 408, 552}, { 456, 552}, { 360, 840}, { 312, 888}, { 360, 888}, { 360, 936},
+    // The southwest pocket, tiles (1,35)-(10,44) - opened by the solved
+    // boulder crossing + restored through-cave, flood-verified open (see
+    // QuickStartTrilbyQuirkHook). Eight spots spread across it per the
+    // user's request that the field host spawns.
+    { 40, 584 },  { 120, 584}, { 24, 632 }, { 104, 632}, { 40, 664 },  { 120, 664}, { 56, 696 },
+    { 136, 696},
 };
 #define QUICKSTART_TRILBY_ROOM_SQUARES 450
 #define QUICKSTART_TRILBY_MAX_ENEMIES 50
@@ -2948,20 +2991,24 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
       QUICKSTART_TRILBY_MAX_ENEMIES, 360, 504,
-      NULL },
+      QuickStartTrilbyQuirkHook },
     // The six overworld-expansion rooms. Exit boxes are dead fields (the
     // warp mechanic is retired) and zeroed. No quirk hooks: the outdoor
     // entity dumps found only OBJECT-kind scenery, no enemy-kind blockers.
     // Squares/max from the flood: reachable tiles, cap ~ squares/13.
+    // All three Eastern Hills rooms run the vanilla-NPC sweep: story/fusion
+    // flags can conjure the farm's scripted population onto the walkways
+    // (the user's screenshot had a pair walling off the stair gap by the
+    // farmhouse), and a ? region owes the player a swept room.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 328, 104, 0, 0, 0, 0,
       sQuickStartEasternHillsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsSouthEnemyOffsets), 265, 20,
-      328, 104, NULL },
+      328, 104, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER, 248, 104, 0, 0, 0, 0,
       sQuickStartEasternHillsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsCenterEnemyOffsets), 285, 21,
-      248, 104, NULL },
+      248, 104, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 264, 264, 0, 0, 0, 0,
       sQuickStartEasternHillsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsNorthEnemyOffsets), 458, 35,
-      264, 264, NULL },
+      264, 264, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 200, 104, 0, 0, 0, 0,
       sQuickStartWesternWoodsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsSouthEnemyOffsets), 217, 16,
       200, 104, NULL },
@@ -3269,11 +3316,69 @@ static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
     if (region->area != AREA_HYRULE_FIELD) {
         return FALSE;
     }
-    return region->room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD || region->room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD;
+    // Trilby joined the list per the user, with its own arena: the boss
+    // spawns in the enclosed southwest pocket instead of at the reward spot
+    // (see the spawn override in QuickStartSpawnRegionWave and the
+    // containment clamp in QuickStartTrilbyQuirkHook).
+    return region->room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD ||
+           region->room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD ||
+           region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS;
 }
 
-static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
+// "The boss wave rolled but the room can't pay for it YET" - per-visit
+// latch for the deferred spawn below. Numbered beside the other wave-loop
+// flags (0 = wave up, 4 = clear hint shown).
+#define QUICKSTART_BOSS_OWED_FLAG 8
+// How long a deferred boss waits for the gfx table to recover before the
+// loop gives up and deals a normal wave instead. Ten seconds: kill drops
+// (the usual pressure - measured, a cleared wave's uncollected drops hold
+// reclaimable at 8 of the 16 the boss needs) despawn in ~8.5s, so a room
+// that is going to recover has recovered by then, and a room under fixed
+// sheet pressure (WW North's fusers) doesn't sit empty forever.
+#define QUICKSTART_BOSS_OWED_TIMEOUT (10 * 60)
+
+// Returns TRUE if a wave (or the boss) actually spawned; FALSE while a
+// rolled boss is deferred waiting for gfx. The caller only marks the room
+// "wave up" on TRUE.
+static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     s32 escalated;
+    // A boss the room owes from an earlier frame's roll. Measured on the
+    // live game (scratchpad/gate_measure.py): at the instant a cleared
+    // wave respawns, the just-killed wave's uncollected drops still hold
+    // sheet slots, so QuickStartReclaimableGfxSlots reads 8-15 against the
+    // gate's 16 and the old "fall through to a normal wave" behaviour
+    // meant the boss NEVER actually appeared mid-region - the only bosses
+    // players ever saw came out of the region-entry bug this batch also
+    // fixes. Deferring the owed spawn until the table recovers (drops
+    // despawn or get picked up within seconds) is what makes the 10% roll
+    // real. The room simply stays quiet for those few seconds.
+    if (QsCheckRoomFlag(QUICKSTART_BOSS_OWED_FLAG)) {
+        if (QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
+            Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
+            QsClearRoomFlag(QUICKSTART_BOSS_OWED_FLAG);
+            if (boss != NULL) {
+                s16 bossX = region->rewardX;
+                s16 bossY = region->rewardY;
+                if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
+                    bossX = 88;
+                    bossY = 600;
+                }
+                boss->x.HALF.HI = gRoomControls.origin_x + bossX;
+                boss->y.HALF.HI = gRoomControls.origin_y + bossY;
+                boss->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(boss);
+                return TRUE;
+            }
+            // CreateEnemy itself failed - fall through to a normal wave
+            // rather than leaving the room empty.
+        } else if (gSave.run_frames - gSave.final_wave_frame < QUICKSTART_BOSS_OWED_TIMEOUT) {
+            return FALSE;
+        } else {
+            // The table never recovered (fixed sheet pressure) - stop
+            // waiting, keep the loop alive with an ordinary wave.
+            QsClearRoomFlag(QUICKSTART_BOSS_OWED_FLAG);
+        }
+    } else
     // This boss rolls in every region's wave loop, not just Castle Garden as
     // an earlier comment here claimed - so it needs no Gust Jar interlock but
     // it would need one if it were still jar-only. It isn't: sub_08027AA4
@@ -3291,27 +3396,50 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     // table below the reserve - which used to hand the boss straight to
     // the reserve trimmer (one piece eaten per pass, measured 5->0 in 320
     // frames, camera_target left dangling on a cleared slot). The trimmer
-    // now refuses boss pieces outright, but the right fix at the source
-    // is to not deal a boss the room can't afford: fall through to an
-    // ordinary wave instead. 6 measured (2 fit a 12-free cleared room,
-    // budget doc finding 4) + the reserve of 4 the spawn must not eat.
-    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region) &&
-        QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
-        // F3: the boss is Green OR Electric (blue), an even coin flip per
-        // spawn. Both forms are one chuchuBoss.c state machine selected by
-        // the spawn type: type 0 records type2=0 (green palette 0x2b),
-        // type 4 records type2=4 (blue palette 0x2c, the electric attack
-        // set). The weapon-peel widening (sub_08027AA4) keys on contact
-        // flags, not type2, so it covers both forms - and it even passes
-        // type2 to the splash particle so the effects match the palette.
-        Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
-        if (boss != NULL) {
-            boss->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
-            boss->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
-            boss->collisionLayer = 1;
-            UpdateSpriteForCollisionLayer(boss);
+    // now refuses boss pieces outright, but a short table no longer
+    // downgrades the roll to a normal wave - it DEFERS the spawn (the
+    // owed branch above), because measurement showed the downgrade fired
+    // every single time. 6 measured (2 fit a 12-free cleared room, budget
+    // doc finding 4) + the reserve of 4 the spawn must not eat.
+    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) {
+        if (QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
+            // F3: the boss is Green OR Electric (blue), an even coin flip
+            // per spawn. Both forms are one chuchuBoss.c state machine
+            // selected by the spawn type: type 0 records type2=0 (green
+            // palette 0x2b), type 4 records type2=4 (blue palette 0x2c,
+            // the electric attack set). The weapon-peel widening
+            // (sub_08027AA4) keys on contact flags, not type2, so it
+            // covers both forms - and it even passes type2 to the splash
+            // particle so the effects match the palette.
+            Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
+            if (boss != NULL) {
+                s16 bossX = region->rewardX;
+                s16 bossY = region->rewardY;
+                // Trilby's arena is the enclosed southwest pocket, not the
+                // reward spot - centered in its widest open band (tile
+                // (5,37)) so the whole family fits inside the pocket's
+                // solid ring. The clamp in QuickStartTrilbyQuirkHook keeps
+                // it there.
+                if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
+                    bossX = 88;
+                    bossY = 600;
+                }
+                boss->x.HALF.HI = gRoomControls.origin_x + bossX;
+                boss->y.HALF.HI = gRoomControls.origin_y + bossY;
+                boss->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(boss);
+                return TRUE;
+            }
+        } else {
+            // Rolled a boss the room can't pay for THIS frame. Latch it and
+            // wait (see the owed branch above). final_wave_frame doubles as
+            // the wait's deadline anchor - the room is empty right now, so
+            // the stuck-wave rescue that also reads it has nothing to do,
+            // and the spawn that eventually lands restarts it anyway.
+            QsSetRoomFlag(QUICKSTART_BOSS_OWED_FLAG);
+            gSave.final_wave_frame = gSave.run_frames;
+            return FALSE;
         }
-        return;
     }
     escalated = QuickStartGetDifficulty() + wave;
     if (escalated > QUICKSTART_MAX_DIFFICULTY) {
@@ -3319,6 +3447,7 @@ static void QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     }
     QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
                                           region->maxEnemies, (u8)escalated);
+    return TRUE;
 }
 
 // Replaces the old "spawn exactly one wave, ever" gate: once a wave goes
@@ -3409,7 +3538,12 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
         QsClearRoomFlag(0);
         return;
     }
-    QuickStartSpawnRegionWave(region, wave);
+    // FALSE means a rolled boss is deferred waiting for gfx (see
+    // QuickStartSpawnRegionWave) - the room stays "no wave up" and this
+    // runs again next frame until the owed spawn lands or times out.
+    if (!QuickStartSpawnRegionWave(region, wave)) {
+        return;
+    }
     QsSetRoomFlag(0);
     // Start (or restart) the stuck-wave clock for the wave just spawned. Room
     // flag 43 is "an Element has already been dropped this visit"; once it is
@@ -4023,6 +4157,19 @@ static void QuickStartHandicapMonitor(void);
 
 static void QuickStartRegionMonitor(s32 poolIndex) {
     const QuickStartRegion* region = &sQuickStartRegionPool[poolIndex];
+    // Settled-room guard (QuickStartRoomSettled). Running in a transition's
+    // torn window is exactly the user's "prize drops the moment I enter,
+    // then the wave spawns" report, reproduced walking the Trilby -> Lon
+    // Lon town bridge: the previous region's "wave spawned" flag + zero
+    // enemies counted in the new room reads as a wave clear, so the reward
+    // and its Ezlo line fire on arrival (at OLD-origin coordinates, so the
+    // item also lands off the reward spot and the state machine re-drops a
+    // second one), and the spurious wave-counter increment makes the first
+    // wave dealt here wave 1+, which is what let the boss roll fire right
+    // behind the phantom prize.
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
     if (region->quirkHook != NULL) {
         region->quirkHook();
     }
@@ -10152,10 +10299,11 @@ static void QuickStartSetupContentSite(s32 site) {
     // is wrong in that window - measured: the gate's prize re-dropped
     // INTO THE ANTE ROOM (with a partial pot cage around it), free to
     // take without ever striking the lever - the user's phantom-prize
-    // report. Settled state is reload_flags == 0, scrollAction == 1 in
-    // every room class (measured overworld, full-load interior, and both
-    // sides of the dojo seam); anything else means the ground is moving.
-    if (gRoomControls.reload_flags != 0 || gRoomControls.scrollAction != 1) {
+    // report. QuickStartRoomSettled folds that measured condition together
+    // with the border-walk window the region reward bug later exposed (the
+    // room-tracker pointer check), so every dispatcher shares one settled
+    // test.
+    if (!QuickStartRoomSettled()) {
         return;
     }
     QuickStartRandomizeContentSiteOnce(site);
@@ -12048,7 +12196,19 @@ static void QuickStartUpdateSwitchBridges(void) {
 
 static void QuickStartFillBoulderHoles(void) {
     s32 i, dx, dy;
-    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
+    // Every ring region, not just Trilby any more: this replaced Lon Lon
+    // Ranch's retired teleport-and-stamp solver (whose SetTileType write
+    // left a black square over each filled hole - see the RETIRED note by
+    // QuickStartClearEasternHillsNpcs), and driving vanilla's own settle
+    // path is the method that renders correctly. Scoped to ring rooms so a
+    // 2-door pool cave's pushable-rock PUZZLE is never solved out from
+    // under the player.
+    if (!QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
+        return;
+    }
+    // Settled-room guard (QuickStartRoomSettled) - the scan and the
+    // teleport below are origin-relative.
+    if (!QuickStartRoomSettled()) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -13399,6 +13559,15 @@ static void QuickStartMakeNpcFuser(Entity* npc, u32 kinstoneId) {
 // retires each one for good the moment its gate opens.
 static void QuickStartSpawnRegionFusers(void) {
     s32 i, indexInRegion = 0;
+    // Settled-room guard (QuickStartRoomSettled): this runs OUTSIDE the
+    // region dispatch, and its "already spawned" identity is an exact
+    // origin-relative coordinate match - computed against a mid-transition
+    // origin it would both spawn the sprite at a wrong world position and
+    // then fail to recognize it after the room settles, leaving an orphan
+    // and spawning a duplicate.
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
         const QuickStartFuser* fuser = &sQuickStartFusers[i];
         s32 worldX, worldY, e;

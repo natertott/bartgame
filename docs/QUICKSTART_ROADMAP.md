@@ -1226,6 +1226,52 @@ sequencing lives in section 8.
 Full per-room measurements (walkability grids, components, entity headroom,
 special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
 
+- **DONE - four-fix batch (user-reported, Aug 2026).**
+  1. *Region reward dropping on first entry ("A prize! But the Element is
+     elsewhere" then the wave/boss spawns).* Same disease as the dojo
+     phantom prize, one level up: `QuickStartRegionMonitor` had no
+     settled-room guard, so during a seam scroll's torn frames it read the
+     NEW room's id with the OLD room's origin and room flags - the stale
+     "wave spawned" flag plus zero enemies counted in the new room parses
+     as a wave clear, so the reward+hint fired on arrival (at wrong-origin
+     coordinates) and the spurious wave-counter bump made the first real
+     wave arrive as wave 1+, boss-eligible. All the per-frame spawners now
+     share one predicate, `QuickStartRoomSettled()`: the dojo fix's
+     measured reload/scrollAction test plus a room-tracker consistency
+     check (`gArea.pCurrentRoomInfo` vs `roomResInfos[room]` - the reset
+     that wipes room vars is also what re-points that pointer, so until it
+     matches, flags and origin are known stale). Verified walking EH South
+     -> EH Center: no hint, no premature item, wave counter 0 until the
+     first genuine clear, then reward at the reward spot with the hint.
+  2. *Eastern Hills vanilla NPCs walling the stair gap by the farmhouse.*
+     Story/fusion flags can conjure the farm's scripted population onto
+     the walkway. All three EH rooms now run a per-frame vanilla-NPC sweep
+     (`QuickStartClearEasternHillsNpcs`, quirk hook), sparing our own
+     ZELDA-kind sprites - same shape as the hub/Lon Lon sweeps.
+  3. *Trilby SW field opened to spawns + made the boss arena.* The pocket
+     at tiles (1,35)-(10,44) (flood-verified open, solid-ringed; entered
+     via the through-cave and ledge hops) got 8 wave-spawn offsets, Trilby
+     joined the boss allowlist, and the boss spawns at (88,600) inside it
+     with a hard containment clamp (`QuickStartTrilbyQuirkHook`).
+     Measurement fallout worth keeping: at the instant a cleared wave
+     respawns, the dead wave's uncollected drops hold the gfx table at
+     8-15 reclaimable against the boss gate's 16, so the old "downgrade to
+     a normal wave" behaviour fired every time and mid-region bosses never
+     actually spawned. The roll now DEFERS instead
+     (`QUICKSTART_BOSS_OWED_FLAG`): the room stays quiet until the table
+     recovers (drops despawn in ~8.5s), then the boss lands; a 10s timeout
+     falls back to a normal wave for rooms under fixed sheet pressure.
+     Deferred spawn verified in-game (owed flag -> boss at the pocket
+     spot, flag cleared, family contained for 900+ frames).
+  4. *Black square over pre-filled boulder holes outside Trilby.* Lon Lon
+     Ranch's teleport-and-stamp solver wrote `SPECIAL_TILE_21` with
+     `SetTileType` - foreign artwork, the Boomerang-chamber failure mode.
+     Retired; `QuickStartFillBoulderHoles` (drives vanilla's own
+     PushableRock settle path, which lays the correct art) now covers
+     every ring region. Ring-scoped so 2-door cave rock puzzles stay
+     puzzles. All three Lon Lon holes verified walkable with clean art;
+     Trilby's own crossing still fills.
+
 - **DONE - switch-puzzle cage walled the dojo shut + phantom prize in the
   ante room (user-reported, Aug 2026).** Two independent defects, both
   reproduced via the real ante-room -> seam -> dojo path:
