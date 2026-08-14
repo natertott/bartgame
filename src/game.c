@@ -336,6 +336,7 @@ static s32 QuickStartCurrentRegionPoolIndex(void);
 static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
+static bool32 QuickStartQuestSwapActive(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
@@ -2759,6 +2760,21 @@ static s32 QuickStartScavState(void);
 #define QUICKSTART_FOOD_COUNT 13
 #define QUICKSTART_CHEAP_SHOP_PRICE 50
 
+// D2: the persistent living-enemy count. Six bits per pool region (wave
+// caps are 50, so 63 fits) recording how many of the region's CURRENT
+// wave are still alive, so a round trip into a ? room, a cave, a fusion's
+// room-reload, or any other pocket within the region RESUMES the fight -
+// only the remainder respawns - instead of putting the whole wave back.
+// Cleared (forcing a full fresh wave) in exactly two cases, per the user:
+// the wave is genuinely cleared, or the player is seen settled in a
+// DIFFERENT region (or the hub) - leaving the region is the reset;
+// everything within it persists. 63 doubles as the "just spawned, count
+// unknown" sentinel: the wave watcher min-updates it to the true live
+// count on the next settled frame and on every kill after. In the run
+// wipe's 202-703 range, so a new run starts clean.
+#define GF_REGION_ALIVE_BIT(i, b) (509 + (i) * 6 + (b)) // i = 0..11 -> 509-580
+#define QUICKSTART_ALIVE_UNKNOWN 63
+
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
 // confirmed actually picked up.
@@ -3296,6 +3312,50 @@ static void QuickStartRegionSetWaveCount(s32 poolIndex, u8 value) {
     }
 }
 
+static u8 QuickStartRegionGetAliveCount(s32 poolIndex) {
+    u8 value = 0;
+    s32 b;
+    for (b = 0; b < 6; b++) {
+        if (QsCheckFlag(GF_REGION_ALIVE_BIT(poolIndex, b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
+static void QuickStartRegionSetAliveCount(s32 poolIndex, u8 value) {
+    s32 b;
+    if (value > QUICKSTART_ALIVE_UNKNOWN) {
+        value = QUICKSTART_ALIVE_UNKNOWN;
+    }
+    for (b = 0; b < 6; b++) {
+        if (value & (1 << b)) {
+            QsSetFlag(GF_REGION_ALIVE_BIT(poolIndex, b));
+        } else {
+            QsClearFlag(GF_REGION_ALIVE_BIT(poolIndex, b));
+        }
+    }
+}
+
+// The live in-room ENEMY headcount the alive-counter records, plus whether
+// any of them is a boss piece - boss waves are setpieces and are never
+// resumed (a "remainder" of jelly pieces respawned through the plain group
+// spawner would come back as ordinary enemies).
+static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
+    s32 i, count = 0;
+    *hasBoss = FALSE;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && QuickStartEntityInCurrentRoom(ent)) {
+            count++;
+            if (ent->id == CHUCHU_BOSS) {
+                *hasBoss = TRUE;
+            }
+        }
+    }
+    return count;
+}
+
 // Rolls and spawns wave `wave` (0-indexed) for this region. Difficulty
 // escalates with wave count on top of the run's own persistent difficulty
 // counter (QuickStartGetDifficulty) - reusing the exact same tier table
@@ -3525,6 +3585,23 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     u8 wave = QuickStartRegionGetWaveCount(slot);
     if (QsCheckRoomFlag(0)) {
         if (!QuickStartRegionWaveCleared()) {
+            // D2: keep the persistent alive-count current while the wave is
+            // up. Min-update only - the count never grows mid-wave, so a
+            // stray extra entity can't inflate the remainder. Boss waves
+            // zero it instead (setpieces re-roll fresh on re-entry rather
+            // than resuming), and quest swap windows record nothing.
+            if (!QuickStartQuestSwapActive()) {
+                bool32 hasBoss;
+                s32 live = QuickStartCountRegionEnemies(&hasBoss);
+                u8 alive = QuickStartRegionGetAliveCount(slot);
+                if (hasBoss) {
+                    if (alive != 0) {
+                        QuickStartRegionSetAliveCount(slot, 0);
+                    }
+                } else if (live < alive) {
+                    QuickStartRegionSetAliveCount(slot, (u8)live);
+                }
+            }
             // A wave that will not clear stalls the region's reward AND its
             // onward exit, so pull stranded enemies back to the reward spot
             // wherever it happens - this used to run only in the chain's last
@@ -3535,8 +3612,37 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
         if (wave < 255) {
             QuickStartRegionSetWaveCount(slot, wave + 1);
         }
+        // A genuine clear is one of the two resets: the next spawn is a
+        // full fresh wave.
+        QuickStartRegionSetAliveCount(slot, 0);
         QsClearRoomFlag(0);
         return;
+    }
+    {
+        // D2: a nonzero remainder means the CURRENT wave was interrupted by
+        // a within-region excursion (? room, cave, fusion reload - anything
+        // that reloads the room without the player settling in another
+        // region, which is what resets it). Resume it: respawn only the
+        // remainder, at the same escalated difficulty this wave was dealt
+        // at, with no wave-counter movement and no boss roll - clearing the
+        // remainder finishes the wave through the branch above exactly as
+        // if the player had never left.
+        u8 remainder = QuickStartRegionGetAliveCount(slot);
+        if (remainder > 0) {
+            s32 escalated = QuickStartGetDifficulty() + wave;
+            if (escalated > QUICKSTART_MAX_DIFFICULTY) {
+                escalated = QUICKSTART_MAX_DIFFICULTY;
+            }
+            QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount,
+                                                  region->roomSquares, remainder, (u8)escalated);
+            // Leave the stored remainder as-is: the watcher above min-updates
+            // it to whatever actually spawned on the next settled frame.
+            QsSetRoomFlag(0);
+            if (slot != QuickStartElementRegionIndex() || !QsCheckRoomFlag(43)) {
+                gSave.final_wave_frame = gSave.run_frames;
+            }
+            return;
+        }
     }
     // FALSE means a rolled boss is deferred waiting for gfx (see
     // QuickStartSpawnRegionWave) - the room stays "no wave up" and this
@@ -3544,6 +3650,9 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
     if (!QuickStartSpawnRegionWave(region, wave)) {
         return;
     }
+    // Fresh full wave: arm the alive-counter at the "count unknown"
+    // sentinel; the watcher records the true spawned count next frame.
+    QuickStartRegionSetAliveCount(slot, QUICKSTART_ALIVE_UNKNOWN);
     QsSetRoomFlag(0);
     // Start (or restart) the stuck-wave clock for the wave just spawned. Room
     // flag 43 is "an Element has already been dropped this visit"; once it is
@@ -7859,6 +7968,15 @@ static s32 QuickStartScavState(void) {
 
 static void QuickStartScavSetState(s32 state) {
     QuickStartScavWriteBits(GF_SCAV_STATE_BIT(0), 2, (u32)state);
+}
+
+// Is either quest currently swapping the region's population (the hunt's
+// pack, the scavenger chase)? While one runs, the room's live headcount
+// describes the QUEST's enemies, not the wave's, so the persistent
+// alive-counter must not record it - the pre-quest remainder stays put,
+// which is exactly the "quests don't reset the count" rule.
+static bool32 QuickStartQuestSwapActive(void) {
+    return QuickStartHuntState() == QUICKSTART_HUNT_RUNNING || QuickStartScavState() == QUICKSTART_SCAV_RUNNING;
 }
 
 static void QuickStartScavRollOnce(void) {
@@ -12839,6 +12957,36 @@ static void QuickStartRoofMonitor(void) {
 // Polled every frame regardless of item-choice phase (unlike
 // QuickStartUpdateItemChoice, which is specific to the hub's spawn floor) so
 // that leaving the starting room still gets QUICKSTART treatment.
+// D2's one reset besides a genuine wave clear: the player LEFT the region.
+// "Left" is defined by where they are seen standing, not by which door they
+// took - settled in a different pool region, or anywhere in the hub, clears
+// every OTHER region's remainder (and the hub clears all of them, so an
+// ocarina round trip is a fresh start everywhere). Settled in a pocket room
+// (a ? room interior, a cave, a Minish house, a 2-door room) matches
+// neither arm and touches nothing - which is exactly the "excursions within
+// the region persist" half of the rule, and it makes the fusion room-reload
+// free: that reload re-enters the SAME region room. Guarded by the settled
+// predicate so a transition's torn frames can't misattribute the player.
+static void QuickStartResetOtherWaveRemainders(void) {
+    s32 i, current;
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    if (QuickStartIsHubRoom()) {
+        current = -1;
+    } else {
+        current = QuickStartCurrentRegionPoolIndex();
+        if (current < 0) {
+            return;
+        }
+    }
+    for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+        if (i != current && QuickStartRegionGetAliveCount(i) != 0) {
+            QuickStartRegionSetAliveCount(i, 0);
+        }
+    }
+}
+
 static void QuickStartRoomMonitor(void) {
     s32 regionSlot;
     // Run clock for the scoring system's time bonus (QuickStartComputeScore
@@ -12937,6 +13085,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartSpawnRegionFusers();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartCurrentRegionPoolIndex();
+    QuickStartResetOtherWaveRemainders();
     QuickStartClearHubRoom();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();

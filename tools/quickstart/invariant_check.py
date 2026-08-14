@@ -119,6 +119,8 @@ FLAG_PARAM_RANGES = {
     ('GF_REGION_REWARD_STATE_BIT', 'b'): (0, 1),
     ('GF_REGION_WAVE_BIT', 'i'): (0, 'QUICKSTART_REGION_STATE_MAX - 1'),
     ('GF_REGION_WAVE_BIT', 'b'): (0, 7),
+    ('GF_REGION_ALIVE_BIT', 'i'): (0, 'QUICKSTART_REGION_STATE_MAX - 1'),
+    ('GF_REGION_ALIVE_BIT', 'b'): (0, 5),
 }
 
 # Macros that only exist to be composed into the ones above; their own range

@@ -202,11 +202,6 @@ can actually obtain.
 
 ### 2.8 World structure
 
-- **Persistent living-enemy count (D2).** Today a wave respawns whole on
-  every room re-entry, so ducking into a ? room mid-fight is punished.
-  Wanted: the alive-count survives leaving; only a full wipe resets to
-  the wave maximum. Store the count only and redraw kinds on re-entry -
-  close enough, infinitely cheaper than storing the roster.
 - **2-door pool door rewiring.** All 40 doors (20 rooms x 2) still
   retarget to one destination and one landing spot, so B->A travel is
   impossible and entry teleports to mid-room. Surveyed and planned in
@@ -326,8 +321,8 @@ allowlists):
    then **F1c stakes** piloted on the chase.
 5. **F7 itself**, once 1 and 4 give it carriers worth drawing.
 6. Structural debts on their own clock: 2-door rewiring (any afternoon),
-   persistent enemy count, the inn (waits on its chest probe), C4 curve
-   (waits on its probe), Minish layer (waits on #103).
+   the inn (waits on its chest probe), C4 curve (waits on its probe),
+   Minish layer (waits on #103).
 
 **Testing doctrine** (unchanged, condensed):
 
