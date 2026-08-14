@@ -992,13 +992,35 @@ sequencing lives in section 8.
   it" - the blue chuchu, the CHEAPEST possible case, still surfaced three
   latent bugs.
 
-- **F4. Charms and curses on the unused quest items.** Assign our own
-  run-long status effects to vanilla's unused quest items (the books, the
-  pies, the medals...). Receiving one announces its effect in dialogue and
-  applies it for the rest of the run. Candidate effects the user named:
-  player walk speed up/down, enemy speed up/down, enemy projectile rate
-  up, elemental immunities (fire/ice/shock), drop-rate shifts, cheap-shop,
-  rare-reward chance up, boss-spawn chance up/down.
+- **F4. Charms and curses on the unused quest items.**
+  **FIRST SIX SHIPPED (Aug 2026): the food charms/curses.** The six
+  unused pastry/food items are run-long status effects in a new
+  `QS_CAT_CHARM` tier category (all uncommon, all in the general ? event
+  / quest drop pool, each drawable once per run): Brioche (sword blows
+  knock enemies twice as far), Croissant (walk half again as fast), Cake
+  (immune to knockback; beats the Pie when both are held), Humble Pie
+  (blows knock LINK twice as far), Dog Food (enemies move half again as
+  fast), Odd Mushroom (shooter enemies - octoroks, wizzrobes, scrubs,
+  stalfos - run their whole fire cadence half again as fast). Eating one
+  fires an Ezlo receipt naming the item and the effect (custom strings
+  33-38) from the GiveItem chokepoint (`QuickStartNoteFoodItem`), so
+  every grant path is covered; effects live in `GF_FOOD_BIT` 496-501 ->
+  `QuickStartFoodMask()`. Implementation notes that took measuring:
+  knockback and enemy speed cannot be patched at their dozens of
+  assignment sites, so `QuickStartApplyFoodEffects` adjusts the FIELDS
+  per frame with the low bit as an already-scaled marker (vanilla values
+  are all even); the walk charm hooks `UpdatePlayerMovement`, where
+  speed is re-derived each frame so the multiplier cannot compound; and
+  the pastries' item-get cutscene path eats the entity without granting
+  anything (no working presentation data), so ground pickups of these
+  six are forced down the plain GiveItem path. All six effects
+  probe-verified numerically (walk 75->113 px/60f; knockback 640->1281
+  both directions; cake zeroes; octorok cadence x1.5).
+
+  Still open from the user's original wish list: elemental immunities
+  (fire/ice/shock), drop-rate shifts, cheap-shop, rare-reward chance up,
+  boss-spawn chance up/down - the mask/receipt framework now exists for
+  all of them, one read at one point each.
 
   *Path:* the bottled charms (Nayru/Farore/Din) are the working precedent
   for every piece of this: granted through the tier table, latched into a

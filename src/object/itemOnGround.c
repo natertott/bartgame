@@ -403,6 +403,21 @@ bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
         case ITEM_KINSTONE_BLUE:
         case ITEM_KINSTONE_GREEN:
             return !GetInventoryValue(super->type);
+        // The food charms/curses (game.c, QuickStartNoteFoodItem). Never
+        // the item-get cutscene for these: the pastries carry the
+        // always-narrate bit but no working item-get presentation, so
+        // the cutscene path ate the entity without granting anything
+        // (measured: the croissant vanished on touch, no pose, no
+        // inventory, no effect). The plain GiveItem path is the one that
+        // works - and it is also where the food hook lives, so the Ezlo
+        // receipt line does the announcing the cutscene would have.
+        case ITEM_BRIOCHE:
+        case ITEM_CROISSANT:
+        case ITEM_PIE:
+        case ITEM_CAKE:
+        case ITEM_QST_DOGFOOD:
+        case ITEM_QST_MUSHROOM:
+            return FALSE;
         default:
             break;
     }

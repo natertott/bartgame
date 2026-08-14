@@ -86,12 +86,22 @@ s32 GetItemPrice(u32 item) {
     return ptr->itemPrice;
 }
 
+#ifdef QUICKSTART
+// The food charm/curse hook (game.c). GiveItem is the one chokepoint every
+// grant path shares - ground pickups, chests, scripts - so hooking here
+// covers all of them; it is a no-op for every non-food item id.
+extern void QuickStartNoteFoodItem(u32 item);
+#endif
+
 u32 GiveItem(Item item, u32 param_2) {
     u32 uVar4;
     u32 result;
     u32 uVar9;
     const ItemMetaData* metaData;
 
+#ifdef QUICKSTART
+    QuickStartNoteFoodItem(item);
+#endif
     uVar4 = GetInventoryValue(item);
     metaData = &gItemMetaData[item];
 

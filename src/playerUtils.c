@@ -2427,11 +2427,25 @@ void sub_08079DCC(void) {
     }
 }
 
+#ifdef QUICKSTART
+// The food charms (game.c). Bit 1 is the Croissant: walk half again as
+// fast. Applied here because the walk state re-derives speed every frame
+// before this runs, so a multiplicative bump cannot compound - the same
+// reason the slope modifier above it is safe.
+extern u8 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_WALK_SPEED 2
+#endif
+
 void UpdatePlayerMovement(void) {
     if ((gPlayerEntity.base.speed != 0) &&
         (gPlayerEntity.base.speed += gPlayerState.speed_modifier, gPlayerEntity.base.speed < 0x20)) {
         gPlayerEntity.base.speed = 0x20;
     }
+#ifdef QUICKSTART
+    if ((QuickStartFoodMask() & QUICKSTART_FOOD_WALK_SPEED) && gPlayerEntity.base.speed > 0) {
+        gPlayerEntity.base.speed += gPlayerEntity.base.speed >> 1;
+    }
+#endif
     if ((gPlayerEntity.base.direction & 4) == 0) {
         sub_08079E90(gPlayerEntity.base.direction);
     }

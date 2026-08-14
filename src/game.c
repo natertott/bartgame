@@ -308,6 +308,7 @@ static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
 static s32 QuickStartFreeGfxSlots(void);
 static s32 QuickStartReclaimableGfxSlots(void);
+static void QuickStartApplyFoodEffects(void);
 static s32 QuickStart2DoorExitSide(void);
 static bool32 QuickStart2DoorDoorSpot(s32, s16*, s16*);
 static s32 QuickStartFindSiteAt(s32, s32);
@@ -1975,6 +1976,16 @@ const u8* const gCustomStrings[] = {
     // whole contract in one breath - three levers, one opens, one
     // punishes - because the room itself gives no tell by design.
     [32] = (const u8*)"Ezlo: Three levers! One\nfrees it, one BITES...",
+    // Food charm/curse receipts (QuickStartNoteFoodItem). One line per
+    // item, shown as an Ezlo bubble the moment the food is picked up, per
+    // the F1b bar: name the item AND the effect, so the player learns the
+    // vocabulary. 33-35 the charms, 36-38 the curses.
+    [33] = (const u8*)"The Brioche! Your sword\nsends foes FLYING now.",
+    [34] = (const u8*)"The Croissant! Your\nfeet feel feather-light.",
+    [35] = (const u8*)"The Cake! No blow can\nmove you now. Stand firm!",
+    [36] = (const u8*)"Humble Pie... a curse!\nBlows send YOU flying.",
+    [37] = (const u8*)"Dog Food?! A curse! The\nenemies quicken...",
+    [38] = (const u8*)"Odd Mushroom... a curse!\nFoes fire twice as fast.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2658,6 +2669,29 @@ static s32 QuickStartScavState(void);
 #define QUICKSTART_LEVER_ROLE_TRAP 1
 #define QUICKSTART_LEVER_ROLE_DUD 2
 #define QUICKSTART_LEVER_ROLE_DONE 0x80
+
+// --- Food charms and curses (F4) ------------------------------------------
+// The six unused pastry/food items, repurposed as run-long status effects:
+// eat one (it arrives as an ordinary uncommon ? event / quest drop) and the
+// effect sticks for the rest of the run, announced by an Ezlo line. Three
+// bless, three bite - and the item names telegraph which is which only
+// loosely (Humble Pie), which is the fun.
+//   bit 0  BRIOCHE   charm: sword blows knock enemies twice as far
+//   bit 1  CROISSANT charm: Link walks half again as fast
+//   bit 2  CAKE      charm: Link cannot be knocked back at all
+//   bit 3  PIE       curse: blows knock Link twice as far ("humble pie")
+//   bit 4  DOGFOOD   curse: enemies move half again as fast
+//   bit 5  MUSHROOM  curse: shooter enemies fire ~1.5x as often
+// Persistent for the run in the QS window (per-run bits, cleared with the
+// rest of the window at run start). CAKE beats PIE when both are held -
+// the immunity check runs last.
+#define GF_FOOD_BIT(n) (496 + (n)) // n = 0..5 -> 496-501
+#define QUICKSTART_FOOD_SWORD_KNOCKBACK (1 << 0)
+#define QUICKSTART_FOOD_WALK_SPEED (1 << 1)
+#define QUICKSTART_FOOD_STEADFAST (1 << 2)
+#define QUICKSTART_FOOD_CURSE_KNOCKBACK (1 << 3)
+#define QUICKSTART_FOOD_CURSE_ENEMY_SPEED (1 << 4)
+#define QUICKSTART_FOOD_CURSE_FIRE_RATE (1 << 5)
 
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
@@ -3372,9 +3406,14 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
 #define QS_CAT_WEAPON (1 << 2)
 #define QS_CAT_SKILL (1 << 3)
 #define QS_CAT_STAT (1 << 4)
+// CHARMS/CURSES: the repurposed pastry/food items (see GF_FOOD_BIT). All
+// uncommon, all run-long status effects, half of them traps - which is
+// why they get their own category rather than riding QS_CAT_STAT: a
+// future caller can ask for "drops but no gambles" by masking it out.
+#define QS_CAT_CHARM (1 << 5)
 // What a "? room" may pay: everything except key items, per the user's rule
 // that those come from the opening selection and the shop.
-#define QS_CAT_DROP (QS_CAT_REWARD | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT)
+#define QS_CAT_DROP (QS_CAT_REWARD | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT | QS_CAT_CHARM)
 #define QS_CAT_ALL (QS_CAT_DROP | QS_CAT_KEY)
 
 #define QS_TIER_COMMON 0
@@ -3497,6 +3536,18 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { BOTTLE_CHARM_NAYRU, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
     { BOTTLE_CHARM_FARORE, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
     { BOTTLE_CHARM_DIN, QS_CAT_STAT, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
+    // --- CHARMS / CURSES -------------------------------------------------
+    // The repurposed food items (F4): eating one applies a run-long status
+    // effect the moment GiveItem runs (QuickStartNoteFoodItem), announced
+    // by an Ezlo line. Three bless, three bite, and nothing but the names
+    // hints which is which. All uncommon per the user's spec; not
+    // repeatable, so each can headline at most one ? event per run.
+    { ITEM_BRIOCHE, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },      // charm: sword knockback up
+    { ITEM_CROISSANT, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },    // charm: walk speed up
+    { ITEM_CAKE, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },         // charm: knockback immunity
+    { ITEM_PIE, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },          // curse: Link knocked further
+    { ITEM_QST_DOGFOOD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },  // curse: enemies faster
+    { ITEM_QST_MUSHROOM, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // curse: foes fire faster
     // --- KEY ITEMS -------------------------------------------------------
     // Never drawn by a ? room (QS_CAT_DROP excludes them); reachable from the
     // opening selection and from a region clear reward.
@@ -6506,6 +6557,23 @@ static void QuickStartMeasureMailbox(void) {
     count = (arg >> 16) & 0xFF;
     bx = (pos & 0xFFFF) ? (s32)(pos & 0xFFFF) : (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x);
     by = (pos >> 16) ? (s32)(pos >> 16) : (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y);
+    // Command variant: low byte 0xFE spawns a GROUND_ITEM whose item id is
+    // the form byte, instead of an enemy - the item-pickup analogue of the
+    // raw enemy spawn (added for the food charm/curse probes; usable for
+    // any "what does item X do on pickup" measurement).
+    if ((arg & 0xFF) == 0xFE) {
+        Entity* e = CreateObject(GROUND_ITEM, (arg >> 8) & 0xFF, 0);
+        if (e != NULL) {
+            e->x.HALF.HI = gRoomControls.origin_x + bx;
+            e->y.HALF.HI = gRoomControls.origin_y + by;
+            e->collisionLayer = 1;
+            e->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(e);
+            e->direction = IdleSouth;
+        }
+        box[0] = 0;
+        return;
+    }
     for (i = 0; i < count; i++) {
         Entity* e = CreateEnemy(arg & 0xFF, (arg >> 8) & 0xFF);
         if (e != NULL) {
@@ -12626,6 +12694,9 @@ static void QuickStartRoomMonitor(void) {
     // Global invariant too: a camera following a deleted entity follows
     // garbage (see the function's comment for the measured NHF case).
     QuickStartRescueDanglingCamera();
+    // The food charms/curses' per-frame half (knockback scaling, enemy
+    // haste, shooter cadence) - a single mask read when none are held.
+    QuickStartApplyFoodEffects();
     // Inert in play (one guarded compare); the measurement harness's spawn
     // hook - see the mailbox comment above QuickStartMeasureMailbox.
     QuickStartMeasureMailbox();
@@ -13083,6 +13154,137 @@ void QuickStartNoteCharm(u32 bottleContent) {
         case BOTTLE_CHARM_DIN:
             SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(2));
             break;
+    }
+}
+
+// --- Food charms and curses (F4) ------------------------------------------
+
+// The six effects the player currently carries, as
+// QUICKSTART_FOOD_* bits. Read by QuickStartApplyFoodEffects each frame
+// and by UpdatePlayerMovement (playerUtils.c) for the walk-speed charm.
+u8 QuickStartFoodMask(void) {
+    s32 n;
+    u8 mask = 0;
+    for (n = 0; n < 6; n++) {
+        if (QsCheckFlag(GF_FOOD_BIT(n))) {
+            mask |= 1 << n;
+        }
+    }
+    return mask;
+}
+
+// Called from GiveItem (itemUtils.c) for EVERY item grant, so it covers
+// ground pickups, chests and scripted gives alike; a no-op for the other
+// ~250 item ids. First taste of a given food sets its run-long bit and
+// announces the effect through Ezlo - the item-get text alone just names
+// a pastry, which tells the player nothing about what it did to them.
+void QuickStartNoteFoodItem(u32 item) {
+    s32 n;
+    switch (item) {
+        case ITEM_BRIOCHE:
+            n = 0;
+            break;
+        case ITEM_CROISSANT:
+            n = 1;
+            break;
+        case ITEM_CAKE:
+            n = 2;
+            break;
+        case ITEM_PIE:
+            n = 3;
+            break;
+        case ITEM_QST_DOGFOOD:
+            n = 4;
+            break;
+        case ITEM_QST_MUSHROOM:
+            n = 5;
+            break;
+        default:
+            return;
+    }
+    if (!QsCheckFlag(GF_FOOD_BIT(n))) {
+        QsSetFlag(GF_FOOD_BIT(n));
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, (33 + n)), 0);
+    }
+}
+
+// Which enemy kinds actually shoot projectiles, for the Mushroom curse.
+// Curated rather than inferred: the fire-rate trick below leans on each
+// of these AIs pacing its shots (and everything else) off super->timer,
+// which was checked per id, not assumed game-wide.
+static bool32 QuickStartEnemyShootsProjectiles(u32 id) {
+    switch (id) {
+        case OCTOROK:
+        case OCTOROK_GOLDEN:
+        case BUSINESS_SCRUB:
+        case WIZZROBE_WIND:
+        case WIZZROBE_FIRE:
+        case WIZZROBE_ICE:
+        case STALFOS:
+            return TRUE;
+    }
+    return FALSE;
+}
+
+// The per-frame half of the food effects. Knockback and speed cannot be
+// patched at their dozens of assignment sites (collision.c writes
+// knockback in ~15 handlers; every enemy AI rewrites its own speed per
+// state), so this adjusts the FIELDS after the fact instead - they are
+// consumed over many frames, and the low bit is used as an "already
+// scaled" marker (all vanilla values are even) so a value is never
+// scaled twice, while an AI overwriting its speed simply gets re-scaled
+// on the next pass. CHUCHU_BOSS pieces are exempt from every enemy-side
+// effect: their fields double as scripted stage machinery.
+static void QuickStartApplyFoodEffects(void) {
+    u8 mask = QuickStartFoodMask();
+    u32 v;
+    s32 i;
+    if (mask == 0) {
+        return;
+    }
+    // Humble Pie first, the Cake last: holding both resolves to immune.
+    if ((mask & QUICKSTART_FOOD_CURSE_KNOCKBACK) && gPlayerEntity.base.knockbackDuration != 0 &&
+        gPlayerEntity.base.knockbackSpeed != 0 && (gPlayerEntity.base.knockbackSpeed & 1) == 0) {
+        v = gPlayerEntity.base.knockbackSpeed * 2;
+        if (v > 1536) {
+            v = 1536;
+        }
+        gPlayerEntity.base.knockbackSpeed = v | 1;
+    }
+    if (mask & QUICKSTART_FOOD_STEADFAST) {
+        gPlayerEntity.base.knockbackDuration = 0;
+        gPlayerEntity.base.knockbackSpeed = 0;
+    }
+    if (mask & (QUICKSTART_FOOD_SWORD_KNOCKBACK | QUICKSTART_FOOD_CURSE_ENEMY_SPEED | QUICKSTART_FOOD_CURSE_FIRE_RATE)) {
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (ent->kind != ENEMY || ent->id == CHUCHU_BOSS) {
+                continue;
+            }
+            if ((mask & QUICKSTART_FOOD_SWORD_KNOCKBACK) && ent->knockbackDuration != 0 && ent->knockbackSpeed != 0 &&
+                (ent->knockbackSpeed & 1) == 0) {
+                v = ent->knockbackSpeed * 2;
+                if (v > 1536) {
+                    v = 1536;
+                }
+                ent->knockbackSpeed = v | 1;
+            }
+            if ((mask & QUICKSTART_FOOD_CURSE_ENEMY_SPEED) && ent->speed > 0 && (ent->speed & 1) == 0) {
+                v = (u32)ent->speed + ((u32)ent->speed >> 1);
+                if (v > 0x400) {
+                    v = 0x400;
+                }
+                ent->speed = (s16)(v | 1);
+            }
+            // Every other frame, tick shooter timers one extra step: their
+            // whole cadence - aim, fire, recover - runs half again as
+            // fast, which reads as trigger-happy. Never past 1, so an
+            // AI's own "did my timer just hit zero" edge is never eaten.
+            if ((mask & QUICKSTART_FOOD_CURSE_FIRE_RATE) && (gRoomTransition.frameCount & 1) != 0 && ent->timer > 1 &&
+                QuickStartEnemyShootsProjectiles(ent->id)) {
+                ent->timer--;
+            }
+        }
     }
 }
 
