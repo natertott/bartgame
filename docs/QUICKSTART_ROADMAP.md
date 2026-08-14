@@ -180,21 +180,25 @@ can actually obtain.
 - **Last unused charm idea (F4).** Rare-reward-chance-up is the only
   item from the original wish list not implemented (boss-chance-up was
   deliberately rejected). Framework is ready; one bit, one read.
-- **Chests as a reward delivery channel (research DONE, wiring
-  outstanding).** The answer is yes on every front. Small chests
-  (SPECIAL_CHEST): contents come from the per-room `gSmallChests` RAM
-  table (8 rows: tile, item, subtype, opened-flag) - inject a row and
-  spawn the chest, which is exactly what the shipped chest lottery
-  already does; a vanilla small chest's contents can be overwritten by
-  rewriting its row after room load. Big chests (CHEST_SPAWNER,
-  including every kinstone-fusion-revealed chest): the open handler
-  (`sub_08084074`, chestSpawner.c) resolves the item from a BIG_CHEST
-  tile-entity row in ROM room data matched by local flag - one
-  QUICKSTART override table consulted there puts any fusion chest's
-  contents under our control, and spawning a fresh always-open big chest
-  is CHEST_SPAWNER type 4 plus an override row. Remaining work: the
-  override hook, the injection helper, and one probe check that
-  CreateItemEntity-granted equipment (swords) survives the chest path.
+- **Chest item control - choose and change what any chest holds (per the
+  user, a feature to implement; research DONE).** Every chest kind is
+  controllable. Small chests (SPECIAL_CHEST): contents come from the
+  per-room `gSmallChests` RAM table (8 rows: tile, item, subtype,
+  opened-flag) - inject a row and spawn the chest, which is exactly what
+  the shipped chest lottery already does; a vanilla small chest's
+  contents can be overwritten by rewriting its row after room load. Big
+  chests (CHEST_SPAWNER, including every kinstone-fusion-revealed
+  chest): the open handler (`sub_08084074`, chestSpawner.c) resolves the
+  item from a BIG_CHEST tile-entity row in ROM room data matched by
+  local flag - one QUICKSTART override table consulted there puts any
+  fusion chest's contents under our control, and spawning a fresh
+  always-open big chest is CHEST_SPAWNER type 4 plus an override row.
+  The build: the override table + hook, an injection/overwrite helper
+  the reward systems can call (tier-table draws included, so a chest can
+  hold a rolled prize), and one probe check that CreateItemEntity-granted
+  equipment (swords) survives the chest path. First clients once built:
+  the fusion chests' payouts, the inn's two reward chests, and the
+  chest-lottery prize finally living IN its chest.
 
 ### 2.7 The hub
 
