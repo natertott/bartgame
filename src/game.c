@@ -249,10 +249,10 @@ static void QsSetSiteFlag(u32 flag) {
 //
 // So QUICKSTART's own per-visit flags live in a private window instead,
 // exactly like its global flags do (QUICKSTART_FLAG_ORIGIN above). Offsets
-// used inside the window run 0..103 (the content sites' 64 + slot*8 windows
-// are the highest), and gRoomVars.flags holds 416 bits, so an origin of 256
-// clears every plausible vanilla flag while leaving the top of the range
-// unused.
+// used inside the window run 0..107 (the content sites' 64 + slot*8 windows,
+// then the puzzle switches' 104..107 toggle bits - QS_SWITCH_HIT_FLAG), and
+// gRoomVars.flags holds 416 bits, so an origin of 256 clears every plausible
+// vanilla flag while leaving the top of the range unused.
 #define QUICKSTART_ROOM_FLAG_ORIGIN 256
 
 static u32 QsCheckRoomFlag(u32 flag) {
@@ -2006,11 +2006,11 @@ const u8* const gCustomStrings[] = {
     [29] = (const u8*)"The Keaton got away...\nThat was my only chance.",
     [30] = (const u8*)"The chase is done for\nthis run. Travel safe!",
     // The closing gate's one-shot room hint (QS_EVENT_GATE).
-    [31] = (const u8*)"Ezlo: Strike the lever,\nthen RUN for the prize!",
+    [31] = (const u8*)"Ezlo: Strike the switch,\nthen RUN for the prize!",
     // The decoy levers' hint (QS_EVENT_GATE, decoy variant). States the
     // whole contract in one breath - three levers, one opens, one
     // punishes - because the room itself gives no tell by design.
-    [32] = (const u8*)"Ezlo: Three levers! One\nfrees it, one BITES...",
+    [32] = (const u8*)"Ezlo: Three switches!\nOne frees it, one BITES...",
     // Food charm/curse receipts (QuickStartNoteFoodItem). One line per
     // item, shown as an Ezlo bubble the moment the food is picked up, per
     // the F1b bar: name the item AND the effect, so the player learns the
@@ -2727,10 +2727,10 @@ static s32 QuickStartScavState(void);
 #define QUICKSTART_GATE_WINDOW_BASE 480
 #define QUICKSTART_GATE_WINDOW_SLOPE 20
 #define QUICKSTART_GATE_WINDOW_MIN 240
-// The decoy-lever variant of the switch-puzzle site (the per-visit coin
-// flip in the QS_EVENT_GATE branch). Lever roles live in the lever
-// ENTITY (type2 - a field hittableLever.c never reads or writes), not
-// in flags: the levers are per-visit objects anyway, and the site's
+// The decoy-switch variant of the switch-puzzle site (the per-visit coin
+// flip in the QS_EVENT_GATE branch). Switch roles live in the switch
+// ENTITY (a scratch byte at 0x76, see QS_SWITCH_ROLE), not
+// in flags: the switches are per-visit objects anyway, and the site's
 // 8-bit room-flag window has only 3 bits free - not enough for a role
 // permutation plus per-lever resolved state.
 #define QUICKSTART_LEVER_ROLE_PRIZE 0
@@ -5705,13 +5705,13 @@ enum {
     QS_EVENT_POT_LOTTERY,
     QS_EVENT_CHEST_LOTTERY,
     QS_EVENT_FAIRY,
-    // The switch-puzzle site (Phase D): a caged prize plus levers.
+    // The switch-puzzle site (Phase D): a caged prize plus switches.
     // Value 7 fills the kind field's 3-bit range exactly, so the two
     // puzzles share it and a per-visit coin flip picks which one this
-    // stay gets: the CLOSING GATE (#1 - one lever, opens the cage for a
-    // shrinking timed window) or the DECOY LEVERS (#2 - three identical
-    // levers dealt prize/trap/dud blind; per the user, NO tell - a pure
-    // gamble). Sword-only by design either way (levers answer any hit),
+    // stay gets: the CLOSING GATE (#1 - one switch, opens the cage for a
+    // shrinking timed window) or the DECOY SWITCHES (#2 - three identical
+    // switches dealt prize/trap/dud blind; per the user, NO tell - a pure
+    // gamble). Sword-only by design either way (switches answer any hit),
     // so it needs no unlock and no kit check.
     QS_EVENT_GATE,
 };
@@ -8782,7 +8782,15 @@ static s32 QuickStartGateRingPots(s32 ptx, s32 pty, Entity** firstOut) {
     return count;
 }
 
-static void QuickStartGateClose(s32 ptx, s32 pty) {
+// playerClearance is a Chebyshev radius (in tiles) around the player that
+// the ring must leave empty. 0 is the old behaviour - only the tile under
+// their feet is spared, which is what the trap close (aimed AT the player)
+// and the timed re-close (the pressure the puzzle IS) need. The initial
+// deal passes 2: the player is standing on the doorstep they just walked
+// in through, so tiles near them ARE the doorway, and a deal that walls
+// the door is the user-reported failure. A cage dealt with a gap is the
+// safe failure either way - the prize just comes cheaper.
+static void QuickStartGateClose(s32 ptx, s32 pty, s32 playerClearance) {
     s32 dx, dy;
     s32 playerTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
     s32 playerTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
@@ -8796,7 +8804,7 @@ static void QuickStartGateClose(s32 ptx, s32 pty) {
             if (dx == 0 && dy == 0) {
                 continue;
             }
-            // Never under the player, never on solid ground, never doubled -
+            // Never near the player, never on solid ground, never doubled -
             // and never in the room's outer THREE tile rows/columns. Doors,
             // seams and ladder mouths live in the outer walls, and their
             // one-tile approach corridors sit directly inboard of them: the
@@ -8805,7 +8813,8 @@ static void QuickStartGateClose(s32 ptx, s32 pty) {
             // In a room too small to give the ring 3 tiles of clearance the
             // cage comes out with a gap - a free prize is the safe failure;
             // a walled-off entrance is the one the user got locked out by.
-            if (tx == playerTX && ty == playerTY) {
+            if (tx >= playerTX - playerClearance && tx <= playerTX + playerClearance &&
+                ty >= playerTY - playerClearance && ty <= playerTY + playerClearance) {
                 continue;
             }
             if (tx < 3 || ty < 3 || tx >= (s32)(gRoomControls.width >> 4) - 3 ||
@@ -8862,35 +8871,86 @@ static void QuickStartGateOpen(s32 ptx, s32 pty) {
     }
 }
 
-// --- The decoy levers (QS_EVENT_GATE, room flag +1 set) -------------------
+// --- The decoy switches (QS_EVENT_GATE, room flag +1 set) -----------------
 // All six deals of {prize, trap, dud} (the QUICKSTART_LEVER_ROLE_*
-// values 0/1/2) across the three levers. One row is drawn per visit and
-// stamped lever-by-lever into type2; QUICKSTART_LEVER_ROLE_DONE marks a
-// lever whose pull has been resolved, so flipping a spent lever back
-// and forth does nothing further.
+// values 0/1/2) across the three switches. One row is drawn per visit and
+// stamped switch-by-switch into a scratch byte on the entity (see
+// QS_SWITCH_ROLE); QUICKSTART_LEVER_ROLE_DONE marks a switch whose pull
+// has been resolved, so flipping a spent switch back and forth does
+// nothing further.
 static const u8 sQuickStartLeverRoles[6][3] = {
     { 0, 1, 2 }, { 0, 2, 1 }, { 1, 0, 2 },
     { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 },
 };
 
-// Pull a room-local pixel anchor at least 3 tiles inboard of every wall.
-// Levers spawn "near the player", and at a seam or door the player IS the
-// entrance corridor: measured in the dojo, the decoy deal put its middle
-// lever on the corridor's own column at the seam mouth, and a lever is a
-// solid, collidable fixture - the room was walled shut exactly the way
-// the mis-placed cage had walled it (user-reported class). Anchoring the
-// search inboard keeps every lever off the doorstep; the player walked
-// in, so a spot a few tiles ahead of them is always reachable.
+// The puzzle's switches are LIGHTABLE_SWITCH objects, not HITTABLE_LEVER.
+// A lever has NO sprite of its own - its gObjectDefinitions row reads gfx
+// 0 / sprite 0, and its whole visual is HittableLever_UpdateTile painting
+// meta-tiles 0x377/0x378 into the room's tilemap. Only dungeon tilesets
+// carry lever art at those indices, so in the overworld ? rooms the lever
+// rendered as whatever garbage the local tileset kept there ("some kind
+// of broken element", per the user - the same tileset-locality lesson as
+// the invisible painted shutter). The lightable switch instead carries
+// fixed gfx 19 / sprite 475 through LoadFixedGFX - the "entity sprites
+// render everywhere" rule the trap pots already rely on - and its Type0
+// is a free-running toggle: every hit flips the flag named by its flag2
+// field (entity offset 0x86) and frameIndex mirrors that flag, 0 off / 1
+// on (lightableSwitch.c). Three consequences shape the plumbing:
+//  - flag2 must name a REAL flag, or the toggle never latches
+//    (SetFlag(0) is a no-op). Each switch gets its own bit in the private
+//    room-flag window - offsets 104..107, directly above the content
+//    sites' 64 + slot*8 windows - encoded as a type-2 (room) flag id.
+//  - type2 selects its optional rail-movement mode, so the decoy roles
+//    that used to ride in the lever's unused type2 move to a scratch
+//    byte at entity offset 0x76, inside LightableSwitchEntity's unused
+//    padding.
+//  - "pulled" is read from frameIndex, not from a flipping type bit.
+#define QS_SWITCH_HIT_FLAG(n) (0x8000 + QUICKSTART_ROOM_FLAG_ORIGIN + 104 + (n))
+#define QS_SWITCH_ROLE(ent) (((u8*)(ent))[0x76])
+#define QS_SWITCH_FLAG2(ent) (*(u16*)((u8*)(ent) + 0x86))
+
+static Entity* QuickStartSpawnPuzzleSwitch(s32 lx, s32 ly, u32 flagIndex) {
+    Entity* sw = CreateObject(LIGHTABLE_SWITCH, 0, 0);
+    if (sw != NULL) {
+        sw->x.HALF.HI = gRoomControls.origin_x + lx;
+        sw->y.HALF.HI = gRoomControls.origin_y + ly;
+        sw->collisionLayer = 1;
+        QS_SWITCH_FLAG2(sw) = QS_SWITCH_HIT_FLAG(flagIndex);
+        // Deal every switch OFF. The bit lives in gRoomVars, which the
+        // room reset wipes anyway; this covers a redeal inside one visit.
+        ClearFlag(QS_SWITCH_HIT_FLAG(flagIndex));
+        QS_SWITCH_ROLE(sw) = 0;
+        UpdateSpriteForCollisionLayer(sw);
+    }
+    return sw;
+}
+
+// Pull a room-local pixel anchor at least 5 tiles inboard of every wall.
+// Switches spawn "near the player", and at a seam or door the player IS
+// the entrance corridor: measured in the dojo, the decoy deal put its
+// middle switch on the corridor's own column at the seam mouth, and a
+// puzzle switch is a solid, collidable fixture - the room was walled shut
+// exactly the way the mis-placed cage had walled it (user-reported
+// class). Anchoring the search inboard keeps every switch off the
+// doorstep; the player walked in, so a spot a few tiles ahead of them is
+// always reachable. The CAGE anchors through this too (the site content
+// spots were chosen for reward drops, and several sit on the door's
+// approach line - "the puzzle is placed right in front of the ? room
+// door", per the user), which is why the margin is 5 tiles rather than
+// the original 3.5: the cage ring reaches one tile beyond its anchor, and
+// a ring tile four tiles from the wall still leaves the outer-3 door band
+// plus a one-tile walking gap in front of it.
+#define QUICKSTART_INBOARD_MARGIN 0x58
 static void QuickStartClampInboard(s32* x, s32* y) {
-    s32 maxX = (s32)gRoomControls.width - 0x38;
-    s32 maxY = (s32)gRoomControls.height - 0x38;
-    if (*x < 0x38) {
-        *x = 0x38;
+    s32 maxX = (s32)gRoomControls.width - QUICKSTART_INBOARD_MARGIN;
+    s32 maxY = (s32)gRoomControls.height - QUICKSTART_INBOARD_MARGIN;
+    if (*x < QUICKSTART_INBOARD_MARGIN) {
+        *x = QUICKSTART_INBOARD_MARGIN;
     } else if (*x > maxX) {
         *x = maxX;
     }
-    if (*y < 0x38) {
-        *y = 0x38;
+    if (*y < QUICKSTART_INBOARD_MARGIN) {
+        *y = QUICKSTART_INBOARD_MARGIN;
     } else if (*y > maxY) {
         *y = maxY;
     }
@@ -8900,7 +8960,7 @@ static bool32 QuickStartLeverAtTile(s32 tx, s32 ty) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == HITTABLE_LEVER &&
+        if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH &&
             (ent->x.HALF.HI - gRoomControls.origin_x) >> 4 == tx &&
             (ent->y.HALF.HI - gRoomControls.origin_y) >> 4 == ty) {
             return TRUE;
@@ -8986,18 +9046,43 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             }
         }
     } else if (kind == QS_EVENT_GATE) {
-        // ---- The switch-puzzle site: closing gate OR decoy levers ----
+        // ---- The switch-puzzle site: closing gate OR decoy switches ----
         // Room-flag windows (per visit): +0 initialized, +1 variant (set
-        // = decoy levers, clear = closing gate), +3 prize seen, +4 the
-        // gate lever's last-seen type bit, +5 hint shown, +6 cage open.
-        s32 ptx = contentX >> 4;
-        s32 pty = contentY >> 4;
+        // = decoy switches, clear = closing gate), +3 prize seen, +4 the
+        // gate switch's last-seen on bit, +5 hint shown, +6 cage open.
+        s32 ptx;
+        s32 pty;
         Entity* lever = NULL;
         s32 i;
         u32 t;
+        // The cage anchors on the site's content spot, and content spots
+        // (picked as reward-drop tiles) often sit on the door's approach
+        // line - the user kept meeting the puzzle "right in front of the
+        // ? room door". Pull the anchor through the same inboard clamp
+        // the switches use before anything keys off it, then re-snap to
+        // open ground. Pure arithmetic over the room's fixed dimensions,
+        // so every frame of the visit recomputes the same spot (the
+        // pickup watch below must keep looking where the prize was put).
+        {
+            s32 ax = contentX;
+            s32 ay = contentY;
+            QuickStartClampInboard(&ax, &ay);
+            if (ax != contentX || ay != contentY) {
+                s16 fixedX, fixedY;
+                contentX = (s16)ax;
+                contentY = (s16)ay;
+                if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
+                    QuickStartFindOpenTileNear(contentX, contentY, 1, &fixedX, &fixedY)) {
+                    contentX = fixedX;
+                    contentY = fixedY;
+                }
+            }
+        }
+        ptx = contentX >> 4;
+        pty = contentY >> 4;
         for (i = 0; i < MAX_ENTITIES; i++) {
             Entity* ent = &gEntities[i].base;
-            if (ent->kind == OBJECT && ent->id == HITTABLE_LEVER && QuickStartEntityInCurrentRoom(ent)) {
+            if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH && QuickStartEntityInCurrentRoom(ent)) {
                 lever = ent;
                 break;
             }
@@ -9041,17 +9126,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 s32 ay = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
                 QuickStartClampInboard(&ax, &ay);
                 if (QuickStartFindOpenTileNear(ax, ay, 1, &lx, &ly)) {
-                    Entity* newLever = CreateObject(HITTABLE_LEVER, 0, 0);
-                    if (newLever != NULL) {
-                        newLever->x.HALF.HI = gRoomControls.origin_x + lx;
-                        newLever->y.HALF.HI = gRoomControls.origin_y + ly;
-                        newLever->collisionLayer = 1;
-                        UpdateSpriteForCollisionLayer(newLever);
-                        lever = newLever;
-                    }
+                    lever = QuickStartSpawnPuzzleSwitch(lx, ly, 0);
                 }
             } else if (decoy) {
-                // Three levers dealt blind: one frees the prize, one
+                // Three switches dealt blind: one frees the prize, one
                 // springs the trap, one is a dud - and nothing in the
                 // room distinguishes them (per the user: a total gamble,
                 // no eye-switch tell). Anchors fan out 2 tiles left/right
@@ -9099,23 +9177,19 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         // because a trap-pot cage is always liftable.
                         continue;
                     }
-                    newLever = CreateObject(HITTABLE_LEVER, 0, 0);
+                    newLever = QuickStartSpawnPuzzleSwitch(lx, ly, (u32)(1 + k));
                     if (newLever == NULL) {
                         continue;
                     }
-                    newLever->x.HALF.HI = gRoomControls.origin_x + lx;
-                    newLever->y.HALF.HI = gRoomControls.origin_y + ly;
-                    newLever->collisionLayer = 1;
-                    UpdateSpriteForCollisionLayer(newLever);
-                    // After UpdateSpriteForCollisionLayer, like the item
-                    // direction above, so nothing repaints over the role.
-                    newLever->type2 = roles[k];
+                    QS_SWITCH_ROLE(newLever) = roles[k];
                 }
             }
             QuickStartGateWriteTimer(0);
-            QuickStartGateClose(ptx, pty);
+            // Clearance 2: at deal time the player is standing in the
+            // doorway they entered through (see QuickStartGateClose).
+            QuickStartGateClose(ptx, pty, 2);
             QsClearRoomFlag(flagBase + 6);
-            if (!decoy && lever != NULL && (lever->type & 1)) {
+            if (!decoy && lever != NULL && lever->frameIndex != 0) {
                 QsSetRoomFlag(flagBase + 4);
             }
             if (!QsCheckRoomFlag(flagBase + 5)) {
@@ -9153,24 +9227,25 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             }
         }
         if (QsCheckRoomFlag(flagBase + 1)) {
-            // ---- Decoy levers, per frame: resolve fresh pulls ----
-            // A lever's type flips 0<->1 on every hit; a spawn-state
-            // lever is type 0, so "type bit set and not yet DONE" is
-            // exactly "pulled for the first time". The roll happened at
-            // the deal - resolving here just reads the stamped role.
+            // ---- Decoy switches, per frame: resolve fresh pulls ----
+            // A switch's frameIndex mirrors its flag2 flag, flipping
+            // 0<->1 on every hit; a fresh deal starts every switch OFF,
+            // so "on and not yet DONE" is exactly "pulled for the first
+            // time". The roll happened at the deal - resolving here just
+            // reads the stamped role.
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* ent = &gEntities[i].base;
-                if (ent->kind != OBJECT || ent->id != HITTABLE_LEVER || !QuickStartEntityInCurrentRoom(ent)) {
+                if (ent->kind != OBJECT || ent->id != LIGHTABLE_SWITCH || !QuickStartEntityInCurrentRoom(ent)) {
                     continue;
                 }
-                if (ent->type2 & QUICKSTART_LEVER_ROLE_DONE) {
+                if (QS_SWITCH_ROLE(ent) & QUICKSTART_LEVER_ROLE_DONE) {
                     continue;
                 }
-                if ((ent->type & 1) == 0) {
+                if (ent->frameIndex == 0) {
                     continue;
                 }
-                ent->type2 |= QUICKSTART_LEVER_ROLE_DONE;
-                switch (ent->type2 & 3) {
+                QS_SWITCH_ROLE(ent) |= QUICKSTART_LEVER_ROLE_DONE;
+                switch (QS_SWITCH_ROLE(ent) & 3) {
                     case QUICKSTART_LEVER_ROLE_PRIZE:
                         // No countdown in this variant: the cage stays
                         // open for the rest of the visit (the shared
@@ -9190,21 +9265,21 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         // blast, or hope the room left a gap.
                         s32 playerTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
                         s32 playerTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-                        QuickStartGateClose(playerTX, playerTY);
+                        QuickStartGateClose(playerTX, playerTY, 0);
                         SoundReq(SFX_MENU_ERROR);
                         break;
                     }
                     default:
-                        // The dud: the lever's own clack (hittableLever's
-                        // SFX_117) is all the feedback there is.
+                        // The dud: the switch's own click (lightableSwitch's
+                        // SFX_110) is all the feedback there is.
                         break;
                 }
             }
             return FALSE;
         }
-        // Any flip of the lever (either direction) restarts the window.
+        // Any flip of the switch (either direction) restarts the window.
         if (lever != NULL) {
-            u32 lt = lever->type & 1;
+            u32 lt = (lever->frameIndex != 0) ? 1 : 0;
             u32 seen = QsCheckRoomFlag(flagBase + 4) ? 1 : 0;
             if (lt != seen) {
                 s32 window;
@@ -9232,8 +9307,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // Clock ran out: shut it again. Per-tile the close skips the
             // player's own tile, and a trap-pot cage is liftable from the
             // inside anyway (at the price of the primed pot), so it can
-            // never become a jail.
-            QuickStartGateClose(ptx, pty);
+            // never become a jail. Clearance 0 on purpose: sparing a
+            // 2-tile halo here would let the player park beside the cage
+            // and cancel the re-close - the timer IS this variant.
+            QuickStartGateClose(ptx, pty, 0);
             QsClearRoomFlag(flagBase + 6);
         }
         return FALSE;
