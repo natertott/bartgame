@@ -43,9 +43,10 @@ what follows is what is NOT yet built.
    variety (F7) is the single biggest missing piece of the vision, and it
    is blocked on the key-item reachability logic, which is therefore the
    most important unstarted design work in the project.
-2. **Make the meta loop visible** - the player cannot currently see the
-   unlock progression the whole design hangs on (unlocks viewer), and has
-   no map or compass (F10).
+2. **Make the meta loop visible** - the player still cannot see the
+   unlock progression the whole design hangs on (unlocks viewer). The
+   navigation half of this goal is done: the MAP and COMPASS (F10)
+   shipped, so a run can now be read off the pause screen.
 3. **Content breadth as data entry** - the tables, checker, and budget
    docs exist precisely so new events, quests, and regions are rows plus
    surveys. Spend breadth effort only through that machinery.
@@ -120,11 +121,14 @@ can actually obtain.
   difficulty), *the burning wick* (HELD until key-item logic - fire-gated
   by design), *overworld switch links* (a plate in one ring region opens
   a grate in another; ambitious, gives the compass something to point at).
-- **Phase D cheap events** (one mechanism each, all proven parts): lever
+- **Phase D cheap events** (one mechanism each, all proven parts): switch
   rooms, bombable-wall treasure, pot-room variants, boss-rush,
   survive-N-seconds. Recommendation stands: survive-N-seconds first -
   smallest diff, reuses the hunt timer + wave spawner verbatim (Decision 4
-  picks the pilot).
+  picks the pilot). One constraint any switch-driven event inherits:
+  build it on LIGHTABLE_SWITCH, never HITTABLE_LEVER - the lever has no
+  sprite at all and paints its art as room tiles, so it only renders in
+  dungeon tilesets (see doctrine 6).
 - **Phase D medium events**: kill-quota bounties (counters exist; needs a
   giver NPC), carry-item-to-NPC (open question: do held objects survive a
   room transition? if not, keep giver and receiver in one region), Great
@@ -317,8 +321,8 @@ allowlists):
 
 1. **The key-item reachability logic** - pure design work, unblocks F7
    (the vision's biggest gap) and two held puzzle/quest variants.
-2. **Unlocks-viewer NPC + F10 research spike** - makes the meta loop
-   visible; both are small and independent.
+2. **Unlocks-viewer NPC** - the meta loop's last invisible surface now
+   that F10 has shipped; small, independent, and cheap as dialogue.
 3. **#125 family-scoping + the F6 measurement pass** - turns the boss
    roster from "one chuchu" into a system; also retires a crash risk.
 4. **F1's remaining hide modes + dig-room research** (shared survey),
@@ -343,3 +347,10 @@ allowlists):
    game.o, new logic over existing assets is cheap while new
    graphics/maps/AI are expensive - which is why the whole plan leans on
    recombination.
+6. **Borrowed vanilla objects are only as portable as their art.** An
+   object that paints its visual into the room's TILEMAP works only in
+   tilesets that carry those tiles; one that carries an entity SPRITE
+   renders anywhere. This has now bitten twice - the invisible painted
+   shutter, then the lever that drew as garbage in every overworld ? room
+   - so before reusing a vanilla object outside its home rooms, check
+   which of the two it is.
