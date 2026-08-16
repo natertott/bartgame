@@ -5256,60 +5256,101 @@ static void QuickStartDrawDifficultyHUD(void) {
 #define QS_R_SLOW 0x40   /* speed <= 96; a wall, not a threat */
 #define QS_R_THIEF 0x80  /* takes items/rupees rather than health */
 
+// `requires` is an item the player must own before this enemy may be drawn
+// into a wave, or 0 for "always eligible". It exists because wave clear
+// demands an empty room, so an enemy the player has no way to kill stalls
+// the region for the rest of the run.
+//
+// Two are known, both found by reading their collision handlers rather
+// than by guessing (contact ids are in include/collision.h):
+//   SPARK   dies only to (contactFlags & 0x7f) == 0x14 = COL_BOOMERANG.
+//           This is the user's own example - "certain enemies who won't
+//           die by the sword will die by the bow & arrow or boomerang...
+//           the shock sprites".
+//   LAKITU  dies only to COL_PACCI (0x1d), the Cane of Pacci.
+// Both stay in the roster - they are good enemies - but they now only
+// appear once the player is carrying the answer to them.
 typedef struct {
     u8 id;
     u8 form;
     u8 roles;
     u8 cost;
+    u16 requires;
 } QuickStartEnemyPick;
 
+// The roster is sorted by what actually makes an enemy dangerous, in this
+// order: HEALTH (the one true scalar in gEnemyDefinitions), then whether
+// it threatens the player's THINGS rather than their hearts (shield and
+// rupee theft compound worse than damage), then reach and mobility, then
+// whether it needs a specific answer.
+//
+// A note on "damage dealt": the definition table's damageType is NOT a
+// number of hearts. It is a type id handed to whatever it touches, and the
+// receiver's own handler decides what it means (see intr.s, where hitType
+// is written into the victim's contactFlags). So damage ranking here is
+// qualitative - armored, ranged, status-inflicting - rather than numeric,
+// and health carries the ordering.
+
+// Level 1 - chaff. Health 1-4, no theft, no armor, nothing that needs an
+// answer. This is the whole roster a player meets before difficulty 4.
 static const QuickStartEnemyPick sQuickStartLevel1[] = {
-    { ACRO_BANDIT, 0, QS_R_CHAFF, 7 },
-    { BEETLE, 0, QS_R_CHAFF | QS_R_FAST, 1 },
-    { BOBOMB, 0, QS_R_SLOW, 2 },
-    { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2 },
-    { CHUCHU, 0 /* green */, QS_R_CHAFF | QS_R_SLOW, 4 },
-    { KEESE, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 1 },
-    { LEEVER, 0 /* red */, QS_R_CHAFF | QS_R_AMBUSH, 2 },
-    { OCTOROK, 0 /* red */, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3 },
-    { LIKE_LIKE, 0, QS_R_SLOW | QS_R_THIEF, 2 },
-    { ROPE, 0, QS_R_CHAFF | QS_R_AMBUSH, 4 },
+    { BEETLE, 0, QS_R_CHAFF | QS_R_FAST, 1, 0 },
+    { KEESE, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 1, 0 },
+    { SMALL_PESTO, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 1, 0 },
+    { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1, 0 },
+    { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2, 0 },
+    { MINI_SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
+    { GYORG_CHILD, 0, QS_R_CHAFF | QS_R_FLYER, 2, 0 },
+    { OCTOROK, 0 /* red */, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
+    { PEAHAT, 0, QS_R_CHAFF | QS_R_FLYER, 2, 0 },
+    { CHUCHU, 0 /* green */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
+    { ROPE, 0, QS_R_CHAFF | QS_R_AMBUSH, 4, 0 },
 };
+// Level 2 - light. Health 4-8, or a mechanic (burrowing, exploding,
+// stationary fire) that asks for a little more than walking up and
+// swinging.
 static const QuickStartEnemyPick sQuickStartLevel2[] = {
-    { CHUCHU, 2 /* blue */, QS_R_CHAFF | QS_R_SLOW, 4 },
-    { LEEVER, 1 /* blue */, QS_R_AMBUSH, 2 },
-    { OCTOROK, 1 /* blue */, QS_R_RANGED | QS_R_SLOW, 3 },
-    { BOMBAROSSA, 0, QS_R_RANGED | QS_R_FAST, 1 },
-    { BOW_MOBLIN, 0, QS_R_RANGED | QS_R_FAST, 8 },
-    { RUPEE_LIKE, 0 /* green */, QS_R_THIEF, 4 },
-    { HELMASAUR, 0, QS_R_FAST, 4 },
-    { MOLDORM, 0, QS_R_FAST, 2 },
-    { PEAHAT, 0, QS_R_CHAFF | QS_R_FLYER, 2 },
-    { MULLDOZER, 0 /* red */, QS_R_SLOW, 4 },
-    { PESTO, 0 /* red */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3 },
-    { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1 },
-    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2 },
+    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2, 0 },
+    { OCTOROK2, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
+    { OCTOROK, 1 /* blue */, QS_R_RANGED | QS_R_SLOW, 3, 0 },
+    { SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
+    { STALFOS, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 2, 0 },
+    { STALFOS, 1 /* blue */, QS_R_CHAFF | QS_R_FAST, 2, 0 },
+    { KEATON, 0, QS_R_CHAFF | QS_R_FAST, 1, 0 },
+    { HELMASAUR, 0, QS_R_FAST, 4, 0 },
+    { PESTO, 0 /* red */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0 },
+    { CHUCHU, 2 /* blue */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
+    { BOBOMB, 0, QS_R_SLOW, 2, 0 },
+    { BOMBAROSSA, 0, QS_R_RANGED | QS_R_FAST, 1, 0 },
+    { LEEVER, 0 /* red */, QS_R_CHAFF | QS_R_AMBUSH, 2, 0 },
+    { MULLDOZER, 0 /* red */, QS_R_SLOW, 4, 0 },
+    { TEKTITE, 1 /* blue */, QS_R_FAST, 1, 0 },
+    { LEEVER, 1 /* blue */, QS_R_AMBUSH, 2, 0 },
 };
 // Yellow and purple Keaton are the same actor with no form-based color
 // variant (confirmed empirically - all 4 form values render identically),
 // so Keaton only appears once here rather than duplicated into level 4.
+// Level 3 - mid. Health 8-10, armored shells, splitters, spore clouds and
+// the first stationary artillery. Nothing here steals and nothing here
+// needs a specific item.
 static const QuickStartEnemyPick sQuickStartLevel3[] = {
-    { MULLDOZER, 1 /* blue */, QS_R_SLOW, 4 },
-    { PESTO, 1 /* blue */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3 },
-    { STALFOS, 1 /* blue */, QS_R_CHAFF | QS_R_FAST, 2 },
-    { TEKTITE, 1 /* blue */, QS_R_FAST, 1 },
-    { GHINI, 0, QS_R_FLYER | QS_R_FAST, 5 },
-    { PUFFSTOOL, 0, QS_R_CHAFF | QS_R_SLOW, 8 },
-    { CHUCHU, 1 /* red */, QS_R_CHAFF | QS_R_SLOW, 4 },
-    { RUPEE_LIKE, 2 /* red */, QS_R_THIEF, 4 },
-    { STALFOS, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 2 },
-    { WISP, 0 /* red */, QS_R_FLYER, 3 },
-    { ROCK_CHUCHU, 0, QS_R_SLOW, 2 },
-    { ROLLOBITE, 0, QS_R_FAST, 6 },
-    { SPARK, 0, QS_R_FAST, 1 },
-    { SPEAR_MOBLIN, 0, QS_R_FAST, 8 },
-    { SPIKED_BEETLE, 0, QS_R_AMBUSH | QS_R_SLOW, 5 },
-    { KEATON, 0, QS_R_CHAFF | QS_R_FAST, 1 },
+    { MOLDORM, 0, QS_R_FAST, 2, 0 },
+    { GHINI, 0, QS_R_FLYER | QS_R_FAST, 5, 0 },
+    { ARMOS, 0, QS_R_AMBUSH | QS_R_SLOW, 5, 0 },
+    { EYEGORE, 0, QS_R_RANGED | QS_R_SLOW, 6, 0 },
+    { MULLDOZER, 1 /* blue */, QS_R_SLOW, 4, 0 },
+    { PESTO, 1 /* blue */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0 },
+    { CHUCHU, 1 /* red */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
+    { ROCK_CHUCHU, 0, QS_R_SLOW, 2, 0 },
+    { SPINY_CHUCHU, 0, QS_R_SLOW, 6, 0 },
+    { SPIKED_BEETLE, 0, QS_R_AMBUSH | QS_R_SLOW, 5, 0 },
+    { PUFFSTOOL, 0, QS_R_CHAFF | QS_R_SLOW, 8, 0 },
+    { FIREBALL_GUY, 0, QS_R_RANGED, 4, 0 },
+    { MINI_FIREBALL_GUY, 0, QS_R_CHAFF | QS_R_RANGED, 4, 0 },
+    { BOMB_PEAHAT, 0, QS_R_FLYER, 2, 0 },
+    { CLOUD_PIRANHA, 0, QS_R_AMBUSH, 4, 0 },
+    { SPINY_BEETLE, 0, QS_R_FAST, 2, 0 },
+    { ENEMY_50, 0, QS_R_FAST, 5, 0 },
 };
 // Floormaster (Wall Master) deliberately left out - it grabs the player and
 // warps them to a dungeon's scripted "entrance" point, which none of these
@@ -5323,37 +5364,82 @@ static const QuickStartEnemyPick sQuickStartLevel3[] = {
 // below) - gEnemyDefinition_5 (enemy.c) gives it 4 forms with increasing
 // health (12/12/20/26), so the two weaker forms are grouped here with the
 // rest of level 4 and the two tougher ones go in level 5 below.
+// Level 4 - heavy. Health 16-20, or a thief. Theft sits at this level
+// regardless of health: losing a shield or a purse compounds across a run
+// in a way that taking a heart does not.
 static const QuickStartEnemyPick sQuickStartLevel4[] = {
-    { RUPEE_LIKE, 1 /* blue */, QS_R_HEAVY | QS_R_THIEF, 4 },
-    { WISP, 1 /* blue */, QS_R_FLYER | QS_R_FAST, 3 },
-    { GOBDO, 0 /* gibdo */, QS_R_HEAVY | QS_R_SLOW, 2 },
-    { LAKITU, 0, QS_R_RANGED | QS_R_FLYER, 1 },
-    { MOLDWORM, 0, QS_R_HEAVY, 6 },
-    { SCISSORS_BEETLE, 0, QS_R_HEAVY, 1 },
-    { SPINY_BEETLE, 0, QS_R_FAST, 2 },
-    { TAKKURI, 0, QS_R_FAST | QS_R_FLYER | QS_R_THIEF, 2 },
-    { DARK_NUT, 0, QS_R_HEAVY | QS_R_SLOW, 2 },
-    { DARK_NUT, 1, QS_R_HEAVY | QS_R_SLOW, 2 },
+    { LIKE_LIKE, 0, QS_R_HEAVY | QS_R_SLOW | QS_R_THIEF, 2, 0 },
+    { RUPEE_LIKE, 0 /* green */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
+    { RUPEE_LIKE, 2 /* red */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
+    { RUPEE_LIKE, 1 /* blue */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
+    { TAKKURI, 0, QS_R_FAST | QS_R_FLYER | QS_R_THIEF, 2, 0 },
+    { GOBDO, 0 /* gibdo */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
+    { SCISSORS_BEETLE, 0, QS_R_HEAVY, 1, 0 },
+    { MOLDWORM, 0, QS_R_HEAVY, 6, 0 },
+    { ENEMY_4D, 0, QS_R_HEAVY, 1, 0 },
+    { BOW_MOBLIN, 0, QS_R_RANGED | QS_R_FAST, 8, 0 },
+    { SPEAR_MOBLIN, 0, QS_R_FAST, 8, 0 },
+    { ACRO_BANDIT, 0, QS_R_CHAFF, 7, 0 },
 };
 // Since QuickStartPickEnemy is rolled independently per enemy (see its own
 // comment above), a high-difficulty wave that leans heavily on level 5 can
 // already come up with more than one Darknut/Ball and Chain Soldier/Wizzrobe
 // in the same room purely by chance - no separate "spawn N minibosses"
 // mechanism needed for that.
+// Level 5 - specialists. Not the toughest (that is the Elites below) but
+// the ones that change HOW you fight: casters that teleport and inflict an
+// element, the 64hp golden trio that soaks a whole magazine, the hazards
+// that ignore a sword entirely and need the right tool in hand.
 static const QuickStartEnemyPick sQuickStartLevel5[] = {
-    { BALL_CHAIN_SOLIDER, 0, QS_R_HEAVY, 1 },
-    { WIZZROBE_ICE, 0, QS_R_RANGED | QS_R_FAST, 5 },
-    { WIZZROBE_FIRE, 0, QS_R_RANGED | QS_R_FAST, 4 },
-    { DARK_NUT, 2 /* blue, 20hp */, QS_R_HEAVY | QS_R_SLOW, 2 },
-    { DARK_NUT, 3 /* red, 26hp */, QS_R_HEAVY | QS_R_SLOW, 2 },
+    { WIZZROBE_FIRE, 0, QS_R_RANGED | QS_R_FAST, 4, 0 },
+    { WIZZROBE_ICE, 0, QS_R_RANGED | QS_R_FAST, 5, 0 },
+    { WIZZROBE_WIND, 0, QS_R_RANGED | QS_R_FAST, 3, 0 },
+    { TEKTITE_GOLDEN, 0, QS_R_HEAVY | QS_R_FAST, 1, 0 },
+    { OCTOROK_GOLDEN, 0, QS_R_HEAVY | QS_R_RANGED | QS_R_SLOW, 3, 0 },
+    { ROPE_GOLDEN, 0, QS_R_HEAVY | QS_R_AMBUSH, 4, 0 },
+    { ROLLOBITE, 0, QS_R_FAST, 6, 0 },
+    { WISP, 0 /* red */, QS_R_FLYER, 3, 0 },
+    { WISP, 1 /* blue */, QS_R_FLYER | QS_R_FAST, 3, 0 },
+    // Weapon-gated (see the `requires` note on QuickStartEnemyPick): these
+    // two shrug off a sword, so they only join once their answer is in the
+    // bag. Drawn like anything else once it is.
+    { SPARK, 0, QS_R_FAST, 1, ITEM_BOOMERANG },
+    { LAKITU, 0, QS_R_RANGED | QS_R_FLYER, 1, ITEM_PACCI_CANE },
 };
 
-static const QuickStartEnemyPick* const sQuickStartEnemyLevels[5] = {
-    sQuickStartLevel1, sQuickStartLevel2, sQuickStartLevel3, sQuickStartLevel4, sQuickStartLevel5,
+// Level 6 - ELITES, per the user: "a tier beyond tier 5 called Elites that
+// includes Darknuts, all mini bosses, and 3x ball-and-chain enemies at one
+// time". Everything here is armored, high-health, or both, and everything
+// here is rationed by sQuickStartLiveCaps rather than by rarity alone -
+// the caps are what stop this tier from becoming the Darknut pile the
+// whole rework exists to prevent.
+//
+// This doubles as the miniboss pool the ? room content draws from
+// (QUICKSTART_MINIBOSS_POOL_SIZE), which is what makes "all minibosses are
+// Elites" true by construction instead of by two lists agreeing.
+//
+// Madderpillar earns its place on health (32) but is the priciest entry in
+// entity terms: probed, one placement is about seven live entities because
+// it is a segmented chain, so its live cap is 2.
+static const QuickStartEnemyPick sQuickStartElites[] = {
+    { DARK_NUT, 0, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
+    { DARK_NUT, 1, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
+    { DARK_NUT, 2 /* blue, 20hp */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
+    { DARK_NUT, 3 /* red, 26hp */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
+    { BALL_CHAIN_SOLIDER, 0, QS_R_HEAVY, 1, 0 },
+    { ENEMY_64, 0, QS_R_HEAVY | QS_R_SLOW, 4, 0 },
+    { MADDERPILLAR, 0, QS_R_HEAVY, 5, 0 },
 };
-static const s32 sQuickStartEnemyLevelCounts[5] = {
+
+#define QUICKSTART_ENEMY_LEVELS 6
+
+static const QuickStartEnemyPick* const sQuickStartEnemyLevels[QUICKSTART_ENEMY_LEVELS] = {
+    sQuickStartLevel1, sQuickStartLevel2, sQuickStartLevel3,
+    sQuickStartLevel4, sQuickStartLevel5, sQuickStartElites,
+};
+static const s32 sQuickStartEnemyLevelCounts[QUICKSTART_ENEMY_LEVELS] = {
     ARRAY_COUNT(sQuickStartLevel1), ARRAY_COUNT(sQuickStartLevel2), ARRAY_COUNT(sQuickStartLevel3),
-    ARRAY_COUNT(sQuickStartLevel4), ARRAY_COUNT(sQuickStartLevel5),
+    ARRAY_COUNT(sQuickStartLevel4), ARRAY_COUNT(sQuickStartLevel5), ARRAY_COUNT(sQuickStartElites),
 };
 
 // One row per difficulty step: how much of each enemy level to sample from
@@ -5366,7 +5452,7 @@ static const s32 sQuickStartEnemyLevelCounts[5] = {
 // per-room QUICKSTART_*_MAX_ENEMIES caps below. A simple first pass, easy
 // to retune once we see how a full run plays out.
 typedef struct {
-    u8 levelWeights[5];
+    u8 levelWeights[QUICKSTART_ENEMY_LEVELS];
     u8 density;
 } QuickStartDifficultyTier;
 
@@ -5394,20 +5480,23 @@ typedef struct {
 // uniform-thirds fill then made about five of them. Weight alone was not
 // the whole fix - the live caps and the composition builder are the rest -
 // but a top tier that dominates the draw made everything else moot.
+// Six columns now: levels 1-5 plus the Elites. The Elite weight is
+// deliberately tiny and late - it is a spice, and the live caps mean even
+// a lucky roll cannot field more than three of them.
 static const QuickStartDifficultyTier sQuickStartDifficultyTiers[QUICKSTART_MAX_DIFFICULTY + 1] = {
-    /*  0 */ { { 100, 0, 0, 0, 0 }, 25 },
-    /*  1 */ { { 75, 25, 0, 0, 0 }, 22 },
-    /*  2 */ { { 50, 45, 5, 0, 0 }, 17 },
-    /*  3 */ { { 30, 50, 20, 0, 0 }, 13 }, // baseline established here
-    /*  4 */ { { 25, 45, 27, 3, 0 }, 12 },
-    /*  5 */ { { 22, 43, 30, 5, 0 }, 11 },
-    /*  6 */ { { 20, 40, 32, 7, 1 }, 10 },
-    /*  7 */ { { 18, 38, 33, 9, 2 }, 10 },
-    /*  8 */ { { 16, 36, 34, 11, 3 }, 9 },
-    /*  9 */ { { 14, 34, 35, 13, 4 }, 8 },
-    /* 10 */ { { 12, 32, 36, 15, 5 }, 7 },
-    /* 11 */ { { 10, 30, 37, 17, 6 }, 6 },
-    /* 12 */ { { 10, 28, 37, 18, 7 }, 6 },
+    /*  0 */ { { 100, 0, 0, 0, 0, 0 }, 25 },
+    /*  1 */ { { 75, 25, 0, 0, 0, 0 }, 22 },
+    /*  2 */ { { 50, 45, 5, 0, 0, 0 }, 17 },
+    /*  3 */ { { 30, 50, 20, 0, 0, 0 }, 13 }, // baseline established here
+    /*  4 */ { { 25, 45, 27, 3, 0, 0 }, 12 },
+    /*  5 */ { { 22, 43, 30, 5, 0, 0 }, 11 },
+    /*  6 */ { { 20, 40, 32, 7, 1, 0 }, 10 },
+    /*  7 */ { { 18, 38, 32, 9, 2, 1 }, 10 },
+    /*  8 */ { { 16, 35, 33, 11, 3, 2 }, 9 },
+    /*  9 */ { { 14, 33, 33, 13, 4, 3 }, 8 },
+    /* 10 */ { { 12, 31, 33, 15, 5, 4 }, 7 },
+    /* 11 */ { { 10, 29, 33, 17, 6, 5 }, 6 },
+    /* 12 */ { { 10, 27, 32, 18, 7, 6 }, 6 },
 };
 
 static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty) {
@@ -5423,7 +5512,7 @@ static s32 QuickStartRollEnemyLevel(const QuickStartDifficultyTier* tier) {
     s32 roll = (s32)Random() % 100;
     s32 cumulative = 0;
     s32 level;
-    for (level = 0; level < 5; level++) {
+    for (level = 0; level < QUICKSTART_ENEMY_LEVELS; level++) {
         cumulative += tier->levelWeights[level];
         if (roll < cumulative) {
             return level;
@@ -5431,9 +5520,9 @@ static s32 QuickStartRollEnemyLevel(const QuickStartDifficultyTier* tier) {
     }
     // Only reachable if a tier's weights don't sum to 100 - fall back to
     // the lowest level that's actually available this tier.
-    for (level = 0; level < 5 && tier->levelWeights[level] == 0; level++) {
+    for (level = 0; level < QUICKSTART_ENEMY_LEVELS && tier->levelWeights[level] == 0; level++) {
     }
-    return (level >= 5) ? 0 : level;
+    return (level >= QUICKSTART_ENEMY_LEVELS) ? 0 : level;
 }
 
 // Draw a roster entry for a ROLE (a QS_R_* bit), at this difficulty. The
@@ -5468,10 +5557,21 @@ static bool32 QuickStartKindAlreadyCast(const QuickStartEnemyPick* pick, const u
     return FALSE;
 }
 
+// May this entry be drawn at all right now? A weapon-gated enemy (see the
+// `requires` note on QuickStartEnemyPick) waits until the player is
+// carrying the thing that kills it - otherwise it would sit in a room the
+// wave-clear objective needs emptied, forever.
+static bool32 QuickStartEnemyEligible(const QuickStartEnemyPick* pick) {
+    if (pick->requires == 0) {
+        return TRUE;
+    }
+    return GetInventoryValue(pick->requires) != 0;
+}
+
 static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32 budget, const u8* takenIds,
-                                                    const u8* takenForms, s32 takenCount) {
+                                                    const u8* takenForms, s32 takenCount, u8 forceLevel) {
     const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
-    s32 level = QuickStartRollEnemyLevel(tier);
+    s32 level = (forceLevel != 0) ? (s32)(forceLevel - 1) : QuickStartRollEnemyLevel(tier);
     s32 count = sQuickStartEnemyLevelCounts[level];
     const QuickStartEnemyPick* level0 = sQuickStartEnemyLevels[level];
     const QuickStartEnemyPick* chosen = NULL;
@@ -5480,7 +5580,7 @@ static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32
     // First choice: affordable, unused, and carries the role.
     if (role != 0) {
         for (i = 0; i < count; i++) {
-            if ((level0[i].roles & role) && level0[i].cost <= budget &&
+            if ((level0[i].roles & role) && level0[i].cost <= budget && QuickStartEnemyEligible(&level0[i]) &&
                 !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
                 seen++;
                 if ((s32)Random() % seen == 0) {
@@ -5502,7 +5602,8 @@ static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32
     // fast AND flyer) and every collision folded a slot away.
     seen = 0;
     for (i = 0; i < count; i++) {
-        if (level0[i].cost <= budget && !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
+        if (level0[i].cost <= budget && QuickStartEnemyEligible(&level0[i]) &&
+            !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
             seen++;
             if ((s32)Random() % seen == 0) {
                 chosen = &level0[i];
@@ -5555,9 +5656,20 @@ static const QuickStartLiveCap sQuickStartLiveCaps[] = {
     // room was the user's report, and it was the modal outcome at the top
     // of the old curve, not bad luck.
     { DARK_NUT, 2, 3 },
-    // Area denial with a long swing - three of them and a small room has
-    // no safe tile left.
-    { BALL_CHAIN_SOLIDER, 2, 2 },
+    // Three at once is the user's own spec for the Elite tier ("3x
+    // ball-and-chain enemies at one time"), so this is a flat 3 rather
+    // than a ramp - the swing is area denial, but three of them reads as
+    // a deliberate set piece rather than a pile.
+    { BALL_CHAIN_SOLIDER, 3, 3 },
+    // The other two Elites. Enemy 64 is a 36hp bruiser.
+    { ENEMY_64, 2, 3 },
+    // Madderpillar is a SEGMENTED chain: one placement is about seven
+    // live entities sharing this id (measured), so this cap of 1 reads as
+    // "one chain in the room", not "one body". Counting segments is
+    // exactly what we want here - the entity table is the scarce thing,
+    // and a second chain would be a seventh of it. Same shape of rule as
+    // the Acro Bandit gang, where one placement is six.
+    { MADDERPILLAR, 1, 1 },
     // The only enemy class measured to cost real frame time (F9): each
     // placement bursts into six. Unchanged.
     { ACRO_BANDIT, 2, 2 },
@@ -5638,11 +5750,16 @@ static bool32 QuickStartKindAtLiveCap(u8 id, u8 difficulty) {
 // clean power ramp and no elites at all.
 #define QUICKSTART_ARCHETYPE_SLOTS 5
 
+// forceLevel pins the roster level a shape draws from, as level+1, or 0 to
+// let the tier weights roll it as usual. Only the Elite trio uses it: an
+// encounter that is ABOUT its elites cannot be left to the tier weights,
+// which give the Elite level a few percent at best.
 typedef struct {
     u8 minDiff;
     u8 weight;
     u8 slotCount;
     u8 countPercent;
+    u8 forceLevel;
     u8 roles[QUICKSTART_ARCHETYPE_SLOTS];
     u8 shares[QUICKSTART_ARCHETYPE_SLOTS];
 } QuickStartArchetype;
@@ -5651,40 +5768,53 @@ static const QuickStartArchetype sQuickStartArchetypes[] = {
     // The plain mixed wave: no shape at all, three untyped draws. Kept as
     // the single most likely outcome so the game still reads as the game -
     // archetypes are seasoning, not a replacement.
-    { 0, 30, 3, 100, { 0, 0, 0, 0, 0 }, { 34, 33, 33, 0, 0 } },
+    { 0, 30, 3, 100, 0, {0, 0, 0, 0, 0 }, { 34, 33, 33, 0, 0 } },
     // SWARM: one cheap kind, more of it than usual. Sixteen Keese costs
     // one sheet slot - the cheapest spectacle in the game.
-    { 0, 12, 1, 150, { QS_R_CHAFF, 0, 0, 0, 0 }, { 100, 0, 0, 0, 0 } },
+    { 0, 12, 1, 150, 0, {QS_R_CHAFF, 0, 0, 0, 0 }, { 100, 0, 0, 0, 0 } },
     // MENAGERIE: the user's "5 types of enemies coming at you all at
     // once". The roles are picked to lean cheap (chaff, fast, flyer,
     // ambush and ranged are where the 1-2 slot kinds live), because five
     // kinds only fit the sheet budget if they are cheap ones - which is
     // exactly the trade the budget exists to expose.
-    { 2, 14, 5, 100, { QS_R_CHAFF, QS_R_FAST, QS_R_FLYER, QS_R_AMBUSH, QS_R_RANGED },
+    { 2, 14, 5, 100, 0, {QS_R_CHAFF, QS_R_FAST, QS_R_FLYER, QS_R_AMBUSH, QS_R_RANGED },
       { 20, 20, 20, 20, 20 } },
     // PINCER: a fast flyer and a slow ground kind arrive as two separate
     // problems out of one spawn - a 12x speed gap does that for free.
-    { 2, 10, 2, 100, { QS_R_FLYER | QS_R_FAST, QS_R_SLOW, 0, 0, 0 }, { 60, 40, 0, 0, 0 } },
+    { 2, 10, 2, 100, 0, {QS_R_FLYER | QS_R_FAST, QS_R_SLOW, 0, 0, 0 }, { 60, 40, 0, 0, 0 } },
     // AMBUSH: burrowers and hiders, with something fast to herd you onto
     // them.
-    { 3, 10, 2, 100, { QS_R_AMBUSH, QS_R_FAST, 0, 0, 0 }, { 65, 35, 0, 0, 0 } },
+    { 3, 10, 2, 100, 0, {QS_R_AMBUSH, QS_R_FAST, 0, 0, 0 }, { 65, 35, 0, 0, 0 } },
     // CROSSFIRE: two ranged kinds plus a chaser, so standing still is
     // punished and closing is contested.
-    { 4, 10, 3, 90, { QS_R_RANGED, QS_R_RANGED, QS_R_FAST, 0, 0 }, { 35, 35, 30, 0, 0 } },
+    { 4, 10, 3, 90, 0, {QS_R_RANGED, QS_R_RANGED, QS_R_FAST, 0, 0 }, { 35, 35, 30, 0, 0 } },
     // ELITE GUARD: one heavy in an escort of chaff - the user's own
     // example, "a single strong enemy surrounded by smaller enemies".
     // The heavy's share is small and the live cap trims it further.
-    { 4, 8, 3, 100, { QS_R_HEAVY, QS_R_CHAFF, QS_R_CHAFF, 0, 0 }, { 15, 45, 40, 0, 0 } },
+    { 4, 8, 3, 100, 0, {QS_R_HEAVY, QS_R_CHAFF, QS_R_CHAFF, 0, 0 }, { 15, 45, 40, 0, 0 } },
     // THIEVES: fast and after your things rather than your hearts. A wave
     // whose threat is economic.
-    { 5, 6, 2, 100, { QS_R_THIEF, QS_R_FAST, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
+    { 5, 6, 2, 100, 0, {QS_R_THIEF, QS_R_FAST, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
     // DUEL: two heavies and nothing else, at a third of the usual count.
     // Variety includes quiet: a generator that is always maximally busy
     // stops reading as varied.
-    { 6, 6, 2, 35, { QS_R_HEAVY, QS_R_HEAVY, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
+    { 6, 6, 2, 35, 0, {QS_R_HEAVY, QS_R_HEAVY, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
     // ARTILLERY: shooters behind a wall of slow bodies, so the player has
     // to choose an order to kill things in.
-    { 6, 8, 2, 100, { QS_R_RANGED, QS_R_SLOW, 0, 0, 0 }, { 40, 60, 0, 0, 0 } },
+    { 6, 8, 2, 100, 0, {QS_R_RANGED, QS_R_SLOW, 0, 0, 0 }, { 40, 60, 0, 0, 0 } },
+    // ELITE TRIO: one Elite kind, three of it, and nothing else. This is
+    // the user's "3x ball-and-chain enemies at one time" as a designed
+    // encounter rather than a lucky roll - forceLevel pins the draw to the
+    // Elite roster, which the tier weights alone would reach only a few
+    // percent of the time (measured: Ball and Chain appeared in 0 of 60
+    // sampled waves before this row existed).
+    //
+    // The head count asks for a quarter of a normal wave - about 4 at high
+    // difficulty - and the live caps trim it to 3 Ball and Chain, 3
+    // Darknuts at difficulty 12 (2 below it), or 2 Madderpillars. So the
+    // shape says "a few of something serious" and the caps decide exactly
+    // how few, which is the same division of labour every other shape uses.
+    { 8, 7, 1, 25, QUICKSTART_ENEMY_LEVELS, {QS_R_HEAVY, 0, 0, 0, 0 }, { 100, 0, 0, 0, 0 } },
 };
 
 static const QuickStartArchetype* QuickStartRollArchetype(u8 difficulty) {
@@ -6041,7 +6171,8 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     shape = QuickStartRollArchetype(difficulty);
     for (i = 0; i < shape->slotCount && kindCount < QUICKSTART_MAX_ENEMY_KINDS; i++) {
         const QuickStartEnemyPick* pick =
-            QuickStartDrawRole(difficulty, shape->roles[i], sheetBudget, kindIds, kindForms, kindCount);
+            QuickStartDrawRole(difficulty, shape->roles[i], sheetBudget, kindIds, kindForms, kindCount,
+                               shape->forceLevel);
         if (pick == NULL) {
             // Nothing affordable and unused left in the rolled level.
             // The slot sits out and its share goes unclaimed, so the wave
@@ -6833,13 +6964,12 @@ static bool32 QuickStart2DoorWantsOverworldEnemies(u8 area, u8 room) {
 
 
 // Miniboss variety: QS_EVENT_MINIBOSS/QuickStart2Door's own miniboss case
-// used to always spawn a plain CreateEnemy(DARK_NUT, 0). sQuickStartLevel5
-// (above) is already this file's own curated, emulator-confirmed "tough
-// solo enemy" tier for the wave/density spawner (Ball and Chain Soldier,
-// both Wizzrobe colors, and the two toughest Darknut forms) - reused here
-// via the ladder/2door slot's own "extra" value rather than auditing a
-// fresh roster from scratch.
-#define QUICKSTART_MINIBOSS_POOL_SIZE 5
+// used to always spawn a plain CreateEnemy(DARK_NUT, 0). It now draws from
+// sQuickStartElites, the level-6 roster - which is what makes the user's
+// "Elites includes Darknuts, all mini bosses" true by construction: the
+// miniboss pool and the Elite tier are the same table, so neither can
+// drift from the other.
+#define QUICKSTART_MINIBOSS_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartElites))
 
 // Lottery prizes are drawn from their own small fixed table rather than the
 // tier system, and that is deliberate. A lottery decides its prize on the
@@ -9813,7 +9943,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             return !QuickStartGroundItemAt(contentX, contentY);
         }
         if (QsCheckRoomFlag(flagBase + 0)) {
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartElites[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             // Which of this room's sites owns an enemy, for both the
             // headcount and the leash below. In a room with a single site
             // this is every enemy, so nothing changes; in Goron Cave, whose
@@ -9953,7 +10083,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // wrong (Hyrule Castle Cellar's is 184px below its own floor),
             // and even a good one can be a tile a Darknut cannot turn
             // around in.
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartElites[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             // Owned by this site, so a room with several of them - Goron
             // Cave's four chambers, the Boomerang chamber's five quadrants -
             // keeps each fight where it belongs.
@@ -11456,7 +11586,7 @@ static void QuickStart2DoorSetupRoomContent(void) {
         }
         {
             s32 extra = QuickStart2DoorGetExtra();
-            const QuickStartEnemyPick* pick = &sQuickStartLevel5[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
+            const QuickStartEnemyPick* pick = &sQuickStartElites[(extra & 0x7f) % QUICKSTART_MINIBOSS_POOL_SIZE];
             if (QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, contentX, contentY,
                                                   QuickStartMinibossCount(pick->id), -1) > 0) {
                 QsSetRoomFlag(0);

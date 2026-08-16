@@ -144,7 +144,19 @@ build:
 - **Themed draws.** Occasionally pick a theme (fire, ice, undead, bug,
   aviary) and prefer roster entries carrying it, so a wave sometimes reads
   as a designed encounter rather than a mix. Needs a theme tag per row;
-  the roles bitmask already has room beside it.
+  the roles bitmask already has room beside it. The roster now has the
+  material for it: a fire theme could field Fireball Guy, its mini
+  variant, the fire Wizzrobe and Bombarossa.
+- **Weapon-gated enemies are a mechanic worth using on purpose.** Spark
+  (boomerang) and Lakitu (Cane of Pacci) currently only appear once the
+  player holds their answer, which keeps waves clearable. The same field
+  could gate a whole encounter behind a tool as a reward for having found
+  it - but note the reverse risk: it makes those enemies invisible on runs
+  that never draw the item, so it is a rationing tool, not a difficulty one.
+- **Grow the Elite roster.** Seven entries, four of them Darknut forms.
+  Wall Master would fit thematically if its warp destination were ever
+  defined for our rooms, and Octorok Boss could serve if the entity cost
+  of its macro were acceptable in a cleared room.
 - **Elite points.** The study proposed a per-difficulty allowance pricing
   heavies against each other (Darknut 3, Wizzrobe 2, ...). Shipped instead
   as per-family live caps, which covers the reported problem more simply.
@@ -285,25 +297,16 @@ Open defects and unexplained reports, roughly by player impact.
   enough reboots (worked around by process chunking, still slow). It
   gates the two items above; batch the fix with the next budget-harness
   work.
-- **Unvetted enemies: 61 of the game's 102 enemy ids are not in the tier
-  lists, and some of the ones that ARE may not be killable.** Two related
-  gaps found in the wave-composition study (Aug 2026):
-  - *Not incorporated.* The tiers use 41 ids. The rest are a mix of boss
-    macros and scripted furniture (rightly excluded) and ordinary enemies
-    that simply were never surveyed - Small Pesto, the golden
-    Octorok/Tektite/Rope trio (64 hp for 1-4 sheet slots), Slime and Mini
-    Slime (a splitter), Wind Wizzrobe, Bomb Peahat, Octorok2, Fireball
-    Guy, Armos, Eyegore, Madderpillar, Spiny Chuchu, Octorok Boss (cheap
-    enough to serve as an elite), Gyorg Child. Each needs the standard
-    spawn probe before it enters a tier.
-  - *Killability unknown.* Spark, Rollobite, Wisp, Bobomb and Bombarossa
-    all carry definition health 255, and Spark's only death path in
-    `spark.c` is a contact type of `0x14`, which is not an ordinary sword
-    hit. Wave clear requires zero live enemies, so a kind a sword-only
-    player cannot kill would stall that region's wave loop. Whether this
-    actually bites is untested - the probe was deliberately deferred - but
-    it should be settled before the roster grows further, and any new
-    candidate should be checked for the same property.
+- **Enemies still outside the roster.** The Aug 2026 expansion probed and
+  admitted 16 new kinds, taking the tiers from 41 to 57 of the game's 102
+  enemy ids. What is still out, and why: the Vaati/Mazaal/Gleerok/Gyorg
+  macros and Octorok Boss (multi-entity set pieces - Octorok Boss probed
+  at 10+ entities per placement and is lantern-only), Wall Master (warps
+  the player to a dungeon entrance our rooms do not define), the trap and
+  furniture kinds, and Flying Skull (health 255 with no death arm found in
+  its handler - excluded until someone can show what kills it). Anything
+  admitted from here should clear the same two gates: the spawn probe
+  (`enemy_spawn_probe.py` pattern) and the killability read.
 - **First run on a brand-new save is fixed** (nothing has happened yet to
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a
   bug.
