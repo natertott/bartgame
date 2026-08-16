@@ -134,6 +134,30 @@ can actually obtain.
   room transition? if not, keep giver and receiver in one region), Great
   Fairy fountain gamble, Mole Mitts dig rooms, more Minish-layer sites.
 
+### 2.4b Wave composition - what is left after the Aug 2026 rework
+
+The escalation clock, per-kind live caps, the sheet budget, the archetype
+builder and the retuned curve all shipped together; the study behind them
+is the Wave Composition Study artifact. What it identified and did NOT
+build:
+
+- **Themed draws.** Occasionally pick a theme (fire, ice, undead, bug,
+  aviary) and prefer roster entries carrying it, so a wave sometimes reads
+  as a designed encounter rather than a mix. Needs a theme tag per row;
+  the roles bitmask already has room beside it.
+- **Elite points.** The study proposed a per-difficulty allowance pricing
+  heavies against each other (Darknut 3, Wizzrobe 2, ...). Shipped instead
+  as per-family live caps, which covers the reported problem more simply.
+  Revisit only if heavies need to trade off against EACH OTHER rather than
+  each having its own ceiling.
+- **Per-region sheet budgets.** `QUICKSTART_WAVE_SHEET_BUDGET` is one
+  global number (12). The tightest rooms at difficulty 12 have less
+  headroom than the roomy ones, so a per-region override is the obvious
+  next tuning knob if the budget ever proves too generous somewhere.
+- **Archetype tuning by measurement.** Weights were chosen by judgement,
+  not measured play. Once a full run is played at the new curve, revisit
+  which shapes appear too often or too rarely.
+
 ### 2.5 Bosses
 
 - **Multi-boss and boss+wave combos (F6).** Measured: two bosses fit a
@@ -261,6 +285,25 @@ Open defects and unexplained reports, roughly by player impact.
   enough reboots (worked around by process chunking, still slow). It
   gates the two items above; batch the fix with the next budget-harness
   work.
+- **Unvetted enemies: 61 of the game's 102 enemy ids are not in the tier
+  lists, and some of the ones that ARE may not be killable.** Two related
+  gaps found in the wave-composition study (Aug 2026):
+  - *Not incorporated.* The tiers use 41 ids. The rest are a mix of boss
+    macros and scripted furniture (rightly excluded) and ordinary enemies
+    that simply were never surveyed - Small Pesto, the golden
+    Octorok/Tektite/Rope trio (64 hp for 1-4 sheet slots), Slime and Mini
+    Slime (a splitter), Wind Wizzrobe, Bomb Peahat, Octorok2, Fireball
+    Guy, Armos, Eyegore, Madderpillar, Spiny Chuchu, Octorok Boss (cheap
+    enough to serve as an elite), Gyorg Child. Each needs the standard
+    spawn probe before it enters a tier.
+  - *Killability unknown.* Spark, Rollobite, Wisp, Bobomb and Bombarossa
+    all carry definition health 255, and Spark's only death path in
+    `spark.c` is a contact type of `0x14`, which is not an ordinary sword
+    hit. Wave clear requires zero live enemies, so a kind a sword-only
+    player cannot kill would stall that region's wave loop. Whether this
+    actually bites is untested - the probe was deliberately deferred - but
+    it should be settled before the roster grows further, and any new
+    candidate should be checked for the same property.
 - **First run on a brand-new save is fixed** (nothing has happened yet to
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a
   bug.

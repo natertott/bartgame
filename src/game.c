@@ -3416,6 +3416,57 @@ static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
 // sheet pressure (WW North's fusers) doesn't sit empty forever.
 #define QUICKSTART_BOSS_OWED_TIMEOUT (10 * 60)
 
+// --- The escalation clock ------------------------------------------------
+//
+// In-region difficulty used to be runDifficulty + waveCount, one step per
+// cleared wave regardless of how big that wave was. But wave size comes
+// from ROOM size, so small rooms handed out difficulty far faster per unit
+// of actual play - the user's report that Eastern Hills "goes up very
+// rapidly" because its rooms hold few enemies and clear quickly.
+//
+// Measured on the live tables before this change: Eastern Hills South
+// spawns NINE enemies per wave at every difficulty (its verified-spot pool
+// only has nine entries, so neither density nor difficulty can raise it)
+// and walked from wave 0 to maximum difficulty in 117 kills, against North
+// Hyrule Field's 362 - a 3.1x faster climb per kill, with Western Wood
+// Center at 3.4x. Worse, Eastern Hills is three region slots with three
+// independent counters, so "spending a while in Eastern Hills" is really
+// three fast clocks at once.
+//
+// The fix prices a difficulty step in KILLS instead of in waves. A
+// region's base wave size is already implied by its table row, so this
+// needs no new saved state: it is pure arithmetic over constants, which
+// also means it recomputes identically on every frame of a visit.
+#define QUICKSTART_ESCALATION_KILLS 30
+#define QUICKSTART_BASE_DENSITY 25
+
+static s32 QuickStartRegionBaseWave(const QuickStartRegion* region) {
+    s32 base = region->roomSquares / QUICKSTART_BASE_DENSITY;
+    if (base > region->enemyOffsetCount) {
+        base = region->enemyOffsetCount;
+    }
+    if (base > region->maxEnemies) {
+        base = region->maxEnemies;
+    }
+    if (base < 1) {
+        base = 1;
+    }
+    return base;
+}
+
+// How many difficulty steps this region's wave counter has actually earned.
+static s32 QuickStartEscalationSteps(const QuickStartRegion* region, u8 wave) {
+    return ((s32)wave * QuickStartRegionBaseWave(region)) / QUICKSTART_ESCALATION_KILLS;
+}
+
+static s32 QuickStartEscalatedDifficulty(const QuickStartRegion* region, u8 wave) {
+    s32 escalated = (s32)QuickStartGetDifficulty() + QuickStartEscalationSteps(region, wave);
+    if (escalated > QUICKSTART_MAX_DIFFICULTY) {
+        escalated = QUICKSTART_MAX_DIFFICULTY;
+    }
+    return escalated;
+}
+
 // Returns TRUE if a wave (or the boss) actually spawned; FALSE while a
 // rolled boss is deferred waiting for gfx. The caller only marks the room
 // "wave up" on TRUE.
@@ -3520,10 +3571,7 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
             return FALSE;
         }
     }
-    escalated = QuickStartGetDifficulty() + wave;
-    if (escalated > QUICKSTART_MAX_DIFFICULTY) {
-        escalated = QUICKSTART_MAX_DIFFICULTY;
-    }
+    escalated = QuickStartEscalatedDifficulty(region, wave);
     QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
                                           region->maxEnemies, (u8)escalated);
     return TRUE;
@@ -3648,10 +3696,7 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
         // if the player had never left.
         u8 remainder = QuickStartRegionGetAliveCount(slot);
         if (remainder > 0) {
-            s32 escalated = QuickStartGetDifficulty() + wave;
-            if (escalated > QUICKSTART_MAX_DIFFICULTY) {
-                escalated = QUICKSTART_MAX_DIFFICULTY;
-            }
+            s32 escalated = QuickStartEscalatedDifficulty(region, wave);
             QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount,
                                                   region->roomSquares, remainder, (u8)escalated);
             // Leave the stored remainder as-is: the watcher above min-updates
@@ -5189,30 +5234,82 @@ static void QuickStartDrawDifficultyHUD(void) {
 // "form" here is the same value CreateEnemy's second argument always was
 // elsewhere in this file (entity->type) - for enemies with a color variant
 // it selects which color; for the rest it's always 0.
+// Two fields beyond the id/form pair the roster started as, both feeding
+// the composition builder below (roadmap: the Wave Composition Study).
+//
+// `roles` is what this enemy IS, as a bitmask, so an archetype can ask for
+// "something that shoots" or "something that swarms" instead of naming
+// kinds. `cost` is what its sprite SHEET costs the GFX table, in slots,
+// read out of gEnemyDefinitions/gFixedTypeGfxData (a slot is 0x200 bytes;
+// see LoadFixedGFX and the fixed_gfx macro). Cost is the honest currency
+// for wave variety: kinds range 1..8 slots, so counting kinds - which is
+// what QUICKSTART_MAX_ENEMY_KINDS used to do - both over-permits three
+// expensive ones (Puffstool + Bow Moblin + Ghini is 21 slots) and
+// over-forbids six cheap ones (six 1-slot kinds is 6). The budget below
+// spends slots instead, which is what the table actually runs out of.
+#define QS_R_CHAFF 0x01  /* dies fast; safe to field in numbers */
+#define QS_R_HEAVY 0x02  /* elite: high hp or armored - the rationed stuff */
+#define QS_R_RANGED 0x04 /* attacks from a distance */
+#define QS_R_FLYER 0x08  /* ignores ground obstacles */
+#define QS_R_AMBUSH 0x10 /* hides, burrows or waits */
+#define QS_R_FAST 0x20   /* speed >= 256 */
+#define QS_R_SLOW 0x40   /* speed <= 96; a wall, not a threat */
+#define QS_R_THIEF 0x80  /* takes items/rupees rather than health */
+
 typedef struct {
     u8 id;
     u8 form;
+    u8 roles;
+    u8 cost;
 } QuickStartEnemyPick;
 
 static const QuickStartEnemyPick sQuickStartLevel1[] = {
-    { ACRO_BANDIT, 0 }, { BEETLE, 0 }, { BOBOMB, 0 }, { CROW, 0 }, { CHUCHU, 0 /* green */ },
-    { KEESE, 0 },       { LEEVER, 0 /* red */ },      { OCTOROK, 0 /* red */ },
-    { LIKE_LIKE, 0 },   { ROPE, 0 },
+    { ACRO_BANDIT, 0, QS_R_CHAFF, 7 },
+    { BEETLE, 0, QS_R_CHAFF | QS_R_FAST, 1 },
+    { BOBOMB, 0, QS_R_SLOW, 2 },
+    { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2 },
+    { CHUCHU, 0 /* green */, QS_R_CHAFF | QS_R_SLOW, 4 },
+    { KEESE, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 1 },
+    { LEEVER, 0 /* red */, QS_R_CHAFF | QS_R_AMBUSH, 2 },
+    { OCTOROK, 0 /* red */, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3 },
+    { LIKE_LIKE, 0, QS_R_SLOW | QS_R_THIEF, 2 },
+    { ROPE, 0, QS_R_CHAFF | QS_R_AMBUSH, 4 },
 };
 static const QuickStartEnemyPick sQuickStartLevel2[] = {
-    { CHUCHU, 2 /* blue */ }, { LEEVER, 1 /* blue */ },     { OCTOROK, 1 /* blue */ }, { BOMBAROSSA, 0 },
-    { BOW_MOBLIN, 0 },        { RUPEE_LIKE, 0 /* green */ }, { HELMASAUR, 0 },          { MOLDORM, 0 },
-    { PEAHAT, 0 },            { MULLDOZER, 0 /* red */ },    { PESTO, 0 /* red */ },    { TEKTITE, 0 /* red */ },
-    { SLUGGULA, 0 },
+    { CHUCHU, 2 /* blue */, QS_R_CHAFF | QS_R_SLOW, 4 },
+    { LEEVER, 1 /* blue */, QS_R_AMBUSH, 2 },
+    { OCTOROK, 1 /* blue */, QS_R_RANGED | QS_R_SLOW, 3 },
+    { BOMBAROSSA, 0, QS_R_RANGED | QS_R_FAST, 1 },
+    { BOW_MOBLIN, 0, QS_R_RANGED | QS_R_FAST, 8 },
+    { RUPEE_LIKE, 0 /* green */, QS_R_THIEF, 4 },
+    { HELMASAUR, 0, QS_R_FAST, 4 },
+    { MOLDORM, 0, QS_R_FAST, 2 },
+    { PEAHAT, 0, QS_R_CHAFF | QS_R_FLYER, 2 },
+    { MULLDOZER, 0 /* red */, QS_R_SLOW, 4 },
+    { PESTO, 0 /* red */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3 },
+    { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1 },
+    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2 },
 };
 // Yellow and purple Keaton are the same actor with no form-based color
 // variant (confirmed empirically - all 4 form values render identically),
 // so Keaton only appears once here rather than duplicated into level 4.
 static const QuickStartEnemyPick sQuickStartLevel3[] = {
-    { MULLDOZER, 1 /* blue */ }, { PESTO, 1 /* blue */ },  { STALFOS, 1 /* blue */ }, { TEKTITE, 1 /* blue */ },
-    { GHINI, 0 },                { PUFFSTOOL, 0 },         { CHUCHU, 1 /* red */ },   { RUPEE_LIKE, 2 /* red */ },
-    { STALFOS, 0 /* red */ },    { WISP, 0 /* red */ },    { ROCK_CHUCHU, 0 },        { ROLLOBITE, 0 },
-    { SPARK, 0 },                { SPEAR_MOBLIN, 0 },      { SPIKED_BEETLE, 0 },      { KEATON, 0 },
+    { MULLDOZER, 1 /* blue */, QS_R_SLOW, 4 },
+    { PESTO, 1 /* blue */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3 },
+    { STALFOS, 1 /* blue */, QS_R_CHAFF | QS_R_FAST, 2 },
+    { TEKTITE, 1 /* blue */, QS_R_FAST, 1 },
+    { GHINI, 0, QS_R_FLYER | QS_R_FAST, 5 },
+    { PUFFSTOOL, 0, QS_R_CHAFF | QS_R_SLOW, 8 },
+    { CHUCHU, 1 /* red */, QS_R_CHAFF | QS_R_SLOW, 4 },
+    { RUPEE_LIKE, 2 /* red */, QS_R_THIEF, 4 },
+    { STALFOS, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 2 },
+    { WISP, 0 /* red */, QS_R_FLYER, 3 },
+    { ROCK_CHUCHU, 0, QS_R_SLOW, 2 },
+    { ROLLOBITE, 0, QS_R_FAST, 6 },
+    { SPARK, 0, QS_R_FAST, 1 },
+    { SPEAR_MOBLIN, 0, QS_R_FAST, 8 },
+    { SPIKED_BEETLE, 0, QS_R_AMBUSH | QS_R_SLOW, 5 },
+    { KEATON, 0, QS_R_CHAFF | QS_R_FAST, 1 },
 };
 // Floormaster (Wall Master) deliberately left out - it grabs the player and
 // warps them to a dungeon's scripted "entrance" point, which none of these
@@ -5227,9 +5324,16 @@ static const QuickStartEnemyPick sQuickStartLevel3[] = {
 // health (12/12/20/26), so the two weaker forms are grouped here with the
 // rest of level 4 and the two tougher ones go in level 5 below.
 static const QuickStartEnemyPick sQuickStartLevel4[] = {
-    { RUPEE_LIKE, 1 /* blue */ }, { WISP, 1 /* blue */ }, { GOBDO, 0 /* gibdo */ }, { LAKITU, 0 },
-    { MOLDWORM, 0 },              { SCISSORS_BEETLE, 0 }, { SPINY_BEETLE, 0 },      { TAKKURI, 0 },
-    { DARK_NUT, 0 },              { DARK_NUT, 1 },
+    { RUPEE_LIKE, 1 /* blue */, QS_R_HEAVY | QS_R_THIEF, 4 },
+    { WISP, 1 /* blue */, QS_R_FLYER | QS_R_FAST, 3 },
+    { GOBDO, 0 /* gibdo */, QS_R_HEAVY | QS_R_SLOW, 2 },
+    { LAKITU, 0, QS_R_RANGED | QS_R_FLYER, 1 },
+    { MOLDWORM, 0, QS_R_HEAVY, 6 },
+    { SCISSORS_BEETLE, 0, QS_R_HEAVY, 1 },
+    { SPINY_BEETLE, 0, QS_R_FAST, 2 },
+    { TAKKURI, 0, QS_R_FAST | QS_R_FLYER | QS_R_THIEF, 2 },
+    { DARK_NUT, 0, QS_R_HEAVY | QS_R_SLOW, 2 },
+    { DARK_NUT, 1, QS_R_HEAVY | QS_R_SLOW, 2 },
 };
 // Since QuickStartPickEnemy is rolled independently per enemy (see its own
 // comment above), a high-difficulty wave that leans heavily on level 5 can
@@ -5237,11 +5341,11 @@ static const QuickStartEnemyPick sQuickStartLevel4[] = {
 // in the same room purely by chance - no separate "spawn N minibosses"
 // mechanism needed for that.
 static const QuickStartEnemyPick sQuickStartLevel5[] = {
-    { BALL_CHAIN_SOLIDER, 0 },
-    { WIZZROBE_ICE, 0 },
-    { WIZZROBE_FIRE, 0 },
-    { DARK_NUT, 2 /* blue, 20hp */ },
-    { DARK_NUT, 3 /* red, 26hp */ },
+    { BALL_CHAIN_SOLIDER, 0, QS_R_HEAVY, 1 },
+    { WIZZROBE_ICE, 0, QS_R_RANGED | QS_R_FAST, 5 },
+    { WIZZROBE_FIRE, 0, QS_R_RANGED | QS_R_FAST, 4 },
+    { DARK_NUT, 2 /* blue, 20hp */, QS_R_HEAVY | QS_R_SLOW, 2 },
+    { DARK_NUT, 3 /* red, 26hp */, QS_R_HEAVY | QS_R_SLOW, 2 },
 };
 
 static const QuickStartEnemyPick* const sQuickStartEnemyLevels[5] = {
@@ -5268,20 +5372,42 @@ typedef struct {
 
 #define QUICKSTART_MIN_DENSITY 5
 
+// Retuned per the user's brief on difficulty pacing: "Levels 1, 2, and 3
+// should scale in difficulty noticeably but fairly. Once we have set a
+// baseline difficulty at 3, we should then seek to explore the variety of
+// enemy combinations more so than just pure difficulty."
+//
+// So steps 0-3 are the POWER ramp: all level-1 chaff, then a 1/2 blend,
+// then level 2 with a taste of 3, with the density climbing alongside. A
+// player meets no elite at all before step 4.
+//
+// Steps 4-12 are the VARIETY ramp. The weights deliberately STOP marching
+// toward level 5 and settle into a level-2/3/4 band that barely moves;
+// what actually changes with difficulty above the baseline is the
+// composition (sQuickStartArchetypes below), the density, and a slowly
+// widening elite allowance (sQuickStartLiveCaps). Level 5 tops out at 7%
+// weight rather than the old 50%.
+//
+// The old curve is why high difficulty read as "Darknuts again": at step
+// 12 it drew level 5 half the time, and two of that level's five entries
+// are Darknut forms, so 61% of waves loaded a Darknut kind and the
+// uniform-thirds fill then made about five of them. Weight alone was not
+// the whole fix - the live caps and the composition builder are the rest -
+// but a top tier that dominates the draw made everything else moot.
 static const QuickStartDifficultyTier sQuickStartDifficultyTiers[QUICKSTART_MAX_DIFFICULTY + 1] = {
     /*  0 */ { { 100, 0, 0, 0, 0 }, 25 },
-    /*  1 */ { { 80, 20, 0, 0, 0 }, 25 },
-    /*  2 */ { { 80, 20, 0, 0, 0 }, 15 },
-    /*  3 */ { { 60, 40, 0, 0, 0 }, 12 },
-    /*  4 */ { { 40, 60, 0, 0, 0 }, 10 },
-    /*  5 */ { { 20, 80, 0, 0, 0 }, 10 },
-    /*  6 */ { { 0, 60, 40, 0, 0 }, 9 },
-    /*  7 */ { { 0, 40, 45, 15, 0 }, 8 },
-    /*  8 */ { { 0, 20, 45, 30, 5 }, 7 },
-    /*  9 */ { { 0, 10, 35, 40, 15 }, 7 },
-    /* 10 */ { { 0, 0, 30, 45, 25 }, 6 },
-    /* 11 */ { { 0, 0, 20, 40, 40 }, 5 },
-    /* 12 */ { { 0, 0, 15, 35, 50 }, 5 }, // never 100% level 5, per the brief
+    /*  1 */ { { 75, 25, 0, 0, 0 }, 22 },
+    /*  2 */ { { 50, 45, 5, 0, 0 }, 17 },
+    /*  3 */ { { 30, 50, 20, 0, 0 }, 13 }, // baseline established here
+    /*  4 */ { { 25, 45, 27, 3, 0 }, 12 },
+    /*  5 */ { { 22, 43, 30, 5, 0 }, 11 },
+    /*  6 */ { { 20, 40, 32, 7, 1 }, 10 },
+    /*  7 */ { { 18, 38, 33, 9, 2 }, 10 },
+    /*  8 */ { { 16, 36, 34, 11, 3 }, 9 },
+    /*  9 */ { { 14, 34, 35, 13, 4 }, 8 },
+    /* 10 */ { { 12, 32, 36, 15, 5 }, 7 },
+    /* 11 */ { { 10, 30, 37, 17, 6 }, 6 },
+    /* 12 */ { { 10, 28, 37, 18, 7 }, 6 },
 };
 
 static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty) {
@@ -5291,38 +5417,299 @@ static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty
     return &sQuickStartDifficultyTiers[difficulty];
 }
 
-// Rolls one fresh enemy (id + form) for the given difficulty: first picks a
-// level via the tier's weights (a plain weighted die roll over whichever
-// levels have nonzero weight this tier), then picks uniformly at random
-// within that level's roster. Called once per enemy spawned rather than
-// once per room, so - exactly per the brief - two rooms at the same
-// difficulty can come out with entirely different enemy mixes.
-static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
-    const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
+// Roll one of the five roster levels using this tier's weights (a plain
+// weighted die over whichever levels have nonzero weight).
+static s32 QuickStartRollEnemyLevel(const QuickStartDifficultyTier* tier) {
     s32 roll = (s32)Random() % 100;
     s32 cumulative = 0;
     s32 level;
-    s32 levelCount;
-    const QuickStartEnemyPick* pick;
     for (level = 0; level < 5; level++) {
         cumulative += tier->levelWeights[level];
         if (roll < cumulative) {
-            break;
+            return level;
         }
     }
-    if (level >= 5) {
-        // Only reachable if a tier's weights don't sum to 100 - fall back
-        // to the lowest level that's actually available this tier.
-        for (level = 0; level < 5 && tier->levelWeights[level] == 0; level++) {
-        }
-        if (level >= 5) {
-            level = 0;
+    // Only reachable if a tier's weights don't sum to 100 - fall back to
+    // the lowest level that's actually available this tier.
+    for (level = 0; level < 5 && tier->levelWeights[level] == 0; level++) {
+    }
+    return (level >= 5) ? 0 : level;
+}
+
+// Draw a roster entry for a ROLE (a QS_R_* bit), at this difficulty. The
+// level is rolled from the tier weights exactly as an untyped draw would,
+// so a role never smuggles in power the tier has not unlocked; within the
+// level, only entries carrying the role are eligible. Reservoir sampling
+// over the matching entries keeps it one pass and no scratch array.
+//
+// Roles are a preference, not a guarantee: a level that has no entry with
+// the asked-for role (level 1 has no QS_R_HEAVY at all, deliberately)
+// falls back to a plain uniform draw from that level, which is exactly the
+// old behaviour. An archetype therefore degrades into an ordinary mixed
+// wave rather than failing to fill.
+// `budget` is the sheet allowance still unspent, and entries dearer than
+// it are never returned: a slot that cannot be afforded should come back
+// with a CHEAPER kind, not with nothing. That distinction is what makes
+// the five-slot menagerie actually field five kinds - measured, drawing
+// blind and skipping the unaffordable ones left waves averaging two kinds,
+// because level 1's roster averages 2.8 slots and five blind draws want
+// ~14 against a budget of 12.
+//
+// Returns NULL only when nothing in the rolled level is affordable at all,
+// which the caller treats as "this slot sits out".
+static bool32 QuickStartKindAlreadyCast(const QuickStartEnemyPick* pick, const u8* takenIds, const u8* takenForms,
+                                        s32 takenCount) {
+    s32 i;
+    for (i = 0; i < takenCount; i++) {
+        if (takenIds[i] == pick->id && takenForms[i] == pick->form) {
+            return TRUE;
         }
     }
+    return FALSE;
+}
+
+static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32 budget, const u8* takenIds,
+                                                    const u8* takenForms, s32 takenCount) {
+    const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
+    s32 level = QuickStartRollEnemyLevel(tier);
+    s32 count = sQuickStartEnemyLevelCounts[level];
+    const QuickStartEnemyPick* level0 = sQuickStartEnemyLevels[level];
+    const QuickStartEnemyPick* chosen = NULL;
+    s32 seen = 0;
+    s32 i;
+    // First choice: affordable, unused, and carries the role.
+    if (role != 0) {
+        for (i = 0; i < count; i++) {
+            if ((level0[i].roles & role) && level0[i].cost <= budget &&
+                !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
+                seen++;
+                if ((s32)Random() % seen == 0) {
+                    chosen = &level0[i];
+                }
+            }
+        }
+        if (chosen != NULL) {
+            return chosen;
+        }
+    }
+    // Second choice: affordable and unused, any role. A shape degrades
+    // into an ordinary mixed wave rather than failing to fill.
+    //
+    // Excluding what the wave already holds is what makes a five-slot
+    // menagerie field five DIFFERENT things: measured without it, waves
+    // averaged two kinds even with five slots, because the role bits
+    // overlap heavily in the small early rosters (a Keese answers chaff,
+    // fast AND flyer) and every collision folded a slot away.
+    seen = 0;
+    for (i = 0; i < count; i++) {
+        if (level0[i].cost <= budget && !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
+            seen++;
+            if ((s32)Random() % seen == 0) {
+                chosen = &level0[i];
+            }
+        }
+    }
+    return chosen;
+}
+
+// Rolls one fresh enemy (id + form) for the given difficulty, ignoring
+// roles. Still used by the single-kind spawners (the ? room wave content,
+// the quest packs); the region wave builder goes through the composition
+// path instead.
+static void QuickStartPickEnemy(u8 difficulty, u8* outId, u8* outForm) {
+    const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
+    s32 level = QuickStartRollEnemyLevel(tier);
+    s32 levelCount;
+    const QuickStartEnemyPick* pick;
     levelCount = sQuickStartEnemyLevelCounts[level];
     pick = &sQuickStartEnemyLevels[level][(s32)Random() % levelCount];
     *outId = pick->id;
     *outForm = pick->form;
+}
+
+// --- Live caps: how many of one family may exist at once -----------------
+//
+// Generalized from the Acro Bandit rule, which proved the mechanism. A
+// wave that wants a capped kind it already has its fill of is given a kind
+// it has already paid the sheet for instead, so the wave keeps its density
+// and only its COMPOSITION changes.
+//
+// The cap is interpolated between base and top across the difficulty
+// range: cap = base + ((top - base) * difficulty) / QUICKSTART_MAX_
+// DIFFICULTY, integer division. For the Darknuts that means a flat 2 all
+// the way up and 3 only at difficulty 12 exactly - the user's call, "at
+// the absolute highest difficulty we should spawn in maximum 3 elites".
+//
+// Wizzrobes are deliberately NOT rationed like the melee elites, also per
+// the user: they are fun in numbers because they fight by vanishing, so
+// any one of them is absent half the time. Their limit is the entity
+// budget (each carries a projectile child of its own), not taste.
+typedef struct {
+    u8 id;
+    u8 baseCap;
+    u8 topCap;
+} QuickStartLiveCap;
+
+static const QuickStartLiveCap sQuickStartLiveCaps[] = {
+    // Armored chasers. The whole point of this table: five of these in one
+    // room was the user's report, and it was the modal outcome at the top
+    // of the old curve, not bad luck.
+    { DARK_NUT, 2, 3 },
+    // Area denial with a long swing - three of them and a small room has
+    // no safe tile left.
+    { BALL_CHAIN_SOLIDER, 2, 2 },
+    // The only enemy class measured to cost real frame time (F9): each
+    // placement bursts into six. Unchanged.
+    { ACRO_BANDIT, 2, 2 },
+    // Item theft compounds unfairly - losing a shield twice is a story,
+    // five times is the run.
+    { RUPEE_LIKE, 3, 3 },
+    { LIKE_LIKE, 3, 3 },
+    { TAKKURI, 3, 3 },
+    // Wizzrobes: generous by design (see above). One family across all
+    // three elements, so a wave cannot field six of each.
+    { WIZZROBE_FIRE, 6, 8 },
+};
+
+// Wizzrobes are three separate ids but one family for capping purposes;
+// everything else caps by its own id, which already covers colour forms
+// (all four Darknuts share id DARK_NUT).
+static bool32 QuickStartEnemyIsWizzrobe(u8 id);
+
+static u8 QuickStartEnemyFamily(u8 id) {
+    if (QuickStartEnemyIsWizzrobe(id)) {
+        return WIZZROBE_FIRE;
+    }
+    return id;
+}
+
+// 0 = uncapped.
+static s32 QuickStartLiveCapFor(u8 id, u8 difficulty) {
+    u8 family = QuickStartEnemyFamily(id);
+    s32 i;
+    if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
+        difficulty = QUICKSTART_MAX_DIFFICULTY;
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartLiveCaps); i++) {
+        if (sQuickStartLiveCaps[i].id == family) {
+            s32 base = sQuickStartLiveCaps[i].baseCap;
+            s32 top = sQuickStartLiveCaps[i].topCap;
+            return base + (((top - base) * (s32)difficulty) / QUICKSTART_MAX_DIFFICULTY);
+        }
+    }
+    return 0;
+}
+
+static bool32 QuickStartKindAtLiveCap(u8 id, u8 difficulty) {
+    s32 cap = QuickStartLiveCapFor(id, difficulty);
+    u8 family;
+    s32 i, count = 0;
+    if (cap == 0) {
+        return FALSE;
+    }
+    family = QuickStartEnemyFamily(id);
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && QuickStartEnemyFamily(ent->id) == family) {
+            count++;
+            if (count >= cap) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
+
+// --- Composition archetypes ----------------------------------------------
+//
+// A wave used to be three kinds in uniform thirds, which is a pile rather
+// than a composition: nothing in the builder knew a Darknut was different
+// in kind from a Keese, so both got a third of the room. An archetype is a
+// SHAPE - which roles are present and in what proportion - and its cast is
+// drawn fresh every time. Two waves of the same archetype at the same
+// difficulty share a structure and share no faces, which is the variety
+// the brief asks for without leaning on raw power.
+//
+// `roles` names what each slot wants; `shares` is that slot's relative
+// portion of the wave (they need not sum to anything in particular - the
+// builder normalizes). `countPercent` scales the whole wave: a swarm is
+// bigger than usual, a duel is much smaller. `minDiff` keeps the
+// elite-bearing shapes out of the early game, where the brief wants a
+// clean power ramp and no elites at all.
+#define QUICKSTART_ARCHETYPE_SLOTS 5
+
+typedef struct {
+    u8 minDiff;
+    u8 weight;
+    u8 slotCount;
+    u8 countPercent;
+    u8 roles[QUICKSTART_ARCHETYPE_SLOTS];
+    u8 shares[QUICKSTART_ARCHETYPE_SLOTS];
+} QuickStartArchetype;
+
+static const QuickStartArchetype sQuickStartArchetypes[] = {
+    // The plain mixed wave: no shape at all, three untyped draws. Kept as
+    // the single most likely outcome so the game still reads as the game -
+    // archetypes are seasoning, not a replacement.
+    { 0, 30, 3, 100, { 0, 0, 0, 0, 0 }, { 34, 33, 33, 0, 0 } },
+    // SWARM: one cheap kind, more of it than usual. Sixteen Keese costs
+    // one sheet slot - the cheapest spectacle in the game.
+    { 0, 12, 1, 150, { QS_R_CHAFF, 0, 0, 0, 0 }, { 100, 0, 0, 0, 0 } },
+    // MENAGERIE: the user's "5 types of enemies coming at you all at
+    // once". The roles are picked to lean cheap (chaff, fast, flyer,
+    // ambush and ranged are where the 1-2 slot kinds live), because five
+    // kinds only fit the sheet budget if they are cheap ones - which is
+    // exactly the trade the budget exists to expose.
+    { 2, 14, 5, 100, { QS_R_CHAFF, QS_R_FAST, QS_R_FLYER, QS_R_AMBUSH, QS_R_RANGED },
+      { 20, 20, 20, 20, 20 } },
+    // PINCER: a fast flyer and a slow ground kind arrive as two separate
+    // problems out of one spawn - a 12x speed gap does that for free.
+    { 2, 10, 2, 100, { QS_R_FLYER | QS_R_FAST, QS_R_SLOW, 0, 0, 0 }, { 60, 40, 0, 0, 0 } },
+    // AMBUSH: burrowers and hiders, with something fast to herd you onto
+    // them.
+    { 3, 10, 2, 100, { QS_R_AMBUSH, QS_R_FAST, 0, 0, 0 }, { 65, 35, 0, 0, 0 } },
+    // CROSSFIRE: two ranged kinds plus a chaser, so standing still is
+    // punished and closing is contested.
+    { 4, 10, 3, 90, { QS_R_RANGED, QS_R_RANGED, QS_R_FAST, 0, 0 }, { 35, 35, 30, 0, 0 } },
+    // ELITE GUARD: one heavy in an escort of chaff - the user's own
+    // example, "a single strong enemy surrounded by smaller enemies".
+    // The heavy's share is small and the live cap trims it further.
+    { 4, 8, 3, 100, { QS_R_HEAVY, QS_R_CHAFF, QS_R_CHAFF, 0, 0 }, { 15, 45, 40, 0, 0 } },
+    // THIEVES: fast and after your things rather than your hearts. A wave
+    // whose threat is economic.
+    { 5, 6, 2, 100, { QS_R_THIEF, QS_R_FAST, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
+    // DUEL: two heavies and nothing else, at a third of the usual count.
+    // Variety includes quiet: a generator that is always maximally busy
+    // stops reading as varied.
+    { 6, 6, 2, 35, { QS_R_HEAVY, QS_R_HEAVY, 0, 0, 0 }, { 50, 50, 0, 0, 0 } },
+    // ARTILLERY: shooters behind a wall of slow bodies, so the player has
+    // to choose an order to kill things in.
+    { 6, 8, 2, 100, { QS_R_RANGED, QS_R_SLOW, 0, 0, 0 }, { 40, 60, 0, 0, 0 } },
+};
+
+static const QuickStartArchetype* QuickStartRollArchetype(u8 difficulty) {
+    s32 total = 0;
+    s32 i, roll, cumulative;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartArchetypes); i++) {
+        if (sQuickStartArchetypes[i].minDiff <= difficulty) {
+            total += sQuickStartArchetypes[i].weight;
+        }
+    }
+    if (total <= 0) {
+        return &sQuickStartArchetypes[0];
+    }
+    roll = (s32)Random() % total;
+    cumulative = 0;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartArchetypes); i++) {
+        if (sQuickStartArchetypes[i].minDiff > difficulty) {
+            continue;
+        }
+        cumulative += sQuickStartArchetypes[i].weight;
+        if (roll < cumulative) {
+            return &sQuickStartArchetypes[i];
+        }
+    }
+    return &sQuickStartArchetypes[0];
 }
 
 // GBA OBJ VRAM is carved into 44 gfx slots (MAX_GFX_SLOTS, vram.h), 4
@@ -5436,7 +5823,26 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 #define QUICKSTART_GFX_SPAWN_CAP_SLOPE 6
 #define QUICKSTART_GFX_SPAWN_CAP_MIN 16
 
-#define QUICKSTART_MAX_ENEMY_KINDS 3
+// How many distinct kinds one wave may hold, and what their sprite sheets
+// may cost between them. The COST is the real limit; the count is just the
+// array bound the archetypes need (no shape asks for more than 4, and the
+// duplicate-fold path can leave slots unused).
+//
+// This replaces a flat cap of 3 kinds, which was a proxy for sheet cost
+// and a bad one, because kinds range 1..8 slots: the old rule permitted
+// Puffstool + Bow Moblin + Ghini (21 slots for three kinds) while
+// forbidding six 1-slot kinds (6 slots for six). Spending the slots
+// directly makes the expensive kinds self-limiting and lets a wave of
+// cheap kinds be genuinely varied - which is the whole point of the
+// composition work.
+//
+// 12 is chosen against the measured budget: the tightest rooms at
+// difficulty 12 (Lon Lon 5 free, Trilby 6, EH-North/WW-North 7 - see
+// docs/QUICKSTART_BUDGET.md) still have to fit their fixed load, and the
+// per-frame reserve enforcement plus QuickStartGfxBudgetForNewKind remain
+// in force underneath this as the runtime backstop.
+#define QUICKSTART_MAX_ENEMY_KINDS 6
+#define QUICKSTART_WAVE_SHEET_BUDGET 12
 
 // Shared by every QUICKSTART enemy spawner: picks `count` distinct spots
 // out of this room's own pre-verified-walkable offset pool (a partial
@@ -5547,32 +5953,27 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
 // Only OUR spawners consult this - the gang's own follower spawns are
 // vanilla behaviour and stay untouched, since capping a gang mid-burst
 // would leave a half-formed formation.
-#define QUICKSTART_ACRO_BANDIT_LIVE_CAP 2
-
+// The cap itself now lives in sQuickStartLiveCaps with the rest of the
+// rationed kinds; this stays as the name the single-kind spawners call, so
+// there is one implementation of "how many of these may be alive" rather
+// than two that can drift apart.
 static bool32 QuickStartAcroBanditCapReached(void) {
-    s32 i;
-    s32 count = 0;
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        if (ent->kind == ENEMY && ent->id == ACRO_BANDIT) {
-            count++;
-            if (count >= QUICKSTART_ACRO_BANDIT_LIVE_CAP) {
-                return TRUE;
-            }
-        }
-    }
-    return FALSE;
+    return QuickStartKindAtLiveCap(ACRO_BANDIT, QuickStartGetDifficulty());
 }
 
 static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
                                                    s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, density, cap, allowed;
+    s32 i, j, r, tmp, count, density, cap, allowed, gfxCap;
     Entity* enemy;
     u8 id, form;
     u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
     u8 kindForms[QUICKSTART_MAX_ENEMY_KINDS];
+    s32 kindQuota[QUICKSTART_MAX_ENEMY_KINDS];
     s32 kindCount = 0;
+    s32 sheetBudget = QUICKSTART_WAVE_SHEET_BUDGET;
+    const QuickStartArchetype* shape;
+    s32 shareTotal = 0;
 
     if (offsetCount > 72) {
         offsetCount = 72;
@@ -5622,17 +6023,86 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     // window - a quest sprite, a reward, a fuser - silently gets nothing.
     // The invariant checker's gfx tier samples every frame and catches
     // exactly that transient.
-    {
-        s32 gfxCap = QUICKSTART_GFX_SPAWN_CAP_BASE - difficulty * QUICKSTART_GFX_SPAWN_CAP_SLOPE;
-        if (gfxCap < QUICKSTART_GFX_SPAWN_CAP_MIN) {
-            gfxCap = QUICKSTART_GFX_SPAWN_CAP_MIN;
+    gfxCap = QUICKSTART_GFX_SPAWN_CAP_BASE - difficulty * QUICKSTART_GFX_SPAWN_CAP_SLOPE;
+    if (gfxCap < QUICKSTART_GFX_SPAWN_CAP_MIN) {
+        gfxCap = QUICKSTART_GFX_SPAWN_CAP_MIN;
+    }
+    if (count > gfxCap) {
+        count = gfxCap;
+    }
+
+    // --- Cast the composition ------------------------------------------
+    // The shape is rolled once per wave; each of its role slots is cast
+    // from the tier's own roster, and a slot that cannot be afforded (or
+    // that the shape has no room for) simply does not join - the wave then
+    // spreads over the kinds it did get, so density never depends on the
+    // draw succeeding. countPercent scales the whole wave AFTER every
+    // other clamp, so a swarm cannot climb back over the GFX ceiling.
+    shape = QuickStartRollArchetype(difficulty);
+    for (i = 0; i < shape->slotCount && kindCount < QUICKSTART_MAX_ENEMY_KINDS; i++) {
+        const QuickStartEnemyPick* pick =
+            QuickStartDrawRole(difficulty, shape->roles[i], sheetBudget, kindIds, kindForms, kindCount);
+        if (pick == NULL) {
+            // Nothing affordable and unused left in the rolled level.
+            // The slot sits out and its share goes unclaimed, so the wave
+            // simply spreads over the kinds it did get.
+            continue;
+        }
+        kindIds[kindCount] = pick->id;
+        kindForms[kindCount] = pick->form;
+        kindQuota[kindCount] = shape->shares[i];
+        shareTotal += shape->shares[i];
+        sheetBudget -= pick->cost;
+        kindCount++;
+    }
+    if (kindCount == 0) {
+        // Nothing affordable at all (a shape of expensive roles against a
+        // spent budget). Fall back to one untyped draw so the room is
+        // never silently empty.
+        QuickStartPickEnemy(difficulty, &id, &form);
+        kindIds[0] = id;
+        kindForms[0] = form;
+        kindQuota[0] = 1;
+        kindCount = 1;
+        shareTotal = 1;
+    }
+    if (shape->countPercent != 100) {
+        count = (count * shape->countPercent) / 100;
+        if (count < 1) {
+            count = 1;
+        }
+        // Re-clamp, because a shape that scales UP (the swarm's 150%) can
+        // otherwise push past the very limits the count was just fitted
+        // to. Two of the three are correctness, not taste: `cap` is the
+        // size of the shuffled index array, so overrunning it reads
+        // uninitialized stack and places enemies at whatever offset that
+        // garbage indexes; gfxCap is the sprite-table ceiling the burst
+        // must not exceed.
+        if (count > cap) {
+            count = cap;
         }
         if (count > gfxCap) {
             count = gfxCap;
         }
     }
+    // Turn relative shares into actual head counts. Rounding leftovers go
+    // to the largest share, which is the one the shape is "about".
+    {
+        s32 assigned = 0;
+        s32 biggest = 0;
+        for (i = 0; i < kindCount; i++) {
+            s32 want = (count * kindQuota[i]) / shareTotal;
+            kindQuota[i] = want;
+            assigned += want;
+            if (want > kindQuota[biggest]) {
+                biggest = i;
+            }
+        }
+        kindQuota[biggest] += count - assigned;
+    }
 
     for (i = 0; i < count; i++) {
+        s32 chosen = -1;
         j = indices[i];
         // Stop entirely rather than spend the last slots (see
         // QUICKSTART_GFX_RESERVE): a full table drops sprites and costs
@@ -5640,35 +6110,50 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
         if (!QuickStartGfxBudgetForSpawn()) {
             break;
         }
-        // A brand-new kind costs a sheet; an already-used one is free. Roll
-        // a new kind only while the budget can pay for it - below the
-        // reserve we keep the density and reuse what is already loaded.
-        if (kindCount < QUICKSTART_MAX_ENEMY_KINDS && (kindCount == 0 || QuickStartGfxBudgetForNewKind())) {
-            QuickStartPickEnemy(difficulty, &id, &form);
-            kindIds[kindCount] = id;
-            kindForms[kindCount] = form;
-            kindCount++;
-        } else {
-            r = (s32)Random() % kindCount;
-            id = kindIds[r];
-            form = kindForms[r];
+        // Take from whichever kind still owes head count. Walking from a
+        // random start keeps the placement order mixed - otherwise every
+        // wave would spawn all of kind 0 on the first offsets and all of
+        // kind 2 on the last, which reads as three separate groups rather
+        // than one composition.
+        r = (s32)Random() % kindCount;
+        for (tmp = 0; tmp < kindCount; tmp++) {
+            s32 k = (r + tmp) % kindCount;
+            if (kindQuota[k] > 0) {
+                chosen = k;
+                break;
+            }
         }
-        // The gang cap (QuickStartAcroBanditCapReached above). A capped
-        // draw is swapped for a kind this wave already paid the sheet for,
-        // so the wave keeps its density; if the acro is the only kind
-        // loaded, the placement is skipped instead.
-        if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
-            for (r = 0; r < kindCount; r++) {
-                if (kindIds[r] != ACRO_BANDIT) {
-                    id = kindIds[r];
-                    form = kindForms[r];
+        if (chosen < 0) {
+            break;
+        }
+        id = kindIds[chosen];
+        form = kindForms[chosen];
+        // A kind at its live cap (sQuickStartLiveCaps) is swapped for one
+        // this wave has already paid the sheet for, so the wave keeps its
+        // density and only its composition changes. If every loaded kind
+        // is capped, the placement is skipped instead.
+        //
+        // The capped kind's own quota is deliberately NOT spent here: the
+        // redirect must not cost the wave a body, or a shape that leads
+        // with a heavy would thin the whole room out every time the cap
+        // bites. Its quota simply keeps getting redirected.
+        if (QuickStartKindAtLiveCap(id, difficulty)) {
+            s32 alt = -1;
+            for (tmp = 0; tmp < kindCount; tmp++) {
+                s32 k = (r + tmp) % kindCount;
+                if (kindIds[k] != id && !QuickStartKindAtLiveCap(kindIds[k], difficulty)) {
+                    alt = k;
                     break;
                 }
             }
-            if (id == ACRO_BANDIT) {
+            if (alt < 0) {
                 continue;
             }
+            chosen = alt;
+            id = kindIds[chosen];
+            form = kindForms[chosen];
         }
+        kindQuota[chosen]--;
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
             enemy->x.HALF.HI = gRoomControls.origin_x + offsets[j][0];
@@ -6802,16 +7287,21 @@ static bool32 QuickStartEnemyIsWizzrobe(u8 id) {
     return id == WIZZROBE_WIND || id == WIZZROBE_FIRE || id == WIZZROBE_ICE;
 }
 
-// How many of this miniboss to put in the room. Three Wizzrobes minimum on
-// the user's call, climbing with the difficulty counter.
+// How many of this miniboss to put in the room. SIX Wizzrobes minimum on
+// the user's second call on this ("in the ? room that has wizzrobes, we
+// need way more than the 3 we have right now - maybe 6 or more, however
+// many the rooms can handle"), climbing with the difficulty counter to ten.
 //
 // The ceiling is entity budget, not taste. MAX_ENTITIES is 72 for the whole
 // game and each Wizzrobe carries a projectile child of its own from Init
-// (wizzrobeFire.c) plus another while it is firing, so six of them is
-// already around 18 slots before anything else in the room exists. Anything
-// else stays a solo fight.
-#define QUICKSTART_WIZZROBE_MIN 3
-#define QUICKSTART_WIZZROBE_MAX 6
+// (wizzrobeFire.c) plus another while it is firing, so ten of them is
+// around 30 slots - affordable because a miniboss ? room is otherwise an
+// empty room (no wave, no props), which is exactly what "however many the
+// room can handle" comes out to. Sheet cost stays flat however many spawn:
+// they are one kind, and a kind is paid for once. Anything else stays a
+// solo fight.
+#define QUICKSTART_WIZZROBE_MIN 6
+#define QUICKSTART_WIZZROBE_MAX 10
 static s32 QuickStartMinibossCount(u8 id) {
     s32 count;
     if (!QuickStartEnemyIsWizzrobe(id)) {
