@@ -390,11 +390,11 @@ def check_static():
 
 
 def emu_regions(rom):
-    from emu import boot, warp, here, poison_here, room_dims, coll_at
+    from emu import boot, warp, here, room_dims, coll_at
     out = []
     for r in P.region_pool():
         c = boot(rom, seed=SEED)
-        poison_here(c)
+        c.memory.u8[0x03000bf0 + 4] = 0
         warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
         if here(c) != (r['area'], r['room']):
             out.append(('FAIL', f"{r['roomName']}: did not land ({here(c)})"))
@@ -443,7 +443,7 @@ def emu_gfx_budget(rom):
     both sat at 44/44 from difficulty 8 up. QuickStartEnforceGfxReserve now
     holds a floor; this tier is what stops it regressing.
     """
-    from emu import boot, warp, here, poison_here, qs_set, GENT, STRIDE, MAX_ENT
+    from emu import boot, warp, here, qs_set, GENT, STRIDE, MAX_ENT
     MAX_GFX, GFXBASE, DIFF0 = 44, 0x02024490, 174
     FLOOR = 2  # the hard floor QUICKSTART_GFX_HARD_FLOOR promises
     out = []
@@ -454,7 +454,7 @@ def emu_gfx_budget(rom):
             c = boot(rom, seed=SEED)
             for b in range(4):
                 qs_set(c, DIFF0 + b, (diff >> b) & 1)
-            poison_here(c)
+            c.memory.u8[0x03000bf0 + 4] = 0
             warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
             if here(c) != (r['area'], r['room']):
                 continue
@@ -484,11 +484,11 @@ def emu_pool_entrances(rom):
     Hyrule Castle bridge (spawns in midair), water (0x30) in the Veil Falls
     rupee-path hallway (spawns in a pool and gets stuck). Both shipped.
     """
-    from emu import boot, warp, here, poison_here, room_dims, coll_at
+    from emu import boot, warp, here, room_dims, coll_at
     out = []
     for row in P.pool_rows():
         c = boot(rom, seed=SEED)
-        poison_here(c)
+        c.memory.u8[0x03000bf0 + 4] = 0
         warp(c, row['area'], row['room'], row['ex'], row['ey'])
         if here(c) != (row['area'], row['room']):
             out.append(('FAIL', f"{row['roomName']}: did not land ({here(c)})"))
@@ -518,7 +518,7 @@ def emu_fusers(rom):
     does NOT pre-fuse anything - it walks in on a fresh run and floods the
     walkable graph from the region entrance, exactly as the player would.
     """
-    from emu import boot, warp, here, poison_here, room_dims, coll_at, GENT, MAX_ENT, STRIDE, ROOM_CONTROLS, r16
+    from emu import boot, warp, here, room_dims, coll_at, GENT, MAX_ENT, STRIDE, ROOM_CONTROLS, r16
     KIN = 0x02002a40 + 0x114 + 301  # gSave.kinstones.fusedKinstones
     ZELDA, NPC_KIND = 0x28, 7
     by_room = collections.OrderedDict()
@@ -531,7 +531,7 @@ def emu_fusers(rom):
             out.append(('FAIL', f'{rn}: fusers placed in a room that is not a region'))
             continue
         c = boot(rom, seed=SEED)
-        poison_here(c)
+        c.memory.u8[ROOM_CONTROLS + 4] = 0
         warp(c, area, room, r['entrance'][0], r['entrance'][1])
         if here(c) != (area, room):
             out.append(('FAIL', f'{rn}: did not land ({here(c)})'))
@@ -612,7 +612,7 @@ def emu_fusers(rom):
 
 
 def emu_rooms(rom, start, end):
-    from emu import boot, warp, here, poison_here, room_dims, coll_at, qs_set, qs_site_set, GENT, STRIDE, MAX_ENT, r16
+    from emu import boot, warp, here, room_dims, coll_at, qs_set, qs_site_set, GENT, STRIDE, MAX_ENT, r16
     sites = P.content_sites_full()
     rooms = []
     seen = set()
@@ -636,7 +636,7 @@ def emu_rooms(rom, start, end):
             out.append(('WARN', f'{rn}: skipped - {KNOWN[(an, rn)]}'))
             continue
         c = boot(rom, seed=SEED)
-        poison_here(c)
+        c.memory.u8[0x03000bf0 + 4] = 0
         # A gated site does not exist until its fusion is done (Goron Cave's
         # four chambers), so fuse every gate this room needs before entering
         # or the site correctly refuses to spawn and the check reads as a
