@@ -35,8 +35,9 @@ Same map every run, different world behind it.
 seven-region ring, endless waves, bosses, Earth Element hunt, win/reset),
 the kinstone economy, three ? room systems with nine event kinds, the
 shop, quests, fourteen charms/curses, the map and compass, the hub inn's
-rest, and a six-tier enemy roster driving composition-built waves are live
-and probe-verified; what follows is what is NOT yet built.
+rest, the hub trophy case browsing all 70 obtainable things, and a
+six-tier enemy roster driving composition-built waves are live and
+probe-verified; what follows is what is NOT yet built.
 
 **Tooling note:** `emu.py`'s `snap()` now works against both mgba python
 builds. The pip wheel (0.10.2) exposes `Image.save_png(file)` where a
@@ -60,10 +61,12 @@ in the Wave Composition Study artifact.
    variety (F7) is the single biggest missing piece of the vision, and it
    is blocked on the key-item reachability logic, which is therefore the
    most important unstarted design work in the project.
-2. **Make the meta loop visible** - the player still cannot see the
-   unlock progression the whole design hangs on (unlocks viewer). The
-   navigation half of this goal is done: the MAP and COMPASS (F10)
-   shipped, so a run can now be read off the pause screen.
+2. **Make the meta loop visible** - largely DONE now. The MAP and COMPASS
+   (F10) shipped, so a run can be read off the pause screen, and the
+   trophy case shipped, so the player can browse all 70 things this mode
+   can give them and read what each one does. What is left is the
+   entitlement half: while `QUICKSTART_UNLOCKS_ENABLED` is 0 the case
+   shows what has been FOUND, not what has been unlocked.
 3. **Content breadth as data entry** - the tables, checker, and budget
    docs exist precisely so new events, quests, and regions are rows plus
    surveys. Spend breadth effort only through that machinery.
@@ -109,37 +112,67 @@ can actually obtain.
   Note what this means for the vision: the meta loop's *content* gating is
   gone, and only the difficulty counter still varies with wins. Both items
   below are therefore paused rather than dropped.
-- **Unlocks viewer (B4 / #52).** PAUSED with the system itself - there is
-  nothing to view while everything is unlocked. Cheap path when it
-  returns: a hub NPC that speaks `sQuickStartUnlockRules` as dialogue.
-  **Carlov's trophy case is the richer path, and the research is DONE**
-  (the user's question, Aug 2026: "can we use the trophy case mechanic as
-  our unlocks viewer?"). Answer: yes, and it is a better fit than it
-  sounds, because the case is already exactly the shape of an unlock
-  browser - a bit array plus a per-entry name, description and picture.
-  What it is, concretely (`src/menu/figurineMenu.c`, 632 lines):
-  - It is a **Subtask** (`SUBTASK_FIGURINEMENU`, `Subtask_FigurineMenu`),
-    not a pause-menu page, so it can be opened from anything that can
-    start a subtask - the same way this mode already opens its own fast
-    travel subtask. It does not have to live in Carlov's shop.
-  - Owned/not-owned is `ReadBit(gSave.figurines, idx)`, read in exactly
-    three places (`FigurineMenu_isFigurineOwned`, the row painter
-    `sub_080A4BA0`, the picture painter `FigurineMenu_080A4978`). Point
-    those at `QuickStartIsUnlocked` and the whole screen re-skins.
-  - Entry count is `gSave.saw_staffroll ? 136 : 130`, in four places -
-    one QUICKSTART override makes it our unlock count.
-  - Names and descriptions are **text ids computed as `idx + 0x800`**,
-    with unowned rows redirected to a fixed "???" string (0x889) - so
-    locked-entry hiding is already built, and our own names are a text
-    table plus one mapping function.
-  - The picture comes from `gFigurines[idx]` (palette + LZ77 gfx pointer)
-    and is the one part we have no material for. Cheapest honest answer:
-    reuse an existing figurine's art per category, or paint nothing and
-    let the row text carry it.
-  Cost estimate: a day, mostly text authoring, and it is all `#ifdef
-  QUICKSTART` inside a vanilla file - the pattern `itemOnGround.c`
-  already uses. It stays PAUSED with the unlock system regardless; this
-  entry exists so the design decision is made and not re-researched.
+- ~~Unlocks viewer (B4 / #52)~~ **SHIPPED, as Carlov's trophy case** (the
+  user's call, Aug 2026: repurpose the vanilla trophy case so the player
+  can browse everything they have unlocked, with a description of what
+  each thing DOES). What went in:
+  - **A 70-row catalog** (`sQuickStartCatalog`, game.c) covering
+    everything this mode can hand the player: the Earth Element, the
+    ordinary pickups (hearts, three rupee sizes, bomb and arrow refills,
+    Kinstone pieces, fairies), the nine reward-tier rewards, fifteen
+    weapons and tools, nine key items, all eight sword skills, six stat
+    upgrades, and all fourteen charms and curses. Grouped by category,
+    because the vanilla list has no headings of its own and grouping IS
+    the structure the player sees.
+  - **A discovery ledger in `gSave.figurines`** - vanilla's 288-bit
+    figurine bitset, which this mode never used (no Carlov, no lotto,
+    `figurineCount` never leaves 0). That choice is what made the re-skin
+    small: the menu's own ownership test is `ReadBit(gSave.figurines,
+    idx)` and needed no change at all. On persistence, what is actually
+    known: no code path in the tree clears the array (the run wipe covers
+    `gSave.inventory`, `gSave.kinstones` and named flag ranges only), and
+    it survived a death-and-return to the hub in the probe. What is NOT
+    yet proven is a full round-trip through a power cycle - the probe's
+    death path left the inventory standing too, so it did not exercise a
+    real run boundary, and nobody has watched the ledger across a save
+    and reload. Worth one probe before the case is described to players
+    as a permanent record.
+  - **Marking at the one chokepoint** - `GiveItem`, via the existing
+    `QuickStartNoteFoodItem` hook, so ground pickups, chest payouts, hub
+    selections and scripted gives all record themselves. The three bottle
+    charms are marked separately in `QuickStartNoteCharm`, because a
+    charm arrives as a filled BOTTLE and the id GiveItem sees is a
+    bottle.
+  - **The case itself is the vanilla object**, FIGURINE_DEVICE type 0,
+    standing on Floor 3 at tile (3,3) - the west end of the spawn room's
+    hall, clear of the sign, the item row and the arrival spot. It keeps
+    its own "Check" prompt and its own MenuFadeIn(7, 0xff); only its
+    SHOP07_TANA story gating had to be bypassed.
+  - **Deferred: the picture pane.** It draws `gFigurines[idx]`, per-
+    figurine art, which for an item catalog would show an arbitrary
+    figurine per row - worse than nothing, so it is suppressed under
+    QUICKSTART. The obvious follow-up is the item's own inventory icon
+    (`DrawDirect` + `gSpriteAnimations_322`, as the pause menu does), but
+    that sheet is not among the ones this screen loads and half the
+    catalog - hearts, rupees, refills, skills - has no inventory icon at
+    all.
+  - **One real bug found and fixed on the way**: the case registers in
+    the SHARED interaction candidate list once at init, because Carlov's
+    back room has nothing else competing for a slot. The hub's spawn room
+    does, and once the case lost its slot it was dead for the visit -
+    checkable-looking and permanently silent. Measured: it opened on a
+    clean boot and never again after a single ground-item pickup in the
+    same room. It now re-arms whenever it finds itself off the list.
+  - Note for whoever adds a catalog row: the name block, the description
+    block and the table are three parallel lists indexed arithmetically.
+    A compile-time check catches the pair running past the 256-entry
+    `gCustomStrings` ceiling (the catalog uses 61-200 of it), but nothing
+    can catch them falling out of order.
+  - Still true: with `QUICKSTART_UNLOCKS_ENABLED` at 0 the case shows
+    DISCOVERY, not entitlement - a row lights when the player has held
+    the thing, which is what a trophy case has always meant. If the
+    unlock system comes back, a second dimension (locked/unlocked vs
+    found/not-found) is a design question to answer then.
 - **Unlock benchmark values.** PAUSED. The thresholds were always
   placeholder and were never tuned against real play (Decision 2), which
   is part of why switching the system off costs so little today.
@@ -208,6 +241,18 @@ can actually obtain.
   build it on LIGHTABLE_SWITCH, never HITTABLE_LEVER - the lever has no
   sprite at all and paints its art as room tiles, so it only renders in
   dungeon tilesets (see doctrine 6).
+- **Tingle's kinstone events (the user, Aug 2026 - a feature to add).**
+  Vanilla's Tingle brothers each fuse a specific kinstone and pay out a
+  set piece; this mode already owns the fusion economy (gated doors,
+  region fusers, the drop curve) but uses none of the Tingle content.
+  Research to do before building: which of the four brothers' fusions
+  have payouts that survive containment (the beanstalk ones are already
+  excluded for exactly this reason - see Vanilla behaviors), whether
+  their NPCs transplant outside their scripted rooms the way our other
+  borrowed NPCs do, and whether their reward is a chest we can override
+  once the chest-control feature lands. Natural fit: a Tingle brother as
+  a rarer variant of the region fuser, paying a tier draw instead of a
+  fixed prize.
 - **Phase D medium events**: kill-quota bounties (counters exist; needs a
   giver NPC), carry-item-to-NPC (open question: do held objects survive a
   room transition? if not, keep giver and receiver in one region), Great
@@ -302,10 +347,25 @@ build:
   to move (496-508 was about to collide with the D2 alive counts) and now
   lives at 581+, and the announcement strings are no longer contiguous -
   the fourteenth uses string 59 because 46 is the inn's first bed offer.
-- **Carlov's lotto machine as a shell sink (per the user, Aug 2026: "can
-  we repurpose the lotto machine mechanic and give our own prizes?";
-  research DONE).** Yes, and the gamble curve underneath it is good
-  enough to keep as-is. What the machine is
+- **Carlov's lotto machine as a shell sink - A FEATURE TO BUILD (the
+  user's call, Aug 2026; research DONE, see below).** Yes, and the gamble
+  curve underneath it is good enough to keep as-is.
+
+  **Read this first: the Mysterious Shells are currently doing another
+  job.** The luck charm IS `ITEM_SHELLS` - this mode carries all fourteen
+  charms and curses on vanilla item ids that had no other role, and the
+  shells were the fourteenth (`QuickStartNoteFoodItem`, `case
+  ITEM_SHELLS: n = 13`). Vanilla's `GiveItem` still runs that item's own
+  metadata action afterwards (`case 0x0e` -> `ModShells`), so **every
+  luck-charm pickup silently banks one shell** - measured: shells 0 -> 1,
+  charm bit 0 -> 1, figurineCount untouched. Harmless while nothing reads
+  the counter; it becomes a design question the moment the machine
+  exists, because one shell per charm pickup is far too slow to feed a
+  gamble. Decide at build time: either shells get a real drop row of
+  their own and the charm moves to some other unused item id, or the
+  charm stays the coin and the machine's prices are set to that scarcity.
+
+  What the machine is
   (`src/object/figurineDevice.c`, 828 lines):
   - `FIGURINE_DEVICE`, object id 34, **gfx 81 / sprite 183** - it carries
     a real entity sprite, so unlike the lever it renders in any tileset
@@ -460,6 +520,14 @@ Open defects and unexplained reports, roughly by player impact.
   functions. The user is collecting a list of the non-working entrances
   and will report them; fix them as they land, then the Minish-layer
   survey (#102) can finish.
+- **Trilby Highlands' northwest ladder is a one-way trap (user report,
+  Aug 2026).** The player can climb UP it but not back down, and the
+  ledge it lands on has no other exit - so the run is stuck there. Needs
+  a walk to find which ladder it is and whether the down-transition is
+  missing, mis-targeted, or blocked by containment; the fix is then
+  either wiring the return or blocking the climb, the same call made for
+  Castle Garden's cellar ladder. Highest-priority world-structure bug on
+  this list: everything else here degrades, this one ends a run.
 - **Trilby's NW enemy offset (120,24) sits in an isolated pocket**; **Lon
   Lon Ranch's top-middle pocket is unfenced** (no walked gating box yet -
   the user paused zone-gating pending their own walk). Both are data
@@ -538,8 +606,8 @@ allowlists):
 
 1. **The key-item reachability logic** - pure design work, unblocks F7
    (the vision's biggest gap) and two held puzzle/quest variants.
-2. **Unlocks-viewer NPC** - the meta loop's last invisible surface now
-   that F10 has shipped; small, independent, and cheap as dialogue.
+2. **Trilby's one-way ladder** - a run-ending trap, and the only bug on
+   this list that costs the player their whole run rather than degrading.
 3. **#125 family-scoping + the F6 measurement pass** - turns the boss
    roster from "one chuchu" into a system; also retires a crash risk.
 4. **F1's remaining hide modes + dig-room research** (shared survey),

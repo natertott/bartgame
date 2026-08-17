@@ -87,12 +87,22 @@ void FigurineDevice_Init(FigurineDeviceEntity* this) {
     super->action = super->type + 1;
     switch (super->type) {
         case 0:
+#ifdef QUICKSTART
+            // The trophy case is hub furniture in this mode
+            // (QuickStartSpawnTrophyCaseOnce, game.c), not the back wall of
+            // Carlov's shop. SHOP07_TANA is a story flag from a questline
+            // this mode never runs, so gating on it would leave the case
+            // permanently inert - checkable but silent. Always live here.
+            this->unk_7a = 1;
+            AddInteractableCheckableObject(super);
+#else
             if (CheckLocalFlag(SHOP07_TANA)) {
                 this->unk_7a = 1;
                 AddInteractableCheckableObject(super);
             } else {
                 this->unk_7a = 0;
             }
+#endif
             super->spriteRendering.b3 = 3;
             super->spritePriority.b0 = 7;
             this->unk_78 = COORD_TO_TILE(super);
@@ -136,9 +146,39 @@ void FigurineDevice_Action1(FigurineDeviceEntity* this) {
             AddInteractableCheckableObject(super);
             break;
         case 1:
+#ifdef QUICKSTART
+            // Re-arm if the case has fallen out of the interaction
+            // candidate list. That list (gPossibleInteraction.candidates,
+            // playerUtils.c) is shared and small, and vanilla registers the
+            // case exactly once at init because Carlov's back room has
+            // nothing else competing for a slot. The hub's spawn room is
+            // not that room - the three selection items, the sign NPC and
+            // anything the player drops all register too - and once the
+            // case lost its slot it was dead for the rest of the visit:
+            // checkable-looking, permanently silent. Measured: the case
+            // opened on a clean boot and never opened again after a single
+            // ground-item pickup in the same room.
+            //
+            // Guarded on the index rather than re-added unconditionally,
+            // because AddInteractableObject clears interactType as its
+            // first act - calling it every frame would wipe the very
+            // interaction this branch is waiting to see.
+            if (super->interactType == INTERACTION_NONE && GetInteractableObjectIndex(super) < 0) {
+                AddInteractableCheckableObject(super);
+            }
+#endif
             if (super->interactType != INTERACTION_NONE) {
                 super->interactType = INTERACTION_NONE;
                 ResetPlayerAnimationAndAction();
+#ifdef QUICKSTART
+                // Same bypass as Init: open the case on every interaction.
+                // MenuFadeIn(7, 0xff) is subtask 7 (the figurine menu) in
+                // its browse-everything flavour - this mode's unlocks
+                // viewer, re-pointed at sQuickStartCatalog.
+                this->unk_7a = 2;
+                SetRoomFlag(2);
+                MenuFadeIn(7, 0xff);
+#else
                 if (CheckLocalFlag(SHOP07_TANA)) {
                     this->unk_7a = 2;
                     SetRoomFlag(2);
@@ -146,6 +186,7 @@ void FigurineDevice_Action1(FigurineDeviceEntity* this) {
                 } else {
                     SetRoomFlag(5);
                 }
+#endif
             }
             break;
         case 2:

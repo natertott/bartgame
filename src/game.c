@@ -340,6 +340,7 @@ static void QuickStartRoomMonitor(void);
 static bool32 QuickStartQuestSwapActive(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
 static bool32 QuickStartLeverAtTile(s32, s32);
+void QuickStartMarkCatalogItem(u32);
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
 static s32 QuickStartFreeGfxSlots(void);
@@ -2055,6 +2056,174 @@ const u8* const gCustomStrings[] = {
     // inn's first bed offer, so the announcement special-cases this one
     // (see QuickStartNoteFoodItem).
     [59] = (const u8*)"Lucky shells! Fortune\nfavors you - rarer finds\nfrom here on.",
+    // ===================== The trophy case catalog ======================
+    //
+    // 60 is the placeholder every not-yet-found row shows; 61 onward are
+    // the entry NAMES, one per sQuickStartCatalog row in table order; the
+    // DESCRIPTIONS follow immediately after the last name. Both blocks are
+    // indexed arithmetically (QUICKSTART_CATALOG_NAME_BASE /
+    // _DESC_BASE), so a row added to the catalog table must have a name
+    // AND a description inserted at the matching position in BOTH blocks -
+    // there is a compile-time check that the pair fits under 256, but
+    // nothing can check that they line up. Keep all three lists in the
+    // same order and adding an entry stays a three-line edit.
+    //
+    // Names are short by necessity: the list draws five at a time in a
+    // narrow column. Descriptions have a scrolling panel and should say
+    // what the thing DOES, not what it is - "Spin Attack" is already on
+    // screen next to it.
+    [60] = (const u8*)"- - - - -",
+    // -- the goal
+    [61] = (const u8*)"Earth Element",
+    // -- ordinary pickups
+    [62] = (const u8*)"Heart",
+    [63] = (const u8*)"Green Rupee",
+    [64] = (const u8*)"Blue Rupee",
+    [65] = (const u8*)"Red Rupee",
+    // "Bomb Refill" rather than "Bombs": row 25 is the BOMBS weapon and
+    // the two would otherwise read identically five rows apart.
+    [66] = (const u8*)"Bomb Refill",
+    [67] = (const u8*)"Arrow Refill",
+    [68] = (const u8*)"Kinstone Piece",
+    [69] = (const u8*)"Fairy",
+    // -- rewards
+    [70] = (const u8*)"Big Green Rupee",
+    [71] = (const u8*)"Big Red Rupee",
+    [72] = (const u8*)"Big Silver Rupee",
+    [73] = (const u8*)"Piece of Heart",
+    [74] = (const u8*)"Heart Container",
+    [75] = (const u8*)"Empty Bottle",
+    [76] = (const u8*)"Blue Potion",
+    [77] = (const u8*)"Red Potion",
+    [78] = (const u8*)"Bottled Fairy",
+    // -- weapons and tools
+    [79] = (const u8*)"Smith's Sword",
+    [80] = (const u8*)"White Sword",
+    [81] = (const u8*)"Shield",
+    [82] = (const u8*)"Mirror Shield",
+    [83] = (const u8*)"Bow",
+    [84] = (const u8*)"Large Quiver",
+    [85] = (const u8*)"Bombs",
+    [86] = (const u8*)"Remote Bombs",
+    [87] = (const u8*)"Bomb Bag",
+    [88] = (const u8*)"Boomerang",
+    [89] = (const u8*)"Magic Boomerang",
+    [90] = (const u8*)"Gust Jar",
+    [91] = (const u8*)"Fire Rod",
+    [92] = (const u8*)"Map",
+    [93] = (const u8*)"Compass",
+    // -- key items
+    [94] = (const u8*)"Pegasus Boots",
+    [95] = (const u8*)"Roc's Cape",
+    [96] = (const u8*)"Mole Mitts",
+    [97] = (const u8*)"Flippers",
+    [98] = (const u8*)"Lantern",
+    [99] = (const u8*)"Ocarina",
+    [100] = (const u8*)"Cane of Pacci",
+    [101] = (const u8*)"Grip Ring",
+    [102] = (const u8*)"Power Bracelets",
+    // -- sword skills
+    [103] = (const u8*)"Spin Attack",
+    [104] = (const u8*)"Great Spin",
+    [105] = (const u8*)"Rock Breaker",
+    [106] = (const u8*)"Roll Attack",
+    [107] = (const u8*)"Dash Attack",
+    [108] = (const u8*)"Down Thrust",
+    [109] = (const u8*)"Sword Beam",
+    [110] = (const u8*)"Peril Beam",
+    // -- stat upgrades
+    [111] = (const u8*)"Arrow Butterfly",
+    [112] = (const u8*)"Dig Butterfly",
+    [113] = (const u8*)"Swim Butterfly",
+    [114] = (const u8*)"Charm of Nayru",
+    [115] = (const u8*)"Charm of Farore",
+    [116] = (const u8*)"Charm of Din",
+    // -- charms and curses
+    [117] = (const u8*)"Brioche",
+    [118] = (const u8*)"Croissant",
+    [119] = (const u8*)"Cake",
+    [120] = (const u8*)"Red Book",
+    [121] = (const u8*)"Green Book",
+    [122] = (const u8*)"Blue Book",
+    [123] = (const u8*)"Tingle Trophy",
+    [124] = (const u8*)"Jabber Nut",
+    [125] = (const u8*)"Carlov's Medal",
+    [126] = (const u8*)"Broken Sword",
+    [127] = (const u8*)"Lucky Shells",
+    [128] = (const u8*)"Humble Pie",
+    [129] = (const u8*)"Dog Food",
+    [130] = (const u8*)"Strange Mushroom",
+    // ---- descriptions, same order --------------------------------------
+    [131] = (const u8*)"The run's goal. It waits\nin one area each run -\ntake it and you win.",
+    [132] = (const u8*)"Restores one heart.\nFalls from cut grass,\npots and slain foes.",
+    [133] = (const u8*)"One rupee. The shop and\nthe inn both take them,\nso nothing is wasted.",
+    [134] = (const u8*)"Five rupees.",
+    [135] = (const u8*)"Twenty rupees.",
+    [136] = (const u8*)"Refills five bombs, up\nto whatever your bag\nwill hold.",
+    [137] = (const u8*)"Refills five arrows, up\nto whatever your quiver\nwill hold.",
+    [138] = (const u8*)"Fuse a piece at a gated\ndoor to open a new room\nfor the rest of the run.",
+    [139] = (const u8*)"Refills your hearts on\nthe spot. Catch one in\na bottle to save it.",
+    [140] = (const u8*)"Fifty rupees. A common\narea-clear reward.",
+    [141] = (const u8*)"One hundred rupees.",
+    [142] = (const u8*)"Two hundred rupees. The\nrichest single reward\nthis mode drops.",
+    [143] = (const u8*)"Four pieces make one\nwhole Heart Container.",
+    [144] = (const u8*)"One more heart on your\nlife bar, permanently\nfor this run.",
+    [145] = (const u8*)"Holds one potion, fairy\nor charm. More bottles\nmeans more can be held.",
+    [146] = (const u8*)"Refills your hearts when\ndrunk. Keep it for the\nfight you did not expect.",
+    [147] = (const u8*)"Refills hearts AND cures\nwhatever ails you.",
+    [148] = (const u8*)"Revives you where you\nfall - an extra life in\na bottle.",
+    [149] = (const u8*)"Your starting blade. Its\nspin and beam skills are\nlearned separately.",
+    [150] = (const u8*)"A stronger blade. Every\nsword blow you land does\nmore damage.",
+    [151] = (const u8*)"Blocks blows from ahead\nand bounces some shots\nstraight back.",
+    [152] = (const u8*)"Blocks what a shield\nblocks, and reflects\nmagic besides.",
+    [153] = (const u8*)"Strikes at range. Some\nfoes a sword cannot kill\nfall to an arrow.",
+    [154] = (const u8*)"Carry far more arrows\nbefore you run dry.",
+    [155] = (const u8*)"Blows open cracked walls\nand kills whatever is\nstanding too close.",
+    [156] = (const u8*)"Bombs you set off when\nYOU choose, not on a\nfuse.",
+    [157] = (const u8*)"Carry far more bombs\nbefore you run dry.",
+    [158] = (const u8*)"Stuns at range and grabs\ndistant items. Kills\nsome flyers outright.",
+    [159] = (const u8*)"A boomerang you steer in\nflight. Reaches what the\nplain one cannot.",
+    [160] = (const u8*)"Sucks in foes, pulls off\nshields, and hauls light\nthings across gaps.",
+    [161] = (const u8*)"Sets fire to what it\ntouches. Lights dark\nrooms as it goes.",
+    [162] = (const u8*)"Shows the whole world on\nthe pause screen, and\nwhere you stand on it.",
+    [163] = (const u8*)"Names the area holding\nthis run's Earth\nElement.",
+    [164] = (const u8*)"Hold the button to run.\nCrash into things and\nthey give way.",
+    [165] = (const u8*)"Jump gaps and ledges,\nand glide a little on\nthe way down.",
+    [166] = (const u8*)"Dig through soft ground\nfor buried things and\nburied ways through.",
+    [167] = (const u8*)"Swim deep water instead\nof being turned back at\nthe shore.",
+    [168] = (const u8*)"Lights dark rooms and\nsets fire to what needs\nburning.",
+    [169] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
+    [170] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
+    [171] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
+    [172] = (const u8*)"Shove the heavy rocks\nthat block the ways\nnothing else opens.",
+    [173] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
+    [174] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
+    [175] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
+    [176] = (const u8*)"Roll into a foe and come\nup swinging, in one\nmotion.",
+    [177] = (const u8*)"Dash with the boots and\nthe sword leads, striking\nwhat you run down.",
+    [178] = (const u8*)"Fall from a jump with\nthe blade below you and\nland it point first.",
+    [179] = (const u8*)"At full health your\nsword throws a beam at\nwhatever you face.",
+    [180] = (const u8*)"At ONE heart your sword\nthrows beams - desperate,\nand strongest.",
+    [181] = (const u8*)"You nock and loose\narrows faster than you\ndid before.",
+    [182] = (const u8*)"You dig faster than you\ndid before.",
+    [183] = (const u8*)"You swim faster than you\ndid before.",
+    [184] = (const u8*)"Nayru: you take a\nQUARTER of the damage\nyou otherwise would.",
+    [185] = (const u8*)"Farore: you take half\ndamage AND deal half\nagain as much.",
+    [186] = (const u8*)"Din: your blows do\nDOUBLE damage. Drink it\nand hit things.",
+    [187] = (const u8*)"Charm: your sword knocks\nfoes twice as far as it\nused to.",
+    [188] = (const u8*)"Charm: you walk half\nagain as fast for the\nrest of the run.",
+    [189] = (const u8*)"Charm: nothing can knock\nyou back. You stand\nwhere you stand.",
+    [190] = (const u8*)"Charm: fire cannot burn\nyou - no flames, no\ncontact damage.",
+    [191] = (const u8*)"Charm: ice cannot freeze\nyou. Walk through what\nused to stop you.",
+    [192] = (const u8*)"Charm: sparks cannot\nshock you.",
+    [193] = (const u8*)"Charm: slain foes spill\nrupees far more often.",
+    [194] = (const u8*)"Charm: slain foes drop\nKinstone pieces far more\noften.",
+    [195] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
+    [196] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
+    [197] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
+    [198] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
+    [199] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
+    [200] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -13779,6 +13948,66 @@ static const QuickStartHubHint sQuickStartHubHints[] = {
 // ZELDA is the entity kind every QUICKSTART NPC borrows, which also means
 // QuickStartClearHubRoom's every-frame NPC sweep spares these - it only
 // deletes NPCs whose id is something else.
+// ==================== The trophy case, in the hub =======================
+//
+// Vanilla's own display case, lifted out of Carlov's shop. FIGURINE_DEVICE
+// type 0 is the CASE (type 1 is the lotto machine beside it): it registers
+// itself with AddInteractableCheckableObject, so the game draws the "you
+// can check this" prompt and routes the button press for us, and its
+// handler answers with MenuFadeIn(7, 0xff) - subtask 7 is the figurine
+// menu and 0xff is its browse-everything flavour, which is precisely the
+// screen we want. Nothing about the interaction had to be rebuilt; only
+// its SHOP07_TANA gating had to be bypassed, since this mode never sets
+// Carlov's story flags (see the two QUICKSTART branches in
+// figurineDevice.c).
+//
+// It carries gfx 81 / sprite 183 in its object definition - a real entity
+// sprite, not painted tiles - so it renders in the tower's tileset the
+// same as anywhere else (doctrine 6, the lesson the sprite-less lever
+// taught). It also stamps SPECIAL_TILE_34 across its three base tiles for
+// collision, which is engine-special rather than tileset art.
+//
+// WHERE: Floor 3, the spawn room, tile (3,3) - the west end of the open
+// hall's top row (rows 3-7 by tx 2-12, measured in docs/QUICKSTART_HUB.md
+// sec 2). That row is otherwise empty: the sign NPC is a row above at
+// y=40, the item-selection row is a row below at y=72, and the player
+// arrives at y=120. So the case stands against the north wall like
+// furniture should, in the first room of every run, without narrowing the
+// walk to anything.
+#define QUICKSTART_TROPHY_CASE_X 56
+#define QUICKSTART_TROPHY_CASE_Y 56
+
+// Idempotent by position, exactly like the hub hints below: hub rooms are
+// re-entered constantly, and a case already standing on its own tile is
+// all the evidence needed that it does not want spawning again. It
+// survives QuickStartClearHubRoom's sweep for free - that deletes enemies
+// and non-ZELDA NPCs, and this is an OBJECT.
+static void QuickStartSpawnTrophyCaseOnce(void) {
+    s32 i;
+    Entity* box;
+    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_FLOOR_3) {
+        return;
+    }
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == FIGURINE_DEVICE) {
+            return;
+        }
+    }
+    box = CreateObject(FIGURINE_DEVICE, 0, 0);
+    if (box == NULL) {
+        return;
+    }
+    box->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_TROPHY_CASE_X;
+    box->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_TROPHY_CASE_Y;
+    box->collisionLayer = 1;
+    box->flags |= ENT_PERSIST;
+    UpdateSpriteForCollisionLayer(box);
+}
+
 static void QuickStartSpawnHubHintsOnce(void) {
     s32 i, j;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubHints); i++) {
@@ -14287,6 +14516,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();
+    QuickStartSpawnTrophyCaseOnce();
     // Melari's Mine and its three side rooms are DORMANT, not deleted. The
     // mine was the hub and nothing routes into it any more (its one remaining
     // inbound pointer, Castle Garden's south border, is walled by containment
@@ -14739,6 +14969,11 @@ u8 QuickStartCharmMask(void) {
 // gSave.stats.charm and a 3600-frame timer there and lets it run out; this
 // records the charm as owned for the rest of the run on top of that.
 void QuickStartNoteCharm(u32 bottleContent) {
+    // The trophy case's three bottle-charm rows can only be lit from here.
+    // A charm arrives as a FILLED BOTTLE, so the id GiveItem sees is a
+    // bottle, not the charm inside it - the catalog hook on that path
+    // would light "Empty Bottle" and never Nayru, Farore or Din.
+    QuickStartMarkCatalogItem(bottleContent);
     switch (bottleContent) {
         case BOTTLE_CHARM_NAYRU:
             SetLocalFlagByBank(FLAG_BANK_11, QUICKSTART_CHARM_BIT(0));
@@ -14773,8 +15008,194 @@ u32 QuickStartFoodMask(void) {
 // ~250 item ids. First taste of a given food sets its run-long bit and
 // announces the effect through Ezlo - the item-get text alone just names
 // a pastry, which tells the player nothing about what it did to them.
+// ===================== The trophy case catalog =========================
+//
+// The player's record of everything this mode can hand them - the reward
+// tiers in all six categories, the ordinary things that fall out of pots
+// and enemies, and the Earth Element - browsed at the trophy case in the
+// hub. An entry stays blank until the player has actually held that item
+// at least once; after that its name and a description of what it DOES
+// are readable forever.
+//
+// WHERE THE LEDGER LIVES: gSave.figurines, vanilla's 36-byte (288-bit)
+// figurine bitset. This mode has no figurines - no Carlov, no lotto
+// machine, `figurineCount` never leaves 0 - so the array is dead storage
+// that is nevertheless saved, loaded and carried across runs with the
+// rest of the file, which is exactly the lifetime a cross-run discovery
+// ledger needs. It also means the vanilla figurine MENU's own ownership
+// test (ReadBit(gSave.figurines, idx), figurineMenu.c) keeps working
+// untouched: only the entry COUNT, the two text lookups and the picture
+// needed re-pointing.
+//
+// Indices are 1-based to match that menu, so catalog row i is menu entry
+// i + 1 and ledger bit i + 1.
+//
+// The categories are the tier table's own (QS_CAT_*), in the order the
+// list reads top to bottom. Rows are grouped by category on purpose: the
+// menu is a flat scrolling list with no headings of its own, so grouping
+// IS the structure the player sees.
+typedef struct {
+    u16 item;
+    u8 category;
+} QuickStartCatalogEntry;
+
+// ITEM_BOTTLE1 appears once here even though the tier table lists it
+// twice (as a REWARD and as a WEAPON draw) - the catalog is a record of
+// THINGS, not of draw rows, so an item that can arrive two ways is still
+// one entry. Everything else is one row per tier-table row, plus the
+// pickups and the Element, which are not tier draws at all.
+static const QuickStartCatalogEntry sQuickStartCatalog[] = {
+    // --- The goal ---------------------------------------------------
+    { ITEM_EARTH_ELEMENT, QS_CAT_KEY },
+    // --- Ordinary pickups: pots, grass, enemy drops ------------------
+    { ITEM_HEART, QS_CAT_REWARD },
+    { ITEM_RUPEE1, QS_CAT_REWARD },
+    { ITEM_RUPEE5, QS_CAT_REWARD },
+    { ITEM_RUPEE20, QS_CAT_REWARD },
+    { ITEM_BOMBS5, QS_CAT_REWARD },
+    { ITEM_ARROWS5, QS_CAT_REWARD },
+    { ITEM_KINSTONE, QS_CAT_REWARD },
+    { ITEM_FAIRY, QS_CAT_REWARD },
+    // --- Rewards ----------------------------------------------------
+    { ITEM_RUPEE50, QS_CAT_REWARD },
+    { ITEM_RUPEE100, QS_CAT_REWARD },
+    { ITEM_RUPEE200, QS_CAT_REWARD },
+    { ITEM_HEART_PIECE, QS_CAT_REWARD },
+    { ITEM_HEART_CONTAINER, QS_CAT_REWARD },
+    { ITEM_BOTTLE1, QS_CAT_REWARD },
+    { ITEM_BOTTLE_BLUE_POTION, QS_CAT_REWARD },
+    { ITEM_BOTTLE_RED_POTION, QS_CAT_REWARD },
+    { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD },
+    // --- Weapons and tools ------------------------------------------
+    { ITEM_SMITH_SWORD, QS_CAT_WEAPON },
+    { ITEM_RED_SWORD, QS_CAT_WEAPON },
+    { ITEM_SHIELD, QS_CAT_WEAPON },
+    { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON },
+    { ITEM_BOW, QS_CAT_WEAPON },
+    { ITEM_LARGE_QUIVER, QS_CAT_WEAPON },
+    { ITEM_BOMBS, QS_CAT_WEAPON },
+    { ITEM_REMOTE_BOMBS, QS_CAT_WEAPON },
+    { ITEM_BOMBBAG, QS_CAT_WEAPON },
+    { ITEM_BOOMERANG, QS_CAT_WEAPON },
+    { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON },
+    { ITEM_GUST_JAR, QS_CAT_WEAPON },
+    { ITEM_FIRE_ROD, QS_CAT_WEAPON },
+    { ITEM_MAP, QS_CAT_WEAPON },
+    { ITEM_COMPASS, QS_CAT_WEAPON },
+    // --- Key items --------------------------------------------------
+    { ITEM_PEGASUS_BOOTS, QS_CAT_KEY },
+    { ITEM_ROCS_CAPE, QS_CAT_KEY },
+    { ITEM_MOLE_MITTS, QS_CAT_KEY },
+    { ITEM_FLIPPERS, QS_CAT_KEY },
+    { ITEM_LANTERN_OFF, QS_CAT_KEY },
+    { ITEM_OCARINA, QS_CAT_KEY },
+    { ITEM_PACCI_CANE, QS_CAT_KEY },
+    { ITEM_GRIP_RING, QS_CAT_KEY },
+    { ITEM_POWER_BRACELETS, QS_CAT_KEY },
+    // --- Sword skills -----------------------------------------------
+    { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL },
+    { ITEM_SKILL_GREAT_SPIN, QS_CAT_SKILL },
+    { ITEM_SKILL_ROCK_BREAKER, QS_CAT_SKILL },
+    { ITEM_SKILL_ROLL_ATTACK, QS_CAT_SKILL },
+    { ITEM_SKILL_DASH_ATTACK, QS_CAT_SKILL },
+    { ITEM_SKILL_DOWN_THRUST, QS_CAT_SKILL },
+    { ITEM_SKILL_SWORD_BEAM, QS_CAT_SKILL },
+    { ITEM_SKILL_PERIL_BEAM, QS_CAT_SKILL },
+    // --- Stat upgrades ----------------------------------------------
+    { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT },
+    { ITEM_DIG_BUTTERFLY, QS_CAT_STAT },
+    { ITEM_SWIM_BUTTERFLY, QS_CAT_STAT },
+    { BOTTLE_CHARM_NAYRU, QS_CAT_STAT },
+    { BOTTLE_CHARM_FARORE, QS_CAT_STAT },
+    { BOTTLE_CHARM_DIN, QS_CAT_STAT },
+    // --- Charms and curses ------------------------------------------
+    { ITEM_BRIOCHE, QS_CAT_CHARM },
+    { ITEM_CROISSANT, QS_CAT_CHARM },
+    { ITEM_CAKE, QS_CAT_CHARM },
+    { ITEM_QST_BOOK1, QS_CAT_CHARM },
+    { ITEM_QST_BOOK2, QS_CAT_CHARM },
+    { ITEM_QST_BOOK3, QS_CAT_CHARM },
+    { ITEM_QST_TINGLE_TROPHY, QS_CAT_CHARM },
+    { ITEM_JABBERNUT, QS_CAT_CHARM },
+    { ITEM_QST_CARLOV_MEDAL, QS_CAT_CHARM },
+    { ITEM_QST_BROKEN_SWORD, QS_CAT_CHARM },
+    { ITEM_SHELLS, QS_CAT_CHARM },
+    { ITEM_PIE, QS_CAT_CHARM },
+    { ITEM_QST_DOGFOOD, QS_CAT_CHARM },
+    { ITEM_QST_MUSHROOM, QS_CAT_CHARM },
+};
+
+#define QUICKSTART_CATALOG_COUNT ((s32)ARRAY_COUNT(sQuickStartCatalog))
+
+// The two string blocks. Names run from QUICKSTART_CATALOG_NAME_BASE, one
+// per row in table order; descriptions from QUICKSTART_CATALOG_DESC_BASE
+// the same way; the single "not yet found" placeholder sits directly
+// above the names. gCustomStrings is indexed by a u8, so 256 is the hard
+// ceiling for the whole mode - this block is by far its largest tenant
+// and the count check below is what keeps it honest.
+#define QUICKSTART_CATALOG_LOCKED_STRING 60
+#define QUICKSTART_CATALOG_NAME_BASE 61
+#define QUICKSTART_CATALOG_DESC_BASE (QUICKSTART_CATALOG_NAME_BASE + QUICKSTART_CATALOG_COUNT)
+// Build breaks if the two blocks run off the end of a u8 text index.
+typedef char QuickStartCatalogStringsFit[(QUICKSTART_CATALOG_DESC_BASE + QUICKSTART_CATALOG_COUNT <= 256) ? 1 : -1];
+// ...and if the ledger outgrows the bitset it borrows.
+typedef char QuickStartCatalogLedgerFits[(QUICKSTART_CATALOG_COUNT < 288) ? 1 : -1];
+
+s32 QuickStartCatalogCount(void) {
+    return QUICKSTART_CATALOG_COUNT;
+}
+
+// index is 1-based (menu convention). Out of range answers "locked",
+// which is the safe direction: a bad index shows nothing rather than
+// reading a neighbouring string.
+bool32 QuickStartCatalogOwned(s32 index) {
+    if (index < 1 || index > QUICKSTART_CATALOG_COUNT) {
+        return FALSE;
+    }
+    return ReadBit(gSave.figurines, (u32)index) != 0;
+}
+
+u32 QuickStartCatalogNameText(s32 index) {
+    if (index < 1 || index > QUICKSTART_CATALOG_COUNT || !QuickStartCatalogOwned(index)) {
+        return TEXT_INDEX(TEXT_CUSTOM, QUICKSTART_CATALOG_LOCKED_STRING);
+    }
+    return TEXT_INDEX(TEXT_CUSTOM, (QUICKSTART_CATALOG_NAME_BASE + index - 1));
+}
+
+u32 QuickStartCatalogDescText(s32 index) {
+    return TEXT_INDEX(TEXT_CUSTOM, (QUICKSTART_CATALOG_DESC_BASE + index - 1));
+}
+
+// The item id behind an entry, for the menu's picture pane.
+u32 QuickStartCatalogItem(s32 index) {
+    if (index < 1 || index > QUICKSTART_CATALOG_COUNT) {
+        return ITEM_NONE;
+    }
+    return sQuickStartCatalog[index - 1].item;
+}
+
+// Mark an item found. Called from the every-grant chokepoint below, so
+// ground pickups, chest payouts, hub selections and scripted gives all
+// land here without each needing its own hook.
+//
+// The bottle charms are the one case the item id cannot answer on its
+// own: Nayru/Farore/Din arrive as a filled BOTTLE, so the id seen here is
+// a bottle id and the charm rows would never light. They are marked
+// separately by the charm code itself (QuickStartMarkCatalogItem is
+// exported for exactly that).
+void QuickStartMarkCatalogItem(u32 item) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_CATALOG_COUNT; i++) {
+        if (sQuickStartCatalog[i].item == item) {
+            WriteBit(gSave.figurines, (u32)(i + 1));
+            return;
+        }
+    }
+}
+
 void QuickStartNoteFoodItem(u32 item) {
     s32 n;
+    QuickStartMarkCatalogItem(item);
     // F10's two tools ride this same GiveItem chokepoint for their pickup
     // receipts (this runs BEFORE GiveItem sets the inventory bit, so a zero
     // read means "first grant" - the once-latch for free). The compass
