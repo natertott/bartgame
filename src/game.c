@@ -2659,6 +2659,123 @@ static const QuickStartLink sQuickStartLinks[] = {
       AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x48, 0xf8 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 112, 128, 84, 98,
       AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x108, 0xf8 },
+
+    // ---- The ring's twenty-two dead doors ----
+    //
+    // Measured, not guessed: tools/quickstart/door_audit.py walks the
+    // player into every live WARP_TYPE_AREA door in all eleven ring rooms
+    // from all four sides, two and three tiles out, and reports which ones
+    // fire. Twenty-two doors with a wired ? room behind them never fired
+    // from any side. That is the whole of "several doors don't do
+    // anything": every tree hollow in the ring, five of the six Trilby and
+    // South Hyrule Field caves, both Castle Garden fountains, Goron Cave's
+    // stairs, and the single door each of Eastern Hills South and Center
+    // has.
+    //
+    // Two different causes, and the collision under the door tells them
+    // apart.
+    //
+    // Solid door tile (0x0f, 0x0d, 0x15, 0x47 - the trees, the cave mouths
+    // cut into cliffs, the Minish holes, the house fronts). The player
+    // walking into one stops against its lip, measured at 15-18px below
+    // the door's own centre, while IsPosInTransitionRect (scroll.c) wants
+    // them within 6px of it and UpdateDoorTransition reads the actTile
+    // under the tile they are actually standing on. They can never be in
+    // both places at once, so the door cannot fire, ever, for anyone. The
+    // box goes on the tile in front, exactly where the blocked player ends
+    // up pressing - the same fix, for the same reason, as the Boomerang
+    // tree ladders above.
+    //
+    // Standable door tile (0x00 - the four open staircases). Here the
+    // player CAN stand on the door, so the tile is fine; what is missing
+    // is the actTile that would make UpdateDoorTransition look at all.
+    // Arming it (QuickStartArmLadderTiles) would work, but a box costs
+    // nothing extra and does not depend on an undecompiled lookup, so
+    // those four get a box whose bounds ARE the vanilla rect - door
+    // position +-6, precisely what IsPosInTransitionRect would have
+    // tested. They behave exactly like the vanilla door would have.
+    //
+    // Every destination was checked for a way back out before any of these
+    // were added (dead_doors.py --returns): eighteen leave by a
+    // WARP_TYPE_BORDER, which never depended on the actTile lookup and
+    // always fires, and the other four by a door this same audit walked
+    // and saw fire. None of these boxes drops the player somewhere they
+    // cannot leave.
+    //
+    // Spawn coordinates are each door's own endX/endY out of
+    // transitions.c - the arrival spot vanilla itself uses - not a
+    // position picked here.
+    // door (776,72), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 770, 782, 66, 78,
+      AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, 120, 120 },
+    // door (232,72), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 226, 238, 66, 78,
+      AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, 120, 120 },
+    // door (504,520), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 498, 510, 514, 526,
+      AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, 120, 120 },
+    // NOT here: Lon Lon Ranch's Goron Cave mouth (136,852). It is dead the
+    // same way, but it is dead on purpose - vanilla keeps that cave shut
+    // behind the Goron's wall punch, which KINSTONE_29's fusion at its
+    // Lon Lon fuser is what pays for. A box would hand the player the cave
+    // without the fusion. Measured while deciding: the mouth has no
+    // walkable tile on any side (the whole cliff face reads solid, and
+    // force-setting the fused bit changes none of it - the punch is an
+    // event, not a flag), so a box there would have been inert anyway.
+    // door (928,552), collision 0x0d - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 922, 934, 562, 574,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 120, 120 },
+    // door (280,168), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 274, 286, 178, 190,
+      AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 120, 120 },
+    // door (88,280), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 82, 94, 274, 286,
+      AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE, 120, 120 },
+    // door (376,216), collision 0x47 - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 370, 382, 226, 238,
+      AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE, 120, 184 },
+    // door (72,456), collision 0x15 - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 66, 78, 466, 478,
+      AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 120, 120 },
+    // door (432,296), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 426, 438, 306, 318,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 120, 120 },
+    // door (576,296), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 570, 582, 306, 318,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 120, 120 },
+    // door (432,392), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 426, 438, 402, 414,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 120, 120 },
+    // door (576,392), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 570, 582, 402, 414,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 120, 120 },
+    // door (752,312), collision 0x0d - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 746, 758, 322, 334,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 120, 120 },
+    // door (504,340), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 498, 510, 334, 346,
+      AREA_CAVES, ROOM_CAVES_BOOMERANG, 168, 216 },
+    // door (136,546), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 130, 142, 556, 568,
+      AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 120, 120 },
+    // door (56,680), collision 0x00 - standable, so the box IS the vanilla rect.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 50, 62, 674, 686,
+      AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 120, 120 },
+    // door (408,690), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 402, 414, 700, 712,
+      AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 120, 120 },
+    // door (56,40), collision 0x15 - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 50, 62, 50, 62,
+      AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 120, 120 },
+    // door (168,152), collision 0x0f - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER, 162, 174, 162, 174,
+      AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST, 120, 120 },
+    // door (184,40), collision 0x15 - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 178, 190, 50, 62,
+      AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 120, 120 },
+    // door (160,488), collision 0x0d - solid, box on the tile in front.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 154, 166, 498, 510,
+      AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 120, 120 },
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -13385,33 +13502,76 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     gRoomTransition.transitioningOut = 0;
 }
 
+// A door's box sits where a player walking into that door ends up
+// standing - and coming back OUT of the same door lands them on that exact
+// spot, because a door's two ends are the same doorway. Fifteen of the
+// twenty-two dead-door boxes are like this: the room's own return border
+// drops the player inside the box that sent them in, and without a guard
+// they would be swallowed again the frame they arrived, in a loop with no
+// way out. (The Boomerang chamber hit this first and was fixed by moving
+// its arrival spot in transitions.c. Fifteen more arrival spots is not a
+// fix, it is fifteen chances to move one onto something solid.)
+//
+// So: no box fires until the player has been seen standing outside every
+// box in the room at least once. Arriving inside one holds it shut;
+// stepping off it arms the room; walking back in fires normally, which is
+// what makes a door a door rather than a one-way trip.
+//
+// The "has been outside" bit is a room flag rather than a static, because
+// the linker script gives this object no .data and no .bss - every RAM
+// address in this build is a named symbol at a fixed offset, so a mutable
+// file-scope variable does not link at all. A room flag is the better fit
+// anyway: gRoomVars is wiped on every room load, which is exactly the
+// lifetime this bit wants.
+#define QUICKSTART_LINK_ARMED_FLAG 56
+
 static void QuickStartProcessLinks(void) {
     s32 i;
+    s32 inside;
     s16 localX, localY;
     if (gRoomTransition.transitioningOut) {
         return;
     }
+    // Same reason every other per-frame monitor gates on this: mid-
+    // transition the room id, the origin and the room flags describe
+    // different rooms for a frame or two, and a box test run against a
+    // stale origin is meaningless.
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
     localX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
     localY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    inside = -1;
     for (i = 0; i < ARRAY_COUNT(sQuickStartLinks); i++) {
         const QuickStartLink* link = &sQuickStartLinks[i];
         if (gRoomControls.area == link->fromArea && gRoomControls.room == link->fromRoom && localX >= link->triggerMinX &&
             localX <= link->triggerMaxX && localY >= link->triggerMinY && localY <= link->triggerMaxY) {
-            gRoomTransition.player_status.area_next = link->toArea;
-            gRoomTransition.player_status.room_next = link->toRoom;
-            gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
-            gRoomTransition.player_status.start_pos_x = link->spawnX;
-            gRoomTransition.player_status.start_pos_y = link->spawnY;
-            gRoomTransition.player_status.layer = 1;
-            // start_anim doubles as the spawn facing (gameUtils.c copies it
-            // straight into the player's animationState/direction on
-            // arrival). The one link that set it explicitly aimed at Castor
-            // Darknut Hall and is retired with it; every remaining link
-            // leaves it alone, matching this function's prior behavior.
-            gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
-            gRoomTransition.transitioningOut = 1;
-            return;
+            inside = i;
+            break;
         }
+    }
+    if (inside < 0) {
+        QsSetRoomFlag(QUICKSTART_LINK_ARMED_FLAG);
+        return;
+    }
+    if (!QsCheckRoomFlag(QUICKSTART_LINK_ARMED_FLAG)) {
+        return;
+    }
+    {
+        const QuickStartLink* link = &sQuickStartLinks[inside];
+        gRoomTransition.player_status.area_next = link->toArea;
+        gRoomTransition.player_status.room_next = link->toRoom;
+        gRoomTransition.player_status.spawn_type = PL_SPAWN_DEFAULT;
+        gRoomTransition.player_status.start_pos_x = link->spawnX;
+        gRoomTransition.player_status.start_pos_y = link->spawnY;
+        gRoomTransition.player_status.layer = 1;
+        // start_anim doubles as the spawn facing (gameUtils.c copies it
+        // straight into the player's animationState/direction on
+        // arrival). The one link that set it explicitly aimed at Castor
+        // Darknut Hall and is retired with it; every remaining link
+        // leaves it alone, matching this function's prior behavior.
+        gRoomTransition.type = TRANSITION_FADE_BLACK_SLOW;
+        gRoomTransition.transitioningOut = 1;
     }
 }
 

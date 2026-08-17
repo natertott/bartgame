@@ -599,15 +599,22 @@ build:
     Revisit if free heals turn out to matter more than variety.
   - **The sixth is `AREA_MINISH_WOODS`, deliberately left out.** It is
     not a room but a whole area behind a BORDER exit from Eastern Hills
-    South and North - opening it is the "regions beyond the ring"
-    decision below, with everything that entails (survey, fusers,
-    ring.py, the checker), not a room wiring. It is the natural next
-    region if the ring grows.
-  - What remains of #102 is the part still blocked behind #103: the
-    holes and entrances the user is collecting that do not fire at all.
-    Those are not missing SITES - they are missing transitions, and the
-    sweep above cannot see them because a door that never fires has no
-    exit row to find.
+    South and North - and both of those border rows are inside
+    `#ifndef QUICKSTART`, so under this build they do not exist: the
+    bottom edge of Eastern Hills is a wall, not a door that fails.
+    Opening it is the "regions beyond the ring" decision below, with
+    everything that entails (survey, fusers, ring.py, the checker), not
+    a room wiring. It is the natural next region if the ring grows, and
+    the corner it opens onto is already surveyed: 26 reachable tiles at
+    tx 0-6, ty 55-61, five with 3x3 clearance.
+  - **What was blocked behind #103 is now unblocked, and it was not what
+    this sweep assumed.** The doors that "don't fire" were not missing
+    transitions - their exit rows were present and correct all along.
+    They were unreachable trigger rects: twenty-one of them across the
+    ring, now covered by position boxes (see #103 under Known bugs).
+    A table sweep like this one cannot see that class of fault at all,
+    which is the lesson worth keeping: a door is data plus geometry, and
+    only walking into it tests both.
 - **Difficulty option research (#51).** An options-menu entry writing a
   save field is small; the real question is design: does difficulty still
   auto-escalate on wins if the player can also set it? (Decision 5.)
@@ -657,12 +664,56 @@ Open defects and unexplained reports, roughly by player impact.
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future
   content double-spawns.
-- **Some Minish holes/entrances don't work (#103, narrowed - user, Aug
-  2026).** The transform RENDERING works fine now and the Minish world is
-  broadly incorporated; what remains is that not every hole/entrance
-  functions. The user is collecting a list of the non-working entrances
-  and will report them; fix them as they land, then the Minish-layer
-  survey (#102) can finish.
+- ~~Some Minish holes/entrances don't work (#103)~~ **FIXED, and it was
+  never really about the Minish layer** (user report, Aug 2026: three
+  doors that "don't fire at all, or they do fire and they don't ever have
+  ? events inside of them" - one at the bottom of Eastern Hills, one in
+  Trilby near the Tingle sprite, one on North Hyrule Field's east side).
+  Auditing all three at once turned up a much bigger fault than three
+  doors.
+  **The audit.** `door_audit.py` walks the player into every live
+  `WARP_TYPE_AREA` door in all eleven ring rooms, from all four sides,
+  two and three tiles out, and reports which fire. **Twenty-two doors
+  with a wired ? room behind them never fired from any side**: every tree
+  hollow in the ring, five of the six Trilby/South Hyrule Field caves,
+  both Castle Garden fountains, and the single door each of Eastern Hills
+  South and Center has. All three of the user's reports were in that set.
+  **The cause, and why it hid so well.** `IsPosInTransitionRect`
+  (scroll.c) tests the player's own centre against the door's position
+  +-6px, and `UpdateDoorTransition` reads the actTile under the tile the
+  player is actually standing on. Where the doorway tile is solid - every
+  tree hollow, every cave mouth cut into a cliff, every Minish hole, most
+  house fronts - a player walking into it stops against its lip, measured
+  at 15-18px below the door's own centre. They can never be inside the
+  rect and standing on the door at once, so the door cannot fire, for
+  anyone, ever. Nothing in the data looks wrong: the exit row is present
+  and correct, which is why a table sweep (the #102 Minish sweep
+  included) could not see this.
+  **The fix.** Twenty-one `sQuickStartLinks` position boxes, the
+  mechanism this file already used for the Boomerang tree ladders, one
+  per dead door. Solid doorway: the box goes on the tile in front, where
+  the blocked player actually ends up pressing. Standable doorway (the
+  four open staircases, which were missing only the actTile): the box's
+  bounds ARE the vanilla rect, door position +-6, so it behaves exactly
+  as the vanilla door would have. Spawn coordinates are each door's own
+  `endX`/`endY` out of transitions.c - vanilla's own arrival spot, not a
+  position invented here.
+  **Two things were checked before any box was added.** Every
+  destination has a way back out (`dead_doors.py --returns`): eighteen
+  leave by a `WARP_TYPE_BORDER`, which never depended on the actTile
+  lookup, and four by a door the same audit watched fire. And fifteen of
+  those return borders land the player *inside the box that sent them
+  in* - so `QuickStartProcessLinks` now holds any box the player is
+  already standing in when the room loads, until they step off it. Eight
+  round trips walked end to end (`door_roundtrip.py`): in, out, and no
+  bounce.
+  **One door is deliberately still dead**: Lon Lon Ranch's Goron Cave
+  mouth. Vanilla keeps that cave shut behind the Goron's wall punch,
+  which KINSTONE_29's fusion pays for; a box would hand over the cave
+  without the fusion. Its cliff face has no walkable tile on any side, so
+  a box there would have been inert anyway - which leaves Goron Cave's
+  two sites unreachable until someone drives that fusion event. Next
+  world-structure item.
 - ~~Trilby Highlands' northwest ladder is a one-way trap~~ **FIXED**
   (user report, Aug 2026). Measured first: Trilby's northwest holds a
   raised pocket at tiles tx 2-12, ty 7-12, and a collision flood puts it
@@ -722,10 +773,11 @@ or a sweep.
   hallway" the player expects after shrinking has NO entrance object in
   the room data - where vanilla puts it is still unfound - and the old
   "check Lon Lon's extra link" note (#49) folds into this same survey.
-- **Inactive Minish hole, NHF's east edge.** Does nothing when
-  approached. Likely an unwired MINISH_SIZED_ENTRANCE or a portal whose
-  destination was never containment-blessed; fold into the #102 survey
-  once #103 unblocks it.
+- ~~Inactive Minish hole, NHF's east edge~~ **FIXED.** It was the fairy-
+  fountain tree at (752,312) - not a portal and not a containment
+  problem, just the twenty-second dead door: solid hollow, unreachable
+  trigger rect. It has a position box now and a round trip walked end to
+  end. See #103 under Known bugs.
 - **The beanstalk fusions stay excluded** (KINSTONE_2E, KINSTONE_24).
   Their payoff is climbing out of the ring to cloud rooms containment
   cancels; a fusion that grows an unusable ladder reads as a bug. Only
@@ -765,7 +817,8 @@ allowlists):
 5. **F7 itself**, once 1 and 4 give it carriers worth drawing.
 6. Structural debts on their own clock: 2-door rewiring (any afternoon),
    the inn (waits on its chest probe), C4 curve (waits on its probe),
-   Minish layer (waits on #103).
+   Goron Cave's wall-punch fusion (its two sites are the only ? rooms in
+   the ring still unreachable).
 
 **Testing doctrine** (unchanged, condensed):
 

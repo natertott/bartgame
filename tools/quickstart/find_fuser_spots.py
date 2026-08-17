@@ -16,7 +16,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import parse_tables as P
-from emu import boot, warp, here, room_dims, coll_at
+from emu import boot, warp, here, poison_here, room_dims, coll_at
 
 ROOT = P.ROOT
 ROM = os.path.join(ROOT, 'tmc.gba')
@@ -86,7 +86,7 @@ def main():
     for room_name, kids in GATES:
         r = regions[room_name]
         c = boot(ROM)
-        c.memory.u8[0x03000bf0 + 4] = 0
+        poison_here(c)
         warp(c, r['area'], r['room'], r['entrance'][0], r['entrance'][1])
         if here(c) != (r['area'], r['room']):
             problems.append('%s: did not land' % room_name)

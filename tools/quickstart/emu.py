@@ -86,6 +86,27 @@ def here(c):
     return (c.memory.u8[ROOM_CONTROLS + 4], c.memory.u8[ROOM_CONTROLS + 5])
 
 
+def poison_here(c):
+    """Make here() read as "the warp never took" before warping.
+
+    Every probe that warps somewhere and then asks whether it arrived needs a
+    value here() cannot return by accident, or a warp that silently does
+    nothing looks like a successful landing in the room the boot left us in.
+
+    This poisons the ROOM byte and NOT the area byte, which used to be zeroed
+    instead. Zeroing the area means claiming to stand in area 0, and area 0 is
+    AREA_MINISH_WOODS - a real area, which the game is entitled to have
+    opinions about. It now does: Minish Woods is on QuickStartAreaContained's
+    list, so containment saw the harness "standing in" a contained area and
+    cancelled every warp out of it to a room that is not a blessed pocket.
+    Nineteen pool rooms failed to land, in a build where nothing about them
+    had changed. The room byte has no such meaning attached to it - 0xff is
+    not a room any (area, room) target can be - so nothing in the game reads
+    a policy off it.
+    """
+    c.memory.u8[ROOM_CONTROLS + 5] = 0xff
+
+
 def qs_set(c, n, v=1):
     _flag_set(c, QS_BIT0 + n, v)
 
