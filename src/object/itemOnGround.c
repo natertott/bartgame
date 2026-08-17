@@ -424,6 +424,11 @@ bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
         case ITEM_QST_CARLOV_MEDAL:
         case ITEM_QST_BROKEN_SWORD:
         case ITEM_JABBERNUT:
+        // The luck charm. Vanilla treats shells as a silent pickup
+        // (see the bounce-SFX group above), but as a CHARM it has to run
+        // the plain GiveItem path so QuickStartNoteFoodItem sees it and
+        // announces what it did.
+        case ITEM_SHELLS:
         // F10's two tools take the same plain-GiveItem path: their pickup
         // receipt (the Ezlo line naming what the tool does / where the
         // Element region is) lives in QuickStartNoteFoodItem, which only

@@ -34,7 +34,7 @@ Same map every run, different world behind it.
 **Where the build stands, in one line:** the run loop (hub, free-roam
 seven-region ring, endless waves, bosses, Earth Element hunt, win/reset),
 the kinstone economy, three ? room systems with nine event kinds, the
-shop, quests, thirteen charms/curses, the map and compass, the hub inn's
+shop, quests, fourteen charms/curses, the map and compass, the hub inn's
 rest, and a six-tier enemy roster driving composition-built waves are live
 and probe-verified; what follows is what is NOT yet built.
 
@@ -237,9 +237,15 @@ build:
   the grant path anyway, because that is already how the miniboss payout
   delivers one and because GiveItem is the unambiguous way to make an
   equipment upgrade apply.
-- **Last unused charm idea (F4).** Rare-reward-chance-up is the only
-  item from the original wish list not implemented (boss-chance-up was
-  deliberately rejected). Framework is ready; one bit, one read.
+- ~~Last unused charm idea (F4)~~ **SHIPPED.** Rare-reward-chance-up is
+  the Mysterious Shells (`ITEM_SHELLS`), a vanilla collectible this mode
+  never used. It re-cuts the tier roll from 60/30/10 to 40/40/20 - rare
+  loot doubles - and is one read in `QuickStartDrawItem`, exactly as
+  predicted. That closes the original F4 wish list; boss-chance-up stays
+  deliberately rejected. Note for the next charm: the food flag block had
+  to move (496-508 was about to collide with the D2 alive counts) and now
+  lives at 581+, and the announcement strings are no longer contiguous -
+  the fourteenth uses string 59 because 46 is the inn's first bed offer.
 - **Chest item control - choose and change what any chest holds (per the
   user, a feature to implement; research DONE).** Every chest kind is
   controllable. Small chests (SPECIAL_CHEST): contents come from the
@@ -311,9 +317,13 @@ Open defects and unexplained reports, roughly by player impact.
   reward, charm included, spawns as a floor item and is collectable), so
   what remains is the live-play question: walk in through the real door and
   watch the item's entity lifetime, plus one playtest asking whether a
-  floor heart piece simply doesn't read as a payout. Cheap insurance
-  regardless: give item-drop sites the sparkle effect the hub's selection
-  items use.
+  floor heart piece simply doesn't read as a payout. **The cheap insurance
+  has shipped**: every reward this mode places now twinkles
+  (`QuickStartSparkleRewards`, vanilla's own `CreateSparkleFx` on a
+  staggered cycle, scoped to ENT_PERSIST items so vanilla room pickups stay
+  quiet). If the report was ever "I did not notice it", that is answered;
+  if it persists, the remaining cause is entity lifetime and the next step
+  is the live-play watch.
 - **Boss death machinery is not family-scoped (#125).** Two bosses dying
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future

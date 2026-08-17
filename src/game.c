@@ -26,6 +26,7 @@
 #include "fade.h"
 #if defined(QUICKSTART) || defined(MAPEXPLORE)
 #include "roomid.h"
+#include "effects.h"
 #include "item.h"
 #include "enemy.h"
 #include "npc.h"
@@ -2048,6 +2049,11 @@ const u8* const gCustomStrings[] = {
     [56] = (const u8*)"The compass hums...\nthe Element waits in\nLon Lon Ranch!",
     [57] = (const u8*)"The compass hums...\nthe Element waits in\nTrilby Highlands!",
     [58] = (const u8*)"The compass hums...\nthe Element waits in\nthe Western Wood!",
+    // Charm 14, the luck charm (ITEM_SHELLS). It does NOT sit at 33 + n
+    // like the other thirteen: that run ends at 45 and 46 is already the
+    // inn's first bed offer, so the announcement special-cases this one
+    // (see QuickStartNoteFoodItem).
+    [59] = (const u8*)"Lucky shells! Fortune\nfavors you - rarer finds\nfrom here on.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2762,7 +2768,13 @@ static s32 QuickStartScavState(void);
 // Persistent for the run in the QS window (per-run bits, cleared with the
 // rest of the window at run start). CAKE beats PIE when both are held -
 // the immunity check runs last.
-#define GF_FOOD_BIT(n) (496 + (n)) // n = 0..12 -> 496-508
+// Moved out of 496-508 when the fourteenth charm arrived: the block sat
+// directly below GF_REGION_ALIVE_BIT (509+), so one more entry would have
+// walked into the D2 alive counts. 581 is the head of the next free run
+// (581-655), which leaves room for a good many more before this has to
+// move again. Per-run flags, all inside the run wipe's 202-703, so nothing
+// carries over from a save written before the move.
+#define GF_FOOD_BIT(n) (581 + (n)) // n = 0..13 -> 581-594
 #define QUICKSTART_FOOD_SWORD_KNOCKBACK (1 << 0)
 #define QUICKSTART_FOOD_WALK_SPEED (1 << 1)
 #define QUICKSTART_FOOD_STEADFAST (1 << 2)
@@ -2776,7 +2788,10 @@ static s32 QuickStartScavState(void);
 #define QUICKSTART_FOOD_DROP_KINSTONES (1 << 10)
 #define QUICKSTART_FOOD_DROP_HEARTS (1 << 11)
 #define QUICKSTART_FOOD_CHEAP_SHOP (1 << 12)
-#define QUICKSTART_FOOD_COUNT 13
+// The last idea from the original F4 wish list: rarer loot, run-long.
+// Read once, in QuickStartDrawItem's tier roll.
+#define QUICKSTART_FOOD_RARE_LUCK (1 << 13)
+#define QUICKSTART_FOOD_COUNT 14
 #define QUICKSTART_CHEAP_SHOP_PRICE 50
 
 // D2: the persistent living-enemy count. Six bits per pool region (wave
@@ -3923,6 +3938,10 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_JABBERNUT, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },        // charm: kinstone drops up
     { ITEM_QST_CARLOV_MEDAL, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: heart drops up
     { ITEM_QST_BROKEN_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: cheap shop
+    // The last item from the original F4 wish list. Uncommon like its
+    // siblings, so a run that finds it early gets a noticeably richer rest
+    // of the run - which is the point of a luck charm.
+    { ITEM_SHELLS, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: rarer rewards
     // F10: the two findable tools. The MAP activates the START-screen map
     // (the pause menu already gates that screen on GetInventoryValue(ITEM_MAP)
     // - see pauseMenu.c PauseMenu_Variant2); the COMPASS turns on the map's
@@ -4170,7 +4189,19 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     // never lands in the 90-99 band at all. Ten buckets divide exactly into
     // the 60/30/10 curve and work at any seed width.
     roll = roll % QS_TIER_BUCKETS;
-    if (roll < QS_TIER_COMMON_BUCKETS) {
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_RARE_LUCK) {
+        // The luck charm (F4's last idea): the same ten buckets, re-cut
+        // 40/40/20 instead of 60/30/10. Rare doubles and the common band
+        // gives up the difference, which is a real change in what a run
+        // FEELS like without touching any table or any other draw.
+        if (roll < 4) {
+            tier = QS_TIER_COMMON;
+        } else if (roll < 8) {
+            tier = QS_TIER_UNCOMMON;
+        } else {
+            tier = QS_TIER_RARE;
+        }
+    } else if (roll < QS_TIER_COMMON_BUCKETS) {
         tier = QS_TIER_COMMON;
     } else if (roll < QS_TIER_COMMON_BUCKETS + QS_TIER_UNCOMMON_BUCKETS) {
         tier = QS_TIER_UNCOMMON;
@@ -13898,6 +13929,56 @@ static void QuickStartResetOtherWaveRemainders(void) {
     }
 }
 
+// Make a reward on the floor read as a reward.
+//
+// The standing "? rooms never pay" report has survived every check aimed
+// at it: the items demonstrably spawn, and a 34-item sweep showed every
+// one of them collectable. Which leaves the possibility that they are
+// simply not being NOTICED - a heart piece lying in grass at the far end
+// of a field looks like scenery, and the kind was called "chest" in the
+// tables for so long that a floor item may just not read as the payout.
+//
+// Vanilla already has the vocabulary for "this thing matters":
+// CreateSparkleFx (objectUtils.c) scatters FX_SPARKLE4 around a parent,
+// which is what treasure and secrets use. Emitting it on a slow cycle
+// turns our drops into something that catches the eye from across a room
+// without becoming a light show.
+//
+// Scoped to OUR items only. ENT_PERSIST is the marker every reward this
+// file places carries and no vanilla room pickup sets, so Lon Lon's
+// native heart piece stays as quiet as it has always been.
+// A MASK, not a period: agbcc emits __umodsi3 for a modulo by anything
+// that is not a power of two, and its runtime library does not provide
+// one (the same constraint QuickStartTierPick documents). 31 is a sparkle
+// about twice a second per item.
+#define QUICKSTART_SPARKLE_PHASE_MASK 31
+#define QUICKSTART_SPARKLE_MAX_ITEMS 4
+
+static void QuickStartSparkleRewards(void) {
+    s32 i, lit = 0;
+    // One item per frame at most, and each item only on its own slot's
+    // phase: the effect is an entity, and a room holding several drops
+    // should not spend four entity slots on sparkles in the same frame.
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES && lit < QUICKSTART_SPARKLE_MAX_ITEMS; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind != OBJECT || ent->id != GROUND_ITEM) {
+            continue;
+        }
+        if ((ent->flags & ENT_PERSIST) == 0) {
+            continue;
+        }
+        lit++;
+        // Stagger by slot so several drops twinkle out of step.
+        if (((gSave.run_frames + (u32)i) & QUICKSTART_SPARKLE_PHASE_MASK) != 0) {
+            continue;
+        }
+        CreateSparkleFx(ent);
+    }
+}
+
 static void QuickStartRoomMonitor(void) {
     s32 regionSlot;
     // Run clock for the scoring system's time bonus (QuickStartComputeScore
@@ -13998,6 +14079,7 @@ static void QuickStartRoomMonitor(void) {
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
     QuickStartClearHubRoom();
+    QuickStartSparkleRewards();
     QuickStartInnMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
@@ -14548,12 +14630,23 @@ void QuickStartNoteFoodItem(u32 item) {
         case ITEM_QST_BROKEN_SWORD:
             n = 12;
             break;
+        // The Mysterious Shells, repurposed as the run's luck charm - the
+        // last item from the original F4 wish list (rare-reward-chance-up).
+        // The shells are a vanilla collectible this mode never used for
+        // anything, and "a pocketful of lucky shells" is about as close to
+        // self-explaining as this roster gets.
+        case ITEM_SHELLS:
+            n = 13;
+            break;
         default:
             return;
     }
     if (!QsCheckFlag(GF_FOOD_BIT(n))) {
         QsSetFlag(GF_FOOD_BIT(n));
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, (33 + n)), 0);
+        // The first thirteen announce through consecutive strings 33..45.
+        // The fourteenth cannot: 46 is already the inn's first bed offer,
+        // so it has its own slot rather than shifting five other blocks.
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, ((n == 13) ? 59 : (33 + n))), 0);
     }
 }
 
