@@ -6350,6 +6350,47 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 #define QUICKSTART_MAX_ENEMY_KINDS 6
 #define QUICKSTART_WAVE_SHEET_BUDGET 12
 
+// ...except where a room's own fixed load leaves less to spend. 12 was
+// always a single global number and the composition study flagged the
+// per-region override as the obvious next knob; Castle Garden is what
+// made it necessary rather than tidy.
+//
+// Measured with the invariant checker's own GFX reader (the slot struct is
+// 12 bytes with a state nibble at +4; a slot counts as used when that
+// nibble is not 0/1/2 - reading it any other way gives numbers that look
+// fine and are not). Castle Garden at difficulty 4, 600 frames from the
+// entrance: free slots sit at ZERO for frames 0-58 while the room loads
+// its own furniture alongside the wave, then settle at exactly 2 - which
+// is QUICKSTART_GFX_HARD_FLOOR itself, i.e. no headroom at all. Every
+// other region passes with 8 to 31 free. Castle Garden is the run's first
+// region and the busiest vanilla room in the ring (guards, fountains, the
+// garden's own NPCs), so it is the one room where the wave has to ask for
+// less.
+//
+// A short budget costs variety, not difficulty: the density and the caps
+// are untouched, so the same number of enemies still spawn - they just
+// come from fewer sheets.
+typedef struct {
+    u8 area;
+    u8 room;
+    u8 budget;
+} QuickStartRegionSheetBudget;
+
+static const QuickStartRegionSheetBudget sQuickStartRegionSheetBudgets[] = {
+    { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 8 },
+};
+
+static s32 QuickStartSheetBudgetHere(void) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRegionSheetBudgets); i++) {
+        if (gRoomControls.area == sQuickStartRegionSheetBudgets[i].area &&
+            gRoomControls.room == sQuickStartRegionSheetBudgets[i].room) {
+            return sQuickStartRegionSheetBudgets[i].budget;
+        }
+    }
+    return QUICKSTART_WAVE_SHEET_BUDGET;
+}
+
 // Shared by every QUICKSTART enemy spawner: picks `count` distinct spots
 // out of this room's own pre-verified-walkable offset pool (a partial
 // Fisher-Yates shuffle, so which spots get used - not just which enemies -
@@ -6477,7 +6518,7 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     u8 kindForms[QUICKSTART_MAX_ENEMY_KINDS];
     s32 kindQuota[QUICKSTART_MAX_ENEMY_KINDS];
     s32 kindCount = 0;
-    s32 sheetBudget = QUICKSTART_WAVE_SHEET_BUDGET;
+    s32 sheetBudget = QuickStartSheetBudgetHere();
     const QuickStartArchetype* shape;
     s32 shareTotal = 0;
 

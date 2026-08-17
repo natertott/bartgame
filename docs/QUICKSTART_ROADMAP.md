@@ -327,11 +327,12 @@ build:
   as per-family live caps, which covers the reported problem more simply.
   Revisit only if heavies need to trade off against EACH OTHER rather than
   each having its own ceiling.
-- **Per-region sheet budgets - NO LONGER HYPOTHETICAL.**
-  `QUICKSTART_WAVE_SHEET_BUDGET` is one global number (12), and it has
-  now proved too generous somewhere: Castle Garden hits ZERO free GFX
-  slots at difficulty 4 (see Known bugs). A per-region override is the
-  fix, and this is its first client.
+- ~~Per-region sheet budgets~~ **SHIPPED**, with Castle Garden as its
+  first and so far only row (8 sheets against the global 12). The table
+  is `sQuickStartRegionSheetBudgets`; adding a region is one row. Re-run
+  the checker's `--gfx` tier after any roster or archetype change - that
+  tier is what caught this, and it is the cheapest of the three emulator
+  tiers to run on its own.
 - **Archetype tuning by measurement.** Weights were chosen by judgement,
   not measured play. Once a full run is played at the new curve, revisit
   which shapes appear too often or too rarely.
@@ -537,20 +538,25 @@ Open defects and unexplained reports, roughly by player impact.
   quiet). If the report was ever "I did not notice it", that is answered;
   if it persists, the remaining cause is entity lifetime and the next step
   is the live-play watch.
-- **Castle Garden runs out of GFX sheets at difficulty 4** (invariant
-  checker, `[FAIL] ROOM_CASTLE_GARDEN_MAIN: only 0 free GFX slots at
-  difficulty 4, floor is 2`). Found during the Aug 2026 quest-difficulty
-  pass and confirmed PRE-EXISTING: the same ROM built at the previous
-  commit fails identically, so it arrived with the wave rework, whose
-  six-kind waves and 12-sheet budget replaced a hard 3-kind cap that used
-  to keep this room comfortable (`docs/QUICKSTART_BUDGET.md` measured 20
-  free slots there before the rework). It degrades safely rather than
-  crashing - `QuickStartGfxBudgetForSpawn` simply refuses further spawns,
-  so the wave comes out short - but Castle Garden is the run's first
-  region and the truncation is invisible. The fix is the one the
-  composition study already named: a PER-REGION sheet budget overriding
-  the global `QUICKSTART_WAVE_SHEET_BUDGET`, with Castle Garden the first
-  row. Only one region fails, and only at difficulty 4.
+- ~~Castle Garden runs out of GFX sheets at difficulty 4~~ **FIXED.** It
+  arrived with the wave rework (six-kind waves and a 12-sheet budget
+  replaced a hard 3-kind cap that used to keep this room comfortable) and
+  was confirmed pre-existing by building the previous commit and getting
+  the identical failure. Traced before it was fixed: at difficulty 4 the
+  free-slot count sat at ZERO for frames 0-58 while the room loaded its
+  own furniture alongside the wave, then settled at exactly 2 - which is
+  `QUICKSTART_GFX_HARD_FLOOR` itself, i.e. no headroom at all, while
+  every other region ran 8 to 31 free. The fix is the per-region sheet
+  budget the composition study named: Castle Garden's wave now spends 8
+  sheets instead of 12. Free never drops below the floor now, and the
+  checker's GFX tier passes all eleven regions.
+  Two things worth keeping from the diagnosis: the GFX slot struct is 12
+  bytes with a state nibble at +4 (a slot is used when that nibble is not
+  0/1/2), and reading it any other way produces numbers that look healthy
+  and are wrong - a first pass at stride 8 reported 23 free slots where
+  the checker correctly saw 0. And a short sheet budget costs VARIETY,
+  not difficulty: density and the caps are untouched, so the same number
+  of enemies spawn from fewer sheets.
 - **Boss death machinery is not family-scoped (#125).** Two bosses dying
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future
