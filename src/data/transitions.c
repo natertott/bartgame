@@ -1150,6 +1150,36 @@ const Transition* const gExitLists_CrenelMinishPaths[] = {
     [ROOM_CRENEL_MINISH_PATHS_MELARI] = gExitList_CrenelMinishPaths_MelarisMine,
 };
 
+#ifdef QUICKSTART
+// THE TRILBY LADDER TRAP (user report, Aug 2026: "the player is able to go
+// UP, but cannot go back down... the player gets stuck on this ledge").
+//
+// Measured, not inferred. Trilby Highlands' northwest corner holds a raised
+// pocket - tiles tx 2-12, ty 7-12 - and a flood of the room's collision puts
+// it in a component of its own: 44 tiles against the main room's 334, with
+// nothing joining them. Walking every direction from inside the pocket keeps
+// the player inside it. The Mole Mitts dig cave's mouth is IN that pocket,
+// and vanilla's exit from the cave lands at (0x88,0x78) - back in the pocket
+// again. So the cave was not a way out; it was the pocket's only furniture.
+//
+// The cave is now the way down. Its overworld exit lands at (0x98,0x268)
+// instead - a spot vanilla itself uses as the landing for this region's
+// ROOM_CAVES_TRILBY_HIGHLANDS exit (see gExitList_Caves_TrilbyHighlands
+// below), so it is proven walkable and in the main body of the room rather
+// than measured by us and hoped for.
+//
+// This is the general shape for a one-way overworld pocket that contains a
+// cave: leave the climb alone, and make the cave's exit the descent. It
+// costs one retargeted row per region and needs no new machinery, which
+// matters as more regions come in - see the roadmap's Mole Mitts note.
+const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
+    { WARP_TYPE_AREA, 0x88, 0x44, 0x98, 0x268, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1a8, 0x78, 0xb8, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
     { WARP_TYPE_AREA, 0x88, 0x44, 0x88, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -1157,6 +1187,7 @@ const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_DigCaves1[] = {
     [ROOM_DIG_CAVES_EASTERN_HILLS] = gExitList_NoExitList,
     [ROOM_DIG_CAVES_1] = gExitList_NoExitList,

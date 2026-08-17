@@ -304,6 +304,7 @@ static bool32 QuickStartRoomSettled(void) {
 
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
+static void QuickStartTinglePayout(void);
 static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
@@ -1640,7 +1641,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 43
+#define QUICKSTART_CONTENT_SITE_COUNT 44
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -2224,6 +2225,8 @@ const u8* const gCustomStrings[] = {
     [198] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
     [199] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
     [200] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
+    // Tingle's payout (QuickStartTinglePayout).
+    [201] = (const u8*)"Tingle, Tingle! A Heart\nContainer for a fine\nfusion!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2977,6 +2980,10 @@ static s32 QuickStartScavState(void);
 // move again. Per-run flags, all inside the run wipe's 202-703, so nothing
 // carries over from a save written before the move.
 #define GF_FOOD_BIT(n) (581 + (n)) // n = 0..13 -> 581-594
+// Tingle's fusion has paid out (see sQuickStartTingles). One bit per row,
+// per run - the heart container is a once-per-run prize, and the run wipe
+// covers 202-703 so a new run puts Tingle back with his fusion unspent.
+#define GF_TINGLE_PAID_BIT(i) (595 + (i)) // i = 0..3 -> 595-598
 #define QUICKSTART_FOOD_SWORD_KNOCKBACK (1 << 0)
 #define QUICKSTART_FOOD_WALK_SPEED (1 << 1)
 #define QUICKSTART_FOOD_STEADFAST (1 << 2)
@@ -11244,6 +11251,35 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, QUICKSTART_KINDS_SMALL, 120, 72 },
     // Percy's house in Western Wood Center.
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY, QUICKSTART_KINDS_SMALL, 120, 104 },
+    // --- The Mole Mitts dig caves ----------------------------------------
+    //
+    // The first of them, and the pattern for the rest (the user, Aug 2026:
+    // "we need to convert this mole mitts cave to a ? event... a general
+    // way of implementing ? events in mole mitt caves as we add more
+    // overworld regions"). A dig cave is an ORDINARY content site - one
+    // table row, nothing new - once two things are known about it, and both
+    // have to be measured rather than read off the map data:
+    //
+    //  1. Its REACHABLE interior. AREA_DIG_CAVES is one 480x960 map shared
+    //     by four rooms, so a raw collision dump spans rooms the player
+    //     cannot walk to. Flood from the arrival tile instead: this one
+    //     came back 27 tiles, tx 7-18 by ty 3-8 against a room origin of
+    //     (0,640), a winding corridor with ZERO tiles of full 3x3 elbow
+    //     room. That is why it is KINDS_SMALL - a 3x3 pot cage or a wave
+    //     has nowhere to stand in here.
+    //  2. Whether its overworld mouth sits in a one-way pocket. Trilby's
+    //     does, which is what made the ladder a trap; the cave's exit is
+    //     now the way back down (see gExitList_DigCaves1_TrilbyHighlands).
+    //
+    // Spot (184,104) is tile (11,6), three tiles along the corridor the
+    // (0x88,0x68) arrival opens into. The far end of the cave - tile
+    // (17,6), which is where a "put it as deep as possible" rule lands -
+    // is on the OTHER side of a wall segment at tx 13-15 and only joins up
+    // via the ty=5 passage; the invariant checker's entrance flood does
+    // not cross it, and it was right to reject the spot. In a 27-tile
+    // corridor "deep" is three tiles, and the entrance's own run is the
+    // only segment guaranteed reachable the moment the player walks in.
+    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 184, 104 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -14507,6 +14543,7 @@ static void QuickStartRoomMonitor(void) {
     // the dispatch also means a region's gates are live whether or not this
     // save's chain happens to include it.
     QuickStartSpawnRegionFusers();
+    QuickStartTinglePayout();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
@@ -15389,6 +15426,87 @@ static void QuickStartMakeNpcFuser(Entity* npc, u32 kinstoneId) {
 // Called every frame from QuickStartRegionMonitor. Cheap: the area/room test
 // rejects all but this region's own rows immediately, and CheckKinstoneFused
 // retires each one for good the moment its gate opens.
+// ==================== Tingle's kinstone fusion =========================
+//
+// "Tingle should be there and the player can fuse Kinstones with them. If
+// they fuse correctly, they should receive a heart container" (the user,
+// Aug 2026). Built entirely on the fuser machinery above rather than as a
+// new system: a Tingle is a fuser with a different sprite and our own
+// payout, so it scatters over the same per-region spot list, uses the same
+// script and the same oversized interact hitbox, and retires the same way
+// once its gate is fused.
+//
+// WHICH FUSION. KINSTONE_2A, and the choice is the whole design. Its
+// vanilla world event adds another Goron to the line in Goron Cave's main
+// chamber - a room that is a content site here, so its vanilla occupants
+// are swept every frame. In other words the fusion's own payload is inert
+// in this mode, which is exactly what a fusion wants to be when the reward
+// is ours to give. This mode listed 2A as an ordinary fuser once before
+// and dropped it for being pointless (see the note in sQuickStartFusers);
+// pointless is the property being reused here.
+//
+// The sprite is the real thing: TINGLE_SIBLINGS, whose definition carries
+// four forms (the four siblings) each with a genuine entity sprite, so it
+// renders wherever it stands. StartCutscene sets ENT_SCRIPTED, which sends
+// the NPC's own update down its scripted branch - the same path the ZELDA
+// fusers take - so none of its vanilla talking logic gets a say.
+typedef struct {
+    u8 area;
+    u8 room;
+    u8 kinstoneId;
+    u8 form; // 0-3, which sibling
+} QuickStartTingle;
+
+static const QuickStartTingle sQuickStartTingles[] = {
+    // Trilby Highlands, which already has a scatter spot list and is where
+    // the Mole Mitts cave and its ledge live - so the region that gained a
+    // dig-cave event also gained the reason to walk it.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_2A, 0 },
+};
+
+#define QUICKSTART_TINGLE_COUNT ((s32)ARRAY_COUNT(sQuickStartTingles))
+// One paid-out bit each, and GF_TINGLE_PAID_BIT only has four.
+typedef char QuickStartTingleBitsFit[(QUICKSTART_TINGLE_COUNT <= 4) ? 1 : -1];
+
+// The payout. Polled rather than hooked because a fusion completes inside
+// the kinstone menu's own cutscene, several layers away from anything this
+// file runs - and CheckKinstoneFused is the same test the fuser spawner
+// already uses to retire a gate, so the two can never disagree about
+// whether the fusion happened.
+static void QuickStartTinglePayout(void) {
+    s32 i;
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    for (i = 0; i < QUICKSTART_TINGLE_COUNT; i++) {
+        const QuickStartTingle* t = &sQuickStartTingles[i];
+        s16 lx, ly, spotX, spotY;
+        if (gRoomControls.area != t->area || gRoomControls.room != t->room) {
+            continue;
+        }
+        if (!CheckKinstoneFused(t->kinstoneId) || QsCheckFlag(GF_TINGLE_PAID_BIT(i))) {
+            continue;
+        }
+        // At the player's feet: the fusion cutscene leaves them standing
+        // where they fused, and Tingle himself is already retired by then
+        // (the spawner skips a fused row), so there is no NPC left to drop
+        // it beside. Snapped to open ground like every other reward.
+        lx = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+        ly = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+        if (!QuickStartTileIsOpen(lx >> 4, ly >> 4) && QuickStartFindOpenTileNear(lx, ly, 1, &spotX, &spotY)) {
+            lx = spotX;
+            ly = spotY;
+        }
+        if (QuickStartSpawnRewardEntity(ITEM_HEART_CONTAINER, lx, ly) == NULL) {
+            // No entity slot this frame; leave the bit clear and try again
+            // next frame rather than eating the prize.
+            continue;
+        }
+        QsSetFlag(GF_TINGLE_PAID_BIT(i));
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 201), 0);
+    }
+}
+
 static void QuickStartSpawnRegionFusers(void) {
     s32 i, indexInRegion = 0;
     // Settled-room guard (QuickStartRoomSettled): this runs OUTSIDE the
@@ -15456,6 +15574,54 @@ static void QuickStartSpawnRegionFusers(void) {
             UpdateSpriteForCollisionLayer(npc);
             npc->direction = IdleSouth;
             QuickStartMakeNpcFuser(npc, fuser->kinstoneId);
+        }
+    }
+    // Tingle rides the same loop's tail: same scatter list, same identity
+    // check, same retirement. The only differences are the sprite and that
+    // his slot index is pushed past the region's own fusers (indexInRegion
+    // keeps counting) so he never lands on top of one.
+    for (i = 0; i < QUICKSTART_TINGLE_COUNT; i++) {
+        const QuickStartTingle* tingle = &sQuickStartTingles[i];
+        QuickStartFuser asFuser;
+        s32 worldX, worldY, e;
+        s16 localX, localY;
+        bool32 alreadyThere = FALSE;
+        if (gRoomControls.area != tingle->area || gRoomControls.room != tingle->room) {
+            continue;
+        }
+        indexInRegion++;
+        if (CheckKinstoneFused(tingle->kinstoneId)) {
+            continue;
+        }
+        asFuser.area = tingle->area;
+        asFuser.room = tingle->room;
+        asFuser.kinstoneId = tingle->kinstoneId;
+        if (!QuickStartFuserSpot(&asFuser, indexInRegion - 1, &localX, &localY)) {
+            continue;
+        }
+        worldX = gRoomControls.origin_x + localX;
+        worldY = gRoomControls.origin_y + localY;
+        for (e = 0; e < MAX_ENTITIES; e++) {
+            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == TINGLE_SIBLINGS &&
+                gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
+                alreadyThere = TRUE;
+                break;
+            }
+        }
+        if (alreadyThere || !QuickStartGfxBudgetForSpawn()) {
+            continue;
+        }
+        {
+            Entity* npc = CreateNPC(TINGLE_SIBLINGS, tingle->form, 0);
+            if (npc == NULL) {
+                continue;
+            }
+            npc->x.HALF.HI = worldX;
+            npc->y.HALF.HI = worldY;
+            npc->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcFuser(npc, tingle->kinstoneId);
         }
     }
 }

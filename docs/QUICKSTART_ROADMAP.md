@@ -241,18 +241,59 @@ can actually obtain.
   build it on LIGHTABLE_SWITCH, never HITTABLE_LEVER - the lever has no
   sprite at all and paints its art as room tiles, so it only renders in
   dungeon tilesets (see doctrine 6).
-- **Tingle's kinstone events (the user, Aug 2026 - a feature to add).**
-  Vanilla's Tingle brothers each fuse a specific kinstone and pay out a
-  set piece; this mode already owns the fusion economy (gated doors,
-  region fusers, the drop curve) but uses none of the Tingle content.
-  Research to do before building: which of the four brothers' fusions
-  have payouts that survive containment (the beanstalk ones are already
-  excluded for exactly this reason - see Vanilla behaviors), whether
-  their NPCs transplant outside their scripted rooms the way our other
-  borrowed NPCs do, and whether their reward is a chest we can override
-  once the chest-control feature lands. Natural fit: a Tingle brother as
-  a rarer variant of the region fuser, paying a tier draw instead of a
-  fixed prize.
+- ~~Tingle's kinstone events~~ **SHIPPED** (the user, Aug 2026: "Tingle
+  should be there and the player can fuse Kinstones with them. If they
+  fuse correctly, they should receive a heart container"). Built on the
+  fuser machinery rather than as a new system - a Tingle is a fuser with
+  a different sprite and our own payout, so it scatters over the same
+  per-region spot list, uses the same script and hitbox, and retires the
+  same way once fused. Standing in Trilby Highlands, so the region that
+  gained a dig-cave event also gained a reason to walk it.
+  - **Which fusion is the design.** KINSTONE_2A, whose vanilla world
+    event adds another Goron to the line in Goron Cave's main chamber -
+    a content-site room whose vanilla occupants are swept every frame.
+    The fusion's own payload is therefore inert here, which is what a
+    fusion should be when the reward is ours to give. This mode listed
+    2A as an ordinary fuser once and dropped it for being pointless;
+    pointless is the property being reused.
+  - The sprite is the real `TINGLE_SIBLINGS`, whose definition carries
+    four forms each with a genuine entity sprite. `StartCutscene` sets
+    ENT_SCRIPTED, which routes its update down the same scripted branch
+    the ZELDA fusers take, so none of its vanilla talking logic gets a
+    say.
+  - Verified: Tingle stands at Trilby local (40,584); forcing the fusion
+    latches the payout bit and drops a Heart Container at (40,612).
+  - Open, if more Tingles are wanted: only four `GF_TINGLE_PAID_BIT`
+    slots exist, and each new one needs a fusion whose vanilla payload is
+    equally inert - that search is the work, not the wiring.
+- **Mole Mitts dig caves as ? event sites - the first one SHIPPED, and
+  the recipe for the rest** (the user, Aug 2026: "convert this mole mitts
+  cave to a ? event... a general way of implementing ? events in mole
+  mitt caves as we add more overworld regions"). A dig cave turns out to
+  need no new machinery at all: it is an ordinary content-site row. What
+  it needs is two measurements, and both have to be taken rather than
+  read off the map data:
+  1. **The reachable interior, flooded from the arrival tile.**
+     `AREA_DIG_CAVES` is a single 480x960 map shared by four rooms, so a
+     raw collision dump spans rooms the player cannot walk to and will
+     happily suggest a content spot in a different room. Trilby's flooded
+     to 27 tiles, tx 7-18 by ty 3-8 against a room origin of (0,640) - a
+     winding corridor with ZERO tiles of full 3x3 elbow room, which is
+     what makes it a KINDS_SMALL site: a pot cage or a wave has nowhere
+     to stand. Expect most dig caves to come out this cramped.
+  2. **Whether its overworld mouth sits in a one-way pocket**, because if
+     it does, the cave's exit is also the region's descent (see the
+     Trilby ladder entry in Known bugs).
+  Shipped row: `{ AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
+  QUICKSTART_KINDS_SMALL, 184, 104 }`, checker-verified ("landed, spots
+  OK, 1 chest spawn verified"). `tools/quickstart/digcave_survey.py` is
+  the survey - re-run it per cave rather than guessing.
+  One trap worth carrying: the first spot tried was the cave's far end,
+  which a "put it as deep as possible" rule picks - and the invariant
+  checker rejected it, correctly, because a wall segment separates it
+  from the entrance's own run and only a side passage joins them. In a
+  27-tile corridor "deep" is three tiles. Take the spot from the run the
+  arrival opens into, and let the checker have the last word.
 - **Phase D medium events**: kill-quota bounties (counters exist; needs a
   giver NPC), carry-item-to-NPC (open question: do held objects survive a
   room transition? if not, keep giver and receiver in one region), Great
@@ -520,14 +561,21 @@ Open defects and unexplained reports, roughly by player impact.
   functions. The user is collecting a list of the non-working entrances
   and will report them; fix them as they land, then the Minish-layer
   survey (#102) can finish.
-- **Trilby Highlands' northwest ladder is a one-way trap (user report,
-  Aug 2026).** The player can climb UP it but not back down, and the
-  ledge it lands on has no other exit - so the run is stuck there. Needs
-  a walk to find which ladder it is and whether the down-transition is
-  missing, mis-targeted, or blocked by containment; the fix is then
-  either wiring the return or blocking the climb, the same call made for
-  Castle Garden's cellar ladder. Highest-priority world-structure bug on
-  this list: everything else here degrades, this one ends a run.
+- ~~Trilby Highlands' northwest ladder is a one-way trap~~ **FIXED**
+  (user report, Aug 2026). Measured first: Trilby's northwest holds a
+  raised pocket at tiles tx 2-12, ty 7-12, and a collision flood puts it
+  in a component of its own - 44 tiles against the main room's 334, with
+  nothing joining them. Walking every direction from inside kept the
+  player inside. The Mole Mitts dig cave's mouth is IN that pocket, and
+  vanilla's cave exit landed at (0x88,0x78), back in the pocket - so the
+  cave was not a way out, it was the pocket's only furniture. The cave is
+  now the descent: its overworld exit lands at (0x98,0x268), a spot
+  vanilla itself uses for this region's other cave exit, so it is proven
+  walkable and in the main body. Verified: walking out of the cave now
+  puts the player at local (152,616), clear of the pocket.
+  **The general shape, for the regions still to come:** leave the climb
+  alone and make the pocket's cave the way back down. One retargeted
+  transition row per region, no new machinery.
 - **Trilby's NW enemy offset (120,24) sits in an isolated pocket**; **Lon
   Lon Ranch's top-middle pocket is unfenced** (no walked gating box yet -
   the user paused zone-gating pending their own walk). Both are data
