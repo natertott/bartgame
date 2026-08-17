@@ -1641,7 +1641,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 49
+#define QUICKSTART_CONTENT_SITE_COUNT 54
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -2632,33 +2632,26 @@ static const QuickStartLink sQuickStartLinks[] = {
     // instead of a static table entry here, the same reason ladder 3's own
     // entrance isn't in this table either).
     //
-    // The four Boomerang tree hollows' ladders DOWN into the chamber. Their
-    // real WARP_TYPE_AREA rows (gExitList_TreeInteriors_Boomerang*) never
-    // fire in play: the ladder tile at (120,84) is armed with a door
-    // actTile (QuickStartOpenBoomerangChamber), but the vanilla collision
-    // under the ladder art is solid, so a player walking up presses against
-    // its lip at y~95 and never actually stands ON the tile the door check
-    // reads. Measured directly - 300 frames of holding up, position pinned
-    // at (120,95), no transition. This is the one leg of the chamber's five
-    // round trips that stayed broken (all four ladders/staircase UP out of
-    // the chamber fire fine - they're approached over open floor).
+    // NOT here, and deliberately gone: the four Boomerang tree hollows'
+    // ladders DOWN into the chamber. They were position boxes at
+    // (x 112-128, y 84-98) - one tile of floor in front of each ladder -
+    // and that is the wrong shape for a ladder. The player never climbed
+    // anything; they walked NEAR the ladder and the room changed under
+    // them (the user, Aug 2026: "as soon as they got close enough to the
+    // ladder they would be warped to the lower room. We want the player to
+    // actually descend the ladder, like in vanilla").
     //
-    // So the down legs are position boxes instead, the same mechanism as
-    // every other row here: the box is exactly where the blocked player
-    // ends up pressing (x 112-128, y 84-98), and each destination is its
-    // own vanilla row's arrival corner in the chamber. The chamber's four
-    // up-rows' arrival spot is moved from (120,56) to (120,104) in
-    // transitions.c to sit just SOUTH of this box - at the vanilla spot the
-    // arriving player materialized inside the box's walk-through path and
-    // bounced straight back down.
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 112, 128, 84, 98,
-      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x48, 0x88 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 112, 128, 84, 98,
-      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x108, 0x88 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 112, 128, 84, 98,
-      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x48, 0xf8 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 112, 128, 84, 98,
-      AREA_CAVES, ROOM_CAVES_BOOMERANG, 0x108, 0xf8 },
+    // The vanilla row does all of this properly on its own - it is a
+    // WARP_TYPE_AREA door on the ladder tile, and UpdateDoorTransition
+    // reads the tile's own type into gRoomTransition.stairs_idx on the way
+    // through, which is what plays the climb. It only ever needed one
+    // thing, and it is one byte: the collision under the ladder art reads
+    // 0x0c, which stops the player at y=95 - the last pixel of the tile,
+    // just outside the door's own +-6 rect around y=84. So they stand
+    // against the ladder forever, on the right tile, six pixels short.
+    // QuickStartOpenBoomerangChamber now opens that one tile's collision
+    // alongside arming its actTile, and the vanilla door takes it from
+    // there. Nothing in this table is involved any more.
 };
 
 // All of Melari's Mine's stock NPCs disabled for now, not just the ones
@@ -11385,6 +11378,66 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // has a FAIRY event kind that can roll here - but it is a real change
     // to what the room gives, unlike the four above.
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 72, 88 },
+
+    // ---- The Minish holes ----
+    //
+    // The rooms behind the ring's Minish holes: shrink at a portal, walk
+    // into a crack or a hole in the ground, drop through. The user reported
+    // North Hyrule Field's (the east one, near the tree portal) as "the
+    // Minish room that is not working" - Link falls in and lands nowhere.
+    //
+    // A Minish hole is not a door. It has no Transition row anywhere, which
+    // is why every exit-table sweep this project has run walked straight
+    // past all of them: it is room-property data driven by
+    // SpecialWarpManager (src/manager/specialWarpManager.c). The room's
+    // entity list carries `manager subtype=0x6, paramA=N`; property N is a
+    // list of `exit_region_raw` boxes; each box names an exitIndex into the
+    // room's own property table where an `exit_raw` gives the destination;
+    // the manager fires DoExitTransition when a PL_MINISH player stands in
+    // the box. tools/quickstart/minish_holes.py reads that chain and prints
+    // every hole in the ring with where it goes.
+    //
+    // So the holes were never broken. All ten fire. Seven of them landed
+    // somewhere this mode had not blessed, and
+    // QuickStartEnforceFieldRegionContainment cancelled the transition the
+    // same frame it started - falling in and landing nowhere is exactly
+    // what an unblessed destination looks like from the player's side.
+    // Castle Garden's three were already sites, which is precisely why its
+    // holes have always worked and nobody's else's did.
+    //
+    // Each of the five below is a dead-end pocket with exactly one border
+    // back to the ring room its hole is in (Knuckle's has two, both to ring
+    // rooms), so blessing them opens no route out of the run. Spots are
+    // flood-surveyed from each hole's own arrival tile.
+    //
+    // The two that stay out are the beanstalk climbs (Eastern Hills Center,
+    // Western Woods South). Those are not pockets - they climb to cloud
+    // rooms outside the ring, and the roadmap already rules them out for
+    // the same reason the beanstalk fusions are excluded.
+
+    // North Hyrule Field, east - the user's. 15x10 room, 37 reachable
+    // tiles, 13 with full 3x3 clearance; content at (152,104) is four
+    // tiles from the arrival tile (5,3), the same shape and the same spot
+    // as Castle Garden's already-working Minish crack.
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE, QUICKSTART_KINDS_SMALL, 152, 104 },
+    // North Hyrule Field, west. The tightest of the five: 30 reachable
+    // tiles and NOT ONE with full 3x3 clearance, only two that clear a
+    // plus. KINDS_SMALL is not a preference here, it is the only pool the
+    // room can host.
+    { AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE, QUICKSTART_KINDS_SMALL, 56, 56 },
+    // Lon Lon Ranch's Minish path. The outlier: 15x50, 528 reachable
+    // tiles, 414 of them fully clear - the only one of the five with room
+    // for combat, hence LARGE. The spot sits three tiles up the corridor
+    // from the arrival tile (8,49) rather than out at the far end, so the
+    // event is visible on landing instead of a 45-tile walk away.
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LON_LON_RANCH, QUICKSTART_KINDS_LARGE, 136, 744 },
+    // Lon Lon Ranch, north. 51 reachable tiles, 13 fully clear.
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, QUICKSTART_KINDS_SMALL, 72, 88 },
+    // Trilby Highlands. 18 reachable tiles, 3 fully clear. This one is
+    // also a real shortcut - its two borders reach Trilby AND Castle
+    // Garden - but both ends are ring rooms the player can already walk
+    // between, so it shortens a trip rather than opening a route.
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, QUICKSTART_KINDS_SMALL, 104, 88 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -13469,24 +13522,39 @@ static void QuickStartArmLadderTiles(s32 localX, s32 localY) {
     SetActTileAtTilePos(ACT_TILE_63, TILE_POS(localX >> 4, localY >> 4), 1);
 }
 
+// The tree ladders need one thing more than the actTile, and only the tree
+// ladders do: the collision under the ladder art reads 0x0c, which is
+// solid. A player walking up into it stops at y=95 - inside the right
+// tile, on its very last pixel, and six pixels outside the door's own
+// +-6 rect around y=84 (IsPosInTransitionRect, scroll.c). Right tile,
+// wrong pixel, forever.
+//
+// SetCollisionData writes the collision byte and NOTHING else - not the
+// tile index, not the tile type, not the actTile. The ladder keeps its art
+// and its type, so gRoomTransition.stairs_idx still reads the ladder on the
+// way through and the player still climbs down it. This is the whole
+// difference between fixing the door and replacing it: the vanilla
+// transition runs, we just let the player reach it.
+//
+// The chamber's own ladders UP do not need this - they are approached over
+// open floor, which is why those four legs always worked.
+static void QuickStartOpenLadderFloor(s32 localX, s32 localY) {
+    SetCollisionData(0, TILE_POS(localX >> 4, localY >> 4), 1);
+}
+
 static void QuickStartOpenBoomerangChamber(void) {
     if (QsCheckRoomFlag(6)) {
         return;
     }
     if (QuickStartIsBoomerangTree(gRoomControls.area, gRoomControls.room)) {
         QsSetRoomFlag(6);
-        // Two overlapping patches, not one. The tree's ladder is approached
-        // from BELOW, unlike Castle Garden's (which the player steps down
-        // onto from above), and a single patch centred on the door left a
-        // few pixels of solid lip at its bottom edge: forcing the player
-        // onto the door tile fired the transition every time, but walking
-        // up into it stopped dead at y=91. Extending the patch one tile
-        // further down gives a walkable run all the way onto the door.
-        // One tile, not the two overlapping patches this used to need. Those
-        // existed only to work around a collision lip the tile-type patch
-        // was itself creating; with nothing but the actTile changing, the
-        // vanilla floor underneath is untouched and there is no lip.
+        // One tile, two bytes: the actTile that makes UpdateDoorTransition
+        // look at this tile at all, and the collision that lets the player
+        // stand on it. The tile's art and type are left alone, so what the
+        // player sees and what the game plays are both still vanilla's
+        // ladder.
         QuickStartArmLadderTiles(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y);
+        QuickStartOpenLadderFloor(QUICKSTART_TREE_LADDER_DOWN_X, QUICKSTART_TREE_LADDER_DOWN_Y);
         return;
     }
     if (gRoomControls.area != AREA_CAVES || gRoomControls.room != ROOM_CAVES_BOOMERANG) {

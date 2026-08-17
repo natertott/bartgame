@@ -3007,13 +3007,18 @@ const Transition* const gExitLists_WindTribeTowerRoof[] = {
 
 const Transition gExitList_Caves_Boomerang[] = {
 #ifdef QUICKSTART
-    // Arrival in each tree hollow moved from (0x78,0x38) to (0x78,0x68):
-    // the hollows' ladders DOWN are position-box links now (sQuickStartLinks,
-    // game.c - the vanilla down-rows' door tile has solid collision and
-    // never fires), and the box sits at y 84-98 right under the ladder. The
-    // old (120,56) arrival spot put the freshly-arrived player on a
-    // walk-through path straight into that box, bouncing them back down the
-    // moment they moved; (120,104) is open floor just south of it.
+    // Arrival in each tree hollow moved from (0x78,0x38) to (0x78,0x68) -
+    // from just NORTH of the hollow's ladder to just SOUTH of it.
+    //
+    // Vanilla can put the player north of the ladder because vanilla only
+    // ever runs this trip once: the chamber is a one-time prize room and
+    // its ladders exist because the Boomerang chest event drew them. Here
+    // the hollows are ? rooms the player comes and goes from, and the
+    // ladder is a live door in both directions (game.c opens its collision
+    // so the vanilla door can fire at all). North of it, the only way out
+    // of the hollow - its south border to the field - crosses the ladder,
+    // so leaving would send the player straight back down. (120,104) is
+    // open floor on the field side of it, so both ways out are a walk.
     { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,

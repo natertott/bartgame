@@ -586,6 +586,19 @@ build:
     reachable tiles and not one tile of full 3x3 clearance, so they are
     KINDS_SMALL and their spots ask only for a plus-shape. Checker-
     verified, all five: "landed, spots OK, 1 chest spawn verified".
+  - **The tree ladders are real ladders again.** Each hollow's ladder down
+    into the chamber used to be a position box on the floor in front of it,
+    so the player never climbed anything - they walked near the ladder and
+    the room changed under them (the user, Aug 2026: "we want the player to
+    actually descend the ladder, like in vanilla"). The vanilla row was
+    always right; the collision under the ladder art reads 0x0c, which
+    stopped the player at y=95, the last pixel of the tile and six outside
+    the door's own +-6 rect at y=84. Right tile, wrong pixel. Opening that
+    one tile's collision alongside its actTile (`SetCollisionData`, which
+    touches neither art nor tile type) lets the vanilla door fire, with the
+    tile's own type still feeding `gRoomTransition.stairs_idx` so the climb
+    plays. All four verified: walk up, descend; arrive back, stand still,
+    walk out south. The boxes are gone.
   - **The Boomerang trees were the risk, and it is checked, not assumed.**
     Their ladders are what reach a chamber this mode already fills, so a
     site that swept their contents would strand four existing sites plus
@@ -657,12 +670,39 @@ Open defects and unexplained reports, roughly by player impact.
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future
   content double-spawns.
-- **Some Minish holes/entrances don't work (#103, narrowed - user, Aug
-  2026).** The transform RENDERING works fine now and the Minish world is
-  broadly incorporated; what remains is that not every hole/entrance
-  functions. The user is collecting a list of the non-working entrances
-  and will report them; fix them as they land, then the Minish-layer
-  survey (#102) can finish.
+- ~~Some Minish holes/entrances don't work (#103)~~ **FIXED, root cause
+  found** (user, Aug 2026, pointing at the hole on North Hyrule Field's
+  east side: "a hole in the ground that Link falls through as mini link...
+  the Minish room that is not working").
+  **A Minish hole is not a door and has no Transition row**, which is why
+  every exit-table sweep this project has run - the #102 Minish sweep
+  included - walked past all ten of them. It is room-property data driven
+  by `SpecialWarpManager`: the room's entity list carries
+  `manager subtype=0x6, paramA=N`, property N is a list of
+  `exit_region_raw` boxes, each box names an `exitIndex` into the room's
+  own property table where an `exit_raw` gives the destination, and the
+  manager fires `DoExitTransition` when a Minish-sized player stands in
+  the box. `tools/quickstart/minish_holes.py` walks that chain and prints
+  every hole in the ring with where it goes.
+  **The holes were never broken - all ten fire.** Seven landed in rooms
+  this mode had not blessed, and
+  `QuickStartEnforceFieldRegionContainment` cancelled the transition the
+  same frame it started. Falling in and landing nowhere is exactly what an
+  unblessed destination looks like from the player's side. Castle Garden's
+  three holes were already content sites, which is precisely why its holes
+  always worked and nobody else's did.
+  **Five are now content sites** - NHF east (`MINISH_CRACKS_EAST_HYRULE_CASTLE`,
+  the user's), NHF west (`DOJOS_TO_GREATBLADE`), Lon Lon's Minish path and
+  its north crack, and Trilby's Knuckle house. Each is a dead-end pocket
+  with one border back to the ring room its hole is in, so blessing them
+  opens no route out of the run; all five are checker-verified "landed,
+  spots OK, 1 chest spawn verified". The two beanstalk climbs stay out for
+  the same reason the beanstalk fusions do - they leave the ring.
+  **Proven, not assumed:** NHF's west hole and Eastern Hills Center's
+  beanstalk hole have identical bitfields and fire by the same manager. In
+  the same build, the one whose destination is now a site drops the player
+  through; the one that is still unblessed is cancelled and leaves them
+  standing in the field.
 - ~~Trilby Highlands' northwest ladder is a one-way trap~~ **FIXED**
   (user report, Aug 2026). Measured first: Trilby's northwest holds a
   raised pocket at tiles tx 2-12, ty 7-12, and a collision flood puts it
@@ -722,10 +762,9 @@ or a sweep.
   hallway" the player expects after shrinking has NO entrance object in
   the room data - where vanilla puts it is still unfound - and the old
   "check Lon Lon's extra link" note (#49) folds into this same survey.
-- **Inactive Minish hole, NHF's east edge.** Does nothing when
-  approached. Likely an unwired MINISH_SIZED_ENTRANCE or a portal whose
-  destination was never containment-blessed; fold into the #102 survey
-  once #103 unblocks it.
+- ~~Inactive Minish hole, NHF's east edge~~ **FIXED.** The second guess
+  was the right one: a destination that was never containment-blessed.
+  `MINISH_CRACKS_EAST_HYRULE_CASTLE` is a content site now. See #103.
 - **The beanstalk fusions stay excluded** (KINSTONE_2E, KINSTONE_24).
   Their payoff is climbing out of the ring to cloud rooms containment
   cancels; a fusion that grows an unusable ladder reads as a bug. Only
@@ -789,3 +828,24 @@ allowlists):
    shutter, then the lever that drew as garbage in every overworld ? room
    - so before reusing a vanilla object outside its home rooms, check
    which of the two it is.
+7. **A probe that finds nothing has proven nothing until a control says
+   otherwise.** Aug 2026, twice in one session: a walk probe reported
+   twenty-two ring doors "dead" and a memory-forced Minish probe reported
+   every Minish hole "dead". Both were the harness. Warping the player in
+   and holding a direction is not how the engine sees someone who walked
+   to a door, and setting the PL_MINISH bit is not the same as being
+   Minish. The first one shipped as twenty-one teleport boxes on doors
+   that had been working the whole time, and had to be reverted whole.
+   The rule that would have caught it costs one extra run: **before
+   reporting that something does not work, point the same probe at a case
+   known to work.** If the control fails too, the finding is about the
+   probe. A positive result (it fired, it spawned, it landed) still
+   stands on its own - only negatives need the control.
+8. **Fix the vanilla mechanism; do not replace it.** The user's standing
+   call, Aug 2026: "we should ONLY have vanilla door mechanics, no more of
+   this teleporting/warping stuff". A position box that fires near a door
+   is not a door - it takes the room away from the player instead of
+   letting them walk through it, and it cannot play the animation the tile
+   was drawn for. When a vanilla door will not fire, the fix is the byte
+   that is stopping it (an actTile, a collision value), not a trigger box
+   layered on top.
