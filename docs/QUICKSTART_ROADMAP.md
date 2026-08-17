@@ -112,6 +112,34 @@ can actually obtain.
 - **Unlocks viewer (B4 / #52).** PAUSED with the system itself - there is
   nothing to view while everything is unlocked. Cheap path when it
   returns: a hub NPC that speaks `sQuickStartUnlockRules` as dialogue.
+  **Carlov's trophy case is the richer path, and the research is DONE**
+  (the user's question, Aug 2026: "can we use the trophy case mechanic as
+  our unlocks viewer?"). Answer: yes, and it is a better fit than it
+  sounds, because the case is already exactly the shape of an unlock
+  browser - a bit array plus a per-entry name, description and picture.
+  What it is, concretely (`src/menu/figurineMenu.c`, 632 lines):
+  - It is a **Subtask** (`SUBTASK_FIGURINEMENU`, `Subtask_FigurineMenu`),
+    not a pause-menu page, so it can be opened from anything that can
+    start a subtask - the same way this mode already opens its own fast
+    travel subtask. It does not have to live in Carlov's shop.
+  - Owned/not-owned is `ReadBit(gSave.figurines, idx)`, read in exactly
+    three places (`FigurineMenu_isFigurineOwned`, the row painter
+    `sub_080A4BA0`, the picture painter `FigurineMenu_080A4978`). Point
+    those at `QuickStartIsUnlocked` and the whole screen re-skins.
+  - Entry count is `gSave.saw_staffroll ? 136 : 130`, in four places -
+    one QUICKSTART override makes it our unlock count.
+  - Names and descriptions are **text ids computed as `idx + 0x800`**,
+    with unowned rows redirected to a fixed "???" string (0x889) - so
+    locked-entry hiding is already built, and our own names are a text
+    table plus one mapping function.
+  - The picture comes from `gFigurines[idx]` (palette + LZ77 gfx pointer)
+    and is the one part we have no material for. Cheapest honest answer:
+    reuse an existing figurine's art per category, or paint nothing and
+    let the row text carry it.
+  Cost estimate: a day, mostly text authoring, and it is all `#ifdef
+  QUICKSTART` inside a vanilla file - the pattern `itemOnGround.c`
+  already uses. It stays PAUSED with the unlock system regardless; this
+  entry exists so the design decision is made and not re-researched.
 - **Unlock benchmark values.** PAUSED. The thresholds were always
   placeholder and were never tuned against real play (Decision 2), which
   is part of why switching the system off costs so little today.
@@ -124,6 +152,15 @@ can actually obtain.
   before they can be drawn safely; the quest's mode field and state
   machine are ready. The dig research is shared with the Mole Mitts dig
   rooms below - do them together.
+- ~~Quest clocks are too generous~~ **SHIPPED** (the user, Aug 2026: "the
+  quests need to be more difficult in general"). The Keaton chase went
+  60s -> 25s ("about half or less"); the hunt quest went 45s -> 30s AND
+  4-8 enemies -> 7-13, which takes it from ~7 seconds per kill to ~2.3 at
+  the top of the curve. Both offer texts quote the new number, and the
+  pack ceiling is still inside the entity budget because the pack is one
+  kind and the placer already stops at the GFX reserve. What is NOT tuned
+  is what happens on a LOSS - that is F1c below, and it is the half that
+  makes a tight clock mean something.
 - **Difficulty-scaled failure stakes (F1c).** Failing a quest should
   start to HURT as difficulty climbs: rupees at mid, health/buff at high,
   item loss at top tiers. One shared `QuickStartApplyFailureStake()`
@@ -139,6 +176,24 @@ can actually obtain.
 
 ### 2.4 Events and puzzles
 
+- ~~The switch puzzle's window is trivial, and switches spawn under the
+  cage pots~~ **SHIPPED** (both halves of a user report, Aug 2026). The
+  window is no longer a flat 8-seconds-falling-to-4: it is priced in
+  TILES OF TRAVEL from the switch that was pulled to the cage, measured
+  against Link's real walking speed (1.20 px/frame, ~14 frames per tile -
+  `walkspeed.py`), times a per-tile allowance that tightens from 22
+  frames at difficulty 0 to 15 at difficulty 12. Measured over 24 forced
+  deals: slack runs 1.55x-1.91x a straight walk at difficulty 0 and
+  1.05x-1.30x at difficulty 12, where the old window was 3-8x whatever
+  the deal happened to require. The decoy variant, which used to open the
+  cage permanently on a correct guess, now runs the same clock at DOUBLE
+  length - its pull is one-shot, so a lapse there cannot be re-pulled.
+  The placement half: switches are dealt at least 5 tiles from the cage
+  (relaxing to a hard floor of 2 in rooms too cramped for it), the cage
+  ring now refuses to spawn a pot on a switch tile, and the switch search
+  clamps to the outer-3 door band rather than the cage's 5.5-tile margin -
+  that margin is sized for a 3x3 ring and was collapsing every small cave
+  onto the 2-tile floor. Same 24 deals: zero buried switches.
 - **Switch puzzles 3-6** (pilot order agreed with the user; 1 and 2
   shipped): *hold everything down* (pressure plates + thrown weights),
   *watch the eyes* (blink sequence, wrong order resets, F1c stake at high
@@ -186,10 +241,11 @@ build:
   as per-family live caps, which covers the reported problem more simply.
   Revisit only if heavies need to trade off against EACH OTHER rather than
   each having its own ceiling.
-- **Per-region sheet budgets.** `QUICKSTART_WAVE_SHEET_BUDGET` is one
-  global number (12). The tightest rooms at difficulty 12 have less
-  headroom than the roomy ones, so a per-region override is the obvious
-  next tuning knob if the budget ever proves too generous somewhere.
+- **Per-region sheet budgets - NO LONGER HYPOTHETICAL.**
+  `QUICKSTART_WAVE_SHEET_BUDGET` is one global number (12), and it has
+  now proved too generous somewhere: Castle Garden hits ZERO free GFX
+  slots at difficulty 4 (see Known bugs). A per-region override is the
+  fix, and this is its first client.
 - **Archetype tuning by measurement.** Weights were chosen by judgement,
   not measured play. Once a full run is played at the new curve, revisit
   which shapes appear too often or too rarely.
@@ -246,6 +302,45 @@ build:
   to move (496-508 was about to collide with the D2 alive counts) and now
   lives at 581+, and the announcement strings are no longer contiguous -
   the fourteenth uses string 59 because 46 is the inn's first bed offer.
+- **Carlov's lotto machine as a shell sink (per the user, Aug 2026: "can
+  we repurpose the lotto machine mechanic and give our own prizes?";
+  research DONE).** Yes, and the gamble curve underneath it is good
+  enough to keep as-is. What the machine is
+  (`src/object/figurineDevice.c`, 828 lines):
+  - `FIGURINE_DEVICE`, object id 34, **gfx 81 / sprite 183** - it carries
+    a real entity sprite, so unlike the lever it renders in any tileset
+    (doctrine 6). It also stamps `SPECIAL_TILE_34` across its three base
+    tiles for collision, which is engine-special, not tileset art. It
+    costs one GFX sheet slot wherever it stands.
+  - **The bet IS the odds, one for one.** Base success chance is
+    `100 * (unclaimed / available)` (`sub_0808826C`), and each extra
+    shell wagered adds one percentage point
+    (`newChance = prevChance + shellDifference`), capped at 100 and at
+    the player's purse. UP/DOWN adjust the bet, R jumps by ten. A floor
+    (15/12/9/6%) keeps a nearly-complete collection from being hopeless.
+    That is a ready-made "spend a currency, buy your own odds" gamble -
+    it needs no design work, only a new prize pool.
+  - **The draw itself is one function**, `FigurineDevice_Draw`: it rolls
+    `Random() % 100 < chance`, then walks the bit array for the first
+    unowned (win) or owned (dud) index. A QUICKSTART branch there that
+    calls `QuickStartDrawItem` and the shared reward helpers is the whole
+    repurposing job. The state machine around it (bet prompt, pull,
+    reveal, Carlov's lines) is untouched.
+  - **The shells economy already exists in this mode.** The luck charm is
+    `ITEM_SHELLS`, and its metadata action (`case 0x0e`, itemUtils.c)
+    runs `ModShells` - so every luck-charm pickup is also banking one
+    shell today, invisibly. Worth deciding deliberately: either the
+    machine is the reason shells accumulate (then shells want their own
+    drop row, not just the charm), or the charm keeps being the only
+    source and the machine is a rare treat.
+  - The two real costs: the reveal expects a FIGURINE index to display a
+    figurine sprite, so either the prize shows a borrowed figurine
+    picture or the reveal is replaced with an Ezlo line; and the machine
+    is gated by `SHOP07_TANA` / `SHOP07_COMPLETE` local flags plus
+    `gSave.available_figurines`, all of which a QUICKSTART placement has
+    to set or bypass.
+  Recommended home if built: the hub, beside the shop - a shell sink
+  belongs where the player already spends.
 - **Chest item control - choose and change what any chest holds (per the
   user, a feature to implement; research DONE).** Every chest kind is
   controllable. Small chests (SPECIAL_CHEST): contents come from the
@@ -341,6 +436,20 @@ Open defects and unexplained reports, roughly by player impact.
   quiet). If the report was ever "I did not notice it", that is answered;
   if it persists, the remaining cause is entity lifetime and the next step
   is the live-play watch.
+- **Castle Garden runs out of GFX sheets at difficulty 4** (invariant
+  checker, `[FAIL] ROOM_CASTLE_GARDEN_MAIN: only 0 free GFX slots at
+  difficulty 4, floor is 2`). Found during the Aug 2026 quest-difficulty
+  pass and confirmed PRE-EXISTING: the same ROM built at the previous
+  commit fails identically, so it arrived with the wave rework, whose
+  six-kind waves and 12-sheet budget replaced a hard 3-kind cap that used
+  to keep this room comfortable (`docs/QUICKSTART_BUDGET.md` measured 20
+  free slots there before the rework). It degrades safely rather than
+  crashing - `QuickStartGfxBudgetForSpawn` simply refuses further spawns,
+  so the wave comes out short - but Castle Garden is the run's first
+  region and the truncation is invisible. The fix is the one the
+  composition study already named: a PER-REGION sheet budget overriding
+  the global `QUICKSTART_WAVE_SHEET_BUDGET`, with Castle Garden the first
+  row. Only one region fails, and only at difficulty 4.
 - **Boss death machinery is not family-scoped (#125).** Two bosses dying
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future

@@ -339,6 +339,7 @@ static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static bool32 QuickStartQuestSwapActive(void);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
+static bool32 QuickStartLeverAtTile(s32, s32);
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
 static s32 QuickStartFreeGfxSlots(void);
@@ -1967,8 +1968,8 @@ const u8* const gCustomStrings[] = {
     // recognize there); the handicap offer says the kit COMES BACK, which
     // the old line left terrifyingly open; the loss line says the attempt
     // is spent for the run, so "why won't he talk to me" never needs
-    // asking. Keep the "45" literal in sync with QUICKSTART_HUNT_SECONDS.
-    [15] = (const u8*)"My quarry! Slay ALL of\nthem in 45 seconds. Go!",
+    // asking. Keep the "30" literal in sync with QUICKSTART_HUNT_SECONDS.
+    [15] = (const u8*)"My quarry! Slay ALL of\nthem in 30 seconds. Go!",
     [16] = (const u8*)"One weapon, no kit -\nall returned after. Deal?",
     [17] = (const u8*)"Cleared, and with time\nto spare! This is yours.",
     [18] = (const u8*)"Too slow - they fled.\nThat was my only hunt.",
@@ -1998,11 +1999,11 @@ const u8* const gCustomStrings[] = {
     [26] = (const u8*)"Ezlo: One pot in this\narea hides a prize!",
     // The scavenger hunt (QuickStartScav*, below). 27 the offer - names
     // the target, the task and the exact time limit, per the F1b bar
-    // (keep the "60" in sync with QUICKSTART_SCAV_SECONDS); 28 the win -
+    // (keep the "25" in sync with QUICKSTART_SCAV_SECONDS); 28 the win -
     // says where the prize is, since it drops at the giver rather than
     // where the Keaton died; 29 the loss - says the attempt is spent; 30
     // the spent line for later visits.
-    [27] = (const u8*)"A Keaton stole my prize!\nSlay it! 60 seconds!",
+    [27] = (const u8*)"A Keaton stole my prize!\nSlay it! 25 seconds!",
     [28] = (const u8*)"My prize is back - and\nnow it's yours. Take it!",
     [29] = (const u8*)"The Keaton got away...\nThat was my only chance.",
     [30] = (const u8*)"The chase is done for\nthis run. Travel safe!",
@@ -2716,7 +2717,13 @@ static void QuickStartTrilbyQuirkHook(void) {
 #define GF_SCAV_STATE_BIT(b) (484 + (b))                                 // b = 0..1 -> 484-485
 // State values + clock, up here rather than with the quest's own code
 // because the hunt quest's guards (defined earlier in the file) read them.
-#define QUICKSTART_SCAV_SECONDS 60
+// 25, down from the original 60 (the user, Aug 2026: "the timer needs to
+// be about half or less"). A Keaton bolts on sight and the chase crosses
+// the region, so a minute made the clock decorative - the player caught it
+// with time to spare and the swarm never mattered. At 25 the chase is the
+// quest: you have to cut the Keaton off rather than out-walk it, and the
+// pack's positioning tax finally costs something.
+#define QUICKSTART_SCAV_SECONDS 25
 #define QUICKSTART_SCAV_FRAMES (QUICKSTART_SCAV_SECONDS * 60)
 #define QUICKSTART_SCAV_OFFERED 0
 #define QUICKSTART_SCAV_RUNNING 1
@@ -2730,9 +2737,35 @@ static s32 QuickStartScavState(void);
 // zeroes it on every fresh visit, so sharing one field is safe. 10 bits =
 // 17 seconds max, twice the widest window.
 #define GF_GATE_TIMER_BIT(b) (486 + (b))                                 // b = 0..9 -> 486-495
-#define QUICKSTART_GATE_WINDOW_BASE 480
-#define QUICKSTART_GATE_WINDOW_SLOPE 20
-#define QUICKSTART_GATE_WINDOW_MIN 240
+// The window is priced in TILES OF TRAVEL rather than as a flat number of
+// seconds (the user, Aug 2026: "it's trivial to get the prize right now").
+// The old 8-seconds-falling-to-4 window was flat, so a switch dealt three
+// tiles from the cage gave the player five idle seconds and a switch dealt
+// across the room gave them the same five - the timer never described the
+// run it was timing. Measured on open ground (walkspeed.py): Link walks
+// 1.20 px/frame, i.e. ~14 frames per tile, and diagonals cost the same as
+// their long axis, so Chebyshev distance IS the walk. The window is that
+// distance times a per-tile allowance that tightens with difficulty:
+//   difficulty 0  -> 22 frames/tile, ~1.6x a straight walk
+//   difficulty 12 -> 15 frames/tile, ~1.07x - a clean line, no hesitation
+// Pegasus Boots and a dash buy back the margin, which is the point: the
+// kit the player found is what turns a sprint back into a walk.
+#define QUICKSTART_GATE_FRAMES_PER_TILE 14
+#define QUICKSTART_GATE_SLACK_BASE 22
+#define QUICKSTART_GATE_SLACK_MIN (QUICKSTART_GATE_FRAMES_PER_TILE + 1)
+// Floor and ceiling. The floor keeps a degenerate short deal (a room too
+// cramped to separate switch and cage) from being unwinnable - three tiles
+// of walking, which is more than the two-tile minimum such a deal leaves;
+// the ceiling is the 10-bit field.
+#define QUICKSTART_GATE_WINDOW_MIN (QUICKSTART_GATE_FRAMES_PER_TILE * 3)
+#define QUICKSTART_GATE_WINDOW_MAX 1000
+// How far the switch must be dealt from the cage, in tiles. This is the
+// other half of the same report: a switch dealt ON the cage made any
+// window generous, and since the cage ring spawns after the switch, a ring
+// pot could also land on top of the switch - "the levers/switches are
+// often under the pots". Five tiles is ~70 frames of walking, so the
+// window has something to price even at the minimum.
+#define QUICKSTART_GATE_LEVER_MIN_TILES 5
 // The decoy-switch variant of the switch-puzzle site (the per-visit coin
 // flip in the QS_EVENT_GATE branch). Switch roles live in the switch
 // ENTITY (a scratch byte at 0x76, see QS_SWITCH_ROLE), not
@@ -8441,10 +8474,20 @@ static void QuickStartHandicapMonitor(void) {
 // Two digits is what the key counter draws, so the limit has to stay under
 // 100 seconds. 45 is enough to cross most of a region and fight, and short
 // enough that dawdling loses.
-#define QUICKSTART_HUNT_SECONDS 45
+#define QUICKSTART_HUNT_SECONDS 30
 #define QUICKSTART_HUNT_FRAMES (QUICKSTART_HUNT_SECONDS * 60)
-#define QUICKSTART_HUNT_MIN_ENEMIES 4
-#define QUICKSTART_HUNT_MAX_ENEMIES 8
+// Pack size, rebalanced with the clock (the user, Aug 2026: "we need both
+// a shorter timer and more enemies"). 4-8 in 45 seconds was ~7 seconds per
+// kill, which no wave enemy survives - the clock never ran out. 7-13 in 30
+// seconds is ~4 seconds per kill at the low end and ~2.3 at the high, so
+// the pack has to be fought efficiently rather than picked apart. The
+// ceiling stays inside the entity budget: the pack is ONE kind (one GFX
+// sheet, the measured-cheap many-instances shape) and shares the room with
+// whatever the region's own wave left standing, and MAX_ENTITIES is 72.
+// 7 + difficulty/2 walks the range and lands exactly on the ceiling at
+// QUICKSTART_MAX_DIFFICULTY, so the clamp below is a guard, not the curve.
+#define QUICKSTART_HUNT_MIN_ENEMIES 7
+#define QUICKSTART_HUNT_MAX_ENEMIES 13
 
 #define GF_HUNT_ROLLED 74
 // (75-76 free - the old 2-bit hunt chain-slot field. The hunt's host region
@@ -9587,6 +9630,17 @@ static void QuickStartGateClose(s32 ptx, s32 pty, s32 playerClearance) {
                 ty >= (s32)(gRoomControls.height >> 4) - 3) {
                 continue;
             }
+            // Never on top of a switch. The cage is dealt AFTER the
+            // switches, and a pot's tile is not "open" once it is there,
+            // so a ring pot landing on a switch buried it - the player saw
+            // a pot where the puzzle's one interactive object should be
+            // ("the levers/switches are often under the pots"). The
+            // switch-side minimum distance normally keeps the ring clear
+            // of them anyway; this is the guard for the cramped rooms
+            // where that minimum has to be relaxed.
+            if (QuickStartLeverAtTile(tx, ty)) {
+                continue;
+            }
             if (!QuickStartTileIsOpen(tx, ty)) {
                 continue;
             }
@@ -9733,6 +9787,140 @@ static bool32 QuickStartLeverAtTile(s32 tx, s32 ty) {
         }
     }
     return FALSE;
+}
+
+// Where a puzzle switch may be dealt: open ground, inboard of the door
+// band, not on another switch, and at least minTiles from the cage anchor
+// (ptx, pty) so the window below has a walk to price. The anchor is the
+// player's own position - they just walked in, so a tile near them is
+// always reachable - and when that neighbourhood is too close to the cage
+// the search pushes the anchor four tiles out and tries again, in the
+// eight compass directions, rather than giving up and dealing on top of
+// the prize.
+//
+// Returns FALSE when nothing satisfies minTiles; the callers walk the
+// distance down rather than skipping the switch, because a puzzle with no
+// switch at all is worse than a short one (the cage is liftable, so a
+// switchless deal is simply a free prize).
+// Clamp to the outer-THREE band rather than to QuickStartClampInboard's
+// 5.5-tile margin. That margin is sized for the CAGE, whose ring reaches a
+// tile beyond its anchor; a switch is a single tile, and the outer-3 test
+// below is already the rule that keeps it off doors, seams and their
+// approach corridors. The difference matters in the small caves: a 15x10
+// room clamps to a band five tiles wide under the cage's margin, which is
+// why every deal there used to land on the 2-tile floor.
+static void QuickStartClampToBand(s32* x, s32* y) {
+    s32 lo = 3 * 16 + 8;
+    s32 maxX = ((s32)(gRoomControls.width >> 4) - 4) * 16 + 8;
+    s32 maxY = ((s32)(gRoomControls.height >> 4) - 4) * 16 + 8;
+    if (*x > maxX) {
+        *x = maxX;
+    }
+    if (*x < lo) {
+        *x = lo;
+    }
+    if (*y > maxY) {
+        *y = maxY;
+    }
+    if (*y < lo) {
+        *y = lo;
+    }
+}
+
+static bool32 QuickStartGateSwitchTile(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s32 minTiles, s16* outX,
+                                       s16* outY) {
+    // The player's own anchor first (they just walked in, so a tile near
+    // them is both reachable and obvious), then anchors pushed four tiles
+    // out, then the four corners of the band - the last resort for a room
+    // too small for any push to buy separation.
+    static const s16 sPush[9][2] = {
+        { 0, 0 },    { -64, 0 },  { 64, 0 },   { 0, -64 },  { 0, 64 },
+        { -64, -64 }, { 64, 64 }, { 64, -64 }, { -64, 64 },
+    };
+    s32 attempt;
+    for (attempt = 0; attempt < 13; attempt++) {
+        s32 ax, ay;
+        s16 lx, ly;
+        s32 tx, ty, dx, dy, dist;
+        if (attempt < 9) {
+            ax = anchorX + sPush[attempt][0];
+            ay = anchorY + sPush[attempt][1];
+        } else {
+            ax = (attempt & 1) ? (3 * 16 + 8) : (((s32)(gRoomControls.width >> 4) - 4) * 16 + 8);
+            ay = (attempt & 2) ? (3 * 16 + 8) : (((s32)(gRoomControls.height >> 4) - 4) * 16 + 8);
+        }
+        QuickStartClampToBand(&ax, &ay);
+        if (!QuickStartFindOpenTileNear(ax, ay, 1, &lx, &ly)) {
+            continue;
+        }
+        tx = lx >> 4;
+        ty = ly >> 4;
+        if (QuickStartLeverAtTile(tx, ty)) {
+            continue;
+        }
+        // The outer band is doors, seams and their approach corridors - a
+        // switch there is a switch in a wall (see QuickStartClampInboard).
+        if (tx < 3 || ty < 3 || tx >= (s32)(gRoomControls.width >> 4) - 3 ||
+            ty >= (s32)(gRoomControls.height >> 4) - 3) {
+            continue;
+        }
+        dx = tx - ptx;
+        if (dx < 0) {
+            dx = -dx;
+        }
+        dy = ty - pty;
+        if (dy < 0) {
+            dy = -dy;
+        }
+        dist = (dx > dy) ? dx : dy;
+        if (dist < minTiles) {
+            continue;
+        }
+        *outX = lx;
+        *outY = ly;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// The same search, relaxing the separation until something fits. 2 is the
+// hard floor: it puts the switch outside the cage ring's own footprint,
+// which is what stops a ring pot from burying it.
+static bool32 QuickStartGateSwitchSpot(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s16* outX, s16* outY) {
+    s32 want;
+    for (want = QUICKSTART_GATE_LEVER_MIN_TILES; want >= 2; want--) {
+        if (QuickStartGateSwitchTile(anchorX, anchorY, ptx, pty, want, outX, outY)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The window a pull earns, priced off how far the switch that was pulled
+// sits from the cage. See the constants for the measurement behind it.
+static s32 QuickStartGateWindowFor(s32 switchTX, s32 switchTY, s32 ptx, s32 pty) {
+    s32 dx = switchTX - ptx;
+    s32 dy = switchTY - pty;
+    s32 dist, perTile, window;
+    if (dx < 0) {
+        dx = -dx;
+    }
+    if (dy < 0) {
+        dy = -dy;
+    }
+    dist = (dx > dy) ? dx : dy;
+    perTile = QUICKSTART_GATE_SLACK_BASE - QuickStartGetDifficulty();
+    if (perTile < QUICKSTART_GATE_SLACK_MIN) {
+        perTile = QUICKSTART_GATE_SLACK_MIN;
+    }
+    window = dist * perTile;
+    if (window < QUICKSTART_GATE_WINDOW_MIN) {
+        window = QUICKSTART_GATE_WINDOW_MIN;
+    }
+    if (window > QUICKSTART_GATE_WINDOW_MAX) {
+        window = QUICKSTART_GATE_WINDOW_MAX;
+    }
+    return window;
 }
 
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
@@ -9890,8 +10078,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 s16 lx, ly;
                 s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
                 s32 ay = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-                QuickStartClampInboard(&ax, &ay);
-                if (QuickStartFindOpenTileNear(ax, ay, 1, &lx, &ly)) {
+                // Separated from the cage on purpose: the window is priced
+                // off this distance, so a switch dealt beside the prize
+                // used to hand it over for free.
+                if (QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly)) {
                     lever = QuickStartSpawnPuzzleSwitch(lx, ly, 0);
                 }
             } else if (decoy) {
@@ -9907,40 +10097,17 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QuickStartClampInboard(&px, &py);
                 for (k = 0; k < 3; k++) {
                     s16 lx, ly;
-                    s32 attempt;
                     Entity* newLever;
-                    bool32 placed = FALSE;
-                    for (attempt = 0; attempt < 3 && !placed; attempt++) {
-                        // The same anchor always yields the same tile, so
-                        // when a neighbour's search funnels into an
-                        // already-claimed tile, retry from a shifted
-                        // anchor rather than stacking two levers.
-                        static const s16 sTryDY[3] = { 0, 32, -32 };
-                        if (!QuickStartFindOpenTileNear(px + (k - 1) * 32, py + sTryDY[attempt], 1, &lx, &ly)) {
-                            continue;
-                        }
-                        if (QuickStartLeverAtTile(lx >> 4, ly >> 4)) {
-                            continue;
-                        }
-                        // Never inside the cage footprint: the ring pots
-                        // spawn right after this and skip occupied tiles.
-                        if ((lx >> 4) >= ptx - 1 && (lx >> 4) <= ptx + 1 && (ly >> 4) >= pty - 1 &&
-                            (ly >> 4) <= pty + 1) {
-                            continue;
-                        }
-                        // Never in the outer wall band either - the search
-                        // can wander back out of the clamped anchor's zone,
-                        // and a lever on a door's approach tile is a wall
-                        // (see QuickStartClampInboard).
-                        if ((lx >> 4) < 3 || (ly >> 4) < 3 || (lx >> 4) >= (s32)(gRoomControls.width >> 4) - 3 ||
-                            (ly >> 4) >= (s32)(gRoomControls.height >> 4) - 3) {
-                            continue;
-                        }
-                        placed = TRUE;
-                    }
-                    if (!placed) {
-                        // Degenerate geometry; a short deal is survivable
-                        // because a trap-pot cage is always liftable.
+                    // One search per switch, from that switch's own anchor.
+                    // It enforces everything the hand-rolled loop here used
+                    // to (open ground, no double-deal, off the cage, inboard
+                    // of the door band) plus the separation the window is
+                    // priced from; when a neighbour's search funnels into a
+                    // claimed tile the helper's own pushed anchors find the
+                    // next one. Degenerate geometry still just deals fewer
+                    // switches - a short deal is survivable because a
+                    // trap-pot cage is always liftable.
+                    if (!QuickStartGateSwitchSpot(px + (k - 1) * 32, py, ptx, pty, &lx, &ly)) {
                         continue;
                     }
                     newLever = QuickStartSpawnPuzzleSwitch(lx, ly, (u32)(1 + k));
@@ -10005,11 +10172,25 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QS_SWITCH_ROLE(ent) |= QUICKSTART_LEVER_ROLE_DONE;
                 switch (QS_SWITCH_ROLE(ent) & 3) {
                     case QUICKSTART_LEVER_ROLE_PRIZE:
-                        // No countdown in this variant: the cage stays
-                        // open for the rest of the visit (the shared
-                        // timer stays 0 and the lapse path below is
-                        // never reached, since this block returns).
+                        // The right guess opens the cage on a clock too -
+                        // it used to stay open for the rest of the visit,
+                        // which made the win half of a gamble room a free
+                        // walk. DOUBLE the closing gate's window, because
+                        // this variant's pull is one-shot: the switch is
+                        // marked DONE, so a lapse here cannot be re-pulled
+                        // the way the gate's single switch can, and the
+                        // player has already paid the 1-in-3 gamble. A
+                        // lapsed cage is still liftable at the price of a
+                        // primed pot, so it is a cost, not a lockout.
                         if (!QsCheckRoomFlag(flagBase + 6)) {
+                            s32 window = QuickStartGateWindowFor((ent->x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                                                 (ent->y.HALF.HI - gRoomControls.origin_y) >> 4, ptx,
+                                                                 pty);
+                            window += window;
+                            if (window > QUICKSTART_GATE_WINDOW_MAX) {
+                                window = QUICKSTART_GATE_WINDOW_MAX;
+                            }
+                            QuickStartGateWriteTimer((u32)window);
                             QuickStartGateOpen(ptx, pty);
                             QsSetRoomFlag(flagBase + 6);
                         }
@@ -10033,10 +10214,10 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         break;
                 }
             }
-            return FALSE;
-        }
-        // Any flip of the switch (either direction) restarts the window.
-        if (lever != NULL) {
+            // Falls through to the shared clock below rather than
+            // returning: both variants run on the same countdown now.
+        } else if (lever != NULL) {
+            // Any flip of the switch (either direction) restarts the window.
             u32 lt = (lever->frameIndex != 0) ? 1 : 0;
             u32 seen = QsCheckRoomFlag(flagBase + 4) ? 1 : 0;
             if (lt != seen) {
@@ -10046,10 +10227,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 } else {
                     QsClearRoomFlag(flagBase + 4);
                 }
-                window = QUICKSTART_GATE_WINDOW_BASE - (s32)QuickStartGetDifficulty() * QUICKSTART_GATE_WINDOW_SLOPE;
-                if (window < QUICKSTART_GATE_WINDOW_MIN) {
-                    window = QUICKSTART_GATE_WINDOW_MIN;
-                }
+                window = QuickStartGateWindowFor((lever->x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                                 (lever->y.HALF.HI - gRoomControls.origin_y) >> 4, ptx, pty);
                 QuickStartGateWriteTimer((u32)window);
                 if (!QsCheckRoomFlag(flagBase + 6)) {
                     QuickStartGateOpen(ptx, pty);
