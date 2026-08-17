@@ -34,8 +34,20 @@ Same map every run, different world behind it.
 **Where the build stands, in one line:** the run loop (hub, free-roam
 seven-region ring, endless waves, bosses, Earth Element hunt, win/reset),
 the kinstone economy, three ? room systems with nine event kinds, the
-shop, quests, and thirteen charms/curses are live and probe-verified;
-what follows is what is NOT yet built.
+shop, quests, thirteen charms/curses, the map and compass, the hub inn's
+rest, and a six-tier enemy roster driving composition-built waves are live
+and probe-verified; what follows is what is NOT yet built.
+
+**Shipped since the last roadmap pass (Aug 2026), for orientation:** F10's
+MAP and COMPASS; the hub inn's REST half; D2's persistent living-enemy
+count; the switch-puzzle repair (placement off the doorway, and the
+sprite-less lever replaced with a real crystal switch); the difficulty
+rework (size-normalized escalation, per-family live caps, a GFX sheet
+budget in place of the kind cap, ten composition archetypes, a retuned
+curve); and the roster expansion to six tiers - 57 of the game's 102 enemy
+ids, an Elites tier that doubles as the miniboss pool, and weapon gating
+for enemies a sword cannot kill. The reasoning behind the last two lives
+in the Wave Composition Study artifact.
 
 **High-level goals for the next phase, in priority terms:**
 
@@ -84,13 +96,20 @@ can actually obtain.
 
 ### 2.2 The meta layer's missing surfaces
 
-- **Unlocks viewer (B4 / #52).** The progression is invisible. Cheap
-  path: a hub NPC that speaks `sQuickStartUnlockRules` as dialogue
-  ("LOCKED - needs N wins"); build a real screen only if the dialogue
-  version reads badly in playtests.
-- **Unlock benchmark values.** Storage and registry exist; the actual
-  thresholds are placeholder. Needs real playthrough scores to tune
-  (Decision 2).
+- **The unlock system is currently SWITCHED OFF** (user's call, Aug 2026:
+  "all items/rooms/features should be available random options at all
+  levels"). `QUICKSTART_UNLOCKS_ENABLED` is 0, so `QuickStartIsUnlocked`
+  returns TRUE for everything; the rules table, the score and win counters
+  and every call site are untouched, so turning it back on is one line.
+  Note what this means for the vision: the meta loop's *content* gating is
+  gone, and only the difficulty counter still varies with wins. Both items
+  below are therefore paused rather than dropped.
+- **Unlocks viewer (B4 / #52).** PAUSED with the system itself - there is
+  nothing to view while everything is unlocked. Cheap path when it
+  returns: a hub NPC that speaks `sQuickStartUnlockRules` as dialogue.
+- **Unlock benchmark values.** PAUSED. The thresholds were always
+  placeholder and were never tuned against real play (Decision 2), which
+  is part of why switching the system off costs so little today.
 
 ### 2.3 Quests
 
@@ -201,13 +220,16 @@ build:
   shape maps to exactly one piece id, so a run can in principle stall on
   one unlucky shape). Then set the curve so expected pieces cover ~60-70%
   of a region's gates per run. Kinstone specificity model is Decision 3.
-- **Sword upgrades in the pools.** Equipment has no ground-item form
-  (`CreateObject(GROUND_ITEM, ITEM_RED_SWORD)` creates nothing), so the
-  Green/Red/Blue/Four Sword need a scripted grant path: the skill-scroll
-  pickup pattern, or a pedestal NPC (ZELDA-kind + `AddInteractableObject`)
-  whose interaction runs GiveItem + a custom text. The pedestal doubles
-  as the delivery for any future charm/curse without a ground form -
-  build once, use twice.
+- **Sword upgrades in the pools - the level-2 sword is IN** (uncommon
+  weapons/tools, per the user, Aug 2026). Equipment has no ground-item
+  form, so it reaches the player through `QuickStartSpawnRewardEntity`'s
+  direct-grant path (GiveItem + message) instead of as something lying on
+  the floor; `QuickStartItemNeedsDirectGrant` is the one place to add the
+  Green/Blue/Four Sword when they are wanted too. Only the main item-drop
+  site is wired through that helper so far - the other reward spawn sites
+  still call `CreateObject(GROUND_ITEM, ...)` directly and would pay
+  nothing if they ever drew a no-floor-form item. Routing the rest through
+  the helper is the tidy-up.
 - **Last unused charm idea (F4).** Rare-reward-chance-up is the only
   item from the original wish list not implemented (boss-chance-up was
   deliberately rejected). Framework is ready; one bit, one read.
@@ -271,14 +293,20 @@ build:
 
 Open defects and unexplained reports, roughly by player impact.
 
-- **Item-drop ? rooms "never pay" (user report, unexplained).** The items
-  demonstrably spawn (26/26 sites in the corrected probe; the original
-  "empty rooms" finding was a probe bug reading the wrong entity offset).
-  Next step is live-play shaped: walk in through the real door, watch the
-  item's entity lifetime; plus one playtest asking whether a floor heart
-  piece simply doesn't read as a payout (the kind was called "chest"
-  forever and never was one). Cheap insurance regardless: give item-drop
-  sites the sparkle effect the hub's selection items use.
+- **Item-drop ? rooms "never pay" (user report, PARTLY EXPLAINED).** The
+  reward audit (Aug 2026) found and fixed the draw bug behind the related
+  "never seen a pastry" report: the pick index was `seed / 10` on a 6-bit
+  seed, so it only ever spanned 0..6 and no tier could reach past its
+  seventh usable entry. That made all 13 charms, and the late rare
+  entries, unreachable for every seed in every room. Now spread across the
+  whole list. Whether it also explains "never pay" is untested - the items
+  themselves demonstrably spawn AND grant (a 34-item sweep confirmed every
+  reward, charm included, spawns as a floor item and is collectable), so
+  what remains is the live-play question: walk in through the real door and
+  watch the item's entity lifetime, plus one playtest asking whether a
+  floor heart piece simply doesn't read as a payout. Cheap insurance
+  regardless: give item-drop sites the sparkle effect the hub's selection
+  items use.
 - **Boss death machinery is not family-scoped (#125).** Two bosses dying
   simultaneously softlocks. Latent today (one boss at a time), but it is
   the hard blocker for F6 multi-boss and a real crash risk if any future

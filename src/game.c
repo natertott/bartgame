@@ -3106,12 +3106,28 @@ static const QuickStartUnlockRule sQuickStartUnlockRules[QUICKSTART_UNLOCK_COUNT
     { 1, 1 },    // QUICKSTART_UNLOCK_KIND_FAIRY
 };
 
+// Master switch for the progression gate. Off (0) per the user, Aug 2026:
+// "turn off the unlocking system - all items/rooms/features should be
+// available random options at all levels."
+//
+// Everything the registry describes stays intact - the rules table, the
+// score and win counters it reads, the call sites that ask - so turning it
+// back on is this one line. That matters because the meta loop is still
+// the design's centre; what is being switched off is the gating, not the
+// idea, and the thresholds were never tuned against real play anyway
+// (Decision 2 in section 5 of the roadmap).
+#define QUICKSTART_UNLOCKS_ENABLED 0
+
 static bool32 QuickStartIsUnlocked(u32 unlockId) {
+#if QUICKSTART_UNLOCKS_ENABLED
     const QuickStartUnlockRule* rule = &sQuickStartUnlockRules[unlockId];
     if (rule->byWins) {
         return gSave.runs_completed >= rule->threshold;
     }
     return gSave.meta_xp >= rule->threshold;
+#else
+    return TRUE;
+#endif
 }
 
 // Which pool row the current room belongs to, or -1 if it isn't a pool
@@ -3847,6 +3863,13 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_BOTTLE1, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOTTLE_ROOM, 1 },
     { ITEM_GUST_JAR, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_FIRE_ROD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NO_PACCI, 0 },
+    // The level-2 sword, per the user. It has no ground-item form, so it
+    // reaches the player through QuickStartSpawnRewardEntity's direct-grant
+    // path rather than as something lying on the floor - which is exactly
+    // what lets it sit in the draw at all, having been excluded until now.
+    // It remains a miniboss payout too; not repeatable, so a run cannot
+    // stack two.
+    { ITEM_RED_SWORD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
     // --- SKILL UPGRADES --------------------------------------------------
@@ -3942,6 +3965,68 @@ static bool32 QuickStartHasBottleRoom(void) {
     return FALSE;
 }
 
+// Items that arrive by GiveItem rather than as something lying on the
+// floor. Equipment is the case: the Red Sword's ground form has been
+// traced as never creating an entity at all (equipment only ever arrives
+// through chests and scripts in vanilla), so a floor site that drew one
+// would pay nothing and read as an empty room - the exact shape of the
+// "? rooms never pay" complaint.
+//
+// Rather than exclude such items from the tables - which is what kept the
+// level-2 sword out of the draw until now - the reward spawner hands them
+// over directly. One helper, so any future no-floor-form item is one row
+// here rather than a special case at fourteen spawn sites.
+static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
+    switch (item) {
+        case ITEM_GREEN_SWORD:
+        case ITEM_RED_SWORD:
+        case ITEM_BLUE_SWORD:
+        case ITEM_FOURSWORD:
+            return TRUE;
+        default:
+            return FALSE;
+    }
+}
+
+// Put `item` in front of the player at a room-local spot: normally as a
+// ground item, but through GiveItem for the equipment that has no floor
+// form. Returns the entity when there is one, and NULL when the item was
+// granted outright - so a caller that only wants "did this pay out" should
+// test the bool32 sibling below instead.
+static Entity* QuickStartSpawnRewardEntity(u16 item, s16 localX, s16 localY) {
+    Entity* itemEntity;
+    if (QuickStartItemNeedsDirectGrant(item)) {
+        if (GetInventoryValue(item) == 0) {
+            GiveItem(item, 0);
+            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 13));
+            MsgInit();
+        }
+        return NULL;
+    }
+    itemEntity = CreateObject(GROUND_ITEM, item, 0);
+    if (itemEntity != NULL) {
+        itemEntity->x.HALF.HI = gRoomControls.origin_x + localX;
+        itemEntity->y.HALF.HI = gRoomControls.origin_y + localY;
+        itemEntity->collisionLayer = 1;
+        itemEntity->flags |= ENT_PERSIST;
+        UpdateSpriteForCollisionLayer(itemEntity);
+        // Set after UpdateSpriteForCollisionLayer, which otherwise
+        // overwrites it.
+        itemEntity->direction = IdleSouth;
+    }
+    return itemEntity;
+}
+
+// "Did this reward actually reach the player?" - TRUE for a ground item
+// that exists AND for a direct grant that has already happened.
+static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
+    if (QuickStartItemNeedsDirectGrant(item)) {
+        QuickStartSpawnRewardEntity(item, localX, localY);
+        return TRUE;
+    }
+    return QuickStartSpawnRewardEntity(item, localX, localY) != NULL;
+}
+
 static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
     if (!e->repeatable && GetInventoryValue(e->item) != 0) {
         return FALSE;
@@ -4014,6 +4099,23 @@ static u16 QuickStartTierPick(u8 catMask, u8 tier, s32 pick) {
 // Draw at a FORCED tier, stepping down if that tier is exhausted and finally
 // falling back to a heart piece - which is always usable, so a draw can never
 // come back empty and leave a "? room" with nothing in it.
+// Spread a 6-bit draw seed across a tier's WHOLE usable list.
+//
+// The raw `seed / QS_TIER_BUCKETS` this replaces could only ever produce
+// 0..6, and QuickStartTierPick reduces a pick by subtraction, so every
+// entry past the seventh usable one in a tier was unreachable for every
+// seed - the reason the thirteen charms had never once been seen. Within a
+// tier band the low digit barely varies while the quotient does, so
+// scaling the digit up and adding the quotient turns a band's 18 seeds
+// into 18 distinct picks. Still a pure function of the seed, which is what
+// keeps a prize stable across leaving and re-entering a room.
+static s32 QuickStartDrawPick(s32 seed) {
+    if (seed < 0) {
+        seed = -seed;
+    }
+    return (seed % QS_TIER_BUCKETS) * 7 + seed / QS_TIER_BUCKETS;
+}
+
 static u16 QuickStartDrawAtTier(s32 pick, u8 catMask, s32 tier) {
     s32 t;
     for (t = tier; t >= 0; t--) {
@@ -4057,9 +4159,28 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     } else {
         tier = QS_TIER_RARE;
     }
-    // The pick comes off the OTHER end of the seed, so which item is drawn is
-    // not locked to which tier was rolled.
-    return QuickStartDrawAtTier(seed / QS_TIER_BUCKETS, catMask, tier);
+    // The pick used to be plain `seed / QS_TIER_BUCKETS`, and that was a
+    // real bug, not a rounding detail: the seed is six bits, so seed/10
+    // only ever produces 0..6. QuickStartTierPick reduces the pick by
+    // subtraction while it is >= the usable count, so with more than about
+    // seven usable entries in a tier, everything after the seventh was
+    // UNREACHABLE - permanently, for every seed, in every room.
+    //
+    // The user reported never once receiving a pastry/status item. That is
+    // exactly this: the thirteen charms sit at the end of the uncommon
+    // list, so simulated over the real table they were reachable 0 times
+    // out of 13 both early (19 usable uncommon entries, 6 reachable) and
+    // mid-run (25 usable, still 6 reachable). Both the F10 tools and the
+    // late skill upgrades were losing the same way in the rare tier.
+    //
+    // The fix keeps the pick a pure function of the seed - prize stability
+    // across leaving and re-entering a room depends on that - but spreads
+    // it over the whole list instead of clustering at the front. Within a
+    // tier band the low digit is nearly constant while seed/10 varies, so
+    // multiplying the digit up and adding the quotient turns the 18 seeds
+    // of a band into 18 DISTINCT picks (measured: full coverage of every
+    // tier at every plausible count, and 11 of the 13 charm slots).
+    return QuickStartDrawAtTier(QuickStartDrawPick(seed), catMask, tier);
 }
 
 // Draws this region's clear reward and drops it at the reward spot, marking
@@ -8484,7 +8605,7 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
                 Entity* itemEntity =
                     CreateObject(GROUND_ITEM,
                                  CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
-                                     ? QuickStartDrawAtTier(((s32)Random() & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE)
+                                     ? QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
                                      : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
                                  0);
                 if (itemEntity != NULL) {
@@ -8776,7 +8897,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
             gSave.timer4 = 0;
             if (QuickStartScavSpot(region, &spotX, &spotY)) {
                 Entity* itemEntity = CreateObject(
-                    GROUND_ITEM, QuickStartDrawAtTier(((s32)Random() & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE),
+                    GROUND_ITEM, QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
                     0);
                 if (itemEntity != NULL) {
                     itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
@@ -9648,20 +9769,18 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // ordinary chest roll only ever fills bits 0-1, so the top bit is
             // free to say which pool to draw from - the same trick the miniboss
             // kind already uses for its elite and Red Sword bits.
-            u16 rewardItem = (extra & 0x80)
-                                 ? QuickStartDrawAtTier((extra & 0x3f) / QS_TIER_BUCKETS, QS_CAT_DROP, QS_TIER_RARE)
-                                 : QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                // Set after UpdateSpriteForCollisionLayer, which otherwise
-                // overwrites it (confirmed in the emulator: direction read
-                // back as 0xFF, not IdleSouth, when set beforehand).
-                itemEntity->direction = IdleSouth;
+            // The rare-site pick goes through the same spread the ordinary
+            // draw uses (see QuickStartDrawItem) - raw seed/10 could only
+            // ever reach the first seven usable entries of the tier.
+            u16 rewardItem =
+                (extra & 0x80)
+                    ? QuickStartDrawAtTier(QuickStartDrawPick(extra & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
+                    : QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
+            // Direct-grant items (the level-2 sword) pay out without ever
+            // being a floor entity, so "delivered" is the test, not "an
+            // entity exists" - otherwise the site would latch nothing and
+            // re-roll forever.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(flagBase + 0);
             }
         }
@@ -13667,7 +13786,7 @@ static void QuickStartRoofSpawnReward(void) {
         seed = QuickStartRoofGetSeed();
     }
     tier = ((seed & 3) == 0) ? QS_TIER_RARE : QS_TIER_UNCOMMON;
-    itemEntity = CreateObject(GROUND_ITEM, QuickStartDrawAtTier(seed / QS_TIER_BUCKETS, QS_CAT_REWARD, tier), 0);
+    itemEntity = CreateObject(GROUND_ITEM, QuickStartDrawAtTier(QuickStartDrawPick(seed), QS_CAT_REWARD, tier), 0);
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_ROOF_REWARD_X;
         itemEntity->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_ROOF_REWARD_Y;
