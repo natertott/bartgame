@@ -12133,11 +12133,31 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
 // which side so QuickStartFixupRiverBridgeReturn can send them out the
 // other one later, regardless of which of the pool room's 2 real doors
 // they actually leave through.
+// RETIRED, per the user: "we should be setting all entrances/exits/rooms
+// as vanilla rooms now... the two-way cave connection in North Hyrule
+// Field is still using the old pool of 1-door and 2-door ? rooms. We
+// should now retire that system ENTIRELY. Connections should now only be
+// their vanilla connections, or they should be blocked entrances."
+//
+// This was the two-sided river crossing: two synthetic trigger spots on
+// either bank of North Hyrule Field's river, both warping into whichever
+// room the 2-door pool had drawn that save, with a return fixup that sent
+// the player out the far side. It is off, so both spots are ordinary
+// ground - walking over them does nothing, which is the "blocked" case.
+//
+// The body is kept rather than deleted because the two bank positions are
+// hand-walked survey data (QUICKSTART_RIVER_SIDE_A/B_*), and if the river
+// ever gets a REAL crossing those coordinates are where it goes.
+#define QUICKSTART_POOL_CONNECTORS_ENABLED 0
+
 static void QuickStartProcessRiverBridgeLink(void) {
     s16 localX, localY;
     u8 targetArea, targetRoom;
     s16 entranceX, entranceY;
     bool32 fromB;
+#if !QUICKSTART_POOL_CONNECTORS_ENABLED
+    return;
+#endif
     if (gRoomTransition.transitioningOut) {
         return;
     }
@@ -12545,21 +12565,25 @@ static void QuickStartProcessDoorRedirects(void) {
     if (!gRoomTransition.transitioningOut) {
         return;
     }
-    // Castle Garden's northwest ladder. Its vanilla connection is the Great
-    // Fairy cellar, which opens onward into Hyrule Castle - a sprawl this
-    // run has no business in - so per the user's own call this ladder goes
-    // back to drawing a random single-door "? room" instead, the one place
-    // the old pool system is still used for its original purpose. The
-    // ladder fixture, its art and its transition stay exactly vanilla; only
-    // where it comes out is ours.
+    // Castle Garden's northwest ladder - BLOCKED, per the user: "for the
+    // one ladder in Hyrule Castle Garden that was not working (the one that
+    // led to the castle dungeon) we can go ahead and block that entrance
+    // for now."
+    //
+    // Its vanilla connection is the Great Fairy cellar, which opens onward
+    // into Hyrule Castle - a sprawl this run has no business in. This
+    // ladder used to answer that by drawing a random single-door "? room",
+    // and it was the last place the old pool system was still used for its
+    // original purpose. With the pools retired the choice is vanilla or
+    // blocked, and vanilla here means the castle, so: blocked.
+    //
+    // Cancelling transitioningOut is the same way containment refuses every
+    // other transition it does not want (see QuickStartCancelUncontained
+    // above) - the player simply stays put, exactly as if the ladder led
+    // nowhere.
     if (gRoomTransition.player_status.area_next == AREA_HYRULE_CASTLE_CELLAR &&
         gRoomTransition.player_status.room_next == ROOM_HYRULE_CASTLE_CELLAR_0) {
-        u8 targetArea, targetRoom;
-        QuickStartGetSlotTarget(0, &targetArea, &targetRoom);
-        gRoomTransition.player_status.area_next = targetArea;
-        gRoomTransition.player_status.room_next = targetRoom;
-        gRoomTransition.player_status.start_pos_x = 0x78;
-        gRoomTransition.player_status.start_pos_y = 0x78;
+        gRoomTransition.transitioningOut = 0;
         return;
     }
 }

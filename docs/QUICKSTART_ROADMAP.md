@@ -284,12 +284,29 @@ build:
 
 ### 2.8 World structure
 
-- **2-door pool door rewiring.** All 40 doors (20 rooms x 2) still
-  retarget to one destination and one landing spot, so B->A travel is
-  impossible and entry teleports to mid-room. Surveyed and planned in
-  `docs/QUICKSTART_2DOOR_MAP.md`; the remaining work is mechanical
-  retargeting plus a checker tier that walks both directions of every
-  pair. An afternoon of data entry that removes a player-visible wart.
+- ~~2-door pool door rewiring~~ **MOOT - the pool system is RETIRED**
+  (user's call, Aug 2026: "we should be setting all entrances/exits/rooms
+  as vanilla rooms now... retire that system ENTIRELY. Connections should
+  now only be their vanilla connections, or they should be blocked
+  entrances entirely"). Nothing draws a room from a pool any more, so
+  there are no synthetic door pairs left to rewire and
+  `docs/QUICKSTART_2DOOR_MAP.md` is history rather than a work plan.
+  What that turned off, and what replaced it:
+  - **North Hyrule Field's river crossing** (the two-way connector the
+    user named). Off. Its west bank is inert ground now; its east bank
+    turns out to have a REAL vanilla cave entrance behind it, which now
+    fires normally into `AREA_CAVES` - verified, the room renders and has
+    its ladder back.
+  - **Castle Garden's northwest ladder** - BLOCKED, per the user. It was
+    the last place the 1-door pool was still used for its original
+    purpose; its vanilla destination is the Great Fairy cellar, which
+    opens into Hyrule Castle, so blocking beat both alternatives.
+  - **The shop's connection stays** (user's explicit call), and so does
+    the hub hole. Neither is a ? room pool draw.
+  - The pool tables, the room lists and the bank-position survey data are
+    kept in-tree behind `QUICKSTART_POOL_CONNECTORS_ENABLED` rather than
+    deleted: the coordinates are hand-walked ground truth, and a real
+    river crossing would want exactly those two spots.
 - **Regions beyond the ring (E).** Castor Wilds / Royal Valley each mean:
   un-block a border, extend the ring-room test, survey, add fusers,
   re-run ring.py + the checker. The adjacency map and distance-2 element
