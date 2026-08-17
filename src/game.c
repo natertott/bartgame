@@ -2249,6 +2249,11 @@ const u8* const gCustomStrings[] = {
     [211] = (const u8*)"Fuse at a sealed door\nand it stays open the\nwhole run.",
     [212] = (const u8*)"Kinstones come off the\nfoes you kill. Fight for\nyour keys.",
     [213] = (const u8*)"Pots and grass pay too.\nBreak everything.",
+    // The wind crest signpost (script_QuickStartWindCrestSign). NOT a pool
+    // entry: this one has to be said every run, because it is the only
+    // place the game states out loud that a trip into the ring is not
+    // one-way.
+    [214] = (const u8*)"Play the Ocarina anywhere\nto ride the wind home to\nthis crest. Always.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -13894,103 +13899,116 @@ static void QuickStartClearHubRoom(void) {
 
 // --- The inn (Floor 2) ----------------------------------------------------
 //
-// Three bed alcoves at tiles (4,3) / (7,3) / (10,3) (QUICKSTART_HUB.md's
-// Floor 2 survey - each alcove is its own one-tile-wide recess in the north
-// wall, so standing in one is an unambiguous, deliberate act). Rest is a
-// two-step R interaction handled entirely in C - no script, no interaction
-// registration: the first R press in an alcove quotes that bed's price
-// (which arms it, room flags 9-11, per visit), the second R press takes the
-// rupees, heals, and plays a sleep fade. Walking out of the alcove disarms,
-// so an armed state always describes the bed the player is standing at,
-// and a stray R elsewhere can never charge anyone. The R button is free
-// here: nothing on this floor is liftable and R's other jobs all need a
-// target. Healing per the agreed spec: 50 rupees = 25% of max (min 1
-// heart), 200 = 50% (min 2 hearts), 500 = full. A heart is 4 units
-// (gSave.stats.maxHealth), and ModHealth clamps at max on its own. Beds
-// are repeatable - the inn is a rupee sink, not a once-latch. The two
-// chest props between the alcoves are the still-open half of the inn spec
-// (COMMON/UNCOMMON rewards) and are wired separately via the small-chest
-// table (see the chest research note in the roadmap).
-#define QUICKSTART_INN_ARMED_FLAG(i) (9 + (i))
+// An INNKEEPER now, not three beds you had to stand on. The first cut put
+// rest on a two-step R press inside each bed alcove, and the user's verdict
+// was that "walking up to the beds and 'talking' to them is not intuitive"
+// - which is fair, because nothing else in the game is operated that way
+// and nothing on screen said it could be.
+//
+// So this is vanilla's own inn, moved. Hyrule Town runs the Happy Hearth
+// Inn through Emma (npc 0x47, script_Emma): talk to her, one textbox offers
+// three rooms at three prices, and the choice comes back through a
+// JumpTable. All of that is reused verbatim - Emma, the TEXT_HAPPY_HEARTH
+// dialogue, the loop - and only the prices and what renting DOES are ours.
+// See script_QuickStartInnkeeper.inc for the split.
+//
+// Healing is unchanged from the agreed spec: 50 rupees = 25% of max (min 1
+// heart), 200 = 50% (min 2 hearts), 500 = full. A heart is 4 units of
+// gSave.stats.maxHealth and ModHealth clamps at max on its own. Beds stay
+// repeatable - the inn is a rupee sink, not a once-latch - which is why
+// every branch of the script loops back to the offer.
+//
+// The two chest props between the alcoves are still the open half of the
+// inn spec (COMMON/UNCOMMON rewards), waiting on the chest-control work.
+#define QUICKSTART_INNKEEPER_X 120
+#define QUICKSTART_INNKEEPER_Y 104
 
-static void QuickStartInnMonitor(void) {
-    static const u8 sBedTileX[3] = { 4, 7, 10 };
-    static const u16 sBedPrice[3] = { 50, 200, 500 };
-    s32 i, tx, ty, heal;
+extern Script script_QuickStartInnkeeper;
+
+// The three rest branches, called from the script once the rupees are
+// taken. Split into three entry points rather than one taking an argument
+// because a script Call passes no arguments - the same reason the hunt
+// quest has three of its own.
+static void QuickStartInnRest(s32 heal) {
+    ModHealth(heal);
+    // The sleep read: the same proven fade the win/reset path uses.
+    SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 8);
+    SoundReq(SFX_SECRET);
+}
+
+void QuickStartInnRestSmall(Entity* entity, ScriptExecutionContext* context) {
+    s32 heal = (s32)gSave.stats.maxHealth / 4;
+    if (heal < 4) {
+        heal = 4;
+    }
+    QuickStartInnRest(heal);
+}
+
+void QuickStartInnRestRegular(Entity* entity, ScriptExecutionContext* context) {
+    s32 heal = (s32)gSave.stats.maxHealth / 2;
+    if (heal < 8) {
+        heal = 8;
+    }
+    QuickStartInnRest(heal);
+}
+
+void QuickStartInnRestLarge(Entity* entity, ScriptExecutionContext* context) {
+    QuickStartInnRest(gSave.stats.maxHealth);
+}
+
+// The keeper is a ZELDA-kind NPC, not the EMMA sprite, and that is a
+// measured retreat rather than a preference. Emma was tried first and never
+// answered: her own update (emma.c) is
+//
+//     if (action == 0) { action++; SetEntityPriority(...); InitScriptForNPC(this); }
+//     else               ExecuteScriptAndHandleAnimation(this, NULL);
+//
+// which re-initialises her script from the room data she was placed by -
+// and an NPC built with CreateNPC was placed by none, so the script
+// StartCutscene had just attached went with it. Forcing her past that
+// branch did not help either. ZELDA is the kind this mode has proven works
+// with StartCutscene (see the note above QuickStartMakeNpcTalkable, and
+// every other NPC here), and what the user asked to reuse is the INN, not
+// the innkeeper's face - the Happy Hearth dialogue, its three-way choice
+// and its prices all come across regardless of who is standing there.
+// Giving her Emma's sprite is a follow-up for whoever works out what else
+// her action-0 branch wants.
+//
+// Idempotent by position, the same way every other permanent hub fixture
+// is (the hint wanderers, the trophy case): hub rooms are re-entered
+// constantly and a keeper already standing on her own tile is all the
+// evidence needed that she does not want spawning again.
+static void QuickStartSpawnInnkeeperOnce(void) {
+    s32 i;
+    Entity* npc;
     if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_FLOOR_2) {
         return;
     }
     if (!QuickStartRoomSettled()) {
         return;
     }
-    tx = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
-    ty = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-    for (i = 0; i < 3; i++) {
-        if (tx == sBedTileX[i] && (ty == 3 || ty == 4)) {
-            break;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == gRoomControls.origin_x + QUICKSTART_INNKEEPER_X &&
+            ent->y.HALF.HI == gRoomControls.origin_y + QUICKSTART_INNKEEPER_Y) {
+            return;
         }
     }
-    if (i == 3) {
-        // Not at any bed: disarm whatever was armed.
-        for (i = 0; i < 3; i++) {
-            if (QsCheckRoomFlag(QUICKSTART_INN_ARMED_FLAG(i))) {
-                QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
-            }
-        }
+    if (!QuickStartGfxBudgetForSpawn()) {
         return;
     }
-    // Never process R while any textbox is up (the offer itself included) -
-    // a plain message box doesn't necessarily move the player off
-    // PLAYER_NORMAL, so the action check alone is not enough.
-    if (gMessage.state & MESSAGE_ACTIVE) {
+    npc = CreateNPC(ZELDA, 0, 0);
+    if (npc == NULL) {
         return;
     }
-    if (gPlayerEntity.base.action != PLAYER_NORMAL) {
-        return;
-    }
-    if (!(gInput.newKeys & R_BUTTON)) {
-        return;
-    }
-    if (!QsCheckRoomFlag(QUICKSTART_INN_ARMED_FLAG(i))) {
-        s32 j;
-        for (j = 0; j < 3; j++) {
-            QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(j));
-        }
-        QsSetRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
-        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (46 + i)));
-        MsgInit();
-        return;
-    }
-    if (gSave.stats.rupees < sBedPrice[i]) {
-        MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 49));
-        MsgInit();
-        return;
-    }
-    ModRupees(-(s32)sBedPrice[i]);
-    if (i == 0) {
-        heal = (s32)gSave.stats.maxHealth / 4;
-        if (heal < 4) {
-            heal = 4;
-        }
-    } else if (i == 1) {
-        heal = (s32)gSave.stats.maxHealth / 2;
-        if (heal < 8) {
-            heal = 8;
-        }
-    } else {
-        heal = gSave.stats.maxHealth;
-    }
-    ModHealth(heal);
-    // Disarm so the next R quotes the price again rather than instantly
-    // charging for a second night.
-    QsClearRoomFlag(QUICKSTART_INN_ARMED_FLAG(i));
-    // The sleep read: the same proven fade the win/reset path uses, behind
-    // the wake-up line's textbox.
-    SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 8);
-    SoundReq(SFX_SECRET);
-    MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 50));
-    MsgInit();
+    npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_INNKEEPER_X;
+    npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_INNKEEPER_Y;
+    npc->collisionLayer = 1;
+    UpdateSpriteForCollisionLayer(npc);
+    npc->direction = IdleSouth;
+    QuickStartMakeNpcTalkable(npc, &script_QuickStartInnkeeper);
 }
+
 
 // --- The hub's hint sprites ----------------------------------------------
 //
@@ -14014,6 +14032,7 @@ static void QuickStartInnMonitor(void) {
 //             (488,424) and the pit just south of it. The two hints sit level
 //             with the crest at x=392 and x=536, well clear of both, so the
 //             player passes between them on the way down to the pit.
+extern Script script_QuickStartWindCrestSign;
 extern Script script_QuickStartHubHint0;
 extern Script script_QuickStartHubHint1;
 extern Script script_QuickStartHubHint2;
@@ -14076,6 +14095,14 @@ static const QuickStartHubHint sQuickStartHubHints[] = {
     { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_2, 152, 264, &script_QuickStartHubHint3 },
     { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 392, 408, &script_QuickStartHubHint4 },
     { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 536, 408, &script_QuickStartHubHint5 },
+    // The wind crest signpost, one tile south of the crest itself at
+    // (488,424) - so it stands on the path anyone walking up to warp home
+    // already takes. Measured: tile (30,27) is open with 3x3 clearance and
+    // is not either wanderer's tile. It rides this table for the spawner
+    // and the sweep-immunity that come with it, but its script names its
+    // own string rather than drawing from the hint pool, so it says the
+    // same thing every run. QuickStartHubHintPick is never called for it.
+    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 488, 440, &script_QuickStartWindCrestSign },
 };
 
 // Idempotent by position rather than by flag, the same way
@@ -14694,7 +14721,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartResetOtherWaveRemainders();
     QuickStartClearHubRoom();
     QuickStartSparkleRewards();
-    QuickStartInnMonitor();
+    QuickStartSpawnInnkeeperOnce();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();

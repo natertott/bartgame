@@ -111,3 +111,23 @@ script_QuickStartHubHint5_loop:
 	EnablePlayerControl
 	Jump script_QuickStartHubHint5_loop
 SCRIPT_END
+
+@ The wind crest signpost, on the Cloud Tops beside the crest itself
+@ (488,424). Not part of the pool: this one line has to be there EVERY run,
+@ because it is the only place the game says out loud that the ocarina
+@ brings you home - a player who never works that out treats every trip
+@ into the ring as one-way. So it names its string outright rather than
+@ asking QuickStartHubHintPick for one.
+SCRIPT_START script_QuickStartWindCrestSign
+script_QuickStartWindCrestSign_loop:
+	CheckEntityInteractType
+	JumpIfNot script_QuickStartWindCrestSign_loop
+	SetPlayerIdle
+	Call DisablePauseMenuAndPutAwayItems
+	FacePlayer
+	MessageNoOverlap TEXT_CUSTOM, 214
+	WaitUntilTextboxCloses
+	Call EnablePauseMenu
+	EnablePlayerControl
+	Jump script_QuickStartWindCrestSign_loop
+SCRIPT_END

@@ -465,14 +465,58 @@ build:
 
 ### 2.7 The hub
 
-- **The inn's two chests (Floor 2).** The REST half shipped (Aug 2026):
-  three beds at 50/200/500 rupees healing 25%/50%/100% (min 1 heart / 2
-  hearts / full), a two-step R interaction that quotes the price first.
-  What remains is the chest half of the spec - the two chest props
-  between the alcoves holding a COMMON and an UNCOMMON reward - which
-  now rides the answered chest research above (inject two `gSmallChests`
-  rows + spawn two SPECIAL_CHESTs, the chest lottery's own proven
-  recipe).
+- **The inn (Floor 2).** Rest is an INNKEEPER now, not three beds you had
+  to stand on (the user, Aug 2026: "walking up to the beds and 'talking'
+  to them is not intuitive"). It is vanilla's own inn, moved: Hyrule
+  Town's Happy Hearth is run by Emma through `script_Emma`, one textbox
+  offering three rooms at three prices with the choice returning through
+  a JumpTable - all of which is reused, along with the TEXT_HAPPY_HEARTH
+  dialogue. Ours are the prices (50/200/500, pushed in with
+  SetMessageValue so the numbers shown are the ones charged) and what
+  renting does: vanilla's branches walk the player off to a rented
+  bedroom, ours heal 25%/50%/100% on the spot and play the sleep fade.
+  The old alcove R-press is deleted.
+  - **The keeper is a ZELDA-kind NPC, not the Emma sprite**, and that is
+    a measured retreat. Emma was tried first and never answered: her own
+    update calls `InitScriptForNPC` on action 0, which re-points her at
+    the script her ROOM DATA names - and an NPC built with CreateNPC was
+    placed by no room data, so the script `StartCutscene` had just
+    attached went with it. Forcing her past that branch did not help.
+    What the user asked to reuse is the inn, not the innkeeper's face.
+    Giving her Emma's sprite is a follow-up for whoever works out what
+    else her action-0 branch wants.
+  - `MessageNoOverlap`, not vanilla's `MessageFromTarget`: the latter
+    wants message-target state a room-data NPC has.
+  - **Verified:** the keeper stands at Floor 2 local (120,104) and
+    talking to her opens TEXT_HAPPY_HEARTH message 0x01 (textIndex
+    0x4501) - the Happy Hearth greeting, rendered. **NOT verified:** the
+    three-way choice, the charge and the heal, because no probe in this
+    harness can advance a textbox - a control test on the known-good
+    wind-crest signpost showed its box sitting in state 0x04 through
+    eight A taps exactly like the innkeeper's. Every earlier NPC probe in
+    this project only ever proved a box OPENS. The branch structure is
+    copied from vanilla's working script and the three rest functions are
+    linked (an undefined Call target would fail the link), but the rent
+    path wants a playtest before it is trusted with the player's rupees.
+    If it misbehaves, the user's own fallback - three sprites at the ends
+    of the beds - is a smaller change than this one was.
+  - Still open: the chest half of the spec - the two chest props between
+    the alcoves holding a COMMON and an UNCOMMON reward - which rides the
+    answered chest research above.
+- ~~A permanent ocarina reminder outside the tower~~ **SHIPPED** (the
+  user, Aug 2026). A seventh wanderer stands on the Cloud Tops at
+  (488,440), one tile south of the wind crest itself at (488,424), so it
+  is on the path anyone walking up to warp home already takes. It rides
+  the hint table for the spawner and sweep-immunity that come with it,
+  but its script names its own string rather than drawing from the pool -
+  this line has to be said EVERY run, because it is the only place the
+  game states out loud that a trip into the ring is not one-way.
+  Verified: it stands there and speaks string 214 (textIndex 0xfed6).
+  A probe note worth keeping: `AREA_CLOUD_TOPS` is 8, and a warp that
+  misses lands in area 7 without complaining. Two earlier passes of this
+  survey read `here() == (7,0)`, carried on regardless, and produced both
+  a collision map of the wrong room and a confident "the signpost did not
+  spawn". Assert the room before trusting anything measured in it.
 - ~~Hint pool drawn per run (F5)~~ **SHIPPED.** Eighteen hints, six
   wanderers, dealt fresh each run: strings 20-25 (the original six) plus
   twelve new ones written against what the mode does NOW - the trophy
