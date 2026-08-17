@@ -572,9 +572,42 @@ build:
   re-run ring.py + the checker. The adjacency map and distance-2 element
   rule absorb new regions as one enum row plus edges. Routine now - a
   breadth call, not an engineering risk.
-- **The Minish layer as a parallel network (#102).** Blocked behind #103
-  (transform rendering + the NHF vine, in Bugs below). After that, Minish
-  rooms are ordinary content sites.
+- **The Minish layer as a parallel network (#102) - the SURVEY IS DONE and
+  its findings are wired** (the user, Aug 2026: sweep every Minish hole,
+  room and treehouse in the ring and add the unwired ones as ? rooms).
+  `minish_sweep.py` walks every exit the eleven ring rooms have, filters
+  to the Minish-layer areas and cross-references
+  `sQuickStartRoomContentSites`. Result: 26 Minish-layer exits, and only
+  six destinations with nothing in them.
+  - **Five are now content sites**: North Hyrule Field's four Boomerang
+    tree hollows (each behind its own kinstone fusion, each with a ladder
+    down to a Boomerang chamber quadrant that was ALREADY a site) and its
+    fairy-fountain tree. All five are 240x160 hollows with 27-37
+    reachable tiles and not one tile of full 3x3 clearance, so they are
+    KINDS_SMALL and their spots ask only for a plus-shape. Checker-
+    verified, all five: "landed, spots OK, 1 chest spawn verified".
+  - **The Boomerang trees were the risk, and it is checked, not assumed.**
+    Their ladders are what reach a chamber this mode already fills, so a
+    site that swept their contents would strand four existing sites plus
+    a RARE drop. `QuickStartClearVanillaRoomContent` deletes enemies,
+    NPCs and a six-object whitelist; the only object standing in these
+    rooms is an ARCHWAY (id 79), which is not on it.
+  - **The fairy-fountain tree DOES cost something**, and the trade is
+    deliberate: FAIRY and GREAT_FAIRY *are* on that whitelist, so wiring
+    it deletes the vanilla Great Fairy and replaces a fixed free heal
+    with a drawn event (the mode's own FAIRY kind can still roll there).
+    Revisit if free heals turn out to matter more than variety.
+  - **The sixth is `AREA_MINISH_WOODS`, deliberately left out.** It is
+    not a room but a whole area behind a BORDER exit from Eastern Hills
+    South and North - opening it is the "regions beyond the ring"
+    decision below, with everything that entails (survey, fusers,
+    ring.py, the checker), not a room wiring. It is the natural next
+    region if the ring grows.
+  - What remains of #102 is the part still blocked behind #103: the
+    holes and entrances the user is collecting that do not fire at all.
+    Those are not missing SITES - they are missing transitions, and the
+    sweep above cannot see them because a door that never fires has no
+    exit row to find.
 - **Difficulty option research (#51).** An options-menu entry writing a
   save field is small; the real question is design: does difficulty still
   auto-escalate on wins if the player can also set it? (Decision 5.)

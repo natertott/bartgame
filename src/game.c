@@ -1641,7 +1641,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 44
+#define QUICKSTART_CONTENT_SITE_COUNT 49
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -11348,6 +11348,43 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // corridor "deep" is three tiles, and the entrance's own run is the
     // only segment guaranteed reachable the moment the player walks in.
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 184, 104 },
+    // --- The Minish-layer rooms the ring never wired up ------------------
+    //
+    // A sweep of every exit the seven ring regions have, filtered to the
+    // Minish areas and cross-referenced against this table, found six
+    // destinations with no content in them (minish_sweep.py). Five are
+    // here; the sixth is AREA_MINISH_WOODS, which is not a room but a
+    // whole area behind a BORDER exit - opening it is a region decision,
+    // not a room wiring, so it stays out (see the roadmap).
+    //
+    // All five are the same shape: 240x160 tree hollows with 27-37
+    // reachable tiles and NOT ONE tile of full 3x3 clearance, so they are
+    // KINDS_SMALL like the dig cave. The spots below ask only for a
+    // plus-shape - the tile and its four orthogonal neighbours, which is
+    // what a ground item or a pot actually needs - and sit at least two
+    // tiles from both the arrival at (0x78,0x78) and the room's own
+    // ladder at (0x78,0x54), so nothing lands under the player's feet or
+    // on the way out.
+    //
+    // The four Boomerang trees are NHF's four middle stumps, each behind
+    // its own kinstone fusion, and their ladders lead down to the
+    // Boomerang chamber's four quadrants - which are already four content
+    // sites of their own. Putting events in the trees does not disturb
+    // that: QuickStartClearVanillaRoomContent deletes enemies, NPCs and a
+    // six-object whitelist, and the only object standing in these rooms
+    // is an ARCHWAY (id 79), which is not on it. The chamber's torch
+    // puzzle is likewise untouched.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, QUICKSTART_KINDS_SMALL, 88, 56 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, QUICKSTART_KINDS_SMALL, 88, 56 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, QUICKSTART_KINDS_SMALL, 88, 56 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, QUICKSTART_KINDS_SMALL, 88, 56 },
+    // The fairy-fountain tree. Note what wiring this one COSTS: the sweep
+    // whitelist does include FAIRY and GREAT_FAIRY, so the vanilla Great
+    // Fairy standing here is deleted and replaced by a drawn event. That
+    // trades a fixed free heal for a randomized one - the mode already
+    // has a FAIRY event kind that can roll here - but it is a real change
+    // to what the room gives, unlike the four above.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 72, 88 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
