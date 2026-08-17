@@ -473,11 +473,30 @@ build:
   now rides the answered chest research above (inject two `gSmallChests`
   rows + spawn two SPECIAL_CHESTs, the chest lottery's own proven
   recipe).
-- **Hint pool drawn per run (F5).** Six fixed hint spots today; wanted: a
-  pool much larger than the spot count, drawn per run without
-  replacement, so every run teaches something. Content should lean on
-  what tests keep proving players miss: quest rules, the kinstone
-  economy, charm gambles, the distance-2 element rule.
+- ~~Hint pool drawn per run (F5)~~ **SHIPPED.** Eighteen hints, six
+  wanderers, dealt fresh each run: strings 20-25 (the original six) plus
+  twelve new ones written against what the mode does NOW - the trophy
+  case, Tingle, the dig caves, the switch-puzzle clock, one-attempt
+  quests, charms-vs-curses - none of which existed when the first six
+  were authored.
+  - **Without replacement, without a shuffle or any storage.** Walking
+    the pool with a fixed stride from a per-run base visits distinct
+    entries as long as stride and pool size are coprime; 18 and 5 are, so
+    six spots always draw six different hints. A compile-time check
+    enforces that for whoever grows the pool - at 20 hints the stride
+    would start repeating and the build stops instead.
+  - The base comes from `gSave.run_seed`, not a rolled flag: already
+    per-run, already saved, already what every other per-run draw derives
+    from. A3's seed pin therefore reproduces the hint deal too.
+  - The six scripts no longer name a string. They `Call
+    QuickStartHubHintPick` (which works out which spot it is speaking for
+    from the NPC's own position and sets `intVariable`) then
+    `MessageNoOverlapVar` - the same pair vanilla uses for its own
+    table-driven dialogue, and the reason the pool can live in game.c
+    next to the spot table instead of being baked into six .inc files.
+  - Verified end to end: seed 0x22 predicts string 212 for spot 0, and
+    talking to that wanderer in the tower entrance resolves textIndex
+    0xfed4 - TEXT_CUSTOM 212 - and renders it.
 
 ### 2.8 World structure
 

@@ -2227,6 +2227,28 @@ const u8* const gCustomStrings[] = {
     [200] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
     // Tingle's payout (QuickStartTinglePayout).
     [201] = (const u8*)"Tingle, Tingle! A Heart\nContainer for a fine\nfusion!",
+    // ================== The hub hint pool (F5) ==========================
+    //
+    // The other twelve. Strings 20-25 above are the original six and stay
+    // where they are; together the eighteen are sQuickStartHintPool, from
+    // which each run deals six without replacement. Written against what
+    // the mode actually does now rather than what it did when the first
+    // six were authored - the trophy case, Tingle, the dig caves and the
+    // switch-puzzle clock did not exist then, and a hint that teaches a
+    // rule the player cannot otherwise learn is worth more than one that
+    // restates the obvious.
+    [202] = (const u8*)"The case upstairs lists\nall you have ever found.\nGo and look!",
+    [203] = (const u8*)"Tingle trades a fusion\nfor a Heart Container.\nFind him in the fields!",
+    [204] = (const u8*)"Quests give ONE attempt\na run. Fail and the\ngiver is done with you.",
+    [205] = (const u8*)"Strike the switch, then\nRUN. The cage shuts fast\n- faster as you win.",
+    [206] = (const u8*)"Some food blesses. Some\nfood BITES. You cannot\ntell by looking.",
+    [207] = (const u8*)"A charm lasts the whole\nrun. So does a curse.",
+    [208] = (const u8*)"Beds upstairs cost more\nand heal more. Rupees\nare worth carrying.",
+    [209] = (const u8*)"The compass names the\narea. It will not name\nthe spot.",
+    [210] = (const u8*)"Mole Mitts open the dug\ncaves. Something waits\nin every one.",
+    [211] = (const u8*)"Fuse at a sealed door\nand it stays open the\nwhole run.",
+    [212] = (const u8*)"Kinstones come off the\nfoes you kill. Fight for\nyour keys.",
+    [213] = (const u8*)"Pots and grass pay too.\nBreak everything.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -14007,6 +14029,46 @@ typedef struct {
     Script* script;
 } QuickStartHubHint;
 
+// ==================== F5: the hint pool ================================
+//
+// Six hint spots, eighteen things worth saying. The spots are fixed - they
+// are wanderers standing in the hub's three quiet rooms - but WHICH hint
+// each one speaks is dealt per run, so a player who has seen the hub ten
+// times has been told ten different sets of six rather than the same six
+// ten times ("a pool much larger than the spot count, drawn per run
+// without replacement, so every run teaches something").
+//
+// WITHOUT REPLACEMENT, without a shuffle or any storage. Walking the pool
+// with a fixed stride from a per-run base visits distinct entries for as
+// long as the stride and the pool size share no factor: 18 and 5 are
+// coprime, so the six spots always draw six different hints. A real
+// Fisher-Yates would need somewhere to keep the permutation; this needs
+// nothing but arithmetic.
+//
+// The base comes from gSave.run_seed rather than a rolled flag, for the
+// same reason: the seed is already per-run, already saved, and already
+// the thing every other per-run draw ultimately derives from - so the
+// deal is stable for the whole run and different in the next one with no
+// new bits claimed anywhere. (A3's seed pin therefore reproduces the hint
+// deal too, which is what a pinned run should do.)
+static const u8 sQuickStartHintPool[] = {
+    20,  21,  22,  23,  24,  25, // the original six
+    202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
+};
+
+#define QUICKSTART_HINT_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartHintPool))
+#define QUICKSTART_HINT_STRIDE 5
+// The stride only deals distinct hints while it stays coprime with the
+// pool, and the pool is the thing people will grow. The stride is prime,
+// so "coprime" reduces to "the pool is not a multiple of it": 18 is fine,
+// 20 would not be, and the build stops there rather than quietly dealing
+// one hint to two wanderers. The second half is the obvious one - there
+// have to be at least as many hints as spots to deal from.
+typedef char QuickStartHintPoolDealsDistinct[((QUICKSTART_HINT_POOL_SIZE % QUICKSTART_HINT_STRIDE) != 0 &&
+                                              QUICKSTART_HINT_POOL_SIZE >= 6)
+                                                 ? 1
+                                                 : -1];
+
 static const QuickStartHubHint sQuickStartHubHints[] = {
     { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 88, 264, &script_QuickStartHubHint0 },
     { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 152, 264, &script_QuickStartHubHint1 },
@@ -14083,6 +14145,48 @@ static void QuickStartSpawnTrophyCaseOnce(void) {
     box->collisionLayer = 1;
     box->flags |= ENT_PERSIST;
     UpdateSpriteForCollisionLayer(box);
+}
+
+// Which hint spot this wanderer is standing on, or -1. Identified by
+// position for the same reason the spawner recognizes them that way: the
+// entity list is rebuilt constantly, and a coordinate match is the one
+// piece of identity that survives it.
+static s32 QuickStartHubHintSlot(Entity* npc) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubHints); i++) {
+        const QuickStartHubHint* hint = &sQuickStartHubHints[i];
+        if (gRoomControls.area == hint->area && gRoomControls.room == hint->room &&
+            npc->x.HALF.HI == gRoomControls.origin_x + hint->x && npc->y.HALF.HI == gRoomControls.origin_y + hint->y) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// The script hook. Each wanderer's script now reads
+//
+//     Call QuickStartHubHintPick
+//     MessageNoOverlapVar
+//
+// instead of naming a string outright, so the six lines are chosen here
+// rather than baked into six .inc files that cannot see this table.
+// ScriptCommand_Call hands the callee the context, and MessageNoOverlapVar
+// shows whatever intVariable holds - the same pair vanilla uses for its
+// own table-driven dialogue.
+void QuickStartHubHintPick(Entity* entity, ScriptExecutionContext* context) {
+    s32 slot = QuickStartHubHintSlot(entity);
+    s32 base, index;
+    if (slot < 0) {
+        // Not one of ours (or caught mid-transition, when the origin has
+        // moved and no spot matches). Say the first hint rather than
+        // nothing: a silent NPC reads as broken, a slightly wrong hint
+        // does not.
+        context->intVariable = TEXT_INDEX(TEXT_CUSTOM, sQuickStartHintPool[0]);
+        return;
+    }
+    base = (s32)(gSave.run_seed & 0x7fff) % QUICKSTART_HINT_POOL_SIZE;
+    index = (base + slot * QUICKSTART_HINT_STRIDE) % QUICKSTART_HINT_POOL_SIZE;
+    context->intVariable = TEXT_INDEX(TEXT_CUSTOM, sQuickStartHintPool[index]);
 }
 
 static void QuickStartSpawnHubHintsOnce(void) {
