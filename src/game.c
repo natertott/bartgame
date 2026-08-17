@@ -3835,12 +3835,19 @@ typedef struct {
 // The tier table. Ordering is irrelevant - unlike the flat pools it replaces,
 // nothing indexes this positionally, so rows can be added or moved freely.
 //
+// Ordering is irrelevant to CORRECTNESS but not to reach: see
+// QuickStartDrawPick for why a tier's later entries used to be unreachable
+// and how the pick now spreads over the whole list.
+//
 // Deliberately absent:
-//   ITEM_RED_SWORD    - CreateObject(GROUND_ITEM, ITEM_RED_SWORD) never makes
-//                       an entity (equipment has no ground-item form in
-//                       vanilla), so it stays a GiveItem-only miniboss payout.
-//   ITEM_LIGHT_ARROW  - same risk, unverified as a floor item.
+//   ITEM_LIGHT_ARROW  - unverified; it can join the direct-grant list
+//                       (QuickStartItemNeedsDirectGrant) and come straight
+//                       in whenever someone wants it.
 //   two loose fairies - that is the FAIRY room kind, not an item.
+//
+// ITEM_RED_SWORD used to be listed here as impossible, on a claim that has
+// since been disproved (see QuickStartItemNeedsDirectGrant). It is now an
+// ordinary uncommon row, delivered by grant rather than by drop.
 static const QuickStartTierEntry sQuickStartTiers[] = {
     // --- REWARDS ---------------------------------------------------------
     { ITEM_RUPEE50, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_NONE, 1 },
@@ -3966,16 +3973,27 @@ static bool32 QuickStartHasBottleRoom(void) {
 }
 
 // Items that arrive by GiveItem rather than as something lying on the
-// floor. Equipment is the case: the Red Sword's ground form has been
-// traced as never creating an entity at all (equipment only ever arrives
-// through chests and scripts in vanilla), so a floor site that drew one
-// would pay nothing and read as an empty room - the exact shape of the
-// "? rooms never pay" complaint.
+// floor.
 //
-// Rather than exclude such items from the tables - which is what kept the
-// level-2 sword out of the draw until now - the reward spawner hands them
-// over directly. One helper, so any future no-floor-form item is one row
-// here rather than a special case at fourteen spawn sites.
+// A correction to the record, because this file asserted the opposite for
+// a long time: the tier table used to exclude ITEM_RED_SWORD on the
+// grounds that CreateObject(GROUND_ITEM, ITEM_RED_SWORD) "never creates an
+// entity at all". A clean-room probe (empty the room of ground items,
+// verify zero, spawn one, count again, with a heart piece run identically
+// as control) shows it DOES create one, and a screenshot shows the sword
+// sprite on the floor. So the impossibility claim was wrong.
+//
+// The swords stay on the direct-grant path anyway, for two better reasons
+// than impossibility. It is what this file ALREADY does for the Red Sword
+// on the miniboss payout (GiveItem + a message), so both routes now feel
+// the same; and GiveItem is the unambiguous way to make an equipment
+// UPGRADE actually apply, which a floor pickup only does by going through
+// the same call in the end.
+//
+// The helper exists regardless of which items are on this list: it
+// replaced ten copies of the same eight-line drop block, so a reward
+// spawner is now one call that cannot forget ENT_PERSIST or the
+// direction fixup.
 static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
     switch (item) {
         case ITEM_GREEN_SWORD:
@@ -4189,7 +4207,6 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
 // QuickStartSpawnRegionRewardOnce below.
 static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 slot) {
     u16 chosenItem;
-    Entity* itemEntity;
     // The region reward is the one draw that includes KEY items, because it
     // is where the Cane of Pacci, the Ocarina and the two key items the
     // opening selection did not offer have always come from. Rolled fresh
@@ -4197,13 +4214,11 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
     // re-derived, so it has nothing to stay consistent with.
     //
     chosenItem = QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_ALL);
-    itemEntity = CreateObject(GROUND_ITEM, chosenItem, 0);
-    if (itemEntity != NULL) {
-        itemEntity->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
-        itemEntity->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
-        itemEntity->collisionLayer = 1;
-        itemEntity->flags |= ENT_PERSIST;
-        UpdateSpriteForCollisionLayer(itemEntity);
+    // "Delivered", not "an entity exists". A direct-grant item (the
+    // level-2 sword) is handed straight over, and without this the region
+    // would draw one, place nothing, and never mark its reward earned -
+    // the clear would silently pay out nothing at all.
+    if (QuickStartRewardDelivered(chosenItem, region->rewardX, region->rewardY)) {
         QuickStartSetRegionRewardState(slot, 1);
         QsSetRoomFlag(1);
     }
@@ -8164,14 +8179,10 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
             // room's payoff has the same variety instead of a single fixed
             // item).
             u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
+            // Direct-grant items (the level-2 sword) never become a floor
+            // entity, so the test is "was it delivered", not "does an
+            // entity exist" - see QuickStartSpawnRewardEntity.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(flagBase + 2);
                 QuickStartGauntletForget();
                 // Kit back before the reward is picked up, so a stripped-kit
@@ -8602,20 +8613,11 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartHuntSetState(QUICKSTART_HUNT_WON);
             gSave.timer4 = 0;
             if (QuickStartHuntSpot(region, &spotX, &spotY)) {
-                Entity* itemEntity =
-                    CreateObject(GROUND_ITEM,
-                                 CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
-                                     ? QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
-                                     : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
-                                 0);
-                if (itemEntity != NULL) {
-                    itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
-                    itemEntity->y.HALF.HI = gRoomControls.origin_y + spotY;
-                    itemEntity->collisionLayer = 1;
-                    itemEntity->flags |= ENT_PERSIST;
-                    UpdateSpriteForCollisionLayer(itemEntity);
-                    itemEntity->direction = IdleSouth;
-                }
+                QuickStartSpawnRewardEntity(
+                    CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
+                        ? QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
+                        : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
+                    spotX, spotY);
             }
             MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 17));
             MsgInit();
@@ -8896,17 +8898,9 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartScavSetState(QUICKSTART_SCAV_WON);
             gSave.timer4 = 0;
             if (QuickStartScavSpot(region, &spotX, &spotY)) {
-                Entity* itemEntity = CreateObject(
-                    GROUND_ITEM, QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
-                    0);
-                if (itemEntity != NULL) {
-                    itemEntity->x.HALF.HI = gRoomControls.origin_x + spotX;
-                    itemEntity->y.HALF.HI = gRoomControls.origin_y + spotY;
-                    itemEntity->collisionLayer = 1;
-                    itemEntity->flags |= ENT_PERSIST;
-                    UpdateSpriteForCollisionLayer(itemEntity);
-                    itemEntity->direction = IdleSouth;
-                }
+                QuickStartSpawnRewardEntity(
+                    QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
+                    spotX, spotY);
             }
             MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 28));
             MsgInit();
@@ -9842,16 +9836,18 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             // stacking a second prize on top.
             if (!QuickStartGroundItemAt(contentX, contentY)) {
                 u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-                Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-                if (itemEntity == NULL) {
+                // A direct-grant prize (the level-2 sword) is handed over
+                // rather than caged, so the cage below has nothing to hold
+                // and the puzzle is already paid. Bail before dealing it.
+                if (QuickStartItemNeedsDirectGrant(rewardItem)) {
+                    QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
+                    QsSetRoomFlag(flagBase + 0);
+                    QsSetRoomFlag(flagBase + 3);
+                    return TRUE;
+                }
+                if (QuickStartSpawnRewardEntity(rewardItem, contentX, contentY) == NULL) {
                     return FALSE;
                 }
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
             }
             decoy = ((s32)Random() & 1) != 0;
             if (decoy) {
@@ -9954,15 +9950,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             QsClearRoomFlag(flagBase + 3);
             {
                 u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-                Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-                if (itemEntity != NULL) {
-                    itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                    itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                    itemEntity->collisionLayer = 1;
-                    itemEntity->flags |= ENT_PERSIST;
-                    UpdateSpriteForCollisionLayer(itemEntity);
-                    itemEntity->direction = IdleSouth;
-                }
+                QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
             }
         }
         if (QsCheckRoomFlag(flagBase + 1)) {
@@ -10173,23 +10161,20 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 s32 ownerSite = QuickStartFindSiteAt(contentX, contentY);
                 u8 tier = (ownerSite >= 0) ? QuickStartSiteRewardTier(ownerSite) : QS_SITE_REWARD_DEFAULT;
                 u16 payout = (extra & 0x80) ? ITEM_HEART_CONTAINER : ITEM_HEART_PIECE;
-                Entity* itemEntity;
                 if (tier != QS_SITE_REWARD_DEFAULT) {
-                    payout = QuickStartDrawAtTier(extra & 0x3f, QS_CAT_DROP, tier - 1);
+                    // Spread the pick, as every other draw does - a raw
+                    // seed could only reach a tier's first few entries.
+                    payout = QuickStartDrawAtTier(QuickStartDrawPick(extra & 0x3f), QS_CAT_DROP, tier - 1);
                 }
-                itemEntity = CreateObject(GROUND_ITEM, payout, 0);
-                if (itemEntity != NULL) {
-                    itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                    itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                    itemEntity->collisionLayer = 1;
-                    itemEntity->flags |= ENT_PERSIST;
-                    UpdateSpriteForCollisionLayer(itemEntity);
-                    itemEntity->direction = IdleSouth;
+                // "Delivered", not "an entity exists": a direct-grant
+                // payout (the level-2 sword) is handed over without ever
+                // lying on the floor.
+                if (QuickStartRewardDelivered(payout, contentX, contentY)) {
                     QsSetRoomFlag(flagBase + 2);
                     // Tied to the same QsSetRoomFlag(flagBase + 2) success path so this
-                    // only ever counts once per miniboss, even if
-                    // CreateObject fails and this branch legitimately
-                    // retries on a later frame (see QuickStartComputeScore,
+                    // only ever counts once per miniboss, even if the spawn
+                    // fails and this branch legitimately retries on a later
+                    // frame (see QuickStartComputeScore,
                     // docs/QUICKSTART_ROADMAP.md).
                     gSave.miniboss_kills++;
                 }
@@ -11415,14 +11400,10 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         if (wave >= 2) {
             s32 extra = QuickStart2DoorGetExtra();
             u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
+            // Direct-grant items (the level-2 sword) never become a floor
+            // entity, so the test is "was it delivered", not "does an
+            // entity exist" - see QuickStartSpawnRewardEntity.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(2);
             }
             return;
@@ -11658,14 +11639,10 @@ static void QuickStart2DoorSetupRoomContent(void) {
         {
             s32 extra = QuickStart2DoorGetExtra();
             u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
+            // Direct-grant items (the level-2 sword) never become a floor
+            // entity, so the test is "was it delivered", not "does an
+            // entity exist" - see QuickStartSpawnRewardEntity.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(0);
             }
         }
@@ -12083,14 +12060,10 @@ static void QuickStartSetupRiverBridgeRoomContent(void) {
         }
         {
             u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
+            // Direct-grant items (the level-2 sword) never become a floor
+            // entity, so the test is "was it delivered", not "does an
+            // entity exist" - see QuickStartSpawnRewardEntity.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(0);
             }
         }
@@ -12367,14 +12340,10 @@ static void QuickStartSetupCaveRoomContent(void) {
         }
         {
             u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-            Entity* itemEntity = CreateObject(GROUND_ITEM, rewardItem, 0);
-            if (itemEntity != NULL) {
-                itemEntity->x.HALF.HI = gRoomControls.origin_x + contentX;
-                itemEntity->y.HALF.HI = gRoomControls.origin_y + contentY;
-                itemEntity->collisionLayer = 1;
-                itemEntity->flags |= ENT_PERSIST;
-                UpdateSpriteForCollisionLayer(itemEntity);
-                itemEntity->direction = IdleSouth;
+            // Direct-grant items (the level-2 sword) never become a floor
+            // entity, so the test is "was it delivered", not "does an
+            // entity exist" - see QuickStartSpawnRewardEntity.
+            if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
                 QsSetRoomFlag(0);
             }
         }
@@ -14885,6 +14854,14 @@ static s32 QuickStartCollectChoiceCandidates(u8 catMask, u8 tierMask, u16* out, 
             continue;
         }
         if (!QuickStartTierEntryUsable(e)) {
+            continue;
+        }
+        // A choice row is three items lying on the floor to be looked at
+        // and walked into. An item with no floor form cannot be one of
+        // them - it would leave a gap the player can neither see nor pick,
+        // and granting it invisibly would defeat the point of a CHOICE. So
+        // direct-grant items are drops and rewards only, never offers.
+        if (QuickStartItemNeedsDirectGrant(e->item)) {
             continue;
         }
         for (j = 0; j < n; j++) {

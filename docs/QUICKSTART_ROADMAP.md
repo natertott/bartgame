@@ -38,6 +38,11 @@ shop, quests, thirteen charms/curses, the map and compass, the hub inn's
 rest, and a six-tier enemy roster driving composition-built waves are live
 and probe-verified; what follows is what is NOT yet built.
 
+**Tooling note:** `emu.py`'s `snap()` now works against both mgba python
+builds. The pip wheel (0.10.2) exposes `Image.save_png(file)` where a
+source build exposes `to_pil()`, and every screenshot probe was failing on
+the wheel until the helper learned both.
+
 **Shipped since the last roadmap pass (Aug 2026), for orientation:** F10's
 MAP and COMPASS; the hub inn's REST half; D2's persistent living-enemy
 count; the switch-puzzle repair (placement off the doorway, and the
@@ -221,15 +226,17 @@ build:
   one unlucky shape). Then set the curve so expected pieces cover ~60-70%
   of a region's gates per run. Kinstone specificity model is Decision 3.
 - **Sword upgrades in the pools - the level-2 sword is IN** (uncommon
-  weapons/tools, per the user, Aug 2026). Equipment has no ground-item
-  form, so it reaches the player through `QuickStartSpawnRewardEntity`'s
-  direct-grant path (GiveItem + message) instead of as something lying on
-  the floor; `QuickStartItemNeedsDirectGrant` is the one place to add the
-  Green/Blue/Four Sword when they are wanted too. Only the main item-drop
-  site is wired through that helper so far - the other reward spawn sites
-  still call `CreateObject(GROUND_ITEM, ...)` directly and would pay
-  nothing if they ever drew a no-floor-form item. Routing the rest through
-  the helper is the tidy-up.
+  weapons/tools, per the user, Aug 2026), and every reward spawner now
+  goes through the shared `QuickStartSpawnRewardEntity` /
+  `QuickStartRewardDelivered` pair. The Green/Blue/Four Sword are one row
+  each in `QuickStartItemNeedsDirectGrant` whenever they are wanted.
+  Correction worth carrying: this file long asserted that equipment has no
+  ground-item form and that `CreateObject(GROUND_ITEM, ITEM_RED_SWORD)`
+  never creates an entity. A clean-room probe disproved it - the entity is
+  created and the sword sprite renders on the floor. The swords stay on
+  the grant path anyway, because that is already how the miniboss payout
+  delivers one and because GiveItem is the unambiguous way to make an
+  equipment upgrade apply.
 - **Last unused charm idea (F4).** Rare-reward-chance-up is the only
   item from the original wish list not implemented (boss-chance-up was
   deliberately rejected). Framework is ready; one bit, one read.

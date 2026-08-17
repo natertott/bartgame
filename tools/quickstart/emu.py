@@ -145,5 +145,15 @@ def coll_at(c, tx, ty):
 
 def snap(c, path):
     """Save the current frame as a PNG (rendering ground truth - the one way
-    to catch the sprites-never-render VRAM failure class)."""
-    c.qs_video.to_pil().convert('RGB').save(path)
+    to catch the sprites-never-render VRAM failure class).
+
+    mgba's python Image exposes different APIs depending on how the
+    bindings were built: a source build gives to_pil(), the pip wheel
+    (0.10.2) gives save_png(file). Try both so a probe written against one
+    machine still runs on the other."""
+    img = c.qs_video
+    if hasattr(img, 'to_pil'):
+        img.to_pil().convert('RGB').save(path)
+        return
+    with open(path, 'wb') as fh:
+        img.save_png(fh)
