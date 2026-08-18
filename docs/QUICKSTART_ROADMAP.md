@@ -306,6 +306,65 @@ builder and the retuned curve all shipped together; the study behind them
 is the Wave Composition Study artifact. What it identified and did NOT
 build:
 
+**FRAME RATE (Aug 2026, user report: "the game is slowing down
+significantly on certain enemy waves... specifically in the very large
+areas, like North/South Hyrule field", with drops "into the single
+frames-per-second" on an iPhone 15). FIXED, and the number that fixes it
+is measured.**
+
+The measurement needs no instrumentation. `main.c`'s loop does
+`gMain.ticks++`, runs the frame, then waits for VBlank; when the work
+overruns, that wait lands on the VBlank *after* next, so ticks advances
+once per two hardware frames. `60 * ticks / frames` is therefore the real
+frame rate, read out of RAM - `tools/quickstart/fps_probe.py`. Control for
+the method: a room load, which certainly overruns, reads 54.8fps with 26
+stalled frames of 300.
+
+North Hyrule Field, difficulty 12, live enemy count *held fixed* for the
+window, player walking so the room scrolls:
+
+| enemies | entities | avg fps | worst 30-frame window |
+|--------:|---------:|--------:|----------------------:|
+| 16 | 33 | 60.0 | 60.0 |
+| 24 | 41 | 60.0 | 60.0 |
+| 28 | 45 | 60.0 | 60.0 |
+| 32 | 49 | 59.4 | 54.0 |
+| 36 | 53 | 57.2 | 44.0 |
+| 40 | 57 | 54.6 | 34.0 |
+| 44 | 61 | 52.0 | 30.0 |
+| 50 | 67 | 52.0 | 30.0 |
+
+Three findings, in order of usefulness:
+
+1. **The knee is between 28 and 32 enemies**, and past 44 it pins at 30fps
+   because the frame has simply doubled. `QUICKSTART_MAX_LIVE_ENEMIES` is
+   28 - a GLOBAL ceiling, because the frame budget belongs to the console
+   rather than to any room, and it counts what is already alive rather
+   than just this wave's own head count (waves overlap; two capped waves
+   stacked are an uncapped room).
+2. **Scrolling is the other half of it.** At 50 enemies standing still the
+   room can still hold 60fps; walking - the tile-buffer rebuild and BG DMA
+   a scrolling room does every frame - is what pushes the same wave over.
+   That is exactly why the report named the large areas: small rooms do
+   not scroll, so enemy work has the whole frame to itself.
+3. **It was one room's problem.** North Hyrule Field is the biggest in the
+   ring (775 squares against South Hyrule Field's 651) and the only region
+   whose waves actually reached the old cap of 50; South Hyrule Field tops
+   out at 29 by itself and Lon Lon at 30, which is why those two measured
+   clean and this one did not. VARIETY turned out not to matter at all -
+   the 50-enemy waves were fifty of ONE kind (a swarm archetype at 150%),
+   and cost the same per body as mixed waves of the same size.
+
+After: every region holds 60.0fps walking and 60.0 walking diagonally,
+room-locked, at difficulty 12. Two rooms (Lon Lon, Western Woods North)
+sit at 59.6-59.7 with three or four stalled frames in 600 - visible only
+to the counter.
+
+A method note worth keeping: the first "after" run showed Castle Garden at
+10fps and Lon Lon holding 48 enemies, which looked like the fix failing.
+Both were the player walking out of the room mid-sample - a room load, not
+a frame cost. Frame-rate samples have to assert the room did not change.
+
 - **Themed draws.** Occasionally pick a theme (fire, ice, undead, bug,
   aviary) and prefer roster entries carrying it, so a wave sometimes reads
   as a designed encounter rather than a mix. Needs a theme tag per row;
@@ -726,6 +785,15 @@ Open defects and unexplained reports, roughly by player impact.
   enough reboots (worked around by process chunking, still slow). It
   gates the two items above; batch the fix with the next budget-harness
   work.
+- ~~A Gyorg boss was in the Elite pool~~ **REMOVED** (user, Aug 2026:
+  "this enemy is usually larger than the room and it really breaks the
+  mechanics"). It was `ENEMY_64` - the enemy enum puts it at 0x64,
+  directly after `GYORG_FEMALE_MOUTH`, and its handler calls into
+  gyorgMale's, so it is a Gyorg boss part drawn at boss scale. It probed
+  as a legal 36hp spawn, which is how it got in; that probe measured
+  whether it spawns and dies, not whether it FITS. Its live-cap row went
+  with it. The lesson generalizes to the rest of the roster: admission
+  needs a size gate as well as a spawn gate.
 - **Enemies still outside the roster.** The Aug 2026 expansion probed and
   admitted 16 new kinds, taking the tiers from 41 to 57 of the game's 102
   enemy ids. What is still out, and why: the Vaati/Mazaal/Gleerok/Gyorg

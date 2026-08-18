@@ -5823,7 +5823,14 @@ static const QuickStartEnemyPick sQuickStartElites[] = {
     { DARK_NUT, 2 /* blue, 20hp */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
     { DARK_NUT, 3 /* red, 26hp */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
     { BALL_CHAIN_SOLIDER, 0, QS_R_HEAVY, 1, 0 },
-    { ENEMY_64, 0, QS_R_HEAVY | QS_R_SLOW, 4, 0 },
+    // NOT here: ENEMY_64. It is a Gyorg boss part - the enemy enum puts it
+    // at 0x64, directly after GYORG_FEMALE_MOUTH, and its own handler calls
+    // into gyorgMale's - and it is drawn at boss scale, bigger than most of
+    // the rooms an elite site sits in. The user, Aug 2026: "this enemy is
+    // usually larger than the room and it really breaks the mechanics".
+    // It probed as a legal spawn with 36hp, which is how it got in; that
+    // probe measured whether it spawns and dies, not whether it fits.
+    // Same reason the rest of the Gyorg/Vaati/Mazaal/Gleerok set is out.
     { MADDERPILLAR, 0, QS_R_HEAVY, 5, 0 },
 };
 
@@ -6057,8 +6064,6 @@ static const QuickStartLiveCap sQuickStartLiveCaps[] = {
     // than a ramp - the swing is area denial, but three of them reads as
     // a deliberate set piece rather than a pile.
     { BALL_CHAIN_SOLIDER, 3, 3 },
-    // The other two Elites. Enemy 64 is a 36hp bruiser.
-    { ENEMY_64, 2, 3 },
     // Madderpillar is a SEGMENTED chain: one placement is about seven
     // live entities sharing this id (measured), so this cap of 1 reads as
     // "one chain in the room", not "one body". Counting segments is
@@ -6323,6 +6328,59 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
     return QuickStartFreeGfxSlots() > QUICKSTART_GFX_HARD_FLOOR;
 }
 
+// The frame-rate ceiling on how many enemies a wave may put in a room.
+//
+// The user, Aug 2026: "the game is slowing down significantly on certain
+// enemy waves... specifically in the very large areas, like North/South
+// Hyrule field, and especially on waves where we've packed as many enemies
+// into the map as possible", with drops "into the single frames-per-second"
+// on an iPhone 15.
+//
+// Measured rather than guessed. main.c's loop does gMain.ticks++, runs the
+// frame, then waits for VBlank; if the frame's work overruns, that wait
+// lands on the VBlank after next and ticks advances once per TWO hardware
+// frames. So 60 * (ticks advanced) / (frames elapsed) IS the frame rate,
+// readable straight out of RAM with no instrumentation
+// (tools/quickstart/fps_probe.py). Control for the method: a room load,
+// which certainly overruns, reads 54.8fps with 26 stalled frames out of
+// 300 - the metric sees overruns.
+//
+// North Hyrule Field, difficulty 12, live enemy count held fixed for the
+// whole window, player walking so the room scrolls:
+//
+//     enemies   entities   avg fps   worst 30-frame window
+//        16        33       60.0            60.0
+//        24        41       60.0            60.0
+//        28        45       60.0            60.0
+//        32        49       59.4            54.0
+//        36        53       57.2            44.0
+//        40        57       54.6            34.0
+//        44        61       52.0            30.0
+//        50        67       52.0            30.0
+//
+// The knee is between 28 and 32, and past 44 it pins at 30fps because the
+// frame has simply doubled. Two things make this North Hyrule Field's
+// problem specifically. It is the biggest room in the ring (775 squares
+// against South Hyrule Field's 651), so the density curve asks for the most
+// enemies; and it is the only region whose waves actually reach the old cap
+// of 50 - South Hyrule Field tops out at 29 on its own and Lon Lon at 30,
+// which is exactly why those two measured clean at 60 and this one did not.
+//
+// SCROLLING is the other half. At 50 enemies standing still the room can
+// still hold 60fps in a quiet moment; it is walking - the tile-buffer
+// rebuild and BG DMA that a scrolling room does every frame - that pushes
+// the same wave over the line. Which is why the report named the large
+// areas: small rooms do not scroll, so the enemy work has the whole frame
+// to itself.
+//
+// 28 is the last count that measured completely clean, on every room and in
+// every direction of travel. It is deliberately a GLOBAL ceiling rather
+// than a lower number on North Hyrule Field's own row: the frame budget is
+// a property of the console, not of the room, and the per-room caps exist
+// to describe floor space. This one describes the hardware, so it outranks
+// them.
+#define QUICKSTART_MAX_LIVE_ENEMIES 28
+
 // Spawn-count ceiling as a function of difficulty, in service of the GFX
 // reserve (see QUICKSTART_GFX_RESERVE). Tuned by measurement, not theory:
 // the numbers below are the first set that kept every region above the
@@ -6574,6 +6632,31 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
         count = 1;
     }
     cap = (offsetCount < maxEnemies) ? offsetCount : maxEnemies;
+    // The frame-rate ceiling, and it outranks every per-room cap above it.
+    // See QUICKSTART_MAX_LIVE_ENEMIES for the measurement.
+    //
+    // Counted against what is ALREADY ALIVE in the room, not just against
+    // this wave's own head count. Waves overlap: measured after the
+    // per-wave clamp alone, Lon Lon Ranch still peaked at 48 live enemies
+    // and Western Woods North at 42, because the monitor deals the next
+    // wave while the last one's stragglers are still walking around, and
+    // two capped waves stacked are an uncapped room. The player does not
+    // care which wave a body came from - the frame has to draw all of
+    // them - so the ceiling is on the room, and a wave dealt into a
+    // half-full room is simply a smaller wave.
+    {
+        bool32 unusedHasBoss;
+        s32 headroom = QUICKSTART_MAX_LIVE_ENEMIES - QuickStartCountRegionEnemies(&unusedHasBoss);
+        if (headroom < 0) {
+            headroom = 0;
+        }
+        if (cap > headroom) {
+            cap = headroom;
+        }
+    }
+    if (cap < 1) {
+        return;
+    }
     if (count > cap) {
         count = cap;
     }
