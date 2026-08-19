@@ -782,26 +782,47 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   must not drop inside the region where it's needed... it could
   accidentally be placed somewhere inaccessible, for example as part of a ?
   room that is behind the door the key unlocks" - is enforced by
-  `sQuickStartKeyRegions`, which names the rooms each key MAY appear in:
-  the Lon Lon Key in North Hyrule Field, Trilby and all three Eastern
-  Hills rooms; the Graveyard Key in North Hyrule Field, Trilby and Royal
-  Valley itself. Royal Valley is on its own list deliberately and safely -
-  every spot outside the gate is in the graveyard, the gated zone keeps
+  `sQuickStartKeyRegions`, which names the REGIONS each key may appear in:
+  the Lon Lon Key in North Hyrule Field, Trilby and Eastern Hills; the
+  Graveyard Key in North Hyrule Field, Trilby and Royal Valley itself.
+  Royal Valley is on its own list deliberately and safely - every spot
+  outside the gate is in the valley's lower half, the gated zone keeps
   placements out of the north until the key is already held, and an owned
   key never draws again.
-  **What that covers, and what it does not.** The filter runs at draw time
-  against the room the draw happens in, so it covers a region's waves, its
-  quest rewards and its enemy drops - two of the user's three sources. A ?
-  ROOM inside one of those regions is NOT covered: a pocket interior is its
-  own room, and nothing maps a pocket back to the region whose door leads
-  into it. That map is the remaining piece.
-  **Verified**: the boot inventory no longer carries the Lon Lon Key; the
-  gated zone provably controls where enemies spawn (with the zone asking
-  for an item the player always holds, 6 of 11 enemies placed north of the
-  gate; asking for the key, none do). The with-key case could not be driven
-  directly - a probe's inventory write does not survive the warp - so the
-  key half rests on that control rather than on a walked test. The doors
-  themselves want a playtest.
+  **? rooms are wired in** (user: "now wire the ? rooms into the key drop
+  regions too"), which closes the third of the user's three drop sources.
+  A pocket interior is its own room, so a rule written against
+  `gRoomControls` stopped applying the moment the player walked through a
+  door - a cave hanging off Lon Lon Ranch looked like nowhere in
+  particular. `sQuickStartRoomOwners` is that missing map: 49 pocket rooms,
+  each with the region-bit mask of whatever region's door leads into it.
+  It is DERIVED, not hand-listed - `tools/quickstart/room_owner.py` walks
+  each ring region's own `WARP_TYPE_AREA` doors transitively (never back
+  out through a ring room, or every pocket ends up owned by everything),
+  its Minish holes via the SpecialWarpManager property chain, its
+  `sQuickStartLinks` boxes, and the two scroll seams that carry no row
+  anywhere. The walk partitions cleanly: no pocket in the pool comes out
+  reachable from two regions.
+  **Owning a region is not sufficient.** A pocket can be inside an allowed
+  region and still sit behind that key's own gate, which is the exact
+  accident the rule exists to prevent. Royal Valley Main is four
+  disconnected pieces, and of its four ? rooms only the Great Fairy is in
+  the lower half the player can walk out of - both graves are behind the
+  graveyard gate and Dampe's house is behind the Lost Woods maze - so all
+  three carry `sealedBy`. The ranch house halves carry it against the Lon
+  Lon Key. One content site has no owner at all (Melari's Mine's south-west
+  room hangs off Melari's Mine, which is not in the ring), and an unowned
+  room refuses every gated key - the right answer for a room with no way
+  back to the overworld.
+  **Verified against the ROM, not against a model.**
+  `tools/quickstart/key_regions.py` warps into 17 rooms and calls the
+  shipped `QuickStartKeyRegionAllowed` directly, expected answer per case,
+  plus an ungated item each time so a room that refuses everything cannot
+  pass as a room that correctly refuses keys. Earlier: the boot inventory
+  no longer carries the Lon Lon Key, and the gated zone provably controls
+  where enemies spawn (zone asking for an item the player always holds, 6
+  of 11 enemies north of the gate; asking for the key, none). The doors
+  themselves still want a playtest.
 - **A test build exists for walking gated routes**: `make
   quickstart-testkit` starts the player holding the Blue Sword, bombs and
   the Spin Attack - the kit North Hyrule Field's WNW border asks for, and
@@ -1108,3 +1129,27 @@ allowlists):
    was drawn for. When a vanilla door will not fire, the fix is the byte
    that is stopping it (an actTile, a collision value), not a trigger box
    layered on top.
+
+10. **You can ask the ROM directly.** `tools/quickstart/callrom.py` calls a
+    function inside the running game and reads r0 - warp into whatever
+    state the question is about, hand the CPU an address, get the shipped
+    answer. That beats re-implementing a rule in Python and checking the
+    re-implementation, which only ever tests the copy. Two details make it
+    work: mgba's binding refuses to write r15, so PC is set by having
+    `ARMRunFake` execute a `bx r3` (in ARM encoding, not Thumb - after a
+    warp the CPU is usually parked in the BIOS IRQ wait), and IME has to be
+    cleared or an interrupt carries the CPU off with your LR. Static
+    functions are absent from `tmc.map`; their addresses come from
+    `arm-none-eabi-nm build/USA/src/game.o` plus the `.text` base. The call
+    clobbers the context it hijacks, so it is one question per boot.
+
+11. **Ids come from the build, never from a regex over the header.** A hand
+    parse of `include/item.h` returned 52 and 57 for the two overworld
+    keys; `build/USA/enum_include/item.inc`, which is what the ROM was
+    compiled against, says 55 and 60. A parser that silently drops the rows
+    it did not anticipate makes every id after them wrong by however many
+    it dropped - and the failure is invisible, because asking a gating
+    function about the wrong item still gets a perfectly plausible answer
+    back. It made `QuickStartKeyRegionAllowed` look permanently permissive
+    when it was in fact answering about items that are not gated at all.
+    `parse_tables.ITEMS` reads the generated `.inc`; use it.

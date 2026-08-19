@@ -4215,8 +4215,9 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_BLUE_SWORD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_RED_SWORD, 0 },
     // The two overworld keys. UNCOMMON rather than rare: a key that gates a
     // whole region is only interesting if runs actually find it, and each
-    // is already restricted to three rooms by sQuickStartKeyRegions, which
-    // is a far harder filter than its tier.
+    // is already restricted to three regions by sQuickStartKeyRegions -
+    // and, inside those, to the pockets sQuickStartRoomOwners does not mark
+    // as sealed - which is a far harder filter than its tier.
     { ITEM_QST_LONLON_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_QST_GRAVEYARD_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
@@ -4413,50 +4414,255 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
 //   Graveyard Key  North Hyrule Field, Trilby, and Royal Valley itself
 //
 // Royal Valley is on the second list deliberately, and it is safe: every
-// spot in that room outside the gate is in the graveyard, the gated zone
-// keeps placements out of the north until the key is already held, and a
-// key the run owns never draws again (QuickStartTierEntryUsable's
-// ownership check). So the key can be found in the valley's lower half but
-// never behind the gate it opens.
+// spot in that room outside the gate is in the valley's lower half, the
+// gated zone keeps placements out of the north until the key is already
+// held, and a key the run owns never draws again
+// (QuickStartTierEntryUsable's ownership check).
 //
-// Checked against the room the draw happens in, so this covers the region's
-// own waves, its quest rewards and its enemy drops. A ? ROOM inside one of
-// these regions is NOT covered - a pocket interior is its own room and this
-// has no map from a pocket back to the region whose door leads into it.
-// That is the one source in the user's list of three still to wire.
+// The check runs against the room the draw happens in, which covers a
+// region's own waves, its quest rewards and its enemy drops directly. It
+// covers ? ROOMS through sQuickStartRoomOwners below - a pocket interior is
+// its own room, so without that map a cave hanging off Lon Lon Ranch looks
+// like nowhere in particular and every rule written against
+// gRoomControls silently stops applying the moment the player walks
+// through a door.
+
+// Which overworld region a "? room" hangs off.
+//
+// Derived rather than hand-listed: tools/quickstart/room_owner.py walks
+// each ring region's own WARP_TYPE_AREA doors transitively (never back out
+// through a ring room, or every pocket would end up owned by everything),
+// its Minish holes via the SpecialWarpManager property chain, its
+// sQuickStartLinks boxes, and the two scroll seams that carry no row at
+// all. The walk partitions cleanly - no pocket in the pool comes out
+// reachable from two regions - but `regions` is a mask anyway so that a
+// future shared pocket is representable instead of being a silent
+// mis-attribution.
+//
+// `sealedBy` is the second half of the rule, and the half that owning a
+// region does not give you: a pocket can be inside an allowed region and
+// still sit BEHIND that key's own gate. Royal Valley Main is 30x63 tiles in
+// four disconnected pieces - the north (ty 4-21) behind the graveyard gate,
+// the middle (ty 23-40) behind the Lost Woods maze, the north-east arrival
+// pocket North Hyrule Field's border lands in, and the south (ty 43-62)
+// where Trilby's border lands. Of the valley's four ? rooms only the Great
+// Fairy is in that south piece; both graves are behind the gate and Dampe's
+// house is behind the maze, so all three are sealed. The ranch-house halves
+// carry the same marking against the Lon Lon Key; Lon Lon Ranch is already
+// off that key's list wholesale, but the row is what stays correct if it is
+// ever added back.
+//
+// One content site is deliberately absent: Melari's Mine's south-west room
+// hangs off Melari's Mine, which is not in the ring at all. No region owns
+// it, and an unowned room refuses every gated key - which is the right
+// answer for a room with no way back to the overworld.
 typedef struct {
-    u16 item;
     u8 area;
     u8 room;
-} QuickStartKeyRegion;
+    u8 regions;   // bitmask of QS_RING_*
+    u16 sealedBy; // the key whose own gate seals this room, 0 if none
+} QuickStartRoomOwner;
 
-static const QuickStartKeyRegion sQuickStartKeyRegions[] = {
-    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD },
-    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS },
-    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH },
-    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER },
-    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH },
-    { ITEM_QST_GRAVEYARD_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD },
-    { ITEM_QST_GRAVEYARD_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS },
-    { ITEM_QST_GRAVEYARD_KEY, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN },
+static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
+    { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0,
+      (1 << QS_RING_CG), 0 },
+    { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1,
+      (1 << QS_RING_CG), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE,
+      (1 << QS_RING_CG), 0 },
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST,
+      (1 << QS_RING_CG), 0 },
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST,
+      (1 << QS_RING_CG), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN,
+      (1 << QS_RING_CG), 0 },
+    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST,
+      (1 << QS_RING_EH), 0 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
+      (1 << QS_RING_EH), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT,
+      (1 << QS_RING_EH), 0 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST,
+      (1 << QS_RING_LLR), ITEM_QST_LONLON_KEY },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST,
+      (1 << QS_RING_LLR), ITEM_QST_LONLON_KEY },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LON_LON_RANCH,
+      (1 << QS_RING_LLR), 0 },
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_RING_NHF), 0 },
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD,
+      (1 << QS_RING_RV), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE,
+      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA,
+      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE,
+      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE,
+      (1 << QS_RING_SHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
+      (1 << QS_RING_TRIL), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY,
+      (1 << QS_RING_WW), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST,
+      (1 << QS_RING_WW), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE,
+      (1 << QS_RING_WW), 0 },
 };
 
-// TRUE for anything that is not a gated key, and for a key only in one of
-// the rooms its own rows name.
-static bool32 QuickStartKeyRegionAllowed(u16 item) {
+// Which named region a room IS, for the twelve rooms that are regions.
+// -1 for everything else, including every pocket.
+static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
+    if (area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN) {
+        return QS_RING_CG;
+    }
+    if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
+        return QS_RING_RV;
+    }
+    if (area != AREA_HYRULE_FIELD) {
+        return -1;
+    }
+    switch (room) {
+        case ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD:
+            return QS_RING_NHF;
+        case ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD:
+            return QS_RING_SHF;
+        case ROOM_HYRULE_FIELD_LON_LON_RANCH:
+            return QS_RING_LLR;
+        case ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS:
+            return QS_RING_TRIL;
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH:
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER:
+        case ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH:
+            return QS_RING_EH;
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH:
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER:
+        case ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH:
+            return QS_RING_WW;
+        default:
+            return -1;
+    }
+}
+
+// The row in sQuickStartRoomOwners for a room, or NULL.
+static const QuickStartRoomOwner* QuickStartRoomOwnerOf(u8 area, u8 room) {
     s32 i;
-    bool32 gated = FALSE;
-    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartKeyRegions); i++) {
-        if (sQuickStartKeyRegions[i].item != item) {
-            continue;
-        }
-        gated = TRUE;
-        if (gRoomControls.area == sQuickStartKeyRegions[i].area &&
-            gRoomControls.room == sQuickStartKeyRegions[i].room) {
-            return TRUE;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRoomOwners); i++) {
+        if (sQuickStartRoomOwners[i].area == area && sQuickStartRoomOwners[i].room == room) {
+            return &sQuickStartRoomOwners[i];
         }
     }
-    return !gated;
+    return NULL;
+}
+
+// The regions the player is currently inside, as a mask. A ring room is its
+// own region; a pocket is whatever region its door hangs off. 0 means "no
+// idea", which for a gated key is a refusal rather than a pass - the whole
+// point of the rule is that an unknown location is exactly where a key
+// must not go.
+static u32 QuickStartCurrentRegionMask(void) {
+    s32 ring = QuickStartRingRegionOfRoom(gRoomControls.area, gRoomControls.room);
+    const QuickStartRoomOwner* owner;
+    if (ring >= 0) {
+        return 1u << ring;
+    }
+    owner = QuickStartRoomOwnerOf(gRoomControls.area, gRoomControls.room);
+    return (owner != NULL) ? owner->regions : 0;
+}
+
+typedef struct {
+    u16 item;
+    u8 regions; // bitmask of QS_RING_*
+} QuickStartKeyRegions;
+
+static const QuickStartKeyRegions sQuickStartKeyRegions[] = {
+    { ITEM_QST_LONLON_KEY, (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_EH) },
+    { ITEM_QST_GRAVEYARD_KEY, (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_RV) },
+};
+
+// TRUE for anything that is not a gated key. For a key, TRUE only where
+// EVERY region the current room belongs to is on that key's list and the
+// room is not sealed behind the key's own gate. "Every" rather than "any"
+// is the conservative reading of a shared pocket: a room you can reach from
+// both Trilby and Lon Lon Ranch is still a room the Lon Lon Key must not
+// appear in.
+static bool32 QuickStartKeyRegionAllowed(u16 item) {
+    s32 i;
+    u32 allowed = 0;
+    u32 here;
+    const QuickStartRoomOwner* owner;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartKeyRegions); i++) {
+        if (sQuickStartKeyRegions[i].item == item) {
+            allowed = sQuickStartKeyRegions[i].regions;
+            break;
+        }
+    }
+    if (allowed == 0) {
+        return TRUE;
+    }
+    owner = QuickStartRoomOwnerOf(gRoomControls.area, gRoomControls.room);
+    if (owner != NULL && owner->sealedBy == item) {
+        return FALSE;
+    }
+    here = QuickStartCurrentRegionMask();
+    if (here == 0) {
+        return FALSE;
+    }
+    return (here & ~allowed) == 0;
 }
 
 static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
@@ -13501,30 +13707,7 @@ static bool32 QuickStartTransitionStaysInSameRoom(void) {
 // stop the player. The containment functions below are the safety net for
 // door-type transitions, not the primary wall.
 static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room) {
-    if (area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN) {
-        return TRUE;
-    }
-    if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
-        return TRUE;
-    }
-    if (area != AREA_HYRULE_FIELD) {
-        return FALSE;
-    }
-    switch (room) {
-        case ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD:
-        case ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD:
-        case ROOM_HYRULE_FIELD_LON_LON_RANCH:
-        case ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS:
-        case ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH:
-        case ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER:
-        case ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH:
-        case ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH:
-        case ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER:
-        case ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH:
-            return TRUE;
-        default:
-            return FALSE;
-    }
+    return QuickStartRingRegionOfRoom(area, room) >= 0;
 }
 
 // A transition between two ring rooms, in either direction - always allowed,

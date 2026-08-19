@@ -86,6 +86,19 @@ def here(c):
     return (c.memory.u8[ROOM_CONTROLS + 4], c.memory.u8[ROOM_CONTROLS + 5])
 
 
+def poison_here(c):
+    """Make here() impossible to confuse with a real room, before a warp.
+
+    The idiom this replaces zeroed the AREA byte as a "did the warp take"
+    sentinel. Area 0 is AREA_MINISH_WOODS - a real area - so the moment
+    containment learned about Minish Woods, every probe that used the
+    sentinel was warping FROM a room the engine believed in, and 19 checks
+    failed for a reason that had nothing to do with the code under test.
+    Poison the ROOM byte instead: 0xff is not a room in any area.
+    """
+    c.memory.u8[ROOM_CONTROLS + 5] = 0xff
+
+
 def qs_set(c, n, v=1):
     _flag_set(c, QS_BIT0 + n, v)
 

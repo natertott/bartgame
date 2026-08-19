@@ -71,6 +71,19 @@ for _line in open(os.path.join(ROOT, 'build/USA/enum_include/kinstone.inc')):
         KINSTONES[_m.group(1)] = int(_m.group(2))
 
 
+# Item ids come from the enum the BUILD produced, never from a hand parse of
+# include/item.h. A regex over the header drifts - it silently drops the
+# rows whose spelling it did not anticipate, and every id after one of them
+# is wrong by however many it dropped. That is invisible: an off-by-three
+# item id makes a gating check answer about a different item and return a
+# perfectly plausible answer.
+ITEMS = {}
+for _line in open(os.path.join(ROOT, 'build/USA/enum_include/item.inc')):
+    _m = re.match(r'\.set (ITEM_\w+), (\d+)', _line.strip())
+    if _m:
+        ITEMS[_m.group(1)] = int(_m.group(2))
+
+
 def content_sites():
     """(areaName, roomName, area, room, contentX, contentY) per row."""
     return [r[:6] for r in content_sites_full()]
