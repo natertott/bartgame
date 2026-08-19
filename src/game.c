@@ -903,7 +903,11 @@ static void GameTask_Transition(void) {
     // room" (QuickStartClearLadderRoomObstacles) - it's granted purely so
     // the save's inventory state matches what the player was told, with no
     // functional door-gating effect either way.
-    SetInventoryValue(ITEM_QST_LONLON_KEY, 1);
+    // The LON LON KEY IS NO LONGER GRANTED. It is a thing to find now (the
+    // user, Aug 2026: "I want to restore the vanilla behavior of these keys
+    // and make it a goal for the player in our game to hunt down these
+    // keys"). See sQuickStartKeyRegions for where it may drop, and
+    // QuickStartUnlockRanchHouseDoors for what it opens.
     // Kinstone bag, granted at boot per the user's request - without it
     // owned, NPCs offering a fusion simply can't be interacted with
     // (kinstone.c gates the fusion prompt on GetInventoryValue(ITEM_KINSTONE_BAG)),
@@ -3165,7 +3169,26 @@ static const s16 sQuickStartRoyalValleyEnemyOffsets[][2] = {
     { 312, 808 }, { 312, 888 }, { 328, 712 }, { 328, 840 }, { 344, 872 }, { 360, 808 },
     { 360, 904 }, { 376, 840 }, { 392, 728 }, { 392, 776 }, { 392, 872 }, { 392, 920 },
     { 408, 952 }, { 424, 744 }, { 424, 888 }, { 440, 776 },
+    // The GRAVEYARD GATE's side, 366 tiles at y 64-351 - the part the user
+    // walked into and found empty ("the entire upper area of Royal Valley
+    // was devoid of enemies entirely"). It was empty because every spot
+    // above stops at y 1007, so nothing could ever be placed up here.
+    //
+    // These are filtered by the gated zone below, which asks for the
+    // Graveyard Key: without it the wave never places anything behind the
+    // gate, so nothing spawns where the player cannot reach it and no wave
+    // becomes unclearable. With it, the whole region populates.
+    { 56, 88 },   { 56, 168 },  { 56, 216 },  { 72, 248 },  { 88, 184 },  { 104, 88 },
+    { 104, 216 }, { 120, 168 }, { 120, 248 }, { 120, 312 }, { 152, 232 }, { 152, 328 },
+    { 184, 248 }, { 184, 312 }, { 216, 328 }, { 232, 152 }, { 248, 312 }, { 280, 328 },
+    { 296, 232 }, { 312, 312 }, { 344, 232 }, { 360, 88 },  { 360, 168 }, { 392, 232 },
+    { 408, 88 },  { 408, 168 }, { 408, 312 },
 };
+// Squares stays at the GRAVEYARD's 242 even though the offsets now cover
+// 608 tiles, because squares drives wave SIZE: sizing it for the whole
+// region would pack a key-less run's 242 reachable tiles at nearly one
+// enemy per nine. The extra spots spread the same wave over more ground
+// once the gate opens, rather than making it bigger.
 #define QUICKSTART_ROYALVALLEY_ROOM_SQUARES 242
 #define QUICKSTART_ROYALVALLEY_MAX_ENEMIES 18
 
@@ -4190,6 +4213,12 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     // Sword, so it reads as the top of the weapon ladder rather than a
     // lucky early find.
     { ITEM_BLUE_SWORD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_RED_SWORD, 0 },
+    // The two overworld keys. UNCOMMON rather than rare: a key that gates a
+    // whole region is only interesting if runs actually find it, and each
+    // is already restricted to three rooms by sQuickStartKeyRegions, which
+    // is a far harder filter than its tier.
+    { ITEM_QST_LONLON_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { ITEM_QST_GRAVEYARD_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
     // --- SKILL UPGRADES --------------------------------------------------
@@ -4317,6 +4346,12 @@ static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
         case ITEM_RED_SWORD:
         case ITEM_BLUE_SWORD:
         case ITEM_FOURSWORD:
+        // The keys go the same way. Vanilla places the Graveyard Key as its
+        // own bespoke object (graveyardKey.c), not as a GROUND_ITEM, and
+        // the Lon Lon Key comes out of a cutscene - neither has a floor
+        // sprite this mode can drop, so both are handed over directly.
+        case ITEM_QST_LONLON_KEY:
+        case ITEM_QST_GRAVEYARD_KEY:
             return TRUE;
         default:
             return FALSE;
@@ -4362,8 +4397,73 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
     return QuickStartSpawnRewardEntity(item, localX, localY) != NULL;
 }
 
+// --- Where an overworld key may be found -----------------------------------
+//
+// The user's rule, and the reason for it: "the key must not drop inside the
+// region where it's needed. That's because it could accidentally be placed
+// somewhere inaccessible, for example as part of a ? room that is behind
+// the door the key unlocks." The Lon Lon Key opening a door whose two rooms
+// are themselves ? rooms is exactly that trap, and the Graveyard Key
+// gating 366 tiles of Royal Valley is the same shape.
+//
+// So each key names the regions it MAY appear in, and they are the
+// neighbours of the region it opens:
+//
+//   Lon Lon Key    North Hyrule Field, Trilby, Eastern Hills
+//   Graveyard Key  North Hyrule Field, Trilby, and Royal Valley itself
+//
+// Royal Valley is on the second list deliberately, and it is safe: every
+// spot in that room outside the gate is in the graveyard, the gated zone
+// keeps placements out of the north until the key is already held, and a
+// key the run owns never draws again (QuickStartTierEntryUsable's
+// ownership check). So the key can be found in the valley's lower half but
+// never behind the gate it opens.
+//
+// Checked against the room the draw happens in, so this covers the region's
+// own waves, its quest rewards and its enemy drops. A ? ROOM inside one of
+// these regions is NOT covered - a pocket interior is its own room and this
+// has no map from a pocket back to the region whose door leads into it.
+// That is the one source in the user's list of three still to wire.
+typedef struct {
+    u16 item;
+    u8 area;
+    u8 room;
+} QuickStartKeyRegion;
+
+static const QuickStartKeyRegion sQuickStartKeyRegions[] = {
+    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD },
+    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS },
+    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH },
+    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER },
+    { ITEM_QST_LONLON_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH },
+    { ITEM_QST_GRAVEYARD_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD },
+    { ITEM_QST_GRAVEYARD_KEY, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS },
+    { ITEM_QST_GRAVEYARD_KEY, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN },
+};
+
+// TRUE for anything that is not a gated key, and for a key only in one of
+// the rooms its own rows name.
+static bool32 QuickStartKeyRegionAllowed(u16 item) {
+    s32 i;
+    bool32 gated = FALSE;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartKeyRegions); i++) {
+        if (sQuickStartKeyRegions[i].item != item) {
+            continue;
+        }
+        gated = TRUE;
+        if (gRoomControls.area == sQuickStartKeyRegions[i].area &&
+            gRoomControls.room == sQuickStartKeyRegions[i].room) {
+            return TRUE;
+        }
+    }
+    return !gated;
+}
+
 static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
     if (!e->repeatable && GetInventoryValue(e->item) != 0) {
+        return FALSE;
+    }
+    if (!QuickStartKeyRegionAllowed(e->item)) {
         return FALSE;
     }
     switch (e->req) {
@@ -6615,6 +6715,19 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // a flippers-only player can reach but not leave, turning a stranded
     // enemy into a stranded player.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 596, 683, 591, 782, ITEM_ROCS_CAPE },
+
+    // --- Royal Valley ---------------------------------------------------
+    // Everything north of the graveyard gate, y 64-351 - a 366-tile
+    // component of its own, and the only way in is the gate the Graveyard
+    // Key opens. Measured: the room holds four separate walkable spaces
+    // (366 north, 262 middle, 242 graveyard, 42 arrival pocket) and none of
+    // them touch.
+    //
+    // The 262-tile MIDDLE (y 368-655) has no zone row because it has no
+    // spots: it is reached only by solving the Lost Woods maze, whose two
+    // doors are still cancelled by containment, so anything placed there
+    // would be an enemy nobody can kill and a wave that never clears.
+    { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, 479, 64, 351, ITEM_QST_GRAVEYARD_KEY },
 };
 
 // Whether something may be placed at this room-local spot in the current
@@ -13997,12 +14110,20 @@ static void QuickStartFillBoulderHoles(void) {
 // Rather than fight the script, this does what vanilla's own sub_0808692C
 // does: drops ENT_SCRIPTED, puts the door back on the plain walk-up-to-open
 // type, and resets its timer. The door then behaves like every other house
-// door in the game. Per the user's own call this is unconditional for now -
-// the house is simply open - with the key or a minish-door route left as a
-// later change if it should be earned instead.
+// door in the game.
+//
+// AND IT NOW WANTS THE KEY. This used to run unconditionally - the house
+// was simply open, and the player was handed the Lon Lon Key at boot for a
+// door that did not check it. Both halves of that are gone: the key is a
+// drop now, and until the run finds one the ranch house doors stay on
+// vanilla's own script, which is to say shut. That is the "later change if
+// it should be earned instead" this comment used to promise.
 static void QuickStartUnlockRanchHouseDoors(void) {
     s32 i;
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return;
+    }
+    if (GetInventoryValue(ITEM_QST_LONLON_KEY) == 0) {
         return;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {

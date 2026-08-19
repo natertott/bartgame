@@ -758,6 +758,50 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   nothing gates the pool draw on holding a Lantern. A run drawn here
   without one plays in the dark. That is the first concrete thing the
   key-item reachability work has to decide.
+  **The upper valley was empty, and is not any more** (user report). Royal
+  Valley Main is FOUR separate walkable spaces, not the three the first
+  survey found: 366 tiles north of the graveyard gate, 262 in the middle
+  behind the Lost Woods maze, the 242-tile graveyard, and the 42-tile
+  arrival pocket. Every spawn spot was in the graveyard, so the north was
+  unpopulated by construction. It has 27 spots now, filtered by a gated
+  zone (`sQuickStartGatedZones`) asking for the Graveyard Key - so nothing
+  spawns behind the gate until the player can open it, and no wave becomes
+  unclearable. The middle stays empty deliberately: the maze doors are
+  still cancelled by containment, so anything placed there would be an
+  enemy nobody can reach.
+- **OVERWORLD KEYS ARE A HUNT NOW** (user, Aug 2026: "I want to restore the
+  vanilla behavior of these keys and make it a goal for the player in our
+  game to hunt down these keys").
+  The Lon Lon Key used to be handed out at boot for a door that did not
+  check it, while `QuickStartUnlockRanchHouseDoors` forced both ranch house
+  doors open unconditionally. Both halves are gone: the key is a drop, the
+  doors stay on vanilla's own script until the run finds one, and the two
+  ranch house ? rooms are behind it again. The Graveyard Key gates Royal
+  Valley's northern 366 tiles the same way.
+  **Where a key may drop is the whole design.** The user's rule - "the key
+  must not drop inside the region where it's needed... it could
+  accidentally be placed somewhere inaccessible, for example as part of a ?
+  room that is behind the door the key unlocks" - is enforced by
+  `sQuickStartKeyRegions`, which names the rooms each key MAY appear in:
+  the Lon Lon Key in North Hyrule Field, Trilby and all three Eastern
+  Hills rooms; the Graveyard Key in North Hyrule Field, Trilby and Royal
+  Valley itself. Royal Valley is on its own list deliberately and safely -
+  every spot outside the gate is in the graveyard, the gated zone keeps
+  placements out of the north until the key is already held, and an owned
+  key never draws again.
+  **What that covers, and what it does not.** The filter runs at draw time
+  against the room the draw happens in, so it covers a region's waves, its
+  quest rewards and its enemy drops - two of the user's three sources. A ?
+  ROOM inside one of those regions is NOT covered: a pocket interior is its
+  own room, and nothing maps a pocket back to the region whose door leads
+  into it. That map is the remaining piece.
+  **Verified**: the boot inventory no longer carries the Lon Lon Key; the
+  gated zone provably controls where enemies spawn (with the zone asking
+  for an item the player always holds, 6 of 11 enemies placed north of the
+  gate; asking for the key, none do). The with-key case could not be driven
+  directly - a probe's inventory write does not survive the warp - so the
+  key half rests on that control rather than on a walked test. The doors
+  themselves want a playtest.
 - **A test build exists for walking gated routes**: `make
   quickstart-testkit` starts the player holding the Blue Sword, bombs and
   the Spin Attack - the kit North Hyrule Field's WNW border asks for, and
