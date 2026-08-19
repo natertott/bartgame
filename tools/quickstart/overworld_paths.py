@@ -24,7 +24,7 @@ Three tables make up the model.
 
   GATES - regions that cost an item to be IN at all, whatever route you
   take through them. Royal Valley wants the Lantern; Lake Hylia the
-  Flippers; Crenel the Grip Ring; Castor Wilds the Cape or the Ladder.
+  Flippers; Crenel the Grip Ring; Castor Wilds the Cape or the Pegasus Boots.
 
 Requirements are in disjunctive normal form: a set of alternative terms,
 each term a set of items that must ALL be held. "Cape or Flippers" is two
@@ -58,13 +58,13 @@ CAPE = 'cape'              # Roc's Cape
 PACCI = 'pacci'            # Cane of Pacci
 LANTERN = 'lantern'
 GRIP = 'grip'              # Grip Ring
-LADDER = 'ladder'
+BOOTS = 'boots'            # Pegasus Boots
 
 ITEM_ENUM = {              # for the eventual game.c port
-    SWORD: 'ITEM_SWORD', SWORD3: 'ITEM_SWORD3', SPIN: 'ITEM_SKILL_SPIN_ATTACK',
+    SWORD: 'ITEM_SMITH_SWORD', SWORD3: 'ITEM_BLUE_SWORD', SPIN: 'ITEM_SKILL_SPIN_ATTACK',
     BOMBS: 'ITEM_BOMBS', FLIPPERS: 'ITEM_FLIPPERS', CAPE: 'ITEM_ROCS_CAPE',
     PACCI: 'ITEM_PACCI_CANE', LANTERN: 'ITEM_LANTERN_OFF', GRIP: 'ITEM_GRIP_RING',
-    LADDER: 'ITEM_LADDER',
+    BOOTS: 'ITEM_PEGASUS_BOOTS',
 }
 
 # Can a run actually GET each of these? Checked against sQuickStartTiers in
@@ -75,8 +75,9 @@ ITEM_ENUM = {              # for the eventual game.c port
 # route nobody can walk.
 OBTAINABLE = {
     SWORD:    (True,  'ITEM_SMITH_SWORD is in the starting kit'),
-    SWORD3:   (False, 'NOT OBTAINABLE - the tier table drops ITEM_RED_SWORD and '
-                      'stops there; the level-3 blade (ITEM_BLUE_SWORD) is in no pool'),
+    SWORD3:   (True,  'ITEM_BLUE_SWORD drops (RARE, behind the White Sword) - added '
+                      'to the tier table because this model showed the Royal Valley '
+                      'route was gated behind an item no run could get'),
     SPIN:     (True,  'ITEM_SKILL_SPIN_ATTACK drops'),
     BOMBS:    (True,  'ITEM_BOMBS drops'),
     FLIPPERS: (True,  'ITEM_FLIPPERS drops'),
@@ -84,7 +85,7 @@ OBTAINABLE = {
     PACCI:    (True,  'ITEM_PACCI_CANE drops'),
     LANTERN:  (True,  'ITEM_LANTERN_OFF drops'),
     GRIP:     (True,  'ITEM_GRIP_RING drops'),
-    LADDER:   (False, 'NOT OBTAINABLE - no ladder item in any pool'),
+    BOOTS:    (True,  'ITEM_PEGASUS_BOOTS drops'),
 }
 
 
@@ -165,9 +166,11 @@ REGIONS = {
     'VF':   dict(name='Veil Falls',     ports=['S', 'WSW'], pooled=False),
     'LH':   dict(name='Lake Hylia',     ports=['W'],        pooled=False),
     'CREN': dict(name='Mt Crenel',      ports=['E'],        pooled=False),
-    # Castor Wilds is listed for its GATE only. Its ports are not surveyed
-    # and it touches nothing in the ring, so it has no links yet.
-    'CW':   dict(name='Castor Wilds',   ports=[],           pooled=False),
+    # Castor Wilds: its SWS exit is open now. Vanilla gates it behind a
+    # Kinstone event, and that event is being removed (user, Aug 2026), so
+    # the exit costs nothing beyond the area's own gate. Its other ports are
+    # not surveyed and it has no link into the ring yet.
+    'CW':   dict(name='Castor Wilds',   ports=['SWS'],      pooled=False),
 }
 
 # Regions that cost an item to be inside AT ALL, on any route through them.
@@ -175,7 +178,7 @@ GATES = {
     'RV':   req([LANTERN]),
     'LH':   req([FLIPPERS]),
     'CREN': req([GRIP]),
-    'CW':   req([CAPE], [LADDER]),
+    'CW':   req([CAPE], [BOOTS]),
 }
 
 # ------------------------------------------------------------ the traversal --
@@ -229,10 +232,26 @@ t('NHF', 'S', 'ENE', [BOMBS])
 t('NHF', 'S', 'ESE', [SWORD])
 
 t('NHF', 'WSW', 'WNW', [CAPE, BOMBS, SWORD3, SPIN], [FLIPPERS, BOMBS, SWORD3, SPIN])
+t('NHF', 'WSW', 'N', [CAPE], [FLIPPERS, BOMBS])
+t('NHF', 'WSW', 'S', [CAPE], [FLIPPERS, BOMBS])
+t('NHF', 'WSW', 'ENE', [CAPE, BOMBS], [FLIPPERS, BOMBS])
+t('NHF', 'WSW', 'ESE', [CAPE], [FLIPPERS, BOMBS])
 
 # --- South Hyrule Field ----------------------------------------------------
 t('SHF', 'N', 'E')
 t('SHF', 'N', 'W', [SWORD])
+t('SHF', 'E', 'W', [SWORD])
+t('SHF', 'E', 'N')
+t('SHF', 'W', 'E', [SWORD])
+t('SHF', 'W', 'N', [SWORD])
+
+# --- Eastern Hills / Western Wood -----------------------------------------
+t('EH', 'N', 'W', [BOMBS])
+t('WW', 'N', 'E')
+
+# --- Castle Garden ---------------------------------------------------------
+# "Castle Garden requires nothing to traverse" - so if it ever grows a
+# second port, every pair between them is free. One port today.
 
 # --- Trilby Highlands ------------------------------------------------------
 for a in ('ENE', 'ESE', 'W', 'S'):

@@ -114,17 +114,31 @@ can actually obtain.
   actually work. A generated route reports its bill directly: three
   regions from Castle Garden costs nothing, or a sword, or Cape/Flippers,
   or bombs+sword; five regions converges on bombs+sword+Cape/Flippers.
-  **Two findings worth acting on.**
-  1. **The level-3 sword is not obtainable**, so five NHF traversals are
-     dead - every route to its WNW port, which is the only way to Royal
-     Valley. The tier table drops `ITEM_RED_SWORD` and stops; the level-3
-     blade is in no pool. Either add it, or restate those requirements.
-  2. **Eastern Hills and Western Wood are dead ends in the model**, not
-     because of geography but because their internal traversals were not
-     part of the survey. Twelve from->to pairs are unsurveyed in total
-     (NHF WSW->N/S/ENE/ESE, all four of SHF's E and W pairs, EH N<->W,
-     WW N<->E), and until they exist a route that enters those regions can
-     only come back out the way it went in.
+  **What it found, and what shipped because of it.** The model showed that
+  five NHF traversals - between them every route to the WNW port, which is
+  the only door to Royal Valley - were priced in a level-3 blade the
+  weapon ladder never reached: the tier table stopped at
+  `ITEM_RED_SWORD`. Nothing about either table looks wrong on its own;
+  side by side, a region falls off the map. **The Tempered Sword
+  (`ITEM_BLUE_SWORD`) is now a RARE drop gated behind the White Sword**
+  (`QS_REQ_RED_SWORD`), so the ladder can only be climbed upward - the run
+  cannot deal the third rung first and then equip a downgrade over it.
+  Every traversal in the survey is now walkable with a kit a run can
+  assemble.
+  Adding it meant a catalog row, and the catalog's name and description
+  strings are indexed arithmetically off `gCustomStrings`, so the fourteen
+  non-catalog strings above them moved up by two. The three sites that
+  refer to those by literal number (the Tingle payout, `sQuickStartHintPool`,
+  and the wind-crest sign script) moved with them, and all seven moved
+  strings were read back out of the built ROM to confirm they resolve to
+  the right text.
+  **The survey is now complete but for two pairs** (EH `W->N`, WW `E->N`),
+  after the user filled in NHF's WSW row, all of SHF, and one crossing each
+  for Eastern Hills and Western Wood. Castle Garden costs nothing to
+  cross; Castor Wilds is gated on Cape or Pegasus Boots (not a Ladder -
+  that is not an item) and its SWS exit is open now that its Kinstone gate
+  is being removed, though nothing yet records what lies on the other side
+  of it.
   What is left to build once the table is complete: the runtime half - roll
   a route per run from the run seed, distribute the win conditions along
   it, and refuse to place one behind a bill the run cannot fill.

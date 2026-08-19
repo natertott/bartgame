@@ -125,7 +125,7 @@ script_QuickStartWindCrestSign_loop:
 	SetPlayerIdle
 	Call DisablePauseMenuAndPutAwayItems
 	FacePlayer
-	MessageNoOverlap TEXT_CUSTOM, 214
+	MessageNoOverlap TEXT_CUSTOM, 216
 	WaitUntilTextboxCloses
 	Call EnablePauseMenu
 	EnablePlayerControl

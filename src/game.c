@@ -1886,6 +1886,7 @@ extern u32 MsgInit(void);
 // The terminator is C's own implicit trailing '\0', which is also this
 // engine's own "end of text" byte (charmap.txt: '$' = 00).
 const u8* const gCustomStrings[] = {
+
     [0] = (const u8*)"You win! Difficulty\nincreased to level \x06\x01.",
     // Castle Garden ladder mini-dungeon reward NPCs (data/scripts/quickstart/
     // script_QuickStartLadderNpc0/1/2.inc) - all 3 ladders share the same
@@ -2075,19 +2076,16 @@ const u8* const gCustomStrings[] = {
     // screen next to it.
     [60] = (const u8*)"- - - - -",
     // -- the goal
+    // -- catalog NAMES, one per sQuickStartCatalog row, in table order
     [61] = (const u8*)"Earth Element",
-    // -- ordinary pickups
     [62] = (const u8*)"Heart",
     [63] = (const u8*)"Green Rupee",
     [64] = (const u8*)"Blue Rupee",
     [65] = (const u8*)"Red Rupee",
-    // "Bomb Refill" rather than "Bombs": row 25 is the BOMBS weapon and
-    // the two would otherwise read identically five rows apart.
     [66] = (const u8*)"Bomb Refill",
     [67] = (const u8*)"Arrow Refill",
     [68] = (const u8*)"Kinstone Piece",
     [69] = (const u8*)"Fairy",
-    // -- rewards
     [70] = (const u8*)"Big Green Rupee",
     [71] = (const u8*)"Big Red Rupee",
     [72] = (const u8*)"Big Silver Rupee",
@@ -2097,163 +2095,150 @@ const u8* const gCustomStrings[] = {
     [76] = (const u8*)"Blue Potion",
     [77] = (const u8*)"Red Potion",
     [78] = (const u8*)"Bottled Fairy",
-    // -- weapons and tools
     [79] = (const u8*)"Smith's Sword",
     [80] = (const u8*)"White Sword",
-    [81] = (const u8*)"Shield",
-    [82] = (const u8*)"Mirror Shield",
-    [83] = (const u8*)"Bow",
-    [84] = (const u8*)"Large Quiver",
-    [85] = (const u8*)"Bombs",
-    [86] = (const u8*)"Remote Bombs",
-    [87] = (const u8*)"Bomb Bag",
-    [88] = (const u8*)"Boomerang",
-    [89] = (const u8*)"Magic Boomerang",
-    [90] = (const u8*)"Gust Jar",
-    [91] = (const u8*)"Fire Rod",
-    [92] = (const u8*)"Map",
-    [93] = (const u8*)"Compass",
-    // -- key items
-    [94] = (const u8*)"Pegasus Boots",
-    [95] = (const u8*)"Roc's Cape",
-    [96] = (const u8*)"Mole Mitts",
-    [97] = (const u8*)"Flippers",
-    [98] = (const u8*)"Lantern",
-    [99] = (const u8*)"Ocarina",
-    [100] = (const u8*)"Cane of Pacci",
-    [101] = (const u8*)"Grip Ring",
-    [102] = (const u8*)"Power Bracelets",
-    // -- sword skills
-    [103] = (const u8*)"Spin Attack",
-    [104] = (const u8*)"Great Spin",
-    [105] = (const u8*)"Rock Breaker",
-    [106] = (const u8*)"Roll Attack",
-    [107] = (const u8*)"Dash Attack",
-    [108] = (const u8*)"Down Thrust",
-    [109] = (const u8*)"Sword Beam",
-    [110] = (const u8*)"Peril Beam",
-    // -- stat upgrades
-    [111] = (const u8*)"Arrow Butterfly",
-    [112] = (const u8*)"Dig Butterfly",
-    [113] = (const u8*)"Swim Butterfly",
-    [114] = (const u8*)"Charm of Nayru",
-    [115] = (const u8*)"Charm of Farore",
-    [116] = (const u8*)"Charm of Din",
-    // -- charms and curses
-    [117] = (const u8*)"Brioche",
-    [118] = (const u8*)"Croissant",
-    [119] = (const u8*)"Cake",
-    [120] = (const u8*)"Red Book",
-    [121] = (const u8*)"Green Book",
-    [122] = (const u8*)"Blue Book",
-    [123] = (const u8*)"Tingle Trophy",
-    [124] = (const u8*)"Jabber Nut",
-    [125] = (const u8*)"Carlov's Medal",
-    [126] = (const u8*)"Broken Sword",
-    [127] = (const u8*)"Lucky Shells",
-    [128] = (const u8*)"Humble Pie",
-    [129] = (const u8*)"Dog Food",
-    [130] = (const u8*)"Strange Mushroom",
-    // ---- descriptions, same order --------------------------------------
-    [131] = (const u8*)"The run's goal. It waits\nin one area each run -\ntake it and you win.",
-    [132] = (const u8*)"Restores one heart.\nFalls from cut grass,\npots and slain foes.",
-    [133] = (const u8*)"One rupee. The shop and\nthe inn both take them,\nso nothing is wasted.",
-    [134] = (const u8*)"Five rupees.",
-    [135] = (const u8*)"Twenty rupees.",
-    [136] = (const u8*)"Refills five bombs, up\nto whatever your bag\nwill hold.",
-    [137] = (const u8*)"Refills five arrows, up\nto whatever your quiver\nwill hold.",
-    [138] = (const u8*)"Fuse a piece at a gated\ndoor to open a new room\nfor the rest of the run.",
-    [139] = (const u8*)"Refills your hearts on\nthe spot. Catch one in\na bottle to save it.",
-    [140] = (const u8*)"Fifty rupees. A common\narea-clear reward.",
-    [141] = (const u8*)"One hundred rupees.",
-    [142] = (const u8*)"Two hundred rupees. The\nrichest single reward\nthis mode drops.",
-    [143] = (const u8*)"Four pieces make one\nwhole Heart Container.",
-    [144] = (const u8*)"One more heart on your\nlife bar, permanently\nfor this run.",
-    [145] = (const u8*)"Holds one potion, fairy\nor charm. More bottles\nmeans more can be held.",
-    [146] = (const u8*)"Refills your hearts when\ndrunk. Keep it for the\nfight you did not expect.",
-    [147] = (const u8*)"Refills hearts AND cures\nwhatever ails you.",
-    [148] = (const u8*)"Revives you where you\nfall - an extra life in\na bottle.",
-    [149] = (const u8*)"Your starting blade. Its\nspin and beam skills are\nlearned separately.",
-    [150] = (const u8*)"A stronger blade. Every\nsword blow you land does\nmore damage.",
-    [151] = (const u8*)"Blocks blows from ahead\nand bounces some shots\nstraight back.",
-    [152] = (const u8*)"Blocks what a shield\nblocks, and reflects\nmagic besides.",
-    [153] = (const u8*)"Strikes at range. Some\nfoes a sword cannot kill\nfall to an arrow.",
-    [154] = (const u8*)"Carry far more arrows\nbefore you run dry.",
-    [155] = (const u8*)"Blows open cracked walls\nand kills whatever is\nstanding too close.",
-    [156] = (const u8*)"Bombs you set off when\nYOU choose, not on a\nfuse.",
-    [157] = (const u8*)"Carry far more bombs\nbefore you run dry.",
-    [158] = (const u8*)"Stuns at range and grabs\ndistant items. Kills\nsome flyers outright.",
-    [159] = (const u8*)"A boomerang you steer in\nflight. Reaches what the\nplain one cannot.",
-    [160] = (const u8*)"Sucks in foes, pulls off\nshields, and hauls light\nthings across gaps.",
-    [161] = (const u8*)"Sets fire to what it\ntouches. Lights dark\nrooms as it goes.",
-    [162] = (const u8*)"Shows the whole world on\nthe pause screen, and\nwhere you stand on it.",
-    [163] = (const u8*)"Names the area holding\nthis run's Earth\nElement.",
-    [164] = (const u8*)"Hold the button to run.\nCrash into things and\nthey give way.",
-    [165] = (const u8*)"Jump gaps and ledges,\nand glide a little on\nthe way down.",
-    [166] = (const u8*)"Dig through soft ground\nfor buried things and\nburied ways through.",
-    [167] = (const u8*)"Swim deep water instead\nof being turned back at\nthe shore.",
-    [168] = (const u8*)"Lights dark rooms and\nsets fire to what needs\nburning.",
-    [169] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
-    [170] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
-    [171] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
-    [172] = (const u8*)"Shove the heavy rocks\nthat block the ways\nnothing else opens.",
-    [173] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
-    [174] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
-    [175] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
-    [176] = (const u8*)"Roll into a foe and come\nup swinging, in one\nmotion.",
-    [177] = (const u8*)"Dash with the boots and\nthe sword leads, striking\nwhat you run down.",
-    [178] = (const u8*)"Fall from a jump with\nthe blade below you and\nland it point first.",
-    [179] = (const u8*)"At full health your\nsword throws a beam at\nwhatever you face.",
-    [180] = (const u8*)"At ONE heart your sword\nthrows beams - desperate,\nand strongest.",
-    [181] = (const u8*)"You nock and loose\narrows faster than you\ndid before.",
-    [182] = (const u8*)"You dig faster than you\ndid before.",
-    [183] = (const u8*)"You swim faster than you\ndid before.",
-    [184] = (const u8*)"Nayru: you take a\nQUARTER of the damage\nyou otherwise would.",
-    [185] = (const u8*)"Farore: you take half\ndamage AND deal half\nagain as much.",
-    [186] = (const u8*)"Din: your blows do\nDOUBLE damage. Drink it\nand hit things.",
-    [187] = (const u8*)"Charm: your sword knocks\nfoes twice as far as it\nused to.",
-    [188] = (const u8*)"Charm: you walk half\nagain as fast for the\nrest of the run.",
-    [189] = (const u8*)"Charm: nothing can knock\nyou back. You stand\nwhere you stand.",
-    [190] = (const u8*)"Charm: fire cannot burn\nyou - no flames, no\ncontact damage.",
-    [191] = (const u8*)"Charm: ice cannot freeze\nyou. Walk through what\nused to stop you.",
-    [192] = (const u8*)"Charm: sparks cannot\nshock you.",
-    [193] = (const u8*)"Charm: slain foes spill\nrupees far more often.",
-    [194] = (const u8*)"Charm: slain foes drop\nKinstone pieces far more\noften.",
-    [195] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
-    [196] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
-    [197] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
-    [198] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
-    [199] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
-    [200] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
-    // Tingle's payout (QuickStartTinglePayout).
-    [201] = (const u8*)"Tingle, Tingle! A Heart\nContainer for a fine\nfusion!",
-    // ================== The hub hint pool (F5) ==========================
-    //
-    // The other twelve. Strings 20-25 above are the original six and stay
-    // where they are; together the eighteen are sQuickStartHintPool, from
-    // which each run deals six without replacement. Written against what
-    // the mode actually does now rather than what it did when the first
-    // six were authored - the trophy case, Tingle, the dig caves and the
-    // switch-puzzle clock did not exist then, and a hint that teaches a
-    // rule the player cannot otherwise learn is worth more than one that
-    // restates the obvious.
-    [202] = (const u8*)"The case upstairs lists\nall you have ever found.\nGo and look!",
-    [203] = (const u8*)"Tingle trades a fusion\nfor a Heart Container.\nFind him in the fields!",
-    [204] = (const u8*)"Quests give ONE attempt\na run. Fail and the\ngiver is done with you.",
-    [205] = (const u8*)"Strike the switch, then\nRUN. The cage shuts fast\n- faster as you win.",
-    [206] = (const u8*)"Some food blesses. Some\nfood BITES. You cannot\ntell by looking.",
-    [207] = (const u8*)"A charm lasts the whole\nrun. So does a curse.",
-    [208] = (const u8*)"Beds upstairs cost more\nand heal more. Rupees\nare worth carrying.",
-    [209] = (const u8*)"The compass names the\narea. It will not name\nthe spot.",
-    [210] = (const u8*)"Mole Mitts open the dug\ncaves. Something waits\nin every one.",
-    [211] = (const u8*)"Fuse at a sealed door\nand it stays open the\nwhole run.",
-    [212] = (const u8*)"Kinstones come off the\nfoes you kill. Fight for\nyour keys.",
-    [213] = (const u8*)"Pots and grass pay too.\nBreak everything.",
-    // The wind crest signpost (script_QuickStartWindCrestSign). NOT a pool
-    // entry: this one has to be said every run, because it is the only
-    // place the game states out loud that a trip into the ring is not
-    // one-way.
-    [214] = (const u8*)"Play the Ocarina anywhere\nto ride the wind home to\nthis crest. Always.",
+    [81] = (const u8*)"Tempered Sword",
+    [82] = (const u8*)"Shield",
+    [83] = (const u8*)"Mirror Shield",
+    [84] = (const u8*)"Bow",
+    [85] = (const u8*)"Large Quiver",
+    [86] = (const u8*)"Bombs",
+    [87] = (const u8*)"Remote Bombs",
+    [88] = (const u8*)"Bomb Bag",
+    [89] = (const u8*)"Boomerang",
+    [90] = (const u8*)"Magic Boomerang",
+    [91] = (const u8*)"Gust Jar",
+    [92] = (const u8*)"Fire Rod",
+    [93] = (const u8*)"Map",
+    [94] = (const u8*)"Compass",
+    [95] = (const u8*)"Pegasus Boots",
+    [96] = (const u8*)"Roc's Cape",
+    [97] = (const u8*)"Mole Mitts",
+    [98] = (const u8*)"Flippers",
+    [99] = (const u8*)"Lantern",
+    [100] = (const u8*)"Ocarina",
+    [101] = (const u8*)"Cane of Pacci",
+    [102] = (const u8*)"Grip Ring",
+    [103] = (const u8*)"Power Bracelets",
+    [104] = (const u8*)"Spin Attack",
+    [105] = (const u8*)"Great Spin",
+    [106] = (const u8*)"Rock Breaker",
+    [107] = (const u8*)"Roll Attack",
+    [108] = (const u8*)"Dash Attack",
+    [109] = (const u8*)"Down Thrust",
+    [110] = (const u8*)"Sword Beam",
+    [111] = (const u8*)"Peril Beam",
+    [112] = (const u8*)"Arrow Butterfly",
+    [113] = (const u8*)"Dig Butterfly",
+    [114] = (const u8*)"Swim Butterfly",
+    [115] = (const u8*)"Charm of Nayru",
+    [116] = (const u8*)"Charm of Farore",
+    [117] = (const u8*)"Charm of Din",
+    [118] = (const u8*)"Brioche",
+    [119] = (const u8*)"Croissant",
+    [120] = (const u8*)"Cake",
+    [121] = (const u8*)"Red Book",
+    [122] = (const u8*)"Green Book",
+    [123] = (const u8*)"Blue Book",
+    [124] = (const u8*)"Tingle Trophy",
+    [125] = (const u8*)"Jabber Nut",
+    [126] = (const u8*)"Carlov's Medal",
+    [127] = (const u8*)"Broken Sword",
+    [128] = (const u8*)"Lucky Shells",
+    [129] = (const u8*)"Humble Pie",
+    [130] = (const u8*)"Dog Food",
+    [131] = (const u8*)"Strange Mushroom",
+    // -- catalog DESCRIPTIONS, same order as the names above
+    [132] = (const u8*)"The run's goal. It waits\nin one area each run -\ntake it and you win.",
+    [133] = (const u8*)"Restores one heart.\nFalls from cut grass,\npots and slain foes.",
+    [134] = (const u8*)"One rupee. The shop and\nthe inn both take them,\nso nothing is wasted.",
+    [135] = (const u8*)"Five rupees.",
+    [136] = (const u8*)"Twenty rupees.",
+    [137] = (const u8*)"Refills five bombs, up\nto whatever your bag\nwill hold.",
+    [138] = (const u8*)"Refills five arrows, up\nto whatever your quiver\nwill hold.",
+    [139] = (const u8*)"Fuse a piece at a gated\ndoor to open a new room\nfor the rest of the run.",
+    [140] = (const u8*)"Refills your hearts on\nthe spot. Catch one in\na bottle to save it.",
+    [141] = (const u8*)"Fifty rupees. A common\narea-clear reward.",
+    [142] = (const u8*)"One hundred rupees.",
+    [143] = (const u8*)"Two hundred rupees. The\nrichest single reward\nthis mode drops.",
+    [144] = (const u8*)"Four pieces make one\nwhole Heart Container.",
+    [145] = (const u8*)"One more heart on your\nlife bar, permanently\nfor this run.",
+    [146] = (const u8*)"Holds one potion, fairy\nor charm. More bottles\nmeans more can be held.",
+    [147] = (const u8*)"Refills your hearts when\ndrunk. Keep it for the\nfight you did not expect.",
+    [148] = (const u8*)"Refills hearts AND cures\nwhatever ails you.",
+    [149] = (const u8*)"Revives you where you\nfall - an extra life in\na bottle.",
+    [150] = (const u8*)"Your starting blade. Its\nspin and beam skills are\nlearned separately.",
+    [151] = (const u8*)"A stronger blade. Every\nsword blow you land does\nmore damage.",
+    [152] = (const u8*)"The White Sword reforged.\nMore damage still, and the\nblade some routes demand.",
+    [153] = (const u8*)"Blocks blows from ahead\nand bounces some shots\nstraight back.",
+    [154] = (const u8*)"Blocks what a shield\nblocks, and reflects\nmagic besides.",
+    [155] = (const u8*)"Strikes at range. Some\nfoes a sword cannot kill\nfall to an arrow.",
+    [156] = (const u8*)"Carry far more arrows\nbefore you run dry.",
+    [157] = (const u8*)"Blows open cracked walls\nand kills whatever is\nstanding too close.",
+    [158] = (const u8*)"Bombs you set off when\nYOU choose, not on a\nfuse.",
+    [159] = (const u8*)"Carry far more bombs\nbefore you run dry.",
+    [160] = (const u8*)"Stuns at range and grabs\ndistant items. Kills\nsome flyers outright.",
+    [161] = (const u8*)"A boomerang you steer in\nflight. Reaches what the\nplain one cannot.",
+    [162] = (const u8*)"Sucks in foes, pulls off\nshields, and hauls light\nthings across gaps.",
+    [163] = (const u8*)"Sets fire to what it\ntouches. Lights dark\nrooms as it goes.",
+    [164] = (const u8*)"Shows the whole world on\nthe pause screen, and\nwhere you stand on it.",
+    [165] = (const u8*)"Names the area holding\nthis run's Earth\nElement.",
+    [166] = (const u8*)"Hold the button to run.\nCrash into things and\nthey give way.",
+    [167] = (const u8*)"Jump gaps and ledges,\nand glide a little on\nthe way down.",
+    [168] = (const u8*)"Dig through soft ground\nfor buried things and\nburied ways through.",
+    [169] = (const u8*)"Swim deep water instead\nof being turned back at\nthe shore.",
+    [170] = (const u8*)"Lights dark rooms and\nsets fire to what needs\nburning.",
+    [171] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
+    [172] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
+    [173] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
+    [174] = (const u8*)"Shove the heavy rocks\nthat block the ways\nnothing else opens.",
+    [175] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
+    [176] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
+    [177] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
+    [178] = (const u8*)"Roll into a foe and come\nup swinging, in one\nmotion.",
+    [179] = (const u8*)"Dash with the boots and\nthe sword leads, striking\nwhat you run down.",
+    [180] = (const u8*)"Fall from a jump with\nthe blade below you and\nland it point first.",
+    [181] = (const u8*)"At full health your\nsword throws a beam at\nwhatever you face.",
+    [182] = (const u8*)"At ONE heart your sword\nthrows beams - desperate,\nand strongest.",
+    [183] = (const u8*)"You nock and loose\narrows faster than you\ndid before.",
+    [184] = (const u8*)"You dig faster than you\ndid before.",
+    [185] = (const u8*)"You swim faster than you\ndid before.",
+    [186] = (const u8*)"Nayru: you take a\nQUARTER of the damage\nyou otherwise would.",
+    [187] = (const u8*)"Farore: you take half\ndamage AND deal half\nagain as much.",
+    [188] = (const u8*)"Din: your blows do\nDOUBLE damage. Drink it\nand hit things.",
+    [189] = (const u8*)"Charm: your sword knocks\nfoes twice as far as it\nused to.",
+    [190] = (const u8*)"Charm: you walk half\nagain as fast for the\nrest of the run.",
+    [191] = (const u8*)"Charm: nothing can knock\nyou back. You stand\nwhere you stand.",
+    [192] = (const u8*)"Charm: fire cannot burn\nyou - no flames, no\ncontact damage.",
+    [193] = (const u8*)"Charm: ice cannot freeze\nyou. Walk through what\nused to stop you.",
+    [194] = (const u8*)"Charm: sparks cannot\nshock you.",
+    [195] = (const u8*)"Charm: slain foes spill\nrupees far more often.",
+    [196] = (const u8*)"Charm: slain foes drop\nKinstone pieces far more\noften.",
+    [197] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
+    [198] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
+    [199] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
+    [200] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
+    [201] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
+    [202] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
+    // -- everything that is not the catalog. These moved up by two when
+    //    the Tempered Sword row was added; they are the only custom
+    //    strings anything refers to by a literal number, so the three
+    //    call sites moved with them (Tingle payout, sQuickStartHintPool,
+    //    script_QuickStartWindCrestSign).
+    [203] = (const u8*)"Tingle, Tingle! A Heart\nContainer for a fine\nfusion!",
+    [204] = (const u8*)"The case upstairs lists\nall you have ever found.\nGo and look!",
+    [205] = (const u8*)"Tingle trades a fusion\nfor a Heart Container.\nFind him in the fields!",
+    [206] = (const u8*)"Quests give ONE attempt\na run. Fail and the\ngiver is done with you.",
+    [207] = (const u8*)"Strike the switch, then\nRUN. The cage shuts fast\n- faster as you win.",
+    [208] = (const u8*)"Some food blesses. Some\nfood BITES. You cannot\ntell by looking.",
+    [209] = (const u8*)"A charm lasts the whole\nrun. So does a curse.",
+    [210] = (const u8*)"Beds upstairs cost more\nand heal more. Rupees\nare worth carrying.",
+    [211] = (const u8*)"The compass names the\narea. It will not name\nthe spot.",
+    [212] = (const u8*)"Mole Mitts open the dug\ncaves. Something waits\nin every one.",
+    [213] = (const u8*)"Fuse at a sealed door\nand it stays open the\nwhole run.",
+    [214] = (const u8*)"Kinstones come off the\nfoes you kill. Fight for\nyour keys.",
+    [215] = (const u8*)"Pots and grass pay too.\nBreak everything.",
+    [216] = (const u8*)"Play the Ocarina anywhere\nto ride the wind home to\nthis crest. Always.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -4066,6 +4051,14 @@ enum {
     QS_REQ_BOTTLE_ROOM,  // a new empty bottle needs a free bottle slot
     QS_REQ_NO_PACCI,     // the Fire Rod shares the Cane's inventory cell
     QS_REQ_NO_FIRE_ROD,  // ...and vice versa
+    // The blade ladder has to be climbed in order. Without this the run
+    // could hand out the Tempered Sword first and the White Sword after
+    // it, and GiveItem equips whatever it is handed - so the "upgrade"
+    // would be a downgrade. Gating the third rung on the second also means
+    // the second can never re-drop (QuickStartTierEntryUsable already
+    // refuses a non-repeatable item the player owns), so the ladder only
+    // ever runs upward.
+    QS_REQ_RED_SWORD,
 };
 
 typedef struct {
@@ -4121,6 +4114,14 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     // It remains a miniboss payout too; not repeatable, so a run cannot
     // stack two.
     { ITEM_RED_SWORD, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    // The third rung, added because the overworld route model wants it: the
+    // user's survey prices North Hyrule Field's WNW exit - the only door to
+    // Royal Valley - at bombs AND a level-3 blade AND the Spin Attack, and
+    // the ladder used to stop at the White Sword, so that exit was gated
+    // behind something no run could obtain. RARE and behind the White
+    // Sword, so it reads as the top of the weapon ladder rather than a
+    // lucky early find.
+    { ITEM_BLUE_SWORD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_RED_SWORD, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
     // --- SKILL UPGRADES --------------------------------------------------
@@ -4324,6 +4325,8 @@ static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
             return GetInventoryValue(ITEM_PACCI_CANE) == 0;
         case QS_REQ_NO_FIRE_ROD:
             return GetInventoryValue(ITEM_FIRE_ROD) == 0;
+        case QS_REQ_RED_SWORD:
+            return GetInventoryValue(ITEM_RED_SWORD) != 0;
         default:
             return TRUE;
     }
@@ -14260,7 +14263,7 @@ typedef struct {
 // deal too, which is what a pinned run should do.)
 static const u8 sQuickStartHintPool[] = {
     20,  21,  22,  23,  24,  25, // the original six
-    202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213,
+    204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215,
 };
 
 #define QUICKSTART_HINT_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartHintPool))
@@ -15466,6 +15469,7 @@ static const QuickStartCatalogEntry sQuickStartCatalog[] = {
     // --- Weapons and tools ------------------------------------------
     { ITEM_SMITH_SWORD, QS_CAT_WEAPON },
     { ITEM_RED_SWORD, QS_CAT_WEAPON },
+    { ITEM_BLUE_SWORD, QS_CAT_WEAPON },
     { ITEM_SHIELD, QS_CAT_WEAPON },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON },
     { ITEM_BOW, QS_CAT_WEAPON },
@@ -15863,7 +15867,7 @@ static void QuickStartTinglePayout(void) {
             continue;
         }
         QsSetFlag(GF_TINGLE_PAID_BIT(i));
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 201), 0);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 203), 0);
     }
 }
 
