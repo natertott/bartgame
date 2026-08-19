@@ -680,9 +680,10 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   re-run ring.py + the checker. The adjacency map and distance-2 element
   rule absorb new regions as one enum row plus edges. Routine now - a
   breadth call, not an engineering risk.
-- **ROYAL VALLEY: surveyed and ready to wire** (user, Aug 2026). It is a
-  one-way valve - in from North Hyrule Field at E, out to Trilby at S, no
-  way back - and the room's own geometry is why.
+- ~~ROYAL VALLEY: surveyed and ready to wire~~ **IN THE POOL** (user, Aug
+  2026). The ring is eight regions now. It is a one-way valve - in from
+  North Hyrule Field at E, out to Trilby at S, no way back - and the
+  room's own geometry is why.
   **Three components, not one** (`tools/quickstart/royal_valley_survey.py`).
   Main is 30x63 tiles holding three separate walkable spaces: the 42-tile
   pocket where NHF's `WEST_NORTH` border lands (tx 19-29, ty 36-40); the
@@ -742,6 +743,29 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   and carries the heaviest bill in the graph - bombs + Lantern + Spin +
   the level-3 blade. That whole class of route was impossible before the
   Tempered Sword went in the pool this same session.
+  **As shipped**: pool row 12 of a state block sized for exactly 12,
+  `roomSquares` 242 and `maxEnemies` 18 over the graveyard component,
+  entrance (296,856) and reward (184,904), 28 surveyed spawn spots. It is
+  the eighth named region (`QS_RING_RV`), adjacent to North Hyrule Field
+  and Trilby. North Hyrule Field's `WEST_NORTH` border is open, which is
+  the only way in. `QuickStartIsRingRegionRoom` names it, so the temporary
+  pocket-interior exception added for the Trilby seam is retired.
+  Measured after wiring: mixed waves of 9-11 enemies at difficulty 0
+  through 12, a steady 60fps walking, at least 12 free GFX slots at every
+  difficulty, and the checker green.
+  **Still open, and now live rather than theoretical**: the region is
+  DARK - screenshotted, it paints the Lantern's small-radius overlay - and
+  nothing gates the pool draw on holding a Lantern. A run drawn here
+  without one plays in the dark. That is the first concrete thing the
+  key-item reachability work has to decide.
+- **A test build exists for walking gated routes**: `make
+  quickstart-testkit` starts the player holding the Blue Sword, bombs and
+  the Spin Attack - the kit North Hyrule Field's WNW border asks for, and
+  so the only way to reach Royal Valley on foot without first winning
+  those items. Off in every normal build (`QUICKSTART_TESTKIT`).
+  Deliberately NOT the Four Sword: holding it makes `sub_080AF284`
+  (movement.c, from Castle Garden's state change) replace Castle Garden's
+  entire exit list, which would take the region's borders with it.
 - **The Minish layer as a parallel network (#102) - the SURVEY IS DONE and
   its findings are wired** (the user, Aug 2026: sweep every Minish hole,
   room and treehouse in the ring and add the unwired ones as ? rooms).

@@ -23,6 +23,13 @@ custom: tools
 quickstart: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
 
+# The same game, but the player starts holding the kit that opens the gated
+# overworld routes: the Blue Sword, bombs, and the Spin Attack. For walking
+# a route without having to win its items first - notably North Hyrule
+# Field's WNW border, the only door into Royal Valley.
+quickstart-testkit: tools
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1
+
 # Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
 # south gate, with the entire main quest done except the Vaati fight - see
 # src/game.c. For manually walking the full overworld and recording

@@ -808,6 +808,30 @@ static void GameTask_Transition(void) {
     // selectable from the item menu even after being displaced.
     SetInventoryValue(ITEM_SHIELD, 1);
     SetInventoryValue(ITEM_SMITH_SWORD, 1);
+#ifdef QUICKSTART_TESTKIT
+    // A TEST BUILD ONLY, off unless the build sets QUICKSTART_TESTKIT: start
+    // holding the things the gated overworld routes ask for, so a route can
+    // be walked without first winning the items that open it. Asked for to
+    // reach North Hyrule Field's WNW border - bombs AND a high sword AND
+    // the Spin Attack - which is the only door into Royal Valley.
+    //
+    // The blade is ITEM_BLUE_SWORD, the top of the ladder this mode can
+    // safely hand out. ITEM_FOURSWORD sits above it and is deliberately NOT
+    // used: holding it makes sub_080AF284 (movement.c, called from Castle
+    // Garden's own state change) replace Castle Garden's ENTIRE exit list
+    // with gUnk_08134FBC, which would take the region's borders with it.
+    // A test kit that quietly rewires a region is worse than no test kit.
+    SetInventoryValue(ITEM_BLUE_SWORD, 1);
+    gSave.stats.equipped[SLOT_B] = ITEM_BLUE_SWORD;
+    SetInventoryValue(ITEM_SKILL_SPIN_ATTACK, 1);
+    // Bombs need three things to be usable, not one: the item owned, a bag
+    // to hold them (type 1 is the small bag) and something in it. On the L
+    // slot, which the normal kit leaves empty.
+    SetInventoryValue(ITEM_BOMBS, 1);
+    gSave.stats.bombBagType = 1;
+    gSave.stats.bombCount = 30;
+    gSave.stats.equippedExtra[0] = ITEM_BOMBS;
+#endif
     // The Fire Rod and Light Arrow used to be pre-granted here for testing.
     // Both are droppable now (WEAPON/TOOL, see docs/QUICKSTART_ITEM_TIERS.md),
     // so handing them out at boot would defeat the point.
@@ -3123,6 +3147,28 @@ static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
 #define QUICKSTART_TRILBY_ROOM_SQUARES 450
 #define QUICKSTART_TRILBY_MAX_ENEMIES 50
 
+// Royal Valley - the graveyard component, and only that one. Main is
+// 30x63 tiles holding THREE separate walkable spaces (see
+// tools/quickstart/royal_valley_survey.py): a 42-tile pocket where North
+// Hyrule Field's border lands, this 242-tile graveyard holding the Trilby
+// border, and a 262-tile top part reachable only through the Lost Woods
+// maze. The pocket drops into the graveyard over a ledge and the maze does
+// not lead back, so the graveyard is the space a run actually plays in -
+// every spot below is inside it, so a wave can never spawn somewhere the
+// player cannot walk.
+//
+// 28 spots, each with full 3x3 clearance and at least three tiles from its
+// neighbours. Squares 242, cap 18 by the survey formula (squares/13).
+static const s16 sQuickStartRoyalValleyEnemyOffsets[][2] = {
+    { 88, 856 },  { 88, 984 },  { 104, 888 }, { 136, 856 }, { 136, 984 }, { 152, 888 },
+    { 184, 856 }, { 184, 904 }, { 184, 952 }, { 232, 904 }, { 280, 904 }, { 296, 856 },
+    { 312, 808 }, { 312, 888 }, { 328, 712 }, { 328, 840 }, { 344, 872 }, { 360, 808 },
+    { 360, 904 }, { 376, 840 }, { 392, 728 }, { 392, 776 }, { 392, 872 }, { 392, 920 },
+    { 408, 952 }, { 424, 744 }, { 424, 888 }, { 440, 776 },
+};
+#define QUICKSTART_ROYALVALLEY_ROOM_SQUARES 242
+#define QUICKSTART_ROYALVALLEY_MAX_ENEMIES 18
+
 // Castle Garden and Lon Lon Ranch (the original two, refactored per
 // docs/QUICKSTART_ROADMAP.md sec 3.1's own "become the first two rows in
 // that table" plan) plus South Hyrule Field, North Hyrule Field, and
@@ -3289,6 +3335,22 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 248, 360, 0, 0, 0, 0,
       sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607, 24,
       248, 360, NULL },
+    // ROYAL VALLEY, the eighth named region and the first one outside the
+    // original ring. Entrance (296,856) and reward (184,904) are both
+    // verified 3x3-clear tiles in the graveyard, ten tiles apart so the
+    // reward is visible on arrival without landing on the player.
+    //
+    // Two things to know about this region that no other pool row has.
+    // It is DARK - screenshotted, the room paints the Lantern's
+    // small-radius overlay - which is why the route model prices the whole
+    // area at a Lantern. Nothing enforces that yet, so a run drawn here
+    // without one plays in the dark rather than being turned away.
+    // And it is a ONE-WAY VALVE: in from North Hyrule Field's WNW border,
+    // out to Trilby's north edge, with no route back up inside the room.
+    { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 296, 856, 0, 0, 0, 0,
+      sQuickStartRoyalValleyEnemyOffsets, ARRAY_COUNT(sQuickStartRoyalValleyEnemyOffsets),
+      QUICKSTART_ROYALVALLEY_ROOM_SQUARES, QUICKSTART_ROYALVALLEY_MAX_ENEMIES,
+      184, 904, NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // (QUICKSTART_TRILBY_POOL_INDEX / QUICKSTART_LONLON_POOL_INDEX retired with
@@ -3418,17 +3480,22 @@ enum {
     QS_RING_LLR,
     QS_RING_TRIL,
     QS_RING_WW,
+    QS_RING_RV,
     QS_RING_COUNT
 };
 
 static const u8 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     /* CG   */ (1 << QS_RING_NHF),
-    /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL),
+    /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL) |
+               (1 << QS_RING_RV),
     /* SHF  */ (1 << QS_RING_NHF) | (1 << QS_RING_EH) | (1 << QS_RING_WW),
     /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR),
     /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
-    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW),
+    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV),
     /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF),
+    // Royal Valley touches North Hyrule Field (its WNW border) and Trilby
+    // (the north seam). Both edges are real crossings the player walks.
+    /* RV   */ (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -3439,6 +3506,7 @@ static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
         QS_RING_CG, QS_RING_LLR, QS_RING_SHF, QS_RING_NHF, QS_RING_TRIL,
         QS_RING_EH, QS_RING_EH, QS_RING_EH,
         QS_RING_WW, QS_RING_WW, QS_RING_WW,
+        QS_RING_RV,
     };
     return byPool[poolIndex % QUICKSTART_REGION_POOL_SIZE];
 }
@@ -11752,26 +11820,10 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == QUICKSTART_CAVE_AREA && room == QUICKSTART_CAVE_ROOM) {
         return TRUE;
     }
-    // Royal Valley Main, so the Trilby seam works in both directions (the
-    // user, Aug 2026: "we should open the border between Trillby North exit
-    // and Royal Valley South exit"). Royal Valley is not in the region pool
-    // yet, so nothing else blesses it: the border row was in the ROM and
-    // did nothing, because containment cancels a ring room's transitions to
-    // anywhere unblessed. Trilby is a ring room, Royal Valley was not
-    // blessed, so walking north off Trilby's top edge was cancelled every
-    // frame it fired.
-    //
-    // The other direction always worked - Royal Valley is not a ring room,
-    // so nothing cancelled it - which is what made this worth fixing
-    // rather than leaving: without the return the crossing was one-way onto
-    // a ledge at the top of Trilby, and the only way on from there is a
-    // drop the player cannot climb back up.
-    //
-    // This row retires the day Royal Valley joins the pool - it will be a
-    // ring room then, and ring-to-ring crossings are already free.
-    if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
-        return TRUE;
-    }
+    // (Royal Valley Main used to be named here, to open the Trilby seam
+    // before the region had a pool row. It is a ring room now -
+    // QuickStartIsRingRegionRoom - so ring-to-ring crossings cover that
+    // seam and the exception is retired.)
     // The North Hyrule Field fairy fountain tree. It is no longer a content
     // site itself - its event moved down the staircase into the cave, which
     // IS a site and so gets blessed by the table scan below - but the tree
@@ -13337,6 +13389,9 @@ static bool32 QuickStartTransitionStaysInSameRoom(void) {
 // door-type transitions, not the primary wall.
 static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room) {
     if (area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN) {
+        return TRUE;
+    }
+    if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
         return TRUE;
     }
     if (area != AREA_HYRULE_FIELD) {

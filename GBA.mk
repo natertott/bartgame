@@ -59,6 +59,10 @@ CUSTOM ?=
 # Dev-only hook: boot straight into a chosen room with full equipment instead
 # of the title/file-select flow, for fast iteration. See src/game.c.
 QUICKSTART ?=
+# Test build only: start holding the kit the gated overworld routes need
+# (Blue Sword, bombs, Spin Attack) instead of having to find it. Off by
+# default; `make quickstart-testkit` turns it on. See src/game.c.
+QUICKSTART_TESTKIT ?=
 # The hub: Home of the Wind Tribe, third floor. See docs/QUICKSTART_HUB.md.
 # Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN. Pointing these back
 # there no longer restores the old start: Castor Darknut's waves, its reward
@@ -123,6 +127,7 @@ $(BUILD_DIR)/enum_include/%.inc: include/%.h
 CINCLUDE := -I include -I $(BUILD_DIR)
 CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE) \
 	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM)) \
+	$(if $(QUICKSTART_TESTKIT),-DQUICKSTART_TESTKIT) \
 	$(if $(MAPEXPLORE),-DMAPEXPLORE -DMAPEXPLORE_AREA=$(MAPEXPLORE_AREA) -DMAPEXPLORE_ROOM=$(MAPEXPLORE_ROOM))
 CFLAGS := -O2 -Wimplicit -Wparentheses -Werror -Wno-multichar -g3
 

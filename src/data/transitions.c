@@ -582,10 +582,17 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
     // a spot vanilla itself vouches for.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x10, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    // Veil Falls (east) and Royal Valley (west) are outside the seven-region
-    // ring and BLOCKED: no border row, no crossing -
-    // IsPosInBorderTransitionRegion fires only on a matching row, so walking
-    // that edge simply stops at it.
+    // ROYAL VALLEY, the eighth region - this is the way IN. Royal Valley's
+    // own EAST_SOUTH row back to here was never blocked, so opening this
+    // one makes the crossing two-way at the North Hyrule Field end; the
+    // room's internal geometry is what keeps the region one-way (its
+    // arrival pocket drops into the graveyard over a ledge, and nothing
+    // climbs back).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x260, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_ROYAL_VALLEY,
+      ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    // Veil Falls (east) is still outside the ring and BLOCKED: no border
+    // row, no crossing - IsPosInBorderTransitionRegion fires only on a
+    // matching row, so walking that edge simply stops at it.
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
