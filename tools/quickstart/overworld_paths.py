@@ -162,7 +162,19 @@ REGIONS = {
     # Not in the pool yet. Listed so the gates and the links that reach them
     # are already stated - adding one to the run is then a pool edit, not a
     # graph edit.
-    'RV':   dict(name='Royal Valley',   ports=['S', 'ESE'], pooled=False),
+    # Royal Valley is a one-way valve, and the room's own geometry is why.
+    # Measured (royal_valley_survey.py): Main is 30x63 tiles holding THREE
+    # separate walkable components. North Hyrule Field's border lands in a
+    # 42-tile pocket (tx 19-29, ty 36-40); the graveyard proper is 242 tiles
+    # (tx 4-28, ty 43-62) with Trilby's border in it; and a 262-tile top
+    # part (tx 2-26, ty 23-40) reachable ONLY by solving the Lost Woods
+    # maze. The pocket drops into the graveyard over a one-tile neck at
+    # tx 20, ty 41-42 whose collision reads 0x29 - a ledge, downhill only.
+    # Solving the maze reaches the top part, which does NOT contain the
+    # North Hyrule Field border, so it is not a way back out either. Hence
+    # E->S free, S->E impossible: exactly the user's survey, for reasons
+    # the room can show you.
+    'RV':   dict(name='Royal Valley',   ports=['E', 'S']),
     'VF':   dict(name='Veil Falls',     ports=['S', 'WSW'], pooled=False),
     'LH':   dict(name='Lake Hylia',     ports=['W'],        pooled=False),
     'CREN': dict(name='Mt Crenel',      ports=['E'],        pooled=False),
@@ -247,7 +259,16 @@ t('SHF', 'W', 'N', [SWORD])
 
 # --- Eastern Hills / Western Wood -----------------------------------------
 t('EH', 'N', 'W', [BOMBS])
+t('EH', 'W', 'N', [BOMBS])
 t('WW', 'N', 'E')
+t('WW', 'E', 'N')
+
+# --- Royal Valley ----------------------------------------------------------
+# A one-way valve: you come in from North Hyrule Field at E and you leave to
+# Trilby at S, and there is no way back up. The Lantern is the area's own
+# gate (GATES below), so the crossing itself asks for nothing on top of it.
+t('RV', 'E', 'S')
+impossible('RV', 'S', 'E')
 
 # --- Castle Garden ---------------------------------------------------------
 # "Castle Garden requires nothing to traverse" - so if it ever grows a
@@ -311,7 +332,7 @@ link('NHF', 'S', 'SHF', 'N', BORDER + ' (the QUICKSTART town bridge)')
 link('NHF', 'ESE', 'LLR', 'WNW', SEAM)
 link('NHF', 'WSW', 'TRIL', 'ENE', SEAM)
 link('NHF', 'ENE', 'VF', 'WSW', BORDER)
-link('NHF', 'WNW', 'RV', 'ESE', BORDER)
+link('NHF', 'WNW', 'RV', 'E', BORDER)
 link('LLR', 'ESE', 'LH', 'W', BORDER)
 link('LLR', 'N', 'VF', 'S', BORDER)
 link('LLR', 'WSW', 'TRIL', 'ESE', BORDER + ' (QUICKSTART; vanilla is the town gate)')

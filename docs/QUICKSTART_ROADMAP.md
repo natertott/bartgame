@@ -680,6 +680,48 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   re-run ring.py + the checker. The adjacency map and distance-2 element
   rule absorb new regions as one enum row plus edges. Routine now - a
   breadth call, not an engineering risk.
+- **ROYAL VALLEY: surveyed and ready to wire** (user, Aug 2026). It is a
+  one-way valve - in from North Hyrule Field at E, out to Trilby at S, no
+  way back - and the room's own geometry is why.
+  **Three components, not one** (`tools/quickstart/royal_valley_survey.py`).
+  Main is 30x63 tiles holding three separate walkable spaces: the 42-tile
+  pocket where NHF's `WEST_NORTH` border lands (tx 19-29, ty 36-40); the
+  242-tile graveyard with Trilby's border in it (tx 4-28, ty 43-62); and a
+  262-tile top part (tx 2-26, ty 23-40). The pocket drops into the
+  graveyard over a ONE-TILE neck at tx 20, ty 41-42 whose collision reads
+  0x29 rather than open floor - a ledge, downhill only. The top part is
+  reachable only by solving the Lost Woods maze, and it does NOT contain
+  the NHF border, so it is not a way back either. That is the user's
+  "E to S free, S to E impossible", derived from the map rather than
+  asserted.
+  **The row, ready to paste**: the graveyard is the component on the
+  route, so content belongs there - `roomSquares` 242, `maxEnemies` 18
+  (242/13, the survey formula), 28 spawn spots with full 3x3 clearance at
+  least three tiles apart, all listed by the survey. The top part would
+  support 262/20 and 26 spots if it is ever wanted as bonus space behind
+  the maze.
+  **What wiring it needs, in order.**
+  1. `transitions.c`: un-block North Hyrule Field's `WEST_NORTH` row (it is
+     `#ifndef QUICKSTART` today). Royal Valley's OWN borders are unguarded
+     already, so the ways out - back east to NHF, south to Trilby - work
+     the moment the player is inside. Leave Trilby's north row blocked:
+     Trilby's own survey says nothing in that region reaches its north
+     exit anyway.
+  2. `game.c`: a `sQuickStartRegionPool` row, a `QS_RING_*` enum entry, its
+     adjacency edges (NHF and Trilby), and the pool-index mapping.
+  3. **Containment decisions.** Main has five vanilla `WARP_TYPE_AREA`
+     doors - the Royal Crypt, Dampe's house, the Great Fairy, and two
+     graves - plus the two maze doors. As a ring region every one of them
+     is cancelled unless blessed, so they become walls by default. The
+     maze is the one that matters: leave it unblessed and the Lost Woods
+     puzzle is scenery.
+  4. **The Lantern gate needs somewhere to live.** The route model treats
+     it as the area's entry cost; nothing in the game enforces it yet, and
+     a run that walks in without one wants checking before this ships.
+  **What it buys**: Royal Valley turns up in 71 of 300 four-region routes
+  and carries the heaviest bill in the graph - bombs + Lantern + Spin +
+  the level-3 blade. That whole class of route was impossible before the
+  Tempered Sword went in the pool this same session.
 - **The Minish layer as a parallel network (#102) - the SURVEY IS DONE and
   its findings are wired** (the user, Aug 2026: sweep every Minish hole,
   room and treehouse in the ring and add the unwired ones as ? rooms).
