@@ -88,11 +88,46 @@ until the key-item reachability logic exists**: no event may carry the
 win until the run can guarantee the player can reach it with the kit they
 can actually obtain.
 
-- **The prerequisite - key-item reachability logic.** Which items gate
-  which content, and how a run proves "this goal is reachable" before
-  hanging the Element on it. This is design work, not code, and it also
-  unblocks the held switch puzzle (burning wick) and gated quest
-  variants. Nothing else on this list moves the vision as much.
+- **The prerequisite - key-item reachability logic. THE MODEL NOW EXISTS**
+  (user survey, Aug 2026), in `tools/quickstart/overworld_paths.py`. The
+  user's framing is what unlocked it: *standing at one entrance of an
+  overworld region, what does the player need to reach another entrance of
+  the same region?* Everything else - which regions a run visits, where
+  its win conditions sit, which key items it must therefore hand out -
+  falls out of that.
+  **Three tables.** PORTS+LINKS: where each region's entrances are and what
+  is on the other side. Not invented - every port is a real
+  `WARP_TYPE_BORDER` row in transitions.c or a real scroll seam between
+  two AREA_HYRULE_FIELD rooms read out of `gAreaRoomHeaders`, and the
+  user's compass naming lands on them exactly (their "ENE" is
+  `TRANSITION_SHAPE_BORDER_EAST_NORTH`). All 19 ports of the four
+  surveyed regions matched a real edge, with nothing left over.
+  TRAVERSAL: the user's survey, entered verbatim, and DIRECTED - Lon Lon's
+  ESE->WNW wants Roc's Cape while WNW->ESE takes Cape, Flippers or the
+  Pacci Cane, and nothing in Trilby reaches its North exit at all.
+  GATES: regions that cost an item to stand in whatever route you take
+  (Royal Valley/Lantern, Lake Hylia/Flippers, Crenel/Grip Ring, Castor
+  Wilds/Cape or Ladder).
+  **Requirements are disjunctive normal form** - alternative terms, each a
+  set of items all of which are needed. AND-ing multiplies out and drops
+  superset terms, so a route's bill comes out as the shortest kits that
+  actually work. A generated route reports its bill directly: three
+  regions from Castle Garden costs nothing, or a sword, or Cape/Flippers,
+  or bombs+sword; five regions converges on bombs+sword+Cape/Flippers.
+  **Two findings worth acting on.**
+  1. **The level-3 sword is not obtainable**, so five NHF traversals are
+     dead - every route to its WNW port, which is the only way to Royal
+     Valley. The tier table drops `ITEM_RED_SWORD` and stops; the level-3
+     blade is in no pool. Either add it, or restate those requirements.
+  2. **Eastern Hills and Western Wood are dead ends in the model**, not
+     because of geography but because their internal traversals were not
+     part of the survey. Twelve from->to pairs are unsurveyed in total
+     (NHF WSW->N/S/ENE/ESE, all four of SHF's E and W pairs, EH N<->W,
+     WW N<->E), and until they exist a route that enters those regions can
+     only come back out the way it went in.
+  What is left to build once the table is complete: the runtime half - roll
+  a route per run from the run seed, distribute the win conditions along
+  it, and refuse to place one behind a bill the run cannot fill.
 - **Banked design from the paused attempt** (reverted cleanly): a per-run
   2-bit carrier draw (wave/boss/quest/? room), each carrier restricting
   the element-region draw to regions where it can pay out; boss carrier
