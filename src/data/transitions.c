@@ -649,8 +649,23 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     // town east exit used (endX 0x8, endY 0x230).
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x230, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
-    // Royal Valley (northwest) and Mt Crenel (west) are outside the ring:
-    // BLOCKED, no rows.
+    // ROYAL VALLEY, and it is open in BOTH directions on purpose (the user,
+    // Aug 2026: "the player should be able to walk back and forth between
+    // this seam"). Royal Valley's own SOUTH_WEST row into Trilby was never
+    // blocked, so without this one the crossing was one-way - and measured,
+    // that would have been a trap rather than a shortcut: the row lands the
+    // player at Trilby's y=16, inside a 48-tile pocket (tx 4-16, ty 0-4)
+    // that is a walkable component of its OWN. It touches neither the
+    // region's 334-tile main body nor any of its other 22 components, so
+    // the only way out of it is back north through this row.
+    //
+    // Which also means this seam does not connect Royal Valley to the
+    // Trilby REGION - it connects it to an alcove on Trilby's north edge.
+    // Anything routing a run through Royal Valley into Trilby needs to know
+    // that; see the traversal model in tools/quickstart/overworld_paths.py.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // Mt Crenel (west) is still outside the ring: BLOCKED, no row.
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },

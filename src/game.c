@@ -1641,7 +1641,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 54
+#define QUICKSTART_CONTENT_SITE_COUNT 58
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -11524,6 +11524,37 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // Garden - but both ends are ring rooms the player can already walk
     // between, so it shortens a trip rather than opening a route.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, QUICKSTART_KINDS_SMALL, 104, 88 },
+
+    // ---- Royal Valley's four interiors ----
+    //
+    // Prep for the region joining the pool (the user, Aug 2026: "most of
+    // the doors you listed connect to rooms that need to be converted to ?
+    // rooms"). Royal Valley Main has six vanilla doors; these are the four
+    // that become events. The ROYAL CRYPT stays blocked, per the same
+    // instruction - it has no row here, so containment keeps its door shut.
+    //
+    // A site row is also the containment blessing, so wiring them now means
+    // that when Royal Valley enters the pool its doors already work. Each
+    // of the four is a clean pocket with a border straight back to Main -
+    // no onward route out of the run, nothing to trap the player. Spots are
+    // flood-surveyed from each door's own arrival coordinates.
+    //
+    // GINA'S GRAVE IS THE ODD ONE: its exit list carries a SECOND border,
+    // to Castle Garden Main. Castle Garden is a ring room, so the pocket
+    // rule lets that through, which makes this room a real shortcut out of
+    // Royal Valley rather than a dead end. That is a routing fact worth
+    // knowing before the region ships, not a bug - both ends are places the
+    // player is allowed to be.
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE, QUICKSTART_KINDS_SMALL, 56, 104 },
+    // The Great Fairy costs the same trade as the fairy-fountain tree:
+    // GREAT_FAIRY is on QuickStartClearVanillaRoomContent's whitelist, so
+    // wiring this room deletes her and replaces a fixed free heal with a
+    // drawn event. 76 reachable tiles, 30 with full 3x3 clearance.
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD, QUICKSTART_KINDS_SMALL, 88, 152 },
+    // 45 reachable tiles but only ONE with full 3x3 clearance, so this spot
+    // is that tile - KINDS_SMALL is the only pool the room can host.
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE, QUICKSTART_KINDS_SMALL, 168, 88 },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, QUICKSTART_KINDS_SMALL, 72, 72 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -11719,6 +11750,22 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     // and needs naming here - otherwise its three field mouths and the door
     // between the two caves all get cancelled the frame they fire.
     if (area == QUICKSTART_CAVE_AREA && room == QUICKSTART_CAVE_ROOM) {
+        return TRUE;
+    }
+    // Royal Valley Main, so the Trilby seam works in both directions (the
+    // user, Aug 2026: "we should open the border between Trillby North exit
+    // and Royal Valley South exit"). Royal Valley is not in the region pool
+    // yet, so nothing else blesses it, and without this the seam is one-way
+    // in the worst possible direction: Royal Valley's own row into Trilby
+    // was never blocked, so the player could leave - into a 48-tile pocket
+    // on Trilby's north edge that is a walkable component of its own, with
+    // no way back and no way on. Measured, not assumed: Trilby has 24
+    // separate walkable components and the arrival pocket touches none of
+    // the other 23.
+    //
+    // This row retires the day Royal Valley joins the pool - it will be a
+    // ring room then, and ring-to-ring crossings are already free.
+    if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
         return TRUE;
     }
     // The North Hyrule Field fairy fountain tree. It is no longer a content

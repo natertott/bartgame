@@ -703,18 +703,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   **What wiring it needs, in order.**
   1. `transitions.c`: un-block North Hyrule Field's `WEST_NORTH` row (it is
      `#ifndef QUICKSTART` today). Royal Valley's OWN borders are unguarded
-     already, so the ways out - back east to NHF, south to Trilby - work
-     the moment the player is inside. Leave Trilby's north row blocked:
-     Trilby's own survey says nothing in that region reaches its north
-     exit anyway.
+     already, so the ways out work the moment the player is inside.
+     **Trilby's north row is open now**, per the user, and it had to be:
+     that crossing was one-way in the worst possible direction. Royal
+     Valley's row into Trilby lands the player at y=16 inside a **48-tile
+     pocket** (tx 4-16, ty 0-4) that is a walkable component of its own -
+     Trilby has 24 separate components and this one touches none of the
+     other 23. Leaving Royal Valley was therefore a trap, not a shortcut.
+     Opening the row needed a second thing as well: containment cancels a
+     ring room's transitions to anywhere unblessed, and Royal Valley is not
+     in the pool yet, so `QuickStartIsPocketInteriorRoom` names it
+     explicitly for now. That naming retires the day the region joins the
+     pool. Both directions walked end to end.
+     **A routing consequence worth keeping**: this seam connects Royal
+     Valley to an ALCOVE on Trilby's north edge, not to the Trilby region.
+     The user's survey lists Trilby's North as reaching everything for
+     free; the room disagrees, and the model takes the measurement, because
+     a generator told the crossing is free would route win conditions
+     through it and strand the run. If that pocket is meant to open into
+     Trilby, it is a small fix and those four rows go back to free.
   2. `game.c`: a `sQuickStartRegionPool` row, a `QS_RING_*` enum entry, its
      adjacency edges (NHF and Trilby), and the pool-index mapping.
-  3. **Containment decisions.** Main has five vanilla `WARP_TYPE_AREA`
-     doors - the Royal Crypt, Dampe's house, the Great Fairy, and two
-     graves - plus the two maze doors. As a ring region every one of them
-     is cancelled unless blessed, so they become walls by default. The
-     maze is the one that matters: leave it unblessed and the Lost Woods
-     puzzle is scenery.
+  3. ~~Containment decisions~~ **PARTLY DONE.** Four of Main's five vanilla
+     doors are content sites now (user's call): **Dampe's house**, the
+     **Great Fairy**, and the **two graves**. Each is a clean pocket with a
+     border straight back to Main, all four checker-verified. The **Royal
+     Crypt stays blocked**, also per the user - no site row, so containment
+     keeps its door shut. Gina's grave is worth knowing about: its exit
+     list carries a SECOND border, to Castle Garden Main, and Castle Garden
+     is a ring room, so the pocket rule lets that through - the room is a
+     real shortcut out of Royal Valley rather than a dead end.
+     Still open: **the Lost Woods maze**. Both its doors are unblessed, so
+     the puzzle is scenery until someone decides otherwise.
   4. **The Lantern gate needs somewhere to live.** The route model treats
      it as the area's entry cost; nothing in the game enforces it yet, and
      a run that walks in without one wants checking before this ships.
