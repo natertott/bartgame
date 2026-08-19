@@ -280,22 +280,20 @@ for a in ('ENE', 'ESE', 'W', 'S'):
         if a != b:
             t('TRIL', a, b)
     impossible('TRIL', a, 'N')
-# CONFLICT, and the model takes the measurement. The user's survey lists
-# Trilby's North as reaching everything for free. The room says otherwise:
-# Royal Valley's border lands the player at Trilby y=16, inside a 48-tile
-# pocket (tx 4-16, ty 0-4) that is a walkable component of its OWN. Trilby
-# has 24 separate components and this one touches none of the other 23 -
-# not the 334-tile main body, not anything. So arriving from Royal Valley
-# does not put the player in the Trilby REGION, it puts them in an alcove
-# on its north edge whose only exit is back north.
+# Arriving from Royal Valley puts the player on a LEDGE, not in the region
+# proper: the border lands them at Trilby y=16, in a 48-tile pocket
+# (tx 4-16, ty 0-4) that a collision flood reads as a component of its own.
+# It is not sealed. Walking off its south edge at tx 14, 15 or 16 drops the
+# player to ty 9, inside Trilby's 334-tile main body - measured by walking
+# it, after a flood said otherwise and the user corrected me. A flood
+# cannot see a ledge: the tile you hop from reads as ordinary floor and the
+# tiles you hop over read as solid wall. tools/quickstart/component_map.py
+# exists now to catch exactly this.
 #
-# Left impossible here because the alternative strands runs: a generator
-# told this crossing is free will happily route a win condition through it.
-# If the pocket is MEANT to open into Trilby - a ledge, a cave, something
-# the flood cannot see - that is a small fix and these four rows become
-# free again.
+# So these four are free, as the user's survey said all along. The drop is
+# one-way, which is why nothing in Trilby reaches N (the rows above).
 for b in ('W', 'S', 'ENE', 'ESE'):
-    impossible('TRIL', 'N', b)
+    t('TRIL', 'N', b)
 
 # --- Lon Lon Ranch ---------------------------------------------------------
 t('LLR', 'WNW', 'WSW', [BOMBS])

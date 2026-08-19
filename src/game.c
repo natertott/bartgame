@@ -11755,13 +11755,17 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     // Royal Valley Main, so the Trilby seam works in both directions (the
     // user, Aug 2026: "we should open the border between Trillby North exit
     // and Royal Valley South exit"). Royal Valley is not in the region pool
-    // yet, so nothing else blesses it, and without this the seam is one-way
-    // in the worst possible direction: Royal Valley's own row into Trilby
-    // was never blocked, so the player could leave - into a 48-tile pocket
-    // on Trilby's north edge that is a walkable component of its own, with
-    // no way back and no way on. Measured, not assumed: Trilby has 24
-    // separate walkable components and the arrival pocket touches none of
-    // the other 23.
+    // yet, so nothing else blesses it: the border row was in the ROM and
+    // did nothing, because containment cancels a ring room's transitions to
+    // anywhere unblessed. Trilby is a ring room, Royal Valley was not
+    // blessed, so walking north off Trilby's top edge was cancelled every
+    // frame it fired.
+    //
+    // The other direction always worked - Royal Valley is not a ring room,
+    // so nothing cancelled it - which is what made this worth fixing
+    // rather than leaving: without the return the crossing was one-way onto
+    // a ledge at the top of Trilby, and the only way on from there is a
+    // drop the player cannot climb back up.
     //
     // This row retires the day Royal Valley joins the pool - it will be a
     // ring room then, and ring-to-ring crossings are already free.

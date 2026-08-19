@@ -715,13 +715,13 @@ a frame cost. Frame-rate samples have to assert the room did not change.
      in the pool yet, so `QuickStartIsPocketInteriorRoom` names it
      explicitly for now. That naming retires the day the region joins the
      pool. Both directions walked end to end.
-     **A routing consequence worth keeping**: this seam connects Royal
-     Valley to an ALCOVE on Trilby's north edge, not to the Trilby region.
-     The user's survey lists Trilby's North as reaching everything for
-     free; the room disagrees, and the model takes the measurement, because
-     a generator told the crossing is free would route win conditions
-     through it and strand the run. If that pocket is meant to open into
-     Trilby, it is a small fix and those four rows go back to free.
+     **Where it lands is a LEDGE, and that is fine** - corrected by the
+     user after a collision flood said otherwise. The row puts the player
+     at Trilby's y=16 in a 48-tile pocket at the top of the map that reads
+     as a sealed component; walking off its south edge at tx 14, 15 or 16
+     drops them to ty 9, inside the region's 334-tile main body. So Royal
+     Valley connects to the Trilby region properly: drop in, walk back
+     north to return.
   2. `game.c`: a `sQuickStartRegionPool` row, a `QS_RING_*` enum entry, its
      adjacency edges (NHF and Trilby), and the pool-index mapping.
   3. ~~Containment decisions~~ **PARTLY DONE.** Four of Main's five vanilla
@@ -1007,7 +1007,19 @@ allowlists):
    shutter, then the lever that drew as garbage in every overworld ? room
    - so before reusing a vanilla object outside its home rooms, check
    which of the two it is.
-7. **A probe that finds nothing has proven nothing until a control says
+7. **A collision flood cannot see a ledge.** It follows fully-open tiles,
+   so it finds a room's components correctly and then lies about how they
+   connect: the tile you hop from reads as ordinary floor, and the tiles
+   you hop over read as solid wall. This produced two wrong "sealed
+   pocket" calls in one session - Royal Valley's neck at tx 20 (collision
+   0x29) and Trilby's Royal Valley arrival, which the user had to correct.
+   `tools/quickstart/component_map.py` is the fix: it floods, then WALKS
+   the player off every boundary tile of every component and reports where
+   they land. Run on Trilby it found seven links between components,
+   including two-way ones between the main body and the 85-tile southern
+   component that no survey had recorded. Ledges are one-way by nature, so
+   its map is directed.
+8. **A probe that finds nothing has proven nothing until a control says
    otherwise.** Aug 2026, twice in one session: a walk probe reported
    twenty-two ring doors "dead" and a memory-forced Minish probe reported
    every Minish hole "dead". Both were the harness. Warping the player in
@@ -1020,7 +1032,7 @@ allowlists):
    known to work.** If the control fails too, the finding is about the
    probe. A positive result (it fired, it spawned, it landed) still
    stands on its own - only negatives need the control.
-8. **Fix the vanilla mechanism; do not replace it.** The user's standing
+9. **Fix the vanilla mechanism; do not replace it.** The user's standing
    call, Aug 2026: "we should ONLY have vanilla door mechanics, no more of
    this teleporting/warping stuff". A position box that fires near a door
    is not a door - it takes the room away from the player instead of

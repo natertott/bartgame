@@ -652,17 +652,19 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     // ROYAL VALLEY, and it is open in BOTH directions on purpose (the user,
     // Aug 2026: "the player should be able to walk back and forth between
     // this seam"). Royal Valley's own SOUTH_WEST row into Trilby was never
-    // blocked, so without this one the crossing was one-way - and measured,
-    // that would have been a trap rather than a shortcut: the row lands the
-    // player at Trilby's y=16, inside a 48-tile pocket (tx 4-16, ty 0-4)
-    // that is a walkable component of its OWN. It touches neither the
-    // region's 334-tile main body nor any of its other 22 components, so
-    // the only way out of it is back north through this row.
+    // blocked, so without this one the crossing was one-way: in from Royal
+    // Valley, and then only onward.
     //
-    // Which also means this seam does not connect Royal Valley to the
-    // Trilby REGION - it connects it to an alcove on Trilby's north edge.
-    // Anything routing a run through Royal Valley into Trilby needs to know
-    // that; see the traversal model in tools/quickstart/overworld_paths.py.
+    // Where it lands, and why that looked alarming for an hour: the row
+    // puts the player at Trilby's y=16, on a LEDGE at the top of the map
+    // (tx 4-16, ty 0-4) that a collision flood reads as a sealed 48-tile
+    // component. It is not sealed - walking off its south edge at tx 14, 15
+    // or 16 drops the player to ty 9, inside the region's 334-tile main
+    // body. A flood cannot see a ledge (the tile you hop from reads as
+    // floor, the tiles you hop over read as wall), which is what
+    // tools/quickstart/component_map.py now exists to catch. So the drop
+    // is the way on, this row is the way back, and Royal Valley connects
+    // to the Trilby region properly in both directions.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     // Mt Crenel (west) is still outside the ring: BLOCKED, no row.
