@@ -1671,7 +1671,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 58
+#define QUICKSTART_CONTENT_SITE_COUNT 59
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -4693,6 +4693,11 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST,
       (1 << QS_RING_TRIL), 0 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE,
+      (1 << QS_RING_TRIL), 0 },
+    // Reached only through the dig cave's bombable wall, so ownership
+    // follows the same transitive-door chain room_owner.py derives
+    // (TRIL ring -> dig cave -> this pool).
+    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
       (1 << QS_RING_TRIL), 0 },
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
       (1 << QS_RING_TRIL), 0 },
@@ -12688,6 +12693,17 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // is that tile - KINDS_SMALL is the only pool the room can host.
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE, QUICKSTART_KINDS_SMALL, 168, 88 },
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, QUICKSTART_KINDS_SMALL, 72, 72 },
+    // Trilby's hidden pool - the room behind the bombable wall in the dig
+    // cave the highlands ladder drops into (the user: "there is a bombable
+    // wall. we should put a ? room in there; it's currently empty").
+    // Vanilla's Mitts Great Fairy fountain; the fairy is already on
+    // QuickStartClearVanillaRoomContent's whitelist, same trade as the
+    // graveyard Great Fairy above. A site row is also the containment
+    // blessing, so this is what opens the dig cave's inner door. Surveyed:
+    // one 13x6-tile open pool platform, arrival at local (184,40) by the
+    // ladder; the spot is the pool's centre. Appended at the table's end
+    // so no existing site's flag-block index moves.
+    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 120, 72 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
