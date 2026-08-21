@@ -97,6 +97,8 @@ FLAG_FAMILIES = [
     ('GF_SEAM_GAUNTLET_', 11, 0),
     ('GF_HANDICAP_', 11, 0),
     ('GF_HUNT_', 11, 0),
+    ('GF_STAKE_TIER_BIT', 11, 0),  # latched in the freed hunt chain-slot bits
+    ('GF_SURVIVE_LIVE', 11, 0),    # the survive room's live-clock marker
     ('GF_HUB_PHASE_BIT', 11, 0),
     ('GF_ROOF_', 11, 0),
     ('GF_SHOP_SLOT_BIT', 11, 0),
