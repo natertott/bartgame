@@ -339,6 +339,7 @@ static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static bool32 QuickStartQuestSwapActive(void);
+static void QuickStartQuestEndResetWave(s32 slot);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
 static bool32 QuickStartLeverAtTile(s32, s32);
 void QuickStartMarkCatalogItem(u32);
@@ -3657,6 +3658,16 @@ static bool32 QuickStartRegionWaveCleared(void) {
     if (!QsCheckRoomFlag(0)) {
         return FALSE;
     }
+    // While a timed quest is swapping the room's population, the head
+    // count describes the QUEST's enemies, not the wave's - the scav
+    // chase in particular despawns the wave at Begin, so without this
+    // guard the empty frames around its start and end read as a
+    // legitimate clear: wave counter advanced, first-clear reward paid.
+    // The user watched exactly that - a failed Keaton chase "cleared the
+    // wave of enemies and dropped the room prize".
+    if (QuickStartQuestSwapActive()) {
+        return FALSE;
+    }
     for (i = 0; i < MAX_ENTITIES; i++) {
         if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
             return FALSE;
@@ -4047,6 +4058,16 @@ static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
 // other region's cannot overlap.
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
     u8 wave = QuickStartRegionGetWaveCount(slot);
+    // The quest-end latch (see QuickStartQuestEndResetWave): a timed quest
+    // ended last frame and the room's population is its aftermath, not a
+    // wave. Drop the wave state and start fresh - never a clear, never a
+    // reward.
+    if (QsCheckRoomFlag(10)) {
+        QsClearRoomFlag(10);
+        QsClearRoomFlag(0);
+        QuickStartRegionSetAliveCount(slot, 0);
+        return;
+    }
     if (QsCheckRoomFlag(0)) {
         if (!QuickStartRegionWaveCleared()) {
             // D2: keep the persistent alive-count current while the wave is
@@ -9806,6 +9827,7 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
             // full kit rather than being picked up by a stripped one.
             QuickStartHandicapRestore();
             QuickStartHuntSetState(QUICKSTART_HUNT_WON);
+            QuickStartQuestEndResetWave(slot);
             gSave.timer4 = 0;
             if (QuickStartHuntSpot(region, &spotX, &spotY)) {
                 QuickStartSpawnRewardEntity(
@@ -9827,6 +9849,7 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartHuntClearPack();
             QuickStartHandicapRestore();
             QuickStartHuntSetState(QUICKSTART_HUNT_FAILED);
+            QuickStartQuestEndResetWave(slot);
             {
                 s32 stakeMsg = QuickStartApplyFailureStake();
                 MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 18));
@@ -9992,6 +10015,20 @@ static bool32 QuickStartScavSpot(const QuickStartRegion* region, s16* outX, s16*
         }
     }
     return FALSE;
+}
+
+// A quest that emptied the room must not leave that emptiness lying
+// around for the wave machinery to read as a clear the moment the
+// swap-active guard drops. Deletions do not fully settle within the
+// deleting frame (measured: the pack still counted 12 enemies on the
+// frame its delete loop ran, and the false clear fired one frame later),
+// so this cannot test emptiness directly - it arms room flag 10, and the
+// wave loop consumes the latch at the top of ITS next pass, dropping the
+// wave state (flag 0 down, remainder zero) before anything can read the
+// aftermath as a clear. The loop then deals a fresh wave with no clear
+// credit and no reward.
+static void QuickStartQuestEndResetWave(s32 slot) {
+    QsSetRoomFlag(10);
 }
 
 static s32 QuickStartCountMarked(u8 id) {
@@ -10205,6 +10242,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
             if (gSave.timer4 == 0) {
                 // Never found. Same failure the chase has, stake included.
                 QuickStartScavSetState(QUICKSTART_SCAV_FAILED);
+                QuickStartQuestEndResetWave(slot);
                 {
                     s32 stakeMsg = QuickStartApplyFailureStake();
                     MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 29));
@@ -10232,6 +10270,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
             }
             QuickStartScavSetState(QUICKSTART_SCAV_WON);
             gSave.timer4 = 0;
+            QuickStartQuestEndResetWave(slot);
             if (QuickStartScavSpot(region, &spotX, &spotY)) {
                 QuickStartSpawnRewardEntity(
                     QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
@@ -10253,6 +10292,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
                 }
             }
             QuickStartScavSetState(QUICKSTART_SCAV_FAILED);
+            QuickStartQuestEndResetWave(slot);
             {
                 s32 stakeMsg = QuickStartApplyFailureStake();
                 MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 29));
