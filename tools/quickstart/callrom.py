@@ -40,6 +40,18 @@ def _game_text_base(mapfile='build/USA/tmc.map'):
     raise KeyError('src/game.o .text base not in ' + mapfile)
 
 
+def map_sym(name, mapfile='build/USA/tmc.map'):
+    """Address of a GLOBAL symbol, read from the CURRENT map. Hardcoding
+    one is the same trap as hardcoding game.o's text base: any rebuild
+    that grows any object earlier in the link shifts everything after it,
+    and a stale address stalls or runs some other plausible function."""
+    for line in open(mapfile):
+        p = line.split()
+        if len(p) == 2 and p[1] == name and p[0].startswith('0x'):
+            return int(p[0], 16)
+    raise KeyError(name)
+
+
 def game_sym(name, obj='build/USA/src/game.o', text=None):
     """Address of a static function in game.c. They are absent from tmc.map -
     static symbols only survive in the object file's own symbol table."""

@@ -14,12 +14,12 @@ giver already is - and checks both halves:
 import sys
 sys.path.insert(0, '/home/user/bartgame/tools/quickstart')
 from emu import boot, warp, here, poison_here, press, entities, KIND_ENEMY, GENT, STRIDE, r16
-from callrom import call_keep
+from callrom import call_keep, map_sym
 import parse_tables as P
 
 ROM = '/home/user/bartgame/tmc.gba'
-CREATE_NPC = 0x08078e68
-CREATE_PROJECTILE = 0x080b22bc
+CREATE_NPC = map_sym('CreateNPC')
+CREATE_PROJECTILE = map_sym('CreateProjectile')
 GUARD_LOS = 12
 ZELDA = 0x2b  # npc.inc: ZELDA is?
 import re

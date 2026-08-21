@@ -29,12 +29,12 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from emu import boot, warp, here, poison_here, press, entities, KIND_ENEMY, GENT, STRIDE, r16, snap
-from callrom import call_keep
+from callrom import call_keep, map_sym
 import parse_tables as P
 
 ROM = os.path.join(P.ROOT, 'tmc.gba')
-CREATE_ENEMY = 0x0804b160
-UPDATE_SPRITE = 0x08016ea8
+CREATE_ENEMY = map_sym('CreateEnemy')
+UPDATE_SPRITE = map_sym('UpdateSpriteForCollisionLayer')
 PLAYER = 0x03001160
 GSAVE = 0x02002a40
 CHUCHU_BOSS = next(int(m.group(1)) for m in
