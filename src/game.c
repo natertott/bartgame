@@ -10890,6 +10890,43 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
     return FALSE;
 }
 
+// Every vanilla small chest, restocked from our own economy (the user:
+// "removing vanilla chests from the game, placing our own chests").
+// Small chests are TILE entities, not objects - LoadRoomTileEntities
+// copies each room's rows into gSmallChests on load, and OpenSmallChest
+// pays out CreateItemEntity(t->_2, t->_3) - so the object sweeps that
+// clear every other kind of vanilla payout never see them (surveyed
+// live: Castle Garden ships two, Western Wood South one, and any ? room
+// with a baked-in tile chest keeps it too). Rewriting the registered
+// entry's item in place keeps the chest itself - its tile art, its open
+// animation, its opened-flag persistence - and swaps only the loot for
+// an ordinary 60/30/10 drop-category draw.
+//
+// _7 is the redraw marker (vanilla rows and our own lottery injections
+// both leave it 0), so each registration is redrawn exactly once; the
+// table re-registers fresh on every room load. The roll is Random rather
+// than a stored seed on purpose: a chest's content is invisible until
+// opened, so the cross-visit prize stability the site draws need has
+// nothing to protect here. Our chest-lottery rows are skipped by their
+// reserved local flags - their prize is already our economy's.
+#define QUICKSTART_CHEST_REDRAWN 0x51
+static void QuickStartRestockSmallChests(void) {
+    s32 i;
+    for (i = 0; i < 8; i++) {
+        TileEntity* t = &gSmallChests[i];
+        if (t->tilePos == 0 || t->_7 == QUICKSTART_CHEST_REDRAWN) {
+            continue;
+        }
+        if (t->localFlag >= QUICKSTART_CHEST_LOTTERY_FLAG(0) &&
+            t->localFlag <= QUICKSTART_CHEST_LOTTERY_FLAG(2)) {
+            continue;
+        }
+        t->_2 = (u8)QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP);
+        t->_3 = 0;
+        t->_7 = QUICKSTART_CHEST_REDRAWN;
+    }
+}
+
 // Two Fairy objects (fairy.c) at fixed offsets - the exact object an
 // ITEM_FAIRY ground item already turns itself into on its own (see
 // itemOnGround.c's ITEM_FAIRY special case: CreateObject(FAIRY, 0x60, 0)),
@@ -16082,6 +16119,9 @@ static void QuickStartRoomMonitor(void) {
     // than per-room, so any other room's hidden ladder or stuck house door
     // gets the same treatment for free.
     QuickStartFixupRoomFixtures();
+    // Also per-entity and unconditional: any room's freshly-registered
+    // vanilla small chests get their loot swapped for our own draws.
+    QuickStartRestockSmallChests();
     // Same "make a vanilla fixture actually work" job, for the Boomerang
     // chamber's five entrances and its chest.
     QuickStartOpenBoomerangChamber();
