@@ -157,7 +157,7 @@ REGIONS = {
     'SHF':  dict(name='South Hyrule Field',   ports=['N', 'E', 'W']),
     'TRIL': dict(name='Trilby Highlands',     ports=['N', 'W', 'S', 'ENE', 'ESE']),
     'LLR':  dict(name='Lon Lon Ranch',        ports=['N', 'WNW', 'WSW', 'ESE', 'SWS']),
-    'EH':   dict(name='Eastern Hills',        ports=['N', 'W']),
+    'EH':   dict(name='Eastern Hills',        ports=['N', 'W', 'ENE', 'ESE', 'S']),
     'WW':   dict(name='Western Wood',         ports=['N', 'E']),
     # Not in the pool yet. Listed so the gates and the links that reach them
     # are already stated - adding one to the run is then a pool edit, not a
@@ -260,6 +260,21 @@ t('SHF', 'W', 'N', [SWORD])
 # --- Eastern Hills / Western Wood -----------------------------------------
 t('EH', 'N', 'W', [BOMBS])
 t('EH', 'W', 'N', [BOMBS])
+# The top section's two east exits (the user's Aug 21 survey). ENE is a
+# ledge pocket: everything flows OUT of it freely (drop down), and the only
+# way back UP is flipping yourself with the Cane of Pacci - plus the bombs
+# the west/south routes already needed to reach the top section at all.
+# ENE and ESE are documented but UNLINKED until whatever lies beyond them
+# joins the ring (Minish Woods is blocked), same standing as Castor Wilds'
+# SWS; S is the blocked Minish Woods border on the south section.
+t('EH', 'ENE', 'ESE')
+t('EH', 'ENE', 'N')
+t('EH', 'ENE', 'W', [BOMBS])
+t('EH', 'ENE', 'S', [BOMBS])
+t('EH', 'ESE', 'ENE', [PACCI])
+t('EH', 'N', 'ENE', [PACCI])
+t('EH', 'W', 'ENE', [BOMBS, PACCI])
+t('EH', 'S', 'ENE', [BOMBS, PACCI])
 t('WW', 'N', 'E')
 t('WW', 'E', 'N')
 
