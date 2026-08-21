@@ -267,11 +267,28 @@ can actually obtain.
   six for six. The cage puzzle's timeout is the natural next caller.
   One build trap found: this libgcc has no `__umodsi3`, so an unsigned
   modulo is a LINK error - mask to 15 bits and use signed `%`.
-- **Hide-and-seek stealth quest (F2).** Research-first: does vanilla's
-  guard line-of-sight AI transplant outside its scripted rooms? If yes,
-  guards on patrol rows from a table gate a prize; if no, fake it with
-  ZELDA-kind patrol NPCs and our own cone check. Park the research
-  question early; schedule the build only once answered.
+- **Hide-and-seek stealth quest (F2). RESEARCH ANSWERED: YES, it
+  transplants** - and to exactly the entity kind the fake would have
+  used. Vanilla's guard sight is not AI in the guard at all: it is a
+  self-contained projectile pair (`GUARD_LINE_OF_SIGHT`, projectile 12).
+  An invisible emitter rides its parent's position and, while the parent
+  is on screen, fires a short-lived invisible ray every 4 ticks in the
+  parent's `knockbackDirection` (with a small angular jitter); rays die
+  on wall tiles - real occlusion - and a ray touching the player writes
+  `parent->type = 0xff`. That byte IS the "spotted!" signal; everything
+  else in the vanilla sneak rooms is scripted response.
+  Verified live (`tools/quickstart/los_check.py`): attached to a plain
+  ZELDA npc - the same kind every quest giver already is - in an
+  ordinary room, the player is spotted standing in the facing line and
+  NOT spotted standing behind, and the effective sight range brackets
+  between 60 and 70px (call it four tiles), which is vanilla's own
+  close-quarters sneaking feel. Two wiring notes for the build: the
+  parent must have a real `collisionLayer` (offset 0x38 - probes that
+  write 0x1d are setting gustJarTolerance and measuring nothing), and
+  the emitter needs `parent` plus `subtimer=60` set at spawn, exactly as
+  guard.c does. The build is now: patrol rows from a table (walk the
+  NPC, keep knockbackDirection = walk direction), the emitter attached,
+  and the quest monitor polling the patroller's type byte for 0xff.
 
 ### 2.4 Events and puzzles
 

@@ -85,7 +85,7 @@ def spawn_family(c, x, y, settle=120):
         return None
     w16a(c, ptr + 0x2e, ox + x)
     w16a(c, ptr + 0x32, oy + y)
-    c.memory.u8[ptr + 0x1d] = 1
+    c.memory.u8[ptr + 0x38] = 1  # collisionLayer
     call_keep(c, UPDATE_SPRITE, (ptr,))
     for _ in range(settle):
         c.run_frame()
