@@ -1024,6 +1024,100 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 08/21 playtest batch (all fixed, with the doctrine each fix bought)
+
+The user's deaths-up-to-difficulty-4 playtest surfaced eight bugs and four
+feature asks; every one shipped in this pass. What each fix taught, kept
+here because the lessons outlive the bugs:
+
+- **Enemies dying on room entry with item drops (major) - three compounding
+  causes.** (1) The GFX trimmer and spawn budget gated on strictly-FREE
+  slots, which a settled room pins at ZERO forever (slots end up referenced
+  or UNLOADED, never FREE), so the trimmer deleted one enemy every 64
+  frames without ever satisfying its own stop condition. Both now count
+  RECLAIMABLE slots (FREE + UNLOADED + STATUS2 - what the loader can
+  actually claim). Doctrine: **reclaimable is the budget; strict-free of a
+  settled room is always zero and gating on it means gating forever.**
+  (2) SLUGGULA left the roster: form 0 is a ceiling-hanger that
+  self-replaces with a new entity (reads as death + spawn churn), a raw
+  form 1 batch self-deletes. (3) GYORG_CHILD left the roster: a boss
+  escort that despawns 27 frames in without a living parent. Doctrine:
+  **roster admission now requires surviving raw EXISTENCE, not merely
+  spawning** - `tools/quickstart/roster_soak.py` raw-spawns every roster
+  row in the quiet dojo and demands 600 frames of life; all 49 surviving
+  rows pass.
+- **Quest end cleared the wave and paid the region prize.** The
+  wave-cleared headcount ran during a quest's population swap and read the
+  empty frames around quest start/end as a legitimate clear. Two guards:
+  wave-clear returns FALSE while a quest swap is active, and quest end
+  latches room flag 10 which the wave loop consumes on the NEXT frame -
+  because DeleteEntity effects settle a frame late and a same-frame
+  emptiness check races (measured: false clear at f61 after a FAILED at
+  f60).
+- **Boss-spawn item drop / prizes dropping automatically after many
+  waves** - both downstream of the above two: the trimmer bleed could
+  empty a room (= credited clear + reward + boss roll in the same
+  instant), and the churn kinds' self-deaths rolled kill drops. A 25-clear
+  soak on the fixed build (2 boss spawns included) shows zero spurious
+  drops. One legitimate coincidence remains by design: a first-clear
+  region reward can land on the same clear that rolls a boss.
+- **Performance drops** - not reproducible on the fixed build: every ring
+  region plus Castle Garden and Lon Lon Ranch holds a locked 60.0 fps
+  (average AND worst 30-frame window, 900-frame samples) at difficulties
+  0/4/8/12, up to 40 live enemies. The constant delete/respawn churn the
+  trimmer bug caused was almost certainly the felt cost.
+- **Minish door lockout (ranch house west).** The 2-door obstacle sweep
+  deleted every OBJECT in the room - including the MINISH_SIZED_ENTRANCE
+  that is the room's only way back out (no pot inside to un-shrink with).
+  The sweep now exempts MINISH_SIZED_ENTRANCE and MINISH_SIZED_ARCHWAY.
+  Doctrine: **a Minish-sized entrance is a DOOR, not furniture; no object
+  sweep may take one.**
+- **Magical Boomerang downgrade.** Upgrades now shadow their base item out
+  of the tier pool (`QuickStartTierEntryUsable`): holding the Magical
+  Boomerang removes the plain Boomerang from the draw, holding the Blue
+  Sword removes the Red.
+- **Eastern Hills model corrected** (overworld_paths.py): the top section
+  has BOTH an ENE and an ESE exit; the surveyed matrix is ENE->ESE/N free,
+  ENE->W/S bombs, ESE->ENE and N->ENE Cane of Pacci, W->ENE and S->ENE
+  bombs + Cane. ENE/ESE/S remain unlinked ports (same standing as Castor
+  Wilds SWS).
+- **Deku scrub restored** in North Hyrule Field as a shop: the prologue
+  cull now replaces BUSINESS_SCRUB_PROLOGUE with a real BUSINESS_SCRUB at
+  its spot, carrying one of three new QUICKSTART sales rows (heart 10 /
+  10 bombs 30 / 30 arrows 30), re-rolled per room entry, start-revealed
+  (no shield duel gates the shop). The hearts offer is custom string 228,
+  which chains via the vanilla mechanism (`\x07` jump) into the shared
+  "Sure / No, thanks" prompt - **the choice markup in that chained prompt
+  is what arms a purchase**; an offer text that never reaches it can never
+  sell. The scrub is kind ENEMY, so one predicate
+  (`QuickStartEntityIsShopScrub`) exempts it from the wave-cleared scan,
+  the alive counter, the trimmer's victim pick, and the scav quest's
+  swap/pack-marking. The prologue's orphaned scene prop and its carved-
+  open hedge tiles (placeholder glyphs outside the cutscene) are cleaned
+  with the same RestorePrevTileEntity repair the scene's own resolution
+  uses.
+- **Trilby's hidden pool** (behind the dig cave's bombable wall - vanilla's
+  Mitts Great Fairy fountain) is content site 59, with TRIL ownership.
+  Appended at the site table's END so no existing site's flag-block index
+  moves; 2 of the 61-slot ceiling remain.
+- **Switch prize puzzle retuned**: per-tile slack 18-difficulty (was 22),
+  ~1.3x a straight walk at difficulty 0 and ~1.07x from 3 up - and every
+  pull that opens the window drops a pressure pack around the cage
+  (beetles + Bobombs, 2+1 at diff 0 to 4+3 at 12), guarded by live-count
+  so pull-spam cannot flood but a killed pack re-arms.
+- **Vanilla small chests restocked from our economy.** Small chests are
+  TILE entities (gSmallChests, loot in the entry's `_2`), invisible to
+  every object sweep. `QuickStartRestockSmallChests` (room monitor,
+  unconditional) swaps each freshly-registered entry's item for a 60/30/10
+  drop draw, marked in the unused `_7` byte; chest visuals/persistence
+  stay vanilla, lottery injections are skipped by their reserved flags.
+  Surveyed live: Castle Garden ships two, Western Wood South one.
+
+Probe doctrine banked along the way: gate_probe-style switch flips write
+the switch entity's frameIndex (+0x1e); BEETLE is enemy id 7 (not 5) and
+BOBOMB 0x22 - filter ids from enemy.h, not memory; and a transient
+HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
+
 - **Item-drop ? rooms "never pay" (user report, PARTLY EXPLAINED).** The
   reward audit (Aug 2026) found and fixed the draw bug behind the related
   "never seen a pastry" report: the pick index was `seed / 10` on a 6-bit
