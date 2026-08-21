@@ -3012,12 +3012,14 @@ static s32 QuickStartHuntState(void);
 // 1.20 px/frame, i.e. ~14 frames per tile, and diagonals cost the same as
 // their long axis, so Chebyshev distance IS the walk. The window is that
 // distance times a per-tile allowance that tightens with difficulty:
-//   difficulty 0  -> 22 frames/tile, ~1.6x a straight walk
-//   difficulty 12 -> 15 frames/tile, ~1.07x - a clean line, no hesitation
+//   difficulty 0  -> 18 frames/tile, ~1.3x a straight walk
+//   difficulty 3+ -> 15 frames/tile, ~1.07x - a clean line, no hesitation
 // Pegasus Boots and a dash buy back the margin, which is the point: the
 // kit the player found is what turns a sprint back into a walk.
+// (Base was 22; retuned per the user's second pass on this puzzle -
+// "needs to be faster and harder" - alongside the pressure spawns below.)
 #define QUICKSTART_GATE_FRAMES_PER_TILE 14
-#define QUICKSTART_GATE_SLACK_BASE 22
+#define QUICKSTART_GATE_SLACK_BASE 18
 #define QUICKSTART_GATE_SLACK_MIN (QUICKSTART_GATE_FRAMES_PER_TILE + 1)
 // Floor and ceiling. The floor keeps a degenerate short deal (a room too
 // cramped to separate switch and cage) from being unwinnable - three tiles
@@ -11335,6 +11337,36 @@ static s32 QuickStartGateWindowFor(s32 switchTX, s32 switchTY, s32 ptx, s32 pty)
     return window;
 }
 
+// The other half of "faster and harder": the sprint is contested. Every
+// time a pull opens the window, a small pack lands around the cage - the
+// user's own suggestion, "spawn enemies like beetles or bombs into the
+// room": beetles for bodies in the lane, Bobombs because a walking bomb
+// next to the prize punishes barrelling in blind. Guarded by a live-count
+// rather than a room flag (the site's flag window has no bits to spare):
+// re-pulling the switch only re-arms the pack once the previous one is
+// dead, so pull-spam cannot flood the room.
+static void QuickStartGateSpawnPressure(s32 ptx, s32 pty) {
+    s32 i, beetles, bombs;
+    s32 diff = QuickStartGetDifficulty();
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && (ent->id == BEETLE || ent->id == BOBOMB) &&
+            QuickStartEntityInCurrentRoom(ent)) {
+            return;
+        }
+    }
+    beetles = 2 + diff / 4;
+    if (beetles > 4) {
+        beetles = 4;
+    }
+    bombs = 1 + diff / 6;
+    if (bombs > 3) {
+        bombs = 3;
+    }
+    QuickStartSpawnEnemiesOnOpenTiles(BEETLE, 0, ptx * 16 + 8, pty * 16 + 8, beetles, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(BOBOMB, 0, ptx * 16 + 8, pty * 16 + 8, bombs, -1);
+}
+
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     // One correction for every kind: if the table's content spot is solid
     // or out of bounds, snap it to the nearest open tile before anything is
@@ -11654,6 +11686,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                             QuickStartGateWriteTimer((u32)window);
                             QuickStartGateOpen(ptx, pty);
                             QsSetRoomFlag(flagBase + 6);
+                            QuickStartGateSpawnPressure(ptx, pty);
                         }
                         SoundReq(SFX_SECRET);
                         break;
@@ -11695,6 +11728,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     QuickStartGateOpen(ptx, pty);
                     QsSetRoomFlag(flagBase + 6);
                 }
+                QuickStartGateSpawnPressure(ptx, pty);
                 SoundReq(SFX_SECRET);
             }
         }
