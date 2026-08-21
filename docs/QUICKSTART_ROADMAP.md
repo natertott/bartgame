@@ -447,12 +447,23 @@ A method note worth keeping: the first "after" run showed Castle Garden at
 Both were the player walking out of the room mid-sample - a room load, not
 a frame cost. Frame-rate samples have to assert the room did not change.
 
-- **Themed draws.** Occasionally pick a theme (fire, ice, undead, bug,
-  aviary) and prefer roster entries carrying it, so a wave sometimes reads
-  as a designed encounter rather than a mix. Needs a theme tag per row;
-  the roles bitmask already has room beside it. The roster now has the
-  material for it: a fire theme could field Fireball Guy, its mini
-  variant, the fire Wizzrobe and Bombarossa.
+- ~~Themed draws~~ **SHIPPED.** One wave in four rolls a theme (fire,
+  ice, undead, bug, aviary) and every archetype slot prefers roster
+  entries tagged with it - on-theme-and-on-role first, then on-theme,
+  then the old role/any ladder - so the cast reads as a designed
+  encounter while the shape still owns the structure. Thirty rows are
+  tagged; the tags are honest where the bestiary is (bugs, birds, ghosts
+  and bones, things on fire) and visual where it is not (the ICE set
+  beyond the ice Wizzrobe is the blue/cold cast, because a wave of blue
+  things led by an ice mage reads as an ice encounter, which is a
+  theme's whole job). A preference, never a guarantee: a tier with
+  nothing on-theme degrades to the ordinary draw, so a theme can never
+  starve a wave or smuggle in power. The `theme` field trails the struct
+  so only tagged rows spell it. Verified by calling the shipped
+  QuickStartDrawRole from the emulator (callrom grew stack-argument
+  support for it): 40 of 40 themed draws returned on-theme entries at a
+  tier where the theme exists on every level; the theme-0 control drew
+  the ordinary mix.
 - **Weapon-gated enemies are a mechanic worth using on purpose.** Spark
   (boomerang) and Lakitu (Cane of Pacci) currently only appear once the
   player holds their answer, which keeps waves clearable. The same field

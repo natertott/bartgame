@@ -6080,12 +6080,35 @@ static void QuickStartDrawDifficultyHUD(void) {
 //   LAKITU  dies only to COL_PACCI (0x1d), the Cane of Pacci.
 // Both stay in the roster - they are good enemies - but they now only
 // appear once the player is carrying the answer to them.
+// `theme` is a FLAVOR, one value per entry (or 0 for none), feeding the
+// themed-draw pass below: one wave in four rolls a theme and prefers
+// entries carrying it, so the wave sometimes reads as a designed
+// encounter - a fire gang, a graveyard shift - rather than a mix. A
+// preference, never a guarantee, exactly like roles: a level with nothing
+// on-theme falls back through the ordinary passes, so a theme can never
+// starve a wave or smuggle in power the tier has not unlocked.
+//
+// The tags are honest where the bestiary is (bugs, birds, ghosts and
+// bones, things on fire) and visual where it is not: the ICE set beyond
+// the ice Wizzrobe is simply the blue/cold cast, because a wave of blue
+// things led by an ice mage READS as an ice encounter, which is the whole
+// job of a theme.
+#define QS_T_FIRE 1
+#define QS_T_ICE 2
+#define QS_T_UNDEAD 3
+#define QS_T_BUG 4
+#define QS_T_AVIARY 5
+#define QUICKSTART_THEME_COUNT 5
+
 typedef struct {
     u8 id;
     u8 form;
     u8 roles;
     u8 cost;
     u16 requires;
+    // Trailing on purpose: C initializers may omit it, so only the rows
+    // that carry a theme spell all six fields.
+    u8 theme;
 } QuickStartEnemyPick;
 
 // The roster is sorted by what actually makes an enemy dangerous, in this
@@ -6104,11 +6127,11 @@ typedef struct {
 // Level 1 - chaff. Health 1-4, no theft, no armor, nothing that needs an
 // answer. This is the whole roster a player meets before difficulty 4.
 static const QuickStartEnemyPick sQuickStartLevel1[] = {
-    { BEETLE, 0, QS_R_CHAFF | QS_R_FAST, 1, 0 },
-    { KEESE, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 1, 0 },
+    { BEETLE, 0, QS_R_CHAFF | QS_R_FAST, 1, 0, QS_T_BUG },
+    { KEESE, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 1, 0, QS_T_AVIARY },
     { SMALL_PESTO, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 1, 0 },
-    { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1, 0 },
-    { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2, 0 },
+    { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1, 0, QS_T_BUG },
+    { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2, 0, QS_T_AVIARY },
     { MINI_SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
     { GYORG_CHILD, 0, QS_R_CHAFF | QS_R_FLYER, 2, 0 },
     { OCTOROK, 0 /* red */, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
@@ -6120,22 +6143,22 @@ static const QuickStartEnemyPick sQuickStartLevel1[] = {
 // stationary fire) that asks for a little more than walking up and
 // swinging.
 static const QuickStartEnemyPick sQuickStartLevel2[] = {
-    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2, 0 },
+    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2, 0, QS_T_BUG },
     { OCTOROK2, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { OCTOROK, 1 /* blue */, QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
-    { STALFOS, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 2, 0 },
-    { STALFOS, 1 /* blue */, QS_R_CHAFF | QS_R_FAST, 2, 0 },
+    { STALFOS, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 2, 0, QS_T_UNDEAD },
+    { STALFOS, 1 /* blue */, QS_R_CHAFF | QS_R_FAST, 2, 0, QS_T_UNDEAD },
     { KEATON, 0, QS_R_CHAFF | QS_R_FAST, 1, 0 },
     { HELMASAUR, 0, QS_R_FAST, 4, 0 },
-    { PESTO, 0 /* red */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0 },
-    { CHUCHU, 2 /* blue */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
-    { BOBOMB, 0, QS_R_SLOW, 2, 0 },
-    { BOMBAROSSA, 0, QS_R_RANGED | QS_R_FAST, 1, 0 },
+    { PESTO, 0 /* red */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0, QS_T_BUG },
+    { CHUCHU, 2 /* blue */, QS_R_CHAFF | QS_R_SLOW, 4, 0, QS_T_ICE },
+    { BOBOMB, 0, QS_R_SLOW, 2, 0, QS_T_FIRE },
+    { BOMBAROSSA, 0, QS_R_RANGED | QS_R_FAST, 1, 0, QS_T_FIRE },
     { LEEVER, 0 /* red */, QS_R_CHAFF | QS_R_AMBUSH, 2, 0 },
     { MULLDOZER, 0 /* red */, QS_R_SLOW, 4, 0 },
-    { TEKTITE, 1 /* blue */, QS_R_FAST, 1, 0 },
-    { LEEVER, 1 /* blue */, QS_R_AMBUSH, 2, 0 },
+    { TEKTITE, 1 /* blue */, QS_R_FAST, 1, 0, QS_T_ICE },
+    { LEEVER, 1 /* blue */, QS_R_AMBUSH, 2, 0, QS_T_ICE },
 };
 // Yellow and purple Keaton are the same actor with no form-based color
 // variant (confirmed empirically - all 4 form values render identically),
@@ -6144,22 +6167,22 @@ static const QuickStartEnemyPick sQuickStartLevel2[] = {
 // the first stationary artillery. Nothing here steals and nothing here
 // needs a specific item.
 static const QuickStartEnemyPick sQuickStartLevel3[] = {
-    { MOLDORM, 0, QS_R_FAST, 2, 0 },
-    { GHINI, 0, QS_R_FLYER | QS_R_FAST, 5, 0 },
+    { MOLDORM, 0, QS_R_FAST, 2, 0, QS_T_BUG },
+    { GHINI, 0, QS_R_FLYER | QS_R_FAST, 5, 0, QS_T_UNDEAD },
     { ARMOS, 0, QS_R_AMBUSH | QS_R_SLOW, 5, 0 },
     { EYEGORE, 0, QS_R_RANGED | QS_R_SLOW, 6, 0 },
-    { MULLDOZER, 1 /* blue */, QS_R_SLOW, 4, 0 },
-    { PESTO, 1 /* blue */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0 },
+    { MULLDOZER, 1 /* blue */, QS_R_SLOW, 4, 0, QS_T_ICE },
+    { PESTO, 1 /* blue */, QS_R_CHAFF | QS_R_FLYER | QS_R_SLOW, 3, 0, QS_T_BUG },
     { CHUCHU, 1 /* red */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
     { ROCK_CHUCHU, 0, QS_R_SLOW, 2, 0 },
     { SPINY_CHUCHU, 0, QS_R_SLOW, 6, 0 },
-    { SPIKED_BEETLE, 0, QS_R_AMBUSH | QS_R_SLOW, 5, 0 },
+    { SPIKED_BEETLE, 0, QS_R_AMBUSH | QS_R_SLOW, 5, 0, QS_T_BUG },
     { PUFFSTOOL, 0, QS_R_CHAFF | QS_R_SLOW, 8, 0 },
-    { FIREBALL_GUY, 0, QS_R_RANGED, 4, 0 },
-    { MINI_FIREBALL_GUY, 0, QS_R_CHAFF | QS_R_RANGED, 4, 0 },
+    { FIREBALL_GUY, 0, QS_R_RANGED, 4, 0, QS_T_FIRE },
+    { MINI_FIREBALL_GUY, 0, QS_R_CHAFF | QS_R_RANGED, 4, 0, QS_T_FIRE },
     { BOMB_PEAHAT, 0, QS_R_FLYER, 2, 0 },
     { CLOUD_PIRANHA, 0, QS_R_AMBUSH, 4, 0 },
-    { SPINY_BEETLE, 0, QS_R_FAST, 2, 0 },
+    { SPINY_BEETLE, 0, QS_R_FAST, 2, 0, QS_T_BUG },
     { ENEMY_50, 0, QS_R_FAST, 5, 0 },
 };
 // Floormaster (Wall Master) deliberately left out - it grabs the player and
@@ -6182,10 +6205,10 @@ static const QuickStartEnemyPick sQuickStartLevel4[] = {
     { RUPEE_LIKE, 0 /* green */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
     { RUPEE_LIKE, 2 /* red */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
     { RUPEE_LIKE, 1 /* blue */, QS_R_HEAVY | QS_R_THIEF, 4, 0 },
-    { TAKKURI, 0, QS_R_FAST | QS_R_FLYER | QS_R_THIEF, 2, 0 },
-    { GOBDO, 0 /* gibdo */, QS_R_HEAVY | QS_R_SLOW, 2, 0 },
-    { SCISSORS_BEETLE, 0, QS_R_HEAVY, 1, 0 },
-    { MOLDWORM, 0, QS_R_HEAVY, 6, 0 },
+    { TAKKURI, 0, QS_R_FAST | QS_R_FLYER | QS_R_THIEF, 2, 0, QS_T_AVIARY },
+    { GOBDO, 0 /* gibdo */, QS_R_HEAVY | QS_R_SLOW, 2, 0, QS_T_UNDEAD },
+    { SCISSORS_BEETLE, 0, QS_R_HEAVY, 1, 0, QS_T_BUG },
+    { MOLDWORM, 0, QS_R_HEAVY, 6, 0, QS_T_BUG },
     { ENEMY_4D, 0, QS_R_HEAVY, 1, 0 },
     { BOW_MOBLIN, 0, QS_R_RANGED | QS_R_FAST, 8, 0 },
     { SPEAR_MOBLIN, 0, QS_R_FAST, 8, 0 },
@@ -6201,15 +6224,15 @@ static const QuickStartEnemyPick sQuickStartLevel4[] = {
 // element, the 64hp golden trio that soaks a whole magazine, the hazards
 // that ignore a sword entirely and need the right tool in hand.
 static const QuickStartEnemyPick sQuickStartLevel5[] = {
-    { WIZZROBE_FIRE, 0, QS_R_RANGED | QS_R_FAST, 4, 0 },
-    { WIZZROBE_ICE, 0, QS_R_RANGED | QS_R_FAST, 5, 0 },
+    { WIZZROBE_FIRE, 0, QS_R_RANGED | QS_R_FAST, 4, 0, QS_T_FIRE },
+    { WIZZROBE_ICE, 0, QS_R_RANGED | QS_R_FAST, 5, 0, QS_T_ICE },
     { WIZZROBE_WIND, 0, QS_R_RANGED | QS_R_FAST, 3, 0 },
     { TEKTITE_GOLDEN, 0, QS_R_HEAVY | QS_R_FAST, 1, 0 },
     { OCTOROK_GOLDEN, 0, QS_R_HEAVY | QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { ROPE_GOLDEN, 0, QS_R_HEAVY | QS_R_AMBUSH, 4, 0 },
-    { ROLLOBITE, 0, QS_R_FAST, 6, 0 },
-    { WISP, 0 /* red */, QS_R_FLYER, 3, 0 },
-    { WISP, 1 /* blue */, QS_R_FLYER | QS_R_FAST, 3, 0 },
+    { ROLLOBITE, 0, QS_R_FAST, 6, 0, QS_T_BUG },
+    { WISP, 0 /* red */, QS_R_FLYER, 3, 0, QS_T_UNDEAD },
+    { WISP, 1 /* blue */, QS_R_FLYER | QS_R_FAST, 3, 0, QS_T_UNDEAD },
     // Weapon-gated (see the `requires` note on QuickStartEnemyPick): these
     // two shrug off a sword, so they only join once their answer is in the
     // bag. Drawn like anything else once it is.
@@ -6385,7 +6408,7 @@ static bool32 QuickStartEnemyEligible(const QuickStartEnemyPick* pick) {
     return GetInventoryValue(pick->requires) != 0;
 }
 
-static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32 budget, const u8* takenIds,
+static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, u8 theme, s32 budget, const u8* takenIds,
                                                     const u8* takenForms, s32 takenCount, u8 forceLevel) {
     const QuickStartDifficultyTier* tier = QuickStartGetDifficultyTier(difficulty);
     s32 level = (forceLevel != 0) ? (s32)(forceLevel - 1) : QuickStartRollEnemyLevel(tier);
@@ -6394,8 +6417,35 @@ static const QuickStartEnemyPick* QuickStartDrawRole(u8 difficulty, u8 role, s32
     const QuickStartEnemyPick* chosen = NULL;
     s32 seen = 0;
     s32 i;
+    // The themed passes, ahead of the role ones: on-theme AND on-role
+    // first, then on-theme at all. Below them the ladder is exactly the
+    // old two-pass behaviour, so an unthemed wave (theme == 0) is
+    // untouched and a themed one degrades gracefully - a level with
+    // nothing on-theme casts by role, a level with nothing on-role casts
+    // anything affordable.
+    if (theme != 0) {
+        s32 pass;
+        for (pass = 0; pass < 2; pass++) {
+            u8 needRole = (pass == 0) ? role : 0;
+            seen = 0;
+            for (i = 0; i < count; i++) {
+                if (level0[i].theme == theme && (needRole == 0 || (level0[i].roles & needRole)) &&
+                    level0[i].cost <= budget && QuickStartEnemyEligible(&level0[i]) &&
+                    !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
+                    seen++;
+                    if ((s32)Random() % seen == 0) {
+                        chosen = &level0[i];
+                    }
+                }
+            }
+            if (chosen != NULL) {
+                return chosen;
+            }
+        }
+    }
     // First choice: affordable, unused, and carries the role.
     if (role != 0) {
+        seen = 0;
         for (i = 0; i < count; i++) {
             if ((level0[i].roles & role) && level0[i].cost <= budget && QuickStartEnemyEligible(&level0[i]) &&
                 !QuickStartKindAlreadyCast(&level0[i], takenIds, takenForms, takenCount)) {
@@ -7116,22 +7166,33 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     // draw succeeding. countPercent scales the whole wave AFTER every
     // other clamp, so a swarm cannot climb back over the GFX ceiling.
     shape = QuickStartRollArchetype(difficulty);
-    for (i = 0; i < shape->slotCount && kindCount < QUICKSTART_MAX_ENEMY_KINDS; i++) {
-        const QuickStartEnemyPick* pick =
-            QuickStartDrawRole(difficulty, shape->roles[i], sheetBudget, kindIds, kindForms, kindCount,
-                               shape->forceLevel);
+    // One wave in four is THEMED: every slot prefers entries tagged with
+    // the same drawn theme (see QS_T_* on the roster), so the cast reads
+    // as a designed encounter. The shape still owns the structure - a
+    // themed swarm is still a swarm - and the fallback ladder means a
+    // theme thin at this tier costs nothing.
+    {
+        u8 waveTheme = 0;
+        if ((s32)Random() % 4 == 0) {
+            waveTheme = (u8)(1 + (s32)Random() % QUICKSTART_THEME_COUNT);
+        }
+        for (i = 0; i < shape->slotCount && kindCount < QUICKSTART_MAX_ENEMY_KINDS; i++) {
+            const QuickStartEnemyPick* pick =
+                QuickStartDrawRole(difficulty, shape->roles[i], waveTheme, sheetBudget, kindIds, kindForms, kindCount,
+                                   shape->forceLevel);
         if (pick == NULL) {
             // Nothing affordable and unused left in the rolled level.
             // The slot sits out and its share goes unclaimed, so the wave
             // simply spreads over the kinds it did get.
             continue;
         }
-        kindIds[kindCount] = pick->id;
-        kindForms[kindCount] = pick->form;
-        kindQuota[kindCount] = shape->shares[i];
-        shareTotal += shape->shares[i];
-        sheetBudget -= pick->cost;
-        kindCount++;
+            kindIds[kindCount] = pick->id;
+            kindForms[kindCount] = pick->form;
+            kindQuota[kindCount] = shape->shares[i];
+            shareTotal += shape->shares[i];
+            sheetBudget -= pick->cost;
+            kindCount++;
+        }
     }
     if (kindCount == 0) {
         // Nothing affordable at all (a shape of expensive roles against a
