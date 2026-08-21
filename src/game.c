@@ -2289,6 +2289,17 @@ const u8* const gCustomStrings[] = {
     // carrier chase keeps string 27.
     [226] = (const u8*)"A Keaton took my prize\nand dove under a BUSH!\nCut it out of hiding!",
     [227] = (const u8*)"The thief BURROWED into\nsoft earth! Your Mole\nMitts can flush it out!",
+    // 228: the restored field merchant's hearts offer (businessScrub.c
+    // sales row 9). Bombs and arrows reuse their real vanilla offer
+    // lines; hearts never had one. Measured against the vanilla bombs
+    // offer's own bytes: \x06\x01 substitutes the price (gMessage.rupees,
+    // same slot as string 0), and \x07\x29\x01 then JUMPS to
+    // TEXT_BUSINESS_SCRUB index 1 - the shared "So, what do you say,
+    // huh? Sure / No, thanks" prompt whose \x05 choice markup is what
+    // arms the purchase (businessScrub.c's Action5 only buys when the
+    // choice concluded on option 0, so an offer that never reaches that
+    // prompt can never sell).
+    [228] = (const u8*)"OK, ya got me!\nI'll sell ya a nice fresh\nheart! Just \x06\x01 Rupees!\n\x07\x29\x01",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3128,16 +3139,66 @@ static void QuickStartLonLonRanchQuirkHook(void) {
     QuickStartClearLonLonRanchAnimals();
 }
 
+// The shop scrub is kind ENEMY (its AI lives in the enemy handler table),
+// but for every purpose the wave machinery cares about it is furniture:
+// it must not hold a wave open, count toward the alive counter, be eaten
+// by the GFX trimmer, or be conscripted/deleted by a quest's population
+// swap. One predicate, checked at each of those sites.
+static bool32 QuickStartEntityIsShopScrub(const Entity* ent) {
+    return ent->kind == ENEMY && ent->id == BUSINESS_SCRUB;
+}
+
+// The restored field merchant (the user: "restore deku scrub in hyrule
+// field, have him sell hearts/bombs/arrows randomly"). Offer rows 9-11
+// are QUICKSTART additions to businessScrub.c's own sales table - each
+// has the start-revealed bit set, so no shield-deflect duel gates the
+// shop - and which one this visit's scrub carries is re-rolled per room
+// entry.
+#define QUICKSTART_SCRUB_OFFER_BASE 9
+static void QuickStartSpawnFieldShopScrub(s32 x, s32 y) {
+    Entity* scrub = CreateEnemy(BUSINESS_SCRUB, QUICKSTART_SCRUB_OFFER_BASE + (s32)(Random() & 0x7fff) % 3);
+    if (scrub != NULL) {
+        scrub->x.HALF.HI = (s16)x;
+        scrub->y.HALF.HI = (s16)y;
+        scrub->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(scrub);
+    }
+}
+
 // North Hyrule Field has one native BUSINESS_SCRUB_PROLOGUE (a one-time
 // vanilla prologue NPC) that spawns as kind ENEMY, not NPC - confirmed in
 // the emulator that it's present at boot with no player action needed. Left
 // alive it would permanently block QuickStartRegionWaveCleared (which
 // requires zero ENEMY-kind entities in the room), so it needs the same
 // "delete on sight" treatment as Castle Garden's guards/Lon Lon's Goron.
+// Its spot is where the restored shop scrub stands: the position is read
+// off the prologue entity in the frame it is culled, so the shop appears
+// exactly where the vanilla scrub lived, once per room entry.
 static void QuickStartClearNorthFieldScrub(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         if (gEntities[i].base.kind == ENEMY && gEntities[i].base.id == BUSINESS_SCRUB_PROLOGUE) {
+            QuickStartSpawnFieldShopScrub(gEntities[i].base.x.HALF.HI, gEntities[i].base.y.HALF.HI);
+            DeleteEntity(&gEntities[i].base);
+            // The map carves the prologue's hedge row open with scene
+            // tiles that draw as placeholder glyphs outside the cutscene;
+            // the scene's own resolution repairs exactly these five
+            // (businessScrubPrologue.c sub_08046078), leaving 0x7a4 - the
+            // notch the scrub itself stands in - open. Same repair here,
+            // once per room load (the prologue entity exists only in the
+            // frame this branch catches it).
+            RestorePrevTileEntity(0x7a2, 1);
+            RestorePrevTileEntity(0x7a3, 1);
+            RestorePrevTileEntity(0x7a5, 1);
+            RestorePrevTileEntity(0x7a6, 1);
+            RestorePrevTileEntity(0x7a7, 1);
+        }
+        // The prologue scene's prop object loads with the scrub (a
+        // CUTSCENE_MISC_OBJECT parked on the same tile) and, with the
+        // cutscene never running, draws as a row of placeholder glyphs
+        // (measured: type 25 at the scrub's exact spot). Scene furniture
+        // for a scene that no longer exists.
+        if (gEntities[i].base.kind == OBJECT && gEntities[i].base.id == CUTSCENE_MISC_OBJECT) {
             DeleteEntity(&gEntities[i].base);
         }
     }
@@ -3669,7 +3730,8 @@ static bool32 QuickStartRegionWaveCleared(void) {
         return FALSE;
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
-        if (gEntities[i].base.kind == ENEMY && QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
+        if (gEntities[i].base.kind == ENEMY && !QuickStartEntityIsShopScrub(&gEntities[i].base) &&
+            QuickStartEntityInCurrentRoom(&gEntities[i].base)) {
             return FALSE;
         }
     }
@@ -3761,7 +3823,7 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
     *hasBoss = FALSE;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == ENEMY && QuickStartEntityInCurrentRoom(ent)) {
+        if (ent->kind == ENEMY && !QuickStartEntityIsShopScrub(ent) && QuickStartEntityInCurrentRoom(ent)) {
             count++;
             if (ent->id == CHUCHU_BOSS) {
                 *hasBoss = TRUE;
@@ -8683,7 +8745,8 @@ static void QuickStartEnforceGfxReserve(void) {
             // gRoomControls.camera_target on a cleared slot at (0,0),
             // which is the black screen half of that report. Setpieces
             // are not density fill; only the fill is ever surplus.
-            if (enemy->id == CHUCHU_BOSS || enemy == gRoomControls.camera_target) {
+            if (enemy->id == CHUCHU_BOSS || enemy == gRoomControls.camera_target ||
+                QuickStartEntityIsShopScrub(enemy)) {
                 continue;
             }
             dx = enemy->x.HALF.HI - gPlayerEntity.base.x.HALF.HI;
@@ -10067,6 +10130,12 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 thiefX
     s32 i, beetles;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
+        // The shop scrub trades through the quest: it is not part of the
+        // wave the swap despawns, and it must not be conscripted into the
+        // pack (a pack member is deleted by the quest's own cleanup).
+        if (QuickStartEntityIsShopScrub(ent)) {
+            continue;
+        }
         if (QuickStartEnemyIsOurs(ent)) {
             DeleteEntity(ent);
         } else if (ent->kind == ENEMY) {
@@ -10085,10 +10154,11 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 thiefX
     QuickStartSpawnEnemiesOnOpenTiles(BEETLE, 0, swarmX, swarmY, beetles, -1);
     QuickStartSpawnEnemiesOnOpenTiles(SPARK, 0, swarmX, swarmY, 3, -1);
     QuickStartSpawnEnemiesOnOpenTiles(WIZZROBE_ICE, 0, swarmX, swarmY, 2, -1);
-    // Everything standing after a despawn is the pack: mark it all.
+    // Everything standing after a despawn is the pack: mark it all
+    // (except the shop scrub, which merely lives here - see above).
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == ENEMY) {
+        if (ent->kind == ENEMY && !QuickStartEntityIsShopScrub(ent)) {
             ((Enemy*)ent)->enemyFlags |= QUICKSTART_EM_FLAG_HUNT;
         }
     }
