@@ -21,7 +21,20 @@ script_QuickStartScav_loop:
 	FacePlayer
 	Call QuickStartScavCanStart
 	JumpIfNot script_QuickStartScav_spent
+	@ F1 hide modes: which offer line depends on where the thief hid,
+	@ decided in C when the giver spawned (QuickStartScavDecideModeOnce).
+	Call QuickStartScavIsBuried
+	JumpIf script_QuickStartScav_buried
+	Call QuickStartScavIsBush
+	JumpIf script_QuickStartScav_bush
 	MessageNoOverlap TEXT_CUSTOM, 27
+	Jump script_QuickStartScav_offered
+script_QuickStartScav_buried:
+	MessageNoOverlap TEXT_CUSTOM, 227
+	Jump script_QuickStartScav_offered
+script_QuickStartScav_bush:
+	MessageNoOverlap TEXT_CUSTOM, 226
+script_QuickStartScav_offered:
 	WaitUntilTextboxCloses
 	@ F1c stake announcement - same branch as the hunt giver's.
 	Call QuickStartStakeIsNone

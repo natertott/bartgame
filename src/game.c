@@ -2284,6 +2284,10 @@ const u8* const gCustomStrings[] = {
     [224] = (const u8*)"Stand your ground! Live\nout the clock and the\nprize is yours!",
     // 225: the linger-plate puzzle's hint (switch puzzle #3).
     [225] = (const u8*)"Two plates, one truth:\nboth held down AT ONCE.\nThe first one rises...",
+    // 226-227: the scavenger hunt's two hide-mode offers (F1). The
+    // carrier chase keeps string 27.
+    [226] = (const u8*)"A Keaton took my prize\nand dove under a BUSH!\nCut it out of hiding!",
+    [227] = (const u8*)"The thief BURROWED into\nsoft earth! Your Mole\nMitts can flush it out!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2947,6 +2951,22 @@ static void QuickStartTrilbyQuirkHook(void) {
 // pack's positioning tax finally costs something.
 #define QUICKSTART_SCAV_SECONDS 25
 #define QUICKSTART_SCAV_FRAMES (QUICKSTART_SCAV_SECONDS * 60)
+// F1's two HIDE MODES. The chase does not always start at the giver: the
+// thief may be hiding under a BUSH (cut it) or BURIED in soft earth (Mole
+// Mitts), decided when the giver first spawns in the host room - the room
+// has to be loaded to scan its tiles. 2-bit mode: 0 undecided, 1 carrier
+// (the shipped chase), 2 bush, 3 buried. The hidden tile is a room tile
+// coordinate pair; FOUND latches once the tile transforms and the pack is
+// out. All in the QS window's free 599+ run (wiped per run with 202-703).
+// Hidden hunts get a longer clock - the search is part of the quest.
+#define GF_SCAV_MODE_BIT(b) (599 + (b))                                  // b = 0..1 -> 599-600
+#define GF_SCAV_TILE_X_BIT(b) (601 + (b))                                // b = 0..5 -> 601-606
+#define GF_SCAV_TILE_Y_BIT(b) (607 + (b))                                // b = 0..5 -> 607-612
+#define GF_SCAV_FOUND 613
+#define QUICKSTART_SCAV_HIDDEN_SECONDS 35
+#define QUICKSTART_SCAV_MODE_CARRIER 1
+#define QUICKSTART_SCAV_MODE_BUSH 2
+#define QUICKSTART_SCAV_MODE_BURIED 3
 #define QUICKSTART_SCAV_OFFERED 0
 #define QUICKSTART_SCAV_RUNNING 1
 #define QUICKSTART_SCAV_WON 2
@@ -9964,7 +9984,8 @@ static s32 QuickStartCountMarked(u8 id) {
 // Release (or re-release, after a room reload) the thief and its swarm.
 // The wave is despawned first per the F1 brief - which also pays for the
 // pack: measured, a cleared room affords far more than a live wave does.
-static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 giverX, s16 giverY) {
+static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 thiefX, s16 thiefY, s16 swarmX,
+                                      s16 swarmY) {
     s32 i, beetles;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
@@ -9974,17 +9995,18 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 giverX
             ((Enemy*)ent)->enemyFlags &= ~QUICKSTART_EM_FLAG_HUNT;
         }
     }
-    // The thief, across the region at the reward spot.
-    QuickStartSpawnEnemiesOnOpenTiles(KEATON, 0, region->rewardX, region->rewardY, 1, -1);
+    // The thief - across the region at the reward spot for the carrier
+    // chase, or bursting out of the hide tile for the hidden modes.
+    QuickStartSpawnEnemiesOnOpenTiles(KEATON, 0, thiefX, thiefY, 1, -1);
     // The swarm, around the conversation: bodies, a positioning tax, and
     // one ranged kind - instance-heavy, kind-light on purpose.
     beetles = 6 + QuickStartGetDifficulty() / 2;
     if (beetles > 10) {
         beetles = 10;
     }
-    QuickStartSpawnEnemiesOnOpenTiles(BEETLE, 0, giverX, giverY, beetles, -1);
-    QuickStartSpawnEnemiesOnOpenTiles(SPARK, 0, giverX, giverY, 3, -1);
-    QuickStartSpawnEnemiesOnOpenTiles(WIZZROBE_ICE, 0, giverX, giverY, 2, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(BEETLE, 0, swarmX, swarmY, beetles, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(SPARK, 0, swarmX, swarmY, 3, -1);
+    QuickStartSpawnEnemiesOnOpenTiles(WIZZROBE_ICE, 0, swarmX, swarmY, 2, -1);
     // Everything standing after a despawn is the pack: mark it all.
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
@@ -9995,7 +10017,94 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 giverX
     QsSetRoomFlag(7);
 }
 
+// --- The hide modes' tile layer ------------------------------------------
+//
+// A bush, for this quest, is a tile the sword turns from solid to open.
+// Measured with a slash-everything diff over North Hyrule Field
+// (scratchpad cut_diff): the 427-431 tile-type family (collision 0x0f) is
+// the cuttable shrub class, uniformly, and it exists in every ring region
+// by the hundreds (tools/quickstart/hide_survey.py). Diggable ground is
+// simpler: gMapBottom.actTiles reads TILE_ACT_DIG (0xd) - which the
+// survey found ONLY in the three Eastern Hills rooms, so the buried mode
+// is rare by geography on top of its Mole Mitts gate.
+static bool32 QuickStartTileIsBush(s32 tx, s32 ty) {
+    u32 t = GetTileTypeAtTilePos(TILE_POS(tx, ty), 1);
+    return t >= 427 && t <= 431;
+}
+
+static bool32 QuickStartTileIsDiggable(s32 tx, s32 ty) {
+    return gMapBottom.actTiles[tx + (ty << 6)] == 0xd; // TILE_ACT_DIG
+}
+
+// Nearest qualifying hide tile to the anchor, ring-scan out to radius 24,
+// staying off the outer-3 door band like every other dealt fixture.
+static bool32 QuickStartScavFindHideTile(s32 mode, s16 anchorX, s16 anchorY, s32* outTX, s32* outTY) {
+    s32 atx = anchorX >> 4;
+    s32 aty = anchorY >> 4;
+    s32 tw = (s32)(gRoomControls.width >> 4);
+    s32 th = (s32)(gRoomControls.height >> 4);
+    s32 r, dx, dy;
+    for (r = 0; r <= 24; r++) {
+        for (dy = -r; dy <= r; dy++) {
+            for (dx = -r; dx <= r; dx++) {
+                s32 tx = atx + dx;
+                s32 ty = aty + dy;
+                if (dx > -r && dx < r && dy > -r && dy < r) {
+                    continue; // ring, not disc - each radius once
+                }
+                if (tx < 3 || ty < 3 || tx >= tw - 3 || ty >= th - 3) {
+                    continue;
+                }
+                if ((mode == QUICKSTART_SCAV_MODE_BURIED) ? QuickStartTileIsDiggable(tx, ty)
+                                                          : QuickStartTileIsBush(tx, ty)) {
+                    *outTX = tx;
+                    *outTY = ty;
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+// Decided at giver-spawn time, in the host room, because the roll itself
+// happens in whatever region the player entered first - the host's tiles
+// are only scannable once the player is actually standing in it. One roll
+// per run: a third buried (needs Mole Mitts owned AND diggable ground -
+// Eastern Hills only), a third bush, the rest the carrier chase; a mode
+// whose tile cannot be found degrades to the next one down.
+static void QuickStartScavDecideModeOnce(const QuickStartRegion* region) {
+    s32 mode = QUICKSTART_SCAV_MODE_CARRIER;
+    s32 tx, ty;
+    s16 spotX, spotY;
+    if (QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) != 0) {
+        return;
+    }
+    if (QuickStartScavSpot(region, &spotX, &spotY)) {
+        s32 roll = (s32)Random() % 3;
+        if (roll == 2 && GetInventoryValue(ITEM_MOLE_MITTS) != 0 &&
+            QuickStartScavFindHideTile(QUICKSTART_SCAV_MODE_BURIED, spotX, spotY, &tx, &ty)) {
+            mode = QUICKSTART_SCAV_MODE_BURIED;
+        } else if (roll >= 1 && QuickStartScavFindHideTile(QUICKSTART_SCAV_MODE_BUSH, spotX, spotY, &tx, &ty)) {
+            mode = QUICKSTART_SCAV_MODE_BUSH;
+        }
+        if (mode != QUICKSTART_SCAV_MODE_CARRIER) {
+            QuickStartScavWriteBits(GF_SCAV_TILE_X_BIT(0), 6, (u32)tx);
+            QuickStartScavWriteBits(GF_SCAV_TILE_Y_BIT(0), 6, (u32)ty);
+        }
+    }
+    QuickStartScavWriteBits(GF_SCAV_MODE_BIT(0), 2, (u32)mode);
+}
+
 // --- Script hooks (data/scripts/quickstart/script_QuickStartScav.inc) ---
+
+void QuickStartScavIsBush(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) == QUICKSTART_SCAV_MODE_BUSH;
+}
+
+void QuickStartScavIsBuried(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) == QUICKSTART_SCAV_MODE_BURIED;
+}
 
 void QuickStartScavCanStart(Entity* entity, ScriptExecutionContext* context) {
     context->condition =
@@ -10009,7 +10118,20 @@ void QuickStartScavBegin(Entity* entity, ScriptExecutionContext* context) {
         return;
     }
     region = &sQuickStartRegionPool[slot];
-    QuickStartScavReleasePack(region, entity->x.HALF.HI - gRoomControls.origin_x,
+    if (QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) >= QUICKSTART_SCAV_MODE_BUSH) {
+        // A hidden hunt: nothing is released yet - the clock covers the
+        // SEARCH, and the pack bursts out when the hide tile transforms
+        // (see the monitor). The region's own wave stays up meanwhile;
+        // searching under fire is the mode's texture.
+        QsClearFlag(GF_SCAV_FOUND);
+        QuickStartLatchFailureStake();
+        gSave.timer4 = QUICKSTART_SCAV_HIDDEN_SECONDS * 60;
+        QuickStartScavSetState(QUICKSTART_SCAV_RUNNING);
+        SoundReq(SFX_SECRET);
+        return;
+    }
+    QuickStartScavReleasePack(region, region->rewardX, region->rewardY,
+                              entity->x.HALF.HI - gRoomControls.origin_x,
                               entity->y.HALF.HI - gRoomControls.origin_y);
     QuickStartLatchFailureStake();
     gSave.timer4 = QUICKSTART_SCAV_FRAMES;
@@ -10027,11 +10149,45 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
     }
     state = QuickStartScavState();
     if (state == QUICKSTART_SCAV_RUNNING) {
+        if (QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) >= QUICKSTART_SCAV_MODE_BUSH &&
+            !QsCheckFlag(GF_SCAV_FOUND)) {
+            // The hidden phase: the thief is under the recorded tile, and
+            // the tile no longer matching its own predicate IS the find -
+            // the bush was cut, the earth was dug. Room reloads regrow the
+            // tile, which is correct: not found is not found.
+            s32 htx = (s32)QuickStartScavReadBits(GF_SCAV_TILE_X_BIT(0), 6);
+            s32 hty = (s32)QuickStartScavReadBits(GF_SCAV_TILE_Y_BIT(0), 6);
+            bool32 transformed =
+                (QuickStartScavReadBits(GF_SCAV_MODE_BIT(0), 2) == QUICKSTART_SCAV_MODE_BURIED)
+                    ? !QuickStartTileIsDiggable(htx, hty)
+                    : !QuickStartTileIsBush(htx, hty);
+            if (transformed) {
+                QsSetFlag(GF_SCAV_FOUND);
+                QuickStartScavReleasePack(region, (s16)(htx * 16 + 8), (s16)(hty * 16 + 8), (s16)(htx * 16 + 8),
+                                          (s16)(hty * 16 + 8));
+                QsSetRoomFlag(7);
+                SoundReq(SFX_SECRET);
+                return;
+            }
+            if (gSave.timer4 != 0) {
+                gSave.timer4--;
+            }
+            if (gSave.timer4 == 0) {
+                // Never found. Same failure the chase has, stake included.
+                QuickStartScavSetState(QUICKSTART_SCAV_FAILED);
+                {
+                    s32 stakeMsg = QuickStartApplyFailureStake();
+                    MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 29));
+                }
+                MsgInit();
+            }
+            return;
+        }
         if (!QsCheckRoomFlag(7)) {
             // Fresh visit mid-chase: the room reload unloaded the pack.
             // Re-release it rather than reading the empty room as a kill.
             if (QuickStartScavSpot(region, &spotX, &spotY)) {
-                QuickStartScavReleasePack(region, spotX, spotY);
+                QuickStartScavReleasePack(region, region->rewardX, region->rewardY, spotX, spotY);
             }
             return;
         }
@@ -10078,6 +10234,10 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
     if (state != QUICKSTART_SCAV_OFFERED) {
         return;
     }
+    // The hide mode is decided here, on the giver's own ground: this is
+    // the first frame the host room is guaranteed loaded, and the offer
+    // text (bush/buried/carrier) has to know before the player talks.
+    QuickStartScavDecideModeOnce(region);
     if (!QuickStartScavSpot(region, &spotX, &spotY)) {
         return;
     }

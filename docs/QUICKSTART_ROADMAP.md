@@ -231,12 +231,39 @@ can actually obtain.
 
 ### 2.3 Quests
 
-- **Scavenger hunt's other two hide modes (F1).** Carrier mode (the
-  Keaton chase) shipped; buried (Mole Mitts) and under-bush modes remain.
-  Both need per-region tile surveys (diggable spots, cuttable bushes)
-  before they can be drawn safely; the quest's mode field and state
-  machine are ready. The dig research is shared with the Mole Mitts dig
-  rooms below - do them together.
+- ~~Scavenger hunt's other two hide modes (F1)~~ **SHIPPED, both.** The
+  thief no longer always bolts from the giver: a third of hunts hide it
+  under a BUSH (cut it out) and a third BURY it in soft earth (Mole
+  Mitts), decided when the giver spawns in the host room - the roll
+  happens wherever the player first walks, so the host's tiles are only
+  scannable then. Hidden hunts start the clock with NOTHING released:
+  35 seconds (vs the chase's 25) covering the search, the region's own
+  wave still up ("searching under fire" is the mode's texture), and the
+  pack - thief AND swarm - bursts out of the hide tile the moment it
+  transforms. Never found = the same FAILED branch, F1c stake included.
+  **The survey work turned into predicates, not tables.** A
+  slash-everything diff over North Hyrule Field
+  (solid-before/open-after is what separates a bush from trampled grass)
+  identified tile types 427-431 (collision 0x0f) as THE cuttable-shrub
+  class - present by the hundreds in every ring region
+  (`tools/quickstart/hide_survey.py`) - and diggable ground is simply
+  `actTiles == TILE_ACT_DIG (0xd)`, which exists ONLY in the three
+  Eastern Hills rooms, so buried is rare by geography on top of its Mole
+  Mitts gate. The runtime picker ring-scans from the quest's own drawn
+  spot for the nearest qualifying tile and degrades mode by mode down to
+  the carrier chase, so no region needed a hand-built table and a region
+  with no bushes simply never offers one.
+  **Detection is the predicate itself**: the monitor re-tests the
+  recorded tile each frame, and "no longer a bush / no longer diggable"
+  IS the find - no new event plumbing, and a room reload correctly
+  regrows an unfound hiding place. Verified end to end in the emulator
+  (`tools/quickstart/hide_check.py`): bush mode rolls, hides at a real
+  bush tile, Begin arms the search clock with no Keaton out,
+  transforming the tile releases thief-plus-swarm there, the kill wins
+  and pays, and the timeout control fails with the stake path; the
+  buried leg does the same in Eastern Hills off a real 0xd tile with
+  Mole Mitts granted. The sword's power to transform exactly these tile
+  types is the diff probe's own already-proven half.
 - ~~Quest clocks are too generous~~ **SHIPPED** (the user, Aug 2026: "the
   quests need to be more difficult in general"). The Keaton chase went
   60s -> 25s ("about half or less"); the hunt quest went 45s -> 30s AND
