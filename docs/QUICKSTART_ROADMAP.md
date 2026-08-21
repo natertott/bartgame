@@ -492,22 +492,45 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 ### 2.5 Bosses
 
 - **Multi-boss and boss+wave combos (F6).** Measured: two bosses fit a
-  cleared room, three are marginal, none fit a live diff-12 wave. Blocked
-  on **family-scoping the boss death machinery (#125)** - a simultaneous
-  dual kill currently softlocks (one-family-per-room assumptions in the
-  staged death and the death sweeps). Escort-roster combos ship as a
-  per-boss field once measured (blue chuchu + ice wizzrobes is the
+  cleared room, three are marginal, none fit a live diff-12 wave. The
+  #125 "simultaneous dual kill softlocks" blocker DID NOT REPRODUCE when
+  re-tested (see the #125 entry in Known bugs) - the remaining gate is a
+  positive: script a real kill of an engaged boss so the dual-engaged
+  case can be measured before combos ship. Escort-roster combos ship as
+  a per-boss field once measured (blue chuchu + ice wizzrobes is the
   thematic shortlist head).
 - **New boss forms.** Octorok Boss is the next-cheapest per the vanilla
   inventory's boss ladder. Gleerok/Mazaal/Big Octorok each need a damage
   audit, an arena audit (Mazaal is a multi-entity macro and wants a
   dedicated room), and a budget measurement. None are "just spawn it" -
   the blue chuchu, the cheapest case, surfaced three latent bugs.
-- **Boss spawns for the paused regions.** The allowlist is
-  vetted-regions-only (CG, NHF, SHF, Trilby's pocket arena). Path per
-  region: measure with the F6 harness, watch one full fight in the
-  emulator, then add the row. EH-North and Lon Lon Ranch are the
-  plausible next candidates; the small seam-scroll rooms stay boss-free.
+- ~~Boss spawns for the paused regions~~ **Lon Lon Ranch and Eastern
+  Hills North ADDED** (the two named candidates), vetted with
+  `tools/quickstart/boss_region.py` to PARITY with Castle Garden - the
+  control everyone has watched work in real play. Per room: the family
+  composes at the reward spot, the intro finishes and the fight engages
+  at the same frame count as the control, a mid-intro seam scroll
+  neither locks the game nor strands the player (both directions), and
+  the mid-fight screenshot shows the boss actually fighting in the room.
+  The small seam-scroll rooms (EH South 480x208, EH Center 480x256) stay
+  boss-free; EH North is 480x544.
+  **Three traps the harness ate so the next vetting doesn't:** (1) an
+  undismissed textbox freezes the boss's whole stage machine while the
+  player can still walk - a probe that never presses A measures a paused
+  game, and the "boss" it sees is an invisible, inert, sword-carvable
+  stack that looks exactly like "this room can't host it". (2) Standing
+  inside the boss gets the player swallowed, and out here the swallow's
+  spit-out has no arena respawn - measured, it dumped the player at
+  world (0,0) in a DIFFERENT room. Real players fight from sword range,
+  so the driver does too - but this is a real vanilla-mechanism edge
+  worth its own look someday. (3) A fence between the entrance and a
+  seam reads as a lockup to a blind march - pick crossing columns from
+  the collision map.
+  **Bar not yet met by the harness anywhere, control included:** killing
+  an ENGAGED boss by script. The engaged fight ignores plain sword taps
+  at 1 hp (the peel wants real contact windows the dumb driver doesn't
+  hit); Castle Garden fails this leg identically, so it measures the
+  harness, not the rooms.
 - **Boss cadence sanity check.** The deferred-spawn fix made the 10% roll
   real for the first time; mid-region bosses were previously ~never.
   After some play, reassess whether 10% + deferral FEELS right (Decision 6).
@@ -969,10 +992,21 @@ Open defects and unexplained reports, roughly by player impact.
   the checker correctly saw 0. And a short sheet budget costs VARIETY,
   not difficulty: density and the caps are untouched, so the same number
   of enemies spawn from fewer sheets.
-- **Boss death machinery is not family-scoped (#125).** Two bosses dying
-  simultaneously softlocks. Latent today (one boss at a time), but it is
-  the hard blocker for F6 multi-boss and a real crash risk if any future
-  content double-spawns.
+- **Boss death machinery family-scoping (#125) - the claimed softlock
+  DOES NOT REPRODUCE on the current build.** The claim ("a simultaneous
+  dual kill softlocks") predates the compaction that ate its analysis, so
+  it was re-tested from scratch: two full families spawned side by side,
+  every piece weakened to 1 hp, both killed through the real damage
+  pipeline within the same quarter-second - all ten pieces tear down,
+  nothing lingers, the player stays mobile, and the wave loop resumes
+  (it rolled a fresh legitimate boss two rooms later). What that run
+  does NOT cover: a dual kill of two ENGAGED bosses, because scripting a
+  real kill of even one engaged boss is still unsolved (see the
+  boss_region entry). Until that exists, #125 is DOWNGRADED from "hard
+  blocker" to "needs a reproducing case": no fix will be written against
+  a failure nobody can produce. The audit of the QUICKSTART-side sweeps
+  found them already family-safe by construction (they match on id, not
+  on a singleton, and the one Helper block is per-family heap).
 - ~~Some Minish holes/entrances don't work (#103)~~ **FIXED, root cause
   found** (user, Aug 2026, pointing at the hole on North Hyrule Field's
   east side: "a hole in the ground that Link falls through as mini link...

@@ -3762,9 +3762,21 @@ static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
     // spawns in the enclosed southwest pocket instead of at the reward spot
     // (see the spawn override in QuickStartSpawnRegionWave and the
     // containment clamp in QuickStartTrilbyQuirkHook).
+    //
+    // Lon Lon Ranch and Eastern Hills North joined via
+    // tools/quickstart/boss_region.py, vetted to PARITY with Castle Garden
+    // (the control everyone has watched work in real play): the family
+    // composes at the reward spot, the intro finishes and the fight
+    // engages on the same frame count, a mid-intro seam scroll neither
+    // locks the game nor strands the player, and the mid-fight screenshot
+    // shows the boss standing in the room. Eastern Hills North is 480x544
+    // - the seam-scroll lockup room was its 480x208 south sibling, which
+    // stays boss-free along with Center (480x256).
     return region->room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD ||
            region->room == ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD ||
-           region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS;
+           region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS ||
+           region->room == ROOM_HYRULE_FIELD_LON_LON_RANCH ||
+           region->room == ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH;
 }
 
 // "The boss wave rolled but the room can't pay for it YET" - per-visit

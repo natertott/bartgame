@@ -25,6 +25,8 @@ THUMB_BX_R3 = 0x4718
 ARM_BX_R3 = 0xE12FFF13
 THUMB_BX_R4 = 0x4720
 ARM_BX_R4 = 0xE12FFF14
+THUMB_BX_R0 = 0x4700
+ARM_BX_R0 = 0xE12FFF10
 def _game_text_base(mapfile='build/USA/tmc.map'):
     """src/game.o's .text base, read from the CURRENT map - never hardcode
     it: every edit to game.c can move it, and a stale base resolves every
@@ -82,6 +84,68 @@ def call_args(core, addr, args, budget=500000):
         pc = cpu.gprs[15]
         if pc - 4 == TRAP or pc - 8 == TRAP:
             return cpu.gprs[0]
+        lib.ARMRun(cpu)
+    raise RuntimeError('call did not return within %d instructions' % budget)
+
+
+def _restore(core, saved, saved_cpsr, ime):
+    """Put the hijacked CPU back exactly where it was, pipeline included.
+
+    Everything but r0 and pc restores by plain assignment. PC needs the
+    prefetch pipeline reloaded, which only a real branch does - so the
+    resume address rides r0 through an injected `bx r0`, and r0's true
+    value is written back the instruction after (we own the emulator
+    between instructions). The saved pc reads ahead of the next
+    instruction by one fetch (4 in Thumb, 8 in ARM), hence the rewind.
+    """
+    cpu = core.cpu._native
+    native = core._core
+    thumb = (saved_cpsr & 0x20) != 0
+    resume = (saved[15] - (4 if thumb else 8)) | (1 if thumb else 0)
+    core.cpu.cpsr.packed = saved_cpsr
+    for i in range(1, 15):
+        cpu.gprs[i] = saved[i]
+    cpu.gprs[0] = resume
+    lib.ARMRunFake(cpu, THUMB_BX_R0 if thumb else ARM_BX_R0)
+    cpu.gprs[0] = saved[0]
+    native.busWrite16(native, 0x04000208, ime)
+
+
+def call_keep(core, addr, args=(), budget=500000):
+    """call/call_args, but NON-DESTRUCTIVE: the interrupted game context is
+    fully restored afterwards, so the caller may keep running frames and
+    the game plays on with only the call's own side effects. This retires
+    the one-question-per-boot rule for probes that need the game to keep
+    living with what the call created."""
+    cpu = core.cpu._native
+    native = core._core
+    for _ in range(2_000_000):
+        pc = cpu.gprs[15]
+        if pc >= 0x08000000 and (core.cpu.cpsr.packed & 0x1f) in (0x10, 0x1f):
+            break
+        lib.ARMRun(cpu)
+    else:
+        raise RuntimeError('CPU never reached game code')
+    ime = native.busRead16(native, 0x04000208)
+    native.busWrite16(native, 0x04000208, 0)
+    saved = [cpu.gprs[i] for i in range(16)]
+    saved_cpsr = core.cpu.cpsr.packed
+    stack = list(args[4:])
+    sp = (SCRATCH_SP - 4 * len(stack)) & ~7
+    for i, v in enumerate(stack):
+        native.busWrite32(native, sp + 4 * i, v & 0xFFFFFFFF)
+    for i, v in enumerate(list(args[:4])):
+        cpu.gprs[i] = v & 0xFFFFFFFF
+    cpu.gprs[4] = addr | 1
+    cpu.gprs[13] = sp
+    cpu.gprs[14] = TRAP | 1
+    lib.ARMRunFake(cpu, THUMB_BX_R4 if (saved_cpsr & 0x20) else ARM_BX_R4)
+    for _ in range(budget):
+        pc = cpu.gprs[15]
+        if pc - 4 == TRAP or pc - 8 == TRAP:
+            out = cpu.gprs[0]
+            _restore(core, saved, saved_cpsr, ime)
+            return out
         lib.ARMRun(cpu)
     raise RuntimeError('call did not return within %d instructions' % budget)
 
