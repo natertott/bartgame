@@ -4751,6 +4751,17 @@ static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
     if (!e->repeatable && GetInventoryValue(e->item) != 0) {
         return FALSE;
     }
+    // An upgrade SHADOWS its base item (the user: with the magic boomerang
+    // owned, drawing the plain boomerang re-equips a downgrade). Once the
+    // better form is in the inventory, the lesser one leaves the pool for
+    // the rest of the run - same one-way ladder the swords' own draw
+    // requirements already imply, enforced from the other end.
+    if (e->item == ITEM_BOOMERANG && GetInventoryValue(ITEM_MAGIC_BOOMERANG) != 0) {
+        return FALSE;
+    }
+    if (e->item == ITEM_RED_SWORD && GetInventoryValue(ITEM_BLUE_SWORD) != 0) {
+        return FALSE;
+    }
     if (!QuickStartKeyRegionAllowed(e->item)) {
         return FALSE;
     }
