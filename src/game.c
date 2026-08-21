@@ -638,7 +638,8 @@ static void GameTask_Transition(void) {
         // GF_SHOP_RANDOMIZED, the latch that decides whether to redraw at all,
         // lives in the QUICKSTART flag window and is cleared by the 202-703
         // loop further up.
-        for (bit = 43; bit <= 141; bit++) {
+        // Bit 142: the survive event's live-clock marker (GF_SURVIVE_LIVE).
+        for (bit = 43; bit <= 142; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -2278,6 +2279,9 @@ const u8* const gCustomStrings[] = {
     [221] = (const u8*)"Too slow! The price:\nrupees, and half your\nhearts.",
     [222] = (const u8*)"Too slow! Rupees, hearts,\nand your charm - gone.",
     [223] = (const u8*)"Too slow! Rupees, hearts\n- and a curse for the\nroad.",
+    // 224: the survive room's one-time Ezlo hint (the wave gauntlet's own
+    // is string 9; which one shows tells the player which deal this is).
+    [224] = (const u8*)"Stand your ground! Live\nout the clock and the\nprize is yours!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -2946,6 +2950,18 @@ static void QuickStartTrilbyQuirkHook(void) {
 #define QUICKSTART_SCAV_WON 2
 #define QUICKSTART_SCAV_FAILED 3
 static s32 QuickStartScavState(void);
+// The hunt's state values and accessor, hoisted for the same reader: the
+// wave room's survive-variant decision (QuickStartSetupWaveRoomContent)
+// must not claim the shared HUD clock while either timed quest is running.
+#define QUICKSTART_HUNT_OFFERED 0
+#define QUICKSTART_HUNT_RUNNING 1
+#define QUICKSTART_HUNT_WON 2
+#define QUICKSTART_HUNT_FAILED 3
+static s32 QuickStartHuntState(void);
+// The survive room's live-clock marker (see QuickStartSetupSurviveRoomContent).
+// FLAG_BANK_11, inside the run wipe's 43-142 sweep; read up here by the
+// ring monitor's abandoned-clock sweep and the HUD clock.
+#define GF_SURVIVE_LIVE 142
 // The closing gate's countdown, in frames (QS_EVENT_GATE - see the branch
 // in QuickStartSetupEventContent). Global bits rather than room state
 // because room flags are bits and this needs a number; only one gate room
@@ -5148,6 +5164,16 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     QuickStartSetupRegionQuest(region, poolIndex);
     QuickStartHuntMonitor(region, poolIndex);
     QuickStartScavMonitor(region, poolIndex);
+    // A survive clock can only truthfully be live inside its own ? room.
+    // Seeing the player here, in a region room, means they walked out on
+    // the attempt - sweep the marker and the shared HUD clock, but never
+    // while a timed quest owns it (a RUNNING quest's clock deliberately
+    // freezes outside its host region).
+    if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE) && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
+        QuickStartScavState() != QUICKSTART_SCAV_RUNNING) {
+        ClearLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
+        gSave.timer4 = 0;
+    }
     QuickStartSpawnRegionRewardOnce(region, poolIndex);
     QuickStartSpawnRegionEnemiesOnce(region, poolIndex);
 }
@@ -8908,6 +8934,94 @@ static void QuickStartHandicapRestore(void);
 // collision.c also reaches through.
 u8 QuickStartCharmMask(void);
 
+// --- The survive room (Phase D's first cheap event) ------------------------
+//
+// "Survive N seconds": the same arena, the same spawner, but the win
+// condition is the clock, not the body count - hold out and the reward
+// drops; there is nothing to clear. It shares QS_EVENT_WAVES' kind value
+// the way the two switch puzzles share QS_EVENT_GATE's, decided once per
+// visit (flagBase + 1 = decided, + 3 = this visit is the survive variant)
+// rather than per run: the whole room state is per-visit anyway, and a
+// re-entry re-dealing the room suits a gamble the same way it does the
+// decoy switches. Roughly one combat-room visit in three.
+//
+// The clock is gSave.timer4 - the SAME HUD key-slot clock the two timed
+// quests own, which forces three rules:
+//   * the variant is never dealt while either quest is RUNNING (the
+//     decision below falls back to the plain gauntlet);
+//   * the HUD shows the clock while GF_SURVIVE_LIVE is up
+//     (QuickStartHuntSecondsLeft);
+//   * a clock abandoned mid-attempt (the player just walks out) is swept
+//     the moment the ring's own monitor sees them back in a region room
+//     (QuickStartRegionMonitor) - the room's per-visit flags died with the
+//     room, so the flag-and-timer pair is the only stale state to clean.
+//     One documented leak: warping straight home from inside the room
+//     leaves the frozen clock on the HUD until the next region visit.
+//     Cosmetic, and the next attempt resets it.
+//
+// Pressure is the wave spawner re-run whenever the room thins below three
+// live enemies (cycling the 0-2 wave sizes for variety); the global
+// 28-enemy budget in QuickStartSpawnEnemyGroupAtDifficulty caps the pile
+// the same way it caps everything else. Killing is allowed - it buys
+// breathing room - it just isn't the goal.
+// (GF_SURVIVE_LIVE is defined with the scav flags further up - the ring
+// monitor's abandoned-clock sweep reads it.)
+#define QUICKSTART_SURVIVE_BASE_SECONDS 20
+
+static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
+    u8 difficulty = QuickStartGetDifficulty();
+    if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
+        QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 224), 0);
+    }
+    if (!QsCheckRoomFlag(flagBase + 0)) {
+        // Fresh attempt: the clock scales UP with difficulty because the
+        // pressure does too - 20s at difficulty 0 is a formality, 32s at
+        // 12 against continuous top-ups is the actual event.
+        gSave.timer4 = (u32)(QUICKSTART_SURVIVE_BASE_SECONDS + difficulty) * 60;
+        SetLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
+        QuickStartSpawnWave(contentX, contentY, 0, difficulty);
+        QuickStartWaveRoomSetWave(flagBase, 1);
+        QsSetRoomFlag(flagBase + 0);
+        SoundReq(SFX_SECRET);
+        return FALSE;
+    }
+    QuickStartLeashStrayEnemies(contentX, contentY);
+    if (gSave.timer4 != 0) {
+        gSave.timer4--;
+        if (gSave.timer4 != 0) {
+            if (QuickStartCountRoomEnemies() < 3 && gSave.timer4 > 120) {
+                // The 2-bit counter cycles 0-3; sizes only go up to wave 2,
+                // so 3 wraps to 0. Compare, not %: agbcc promotes u8 to
+                // unsigned and emits the __umodsi3 this libgcc lacks.
+                u8 wave = QuickStartWaveRoomGetWave(flagBase);
+                QuickStartSpawnWave(contentX, contentY, (u8)((wave >= 3) ? 0 : wave), difficulty);
+                QuickStartWaveRoomSetWave(flagBase, (u8)((wave + 1) & 3));
+            }
+            return FALSE;
+        }
+    }
+    // Survived. Whatever is still standing scatters, and the prize drops.
+    {
+        s32 i;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (QuickStartEnemyIsOurs(ent)) {
+                DeleteEntity(ent);
+            }
+        }
+    }
+    ClearLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
+    {
+        u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
+        if (QuickStartRewardDelivered(rewardItem, contentX, contentY)) {
+            QsSetRoomFlag(flagBase + 2);
+            SoundReq(SFX_SECRET);
+        }
+    }
+    return FALSE;
+}
+
 // Returns TRUE once the room's payoff has been collected, i.e. "this event
 // is finished, never spawn it again" - the caller owns the actual done
 // latch, because the two callers store it in different places (a retired
@@ -8927,6 +9041,25 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         }
         QsClearRoomFlag(flagBase + 2);
         return FALSE;
+    }
+    // Which variant is this visit - the 3-wave gauntlet or the survive
+    // clock? Decided once per visit (see the survive comment above). A
+    // live seam-gauntlet record for THIS room outranks the flip (crossing
+    // Grimblade's seam wiped these very flags mid-fight), and so does a
+    // live survive clock, for the same seam; a RUNNING timed quest owns
+    // the HUD clock, so those visits are always the gauntlet.
+    if (!QsCheckRoomFlag(flagBase + 1)) {
+        QsSetRoomFlag(flagBase + 1);
+        if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE) && gSave.timer4 != 0) {
+            QsSetRoomFlag(flagBase + 3);
+            QsSetRoomFlag(flagBase + 0);
+        } else if (!QuickStartGauntletIsHere() && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
+                   QuickStartScavState() != QUICKSTART_SCAV_RUNNING && (s32)Random() % 3 == 0) {
+            QsSetRoomFlag(flagBase + 3);
+        }
+    }
+    if (QsCheckRoomFlag(flagBase + 3)) {
+        return QuickStartSetupSurviveRoomContent(extra, contentX, contentY, flagBase);
     }
     if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
@@ -9216,10 +9349,8 @@ static void QuickStartHandicapMonitor(void) {
 #define GF_HUNT_SPOT_BIT(b) (77 + (b))  // b = 0..4, index into the region's own offsets
 #define GF_HUNT_HANDICAP 82             // this run's hunt is the stripped-kit variant
 #define GF_HUNT_STATE_BIT(b) (83 + (b)) // b = 0..1
-#define QUICKSTART_HUNT_OFFERED 0
-#define QUICKSTART_HUNT_RUNNING 1
-#define QUICKSTART_HUNT_WON 2
-#define QUICKSTART_HUNT_FAILED 3
+// (State values live with the scav quest's, further up - the wave room's
+// survive-variant decision reads both.)
 
 static s32 QuickStartHuntState(void) {
     return (s32)QuickStartGauntletReadBits(GF_HUNT_STATE_BIT(0), 2);
@@ -9485,7 +9616,8 @@ static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
 s32 QuickStartHuntSecondsLeft(void) {
     // The scavenger hunt shares the clock, so the key slot shows it for
     // whichever of the two timed quests is running.
-    if ((QuickStartHuntState() != QUICKSTART_HUNT_RUNNING && QuickStartScavState() != QUICKSTART_SCAV_RUNNING) ||
+    if ((QuickStartHuntState() != QUICKSTART_HUNT_RUNNING && QuickStartScavState() != QUICKSTART_SCAV_RUNNING &&
+         !CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE)) ||
         gSave.timer4 == 0) {
         return -1;
     }

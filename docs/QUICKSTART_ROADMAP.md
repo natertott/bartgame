@@ -299,14 +299,30 @@ can actually obtain.
   difficulty), *the burning wick* (HELD until key-item logic - fire-gated
   by design), *overworld switch links* (a plate in one ring region opens
   a grate in another; ambitious, gives the compass something to point at).
-- **Phase D cheap events** (one mechanism each, all proven parts): switch
-  rooms, bombable-wall treasure, pot-room variants, boss-rush,
-  survive-N-seconds. Recommendation stands: survive-N-seconds first -
-  smallest diff, reuses the hunt timer + wave spawner verbatim (Decision 4
-  picks the pilot). One constraint any switch-driven event inherits:
-  build it on LIGHTABLE_SWITCH, never HITTABLE_LEVER - the lever has no
-  sprite at all and paints its art as room tiles, so it only renders in
-  dungeon tilesets (see doctrine 6).
+- **Phase D cheap events** - ~~survive-N-seconds~~ **SHIPPED** as the
+  pilot, exactly as recommended (smallest diff, reuses the wave spawner
+  and the quests' HUD clock). It shares QS_EVENT_WAVES' kind value the way
+  the two switch puzzles share QS_EVENT_GATE's: one combat-room visit in
+  three deals "stand your ground" instead of the 3-wave gauntlet, decided
+  per visit (the room state is per-visit anyway). The clock is 20s + 1s
+  per difficulty point - it scales UP because the pressure does: the
+  spawner re-runs whenever the room thins below three live enemies, capped
+  by the same global 28-enemy budget as everything else. Win = the clock,
+  not the body count; the survivors scatter and the prize drops from the
+  same QS_CAT_DROP pool a chest pays. Three sharp edges handled: the
+  variant is never dealt while a timed quest owns the shared clock; a
+  seam crossing (Grimblade) resumes the live attempt rather than
+  re-flipping it; and an abandoned attempt's clock is swept by the ring
+  monitor the moment the player is seen back in a region room (one
+  documented cosmetic leak: warping straight home freezes the HUD clock
+  until the next region visit). Verified in the emulator end to end: deal
+  rate, ticking, enemy spawns, the win branch clearing the room and
+  dropping the prize, and the abandon sweep.
+  Still open from the same list: switch rooms, bombable-wall treasure,
+  pot-room variants, boss-rush. One constraint any switch-driven event
+  inherits: build it on LIGHTABLE_SWITCH, never HITTABLE_LEVER - the
+  lever has no sprite at all and paints its art as room tiles, so it only
+  renders in dungeon tilesets (see doctrine 6).
 - ~~Tingle's kinstone events~~ **SHIPPED** (the user, Aug 2026: "Tingle
   should be there and the player can fuse Kinstones with them. If they
   fuse correctly, they should receive a heart container"). Built on the
