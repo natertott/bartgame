@@ -23,13 +23,25 @@ TRAP = 0x08000000     # ROM start; we stop before ever executing it
 SCRATCH_SP = 0x0203F000
 THUMB_BX_R3 = 0x4718
 ARM_BX_R3 = 0xE12FFF13
-GAME_TEXT = 0x08052010  # src/game.o .text base, from build/USA/tmc.map
+def _game_text_base(mapfile='build/USA/tmc.map'):
+    """src/game.o's .text base, read from the CURRENT map - never hardcode
+    it: every edit to game.c can move it, and a stale base resolves every
+    symbol to some other function whose behavior is plausible enough to
+    debug for an hour."""
+    import re
+    for line in open(mapfile):
+        m = re.match(r'\s*\.text\s+(0x[0-9a-f]+)\s+0x[0-9a-f]+\s+src/game\.o', line)
+        if m:
+            return int(m.group(1), 16)
+    raise KeyError('src/game.o .text base not in ' + mapfile)
 
 
-def game_sym(name, obj='build/USA/src/game.o', text=GAME_TEXT):
+def game_sym(name, obj='build/USA/src/game.o', text=None):
     """Address of a static function in game.c. They are absent from tmc.map -
     static symbols only survive in the object file's own symbol table."""
     import subprocess
+    if text is None:
+        text = _game_text_base()
     out = subprocess.run(['arm-none-eabi-nm', obj], capture_output=True, text=True).stdout
     for line in out.split('\n'):
         p = line.split()
@@ -41,6 +53,18 @@ def game_sym(name, obj='build/USA/src/game.o', text=GAME_TEXT):
 def call(core, addr, r0=0, r1=0, budget=500000):
     cpu = core.cpu._native
     native = core._core
+    # The CPU is usually parked in the BIOS IntrWait halt loop between
+    # frames. Injecting there loses the jump: with IME forced off the loop
+    # never wakes, and with it on, IntrWait's own return swallows the
+    # hijack. So first step - interrupts still live - until the CPU is in
+    # ordinary game code (out of the BIOS, not in IRQ mode), then hijack.
+    for _ in range(2_000_000):
+        pc = cpu.gprs[15]
+        if pc >= 0x08000000 and (core.cpu.cpsr.packed & 0x1f) in (0x10, 0x1f):
+            break
+        lib.ARMRun(cpu)
+    else:
+        raise RuntimeError('CPU never reached game code')
     native.busWrite16(native, 0x04000208, 0)  # IME off
     cpsr = core.cpu.cpsr.packed
     cpu.gprs[0] = r0

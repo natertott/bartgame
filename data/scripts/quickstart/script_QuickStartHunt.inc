@@ -34,6 +34,25 @@ script_QuickStartHunt_handicap:
 	MessageNoOverlap TEXT_CUSTOM, 16
 script_QuickStartHunt_go:
 	WaitUntilTextboxCloses
+	@ F1c: the stake is announced before the clock starts. The tier helpers
+	@ answer through the condition register like every Call here; tier 3
+	@ falls through to the harshest line.
+	Call QuickStartStakeIsNone
+	JumpIf script_QuickStartHunt_begin
+	Call QuickStartStakeIsRupees
+	JumpIf script_QuickStartHunt_stake1
+	Call QuickStartStakeIsHealth
+	JumpIf script_QuickStartHunt_stake2
+	MessageNoOverlap TEXT_CUSTOM, 219
+	Jump script_QuickStartHunt_stakewait
+script_QuickStartHunt_stake1:
+	MessageNoOverlap TEXT_CUSTOM, 217
+	Jump script_QuickStartHunt_stakewait
+script_QuickStartHunt_stake2:
+	MessageNoOverlap TEXT_CUSTOM, 218
+script_QuickStartHunt_stakewait:
+	WaitUntilTextboxCloses
+script_QuickStartHunt_begin:
 	Call QuickStartHuntBegin
 	Jump script_QuickStartHunt_done
 script_QuickStartHunt_spent:

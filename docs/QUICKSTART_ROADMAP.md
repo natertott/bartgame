@@ -177,15 +177,18 @@ can actually obtain.
     figurine bitset, which this mode never used (no Carlov, no lotto,
     `figurineCount` never leaves 0). That choice is what made the re-skin
     small: the menu's own ownership test is `ReadBit(gSave.figurines,
-    idx)` and needed no change at all. On persistence, what is actually
-    known: no code path in the tree clears the array (the run wipe covers
-    `gSave.inventory`, `gSave.kinstones` and named flag ranges only), and
-    it survived a death-and-return to the hub in the probe. What is NOT
-    yet proven is a full round-trip through a power cycle - the probe's
-    death path left the inventory standing too, so it did not exercise a
-    real run boundary, and nobody has watched the ledger across a save
-    and reload. Worth one probe before the case is described to players
-    as a permanent record.
+    idx)` and needed no change at all. On persistence, now PROVEN through
+    a power cycle (`tools/quickstart/ledger_cycle.py`): set a ledger bit,
+    call the game's own WriteSaveFile, hard-reset the core (EWRAM wiped,
+    EEPROM kept), walk the boot flow again - the bit comes back, a
+    neighbor byte stays 0, and the bit is verifiably absent between the
+    reset and the reload, so it came from EEPROM rather than surviving
+    RAM. The case can honestly be described as a permanent record, with
+    the ordinary save-semantics caveat: a discovery reaches EEPROM at the
+    NEXT save write (run start and the win path both call WriteSaveFile),
+    so powering off mid-run loses discoveries made since the last one.
+    No code path in the tree clears the array - the run wipe covers
+    `gSave.inventory`, `gSave.kinstones` and named flag ranges only.
   - **Marking at the one chokepoint** - `GiveItem`, via the existing
     `QuickStartNoteFoodItem` hook, so ground pickups, chest payouts, hub
     selections and scripted gives all record themselves. The three bottle
@@ -243,13 +246,27 @@ can actually obtain.
   kind and the placer already stops at the GFX reserve. What is NOT tuned
   is what happens on a LOSS - that is F1c below, and it is the half that
   makes a tight clock mean something.
-- **Difficulty-scaled failure stakes (F1c).** Failing a quest should
-  start to HURT as difficulty climbs: rupees at mid, health/buff at high,
-  item loss at top tiers. One shared `QuickStartApplyFailureStake()`
-  serving every timed-or-conditioned goal. Two rules carried from the
-  curse work: stakes are announced in the offer text, and the failure
-  text says what was taken. The scavenger hunt's FAILED branch is the
-  pilot site.
+- ~~Difficulty-scaled failure stakes (F1c)~~ **SHIPPED**, on both timed
+  quests at once (they share the clock, the mark bit and now the stake).
+  The ladder: difficulty 0-3 free, 4-7 costs 50 rupees, 8-11 costs 100
+  rupees and half your current hearts, 12 costs 200 rupees, half your
+  hearts, and one held food charm - or, with no charm to take, a run-long
+  curse goes on instead. Both announced rules hold: the giver scripts
+  branch on `QuickStartStakeIs*` and show the tier's own stake line after
+  the offer (strings 217-219), and `QuickStartApplyFailureStake()`
+  returns the failure string for the strongest thing it actually took
+  (220-223), so a broke player is never told they lost rupees they never
+  had. The tier is LATCHED at quest start (the freed 75-76 hunt-slot
+  bits) so a stake can't grow after it was announced. Taking a charm is
+  the top tier's item loss on purpose: charms can never strand a run the
+  way traversal items could, and the cleared inventory bit puts the charm
+  back in the draw pool. Health never goes below two hearts, and a player
+  at two hearts or less is spared the health hit entirely. Verified by
+  calling the shipped functions in the ROM at all four tiers plus both
+  edge cases (charmless tier 3 -> curse; low-health tier 2 -> spared) -
+  six for six. The cage puzzle's timeout is the natural next caller.
+  One build trap found: this libgcc has no `__umodsi3`, so an unsigned
+  modulo is a LINK error - mask to 15 bits and use signed `%`.
 - **Hide-and-seek stealth quest (F2).** Research-first: does vanilla's
   guard line-of-sight AI transplant outside its scripted rooms? If yes,
   guards on patrol rows from a table gate a prize; if no, fake it with

@@ -2267,6 +2267,17 @@ const u8* const gCustomStrings[] = {
     [214] = (const u8*)"Kinstones come off the\nfoes you kill. Fight for\nyour keys.",
     [215] = (const u8*)"Pots and grass pay too.\nBreak everything.",
     [216] = (const u8*)"Play the Ocarina anywhere\nto ride the wind home to\nthis crest. Always.",
+    // 217-223: F1c failure stakes. 217-219 are the offer's stake line (the
+    // giver scripts branch on QuickStartStakeIs* and show the tier's own
+    // announcement); 220-223 are the failure lines, chosen by
+    // QuickStartApplyFailureStake for the strongest thing actually taken.
+    [217] = (const u8*)"One thing more: fail,\nand it costs you 50\nrupees.",
+    [218] = (const u8*)"Fail me, and it costs\n100 rupees - and half\nyour hearts.",
+    [219] = (const u8*)"Fail me and I take 200\nrupees, half your hearts,\nand a charm you carry.",
+    [220] = (const u8*)"Too slow! The price of\nfailure: your rupees.",
+    [221] = (const u8*)"Too slow! The price:\nrupees, and half your\nhearts.",
+    [222] = (const u8*)"Too slow! Rupees, hearts,\nand your charm - gone.",
+    [223] = (const u8*)"Too slow! Rupees, hearts\n- and a curse for the\nroad.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -9200,8 +9211,8 @@ static void QuickStartHandicapMonitor(void) {
 #define QUICKSTART_HUNT_MAX_ENEMIES 13
 
 #define GF_HUNT_ROLLED 74
-// (75-76 free - the old 2-bit hunt chain-slot field. The hunt's host region
-// is the 4-bit QS-window GF_REGION_HUNT_HOST_BIT field now.)
+// (75-76: the old 2-bit hunt chain-slot field, reused as the latched
+// failure-stake tier - GF_STAKE_TIER_BIT below.)
 #define GF_HUNT_SPOT_BIT(b) (77 + (b))  // b = 0..4, index into the region's own offsets
 #define GF_HUNT_HANDICAP 82             // this run's hunt is the stripped-kit variant
 #define GF_HUNT_STATE_BIT(b) (83 + (b)) // b = 0..1
@@ -9216,6 +9227,148 @@ static s32 QuickStartHuntState(void) {
 
 static void QuickStartHuntSetState(s32 state) {
     QuickStartGauntletWriteBits(GF_HUNT_STATE_BIT(0), 2, (u32)state);
+}
+
+// ============ F1c: difficulty-scaled failure stakes =====================
+//
+// Failing a quest starts to HURT as difficulty climbs (the roadmap's F1c,
+// and the half that makes a tight clock mean something). The ladder:
+//
+//   difficulty 0-3   nothing - early runs practice the clock for free
+//   difficulty 4-7   rupees (50)
+//   difficulty 8-11  rupees (100) and half your current hearts
+//   difficulty 12    rupees (200), half your hearts, and one held food
+//                    charm - or, if no charm is held, a run-long curse
+//
+// Two rules, both carried from the curse work: the stake is ANNOUNCED in
+// the offer (the giver scripts branch on the tier helpers below and show a
+// stake line after the offer text), and the failure text says what was
+// actually taken (QuickStartApplyFailureStake returns the string for the
+// strongest thing it took, so a broke player is not told they lost rupees
+// they never had).
+//
+// The tier is LATCHED when the quest begins, not read when it fails:
+// difficulty can climb mid-run, and a stake that grows after it was
+// announced is a lie. Latched in the old hunt chain-slot field (75-76,
+// freed when the host region moved to the QS window); the two timed quests
+// are mutually exclusive, so one shared field serves both.
+//
+// Taking a charm is the top tier's "item loss" on purpose: a charm is a
+// real item the player picked up and owns, losing one can never strand a
+// run the way losing a traversal item could (the overworld routes bill
+// swords, capes, flippers - never pastries), and clearing its inventory
+// bit puts it back in the draw pool, so the loss is recoverable the same
+// way the item arrived.
+#define GF_STAKE_TIER_BIT(b) (75 + (b)) // b = 0..1, FLAG_BANK_11 (see hunt block above)
+
+static s32 QuickStartFailureStakeTier(void) {
+    s32 d = QuickStartGetDifficulty();
+    if (d <= 3) {
+        return 0;
+    }
+    if (d <= 7) {
+        return 1;
+    }
+    if (d <= 11) {
+        return 2;
+    }
+    return 3;
+}
+
+static void QuickStartLatchFailureStake(void) {
+    QuickStartGauntletWriteBits(GF_STAKE_TIER_BIT(0), 2, (u32)QuickStartFailureStakeTier());
+}
+
+// Script-condition helpers for the giver scripts' stake announcement
+// (data/scripts/quickstart/script_QuickStartHunt.inc / _Scav.inc). Same
+// Call/JumpIf pattern as QuickStartHuntCanStart below.
+void QuickStartStakeIsNone(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartFailureStakeTier() == 0;
+}
+
+void QuickStartStakeIsRupees(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartFailureStakeTier() == 1;
+}
+
+void QuickStartStakeIsHealth(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartFailureStakeTier() == 2;
+}
+
+// The food charms the top tier may take, by GF_FOOD_BIT index. The three
+// curses (3-5) are deliberately absent - taking a curse away would be a
+// reward.
+static const u16 sQuickStartStakeCharms[][2] = {
+    { 0, ITEM_BRIOCHE },     { 1, ITEM_CROISSANT },    { 2, ITEM_CAKE },
+    { 6, ITEM_QST_BOOK1 },   { 7, ITEM_QST_BOOK2 },    { 8, ITEM_QST_BOOK3 },
+    { 9, ITEM_QST_TINGLE_TROPHY }, { 10, ITEM_JABBERNUT }, { 11, ITEM_QST_CARLOV_MEDAL },
+    { 12, ITEM_QST_BROKEN_SWORD }, { 13, ITEM_SHELLS },
+};
+
+// Applies the latched stake and returns the gCustomStrings index describing
+// what was taken, or 0 when nothing was (caller shows its quest's own
+// failure line). Shared by every timed-or-conditioned goal's FAILED branch.
+static s32 QuickStartApplyFailureStake(void) {
+    s32 tier = (s32)QuickStartGauntletReadBits(GF_STAKE_TIER_BIT(0), 2);
+    bool32 tookRupees = FALSE;
+    bool32 tookHealth = FALSE;
+    bool32 tookCharm = FALSE;
+    bool32 cursed = FALSE;
+    if (tier == 0) {
+        return 0;
+    }
+    {
+        u16 cost = (tier == 1) ? 50 : (tier == 2) ? 100 : 200;
+        if (gSave.stats.rupees != 0) {
+            tookRupees = TRUE;
+            gSave.stats.rupees = (gSave.stats.rupees > cost) ? gSave.stats.rupees - cost : 0;
+        }
+    }
+    // Half the CURRENT hearts, and never below two - the stake is a setback,
+    // not an execution, and a player at two hearts is already paying.
+    if (tier >= 2 && gSave.stats.health > 8) {
+        gSave.stats.health /= 2;
+        tookHealth = TRUE;
+    }
+    if (tier >= 3) {
+        s32 held[ARRAY_COUNT(sQuickStartStakeCharms)];
+        s32 heldCount = 0;
+        s32 i;
+        for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartStakeCharms); i++) {
+            if (QsCheckFlag(GF_FOOD_BIT(sQuickStartStakeCharms[i][0]))) {
+                held[heldCount++] = i;
+            }
+        }
+        if (heldCount != 0) {
+            // Signed modulo on a masked value: this libgcc has no __umodsi3.
+            i = held[((s32)(Random() & 0x7fff)) % heldCount];
+            QsClearFlag(GF_FOOD_BIT(sQuickStartStakeCharms[i][0]));
+            SetInventoryValue(sQuickStartStakeCharms[i][1], 0);
+            tookCharm = TRUE;
+        } else {
+            // No charm to take: a curse goes on instead. Same three the
+            // pastries carry; first one not already active.
+            for (i = 3; i <= 5; i++) {
+                if (!QsCheckFlag(GF_FOOD_BIT(i))) {
+                    QsSetFlag(GF_FOOD_BIT(i));
+                    cursed = TRUE;
+                    break;
+                }
+            }
+        }
+    }
+    if (tookCharm) {
+        return 222;
+    }
+    if (cursed) {
+        return 223;
+    }
+    if (tookHealth) {
+        return 221;
+    }
+    if (tookRupees) {
+        return 220;
+    }
+    return 0;
 }
 
 // One draw per run, from the region monitor like every other per-run draw.
@@ -9367,6 +9520,7 @@ void QuickStartHuntBegin(Entity* entity, ScriptExecutionContext* context) {
         QuickStartHandicapApply();
     }
     QuickStartHuntSpawnPack(entity->x.HALF.HI - gRoomControls.origin_x, entity->y.HALF.HI - gRoomControls.origin_y);
+    QuickStartLatchFailureStake();
     gSave.timer4 = QUICKSTART_HUNT_FRAMES;
     QuickStartHuntSetState(QUICKSTART_HUNT_RUNNING);
     SoundReq(SFX_SECRET);
@@ -9416,7 +9570,10 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartHuntClearPack();
             QuickStartHandicapRestore();
             QuickStartHuntSetState(QUICKSTART_HUNT_FAILED);
-            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 18));
+            {
+                s32 stakeMsg = QuickStartApplyFailureStake();
+                MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 18));
+            }
             MsgInit();
         }
         return;
@@ -9647,6 +9804,7 @@ void QuickStartScavBegin(Entity* entity, ScriptExecutionContext* context) {
     region = &sQuickStartRegionPool[slot];
     QuickStartScavReleasePack(region, entity->x.HALF.HI - gRoomControls.origin_x,
                               entity->y.HALF.HI - gRoomControls.origin_y);
+    QuickStartLatchFailureStake();
     gSave.timer4 = QUICKSTART_SCAV_FRAMES;
     QuickStartScavSetState(QUICKSTART_SCAV_RUNNING);
     SoundReq(SFX_SECRET);
@@ -9702,7 +9860,10 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
                 }
             }
             QuickStartScavSetState(QUICKSTART_SCAV_FAILED);
-            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 29));
+            {
+                s32 stakeMsg = QuickStartApplyFailureStake();
+                MessageRequest(TEXT_INDEX(TEXT_CUSTOM, (stakeMsg != 0) ? stakeMsg : 29));
+            }
             MsgInit();
         }
         return;

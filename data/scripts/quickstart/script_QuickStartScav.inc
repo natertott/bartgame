@@ -23,6 +23,23 @@ script_QuickStartScav_loop:
 	JumpIfNot script_QuickStartScav_spent
 	MessageNoOverlap TEXT_CUSTOM, 27
 	WaitUntilTextboxCloses
+	@ F1c stake announcement - same branch as the hunt giver's.
+	Call QuickStartStakeIsNone
+	JumpIf script_QuickStartScav_begin
+	Call QuickStartStakeIsRupees
+	JumpIf script_QuickStartScav_stake1
+	Call QuickStartStakeIsHealth
+	JumpIf script_QuickStartScav_stake2
+	MessageNoOverlap TEXT_CUSTOM, 219
+	Jump script_QuickStartScav_stakewait
+script_QuickStartScav_stake1:
+	MessageNoOverlap TEXT_CUSTOM, 217
+	Jump script_QuickStartScav_stakewait
+script_QuickStartScav_stake2:
+	MessageNoOverlap TEXT_CUSTOM, 218
+script_QuickStartScav_stakewait:
+	WaitUntilTextboxCloses
+script_QuickStartScav_begin:
 	Call QuickStartScavBegin
 	Jump script_QuickStartScav_done
 script_QuickStartScav_spent:
