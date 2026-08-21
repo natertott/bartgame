@@ -13300,6 +13300,16 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
             continue;
         }
         if (entity->kind == ENEMY || entity->kind == NPC || (clearObjects && entity->kind == OBJECT)) {
+            // A Minish-sized entrance is a DOOR, not furniture. Ranch house
+            // west's only way back out to Lon Lon Ranch is its
+            // MINISH_SIZED_ENTRANCE object (there is no pot to un-shrink
+            // with in there), so sweeping it with the room's decor locked a
+            // Minish player in permanently. Same protection for the archway
+            // variant wherever a clearObjects room carries one.
+            if (entity->kind == OBJECT &&
+                (entity->id == MINISH_SIZED_ENTRANCE || entity->id == MINISH_SIZED_ARCHWAY)) {
+                continue;
+            }
             DeleteEntity(entity);
         }
     }
