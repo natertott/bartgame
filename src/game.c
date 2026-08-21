@@ -2282,6 +2282,8 @@ const u8* const gCustomStrings[] = {
     // 224: the survive room's one-time Ezlo hint (the wave gauntlet's own
     // is string 9; which one shows tells the player which deal this is).
     [224] = (const u8*)"Stand your ground! Live\nout the clock and the\nprize is yours!",
+    // 225: the linger-plate puzzle's hint (switch puzzle #3).
+    [225] = (const u8*)"Two plates, one truth:\nboth held down AT ONCE.\nThe first one rises...",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -10821,6 +10823,24 @@ static Entity* QuickStartSpawnPuzzleSwitch(s32 lx, s32 ly, u32 flagIndex) {
     return sw;
 }
 
+// The third switch-site puzzle's fixture: a PRESSURE_PLATE dealt as a
+// QUICKSTART linger plate (type2 = linger frames >> 4; see
+// pressurePlate.c). Same flag plumbing as the switches - the plate's own
+// SetFlag/ClearFlag drive a bit in the private room-flag window, and the
+// monitor reads the bits, never the entities.
+static Entity* QuickStartSpawnPuzzlePlate(s32 lx, s32 ly, u32 flagIndex, u32 lingerFrames) {
+    Entity* plate = CreateObject(PRESSURE_PLATE, 0, lingerFrames >> 4);
+    if (plate != NULL) {
+        plate->x.HALF.HI = gRoomControls.origin_x + lx;
+        plate->y.HALF.HI = gRoomControls.origin_y + ly;
+        plate->collisionLayer = 1;
+        QS_SWITCH_FLAG2(plate) = QS_SWITCH_HIT_FLAG(flagIndex);
+        ClearFlag(QS_SWITCH_HIT_FLAG(flagIndex));
+        UpdateSpriteForCollisionLayer(plate);
+    }
+    return plate;
+}
+
 // Pull a room-local pixel anchor at least 5 tiles inboard of every wall.
 // Switches spawn "near the player", and at a seam or door the player IS
 // the entrance corridor: measured in the dojo, the decoy deal put its
@@ -11144,13 +11164,47 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     return FALSE;
                 }
             }
-            decoy = ((s32)Random() & 1) != 0;
-            if (decoy) {
-                QsSetRoomFlag(flagBase + 1);
-            } else {
-                QsClearRoomFlag(flagBase + 1);
+            // Three puzzles share this site now: the closing gate, the
+            // decoy switches, and the linger plates - an even three-way
+            // roll per visit, same rationale as the original coin flip.
+            {
+                s32 variantRoll = (s32)Random() % 3;
+                decoy = variantRoll == 1;
+                if (decoy) {
+                    QsSetRoomFlag(flagBase + 1);
+                } else {
+                    QsClearRoomFlag(flagBase + 1);
+                }
+                if (variantRoll == 2) {
+                    QsSetRoomFlag(flagBase + 7);
+                } else {
+                    QsClearRoomFlag(flagBase + 7);
+                }
             }
-            if (!decoy && lever == NULL) {
+            if (QsCheckRoomFlag(flagBase + 7)) {
+                // ---- The linger plates (#3, "hold everything down") ----
+                // Two plates: one dealt ahead of the player, one across
+                // the room (the anchor mirrored over the cage), so the
+                // route between them crosses the prize. Both must be down
+                // AT ONCE; the linger is the clock, tightening with
+                // difficulty. A short deal (a room too cramped for both
+                // plates) is survivable the same way every cage is: the
+                // ring is trap pots, liftable at the price of a primed one.
+                s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+                s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+                s32 linger = 300 - (s32)QuickStartGetDifficulty() * 12;
+                s32 k;
+                QuickStartClampInboard(&px, &py);
+                for (k = 0; k < 2; k++) {
+                    s16 lx, ly;
+                    s32 ax = (k == 0) ? px : (ptx * 16 + 8) * 2 - px;
+                    s32 ay = (k == 0) ? py : (pty * 16 + 8) * 2 - py;
+                    QuickStartClampInboard(&ax, &ay);
+                    if (QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly)) {
+                        QuickStartSpawnPuzzlePlate(lx, ly, (u32)k, (u32)linger);
+                    }
+                }
+            } else if (!decoy && lever == NULL) {
                 s16 lx, ly;
                 s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
                 s32 ay = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
@@ -11203,7 +11257,9 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             }
             if (!QsCheckRoomFlag(flagBase + 5)) {
                 QsSetRoomFlag(flagBase + 5);
-                if (decoy) {
+                if (QsCheckRoomFlag(flagBase + 7)) {
+                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 225), 0);
+                } else if (decoy) {
                     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 32), 0);
                 } else {
                     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 31), 0);
@@ -11226,6 +11282,19 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
                 QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
             }
+        }
+        if (QsCheckRoomFlag(flagBase + 7)) {
+            // ---- Linger plates, per frame ----
+            // Both plate bits up at once = the cage opens, once, for good.
+            // The plates keep sinking and rising on their own after that;
+            // they just no longer gate anything. flagBase + 6 (cleared at
+            // the deal) is the opened latch.
+            if (!QsCheckRoomFlag(flagBase + 6) && QsCheckRoomFlag(104 + 0) && QsCheckRoomFlag(104 + 1)) {
+                QsSetRoomFlag(flagBase + 6);
+                QuickStartGateOpen(ptx, pty);
+                SoundReq(SFX_SECRET);
+            }
+            return FALSE;
         }
         if (QsCheckRoomFlag(flagBase + 1)) {
             // ---- Decoy switches, per frame: resolve fresh pulls ----

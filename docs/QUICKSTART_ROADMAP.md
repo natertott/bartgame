@@ -311,11 +311,36 @@ can actually obtain.
   that margin is sized for a 3x3 ring and was collapsing every small cave
   onto the 2-tile floor. Same 24 deals: zero buried switches.
 - **Switch puzzles 3-6** (pilot order agreed with the user; 1 and 2
-  shipped): *hold everything down* (pressure plates + thrown weights),
-  *watch the eyes* (blink sequence, wrong order resets, F1c stake at high
-  difficulty), *the burning wick* (HELD until key-item logic - fire-gated
-  by design), *overworld switch links* (a plate in one ring region opens
-  a grate in another; ambitious, gives the compass something to point at).
+  shipped): ~~*hold everything down*~~ **#3 SHIPPED as the LINGER
+  PLATES**, the third deal of the switch site's per-visit roll (an even
+  three-way now: gate / decoy / plates). Two pressure plates, one dealt
+  ahead of the player and one across the cage; both must be down AT
+  ONCE, and a plate stays down 300 frames (tightening 12/difficulty
+  step) after the player steps off - the linger IS the clock, and the
+  sprint between the plates crosses the prize. One honest deviation from
+  the sketch: "thrown weights" died on contact with vanilla - a thrown
+  pot SHATTERS, and the only vanilla plate-weights are pushable statues,
+  which can wedge irreversibly in a dealt room - so the simultaneity
+  pressure moved into the linger instead, and nothing in the puzzle can
+  soft-lock (a short deal in a cramped room degrades the same way every
+  cage does: trap pots are liftable). Built as a type2-gated variant
+  inside vanilla's own pressurePlate.c - type2 = linger>>4, vanilla
+  plates (type2 0) untouched - with the same room-flag plumbing the
+  switches use (bits 104-105). Verified end to end in the emulator
+  (tools/quickstart/plates_check.py): the deal renders (PRESSURE_PLATE
+  is a real entity sprite - doctrine 6 satisfied, screenshot taken),
+  stepping on presses, both-down opens the cage, and the control run
+  that waits out the linger finds the cage still shut. Two probe traps
+  reconfirmed on the way: an open textbox makes PlayerCanBeMoved()
+  false, so IsCollidingPlayer refuses a player standing squarely ON the
+  plate - dismiss hints before measuring; and in a SMALL room the
+  mirrored anchor clamps onto the first one, dealing the plates adjacent
+  (trivial but survivable - larger rooms spread them).
+  Still open: *watch the eyes* (blink sequence, wrong order resets, F1c
+  stake at high difficulty - the stake helper now exists), *the burning
+  wick* (HELD until key-item logic - fire-gated by design), *overworld
+  switch links* (a plate in one ring region opens a grate in another;
+  ambitious, gives the compass something to point at).
 - **Phase D cheap events** - ~~survive-N-seconds~~ **SHIPPED** as the
   pilot, exactly as recommended (smallest diff, reuses the wave spawner
   and the quests' HUD clock). It shares QS_EVENT_WAVES' kind value the way
