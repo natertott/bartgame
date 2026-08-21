@@ -6167,7 +6167,11 @@ static const QuickStartEnemyPick sQuickStartLevel1[] = {
     { TEKTITE, 0 /* red */, QS_R_CHAFF | QS_R_FAST, 1, 0, QS_T_BUG },
     { CROW, 0, QS_R_CHAFF | QS_R_FLYER | QS_R_FAST, 2, 0, QS_T_AVIARY },
     { MINI_SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
-    { GYORG_CHILD, 0, QS_R_CHAFF | QS_R_FLYER, 2, 0 },
+    // NOT here: GYORG_CHILD. It is a boss-fight escort: raw-spawned with
+    // no Gyorg parent to orbit it deletes itself within half a second
+    // (roster soak: gone at f27), which on a field reads as an enemy
+    // blinking out of existence.
+
     { OCTOROK, 0 /* red */, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { PEAHAT, 0, QS_R_CHAFF | QS_R_FLYER, 2, 0 },
     { CHUCHU, 0 /* green */, QS_R_CHAFF | QS_R_SLOW, 4, 0 },
@@ -6177,7 +6181,15 @@ static const QuickStartEnemyPick sQuickStartLevel1[] = {
 // stationary fire) that asks for a little more than walking up and
 // swinging.
 static const QuickStartEnemyPick sQuickStartLevel2[] = {
-    { SLUGGULA, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 2, 0, QS_T_BUG },
+    // NOT here: SLUGGULA. It looked spawnable in the admission probe, but
+    // its lifecycle belongs to a spawner: form 0 is the dungeon
+    // ceiling-hanger, which runs a drop-in dance and then swaps itself for
+    // a form-1 entity (CreateEnemy + DeleteThisEntity), and a form 1
+    // spawned RAW runs its burrow-out animation to completion and deletes
+    // itself - measured, a whole wave of them vanished in same-frame
+    // batches, over and over as the wave loop refilled. Either form in an
+    // open field reads as enemies popping in and out of existence, which
+    // is the user's entry-deaths report in its second costume.
     { OCTOROK2, 0, QS_R_CHAFF | QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { OCTOROK, 1 /* blue */, QS_R_RANGED | QS_R_SLOW, 3, 0 },
     { SLIME, 0, QS_R_CHAFF | QS_R_SLOW, 2, 0 },
@@ -6790,6 +6802,8 @@ static const QuickStartArchetype* QuickStartRollArchetype(u8 difficulty) {
 #define QUICKSTART_GFX_RESERVE 4
 #define QUICKSTART_GFX_HARD_FLOOR 2
 
+static s32 QuickStartReclaimableGfxSlots(void);
+
 static s32 QuickStartFreeGfxSlots(void) {
     s32 i, freeSlots = 0;
     for (i = 0; i < MAX_GFX_SLOTS; i++) {
@@ -6817,13 +6831,20 @@ static s32 QuickStartReclaimableGfxSlots(void) {
 }
 
 // Is there room to load a sprite sheet we have not already paid for?
+//
+// RECLAIMABLE, not the strict counter. A settled room pins strict-free at
+// ZERO: the loader never proactively zeroes a slot, so every slot ends up
+// either referenced or UNLOADED-but-evictable, and a budget gated on
+// strict-free goes permanently false a minute into a visit - refusing
+// NPC and reward spawns that would in fact fit fine. The loader evicts
+// UNLOADED slots on demand; reclaimable IS the budget.
 static bool32 QuickStartGfxBudgetForNewKind(void) {
-    return QuickStartFreeGfxSlots() > QUICKSTART_GFX_RESERVE;
+    return QuickStartReclaimableGfxSlots() > QUICKSTART_GFX_RESERVE;
 }
 
 // Is there room to put ANY further entity on screen?
 static bool32 QuickStartGfxBudgetForSpawn(void) {
-    return QuickStartFreeGfxSlots() > QUICKSTART_GFX_HARD_FLOOR;
+    return QuickStartReclaimableGfxSlots() > QUICKSTART_GFX_HARD_FLOOR;
 }
 
 // The frame-rate ceiling on how many enemies a wave may put in a room.
@@ -8601,7 +8622,16 @@ static void QuickStartEnforceGfxReserve(void) {
     }
     for (reaped = 0; reaped < 1; reaped++) {
         s32 i, worst = -1, worstDist = -1, ours = 0;
-        if (QuickStartFreeGfxSlots() >= QUICKSTART_GFX_RESERVE) {
+        // RECLAIMABLE, not strict-free. This gate on the strict counter
+        // was the user's "enemies dying as soon as I enter the area":
+        // a settled room reads ZERO strict-free forever (slots end up
+        // referenced or UNLOADED, never FREE), and deleting an enemy
+        // turns its sheet UNLOADED - so the trimmer could never satisfy
+        // its own stop condition and ate one enemy every 64 frames to
+        // the floor, visibly, in every gfx-warm room. Measured in Castle
+        // Garden at difficulty 4: strict-free 0, reclaimable 12, and the
+        // room bled 21 enemies down to 13 in six hundred frames.
+        if (QuickStartReclaimableGfxSlots() >= QUICKSTART_GFX_RESERVE) {
             return;
         }
         for (i = 0; i < MAX_ENTITIES; i++) {
