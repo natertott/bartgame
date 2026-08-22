@@ -230,12 +230,26 @@ void KinstoneMenu_Type1(void) {
     }
 }
 
+#ifdef QUICKSTART
+extern u32 QuickStartKinstoneIsTingle(u32 kinstoneId);
+#endif
+
 void KinstoneMenu_Type2(void) {
     const KinstoneWorldEvent* ptr;
     if (gMenu.column_idx == 6) {
         gFuseInfo.fusionState = FUSION_STATE_6;
         ptr = &gKinstoneWorldEvents[gFuseInfo.kinstoneId];
+#ifdef QUICKSTART
+        // A tingle fusion's reward is the item QuickStartTinglePayout
+        // drops at the player's feet, not the world event its borrowed
+        // kinstone id happens to name - vanilla would pan to the Goron
+        // Cave here (the user: "skip the goron cave animation and go
+        // straight to the item dropping"), so for those ids the menu
+        // closes like a fusion with no event at all.
+        if (ptr->subtask != 0 && !QuickStartKinstoneIsTingle(gFuseInfo.kinstoneId)) {
+#else
         if (ptr->subtask != 0) {
+#endif
             MenuFadeIn(ptr->subtask, ptr->worldEventId);
         } else {
             Subtask_Exit();

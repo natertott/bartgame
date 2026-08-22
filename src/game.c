@@ -17075,14 +17075,46 @@ typedef struct {
     u8 room;
     u8 kinstoneId;
     u8 form; // 0-3, which sibling
+    u16 x, y; // the sibling's vanilla stump, room-local pixels
 } QuickStartTingle;
 
+// At their VANILLA STUMPS, not on the fuser scatter (the user: "the
+// tingle sprites in the vanilla game are sitting on tree stumps in
+// specific sites. This is where they should be in our game too").
+// Coordinates read straight off vanilla's own placements
+// (entity_headers.s npc_raw subtype=0x1b / the Lon Lon delayed list):
+// Tingle himself in South Hyrule Field, Ankle in Lon Lon Ranch, David
+// Jr. in Trilby Highlands. The fourth sibling's stump is Lake Hylia,
+// outside the ring, so Knuckle sits this mode out.
+//
+// Kinstones: all three take the same red piece (0x71), mirroring
+// vanilla, where the sibling fusions are one family. 2A/2B are the two
+// goron-line fusions this mode's fuser table documents as inert (their
+// world event only adds a Goron to a line in a room that is a swept
+// content site); 2C's world event resolves outside the ring entirely.
+// None of the three gates anything - the payout below is the point -
+// and the fusion cutscene is skipped for these ids at its source
+// (KinstoneMenu_Type2 consults QuickStartKinstoneIsTingle), so a tingle
+// fusion cuts straight to the item drop instead of panning to the
+// Goron Cave. The goron unlocks themselves stay where they are, on the
+// ZELDA-sprite fusers (KINSTONE_25/26/2F/29).
 static const QuickStartTingle sQuickStartTingles[] = {
-    // Trilby Highlands, which already has a scatter spot list and is where
-    // the Mole Mitts cave and its ledge live - so the region that gained a
-    // dig-cave event also gained the reason to walk it.
-    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_2A, 0 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_2A, 0, 0x3b8, 0x118 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2B, 1, 0xb8, 0x108 },
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_2C, 2, 0xb8, 0x78 },
 };
+
+// Exported for kinstoneMenu.c's KinstoneMenu_Type2: is this fusion one of
+// the tingle rows above, whose world-event cutscene should be skipped?
+u32 QuickStartKinstoneIsTingle(u32 kinstoneId) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartTingles); i++) {
+        if (sQuickStartTingles[i].kinstoneId == kinstoneId) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #define QUICKSTART_TINGLE_COUNT ((s32)ARRAY_COUNT(sQuickStartTingles))
 // One paid-out bit each, and GF_TINGLE_PAID_BIT only has four.
@@ -17196,31 +17228,23 @@ static void QuickStartSpawnRegionFusers(void) {
             QuickStartMakeNpcFuser(npc, fuser->kinstoneId);
         }
     }
-    // Tingle rides the same loop's tail: same scatter list, same identity
-    // check, same retirement. The only differences are the sprite and that
-    // his slot index is pushed past the region's own fusers (indexInRegion
-    // keeps counting) so he never lands on top of one.
+    // Tingle rides the same loop's tail: same identity check, same
+    // retirement. Two differences: the sprite, and the SPOT - a tingle
+    // stands on his sibling's own vanilla stump (fixed per row above)
+    // rather than drawing from the region's scatter list, so he no longer
+    // consumes a scatter slot or competes with the fusers for one.
     for (i = 0; i < QUICKSTART_TINGLE_COUNT; i++) {
         const QuickStartTingle* tingle = &sQuickStartTingles[i];
-        QuickStartFuser asFuser;
         s32 worldX, worldY, e;
-        s16 localX, localY;
         bool32 alreadyThere = FALSE;
         if (gRoomControls.area != tingle->area || gRoomControls.room != tingle->room) {
             continue;
         }
-        indexInRegion++;
         if (CheckKinstoneFused(tingle->kinstoneId)) {
             continue;
         }
-        asFuser.area = tingle->area;
-        asFuser.room = tingle->room;
-        asFuser.kinstoneId = tingle->kinstoneId;
-        if (!QuickStartFuserSpot(&asFuser, indexInRegion - 1, &localX, &localY)) {
-            continue;
-        }
-        worldX = gRoomControls.origin_x + localX;
-        worldY = gRoomControls.origin_y + localY;
+        worldX = gRoomControls.origin_x + tingle->x;
+        worldY = gRoomControls.origin_y + tingle->y;
         for (e = 0; e < MAX_ENTITIES; e++) {
             if (gEntities[e].base.kind == NPC && gEntities[e].base.id == TINGLE_SIBLINGS &&
                 gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
