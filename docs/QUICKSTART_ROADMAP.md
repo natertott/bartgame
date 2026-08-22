@@ -1118,6 +1118,45 @@ the switch entity's frameIndex (+0x1e); BEETLE is enemy id 7 (not 5) and
 BOBOMB 0x22 - filter ids from enemy.h, not memory; and a transient
 HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
 
+### The second playtest batch (all shipped)
+
+- **Tingle siblings at their vanilla stumps.** Three now, not one, each
+  at his sibling's own vanilla entity placement: Tingle in SHF
+  (0x3b8,0x118), Ankle in LLR (0xb8,0x108), David Jr. in Trilby
+  (0xb8,0x78); Knuckle's stump is Lake Hylia, outside the ring. Fusions
+  KINSTONE_2A/2B/2C (one red-piece family, as vanilla); each pays a
+  heart container at the player's feet. They no longer draw from the
+  fuser scatter or consume its slots. NOTE: three heart containers per
+  run is richer than the old one - retune the payout if it plays too
+  generous.
+- **Tingle fusions skip the world-event cutscene.** KinstoneMenu_Type2
+  consults game.c's exported QuickStartKinstoneIsTingle and closes the
+  menu like a fusion with no event, so a tingle fusion cuts straight to
+  the item drop instead of panning to the Goron Cave. Goron unlocks
+  stay on the ZELDA fusers (25/26/2F walls + 29 entrance), untouched.
+- **Region clear rewards drop at the player's feet**, snapped to open
+  ground, with the true landing spot recorded in gSave.reward_drop_x/y
+  (carved from filler22) for the exact-coordinate confirm scan. The boss
+  spawn and the Earth Element keep the fixed reward spot - setpieces.
+- **The Lost Woods maze is per-run random.** Route = pure function of
+  gSave.run_seed, five steps from {Up,Right,Left} (Down = the give-up
+  border, never drawn); vanilla's fixed alternate route compiled out.
+  The sign system tells the truth for free: sign text is bound to tile
+  POSITION (Up@0x49, Right@0x14b, Left@0x18c, sign tile type 374), so
+  the progress painter stamps the position whose word IS the current
+  step. Each pass's Ghini is swept and replaced by one level 4/5 roster
+  draw. Walked end to end: wrong step resets, five correct solve, the
+  north border delivers to RV-middle at (0x78,0x278).
+- **Probe doctrine:** ROOM_HYRULE_FIELD_LON_LON_RANCH is room FIVE, not
+  2 - a warp to (3,2) lands in a different Hyrule Field room that
+  happily settles and spawns waves, which cost half a day chasing
+  'missing fusers'; AREA_ROYAL_VALLEY is 9. Take room ids from
+  parse_tables, never from memory. The maze's progress lives in
+  gArea's bitfield byte at +0xd (unk_0c_1 = bits 1-3, unk_0c_4 = bits
+  4-7), and gRoomVars (QS room flags included) is wiped on EVERY
+  scroll-load - which is what makes a room flag a per-pass latch in
+  scroll-looping rooms.
+
 - **Item-drop ? rooms "never pay" (user report, PARTLY EXPLAINED).** The
   reward audit (Aug 2026) found and fixed the draw bug behind the related
   "never seen a pastry" report: the pick index was `seed / 10` on a 6-bit
