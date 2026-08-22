@@ -1091,6 +1091,17 @@ extern u8 gUnk_080D9338[];
 extern u8 gUnk_080D9340[];
 extern TileEntity gUnk_080D9328[];
 
+#ifdef QUICKSTART
+// The maze's route is per-run random now - see game.c's QuickStartMazeStep
+// block for the whole design (route drawn from the run seed, the vanilla
+// sign system re-aimed to read it out, Down never drawn). Vanilla's second,
+// six-step route (gUnk_080D9340, the heart-piece path) is compiled out:
+// with the main route random, a FIXED alternate solution would quietly
+// solve a maze whose signs never mentioned it.
+extern u32 QuickStartMazeStep(u32 step);
+extern u32 QuickStartMazeSignPos(u32 step);
+#endif
+
 static void sub_0804C128(void) {
     sub_080AF250(0);
     if (gRoomVars.didEnterScrolling) {
@@ -1099,13 +1110,18 @@ static void sub_0804C128(void) {
                 gArea.unk_0c_1 = 1;
             }
         } else {
+#ifdef QUICKSTART
+            if (gRoomControls.scroll_direction == QuickStartMazeStep(gArea.unk_0c_1)) {
+#else
             if (gRoomControls.scroll_direction == gUnk_080D9338[gArea.unk_0c_1]) {
+#endif
                 gArea.unk_0c_1++;
             } else {
                 gArea.unk_0c_1 = 0;
             }
         }
 
+#ifndef QUICKSTART
         if (gArea.unk_0c_1 == 0) {
             if (gRoomControls.scroll_direction == gUnk_080D9340[gArea.unk_0c_4]) {
                 gArea.unk_0c_4++;
@@ -1114,6 +1130,7 @@ static void sub_0804C128(void) {
                 gArea.unk_0c_4 = 0;
             }
         }
+#endif
 
         if (gArea.unk_0c_1 == 6) {
             sub_080AF250(1);
@@ -1123,6 +1140,7 @@ static void sub_0804C128(void) {
             return;
         }
 
+#ifndef QUICKSTART
         if (gArea.unk_0c_4 == 6) {
             sub_080AF250(1);
             if (CheckLocalFlag(HAKA_01_T0) == 0) {
@@ -1134,6 +1152,7 @@ static void sub_0804C128(void) {
             gArea.unk_0c_4 = 0;
             return;
         }
+#endif
     } else {
         sub_0804C258();
     }
@@ -1161,7 +1180,19 @@ void sub_0804C290(void) {
 
     if (gArea.unk_0c_1) {
         iVar1 = gArea.unk_0c_1;
+#ifdef QUICKSTART
+        // Steps 1-5 paint the sign whose bound one-word text IS this
+        // step's random direction; the solved marker (7) keeps vanilla's
+        // own "Down" sign, which points at the way out. The sign tile
+        // type is the same 374 every vanilla entry uses.
+        if (iVar1 >= 1 && iVar1 <= 5) {
+            SetTileType(374, QuickStartMazeSignPos((u32)iVar1), LAYER_BOTTOM);
+        } else if (iVar1 == 7) {
+            SetTileType(374, 0xc7, LAYER_BOTTOM);
+        }
+#else
         SetTileType((gUnk_080D9348 + iVar1)->unk0, (gUnk_080D9348 + iVar1)->unk2, LAYER_BOTTOM);
+#endif
     }
 }
 

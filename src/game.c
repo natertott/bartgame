@@ -305,6 +305,7 @@ static bool32 QuickStartRoomSettled(void) {
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
 static void QuickStartTinglePayout(void);
+static void QuickStartMazeMonitor(void);
 static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
@@ -16193,6 +16194,7 @@ static void QuickStartRoomMonitor(void) {
     // save's chain happens to include it.
     QuickStartSpawnRegionFusers();
     QuickStartTinglePayout();
+    QuickStartMazeMonitor();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
@@ -17144,6 +17146,85 @@ u32 QuickStartKinstoneIsTingle(u32 kinstoneId) {
         }
     }
     return 0;
+}
+
+// ==================== The Lost Woods maze, randomized ====================
+//
+// Royal Valley's forest maze (roomInit.c sub_0804C128): the room scroll-
+// loops into itself, gArea.unk_0c_1 counts correct scrolls against a fixed
+// direction table, five correct in a row opens the north exit, one wrong
+// resets. Vanilla's route is the same every playthrough (Up, Left, Left,
+// Up, Right), which is the user's report: "Right now, the puzzle is the
+// same every time. Can we randomize the puzzle?"
+//
+// The route here is a pure function of gSave.run_seed - stable all run,
+// different across runs, no storage. Steps 1-5 each draw from {Up, Right,
+// Left}; Down is never drawn because the maze's south border is the real
+// "give up and leave" exit (transitions.c gExitList_RoyalValley_ForestMaze)
+// and a route step through it would eject the player mid-solution.
+//
+// The SIGNS come along for free, which is what makes a random route fair
+// rather than a 1-in-243 guess. Vanilla's telling mechanism: seven sign
+// tile-entities are registered at seven fixed tile positions, each bound
+// to its own one-word text ("Up" at 0x49, "Right" at 0x14b, "Left" at
+// 0x18c...), and sub_0804C290 paints the sign TILE (type 374) at one
+// position per progress step - the room's per-scroll reload erases the
+// previous one, so exactly one sign stands per pass. Painting the position
+// whose bound word IS the current step's direction makes the vanilla sign
+// system read out our random route verbatim (the relative signs - "Same
+// as before" - are simply never painted).
+u32 QuickStartMazeStep(u32 step) {
+    static const u8 dirs[3] = { 0, 1, 3 }; // scroll_direction: Up, Right, Left
+    u32 h = gSave.run_seed ^ (step * 0x9E3779B9u);
+    h ^= h >> 11;
+    h = h * 0x85EB + step;
+    h ^= h >> 7;
+    // No __umodsi3 in this libgcc: mask to 15 bits and use signed %.
+    return dirs[(s32)(h & 0x7fff) % 3];
+}
+
+// Which sign tile position tells this step's direction (see above).
+u32 QuickStartMazeSignPos(u32 step) {
+    switch (QuickStartMazeStep(step)) {
+        case 0:
+            return 0x49; // "Up"
+        case 1:
+            return 0x14b; // "Right"
+        default:
+            return 0x18c; // "Left"
+    }
+}
+
+// The maze's escort, re-rolled per pass (the user: "right now, a Ghini
+// spawns in every room of the puzzle. Can we randomize the enemy that
+// appears? Maybe we can sample from the tier 4 and 5 enemies"). The
+// vanilla GHINI arrives through the room's own entity list on every
+// scroll-reload; each pass sweeps it and deals one draw from the level
+// 4/5 roster at its spot instead. Room flag 2 latches once per pass -
+// gRoomVars is wiped on every scroll-load, so the latch re-arms exactly
+// when the ghini respawns.
+static void QuickStartMazeMonitor(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_ROYAL_VALLEY || gRoomControls.room != ROOM_ROYAL_VALLEY_FOREST_MAZE) {
+        return;
+    }
+    if (!QuickStartRoomSettled() || QsCheckRoomFlag(2)) {
+        return;
+    }
+    QsSetRoomFlag(2);
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && QuickStartEntityInCurrentRoom(ent)) {
+            DeleteEntity(ent);
+        }
+    }
+    {
+        s32 n4 = (s32)ARRAY_COUNT(sQuickStartLevel4);
+        s32 n5 = (s32)ARRAY_COUNT(sQuickStartLevel5);
+        s32 roll = (s32)(Random() & 0x7fff) % (n4 + n5);
+        const QuickStartEnemyPick* pick = (roll < n4) ? &sQuickStartLevel4[roll] : &sQuickStartLevel5[roll - n4];
+        QuickStartSpawnEnemiesOnOpenTiles(pick->id, pick->form, 0x78, 0x48, 1, -1);
+    }
 }
 
 #define QUICKSTART_TINGLE_COUNT ((s32)ARRAY_COUNT(sQuickStartTingles))
