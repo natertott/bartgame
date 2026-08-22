@@ -341,6 +341,7 @@ static void QuickStartRoomMonitor(void);
 static bool32 QuickStartQuestSwapActive(void);
 static void QuickStartQuestEndResetWave(s32 slot);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
+static bool32 QuickStartTileIsOpen(s32, s32);
 static bool32 QuickStartLeverAtTile(s32, s32);
 void QuickStartMarkCatalogItem(u32);
 static bool32 QuickStartPositionAllowed(s16, s16);
@@ -5000,12 +5001,39 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     return QuickStartDrawAtTier(QuickStartDrawPick(seed), catMask, tier);
 }
 
-// Draws this region's clear reward and drops it at the reward spot, marking
-// this chain slot "earned" (1) and room flag 1 "now watching this visit's
-// drop" - shared by both the initial grant and the re-drop path in
+// Draws this region's clear reward and drops it AT THE PLAYER'S FEET,
+// marking this chain slot "earned" (1) and room flag 1 "now watching this
+// visit's drop" - shared by both the initial grant and the re-drop path in
 // QuickStartSpawnRegionRewardOnce below.
+//
+// Near the player, not the fixed reward spot (the user: "is it possible
+// for the item to drop near wherever the player currently is? right now
+// the items drop at predefined locations") - the clear happens wherever
+// the last enemy died, which is wherever the player is standing, and a
+// prize across the region is a walk, not a payoff. Same snap-to-open-
+// ground shape as the tingle payout. The actual landing spot is recorded
+// in gSave.reward_drop_x/y so the state-1 confirm below scans where the
+// item really is; a stale value from another region's own state-1 window
+// can only make that scan miss, which re-drops - at the player again -
+// rather than losing anything. The boss spawn and the Element keep the
+// fixed reward spot: those are setpieces, not loot.
 static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 slot) {
     u16 chosenItem;
+    s16 dropX, dropY, spotX, spotY;
+    dropX = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    dropY = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    if (!QuickStartTileIsOpen(dropX >> 4, dropY >> 4)) {
+        if (QuickStartFindOpenTileNear(dropX, dropY, 1, &spotX, &spotY)) {
+            dropX = spotX;
+            dropY = spotY;
+        } else {
+            // Nothing open anywhere near the player (they are standing in
+            // machinery of some kind) - the surveyed reward spot is the
+            // one place always known to work.
+            dropX = region->rewardX;
+            dropY = region->rewardY;
+        }
+    }
     // The region reward is the one draw that includes KEY items, because it
     // is where the Cane of Pacci, the Ocarina and the two key items the
     // opening selection did not offer have always come from. Rolled fresh
@@ -5017,7 +5045,9 @@ static void QuickStartSpawnRegionRewardItem(const QuickStartRegion* region, s32 
     // level-2 sword) is handed straight over, and without this the region
     // would draw one, place nothing, and never mark its reward earned -
     // the clear would silently pay out nothing at all.
-    if (QuickStartRewardDelivered(chosenItem, region->rewardX, region->rewardY)) {
+    if (QuickStartRewardDelivered(chosenItem, dropX, dropY)) {
+        gSave.reward_drop_x = dropX;
+        gSave.reward_drop_y = dropY;
         QuickStartSetRegionRewardState(slot, 1);
         QsSetRoomFlag(1);
     }
@@ -5079,7 +5109,7 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         QuickStartSpawnRegionRewardItem(region, slot);
         return;
     }
-    if (QuickStartGroundItemAt(region->rewardX, region->rewardY)) {
+    if (QuickStartGroundItemAt(gSave.reward_drop_x, gSave.reward_drop_y)) {
         QsSetRoomFlag(1);
         return;
     }

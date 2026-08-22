@@ -73,7 +73,16 @@ typedef struct {
     /*0x009*/ u8 available_figurines;        /**< figurines available to get */
     /*0x00A*/ u8 fillerA[22];                /**< unused filler */
     /*0x020*/ u16 map_hints;                 /**< bitmask, used by subtask MapHint */
+#ifdef QUICKSTART
+    /*0x022*/ s16 reward_drop_x;             /**< QUICKSTART: room-local spot the region clear reward
+                                               * was last dropped at (near the player, not the fixed
+                                               * reward spot) - what the state-1 "still lying there?"
+                                               * confirm scans. See QuickStartSpawnRegionRewardItem. */
+    /*0x024*/ s16 reward_drop_y;
+    /*0x026*/ u8 filler26[26];               /**< unused filler */
+#else
     /*0x022*/ u8 filler22[30];               /**< unused filler */
+#endif
     /*0x040*/ u32 windcrests;                /**< upper 8 bit Windcrest flags @see WindcrestID
                                               * lower bits used for other things */
 #ifdef QUICKSTART
