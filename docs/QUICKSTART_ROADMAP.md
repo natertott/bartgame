@@ -80,6 +80,62 @@ in the Wave Composition Study artifact.
 
 Ordered roughly by how much of the vision each unblocks.
 
+### 2.0 The Fountain of Sacrifice (researched Aug 2026 - FEASIBLE, not built)
+
+The user's pitch: in a Great Fairy fountain room, the player's items lie
+strewn across the floor; a sprite asks for a sacrifice; the player picks
+one up and gives it to the fountain, loses it, and receives a tier-scaled
+return - commons risk punishment or nothing, uncommons break even or
+better, rares only ever pay out (up to two rares).
+
+**Every part of it maps onto machinery this mode already ships, verified
+by probe:**
+
+- *Items strewn as carryable props*: `SHOP_ITEM` (ItemForSale) renders
+  ANY item id as a liftable pedestal prop - the run's own shop spawns
+  them dynamically (`QuickStartSpawnShopItem`) and the player lifts and
+  carries them in play every day. Probed: three arbitrary item ids
+  spawned and rendered as props inside the graveyard fairy chamber
+  (scratchpad sacrifice_strew.png). Strewing the inventory = enumerate
+  owned eligible items, spawn one prop each.
+- *"Throw it into the fountain"*: ItemForSale has no throw arc (its drop
+  snaps it home - sub_080819B4), so v1 should trigger on CARRY-INTO-THE
+  -POOL-BOX: while `gPlayerEntity.carriedEntity` is one of our props and
+  the player stands in the fountain-edge box, pressing the drop button
+  consumes it - splash FX + SFX_WATER_SPLASH, delete prop, done. Reads
+  as tossing it in, needs zero new engine mechanics. (A true pot-style
+  throw arc means a new carry class or patching ItemForSale's drop path
+  - possible, not worth v1.)
+- *Losing the item*: SetInventoryValue(item, 0) - the F1c handicap
+  system already strips and restores whole kits including button slots,
+  so removal incl. the equipped-item edge is proven code.
+- *Tier of the offering*: sQuickStartTiers carries every item's
+  COMMON/UNCOMMON/RARE band - direct lookup, the same table the
+  boomerang-shadowing check reads.
+- *The returns*: QuickStartDrawAtTier for prizes (two rares = two calls,
+  dropped at the player's feet like everything now); the F1c stake
+  machinery already implements the punishments (rupee loss, heart loss,
+  charm loss); heart-container loss is a stats.maxHealth write.
+- *The asking sprite*: the proven talkable-NPC + TEXT_CUSTOM strings
+  (merchant/sign machinery), not a live GREAT_FAIRY object (unverified
+  AI).
+
+**The two real constraints found:**
+
+1. *GFX budget*: each unique strewn item costs a sprite sheet; a full
+   20-item inventory will not fit the 44-slot table. Strew a curated
+   draw of at most ~8-10 eligible items per visit (fairy rooms are
+   otherwise empty, so that fits comfortably), or rotate per visit.
+2. *Curation*: never strew the sword (an endless-wave run without one
+   can brick), active quest keys, or the Earth Element. An ELIGIBLE
+   predicate over the tier table's categories covers this.
+
+**Suggested placement**: upgrade the existing QS_EVENT_FAIRY site kind -
+the site-kind field is full at 8, and the plain two-heal-fairies payout
+is the weakest event in the vocabulary; the fountain-sacrifice is a
+strict upgrade for the same bit, and its extra byte can roll
+"plain fairies vs sacrifice" per site if both should coexist.
+
 ### 2.1 Win-condition variety (F7) - PAUSED, and its prerequisite
 
 The run's only win carrier is a region's wave clear. Wanted: the Element
