@@ -5002,6 +5002,23 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     return QuickStartDrawAtTier(QuickStartDrawPick(seed), catMask, tier);
 }
 
+// Where a payout lands now: the player's own feet, snapped to open ground
+// - shared by the quest rewards below (the user: "make it so that side
+// quest items also drop at the players feet"). The region clear reward
+// keeps its own inline copy because it carries one extra fallback (the
+// surveyed reward spot) for the player-in-machinery case.
+static void QuickStartPlayerDropSpot(s16* outX, s16* outY) {
+    s16 lx = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+    s16 ly = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+    s16 sx, sy;
+    if (!QuickStartTileIsOpen(lx >> 4, ly >> 4) && QuickStartFindOpenTileNear(lx, ly, 1, &sx, &sy)) {
+        lx = sx;
+        ly = sy;
+    }
+    *outX = lx;
+    *outY = ly;
+}
+
 // Draws this region's clear reward and drops it AT THE PLAYER'S FEET,
 // marking this chain slot "earned" (1) and room flag 1 "now watching this
 // visit's drop" - shared by both the initial grant and the re-drop path in
@@ -9941,13 +9958,14 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartHuntSetState(QUICKSTART_HUNT_WON);
             QuickStartQuestEndResetWave(slot);
             gSave.timer4 = 0;
-            if (QuickStartHuntSpot(region, &spotX, &spotY)) {
-                QuickStartSpawnRewardEntity(
-                    CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
-                        ? QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
-                        : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
-                    spotX, spotY);
-            }
+            // At the player's feet, like every other loot payout now -
+            // the kill that ends the hunt happens wherever the player is.
+            QuickStartPlayerDropSpot(&spotX, &spotY);
+            QuickStartSpawnRewardEntity(
+                CheckLocalFlagByBank(FLAG_BANK_11, GF_HUNT_HANDICAP)
+                    ? QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
+                    : QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP),
+                spotX, spotY);
             MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 17));
             MsgInit();
             return;
@@ -10390,11 +10408,13 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
             QuickStartScavSetState(QUICKSTART_SCAV_WON);
             gSave.timer4 = 0;
             QuickStartQuestEndResetWave(slot);
-            if (QuickStartScavSpot(region, &spotX, &spotY)) {
-                QuickStartSpawnRewardEntity(
-                    QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
-                    spotX, spotY);
-            }
+            // At the player's feet - the thief died under their sword, so
+            // the recovered prize lands right there instead of walking
+            // them back across the region to the giver's spot.
+            QuickStartPlayerDropSpot(&spotX, &spotY);
+            QuickStartSpawnRewardEntity(
+                QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
+                spotX, spotY);
             MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 28));
             MsgInit();
             return;
