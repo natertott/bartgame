@@ -3409,6 +3409,11 @@ static const s16 sQuickStartCastorWildsEnemyOffsets[][2] = {
 // opens once the vanilla-enemy sweep clears its garrison).
 static const s16 sQuickStartRuinsEntranceEnemyOffsets[][2] = {
     { 40, 440 }, { 56, 392 }, { 104, 456 }, { 120, 488 },
+    // Aug 2026 spot-survey round: the entrance strip genuinely has only
+    // 12 elbow-room tiles, and this is the one more the spacing rules
+    // admit. Small on purpose - the size ceiling is not the limit here,
+    // the floor is.
+    { 56, 424 },
 };
 #define QUICKSTART_RUINSENTRANCE_ROOM_SQUARES 77
 
@@ -3417,6 +3422,10 @@ static const s16 sQuickStartRuinsEntranceEnemyOffsets[][2] = {
 static const s16 sQuickStartRuinsBelowFortressEnemyOffsets[][2] = {
     { 56, 56 },   { 72, 88 },   { 104, 56 },  { 152, 120 }, { 168, 88 },  { 200, 120 },
     { 216, 40 },  { 232, 72 },  { 248, 120 }, { 264, 40 },  { 296, 104 }, { 328, 120 },
+    // Aug 2026 spot-survey round, strict open-ground flood from the
+    // entrance (the shrub-permeable flood is NOT trusted in this tileset -
+    // collision 0x0f is only proven cuttable in Hyrule Field's).
+    { 88, 72 },   { 232, 104 }, { 248, 56 },  { 280, 56 },  { 344, 104 },
 };
 #define QUICKSTART_RUINSBELOW_ROOM_SQUARES 137
 
@@ -3441,30 +3450,52 @@ static const s16 sQuickStartRuinsBelowFortressEnemyOffsets[][2] = {
 // seam) and the main body (the LLR gap and everything east). The grid uses
 // the main body only - an enemy in the pocket would be unreachable from
 // the region's own through-routes.
+// The Aug 2026 spot-survey rows appended below each grid grew the pools
+// toward the size-scaled ceilings. Method: flood from the region entrance
+// over open ground PLUS tiles the ROM's own QuickStartTileIsBush confirms
+// as the cuttable-shrub class (bushes join components - the player cuts
+// through - but no spot may stand on one); every candidate needs a
+// strictly-open 3x3 and a TRUE from the shipped QuickStartTileHasElbowRoom,
+// called in the running game. The bush-verified flood's component sizes
+// reproduce the recorded room surveys (EHS 258 vs 265 recorded), which is
+// the method agreeing with the ground truth it extends.
 static const s16 sQuickStartEasternHillsSouthEnemyOffsets[][2] = {
     { 72, 168 },  { 168, 24 },  { 408, 168 }, { 152, 152 }, { 328, 24 },
     { 344, 152 }, { 376, 120 }, { 120, 136 }, { 360, 88 },
+    { 104, 168 }, { 136, 168 }, { 184, 40 },  { 328, 56 },  { 360, 136 },
+    { 360, 168 }, { 392, 152 },
 };
 static const s16 sQuickStartEasternHillsCenterEnemyOffsets[][2] = {
     { 72, 216 },  { 328, 232 }, { 104, 56 },  { 200, 200 }, { 168, 88 },
     { 264, 24 },  { 280, 184 }, { 56, 88 },   { 120, 184 }, { 216, 56 },
     { 152, 216 }, { 120, 88 },  { 152, 56 },  { 232, 184 }, { 312, 200 },
+    { 72, 72 },   { 72, 184 },  { 104, 200 }, { 136, 72 },  { 136, 200 },
+    { 168, 200 }, { 168, 232 }, { 184, 56 },  { 200, 88 },  { 248, 40 },
+    { 248, 200 },
 };
 static const s16 sQuickStartEasternHillsNorthEnemyOffsets[][2] = {
     { 328, 24 },  { 40, 216 },  { 344, 456 }, { 168, 104 }, { 120, 328 },
     { 424, 248 }, { 152, 232 }, { 280, 120 }, { 312, 344 }, { 184, 296 },
     { 328, 232 }, { 264, 56 },  { 104, 216 }, { 120, 264 }, { 200, 216 },
     { 280, 216 }, { 296, 296 }, { 312, 72 },  { 312, 408 }, { 360, 264 },
+    { 24, 440 },  { 56, 392 },  { 56, 424 },  { 56, 456 },  { 72, 216 },
+    { 88, 392 },  { 88, 424 },  { 88, 456 },  { 88, 488 },  { 104, 312 },
+    { 120, 232 }, { 120, 392 }, { 120, 424 }, { 120, 456 },
 };
 static const s16 sQuickStartWesternWoodsSouthEnemyOffsets[][2] = {
     { 424, 24 },  { 40, 56 },   { 328, 152 }, { 296, 40 },  { 72, 152 },
     { 360, 72 },  { 168, 152 }, { 40, 120 },  { 72, 88 },   { 312, 88 },
     { 184, 72 },  { 328, 56 },  { 392, 56 },  { 424, 72 },
+    { 40, 88 },   { 40, 152 },  { 72, 56 },   { 72, 120 },  { 200, 152 },
+    { 312, 120 },
 };
 static const s16 sQuickStartWesternWoodsCenterEnemyOffsets[][2] = {
     { 424, 24 },  { 376, 120 }, { 296, 24 },  { 296, 136 }, { 328, 72 },
     { 392, 72 },  { 424, 104 }, { 248, 120 }, { 264, 40 },  { 312, 104 },
     { 360, 88 },
+    { 40, 24 },   { 40, 56 },   { 88, 72 },   { 88, 104 },  { 120, 120 },
+    { 296, 56 },  { 328, 120 }, { 392, 104 }, { 408, 40 },  { 424, 72 },
+    { 424, 136 },
 };
 static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
     { 72, 88 },   { 40, 552 },  { 408, 136 }, { 296, 616 }, { 40, 296 },
@@ -3472,6 +3503,9 @@ static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
     { 312, 456 }, { 72, 200 },  { 136, 568 }, { 312, 104 }, { 328, 200 },
     { 344, 376 }, { 40, 392 },  { 200, 408 }, { 248, 568 }, { 408, 232 },
     { 40, 472 },  { 88, 504 },  { 104, 152 }, { 232, 456 },
+    { 40, 248 },  { 40, 424 },  { 40, 504 },  { 56, 280 },  { 56, 456 },
+    { 56, 536 },  { 72, 120 },  { 72, 152 },  { 72, 232 },  { 72, 488 },
+    { 88, 456 },  { 88, 536 },  { 104, 488 }, { 104, 568 },
 };
 
 static const QuickStartRegion sQuickStartRegionPool[] = {
@@ -3968,6 +4002,17 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
     *hasBoss = FALSE;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
+        // Skip corpses awaiting cleanup (DeleteEntity marks prev negative
+        // and the slot's kind byte survives until ClearAllDeletedEntities
+        // next frame - the engine's own deleted test). Without this, the
+        // entry-frame race ate whole waves in the swept rooms: the Ruins
+        // quirk hook deletes its vanilla armos garrison the same monitor
+        // pass the first wave deals, the un-settled corpses still counted,
+        // and a 16-entity room ceiling minus a 14-armos garrison dealt a
+        // 2-enemy wave into what was about to be an empty room.
+        if ((s32)ent->prev < 0) {
+            continue;
+        }
         if (ent->kind == ENEMY && !QuickStartEntityIsShopScrub(ent) && QuickStartEntityInCurrentRoom(ent)) {
             count++;
             if (ent->id == CHUCHU_BOSS) {

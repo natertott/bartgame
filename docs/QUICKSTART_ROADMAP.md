@@ -1424,8 +1424,35 @@ SHF/Lon Lon 27, WW North 26, the mid rooms 18-23, and the smallest shelves
 Ruins entrance 8 entities vs its old cap of 5, WW Center 11 vs 9). Two
 constraints still bound small-room fights: the difficulty-sloped GFX spawn
 cap (16 placements at difficulty 8+, a sprite-table property) and each
-room's verified-spot pool (the Ruins entrance owns only 4 spots) - more
-spots means more surveys, not a bigger cap.
+room's verified-spot pool.
+
+**The spot-survey round then grew the eight skimpy pools** (+61 spots:
+EHS 9->16, EHC 15->26, EHN 20->34, WW South 14->20, WW Center 11->22,
+WW North 24->38, Ruins entrance 4->5, Ruins below 12->17). Method worth
+keeping: flood from the region entrance over open ground PLUS tiles the
+ROM's own `QuickStartTileIsBush` confirms as the cuttable class (bushes
+join components - the player cuts through - but no spot stands on one);
+every candidate needs a strictly-open 3x3 and a TRUE from the shipped
+`QuickStartTileHasElbowRoom`, called in the running game. The
+bush-verified flood reproduces the recorded room surveys (EHS 258 tiles
+vs 265 recorded), and the shrub bridge is NOT trusted outside the Hyrule
+Field tileset - the Ruins rooms got a strict open-ground flood, which is
+why their hauls are small: the Ruins entrance genuinely has 12 elbow-room
+tiles, and its floor, not its ceiling, is the limit. Measured after: EHN
+and WW Center enter at exactly their ceilings (23 and 16) at 60fps.
+
+The survey also flushed a second budget race the small ceilings made
+visible: the Ruins quirk hook deletes its vanilla armos garrison in the
+same monitor pass the first wave deals, DeleteEntity corpses keep their
+kind byte until next frame's cleanup, and the garrison-counting budget
+dealt a 2-enemy wave into what was about to be an empty room.
+`QuickStartCountRegionEnemies` now skips corpses by the engine's own
+deleted test (prev < 0). Measured after: Ruins-below entry went 2 -> 7
+visible entities with 12 of its 16-entity budget charged (an Acro gang
+rides coiled as ONE entity until it bursts, and bomb peahats pair) - the
+budget is honest even when the room looks sparser than it is. The Ruins
+entrance still varies with the archetype roll: a lone-heavy shape deals
+one strong body on some seeds, a fuller shape deals its five spots.
 
 Measurement doctrine that made this findable:
 `scratchpad/multiplicity.py`'s spawn-ONE-and-count is the admission gate
