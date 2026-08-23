@@ -306,6 +306,7 @@ static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
 static void QuickStartTinglePayout(void);
 static void QuickStartMazeMonitor(void);
+static void QuickStartSacrificeMonitor(void);
 static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
@@ -1265,6 +1266,7 @@ static void GameMain_InitRoom(void) {
 
 #ifdef QUICKSTART
 extern Script script_QuickStartChooseOne;
+extern Script script_QuickStartFountain;
 extern Script script_QuickStartMerchant;
 extern Script script_QuickStartHunt;
 extern Script script_QuickStartScav;
@@ -2315,6 +2317,14 @@ const u8* const gCustomStrings[] = {
     // choice concluded on option 0, so an offer that never reaches that
     // prompt can never sell).
     [228] = (const u8*)"OK, ya got me!\nI'll sell ya a nice fresh\nheart! Just \x06\x01 Rupees!\n\x07\x29\x01",
+    // 229-233: the Fountain of Sacrifice (QuickStartSacrificeMonitor).
+    // 229 is the asking sprite's one line; 230-233 are the outcome
+    // notices, delivered as Ezlo hints the moment the offering sinks.
+    [229] = (const u8*)"Carry a treasure onto my\ncircle, and fate will\nanswer. Spare what you dare.",
+    [230] = (const u8*)"The fountain scorns so\nsmall a gift... and takes\nits due.",
+    [231] = (const u8*)"The waters swallow your\ngift. Silence.",
+    [232] = (const u8*)"A gift for a gift,\nsays the fountain.",
+    [233] = (const u8*)"The fountain overflows\nwith gratitude!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -16397,6 +16407,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartSpawnRegionFusers();
     QuickStartTinglePayout();
     QuickStartMazeMonitor();
+    QuickStartSacrificeMonitor();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
@@ -16482,6 +16493,14 @@ static void QuickStartRoomMonitor(void) {
         for (site = 0; site < QUICKSTART_CONTENT_SITE_COUNT; site++) {
             if (gRoomControls.area == sQuickStartRoomContentSites[site].area &&
                 gRoomControls.room == sQuickStartRoomContentSites[site].room) {
+                // The graveyard Great Fairy room keeps its site row for
+                // the containment blessing only: its content is the
+                // Fountain of Sacrifice (QuickStartSacrificeMonitor),
+                // not a rolled site event.
+                if (sQuickStartRoomContentSites[site].area == AREA_GREAT_FAIRIES &&
+                    sQuickStartRoomContentSites[site].room == ROOM_GREAT_FAIRIES_GRAVEYARD) {
+                    continue;
+                }
                 QuickStartSetupContentSite(site);
             }
         }
@@ -17405,6 +17424,292 @@ u32 QuickStartMazeSignPos(u32 step) {
 // 4/5 roster at its spot instead. Room flag 2 latches once per pass -
 // gRoomVars is wiped on every scroll-load, so the latch re-arms exactly
 // when the ghini respawns.
+// ==================== The Fountain of Sacrifice ==========================
+//
+// The graveyard Great Fairy room (the user's pitch, built from the parts
+// the Aug 2026 research proved out): a per-run random selection of the
+// player's own items lies strewn around the chamber as liftable pedestal
+// props (SHOP_ITEM, the shop's own carry machinery); carrying one onto
+// the fairy's summoning circle consumes it - the item leaves the
+// inventory for good - and the fountain answers by the TIER of the
+// offering. Commons risk punishment or silence; uncommons break even or
+// better; rares only ever pay out, up to double.
+//
+// The room's content-site row stays purely as the containment blessing
+// (the site dispatch skips it), so this room's event is always the
+// fountain.
+#define QUICKSTART_SACRIFICE_SLOTS 8
+// The chamber's open nooks (15x18 collision survey): four flanking the
+// basin's edge on row 7, four along the south walk on row 14 - all
+// 3x3-verified floor, none on the circle itself.
+static const s16 sQuickStartSacrificeSpots[QUICKSTART_SACRIFICE_SLOTS][2] = {
+    { 40, 120 }, { 56, 120 }, { 184, 120 }, { 200, 120 },
+    { 56, 232 }, { 88, 232 }, { 152, 232 }, { 184, 232 },
+};
+// The summoning circle: the decorated disc at the chamber's centre
+// (tiles 4-9 x 9-13). Stepping onto it with an offering held overhead is
+// the sacrifice.
+#define QUICKSTART_SACRIFICE_BOX_X0 72
+#define QUICKSTART_SACRIFICE_BOX_X1 152
+#define QUICKSTART_SACRIFICE_BOX_Y0 144
+#define QUICKSTART_SACRIFICE_BOX_Y1 222
+
+// What may be offered up. Inventory-backed rows of the tier table, minus
+// the things a run cannot afford to lose: every sword (the endless waves
+// must stay fightable), the overworld quest keys, the Earth Element, and
+// the bottles (their contents make removal ambiguous).
+static bool32 QuickStartSacrificeEligible(u16 item) {
+    switch (item) {
+        case ITEM_SMITH_SWORD:
+        case ITEM_GREEN_SWORD:
+        case ITEM_RED_SWORD:
+        case ITEM_BLUE_SWORD:
+        case ITEM_FOURSWORD:
+        case ITEM_QST_LONLON_KEY:
+        case ITEM_QST_GRAVEYARD_KEY:
+        case ITEM_EARTH_ELEMENT:
+        case ITEM_BOTTLE1:
+        case ITEM_BOTTLE2:
+        case ITEM_BOTTLE3:
+        case ITEM_BOTTLE4:
+            return FALSE;
+    }
+    return GetInventoryValue(item) != 0;
+}
+
+// The offering's tier, off the same table every draw uses. Uncommon when
+// the item somehow has no row - the middle answer harms least.
+static u8 QuickStartSacrificeTierOf(u16 item) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        if (sQuickStartTiers[i].item == item) {
+            return sQuickStartTiers[i].tier;
+        }
+    }
+    return QS_TIER_UNCOMMON;
+}
+
+// Which item stands at strew slot `slot` this run, ITEM_NONE for a bare
+// pedestal. A pure function of the run seed (the user: "rotate/randomize
+// which items are offered up each run"): every eligible item is scored by
+// a per-run hash and the eight best stand. Stable across visits within a
+// run, different across runs, and self-pruning - an item sacrificed (or
+// never owned) simply stops being eligible, and the slot goes bare.
+static u16 QuickStartSacrificeStrewItem(s32 slot) {
+    u16 best[QUICKSTART_SACRIFICE_SLOTS];
+    u32 bestScore[QUICKSTART_SACRIFICE_SLOTS];
+    s32 count = 0, i, j;
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        u16 item = sQuickStartTiers[i].item;
+        u32 score;
+        bool32 seen = FALSE;
+        if (!QuickStartSacrificeEligible(item)) {
+            continue;
+        }
+        for (j = 0; j < count; j++) {
+            if (best[j] == item) {
+                seen = TRUE;
+                break;
+            }
+        }
+        if (seen) {
+            continue;
+        }
+        // Mixed with real avalanche (multiply-xorshift-multiply) - a
+        // simple xor ranked identically for near-identical seeds, which
+        // read as "the fountain never rotates".
+        score = (gSave.run_seed + item) * 0x9E3779B9u;
+        score ^= score >> 15;
+        score = score * 0x2C1B3C6Du;
+        score ^= score >> 12;
+        // Insertion into the top-8, worst evicted.
+        for (j = 0; j < count; j++) {
+            if (score > bestScore[j]) {
+                break;
+            }
+        }
+        if (j < QUICKSTART_SACRIFICE_SLOTS) {
+            s32 k;
+            s32 last = (count < QUICKSTART_SACRIFICE_SLOTS) ? count : QUICKSTART_SACRIFICE_SLOTS - 1;
+            for (k = last; k > j; k--) {
+                best[k] = best[k - 1];
+                bestScore[k] = bestScore[k - 1];
+            }
+            best[j] = item;
+            bestScore[j] = score;
+            if (count < QUICKSTART_SACRIFICE_SLOTS) {
+                count++;
+            }
+        }
+    }
+    return (slot < count) ? best[slot] : ITEM_NONE;
+}
+
+// Losing the offering. SetInventoryValue is the truth every draw reads;
+// the button slots are fixed up the way the handicap strip does it, so a
+// sacrificed equipped item does not leave a ghost on A or B.
+static void QuickStartSacrificeRemoveItem(u16 item) {
+    SetInventoryValue(item, 0);
+    if (gSave.stats.equipped[0] == item) {
+        gSave.stats.equipped[0] = ITEM_NONE;
+    }
+    if (gSave.stats.equipped[1] == item) {
+        gSave.stats.equipped[1] = ITEM_NONE;
+    }
+    if (gSave.stats.equippedExtra[0] == item) {
+        gSave.stats.equippedExtra[0] = ITEM_NONE;
+    }
+}
+
+static u16 QuickStartSacrificePrize(u8 tier) {
+    return QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, tier);
+}
+
+// The fountain's answer, by the offering's tier - the user's own odds:
+//   COMMON:   3-in-10 punished, 3-in-10 nothing, 4-in-10 a common back.
+//   UNCOMMON: 2-in-10 lightly punished, 5-in-10 an uncommon, 3-in-10 a RARE.
+//   RARE:     benefits only - a rare, TWO rares, or a rare + an uncommon.
+// Punishments reuse the stake primitives: rupees, hearts, or (commons
+// only, and never below three hearts) a whole heart container.
+static void QuickStartSacrificeResolve(u16 item) {
+    u8 tier = QuickStartSacrificeTierOf(item);
+    s32 roll = (s32)(Random() & 0x7fff) % 10;
+    s16 dropX, dropY;
+    u32 msg;
+    QuickStartSacrificeRemoveItem(item);
+    SoundReq(SFX_WATER_SPLASH);
+    QuickStartPlayerDropSpot(&dropX, &dropY);
+    if (tier == QS_TIER_COMMON) {
+        if (roll < 3) {
+            s32 p = (s32)(Random() & 0x7fff) % 3;
+            if (p == 0) {
+                ModRupees(-100);
+            } else if (p == 1) {
+                if (gSave.stats.health > 8) {
+                    gSave.stats.health = (u8)(gSave.stats.health / 2);
+                }
+            } else if (gSave.stats.maxHealth > 24) {
+                gSave.stats.maxHealth -= 8;
+                if (gSave.stats.health > gSave.stats.maxHealth) {
+                    gSave.stats.health = gSave.stats.maxHealth;
+                }
+            } else {
+                ModRupees(-100);
+            }
+            msg = 230;
+        } else if (roll < 6) {
+            msg = 231;
+        } else {
+            QuickStartSpawnRewardEntity(QuickStartSacrificePrize(QS_TIER_COMMON), dropX, dropY);
+            msg = 232;
+        }
+    } else if (tier == QS_TIER_UNCOMMON) {
+        if (roll < 2) {
+            ModRupees(-50);
+            msg = 230;
+        } else if (roll < 7) {
+            QuickStartSpawnRewardEntity(QuickStartSacrificePrize(QS_TIER_UNCOMMON), dropX, dropY);
+            msg = 232;
+        } else {
+            QuickStartSpawnRewardEntity(QuickStartSacrificePrize(QS_TIER_RARE), dropX, dropY);
+            msg = 233;
+        }
+    } else {
+        QuickStartSpawnRewardEntity(QuickStartSacrificePrize(QS_TIER_RARE), dropX, dropY);
+        if (roll >= 5) {
+            QuickStartSpawnRewardEntity(
+                QuickStartSacrificePrize((roll < 8) ? QS_TIER_RARE : QS_TIER_UNCOMMON), dropX, dropY);
+        }
+        msg = 233;
+    }
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, msg), 0);
+}
+
+// Does a pedestal prop for this item already stand (or ride overhead)?
+static bool32 QuickStartSacrificePropExists(u16 item) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == SHOP_ITEM && ent->type == (u8)item) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static void QuickStartSacrificeMonitor(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_GREAT_FAIRIES || gRoomControls.room != ROOM_GREAT_FAIRIES_GRAVEYARD) {
+        return;
+    }
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    // The vanilla Great Fairy herself is on this sweep's whitelist; with
+    // the site dispatch skipping this room, nothing else would clear her.
+    QuickStartClearVanillaRoomContent();
+    // The asking sprite, at the circle's head. Position is the identity
+    // check, same as every other spawned NPC.
+    {
+        s32 worldX = gRoomControls.origin_x + 120;
+        s32 worldY = gRoomControls.origin_y + 136;
+        bool32 there = FALSE;
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            if (gEntities[i].base.kind == NPC && gEntities[i].base.id == ZELDA &&
+                gEntities[i].base.x.HALF.HI == worldX && gEntities[i].base.y.HALF.HI == worldY) {
+                there = TRUE;
+                break;
+            }
+        }
+        if (!there && QuickStartGfxBudgetForSpawn()) {
+            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            if (npc != NULL) {
+                npc->x.HALF.HI = worldX;
+                npc->y.HALF.HI = worldY;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                QuickStartMakeNpcTalkable(npc, &script_QuickStartFountain);
+            }
+        }
+    }
+    // The strew: a missing prop for a still-owned strewn item respawns at
+    // its pedestal (which is also what restores one the player picked up
+    // and put back down - ItemForSale deletes itself on a cancelled drop,
+    // exactly as it does in the shop).
+    for (i = 0; i < QUICKSTART_SACRIFICE_SLOTS; i++) {
+        u16 item = QuickStartSacrificeStrewItem(i);
+        if (item == ITEM_NONE || QuickStartSacrificePropExists(item)) {
+            continue;
+        }
+        if (!QuickStartGfxBudgetForSpawn()) {
+            break;
+        }
+        QuickStartSpawnShopItem(item, sQuickStartSacrificeSpots[i][0], sQuickStartSacrificeSpots[i][1]);
+    }
+    // The sacrifice: an offering held overhead, carried onto the circle.
+    {
+        Entity* carried = gPlayerEntity.carriedEntity;
+        s16 lx = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+        s16 ly = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+        if (gPlayerState.heldObject != 0 && carried != NULL && carried->kind == OBJECT &&
+            carried->id == SHOP_ITEM && lx >= QUICKSTART_SACRIFICE_BOX_X0 && lx <= QUICKSTART_SACRIFICE_BOX_X1 &&
+            ly >= QUICKSTART_SACRIFICE_BOX_Y0 && ly <= QUICKSTART_SACRIFICE_BOX_Y1) {
+            u16 item = carried->type;
+            // Put the carry system down exactly the way ItemForSale's own
+            // drop path (sub_080819B4) does, then take the prop.
+            gPlayerState.heldObject = 0;
+            gPlayerEntity.carriedEntity = NULL;
+            gRoomVars.shopItemType = 0;
+            gRoomVars.shopItemType2 = 0;
+            gHUD.rActionInteractObject = R_ACTION_NONE;
+            gHUD.rActionPlayerState = R_ACTION_NONE;
+            DeleteEntity(carried);
+            QuickStartSacrificeResolve(item);
+        }
+    }
+}
+
 static void QuickStartMazeMonitor(void) {
     s32 i;
     if (gRoomControls.area != AREA_ROYAL_VALLEY || gRoomControls.room != ROOM_ROYAL_VALLEY_FOREST_MAZE) {

@@ -595,6 +595,7 @@
 
 .ifdef QUICKSTART
 	.include "data/scripts/quickstart/script_QuickStartChooseOne.inc"
+	.include "data/scripts/quickstart/script_QuickStartFountain.inc"
 	.include "data/scripts/quickstart/script_QuickStartMerchant.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc0.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc1.inc"
