@@ -341,6 +341,8 @@ static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static s32 QuickStartRoomEnemyCeiling(s32 roomSquares);
+static bool32 QuickStartWinCarrierMet(void);
+static void QuickStartWinBossWatcher(void);
 static bool32 QuickStartQuestSwapActive(void);
 static void QuickStartQuestEndResetWave(s32 slot);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
@@ -1557,24 +1559,80 @@ static void QuickStartShowRegionIntroHintOnce(void) {
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 10), 0);
 }
 
+// --- F7 win-condition carriers -------------------------------------------
+//
+// The Earth Element's unlock rides one of three CARRIERS, rolled per run
+// alongside the element region itself (QuickStartRollElementRegionOnce):
+//
+//   WAVE  (0) - the classic: clear the element region's first wave.
+//   BOSS  (1) - the element region's wave loop deals a Chuchu Boss from
+//               its very first wave and keeps dealing one until it falls
+//               (QuickStartSpawnRegionWave's forced branch); the kill sets
+//               GF_WIN_BOSS_DOWN (QuickStartWinBossWatcher) and the
+//               Element drops. Only regions on the boss allowlist may
+//               host this carrier.
+//   QUEST (2) - the run's pot quest is forced into the element region
+//               (QuickStartRandomizeQuestOnce) and completing it -
+//               GF_QUEST_DONE, which nothing can fail, the pot hunt has
+//               no clock - frees the Element.
+//
+// The two bars every carrier clears (roadmap 2.1): "cannot stall the
+// run" - the boss deal self-heals through the existing owed/deferral
+// machinery and re-deals on every fresh visit until beaten, the pot
+// quest is unfailable, and both unlocks persist for the run once earned;
+// and "provably reachable" - each carrier restricts the element-REGION
+// draw at roll time to rooms where it pays out (boss allowlist; the pot
+// quest rides every room's own verified spot table), with anything
+// unsatisfiable falling back to WAVE before the region is drawn.
+//
+// Bits 614-616 (after the scav block's 599-613): the 2-bit carrier value
+// and the boss-beaten latch. Per-run, inside the 202-703 run wipe.
+#define GF_WIN_CARRIER_BIT(b) (614 + (b)) // b = 0..1
+#define GF_WIN_BOSS_DOWN 616
+#define QUICKSTART_WIN_WAVE 0
+#define QUICKSTART_WIN_BOSS 1
+#define QUICKSTART_WIN_QUEST 2
+
+static s32 QuickStartWinCarrier(void) {
+    s32 b, value = 0;
+    for (b = 0; b < 2; b++) {
+        if (QsCheckFlag(GF_WIN_CARRIER_BIT(b))) {
+            value |= (1 << b);
+        }
+    }
+    return value;
+}
+
 // Same one-per-run shape as QuickStartShowRegionIntroHintOnce above, but
 // fired on first entry to the chain's LAST slot instead of its first -
 // per the user's own feedback ("I haven't seen [the Earth Element] in
 // other areas, even after defeating full waves of enemies"): the actual
-// mechanic is simple and deterministic (the Earth Element always drops the
-// moment the FIRST wave in this one specific region - the chain's last
-// slot - is cleared, no RNG, no boss requirement), but nothing in-game
+// mechanic is simple and deterministic, but nothing in-game
 // ever said so, and every other region a player might grind endless waves
 // in in the meantime (this session's own new infinite-wave system) will
 // never drop it no matter how long they stay. This hint directly names
-// the trigger the moment the player reaches the region where it's real.
+// the trigger the moment the player reaches the region where it's real -
+// and with F7 the trigger varies, so the hint does too: string 12 for the
+// classic wave clear, 234 for the boss guardian, 235 for the pot hunt.
 #define GF_REGION_FINAL_HINT_SHOWN 229
 static void QuickStartShowRegionFinalHintOnce(void) {
+    s32 hint;
     if (QsCheckFlag(GF_REGION_FINAL_HINT_SHOWN)) {
         return;
     }
     QsSetFlag(GF_REGION_FINAL_HINT_SHOWN);
-    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 12), 0);
+    switch (QuickStartWinCarrier()) {
+        case QUICKSTART_WIN_BOSS:
+            hint = 234;
+            break;
+        case QUICKSTART_WIN_QUEST:
+            hint = 235;
+            break;
+        default:
+            hint = 12;
+            break;
+    }
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, hint), 0);
 }
 
 // Melari's Mine's other 2 real doors (Southeast/East - see
@@ -2325,6 +2383,14 @@ const u8* const gCustomStrings[] = {
     [231] = (const u8*)"The waters swallow your\ngift. Silence.",
     [232] = (const u8*)"A gift for a gift,\nsays the fountain.",
     [233] = (const u8*)"The fountain overflows\nwith gratitude!",
+    // 234-236: F7 win-condition carriers. 234/235 are the BOSS and QUEST
+    // final hints (the WAVE carrier keeps string 12); 236 is the unlock
+    // notice both non-wave carriers fire the moment the Element becomes
+    // collectable, because unlike the wave clear the player may be
+    // nowhere near the reward spot when it happens.
+    [234] = (const u8*)"The Element rests here -\nbut a GUARDIAN holds it.\nBring the beast down!",
+    [235] = (const u8*)"The Element hides here.\nSmash the pots! One\nholds more than clay...",
+    [236] = (const u8*)"It is freed! The Element\nwaits where this region\npays its prizes!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -3858,8 +3924,10 @@ static u32 QuickStartRingWithinTwo(u8 ring) {
 // before the player can reach it" reasoning every other per-run draw uses.
 // The old chain draw's Zora Flippers special case (force Trilby last)
 // stays retired: no key item re-routes the run.
+static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region);
+
 static void QuickStartRollElementRegionOnce(void) {
-    s32 drop, elem, b;
+    s32 drop, elem, b, carrier, i;
     u32 allowed;
     if (QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
         return;
@@ -3872,15 +3940,57 @@ static void QuickStartRollElementRegionOnce(void) {
     }
     QsSetFlag(GF_DROP_REGION_ROLLED);
     allowed = QuickStartRingWithinTwo(QuickStartRingRegionOfPoolIndex(drop));
+    // F7: the win carrier, rolled before the element region because each
+    // carrier restricts where the element may land. An even three-way
+    // draw from the run seed through the avalanche mix - NOT Random():
+    // measured over 18 pinned sequential seeds, Random() % 3 here
+    // returned only {0, 2}, perfectly alternating with seed parity, and
+    // BOSS never landed once. Same lesson as the fountain's strew hash:
+    // near-identical seeds need real mixing. (Masked to 15 bits for the
+    // signed % - this libgcc has no __umodsi3.)
+    {
+        u32 h = (u32)gSave.run_seed + 0xF7u;
+        h = h * 0x9E3779B9u;
+        h ^= h >> 15;
+        h = h * 0x2C1B3C6Du;
+        h ^= h >> 12;
+        carrier = (s32)(h & 0x7fff) % 3;
+    }
+    // BOSS is only satisfiable if some room inside the distance-2 mask is
+    // on the boss allowlist - pre-checked HERE so the elem loop below can
+    // never spin on an empty intersection. Unsatisfiable falls back to
+    // the classic wave, which every room hosts by construction.
+    if (carrier == QUICKSTART_WIN_BOSS) {
+        bool32 bossable = FALSE;
+        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+            if ((allowed & (1u << QuickStartRingRegionOfPoolIndex(i))) &&
+                QuickStartRegionAllowsBoss(&sQuickStartRegionPool[i])) {
+                bossable = TRUE;
+                break;
+            }
+        }
+        if (!bossable) {
+            carrier = QUICKSTART_WIN_WAVE;
+        }
+    }
     for (;;) {
         elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-        if (allowed & (1u << QuickStartRingRegionOfPoolIndex(elem))) {
-            break;
+        if (!(allowed & (1u << QuickStartRingRegionOfPoolIndex(elem)))) {
+            continue;
         }
+        if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
+            continue;
+        }
+        break;
     }
     for (b = 0; b < 4; b++) {
         if (elem & (1 << b)) {
             QsSetFlag(GF_ELEMENT_REGION_BIT(b));
+        }
+    }
+    for (b = 0; b < 2; b++) {
+        if (carrier & (1 << b)) {
+            QsSetFlag(GF_WIN_CARRIER_BIT(b));
         }
     }
     QsSetFlag(GF_ELEMENT_REGION_ROLLED);
@@ -4132,6 +4242,17 @@ static s32 QuickStartEscalatedDifficulty(const QuickStartRegion* region, u8 wave
 // "wave up" on TRUE.
 static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     s32 escalated;
+    // F7 BOSS carrier: the element region deals the boss from its very
+    // first wave and keeps dealing it until it falls - "forces the boss
+    // wave until beaten". Everything downstream of the widened condition
+    // below (the GFX gate, the owed/deferral latch and its timeout, the
+    // Trilby arena override) already treats a forced deal identically to
+    // a rolled one, which is the self-healing the carrier's no-stall bar
+    // asks for: a room that cannot pay for the boss THIS visit defers or
+    // falls through to a normal wave, and the next deal forces it again.
+    s32 forcedBoss = QuickStartWinCarrier() == QUICKSTART_WIN_BOSS &&
+                     QuickStartCurrentRegionPoolIndex() == QuickStartElementRegionIndex() &&
+                     !QsCheckFlag(GF_WIN_BOSS_DOWN);
     // A boss the room owes from an earlier frame's roll. Measured on the
     // live game (scratchpad/gate_measure.py): at the instant a cleared
     // wave respawns, the just-killed wave's uncollected drops still hold
@@ -4191,7 +4312,8 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
     // owed branch above), because measurement showed the downgrade fired
     // every single time. 6 measured (2 fit a 12-free cleared room, budget
     // doc finding 4) + the reserve of 4 the spawn must not eat.
-    if (wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) {
+    if ((wave > 0 && (s32)Random() % 100 < QUICKSTART_REGION_BOSS_WAVE_CHANCE && QuickStartRegionAllowsBoss(region)) ||
+        (forcedBoss && QuickStartRegionAllowsBoss(region))) {
         if (QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
             // F3: the boss is Green OR Electric (blue), an even coin flip
             // per spawn. Both forms are one chuchuBoss.c state machine
@@ -5305,9 +5427,18 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         // 403 ("an Element was created this round") is the right gate for
         // the two follow-up steps, since it is set exactly when the drop
         // happens and cleared on a genuinely new room load.
-        if (QuickStartRegionWaveCleared() || QsCheckRoomFlag(43)) {
+        // F7: the unlock condition is the run's carrier
+        // (QuickStartWinCarrierMet - the WAVE case is byte-for-byte the
+        // old QuickStartRegionWaveCleared gate). The boss watcher runs
+        // first so the frame a carrier boss dies is the frame the
+        // Element appears. The stuck-wave rescue stays WAVE-only: under
+        // the other carriers an uncleared wave is ambient scenery, and
+        // teleporting a mid-fight boss family to the reward spot is
+        // exactly the kind of help nobody asked for.
+        QuickStartWinBossWatcher();
+        if (QuickStartWinCarrierMet() || QsCheckRoomFlag(43)) {
             QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
-        } else {
+        } else if (QuickStartWinCarrier() == QUICKSTART_WIN_WAVE) {
             QuickStartRescueStuckFinalWave(region);
         }
         QuickStartCheckWinCondition();
@@ -5396,6 +5527,73 @@ static void QuickStartQuestSetFlag(s32 bit) {
     SetLocalFlagByBank(FLAG_BANK_11, bit);
 }
 
+// --- The F7 carrier's per-frame halves (see the carrier block above) -----
+
+// A live boss piece: health still up, not a corpse awaiting next frame's
+// cleanup, and therefore not the dead proxy the vanilla arena flow never
+// deletes here (it parks at health 0 - the same piece QuickStartEnemyIsOurs
+// learned to ignore).
+static bool32 QuickStartWinBossAlive(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if ((s32)ent->prev < 0) {
+            continue;
+        }
+        if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS && ent->health > 0 &&
+            QuickStartEntityInCurrentRoom(ent)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Room flag 45: "the carrier boss has been SEEN alive this visit" - the
+// sighting half of the beaten-detection latch. A kill is a sighting
+// followed by an absence in the same visit; requiring the sighting first
+// is what stops the empty frames before the (possibly deferred) spawn
+// from reading as a victory.
+static void QuickStartWinBossWatcher(void) {
+    if (QuickStartWinCarrier() != QUICKSTART_WIN_BOSS || QsCheckFlag(GF_WIN_BOSS_DOWN)) {
+        return;
+    }
+    if (QuickStartQuestSwapActive()) {
+        // A quest's population swap deletes and respawns enemies
+        // wholesale; nothing observed during it is evidence about the
+        // boss. Dropping the sighting latch means the swap window can
+        // neither create nor bank a phantom kill.
+        QsClearRoomFlag(45);
+        return;
+    }
+    if (QuickStartWinBossAlive()) {
+        QsSetRoomFlag(45);
+    } else if (QsCheckRoomFlag(45)) {
+        QsSetFlag(GF_WIN_BOSS_DOWN);
+        // The score formula has carried boss_kills since day one waiting
+        // for a real feeder; the carrier boss is the first kill the mode
+        // can attribute unambiguously.
+        gSave.boss_kills++;
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 236), 0);
+    }
+}
+
+// Has this run's carrier paid out? The element branch of
+// QuickStartSpawnRegionRewardOnce gates the Element drop on this, so the
+// classic behavior is exactly the WAVE case. BOSS and QUEST both read
+// per-run latches: once earned, leaving and returning cannot re-lock the
+// Element (the wave carrier's per-visit re-clear requirement is the
+// established exception, kept as-is).
+static bool32 QuickStartWinCarrierMet(void) {
+    switch (QuickStartWinCarrier()) {
+        case QUICKSTART_WIN_BOSS:
+            return QsCheckFlag(GF_WIN_BOSS_DOWN);
+        case QUICKSTART_WIN_QUEST:
+            return QuickStartQuestFlag(GF_QUEST_DONE);
+        default:
+            return QuickStartRegionWaveCleared();
+    }
+}
+
 // One draw per run, rolled unconditionally from the room monitor like every
 // other per-run draw (the hub is bypassed, so nothing may depend on a
 // particular room being entered).
@@ -5408,8 +5606,18 @@ static void QuickStartRandomizeQuestOnce(void) {
     // pool's regions. Stored in the QS window's 4-bit GF_REGION_QUEST_HOST_BIT
     // field rather than the old 2-bit bank-11 slot field, which cannot
     // count past 3.
+    //
+    // F7 QUEST carrier: the pot quest IS the win condition, so its host
+    // draw is overridden to the element region. The element roll is
+    // forced first (idempotent - usually it has already happened) because
+    // the override needs its result, and the two Random() consumes below
+    // stay unconditional so the stream cannot depend on the carrier.
+    QuickStartRollElementRegionOnce();
     slot = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
     hide = (s32)Random() % QUICKSTART_QUEST_POTS;
+    if (QuickStartWinCarrier() == QUICKSTART_WIN_QUEST) {
+        slot = QuickStartElementRegionIndex();
+    }
     for (b = 0; b < 4; b++) {
         if (slot & (1 << b)) {
             QsSetFlag(GF_REGION_QUEST_HOST_BIT(b));
@@ -5514,6 +5722,12 @@ static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot)
         QuickStartQuestSetFlag(GF_QUEST_DONE);
         MessageRequest(TEXT_INDEX(TEXT_CUSTOM, 14));
         MsgInit();
+        // F7 QUEST carrier: this completion just freed the Element - say
+        // so, because unlike the wave clear the player may be standing at
+        // the far end of the region from the reward spot it appears at.
+        if (QuickStartWinCarrier() == QUICKSTART_WIN_QUEST && slot == QuickStartElementRegionIndex()) {
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 236), 0);
+        }
     }
 }
 

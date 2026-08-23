@@ -155,13 +155,45 @@ is the weakest event in the vocabulary; the fountain-sacrifice is a
 strict upgrade for the same bit, and its extra byte can roll
 "plain fairies vs sacrifice" per site if both should coexist.
 
-### 2.1 Win-condition variety (F7) - PAUSED, and its prerequisite
+### 2.1 Win-condition variety (F7) - SHIPPED (Aug 2026), carriers live
 
-The run's only win carrier is a region's wave clear. Wanted: the Element
-can also hang on a boss, a quest, or a ? room. **Paused (user's call)
-until the key-item reachability logic exists**: no event may carry the
-win until the run can guarantee the player can reach it with the kit they
-can actually obtain.
+**The banked design is built.** Every run rolls a WIN CARRIER alongside
+the element region - an even three-way draw from the run seed through the
+avalanche mix (measured first with Random() % 3: over 18 pinned
+sequential seeds it returned only {WAVE, QUEST}, alternating with seed
+parity, and BOSS never landed once - the fountain's near-identical-seeds
+lesson, again):
+
+- **WAVE** - the classic, byte-for-byte: clear the element region's
+  first wave and the Element drops at the reward spot.
+- **BOSS** - the element region's wave loop deals a Chuchu Boss from its
+  very first wave and keeps dealing one until it falls; the kill latches
+  a per-run bit, feeds `gSave.boss_kills` (the score formula's feeder at
+  last), fires the "It is freed!" hint, and the Element appears. The
+  element-REGION draw is restricted at roll time to the boss allowlist
+  (with an any-candidate pre-check so the roll can never spin on an empty
+  distance-2 intersection - unsatisfiable falls back to WAVE). Beaten
+  detection is a sighting-then-absence latch (room flag 45 + the corpse
+  filter), guarded against quest population swaps.
+- **QUEST** - the run's pot quest is forced to host in the element region
+  and completing it (unfailable - the pot hunt has no clock) frees the
+  Element. The completion hint tells the player where to look, because
+  unlike a wave clear they may be far from the reward spot.
+
+The final-region Ezlo hint names the actual trigger per carrier (strings
+12/234/235). Both non-wave unlocks persist for the run once earned; the
+boss deal self-heals through the existing owed/deferral machinery and
+re-deals on every fresh visit until beaten. Both roadmap bars hold:
+no carrier can stall the run, and every carrier's payout spot is the
+region's own verified reward spot.
+
+**What this deliberately does NOT yet include**: the ? room carrier (the
+fourth of the banked design - it needs a per-site reachability argument
+the key-item runtime will eventually provide), and the full route-bill
+runtime (roll a route per run, price its kit) - the reachability MODEL
+below stands ready for both.
+
+The original prerequisite record:
 
 - **The prerequisite - key-item reachability logic. THE MODEL NOW EXISTS**
   (user survey, Aug 2026), in `tools/quickstart/overworld_paths.py`. The
