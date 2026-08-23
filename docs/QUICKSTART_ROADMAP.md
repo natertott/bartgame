@@ -1365,7 +1365,7 @@ HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a
   bug.
 
-### The large-area slowdowns: reproduced and DIAGNOSED (Aug 2026 research)
+### The large-area slowdowns: reproduced, diagnosed, and FIXED (Aug 2026)
 
 The user's report: big framerate drops in NHF, SHF and Lon Lon persisted
 after the enemy cap was dropped, "indicating that it wasn't the enemy
@@ -1403,16 +1403,35 @@ HOVERS above the cap until enough segments die; and each 1-placement
 top-up can itself be a x4/x9 draw. That is also why dropping the cap
 changed nothing: the cap held perfectly - in placements.
 
-The fix when we take it (not built - this round was diagnosis only):
-charge each roster row its true entity cost at deal time - a multiplicity
-column (moldworm 9, moldorm 4, enemy_50 4, bomb peahat 2, rupee like 2,
-madderpillar 7, acro gang 6) counted against the 28 headroom, or simply
-live-cap the uncapped multipliers the way madderpillar already is.
+**The fix SHIPPED** (the turn after the diagnosis): every spawner now
+charges each placement its measured entity cost against the room's live
+budget (`QuickStartKindEntityCost`: moldworm 9, madderpillar 7, acro gang
+6, moldorm 4, enemy_50 4, bomb peahat 2, rupee like 2, everything else 1).
+The wave dealer swaps an unaffordable kind for a loaded kind that fits -
+the same redirect shape the live caps use - and the single-kind placer
+divides its count by the kind's cost (floored at one placement so miniboss
+and Lost Woods set pieces can never wedge their rooms). Verified on the
+same seed that produced the 41-entity NHF entry: the identical
+moldorm-heavy draw now lands at exactly 28 entities, and the sword-mash
+measurement went from 54.5 avg / 38 worst to 60.0 / 58.0.
+
+Alongside it, the per-region maxEnemies hand caps are RETIRED for a
+size-scaled ceiling (`QuickStartRoomEnemyCeiling`: 14 + squares/50, capped
+at the hardware 28) - the user's brief: the largest continuous areas carry
+the most enemies, the small rooms still read busy. NHF gets the full 28,
+SHF/Lon Lon 27, WW North 26, the mid rooms 18-23, and the smallest shelves
+15-16 where the old hand caps starved them at 5-9 (measured post-fix:
+Ruins entrance 8 entities vs its old cap of 5, WW Center 11 vs 9). Two
+constraints still bound small-room fights: the difficulty-sloped GFX spawn
+cap (16 placements at difficulty 8+, a sprite-table property) and each
+room's verified-spot pool (the Ruins entrance owns only 4 spots) - more
+spots means more surveys, not a bigger cap.
+
 Measurement doctrine that made this findable:
 `scratchpad/multiplicity.py`'s spawn-ONE-and-count is the admission gate
 any future roster row should clear; the old entrance-spot fps probe
-passed this build because it sampled rooms whose draw happened not to
-include a multiplier.
+passed the broken build because it sampled rooms whose draw happened not
+to include a multiplier.
 
 ## 4. Vanilla behaviors not yet addressed
 

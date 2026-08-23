@@ -340,6 +340,7 @@ static s32 QuickStartCurrentRegionPoolIndex(void);
 static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
+static s32 QuickStartRoomEnemyCeiling(s32 roomSquares);
 static bool32 QuickStartQuestSwapActive(void);
 static void QuickStartQuestEndResetWave(s32 slot);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
@@ -1321,8 +1322,9 @@ typedef struct QuickStartRegion_ {
     s16 exitMaxY;
     const s16 (*enemyOffsets)[2];
     s32 enemyOffsetCount;
+    // Also the sole input to this room's live-enemy ceiling - the old
+    // per-row maxEnemies field is retired, see QuickStartRoomEnemyCeiling.
     s32 roomSquares;
-    s32 maxEnemies;
     // Reward pool for whenever this region ISN'T the chain's last slot -
     // the last slot drops an Earth Element and triggers the win condition
     // instead (see QuickStartSpawnRegionRewardOnce), same as Lon Lon Ranch
@@ -1519,12 +1521,10 @@ static void QuickStartClearCastleGuards(void) {
 // verified: MAX_ENTITIES (entity.h) caps the entire room - player,
 // decorations, reward item, everything - at 72 entities total, and this
 // room's own overhead (player + decorations) already used ~7 of those
-// before a single enemy spawns. QUICKSTART_GARDEN_MAX_ENEMIES is that
-// real, measured ceiling (with a safety margin for the reward item and
-// anything else sharing the room) - the density formula's own count gets
-// clamped to it, same as it's clamped to the offset pool size.
+// before a single enemy spawns. (The old per-room maxEnemies of 50 that
+// encoded that is retired - the size-scaled QuickStartRoomEnemyCeiling,
+// far below it, owns the clamp now.)
 #define QUICKSTART_GARDEN_ROOM_SQUARES 496
-#define QUICKSTART_GARDEN_MAX_ENEMIES 50
 static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
     { 0xc8, 0x96 },  { 0x15e, 0x96 },  { 0x1f4, 0x96 },  { 0x28a, 0x96 },  { 0x320, 0x96 },
     { 0xb4, 0xd2 },  { 0x186, 0xe6 },  { 0x1f4, 0xe6 },  { 0x262, 0xe6 },  { 0x320, 0xe6 },
@@ -2795,7 +2795,6 @@ static void QuickStartSpawnMelarisMineEnemiesOnce(void) {
 // with the entrance from Castle Garden and the win key's own spot (see
 // QuickStartSpawnWinKeyOnce) excluded.
 #define QUICKSTART_LONLON_ROOM_SQUARES 660
-#define QUICKSTART_LONLON_MAX_ENEMIES 50
 static const s16 sQuickStartLonLonRanchEnemyOffsets[50][2] = {
     { 88, 24 },   { 168, 24 },  { 168, 56 },  { 56, 136 },  { 392, 136 }, { 24, 152 },  { 88, 152 },
     { 424, 152 }, { 56, 168 },  { 360, 168 }, { 392, 168 }, { 88, 184 },  { 296, 184 }, { 56, 200 },
@@ -3323,7 +3322,6 @@ static const s16 sQuickStartSouthFieldEnemyOffsets[][2] = {
     { 504, 552}, { 552, 552}, { 600, 552}, { 648, 552}, { 840, 552}, { 72, 600},
 };
 #define QUICKSTART_SOUTHFIELD_ROOM_SQUARES 651
-#define QUICKSTART_SOUTHFIELD_MAX_ENEMIES 50
 
 static const s16 sQuickStartNorthFieldEnemyOffsets[][2] = {
     { 504, 120}, { 936, 120}, { 984, 120}, { 504, 168}, { 72, 216},  { 504, 216}, { 72, 264},
@@ -3339,7 +3337,6 @@ static const s16 sQuickStartNorthFieldEnemyOffsets[][2] = {
     { 792, 744}, { 840, 744},
 };
 #define QUICKSTART_NORTHFIELD_ROOM_SQUARES 775
-#define QUICKSTART_NORTHFIELD_MAX_ENEMIES 50
 
 static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
     { 120, 24 },  { 360, 120}, { 408, 120}, { 456, 120}, { 360, 168}, { 312, 360}, { 360, 360},
@@ -3353,7 +3350,6 @@ static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
     { 136, 696},
 };
 #define QUICKSTART_TRILBY_ROOM_SQUARES 450
-#define QUICKSTART_TRILBY_MAX_ENEMIES 50
 
 // Royal Valley - the graveyard component, and only that one. Main is
 // 30x63 tiles holding THREE separate walkable spaces (see
@@ -3394,7 +3390,6 @@ static const s16 sQuickStartRoyalValleyEnemyOffsets[][2] = {
 // enemy per nine. The extra spots spread the same wave over more ground
 // once the gate opens, rather than making it bigger.
 #define QUICKSTART_ROYALVALLEY_ROOM_SQUARES 242
-#define QUICKSTART_ROYALVALLEY_MAX_ENEMIES 18
 
 // Castor Wilds - the north-east dry bank, the component the Western Wood
 // North border lands in (flood: 244 tiles, tx 40-61 ty 4-25 of a 63x60
@@ -3408,7 +3403,6 @@ static const s16 sQuickStartCastorWildsEnemyOffsets[][2] = {
     { 952, 280 }, { 952, 360 }, { 968, 232 }, { 968, 392 },
 };
 #define QUICKSTART_CASTORWILDS_ROOM_SQUARES 244
-#define QUICKSTART_CASTORWILDS_MAX_ENEMIES 18
 
 // Wind Ruins, entrance strip - the south chunk the Castor Wilds border
 // lands in (77 tiles, ty 22-31 of the 15x33 room; the armos alley above
@@ -3417,7 +3411,6 @@ static const s16 sQuickStartRuinsEntranceEnemyOffsets[][2] = {
     { 40, 440 }, { 56, 392 }, { 104, 456 }, { 120, 488 },
 };
 #define QUICKSTART_RUINSENTRANCE_ROOM_SQUARES 77
-#define QUICKSTART_RUINSENTRANCE_MAX_ENEMIES 5
 
 // Wind Ruins, below the fortress - the armos field (137 tiles, the
 // region's real arena).
@@ -3426,7 +3419,6 @@ static const s16 sQuickStartRuinsBelowFortressEnemyOffsets[][2] = {
     { 216, 40 },  { 232, 72 },  { 248, 120 }, { 264, 40 },  { 296, 104 }, { 328, 120 },
 };
 #define QUICKSTART_RUINSBELOW_ROOM_SQUARES 137
-#define QUICKSTART_RUINSBELOW_MAX_ENEMIES 10
 
 // Castle Garden and Lon Lon Ranch (the original two, refactored per
 // docs/QUICKSTART_ROADMAP.md sec 3.1's own "become the first two rows in
@@ -3489,7 +3481,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // unchanged from the old QuickStartSpawnGarden*/sQuickStartGarden*
     // functions/data above.
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0x1f8, 0x1e0, 488, 520, 16, 56, sQuickStartGardenEnemyOffsets,
-      ARRAY_COUNT(sQuickStartGardenEnemyOffsets), QUICKSTART_GARDEN_ROOM_SQUARES, QUICKSTART_GARDEN_MAX_ENEMIES,
+      ARRAY_COUNT(sQuickStartGardenEnemyOffsets), QUICKSTART_GARDEN_ROOM_SQUARES,
       0x1f8, 0x108,
       QuickStartClearCastleGuards },
     // Lon Lon Ranch - entrance/exit reused from the old static
@@ -3532,7 +3524,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // border transition rather than after.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 288, 336, 928, 956,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
-      QUICKSTART_LONLON_MAX_ENEMIES, 264, 712,
+      264, 712,
       QuickStartLonLonRanchQuirkHook },
     // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
     // both verified-open, non-water tiles from the collision scan. Exit box
@@ -3541,7 +3533,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // destination doesn't matter, see the block comment above).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 504, 264, 460, 546, 0, 30,
       sQuickStartSouthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartSouthFieldEnemyOffsets), QUICKSTART_SOUTHFIELD_ROOM_SQUARES,
-      QUICKSTART_SOUTHFIELD_MAX_ENEMIES, 648, 552,
+      648, 552,
       NULL },
     // North Hyrule Field - entrance (504,456) and reward spot (744,504) are
     // verified-open. Exit box is the user-surveyed bottom edge
@@ -3550,7 +3542,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // BUSINESS_SCRUB_PROLOGUE that otherwise blocks wave-clear detection.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 504, 456, 478, 530, 770, 800,
       sQuickStartNorthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartNorthFieldEnemyOffsets), QUICKSTART_NORTHFIELD_ROOM_SQUARES,
-      QUICKSTART_NORTHFIELD_MAX_ENEMIES, 744, 504,
+      744, 504,
       QuickStartClearNorthFieldScrub },
     // Trilby Highlands - entrance (360,360) and reward spot (360,504) are
     // both spot-checked with screenshots (dry land next to the room's
@@ -3559,40 +3551,40 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // band (room width is only 480px, so this sits right at the edge).
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
-      QUICKSTART_TRILBY_MAX_ENEMIES, 360, 504,
+      360, 504,
       QuickStartTrilbyQuirkHook },
     // The six overworld-expansion rooms. Exit boxes are dead fields (the
     // warp mechanic is retired) and zeroed. No quirk hooks: the outdoor
     // entity dumps found only OBJECT-kind scenery, no enemy-kind blockers.
-    // Squares/max from the flood: reachable tiles, cap ~ squares/13.
+    // Squares from the flood: reachable tiles.
     // All three Eastern Hills rooms run the vanilla-NPC sweep: story/fusion
     // flags can conjure the farm's scripted population onto the walkways
     // (the user's screenshot had a pair walling off the stair gap by the
     // farmhouse), and a ? region owes the player a swept room.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 328, 104, 0, 0, 0, 0,
-      sQuickStartEasternHillsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsSouthEnemyOffsets), 265, 20,
+      sQuickStartEasternHillsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsSouthEnemyOffsets), 265,
       328, 104, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER, 248, 104, 0, 0, 0, 0,
-      sQuickStartEasternHillsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsCenterEnemyOffsets), 285, 21,
+      sQuickStartEasternHillsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsCenterEnemyOffsets), 285,
       248, 104, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 264, 264, 0, 0, 0, 0,
-      sQuickStartEasternHillsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsNorthEnemyOffsets), 458, 35,
+      sQuickStartEasternHillsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsNorthEnemyOffsets), 458,
       264, 264, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 200, 104, 0, 0, 0, 0,
-      sQuickStartWesternWoodsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsSouthEnemyOffsets), 217, 16,
+      sQuickStartWesternWoodsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsSouthEnemyOffsets), 217,
       200, 104, NULL },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 264, 88, 0, 0, 0, 0,
-      sQuickStartWesternWoodsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsCenterEnemyOffsets), 121, 9,
+      sQuickStartWesternWoodsCenterEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsCenterEnemyOffsets), 121,
       264, 88, NULL },
-    // Max 24, not the squares/13 = 46 the survey formula suggests. This
-    // room carries the ring's heaviest fixed sheet load - five fusers plus
-    // its own vanilla object clutter - and the gfx tier measured the wave's
-    // one-frame spawn burst dipping to 1 free sprite slot at difficulty 8
-    // against the checker's floor of 2 (the burst reads a stale free count,
-    // and the reaper only settles it a few dozen frames later). 24 keeps
-    // the burst small enough that the worst frame stays above the floor.
+    // This room once carried a hand cap of 24 for its fixed sheet load
+    // (five fusers plus vanilla clutter, the gfx tier measured the spawn
+    // burst dipping to 1 free slot at difficulty 8). That concern is now
+    // owned by the difficulty-sloped gfx spawn cap - the slope was raised
+    // to 6 for exactly this room, which caps difficulty-8+ bursts at 16,
+    // under the old 24 - so the size ceiling (607 squares -> 26) applies
+    // like everywhere else.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 248, 360, 0, 0, 0, 0,
-      sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607, 24,
+      sQuickStartWesternWoodsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsNorthEnemyOffsets), 607,
       248, 360, NULL },
     // ROYAL VALLEY, the eighth named region and the first one outside the
     // original ring. Entrance (296,856) and reward (184,904) are both
@@ -3608,7 +3600,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // out to Trilby's north edge, with no route back up inside the room.
     { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 296, 856, 0, 0, 0, 0,
       sQuickStartRoyalValleyEnemyOffsets, ARRAY_COUNT(sQuickStartRoyalValleyEnemyOffsets),
-      QUICKSTART_ROYALVALLEY_ROOM_SQUARES, QUICKSTART_ROYALVALLEY_MAX_ENEMIES,
+      QUICKSTART_ROYALVALLEY_ROOM_SQUARES,
       184, 904, NULL },
     // CASTOR WILDS and the WIND RUINS - the western spur (WW North's west
     // border into the Wilds, the Wilds' south-west border into the Ruins,
@@ -3624,15 +3616,15 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // for twelve rows).
     { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 984, 264, 0, 0, 0, 0,
       sQuickStartCastorWildsEnemyOffsets, ARRAY_COUNT(sQuickStartCastorWildsEnemyOffsets),
-      QUICKSTART_CASTORWILDS_ROOM_SQUARES, QUICKSTART_CASTORWILDS_MAX_ENEMIES,
+      QUICKSTART_CASTORWILDS_ROOM_SQUARES,
       920, 216, NULL },
     { AREA_RUINS, ROOM_RUINS_ENTRANCE, 216, 456, 0, 0, 0, 0,
       sQuickStartRuinsEntranceEnemyOffsets, ARRAY_COUNT(sQuickStartRuinsEntranceEnemyOffsets),
-      QUICKSTART_RUINSENTRANCE_ROOM_SQUARES, QUICKSTART_RUINSENTRANCE_MAX_ENEMIES,
+      QUICKSTART_RUINSENTRANCE_ROOM_SQUARES,
       104, 456, QuickStartClearRuinsVanillaEnemies },
     { AREA_RUINS, ROOM_RUINS_BELOW_FORTRESS_ENTRANCE, 120, 104, 0, 0, 0, 0,
       sQuickStartRuinsBelowFortressEnemyOffsets, ARRAY_COUNT(sQuickStartRuinsBelowFortressEnemyOffsets),
-      QUICKSTART_RUINSBELOW_ROOM_SQUARES, QUICKSTART_RUINSBELOW_MAX_ENEMIES,
+      QUICKSTART_RUINSBELOW_ROOM_SQUARES,
       296, 104, QuickStartClearRuinsVanillaEnemies },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
@@ -4068,8 +4060,8 @@ static s32 QuickStartRegionBaseWave(const QuickStartRegion* region) {
     if (base > region->enemyOffsetCount) {
         base = region->enemyOffsetCount;
     }
-    if (base > region->maxEnemies) {
-        base = region->maxEnemies;
+    if (base > QuickStartRoomEnemyCeiling(region->roomSquares)) {
+        base = QuickStartRoomEnemyCeiling(region->roomSquares);
     }
     if (base < 1) {
         base = 1;
@@ -4196,7 +4188,7 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
     }
     escalated = QuickStartEscalatedDifficulty(region, wave);
     QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
-                                          region->maxEnemies, (u8)escalated);
+                                          QuickStartRoomEnemyCeiling(region->roomSquares), (u8)escalated);
     return TRUE;
 }
 
@@ -6651,9 +6643,10 @@ static const s32 sQuickStartEnemyLevelCounts[QUICKSTART_ENEMY_LEVELS] = {
 // denser than that isn't just a matter of verifying more spawn spots, the
 // room's entire entity budget (MAX_ENTITIES, entity.h) is shared with the
 // player, decorations, and everything else, so there's a hard ceiling on
-// how many enemies can ever exist at once regardless of density - see the
-// per-room QUICKSTART_*_MAX_ENEMIES caps below. A simple first pass, easy
-// to retune once we see how a full run plays out.
+// how many enemies can ever exist at once regardless of density - see
+// QUICKSTART_MAX_LIVE_ENEMIES and the size-scaled QuickStartRoomEnemyCeiling
+// below. A simple first pass, easy to retune once we see how a full run
+// plays out.
 typedef struct {
     u8 levelWeights[QUICKSTART_ENEMY_LEVELS];
     u8 density;
@@ -6960,6 +6953,47 @@ static bool32 QuickStartKindAtLiveCap(u8 id, u8 difficulty) {
     return FALSE;
 }
 
+// --- Entity cost: what one PLACEMENT of a kind actually puts in the room --
+//
+// The live ceiling (QUICKSTART_MAX_LIVE_ENEMIES and the size-scaled room
+// ceilings below it) is a budget on ENTITIES - the things the frame must
+// update, collide and draw - but the spawners used to spend it in
+// PLACEMENTS. For most kinds those are the same thing. The kinds in this
+// table burst into more on spawn, measured one at a time (spawn ONE, settle
+// 40 frames, count entities carrying the id): they are segmented chains, or
+// spawn a partner, and every segment is a full enemy entity. That gap is
+// the diagnosed cause of the large-area slowdowns: censused live, NHF's
+// difficulty-12 entry wave dealt 16 placements of which 8 were Moldorms,
+// and the room came up at 40 live enemies - 143% of the ceiling the deal
+// had just been clamped to (54fps scrolling at 41 live, ~30 by 55).
+//
+// Acro Bandit's cost comes from the F9 gang measurement rather than the
+// probe - the gang unearths on a delay the probe's 40-frame window missed.
+typedef struct {
+    u8 id;
+    u8 entityCost;
+} QuickStartKindCost;
+
+static const QuickStartKindCost sQuickStartKindCosts[] = {
+    { MOLDWORM, 9 },
+    { MADDERPILLAR, 7 },
+    { ACRO_BANDIT, 6 },
+    { MOLDORM, 4 },
+    { ENEMY_50, 4 },
+    { BOMB_PEAHAT, 2 },
+    { RUPEE_LIKE, 2 },
+};
+
+static s32 QuickStartKindEntityCost(u8 id) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartKindCosts); i++) {
+        if (sQuickStartKindCosts[i].id == id) {
+            return sQuickStartKindCosts[i].entityCost;
+        }
+    }
+    return 1;
+}
+
 // --- Composition archetypes ----------------------------------------------
 //
 // A wave used to be three kinds in uniform thirds, which is a pile rather
@@ -7217,6 +7251,32 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 // them.
 #define QUICKSTART_MAX_LIVE_ENEMIES 28
 
+// The per-room slice of that hardware budget, computed from room size
+// rather than hand-tuned (this retires the pool rows' maxEnemies field,
+// whose values predated the ceiling above - half were 50s the ceiling
+// silently overrode, and the small-room values starved rooms the brief
+// wants busy). The brief: the largest continuous areas carry the most
+// enemies the hardware allows, and the small rooms - lower Eastern Hills,
+// the Western Wood pockets, the Ruins shelves - still read busy, reduced
+// somewhat for their size, never sparse. Linear in reachable squares over
+// a healthy floor:
+//   NHF 775sq -> 28   Lon Lon 660 -> 27   SHF 651 -> 27   WW North 607 -> 26
+//   Garden 496 -> 23  EH North 458 -> 23  Trilby 450 -> 23
+//   EH Center 285 -> 19  EH South 265 -> 19  Castor 244 -> 18
+//   Royal Valley 242 -> 18  WW South 217 -> 18
+//   Ruins Below 137 -> 16  WW Center 121 -> 16  Ruins Entrance 77 -> 15
+// The old hand caps put WW Center at 9 and the Ruins entrance at 5. A
+// floor this high is safe ONLY because the budget is now charged in true
+// entity cost (QuickStartKindEntityCost): 15 on the meter is 15 frame-time
+// enemies no matter which kinds the draw picks.
+static s32 QuickStartRoomEnemyCeiling(s32 roomSquares) {
+    s32 ceiling = 14 + roomSquares / 50;
+    if (ceiling > QUICKSTART_MAX_LIVE_ENEMIES) {
+        ceiling = QUICKSTART_MAX_LIVE_ENEMIES;
+    }
+    return ceiling;
+}
+
 // Spawn-count ceiling as a function of difficulty, in service of the GFX
 // reserve (see QUICKSTART_GFX_RESERVE). Tuned by measurement, not theory:
 // the numbers below are the first set that kept every region above the
@@ -7310,10 +7370,10 @@ static s32 QuickStartSheetBudgetHere(void) {
 // Fisher-Yates shuffle, so which spots get used - not just which enemies -
 // varies across boots too) and rolls a fresh enemy for each from
 // QuickStartPickEnemy. `count` itself comes from the room's size in 32x32
-// squares divided by this difficulty's density, clamped to at least 1, and
-// to at most whichever is smaller of the offset pool's own size or
-// maxEnemies (the room's hard entity-budget ceiling - see the per-room
-// constants above each call site). Difficulty is an explicit parameter
+// squares divided by this difficulty's density, clamped to at least 1, to
+// the offset pool's own size, and to the room's live-entity budget
+// (min(maxEnemies, QUICKSTART_MAX_LIVE_ENEMIES) minus what is already
+// alive, charged in true entity cost). Difficulty is an explicit parameter
 // (rather than always reading QuickStartGetDifficulty() itself) so the
 // region-chain's endless-wave loop (QuickStartSpawnRegionWave) can escalate
 // past the run's own persistent difficulty counter as waves stack up,
@@ -7438,7 +7498,7 @@ static bool32 QuickStartAcroBanditCapReached(void) {
 static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
                                                    s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
-    s32 i, j, r, tmp, count, density, cap, allowed, gfxCap;
+    s32 i, j, r, tmp, count, density, cap, allowed, gfxCap, entityBudget;
     Entity* enemy;
     u8 id, form;
     u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
@@ -7480,9 +7540,19 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     if (count < 1) {
         count = 1;
     }
-    cap = (offsetCount < maxEnemies) ? offsetCount : maxEnemies;
-    // The frame-rate ceiling, and it outranks every per-room cap above it.
-    // See QUICKSTART_MAX_LIVE_ENEMIES for the measurement.
+    cap = offsetCount;
+    // The frame-rate ceiling, and it outranks every other cap here. See
+    // QUICKSTART_MAX_LIVE_ENEMIES for the measurement.
+    //
+    // It is a budget in ENTITIES, not placements: the spawn loop below
+    // charges each placement its true entity cost (QuickStartKindEntityCost)
+    // because a Moldworm placement is nine entities the moment it lands -
+    // spending the budget in placements is exactly the leak that put NHF at
+    // 40 live under a ceiling of 28. `maxEnemies` is the caller's own
+    // ceiling for this deal: the pool regions pass their size-scaled room
+    // ceiling (QuickStartRoomEnemyCeiling), the set-piece rooms (2-door,
+    // roof, mine) their own taste, the interrupted-wave resume its saved
+    // remainder.
     //
     // Counted against what is ALREADY ALIVE in the room, not just against
     // this wave's own head count. Waves overlap: measured after the
@@ -7495,12 +7565,13 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     // half-full room is simply a smaller wave.
     {
         bool32 unusedHasBoss;
-        s32 headroom = QUICKSTART_MAX_LIVE_ENEMIES - QuickStartCountRegionEnemies(&unusedHasBoss);
-        if (headroom < 0) {
-            headroom = 0;
+        s32 roomCeiling = (maxEnemies < QUICKSTART_MAX_LIVE_ENEMIES) ? maxEnemies : QUICKSTART_MAX_LIVE_ENEMIES;
+        entityBudget = roomCeiling - QuickStartCountRegionEnemies(&unusedHasBoss);
+        if (entityBudget < 0) {
+            entityBudget = 0;
         }
-        if (cap > headroom) {
-            cap = headroom;
+        if (cap > entityBudget) {
+            cap = entityBudget;
         }
     }
     if (cap < 1) {
@@ -7664,6 +7735,29 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
             id = kindIds[chosen];
             form = kindForms[chosen];
         }
+        // The entity-budget charge (the multiplicity fix). A kind whose true
+        // entity cost no longer fits the remaining budget is swapped for a
+        // loaded kind that does, exactly like the live-cap redirect above -
+        // the wave keeps dealing bodies the frame can afford. When nothing
+        // loaded fits, the budget is spent: stop dealing rather than let a
+        // segmented chain land 9 entities on a 2-entity remainder.
+        if (QuickStartKindEntityCost(id) > entityBudget) {
+            s32 alt = -1;
+            for (tmp = 0; tmp < kindCount; tmp++) {
+                s32 k = (r + tmp) % kindCount;
+                if (QuickStartKindEntityCost(kindIds[k]) <= entityBudget &&
+                    !QuickStartKindAtLiveCap(kindIds[k], difficulty)) {
+                    alt = k;
+                    break;
+                }
+            }
+            if (alt < 0) {
+                break;
+            }
+            chosen = alt;
+            id = kindIds[chosen];
+            form = kindForms[chosen];
+        }
         kindQuota[chosen]--;
         enemy = CreateEnemy(id, form);
         if (enemy != NULL) {
@@ -7672,6 +7766,7 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
             enemy->collisionLayer = 1;
             enemy->flags |= ENT_PERSIST;
             UpdateSpriteForCollisionLayer(enemy);
+            entityBudget -= QuickStartKindEntityCost(id);
         }
     }
 }
@@ -9182,6 +9277,26 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
+    // The entity-budget charge, single-kind edition (the multiplicity fix):
+    // this placer serves the ? room waves and the quest packs, and a
+    // 12-count pack of a segmented kind used to be 12 placements = up to
+    // 108 entities. Divide the room's remaining hardware budget by the
+    // kind's true entity cost - but never below one placement, because the
+    // event paths that come through here (miniboss spawns, the Lost Woods
+    // room enemy) MUST produce their creature or their room wedges; one
+    // deliberate set-piece body over budget is a frame dip, a wedged event
+    // is a broken run.
+    {
+        bool32 unusedHasBoss;
+        s32 budget = QUICKSTART_MAX_LIVE_ENEMIES - QuickStartCountRegionEnemies(&unusedHasBoss);
+        s32 afford = budget / QuickStartKindEntityCost(id);
+        if (afford < 1) {
+            afford = 1;
+        }
+        if (count > afford) {
+            count = afford;
+        }
+    }
     for (relax = 0; relax < 2 && placed < count; relax++) {
         for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING && placed < count; ring++) {
             s32 dx, dy;
