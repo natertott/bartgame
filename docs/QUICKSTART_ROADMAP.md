@@ -80,7 +80,26 @@ in the Wave Composition Study artifact.
 
 Ordered roughly by how much of the vision each unblocks.
 
-### 2.0 The Fountain of Sacrifice (researched Aug 2026 - FEASIBLE, not built)
+### 2.0 The Fountain of Sacrifice (SHIPPED Aug 2026)
+
+**Built as designed below, plus per-run rotation.** What shipped: the
+graveyard Great Fairy chamber skips its site dispatch and runs the
+sacrifice instead. A Zelda-sprite host at the fountain edge explains the
+deal (custom strings 229-233). Eight items are strewn as liftable
+`SHOP_ITEM` props on fixed pedestal spots; WHICH eight rotates per run -
+the top 8 of the player's eligible inventory ranked by an avalanche hash
+of (run_seed, item id), so two runs with near-identical seeds still get
+different spreads (a plain xor hash measurably did not rotate - the
+multiply-xorshift-multiply mix is load-bearing). Eligibility excludes all
+swords, bottles, quest keys, and the Earth Element. Carrying a prop into
+the summoning-circle box consumes it: inventory slot zeroed (equipped
+slots included), the ItemForSale teardown mirrored, and the tier-scaled
+return resolved on the spot - commons roll punish/nothing/common,
+uncommons small-punish/uncommon/rare, rares always pay and can pay
+double. Props the player puts down (outside the circle) respawn on their
+pedestals via the same maintain loop the shop uses.
+
+The original research record, kept for the design rationale:
 
 The user's pitch: in a Great Fairy fountain room, the player's items lie
 strewn across the floor; a sprite asks for a sacrifice; the player picks
@@ -1121,7 +1140,9 @@ here because the lessons outlive the bugs:
   region plus Castle Garden and Lon Lon Ranch holds a locked 60.0 fps
   (average AND worst 30-frame window, 900-frame samples) at difficulties
   0/4/8/12, up to 40 live enemies. The constant delete/respawn churn the
-  trimmer bug caused was almost certainly the felt cost.
+  trimmer bug caused was almost certainly the felt cost. SUPERSEDED: the
+  drops persisted and the real cause is segmented kinds blowing the live
+  ceiling - see "The large-area slowdowns" section below.
 - **Minish door lockout (ranch house west).** The 2-door obstacle sweep
   deleted every OBJECT in the room - including the MINISH_SIZED_ENTRANCE
   that is the room's only way back out (no pot inside to un-shrink with).
@@ -1343,6 +1364,55 @@ HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
 - **First run on a brand-new save is fixed** (nothing has happened yet to
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a
   bug.
+
+### The large-area slowdowns: reproduced and DIAGNOSED (Aug 2026 research)
+
+The user's report: big framerate drops in NHF, SHF and Lon Lon persisted
+after the enemy cap was dropped, "indicating that it wasn't the enemy
+count OR variety." Reproduced under cycle-accurate timing (the tick-skip
+metric reads the game's true hardware frame rate), so it is NOT the
+user's emulator. The bisect - one variable at a time, difficulty 12 -
+acquitted every suspect but one:
+
+- **QS room monitors, ground-item litter, area size: innocent.** Empty
+  NHF holds a locked 60.0. 24 ground items on the floor: 60.0. The same
+  24 enemies in NHF and in a tiny cave: 60.0 both. (The earlier battery's
+  "litter drags fps" reading was confounded - it ran on top of a
+  leftover wave.)
+- **Raw headcount below the ceiling: innocent.** 28 keese, 38 keese,
+  even 48 keese standing still: 60.0 flat. Twelve of ANY single roster
+  kind: 60.0.
+- **Total live entities past ~45, plus scrolling/combat: guilty.** The
+  real NHF entry wave at difficulty 12 measured 41 live enemies - 59.9
+  standing still (borderline), 54.5 avg / 38 worst while fighting, and
+  43.5 at 51 / ~31 at 55. The skip cadence at the floor is exactly the
+  alternating-frame "halved fps" the user sees.
+
+**Why 41 live enemies exist under a 28 ceiling:** the frame-budget cap
+(`QUICKSTART_MAX_LIVE_ENEMIES` 28, set in the previous performance round)
+clamps the wave's PLACEMENT count against what is alive at deal time -
+but a placement is not an entity. Probed one-by-one, five roster kinds
+multiply after the clamp: **MOLDWORM x9, MADDERPILLAR x7 (already
+live-capped to 2), MOLDORM x4, ENEMY_50 x4, BOMB_PEAHAT x2, RUPEE_LIKE
+x2** - they are segmented chains (or spawn a partner), every segment a
+full enemy entity the frame must update, collide and draw. Censused at
+NHF entry, difficulty 12: the wave dealt 16 placements (8 red chuchu + 8
+moldorm) and the moldorms alone became 32 entities - 40 live, 143% of
+the ceiling. Once over, the next deal's headroom is zero so the room
+HOVERS above the cap until enough segments die; and each 1-placement
+top-up can itself be a x4/x9 draw. That is also why dropping the cap
+changed nothing: the cap held perfectly - in placements.
+
+The fix when we take it (not built - this round was diagnosis only):
+charge each roster row its true entity cost at deal time - a multiplicity
+column (moldworm 9, moldorm 4, enemy_50 4, bomb peahat 2, rupee like 2,
+madderpillar 7, acro gang 6) counted against the 28 headroom, or simply
+live-cap the uncapped multipliers the way madderpillar already is.
+Measurement doctrine that made this findable:
+`scratchpad/multiplicity.py`'s spawn-ONE-and-count is the admission gate
+any future roster row should clear; the old entrance-spot fps probe
+passed this build because it sampled rooms whose draw happened not to
+include a multiplier.
 
 ## 4. Vanilla behaviors not yet addressed
 
