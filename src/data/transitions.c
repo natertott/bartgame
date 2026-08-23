@@ -688,12 +688,11 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
 const Transition gExitList_HyruleField_WesternWoodsNorth[] = {
     { WARP_TYPE_AREA, 0xa0, 0x1e8, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#ifndef QUICKSTART
-    // Castor Wilds is outside the seven-region ring: BLOCKED under
-    // QUICKSTART, no row.
+    // Castor Wilds joined the ring (the western spur, with the Wind Ruins
+    // behind it), so its border runs vanilla again - the row used to be
+    // compiled out under QUICKSTART.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
-#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_WesternWoodsCenter[] = {

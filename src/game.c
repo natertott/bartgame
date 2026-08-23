@@ -642,7 +642,10 @@ static void GameTask_Transition(void) {
         // lives in the QUICKSTART flag window and is cleared by the 202-703
         // loop further up.
         // Bit 142: the survive event's live-clock marker (GF_SURVIVE_LIVE).
-        for (bit = 43; bit <= 142; bit++) {
+        // Bits 143-155: the tail of the extension-slot state (pool slots
+        // 12+, QuickStartExtSlotFlag) - per-run like the window blocks it
+        // extends, so the sweep grew to cover it.
+        for (bit = 43; bit <= 155; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -938,6 +941,16 @@ static void GameTask_Transition(void) {
     // change a room this mode visits - 29 of the 91 that have a world event
     // at all, of which the 18 that open a gate or place a chest have fusers.)
     MemClear(&gSave.kinstones, sizeof(gSave.kinstones));
+    // The three sleeping statues guarding Castor Wilds' south-west passage
+    // into the Wind Ruins. Their fusions take MYSTERIOUS pieces (0x65-0x6d),
+    // which the enemy droptable cannot produce (it only mints 0x6E-0x75),
+    // so left unfused the Ruins would be sealed behind a currency the run
+    // cannot earn. Pre-fusing them per run opens the passage permanently -
+    // the same treatment Trilby's boulder crossing gets - and gates nothing
+    // else: each statue's world event is the statue itself stepping aside.
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_LEFT);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_MIDDLE);
+    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_RIGHT);
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -1673,7 +1686,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // They also have to be cleared per run explicitly - see the site-block
 // clear in GameTask_Transition, and its comment on why the bank-wide wipe
 // there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 59
+#define QUICKSTART_CONTENT_SITE_COUNT 61
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
@@ -2849,6 +2862,29 @@ static void QuickStartClearEasternHillsNpcs(void) {
     }
 }
 
+// The Wind Ruins' pool rooms ship VANILLA enemies through their room
+// entity lists - Below Fortress alone carries eight (armos ranks and
+// keatons). A pool region's wave-clear test counts every ENEMY in the
+// room, so left standing they would permanently block the counter, the
+// same failure the prologue scrub and the Castle Garden guards had.
+// ENT_PERSIST is the "ours" marker every QUICKSTART spawner sets, so
+// sweeping only the un-marked leaves our own waves alone. Deleting the
+// armos ranks also opens the alley they garrison, which is what makes
+// the entrance strip traversable without vanilla's push-the-statue
+// business.
+static void QuickStartClearRuinsVanillaEnemies(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == ENEMY && !(ent->flags & ENT_PERSIST) && QuickStartEntityInCurrentRoom(ent)) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
 // Trilby Highlands' southwest field - the 10x10-tile pocket at tiles
 // (1,35)-(10,44) that the solved boulder crossing and the restored
 // through-cave opened up (flood-verified open, and ringed by solid tiles
@@ -3119,22 +3155,65 @@ static s32 QuickStartHuntState(void);
 // 3-state like the old ITEM_32/ITEM_5A markers this replaces: 0 = not
 // earned yet, 1 = earned and a ground item is (or was) dropped, 2 =
 // confirmed actually picked up.
+// The three per-slot state blocks in the QS window (reward state, wave
+// counter, alive counter) were sized for twelve pool rows and the window
+// has no room to grow them. Slots 12+ (the Castor Wilds / Wind Ruins
+// expansion) route through here instead: 16 bits per extension slot
+// (reward 2, wave 8, alive 6), laid into FLAG_BANK_11's free ranges
+// 60-73, 121-141 and 143-155 - all inside or adjacent to the run wipe,
+// which is extended to cover the 143-155 tail (see GameTask_Transition).
+#define QUICKSTART_EXT_SLOT_BASE 12
+#define QUICKSTART_EXT_REWARD_OFF 0
+#define QUICKSTART_EXT_WAVE_OFF 2
+#define QUICKSTART_EXT_ALIVE_OFF 10
+static u32 QuickStartExtSlotFlag(s32 poolIndex, u32 off) {
+    u32 lin = (u32)(poolIndex - QUICKSTART_EXT_SLOT_BASE) * 16 + off; /* 0..47 */
+    if (lin < 14) {
+        return 60 + lin;
+    }
+    if (lin < 35) {
+        return 121 + (lin - 14);
+    }
+    return 143 + (lin - 35);
+}
+
+static bool32 QuickStartSlotBitCheck(s32 poolIndex, u32 extOff, u32 windowBit) {
+    if (poolIndex >= QUICKSTART_EXT_SLOT_BASE) {
+        return CheckLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
+    }
+    return QsCheckFlag(windowBit);
+}
+
+static void QuickStartSlotBitWrite(s32 poolIndex, u32 extOff, u32 windowBit, bool32 on) {
+    if (poolIndex >= QUICKSTART_EXT_SLOT_BASE) {
+        if (on) {
+            SetLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
+        }
+    } else if (on) {
+        QsSetFlag(windowBit);
+    } else {
+        QsClearFlag(windowBit);
+    }
+}
+
 static u8 QuickStartGetRegionRewardState(s32 poolIndex) {
-    return (QsCheckFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 0)) ? 1 : 0) |
-           (QsCheckFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 1)) ? 2 : 0);
+    return (QuickStartSlotBitCheck(poolIndex, QUICKSTART_EXT_REWARD_OFF + 0,
+                                   GF_REGION_REWARD_STATE_BIT(poolIndex, 0))
+                ? 1
+                : 0) |
+           (QuickStartSlotBitCheck(poolIndex, QUICKSTART_EXT_REWARD_OFF + 1,
+                                   GF_REGION_REWARD_STATE_BIT(poolIndex, 1))
+                ? 2
+                : 0);
 }
 
 static void QuickStartSetRegionRewardState(s32 poolIndex, u8 value) {
-    if (value & 1) {
-        QsSetFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 0));
-    } else {
-        QsClearFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 0));
-    }
-    if (value & 2) {
-        QsSetFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 1));
-    } else {
-        QsClearFlag(GF_REGION_REWARD_STATE_BIT(poolIndex, 1));
-    }
+    QuickStartSlotBitWrite(poolIndex, QUICKSTART_EXT_REWARD_OFF + 0, GF_REGION_REWARD_STATE_BIT(poolIndex, 0),
+                           (value & 1) != 0);
+    QuickStartSlotBitWrite(poolIndex, QUICKSTART_EXT_REWARD_OFF + 1, GF_REGION_REWARD_STATE_BIT(poolIndex, 1),
+                           (value & 2) != 0);
 }
 
 // Lon Lon Ranch's own quirks (Goron/animal removal; its boulder-hole
@@ -3306,6 +3385,38 @@ static const s16 sQuickStartRoyalValleyEnemyOffsets[][2] = {
 // once the gate opens, rather than making it bigger.
 #define QUICKSTART_ROYALVALLEY_ROOM_SQUARES 242
 #define QUICKSTART_ROYALVALLEY_MAX_ENEMIES 18
+
+// Castor Wilds - the north-east dry bank, the component the Western Wood
+// North border lands in (flood: 244 tiles, tx 40-61 ty 4-25 of a 63x60
+// room; the swamp splits everything west of it into other components).
+// 28 spread 3x3-clear spots from the survey (scratchpad cwwr_survey).
+static const s16 sQuickStartCastorWildsEnemyOffsets[][2] = {
+    { 728, 88 },  { 728, 136 }, { 728, 184 }, { 728, 232 }, { 760, 104 }, { 760, 152 },
+    { 760, 200 }, { 760, 248 }, { 792, 88 },  { 792, 136 }, { 792, 184 }, { 792, 232 },
+    { 824, 104 }, { 824, 152 }, { 824, 200 }, { 824, 248 }, { 856, 184 }, { 856, 232 },
+    { 872, 392 }, { 888, 200 }, { 888, 248 }, { 920, 216 }, { 920, 392 }, { 936, 248 },
+    { 952, 280 }, { 952, 360 }, { 968, 232 }, { 968, 392 },
+};
+#define QUICKSTART_CASTORWILDS_ROOM_SQUARES 244
+#define QUICKSTART_CASTORWILDS_MAX_ENEMIES 18
+
+// Wind Ruins, entrance strip - the south chunk the Castor Wilds border
+// lands in (77 tiles, ty 22-31 of the 15x33 room; the armos alley above
+// opens once the vanilla-enemy sweep clears its garrison).
+static const s16 sQuickStartRuinsEntranceEnemyOffsets[][2] = {
+    { 40, 440 }, { 56, 392 }, { 104, 456 }, { 120, 488 },
+};
+#define QUICKSTART_RUINSENTRANCE_ROOM_SQUARES 77
+#define QUICKSTART_RUINSENTRANCE_MAX_ENEMIES 5
+
+// Wind Ruins, below the fortress - the armos field (137 tiles, the
+// region's real arena).
+static const s16 sQuickStartRuinsBelowFortressEnemyOffsets[][2] = {
+    { 56, 56 },   { 72, 88 },   { 104, 56 },  { 152, 120 }, { 168, 88 },  { 200, 120 },
+    { 216, 40 },  { 232, 72 },  { 248, 120 }, { 264, 40 },  { 296, 104 }, { 328, 120 },
+};
+#define QUICKSTART_RUINSBELOW_ROOM_SQUARES 137
+#define QUICKSTART_RUINSBELOW_MAX_ENEMIES 10
 
 // Castle Garden and Lon Lon Ranch (the original two, refactored per
 // docs/QUICKSTART_ROADMAP.md sec 3.1's own "become the first two rows in
@@ -3489,6 +3600,30 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartRoyalValleyEnemyOffsets, ARRAY_COUNT(sQuickStartRoyalValleyEnemyOffsets),
       QUICKSTART_ROYALVALLEY_ROOM_SQUARES, QUICKSTART_ROYALVALLEY_MAX_ENEMIES,
       184, 904, NULL },
+    // CASTOR WILDS and the WIND RUINS - the western spur (WW North's west
+    // border into the Wilds, the Wilds' south-west border into the Ruins,
+    // that second edge opened by pre-fusing the three sleeping-statue
+    // kinstones at run start, see GameTask_Transition). Entrances and
+    // rewards are flood-verified tiles in each room's border-landing
+    // component (scratchpad cwwr_survey). Castor Wilds' row covers its
+    // north-east dry bank; the swamp beyond prices the rest of the room at
+    // Pegasus Boots exactly as the route model says, same "gear-priced
+    // region" standing as Royal Valley's darkness. These are pool slots
+    // 12-14, whose per-slot state lives in FLAG_BANK_11 via the
+    // QuickStartSlotBit* routers (the QS window's own blocks were sized
+    // for twelve rows).
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 984, 264, 0, 0, 0, 0,
+      sQuickStartCastorWildsEnemyOffsets, ARRAY_COUNT(sQuickStartCastorWildsEnemyOffsets),
+      QUICKSTART_CASTORWILDS_ROOM_SQUARES, QUICKSTART_CASTORWILDS_MAX_ENEMIES,
+      920, 216, NULL },
+    { AREA_RUINS, ROOM_RUINS_ENTRANCE, 216, 456, 0, 0, 0, 0,
+      sQuickStartRuinsEntranceEnemyOffsets, ARRAY_COUNT(sQuickStartRuinsEntranceEnemyOffsets),
+      QUICKSTART_RUINSENTRANCE_ROOM_SQUARES, QUICKSTART_RUINSENTRANCE_MAX_ENEMIES,
+      104, 456, QuickStartClearRuinsVanillaEnemies },
+    { AREA_RUINS, ROOM_RUINS_BELOW_FORTRESS_ENTRANCE, 120, 104, 0, 0, 0, 0,
+      sQuickStartRuinsBelowFortressEnemyOffsets, ARRAY_COUNT(sQuickStartRuinsBelowFortressEnemyOffsets),
+      QUICKSTART_RUINSBELOW_ROOM_SQUARES, QUICKSTART_RUINSBELOW_MAX_ENEMIES,
+      296, 104, QuickStartClearRuinsVanillaEnemies },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // (QUICKSTART_TRILBY_POOL_INDEX / QUICKSTART_LONLON_POOL_INDEX retired with
@@ -3619,10 +3754,14 @@ enum {
     QS_RING_TRIL,
     QS_RING_WW,
     QS_RING_RV,
+    QS_RING_CW,
+    QS_RING_WR,
     QS_RING_COUNT
 };
 
-static const u8 sQuickStartRingAdjacency[QS_RING_COUNT] = {
+// u16, not u8: ten rings no longer fit an 8-bit mask. Every consumer
+// already works in u32 locals.
+static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     /* CG   */ (1 << QS_RING_NHF),
     /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL) |
                (1 << QS_RING_RV),
@@ -3630,10 +3769,15 @@ static const u8 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR),
     /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
     /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV),
-    /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF),
+    /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF) | (1 << QS_RING_CW),
     // Royal Valley touches North Hyrule Field (its WNW border) and Trilby
     // (the north seam). Both edges are real crossings the player walks.
     /* RV   */ (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
+    // Castor Wilds hangs off Western Wood North's west border; the Wind
+    // Ruins hang off Castor Wilds' south-west border. A straight spur off
+    // the ring's western side.
+    /* CW   */ (1 << QS_RING_WW) | (1 << QS_RING_WR),
+    /* WR   */ (1 << QS_RING_CW),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -3645,6 +3789,7 @@ static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
         QS_RING_EH, QS_RING_EH, QS_RING_EH,
         QS_RING_WW, QS_RING_WW, QS_RING_WW,
         QS_RING_RV,
+        QS_RING_CW, QS_RING_WR, QS_RING_WR,
     };
     return byPool[poolIndex % QUICKSTART_REGION_POOL_SIZE];
 }
@@ -3775,7 +3920,7 @@ static u8 QuickStartRegionGetWaveCount(s32 poolIndex) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 8; b++) {
-        if (QsCheckFlag(GF_REGION_WAVE_BIT(poolIndex, b))) {
+        if (QuickStartSlotBitCheck(poolIndex, QUICKSTART_EXT_WAVE_OFF + b, GF_REGION_WAVE_BIT(poolIndex, b))) {
             value |= (1 << b);
         }
     }
@@ -3785,11 +3930,8 @@ static u8 QuickStartRegionGetWaveCount(s32 poolIndex) {
 static void QuickStartRegionSetWaveCount(s32 poolIndex, u8 value) {
     s32 b;
     for (b = 0; b < 8; b++) {
-        if (value & (1 << b)) {
-            QsSetFlag(GF_REGION_WAVE_BIT(poolIndex, b));
-        } else {
-            QsClearFlag(GF_REGION_WAVE_BIT(poolIndex, b));
-        }
+        QuickStartSlotBitWrite(poolIndex, QUICKSTART_EXT_WAVE_OFF + b, GF_REGION_WAVE_BIT(poolIndex, b),
+                               (value & (1 << b)) != 0);
     }
 }
 
@@ -3797,7 +3939,7 @@ static u8 QuickStartRegionGetAliveCount(s32 poolIndex) {
     u8 value = 0;
     s32 b;
     for (b = 0; b < 6; b++) {
-        if (QsCheckFlag(GF_REGION_ALIVE_BIT(poolIndex, b))) {
+        if (QuickStartSlotBitCheck(poolIndex, QUICKSTART_EXT_ALIVE_OFF + b, GF_REGION_ALIVE_BIT(poolIndex, b))) {
             value |= (1 << b);
         }
     }
@@ -3810,11 +3952,8 @@ static void QuickStartRegionSetAliveCount(s32 poolIndex, u8 value) {
         value = QUICKSTART_ALIVE_UNKNOWN;
     }
     for (b = 0; b < 6; b++) {
-        if (value & (1 << b)) {
-            QsSetFlag(GF_REGION_ALIVE_BIT(poolIndex, b));
-        } else {
-            QsClearFlag(GF_REGION_ALIVE_BIT(poolIndex, b));
-        }
+        QuickStartSlotBitWrite(poolIndex, QUICKSTART_EXT_ALIVE_OFF + b, GF_REGION_ALIVE_BIT(poolIndex, b),
+                               (value & (1 << b)) != 0);
     }
 }
 
@@ -4607,7 +4746,7 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
 typedef struct {
     u8 area;
     u8 room;
-    u8 regions;   // bitmask of QS_RING_*
+    u16 regions;  // bitmask of QS_RING_* (u16: ten rings outgrew a byte)
     u16 sealedBy; // the key whose own gate seals this room, 0 if none
 } QuickStartRoomOwner;
 
@@ -4703,6 +4842,15 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     // (TRIL ring -> dig cave -> this pool).
     { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
       (1 << QS_RING_TRIL), 0 },
+    // The western spur's pockets: the heart-piece cave and the north
+    // through-cave hang off Castor Wilds, the Wind Ruins cave off the
+    // Ruins' entrance strip.
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE,
+      (1 << QS_RING_CW), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH,
+      (1 << QS_RING_CW), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
+      (1 << QS_RING_WR), 0 },
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
       (1 << QS_RING_TRIL), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE,
@@ -4725,6 +4873,16 @@ static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
     }
     if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
         return QS_RING_RV;
+    }
+    if (area == AREA_CASTOR_WILDS && room == ROOM_CASTOR_WILDS_MAIN) {
+        return QS_RING_CW;
+    }
+    // Every Wind Ruins room is a ring member - the three big spaces are
+    // pool regions, the connectors (Beanstalk, Tektites, the ladder room,
+    // the fortress forecourt) are free-travel corridors between them, all
+    // stitched by the area's own scroll seams.
+    if (area == AREA_RUINS && room <= ROOM_RUINS_BELOW_FORTRESS_ENTRANCE) {
+        return QS_RING_WR;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -4779,7 +4937,7 @@ static u32 QuickStartCurrentRegionMask(void) {
 
 typedef struct {
     u16 item;
-    u8 regions; // bitmask of QS_RING_*
+    u16 regions; // bitmask of QS_RING_* (u16: ten rings outgrew a byte)
 } QuickStartKeyRegions;
 
 static const QuickStartKeyRegions sQuickStartKeyRegions[] = {
@@ -12826,6 +12984,15 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // ladder; the spot is the pool's centre. Appended at the table's end
     // so no existing site's flag-block index moves.
     { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 120, 72 },
+    // The western spur's two ? rooms, filling the site table to its 61-slot
+    // ceiling. Castor Wilds' heart-piece cave (15x10, 3 clear tiles, spot
+    // at the centre of its back ledge; the vanilla heart piece is a
+    // GROUND_ITEM the site sweep already clears) and the Wind Ruins' own
+    // cave off the entrance strip (15x10, 13 clear tiles). The Wilds'
+    // south cave and the Swiftblade dojo stay blocked for now - the flag
+    // block is full, same standing as the Royal Crypt.
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE, QUICKSTART_KINDS_SMALL, 120, 56 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS, QUICKSTART_KINDS_SMALL, 120, 88 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -13033,6 +13200,14 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     // is still the room the player walks into from the field, so it has to
     // be blessed here or the door into it gets cancelled.
     if (area == AREA_TREE_INTERIORS && room == ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN) {
+        return TRUE;
+    }
+    // Castor Wilds' north through-cave: two doors, both back out to the
+    // Wilds, linking the dry banks the swamp separates. A pure connector -
+    // no site row, no flags - but it needs blessing here or Castor Wilds'
+    // own internal traversal dies at both cave mouths. Same standing as
+    // North Hyrule Field's through-cave above.
+    if (area == AREA_CASTOR_CAVES && room == ROOM_CASTOR_CAVES_NORTH) {
         return TRUE;
     }
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
@@ -14780,8 +14955,15 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     // Every AREA_HYRULE_FIELD ring room is policed here now - the ranch
     // keeps its own function below only because its exception list (wallet
     // cave, ranch houses, Goron cave, the 2-door connector) is longer.
-    if (gRoomControls.area != AREA_HYRULE_FIELD ||
-        gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH ||
+    // The western spur (Castor Wilds, the Wind Ruins) is policed by the
+    // same rules: ring crossings and blessed pockets pass, and everything
+    // else - the fortress border, the Swiftblade dojo, the Minish caves,
+    // the unblessed Castor caves, the beanstalk - is cancelled. (The
+    // Darknut cave's CW-side door is among the cancelled: that room
+    // belongs to the 2-door connector draw, whose own machinery serves
+    // and returns it.)
+    if (!((gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) ||
+          gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS) ||
         !QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }

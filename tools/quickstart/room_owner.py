@@ -51,6 +51,13 @@ RING = {  # room name -> the QS_RING_* name it is
     'ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER': 'WW',
     'ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH': 'WW',
     'ROOM_ROYAL_VALLEY_MAIN': 'RV',
+    'ROOM_CASTOR_WILDS_MAIN': 'CW',
+    'ROOM_RUINS_ENTRANCE': 'WR',
+    'ROOM_RUINS_BEANSTALK': 'WR',
+    'ROOM_RUINS_TEKTITES': 'WR',
+    'ROOM_RUINS_LADDER_TO_TEKTITES': 'WR',
+    'ROOM_RUINS_FORTRESS_ENTRANCE': 'WR',
+    'ROOM_RUINS_BELOW_FORTRESS_ENTRANCE': 'WR',
 }
 # Two ? rooms are joined to their parent by a SCROLL SEAM, not by any kind
 # of transition: rooms inside one area share a pixel grid and the player
@@ -102,7 +109,8 @@ SEALED = {
 }
 
 ENUM = {'CG': 'QS_RING_CG', 'NHF': 'QS_RING_NHF', 'SHF': 'QS_RING_SHF', 'EH': 'QS_RING_EH',
-        'LLR': 'QS_RING_LLR', 'TRIL': 'QS_RING_TRIL', 'WW': 'QS_RING_WW', 'RV': 'QS_RING_RV'}
+        'LLR': 'QS_RING_LLR', 'TRIL': 'QS_RING_TRIL', 'WW': 'QS_RING_WW', 'RV': 'QS_RING_RV',
+        'CW': 'QS_RING_CW', 'WR': 'QS_RING_WR'}
 
 
 def doors_from(room_name):

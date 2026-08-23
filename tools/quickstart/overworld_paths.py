@@ -158,7 +158,7 @@ REGIONS = {
     'TRIL': dict(name='Trilby Highlands',     ports=['N', 'W', 'S', 'ENE', 'ESE']),
     'LLR':  dict(name='Lon Lon Ranch',        ports=['N', 'WNW', 'WSW', 'ESE', 'SWS']),
     'EH':   dict(name='Eastern Hills',        ports=['N', 'W', 'ENE', 'ESE', 'S']),
-    'WW':   dict(name='Western Wood',         ports=['N', 'E']),
+    'WW':   dict(name='Western Wood',         ports=['N', 'E', 'W']),
     # Not in the pool yet. Listed so the gates and the links that reach them
     # are already stated - adding one to the run is then a pool edit, not a
     # graph edit.
@@ -178,11 +178,17 @@ REGIONS = {
     'VF':   dict(name='Veil Falls',     ports=['S', 'WSW'], pooled=False),
     'LH':   dict(name='Lake Hylia',     ports=['W'],        pooled=False),
     'CREN': dict(name='Mt Crenel',      ports=['E'],        pooled=False),
-    # Castor Wilds: its SWS exit is open now. Vanilla gates it behind a
-    # Kinstone event, and that event is being removed (user, Aug 2026), so
-    # the exit costs nothing beyond the area's own gate. Its other ports are
-    # not surveyed and it has no link into the ring yet.
-    'CW':   dict(name='Castor Wilds',   ports=['SWS'],      pooled=False),
+    # Castor Wilds joined the pool (the western spur): in from Western
+    # Wood North's west border (its E port), out south-west to the Wind
+    # Ruins - that passage's sleeping-statue fusions are pre-fused at run
+    # start, so the SWS exit costs nothing beyond the area's own gate.
+    # In-region traversal E<->SWS crosses the swamp, which is what the
+    # region gate (cape-or-boots) already prices.
+    'CW':   dict(name='Castor Wilds',   ports=['E', 'SWS']),
+    # The Wind Ruins: one way in (the Castor Wilds border at its north end).
+    # Its six rooms are ring members; the entrance strip and the armos
+    # field below the fortress are pool regions, the rest are corridors.
+    'WR':   dict(name='Wind Ruins',     ports=['N']),
 }
 
 # Regions that cost an item to be inside AT ALL, on any route through them.
@@ -256,6 +262,13 @@ t('SHF', 'E', 'W', [SWORD])
 t('SHF', 'E', 'N')
 t('SHF', 'W', 'E', [SWORD])
 t('SHF', 'W', 'N', [SWORD])
+
+# --- Castor Wilds ----------------------------------------------------------
+# One crossing: the swamp between the north-east dry bank (E, the Western
+# Wood border) and the south-west passage to the Ruins. The region gate
+# (cape-or-boots) is the price; the crossing itself adds nothing.
+t('CW', 'E', 'SWS')
+t('CW', 'SWS', 'E')
 
 # --- Eastern Hills / Western Wood -----------------------------------------
 t('EH', 'N', 'W', [BOMBS])
@@ -369,6 +382,8 @@ link('TRIL', 'W', 'CREN', 'E', BORDER)
 link('TRIL', 'S', 'WW', 'N', SEAM)
 link('SHF', 'E', 'EH', 'W', SEAM)
 link('SHF', 'W', 'WW', 'E', SEAM)
+link('WW', 'W', 'CW', 'E', BORDER + ' (restored under QUICKSTART with the expansion)')
+link('CW', 'SWS', 'WR', 'N', BORDER)
 
 
 def derive_links():
