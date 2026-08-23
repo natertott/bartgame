@@ -2429,20 +2429,32 @@ void sub_08079DCC(void) {
 
 #ifdef QUICKSTART
 // The food charms (game.c). Bit 1 is the Croissant: walk half again as
-// fast. Applied here because the walk state re-derives speed every frame
-// before this runs, so a multiplicative bump cannot compound - the same
-// reason the slope modifier above it is safe.
+// fast. The boost is applied around the position integration only
+// (sub_0800857C reads speed and calls LinearMoveDirectionOLD) and then
+// RESTORED, so it can never compound. The first version bumped the field
+// in place, trusting "the walk state re-derives speed every frame" - but
+// the ROLL only re-derives on frames 0-3 of its animation cycle
+// (PlayerRollUpdate's switch on frame & 0xf) and calls this every frame,
+// so the bump multiplied 1.5x per frame, overflowed the Q8.8 s16, and
+// launched Link through walls and off screen. Boost-move-restore holds
+// for every player state, whether or not it re-derives.
 extern u32 QuickStartFoodMask(void);
 #define QUICKSTART_FOOD_WALK_SPEED 2
 #endif
 
 void UpdatePlayerMovement(void) {
+#ifdef QUICKSTART
+    s16 qsSavedSpeed = 0;
+    s32 qsBoosted = 0;
+#endif
     if ((gPlayerEntity.base.speed != 0) &&
         (gPlayerEntity.base.speed += gPlayerState.speed_modifier, gPlayerEntity.base.speed < 0x20)) {
         gPlayerEntity.base.speed = 0x20;
     }
 #ifdef QUICKSTART
     if ((QuickStartFoodMask() & QUICKSTART_FOOD_WALK_SPEED) && gPlayerEntity.base.speed > 0) {
+        qsSavedSpeed = gPlayerEntity.base.speed;
+        qsBoosted = 1;
         gPlayerEntity.base.speed += gPlayerEntity.base.speed >> 1;
     }
 #endif
@@ -2451,6 +2463,11 @@ void UpdatePlayerMovement(void) {
     }
     sub_0800857C(&gPlayerEntity.base);
     sub_0807A5B8(gPlayerEntity.base.direction);
+#ifdef QUICKSTART
+    if (qsBoosted) {
+        gPlayerEntity.base.speed = qsSavedSpeed;
+    }
+#endif
 }
 
 void sub_08079E58(s32 speed, u32 direction) {

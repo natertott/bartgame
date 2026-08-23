@@ -1364,6 +1364,24 @@ HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
 - **First run on a brand-new save is fixed** (nothing has happened yet to
   vary the seed). Accepted as fine; noted so nobody rediscovers it as a
   bug.
+- ~~Croissant charm launches Link through walls when rolling~~ **FIXED**
+  (user report, Aug 2026: "when the player rolls the sprite jumps forward
+  many frames, sometimes clipping the player through tiles and out of
+  frame"). The walk-speed charm bumped `gPlayerEntity.base.speed` in place
+  every frame inside UpdatePlayerMovement, trusting that the walk state
+  re-derives speed each frame first - but PlayerRollUpdate only re-derives
+  on frames 0-3 of its animation cycle and calls UpdatePlayerMovement
+  every frame, so during a roll the bump compounded 1.5x per frame,
+  overflowed the Q8.8 s16 speed, and the resulting hundreds-of-px steps
+  tunneled through collision. Now boost-move-restore: the 1.5x applies
+  around the position integration only and the field is restored after,
+  so it cannot compound in ANY player state. Verified live: the walk boost
+  still measures exactly 1.5x with no residue in the speed field, and
+  twelve consecutive integrations at roll speed leave it byte-identical
+  (the old code made that 130x and an overflow). Doctrine: **a per-frame
+  multiplicative buff must never persist into the field it scales** -
+  "some state re-derives this" is an alibi that holds exactly until the
+  one state that doesn't.
 
 ### The large-area slowdowns: reproduced, diagnosed, and FIXED (Aug 2026)
 
