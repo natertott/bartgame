@@ -1510,6 +1510,51 @@ any future roster row should clear; the old entrance-spot fps probe
 passed the broken build because it sampled rooms whose draw happened not
 to include a multiplier.
 
+### The Castor Wilds batch (Aug 2026, all shipped)
+
+Five user reports off the first Castor Wilds playthroughs, all fixed in
+one pass:
+
+- **The statue passage stayed blocked despite the pre-fused kinstones.**
+  The fused bits alone are not the passage: the statue NPC stamps the
+  bottom-left tiles (1,58)-(3,59) solid whenever `HIKYOU_00_SEKIZOU` is
+  unset (castorWildsStatue.c), and vanilla only sets that flag at the end
+  of the rock cutscene the three fusions trigger - which pre-fused bits
+  skip. Run start now sets the flag the cutscene would have
+  (`SetLocalFlagByBank(GetFlagBankOffset(AREA_CASTOR_WILDS), ...)`).
+  Verified: all six passage tiles read open, statues stand in their
+  stepped-aside pose, art intact.
+- **The Wind Tribe tower's front door rendered as a black box.** The old
+  fix stamped `TILE_TYPE_0` over the doorway - the painted-tile trap,
+  again (type 0 has no art in that tileset). The block was never ours to
+  carve: `sub_StateChange_WindTribeTower_Entrance` stamps SPECIAL_TILE_114
+  over the doorway whenever the `WARP_EVENT_END` story flag is unset. Run
+  start sets the flag; the room draws itself open. Verified: walked out
+  the front door to Cloud Tops in 60 frames, doorway art vanilla.
+  Doctrine, third strike and now law: **when a vanilla room hides or
+  shows tiles, find the flag its StateChange keys on - never repaint.**
+- **Nine unwired doors and holes are ? rooms now.** Castor Wilds' five
+  Minish holes (the Bow path with both its holes, three cracks), the
+  Scarblade dojo hole, Swiftblade I's grave dojo, the Minish water cave
+  off the south-east door, and the Wind Ruins entrance crack. The site
+  table was FULL at its 61-site flag ceiling, so these are the first
+  EXTENSION sites: site indices 61+ route their 13 bits through free
+  window runs (208+, 496+, 617+, 658+) plus the head of bank 11's retired
+  wave-counter range (QsCheckSiteFlag/QsSetSiteFlag; capacity 9, all
+  inside existing run wipes, flags tier green at 1487 claimed bits).
+  Spots surveyed per room with origin correction - DOJOS and MINISH_CAVES
+  share multi-room pixel grids, and a flood keyed on room-local arrival
+  coordinates reads walls there (the survey now floods from the player's
+  settled tile).
+- **Castor Wilds has kinstone fusers now** (user: none spawned there at
+  all). Five fusions, every payload inside the region: KINSTONE_56/57/58
+  are the hole-reveal fusions for the region's own Minish cracks - fusing
+  IS how those new ? rooms open - plus KINSTONE_40 (west-edge pocket) and
+  KINSTONE_44 (the Scarblade hole, whose world event also pays the Fast
+  Spin scroll). All shapes 16-18, pieces the droptable mints. Nine
+  scatter spots drawn from the region's verified enemy-offset grid.
+  Verified: five fusers stand on scatter spots at region entry.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

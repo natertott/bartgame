@@ -216,11 +216,69 @@ static void QsWriteField(u32 base, s32 bits, s32 value) {
 // fountain re-rolled its contents on every single entry.
 #define QUICKSTART_SITE_FLAG_ORIGIN 1
 
+// --- The site block's EXTENSION (sites 61 and up) --------------------------
+//
+// The raw block is full: 61 sites * 13 bits ends 7 bits short of the
+// QUICKSTART window's own origin, and the Castor Wilds round wanted nine
+// more rooms. Extension sites' bits are ROUTED into free runs earlier
+// reworks left behind - four in the QUICKSTART window (the retired 2-door
+// third-kind spill at 208+, the moved food block's old home at 496+, the
+// run after the F7 carrier bits at 617+, and the retired shop-door/price
+// bits at 658+) plus the head of bank 11's retired wave-counter range.
+// Every borrowed run sits inside an existing run-start wipe (window
+// 202-703, bank-11 43-155), so extension sites reset per run with no new
+// clear loop. The defines exist for the flags checker's ledger; the
+// router below them is what the accessors actually run.
+#define GF_SITE_EXT_A_BIT(b) (208 + (b)) // b = 0..20
+#define GF_SITE_EXT_B_BIT(b) (496 + (b)) // b = 0..12
+#define GF_SITE_EXT_C_BIT(b) (617 + (b)) // b = 0..38
+#define GF_SITE_EXT_D_BIT(b) (658 + (b)) // b = 0..31
+#define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..11, FLAG_BANK_11
+// 61 * 13, spelled as a number because the BITS define lives further down
+// with the site table; the assertion beside it keeps this honest.
+#define QUICKSTART_SITE_RAW_BITS 793
+
+static s32 QuickStartSiteExtTarget(s32 e, s32* isBank11) {
+    *isBank11 = 0;
+    if (e < 21) {
+        return GF_SITE_EXT_A_BIT(e);
+    }
+    if (e < 34) {
+        return GF_SITE_EXT_B_BIT(e - 21);
+    }
+    if (e < 73) {
+        return GF_SITE_EXT_C_BIT(e - 34);
+    }
+    if (e < 105) {
+        return GF_SITE_EXT_D_BIT(e - 73);
+    }
+    *isBank11 = 1;
+    return GF_SITE_EXT11_BIT(e - 105);
+}
+
 static bool32 QsCheckSiteFlag(u32 flag) {
+    if (flag >= QUICKSTART_SITE_RAW_BITS) {
+        s32 isBank11;
+        s32 t = QuickStartSiteExtTarget((s32)flag - QUICKSTART_SITE_RAW_BITS, &isBank11);
+        if (isBank11) {
+            return CheckLocalFlagByBank(FLAG_BANK_11, t);
+        }
+        return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + t);
+    }
     return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
 static void QsSetSiteFlag(u32 flag) {
+    if (flag >= QUICKSTART_SITE_RAW_BITS) {
+        s32 isBank11;
+        s32 t = QuickStartSiteExtTarget((s32)flag - QUICKSTART_SITE_RAW_BITS, &isBank11);
+        if (isBank11) {
+            SetLocalFlagByBank(FLAG_BANK_11, t);
+        } else {
+            SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + t);
+        }
+        return;
+    }
     SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
@@ -955,6 +1013,24 @@ static void GameTask_Transition(void) {
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_LEFT);
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_MIDDLE);
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_RIGHT);
+    // The fused bits alone are NOT the passage (user report: the path to
+    // the Ruins stayed blocked). The passage tiles at (1,58)-(3,59) are
+    // stamped solid by the statue NPC whenever HIKYOU_00_SEKIZOU is unset
+    // (castorWildsStatue.c), and vanilla only sets that flag at the end of
+    // the rock cutscene the three fusions trigger - a cutscene the
+    // pre-fused bits skip. Set the flag the cutscene would have set.
+    SetLocalFlagByBank(GetFlagBankOffset(AREA_CASTOR_WILDS), HIKYOU_00_SEKIZOU);
+    // The hub tower entrance's inner doorway. Vanilla stamps SPECIAL_TILE_114
+    // over it whenever WARP_EVENT_END is unset
+    // (sub_StateChange_WindTribeTower_Entrance, roomInit.c) - the story
+    // flag for the wind tribe's warp questline this mode never plays. With
+    // the flag set the stamp never happens and the doorway is simply open,
+    // art intact. This replaces the old SetTileType(TILE_TYPE_0) sweep in
+    // QuickStartClearHubRoom, which repainted the columns as a black box -
+    // the same painted-tile trap as the boulder-in-hole sprites (user
+    // report). WARP_EVENT_END's only other consumers are Wind Tribe NPC
+    // dialogue variants, and the hub sweep deletes those NPCs anyway.
+    SetGlobalFlag(WARP_EVENT_END);
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -1737,18 +1813,30 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // window, in the 586 bits the retired GF_DOOR_* entrances used to squat on,
 // so it can grow without shoving anything else along in front of it.
 //
-// Ceiling is QUICKSTART_CONTENT_SITE_MAX = 61 sites (61 * 13 = 793 bits,
-// raw 1..793), short of raw 801 where the QUICKSTART window itself begins. Adding a site is now one table row and nothing else - no constant
-// below it moves, because there is nothing below it. The compile-time
-// assertion under the count is what makes that promise enforceable: blow
-// past 61 and the build stops instead of quietly aliasing the window.
+// Ceiling of the RAW block is QUICKSTART_CONTENT_SITE_MAX = 61 sites
+// (61 * 13 = 793 bits, raw 1..793), short of raw 801 where the QUICKSTART
+// window itself begins. Sites past 61 are EXTENSION sites: their 13 bits
+// route through QsCheckSiteFlag/QsSetSiteFlag into the borrowed free runs
+// declared beside those accessors (GF_SITE_EXT_*), with room for exactly
+// QUICKSTART_CONTENT_SITE_EXT_MAX of them. Adding a site is still one
+// table row; blow past the combined ceiling and the build stops instead
+// of quietly aliasing something.
 //
-// They also have to be cleared per run explicitly - see the site-block
-// clear in GameTask_Transition, and its comment on why the bank-wide wipe
-// there does not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 61
+// The raw block is cleared per run explicitly - see the site-block clear
+// in GameTask_Transition, and its comment on why the bank-wide wipe there
+// does not reach the top of this block on its own. The extension bits
+// need no clear of their own: every borrowed run sits inside the window
+// wipe (202-703) or the bank-11 wipe (43-155).
+#define QUICKSTART_CONTENT_SITE_COUNT 70
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
+#define QUICKSTART_CONTENT_SITE_EXT_MAX 9
+// The RAW_BITS number spelled beside the accessors must be the raw
+// ceiling's exact size, or the router fires at the wrong boundary.
+typedef char QuickStartSiteRawBitsMatch[(QUICKSTART_SITE_RAW_BITS ==
+                                         QUICKSTART_CONTENT_SITE_MAX * QUICKSTART_CONTENT_SITE_BITS)
+                                            ? 1
+                                            : -1];
 #define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
 #define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
 #define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
@@ -1757,7 +1845,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // Build breaks here if the site table outgrows the space between raw 0 and
 // the start of the QUICKSTART window. C89 has no static_assert; a negative
 // array dimension is the portable stand-in agbcc accepts.
-typedef char QuickStartContentSiteBlockFits[(QUICKSTART_CONTENT_SITE_COUNT <= QUICKSTART_CONTENT_SITE_MAX) ? 1 : -1];
+typedef char QuickStartContentSiteBlockFits[(QUICKSTART_CONTENT_SITE_COUNT <=
+                                             QUICKSTART_CONTENT_SITE_MAX + QUICKSTART_CONTENT_SITE_EXT_MAX)
+                                                ? 1
+                                                : -1];
 typedef char QuickStartContentSiteBlockClearsWindow[(QUICKSTART_SITE_FLAG_ORIGIN +
                                                          QUICKSTART_CONTENT_SITE_MAX * QUICKSTART_CONTENT_SITE_BITS <=
                                                      QUICKSTART_FLAG_ORIGIN + 101)
@@ -5019,6 +5110,28 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH,
       (1 << QS_RING_CW), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
+      (1 << QS_RING_WR), 0 },
+    // The Castor Wilds round's nine extension pockets: the Wilds' Minish
+    // cracks, the Bow minish path, both dojo rooms and the Minish water
+    // cave hang off Castor Wilds' own doors and holes; the last crack
+    // hangs off the Wind Ruins' entrance strip.
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE,
+      (1 << QS_RING_CW), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I,
+      (1 << QS_RING_CW), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1,
+      (1 << QS_RING_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
       (1 << QS_RING_WR), 0 },
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
       (1 << QS_RING_TRIL), 0 },
@@ -13372,11 +13485,39 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // ceiling. Castor Wilds' heart-piece cave (15x10, 3 clear tiles, spot
     // at the centre of its back ledge; the vanilla heart piece is a
     // GROUND_ITEM the site sweep already clears) and the Wind Ruins' own
-    // cave off the entrance strip (15x10, 13 clear tiles). The Wilds'
-    // south cave and the Swiftblade dojo stay blocked for now - the flag
-    // block is full, same standing as the Royal Crypt.
+    // cave off the entrance strip (15x10, 13 clear tiles). (The Swiftblade
+    // dojo, once "blocked for now - the flag block is full", is wired via
+    // the extension block below.)
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE, QUICKSTART_KINDS_SMALL, 120, 56 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS, QUICKSTART_KINDS_SMALL, 120, 88 },
+    // --- EXTENSION sites (61+), the Castor Wilds round -------------------
+    // The first rows past the raw flag block's ceiling; their per-run bits
+    // route through the GF_SITE_EXT_* runs (see QsCheckSiteFlag). All nine
+    // are real vanilla doors/holes off Castor Wilds and the Wind Ruins
+    // that containment had been cancelling. Spots are surveyed: flooded
+    // from each room's own arrival tile (origin-corrected - DOJOS and
+    // MINISH_CAVES share multi-room pixel grids), full-3x3 or plus-shape
+    // clearance confirmed, and the pick taken from the run the arrival
+    // opens into. The three CW cracks and the Bow minish path sit behind
+    // KINSTONE_56/57/58's hole-reveal fusions, which the region's new
+    // fuser scatter offers - fusing IS how these doors open.
+    //
+    // The Bow path (15x50) is TWO disconnected 33-tile corridors, one per
+    // hole; the site's spot lives in the north hole's corridor, and the
+    // south hole stays a scenic second entrance.
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW, QUICKSTART_KINDS_SMALL, 152, 24 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW, QUICKSTART_KINDS_SMALL, 136, 104 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH, QUICKSTART_KINDS_SMALL, 88, 88 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST, QUICKSTART_KINDS_SMALL, 88, 88 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE, QUICKSTART_KINDS_SMALL, 88, 88 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE, QUICKSTART_KINDS_SMALL, 168, 72 },
+    // Swiftblade I's grave dojo (150 open tiles, 104 with full 3x3) and
+    // the Scarblade anteroom (86/52) - real rooms with real floor space.
+    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, QUICKSTART_KINDS_SMALL, 184, 120 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE, QUICKSTART_KINDS_SMALL, 104, 40 },
+    // The Minish water cave off the Wilds' south-east door (240 open
+    // tiles).
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, QUICKSTART_KINDS_SMALL, 72, 424 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -15880,9 +16021,8 @@ static void QuickStartFixupRoomFixtures(void) {
 
 // Is this one of the hub's rooms? The tower is one area (four floors) and
 // its roof is another; both are ours end to end.
-// Room flag for the one-shot door unblock below. Well clear of the low
-// numbers vanilla room logic uses (see QUICKSTART_ROOM_FLAG_ORIGIN).
-#define QUICKSTART_HUB_DOOR_OPENED_FLAG 55
+// (Room flag 55, the old one-shot door unblock's latch, is free again -
+// the doorway fix moved to the WARP_EVENT_END story flag at run start.)
 
 static bool32 QuickStartIsHubRoom(void) {
     return gRoomControls.area == AREA_WIND_TRIBE_TOWER || gRoomControls.area == AREA_WIND_TRIBE_TOWER_ROOF;
@@ -15934,28 +16074,16 @@ static void QuickStartClearHubRoom(void) {
             DeleteEntity(ent);
         }
     }
-    // The front door needs more than the NPC standing in it removed.
-    //
-    // Measured: the Entrance room's doorway tiles (columns 6-8, row 18) read
-    // 0x5f - walkable, the same path-tile value Castle Garden uses - but the
-    // two rows BELOW them, 19 and 20, read 0x0f, fully solid. So the player
-    // walks into the doorway, stops at y=302, and the south border transition
-    // to Cloud Tops (which fires on crossing the room's edge at y=336) can
-    // never trigger. The Wind Tribe's ARCHWAY object sits at (120,328), on
-    // the far side of that wall.
-    //
-    // This is the same shape as the Castle Garden guard blocks: vanilla walls
-    // an early-game player out of late-game content with solid tiles, keyed
-    // on a plot flag this mode never sets. Clearing the collision opens it.
-    // Only the three doorway columns, so the rest of the south wall stays.
-    if (gRoomControls.area == AREA_WIND_TRIBE_TOWER && gRoomControls.room == ROOM_WIND_TRIBE_TOWER_ENTRANCE &&
-        !QsCheckRoomFlag(QUICKSTART_HUB_DOOR_OPENED_FLAG)) {
-        QsSetRoomFlag(QUICKSTART_HUB_DOOR_OPENED_FLAG);
-        for (i = 6; i <= 8; i++) {
-            SetTileType(TILE_TYPE_0, TILE_POS(i, 19), LAYER_BOTTOM);
-            SetTileType(TILE_TYPE_0, TILE_POS(i, 20), LAYER_BOTTOM);
-        }
-    }
+    // RETIRED: the SetTileType(TILE_TYPE_0) doorway sweep that used to run
+    // here. It cleared the collision but repainted the front-door columns
+    // as a black box (user report) - the painted-tile trap, again: type 0
+    // has no art in this tileset. The block was never "solid tiles this
+    // mode must carve": sub_StateChange_WindTribeTower_Entrance
+    // (roomInit.c) stamps SPECIAL_TILE_114 over the doorway whenever the
+    // WARP_EVENT_END story flag is unset. That flag is now set at run
+    // start (GameTask_Transition, next to the statue pre-fuse), so the
+    // stamp never happens and the doorway draws itself open with its own
+    // art.
 }
 
 // --- The inn (Floor 2) ----------------------------------------------------
@@ -17036,6 +17164,20 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_3A },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_48 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_4C },
+    // Castor Wilds: five fusions, every one with a vanilla payload inside
+    // the region itself (user report: no kinstone sprites spawned here at
+    // all). KINSTONE_56/57/58 are the hole-reveal fusions for the Wilds'
+    // own Minish cracks - the very rooms the extension sites wire as
+    // ? rooms, so fusing IS how those doors open. KINSTONE_40 uncovers the
+    // west-edge pocket and KINSTONE_44 the Scarblade dojo hole (its world
+    // event also pays the Fast Spin scroll). Shapes 16/17/18 - all pieces
+    // the enemy droptable mints (18 is the single most-served shape in the
+    // existing scatter).
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_40 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_44 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_56 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_57 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_58 },
 };
 
 // --- F10: the COMPASS's pause-map feeds (called from pauseMenuScreen6.c) --
@@ -17126,6 +17268,13 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH,
       { { 248, 360 }, { 264, 504 }, { 280, 408 }, { 376, 72 }, { 392, 328 },
         { 56, 248 }, { 296, 536 }, { 344, 136 }, { 376, 168 } } },
+    // Castor Wilds: nine spots drawn from the region's own verified
+    // enemy-offset grid on the north-east dry bank (every entry there is
+    // pre-verified walkable and gated-zone filtered), keeping clear of the
+    // reward spot (920,216) and the arrival at (984,264).
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN,
+      { { 728, 88 }, { 728, 232 }, { 760, 152 }, { 792, 88 }, { 792, 184 },
+        { 824, 248 }, { 856, 184 }, { 888, 248 }, { 952, 360 } } },
 };
 
 // One 4-bit roll for the whole run, rolled lazily the first time a fuser
