@@ -107,11 +107,33 @@ def qs_set(c, n, v=1):
 # live in the +700 window - they are raw FLAG_BANK_12 offsets, based at 1
 # (offset 0 is unwritable; SetLocalFlagByBank drops it). See the bank map at
 # the top of src/game.c.
+#
+# EXTENSION sites (index 61+) route their bits elsewhere - this mirrors the
+# game's own QsSetSiteFlag router (QuickStartSiteExtTarget, src/game.c)
+# byte for byte, because a harness that writes the raw location for an
+# extension bit is poking window flags that belong to something else.
 SITE_ORIGIN = 1
+SITE_RAW_BITS = 793  # 61 sites * 13 bits
+FLAG_BANK_11 = 0x9C0
+
+
+def _site_bit(n):
+    if n < SITE_RAW_BITS:
+        return FLAG_BANK_12 + SITE_ORIGIN + n
+    e = n - SITE_RAW_BITS
+    if e < 21:
+        return FLAG_BANK_12 + 700 + 208 + e
+    if e < 34:
+        return FLAG_BANK_12 + 700 + 496 + (e - 21)
+    if e < 73:
+        return FLAG_BANK_12 + 700 + 617 + (e - 34)
+    if e < 105:
+        return FLAG_BANK_12 + 700 + 658 + (e - 73)
+    return FLAG_BANK_11 + 143 + (e - 105)
 
 
 def qs_site_set(c, n, v=1):
-    _flag_set(c, FLAG_BANK_12 + SITE_ORIGIN + n, v)
+    _flag_set(c, _site_bit(n), v)
 
 
 def _flag_set(c, b, v):
