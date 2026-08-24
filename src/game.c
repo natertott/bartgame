@@ -399,6 +399,8 @@ static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
 static s32 QuickStartRoomEnemyCeiling(s32 roomSquares);
+static bool32 QuickStartIsInnRoom(void);
+static void QuickStartInnChestMonitor(void);
 static bool32 QuickStartWinCarrierMet(void);
 static void QuickStartWinBossWatcher(void);
 static bool32 QuickStartQuestSwapActive(void);
@@ -1031,6 +1033,18 @@ static void GameTask_Transition(void) {
     // report). WARP_EVENT_END's only other consumers are Wind Tribe NPC
     // dialogue variants, and the hub sweep deletes those NPCs anyway.
     SetGlobalFlag(WARP_EVENT_END);
+    // Seal the inn's three reward chests for the new run. Their local
+    // flags (8/9/10 in the tower's bank) are what SpecialChest reads to
+    // delete itself, so sealing here means the player's FIRST visit
+    // already shows no free prizes - the monitor alone was too late,
+    // because a chest entity only consults the flag when it initialises.
+    // Paying the innkeeper clears the tier's flag and deals its chest.
+    {
+        s32 chest;
+        for (chest = 0; chest < 3; chest++) {
+            SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 8 + chest);
+        }
+    }
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
     // skip the whole intro that would normally clear it. PL_NO_CAP is meant
@@ -3552,14 +3566,39 @@ static const s16 sQuickStartRoyalValleyEnemyOffsets[][2] = {
 // North border lands in (flood: 244 tiles, tx 40-61 ty 4-25 of a 63x60
 // room; the swamp splits everything west of it into other components).
 // 28 spread 3x3-clear spots from the survey (scratchpad cwwr_survey).
+// Castor Wilds is a chain of ISLANDS in swamp sludge, and the first pass
+// only ever surveyed the north-east dry bank the border lands on - 28
+// spots crammed into one corner of a 63x60 room (user report: everything
+// spawns in a tiny patch top-right). Re-surveyed whole: 1933 open tiles in
+// 33 components, of which two carry the map - the NORTH landmass the
+// arrival stands on (644 tiles) and the SOUTH one (1078). Nothing joins
+// them on foot; the sludge between is crossed by dashing, which is why the
+// route model prices this room at Pegasus Boots or Roc's Cape.
+//
+// So the grid is 72 spots (the spawner's own index-array ceiling, so none
+// are truncated): 46 spread across the arrival's own landmass, ungated,
+// and 26 across the south, all at y >= 496 so a single gated-zone box
+// covers them (sQuickStartGatedZones, boots-or-cape). Every spot passed
+// the shipped QuickStartTileHasElbowRoom in the running game and sits at
+// least 3.5 tiles from its neighbours.
 static const s16 sQuickStartCastorWildsEnemyOffsets[][2] = {
-    { 728, 88 },  { 728, 136 }, { 728, 184 }, { 728, 232 }, { 760, 104 }, { 760, 152 },
-    { 760, 200 }, { 760, 248 }, { 792, 88 },  { 792, 136 }, { 792, 184 }, { 792, 232 },
-    { 824, 104 }, { 824, 152 }, { 824, 200 }, { 824, 248 }, { 856, 184 }, { 856, 232 },
-    { 872, 392 }, { 888, 200 }, { 888, 248 }, { 920, 216 }, { 920, 392 }, { 936, 248 },
-    { 952, 280 }, { 952, 360 }, { 968, 232 }, { 968, 392 },
+    // --- the arrival's landmass (no gear needed) ---
+    { 40, 232 },  { 88, 168 },  { 88, 264 },  { 104, 88 },  { 120, 216 }, { 136, 136 },
+    { 136, 296 }, { 184, 104 }, { 184, 168 }, { 184, 232 }, { 200, 296 }, { 248, 200 },
+    { 248, 264 }, { 296, 296 }, { 312, 200 }, { 344, 248 }, { 376, 200 }, { 408, 136 },
+    { 408, 248 }, { 440, 184 }, { 472, 120 }, { 472, 232 }, { 504, 280 }, { 536, 328 },
+    { 584, 296 }, { 616, 344 }, { 632, 424 }, { 664, 376 }, { 680, 280 }, { 696, 424 },
+    { 712, 88 },  { 728, 152 }, { 728, 216 }, { 760, 440 }, { 776, 88 },  { 776, 184 },
+    { 776, 248 }, { 808, 136 }, { 824, 216 }, { 840, 88 },  { 872, 184 }, { 872, 248 },
+    { 872, 392 }, { 920, 216 }, { 936, 376 }, { 952, 264 },
+    // --- the southern landmass (gated: boots or cape) ---
+    { 40, 520 },  { 40, 616 },  { 40, 920 },  { 104, 568 }, { 120, 648 }, { 120, 728 },
+    { 120, 904 }, { 184, 600 }, { 200, 680 }, { 200, 920 }, { 232, 760 }, { 248, 840 },
+    { 280, 584 }, { 280, 680 }, { 280, 920 }, { 312, 504 }, { 312, 792 }, { 344, 872 },
+    { 392, 808 }, { 408, 520 }, { 408, 920 }, { 424, 600 }, { 456, 856 }, { 488, 520 },
+    { 504, 600 }, { 504, 920 },
 };
-#define QUICKSTART_CASTORWILDS_ROOM_SQUARES 244
+#define QUICKSTART_CASTORWILDS_ROOM_SQUARES 483
 
 // Wind Ruins, entrance strip - the south chunk the Castor Wilds border
 // lands in (77 tiles, ty 22-31 of the 15x33 room; the armos alley above
@@ -7776,6 +7815,12 @@ typedef struct {
     s16 minY;
     s16 maxY;
     u16 requiredItem;
+    // Optional, trailing (C zero-fills what a short initializer omits, so
+    // every existing row keeps its meaning): a SECOND item that opens the
+    // same zone. Castor Wilds' sludge is crossed by dashing, and either the
+    // Pegasus Boots or Roc's Cape does it - a single-item gate would lock
+    // half the region behind whichever one the run happened not to draw.
+    u16 altItem;
 } QuickStartGatedZone;
 
 static const QuickStartGatedZone sQuickStartGatedZones[] = {
@@ -7813,6 +7858,16 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // enemy into a stranded player.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 596, 683, 591, 782, ITEM_ROCS_CAPE },
 
+    // --- Castor Wilds -----------------------------------------------
+    // The southern landmass, across the swamp sludge. Reachable only by
+    // dashing - Pegasus Boots or Roc's Cape, either one - which is exactly
+    // what the route model already prices this region at. The box is the
+    // whole south half (y >= 480) and the region's own grid keeps its
+    // southern spots at y >= 496, so a run without either item simply
+    // fights on the northern landmass and nothing spawns where it cannot
+    // be reached.
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, 1007, 480, 1023, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
+
     // --- Royal Valley ---------------------------------------------------
     // Everything north of the graveyard gate, y 64-351 - a 366-tile
     // component of its own, and the only way in is the gate the Graveyard
@@ -7843,7 +7898,10 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
         if (zone->requiredItem == 0) {
             return FALSE;
         }
-        return GetInventoryValue(zone->requiredItem) != 0;
+        if (GetInventoryValue(zone->requiredItem) != 0) {
+            return TRUE;
+        }
+        return zone->altItem != 0 && GetInventoryValue(zone->altItem) != 0;
     }
     return TRUE;
 }
@@ -11618,6 +11676,14 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
 #define QUICKSTART_CHEST_REDRAWN 0x51
 static void QuickStartRestockSmallChests(void) {
     s32 i;
+    // The hub inn's three chests are the innkeeper's, not the drop
+    // economy's: they are dealt one at a time by the bed the player
+    // actually pays for (QuickStartInnChestMonitor). Restocking them here
+    // is what let the player walk upstairs and open all three for free -
+    // the user's report that the inn chests come pre-filled.
+    if (QuickStartIsInnRoom()) {
+        return;
+    }
     for (i = 0; i < 8; i++) {
         TileEntity* t = &gSmallChests[i];
         if (t->tilePos == 0 || t->_7 == QUICKSTART_CHEST_REDRAWN) {
@@ -16118,6 +16184,119 @@ extern Script script_QuickStartInnkeeper;
 // taken. Split into three entry points rather than one taking an argument
 // because a script Call passes no arguments - the same reason the hunt
 // quest has three of its own.
+// --- The inn's three reward chests ---------------------------------------
+//
+// One chest per bed tier, and a chest is only ever filled by PAYING for
+// that bed: 50 rupees deals the top chest a COMMON, 200 the middle an
+// UNCOMMON, 500 the bottom a RARE. Before payment each chest is sealed by
+// setting its own vanilla local flag, which is the flag SpecialChest reads
+// to delete itself (specialChest.c) - so an unpaid chest is simply not
+// there, rather than there-and-empty.
+//
+// Beds are repeatable and so are the chests: opening one lets vanilla set
+// the flag again, the armed bit clears on the next monitor pass, and the
+// next payment deals a fresh prize into the same chest. The chests are
+// registered in gSmallChests by the room's own tile-entity list, so this
+// touches their rows rather than inventing any.
+#define QUICKSTART_INN_CHESTS 3
+// FLAG_BANK_11 121-123, in the retired wave-counter run and inside the
+// bank-11 run wipe (43-155), so a new run starts with every chest sealed.
+#define GF_INN_CHEST_ARMED(i) (121 + (i)) // i = 0..2 -> 121-123
+
+static bool32 QuickStartInnChestArmed(s32 tier) {
+    return CheckLocalFlagByBank(FLAG_BANK_11, GF_INN_CHEST_ARMED(tier)) != 0;
+}
+
+static void QuickStartInnChestSetArmed(s32 tier, bool32 on) {
+    if (on) {
+        SetLocalFlagByBank(FLAG_BANK_11, GF_INN_CHEST_ARMED(tier));
+    } else {
+        ClearLocalFlagByBank(FLAG_BANK_11, GF_INN_CHEST_ARMED(tier));
+    }
+}
+
+static bool32 QuickStartIsInnRoom(void) {
+    return gRoomControls.area == AREA_WIND_TRIBE_TOWER && gRoomControls.room == ROOM_WIND_TRIBE_TOWER_FLOOR_2;
+}
+
+// The inn's chest rows, ordered top to bottom by tile row so tier 0 is
+// always the same physical chest across visits (gSmallChests' own order is
+// whatever the room list happened to register).
+static TileEntity* QuickStartInnChest(s32 tier) {
+    s32 i, j;
+    TileEntity* order[QUICKSTART_INN_CHESTS];
+    s32 n = 0;
+    for (i = 0; i < 8 && n < QUICKSTART_INN_CHESTS; i++) {
+        if (gSmallChests[i].tilePos != 0) {
+            order[n++] = &gSmallChests[i];
+        }
+    }
+    if (tier >= n) {
+        return NULL;
+    }
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (order[j]->tilePos < order[i]->tilePos) {
+                TileEntity* tmp = order[i];
+                order[i] = order[j];
+                order[j] = tmp;
+            }
+        }
+    }
+    return order[tier];
+}
+
+// Fills the tier's chest and puts it back in the room. Called from the
+// rest branches, i.e. only after the rupees have actually been taken.
+static void QuickStartInnDealChest(s32 tier) {
+    TileEntity* t;
+    Entity* chest;
+    if (!QuickStartIsInnRoom()) {
+        return;
+    }
+    t = QuickStartInnChest(tier);
+    if (t == NULL) {
+        return;
+    }
+    t->_2 = (u8)QuickStartDrawAtTier((s32)Random() & 0x3f, QS_CAT_DROP, tier);
+    t->_3 = 0;
+    t->_7 = QUICKSTART_CHEST_REDRAWN;
+    ClearLocalFlag(t->localFlag);
+    QuickStartInnChestSetArmed(tier, TRUE);
+    chest = CreateObject(SPECIAL_CHEST, t->localFlag, 0);
+    if (chest != NULL) {
+        chest->x.HALF.HI = gRoomControls.origin_x + ((t->tilePos & 0x3f) << 4) + 8;
+        chest->y.HALF.HI = gRoomControls.origin_y + ((t->tilePos >> 6) << 4) + 8;
+        chest->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(chest);
+    }
+}
+
+// Every frame in the inn: seal whatever has not been paid for, and retire
+// the armed bit once a dealt chest has been opened (vanilla sets the flag
+// itself on the way out), so the next purchase can re-arm it.
+static void QuickStartInnChestMonitor(void) {
+    s32 tier;
+    if (!QuickStartIsInnRoom() || !QuickStartRoomSettled()) {
+        return;
+    }
+    for (tier = 0; tier < QUICKSTART_INN_CHESTS; tier++) {
+        TileEntity* t = QuickStartInnChest(tier);
+        if (t == NULL) {
+            continue;
+        }
+        if (QuickStartInnChestArmed(tier)) {
+            if (CheckLocalFlag(t->localFlag)) {
+                QuickStartInnChestSetArmed(tier, FALSE);
+            }
+            continue;
+        }
+        if (!CheckLocalFlag(t->localFlag)) {
+            SetLocalFlag(t->localFlag);
+        }
+    }
+}
+
 static void QuickStartInnRest(s32 heal) {
     ModHealth(heal);
     // The sleep read: the same proven fade the win/reset path uses.
@@ -16131,6 +16310,7 @@ void QuickStartInnRestSmall(Entity* entity, ScriptExecutionContext* context) {
         heal = 4;
     }
     QuickStartInnRest(heal);
+    QuickStartInnDealChest(0);
 }
 
 void QuickStartInnRestRegular(Entity* entity, ScriptExecutionContext* context) {
@@ -16139,10 +16319,12 @@ void QuickStartInnRestRegular(Entity* entity, ScriptExecutionContext* context) {
         heal = 8;
     }
     QuickStartInnRest(heal);
+    QuickStartInnDealChest(1);
 }
 
 void QuickStartInnRestLarge(Entity* entity, ScriptExecutionContext* context) {
     QuickStartInnRest(gSave.stats.maxHealth);
+    QuickStartInnDealChest(2);
 }
 
 // The keeper is a ZELDA-kind NPC, not the EMMA sprite, and that is a
@@ -16916,6 +17098,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartClearHubRoom();
     QuickStartSparkleRewards();
     QuickStartSpawnInnkeeperOnce();
+    QuickStartInnChestMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();

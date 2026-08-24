@@ -92,6 +92,7 @@ FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
 FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
     ('GF_SITE_EXT11_', 11, 0),  # extension-site bits routed into bank 11
+    ('GF_INN_CHEST_ARMED', 11, 0),  # the inn's per-tier chest arm bits
     ('GF_SEED_PINNED', 11, 0),
     ('GF_QUEST_', 11, 0),
     ('QUICKSTART_CHARM_BIT', 11, 0),
