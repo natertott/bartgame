@@ -1555,6 +1555,46 @@ one pass:
   scatter spots drawn from the region's verified enemy-offset grid.
   Verified: five fusers stand on scatter spots at region entry.
 
+### The Castor Wilds / Wind Ruins second batch (Aug 2026, shipped)
+
+- **Castor Wilds spawned everything in one corner.** The first survey took
+  the north-east dry bank for the whole region: 28 spots in a corner of a
+  63x60 room, `roomSquares` 244. Re-flooded whole, the Wilds are 1933 open
+  tiles in 33 components - two of them the map: the arrival's northern
+  landmass (644 tiles) and the southern one (1078), with nothing joining
+  them on foot. The grid is **72 spots** now (the spawner's own index
+  ceiling, so nothing is truncated): 46 across the north, 26 across the
+  south, `roomSquares` 483. Measured with gear: waves span local y 71-942
+  across both islands; without, they stay north.
+- **The sludge crossing is boots OR cape.** `QuickStartGatedZone` grew a
+  trailing `altItem`, so one zone can name two keys - the south landmass
+  is gated on Pegasus Boots or Roc's Cape rather than whichever one the run
+  happened to draw. (Trailing field, so every existing row is untouched.)
+- **The last two Castor cave doors are ? rooms**: the Darknut hall (the
+  user named it) and the south cave, surveyed room-local at 34 and 67
+  tiles. Extension capacity went 9 -> 11 sites by widening the bank-11
+  routing run and extending that bank's run-start wipe to 173 (174 is the
+  seed pin and stays).
+- **The Wind Ruins' sub-areas are populated.** Like Eastern Hills and the
+  Western Wood, the Ruins are one area cut into six seam-joined rooms, but
+  only two are pool regions and the pool is at its 16-row 4-bit ceiling.
+  So satellites: a small table of (area, room, offsets, squares) that
+  fills a seam neighbour once per visit off the same tiered group spawner,
+  with no reward, quest or wave state of its own - the hub roof's shape.
+  Beanstalk, Tektites, Ladder-to-Tektites and the Fortress approach all
+  deal 2-5 enemies now where they used to be empty.
+- **The inn's chests were free loot.** The blanket small-chest restock was
+  filling all three, so the player could walk upstairs and open them
+  without renting a bed. The restock skips the inn now; the chests are
+  sealed at run start through the same local flags `SpecialChest` reads to
+  delete itself; and paying deals exactly one - 50 rupees a COMMON, 200 an
+  UNCOMMON, 500 a RARE - re-arming on the next purchase since beds repeat.
+- **Still open from this batch**: `ROOM_DIG_CAVES_1` and `_2` (the
+  suspected dirt-filled caves) read zero open tiles on a cold warp, so
+  either they need their entrance's own load path or they are unused
+  rooms. They want a walked check from the overworld mouth before being
+  wired, exactly like the Trilby dig cave got.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

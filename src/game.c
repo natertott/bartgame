@@ -233,7 +233,8 @@ static void QsWriteField(u32 base, s32 bits, s32 value) {
 #define GF_SITE_EXT_B_BIT(b) (496 + (b)) // b = 0..12
 #define GF_SITE_EXT_C_BIT(b) (617 + (b)) // b = 0..38
 #define GF_SITE_EXT_D_BIT(b) (658 + (b)) // b = 0..31
-#define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..11, FLAG_BANK_11
+#define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..30, FLAG_BANK_11
+#define GF_SITE_EXT11B_BIT(b) (124 + (b)) // b = 0..17, FLAG_BANK_11
 // 61 * 13, spelled as a number because the BITS define lives further down
 // with the site table; the assertion beside it keeps this honest.
 #define QUICKSTART_SITE_RAW_BITS 793
@@ -253,7 +254,10 @@ static s32 QuickStartSiteExtTarget(s32 e, s32* isBank11) {
         return GF_SITE_EXT_D_BIT(e - 73);
     }
     *isBank11 = 1;
-    return GF_SITE_EXT11_BIT(e - 105);
+    if (e < 136) {
+        return GF_SITE_EXT11_BIT(e - 105);
+    }
+    return GF_SITE_EXT11B_BIT(e - 136);
 }
 
 static bool32 QsCheckSiteFlag(u32 flag) {
@@ -365,6 +369,7 @@ static void QuickStartSpawnRegionFusers(void);
 static void QuickStartTinglePayout(void);
 static void QuickStartMazeMonitor(void);
 static void QuickStartSacrificeMonitor(void);
+static void QuickStartSatelliteMonitor(void);
 static void QuickStartReloadRoomAfterFusion(void);
 static void QuickStartSpawnStarterChoice(void);
 static void QuickStartSpawnStarterChoiceOnce(void);
@@ -709,7 +714,7 @@ static void GameTask_Transition(void) {
         // Bits 143-155: the tail of the extension-slot state (pool slots
         // 12+, QuickStartExtSlotFlag) - per-run like the window blocks it
         // extends, so the sweep grew to cover it.
-        for (bit = 43; bit <= 155; bit++) {
+        for (bit = 43; bit <= 173; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
         // The hunt clock and the handicap snapshot. Clearing the ACTIVE bit
@@ -1841,10 +1846,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // does not reach the top of this block on its own. The extension bits
 // need no clear of their own: every borrowed run sits inside the window
 // wipe (202-703) or the bank-11 wipe (43-155).
-#define QUICKSTART_CONTENT_SITE_COUNT 70
+#define QUICKSTART_CONTENT_SITE_COUNT 72
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
-#define QUICKSTART_CONTENT_SITE_EXT_MAX 9
+#define QUICKSTART_CONTENT_SITE_EXT_MAX 11
 // The RAW_BITS number spelled beside the accessors must be the raw
 // ceiling's exact size, or the router fires at the wrong boundary.
 typedef char QuickStartSiteRawBitsMatch[(QUICKSTART_SITE_RAW_BITS ==
@@ -5172,6 +5177,10 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_RING_CW), 0 },
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
       (1 << QS_RING_WR), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT,
+      (1 << QS_RING_CW), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH,
+      (1 << QS_RING_CW), 0 },
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
       (1 << QS_RING_TRIL), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE,
@@ -13584,6 +13593,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // The Minish water cave off the Wilds' south-east door (240 open
     // tiles).
     { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, QUICKSTART_KINDS_SMALL, 72, 424 },
+    // The Wilds' last two cave doors, both real vanilla entrances the
+    // content sweep had been emptying with nothing put back (user report,
+    // naming the Darknut hall specifically). Surveyed room-local: the
+    // Darknut hall is a 34-tile chamber with 6 elbow-room tiles, the south
+    // cave 67 tiles with 31. Spots are each room's own centre tile.
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, QUICKSTART_KINDS_SMALL, 104, 104 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, QUICKSTART_KINDS_SMALL, 104, 104 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -16857,6 +16873,80 @@ static void QuickStartRoofFairyPotsOnce(void) {
     }
 }
 
+// --- Satellite rooms: a region's seam-connected neighbours ---------------
+//
+// The Wind Ruins are laid out like Eastern Hills and the Western Wood - one
+// area cut into sub-areas joined by scroll seams - but only two of its six
+// rooms are pool regions, so walking through the seam into the fortress
+// approach or the tektite terraces used to find them empty (user report).
+// The pool cannot simply grow: its per-slot state is packed in 4-bit
+// fields, so sixteen rows is the hard ceiling and fifteen are spoken for.
+//
+// A satellite is the cheap half of a region: enemies, nothing else. It has
+// no reward, no quest host, no wave counter and no persistent state - it
+// fills once per visit off the same tiered group spawner every region
+// uses, exactly as the hub roof does, and a re-entry deals a fresh group.
+// That is all these rooms need to stop reading as abandoned.
+typedef struct {
+    u8 area;
+    u8 room;
+    const s16 (*enemyOffsets)[2];
+    s32 enemyOffsetCount;
+    s32 roomSquares;
+} QuickStartSatelliteRoom;
+
+// Spots surveyed room-local in the running game (the collision grid is
+// per-room; each room's largest component, tiles passing the shipped
+// QuickStartTileHasElbowRoom, spread apart). The squares figure is set so
+// the density curve asks for the whole spot list rather than one body:
+// these rooms are single screens, and one enemy on a screen reads as
+// emptier than none.
+static const s16 sQuickStartRuinsBeanstalkOffsets[][2] = {
+    { 56, 72 }, { 72, 136 }, { 104, 72 },
+};
+static const s16 sQuickStartRuinsTektitesOffsets[][2] = {
+    { 72, 72 }, { 120, 72 }, { 168, 72 },
+};
+static const s16 sQuickStartRuinsLadderTektitesOffsets[][2] = {
+    { 72, 120 }, { 120, 88 }, { 184, 88 },
+};
+static const s16 sQuickStartRuinsFortressEntranceOffsets[][2] = {
+    { 168, 88 }, { 168, 184 }, { 216, 72 },
+};
+
+static const QuickStartSatelliteRoom sQuickStartSatelliteRooms[] = {
+    { AREA_RUINS, ROOM_RUINS_BEANSTALK, sQuickStartRuinsBeanstalkOffsets,
+      ARRAY_COUNT(sQuickStartRuinsBeanstalkOffsets), 24 },
+    { AREA_RUINS, ROOM_RUINS_TEKTITES, sQuickStartRuinsTektitesOffsets,
+      ARRAY_COUNT(sQuickStartRuinsTektitesOffsets), 24 },
+    { AREA_RUINS, ROOM_RUINS_LADDER_TO_TEKTITES, sQuickStartRuinsLadderTektitesOffsets,
+      ARRAY_COUNT(sQuickStartRuinsLadderTektitesOffsets), 24 },
+    { AREA_RUINS, ROOM_RUINS_FORTRESS_ENTRANCE, sQuickStartRuinsFortressEntranceOffsets,
+      ARRAY_COUNT(sQuickStartRuinsFortressEntranceOffsets), 30 },
+};
+
+// Room flag 56: this satellite has been filled this visit. Per-visit by
+// nature - gRoomVars is wiped on every room and seam load - which is the
+// behaviour wanted: cross the seam back and the room deals again.
+#define QUICKSTART_SATELLITE_FILLED_FLAG 56
+
+static void QuickStartSatelliteMonitor(void) {
+    s32 i;
+    if (!QuickStartRoomSettled() || QsCheckRoomFlag(QUICKSTART_SATELLITE_FILLED_FLAG)) {
+        return;
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartSatelliteRooms); i++) {
+        const QuickStartSatelliteRoom* sat = &sQuickStartSatelliteRooms[i];
+        if (gRoomControls.area != sat->area || gRoomControls.room != sat->room) {
+            continue;
+        }
+        QsSetRoomFlag(QUICKSTART_SATELLITE_FILLED_FLAG);
+        QuickStartSpawnEnemyGroup(sat->enemyOffsets, sat->enemyOffsetCount, sat->roomSquares,
+                                  QuickStartRoomEnemyCeiling(sat->roomSquares));
+        return;
+    }
+}
+
 static void QuickStartRoofMonitor(void) {
     u8 state;
     if (gRoomControls.area != AREA_WIND_TRIBE_TOWER_ROOF || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_ROOF_0) {
@@ -17092,6 +17182,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartTinglePayout();
     QuickStartMazeMonitor();
     QuickStartSacrificeMonitor();
+    QuickStartSatelliteMonitor();
     QuickStartReloadRoomAfterFusion();
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();

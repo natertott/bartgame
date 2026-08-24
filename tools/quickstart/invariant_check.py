@@ -63,6 +63,15 @@ SEED = None
 
 # Rooms that are expected not to be reachable and why - reported WARN.
 KNOWN = {}
+
+# Sites whose row exists for the CONTAINMENT BLESSING only: the room's
+# content is its own shipped mechanic, not a rolled site event, so
+# QuickStartSetupContentSite skips them by name and a forced chest can
+# never appear. Their spot is still checked like any other; only the
+# chest leg is waived.
+NO_SITE_EVENT = {
+    ('AREA_GREAT_FAIRIES', 'ROOM_GREAT_FAIRIES_GRAVEYARD'),  # Fountain of Sacrifice
+}
 GROUND_ITEM_ID = 0
 QS_EVENT_ITEM_DROP = 0
 
@@ -92,6 +101,7 @@ FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
 FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
     ('GF_SITE_EXT11_', 11, 0),  # extension-site bits routed into bank 11
+    ('GF_SITE_EXT11B_', 11, 0),  # ...and its second bank-11 run
     ('GF_INN_CHEST_ARMED', 11, 0),  # the inn's per-tier chest arm bits
     ('GF_SEED_PINNED', 11, 0),
     ('GF_QUEST_', 11, 0),
@@ -748,6 +758,8 @@ def emu_rooms(rom, start, end):
                     seen_comps[cid] = idx
             elif (cx // 16, cy // 16) not in reach:
                 msgs.append(f'site {idx} spot ({cx},{cy}) not in entrance component')
+            if (an, rn) in NO_SITE_EVENT:
+                continue
             if not any(abs(ix - cx) <= 48 and abs(iy - cy) <= 48 for ix, iy in items):
                 msgs.append(f'site {idx}: forced chest spawned no GROUND_ITEM within 48px of ({cx},{cy})')
         out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
