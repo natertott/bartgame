@@ -427,7 +427,7 @@ static s32 QuickStartFindSiteAt(s32, s32);
 static bool32 QuickStartTileBelongsToSite(s32, s32, s32);
 static void QuickStartSiteContentSpot(s32, s16*, s16*);
 static u8 QuickStartSiteRewardTier(s32);
-static void QuickStartPotRoomGenerate(s32, s32, s32, s32);
+static void QuickStartPotRoomGenerate(s32, s32, s32, s32, s32, s32);
 static u8 QuickStartGetDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
@@ -8231,12 +8231,14 @@ static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, 
     QuickStartSpawnEnemyGroupAtDifficulty(offsets, offsetCount, roomSquares, maxEnemies, QuickStartGetDifficulty());
 }
 
-// QS_EVENT_WAVES (see QuickStartSetupWaveRoomContent) is new - a 3-wave
-// combat room, single enemy type per wave, only ever assigned to a
-// medium/large pool room (QuickStartRandomizeSlotsOnce) alongside
-// QS_EVENT_MINIBOSS, per the user's own room-size split: chest/NPC
-// content stays in the small pool, miniboss/waves (and puzzles, later) stay
-// in the medium/large one.
+// QS_EVENT_WAVES (see QuickStartSetupWaveRoomContent) is a 3-wave combat
+// room, single enemy type per wave. It began life as medium/large-only,
+// alongside QS_EVENT_MINIBOSS, under the original room-size split -
+// chest/NPC content in the small pool, combat in the medium/large one.
+// It is in every pool now (user: "we can add in the wave and survive N
+// seconds type to the small rooms, but we shouldn't put mini bosses in
+// those rooms"), which leaves the miniboss as the one kind the size gate
+// still holds back.
 // POT_LOTTERY/CHEST_LOTTERY/FAIRY added this session, alongside pot-lottery
 // and chest-lottery puzzle rooms and free-heal fairy rooms - see
 // QuickStartPickSmallKind/QuickStartPickLargeKind below for which pool
@@ -8283,36 +8285,55 @@ static bool32 QuickStartKindUnlocked(u8 kind) {
     }
 }
 
-// Small pool: puzzle/dialogue content, no combat needed - CHEST/NPC (the
-// original two) plus the two new lottery puzzles.
-// The small pool used to be four kinds of which THREE were "collect a
-// prize out of a container" (item drop, pot lottery, chest lottery), so a
-// run through cramped rooms felt like one event repeated - the user's
-// "only pot rewards for every room I entered". FAIRY joins it: it needs
-// almost no floor (two fairies either side of the content spot), and it
-// is the one small-room kind that is not a prize to pick up, which is
-// exactly the texture the pool was missing.
+// Small pool: what a cramped tree hollow or cave nook may be.
+//
+// Two rules from the user shape all three pools, so they are written out
+// once here:
+//
+//   1. NO PLAIN ITEM DROPS. A room whose whole content is "a prize is
+//      lying here" was the least interesting thing in the ring and it was
+//      everywhere; it is gone from all three draws. The kind itself still
+//      exists for exactly one site - the Boomerang chamber's central
+//      staircase (QUICKSTART_KINDS_RARE), which is gated behind four
+//      kinstone fusions and pays a RARE item for them. Earning a free
+//      prize is fine; tripping over one is not.
+//   2. COMBAT IS THE DEFAULT, not the exception. Waves, survive clocks and
+//      minibosses were together a fifth of what a run met; they are close
+//      to half of it now.
+//
+// So the cramped pool is the gauntlet plus the three quiet kinds that need
+// no floor. QS_EVENT_WAVES carries the survive-N-seconds variant with it
+// (one combat visit in three, decided per visit inside
+// QuickStartSetupWaveRoomContent) and the stripped-kit handicap (one
+// gauntlet in four, extra bit 6), so adding one kind here adds three
+// textures. MINIBOSS deliberately stays out: a set-piece body needs room
+// to circle, and these rooms have none.
 static u8 QuickStartPickSmallKind(void) {
     u8 kind;
-    // Weighted, not a flat fifth: the four originals keep 2/9 each and the
-    // fairy room takes 1/9. A fairy is a free heal rather than a prize, so
-    // it earns a slot for texture but should stay the rarest thing a
-    // cramped room can be - a flat fifth measured at 17% of all sites,
-    // which is more free healing than the run economy wants.
-    switch ((s32)Random() % 9) {
+    // Sixteenths. The gauntlet takes 6, the three quiet kinds 3 each, and
+    // the fairy room 1 - the user asked for fairies to be a rare event,
+    // and 1/16 of the pool that owns most of the ring's sites is what
+    // "rare" costs. (It was 1/9 here, which measured 11% of all sites.)
+    switch ((s32)Random() % 16) {
         case 0:
         case 1:
-            kind = QS_EVENT_ITEM_DROP;
-            break;
         case 2:
         case 3:
-            kind = QS_EVENT_NPC;
-            break;
         case 4:
         case 5:
+            kind = QS_EVENT_WAVES;
+            break;
+        case 6:
+        case 7:
+        case 8:
+            kind = QS_EVENT_NPC;
+            break;
+        case 9:
+        case 10:
+        case 11:
             kind = QS_EVENT_POT_LOTTERY;
             break;
-        case 8:
+        case 15:
             kind = QS_EVENT_FAIRY;
             break;
         default:
@@ -8320,7 +8341,11 @@ static u8 QuickStartPickSmallKind(void) {
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
-        kind = QS_EVENT_ITEM_DROP;
+        // The fallback used to be the item drop, which would quietly put
+        // rule 1 back - a save that has not earned the lotteries yet would
+        // meet nothing but free prizes. Split it instead, so an early save
+        // gets the same mix of fight and talk the pool is built around.
+        kind = (kind == QS_EVENT_CHEST_LOTTERY) ? QS_EVENT_WAVES : QS_EVENT_NPC;
     }
     return kind;
 }
@@ -8330,53 +8355,80 @@ static u8 QuickStartPickSmallKind(void) {
 // draws, since these rooms have the floor space for a couple of fairies to
 // wander without clutter.
 // Rooms with no restrictions at all - big, open, and free of anything the
-// event has to work around, so every kind is fair game. Distinct from the
-// large pool, which is combat-and-fairies only: a room being big is not a
-// reason to stop it rolling a pot lottery.
+// event has to work around, so every kind except the retired item drop is
+// fair game. Distinct from the large pool, which is combat-and-fairies
+// only: a room being big is not a reason to stop it rolling a pot lottery.
 static u8 QuickStartPickAnyKind(void) {
     u8 kind;
-    switch ((s32)Random() % 8) {
+    // Sixteenths again. Half of it is combat (4 gauntlets + 4 minibosses),
+    // because these eighteen sites are the only ones with the floor for a
+    // set-piece fight and they were spending a third of their draws on a
+    // dropped prize or a fairy. The gate puzzle takes 3 - it needs this
+    // much floor too, and at 1/8 it was the rarest thing in the ring.
+    switch ((s32)Random() % 16) {
         case 0:
-            kind = QS_EVENT_ITEM_DROP;
-            break;
         case 1:
-            kind = QS_EVENT_MINIBOSS;
-            break;
         case 2:
-            kind = QS_EVENT_NPC;
-            break;
         case 3:
             kind = QS_EVENT_WAVES;
             break;
         case 4:
+        case 5:
+        case 6:
+        case 7:
+            kind = QS_EVENT_MINIBOSS;
+            break;
+        case 8:
+        case 9:
+        case 10:
+            kind = QS_EVENT_GATE;
+            break;
+        case 11:
+        case 12:
+            kind = QS_EVENT_NPC;
+            break;
+        case 13:
             kind = QS_EVENT_POT_LOTTERY;
             break;
-        case 5:
+        case 14:
             kind = QS_EVENT_CHEST_LOTTERY;
-            break;
-        case 6:
-            kind = QS_EVENT_GATE;
             break;
         default:
             kind = QS_EVENT_FAIRY;
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
-        kind = QS_EVENT_ITEM_DROP;
+        // Combat, not a free prize - see rule 1 on the small pool.
+        kind = QS_EVENT_WAVES;
     }
     return kind;
 }
 
 static u8 QuickStartPickLargeKind(void) {
     u8 kind;
-    switch ((s32)Random() % 4) {
+    // Sixteenths, weighted hard toward the fight: this pool exists because
+    // the room can host one. The fairy keeps a single slot as the breather
+    // between them, not as a quarter of the pool.
+    switch ((s32)Random() % 16) {
         case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
             kind = QS_EVENT_MINIBOSS;
             break;
-        case 1:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
             kind = QS_EVENT_WAVES;
             break;
-        case 2:
+        case 13:
+        case 14:
             kind = QS_EVENT_GATE;
             break;
         default:
@@ -9830,6 +9882,21 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     u8 id, form;
     s32 i, count;
     QuickStartPickEnemy(difficulty, &id, &form);
+    // No Ravens in a gauntlet or on a survive clock - the user's call, and
+    // the behaviour backs it up: a CROW flies a wide erratic circuit and
+    // will not commit to the player, so a wave of them is spent chasing
+    // rather than fighting, which reads as dead air against the clock and
+    // as a stalemate in a cramped room. Re-roll rather than substitute
+    // outright, so the wave still gets a difficulty-appropriate draw; only
+    // a run of rolls that all land on the bird falls back to the beetle
+    // (possible at low difficulty, where level 1 is a short list).
+    for (i = 0; i < 4 && id == CROW; i++) {
+        QuickStartPickEnemy(difficulty, &id, &form);
+    }
+    if (id == CROW) {
+        id = BEETLE;
+        form = 0;
+    }
     // Single-kind spawn + the gang cap = a capped acro pick would place
     // nothing and the empty wave would read as instantly cleared. Trade
     // the pick for a beetle instead of consuming another Random() so the
@@ -9842,7 +9909,21 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
     }
-    QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1);
+    if (QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1) == 0) {
+        // A wave that places nobody reads as instantly cleared, and three
+        // of those in a row hand the reward over for free. That was only
+        // ever theoretical while gauntlets lived in roomy sites; now that
+        // the small pool rolls them too, put one body on the content spot
+        // itself, which is by construction somewhere the player can stand.
+        Entity* enemy = CreateEnemy(id, form);
+        if (enemy != NULL) {
+            enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+            enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+            enemy->collisionLayer = 1;
+            enemy->flags |= ENT_PERSIST;
+            UpdateSpriteForCollisionLayer(enemy);
+        }
+    }
 }
 
 // --- Why a wave gauntlet in the Grimblade dojo could never be finished ---
@@ -11399,6 +11480,7 @@ static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
 #define QUICKSTART_REACH_BYTES (64 * 64 / 8)
 #define QUICKSTART_REACH_GET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] & (1 << ((((y) << 6) | (x)) & 7)))
 #define QUICKSTART_REACH_SET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] |= (1 << ((((y) << 6) | (x)) & 7)))
+#define QUICKSTART_REACH_CLR(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] &= ~(1 << ((((y) << 6) | (x)) & 7)))
 
 static void QuickStartMarkReachableTiles(u8* bits, s32 anchorTX, s32 anchorTY) {
     s32 w = (s32)(gRoomControls.width >> 4);
@@ -11534,7 +11616,34 @@ static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed
     return placed;
 }
 
-static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32 ownerSite) {
+// Take a tile and its four neighbours back out of the reachable set, so
+// nothing is laid on them. A no-op for a negative tile.
+static void QuickStartPotRoomKeepClear(u8* reach, s32 tx, s32 ty) {
+    static const s8 kNear[5][2] = { { 0, 0 }, { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+    s32 i;
+    if (tx < 0 || ty < 0) {
+        return;
+    }
+    for (i = 0; i < 5; i++) {
+        s32 x = tx + kNear[i][0];
+        s32 y = ty + kNear[i][1];
+        if (x >= 0 && y >= 0 && x < 64 && y < 64) {
+            QUICKSTART_REACH_CLR(reach, x, y);
+        }
+    }
+}
+
+// keepClearTX/TY: one tile (and its four neighbours) the field must not
+// cover, or -1 for none. The 2-door pool passes its room's ARRIVAL tile:
+// the layout anchors on wherever the player happens to be standing when
+// the room settles, which is not always the doorway they came in by, and a
+// pot dropped onto the doorway itself has to be broken before the room can
+// be left. Denying the tile in the reachability set (rather than deleting
+// the pot afterwards) is what keeps the two fill passes agreeing - the
+// counting pass and the spawning pass must see the same field, or the
+// winner index lands on a pot that does not exist.
+static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32 ownerSite, s32 keepClearTX,
+                                      s32 keepClearTY) {
     const QuickStartPotRoomPreset* preset = &sQuickStartPotRoomPresets[(extra & 3) % QUICKSTART_POT_ROOM_PRESET_COUNT];
     s32 prizeIndex = QuickStartLotteryPrizeIndex(extra);
     s32 winnerBucket = (extra >> QUICKSTART_POT_WINNER_SHIFT) & (QUICKSTART_POT_WINNER_BUCKETS - 1);
@@ -11571,6 +11680,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     // Computed here, once, and shared by both passes - and deliberately
     // before a single pot exists, since pots write their own collision.
     QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
+    QuickStartPotRoomKeepClear(reach, keepClearTX, keepClearTY);
 
     actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
                                    FALSE, reach);
@@ -11586,6 +11696,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
         }
         // Re-anchoring moves the component too, so the set is rebuilt.
         QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
+        QuickStartPotRoomKeepClear(reach, keepClearTX, keepClearTY);
         actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
                                        FALSE, reach);
     }
@@ -11621,7 +11732,7 @@ static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 content
     // retiring it is the whole point of this rewrite.
     anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
     anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, QuickStartFindSiteAt(contentX, contentY));
+    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, QuickStartFindSiteAt(contentX, contentY), -1, -1);
     QsSetRoomFlag(flagBase + 0);
     return FALSE;
 }
@@ -13006,11 +13117,13 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
 //
 // large: which of the two size-restricted kind pools this site rolls from,
 // the same split the retired ladder/door slots used (QuickStartPickSmallKind
-// vs QuickStartPickLargeKind). Small rooms get puzzle/dialogue content
-// (chest, NPC, pot lottery, chest lottery); only rooms with real floor
-// space get combat (miniboss, 3-wave gauntlet) or a fairy pair. Almost
-// everything here is a cramped tree hollow or cave nook, so `large` is the
-// exception, not the rule.
+// vs QuickStartPickLargeKind). The split is no longer combat-vs-quiet:
+// small rooms roll the 3-wave gauntlet (and with it the survive clock and
+// the stripped-kit variant) alongside their chest/NPC/lottery content, and
+// what the size gate actually protects is the MINIBOSS and the gate
+// puzzle, both of which need floor to work. Almost everything here is a
+// cramped tree hollow or cave nook, so `large` is the exception, not the
+// rule.
 // Which set of event kinds a site may roll.
 enum {
     // Reclassified Aug 2026 (user: "a noticeable lack of variety in ?
@@ -14231,7 +14344,16 @@ static void QuickStart2DoorSetupPotRoomContent(s32 contentX, s32 contentY) {
     }
     anchorTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
     anchorTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-    QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, -1);
+    {
+        // The doorway this pool spawns the player on, kept clear whether or
+        // not that is where they are still standing - measured in
+        // ROOM_VEIL_FALLS_CAVES_EXIT, where the field reached the arrival
+        // tile and the invariant checker's "entrance must be open floor"
+        // rule caught it.
+        s16 entranceX, entranceY, contentDX, contentDY;
+        QuickStart2DoorGetSpawnInfo(&entranceX, &entranceY, &contentDX, &contentDY);
+        QuickStartPotRoomGenerate(extra, anchorTX, anchorTY, -1, entranceX >> 4, entranceY >> 4);
+    }
     QsSetRoomFlag(0);
 }
 

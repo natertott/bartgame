@@ -1675,6 +1675,92 @@ Measured after, same method, 288 site rolls over four seeds: pot 22%, NPC
 **Container-prize share 70% -> 53%; combat/puzzle/fairy 14% -> 28%; all
 eight kinds now appear in every seed.**
 
+### The combat rebalance: rare fairies, no free prizes, gauntlets everywhere (Aug 2026)
+
+The follow-up to the variety pass above, and the user's spec verbatim:
+"bias fairy rooms down - these should be considered rare events...
+completely eliminate rooms that just drop a prize immediately, except for
+the central boomerang room in NHF... increase the amount of combat style
+rooms (waves, mini bosses, survive n seconds)... we can add in the 'wave'
+and 'survive N seconds' type to the small rooms, but we shouldn't put mini
+bosses in those rooms. Don't use Ravens for wave or survive N seconds type
+spawns."
+
+Five changes, all in the three kind pickers plus the wave spawner:
+
+1. **`QS_EVENT_ITEM_DROP` is out of every draw.** It survives at exactly
+   one site - the Boomerang chamber's central staircase
+   (`QUICKSTART_KINDS_RARE`), which is gated behind four kinstone fusions
+   and pays a RARE item for them. Earning a free prize is fine; tripping
+   over one is not. The unlock fallbacks mattered as much as the draws
+   here: all three pickers used to degrade a locked kind to the item drop,
+   which would have quietly reinstated it for any save that had not earned
+   the lotteries yet. Small now splits its fallback between NPC and the
+   gauntlet; ANY and LARGE fall back to the gauntlet.
+2. **The gauntlet joins the small pool** at 6/16, which brings the survive
+   clock (one combat visit in three, decided per visit) and the
+   stripped-kit handicap (one gauntlet in four, extra bit 6) into cramped
+   rooms with it - one kind added, three textures gained. The MINIBOSS
+   deliberately stays out of SMALL: a set-piece body needs room to circle.
+   That inverts what the size gate is for - it used to separate combat
+   from quiet content, and now it holds back only the miniboss and the
+   gate puzzle, the two kinds that genuinely need floor.
+3. **ANY went to half combat** (4/16 waves + 4/16 miniboss) and gave the
+   gate puzzle 3/16; those eighteen sites are the only ones with floor for
+   a set-piece fight and they were spending a third of their draws on a
+   dropped prize or a fairy. LARGE is 13/16 combat.
+4. **FAIRY is 1/16 in every pool** (it was 1/9 in small, 1/4 in large),
+   measured at 4.5% of all sites - the user's "rare event".
+5. **No Ravens in a gauntlet or on a survive clock.** A CROW flies a wide
+   erratic circuit and will not commit to the player, so a wave of them is
+   dead air against the clock and a stalemate in a cramped room.
+   `QuickStartSpawnWave` re-rolls up to four times rather than
+   substituting outright, so the wave still gets a difficulty-appropriate
+   draw; only a run of rolls that all land on the bird falls back to a
+   beetle.
+
+One safety net came with #2: a wave that places nobody reads as instantly
+cleared, and three of those in a row hand the reward over for free. That
+was theoretical while gauntlets lived in roomy sites; with cramped rooms
+rolling them, `QuickStartSpawnWave` now puts one body on the content spot
+itself if the ring placer comes back empty.
+
+**Measured after, 201 site rolls over six pinned seeds** (each seed walked
+into every site room, kind read back out of its own flags):
+
+| kind | share | | kind | share |
+|---|---|---|---|---|
+| waves | 26.9% | | pot lottery | 11.9% |
+| NPC | 17.9% | | chest lottery | 11.4% |
+| miniboss | 16.9% | | gate | 7.5% |
+| | | | fairy | 4.5% |
+| | | | item drop | 3.0% |
+
+Combat is **43.8%** of all sites, up from 14%. Every one of the six item
+drops is the RARE boomerang site - the kind appears nowhere else. No SMALL
+site rolled a miniboss in any seed. 11 of the 54 gauntlets (20%) carry the
+stripped-kit handicap.
+
+Two side checks, both on the same build. Forcing eight of the tightest
+SMALL rooms to `QS_EVENT_WAVES` and watching each for eight seconds: all
+eight spawn a four-body wave and hold it, so the cramped-room gauntlet is
+a real fight rather than a walkover. And across 92 sampled wave-room
+visits at difficulties 0 and 8, a Raven appeared exactly zero times
+(average 4.6 bodies per wave).
+
+One fix fell out of the rebalance. The invariant checker's "a 2-door
+room's entrance must be open floor" rule started failing on
+`ROOM_VEIL_FALLS_CAVES_EXIT`: with the new weights that room drew the pot
+lottery on the default seed, and the field reached the arrival tile - a
+pot the player has to break before they can leave by the door they came
+in. The pot layout anchors on wherever the player is standing when the
+room settles, which is not always that doorway, so the arrival tile is now
+denied in the reachability set the two fill passes share
+(`QuickStartPotRoomKeepClear`). Denying rather than deleting matters: the
+counting pass and the spawning pass have to see the same field, or the
+winner index lands on a pot that never spawned and the room is
+unwinnable.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
