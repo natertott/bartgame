@@ -1618,16 +1618,25 @@ one pass:
   load, no transition, no dig tile and no chest anywhere in the event data,
   which is why nothing is behind them: in vanilla the payoff is the SHORTCUT
   itself, not a treasure, and nothing needs digging up.
-  **What to put there** (not built - the user's question, answered with a
-  recommendation): the cleared patch is a known, per-fusion coordinate, so
-  it is a natural reward spot. Cheapest worthwhile version is the Tingle
-  payout's exact shape - poll `CheckKinstoneFused`, pay once per fusion via
-  a paid-bit, drop through `QuickStartSpawnRewardEntity` at the revealed
-  patch - with an UNCOMMON-tier draw rather than Tingle's heart container.
-  The step up in ambition is to make it a challenge: deal a small guarded
-  pack at the patch (the satellite spawner already does exactly this in one
-  call) and let the drop land when it clears, which turns each brush fusion
-  into a miniature ? event without needing a room behind it.
+  **What went on them: BOTH, rolled per run** (the user's call). Each of
+  the two brush patches pays out once, in one of two moods decided by an
+  avalanche hash of (run_seed, kinstone id) - so the two can differ inside
+  a run and both differ across runs, with nothing stored:
+  - *reward* - a common-or-uncommon draw lying in the clearing.
+  - *challenge* - an UNCOMMON draw with a pack of this difficulty's own
+    enemies ringed around it (3 + difficulty/4). The prize is placed WITH
+    the guards rather than behind them, so there is no clear-detection to
+    get wrong and nothing is lost by leaving mid-fight: come back and the
+    pack re-deals around a prize still lying there.
+  Built on the Tingle payout's exact shape (poll `CheckKinstoneFused`, pay
+  once per patch via a bank-11 paid bit, deliver through
+  `QuickStartRewardDelivered`), with its own Ezlo line per mood (strings
+  237/238). Verified across pinned seeds: reward/reward, challenge/
+  challenge and a split run all pay at the right patch coordinates with
+  guards only in challenge mode. One honest degradation: the guard pack
+  goes through the same entity-cost budget as everything else, so in a room
+  already carrying a full difficulty-12 wave the guards may not fit - the
+  prize still lands, the clearing is just quiet.
 
 ## 4. Vanilla behaviors not yet addressed
 

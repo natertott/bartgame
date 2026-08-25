@@ -234,7 +234,7 @@ static void QsWriteField(u32 base, s32 bits, s32 value) {
 #define GF_SITE_EXT_C_BIT(b) (617 + (b)) // b = 0..38
 #define GF_SITE_EXT_D_BIT(b) (658 + (b)) // b = 0..31
 #define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..30, FLAG_BANK_11
-#define GF_SITE_EXT11B_BIT(b) (124 + (b)) // b = 0..17, FLAG_BANK_11
+#define GF_SITE_EXT11B_BIT(b) (124 + (b)) // b = 0..6, FLAG_BANK_11
 // 61 * 13, spelled as a number because the BITS define lives further down
 // with the site table; the assertion beside it keeps this honest.
 #define QUICKSTART_SITE_RAW_BITS 793
@@ -367,6 +367,7 @@ static bool32 QuickStartRoomSettled(void) {
 static void QuickStartMakeNpcTalkable(Entity*, Script*);
 static void QuickStartSpawnRegionFusers(void);
 static void QuickStartTinglePayout(void);
+static void QuickStartBrushFusionPayout(void);
 static void QuickStartMazeMonitor(void);
 static void QuickStartSacrificeMonitor(void);
 static void QuickStartSatelliteMonitor(void);
@@ -2513,6 +2514,10 @@ const u8* const gCustomStrings[] = {
     [234] = (const u8*)"The Element rests here -\nbut a GUARDIAN holds it.\nBring the beast down!",
     [235] = (const u8*)"The Element hides here.\nSmash the pots! One\nholds more than clay...",
     [236] = (const u8*)"It is freed! The Element\nwaits where this region\npays its prizes!",
+    // 237-238: the Western Wood brush fusions' two moods (see
+    // QuickStartBrushFusionPayout) - a guarded clearing, or a quiet one.
+    [237] = (const u8*)"The branches part... and\nsomething was WAITING in\nthere. Cut your way to it!",
+    [238] = (const u8*)"The branches part. A\nlittle clearing, and a\nlittle prize in it.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -17197,6 +17202,7 @@ static void QuickStartRoomMonitor(void) {
     // save's chain happens to include it.
     QuickStartSpawnRegionFusers();
     QuickStartTinglePayout();
+    QuickStartBrushFusionPayout();
     QuickStartMazeMonitor();
     QuickStartSacrificeMonitor();
     QuickStartSatelliteMonitor();
@@ -18588,6 +18594,109 @@ static void QuickStartTinglePayout(void) {
         }
         QsSetFlag(GF_TINGLE_PAID_BIT(i));
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 203), 0);
+    }
+}
+
+// --- The Western Wood brush fusions --------------------------------------
+//
+// Two of the Wood's fusions are WORLD_EVENT_TYPE_6, whose handler
+// (sub_08018AB4, kinstone.c) does exactly one thing: while the fusion is
+// UNDONE it stamps a 4x3 patch of brush art over the spot. Fusing does not
+// add anything - it stops the stamp, so the map's own ground shows through
+// and the patch becomes passable. Vanilla's payoff is the shortcut itself;
+// nothing is buried there (user question: "there's nothing behind them -
+// why?").
+//
+// So the cleared patch is free, known-good ground at a fixed coordinate,
+// and this puts something on it. Per the user, WHICH something is rolled
+// per run: half the time a straight reward, half the time a guarded one.
+//
+//   REWARD    - a common-or-uncommon draw sitting on the patch.
+//   CHALLENGE - the same patch, an UNCOMMON draw, and a pack of this
+//               difficulty's own enemies ringed around it. The prize is
+//               placed with the guards rather than after them, so there is
+//               no clear-detection to get wrong and no way for the reward
+//               to be lost if the player leaves mid-fight: come back and
+//               the pack is re-dealt around a prize still lying there.
+//
+// The mode is a pure function of (run_seed, kinstone id) through the
+// avalanche mix - the same one the fountain's strew and the F7 carrier use,
+// because plain xor hashes of near-identical seeds measurably do not
+// rotate - so the two fusions can differ within a run and both differ
+// across runs, with no stored state.
+typedef struct {
+    u8 kinstoneId;
+    u8 area;
+    u8 room;
+    s16 x;
+    s16 y;
+} QuickStartBrushFusion;
+
+// Spots are each event's own (x,y) out of gWorldEvents - the exact tile the
+// brush art was covering, so the prize lands in the clearing the fusion
+// just opened rather than near it.
+static const QuickStartBrushFusion sQuickStartBrushFusions[] = {
+    { KINSTONE_21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 168, 88 },
+    { KINSTONE_4C, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 216, 296 },
+};
+#define QUICKSTART_BRUSH_FUSION_COUNT ((s32)ARRAY_COUNT(sQuickStartBrushFusions))
+// FLAG_BANK_11 131-132, below the extension-site routing run and inside the
+// bank-11 run wipe, so a new run re-arms both patches.
+#define GF_WW_BRUSH_PAID_BIT(i) (131 + (i)) // i = 0..1
+typedef char QuickStartBrushBitsFit[(QUICKSTART_BRUSH_FUSION_COUNT <= 2) ? 1 : -1];
+
+static bool32 QuickStartBrushIsChallenge(u8 kinstoneId) {
+    u32 h = (u32)gSave.run_seed + 0xB0u + (u32)kinstoneId;
+    h = h * 0x9E3779B9u;
+    h ^= h >> 15;
+    h = h * 0x2C1B3C6Du;
+    h ^= h >> 12;
+    return (h >> 9) & 1;
+}
+
+// Polled, like the Tingle payout and for the same reason: a fusion
+// completes inside the kinstone menu's own cutscene, and CheckKinstoneFused
+// is the same test the fuser spawner uses to retire the gate.
+static void QuickStartBrushFusionPayout(void) {
+    s32 i;
+    if (!QuickStartRoomSettled()) {
+        return;
+    }
+    for (i = 0; i < QUICKSTART_BRUSH_FUSION_COUNT; i++) {
+        const QuickStartBrushFusion* b = &sQuickStartBrushFusions[i];
+        bool32 challenge;
+        s16 lx, ly, spotX, spotY;
+        u16 prize;
+        s32 tier;
+        if (gRoomControls.area != b->area || gRoomControls.room != b->room) {
+            continue;
+        }
+        if (!CheckKinstoneFused(b->kinstoneId) ||
+            CheckLocalFlagByBank(FLAG_BANK_11, GF_WW_BRUSH_PAID_BIT(i))) {
+            continue;
+        }
+        lx = b->x;
+        ly = b->y;
+        if (!QuickStartTileIsOpen(lx >> 4, ly >> 4) && QuickStartFindOpenTileNear(lx, ly, 1, &spotX, &spotY)) {
+            lx = spotX;
+            ly = spotY;
+        }
+        challenge = QuickStartBrushIsChallenge(b->kinstoneId);
+        tier = challenge ? QS_TIER_UNCOMMON : (s32)((Random() & 1) ? QS_TIER_UNCOMMON : QS_TIER_COMMON);
+        prize = QuickStartDrawAtTier((s32)Random() & 0x3f, QS_CAT_DROP, tier);
+        if (!QuickStartRewardDelivered(prize, lx, ly)) {
+            // No entity slot this frame - leave the bit clear and try
+            // again rather than eating the prize.
+            continue;
+        }
+        if (challenge) {
+            u8 id, form;
+            s32 count = 3 + (s32)QuickStartGetDifficulty() / 4;
+            QuickStartPickEnemy(QuickStartGetDifficulty(), &id, &form);
+            QuickStartSpawnEnemiesOnOpenTiles(id, form, lx, ly, count, -1);
+        }
+        SetLocalFlagByBank(FLAG_BANK_11, GF_WW_BRUSH_PAID_BIT(i));
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, challenge ? 237 : 238), 0);
     }
 }
 
