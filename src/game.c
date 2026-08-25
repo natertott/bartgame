@@ -8285,17 +8285,35 @@ static bool32 QuickStartKindUnlocked(u8 kind) {
 
 // Small pool: puzzle/dialogue content, no combat needed - CHEST/NPC (the
 // original two) plus the two new lottery puzzles.
+// The small pool used to be four kinds of which THREE were "collect a
+// prize out of a container" (item drop, pot lottery, chest lottery), so a
+// run through cramped rooms felt like one event repeated - the user's
+// "only pot rewards for every room I entered". FAIRY joins it: it needs
+// almost no floor (two fairies either side of the content spot), and it
+// is the one small-room kind that is not a prize to pick up, which is
+// exactly the texture the pool was missing.
 static u8 QuickStartPickSmallKind(void) {
     u8 kind;
-    switch ((s32)Random() % 4) {
+    // Weighted, not a flat fifth: the four originals keep 2/9 each and the
+    // fairy room takes 1/9. A fairy is a free heal rather than a prize, so
+    // it earns a slot for texture but should stay the rarest thing a
+    // cramped room can be - a flat fifth measured at 17% of all sites,
+    // which is more free healing than the run economy wants.
+    switch ((s32)Random() % 9) {
         case 0:
+        case 1:
             kind = QS_EVENT_ITEM_DROP;
             break;
-        case 1:
+        case 2:
+        case 3:
             kind = QS_EVENT_NPC;
             break;
-        case 2:
+        case 4:
+        case 5:
             kind = QS_EVENT_POT_LOTTERY;
+            break;
+        case 8:
+            kind = QS_EVENT_FAIRY;
             break;
         default:
             kind = QS_EVENT_CHEST_LOTTERY;
@@ -12995,6 +13013,13 @@ static void QuickStartSetupMelariSoutheastRoomContent(void) {
 // exception, not the rule.
 // Which set of event kinds a site may roll.
 enum {
+    // Reclassified Aug 2026 (user: "a noticeable lack of variety in ?
+    // events... only pot rewards"). The roll itself was fair, but 57 of 72
+    // sites were SMALL, and SMALL's pool is only the four quiet kinds -
+    // so a run almost never met a miniboss, a gauntlet, a gate puzzle or a
+    // fairy room. Every site room was re-measured for tiles with full 3x3
+    // clearance in its own component, and the eleven that have real floor
+    // space (>= 20 such tiles) are ANY now. Cramped rooms stay SMALL.
     QUICKSTART_KINDS_SMALL, // puzzle/dialogue only - cramped tree hollows, cave nooks
     QUICKSTART_KINDS_LARGE, // combat and fairies - rooms with real floor space
     QUICKSTART_KINDS_ANY,   // everything, for rooms big and clear enough to host anything
@@ -13042,7 +13067,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // on top of that staircase. The tree is a pass-through now; its
     // staircase tile reads ACT_TILE_40, so it opens on touch like any other
     // vanilla door.
-    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
     // South Hyrule Field's 3 converted doors. Unlike the Boomerang trees
     // these are true dead ends - one room each, single border exit back to
     // the field - so they're the simplest possible shape for this model.
@@ -13092,7 +13117,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // the two reached by bombing a wall open.
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, QUICKSTART_KINDS_ANY, 0x78, 0x60 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 0x78, 0x60 },
     // Trilby's through-cave - the room behind the two exposed ladders at
     // (0x98,0x284) and (0x118,0x284). Deferred at the pilot as a "future
@@ -13162,7 +13187,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // tall - outside its own room, so it could never have worked even if the
     // room were reachable. Both facts are in the roadmap's open-bugs list;
     // this closes them by reclaiming the bits for a room that does work.
-    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, QUICKSTART_KINDS_SMALL, 120, 72 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET, QUICKSTART_KINDS_ANY, 120, 72 },
     // Castle Garden's southeast ladder leads to this dojo's ante room, and
     // the ante room scroll-seams north into the dojo proper. The event goes
     // in the DOJO, not the ante room - the ante room is a corridor, and the
@@ -13378,8 +13403,8 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // 11x6-tile open rectangle, local (32,32)-(207,127), with the player
     // arriving at (120,120). 66 clear tiles is small-pool territory - room
     // for a puzzle or a conversation, not for a wave.
-    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, QUICKSTART_KINDS_SMALL, 120, 80 },
-    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, QUICKSTART_KINDS_SMALL, 120, 80 },
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, QUICKSTART_KINDS_ANY, 120, 80 },
+    { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, QUICKSTART_KINDS_ANY, 120, 80 },
     // --- The overworld expansion's six new door interiors -----------------
     // One per real door in Eastern Hills and Western Wood, surveyed the
     // same way as everything above (collision grid read live in the
@@ -13397,7 +13422,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, QUICKSTART_KINDS_SMALL, 120, 88 },
     // Eastern Hills Center's cave. 23 open-3x3 tiles, and vanilla's own
     // Keese ambush + chest are swept like every other site's occupants.
-    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST, QUICKSTART_KINDS_SMALL, 120, 72 },
+    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST, QUICKSTART_KINDS_ANY, 120, 72 },
     // The Eastern Hills farm house. Furniture-heavy (4 open-3x3 tiles), so
     // the spot sits west of centre where the floor is actually clear.
     { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE, QUICKSTART_KINDS_SMALL, 88, 72 },
@@ -13561,7 +13586,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // 45 reachable tiles but only ONE with full 3x3 clearance, so this spot
     // is that tile - KINDS_SMALL is the only pool the room can host.
     { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE, QUICKSTART_KINDS_SMALL, 168, 88 },
-    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, QUICKSTART_KINDS_SMALL, 72, 72 },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, QUICKSTART_KINDS_ANY, 72, 72 },
     // Trilby's hidden pool - the room behind the bombable wall in the dig
     // cave the highlands ladder drops into (the user: "there is a bombable
     // wall. we should put a ? room in there; it's currently empty").
@@ -13572,7 +13597,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // one 13x6-tile open pool platform, arrival at local (184,40) by the
     // ladder; the spot is the pool's centre. Appended at the table's end
     // so no existing site's flag-block index moves.
-    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, QUICKSTART_KINDS_SMALL, 120, 72 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, QUICKSTART_KINDS_ANY, 120, 72 },
     // The western spur's two ? rooms, filling the site table to its 61-slot
     // ceiling. Castor Wilds' heart-piece cave (15x10, 3 clear tiles, spot
     // at the centre of its back ledge; the vanilla heart piece is a
@@ -13605,18 +13630,18 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE, QUICKSTART_KINDS_SMALL, 168, 72 },
     // Swiftblade I's grave dojo (150 open tiles, 104 with full 3x3) and
     // the Scarblade anteroom (86/52) - real rooms with real floor space.
-    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, QUICKSTART_KINDS_SMALL, 184, 120 },
+    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, QUICKSTART_KINDS_ANY, 184, 120 },
     { AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE, QUICKSTART_KINDS_SMALL, 104, 40 },
     // The Minish water cave off the Wilds' south-east door (240 open
     // tiles).
-    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, QUICKSTART_KINDS_SMALL, 72, 424 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, QUICKSTART_KINDS_ANY, 72, 424 },
     // The Wilds' last two cave doors, both real vanilla entrances the
     // content sweep had been emptying with nothing put back (user report,
     // naming the Darknut hall specifically). Surveyed room-local: the
     // Darknut hall is a 34-tile chamber with 6 elbow-room tiles, the south
     // cave 67 tiles with 31. Spots are each room's own centre tile.
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, QUICKSTART_KINDS_SMALL, 104, 104 },
-    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, QUICKSTART_KINDS_SMALL, 104, 104 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, QUICKSTART_KINDS_ANY, 104, 104 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward

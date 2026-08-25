@@ -1638,6 +1638,43 @@ one pass:
   already carrying a full difficulty-12 wave the guards may not fit - the
   prize still lands, the clearing is just quiet.
 
+### ? event variety: the roll was fair, the TABLE was not (Aug 2026)
+
+User report: "a noticeable lack of variety in ? events... I think I only
+received pot rewards for every room I entered." Measured before changing
+anything - forcing every site's roll across pinned seeds and reading the
+dealt kind back out of its flags - and the pickers themselves were clean:
+the small pool's four kinds came out near-even, the engine's own
+`Random() % 4` is well distributed (checked against the real generator,
+`gRand = ror(gRand * 3, 13)`), and no kind was starved by the unlock
+fallback. The bias was structural:
+
+- **57 of 72 sites were `QUICKSTART_KINDS_SMALL`**, and SMALL's pool is
+  the four quiet kinds only. Miniboss, gauntlet, gate puzzle and fairy
+  rooms live in the LARGE/ANY pools, which ten sites had between them - so
+  a run realistically never met one.
+- **Three of the small pool's four kinds are "collect a prize out of a
+  container"** (item drop, pot lottery, chest lottery), so even a fair
+  roll produced the same texture three visits in four.
+
+Two fixes, both measured:
+
+1. **Reclassified by measured floor space.** Every site room was flooded
+   from its own content spot and its tiles with full 3x3 clearance
+   counted; the eleven SMALL rooms with 20 or more went to `KINDS_ANY`
+   (Swiftblade's dojo alone has 52). Cramped rooms stay SMALL. ANY sites:
+   7 -> 18.
+2. **FAIRY joined the small pool**, weighted 1/9 against 2/9 for each of
+   the four originals - it needs almost no floor and is the one small-room
+   kind that is not a prize to pick up. A flat fifth measured at 17% of
+   all sites, which is more free healing than the economy wants; 1/9 lands
+   it at 11%.
+
+Measured after, same method, 288 site rolls over four seeds: pot 22%, NPC
+19%, item drop 16%, chest 15%, fairy 11%, miniboss 10%, gate 4%, waves 4%.
+**Container-prize share 70% -> 53%; combat/puzzle/fairy 14% -> 28%; all
+eight kinds now appear in every seed.**
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
