@@ -1049,6 +1049,18 @@ static void GameTask_Transition(void) {
         for (chest = 0; chest < 3; chest++) {
             SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 8 + chest);
         }
+        // Vanilla chests this mode does not want at all (user report). A
+        // chest's own local flag is what SpecialChest reads to delete
+        // itself, so setting it here removes the chest for the run without
+        // touching room data. The tower's shop chest and the two behind the
+        // spawn room's display case were the visible cases - the display
+        // case pair also STOLE the case's own A press, because a chest
+        // registers as an interactable and won that contest. The smith's
+        // forge chest in Link's house is the third.
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 7);
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 14);
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 15);
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_HOUSE_INTERIORS_2), 22);
     }
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
     // EZERO_1ST ("met Ezlo") isn't set - true for any fresh save, since we
@@ -16489,7 +16501,12 @@ static const QuickStartHubHint sQuickStartHubHints[] = {
     // and the sweep-immunity that come with it, but its script names its
     // own string rather than drawing from the hint pool, so it says the
     // same thing every run. QuickStartHubHintPick is never called for it.
-    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 488, 440, &script_QuickStartWindCrestSign },
+    // Moved off the door-to-hole axis (user report): the tower door is at
+    // local x 488 and the drop hole is straight down from it, so anyone
+    // heading out after the item draft walked into this sign every single
+    // run. It stands a few tiles east now - still beside the crest and on
+    // the way to it, no longer in the doorway's line.
+    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 552, 456, &script_QuickStartWindCrestSign },
 };
 
 // Idempotent by position rather than by flag, the same way

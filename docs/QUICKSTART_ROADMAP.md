@@ -1595,6 +1595,40 @@ one pass:
   rooms. They want a walked check from the overworld mouth before being
   wired, exactly like the Trilby dig cave got.
 
+### Hub polish + the Western Wood brush fusions (Aug 2026)
+
+- **The wind-crest sign was in the doorway's line.** The tower door sits at
+  Cloud Tops local x 488 and the drop hole is straight south of it, so the
+  sign at (488,440) was standing in the path every run took after the item
+  draft. Moved to (552,456) - still beside the crest, off the axis, and on
+  a tile with full elbow room (the first candidate, (568,456), was open but
+  pinched, which the shipped predicate caught).
+- **Three vanilla chests removed** (user report): the hub shop's, the two
+  behind the spawn room's display case - which also stole the case's own A
+  press, since a chest registers as an interactable and won that contest -
+  and the forge chest in Link's house. Sealed at run start through the same
+  local flags `SpecialChest` reads to delete itself, the mechanism the inn
+  chests already use. The bedroom's three lottery chests are ours and stay.
+- **The Western Wood brush fusions reveal ground, by design** (research
+  answer). Those fusions are `WORLD_EVENT_TYPE_6`, and its handler
+  (`sub_08018AB4`, kinstone.c) does exactly one thing: while the fusion is
+  UNDONE it stamps a 4x3 patch of brush art over the spot, bottom layer and
+  top. Fusing does not add anything - it stops the stamp, so the map's own
+  ground shows through and the patch becomes passable. There is no entity
+  load, no transition, no dig tile and no chest anywhere in the event data,
+  which is why nothing is behind them: in vanilla the payoff is the SHORTCUT
+  itself, not a treasure, and nothing needs digging up.
+  **What to put there** (not built - the user's question, answered with a
+  recommendation): the cleared patch is a known, per-fusion coordinate, so
+  it is a natural reward spot. Cheapest worthwhile version is the Tingle
+  payout's exact shape - poll `CheckKinstoneFused`, pay once per fusion via
+  a paid-bit, drop through `QuickStartSpawnRewardEntity` at the revealed
+  patch - with an UNCOMMON-tier draw rather than Tingle's heart container.
+  The step up in ambition is to make it a challenge: deal a small guarded
+  pack at the patch (the satellite spawner already does exactly this in one
+  call) and let the drop land when it clears, which turns each brush fusion
+  into a miniature ? event without needing a room behind it.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
