@@ -1796,6 +1796,18 @@ or a sweep.
 
 ## 5. Everything else
 
+**Build targets.** `make quickstart` and `make quickstart-testkit` are the
+two shipping ROMs. `make quickstart-d3` and `make quickstart-testkit-d3`
+are the same two builds with `QUICKSTART_START_DIFFICULTY=3` - every run
+starts at difficulty 3 instead of 0, for playtesting the middle of the
+curve without having to win up to it. It is a FLOOR, not a pin: the
+counter is still the mode's real meta-progression number, so a win moves
+it on to 4 and a save that has already climbed past 3 keeps its progress.
+Any value works (`make quickstart QUICKSTART_START_DIFFICULTY=7`); at the
+default of 0 the knob compiles out entirely - verified by the shipping
+ROM's md5 being byte-identical before and after the knob was added.
+
+
 **Open content decisions** (calls for the user, not engineering):
 
 1. Element theming - which element belongs to which region, and does the

@@ -30,6 +30,15 @@ quickstart: tools
 quickstart-testkit: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1
 
+# The same two builds, but every run starts at difficulty 3 instead of 0 -
+# for playtesting the middle of the curve without having to win up to it.
+# It is a floor, not a pin: a win still moves the counter on to 4.
+quickstart-d3: tools
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_START_DIFFICULTY=3
+
+quickstart-testkit-d3: tools
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1 QUICKSTART_START_DIFFICULTY=3
+
 # Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
 # south gate, with the entire main quest done except the Vaati fight - see
 # src/game.c. For manually walking the full overworld and recording

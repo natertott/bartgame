@@ -6711,9 +6711,35 @@ u8 QuickStartDifficultyForDrops(void) {
     return QuickStartGetDifficulty();
 }
 
+// A build-time FLOOR on the run's difficulty, for playtesting the middle of
+// the curve without having to win up to it:
+//
+//     make quickstart QUICKSTART_START_DIFFICULTY=3
+//
+// starts every run at 3 and still climbs from there on a win (the increment
+// reads through this same getter, so the first win writes 4). 0 - the
+// default, and what the shipping builds use - leaves a brand-new save at
+// the bottom of the curve.
+//
+// A floor rather than a fixed value on purpose: the difficulty counter is
+// the one genuinely persistent meta-progression number in the mode, and a
+// build that pinned it would silently discard a save's real progress the
+// moment it went past the pin.
+#ifndef QUICKSTART_START_DIFFICULTY
+#define QUICKSTART_START_DIFFICULTY 0
+#endif
+
 static u8 QuickStartGetDifficulty(void) {
-    return (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
-           (QsCheckFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
+    u8 difficulty = (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
+                    (QsCheckFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
+    // #if, not a plain if: at the default of 0 the comparison is always
+    // false for a u8, and agbcc's -Werror rejects it.
+#if QUICKSTART_START_DIFFICULTY > 0
+    if (difficulty < QUICKSTART_START_DIFFICULTY) {
+        difficulty = QUICKSTART_START_DIFFICULTY;
+    }
+#endif
+    return difficulty;
 }
 
 static void QuickStartIncrementDifficulty(void) {
