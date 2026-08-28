@@ -2067,6 +2067,106 @@ plate down and the other still up, the run between them is contested by the
 same pack, on the same live-count guard, so stepping on and off cannot
 flood the room.
 
+### Round two on frame time: the mixer's sample rate, and two latches (Aug 2026)
+
+Asked what else was on the table after the first pass. Three things were,
+and together they take a North Hyrule Field frame from 81,240 instructions
+to 42,224 at the far end.
+
+**A finer profiler first.** The sampler now attributes every sample to the
+SOURCE OBJECT it came from (linker-map section ranges) as well as the
+function, and it separates m4a's IWRAM mixer buffer
+(0x0300404c-0x030043cf) from the engine's other IWRAM-resident code. That
+turned "45% is in IWRAM somewhere" into "37.75% is the mixer, 3.7% is the
+engine's IWRAM code and the interrupt handlers".
+
+**1. Two per-frame sweeps that only needed to run once per room visit.**
+Both were ours, and both were near the top of the profile:
+
+- `QuickStartResetOtherWaveRemainders` asked all fifteen regions for an
+  8-bit counter, every frame - and every one of those bits is a routed
+  flag read. `QuickStartRegionGetAliveCount` + `QuickStartSlotBitCheck` +
+  `ReadBit` were ~4.5% of the frame between them, almost all of it this one
+  caller. Once per visit is not an approximation: the sweep clears every
+  region EXCEPT the one the player is in, and while they are standing in
+  it nothing can write another region's counter.
+- `QuickStartFuserPlacements` (new last round) walked the whole fuser table
+  with a nine-row room lookup per row, every frame, to answer a question
+  that only changes when a room loads or a fusion completes - and both of
+  those wipe the room flags, so the latch is exactly as fresh as the
+  question. Latched only on a COMPLETE pass, so a spawn refused for want of
+  a gfx slot retries next frame.
+
+Plus the region quirk hooks (the delete-vanilla-content-on-sight sweeps -
+North Hyrule Field's prologue scrub was 1.6% by itself) now run one frame
+in four. Nothing races them: the content they remove is placed at room load
+and sits there until something deletes it.
+
+Result: **`src/game.o` went from 20.5% of the frame to 6.8%**, and the whole
+frame from 81,240 to 64,205 instructions (-21%), worst frame 138,056 to
+85,200 (-38%).
+
+**2. The mixer's SAMPLE RATE is a compile-time constant.** `m4aSoundInit`
+calls `m4aSoundMode(... SOUND_MODE_FREQ_15768 ...)`, and mixing cost scales
+with it directly - m4a mixes rate/60 samples per channel per frame.
+Measured, same room and walk, one build each:
+
+| mixer rate | instr/frame | vs vanilla |
+|---|---|---|
+| 15,768 Hz (vanilla) | 74,792 | — |
+| 13,379 Hz | 71,160 | −4.9% |
+| 10,512 Hz | 66,101 | −11.6% |
+| 7,884 Hz | 61,291 | **−18.1%** |
+
+It stacks with the channel and reverb trims from the previous round,
+because they scale different parts of the same loop.
+
+**3. Two audio builds, and the numbers for both.** North Hyrule Field and
+South Hyrule Field, walking, against the ROM from before any of this work:
+
+| build | NHF instr/frame | NHF worst | SHF instr/frame |
+|---|---|---|---|
+| before this work | 81,240 | 138,056 | 65,083 |
+| default now | 64,205 (−21%) | 85,200 | 55,054 (−15%) |
+| `quickstart-audiolight` | 52,936 (−35%) | 65,800 | 48,528 (−25%) |
+| `quickstart-audiomin` | 42,224 (**−48%**) | 51,632 | 44,246 (−32%) |
+
+`audiolight` is 4 channels, no reverb, 13,379Hz; `audiomin` is the same at
+7,884Hz. At audiomin the worst North Hyrule Field frame is about 155,000
+cycles of a 280,896-cycle budget - roughly half - where before this work the
+worst frame did not fit at all. Both are audible trades and neither is the
+default.
+
+**A build-system trap worth knowing.** Neither `game.o` nor `m4a.o` depends
+on the flags that select a variant, so `make` will happily reuse an object
+built with different ones - which is how a "vanilla audio" measurement came
+back showing the mixer at half cost (it still had the 7,884Hz `m4a.o` in
+the build tree). Every quickstart target now deletes both objects before
+building, so the variants cannot cross-contaminate.
+
+**What is left, in order of size.** For a North Hyrule Field frame as it
+now stands:
+
+| | share | cuttable? |
+|---|---|---|
+| m4a mixer (IWRAM) | 40% | only by the audio knobs above - it is vanilla's |
+| `src/movement.o` | 6.4% | no - entity movement |
+| `src/game.o` | 6.6% | some; the remaining hot spots are flag reads |
+| `src/playerUtils.o` | 4.5% | no - the player |
+| `src/entity.o` | 3.7% | no - list housekeeping |
+| `src/ui.o` | 3.4% | only by dropping HUD elements the player sees |
+| engine IWRAM + IRQ | 3.1% | no |
+| `GravityUpdate` (asm) | 3.0% | per entity per frame - scales with enemy count |
+| m4a ROM half | 2.6% | with the audio knobs |
+| enemy AI (`asm/src/enemy.o` + per-enemy) | ~4% | scales with enemy count |
+
+Two honest observations from that table. **Enemy count is still the second
+lever after audio** - gravity, movement, collision and AI are all per-entity
+per-frame, and the room ceiling is 28. And the NPC script VM (~1.5%) scales
+with the number of fuser sprites in a room, which cross-region hosting can
+now push to nine; capping that lower would be a small, cheap win if it is
+ever wanted.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

@@ -346,6 +346,29 @@ void MPlayFadeOut(MusicPlayerInfo* mplayInfo, u16 speed) {
     }
 }
 
+// QUICKSTART: the mixer's SAMPLE RATE, as a build-time knob.
+//
+// This is the one number that scales the whole mixing cost - m4a mixes
+// pcmSamplesPerVBlank samples per channel per frame, and that count is
+// this rate divided by 60. Vanilla runs at 15,768Hz; the profiler puts the
+// mixer at ~38% of a North Hyrule Field frame, so the rate is the biggest
+// single lever the mode has on frame time.
+//
+// The value is the m4a frequency INDEX (1..12), matching the
+// SOUND_MODE_FREQ_* ladder above: 2 = 7,884Hz, 3 = 10,512, 4 = 13,379,
+// 5 = 15,768 (vanilla), 6 = 18,157. Lower is muddier - it is a real
+// audible drop, not a free win - so the default leaves vanilla's rate
+// exactly alone and `make quickstart-audiolight` picks the trade.
+//
+// Only the INIT rate is set here. Songs re-enter m4aSoundMode with their
+// own reverb word (see MPlayStart below), which carries no frequency bits,
+// so the rate set here holds for the whole run.
+#if defined(QUICKSTART) && defined(QUICKSTART_AUDIO_FREQ) && QUICKSTART_AUDIO_FREQ > 0
+#define QUICKSTART_SOUND_MODE_FREQ ((u32)QUICKSTART_AUDIO_FREQ << SOUND_MODE_FREQ_SHIFT)
+#else
+#define QUICKSTART_SOUND_MODE_FREQ SOUND_MODE_FREQ_15768
+#endif
+
 void m4aSoundInit(void) {
     s32 i;
 
@@ -353,7 +376,7 @@ void m4aSoundInit(void) {
 
     SoundInit(&gSoundInfo);
     MPlayExtender(gCgbChans);
-    m4aSoundMode(SOUND_MODE_DA_BIT_8 | SOUND_MODE_FREQ_15768 | (0xf << SOUND_MODE_MASVOL_SHIFT) |
+    m4aSoundMode(SOUND_MODE_DA_BIT_8 | QUICKSTART_SOUND_MODE_FREQ | (0xf << SOUND_MODE_MASVOL_SHIFT) |
                  (8 << SOUND_MODE_MAXCHN_SHIFT));
 
     for (i = 0; i < NUM_MUSIC_PLAYERS; i++) {

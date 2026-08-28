@@ -21,6 +21,7 @@ custom: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1
 
 quickstart: tools
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
 
 # The same game, but the player starts holding the kit that opens the gated
@@ -28,22 +29,35 @@ quickstart: tools
 # a route without having to win its items first - notably North Hyrule
 # Field's WNW border, the only door into Royal Valley.
 quickstart-testkit: tools
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1
 
 # The same two builds, but every run starts at difficulty 3 instead of 0 -
 # for playtesting the middle of the curve without having to win up to it.
 # It is a floor, not a pin: a win still moves the counter on to 4.
 quickstart-d3: tools
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_START_DIFFICULTY=3
 
 quickstart-testkit-d3: tools
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1 QUICKSTART_START_DIFFICULTY=3
 
-# Playtest build: the same game with m4a trimmed to four direct-sound
-# channels and no reverb, which measured 15% of a North Hyrule Field frame.
-# Fewer simultaneous sounds and no reverb tail - build it, play it, decide.
+# The two audio-trim playtest builds. m4a's mixer is ~40% of a North Hyrule
+# Field frame, so it is the largest single lever the mode has - and every
+# setting here is an audible trade, which is why they are separate builds
+# rather than a change to the default. Measured numbers are in the roadmap.
+#
+#   audiolight  4 channels, no reverb, 13,379Hz - the moderate trade
+#   audiomin    4 channels, no reverb,  7,884Hz - as far as it goes while
+#               still having music and effects at all
 quickstart-audiolight: tools
-	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0 QUICKSTART_AUDIO_FREQ=4
+
+quickstart-audiomin: tools
+	@rm -f build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0 QUICKSTART_AUDIO_FREQ=2
 
 # Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
 # south gate, with the entire main quest done except the Vaati fight - see

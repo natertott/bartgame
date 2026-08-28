@@ -5948,7 +5948,14 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     if (!QuickStartRoomSettled()) {
         return;
     }
-    if (region->quirkHook != NULL) {
+    // Phase-gated (one frame in four, slot 0). Every quirk hook is a
+    // delete-vanilla-content-on-sight sweep of the whole 72-entity table -
+    // North Hyrule Field's prologue scrub was 1.6% of the frame there on
+    // its own - and none of them is racing anything: the content they
+    // remove is placed at room load and sits there until something deletes
+    // it. Four frames of a vanilla NPC standing in a field is not visible;
+    // scanning for it sixty times a second is.
+    if (region->quirkHook != NULL && (gSave.run_frames & 3) == 0) {
         region->quirkHook();
     }
     // The intro hint fires once per run in whichever region the player
@@ -17510,9 +17517,23 @@ static void QuickStartRoofMonitor(void) {
 // the region persist" half of the rule, and it makes the fusion room-reload
 // free: that reload re-enters the SAME region room. Guarded by the settled
 // predicate so a transition's torn frames can't misattribute the player.
+// Room flag 46: this visit has already done the sweep. It is the second
+// most expensive thing this file did per frame (measured: the loop below
+// asks fifteen regions for an 8-bit counter, and every one of those bits
+// is a routed flag read - together QuickStartRegionGetAliveCount,
+// QuickStartSlotBitCheck and ReadBit were ~4.5% of a North Hyrule Field
+// frame, almost all of it this caller).
+//
+// Once per visit is not an approximation here, it is the exact semantics:
+// the sweep clears every region EXCEPT the one the player is standing in,
+// and while they are standing in it nothing can write another region's
+// counter. The room flags die with the visit, so the next room entry does
+// it again.
+#define QUICKSTART_REMAINDERS_SWEPT_FLAG 46
+
 static void QuickStartResetOtherWaveRemainders(void) {
     s32 i, current;
-    if (!QuickStartRoomSettled()) {
+    if (!QuickStartRoomSettled() || QsCheckRoomFlag(QUICKSTART_REMAINDERS_SWEPT_FLAG)) {
         return;
     }
     if (QuickStartIsHubRoom()) {
@@ -17528,6 +17549,7 @@ static void QuickStartResetOtherWaveRemainders(void) {
             QuickStartRegionSetAliveCount(i, 0);
         }
     }
+    QsSetRoomFlag(QUICKSTART_REMAINDERS_SWEPT_FLAG);
 }
 
 // Make a reward on the floor read as a reward.
@@ -19457,9 +19479,25 @@ static void QuickStartBrushFusionPayout(void) {
     }
 }
 
+// Room flag 47: every fuser this room owes is standing. The placement pass
+// below is a full ordered walk of the fuser table with a nine-row room
+// lookup per row, and it was 1.6% of a North Hyrule Field frame on its own
+// (QuickStartFuserPlacements plus QuickStartFuserSpotRoomIndex) - to
+// answer a question whose answer only changes when a room loads or a
+// fusion completes. Both of those events wipe the room flags: a fusion
+// reloads the room (QuickStartReloadRoomAfterFusion), and a room load
+// resets gRoomVars by definition. So the latch is exactly as fresh as the
+// question.
+//
+// Latched only on a COMPLETE pass. A spawn refused for want of a gfx slot
+// leaves the flag clear, so the next frame tries again - which is the
+// behaviour the gfx reserve exists to make possible.
+#define QUICKSTART_FUSERS_PLACED_FLAG 47
+
 static void QuickStartSpawnRegionFusers(void) {
     u8 hostRoom[34], hostSpot[34]; // QUICKSTART_FUSER_COUNT
     s32 i, hereRoom;
+    bool32 complete = TRUE;
     // Settled-room guard (QuickStartRoomSettled): this runs OUTSIDE the
     // region dispatch, and its "already spawned" identity is an exact
     // origin-relative coordinate match - computed against a mid-transition
@@ -19467,6 +19505,9 @@ static void QuickStartSpawnRegionFusers(void) {
     // then fail to recognize it after the room settles, leaving an orphan
     // and spawning a duplicate.
     if (!QuickStartRoomSettled()) {
+        return;
+    }
+    if (QsCheckRoomFlag(QUICKSTART_FUSERS_PLACED_FLAG)) {
         return;
     }
     hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
@@ -19517,7 +19558,8 @@ static void QuickStartSpawnRegionFusers(void) {
             continue;
         }
         if (!QuickStartGfxBudgetForSpawn()) {
-            return;
+            complete = FALSE;
+            break;
         }
         {
             // ZELDA for the same reason the merchant and the ? room signs
@@ -19528,7 +19570,8 @@ static void QuickStartSpawnRegionFusers(void) {
             // sprite" call - a real fusion-stone sprite is the follow-up.
             Entity* npc = CreateNPC(ZELDA, 0, 0);
             if (npc == NULL) {
-                return;
+                complete = FALSE;
+                break;
             }
             npc->x.HALF.HI = worldX;
             npc->y.HALF.HI = worldY;
@@ -19577,6 +19620,9 @@ static void QuickStartSpawnRegionFusers(void) {
             npc->direction = IdleSouth;
             QuickStartMakeNpcFuser(npc, tingle->kinstoneId);
         }
+    }
+    if (complete) {
+        QsSetRoomFlag(QUICKSTART_FUSERS_PLACED_FLAG);
     }
 }
 
