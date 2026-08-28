@@ -2519,6 +2519,12 @@ const u8* const gCustomStrings[] = {
     // QuickStartBrushFusionPayout) - a guarded clearing, or a quiet one.
     [237] = (const u8*)"The branches part... and\nsomething was WAITING in\nthere. Cut your way to it!",
     [238] = (const u8*)"The branches part. A\nlittle clearing, and a\nlittle prize in it.",
+    // The decoy switches' two wrong answers. Per the user: "something bad
+    // should happen if you press the wrong switch... enemies spawn, you
+    // lose a heart, you lose some rupees." The dud takes the purse, the
+    // trap cages you and calls in company.
+    [239] = (const u8*)"WRONG. The floor drinks\nyour rupees and the\nswitch clicks shut.",
+    [240] = (const u8*)"WRONG. The room closes\naround you - and you are\nnot alone in it!",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 
@@ -12265,18 +12271,37 @@ static void QuickStartClampInboard(s32* x, s32* y) {
     }
 }
 
+// Is a puzzle fixture already standing on this tile?
+//
+// PRESSURE_PLATE belongs here as much as LIGHTABLE_SWITCH does, and its
+// absence is a shipped bug the user photographed: the linger-plate variant
+// deals two plates, this test only ever matched switches, so the second
+// plate's search happily returned the tile the first one was already
+// standing on. The two plates rendered on top of each other - and with
+// them one tile apart, "hold both down at once" is one step, which is the
+// other half of the report ("it seems too easy").
 static bool32 QuickStartLeverAtTile(s32 tx, s32 ty) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH &&
-            (ent->x.HALF.HI - gRoomControls.origin_x) >> 4 == tx &&
+        if (ent->kind != OBJECT || (ent->id != LIGHTABLE_SWITCH && ent->id != PRESSURE_PLATE)) {
+            continue;
+        }
+        if ((ent->x.HALF.HI - gRoomControls.origin_x) >> 4 == tx &&
             (ent->y.HALF.HI - gRoomControls.origin_y) >> 4 == ty) {
             return TRUE;
         }
     }
     return FALSE;
 }
+
+// How far apart the two linger plates must stand, in tiles, and the floor
+// the search walks down to. Six is a real walk - about a second at Link's
+// pace, against a linger that starts at five seconds and tightens to under
+// three - and three is the tightest deal that still reads as two separate
+// fixtures with a step between them.
+#define QUICKSTART_PLATE_APART 6
+#define QUICKSTART_PLATE_APART_MIN 3
 
 // Where a puzzle switch may be dealt: open ground, inboard of the door
 // band, not on another switch, and at least minTiles from the cage anchor
@@ -12316,8 +12341,12 @@ static void QuickStartClampToBand(s32* x, s32* y) {
     }
 }
 
-static bool32 QuickStartGateSwitchTile(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s32 minTiles, s16* outX,
-                                       s16* outY) {
+// avoidTX/avoidTY with avoidTiles > 0: a SECOND point the spot must keep
+// its distance from, on top of the cage. Only the linger plates use it -
+// plate two has to be a walk away from plate one, or the puzzle is one
+// step - and -1 opts out.
+static bool32 QuickStartGateSwitchTileAvoiding(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s32 minTiles,
+                                               s32 avoidTX, s32 avoidTY, s32 avoidTiles, s16* outX, s16* outY) {
     // The player's own anchor first (they just walked in, so a tile near
     // them is both reachable and obvious), then anchors pushed four tiles
     // out, then the four corners of the band - the last resort for a room
@@ -12365,11 +12394,29 @@ static bool32 QuickStartGateSwitchTile(s32 anchorX, s32 anchorY, s32 ptx, s32 pt
         if (dist < minTiles) {
             continue;
         }
+        if (avoidTiles > 0) {
+            dx = tx - avoidTX;
+            if (dx < 0) {
+                dx = -dx;
+            }
+            dy = ty - avoidTY;
+            if (dy < 0) {
+                dy = -dy;
+            }
+            if (((dx > dy) ? dx : dy) < avoidTiles) {
+                continue;
+            }
+        }
         *outX = lx;
         *outY = ly;
         return TRUE;
     }
     return FALSE;
+}
+
+static bool32 QuickStartGateSwitchTile(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s32 minTiles, s16* outX,
+                                       s16* outY) {
+    return QuickStartGateSwitchTileAvoiding(anchorX, anchorY, ptx, pty, minTiles, 0, 0, 0, outX, outY);
 }
 
 // The same search, relaxing the separation until something fits. 2 is the
@@ -12380,6 +12427,26 @@ static bool32 QuickStartGateSwitchSpot(s32 anchorX, s32 anchorY, s32 ptx, s32 pt
     for (want = QUICKSTART_GATE_LEVER_MIN_TILES; want >= 2; want--) {
         if (QuickStartGateSwitchTile(anchorX, anchorY, ptx, pty, want, outX, outY)) {
             return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The plate-two search: the cage separation walks down as usual, and the
+// distance from plate one walks down with it, but never below
+// QUICKSTART_PLATE_APART_MIN. A deal that cannot even manage that is a
+// room too small to host the variant at all, and the caller drops the
+// second plate rather than stacking it on the first - a one-plate deal
+// leaves a liftable trap-pot cage, which is a cost, not a lockout.
+static bool32 QuickStartGatePlateSpot(s32 anchorX, s32 anchorY, s32 ptx, s32 pty, s32 avoidTX, s32 avoidTY,
+                                      s16* outX, s16* outY) {
+    s32 want, apart;
+    for (apart = QUICKSTART_PLATE_APART; apart >= QUICKSTART_PLATE_APART_MIN; apart--) {
+        for (want = QUICKSTART_GATE_LEVER_MIN_TILES; want >= 2; want--) {
+            if (QuickStartGateSwitchTileAvoiding(anchorX, anchorY, ptx, pty, want, avoidTX, avoidTY, apart, outX,
+                                                 outY)) {
+                return TRUE;
+            }
         }
     }
     return FALSE;
@@ -12610,23 +12677,71 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 // the room (the anchor mirrored over the cage), so the
                 // route between them crosses the prize. Both must be down
                 // AT ONCE; the linger is the clock, tightening with
-                // difficulty. A short deal (a room too cramped for both
-                // plates) is survivable the same way every cage is: the
-                // ring is trap pots, liftable at the price of a primed one.
+                // difficulty, and the two are dealt a real walk apart (see
+                // QuickStartGatePlateSpot - they used to be able to land on
+                // the same tile, which made the puzzle one step). A room
+                // that cannot hold both falls back to the single-switch
+                // gate below rather than dealing an unsolvable one.
                 s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
                 s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
                 s32 linger = 300 - (s32)QuickStartGetDifficulty() * 12;
+                s16 firstX = 0, firstY = 0;
+                bool32 haveFirst = FALSE;
+                bool32 placed = FALSE;
                 s32 k;
                 QuickStartClampInboard(&px, &py);
                 for (k = 0; k < 2; k++) {
                     s16 lx, ly;
                     s32 ax = (k == 0) ? px : (ptx * 16 + 8) * 2 - px;
                     s32 ay = (k == 0) ? py : (pty * 16 + 8) * 2 - py;
+                    bool32 got;
                     QuickStartClampInboard(&ax, &ay);
-                    if (QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly)) {
-                        QuickStartSpawnPuzzlePlate(lx, ly, (u32)k, (u32)linger);
+                    // Plate two is searched with plate one as a second
+                    // point to keep away from. Mirroring the anchor over
+                    // the cage was supposed to do that on its own, but the
+                    // mirror is CLAMPED back inboard, and in a room as
+                    // small as a dojo the clamp puts it straight back where
+                    // it started - which is how the pair ended up stacked.
+                    if (k == 1 && haveFirst) {
+                        got = QuickStartGatePlateSpot(ax, ay, ptx, pty, firstX >> 4, firstY >> 4, &lx, &ly);
+                    } else {
+                        got = QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly);
+                    }
+                    if (!got) {
+                        continue;
+                    }
+                    if (QuickStartSpawnPuzzlePlate(lx, ly, (u32)k, (u32)linger) == NULL) {
+                        continue;
+                    }
+                    if (k == 0) {
+                        firstX = lx;
+                        firstY = ly;
+                        haveFirst = TRUE;
+                    } else {
+                        placed = TRUE;
                     }
                 }
+                if (!placed) {
+                    // The room cannot hold two plates a walk apart. That
+                    // used to deal ONE, which is not a hard puzzle - it is
+                    // an unsolvable one: both bits can never be up, so the
+                    // cage never opens and the only way to the prize is
+                    // lifting a primed pot. Sweep the lone plate and fall
+                    // through to the single-switch gate below, which any
+                    // room that hosts this site can hold.
+                    s32 e;
+                    for (e = 0; e < MAX_ENTITIES; e++) {
+                        Entity* ent = &gEntities[e].base;
+                        if (ent->kind == OBJECT && ent->id == PRESSURE_PLATE &&
+                            QuickStartEntityInCurrentRoom(ent)) {
+                            DeleteEntity(ent);
+                        }
+                    }
+                    QsClearRoomFlag(flagBase + 7);
+                }
+            }
+            if (QsCheckRoomFlag(flagBase + 7)) {
+                // plates dealt - nothing more to place
             } else if (!decoy && lever == NULL) {
                 s16 lx, ly;
                 s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
@@ -12716,6 +12831,13 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 6);
                 QuickStartGateOpen(ptx, pty);
                 SoundReq(SFX_SECRET);
+            } else if (!QsCheckRoomFlag(flagBase + 6) &&
+                       (QsCheckRoomFlag(104 + 0) || QsCheckRoomFlag(104 + 1))) {
+                // One plate down and the other still up: the run between
+                // them is the puzzle, so it is contested. Same pack the
+                // closing gate arms, and the same live-count guard, so
+                // stepping on and off cannot flood the room.
+                QuickStartGateSpawnPressure(ptx, pty);
             }
             return FALSE;
         }
@@ -12771,16 +12893,41 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                         // feet and only fills open tiles, so this rings
                         // them in primed pots - lift one and eat the
                         // blast, or hope the room left a gap.
+                        //
+                        // And now company with it. Per the user, a wrong
+                        // switch has to cost something; being ringed in
+                        // was easy to miss, because a trap-pot cage is
+                        // liftable and the player often walked straight
+                        // out of it without noticing they had sprung
+                        // anything. A pack landing on the cage cannot be
+                        // missed.
                         s32 playerTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
                         s32 playerTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
                         QuickStartGateClose(playerTX, playerTY, 0);
+                        QuickStartGateSpawnPressure(playerTX, playerTY);
+                        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 240), 0);
                         SoundReq(SFX_MENU_ERROR);
                         break;
                     }
-                    default:
-                        // The dud: the switch's own click (lightableSwitch's
-                        // SFX_110) is all the feedback there is.
+                    default: {
+                        // The dud used to be exactly nothing - the
+                        // switch's own click and no more - which is what
+                        // made a three-way gamble read as "press them
+                        // until one works". It takes the purse now: a
+                        // difficulty-scaled toll, and never more than the
+                        // player is carrying, so it is a setback rather
+                        // than a wipe. A player with nothing to take gets
+                        // the sound and the sting of having spent their
+                        // guess.
+                        u16 toll = (u16)(20 + (s32)QuickStartGetDifficulty() * 5);
+                        if (gSave.stats.rupees != 0) {
+                            gSave.stats.rupees =
+                                (gSave.stats.rupees > toll) ? (u16)(gSave.stats.rupees - toll) : 0;
+                            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 239), 0);
+                        }
+                        SoundReq(SFX_MENU_ERROR);
                         break;
+                    }
                 }
             }
             // Falls through to the shared clock below rather than
@@ -17482,6 +17629,62 @@ static bool32 QuickStartPhase(u32 slot) {
     return (gSave.run_frames & 7) == (slot & 7);
 }
 
+// --- Trimming the sound mixer, as a build-time knob ----------------------
+//
+// MEASURED, in the same room and by the same profiler as the frame-phase
+// work above (NHF, walking, instructions per frame):
+//
+//   as shipped                      68,390   mixer 43% of the frame
+//   reverb off                      65,719   -3.9%
+//   8 -> 6 direct-sound channels    67,149   -1.8%
+//   8 -> 4 direct-sound channels    61,005   -10.8%
+//   reverb off + 4 channels         58,056   -15.1%
+//   direct sound OFF entirely       50,464   -26.2%
+//
+// So the answer to "does turning the mixer off give us 40% back" is no:
+// silencing direct sound completely - no music, no sound effects - is
+// worth 26%. The 43% the profiler attributes to the IWRAM mixer includes
+// the DMA and interrupt path that runs whatever the channels are doing.
+// The honest middle is four channels with the reverb off: 15% of the frame
+// for fewer simultaneous sounds (a new effect cuts an old one off sooner)
+// and no reverb tail.
+//
+// That is a taste decision on real hardware, not a code decision, so it
+// ships as a knob rather than a change: `make quickstart-audiolight`
+// builds with four channels and no reverb, and the default build is
+// untouched (both values 0/-1, and the whole function compiles out).
+//
+// The fields are m4a's own SoundInfo, whose struct lives in src/gba/m4a.c
+// rather than a header, so they are reached by offset through the BIOS's
+// sound-info pointer at 0x03007FF0: reverb at +5, maxChannels at +6. The
+// ident guard is m4a's own lock - the field holds 'hsmS' except during a
+// sensitive operation - so a write can never land mid-mix.
+#ifndef QUICKSTART_AUDIO_CHANNELS
+#define QUICKSTART_AUDIO_CHANNELS 0 // 0 = leave vanilla's 8 alone
+#endif
+#ifndef QUICKSTART_AUDIO_REVERB
+#define QUICKSTART_AUDIO_REVERB (-1) // -1 = leave vanilla's alone
+#endif
+
+#if QUICKSTART_AUDIO_CHANNELS > 0 || QUICKSTART_AUDIO_REVERB >= 0
+// m4a.c's own ID_NUMBER, spelled out: the multi-char constant 'hsmS'
+// is (('h'<<24)|('s'<<16)|('m'<<8)|'S'). Writing it byte-reversed is how
+// the first attempt at this silently did nothing at all.
+#define QUICKSTART_SOUND_INFO_MAGIC 0x68736D53
+static void QuickStartAudioTrim(void) {
+    u8* info = *(u8**)0x03007FF0;
+    if (info == NULL || *(u32*)info != QUICKSTART_SOUND_INFO_MAGIC) {
+        return;
+    }
+#if QUICKSTART_AUDIO_CHANNELS > 0
+    info[6] = QUICKSTART_AUDIO_CHANNELS;
+#endif
+#if QUICKSTART_AUDIO_REVERB >= 0
+    info[5] = QUICKSTART_AUDIO_REVERB;
+#endif
+}
+#endif
+
 static void QuickStartRoomMonitor(void) {
     s32 regionSlot;
     // Run clock for the scoring system's time bonus (QuickStartComputeScore
@@ -17583,6 +17786,16 @@ static void QuickStartRoomMonitor(void) {
     QuickStartUpdateSwitchBridges();
     // Global invariant, so it runs everywhere rather than only in the
     // regions that spawn: keep free GFX slots above the reserve.
+#if QUICKSTART_AUDIO_CHANNELS > 0 || QUICKSTART_AUDIO_REVERB >= 0
+    // Slot 4 with the boulder holes. Re-asserted rather than set once at
+    // run start: starting a song re-runs m4a's own setup, which would put
+    // vanilla's values back. The call site is inside the same #if as the
+    // function so the default build carries no trace of it - verified by
+    // md5: the default ROM is byte-identical with and without the knob.
+    if (QuickStartPhase(4)) {
+        QuickStartAudioTrim();
+    }
+#endif
     // NOT staggered, and the invariant checker is why: at one frame in
     // eight the free-slot count dipped to zero between enforcements in
     // North Hyrule Field and Lon Lon Ranch (measured - the checker samples

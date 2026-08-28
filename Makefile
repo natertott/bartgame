@@ -39,6 +39,12 @@ quickstart-d3: tools
 quickstart-testkit-d3: tools
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1 QUICKSTART_START_DIFFICULTY=3
 
+# Playtest build: the same game with m4a trimmed to four direct-sound
+# channels and no reverb, which measured 15% of a North Hyrule Field frame.
+# Fewer simultaneous sounds and no reverb tail - build it, play it, decide.
+quickstart-audiolight: tools
+	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0
+
 # Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
 # south gate, with the entire main quest done except the Vaati fight - see
 # src/game.c. For manually walking the full overworld and recording

@@ -67,6 +67,12 @@ QUICKSTART_TESTKIT ?=
 # run still climbs from there on a win. 0 (the default) is the shipping
 # curve; `make quickstart-d3` passes 3. See src/game.c.
 QUICKSTART_START_DIFFICULTY ?= 0
+# Playtest build only: trim m4a's mixer to buy frame time. 0 / -1 leave
+# vanilla's 8 channels and its reverb alone (the default, and the whole
+# thing compiles out); `make quickstart-audiolight` passes 4 and 0. See the
+# measurements above QuickStartAudioTrim in src/game.c.
+QUICKSTART_AUDIO_CHANNELS ?= 0
+QUICKSTART_AUDIO_REVERB ?= -1
 # The hub: Home of the Wind Tribe, third floor. See docs/QUICKSTART_HUB.md.
 # Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN. Pointing these back
 # there no longer restores the old start: Castor Darknut's waves, its reward
@@ -130,7 +136,7 @@ $(BUILD_DIR)/enum_include/%.inc: include/%.h
 # agbcc includes are separate because we don't want dependency scanning on them
 CINCLUDE := -I include -I $(BUILD_DIR)
 CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE) \
-	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM) -DQUICKSTART_START_DIFFICULTY=$(QUICKSTART_START_DIFFICULTY)) \
+	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM) -DQUICKSTART_START_DIFFICULTY=$(QUICKSTART_START_DIFFICULTY) -DQUICKSTART_AUDIO_CHANNELS=$(QUICKSTART_AUDIO_CHANNELS) '-DQUICKSTART_AUDIO_REVERB=($(QUICKSTART_AUDIO_REVERB))') \
 	$(if $(QUICKSTART_TESTKIT),-DQUICKSTART_TESTKIT) \
 	$(if $(MAPEXPLORE),-DMAPEXPLORE -DMAPEXPLORE_AREA=$(MAPEXPLORE_AREA) -DMAPEXPLORE_ROOM=$(MAPEXPLORE_ROOM))
 CFLAGS := -O2 -Wimplicit -Wparentheses -Werror -Wno-multichar -g3

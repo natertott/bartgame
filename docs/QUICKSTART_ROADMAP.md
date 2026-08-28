@@ -1990,6 +1990,83 @@ slots, which stayed above its floor, and the fuser change is not the cause
 (measured: four fuser sprites in the room, all sharing one sheet). Worth
 tightening the wave's own sheet budget by one next time this area is open.
 
+### Can we turn the sound mixer off? Measured (Aug 2026)
+
+Asked directly after the profiling round: the mixer is 40%+ of the frame -
+would switching it off hand that back? **No, and the honest number is 26%.**
+Every row below is the same room, the same walk, the same profiler, with
+one thing changed in m4a's live `SoundInfo`:
+
+| | instr/frame | vs shipped |
+|---|---|---|
+| as shipped (8 channels, reverb 40) | 68,390 | — |
+| reverb off | 65,719 | −3.9% |
+| 8 → 6 direct-sound channels | 67,149 | −1.8% |
+| 8 → 4 direct-sound channels | 61,005 | **−10.8%** |
+| reverb off + 4 channels | 58,056 | **−15.1%** |
+| direct sound OFF entirely | 50,464 | **−26.2%** |
+
+The gap between "the profiler says 43% is in the mixer" and "silencing it
+gives 26% back" is the DMA and interrupt path, which runs whatever the
+channels are doing. Silencing direct sound also means no music and no
+sound effects, which is not a shipping option.
+
+Two things that do NOT work: the mixer FREQUENCY field is only read when
+m4a initialises, so writing it live changes nothing (measured: 0.0%); and a
+song change re-runs m4a's setup and puts vanilla's reverb back (measured:
+40 in the hub, 30 in North Hyrule Field on the stock build), so anything we
+set has to be re-asserted rather than set once.
+
+**Shipped as a knob, not a change.** `make quickstart-audiolight` builds
+with four channels and no reverb; the default build is untouched and
+byte-identical with the knob in the tree (verified by md5). On that build,
+North Hyrule Field walking goes 66,821 → 58,618 instructions per frame and
+the worst frame 148,416 → 92,040. The cost is audible: fewer simultaneous
+sounds, so a new effect cuts an older one off sooner, and no reverb tail.
+Whether that trade is worth it is a listening decision on real hardware.
+
+### The dojo switch puzzle: two plates in one tile, and no penalty (Aug 2026)
+
+Photographed in play: the two linger plates spawned on top of each other,
+and the puzzle read as "press one, nothing happens; press the other, take
+the prize."
+
+**Why they stacked.** `QuickStartLeverAtTile` - the "is a fixture already
+here" test the spot search runs - only ever matched `LIGHTABLE_SWITCH`.
+Pressure plates were invisible to it, so plate two's search happily
+returned the tile plate one was standing on. The mirrored anchor was
+supposed to throw plate two across the room, but the mirror is CLAMPED back
+inboard, and in a room as small as a dojo the clamp puts it straight back
+where it started.
+
+Three fixes: the occupancy test sees plates now; plate two is searched with
+plate one as a second point to keep its distance from (six tiles, walked
+down to three); and a room that cannot hold both a walk apart falls back to
+the single-switch gate instead of dealing ONE plate - which was not a hard
+puzzle but an unsolvable one, since both bits can never be up. Measured
+across five site rooms and two seeds: every plate deal is now 6-8 tiles
+apart (average 7.2), and the one room too small for the variant
+(ROOM_DOJOS_TO_SCARBLADE) now deals the gate instead.
+
+**And the wrong answer costs something.** Per the user: "something bad
+should happen if you press the wrong switch - enemies spawn, you lose a
+heart, you lose some rupees." The decoy variant deals three switches as
+prize / trap / dud, and the dud used to be *exactly nothing* - the switch's
+own click - which is what made a three-way gamble read as "press them until
+one works". Now:
+
+- **dud**: a rupee toll, `20 + difficulty * 5`, never more than the player
+  is carrying, with its own line so the player knows what just happened;
+- **trap**: still rings the player in primed pots, and now calls in the
+  beetle-and-Bobomb pack as well. Being ringed in was easy to miss - a
+  trap-pot cage is liftable, and players walked out of it without noticing
+  they had sprung anything. A pack landing on them cannot be missed.
+
+The linger plates got the same treatment from the other side: with one
+plate down and the other still up, the run between them is contested by the
+same pack, on the same live-count guard, so stepping on and off cannot
+flood the room.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
