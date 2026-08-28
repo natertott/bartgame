@@ -1761,6 +1761,235 @@ counting pass and the spawning pass have to see the same field, or the
 winner index lands on a pot that never spawned and the room is
 unwinnable.
 
+### Travelling fusions, and fuser sprites that actually move (Aug 2026)
+
+Two things, both from play. "The Zelda sprites always spawn into the exact
+same positions and it gets a bit boring", and a new mechanic: "when the
+player fuses kinstones with a Zelda sprite, the place it unlocks can be up
+to 1 world region away... sprites in EH can unlock things in Lon Lon Ranch,
+NHF sprites can unlock things in Trilby Highlands".
+
+**Why the positions never moved.** The old rule was
+`slot = (indexInRegion * 4 + a 4-bit run roll + roomIndex * 2) % 9`. Four
+and nine are coprime, so no two fusers in a room ever collided - but the
+whole expression is one fixed order with a per-run STARTING POINT. North
+Hyrule Field's six fusers took the same six spots in the same sequence
+every run, rotated. Sixteen rolls, nine rotations, one arrangement.
+
+It is a real permutation now: a seed-derived STEP through the nine spots
+(always coprime with nine, so still injective) plus a seed-derived offset.
+54 distinct layouts per room instead of 9 rotations of one.
+
+**How a fusion travels.** A fusion's payload is vanilla world-event data
+and fires where `gWorldEvents` says it does, so what moves is the SPRITE:
+the sprite offering the Trilby fusion may be standing in North Hyrule
+Field. Candidate hosts are the fusion's own room plus every fuser room
+whose named region is adjacent on the map graph - the same
+`sQuickStartRingAdjacency` the element's hiding place already uses - so a
+fusion can still turn up exactly where it always did.
+
+Three rules keep it from breaking a run:
+
+- **Castor Wilds exports only.** Its region is a swamp crossed with the
+  Pegasus Boots or Roc's Cape, so a Western Wood fusion hosted there would
+  be unreachable until the player finds one. Fusions homed in the Wilds may
+  travel out; nothing travels in.
+- **Nine per room, the spot count.** A fusion that would be the tenth falls
+  back to its home room, then to any room with space. 34 fusions, 81 spots.
+- **One ordered pass.** The whole assignment is resolved in a single pass
+  over the table with a live count per room, which is what makes the answer
+  identical no matter which room the player is standing in when it is
+  asked. Anything less than that and a fusion could exist in two rooms, or
+  neither.
+
+Measured over three pinned seeds: all 34 fusers standing in every seed, and
+the spread moves a long way run to run - North Hyrule Field hosted 8, then
+3, then 3; South Hyrule Field 3, 5, 6; Trilby 4, 5, 7; Castor Wilds 4, 2, 2
+(never more than the 5 it homes, as designed). Spot indices differ per seed
+in every room.
+
+The invariant checker's fuser tier moved with it: a room's population is a
+per-run draw now, so "as many occupied spots as fusers homed here" is no
+longer the invariant. Every spot room is walked (not just the ones that
+home a fuser), every spot is still verified reachable and open, and the
+count check is global - all 34 fusions standing somewhere, exactly once.
+
+### The Pacci drop: Castor Wilds and the Wind Ruins need swamp kit (Aug 2026)
+
+User report: taking the Cane of Pacci in the hub's gift round and being
+dropped into Castor Wilds and the Wind Ruins, which are islands in a swamp
+that needs the Pegasus Boots or Roc's Cape to cross. A player dropped there
+with neither can neither explore the region nor leave it.
+
+The check could not live in the draw. The drop region is rolled on frame
+one, well before the gift round has happened, so nothing about the player's
+kit is known yet. It lives at the FALL instead
+(`QuickStartDropRegionIndexUsable`), which is the first moment it is - and
+the correction is latched back into the drop bits rather than recomputed,
+so "every fall within a run lands in the same place" still holds after the
+player finds a pair of boots halfway through.
+
+Measured, forcing the drop to each of the three swamp rows: with no kit all
+three redirect (to North Hyrule Field on the test seed), and the control
+row is untouched; with the Pegasus Boots written into the inventory, Castor
+Wilds and the Ruins Entrance both land where they were drawn.
+
+### ? room spawns keep clear of the door (Aug 2026)
+
+"For certain ? rooms, especially the smaller ones, we need to make sure
+that enemies spawn sufficiently away from the door entrance... sometimes
+during waves an enemy will spawn under them. The ball-and-chain enemy also
+poses a problem... they can hit the player immediately on entrance causing
+an auto-death."
+
+The placer's ring search starts at the content spot, which in a cramped
+room is where the player is standing when the room settles. Two radii now,
+because reach differs: two tiles for everything, four for the
+BALL_CHAIN_SOLIDER, whose swing covers the ring around it. The wider one is
+enforced only while the placer is still being picky - a third relax pass
+drops a long-reach kind back to the ordinary two rather than spawning
+nothing, which would hand the room's reward over uncontested. The
+empty-wave fallback added last week was rewritten for the same reason: it
+used to drop a body on the content spot, which is exactly the ambush this
+rule exists to prevent, and now walks out to the first open tile that
+clears the player.
+
+Measured in the eight tightest rooms that host a gauntlet: the closest
+spawn to the player is 3 tiles in seven of them and 5 in the eighth, with
+3-4 bodies landing in each.
+
+### The large-area lag, profiled properly (Aug 2026)
+
+Reported again from two devices - an iPhone 15 running Delta and a 2025
+MacBook Air running mGBA - with the same signature both times: entering
+North or South Hyrule Field makes the gameplay lag, while **the FPS readout
+stays at 60 and the music stays in time**. Earlier rounds moved enemy
+counts, enemy variety and the RAM/VRAM caps and none of it helped, which is
+what finally made it clear that the question was wrong: the frame rate was
+never the problem.
+
+**What that signature actually means.** The LCD refreshes at 60Hz no matter
+what the CPU is doing, and the sound driver is fed from the VBlank
+interrupt, so both keep perfect time even when the game itself is late.
+What can be late is the main loop: it does a frame's work, then waits for
+the next VBlank. If the work overruns the frame's 280,896 cycles, the wait
+returns a vblank LATER than it should and the game updates once per two
+refreshes. An emulator reports 60 FPS throughout; the music never stutters;
+the game moves in lurches. That is the report, exactly.
+
+**A profiler, finally.** mgba's Python bindings can single-step, and they
+step about 1.4 million instructions a second, which is fast enough to
+profile a real frame. `prof2` steps the CPU, samples the PC every 8
+instructions, resolves each sample against `nm tmc.elf` (every local static,
+not just the linker map's exported symbols - the first pass attributed a
+quarter of the file to `GameTask` because the statics after it had no
+entries), and brackets frames on `gRoomTransition.frameCount`, which
+GameTask bumps once per main-loop pass. Bracketing on the BIOS halt does
+not work: every interrupt enters the BIOS, so the halt is not a frame
+boundary.
+
+Two things that do NOT work and are worth writing down. Counting samples
+inside the BIOS to measure idle time gives nonsense, because mgba collapses
+the whole VBlankIntrWait halt into a single step - the first run of this
+reported "99% busy" everywhere, including in an empty room. And the
+logic-frame-rate check (frameCount increments per 600 video frames) reads
+100% in every region room in this harness, standing still or walking, at
+difficulty 0 and 12 - so the overrun is not reproducible here, only the
+load that causes it.
+
+**What one frame costs.** Instructions per frame, North Hyrule Field:
+
+| | before | after |
+|---|---|---|
+| standing still | 60,210 | 52,621 |
+| walking (average) | 85,896 | 75,175 |
+| walking (worst frame) | **140,960** | **90,536** |
+| QuickStart* share, walking | 17.3% | 9.5% |
+| QuickStart* share, standing | 24.4% | 13.2% |
+
+THUMB code fetched from ROM averages around three cycles an instruction, so
+a 141,000-instruction frame is roughly 420,000 cycles against a budget of
+280,896. **Those frames could not fit**, and a frame that does not fit is
+the lurch. The average frame fit; the peaks did not.
+
+**Where it goes.** Of the frame as it stands: about 40% is the M4A sound
+mixer (the `SoundMainRAM` copy in IWRAM at 0x030042e8-0x0300432c - vanilla,
+untouched, and confirmed running vanilla's own settings: 8 channels,
+frequency index 5, `maxLines` 0), about 10-13% is ours, and the rest is the
+engine's own entity, collision and drawing work over the 17-29 enemies a
+region wave puts on the field.
+
+**Two suspicions ruled out with measurements.** The GamePak wait states are
+already optimal - `REG_WAITCNT` reads 0x4314 at runtime, which is WS0 3/1
+with the prefetch buffer ON, so the ROM is not being read slowly. And the
+sound engine is configured exactly as vanilla configures it, so nothing we
+re-appropriated made the mixer more expensive.
+
+**The fix: a frame-phase scheduler.** `QuickStartRoomMonitor` was calling
+about fifty of our monitors on every single frame. Most are not per-frame
+work by nature - they are idempotent sweeps that fix up world state, and
+several walk the whole 72-entity table to do it. The worst single one,
+`QuickStartSpawnRegionFusers`, walked the entity table once per fuser in
+the room (six times in North Hyrule Field) every frame, to answer a
+question that only changes when a room loads or a fusion completes.
+
+`QuickStartPhase(slot)` is true on one frame in eight, and callers pass
+distinct slots so the work spreads across the cycle instead of bunching:
+
+| slot | what runs there |
+|---|---|
+| 0 | placed-item timer refresh (the timer it writes is 600 frames long) |
+| 1 | the nine latched one-shot per-run draws |
+| 2 | room-fixture fixups, reward sparkles |
+| 3 | chest restock, Boomerang chamber, ranch-house doors |
+| 4 | boulder-hole settling |
+| 6 | region fusers; the stuck-wave rescue |
+| 7 | the Tingle and brush fusion payouts |
+
+Plus the region monitor's alive-count bookkeeping, which was a full entity
+sweep and an 8-bit flag read every frame and is 3.3% of a region frame on
+its own; nothing reads the stored remainder until the player leaves the
+room, and the update is a min-update, so a later sample can only be more
+correct.
+
+What is deliberately NOT staggered: anything that has to observe a single
+frame to be correct (containment, door redirects, the handicap monitor, the
+food effects, the HUD, the region monitor itself, every ? room's own
+content dispatch), and the two global safety valves. The GFX reserve was
+staggered in the first attempt and the invariant checker caught it
+immediately - free slots dipped to zero between enforcements in two
+regions - so it went back to every frame, which it can afford: it never
+appeared in the profile at all.
+
+**Where the remaining headroom is**, in order of size:
+
+1. **The 40% audio mixer.** Vanilla's, and the biggest single item in the
+   frame. `maxLines` is 0 (unlimited); setting it would cap the mixer's
+   share at the cost of audio quality under load. Worth an experiment.
+2. **Enemy count.** After audio, the engine's per-entity work over 17-29
+   enemies is the frame. The room ceiling is 28; every enemy removed is
+   real cycles back. This is the lever previous rounds pulled, and it does
+   work - it just was not the whole story.
+3. **Our remaining ~10%**, now mostly flag reads (`ReadBit` and
+   `CheckLocalFlagByBank` together are still ~4% of the frame, and we are
+   the dominant caller). Batching them would mean reading whole flag BYTES
+   instead of calling a function per bit.
+
+**Two open checker results, both pre-existing.** With the default seed the
+GFX-reserve tier reports North Hyrule Field dipping to 1 free slot (the
+floor is 2) for a few frames at difficulty 4; seeds 2, 3 and 7 are clean on
+that tier. On seed 7 the rooms tier reports the forced chest in
+ROOM_CASTOR_CAVES_DARKNUT not appearing - the ROM built from the previous
+commit fails that one identically, so it is not from this batch. This check has been
+marginal in that room for a while - the ROM shipped before this batch fails
+the same check on seed 1 - and the batch changed the RNG stream (one
+`Random()` call retired with the fuser scatter roll, and the per-run draws
+moved to a phase slot), which moved which seeds land on a three-sheet wave.
+It is a dip in RAW free slots; the game's own spawn gate is on RECLAIMABLE
+slots, which stayed above its floor, and the fuser change is not the cause
+(measured: four fuser sprites in the room, all sharing one sheet). Worth
+tightening the wave's own sheet budget by one next time this area is open.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

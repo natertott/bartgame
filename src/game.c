@@ -404,6 +404,7 @@ static s32 QuickStartCurrentRegionPoolIndex(void);
 static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
 static void QuickStartRoomMonitor(void);
+static bool32 QuickStartPhase(u32 slot);
 static s32 QuickStartRoomEnemyCeiling(s32 roomSquares);
 static bool32 QuickStartIsInnRoom(void);
 static void QuickStartInnChestMonitor(void);
@@ -4601,7 +4602,14 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
             // stray extra entity can't inflate the remainder. Boss waves
             // zero it instead (setpieces re-roll fresh on re-entry rather
             // than resuming), and quest swap windows record nothing.
-            if (!QuickStartQuestSwapActive()) {
+            // Phase-gated (see QuickStartPhase): the two calls below are a
+            // full sweep of the entity table and an eight-bit flag read,
+            // and together they were 3.3% of every frame in a region -
+            // measured. Nothing reads the stored remainder until the
+            // player leaves the room, so recording it fifteen times a
+            // second is as good as sixty, and min-update means a late
+            // sample can only ever be MORE correct.
+            if (!QuickStartQuestSwapActive() && QuickStartPhase(2)) {
                 bool32 hasBoss;
                 s32 live = QuickStartCountRegionEnemies(&hasBoss);
                 u8 alive = QuickStartRegionGetAliveCount(slot);
@@ -4617,7 +4625,11 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
             // onward exit, so pull stranded enemies back to the reward spot
             // wherever it happens - this used to run only in the chain's last
             // region. See QuickStartRescueStuckFinalWave.
-            QuickStartRescueStuckFinalWave(region);
+            // Same treatment: a stranded enemy has been stranded for
+            // several seconds by the time this matters at all.
+            if (QuickStartPhase(6)) {
+                QuickStartRescueStuckFinalWave(region);
+            }
             return;
         }
         if (wave < 255) {
@@ -9825,10 +9837,53 @@ static void QuickStartRescuePlayerOntoGround(void) {
 // half of the room. Pass -1 to opt out (the wave, quest and 2-door
 // spawners, none of which belong to a site). In a single-site room the test
 // is always true, so nothing about the old behaviour changes.
+// How close to the PLAYER an event may put a body, in tiles (Chebyshev).
+//
+// The failure this exists for, reported from play: a ? room's door drops the
+// player one tile above the door tile, the room's event spawns on the same
+// frame, and the ring search starts at the content spot - which in a small
+// room is right on top of them. A beetle appearing under the player is
+// merely startling; a BALL_CHAIN_SOLIDER is an auto-death, because its
+// chain is already swinging when the room fades in and the player has not
+// had a frame to move.
+//
+// Two radii, because reach differs: two tiles for everything, four for the
+// ball and chain, whose swing covers the ring around it. The wider one is
+// only enforced while the placer is still being picky (see the relax
+// passes) - a room too cramped to hold a ball-and-chain four tiles off the
+// door falls back to the ordinary two rather than spawning nothing, which
+// would hand the room's reward over uncontested.
+#define QUICKSTART_SPAWN_KEEP_CLEAR 2
+#define QUICKSTART_SPAWN_KEEP_CLEAR_REACH 4
+
+static s32 QuickStartSpawnKeepClearFor(u8 id) {
+    if (id == BALL_CHAIN_SOLIDER) {
+        return QUICKSTART_SPAWN_KEEP_CLEAR_REACH;
+    }
+    return QUICKSTART_SPAWN_KEEP_CLEAR;
+}
+
+// Is (tx,ty) within `tiles` of the player, measured room-locally? False
+// whenever the player is not in this room's coordinate space at all, which
+// is the safe answer: the rule is "do not land on the player", and there is
+// no player here to land on.
+static bool32 QuickStartTileNearPlayer(s32 tx, s32 ty, s32 tiles) {
+    s32 dx = tx - ((gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4);
+    s32 dy = ty - ((gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4);
+    if (dx < 0) {
+        dx = -dx;
+    }
+    if (dy < 0) {
+        dy = -dy;
+    }
+    return dx <= tiles && dy <= tiles;
+}
+
 static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
+    s32 keepClear = QuickStartSpawnKeepClearFor(id);
     // The entity-budget charge, single-kind edition (the multiplicity fix):
     // this placer serves the ? room waves and the quest packs, and a
     // 12-count pack of a segmented kind used to be 12 placements = up to
@@ -9849,7 +9904,11 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
             count = afford;
         }
     }
-    for (relax = 0; relax < 2 && placed < count; relax++) {
+    // Three passes now, not two. 0: elbow room, two tiles of separation,
+    // full keep-clear. 1: any open tile, one tile of separation, full
+    // keep-clear. 2: the same, but a long-reach kind drops back to the
+    // ordinary keep-clear so a cramped room still gets its fight.
+    for (relax = 0; relax < 3 && placed < count; relax++) {
         for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING && placed < count; ring++) {
             s32 dx, dy;
             for (dy = -ring; dy <= ring; dy++) {
@@ -9865,6 +9924,9 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
                     tx = anchorTX + dx;
                     ty = anchorTY + dy;
                     if (relax == 0 ? !QuickStartTileHasElbowRoom(tx, ty) : !QuickStartTileIsOpen(tx, ty)) {
+                        continue;
+                    }
+                    if (QuickStartTileNearPlayer(tx, ty, relax < 2 ? keepClear : QUICKSTART_SPAWN_KEEP_CLEAR)) {
                         continue;
                     }
                     if (!QuickStartTileBelongsToSite(tx, ty, ownerSite)) {
@@ -9939,15 +10001,38 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
         // A wave that places nobody reads as instantly cleared, and three
         // of those in a row hand the reward over for free. That was only
         // ever theoretical while gauntlets lived in roomy sites; now that
-        // the small pool rolls them too, put one body on the content spot
-        // itself, which is by construction somewhere the player can stand.
-        Entity* enemy = CreateEnemy(id, form);
-        if (enemy != NULL) {
-            enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
-            enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
-            enemy->collisionLayer = 1;
-            enemy->flags |= ENT_PERSIST;
-            UpdateSpriteForCollisionLayer(enemy);
+        // the small pool rolls them too, walk out from the content spot for
+        // the first open tile that still clears the player, and put one
+        // body there. Deliberately NOT the content spot itself: in the
+        // cramped rooms this exists for, the content spot is often exactly
+        // where the player is standing, which is the ambush the keep-clear
+        // rule above is there to prevent.
+        s32 ring;
+        for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING; ring++) {
+            s32 dx, dy;
+            for (dy = -ring; dy <= ring; dy++) {
+                for (dx = -ring; dx <= ring; dx++) {
+                    s32 tx = (contentX >> 4) + dx;
+                    s32 ty = (contentY >> 4) + dy;
+                    Entity* enemy;
+                    if (dx != -ring && dx != ring && dy != -ring && dy != ring) {
+                        continue;
+                    }
+                    if (!QuickStartTileIsOpen(tx, ty) ||
+                        QuickStartTileNearPlayer(tx, ty, QUICKSTART_SPAWN_KEEP_CLEAR)) {
+                        continue;
+                    }
+                    enemy = CreateEnemy(id, form);
+                    if (enemy != NULL) {
+                        enemy->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+                        enemy->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+                        enemy->collisionLayer = 1;
+                        enemy->flags |= ENT_PERSIST;
+                        UpdateSpriteForCollisionLayer(enemy);
+                    }
+                    return;
+                }
+            }
         }
     }
 }
@@ -16866,6 +16951,79 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // place every fall within a run (the draw is latched), somewhere new each
 // run. The Element is guaranteed within two map regions of it (see
 // QuickStartRollElementRegionOnce).
+// Castor Wilds and the Wind Ruins are islands in a swamp. Crossing the
+// sludge needs the Pegasus Boots or Roc's Cape, so a player dropped in with
+// neither can neither explore the region nor leave it - the user's report
+// was landing in both while holding only the Cane of Pacci.
+//
+// The check cannot live in the draw. The drop region is rolled on frame one
+// (QuickStartRollElementRegionOnce), well before the hub's gift round has
+// happened, so nothing about the player's kit is known yet. It lives here
+// instead, at the fall, which is the first moment it is.
+//
+// The correction is LATCHED back into the drop bits rather than recomputed
+// on every fall, so the chain's own promise - every fall within a run lands
+// in the same place - still holds after the player finds a pair of boots
+// halfway through the run.
+static bool32 QuickStartRegionNeedsSwampKit(s32 poolIndex) {
+    u8 ring = QuickStartRingRegionOfPoolIndex(poolIndex);
+    return ring == QS_RING_CW || ring == QS_RING_WR;
+}
+
+static bool32 QuickStartHasSwampKit(void) {
+    return GetInventoryValue(ITEM_PEGASUS_BOOTS) != 0 || GetInventoryValue(ITEM_ROCS_CAPE) != 0;
+}
+
+static s32 QuickStartDropRegionIndexUsable(void) {
+    s32 index = QuickStartDropRegionIndex();
+    s32 i, usable, pick, b;
+    if (!QuickStartRegionNeedsSwampKit(index) || QuickStartHasSwampKit()) {
+        return index;
+    }
+    // Re-draw from the run seed over the rows that ARE usable rather than
+    // stepping to the next one: CW and the two Wind Ruins rows sit at the
+    // end of the pool, so "next row" would send all three to the same
+    // place every time. Avalanche mix for the same reason every other
+    // seed-derived pick in this file uses one - small moduli of adjacent
+    // seeds are not distributed.
+    usable = 0;
+    for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+        if (!QuickStartRegionNeedsSwampKit(i)) {
+            usable++;
+        }
+    }
+    if (usable == 0) {
+        return index; // cannot happen with the current pool; not a reason to wedge the fall
+    }
+    {
+        u32 h = (u32)gSave.run_seed + 0x5Du;
+        h = h * 0x9E3779B9u;
+        h ^= h >> 15;
+        h = h * 0x2C1B3C6Du;
+        h ^= h >> 12;
+        pick = (s32)(h & 0x7fff) % usable;
+    }
+    index = 0;
+    for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+        if (QuickStartRegionNeedsSwampKit(i)) {
+            continue;
+        }
+        if (pick == 0) {
+            index = i;
+            break;
+        }
+        pick--;
+    }
+    for (b = 0; b < 4; b++) {
+        if (index & (1 << b)) {
+            QsSetFlag(GF_DROP_REGION_BIT(b));
+        } else {
+            QsClearFlag(GF_DROP_REGION_BIT(b));
+        }
+    }
+    return index;
+}
+
 static void QuickStartProcessHubHoleLink(void) {
     const QuickStartRegion* first;
     if (gRoomControls.area != AREA_CLOUD_TOPS || gRoomControls.room != ROOM_CLOUD_TOPS_CLOUD_TOPS) {
@@ -16881,7 +17039,7 @@ static void QuickStartProcessHubHoleLink(void) {
     // the draw is rolled unconditionally elsewhere, but a run must never
     // begin with the drop/element regions undrawn.
     QuickStartRollElementRegionOnce();
-    first = &sQuickStartRegionPool[QuickStartDropRegionIndex()];
+    first = &sQuickStartRegionPool[QuickStartDropRegionIndexUsable()];
     gRoomTransition.player_status.area_next = first->area;
     gRoomTransition.player_status.room_next = first->room;
     gRoomTransition.player_status.start_pos_x = first->entranceX;
@@ -17275,6 +17433,55 @@ static void QuickStartSparkleRewards(void) {
     }
 }
 
+// --- The frame-phase scheduler -----------------------------------------
+//
+// MEASURED (Aug 2026, a sampling profiler built on mgba's single-step:
+// tools' prof2 samples the PC every 8 instructions and brackets frames on
+// gRoomTransition.frameCount, so "instructions per frame" is this mode's
+// real CPU load):
+//
+//   North Hyrule Field, walking:   85,900 instructions/frame, peaking at
+//                                  140,900
+//   Eastern Hills South, walking:  67,500, peaking at 85,000
+//
+// A GBA frame is 280,896 cycles and THUMB code fetched from ROM averages
+// around three cycles an instruction, so the average frame in North Hyrule
+// Field is already spending most of its budget and the peaks do not fit at
+// all. A frame that does not fit does not lower the LCD's refresh or stall
+// the sound driver - both keep running at 60 - it just means the main
+// loop's next VBlankIntrWait returns a vblank late and the GAME updates a
+// frame later than it should. That is exactly the reported symptom: a
+// steady 60 FPS readout, music in time, and movement that lags.
+//
+// Of that load, QuickStart* code was 17% while walking and 24% standing
+// still, spread over about fifty monitors that this function calls every
+// single frame. Most of them are not per-frame work by nature - they are
+// idempotent sweeps that fix up world state (refresh an item's despawn
+// timer, put a fuser back if it is missing, settle a pushed boulder,
+// re-open a door vanilla left shut). Running them eight times a second
+// instead of sixty is invisible in play and gives the frame its headroom
+// back.
+//
+// QuickStartPhase(slot) is true on one frame in eight, so a caller wrapped
+// in it runs at 7.5Hz. Callers pass DISTINCT slots, which is the point: the
+// work is spread across the eight-frame cycle rather than all landing on
+// the same frame and producing the very spike this is meant to remove.
+//
+// What is NOT staggered, and why: anything that has to observe a single
+// frame to be correct. The containment checks and the door redirects run
+// against a room transition that is one frame wide; the handicap monitor,
+// the food effects and the HUD are per-frame by definition; the region
+// monitor owns the wave the player is fighting; and every ? room's own
+// content dispatch stays immediate so an event never appears late in the
+// room the player is standing in.
+//
+// The phase counter is gSave.run_frames - incremented at the top of this
+// function, so it counts monitor passes rather than video frames, which is
+// the cadence the callers below actually run at.
+static bool32 QuickStartPhase(u32 slot) {
+    return (gSave.run_frames & 7) == (slot & 7);
+}
+
 static void QuickStartRoomMonitor(void) {
     s32 regionSlot;
     // Run clock for the scoring system's time bonus (QuickStartComputeScore
@@ -17291,7 +17498,12 @@ static void QuickStartRoomMonitor(void) {
     // Before any content runs, so a reward placed on an earlier frame is
     // already immortal by the time this frame's "is it still there?" check
     // looks for it.
-    QuickStartRefreshPlacedItemTimers();
+    // Slot 0. The timer this writes is 600 frames long, so refreshing it
+    // eight times a second keeps a placed reward just as immortal as
+    // refreshing it sixty times a second did.
+    if (QuickStartPhase(0)) {
+        QuickStartRefreshPlacedItemTimers();
+    }
     // Every room, not just the ones that can apply a handicap: its whole job
     // is to notice that the player has LEFT the room that stripped them and
     // hand the kit back.
@@ -17317,34 +17529,73 @@ static void QuickStartRoomMonitor(void) {
     // GF_*_RANDOMIZED flag, so running them every frame from anywhere
     // costs a handful of flag reads and removes the dependency on any one
     // room being entered.
-    QuickStartRollElementRegionOnce();
-    QuickStartRandomizeSlotsOnce();
-    QuickStart2DoorRandomizeOnce();
-    QuickStartRandomizeRiverBridgeOnce();
-    QuickStartRandomizeCaveOnce();
-    QuickStartRandomizeMelariEastOnce();
-    QuickStartRandomizeMelariSoutheastOnce();
-    QuickStartRandomizeShopOnce();
-    QuickStartRandomizeQuestOnce();
+    // Slot 1. Nine latched one-shot draws: after the first pass each is a
+    // flag read that returns immediately, and nine flag reads a frame is
+    // not free - flag reads were 6% of the whole frame in the profile.
+    // A draw landing up to eight frames into the run changes nothing; the
+    // pit's own fall calls QuickStartRollElementRegionOnce explicitly
+    // anyway, so the one draw with a hard deadline does not depend on this
+    // cadence at all.
+    if (QuickStartPhase(1)) {
+        QuickStartRollElementRegionOnce();
+        QuickStartRandomizeSlotsOnce();
+        QuickStart2DoorRandomizeOnce();
+        QuickStartRandomizeRiverBridgeOnce();
+        QuickStartRandomizeCaveOnce();
+        QuickStartRandomizeMelariEastOnce();
+        QuickStartRandomizeMelariSoutheastOnce();
+        QuickStartRandomizeShopOnce();
+        QuickStartRandomizeQuestOnce();
+    }
     // Also unconditional: the two rooms that need it today are Castle
     // Garden Main and Link's House, but the checks are per-entity rather
     // than per-room, so any other room's hidden ladder or stuck house door
     // gets the same treatment for free.
-    QuickStartFixupRoomFixtures();
+    // Slot 2. A full entity sweep looking for two specific fixtures to
+    // un-stick. Nothing observes the fix within a frame of the room load -
+    // the door it opens is opened by walking into it.
+    if (QuickStartPhase(2)) {
+        QuickStartFixupRoomFixtures();
+    }
     // Also per-entity and unconditional: any room's freshly-registered
     // vanilla small chests get their loot swapped for our own draws.
-    QuickStartRestockSmallChests();
+    // Slot 3, with the chamber and ranch-house door fixups. All three are
+    // sweeps over freshly-registered vanilla fixtures; a chest cannot be
+    // opened in the eighth of a second before its loot is swapped.
+    if (QuickStartPhase(3)) {
+        QuickStartRestockSmallChests();
+    }
     // Same "make a vanilla fixture actually work" job, for the Boomerang
     // chamber's five entrances and its chest.
-    QuickStartOpenBoomerangChamber();
-    QuickStartUnlockRanchHouseDoors();
-    QuickStartFillBoulderHoles();
+    if (QuickStartPhase(3)) {
+        QuickStartOpenBoomerangChamber();
+        QuickStartUnlockRanchHouseDoors();
+    }
+    // Slot 4. Per pushable rock this scans a 7x7 tile block, and it only
+    // ever has anything to do on the frames just after the player pushes
+    // one into a hole - which takes far longer than eight frames.
+    if (QuickStartPhase(4)) {
+        QuickStartFillBoulderHoles();
+    }
+    // NOT staggered: a switch bridge appearing is the direct answer to the
+    // player hitting a switch, and a delay there reads as the switch not
+    // working.
     QuickStartUpdateSwitchBridges();
     // Global invariant, so it runs everywhere rather than only in the
     // regions that spawn: keep free GFX slots above the reserve.
+    // NOT staggered, and the invariant checker is why: at one frame in
+    // eight the free-slot count dipped to zero between enforcements in
+    // North Hyrule Field and Lon Lon Ranch (measured - the checker samples
+    // the minimum over 600 frames and it failed on both). A spawner does
+    // check the budget for itself, but the reserve is there so that
+    // vanilla's own effects can always claim a sheet, and nothing checks on
+    // vanilla's behalf. It is cheap - it never appeared in the profile at
+    // all - so it goes back to every frame.
     QuickStartEnforceGfxReserve();
     // Global invariant too: a camera following a deleted entity follows
     // garbage (see the function's comment for the measured NHF case).
+    // Same call: cheap, and a camera following freed memory for even a few
+    // frames is a visible glitch rather than a delayed fixup.
     QuickStartRescueDanglingCamera();
     // The food charms/curses' per-frame half (knockback scaling, enemy
     // haste, shooter cadence) - a single mask read when none are held.
@@ -17373,9 +17624,21 @@ static void QuickStartRoomMonitor(void) {
     // never be the reason a gate has no fuser standing at it. Being outside
     // the dispatch also means a region's gates are live whether or not this
     // save's chain happens to include it.
-    QuickStartSpawnRegionFusers();
-    QuickStartTinglePayout();
-    QuickStartBrushFusionPayout();
+    // Slot 6. The single most expensive monitor in the profile: for each of
+    // the region's fusers (six in North Hyrule Field) it walks the whole
+    // 72-entity table looking for a sprite already standing on that spot,
+    // every frame, to answer a question that only changes when a room
+    // loads or a fusion completes.
+    if (QuickStartPhase(6)) {
+        QuickStartSpawnRegionFusers();
+    }
+    // Slot 7 with the other fusion payouts - all three watch for a fusion
+    // the player just completed, and all three pay out through a room
+    // reload or a drop that takes far longer than an eighth of a second.
+    if (QuickStartPhase(7)) {
+        QuickStartTinglePayout();
+        QuickStartBrushFusionPayout();
+    }
     QuickStartMazeMonitor();
     QuickStartSacrificeMonitor();
     QuickStartSatelliteMonitor();
@@ -17383,7 +17646,12 @@ static void QuickStartRoomMonitor(void) {
     regionSlot = QuickStartCurrentRegionPoolIndex();
     QuickStartResetOtherWaveRemainders();
     QuickStartClearHubRoom();
-    QuickStartSparkleRewards();
+    // Slot 2 (sharing with the fixture sweep, which is idle in a region
+    // room). The sparkle already staggers itself per item; this only
+    // decides how often the sweep that finds the items runs.
+    if (QuickStartPhase(2)) {
+        QuickStartSparkleRewards();
+    }
     QuickStartSpawnInnkeeperOnce();
     QuickStartInnChestMonitor();
     QuickStartProcessHubHoleLink();
@@ -17747,47 +18015,150 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
         { 824, 248 }, { 856, 184 }, { 888, 248 }, { 952, 360 } } },
 };
 
-// One 4-bit roll for the whole run, rolled lazily the first time a fuser
-// needs a position. Eighteen fusers would want eighteen stored positions;
-// this stores one number and derives all of them, which is the only shape
-// that fits - there are five free flag offsets left below 707.
-static u32 QuickStartFuserScatter(void) {
-    s32 b;
-    u32 value = 0;
-    if (!QsCheckFlag(GF_FUSER_SCATTER_ROLLED)) {
-        u32 roll = (u32)((s32)Random() & 0xf);
-        for (b = 0; b < 4; b++) {
-            if (roll & (1 << b)) {
-                QsSetFlag(GF_FUSER_SCATTER_BIT(b));
-            }
+// Which named ring region each row of sQuickStartFuserSpots sits in, in the
+// same order. A parallel array rather than a field on the struct so the spot
+// table can still be pasted over wholesale by
+// tools/quickstart/find_fuser_spots.py without hand-editing every row.
+static const u8 sQuickStartFuserSpotRings[] = {
+    QS_RING_CG, QS_RING_LLR, QS_RING_NHF, QS_RING_SHF, QS_RING_TRIL,
+    QS_RING_EH, QS_RING_WW, QS_RING_WW, QS_RING_CW,
+};
+
+#define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))
+#define QUICKSTART_FUSER_COUNT ((s32)ARRAY_COUNT(sQuickStartFusers))
+
+// Which row of the spot table this room is, or -1 for a room that hosts no
+// fusers at all.
+static s32 QuickStartFuserSpotRoomIndex(u8 area, u8 room) {
+    s32 r;
+    for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
+        if (sQuickStartFuserSpots[r].area == area && sQuickStartFuserSpots[r].room == room) {
+            return r;
         }
-        QsSetFlag(GF_FUSER_SCATTER_ROLLED);
     }
-    for (b = 0; b < 4; b++) {
-        if (QsCheckFlag(GF_FUSER_SCATTER_BIT(b))) {
-            value |= 1 << b;
-        }
-    }
-    return value;
+    return -1;
 }
 
-// Step 4 through a list of 9 is injective for the first nine callers (4 and 9
-// are coprime), so the fusers in a region can never be handed the same spot -
-// North Hyrule Field's six included. The region index is folded in as well so
-// the five regions do not all rotate in lockstep between runs.
-static bool32 QuickStartFuserSpot(const QuickStartFuser* fuser, s32 indexInRegion, s16* x, s16* y) {
-    s32 r;
-    for (r = 0; r < (s32)ARRAY_COUNT(sQuickStartFuserSpots); r++) {
-        if (sQuickStartFuserSpots[r].area == fuser->area && sQuickStartFuserSpots[r].room == fuser->room) {
-            s32 slot = (indexInRegion * 4 + (s32)QuickStartFuserScatter() + r * 2) %
-                       QUICKSTART_FUSER_SPOTS_PER_REGION;
-            *x = sQuickStartFuserSpots[r].spots[slot][0];
-            *y = sQuickStartFuserSpots[r].spots[slot][1];
-            return TRUE;
-        }
-    }
-    return FALSE;
+// Which of the room's nine spots the n-th fuser to arrive there stands on.
+//
+// The old rule was slot = (index * 4 + a 4-bit run roll + roomIndex * 2) % 9,
+// which only ever produced nine ROTATIONS of one fixed order - six fusers in
+// North Hyrule Field took the same six spots in the same sequence every run,
+// just starting at a different one, which is what "they always spawn in the
+// exact same positions" was describing.
+//
+// This is a real per-run permutation instead: a seed-derived STEP through
+// the nine spots, plus a seed-derived starting offset. Every step here is
+// coprime with nine, so the map is injective - the first nine arrivals can
+// never be handed the same spot - and the pair (step, offset) has 54
+// distinct values per room, each of which lays the fusers out differently
+// rather than sliding one arrangement along.
+static s32 QuickStartFuserSpotSlot(s32 spotRoom, s32 arrival) {
+    static const u8 kSteps[6] = { 1, 2, 4, 5, 7, 8 };
+    u32 h = ((u32)gSave.run_seed + 0xA0u + (u32)spotRoom) * 0x9E3779B9u;
+    s32 step, offset;
+    h ^= h >> 15;
+    h = h * 0x2C1B3C6Du;
+    h ^= h >> 12;
+    step = kSteps[(s32)((h >> 16) & 0x7fff) % 6];
+    offset = (s32)(h & 0x7fff) % QUICKSTART_FUSER_SPOTS_PER_REGION;
+    return (arrival * step + offset) % QUICKSTART_FUSER_SPOTS_PER_REGION;
 }
+
+// --- Fusions that travel: where each fuser STANDS this run ----------------
+//
+// New mechanic, per the user: "when the player fuses kinstones with a Zelda
+// sprite, the place it unlocks can be up to 1 world region away... sprites in
+// EH can unlock things in Lon Lon Ranch, NHF sprites can unlock things in
+// Trilby Highlands". A fusion's PAYLOAD is fixed - it is vanilla world-event
+// data, and it fires wherever gWorldEvents says it does - so what moves is
+// the sprite: a fusion homed in Trilby may be offered by a sprite standing in
+// North Hyrule Field, which is the same relation seen from the other end.
+//
+// The candidate hosts are the fusion's own room plus every spot room whose
+// named region is ADJACENT to its home region on the map graph
+// (sQuickStartRingAdjacency - the same one-step metric the element's hiding
+// place already uses). Its own room is always a candidate, so a fusion can
+// still turn up where it always did.
+//
+// CASTOR WILDS IS AN EXPORTER ONLY. Its region is a swamp crossed with the
+// Pegasus Boots or Roc's Cape, so a Western Wood fusion hosted there would be
+// unreachable until the player finds one of those - the same trap the pit's
+// drop region had to be taught to avoid. Fusions homed in the Wilds may
+// travel out; nothing travels in.
+//
+// Resolved in ONE PASS over the whole table, in table order, with a live
+// count per room - which is what makes the answer identical no matter which
+// room the player is standing in when it is asked. A room is full at nine
+// (its spot count); a fusion that would be the tenth falls back to its home
+// room, and then to any room with space, so a fusion can never be dropped for
+// want of a spot. With 34 fusions and 81 spots there is always room.
+static void QuickStartFuserPlacements(u8* outRoom, u8* outSpot) {
+    u8 counts[9]; // QUICKSTART_FUSER_SPOT_ROOMS - agbcc wants a constant here
+    s32 i, r;
+    for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
+        counts[r] = 0;
+    }
+    for (i = 0; i < QUICKSTART_FUSER_COUNT; i++) {
+        const QuickStartFuser* fuser = &sQuickStartFusers[i];
+        s32 home = QuickStartFuserSpotRoomIndex(fuser->area, fuser->room);
+        s32 cands[9];
+        s32 n = 0, host;
+        u32 h;
+        if (home < 0) {
+            outRoom[i] = 0xFF; // no scatter list for this room - cannot place
+            outSpot[i] = 0;
+            continue;
+        }
+        cands[n++] = home;
+        for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
+            if (r == home || sQuickStartFuserSpotRings[r] == QS_RING_CW) {
+                continue;
+            }
+            if (sQuickStartRingAdjacency[sQuickStartFuserSpotRings[home]] &
+                (1u << sQuickStartFuserSpotRings[r])) {
+                cands[n++] = r;
+            }
+        }
+        // Avalanche over the run seed and the fusion's own id, not Random():
+        // this has to give the same answer every time it is asked, from any
+        // room, on any frame.
+        h = ((u32)gSave.run_seed + 0xF0u + (u32)fuser->kinstoneId) * 0x9E3779B9u;
+        h ^= h >> 15;
+        h = h * 0x2C1B3C6Du;
+        h ^= h >> 12;
+        host = cands[(s32)(h & 0x7fff) % n];
+        if (counts[host] >= QUICKSTART_FUSER_SPOTS_PER_REGION) {
+            host = home;
+        }
+        if (counts[host] >= QUICKSTART_FUSER_SPOTS_PER_REGION) {
+            for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
+                if (counts[r] < QUICKSTART_FUSER_SPOTS_PER_REGION) {
+                    host = r;
+                    break;
+                }
+            }
+        }
+        outRoom[i] = (u8)host;
+        outSpot[i] = (u8)QuickStartFuserSpotSlot(host, counts[host]);
+        counts[host]++;
+    }
+}
+
+// RETIRED: QuickStartFuserScatter, the single 4-bit roll that used to move
+// every fuser at once. Placement is derived from gSave.run_seed now - the
+// room a fusion is hosted in (QuickStartFuserPlacements) and the spot it
+// takes there (QuickStartFuserSpotSlot) both hash the seed directly, which
+// needs no stored roll and gives far more than sixteen arrangements.
+// GF_FUSER_SCATTER_ROLLED (699) and GF_FUSER_SCATTER_BIT (700-703) are free
+// again; they are left defined so the bank map above still reads straight.
+
+// RETIRED: QuickStartFuserSpot, which mapped a fuser to a spot with
+// slot = (indexInRegion * 4 + a 4-bit run roll + roomIndex * 2) % 9. Both
+// halves of what it did have moved: which ROOM a fuser stands in is now
+// QuickStartFuserPlacements (fusions travel up to one region), and which
+// SPOT in that room is QuickStartFuserSpotSlot (a real per-run permutation
+// rather than nine rotations of one order).
 
 // Reads/writes the 7-bit "already reloaded for this fusion" id. Zero means
 // no fusion has needed one yet, which is safe: KINSTONE_NONE is 0 and no
@@ -18874,7 +19245,8 @@ static void QuickStartBrushFusionPayout(void) {
 }
 
 static void QuickStartSpawnRegionFusers(void) {
-    s32 i, indexInRegion = 0;
+    u8 hostRoom[34], hostSpot[34]; // QUICKSTART_FUSER_COUNT
+    s32 i, hereRoom;
     // Settled-room guard (QuickStartRoomSettled): this runs OUTSIDE the
     // region dispatch, and its "already spawned" identity is an exact
     // origin-relative coordinate match - computed against a mid-transition
@@ -18884,24 +19256,35 @@ static void QuickStartSpawnRegionFusers(void) {
     if (!QuickStartRoomSettled()) {
         return;
     }
-    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartFusers); i++) {
+    hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
+    if (hereRoom < 0) {
+        // No scatter list, so no fuser can stand here. The Tingle loop below
+        // still runs - a tingle stands on his own vanilla stump and needs no
+        // spot list.
+        i = QUICKSTART_FUSER_COUNT;
+    } else {
+        i = 0;
+        // Resolved for the WHOLE table, not just this room: the placement is
+        // a single ordered pass, and reading it any other way would give a
+        // different answer depending on where the player is standing.
+        QuickStartFuserPlacements(hostRoom, hostSpot);
+    }
+    for (; i < QUICKSTART_FUSER_COUNT; i++) {
         const QuickStartFuser* fuser = &sQuickStartFusers[i];
         s32 worldX, worldY, e;
         s16 localX, localY;
         bool32 alreadyThere;
-        if (gRoomControls.area != fuser->area || gRoomControls.room != fuser->room) {
+        if (hostRoom[i] != (u8)hereRoom) {
             continue;
         }
-        // Counted over the rows for THIS room only, and counted before the
-        // fused check - so opening one gate does not shuffle the fusers that
-        // are still standing.
-        indexInRegion++;
+        // The fused check comes AFTER the placement, which is decided for
+        // every row whether or not its gate is still shut - so opening one
+        // gate does not shuffle the fusers that are still standing.
         if (CheckKinstoneFused(fuser->kinstoneId)) {
             continue;
         }
-        if (!QuickStartFuserSpot(fuser, indexInRegion - 1, &localX, &localY)) {
-            continue;
-        }
+        localX = sQuickStartFuserSpots[hereRoom].spots[hostSpot[i]][0];
+        localY = sQuickStartFuserSpots[hereRoom].spots[hostSpot[i]][1];
         worldX = gRoomControls.origin_x + localX;
         worldY = gRoomControls.origin_y + localY;
         // Position is the identity check. No two spots in a region are within

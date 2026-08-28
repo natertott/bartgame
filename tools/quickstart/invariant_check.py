@@ -525,6 +525,80 @@ def emu_pool_entrances(rom):
     return out
 
 
+
+# --- Mirror of QuickStartFuserPlacements / QuickStartFuserSpotSlot --------
+#
+# Fusions travel up to one map region from their home room now, so where a
+# fuser sprite stands is a per-run draw rather than a table lookup. This
+# recomputes the game's own answer from gSave.run_seed - the same shape of
+# mirror emu.py keeps for the extension-site flag router, and for the same
+# reason: counting sprites on spots cannot tell a fuser apart from the other
+# things that borrow the ZELDA entity kind (the ? room signs, the region
+# hint NPC), and on some seeds one of those stands exactly on a scatter spot.
+#
+# Keep in step with src/game.c.
+QS_RING = {'CG': 0, 'NHF': 1, 'SHF': 2, 'EH': 3, 'LLR': 4, 'TRIL': 5,
+           'WW': 6, 'RV': 7, 'CW': 8, 'WR': 9}
+RING_ADJ = {
+    'CG': ['NHF'],
+    'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
+    'SHF': ['NHF', 'EH', 'WW'],
+    'EH': ['SHF', 'LLR'],
+    'LLR': ['EH', 'NHF', 'TRIL'],
+    'TRIL': ['LLR', 'NHF', 'WW', 'RV'],
+    'WW': ['TRIL', 'SHF', 'CW'],
+    'RV': ['NHF', 'TRIL'],
+    'CW': ['WW', 'WR'],
+    'WR': ['CW'],
+}
+# The ring each row of sQuickStartFuserSpots sits in, in table order.
+SPOT_RINGS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW']
+SPOTS_PER_REGION = 9
+
+
+def _avalanche(x):
+    h = (x * 0x9E3779B9) & 0xFFFFFFFF
+    h ^= h >> 15
+    h = (h * 0x2C1B3C6D) & 0xFFFFFFFF
+    h ^= h >> 12
+    return h
+
+
+def _spot_slot(run_seed, spot_room, arrival):
+    steps = (1, 2, 4, 5, 7, 8)
+    h = _avalanche((run_seed + 0xA0 + spot_room) & 0xFFFFFFFF)
+    step = steps[((h >> 16) & 0x7fff) % 6]
+    offset = (h & 0x7fff) % SPOTS_PER_REGION
+    return (arrival * step + offset) % SPOTS_PER_REGION
+
+
+def fuser_placements(run_seed):
+    """[(spot_room_index, spot_index)] per row of sQuickStartFusers."""
+    spot_rooms = P.fuser_spots()
+    index_of = {(r['area'], r['room']): i for i, r in enumerate(spot_rooms)}
+    counts = [0] * len(spot_rooms)
+    out = []
+    for f in P.fusers():
+        home = index_of.get((f['area'], f['room']), -1)
+        if home < 0:
+            out.append(None)
+            continue
+        cands = [home]
+        for r in range(len(spot_rooms)):
+            if r == home or SPOT_RINGS[r] == 'CW':
+                continue
+            if SPOT_RINGS[r] in RING_ADJ[SPOT_RINGS[home]]:
+                cands.append(r)
+        h = _avalanche((run_seed + 0xF0 + f['kinstone']) & 0xFFFFFFFF)
+        host = cands[(h & 0x7fff) % len(cands)]
+        if counts[host] >= SPOTS_PER_REGION:
+            host = home
+        if counts[host] >= SPOTS_PER_REGION:
+            host = next(r for r in range(len(spot_rooms)) if counts[r] < SPOTS_PER_REGION)
+        out.append((host, _spot_slot(run_seed, host, counts[host])))
+        counts[host] += 1
+    return out
+
 def emu_fusers(rom):
     """Every Kinstone fuser must be reachable while its own gate is still shut.
 
@@ -539,7 +613,14 @@ def emu_fusers(rom):
     by_room = collections.OrderedDict()
     for f in P.fusers():
         by_room.setdefault((f['areaName'], f['roomName'], f['area'], f['room']), []).append(f)
+    # Every room with a scatter list is walked, not just the rooms that HOME
+    # a fuser: a fusion can be hosted in any adjacent region's room now, so a
+    # room can hold sprites none of whose rows name it.
+    for sp in P.fuser_spots():
+        key = (sp['areaName'], sp['roomName'], sp['area'], sp['room'])
+        by_room.setdefault(key, [])
     out = []
+    placed = {}
     for (an, rn, area, room), rows in by_room.items():
         r = next((x for x in P.region_pool() if x['area'] == area and x['room'] == room), None)
         if r is None:
@@ -612,17 +693,50 @@ def emu_fusers(rom):
                 msgs.append(f'scatter spot ({x},{y}) on non-open tile {grid[y // 16][x // 16]:#x}')
             elif (x // 16, y // 16) not in reach:
                 msgs.append(f'scatter spot ({x},{y}) not in the entrance component')
-        # And every un-fused fuser has to be standing on one of those spots,
-        # one each. Counted by occupied spots rather than by total sprites:
-        # the fusers borrow the ZELDA entity kind, and so do the ? room signs
-        # and the region hint NPC, so "how many Zeldas are in the room" is not
-        # the same question.
-        used = [p for p in spots if p in live]
-        if len(used) != len(rows):
-            msgs.append(f'{len(rows)} un-fused fuser(s) but {len(used)} scatter spot(s) occupied')
+        # Every fuser standing here has to be on one of those spots, and no
+        # spot may hold two. Counted by occupied spots rather than by total
+        # sprites: the fusers borrow the ZELDA entity kind, and so do the
+        # ? room signs and the region hint NPC, so "how many Zeldas are in
+        # the room" is not the same question.
+        #
+        # NOT compared against the number of fusers HOMED here any more.
+        # Fusions travel up to one map region from their home room now
+        # (QuickStartFuserPlacements in src/game.c), so a room's population
+        # is a per-run draw. What still has to hold is global, and is
+        # checked after the loop: every un-fused fusion is standing
+        # somewhere, exactly once.
+        # Which fusers the game itself decided belong here, recomputed from
+        # this boot's run seed rather than inferred from the sprites - see
+        # the mirror above.
+        run_seed = sum(c.memory.u8[0x02002a40 + 0x4C + k] << (8 * k) for k in range(4))
+        placement = fuser_placements(run_seed)
+        spot_room = next((i for i, x in enumerate(P.fuser_spots())
+                          if (x['area'], x['room']) == (area, room)), None)
+        want_here = [(f, p[1]) for f, p in zip(P.fusers(), placement)
+                     if p is not None and p[0] == spot_room]
+        for f, sl in want_here:
+            if sl >= len(spots):
+                msgs.append(f'KINSTONE_{f["kinstone"]:02X} placed on spot {sl}, '
+                            f'but this room only has {len(spots)}')
+            elif spots[sl] not in live:
+                msgs.append(f'KINSTONE_{f["kinstone"]:02X} should be standing on '
+                            f'spot {sl} {spots[sl]} and nothing is there')
+        slots = [sl for _, sl in want_here]
+        if len(set(slots)) != len(slots):
+            msgs.append('two fusers were handed the same spot')
+        placed[(area, room)] = len(want_here)
         out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
-                   else ('PASS', f'{rn}: {len(rows)} fuser(s) un-fused, on {len(spots)} '
-                                 f'verified scatter spots, spawned'))
+                   else ('PASS', f'{rn}: {len(want_here)} fuser(s) placed here this run '
+                                 f'({len(rows)} homed), all standing, on {len(spots)} '
+                                 f'verified scatter spots'))
+    total = sum(placed.values())
+    want = len([f for f in P.fusers()])
+    if total != want:
+        out.append(('FAIL', f'{total} fuser(s) placed across every spot room, '
+                            f'but the table has {want} - a fusion with nowhere to stand '
+                            f'can never be offered'))
+    else:
+        out.append(('PASS', f'all {want} fusions placed exactly once across the spot rooms'))
     return out
 
 
