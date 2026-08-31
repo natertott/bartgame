@@ -527,7 +527,15 @@ void GameTask(void) {
 // those are meant to be permanently "owned" inventory entries.
 //
 // Also deliberately NOT granted: ITEM_MAP (dungeon-map pause screen isn't
-// needed for overworld mapping) and ITEM_LANTERN_ON (see below).
+// needed for overworld mapping), ITEM_LANTERN_ON (see below), and
+// ITEM_FIRE_ROD.
+//
+// The Fire Rod is an UNUSED beta item - it sits between ITEM_PEGASUS_BOOTS
+// and ITEM_OCARINA in the enum and vanilla never hands it out. Granting it
+// put it in the item menu in the Cane of Pacci's place (user-reported, and
+// visible in a menu screenshot of the build), which for a mapping build is
+// worse than useless: the Cane is one of the ten items the reachability
+// model actually gates routes on, and it has to be there to be used.
 //
 // Only ITEM_LANTERN_OFF is granted, not ITEM_LANTERN_ON - matching
 // QUICKSTART's own item list. Owning both simultaneously (which a real save
@@ -556,7 +564,7 @@ static const u8 sMapExploreItems[] = {
     ITEM_LIGHT_ARROW,       ITEM_BOOMERANG,        ITEM_MAGIC_BOOMERANG,  ITEM_SHIELD,
     ITEM_MIRROR_SHIELD,     ITEM_LANTERN_OFF,      ITEM_GUST_JAR,
     ITEM_PACCI_CANE,        ITEM_MOLE_MITTS,       ITEM_ROCS_CAPE,        ITEM_PEGASUS_BOOTS,
-    ITEM_FIRE_ROD,          ITEM_OCARINA,           ITEM_BOTTLE1,          ITEM_BOTTLE2,
+    ITEM_OCARINA,           ITEM_BOTTLE1,           ITEM_BOTTLE2,
     ITEM_BOTTLE3,           ITEM_BOTTLE4,           ITEM_SHELLS,           ITEM_EARTH_ELEMENT,
     ITEM_FIRE_ELEMENT,      ITEM_WATER_ELEMENT,     ITEM_WIND_ELEMENT,     ITEM_GRIP_RING,
     ITEM_POWER_BRACELETS,   ITEM_FLIPPERS,          ITEM_SKILL_SPIN_ATTACK,
