@@ -42,9 +42,19 @@ sys.path.insert(0, HERE)
 # Items. Names match overworld_paths.py where they overlap, so the two
 # tables can be compared without a translation layer.
 SWORD = 'sword'                # any sword at all (the Smith's)
-SWORD2 = 'sword2'              # "level 2 sword" in the survey's words
-SWORD3 = 'sword3'              # "level 3 sword"
 SPIN = 'spin'
+# The block push. The survey recorded it in vanilla's terms - a level-two
+# sword plus the Spin Attack for Lon Lon's and Trilby's blocks, level three
+# for Royal Valley's and the North Hyrule Field graveyard pocket's - because
+# vanilla's duplication technique needs one clone per step up in block size,
+# and the equipped sword is what decides how many clones you get.
+#
+# That pricing is retired. The mode reassigns the whole mechanic to the POWER
+# BRACELETS, which move every size of block with no clones at all (see
+# UpdatePlayerCollision's ACT_TILE_114 case). One token, one item, and the
+# sword2-vs-sword3 disagreement the survey turned up stops existing - it was
+# never two different obstacles, only two different block sizes.
+BRACELETS = 'bracelets'
 BOMBS = 'bombs'
 BOW = 'bow'
 FLIPPERS = 'flippers'
@@ -141,9 +151,9 @@ d('LLR', 'MINISH_CRACKS', 'LON_LON_RANCH_NORTH', 120, 56, [[PACCI, MINISH]])
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 396, 253, [[MINISH, PACCI]],
   'POCKET (tornado float). Only spawn content here when these are held.')
 d('LLR', 'MINISH_PATHS', 'LON_LON_RANCH', -864, 728, [[BOOTS, MINISH]])
-d('LLR', 'CAVES', 'LON_LON_RANCH', 86, 81, [[SWORD2, SPIN]],
+d('LLR', 'CAVES', 'LON_LON_RANCH', 86, 81, [[BRACELETS]],
   'the main part is behind a pushable block')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 184, 298, [[SWORD2, SPIN]],
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 184, 298, [[BRACELETS]],
   'POCKET out of the cave above - where Tingle sits. Gate content on this.')
 d('LLR', 'CAVES', 'LON_LON_RANCH_WALLET', 120, -1032, [[FUSION]])
 d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_WEST', 245, 90, [[MINISH], [LONLON_KEY]],
@@ -180,8 +190,8 @@ d('NHF', 'CAVES', 'TO_GRAVEYARD', -104, 216, [[BOMBS]])
 d('NHF', 'CAVES', 'HEART_PIECE_HALLWAY', -1000, -1000, [[BOMBS]])
 d('NHF', 'DOJOS', 'TO_GREATBLADE', -392, -56, [[FUSION, FLIPPERS]])
 d('NHF', 'DOJOS', 'GREATBLADE', 120, 200, [[FUSION, FLIPPERS]])
-d('NHF', 'CAVES', 'TO_GRAVEYARD', 59, 110, [[BOMBS, SPIN, SWORD3]], 'POCKET')
-d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, [[BOMBS, SPIN, SWORD3]],
+d('NHF', 'CAVES', 'TO_GRAVEYARD', 59, 110, [[BOMBS, BRACELETS]], 'POCKET')
+d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, [[BOMBS, BRACELETS]],
   'exit, reachable ONLY through the TO_GRAVEYARD pocket above')
 
 # --- Royal Valley ----------------------------------------------------------
@@ -197,7 +207,7 @@ d('RV', 'ROYAL_VALLEY', 'MAIN', 244, 331, [[LANTERN, MAZE, GRAVEYARD_KEY]],
 d('RV', 'ROYAL_VALLEY_GRAVES', 'HEART_PIECE', 120, 120, [[LANTERN, MAZE, GRAVEYARD_KEY]])
 d('RV', 'ROYAL_VALLEY_GRAVES', 'GINA', -168, 280, [[LANTERN, MAZE, GRAVEYARD_KEY]])
 d('RV', 'ROYAL_VALLEY', 'CRYPT', None, None,
-  [[LANTERN, MAZE, GRAVEYARD_KEY, SPIN, SWORD3]], 'the royal crypt')
+  [[LANTERN, MAZE, GRAVEYARD_KEY, BRACELETS]], 'the royal crypt')
 
 # --- Trilby Highlands ------------------------------------------------------
 region('TRIL', 'Trilby Highlands', ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 465, 124),
@@ -216,10 +226,10 @@ d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 560, FREE, 'exit')
 d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', -824, -600, FREE, 'the two-ladder cave, near side')
 d('TRIL', 'CAVES', 'BOTTLE_BUSINESS_SCRUB', -6, 95, [[BOMBS]],
   'THE bombable wall off the two-ladder cave')
-d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', -1064, -600, [[SWORD2, SPIN]],
+d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', -1064, -600, [[BRACELETS]],
   'the other pocket of the two-ladder cave, from its far side')
 d('TRIL', 'CAVES', 'TRILBY_KEESE_CHEST', -152, -296,
-  [[BOMBS, BOULDER('TRIL', 1)], [BOMBS, SWORD2, SPIN]])
+  [[BOMBS, BOULDER('TRIL', 1)], [BOMBS, BRACELETS]])
 d('TRIL', 'CAVES', 'TRILBY_RUPEE', -440, -1032, [[FUSION]], 'in the boulder pocket')
 d('TRIL', 'TREE_INTERIORS', 'PERCYS_TREEHOUSE', -136, 120, FREE, 'in the boulder pocket')
 d('TRIL', 'CAVES', 'TRILBY_FAIRY_FOUNTAIN', -472, -296, [[BOMBS]], 'in the boulder pocket')
@@ -386,24 +396,36 @@ def check():
             if survey is None and model:
                 conflicts.append('%s has no room requirement in the survey but '
                                  'overworld_paths gates it on %s' % (key, OP.show(model)))
-    #    3b. The block-pushing skill: the survey says level-2 sword + spin in
-    #        Lon Lon and Trilby, and level-3 sword + spin in Royal Valley and
-    #        the North Hyrule Field graveyard pocket. Both cannot be right.
-    twos = [k for k, r in SURVEY.items()
-            for e in r['dests'] if e['req'] and any(SWORD2 in t for t in e['req'])]
-    threes = [k for k, r in SURVEY.items()
-              for e in r['dests'] if e['req'] and any(SWORD3 in t for t in e['req'])]
-    if twos and threes:
-        conflicts.append('the same "push a block" obstacle is priced at %s in %s and '
-                         'at %s in %s - one of the two is wrong'
-                         % (SWORD2, sorted(set(twos)), SWORD3, sorted(set(threes))))
-    #    3c. overworld_paths prices NHF WNW on bombs+sword3+spin; the survey's
-    #        only sword3 route out of NHF is the graveyard-pocket exit.
+    #    3b. RESOLVED, and the check kept as a regression guard. The survey
+    #        priced the same "push a block" obstacle at a level-two sword in
+    #        Lon Lon and Trilby and a level-three sword in Royal Valley and
+    #        the North Hyrule Field graveyard pocket. Neither reading was
+    #        wrong about the map - vanilla really does charge more for a
+    #        bigger block, because block size is clone count and clone count
+    #        is sword level. The mode moved the whole mechanic onto the Power
+    #        Bracelets, so every block is one item now. If a sword level ever
+    #        reappears as a block price, this catches it.
+    swordy = sorted({k for k, r in SURVEY.items() for e in r['dests']
+                     if e['req'] and any(any(t.startswith('sword') and t != SWORD
+                                             for t in term)
+                                         for term in e['req'])})
+    if swordy:
+        conflicts.append('a sword level is being used as a block-push price again, in '
+                         '%s - the Power Bracelets own that gate now' % swordy)
+    #    3c. The two models have to agree on North Hyrule Field's WNW border,
+    #        because the survey found only ONE way out that way - through the
+    #        graveyard pocket at (5,93) - and overworld_paths prices that
+    #        border independently. This used to be a by-hand cross-check
+    #        printed every run because the two sides were written in
+    #        different currencies; with the block push down to one item they
+    #        are directly comparable, so it only speaks up when they differ.
     op_nhf = OP.TRAVERSAL.get(('NHF', 'N', 'WNW'))
     if op_nhf:
-        conflicts.append('cross-check by hand: overworld_paths NHF N->WNW = %s; the '
-                         'survey\'s hardest NHF exit (5,93) = %s'
-                         % (OP.show(op_nhf), _fmt([[BOMBS, SPIN, SWORD3]])))
+        survey_nhf = _fmt([[BOMBS, BRACELETS]])
+        if OP.show(op_nhf) != survey_nhf:
+            conflicts.append('overworld_paths prices NHF N->WNW at %s but the survey\'s '
+                             'only route out that way (5,93) costs %s'
+                             % (OP.show(op_nhf), survey_nhf))
 
     print('=== survey: %d regions, %d destinations' %
           (len(SURVEY), sum(len(r['dests']) for r in SURVEY.values())))

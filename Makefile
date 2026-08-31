@@ -31,6 +31,7 @@ custom: tools
 #   grep -rl 'QUICKSTART\|MAPEXPLORE' src/ data/ asm/ --include=*.c --include=*.s
 VARIANT_OBJS := \
 	build/USA/data/scripts.o \
+	build/USA/src/beanstalkSubtask.o build/USA/src/beanstalkSubtask.s build/USA/src/beanstalkSubtask.i \
 	build/USA/src/collision.o build/USA/src/collision.s build/USA/src/collision.i \
 	build/USA/src/data/transitions.o build/USA/src/data/transitions.s build/USA/src/data/transitions.i \
 	build/USA/src/enemy/businessScrub.o build/USA/src/enemy/businessScrub.s build/USA/src/enemy/businessScrub.i \
@@ -67,6 +68,12 @@ VARIANT_OBJS := \
 	build/USA/src/ui.o build/USA/src/ui.s build/USA/src/ui.i \
 	build/USA/src/vram.o build/USA/src/vram.s build/USA/src/vram.i
 
+# EVERY target below builds the same file, tmc.gba - GBA.mk's ROM name comes
+# from GAME_VERSION and nothing else. So each one also stamps a copy under its
+# own name, and the copy is part of the target rather than something to
+# remember afterwards. It was not, once, and five stale ROMs went out looking
+# freshly built because their timestamps were the only evidence and nobody
+# reads those.
 quickstart: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
@@ -78,6 +85,7 @@ quickstart: tools
 quickstart-testkit: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1
+	@cp tmc.gba tmc-testkit.gba
 
 # The same two builds, but every run starts at difficulty 3 instead of 0 -
 # for playtesting the middle of the curve without having to win up to it.
@@ -85,10 +93,12 @@ quickstart-testkit: tools
 quickstart-d3: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_START_DIFFICULTY=3
+	@cp tmc.gba tmc-d3.gba
 
 quickstart-testkit-d3: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_TESTKIT=1 QUICKSTART_START_DIFFICULTY=3
+	@cp tmc.gba tmc-testkit-d3.gba
 
 # The two audio-trim playtest builds. m4a's mixer is ~40% of a North Hyrule
 # Field frame, so it is the largest single lever the mode has - and every
@@ -101,10 +111,12 @@ quickstart-testkit-d3: tools
 quickstart-audiolight: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0 QUICKSTART_AUDIO_FREQ=4
+	@cp tmc.gba tmc-audiolight.gba
 
 quickstart-audiomin: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1 QUICKSTART_AUDIO_CHANNELS=4 QUICKSTART_AUDIO_REVERB=0 QUICKSTART_AUDIO_FREQ=2
+	@cp tmc.gba tmc-audiomin.gba
 
 # Dev-only: boot into South Hyrule Field, just outside Hyrule Castle Town's
 # south gate, with the entire main quest done except the Vaati fight - see
@@ -113,6 +125,7 @@ quickstart-audiomin: tools
 mapexplore: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 MAPEXPLORE=1
+	@cp tmc.gba tmc-mapexplore.gba
 
 .PHONY: extract_assets
 extract_assets: tools

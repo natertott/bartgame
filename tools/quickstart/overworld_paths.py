@@ -50,8 +50,13 @@ sys.path.insert(0, HERE)
 # ---------------------------------------------------------------- items ----
 
 SWORD = 'sword'
-SWORD3 = 'sword3'          # the level-3 blade
-SPIN = 'spin'              # the Spin Attack skill
+# RETIRED: the level-3 blade and the Spin Attack skill as route currency.
+# They existed here for exactly one obstacle - the block in the North Hyrule
+# Field graveyard pocket, which vanilla opens by cloning Link and needs one
+# clone per step up in block size, i.e. a big enough sword plus the technique.
+# The mode gives that whole job to the POWER BRACELETS instead, so the bill
+# is one item and the same one at every block on the map.
+BRACELETS = 'bracelets'    # Power Bracelets - moves a block of any size
 BOMBS = 'bombs'
 FLIPPERS = 'flippers'
 CAPE = 'cape'              # Roc's Cape
@@ -61,7 +66,7 @@ GRIP = 'grip'              # Grip Ring
 BOOTS = 'boots'            # Pegasus Boots
 
 ITEM_ENUM = {              # for the eventual game.c port
-    SWORD: 'ITEM_SMITH_SWORD', SWORD3: 'ITEM_BLUE_SWORD', SPIN: 'ITEM_SKILL_SPIN_ATTACK',
+    SWORD: 'ITEM_SMITH_SWORD', BRACELETS: 'ITEM_POWER_BRACELETS',
     BOMBS: 'ITEM_BOMBS', FLIPPERS: 'ITEM_FLIPPERS', CAPE: 'ITEM_ROCS_CAPE',
     PACCI: 'ITEM_PACCI_CANE', LANTERN: 'ITEM_LANTERN_OFF', GRIP: 'ITEM_GRIP_RING',
     BOOTS: 'ITEM_PEGASUS_BOOTS',
@@ -74,11 +79,12 @@ ITEM_ENUM = {              # for the eventual game.c port
 # define", and a route whose bill names something no ? room can drop is a
 # route nobody can walk.
 OBTAINABLE = {
-    SWORD:    (True,  'ITEM_SMITH_SWORD is in the starting kit'),
-    SWORD3:   (True,  'ITEM_BLUE_SWORD drops (RARE, behind the White Sword) - added '
-                      'to the tier table because this model showed the Royal Valley '
-                      'route was gated behind an item no run could get'),
-    SPIN:     (True,  'ITEM_SKILL_SPIN_ATTACK drops'),
+    SWORD:     (True, 'ITEM_SMITH_SWORD is in the starting kit'),
+    BRACELETS: (True, 'ITEM_POWER_BRACELETS drops (RARE). It used to be a Minish-only '
+                      'convenience; it is now the single gate on every pushable block, '
+                      'which is what makes the Royal Valley and graveyard-pocket routes '
+                      'walkable without a specific sword upgrade. ITEM_BLUE_SWORD stays '
+                      'in the tier table on its own merits, no longer to unlock a route'),
     BOMBS:    (True,  'ITEM_BOMBS drops'),
     FLIPPERS: (True,  'ITEM_FLIPPERS drops'),
     CAPE:     (True,  'ITEM_ROCS_CAPE drops'),
@@ -231,7 +237,7 @@ t('NHF', 'N', 'ENE', [BOMBS])
 t('NHF', 'N', 'S')
 t('NHF', 'N', 'ESE', [SWORD])
 t('NHF', 'N', 'WSW', [FLIPPERS], [CAPE])
-t('NHF', 'N', 'WNW', [BOMBS, SWORD3, SPIN])
+t('NHF', 'N', 'WNW', [BOMBS, BRACELETS])
 
 t('NHF', 'WNW', 'WSW')
 t('NHF', 'WNW', 'N')
@@ -241,23 +247,23 @@ t('NHF', 'WNW', 'ESE', [SWORD])
 
 t('NHF', 'ESE', 'S', [SWORD])
 t('NHF', 'ESE', 'WSW', [SWORD, CAPE], [SWORD, FLIPPERS])
-t('NHF', 'ESE', 'WNW', [BOMBS, SWORD3, SPIN])
+t('NHF', 'ESE', 'WNW', [BOMBS, BRACELETS])
 t('NHF', 'ESE', 'N', [SWORD])
 t('NHF', 'ESE', 'ENE', [SWORD, BOMBS])
 
 t('NHF', 'ENE', 'N', [BOMBS])
-t('NHF', 'ENE', 'WNW', [BOMBS, SWORD3, SPIN])
+t('NHF', 'ENE', 'WNW', [BOMBS, BRACELETS])
 t('NHF', 'ENE', 'WSW', [BOMBS, FLIPPERS], [BOMBS, CAPE])
 t('NHF', 'ENE', 'S', [BOMBS])
 t('NHF', 'ENE', 'ESE', [BOMBS, SWORD])
 
 t('NHF', 'S', 'WSW', [CAPE], [FLIPPERS])
-t('NHF', 'S', 'WNW', [BOMBS, SWORD3, SPIN])
+t('NHF', 'S', 'WNW', [BOMBS, BRACELETS])
 t('NHF', 'S', 'N')
 t('NHF', 'S', 'ENE', [BOMBS])
 t('NHF', 'S', 'ESE', [SWORD])
 
-t('NHF', 'WSW', 'WNW', [CAPE, BOMBS, SWORD3, SPIN], [FLIPPERS, BOMBS, SWORD3, SPIN])
+t('NHF', 'WSW', 'WNW', [CAPE, BOMBS, BRACELETS], [FLIPPERS, BOMBS, BRACELETS])
 t('NHF', 'WSW', 'N', [CAPE], [FLIPPERS, BOMBS])
 t('NHF', 'WSW', 'S', [CAPE], [FLIPPERS, BOMBS])
 t('NHF', 'WSW', 'ENE', [CAPE, BOMBS], [FLIPPERS, BOMBS])

@@ -450,21 +450,57 @@ u32 UpdatePlayerCollision(void) {
             if (position == 0xffff) {
                 return 0;
             }
+            // The block's SIZE in tiles came back in the top nibble, so tmp2
+            // is both the PUSHED_BLOCK type (2x2 -> 1, 3x3 -> 2, 4x4 -> 3)
+            // and the number of EXTRA pushers vanilla demands: one clone per
+            // step up in size. Vanilla's only way to get those clones is the
+            // duplication technique - charge the Spin Attack, stand on a
+            // glowing clone tile, and split into as many Links as the
+            // equipped sword allows (Smith's and Green give none, Red one,
+            // Blue two, Four Sword three, see player.c's
+            // SurfaceAction_CloneTile). So a 4x4 block is really a demand for
+            // the Four Sword plus the Spin Attack scroll.
             tmp2 = (position >> 0xc) - 1;
             position &= 0xfff;
-            // TODO convert to for loop?
-            index = 0;
-            tmp3 = 0;
-            while (index < 3) {
-                if ((((*(u32*)(&(((GenericEntity*)gPlayerClones[0]))->field_0x6c)) & (1 << index)) != 0) &&
-                    (sub_0801A570(gPlayerClones[index], 0) == position)) {
-                    tmp3++;
+#ifdef QUICKSTART
+            // In this mode the Power Bracelets ARE the block gate, and they
+            // replace that whole chain: one pair of hands, any size block.
+            //
+            // Two reasons the vanilla rule could not stay. It prices the
+            // overworld's blocks in swords - level two for Lon Lon and
+            // Trilby, level three for Royal Valley and the North Hyrule
+            // Field graveyard pocket - and the sword a run is holding is a
+            // fact about its luck, so the same pocket was reachable or not
+            // depending on a draw the player never made a choice about. And
+            // the technique needs a scroll AND a sword AND a glowing tile
+            // within reach of the block; only some of those blocks have one.
+            //
+            // Skipping the count rather than faking clones is deliberate.
+            // Nothing downstream reads gPlayerClones - PUSHED_BLOCK moves
+            // itself and repaints the tiles under it, and the player just
+            // plays the push animation - so a spoofed clone would be a
+            // sprite to feed and delete for no gain. It also drops the read
+            // through gPlayerClones[0] below, which is a NULL dereference
+            // whenever a cloneless Link leans on one of these (harmless on
+            // hardware - address 0x6c is BIOS - but not worth keeping).
+            if (GetInventoryValue(ITEM_POWER_BRACELETS) == 0) {
+#endif
+                // TODO convert to for loop?
+                index = 0;
+                tmp3 = 0;
+                while (index < 3) {
+                    if ((((*(u32*)(&(((GenericEntity*)gPlayerClones[0]))->field_0x6c)) & (1 << index)) != 0) &&
+                        (sub_0801A570(gPlayerClones[index], 0) == position)) {
+                        tmp3++;
+                    }
+                    index++;
                 }
-                index++;
+                if (tmp3 < tmp2) {
+                    return 0;
+                }
+#ifdef QUICKSTART
             }
-            if (tmp3 < tmp2) {
-                return 0;
-            }
+#endif
             pushedBlock = CreateObject(PUSHED_BLOCK, tmp2, 0);
             if (pushedBlock == NULL) {
                 return 0;

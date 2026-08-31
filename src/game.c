@@ -900,11 +900,13 @@ static void GameTask_Transition(void) {
     // Level 1 on purpose. Upgrading to ITEM_RED_SWORD does make
     // SurfaceAction_CloneTile hand out one clone (player.c switches on the
     // equipped sword: Smith's and Green give zero, Red one, Blue two, Four
-    // Sword three), but the sword is only half of it - the duplication
+    // Sword three), but the sword was only half of it - the duplication
     // technique also needs the spin-attack skill scroll, which this mode
-    // does not grant either. Giving the sword alone bought nothing, so the
-    // clone-block puzzles stay unsolvable for now and the whole mechanic is
-    // parked on the roadmap rather than half-wired here.
+    // does not grant either. That whole chain is no longer what opens a
+    // clone block: the POWER BRACELETS are, and they open every size on
+    // their own (see UpdatePlayerCollision's ACT_TILE_114 case). So the
+    // starting sword has nothing to do with block puzzles any more, and
+    // level 1 costs the run nothing it could otherwise have had.
     gSave.stats.equipped[SLOT_B] = ITEM_SMITH_SWORD;
     // L item slot starts empty. It used to hold the Bow, back when the Bow
     // was free gear; now that bow, arrows and bombs are all things the run
@@ -2466,7 +2468,7 @@ const u8* const gCustomStrings[] = {
     [171] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
     [172] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
     [173] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
-    [174] = (const u8*)"Shove the heavy rocks\nthat block the ways\nnothing else opens.",
+    [174] = (const u8*)"Shove the big stone\nblocks by yourself -\nany size, no clones.",
     [175] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
     [176] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
     [177] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
@@ -8051,12 +8053,14 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 352, 623, 208, 351, ITEM_PACCI_CANE },
 
     // The TINGLE POCKET (23 tiles, tx 10-14 / ty 16-23), out of the cave
-    // whose main chamber is behind a pushable block. The survey prices the
-    // push at the level-two sword and the Spin Attack together - hence the
-    // AND field above. (ITEM_RED_SWORD is what this file already calls the
-    // level-two blade; see the miniboss reward drop.)
+    // whose main chamber is behind a pushable block. That push used to be
+    // priced in swords - and the survey found the same obstacle costing a
+    // level-two sword here and a level-three sword in Royal Valley, which
+    // is the sort of disagreement that means the model is wrong, not the
+    // map. The Power Bracelets now move every size of block, so this is a
+    // single item and the same one everywhere.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 160, 239, 256, 383,
-      ITEM_RED_SWORD, 0, ITEM_SKILL_SPIN_ATTACK },
+      ITEM_POWER_BRACELETS },
 };
 
 // Whether something may be placed at this room-local spot in the current

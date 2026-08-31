@@ -2332,14 +2332,14 @@ fusion* as a placeable chain step rather than a special case.
    a `settled` test (local inside the room rect), holds the room-change
    stamp until it passes, and prints `** MID-TRANSITION **` rather than a
    number that means nothing.
-2. **A real conflict: the block-pushing skill is priced two ways.** The
+2. ~~**A real conflict: the block-pushing skill is priced two ways.** The
    survey says *level-2 sword + spin* for the pushable blocks in Lon Lon
    Ranch and Trilby Highlands, and *level-3 sword + spin* for the Royal
-   Valley crypt and the North Hyrule Field graveyard pocket.
-   `overworld_paths.py` already prices NHF's WNW route at bombs + sword3 +
-   spin. Either these are genuinely different obstacles or one reading is
-   wrong, and it matters: sword3 is a much later item, so getting this wrong
-   moves whole regions between spheres.
+   Valley crypt and the North Hyrule Field graveyard pocket.~~ RESOLVED, and
+   neither reading was wrong: vanilla charges one clone per step up in block
+   size, and clone count is sword level, so the survey was seeing two block
+   sizes rather than two obstacles. The mode moves the whole mechanic onto
+   the Power Bracelets - see "The Power Bracelets move every block now".
 3. **Royal Valley's lantern gate is stated differently by the two tables.**
    `overworld_paths.GATES` gates the whole region on the Lantern; the survey
    has no region requirement and instead puts the Lantern on the individual
@@ -2407,8 +2407,9 @@ the first row containing the point, so two overlapping rows cannot mean
 "both" - the second is never consulted. The gated-zone struct grew a
 trailing `alsoItem`, making the whole requirement
 `(requiredItem OR altItem) AND alsoItem`. Lon Lon's Tingle pocket is what
-needed it (level-two sword *and* Spin Attack for the block push); Royal
-Valley's graveyard uses it too.
+needed it (level-two sword *and* Spin Attack for the block push, at the
+time - that row is a single item now that the Power Bracelets own the block
+gate); Royal Valley's graveyard still uses it.
 
 **Lon Lon Ranch's two pockets are measured, not estimated.** Flooding the
 room's collision: the tornado pocket is a 46-tile component (tx 22-38 /
@@ -2472,6 +2473,81 @@ So: a single-seed gfx failure is a seed report, not a regression. Diagnose
 it by running the tier on the same seed against the previous ROM before
 believing it. The underlying weakness - the reserve not defending the
 metric the tier measures - is real and still open.
+
+### The Power Bracelets move every block now (Aug 2026)
+
+The survey turned up the same "push a block" obstacle priced two different
+ways - a level-two sword in Lon Lon and Trilby, a level-three sword in Royal
+Valley and the North Hyrule Field graveyard pocket - and the answer turned
+out to be that **both readings were right about vanilla**, which is why the
+model had to change rather than the map.
+
+**How vanilla actually works.** The block's size comes back from
+`sub_0801A570` in the top nibble of the tile position. In
+`UpdatePlayerCollision`'s `ACT_TILE_114` case that becomes `tmp2`, which is
+simultaneously the `PUSHED_BLOCK` type (2x2 -> 1, 3x3 -> 2, 4x4 -> 3) and the
+number of **extra pushers** demanded: one clone per step up in size. The only
+way to get clones is the duplication technique - charge the Spin Attack,
+stand on a glowing clone tile, split into as many Links as the equipped sword
+allows (`SurfaceAction_CloneTile`: Smith's and Green none, Red one, Blue two,
+Four Sword three). So a bigger block is literally a bigger sword, and the
+survey was reading two block sizes, not two obstacles.
+
+**Why that could not stay.** It priced overworld pockets in whatever sword a
+run happened to draw - a fact about its luck, not a choice it made - and it
+needs a scroll AND a sword AND a glowing tile within reach of the block,
+which not every one of these blocks has.
+
+**What replaces it.** The Power Bracelets are now the whole gate: hold them
+and any size of block moves, with no clones at all. One item, the same one at
+every block on the map. The change is three lines around the clone count, and
+it **skips** the count rather than faking clones - nothing downstream reads
+`gPlayerClones` (the `PUSHED_BLOCK` object moves itself and repaints the
+tiles under it; the player just plays the push animation), so a spoofed clone
+would be a sprite to feed and delete for no gain. Skipping also drops the
+read through `gPlayerClones[0]`, which is a NULL dereference any time a
+cloneless Link leans on one of these - harmless on hardware, since address
+0x6c is BIOS, but not worth keeping.
+
+**Measured, both directions**, on four real blocks (scratchpad
+`block_probe.py`, which finds each block as a connected component of act tile
+114 and shoves the player against the middle of all four edges):
+
+| room | block | with bracelets | without |
+|---|---|---|---|
+| `CAVES/LON_LON_RANCH` | 2x2 | moves | does not move |
+| `CAVES/TRILBY_HIGHLANDS` | 2x2 | moves | does not move |
+| `CAVES/TO_GRAVEYARD` | 3x3 | moves | does not move |
+| `ROYAL_VALLEY_GRAVES/HEART_PIECE` | 3x3 | moves | does not move |
+
+The 3x3 rows are the ones that matter: that is the size vanilla charges two
+clones for, so the bypass is not just working at the cheapest block. Each one
+moves from a single side because the others are walled in - that is the map,
+not the mechanic.
+
+**Fallout.** `world_reach.py` and `overworld_paths.py` both retire their
+sword/spin tokens for a single `BRACELETS`; the Lon Lon Tingle-pocket zone
+row in `game.c` drops its sword+spin AND for one item; the conflict check
+that reported the sword2-vs-sword3 disagreement is now a regression guard
+that fires if a sword level is ever used as a block price again; and the NHF
+WNW cross-check, which used to print every run because the two models were
+written in different currencies, now compares them directly and stays quiet
+when they agree. `world_reach.py --check` reports **zero** conflicts.
+
+One knock-on worth noting: `beanstalkSubtask.c` joins `VARIANT_OBJS`. It is
+the file that owns `UpdatePlayerCollision`, so it now compiles differently
+per variant, and the stale-object trap that has bitten this project three
+times applies to it like any other.
+
+**And a fourth version of that same trap, caught here.** Every variant target
+builds the same file - `tmc.gba` - because GBA.mk's ROM name comes from
+`GAME_VERSION` and nothing else. The per-variant names (`tmc-testkit.gba`,
+`tmc-d3.gba`, ...) were copies made by hand *after* the build, which means a
+round of "build all six" left five of them untouched and shipped whatever was
+last copied into them. That happened; the previous batch's five non-default
+ROMs were stale. Each target now ends with its own `cp`, so the copy is part
+of building rather than something to remember, and `ls -la tmc*.gba` shows six
+distinct timestamps and six distinct md5s when the set is genuinely fresh.
 
 ## 4. Vanilla behaviors not yet addressed
 
