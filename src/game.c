@@ -24,6 +24,19 @@
 #include "beanstalkSubtask.h"
 #include "pauseMenu.h"
 #include "fade.h"
+
+// text.c's TEXT_CUSTOM hook (sub_0805EEB4) reads gCustomStrings /
+// gCustomStringCount unconditionally, but the table itself only exists in
+// the QUICKSTART branch below - so every other build failed to LINK. Found
+// by the mapexplore build, which had bit-rotted into exactly this. An empty
+// table costs eight bytes and keeps vanilla and mapexplore linkable; the
+// count is 0, so the hook falls through to its own invalid-text
+// placeholder, which is the same thing it does for an out-of-range index.
+#ifndef QUICKSTART
+const u8* const gCustomStrings[] = { 0 };
+const u32 gCustomStringCount = 0;
+#endif
+
 #if defined(QUICKSTART) || defined(MAPEXPLORE)
 #include "roomid.h"
 #include "effects.h"
