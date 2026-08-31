@@ -235,6 +235,20 @@ static void QsWriteField(u32 base, s32 bits, s32 value) {
 #define GF_SITE_EXT_D_BIT(b) (658 + (b)) // b = 0..31
 #define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..30, FLAG_BANK_11
 #define GF_SITE_EXT11B_BIT(b) (124 + (b)) // b = 0..6, FLAG_BANK_11
+// The 73rd site's bits. Both runs below are what is LEFT of the flag space:
+// an audit of every macro in this file (the invariant checker's own
+// expansion, reused as a free-space report) says the QUICKSTART window is
+// 689 of its 704 offsets full, and the only wiped runs still free anywhere
+// are window 94-100 and bank-11 133-141. Sixteen bits between them, and a
+// site needs thirteen.
+//
+// So this is the ceiling, and it should be treated as one: the next site
+// after this cannot be added by finding more bits, because there are not
+// any. See the roadmap - the site block wants a real storage redesign
+// (a packed array in gSave rather than one flag per bit) before the table
+// grows again.
+#define GF_SITE_EXT_E_BIT(b) (94 + (b))    // b = 0..6, the window's last free run
+#define GF_SITE_EXT11C_BIT(b) (133 + (b))  // b = 0..8, FLAG_BANK_11
 // 61 * 13, spelled as a number because the BITS define lives further down
 // with the site table; the assertion beside it keeps this honest.
 #define QUICKSTART_SITE_RAW_BITS 793
@@ -253,11 +267,22 @@ static s32 QuickStartSiteExtTarget(s32 e, s32* isBank11) {
     if (e < 105) {
         return GF_SITE_EXT_D_BIT(e - 73);
     }
-    *isBank11 = 1;
-    if (e < 136) {
-        return GF_SITE_EXT11_BIT(e - 105);
+    // The two scrap runs the 73rd site is built out of. A first attempt
+    // widened run B into window 509-521 instead, and the invariant
+    // checker's flag tier rejected it within one run: GF_REGION_ALIVE_BIT
+    // is already there. The free-space audit that followed is what these
+    // two runs come from.
+    if (e < 112) {
+        return GF_SITE_EXT_E_BIT(e - 105);
     }
-    return GF_SITE_EXT11B_BIT(e - 136);
+    *isBank11 = 1;
+    if (e < 143) {
+        return GF_SITE_EXT11_BIT(e - 112);
+    }
+    if (e < 150) {
+        return GF_SITE_EXT11B_BIT(e - 143);
+    }
+    return GF_SITE_EXT11C_BIT(e - 150);
 }
 
 static bool32 QsCheckSiteFlag(u32 flag) {
@@ -1860,10 +1885,10 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // does not reach the top of this block on its own. The extension bits
 // need no clear of their own: every borrowed run sits inside the window
 // wipe (202-703) or the bank-11 wipe (43-155).
-#define QUICKSTART_CONTENT_SITE_COUNT 72
+#define QUICKSTART_CONTENT_SITE_COUNT 73
 #define QUICKSTART_CONTENT_SITE_BITS 13
 #define QUICKSTART_CONTENT_SITE_MAX 61
-#define QUICKSTART_CONTENT_SITE_EXT_MAX 11
+#define QUICKSTART_CONTENT_SITE_EXT_MAX 12
 // The RAW_BITS number spelled beside the accessors must be the raw
 // ceiling's exact size, or the router fires at the wrong boundary.
 typedef char QuickStartSiteRawBitsMatch[(QUICKSTART_SITE_RAW_BITS ==
@@ -13837,6 +13862,27 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // corridor "deep" is three tiles, and the entrance's own run is the
     // only segment guaranteed reachable the moment the player walks in.
     { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 184, 104 },
+    // The SAME room's main body, which had nothing in it at all. Measured:
+    // the room is 30x60 and holds seven walkable components, and the one
+    // the entrance lands in - the 27-tile corridor the row above serves -
+    // is not the big one. The main body is 1,170 tiles, 1,036 of them with
+    // full 3x3 clearance, spanning tx 0-29 / ty 21-59. One event in a
+    // 27-tile corridor and none at all in a room forty times its size was
+    // the "split the events into two" report.
+    //
+    // ANY, not SMALL: with a thousand clear tiles this room can host
+    // anything the pool deals, minibosses and gate puzzles included.
+    //
+    // It is BEHIND THE MOLE MITTS, and that is not a problem - it is the
+    // shape of the thing. A collision flood cannot cross the diggable wall
+    // between the corridor and the body, so the two read as separate
+    // components; the Mitts are what join them. That also keeps the
+    // invariant checker's multi-site rule satisfied (each site in a
+    // distinct component) for the honest reason rather than by accident.
+    // See the world-reachability section of the roadmap: this room is the
+    // worked example for why tile CLASS, not tile position, is what a
+    // requirements model has to be built on.
+    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_ANY, 232, 648 },
     // --- The Minish-layer rooms the ring never wired up ------------------
     //
     // A sweep of every exit the seven ring regions have, filtered to the

@@ -102,6 +102,7 @@ FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
     ('GF_SITE_EXT11_', 11, 0),  # extension-site bits routed into bank 11
     ('GF_SITE_EXT11B_', 11, 0),  # ...and its second bank-11 run
+    ('GF_SITE_EXT11C_', 11, 0),  # ...and its third, the last free bank-11 run
     ('GF_INN_CHEST_ARMED', 11, 0),  # the inn's per-tier chest arm bits
     ('GF_WW_BRUSH_PAID_BIT', 11, 0),  # the Western Wood brush-fusion payouts
     ('GF_SEED_PINNED', 11, 0),

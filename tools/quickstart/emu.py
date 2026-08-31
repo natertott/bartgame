@@ -129,7 +129,13 @@ def _site_bit(n):
         return FLAG_BANK_12 + 700 + 617 + (e - 34)
     if e < 105:
         return FLAG_BANK_12 + 700 + 658 + (e - 73)
-    return FLAG_BANK_11 + 143 + (e - 105)
+    if e < 112:
+        return FLAG_BANK_12 + 700 + 94 + (e - 105)
+    if e < 143:
+        return FLAG_BANK_11 + 143 + (e - 112)
+    if e < 150:
+        return FLAG_BANK_11 + 124 + (e - 143)
+    return FLAG_BANK_11 + 133 + (e - 150)
 
 
 def qs_site_set(c, n, v=1):

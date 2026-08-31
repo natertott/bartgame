@@ -339,10 +339,38 @@ t('LLR', 'N', 'WSW', [BOMBS])
 t('LLR', 'N', 'SWS')
 t('LLR', 'N', 'ESE', [CAPE], [FLIPPERS], [PACCI])
 
-t('LLR', 'ESE', 'N', [CAPE, PACCI])
-t('LLR', 'ESE', 'WNW', [CAPE])
-t('LLR', 'ESE', 'WSW', [CAPE, BOMBS])
-t('LLR', 'ESE', 'SWS', [CAPE])
+# --- The TRUE ESE, and two east ports this model does not have yet --------
+#
+# User, Aug 2026: "There is a connection in LLR that I forgot about. It is
+# the true ESE." Their survey of it, verbatim:
+#
+#     ESE -> SWS               nothing
+#     ESE -> W                 bombs
+#     ESE -> WNW               nothing
+#     ESE -> NWN               cane of pacci
+#     ESE -> upper middle E    nothing (except the boulder-in-hole)
+#     ESE -> middle E          rocs cape or zoras flippers or cane of pacci
+#
+# The first four map onto ports this model already has - W is WSW and NWN
+# is N - and they REPLACE the old ESE rows wholesale. The old rows were
+# written for a different connection and every one of them was dearer
+# (ESE->WNW wanted the Cape; it is free from the true ESE).
+#
+# The last two name ports that do not exist here: Lon Lon Ranch's east side
+# apparently has THREE connections - this ESE plus an "upper middle E" and a
+# "middle E" - where the model has one. They cannot be added from the survey
+# alone, because a port is only half a fact: the other half is what is on
+# the other side of it, and nothing here says which region or room those two
+# reach. Recorded, not invented. See the roadmap's world-reachability
+# section - this is exactly the kind of hole the reachability extractor is
+# meant to close by measurement rather than by asking.
+t('LLR', 'ESE', 'SWS')
+t('LLR', 'ESE', 'WSW', [BOMBS])
+t('LLR', 'ESE', 'WNW')
+t('LLR', 'ESE', 'N', [PACCI])
+# PENDING (need the destinations before they can be ports):
+#   t('LLR', 'ESE', 'E_UPPER_MIDDLE')                        # free
+#   t('LLR', 'ESE', 'E_MIDDLE', [CAPE], [FLIPPERS], [PACCI])
 
 t('LLR', 'SWS', 'WSW', [BOMBS])
 t('LLR', 'SWS', 'WNW')

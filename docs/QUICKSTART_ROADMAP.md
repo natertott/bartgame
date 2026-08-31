@@ -2167,6 +2167,141 @@ with the number of fuser sprites in a room, which cross-region hosting can
 now push to nine; capping that lower would be a small, cheap win if it is
 ever wanted.
 
+### Mapping the world: a requirements model for every square (Aug 2026)
+
+The design question behind win-condition chains, in the user's words: "we
+need a way of mapping out the vanilla world and all the requirements needed
+to reach every square of the game, and we need to do it robustly." What
+follows is the plan, the measurement that says it is tractable, and what
+already exists.
+
+**Walkthroughs are the wrong source.** A 100% walkthrough describes
+vanilla's intended ORDER - get the Flippers, then go to Lake Hylia - which
+is one valid route, not the set of constraints. It cannot tell you what is
+reachable without an item, it says nothing about the rooms this mode has
+re-wired, and it cannot be checked. The ROM has strictly better data: it is
+exact, offline, and already half-parsed by the tools here.
+
+**The measurement that makes it tractable.** The scaling worry is "every
+square" - tens of thousands of them. But a requirement is a property of the
+KIND of square, not the square. Measured this round (`tileclass.py`): the
+fifteen region rooms hold about 24,000 tiles and **397 distinct
+(collisionData, tileType, actTile) classes** between them, of which 68 are
+plain floor and 329 are everything else. That is a 60:1 reduction, and it
+gets better, not worse, with more rooms - a new room in a tileset already
+surveyed adds almost no new classes. **The measurement burden is a few
+hundred things once, not tens of thousands of things ever.**
+
+**Three layers.**
+
+1. **The room graph.** Nodes are rooms, edges are exits. Already built:
+   `exit_lists.py` parses every room's exit list out of transitions.c as
+   the BUILD sees it, resolving the QUICKSTART #ifdefs so it reports the
+   doors that exist in the ROM we ship rather than vanilla's.
+2. **Intra-room reachability.** For one room: a flood over the collision
+   grid where passability is a function of (tile class, items held) rather
+   than a fixed test. Output: which of the room's exits reach which, and at
+   what cost. This is the piece that does not exist yet.
+3. **The world graph.** Compose the two. A node is (room, entrance); an
+   edge is (room, entranceA) -> (room, exitB) carrying layer 2's
+   requirement, then (room, exitB) -> (destRoom, arrival) free from layer 1.
+
+**Where requirements come from, in order of trust.**
+
+- **Tile class** (the bulk): the table above, filled once per class.
+- **Objects**: locked doors, bombable walls, cracked floors, dig spots.
+  These are entities, not tiles, so they come from the room's object list,
+  and each object type maps to a requirement.
+- **Fusions**: `gKinstoneWorldEvents` -> `gWorldEvents` already gives which
+  fusion changes which room at which coordinates - `find_fuser_spots.py`
+  reads it today.
+
+**How the class table gets filled: differential measurement, not
+judgement.** For each class, one experiment: stand the player next to a
+tile of that class holding item set S, walk into it, and see whether they
+end up standing on it. Every piece of that already works - granting items
+by writing `gSave.inventory` directly was proven this month on the swamp-kit
+drop gate, and the flood and warp helpers are the checker's own. The answer
+is a property of the class, so one measurement transfers to every tile of
+that class in the game.
+
+**The verification loop is the "robustly" part.** The model is trusted only
+where the emulator agrees with it. For a sample of (room, entrance, exit,
+item set) the harness walks it and confirms; a disagreement means a class
+is misclassified, and the tile that disagreed names which one. That is the
+same discipline the invariant checker already applies to sites and fusers,
+pointed at reachability.
+
+**Then chains are winnable BY CONSTRUCTION, not by checking.** This is the
+important design point, and it is what answers "makes sure the player can
+win every time". Do not generate a chain and then verify it - generate it
+forward, in spheres:
+
+- Sphere 0 is everything reachable with the starting kit.
+- The chain's first step is placed somewhere in sphere 0. Its reward joins
+  the item set.
+- Sphere 1 is everything reachable with that larger set. The second step
+  goes there. Repeat.
+
+A chain built this way cannot be unwinnable, because no step was ever
+placed anywhere the player could not already stand. This is the standard
+randomizer guarantee (assumed fill / sphere logic) and it removes the need
+for a solver that can fail.
+
+**Meta-events fall out for free.** "Do fusion X, in region Y, which needs
+item Z" is one goal node whose requirement is the AND of the fusion's own
+requirement and the region's reachability. The DNF algebra for that already
+exists in `overworld_paths.py` - alternative terms, AND multiplies out, OR
+unions, and minimize() drops any term another term is a subset of, so a
+route's bill stays the shortest sets that actually work.
+
+**A worked example, measured this round.** `ROOM_DIG_CAVES_TRILBY_HIGHLANDS`
+is 30x60 and holds SEVEN walkable components. The entrance lands in a
+27-tile corridor; the main body is 1,170 tiles (1,036 with full 3x3
+clearance). A pure collision flood says the body is unreachable from the
+door. It is not - it is behind the MOLE MITTS, and the diggable wall
+between them is a tile class the flood does not know about. One room
+contains the whole problem and the whole solution.
+
+**Staging.**
+
+1. ~~The class census.~~ Done - 397 classes, `tileclass.py`.
+2. The class -> requirement table, by differential measurement. Start with
+   the ~30 classes that cover most of the map's area.
+3. `reach.py`: the permission flood, per room, per item set, emitting
+   exit-to-exit DNFs.
+4. The object layer (bombable, locked, dig, fusion-revealed).
+5. The world graph and the sphere filler.
+6. Port the finished graph into game.c as static data. The game needs the
+   answer, not the tooling.
+
+**What the harness can measure today**: the room graph, collision grids,
+tile classes, component structure, arbitrary item grants, and whether a
+given spot is reachable from a given entrance. **What needs building**: the
+class-to-requirement table and the permission flood. Everything in stage 3
+onward is composition of things that already work.
+
+### The site block has hit its ceiling (Aug 2026)
+
+Adding the 73rd content site needed thirteen more flag bits and there were
+almost none left. An audit (the invariant checker's own macro expansion,
+reused as a free-space report) says the QUICKSTART window is **689 of its
+704 offsets full**, and the only free runs left anywhere that a run-start
+wipe actually clears are window 94-100 (7 bits) and bank-11 133-141 (9).
+The 73rd site is built out of exactly those two scraps.
+
+A first attempt widened extension run B into window 509-521 instead, and
+the flag tier rejected it within one run - `GF_REGION_ALIVE_BIT` is already
+there. Worth recording as a win for the checker: a silent overlap there
+would have corrupted region state in a way that would have been very hard
+to trace back.
+
+**There is no 74th site.** Before the table grows again the site block wants
+a real storage redesign - a packed array in gSave (13 bits x N read and
+written as bytes) rather than one engine flag per bit. That would also cut
+the flag-read cost the profiler keeps finding, since a byte read replaces
+thirteen routed bit reads.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
