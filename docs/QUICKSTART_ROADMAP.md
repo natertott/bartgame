@@ -2447,6 +2447,32 @@ minish door rather than furniture in the room. Keeping the objects costs a
 little floor space. Clearing them cost a route, and a route is the scarcer
 thing.
 
+### The GFX-budget tier measures something the reserve does not promise
+
+Worth writing down, because this batch tripped it and it is not a bug in
+this batch.
+
+`QuickStartEnforceGfxReserve` stops trimming when **reclaimable** slots
+reach the reserve. The checker's gfx tier counts **strict-free** slots
+(state nibble not in 0/1/2) and fails under 2. Those are different
+quantities, so the reserve can be perfectly satisfied while the tier reads
+zero.
+
+Measured across seeds, both before and after this batch: North Hyrule Field
+at difficulty 4 reads 0 free on seed `0x11111111` on **both** ROMs,
+identically, and passes on `0x22222222` and `0x33333333`. Lon Lon Ranch
+read 0 on the derived default seed after this batch and 4 before it - but
+5, 5, 7 before and 12, 11, 13 after on the three pinned seeds, i.e. *better*
+on every seed that was checked both ways. Filtering spots changes how many
+`Random()` calls the shuffle makes, which shifts the whole downstream
+stream; the room lands on a different set of sheets, and sometimes that set
+is unluckier.
+
+So: a single-seed gfx failure is a seed report, not a regression. Diagnose
+it by running the tier on the same seed against the previous ROM before
+believing it. The underlying weakness - the reserve not defending the
+metric the tier measures - is real and still open.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
