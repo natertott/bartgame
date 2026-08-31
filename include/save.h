@@ -79,7 +79,21 @@ typedef struct {
                                                * reward spot) - what the state-1 "still lying there?"
                                                * confirm scans. See QuickStartSpawnRegionRewardItem. */
     /*0x024*/ s16 reward_drop_y;
-    /*0x026*/ u8 filler26[26];               /**< unused filler */
+    /**
+     * QUICKSTART: the five-step win chain. Each step is a kind, a place and
+     * a detail whose meaning the kind decides; see the QS_CHAIN_* block in
+     * game.c. Steps are rolled ONE AT A TIME - step n+1 only exists once
+     * step n is done - because each roll has to be made against the
+     * loadout the player actually holds at that moment, which is what
+     * makes the chain winnable by construction rather than by luck.
+     */
+    /*0x026*/ u8 chain_kind[5];
+    /*0x02B*/ u8 chain_where[5];             /**< pool row, site index, or unused */
+    /*0x030*/ u8 chain_detail[5];            /**< item id, wave target, or unused */
+    /*0x035*/ u8 chain_progress;             /**< steps COMPLETED, 0..5 */
+    /*0x036*/ u8 chain_rolled;               /**< steps ROLLED, 0..5; always >= chain_progress */
+    /*0x037*/ u8 chain_hinted;               /**< bit n: the Ezlo hint for step n has been shown */
+    /*0x038*/ u8 filler38[8];                /**< unused filler */
 #else
     /*0x022*/ u8 filler22[30];               /**< unused filler */
 #endif

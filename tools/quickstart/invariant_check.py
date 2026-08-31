@@ -325,6 +325,21 @@ def check_flags():
 
 def check_static():
     out = []
+    # The generated reachability table against the survey it came from. This
+    # is the drift trap this project keeps walking into in a new costume: the
+    # header is committed, so an edit to world_reach.py that nobody
+    # regenerates leaves the GAME placing win-chain steps by yesterday's map
+    # while every tool reports today's. gen_reach --check exits non-zero on
+    # any difference.
+    try:
+        import subprocess
+        gen = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gen_reach.py')
+        pr = subprocess.run([sys.executable, gen, '--check'], capture_output=True, text=True,
+                            cwd=P.ROOT)
+        out.append(('PASS' if pr.returncode == 0 else 'FAIL',
+                    (pr.stdout or pr.stderr).strip().split('\n')[-1]))
+    except Exception as exc:
+        out.append(('WARN', 'could not run gen_reach --check: %s' % exc))
     for (an, rn), d in P.pool_doors().items():
         doors = d['doors']
         if len(doors) < 2:

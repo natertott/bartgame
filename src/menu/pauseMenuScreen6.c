@@ -34,6 +34,8 @@ extern u16 gUnk_02017AA0[];
 // the Element region's map marker goes.
 extern u32 QuickStartCompassKinstone(u32 kinstoneId);
 extern u32 QuickStartElementMapMarker(u16* x, u16* y);
+// The win chain's current step, exact to the room (game.c).
+extern u32 QuickStartChainMapMarker(u16* x, u16* y);
 #endif
 
 void sub_080A68D4();
@@ -237,6 +239,15 @@ void sub_080A68D4(void) {
         }
         if (QuickStartElementMapMarker(&elementX, &elementY)) {
             sub_080A698C(elementX, elementY, DRAW_DIRECT_SPRITE_INDEX, 2 + 100);
+        }
+        // ...and the win chain's CURRENT step, exact to the room. The
+        // Element marker deliberately stops at a region; this one does
+        // not, because the chain step is the single thing the player is
+        // being asked to do next and the compass line that names it
+        // (gCustomStrings 251-255) says what without saying where. A
+        // different icon so the two are not confused for each other.
+        if (QuickStartChainMapMarker(&elementX, &elementY)) {
+            sub_080A698C(elementX, elementY, DRAW_DIRECT_SPRITE_INDEX, 3 + 100);
         }
         return;
     }

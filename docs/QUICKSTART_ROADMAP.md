@@ -2549,6 +2549,114 @@ ROMs were stale. Each target now ends with its own `cp`, so the copy is part
 of building rather than something to remember, and `ls -la tmc*.gba` shows six
 distinct timestamps and six distinct md5s when the set is genuinely fresh.
 
+### The win is a five-step chain now (Aug 2026)
+
+The Earth Element used to be one condition away: clear a wave, or beat a
+boss, or finish the pot quest, in one rolled region. It is five now, and the
+fifth is that carrier - so the old machinery is the last link rather than
+the whole chain.
+
+**Rolled one at a time, and that is the entire design.** Step n+1 does not
+exist until step n is finished. Its roll is made against the loadout the
+player is holding at that moment, so it can be placed inside the sphere they
+have actually opened. This is the spheres idea run forwards: sphere 0 is what
+the starting kit reaches; a step placed inside the current sphere is
+reachable by construction; finishing it pays a key item, which grows the
+sphere; the next step goes inside the grown one. Nothing has to be proved
+winnable afterwards, because at no point was anything placed anywhere the
+player could not already stand. Rolling all five up front cannot give that -
+it would have to guess which items the run will find, and a wrong guess is a
+run that cannot be finished.
+
+**The five kinds**, each of them something the mode was already able to
+observe, which is the constraint that shaped the list — a step whose
+completion cannot be detected is a dead run:
+
+| kind | the task | how it is seen |
+|---|---|---|
+| `ITEM` | be holding a particular item | `GetInventoryValue` |
+| `EVENT` | finish the ? room event at one content site | `GF_CONTENT_SITE_DONE` |
+| `WAVE` | clear waves in one region until its counter hits a target | the per-region wave counter |
+| `BOSS` | put a boss down in one region | a watcher modelled on the carrier's |
+| `QUEST` | finish the run's side quest | `GF_QUEST_DONE` |
+
+A kinstone-gated ? room is an `EVENT` like any other, not a kind of its own -
+which is what was asked for. The gate is respected at ROLL time instead: a
+gated site is only offered once its fusion is already done, because a site
+whose wall has not been punched open is a place the player cannot stand.
+
+`ITEM` is the guaranteed floor and the reason the chain can never wedge:
+"be holding X" needs no reachable room at all, only that the economy can
+still hand X over, and the economy runs wherever the player already is.
+
+**Where reachability comes from.** `tools/quickstart/gen_reach.py` compiles
+the walked survey into `include/quickstart/reach.h` - 128 destination rows
+and a per-region entry price, each a DNF of token bitmasks. The game builds
+a "held" mask from the inventory plus the run's fusion count, floods the ring
+adjacency from the drop region admitting a neighbour only when its entry
+price is paid, and then asks whether the candidate's own row is satisfied.
+
+Two things about that table are deliberate and worth keeping deliberate.
+Tokens with no run-time test - being Minish, the maze solved, four switches
+thrown, a boulder in its hole - are emitted but **never set** in the held
+mask, so any route needing one is permanently invisible to the placer. And
+the flood starts from `QuickStartDropRegionIndexUsable`, not the raw rolled
+drop: a raw roll can land on Castor Wilds or the Wind Ruins, which a run
+without boots or cape cannot be inside at all. Reading the raw bits instead
+put four of six probe seeds' first step inside the Wind Ruins - correctly,
+for a drop that was never going to happen.
+
+**Telling the player, without telling them everything.** Ezlo names the
+REGION and nothing else (`gCustomStrings` 241-250, one per ring region) - a
+region rather than a room because 842 rooms do not fit in a 256-slot string
+table, and because "somewhere in Trilby Highlands" is a hint while a room
+name is an instruction. The COMPASS changes both surfaces at once: Ezlo's
+line becomes one that says what the task IS (251-255, one per kind), and the
+map screen gains a second marker, exact to the room. So a compass holder gets
+the what and the where; everyone else gets a region and their own legs.
+
+That fills `gCustomStrings` to 256 of 256. There is no 257th - text.c
+indexes it with a u8 - so the next line that needs a slot needs a second
+text category (`TEXT_CUSTOM` is 0xfe; 0xff is unused), and there is now a
+compile-time guard that says so instead of silently aliasing string 0.
+
+**State** lives in `gSave.chain_*` (save.h), in filler the mode had not
+claimed - the flag banks are full. `chain_rolled` counts steps dealt,
+`chain_progress` steps finished, `chain_hinted` carries one hint bit per step
+plus the current step's own observation latch. All of it is zeroed per run:
+a stale `chain_rolled` would make the monitor think step 0 was dealt already
+and go hunting a target chosen against last run's loadout, in last run's
+ring, from last run's drop point.
+
+**Measured, on the ROM, both directions** (`tools/quickstart/chain_probe.py`,
+which recomputes reachability in Python from the same survey and complains if
+the game disagrees):
+
+* six seeds, every step the game dealt was independently confirmed reachable
+  — **0 problems**;
+* two seeds ran all four pre-steps to completion with the rewards landing and
+  the next step rolling each time;
+* a `BOSS` step advances on the kill and not before (progress 0 → 1 across a
+  boss family that was alive for 180 frames first);
+* the Earth Element **did not appear** in the element region on 3/3 seeds
+  while the pre-steps were unfinished, and appeared once they were forced
+  done on the two seeds whose carrier the crude test could satisfy (the
+  third's carrier is QUEST, which the test never completes);
+* Ezlo's hint fires on 6/6 seeds, and names the right thing: string 243
+  (South Hyrule Field) for a boss step in South Hyrule Field, 246 (Trilby)
+  for an event in Percy's treehouse - and with the compass held the same
+  seeds instead get 254 (boss) and 252 (event).
+
+`gen_reach.py --check` is now part of the invariant checker's static tier, so
+editing the survey without regenerating the header fails loudly rather than
+leaving the game placing steps by yesterday's map.
+
+**What is not wired.** The `ITEM` step is satisfiable from the normal economy
+and nothing bounds how long that takes - the mode hands out key items
+constantly, but a specific one is a draw, not a promise. Biasing the reward
+draw toward the wanted item while an `ITEM` step is live is the obvious next
+move and it is one hook (`QuickStartDrawItem`) away.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

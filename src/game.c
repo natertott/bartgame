@@ -447,6 +447,13 @@ static s32 QuickStartRoomEnemyCeiling(s32 roomSquares);
 static bool32 QuickStartIsInnRoom(void);
 static void QuickStartInnChestMonitor(void);
 static bool32 QuickStartWinCarrierMet(void);
+// Defined with the rest of the win chain far below, but asked much earlier:
+// the region wave loop needs to know whether the chain wants a boss here
+// before the chain's own tables have been declared.
+static bool32 QuickStartChainWantsBossHere(void);
+// ...and the reverse: the chain sits above both of these and needs them.
+static bool32 QuickStartIsHubRoom(void);
+static s32 QuickStartDropRegionIndexUsable(void);
 static void QuickStartWinBossWatcher(void);
 static bool32 QuickStartQuestSwapActive(void);
 static void QuickStartQuestEndResetWave(s32 slot);
@@ -884,6 +891,19 @@ static void GameTask_Transition(void) {
     gSave.enemies_killed = 0;
     gSave.miniboss_kills = 0;
     gSave.boss_kills = 0;
+    // The win chain is per RUN, top to bottom. Nothing about it may survive
+    // a reset: a stale chain_rolled would make the monitor think step 0 was
+    // already dealt and go looking for a target that was chosen against
+    // last run's loadout, in last run's ring, from last run's drop point -
+    // which is exactly the unwinnable placement the whole roll-late design
+    // exists to prevent. Zeroing all of it is one memset's worth of work
+    // and removes the entire class.
+    MemClear(gSave.chain_kind, sizeof(gSave.chain_kind));
+    MemClear(gSave.chain_where, sizeof(gSave.chain_where));
+    MemClear(gSave.chain_detail, sizeof(gSave.chain_detail));
+    gSave.chain_progress = 0;
+    gSave.chain_rolled = 0;
+    gSave.chain_hinted = 0;
     // Bomb bag/quiver capacity and current ammo count - like the equip
     // slots just below, these are never touched by the inventory-ownership
     // MemClear above (they're separate Stats fields, not inventory bits),
@@ -1760,6 +1780,75 @@ static s32 QuickStartWinCarrier(void) {
     return value;
 }
 
+// --- The five-step win chain ---------------------------------------------
+//
+// The Earth Element is no longer one condition away. A run is a CHAIN of
+// five steps; the fifth is the carrier above, and finishing it drops the
+// Element. The four before it are rolled one at a time, and that is the
+// whole design: step n+1 does not exist until step n is done, so its roll
+// can be made against the loadout the player is actually holding at that
+// moment rather than the one they started with.
+//
+// WHY ONE AT A TIME. This is the "spheres" idea, run forwards. Sphere 0 is
+// what the starting kit can reach. A step placed inside the current sphere
+// is reachable by construction; completing it pays a key item, which grows
+// the sphere; the next step is placed inside the grown sphere. A chain
+// built this way is winnable without anyone having to prove it afterwards,
+// because at no point was anything placed anywhere the player could not
+// already stand. Rolling all five up front cannot do that - it would have
+// to guess which items the run will find, and a wrong guess is a run that
+// cannot be finished.
+//
+// WHAT A STEP CAN BE. The kinds below cover the user's list. Each one is
+// something the mode already knows how to detect, which matters more than
+// it sounds: a step whose completion cannot be observed is a dead run.
+//
+// WHERE IT LIVES. gSave.chain_* (save.h) - not the flag banks, which are
+// full. chain_rolled counts steps dealt, chain_progress steps finished,
+// and step n is "current" when n == chain_progress < chain_rolled.
+#define QUICKSTART_CHAIN_STEPS 5
+#define QUICKSTART_CHAIN_PRE_STEPS 4   // the four before the carrier
+#define QS_CHAIN_ITEM 0   // hold item `detail` - from anywhere: a drop, a
+                          // ? room, a quest reward, the shop counter
+#define QS_CHAIN_EVENT 1  // finish the ? room event at content site `where`
+#define QS_CHAIN_WAVE 2   // clear waves in region pool row `where` until its
+                          // wave counter reaches `detail`
+#define QS_CHAIN_BOSS 3   // put down a boss in region pool row `where`
+#define QS_CHAIN_QUEST 4  // finish the run's side quest
+#define QS_CHAIN_KIND_COUNT 5
+//
+// A kinstone-gated ? room is an EVENT step like any other, not a kind of
+// its own - which is what the user asked for ("a ? event inside a
+// particular ? room, including those that might be gated by a kinstone
+// fusion"). The gate is respected at ROLL time instead: a gated site is
+// only offered once its fusion is already done, because a site whose wall
+// has not been punched open yet is a place the player cannot stand, and
+// the whole point of rolling late is to never put a step in one of those.
+
+static s32 QuickStartChainProgress(void) {
+    if (gSave.chain_progress > QUICKSTART_CHAIN_STEPS) {
+        return QUICKSTART_CHAIN_STEPS;
+    }
+    return gSave.chain_progress;
+}
+
+// Are the four pre-steps all behind us? This is what the carrier - the
+// fifth step - now waits on before it will free the Element.
+static bool32 QuickStartChainPreStepsDone(void) {
+    return QuickStartChainProgress() >= QUICKSTART_CHAIN_PRE_STEPS;
+}
+
+// The step the player is working on right now, or -1 if there is none
+// (nothing rolled yet, or the pre-steps are finished and the carrier has
+// the floor).
+static s32 QuickStartChainCurrentStep(void) {
+    s32 n = QuickStartChainProgress();
+    if (n >= QUICKSTART_CHAIN_PRE_STEPS || n >= gSave.chain_rolled) {
+        return -1;
+    }
+    return n;
+}
+
 // Same one-per-run shape as QuickStartShowRegionIntroHintOnce above, but
 // fired on first entry to the chain's LAST slot instead of its first -
 // per the user's own feedback ("I haven't seen [the Earth Element] in
@@ -2573,8 +2662,45 @@ const u8* const gCustomStrings[] = {
     // trap cages you and calls in company.
     [239] = (const u8*)"WRONG. The floor drinks\nyour rupees and the\nswitch clicks shut.",
     [240] = (const u8*)"WRONG. The room closes\naround you - and you are\nnot alone in it!",
+    // ===================== The win chain's two hint banks ================
+    //
+    // 241-250: Ezlo's line, one per QS_RING_* in enum order, naming the
+    // REGION the current step is in and nothing more. A region rather than
+    // a room because there are 842 rooms and 256 string slots, and because
+    // a region is a hint while a room name would be an instruction.
+    //
+    // 251-255: the compass's line, one per QS_CHAIN_* in enum order,
+    // naming what the task IS. A compass holder gets this instead of the
+    // region line, and gets the exact room as a map marker on top of it
+    // (QuickStartChainMapMarker) - so the two surfaces together are "what"
+    // plus "where", and neither alone is both.
+    //
+    // These two banks fill the table to 255 exactly. There is no 256th
+    // string; text.c indexes gCustomStrings with a u8.
+    [241] = (const u8*)"Something in the castle\ngarden is waiting for\nyou to find it.",
+    [242] = (const u8*)"North Hyrule Field\nholds what comes next.\nI feel it from here.",
+    [243] = (const u8*)"Your path runs south,\nthrough the fields below\nthe town.",
+    [244] = (const u8*)"The eastern hills. Go\nand see what is waiting\nin them.",
+    [245] = (const u8*)"Lon Lon Ranch. There is\nsomething there that is\nnot finished.",
+    [246] = (const u8*)"Trilby Highlands calls.\nWhatever comes next is\nsomewhere up there.",
+    [247] = (const u8*)"Into the western wood -\nthat is where the next\nlink lies.",
+    [248] = (const u8*)"The Royal Valley. I do\nnot like it either, but\nthat is the way.",
+    [249] = (const u8*)"Castor Wilds. Mind the\nswamp - and mind what\nlives in it.",
+    [250] = (const u8*)"The Wind Ruins. Old\nstones, and something\nunfinished among them.",
+    [251] = (const u8*)"The compass turns. You\nlack something. Find it,\nwherever it hides.",
+    [252] = (const u8*)"The compass points to a\nmarked room. Finish what\nis happening inside it.",
+    [253] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
+    [254] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
+    [255] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
 };
 const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
+// text.c resolves TEXT_INDEX(TEXT_CUSTOM, n) with customIndex = (u8)textIndex,
+// so 256 is a hard ceiling rather than a budget - a 257th string would be
+// unreachable and the 1st would answer for it. The table is full to the brim
+// as of the win chain's two hint banks; the next line that needs a slot needs
+// a second category (TEXT_CUSTOM is 0xfe, 0xff is unused) rather than a
+// bigger array.
+typedef char QuickStartCustomStringsFit[(ARRAY_COUNT(gCustomStrings) <= 256) ? 1 : -1];
 
 // Room flag 40 (in QUICKSTART's private room-flag window, see QsSetRoomFlag)
 // tracks "message already shown" across the few frames it's
@@ -4072,6 +4198,13 @@ enum {
     QS_RING_COUNT
 };
 
+// The walked survey, compiled. Included HERE rather than at the top of the
+// file because its rows are written in QS_RING_* terms and the enum is
+// directly above; a header that names constants it cannot see is a header
+// that goes stale silently. Generated by tools/quickstart/gen_reach.py from
+// tools/quickstart/world_reach.py - edit the survey, not the header.
+#include "quickstart/reach.h"
+
 // u16, not u8: ten rings no longer fit an 8-bit mask. Every consumer
 // already works in u32 locals.
 static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
@@ -4461,9 +4594,15 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
     // a rolled one, which is the self-healing the carrier's no-stall bar
     // asks for: a room that cannot pay for the boss THIS visit defers or
     // falls through to a normal wave, and the next deal forces it again.
-    s32 forcedBoss = QuickStartWinCarrier() == QUICKSTART_WIN_BOSS &&
-                     QuickStartCurrentRegionPoolIndex() == QuickStartElementRegionIndex() &&
-                     !QsCheckFlag(GF_WIN_BOSS_DOWN);
+    //
+    // The win CHAIN forces a boss the same way, in whatever region one of
+    // its BOSS steps named - see QuickStartChainWantsBossHere. It is the
+    // identical deal through the identical machinery; the only difference
+    // is which latch says "still owed".
+    s32 forcedBoss = (QuickStartWinCarrier() == QUICKSTART_WIN_BOSS &&
+                      QuickStartCurrentRegionPoolIndex() == QuickStartElementRegionIndex() &&
+                      !QsCheckFlag(GF_WIN_BOSS_DOWN)) ||
+                     QuickStartChainWantsBossHere();
     // A boss the room owes from an earlier frame's roll. Measured on the
     // live game (scratchpad/gate_measure.py): at the instant a cleared
     // wave respawns, the just-killed wave's uncollected drops still hold
@@ -5832,6 +5971,20 @@ static void QuickStartWinBossWatcher(void) {
 // Element (the wave carrier's per-visit re-clear requirement is the
 // established exception, kept as-is).
 static bool32 QuickStartWinCarrierMet(void) {
+    // The carrier is the chain's FIFTH step, so it cannot pay out until the
+    // four before it have. Checked here rather than at the Element's drop
+    // site because every path to the Element runs through this one answer -
+    // the drop, the despawn refresh and the stuck-wave rescue all ask it -
+    // and one gate is one thing to reason about.
+    //
+    // Note what this deliberately does NOT do: it does not stop the carrier
+    // from being SATISFIED early. A player who clears the element region's
+    // first wave while still on step 2 has done the work; the moment step 4
+    // lands, this returns true on the same frame and the Element appears
+    // without asking them to fight it again.
+    if (!QuickStartChainPreStepsDone()) {
+        return FALSE;
+    }
     switch (QuickStartWinCarrier()) {
         case QUICKSTART_WIN_BOSS:
             return QsCheckFlag(GF_WIN_BOSS_DOWN);
@@ -14637,6 +14790,571 @@ static void QuickStartSetupContentSite(s32 site) {
     }
 }
 
+// =========================================================================
+// The five-step win chain, part two: reachability, rolling, watching
+// =========================================================================
+//
+// Part one (the QS_CHAIN_* block far above) is the shape and the state.
+// This is the engine, and it lives down here because it needs three tables
+// that only exist by this point: the content sites, the region pool, and
+// the walked survey compiled into quickstart_reach.h.
+//
+// THE ONE RULE, restated because everything below is in service of it: a
+// step is only ever placed somewhere the player can already stand, using
+// the loadout they are holding at the moment it is placed. Nothing here
+// predicts what the run will find.
+
+// The facts the player currently holds, as a QS_REACH_* mask. Items come
+// from the inventory; the fusion bit from the run's own fusion count.
+// Every bit above those stays clear forever - see quickstart_reach.h - so
+// a route priced at "be Minish" or "solve the maze" is simply never
+// offered to the placer. That is the conservative direction on purpose:
+// offering too little costs variety, offering too much costs the run.
+static u32 QuickStartHeldReachMask(void) {
+    u32 held = 0;
+    s32 i;
+    for (i = 0; i < QS_REACH_ITEM_BITS; i++) {
+        if (GetInventoryValue(sQuickStartReachItems[i]) != 0) {
+            held |= (1u << i);
+        }
+    }
+    if (gSave.kinstones.fusedCount != 0) {
+        held |= QS_REACH_FUSION;
+    }
+    return held;
+}
+
+// Is any one of a requirement's alternatives satisfied? An unused slot is
+// ~0u, which would need every bit including the ones never set, so it
+// fails on its own - but the early-out is free and says what it means.
+static bool32 QuickStartReachTermsMet(const u32* terms, u32 held) {
+    s32 i;
+    for (i = 0; i < QS_REACH_TERMS; i++) {
+        if (terms[i] == ~0u) {
+            continue;
+        }
+        if ((terms[i] & ~held) == 0) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Which named regions the player could walk to from where this run dropped
+// them, given what they are carrying: a flood over the ring's own
+// adjacency, admitting a neighbour only when its entry price is paid.
+//
+// The DROP region is admitted unconditionally, and that is not a shortcut.
+// An entry requirement is the price of GETTING IN, and the player is
+// already inside the one they were dropped in. Hyrule Castle Garden is the
+// case that proves it matters: the survey never walked it, so its entry
+// row reads "never", and a run starting there would otherwise have nowhere
+// at all to put step 0.
+static u32 QuickStartReachableRegions(u32 held) {
+    // The USABLE drop, not the rolled one. A raw roll can land on Castor
+    // Wilds or the Wind Ruins, which a run without Pegasus Boots or Roc's
+    // Cape cannot be inside at all; QuickStartDropRegionIndexUsable redraws
+    // those and writes the correction back, so this is both the region the
+    // player will really start in and the one the drop machinery will
+    // really use. Reading the raw bits instead put four of six probe seeds'
+    // first step inside the Wind Ruins - correctly, for a drop that was
+    // never going to happen.
+    u32 open = 1u << QuickStartRingRegionOfPoolIndex(QuickStartDropRegionIndexUsable());
+    s32 pass, r, t;
+    for (pass = 0; pass < QS_RING_COUNT; pass++) {
+        u32 grown = open;
+        for (r = 0; r < QS_RING_COUNT; r++) {
+            if (!(open & (1u << r))) {
+                continue;
+            }
+            for (t = 0; t < QS_RING_COUNT; t++) {
+                if (!(sQuickStartRingAdjacency[r] & (1u << t)) || (grown & (1u << t))) {
+                    continue;
+                }
+                if (QuickStartReachTermsMet(sQuickStartReachRegion[t], held)) {
+                    grown |= (1u << t);
+                }
+            }
+        }
+        if (grown == open) {
+            break;
+        }
+        open = grown;
+    }
+    return open;
+}
+
+// Can the player get INTO this specific room? A room can appear in the
+// survey more than once - two regions reaching it, or one region reaching
+// it two ways - and any single satisfied row is enough.
+static bool32 QuickStartReachRoomOk(u32 regions, u32 held, u8 area, u8 room) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachDests); i++) {
+        const QuickStartReachDest* dest = &sQuickStartReachDests[i];
+        if (dest->area != area || dest->room != room) {
+            continue;
+        }
+        if (!(regions & (1u << dest->region))) {
+            continue;
+        }
+        if (QuickStartReachTermsMet(dest->req, held)) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// A region pool row's own room. Every pool row is inside its named region
+// and reachable from that region's start without a further price - the
+// three Eastern Hills rows and the three Western Wood rows are thirds of
+// one region stitched by its own scroll seams, and the two Wind Ruins rows
+// likewise - so being able to ENTER the named region is the whole test and
+// no destination row is needed.
+static bool32 QuickStartReachPoolOk(u32 regions, s32 poolIndex) {
+    return (regions & (1u << QuickStartRingRegionOfPoolIndex(poolIndex))) != 0;
+}
+
+// --- What makes a candidate legal ----------------------------------------
+
+// A ? room event. Reachable, not already finished (a step the player
+// completed before it was dealt is a step they never get to see happen),
+// and if the site is kinstone-gated, that fusion must ALREADY be done -
+// which is how a gated ? room becomes an ordinary event step rather than a
+// kind of its own.
+static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
+    const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
+    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
+        return FALSE;
+    }
+    if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
+        return FALSE;
+    }
+    return QuickStartReachRoomOk(regions, held, entry->area, entry->room);
+}
+
+// A boss. Reachable AND on the boss allowlist - the same gate the F7
+// carrier uses, for the same reason: a region that cannot host a boss
+// would be a step that never appears at all.
+static bool32 QuickStartChainBossOk(u32 regions, s32 poolIndex) {
+    return QuickStartReachPoolOk(regions, poolIndex) &&
+           QuickStartRegionAllowsBoss(&sQuickStartRegionPool[poolIndex]);
+}
+
+// Has an earlier step already claimed this (kind, where)? Two steps on one
+// ? room would be one step the player finishes twice over, and two quest
+// steps is a quest that can only pay once.
+static bool32 QuickStartChainAlreadyUsed(s32 upTo, u8 kind, u8 where) {
+    s32 i;
+    for (i = 0; i < upTo && i < QUICKSTART_CHAIN_PRE_STEPS; i++) {
+        if (gSave.chain_kind[i] == kind && gSave.chain_where[i] == where) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The avalanche mix this file already uses for per-run draws. Random() is
+// deliberately not used for any of the chain: a roll has to give the same
+// answer every tick until it is stored, and the placer runs on a phase
+// slot, so a stream that advances underneath it would deal a different
+// step each time it was asked.
+static u32 QuickStartChainHash(u32 salt) {
+    u32 h = (u32)gSave.run_seed + salt * 0x85EBCA6Bu + 0xC0FFEEu;
+    h = h * 0x9E3779B9u;
+    h ^= h >> 15;
+    h = h * 0x2C1B3C6Du;
+    h ^= h >> 12;
+    return h;
+}
+
+// An item the run does not have yet, drawn from the key-item shelf of the
+// tier table so it is something the economy can actually hand over - and
+// so that finishing the step GROWS the sphere, which is what lets the next
+// step be placed further out than this one was.
+static u16 QuickStartChainPickItem(u32 salt) {
+    s32 i, n = 0, want;
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        const QuickStartTierEntry* row = &sQuickStartTiers[i];
+        if (row->cat == QS_CAT_KEY && GetInventoryValue(row->item) == 0) {
+            n++;
+        }
+    }
+    if (n == 0) {
+        return 0;
+    }
+    want = (s32)(QuickStartChainHash(salt) & 0x7fff) % n;
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        const QuickStartTierEntry* row = &sQuickStartTiers[i];
+        if (row->cat != QS_CAT_KEY || GetInventoryValue(row->item) != 0) {
+            continue;
+        }
+        if (want-- == 0) {
+            return row->item;
+        }
+    }
+    return 0;
+}
+
+// --- Rolling one step ----------------------------------------------------
+//
+// Counts candidates of one kind, then walks again to the chosen index. Two
+// passes rather than a candidate array: the arrays would be 73 and 15
+// entries of stack in a function called from the frame loop, and counting
+// is the same work twice.
+static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 held) {
+    s32 i, n = 0;
+    switch (kind) {
+        case QS_CHAIN_EVENT:
+            for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+                if (QuickStartChainEventOk(regions, held, i) &&
+                    !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)i)) {
+                    n++;
+                }
+            }
+            break;
+        case QS_CHAIN_WAVE:
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                if (QuickStartReachPoolOk(regions, i) &&
+                    !QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
+                    n++;
+                }
+            }
+            break;
+        case QS_CHAIN_BOSS:
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                if (QuickStartChainBossOk(regions, i) &&
+                    !QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i)) {
+                    n++;
+                }
+            }
+            break;
+        case QS_CHAIN_QUEST:
+            // One quest per run, and it has to still be open and standing
+            // somewhere the player can get to.
+            if (!QuickStartQuestFlag(GF_QUEST_DONE) &&
+                QuickStartReachPoolOk(regions, QuickStartQuestSlot()) &&
+                !QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, 0)) {
+                n = 1;
+            }
+            break;
+        default:
+            break;
+    }
+    return n;
+}
+
+// Pick the `want`-th candidate of `kind` and write it into step `step`.
+static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 held) {
+    s32 i;
+    gSave.chain_kind[step] = kind;
+    gSave.chain_where[step] = 0;
+    gSave.chain_detail[step] = 0;
+    switch (kind) {
+        case QS_CHAIN_EVENT:
+            for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+                if (!QuickStartChainEventOk(regions, held, i) ||
+                    QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)i)) {
+                    continue;
+                }
+                if (want-- == 0) {
+                    gSave.chain_where[step] = (u8)i;
+                    return;
+                }
+            }
+            break;
+        case QS_CHAIN_WAVE:
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                if (!QuickStartReachPoolOk(regions, i) ||
+                    QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
+                    continue;
+                }
+                if (want-- == 0) {
+                    gSave.chain_where[step] = (u8)i;
+                    // The TARGET count, not a delta: whatever that region
+                    // has cleared so far plus one. Storing the target means
+                    // the test is a single compare that cannot drift if the
+                    // counter is touched by anything else, and waves the
+                    // player cleared BEFORE the step was dealt correctly do
+                    // not count toward it.
+                    {
+                        s32 target = (s32)QuickStartRegionGetWaveCount(i) + 1;
+                        gSave.chain_detail[step] = (u8)(target > 255 ? 255 : target);
+                    }
+                    return;
+                }
+            }
+            break;
+        case QS_CHAIN_BOSS:
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                if (!QuickStartChainBossOk(regions, i) ||
+                    QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i)) {
+                    continue;
+                }
+                if (want-- == 0) {
+                    gSave.chain_where[step] = (u8)i;
+                    return;
+                }
+            }
+            break;
+        case QS_CHAIN_QUEST:
+            gSave.chain_where[step] = (u8)QuickStartQuestSlot();
+            return;
+        default:
+            break;
+    }
+    // Fell through: the count and the walk disagreed, which can only happen
+    // if the world changed between them. Not fatal, and not worth a retry
+    // loop - the ITEM fallback below is always available.
+    gSave.chain_kind[step] = QS_CHAIN_ITEM;
+    gSave.chain_detail[step] = (u8)QuickStartChainPickItem((u32)step * 7 + 3);
+}
+
+// Deal step `step`. Tries the four placed kinds in an order the seed
+// rotates, so a run is not always "event, then wave, then boss", and falls
+// back to ITEM.
+//
+// ITEM is the guaranteed floor and the reason the chain can never wedge:
+// "be holding X" needs no reachable room at all, only that the economy can
+// still hand X over, and the economy runs everywhere the player already is.
+static void QuickStartChainRollStep(s32 step) {
+    static const u8 kOrder[4] = { QS_CHAIN_EVENT, QS_CHAIN_WAVE, QS_CHAIN_BOSS, QS_CHAIN_QUEST };
+    u32 held = QuickStartHeldReachMask();
+    u32 regions = QuickStartReachableRegions(held);
+    u32 h = QuickStartChainHash((u32)step);
+    s32 rot = (s32)((h >> 8) & 3);
+    s32 k;
+    for (k = 0; k < 4; k++) {
+        u8 kind = kOrder[(k + rot) & 3];
+        s32 n = QuickStartChainCountCandidates(kind, step, regions, held);
+        if (n > 0) {
+            QuickStartChainStore(kind, step, (s32)(h & 0x7fff) % n, regions, held);
+            return;
+        }
+    }
+    gSave.chain_kind[step] = QS_CHAIN_ITEM;
+    gSave.chain_where[step] = 0;
+    gSave.chain_detail[step] = (u8)QuickStartChainPickItem((u32)step * 7 + 3);
+}
+
+// --- Has the current step been finished? ---------------------------------
+//
+// One predicate per kind, each of them something the mode was already
+// keeping track of. That is the reason the kind list is what it is: a step
+// whose completion cannot be OBSERVED is a run that cannot end.
+#define QS_CHAIN_LATCH 0x80  // in chain_hinted: the current step's own
+                             // one-shot observation bit (bosses use it)
+
+static bool32 QuickStartChainStepMet(s32 step) {
+    u8 where = gSave.chain_where[step];
+    switch (gSave.chain_kind[step]) {
+        case QS_CHAIN_ITEM:
+            // detail 0 means the pick found nothing to want - every key
+            // item is already held. Treat that as done rather than as a
+            // wall; a run that rich has earned the step.
+            return gSave.chain_detail[step] == 0 ||
+                   GetInventoryValue(gSave.chain_detail[step]) != 0;
+        case QS_CHAIN_EVENT:
+            return QsCheckSiteFlag(GF_CONTENT_SITE_DONE(where)) != 0;
+        case QS_CHAIN_WAVE:
+            return QuickStartRegionGetWaveCount(where) >= gSave.chain_detail[step];
+        case QS_CHAIN_BOSS:
+            return (gSave.chain_hinted & QS_CHAIN_LATCH) != 0;
+        case QS_CHAIN_QUEST:
+            return QuickStartQuestFlag(GF_QUEST_DONE) != 0;
+        default:
+            break;
+    }
+    return FALSE;
+}
+
+// Should the current region's wave loop deal a boss right now? The F7
+// carrier has its own version of this question in QuickStartSpawnRegionWave;
+// this is the chain's, and it answers for any region a BOSS step named.
+static bool32 QuickStartChainWantsBossHere(void) {
+    s32 step = QuickStartChainCurrentStep();
+    return step >= 0 && gSave.chain_kind[step] == QS_CHAIN_BOSS &&
+           QuickStartCurrentRegionPoolIndex() == (s32)gSave.chain_where[step] &&
+           !(gSave.chain_hinted & QS_CHAIN_LATCH);
+}
+
+// The BOSS step's eyes. Modelled on QuickStartWinBossWatcher: remember that
+// a boss was seen ALIVE in this room this visit, and when it is gone,
+// latch. Room flag 44 is this watcher's "seen alive" bit - one below the
+// carrier watcher's 45, so the two can both be true in the same room
+// without either standing on the other.
+static void QuickStartChainBossWatcher(void) {
+    s32 i, live = 0;
+    if (!QuickStartChainWantsBossHere() || !QuickStartRoomSettled()) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS && QuickStartEntityInCurrentRoom(ent)) {
+            live++;
+        }
+    }
+    if (live > 0) {
+        QsSetRoomFlag(44);
+        return;
+    }
+    if (QsCheckRoomFlag(44)) {
+        gSave.chain_hinted |= QS_CHAIN_LATCH;
+    }
+}
+
+// --- Telling the player, without telling them everything -----------------
+//
+// Two surfaces, and the split is the user's: Ezlo gives the WHERE, the
+// compass gives the WHAT.
+//
+// Ezlo names the region and nothing else. A region, not a room, because
+// there are 842 rooms and the custom string table has 256 slots - and
+// because "somewhere in Trilby Highlands" is a hint, while a room name
+// would be an instruction.
+//
+// The compass earns its keep instead by (a) swapping Ezlo's line for one
+// that says what the task actually IS, and (b) dropping a marker on the
+// exact room on the map screen (QuickStartChainMapMarker below). So a
+// compass holder gets the room AND the task; everyone else gets a region
+// and their own legs.
+#define QUICKSTART_CHAIN_HINT_REGION_BASE 241  // +QS_RING_*, ten of them
+#define QUICKSTART_CHAIN_HINT_KIND_BASE 251    // +QS_CHAIN_*, five of them
+
+// Which named region a step points at - for the hint, and for the marker.
+static s32 QuickStartChainStepRegion(s32 step) {
+    switch (gSave.chain_kind[step]) {
+        case QS_CHAIN_EVENT: {
+            const QuickStartContentSite* entry = &sQuickStartRoomContentSites[gSave.chain_where[step]];
+            s32 i;
+            for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachDests); i++) {
+                if (sQuickStartReachDests[i].area == entry->area &&
+                    sQuickStartReachDests[i].room == entry->room) {
+                    return sQuickStartReachDests[i].region;
+                }
+            }
+            return -1;
+        }
+        case QS_CHAIN_WAVE:
+        case QS_CHAIN_BOSS:
+        case QS_CHAIN_QUEST:
+            return QuickStartRingRegionOfPoolIndex(gSave.chain_where[step]);
+        default:
+            break;
+    }
+    return -1;  // an ITEM step is not anywhere in particular
+}
+
+// The room a step points at, for the compass marker. FALSE when the step
+// has no room (an ITEM step, or a region whose row we cannot find).
+static bool32 QuickStartChainStepRoom(s32 step, u8* area, u8* room) {
+    switch (gSave.chain_kind[step]) {
+        case QS_CHAIN_EVENT: {
+            const QuickStartContentSite* entry = &sQuickStartRoomContentSites[gSave.chain_where[step]];
+            *area = entry->area;
+            *room = entry->room;
+            return TRUE;
+        }
+        case QS_CHAIN_WAVE:
+        case QS_CHAIN_BOSS:
+        case QS_CHAIN_QUEST: {
+            const QuickStartRegion* region = &sQuickStartRegionPool[gSave.chain_where[step]];
+            *area = region->area;
+            *room = region->room;
+            return TRUE;
+        }
+        default:
+            break;
+    }
+    return FALSE;
+}
+
+// One hint per step, fired once the player is settled somewhere the
+// textbox will not land on top of a room transition.
+static void QuickStartChainHintOnce(s32 step) {
+    s32 hint, ring;
+    if (gSave.chain_hinted & (1 << step)) {
+        return;
+    }
+    if (!QuickStartRoomSettled() || (gPlayerState.flags & PL_BUSY) ||
+        gPlayerState.queued_action != 0) {
+        return;
+    }
+    if (GetInventoryValue(ITEM_COMPASS) != 0) {
+        hint = QUICKSTART_CHAIN_HINT_KIND_BASE + gSave.chain_kind[step];
+    } else {
+        ring = QuickStartChainStepRegion(step);
+        if (ring < 0) {
+            // An ITEM step is not in a place, so there is no region to
+            // name. Without a compass that is all the player gets - the
+            // item will turn up in the economy wherever they are playing.
+            hint = QUICKSTART_CHAIN_HINT_KIND_BASE + QS_CHAIN_ITEM;
+        } else {
+            hint = QUICKSTART_CHAIN_HINT_REGION_BASE + ring;
+        }
+    }
+    gSave.chain_hinted |= (u8)(1 << step);
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, hint), 0);
+}
+
+// --- The monitor ---------------------------------------------------------
+//
+// Rolls the first step, watches the current one, pays for it and rolls the
+// next. Runs on a phase slot: the whole thing is table walks over 73 sites
+// and 15 pool rows, which is cheap but not free, and nothing here changes
+// faster than a room load.
+static void QuickStartChainMonitor(void) {
+    s32 step;
+    u16 reward;
+    if (!QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+        return;  // the drop region is what reachability is measured from
+    }
+    // Nothing while the player is still in the hub. Two reasons, and both
+    // matter: sphere 0 has to be measured against the kit they LEAVE with,
+    // not the empty one they arrive with (the hub's three selection rounds
+    // happen in between), and a step reward dropped on the hub floor is a
+    // reward dropped in a room the run is about to leave for good.
+    if (QuickStartIsHubRoom()) {
+        return;
+    }
+    if (gSave.chain_rolled == 0) {
+        QuickStartChainRollStep(0);
+        gSave.chain_rolled = 1;
+        gSave.chain_hinted = 0;
+        return;
+    }
+    step = QuickStartChainCurrentStep();
+    if (step < 0) {
+        return;  // the four pre-steps are done; the carrier has the floor
+    }
+    QuickStartChainHintOnce(step);
+    if (!QuickStartChainStepMet(step)) {
+        return;
+    }
+    // Pay first, advance second. The reward is what grows the sphere the
+    // NEXT step is placed inside, so it has to be in the player's hands
+    // before that roll happens - and if the drop cannot land this tick (no
+    // free entity slot, a cutscene, a room mid-load) we simply try again
+    // next tick rather than advancing without it. The pick is a pure
+    // function of the seed and the step, so retrying asks for the same
+    // item every time.
+    reward = (u16)QuickStartChainPickItem((u32)step * 13 + 1);
+    if (reward != 0) {
+        s16 lx = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+        s16 ly = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+        if (!QuickStartRoomSettled() || !QuickStartRewardDelivered(reward, lx, ly)) {
+            return;
+        }
+    }
+    gSave.chain_progress = (u8)(step + 1);
+    gSave.chain_hinted &= (u8)~QS_CHAIN_LATCH;  // the next step starts clean
+    if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS) {
+        QuickStartChainRollStep(step + 1);
+        gSave.chain_rolled = (u8)(step + 2);
+    } else {
+        gSave.chain_rolled = QUICKSTART_CHAIN_PRE_STEPS;
+    }
+}
+
 // One draw per save, same shape as QuickStartRandomizeSlotsOnce but for
 // a single slot - no cross-slot dedup needed, there's only one connector.
 // Placed here rather than alongside QuickStart2DoorGetTarget/GetSpawnInfo
@@ -18037,6 +18755,18 @@ static void QuickStartRoomMonitor(void) {
     // never be the reason a gate has no fuser standing at it. Being outside
     // the dispatch also means a region's gates are live whether or not this
     // save's chain happens to include it.
+    // Slot 5, which had been standing empty since the frame-time work. The
+    // win chain's placer walks 73 content sites and 15 pool rows against
+    // the survey table - cheap, but not free, and nothing it looks at
+    // changes faster than a room load.
+    if (QuickStartPhase(5)) {
+        QuickStartChainMonitor();
+    }
+    // Every frame, not staggered: it has to see the boss ALIVE at least
+    // once before it sees it gone, and a boss can be born and die inside
+    // eight frames' worth of a stagger window if the last hit lands as the
+    // room settles.
+    QuickStartChainBossWatcher();
     // Slot 6. The single most expensive monitor in the profile: for each of
     // the region's fusers (six in North Hyrule Field) it walks the whole
     // 72-entity table looking for a sprite already standing on that spot,
@@ -18362,6 +19092,31 @@ u32 QuickStartElementMapMarker(u16* x, u16* y) {
     }
     region = &sQuickStartRegionPool[QuickStartElementRegionIndex()];
     hdr = gAreaRoomHeaders[region->area] + region->room;
+    *x = hdr->map_x + (hdr->pixel_width / 2);
+    *y = hdr->map_y + (hdr->pixel_height / 2);
+    return TRUE;
+}
+
+// The compass's second marker: the ROOM the current chain step points at.
+// The Element marker above narrows the hunt to a region and stops there,
+// on purpose; this one is allowed to be exact, because by the time it
+// matters the player has found the compass and the step it names is the
+// one thing standing between them and the next link.
+//
+// Returns FALSE for an ITEM step - "be holding the Cane of Pacci" is not
+// somewhere on the map - and once the four pre-steps are done, at which
+// point the Element marker is the one that matters again.
+u32 QuickStartChainMapMarker(u16* x, u16* y) {
+    RoomHeader* hdr;
+    u8 area, room;
+    s32 step = QuickStartChainCurrentStep();
+    if (GetInventoryValue(ITEM_COMPASS) == 0 || step < 0) {
+        return FALSE;
+    }
+    if (!QuickStartChainStepRoom(step, &area, &room)) {
+        return FALSE;
+    }
+    hdr = gAreaRoomHeaders[area] + room;
     *x = hdr->map_x + (hdr->pixel_width / 2);
     *y = hdr->map_y + (hdr->pixel_height / 2);
     return TRUE;
