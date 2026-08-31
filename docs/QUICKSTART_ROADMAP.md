@@ -2302,6 +2302,89 @@ written as bytes) rather than one engine flag per bit. That would also cut
 the flag-read cost the profiler keeps finding, since a byte read replaces
 thirteen routed bit reads.
 
+### The first reachability survey, encoded and cross-checked (Aug 2026)
+
+The user walked the mapexplore build and produced a per-region reachability
+survey: for each region, one start point, and what it costs to reach every
+door, cave mouth, pocket and sub-area from there. It is now
+`tools/quickstart/world_reach.py` - **13 regions, 129 destinations** - and
+`--check` runs it against the ROM's exit table and against the port model in
+`overworld_paths.py`.
+
+**Requirements stopped being only items, and that is the important part.**
+Half of what gates this world is world STATE: a fusion that lays a bridge, a
+boulder pushed into a hole, a maze solved, four switches thrown. Those are
+tokens in the same vocabulary as items now, because the algebra does not
+care - "holds the Flippers" and "boulder 1 is in its hole" are both just
+facts that must hold. That is what will let the sphere filler treat *do this
+fusion* as a placeable chain step rather than a special case.
+
+**What the cross-check found.**
+
+1. **69 of the 129 coordinates are unusable, and it is the overlay's
+   fault.** Local coordinates are world position minus
+   `gRoomControls.origin`, and for several frames around a transition the
+   position is already the new room's while the origin still belongs to the
+   old one - which comes out as a large negative or a number in the tens of
+   thousands. Every reading taken while walking through a door landed in
+   that window. The room NAMES are all good, so no requirement is lost; only
+   the pixel coordinates need re-taking. **Fixed**: the overlay now computes
+   a `settled` test (local inside the room rect), holds the room-change
+   stamp until it passes, and prints `** MID-TRANSITION **` rather than a
+   number that means nothing.
+2. **A real conflict: the block-pushing skill is priced two ways.** The
+   survey says *level-2 sword + spin* for the pushable blocks in Lon Lon
+   Ranch and Trilby Highlands, and *level-3 sword + spin* for the Royal
+   Valley crypt and the North Hyrule Field graveyard pocket.
+   `overworld_paths.py` already prices NHF's WNW route at bombs + sword3 +
+   spin. Either these are genuinely different obstacles or one reading is
+   wrong, and it matters: sword3 is a much later item, so getting this wrong
+   moves whole regions between spheres.
+3. **Royal Valley's lantern gate is stated differently by the two tables.**
+   `overworld_paths.GATES` gates the whole region on the Lantern; the survey
+   has no region requirement and instead puts the Lantern on the individual
+   destinations past the maze. The survey looks more accurate - you can
+   stand in Royal Valley's entrance without a Lantern - so the GATES row
+   probably wants to become a per-destination cost.
+4. Two room names the survey uses are not in transitions.c:
+   `ROYAL_VALLEY/CRYPT` and `CASTOR_WILDS_DIG_CAVE/0`. Both are probably
+   real places under other names.
+5. 27 destinations are not direct exits of their start room - expected, and
+   worth keeping: they are the two-doors-deep entries, which is exactly the
+   composition the world graph is for.
+
+**The survey is an upper bound, not a proof.** The user's own caveat, worth
+repeating because it shapes how the filler must use this: a survey walked
+from ONE start point only finds the routes that start there. North Hyrule
+Field and Castor Wilds both have several ways into the same pocket, and
+dropping the player somewhere else opens routes this table does not know
+about. Every requirement here is the cost from that start - never evidence
+that no cheaper way exists.
+
+### Content the survey says we should gate (Aug 2026)
+
+Places where the mode currently spawns content without checking whether the
+player can be there, or where vanilla has a mechanism worth taking over:
+
+* **Lon Lon Ranch's tornado pocket** (396,253) needs the Minish Cap and the
+  Pacci Cane; **the Tingle pocket** (184,298) needs the block push. Content
+  in either should be gated on those, the way Castor Wilds' south half is
+  gated on boots-or-cape.
+* **Castor Wilds' `MINISH_PATHS/BOW`** is a long water hallway crossed with
+  the Flippers or the Gust Jar - only aquatic or flying enemies belong in
+  it.
+* **`HOUSE_INTERIORS_4/RANCH_HOUSE_WEST`** is reachable as Minish *only if
+  the room keeps its vanilla content* - our sweep must not clear it, or that
+  route disappears.
+* **Wind Ruins has two vanilla kill-the-enemies gates** (the two-chest
+  pocket below the fortress entrance, and the fortress approach). Both are
+  ready-made ? events - the gate mechanism is already there and already
+  keyed to clearing a room.
+* **Two pockets are unreachable from their own room**: Lon Lon Ranch's
+  fusion-chest pocket (only from Veil Falls) and Trilby's north pocket (only
+  from Royal Valley). Neither should ever be picked as a content site for a
+  run that cannot enter from the far side.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

@@ -393,6 +393,15 @@ local function state()
   s.lx, s.ly = s.wx - s.ox, s.wy - s.oy
   s.tx, s.ty = s.lx // 16, s.ly // 16
   s.base = (s.layer == 2) and MAP_TOP or MAP_BOTTOM
+  -- SETTLED is the only reading worth writing down. Local coordinates are
+  -- world minus gRoomControls.origin, and for several frames around a
+  -- transition the position is already the new room's while the origin is
+  -- still the old one's - which comes out as a large negative or a number in
+  -- the tens of thousands. The first survey walked with this script lost 69
+  -- of its 129 coordinates that way (the room NAMES were fine; the numbers
+  -- were not), so the panel and both logs now say so instead of printing a
+  -- coordinate that means nothing.
+  s.settled = s.w > 0 and s.h > 0 and s.lx >= 0 and s.ly >= 0 and s.lx < s.w and s.ly < s.h
   if s.tx >= 0 and s.ty >= 0 and s.tx < 64 and s.ty < 64 then
     s.col, s.typ, s.act = tileClass(s.base, s.tx, s.ty)
   else
@@ -418,6 +427,9 @@ local function where(s)
 end
 
 local function tileLine(s)
+  if not s.settled then
+    return "tile        (mid-transition - wait for the room to settle)"
+  end
   if s.col < 0 then
     return "tile        (off the map)"
   end
@@ -454,8 +466,12 @@ local function paint(s)
   buffer:print(string.format("area %d  room %d  layer %d\n", s.area, s.room, s.layer))
   buffer:print(string.format("room        %dx%d px  (%dx%d tiles)  origin (%d,%d)\n",
                              s.w, s.h, s.w // 16, s.h // 16, s.ox, s.oy))
-  buffer:print(string.format("player      world (%d,%d)  local (%d,%d)  tile (%d,%d)\n",
-                             s.wx, s.wy, s.lx, s.ly, s.tx, s.ty))
+  if s.settled then
+    buffer:print(string.format("player      world (%d,%d)  local (%d,%d)  tile (%d,%d)\n",
+                               s.wx, s.wy, s.lx, s.ly, s.tx, s.ty))
+  else
+    buffer:print(string.format("player      world (%d,%d)   ** MID-TRANSITION **\n", s.wx, s.wy))
+  end
   buffer:print(tileLine(s) .. "\n")
   buffer:print(neighbours(s) .. "\n")
   buffer:print("items       " .. table.concat(held(), " ") .. "\n")
@@ -465,6 +481,10 @@ end
 -- A line you can paste straight into the model: where you are, in the
 -- coordinates the tables use, plus the tile class under your feet.
 local function stamp(tag, s)
+  if not s.settled then
+    return string.format("%-9s %s  UNSETTLED - world (%d,%d), origin not this room's yet",
+                         tag, where(s), s.wx, s.wy)
+  end
   return string.format("%-9s %s  local (%d,%d)  tile (%d,%d)  layer %d  coll 0x%02x type 0x%04x act 0x%02x",
                        tag, where(s), s.lx, s.ly, s.tx, s.ty, s.layer,
                        s.col % 256, s.typ % 0x10000, s.act % 256)
@@ -480,10 +500,10 @@ local function onFrame()
   local s = state()
 
   if s.area ~= lastArea or s.room ~= lastRoom then
-    -- Wait for the room to settle before reporting: mid-transition the
-    -- origin has not been rewritten yet, so the local coordinates on the
-    -- first frames of a new room are the OLD room's arithmetic.
-    if s.w > 0 then
+    -- Wait for the room to SETTLE before reporting - see the note on
+    -- s.settled. The room id changes several frames before the origin
+    -- follows it, and a stamp taken in between is unusable.
+    if s.settled then
       if lastWhere then
         console:log(string.format("ROOM %s  ->  %s", lastWhere, where(s)))
       else
