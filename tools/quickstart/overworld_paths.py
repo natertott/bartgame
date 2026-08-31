@@ -193,7 +193,15 @@ REGIONS = {
 
 # Regions that cost an item to be inside AT ALL, on any route through them.
 GATES = {
-    'RV':   req([LANTERN]),
+    # RETIRED: 'RV': req([LANTERN]). The walked survey
+    # (tools/quickstart/world_reach.py) disagreed with this row and the
+    # survey is right: you can stand in Royal Valley's entrance, and walk
+    # its E->S crossing, with no Lantern at all. What the Lantern actually
+    # gates is the LOST WOODS MAZE and everything past it - the graveyard,
+    # Dampe's house, the upper pocket - none of which is a port, so none of
+    # it belongs in a port-level gate. Those costs live per-destination in
+    # world_reach.py, where they can also carry the maze-solved and
+    # graveyard-key facts that come with them.
     'LH':   req([FLIPPERS]),
     'CREN': req([GRIP]),
     'CW':   req([CAPE], [BOOTS]),

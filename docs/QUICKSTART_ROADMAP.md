@@ -2366,16 +2366,15 @@ that no cheaper way exists.
 Places where the mode currently spawns content without checking whether the
 player can be there, or where vanilla has a mechanism worth taking over:
 
-* **Lon Lon Ranch's tornado pocket** (396,253) needs the Minish Cap and the
-  Pacci Cane; **the Tingle pocket** (184,298) needs the block push. Content
-  in either should be gated on those, the way Castor Wilds' south half is
-  gated on boots-or-cape.
-* **Castor Wilds' `MINISH_PATHS/BOW`** is a long water hallway crossed with
-  the Flippers or the Gust Jar - only aquatic or flying enemies belong in
-  it.
-* **`HOUSE_INTERIORS_4/RANCH_HOUSE_WEST`** is reachable as Minish *only if
-  the room keeps its vanilla content* - our sweep must not clear it, or that
-  route disappears.
+* ~~**Lon Lon Ranch's tornado pocket** (396,253) needs the Minish Cap and
+  the Pacci Cane; **the Tingle pocket** (184,298) needs the block push.~~
+  SHIPPED - both are zone rows now, measured exactly; see below.
+* ~~**Castor Wilds' `MINISH_PATHS/BOW`** is a long water hallway crossed
+  with the Flippers or the Gust Jar - only aquatic or flying enemies belong
+  in it.~~ SHIPPED - substituted at the placer; see below.
+* ~~**`HOUSE_INTERIORS_4/RANCH_HOUSE_WEST`** is reachable as Minish *only
+  if the room keeps its vanilla content* - our sweep must not clear it.~~
+  SHIPPED - off the obstacle-sweep list; see below.
 * **Wind Ruins has two vanilla kill-the-enemies gates** (the two-chest
   pocket below the fortress entrance, and the fortress approach). Both are
   ready-made ? events - the gate mechanism is already there and already
@@ -2384,6 +2383,69 @@ player can be there, or where vanilla has a mechanism worth taking over:
   fusion-chest pocket (only from Veil Falls) and Trilby's north pocket (only
   from Royal Valley). Neither should ever be picked as a content site for a
   run that cannot enter from the far side.
+
+### The survey's gates, enforced (Aug 2026)
+
+Four of the items above are now code, plus the Royal Valley correction the
+survey forced.
+
+**Royal Valley is not Lantern-gated as a region.** The route model priced
+the whole area at a Lantern because the room is dark, and the pool row said
+so in a comment. The walked survey disagrees: you can stand in the entrance
+and walk the E->S crossing with no Lantern at all. What the Lantern actually
+gates is the Lost Woods maze and everything past it - the graveyard, Dampe's
+house, the upper pocket - none of which is a *port*, so none of it belonged
+in a port-level gate. `GATES['RV']` is retired (with the reasoning left in
+place of the row) and the cost moved to where it is true: the north
+component's zone row now asks for the Graveyard Key **and** the Lantern.
+The maze-solved fact is not an inventory item and cannot be asked for at
+placement time, but the Lantern is the gate *on* the maze, so requiring it
+covers the same ground.
+
+**Zone rows can now express an AND.** `QuickStartPositionAllowed` answers on
+the first row containing the point, so two overlapping rows cannot mean
+"both" - the second is never consulted. The gated-zone struct grew a
+trailing `alsoItem`, making the whole requirement
+`(requiredItem OR altItem) AND alsoItem`. Lon Lon's Tingle pocket is what
+needed it (level-two sword *and* Spin Attack for the block push); Royal
+Valley's graveyard uses it too.
+
+**Lon Lon Ranch's two pockets are measured, not estimated.** Flooding the
+room's collision: the tornado pocket is a 46-tile component (tx 22-38 /
+ty 13-21 = px x 352-623, y 208-351), the Tingle pocket 23 tiles (tx 10-14 /
+ty 16-23 = px x 160-239, y 256-383). **Zero** tiles of the 460-tile main
+body fall inside either box, so the rectangles are exact rather than
+approximate - a rare luxury for a zone row.
+
+One honest limitation on the tornado row: it gates on the Pacci Cane only.
+There is no `ITEM_MINISH_*` at all - being Minish is a *state* - and even if
+there were, this filter runs when the room's content is placed, with the
+player at the door at full size, so a "are you Minish right now" test would
+answer about the wrong moment. A run holding the cane with no route to a
+portal can still have content placed there. That is a much smaller hole than
+the one it closes; if it turns out to matter in play, the fix is
+`requiredItem 0` ("never"), not a cleverer test.
+
+**`MINISH_PATHS/BOW` only accepts things that fly.** A walking enemy dealt
+into that water hallway is either standing on liquid or stuck on the thin
+bank - and for a wave room, a gauntlet that cannot be cleared. The
+substitution happens at the *placer*
+(`QuickStartSpawnEnemiesOnOpenTiles`), not at the roster draw, so every path
+that puts a body in a room goes through it - waves, minibosses, quest packs,
+the pot room's own filler - while the roster stays untouched everywhere
+else. Already-airborne kinds pass through unchanged; anything else is
+re-rolled into KEESE / SMALL_PESTO / PEAHAT / PESTO / GHINI / WISP. CROW is
+left out for the same reason waves never draw it, TAKKURI because a thief
+over water can carry a stolen shield somewhere unreachable, and LAKITU
+because its roster row needs the Pacci Cane.
+
+**`RANCH_HOUSE_WEST` keeps its furniture.** It was on the obstacle-sweep
+list, and OBJECT-kind is exactly what its second, Minish-sized entrance is
+made of - so clearing the clutter deleted the entrance with it. It comes off
+the list; `RANCH_HOUSE_EAST` stays, because its second way in is a separate
+minish door rather than furniture in the room. Keeping the objects costs a
+little floor space. Clearing them cost a route, and a route is the scarcer
+thing.
 
 ## 4. Vanilla behaviors not yet addressed
 

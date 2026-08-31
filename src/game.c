@@ -3898,9 +3898,13 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     //
     // Two things to know about this region that no other pool row has.
     // It is DARK - screenshotted, the room paints the Lantern's
-    // small-radius overlay - which is why the route model prices the whole
-    // area at a Lantern. Nothing enforces that yet, so a run drawn here
-    // without one plays in the dark rather than being turned away.
+    // small-radius overlay. The route model used to price the WHOLE area at
+    // a Lantern because of that; the walked survey says otherwise, and the
+    // survey wins: the entrance and the E->S crossing are walkable with no
+    // Lantern at all, so a run drawn here without one is playable, not
+    // stranded. What the Lantern really gates is the Lost Woods maze and
+    // everything past it, which is enforced below as a gated zone rather
+    // than here as a region-wide price.
     // And it is a ONE-WAY VALVE: in from North Hyrule Field's WNW border,
     // out to Trilby's north edge, with no route back up inside the room.
     { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 296, 856, 0, 0, 0, 0,
@@ -7944,6 +7948,16 @@ typedef struct {
     // Pegasus Boots or Roc's Cape does it - a single-item gate would lock
     // half the region behind whichever one the run happened not to draw.
     u16 altItem;
+    // Also optional and also trailing: an item that must be held IN ADDITION
+    // to the one above, so a zone can state an AND as well as an OR. The
+    // whole requirement is (requiredItem OR altItem) AND alsoItem.
+    //
+    // Lon Lon Ranch's Tingle pocket is why: it is behind a pushable block,
+    // which the survey prices at the level-two sword AND the Spin Attack,
+    // and neither alone opens it. Note that overlapping ZONE ROWS cannot
+    // express this - QuickStartPositionAllowed answers on the first row that
+    // contains the point - so the AND has to live inside a row.
+    u16 alsoItem;
 } QuickStartGatedZone;
 
 static const QuickStartGatedZone sQuickStartGatedZones[] = {
@@ -8002,7 +8016,47 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // spots: it is reached only by solving the Lost Woods maze, whose two
     // doors are still cancelled by containment, so anything placed there
     // would be an enemy nobody can kill and a wave that never clears.
-    { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, 479, 64, 351, ITEM_QST_GRAVEYARD_KEY },
+    //
+    // The north component's row carries the LANTERN as well as the key.
+    // Getting to the gate at all means crossing that same dark maze, so the
+    // survey prices the graveyard at Lantern AND maze AND key. The
+    // maze-solved fact is not an inventory item and cannot be asked for
+    // here, but the Lantern is the gate ON the maze, so asking for it
+    // covers the ground the survey actually walked.
+    { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, 479, 64, 351,
+      ITEM_QST_GRAVEYARD_KEY, 0, ITEM_LANTERN_OFF },
+
+    // --- Lon Lon Ranch's two pockets ------------------------------------
+    // Both come from the walked survey (tools/quickstart/world_reach.py),
+    // and both were being treated as ordinary floor: the region's wave
+    // spawner could and did place content in them for runs that had no way
+    // in. Measured with a flood of the room's collision - each is a separate
+    // walkable component, and neither bounding box contains a single tile of
+    // the room's 460-tile main body, so a rectangle is exact here rather
+    // than approximate.
+    //
+    // The TORNADO POCKET (46 tiles, tx 22-38 / ty 13-21). The survey prices
+    // it at the Minish Cap AND the Cane of Pacci - float up on the tornado,
+    // then cross with the cane.
+    //
+    // Only the CANE half is checkable. Being Minish is a STATE, not an
+    // inventory item (there is no ITEM_MINISH_* at all), and even if there
+    // were, this filter runs when the room's content is placed - with the
+    // player standing at the door at full size - so a "are you Minish right
+    // now" test would answer about the wrong moment. So the row gates on the
+    // cane, which is the half that can be known, and a run holding the cane
+    // but with no route to a portal can still have content placed here. That
+    // is a smaller hole than the one it closes; if it turns out to matter,
+    // the fix is requiredItem 0 ("never"), not a cleverer test.
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 352, 623, 208, 351, ITEM_PACCI_CANE },
+
+    // The TINGLE POCKET (23 tiles, tx 10-14 / ty 16-23), out of the cave
+    // whose main chamber is behind a pushable block. The survey prices the
+    // push at the level-two sword and the Spin Attack together - hence the
+    // AND field above. (ITEM_RED_SWORD is what this file already calls the
+    // level-two blade; see the miniboss reward drop.)
+    { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 160, 239, 256, 383,
+      ITEM_RED_SWORD, 0, ITEM_SKILL_SPIN_ATTACK },
 };
 
 // Whether something may be placed at this room-local spot in the current
@@ -8019,6 +8073,10 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
             continue;
         }
         if (zone->requiredItem == 0) {
+            return FALSE;
+        }
+        // (requiredItem OR altItem) AND alsoItem - see the struct.
+        if (zone->alsoItem != 0 && GetInventoryValue(zone->alsoItem) == 0) {
             return FALSE;
         }
         if (GetInventoryValue(zone->requiredItem) != 0) {
@@ -9938,11 +9996,53 @@ static bool32 QuickStartTileNearPlayer(s32 tx, s32 ty, s32 tiles) {
     return dx <= tiles && dy <= tiles;
 }
 
+// --- Rooms that only accept things that fly ------------------------------
+//
+// Castor Wilds' MINISH_PATHS/BOW is a long hallway of WATER, crossed with
+// the Flippers or the Gust Jar (the survey's own note: "we should only spawn
+// in aquatic or flying enemies here"). A walking enemy dealt into it is
+// either standing on liquid or stuck on the thin bank - either way it is not
+// a fight, and for a wave room it is a gauntlet that cannot be cleared.
+//
+// The substitution happens at the PLACER rather than at the roster draw, so
+// every path that puts a body in a room goes through it - waves, minibosses,
+// quest packs and the pot room's own filler alike - and the roster stays
+// untouched everywhere else.
+static bool32 QuickStartRoomIsOverWater(void) {
+    return gRoomControls.area == AREA_MINISH_PATHS && gRoomControls.room == ROOM_MINISH_PATHS_BOW;
+}
+
+// The flyers, drawn from the roster's own QS_R_FLYER rows. CROW is left out
+// for the same reason waves never draw it (it will not commit to the
+// player), TAKKURI because a thief over water can carry a stolen shield
+// somewhere unreachable, and LAKITU because its row needs the Pacci Cane.
+static u8 QuickStartWaterRoomKind(u8 id, u8* form) {
+    static const u8 kFlyers[6] = { KEESE, SMALL_PESTO, PEAHAT, PESTO, GHINI, WISP };
+    switch (id) {
+        case KEESE:
+        case SMALL_PESTO:
+        case PEAHAT:
+        case PESTO:
+        case GHINI:
+        case WISP:
+        case BOMB_PEAHAT:
+            return id; // already airborne
+        default:
+            break;
+    }
+    *form = 0;
+    return kFlyers[(s32)(gSave.run_frames & 0x7fff) % 6];
+}
+
 static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
-    s32 keepClear = QuickStartSpawnKeepClearFor(id);
+    s32 keepClear;
+    if (QuickStartRoomIsOverWater()) {
+        id = QuickStartWaterRoomKind(id, &form);
+    }
+    keepClear = QuickStartSpawnKeepClearFor(id);
     // The entity-budget charge, single-kind edition (the multiplicity fix):
     // this placer serves the ? room waves and the quest packs, and a
     // 12-count pack of a segmented kind used to be 12 placements = up to
@@ -14779,12 +14879,19 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     // pillars, archway and technique-scroll reward are exactly the "vanilla
     // content" the user asked to have cleared out of it, and they take up
     // most of the arena a miniboss or wave gauntlet needs.
+    // RANCH_HOUSE_WEST used to be on this list and is deliberately off it
+    // now. The survey found a second way into that room: as Minish, through
+    // its own vanilla furniture - and OBJECT-kind is exactly what that
+    // route is made of, so sweeping the room's objects deleted the entrance
+    // along with the clutter. Keeping its objects costs a little floor
+    // space; clearing them cost a route, and a route is the scarcer thing.
+    // (RANCH_HOUSE_EAST stays: its second entrance is a separate minish
+    // door, not furniture in this room.)
     bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT) ||
                           (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) ||
                           (area == AREA_HOUSE_INTERIORS_2 && room == ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH) ||
                           (area == AREA_HOUSE_INTERIORS_4 &&
-                           (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST ||
-                            room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST));
+                           room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
     // Every room that goes through here is a "? room" of some kind, so its
     // own vanilla payout goes too - same reasoning as the content sites.
     QuickStartClearVanillaRoomContent();
