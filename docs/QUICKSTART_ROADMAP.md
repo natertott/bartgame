@@ -2657,6 +2657,98 @@ constantly, but a specific one is a draw, not a promise. Biasing the reward
 draw toward the wanted item while an `ITEM` step is live is the obvious next
 move and it is one hook (`QuickStartDrawItem`) away.
 
+### Mt Crenel, and the site block's ceiling coming down (Aug 2026)
+
+Adding the mountain meant removing a wall first: the content-site table was
+exactly full at 73, and the comment on it said so - "the next site after this
+cannot be added by finding more bits, because there are not any."
+
+**The redesign turned out to be a deletion.** A site stored thirteen bits: a
+"randomized" latch, a 3-bit KIND and an 8-bit EXTRA (the kind's parameter),
+plus DONE. Twelve of those thirteen were recording a dice roll - rolled once
+with `Random()` on first entry and kept so the room would look the same on
+the way back. But the run already has a seed that never changes and the site
+already has an index, so the same answer can be **computed** from those two
+whenever it is asked for. `QuickStartContentSiteRoll` borrows vanilla's whole
+RNG state (`gRand`, one word), seeds it from an avalanche of
+`(run_seed, site)`, runs the *unchanged* roll, and puts the state back. Six
+lines, and every kind picker stayed untouched - the alternative was rewriting
+five of them to take an RNG argument.
+
+What is left is DONE, one bit, at raw offset `ORIGIN + site`. The ceiling
+moved from **73 sites to 793**, the extension router and its six borrowed
+scrap runs are gone, and bank 11 is untangled - the extension's own comment
+claimed 121-141 was free while the inn chests had been sitting at 121-123 the
+whole time.
+
+**Mt Crenel is 30 surveyed destinations and 11 new ? rooms.** The survey is
+in `world_reach.py` as region `CREN`, and it needed a caveat none of the
+others did, in the user's own words: *"there are a lot of one-way gates going
+from this starting point to this exit; going the other way, the requirements
+list might look different."* Every other region was walked from where the
+player arrives. Crenel was walked **downhill** from a waypoint inside the
+mountain, while a player from Trilby arrives at the bottom and climbs **up**,
+so the rows are the cost of the reverse of the player's route and the uphill
+price is simply not in the data.
+
+Two consequences, both erring toward offering the placer less:
+
+* the **region** is priced at grip + bombs. Not because the survey says so -
+  it says nothing about getting in - but because those are the two most
+  expensive things it shows anywhere between the mountain's entrance and the
+  rest of it. Pricing the way in at the worst thing on the way out is the
+  conservative reading; if the real climb is cheaper the cost is variety, not
+  a stranded run.
+* the one-way **cane gate** is deliberately NOT priced into the rows below
+  it. The lower half has its own way out of the mountain entirely
+  (`MT_CRENEL/ENTRANCE`), so a player who drops through without the cane is
+  not stranded - they just cannot climb back up. What a run cannot do is
+  bounce between the halves.
+
+`QS_RING_CREN` joins the ring as a spur off Trilby's west border. It is a
+ring member but **not** a pool row: nothing drops the player there and no
+region wave loop runs in it, so Crenel hosts EVENT steps and nothing else.
+
+**Every spot is measured, not chosen.** `tools/quickstart/crenel_spots.py`
+warps in at the survey's own coordinate, floods the collision from where the
+player lands, and returns the tile nearest that component's centre of mass
+among those with eight-way clearance and at least four tiles between them and
+the arrival - four because the spawner's door keep-clear is two, and four for
+a ball-and-chain. That measurement is also why **five** rooms the survey
+names are not sites: Crenel's pillar cave and dig cave are 5 and 9 tiles of
+standing room, and Mt Crenel's Top, Wall Climb and Cavern of Flames approach
+are ledge mazes with no 3x3-clear tile in the arrival component at all. An
+event with no room to happen in is worse than no event.
+
+**Measured, on the ROM.** With the grip ring and bombs in hand, Mt Crenel
+joins the sphere on 8/8 probe seeds and the chain placed **six** steps inside
+it across those seeds - every one independently confirmed reachable by
+`chain_probe.py`, which recomputes the sphere in Python from the same survey.
+Without those two items Crenel never appears, which is the same check run
+from the other side.
+
+That verification also caught a drift the moment it was introduced: the
+probe's hand-copied ring adjacency had never heard of Crenel, so it called
+six correct placements unreachable. It now asserts its region set against the
+generator's and that the adjacency is symmetric, so a missing region is loud
+rather than a wrong verdict.
+
+**A second text bank.** `gCustomStrings` hit its hard 256-entry ceiling with
+the win chain's hint banks, and Crenel needs an eleventh region line.
+`TEXT_CUSTOM2` (0xff, the last free category) adds a second 256-entry table;
+the hint banks moved into it, freeing 241-255 in the first. New strings go in
+bank two from now on.
+
+**The test kit carries the Four Sword now**, plus the grip ring, the power
+bracelets, the spin attack and the lantern (and keeps its bombs, because
+Crenel's entry price is grip AND bombs). The Four Sword was refused for a
+long time and for a real reason: holding it makes `sub_080AF284` replace
+Castle Garden's ENTIRE exit list with its late-game version, which would take
+the mode's own pool doors with it. Both of vanilla's Four-Sword exit swaps are
+suppressed under QUICKSTART now, which costs nothing - the layouts they point
+at are content this mode never reaches - and that is what makes the top of
+the sword ladder safe to hand out.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

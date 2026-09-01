@@ -35,6 +35,8 @@
 #ifndef QUICKSTART
 const u8* const gCustomStrings[] = { 0 };
 const u32 gCustomStringCount = 0;
+const u8* const gCustomStrings2[] = { 0 };
+const u32 gCustomStringCount2 = 0;
 #endif
 
 #if defined(QUICKSTART) || defined(MAPEXPLORE)
@@ -229,98 +231,37 @@ static void QsWriteField(u32 base, s32 bits, s32 value) {
 // fountain re-rolled its contents on every single entry.
 #define QUICKSTART_SITE_FLAG_ORIGIN 1
 
-// --- The site block's EXTENSION (sites 61 and up) --------------------------
+// --- One bit per site ------------------------------------------------------
 //
-// The raw block is full: 61 sites * 13 bits ends 7 bits short of the
-// QUICKSTART window's own origin, and the Castor Wilds round wanted nine
-// more rooms. Extension sites' bits are ROUTED into free runs earlier
-// reworks left behind - four in the QUICKSTART window (the retired 2-door
-// third-kind spill at 208+, the moved food block's old home at 496+, the
-// run after the F7 carrier bits at 617+, and the retired shop-door/price
-// bits at 658+) plus the head of bank 11's retired wave-counter range.
-// Every borrowed run sits inside an existing run-start wipe (window
-// 202-703, bank-11 43-155), so extension sites reset per run with no new
-// clear loop. The defines exist for the flags checker's ledger; the
-// router below them is what the accessors actually run.
-#define GF_SITE_EXT_A_BIT(b) (208 + (b)) // b = 0..20
-#define GF_SITE_EXT_B_BIT(b) (496 + (b)) // b = 0..12
-#define GF_SITE_EXT_C_BIT(b) (617 + (b)) // b = 0..38
-#define GF_SITE_EXT_D_BIT(b) (658 + (b)) // b = 0..31
-#define GF_SITE_EXT11_BIT(b) (143 + (b)) // b = 0..30, FLAG_BANK_11
-#define GF_SITE_EXT11B_BIT(b) (124 + (b)) // b = 0..6, FLAG_BANK_11
-// The 73rd site's bits. Both runs below are what is LEFT of the flag space:
-// an audit of every macro in this file (the invariant checker's own
-// expansion, reused as a free-space report) says the QUICKSTART window is
-// 689 of its 704 offsets full, and the only wiped runs still free anywhere
-// are window 94-100 and bank-11 133-141. Sixteen bits between them, and a
-// site needs thirteen.
+// This block used to store thirteen bits per site: a "randomized" latch, a
+// 3-bit KIND and an 8-bit EXTRA (the kind's parameter), plus DONE. Sixty-one
+// sites filled the raw run and the next twelve were ROUTED into free scraps
+// borrowed from four retired blocks in the QUICKSTART window and two in bank
+// 11 - and with the 73rd, the scraps ran out. The comment that stood here
+// said the next site could not be added by finding more bits, because there
+// were not any, and that the block wanted a real storage redesign first.
 //
-// So this is the ceiling, and it should be treated as one: the next site
-// after this cannot be added by finding more bits, because there are not
-// any. See the roadmap - the site block wants a real storage redesign
-// (a packed array in gSave rather than one flag per bit) before the table
-// grows again.
-#define GF_SITE_EXT_E_BIT(b) (94 + (b))    // b = 0..6, the window's last free run
-#define GF_SITE_EXT11C_BIT(b) (133 + (b))  // b = 0..8, FLAG_BANK_11
-// 61 * 13, spelled as a number because the BITS define lives further down
-// with the site table; the assertion beside it keeps this honest.
+// This is that redesign, and it turned out to be a deletion rather than a
+// new store. Twelve of the thirteen bits were recording a dice roll: the
+// kind and its parameter, rolled once with Random() on first entry and then
+// kept so the room would look the same on the way back. But the run already
+// has a seed that never changes, and the site already has an index - so the
+// same answer can be COMPUTED from those two whenever it is asked for,
+// deterministically, with nothing stored at all. See
+// QuickStartContentSiteRoll below.
+//
+// What is left is DONE, one bit, at raw offset ORIGIN + site. The raw run is
+// 793 bits, so the ceiling moved from 73 sites to 793 - and every borrowed
+// scrap goes back to being free. That also un-tangles bank 11, where the
+// extension's own comment claimed 121-141 was free while the inn chests were
+// already sitting at 121-123.
 #define QUICKSTART_SITE_RAW_BITS 793
 
-static s32 QuickStartSiteExtTarget(s32 e, s32* isBank11) {
-    *isBank11 = 0;
-    if (e < 21) {
-        return GF_SITE_EXT_A_BIT(e);
-    }
-    if (e < 34) {
-        return GF_SITE_EXT_B_BIT(e - 21);
-    }
-    if (e < 73) {
-        return GF_SITE_EXT_C_BIT(e - 34);
-    }
-    if (e < 105) {
-        return GF_SITE_EXT_D_BIT(e - 73);
-    }
-    // The two scrap runs the 73rd site is built out of. A first attempt
-    // widened run B into window 509-521 instead, and the invariant
-    // checker's flag tier rejected it within one run: GF_REGION_ALIVE_BIT
-    // is already there. The free-space audit that followed is what these
-    // two runs come from.
-    if (e < 112) {
-        return GF_SITE_EXT_E_BIT(e - 105);
-    }
-    *isBank11 = 1;
-    if (e < 143) {
-        return GF_SITE_EXT11_BIT(e - 112);
-    }
-    if (e < 150) {
-        return GF_SITE_EXT11B_BIT(e - 143);
-    }
-    return GF_SITE_EXT11C_BIT(e - 150);
-}
-
 static bool32 QsCheckSiteFlag(u32 flag) {
-    if (flag >= QUICKSTART_SITE_RAW_BITS) {
-        s32 isBank11;
-        s32 t = QuickStartSiteExtTarget((s32)flag - QUICKSTART_SITE_RAW_BITS, &isBank11);
-        if (isBank11) {
-            return CheckLocalFlagByBank(FLAG_BANK_11, t);
-        }
-        return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + t);
-    }
     return CheckLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
 static void QsSetSiteFlag(u32 flag) {
-    if (flag >= QUICKSTART_SITE_RAW_BITS) {
-        s32 isBank11;
-        s32 t = QuickStartSiteExtTarget((s32)flag - QUICKSTART_SITE_RAW_BITS, &isBank11);
-        if (isBank11) {
-            SetLocalFlagByBank(FLAG_BANK_11, t);
-        } else {
-            SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_FLAG_ORIGIN + t);
-        }
-        return;
-    }
     SetLocalFlagByBank(FLAG_BANK_12, QUICKSTART_SITE_FLAG_ORIGIN + flag);
 }
 
@@ -707,19 +648,19 @@ static void GameTask_Transition(void) {
             ClearGlobalFlag(bit); // bank 0 == raw bit index into gSave.flags
         }
         // The room-keyed content sites, whose block is FLAG_BANK_12 raw
-        // 1..793 (GF_CONTENT_SITE_BASE - it is raw-addressed, below the
-        // QUICKSTART window rather than inside it). They re-roll every
-        // fresh boot for the same reason everything above does.
+        // 1..793 - raw-addressed, below the QUICKSTART window rather than
+        // inside it. One bit each (DONE); the kind and its parameter are no
+        // longer stored at all, so there is nothing else here to clear.
         //
         // The loop above ALMOST covers them - it sweeps absolute bits
         // 0x100..3387, and this block is absolute 2688..3480 - but it stops
-        // at the start of the QUICKSTART window, which cuts the block off
-        // at raw 699. The top ~7 sites would carry over. So clear the whole
-        // block explicitly, sized to its ceiling (1 + 61 sites * 13 bits) and
-        // not to the current count, so adding a site row stays a one-line
-        // change. Literal rather than QUICKSTART_CONTENT_SITE_MAX * ...
-        // because, like every other number in this block, the defines live
-        // further down the file than GameTask_Transition does.
+        // at the start of the QUICKSTART window, which cuts the block off at
+        // raw 699. Sites past that would carry over. So clear the whole
+        // block explicitly, sized to the raw run rather than to the current
+        // count, so adding a site row stays a one-line change. Literal
+        // rather than a define because, like every other number in this
+        // block, the defines live further down the file than
+        // GameTask_Transition does.
         for (bit = 0; bit < 794; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_12, bit);
         }
@@ -961,18 +902,28 @@ static void GameTask_Transition(void) {
     // reach North Hyrule Field's WNW border - bombs AND a high sword AND
     // the Spin Attack - which is the only door into Royal Valley.
     //
-    // The blade is ITEM_BLUE_SWORD, the top of the ladder this mode can
-    // safely hand out. ITEM_FOURSWORD sits above it and is deliberately NOT
-    // used: holding it makes sub_080AF284 (movement.c, called from Castle
-    // Garden's own state change) replace Castle Garden's ENTIRE exit list
-    // with gUnk_08134FBC, which would take the region's borders with it.
-    // A test kit that quietly rewires a region is worse than no test kit.
-    SetInventoryValue(ITEM_BLUE_SWORD, 1);
-    gSave.stats.equipped[SLOT_B] = ITEM_BLUE_SWORD;
+    // The blade is the FOUR SWORD now, per the user. It used to be the Blue
+    // Sword, because holding the Four Sword makes sub_080AF284 (movement.c,
+    // called from Castle Garden's own room init) replace that region's
+    // ENTIRE exit list with its late-game version - which would take the
+    // region's borders with it, and a test kit that quietly rewires a
+    // region is worse than no test kit. That swap is suppressed under
+    // QUICKSTART now (see movement.c), so the top of the ladder is safe to
+    // hand out and the kit hands it out.
+    SetInventoryValue(ITEM_FOURSWORD, 1);
+    gSave.stats.equipped[SLOT_B] = ITEM_FOURSWORD;
     SetInventoryValue(ITEM_SKILL_SPIN_ATTACK, 1);
+    // The three gates the kit exists to open. The Grip Ring is Mt Crenel's
+    // entry price and the Power Bracelets move every pushable block on the
+    // map; the Lantern is the Lost Woods maze and everything past it.
+    SetInventoryValue(ITEM_GRIP_RING, 1);
+    SetInventoryValue(ITEM_POWER_BRACELETS, 1);
+    SetInventoryValue(ITEM_LANTERN_OFF, 1);
     // Bombs need three things to be usable, not one: the item owned, a bag
     // to hold them (type 1 is the small bag) and something in it. On the L
-    // slot, which the normal kit leaves empty.
+    // slot, which the normal kit leaves empty. Kept alongside the five the
+    // user named: Mt Crenel's own entry price is grip AND bombs, so a kit
+    // meant for walking that mountain needs both halves of it.
     SetInventoryValue(ITEM_BOMBS, 1);
     gSave.stats.bombBagType = 1;
     gSave.stats.bombCount = 30;
@@ -1962,20 +1913,14 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // entrance index, so a room's content is a property of the room itself -
 // which is what makes the door count and the room count independent.
 //
-// 13 bits per site: 1 randomized latch + 3 kind bits + 8 extra bits + 1
-// done latch, laid out contiguously so adding a site is +13 bits and one
-// table row.
-//
-// This started out as 8 bits (1 kind bit, 3 extra bits) because the pilot
-// only ever rolled chest-or-NPC. It has to carry the full roll now: with
-// the last 5 synthetic entrances retired, content sites are the ONLY way a
-// single-door "? room" gets its contents, so they need the same 7-kind
-// vocabulary the retired ladder/door slots had (QS_EVENT_*: chest,
-// miniboss, npc, waves, pot lottery, chest lottery, fairy) - 3 kind bits -
-// and the same 8-bit extra, which the pot lottery needs in full (it packs
-// a 0-8 winner slot plus a prize index, see QuickStartPickPotRoomExtra).
-// Anything narrower would have silently deleted the lottery/fairy/miniboss/
-// wave room types from the game as the last doors were converted.
+// One bit per site, and only DONE. The kind and its 8-bit parameter used to
+// live here too - rolled once with Random() on first entry and stored so the
+// room looked the same on the way back - which cost thirteen bits a site and
+// ran the block out of space at seventy-three. They are DERIVED from the run
+// seed and the site index instead (QuickStartContentSiteRoll), which gives
+// the same "same room, same contents, all run" guarantee for nothing: the
+// seed does not change and neither does the index, so neither does the
+// answer.
 //
 // These are QsCheckSiteFlag/QsSetSiteFlag offsets - RAW FLAG_BANK_12
 // offsets from 0, not the +700 QUICKSTART window every other GF_* in this
@@ -1983,45 +1928,27 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // window, in the 586 bits the retired GF_DOOR_* entrances used to squat on,
 // so it can grow without shoving anything else along in front of it.
 //
-// Ceiling of the RAW block is QUICKSTART_CONTENT_SITE_MAX = 61 sites
-// (61 * 13 = 793 bits, raw 1..793), short of raw 801 where the QUICKSTART
-// window itself begins. Sites past 61 are EXTENSION sites: their 13 bits
-// route through QsCheckSiteFlag/QsSetSiteFlag into the borrowed free runs
-// declared beside those accessors (GF_SITE_EXT_*), with room for exactly
-// QUICKSTART_CONTENT_SITE_EXT_MAX of them. Adding a site is still one
-// table row; blow past the combined ceiling and the build stops instead
-// of quietly aliasing something.
+// Ceiling is now the raw run itself - 793 sites - rather than the 73 the
+// old thirteen-bit layout could reach even after borrowing scraps from six
+// retired blocks. The build still stops rather than aliasing if the table
+// somehow reaches it.
 //
-// The raw block is cleared per run explicitly - see the site-block clear
-// in GameTask_Transition, and its comment on why the bank-wide wipe there
-// does not reach the top of this block on its own. The extension bits
-// need no clear of their own: every borrowed run sits inside the window
-// wipe (202-703) or the bank-11 wipe (43-155).
-#define QUICKSTART_CONTENT_SITE_COUNT 73
-#define QUICKSTART_CONTENT_SITE_BITS 13
-#define QUICKSTART_CONTENT_SITE_MAX 61
-#define QUICKSTART_CONTENT_SITE_EXT_MAX 12
-// The RAW_BITS number spelled beside the accessors must be the raw
-// ceiling's exact size, or the router fires at the wrong boundary.
-typedef char QuickStartSiteRawBitsMatch[(QUICKSTART_SITE_RAW_BITS ==
-                                         QUICKSTART_CONTENT_SITE_MAX * QUICKSTART_CONTENT_SITE_BITS)
-                                            ? 1
-                                            : -1];
-#define GF_CONTENT_SITE_BASE(i) ((i) * QUICKSTART_CONTENT_SITE_BITS)
-#define GF_CONTENT_SITE_RANDOMIZED(i) (GF_CONTENT_SITE_BASE(i) + 0)
-#define GF_CONTENT_SITE_KIND_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 1 + (b))    // b = 0..2
-#define GF_CONTENT_SITE_EXTRA_BIT(i, b) (GF_CONTENT_SITE_BASE(i) + 4 + (b))   // b = 0..7
-#define GF_CONTENT_SITE_DONE(i) (GF_CONTENT_SITE_BASE(i) + 12)
+// The block is cleared per run explicitly - see the site-block clear in
+// GameTask_Transition, and its comment on why the bank-wide wipe there does
+// not reach the top of this block on its own.
+#define QUICKSTART_CONTENT_SITE_COUNT 84
+#define QUICKSTART_CONTENT_SITE_BITS 1
+#define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
 // the start of the QUICKSTART window. C89 has no static_assert; a negative
 // array dimension is the portable stand-in agbcc accepts.
 typedef char QuickStartContentSiteBlockFits[(QUICKSTART_CONTENT_SITE_COUNT <=
-                                             QUICKSTART_CONTENT_SITE_MAX + QUICKSTART_CONTENT_SITE_EXT_MAX)
+                                             QUICKSTART_SITE_RAW_BITS)
                                                 ? 1
                                                 : -1];
 typedef char QuickStartContentSiteBlockClearsWindow[(QUICKSTART_SITE_FLAG_ORIGIN +
-                                                         QUICKSTART_CONTENT_SITE_MAX * QUICKSTART_CONTENT_SITE_BITS <=
-                                                     QUICKSTART_FLAG_ORIGIN + 101)
+                                                         QUICKSTART_CONTENT_SITE_COUNT <=
+                                                     QUICKSTART_FLAG_ORIGIN)
                                                         ? 1
                                                         : -1];
 // --- The shop, as a randomly-placed "? room" -------------------------------
@@ -2662,45 +2589,59 @@ const u8* const gCustomStrings[] = {
     // trap cages you and calls in company.
     [239] = (const u8*)"WRONG. The floor drinks\nyour rupees and the\nswitch clicks shut.",
     [240] = (const u8*)"WRONG. The room closes\naround you - and you are\nnot alone in it!",
+};
+const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
+
+// --- The second bank -------------------------------------------------------
+//
+// gCustomStrings above is full: text.c resolves TEXT_INDEX(TEXT_CUSTOM, n)
+// with customIndex = (u8)textIndex, so 256 is a ceiling and not a budget,
+// and the win chain's hint banks reached it exactly. TEXT_CUSTOM2 (0xff) is
+// a second category with its own table and 256 more lines. New strings go
+// HERE from now on; the first table is closed.
+const u8* const gCustomStrings2[] = {
     // ===================== The win chain's two hint banks ================
     //
-    // 241-250: Ezlo's line, one per QS_RING_* in enum order, naming the
-    // REGION the current step is in and nothing more. A region rather than
-    // a room because there are 842 rooms and 256 string slots, and because
-    // a region is a hint while a room name would be an instruction.
+    // 0-10: Ezlo's line, one per QS_RING_* in enum order, naming the REGION
+    // the current step is in and nothing more. A region rather than a room
+    // because there are 842 rooms, and because a region is a hint while a
+    // room name would be an instruction.
     //
-    // 251-255: the compass's line, one per QS_CHAIN_* in enum order,
-    // naming what the task IS. A compass holder gets this instead of the
-    // region line, and gets the exact room as a map marker on top of it
+    // 11-15: the compass's line, one per QS_CHAIN_* in enum order, naming
+    // what the task IS. A compass holder gets this instead of the region
+    // line, and the exact room as a map marker on top of it
     // (QuickStartChainMapMarker) - so the two surfaces together are "what"
     // plus "where", and neither alone is both.
     //
-    // These two banks fill the table to 255 exactly. There is no 256th
-    // string; text.c indexes gCustomStrings with a u8.
-    [241] = (const u8*)"Something in the castle\ngarden is waiting for\nyou to find it.",
-    [242] = (const u8*)"North Hyrule Field\nholds what comes next.\nI feel it from here.",
-    [243] = (const u8*)"Your path runs south,\nthrough the fields below\nthe town.",
-    [244] = (const u8*)"The eastern hills. Go\nand see what is waiting\nin them.",
-    [245] = (const u8*)"Lon Lon Ranch. There is\nsomething there that is\nnot finished.",
-    [246] = (const u8*)"Trilby Highlands calls.\nWhatever comes next is\nsomewhere up there.",
-    [247] = (const u8*)"Into the western wood -\nthat is where the next\nlink lies.",
-    [248] = (const u8*)"The Royal Valley. I do\nnot like it either, but\nthat is the way.",
-    [249] = (const u8*)"Castor Wilds. Mind the\nswamp - and mind what\nlives in it.",
-    [250] = (const u8*)"The Wind Ruins. Old\nstones, and something\nunfinished among them.",
-    [251] = (const u8*)"The compass turns. You\nlack something. Find it,\nwherever it hides.",
-    [252] = (const u8*)"The compass points to a\nmarked room. Finish what\nis happening inside it.",
-    [253] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
-    [254] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
-    [255] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
+    // Both banks are indexed arithmetically off QS_RING_* and QS_CHAIN_*,
+    // so a new ring region or a new step kind needs a line inserted at the
+    // matching position or every line after it answers for the wrong thing.
+    [0] = (const u8*)"Something in the castle\ngarden is waiting for\nyou to find it.",
+    [1] = (const u8*)"North Hyrule Field\nholds what comes next.\nI feel it from here.",
+    [2] = (const u8*)"Your path runs south,\nthrough the fields below\nthe town.",
+    [3] = (const u8*)"The eastern hills. Go\nand see what is waiting\nin them.",
+    [4] = (const u8*)"Lon Lon Ranch. There is\nsomething there that is\nnot finished.",
+    [5] = (const u8*)"Trilby Highlands calls.\nWhatever comes next is\nsomewhere up there.",
+    [6] = (const u8*)"Into the western wood -\nthat is where the next\nlink lies.",
+    [7] = (const u8*)"The Royal Valley. I do\nnot like it either, but\nthat is the way.",
+    [8] = (const u8*)"Castor Wilds. Mind the\nswamp - and mind what\nlives in it.",
+    [9] = (const u8*)"The Wind Ruins. Old\nstones, and something\nunfinished among them.",
+    [10] = (const u8*)"Mount Crenel. Up among\nthe rocks - and it is a\nlong way up.",
+    // -- the compass's five, one per QS_CHAIN_*
+    [11] = (const u8*)"The compass turns. You\nlack something. Find it,\nwherever it hides.",
+    [12] = (const u8*)"The compass points to a\nmarked room. Finish what\nis happening inside it.",
+    [13] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
+    [14] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
+    [15] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
 };
-const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
-// text.c resolves TEXT_INDEX(TEXT_CUSTOM, n) with customIndex = (u8)textIndex,
-// so 256 is a hard ceiling rather than a budget - a 257th string would be
-// unreachable and the 1st would answer for it. The table is full to the brim
-// as of the win chain's two hint banks; the next line that needs a slot needs
-// a second category (TEXT_CUSTOM is 0xfe, 0xff is unused) rather than a
-// bigger array.
+const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
+
+// text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
+// hard ceiling per bank rather than a budget - entry 257 would be
+// unreachable and entry 1 would answer for it. Bank one is full; bank two
+// is where new lines go, and when IT fills there are no more category ids.
 typedef char QuickStartCustomStringsFit[(ARRAY_COUNT(gCustomStrings) <= 256) ? 1 : -1];
+typedef char QuickStartCustomStrings2Fit[(ARRAY_COUNT(gCustomStrings2) <= 256) ? 1 : -1];
 
 // Room flag 40 (in QUICKSTART's private room-flag window, see QsSetRoomFlag)
 // tracks "message already shown" across the few frames it's
@@ -4195,6 +4136,11 @@ enum {
     QS_RING_RV,
     QS_RING_CW,
     QS_RING_WR,
+    // Mt Crenel, hanging off Trilby's west border. It is NOT a pool region -
+    // nothing drops the player there and it hosts no region wave loop - but
+    // it is a ring member, because ring membership is what the win chain's
+    // reachability flood walks and Crenel is full of ? rooms now.
+    QS_RING_CREN,
     QS_RING_COUNT
 };
 
@@ -4214,7 +4160,8 @@ static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     /* SHF  */ (1 << QS_RING_NHF) | (1 << QS_RING_EH) | (1 << QS_RING_WW),
     /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR),
     /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
-    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV),
+    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV) |
+               (1 << QS_RING_CREN),
     /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF) | (1 << QS_RING_CW),
     // Royal Valley touches North Hyrule Field (its WNW border) and Trilby
     // (the north seam). Both edges are real crossings the player walks.
@@ -4224,6 +4171,9 @@ static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     // the ring's western side.
     /* CW   */ (1 << QS_RING_WW) | (1 << QS_RING_WR),
     /* WR   */ (1 << QS_RING_CW),
+    // Mt Crenel is a spur off Trilby's west border, and only that: every
+    // other edge of the mountain is cliff.
+    /* CREN */ (1 << QS_RING_TRIL),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -9306,7 +9256,7 @@ static const u16 sQuickStartLotteryPrizes[8] = {
 //
 // Both lottery kinds pack their whole state into the single 8-bit `extra`
 // value every kind gets, because that is what survives leaving the room and
-// coming back (GF_CONTENT_SITE_EXTRA_BIT / GF_2DOOR_EXTRA_BIT, 8 bits each).
+// coming back (the site roll's extra byte / GF_2DOOR_EXTRA_BIT, 8 bits each).
 //
 // The prize field is THREE bits, and the mask below is the only place that
 // number is written down. It used to be two, which was correct while
@@ -13383,7 +13333,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 return FALSE;
             }
             {
-                // Elite sites (extra bit 7, see QuickStartRandomizeContentSiteOnce)
+                // Elite sites (extra bit 7, see QuickStartContentSiteRoll)
                 // pay a full Heart Container; everything else the ordinary
                 // heart piece.
                 //
@@ -13708,7 +13658,7 @@ enum {
     // gates, Minish routes): no roll at all - ALWAYS a miniboss from the
     // level-5 roster, and its kill drops a HEART CONTAINER instead of the
     // normal heart piece (the elite bit rides in the extra byte's top bit;
-    // see QuickStartRandomizeContentSiteOnce and the miniboss reward drop).
+    // see QuickStartContentSiteRoll and the miniboss reward drop).
     QUICKSTART_KINDS_ELITE,
     // No roll either: always a plain item drop, always off the RARE pool
     // (QS_TIER_RARE). For sites that are meant to be worth
@@ -14344,6 +14294,39 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // cave 67 tiles with 31. Spots are each room's own centre tile.
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, QUICKSTART_KINDS_SMALL, 104, 104 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, QUICKSTART_KINDS_ANY, 104, 104 },
+    // --- Mt Crenel ------------------------------------------------------
+    //
+    // The mountain, from the user's own walked survey (see the CREN block
+    // in tools/quickstart/world_reach.py for the route data and the caveat
+    // about which direction it was walked in). Eleven rooms, and every
+    // spot below is MEASURED rather than chosen: tools/quickstart/
+    // crenel_spots.py warps in at the survey's own coordinate, floods the
+    // collision from where the player lands, and returns the tile nearest
+    // that component's centre of mass among those with eight-way clearance
+    // and at least four tiles between them and the arrival. Four tiles
+    // because the spawner's own door keep-clear is two, and four for a
+    // ball-and-chain - the ambush the user reported as an auto-death.
+    //
+    // Five more rooms the survey names are deliberately NOT here, because
+    // the same measurement found nowhere in them to put an event: Crenel's
+    // pillar cave and dig cave are 5 and 9 tiles of standing room, and
+    // Mt Crenel's Top, Wall Climb and Cavern of Flames approach are ledge
+    // mazes whose arrival component has no 3x3-clear tile at all. An event
+    // with no room to happen in is worse than no event.
+    //
+    // Kinds follow the measured component size: SMALL for a chamber, ANY
+    // for a hall, LARGE for the two that are genuinely big.
+    { AREA_CAVE_OF_FLAMES, ROOM_CAVE_OF_FLAMES_ENTRANCE, QUICKSTART_KINDS_ANY, 136, 104 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES, QUICKSTART_KINDS_SMALL, 168, 104 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, QUICKSTART_KINDS_SMALL, 552, 248 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_GRIP_RING, QUICKSTART_KINDS_SMALL, 104, 72 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE, QUICKSTART_KINDS_ANY, 120, 120 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HERMIT, QUICKSTART_KINDS_SMALL, 104, 72 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB, QUICKSTART_KINDS_SMALL, 104, 72 },
+    { AREA_DOJOS, ROOM_DOJOS_GRAYBLADE, QUICKSTART_KINDS_ANY, 120, 104 },
+    { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, QUICKSTART_KINDS_LARGE, 120, 456 },
+    { AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, QUICKSTART_KINDS_ANY, 440, 88 },
+    { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, QUICKSTART_KINDS_LARGE, 648, 200 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -14611,11 +14594,33 @@ static bool32 QuickStartIsPocketTransition(u8 fromArea, u8 fromRoom, u8 toArea, 
 // player through the synthetic pool instead; with that pool gone, rolling
 // narrowly here would have quietly removed the pot lottery, chest lottery,
 // fairy rooms, minibosses and wave gauntlets from the game.
-static void QuickStartRandomizeContentSiteOnce(s32 site) {
+// vanilla's whole RNG state, one word (Random() is gRand = ror(gRand*3,13)).
+// Borrowed and put back below so a site's roll can be replayed on demand.
+extern u32 gRand;
+
+static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
     u8 kind, extra;
-    s32 b;
-    if (QsCheckSiteFlag(GF_CONTENT_SITE_RANDOMIZED(site))) {
-        return;
+    u32 savedRand = gRand;
+    // Seed the shared stream from (run seed, site index) and restore it
+    // afterwards. This is what replaces thirteen stored bits per site with
+    // one: the roll below is unchanged - it still calls the same pickers
+    // through the same Random() - but it now gives the SAME answer every
+    // time it is asked, because its input never changes. Borrowing the
+    // global state rather than threading a private stream through five
+    // pickers keeps the change to these six lines; the alternative was
+    // rewriting every kind picker to take an RNG argument.
+    //
+    // The mix is the avalanche this file uses everywhere else. It must not
+    // produce zero: Random() multiplies, so a zero state stays zero and
+    // every site would roll identically.
+    {
+        u32 h = (u32)gSave.run_seed + (u32)site * 0x9E3779B9u + 0x51ED2701u;
+        h ^= h >> 15;
+        h = h * 0x2C1B3C6Du;
+        h ^= h >> 12;
+        h = h * 0x297A2D39u;
+        h ^= h >> 15;
+        gRand = h | 1u;
     }
     switch (sQuickStartRoomContentSites[site].kinds) {
         case QUICKSTART_KINDS_ANY:
@@ -14696,17 +14701,9 @@ static void QuickStartRandomizeContentSiteOnce(s32 site) {
     } else {
         extra = 0; // QS_EVENT_FAIRY takes no parameter.
     }
-    for (b = 0; b < 3; b++) {
-        if (kind & (1 << b)) {
-            QsSetSiteFlag(GF_CONTENT_SITE_KIND_BIT(site, b));
-        }
-    }
-    for (b = 0; b < 8; b++) {
-        if (extra & (1 << b)) {
-            QsSetSiteFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b));
-        }
-    }
-    QsSetSiteFlag(GF_CONTENT_SITE_RANDOMIZED(site));
+    gRand = savedRand;
+    *outKind = kind;
+    *outExtra = extra;
 }
 
 // How many other sites share this site's room and come before it - i.e.
@@ -14724,8 +14721,7 @@ static s32 QuickStartContentSiteSlotInRoom(s32 site) {
 
 static void QuickStartSetupContentSite(s32 site) {
     const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
-    u8 kind;
-    s32 extra, b;
+    u8 kind, extra;
     // Never during a room scroll or reload. The Grimblade dojo joins its
     // ante room by a scroll seam, and mid-scroll there are frames where
     // gRoomControls.room already names the dojo while origin still points
@@ -14742,7 +14738,6 @@ static void QuickStartSetupContentSite(s32 site) {
     if (!QuickStartRoomSettled()) {
         return;
     }
-    QuickStartRandomizeContentSiteOnce(site);
     // Above the "already collected" check on purpose. The vanilla payout has
     // to go every time the room loads, not only on the visit that spawns the
     // event - otherwise a room whose event is long since collected quietly
@@ -14754,28 +14749,16 @@ static void QuickStartSetupContentSite(s32 site) {
     // A gated site does not exist until its fusion is done. This is what
     // keeps the Goron cave's four stages one-per-chamber: each stage's
     // event is behind the wall its own fusion punches open, so the player
-    // cannot see or reach the next one early. Checked here rather than in
-    // the randomizer above on purpose - the roll is latched once per run
-    // either way, and doing it here means a chamber that opens mid-run
-    // spawns on the next room load with the roll it always had.
+    // cannot see or reach the next one early. Checked before the roll on
+    // purpose: the roll gives the same answer whenever it is asked, so a
+    // chamber that opens mid-run spawns with the contents it always had.
     if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
         return;
     }
     if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
         return;
     }
-    kind = 0;
-    for (b = 0; b < 3; b++) {
-        if (QsCheckSiteFlag(GF_CONTENT_SITE_KIND_BIT(site, b))) {
-            kind |= (1 << b);
-        }
-    }
-    extra = 0;
-    for (b = 0; b < 8; b++) {
-        if (QsCheckSiteFlag(GF_CONTENT_SITE_EXTRA_BIT(site, b))) {
-            extra |= (1 << b);
-        }
-    }
+    QuickStartContentSiteRoll(site, &kind, &extra);
     // Room flags are per ROOM, but the Boomerang chamber holds five events
     // at once, so they cannot all use flags 0-5 the way a lone event does -
     // the first one to set "already spawned" would silence the other four
@@ -15217,8 +15200,10 @@ static void QuickStartChainBossWatcher(void) {
 // exact room on the map screen (QuickStartChainMapMarker below). So a
 // compass holder gets the room AND the task; everyone else gets a region
 // and their own legs.
-#define QUICKSTART_CHAIN_HINT_REGION_BASE 241  // +QS_RING_*, ten of them
-#define QUICKSTART_CHAIN_HINT_KIND_BASE 251    // +QS_CHAIN_*, five of them
+// Both banks live in gCustomStrings2 (TEXT_CUSTOM2) - the first table hit
+// its hard 256-entry ceiling exactly as these were written.
+#define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_RING_*
+#define QUICKSTART_CHAIN_HINT_KIND_BASE QS_RING_COUNT   // +QS_CHAIN_*
 
 // Which named region a step points at - for the hint, and for the marker.
 static s32 QuickStartChainStepRegion(s32 step) {
@@ -15293,7 +15278,7 @@ static void QuickStartChainHintOnce(s32 step) {
         }
     }
     gSave.chain_hinted |= (u8)(1 << step);
-    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, hint), 0);
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, hint), 0);
 }
 
 // --- The monitor ---------------------------------------------------------

@@ -285,11 +285,19 @@ typedef enum {
     // script, or CreateEzloHint/MessageRequest directly from C. See
     // gCustomStrings in game.c to add a new line.
     TEXT_CUSTOM = 0xfe,
+    // A SECOND custom bank, and the reason there is one: TEXT_CUSTOM's table
+    // is indexed by sub_0805EEB4 with `customIndex = (u8)textIndex`, so 256
+    // strings is a hard ceiling rather than a budget - and the win chain's
+    // two hint banks filled it exactly. 0xff was the only category id left,
+    // and it costs one more branch in text.c to get another 256 lines.
+    TEXT_CUSTOM2 = 0xff,
 } TextCategory;
 
 #define TEXT_INDEX(category, index) ((category << 8) | index)
 
 extern const u8* const gCustomStrings[];
 extern const u32 gCustomStringCount;
+extern const u8* const gCustomStrings2[];
+extern const u32 gCustomStringCount2;
 
 #endif // MESSAGE_H

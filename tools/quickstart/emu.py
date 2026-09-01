@@ -108,34 +108,18 @@ def qs_set(c, n, v=1):
 # (offset 0 is unwritable; SetLocalFlagByBank drops it). See the bank map at
 # the top of src/game.c.
 #
-# EXTENSION sites (index 61+) route their bits elsewhere - this mirrors the
-# game's own QsSetSiteFlag router (QuickStartSiteExtTarget, src/game.c)
-# byte for byte, because a harness that writes the raw location for an
-# extension bit is poking window flags that belong to something else.
+# ONE BIT PER SITE, and only DONE. The block used to be thirteen bits each -
+# a randomized latch, a kind and an 8-bit parameter - with sites past the
+# 61st routed into borrowed scraps through a matching router here. The kind
+# and its parameter are derived from (run seed, site index) now, so there is
+# nothing left to store but DONE and nothing left to route.
 SITE_ORIGIN = 1
-SITE_RAW_BITS = 793  # 61 sites * 13 bits
+SITE_RAW_BITS = 793
 FLAG_BANK_11 = 0x9C0
 
 
 def _site_bit(n):
-    if n < SITE_RAW_BITS:
-        return FLAG_BANK_12 + SITE_ORIGIN + n
-    e = n - SITE_RAW_BITS
-    if e < 21:
-        return FLAG_BANK_12 + 700 + 208 + e
-    if e < 34:
-        return FLAG_BANK_12 + 700 + 496 + (e - 21)
-    if e < 73:
-        return FLAG_BANK_12 + 700 + 617 + (e - 34)
-    if e < 105:
-        return FLAG_BANK_12 + 700 + 658 + (e - 73)
-    if e < 112:
-        return FLAG_BANK_12 + 700 + 94 + (e - 105)
-    if e < 143:
-        return FLAG_BANK_11 + 143 + (e - 112)
-    if e < 150:
-        return FLAG_BANK_11 + 124 + (e - 143)
-    return FLAG_BANK_11 + 133 + (e - 150)
+    return FLAG_BANK_12 + SITE_ORIGIN + n
 
 
 def qs_site_set(c, n, v=1):

@@ -100,9 +100,12 @@ FLAG_BANKS = {11: (0x9C0, 0xA80), 12: (0xA80, 0x1000)}
 # family is declared here rather than inferred from usage.
 FLAG_FAMILIES = [
     ('GF_CONTENT_SITE_', 12, 'QUICKSTART_SITE_FLAG_ORIGIN'),
-    ('GF_SITE_EXT11_', 11, 0),  # extension-site bits routed into bank 11
-    ('GF_SITE_EXT11B_', 11, 0),  # ...and its second bank-11 run
-    ('GF_SITE_EXT11C_', 11, 0),  # ...and its third, the last free bank-11 run
+    # RETIRED: GF_SITE_EXT11_/EXT11B_/EXT11C_, the extension-site bits that
+    # used to be routed into bank 11. Sites are one bit each now and all of
+    # them fit in the raw run, so there is nothing to route and those bank-11
+    # scraps are free again. (One of them, 121-141, overlapped the inn chests
+    # below - a collision this ledger would have caught if the extension had
+    # ever been declared with a real width.)
     ('GF_INN_CHEST_ARMED', 11, 0),  # the inn's per-tier chest arm bits
     ('GF_WW_BRUSH_PAID_BIT', 11, 0),  # the Western Wood brush-fusion payouts
     ('GF_SEED_PINNED', 11, 0),
@@ -124,7 +127,7 @@ FLAG_FAMILIES = [
 # define. Anything left undeclared is a FAIL, not a skip - a new macro must
 # say how wide it is before this tier can vouch for the layout.
 FLAG_PARAM_RANGES = {
-    ('GF_CONTENT_SITE_', 'i'): (0, 'QUICKSTART_CONTENT_SITE_MAX - 1'),
+    ('GF_CONTENT_SITE_', 'i'): (0, 'QUICKSTART_CONTENT_SITE_COUNT - 1'),
     ('GF_SLOT_', 'i'): (0, 3),
     ('GF_SHOP_REFILL_PRICE_BIT', 'i'): (0, 2),
     ('GF_SHOP_ONEOFF_PRICE_BIT', 'i'): (0, 3),
@@ -273,7 +276,7 @@ def check_flags():
     m = re.search(r'for \(bit = 0; bit < (\d+); bit\+\+\) \{\s*'
                   r'ClearLocalFlagByBank\(FLAG_BANK_12, bit\);', src)
     site_max = (ns.get('QUICKSTART_SITE_FLAG_ORIGIN', 0) +
-                ns.get('QUICKSTART_CONTENT_SITE_MAX', 0) * ns.get('QUICKSTART_CONTENT_SITE_BITS', 0))
+                ns.get('QUICKSTART_CONTENT_SITE_COUNT', 0) * ns.get('QUICKSTART_CONTENT_SITE_BITS', 0))
     if not m:
         out.append(('FAIL', 'no run-start clear loop found for the content site block'))
     elif int(m.group(1)) < site_max:
@@ -790,16 +793,19 @@ def emu_rooms(rom, start, end):
         for _g in sorted(rec.get('gates', ())):
             _b = 0x02002a40 + 0x114 + 301 + (_g >> 3)
             c.memory.u8[_b] |= 1 << (_g & 7)
-        # Force every site in this room to the chest kind before entering, so
-        # the same boot verifies both geometry and a live spawn.
+        # Make sure every site in this room is still LIVE before entering, so
+        # the same boot verifies both geometry and a real spawn.
+        #
+        # This used to force each site to the chest kind, which it could do
+        # because the kind was thirteen stored bits. It is derived from
+        # (run seed, site index) now and there is nothing to write, so the
+        # spawn half of the check is necessarily weaker: it asks whether the
+        # site put ANYTHING in the room rather than whether a specific chest
+        # appeared. That still catches the failure it exists for - a site
+        # whose event never happens - and the geometry half, which is the
+        # part that has actually caught bugs, is unchanged.
         for idx, _cx, _cy in rec['spots']:
-            base = idx * 13  # raw FLAG_BANK_12 offset - see qs_site_set
-            qs_site_set(c, base, 1)
-            for b in range(3):
-                qs_site_set(c, base + 1 + b, (QS_EVENT_ITEM_DROP >> b) & 1)
-            for b in range(8):
-                qs_site_set(c, base + 4 + b, 0)
-            qs_site_set(c, base + 12, 0)
+            qs_site_set(c, idx, 0)   # one bit each now: DONE, cleared
         sx, sy = (rec['spots'][0][1], rec['spots'][0][2] + 24) if rec['spots'] else (120, 120)
         warp(c, rec['a'], rec['r'], sx, sy)
         for _ in range(150):
@@ -813,7 +819,30 @@ def emu_rooms(rom, start, end):
         px = r16(c, 0x03001160 + 0x2e) - r16(c, 0x03000bf0 + 6)
         py = r16(c, 0x03001160 + 0x32) - r16(c, 0x03000bf0 + 8)
         tw, th = W // 16, H // 16
-        grid = [[coll_at(c, tx, ty) for tx in range(tw)] for ty in range(th)]
+        # The collision grid comes from a SECOND boot with every site in the
+        # room already DONE, i.e. with no event in it. Measured, four rooms
+        # deep: a pot lottery writes collision 29 onto its own anchor, so a
+        # grid sampled from the live boot says the spot the event is standing
+        # on is solid - which is true, and useless. The geometry question is
+        # about the ROOM; the spawn question needs the event. One boot cannot
+        # answer both, so there are two.
+        cg = boot(rom, seed=SEED)
+        # Same gate fusing as the live boot above. Goron Cave's four chambers
+        # are one room only once their kinstone walls are open; without the
+        # fusions this boot floods a sealed shaft and reports three perfectly
+        # good spots as "not in the entrance component".
+        for _g in sorted(rec.get('gates', ())):
+            _b = 0x02002a40 + 0x114 + 301 + (_g >> 3)
+            cg.memory.u8[_b] |= 1 << (_g & 7)
+        for idx, _cx, _cy in rec['spots']:
+            qs_site_set(cg, idx, 1)
+        warp(cg, rec['a'], rec['r'], sx, sy)
+        for _ in range(60):
+            cg.run_frame()
+        grid = ([[coll_at(cg, tx, ty) for tx in range(tw)] for ty in range(th)]
+                if here(cg) == (rec['a'], rec['r'])
+                else [[coll_at(c, tx, ty) for tx in range(tw)] for ty in range(th)])
+        del cg
         seedt = (max(0, min(px // 16, tw - 1)), max(0, min(py // 16, th - 1)))
         if grid[seedt[1]][seedt[0]] != 0:
             best = None
@@ -850,10 +879,13 @@ def emu_rooms(rom, start, end):
                             if nt not in comp and 0 <= nt[0] < tw and 0 <= nt[1] < th and grid[nt[1]][nt[0]] == 0:
                                 comp[nt] = comp[(x, y)]
                                 q.append(nt)
+        # Anything the site could have dealt: a ground item, an enemy, a pot,
+        # an NPC. See the comment on the site-liveness poke above for why
+        # this is a kind-agnostic sweep rather than a hunt for one chest.
         items = [(r16(c, GENT + i * STRIDE + 0x2e) - r16(c, 0x03000bf0 + 6),
                   r16(c, GENT + i * STRIDE + 0x32) - r16(c, 0x03000bf0 + 8))
                  for i in range(MAX_ENT)
-                 if c.memory.u8[GENT + i * STRIDE + 8] == 6 and c.memory.u8[GENT + i * STRIDE + 9] == GROUND_ITEM_ID]
+                 if c.memory.u8[GENT + i * STRIDE + 8] in (3, 6, 7)]
         # Reachability semantics depend on how many sites share the room.
         # Single-site rooms: the spot must sit in the component the player
         # arrives in. Multi-site rooms (the Boomerang chamber): each site is
@@ -892,10 +924,10 @@ def emu_rooms(rom, start, end):
             if (an, rn) in NO_SITE_EVENT:
                 continue
             if not any(abs(ix - cx) <= 48 and abs(iy - cy) <= 48 for ix, iy in items):
-                msgs.append(f'site {idx}: forced chest spawned no GROUND_ITEM within 48px of ({cx},{cy})')
+                msgs.append(f'site {idx}: nothing spawned within 48px of ({cx},{cy})')
         out.append(('FAIL', f'{rn}: ' + '; '.join(msgs)) if msgs
                    else ('PASS', f'{rn}: landed, spots OK'
-                                 + (f', {len(rec["spots"])} chest spawn(s) verified' if rec['spots'] else '')))
+                                 + (f', {len(rec["spots"])} live spawn(s)' if rec['spots'] else '')))
     return out
 
 

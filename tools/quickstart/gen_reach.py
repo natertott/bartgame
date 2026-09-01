@@ -76,11 +76,11 @@ RING = {
     'EH-S': 'QS_RING_EH', 'LLR': 'QS_RING_LLR', 'NHF': 'QS_RING_NHF',
     'RV': 'QS_RING_RV', 'TRIL': 'QS_RING_TRIL', 'WW-N': 'QS_RING_WW',
     'WW-C': 'QS_RING_WW', 'WW-S': 'QS_RING_WW', 'CW': 'QS_RING_CW',
-    'WR': 'QS_RING_WR',
+    'WR': 'QS_RING_WR', 'CREN': 'QS_RING_CREN',
 }
 RINGS = ['QS_RING_CG', 'QS_RING_NHF', 'QS_RING_SHF', 'QS_RING_EH',
          'QS_RING_LLR', 'QS_RING_TRIL', 'QS_RING_WW', 'QS_RING_RV',
-         'QS_RING_CW', 'QS_RING_WR']
+         'QS_RING_CW', 'QS_RING_WR', 'QS_RING_CREN']
 
 MAX_TERMS = 3   # the widest requirement in the survey (Lon Lon's east exit:
                 # flippers, or the cape, or Minish plus the Pacci Cane)

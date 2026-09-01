@@ -2268,21 +2268,36 @@ void sub_080AF250(s32 param_1) {
     }
 }
 
+// Vanilla's endgame re-plumbing: once the Four Sword is in the bag, these
+// two swap a room's whole exit list for its late-game version.
+//
+// QUICKSTART suppresses both. This mode OWNS its regions' borders - the
+// castle garden's doors are pool doors, walked by the region chain and
+// checked by the invariant checker - and an exit list swapped out from
+// under them would take the region's edges with it. That is why the test
+// kit refused to hand out the Four Sword for so long; suppressing the swap
+// is what makes the sword safe to hand out at all, and it costs nothing,
+// because the late-game layouts these point at are content the mode never
+// reaches.
 void sub_080AF284(void) {
     if (CheckPlayerInRegion(0x78, gRoomControls.height - 0x50, 0x78, 0x50)) {
         gArea.pCurrentRoomInfo = GetCurrentRoomInfo();
         gArea.pCurrentRoomInfo->exits = gUnk_08135048;
     } else {
+#ifndef QUICKSTART
         if (GetInventoryValue(ITEM_FOURSWORD) != 0) {
             gArea.pCurrentRoomInfo = GetCurrentRoomInfo();
             gArea.pCurrentRoomInfo->exits = gUnk_08134FBC;
         }
+#endif
     }
 }
 
 void sub_080AF2E4(void) {
+#ifndef QUICKSTART
     if (GetInventoryValue(ITEM_FOURSWORD)) {
         gArea.pCurrentRoomInfo = GetCurrentRoomInfo();
         gArea.pCurrentRoomInfo->exits = gUnk_0813A76C;
     }
+#endif
 }

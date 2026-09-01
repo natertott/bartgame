@@ -86,6 +86,17 @@ void sub_0805EEB4(Token* token, u32 textIndex) {
         sub_0805EF40(token, (const u8*)&gUnk_08109244);
         return;
     }
+    // The second bank, same shape. It exists because the first one is full
+    // at its hard 256-entry ceiling, not because anything about it differs.
+    if ((textIndex >> 8) == TEXT_CUSTOM2) {
+        customIndex = (u8)textIndex;
+        if (customIndex < gCustomStringCount2) {
+            sub_0805EF40(token, gCustomStrings2[customIndex]);
+            return;
+        }
+        sub_0805EF40(token, (const u8*)&gUnk_08109244);
+        return;
+    }
     langIndex = gSaveHeader->language;
     if (((1 < langIndex) && (textIndex >> 8 == 1)) && (textIndex < 0x119)) {
         langIndex = 3;

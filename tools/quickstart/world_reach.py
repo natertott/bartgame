@@ -318,6 +318,78 @@ d('WR', 'RUINS', 'FORTRESS_ENTRANCE', None, None, None,
   're-appropriation candidate')
 
 
+# --- Mt Crenel -------------------------------------------------------------
+#
+# READ THE DIRECTION OF TRAVEL BEFORE READING THE ROWS. Every other region
+# here was surveyed from the spot the player ARRIVES at. Mt Crenel was
+# surveyed from a waypoint deep inside it - the Cavern of Flames entrance -
+# and walked DOWNHILL, while a player coming from Trilby Highlands arrives at
+# the bottom and climbs UP. So these requirements are the cost of the
+# survey's route, which is the reverse of the player's, and the uphill price
+# simply is not in the data. The user said as much: "there are a lot of
+# one-way gates going from this starting point to this exit; going the other
+# way, the requirements list might look different."
+#
+# Two things follow, and both err toward offering the chain placer LESS.
+#
+# The REGION price is grip + bombs. Not because the survey says so - it says
+# nothing about getting in - but because those are the two most expensive
+# things it shows anywhere on the stretch between the mountain's entrance and
+# the rest of it, and pricing the way IN at the worst thing on the way OUT is
+# the conservative reading. If the real climb is cheaper, the cost is
+# variety, not a stranded run.
+#
+# The one-way CANE gate the survey describes is NOT priced into the rows
+# below it, and that is deliberate rather than an oversight: the lower half
+# has its own way out of the mountain entirely (MT_CRENEL/ENTRANCE), so a
+# player who drops through the gate without the cane is not stranded - they
+# just cannot climb back UP without it. Content in the lower half is safe;
+# what a run cannot do is bounce between the two halves.
+region('CREN', 'Mt Crenel', ('MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 101, 271),
+       room_req=[[GRIP, BOMBS]],
+       note='surveyed downhill from inside; the player arrives uphill')
+
+# The upper half, above the one-way cane gate.
+d('CREN', 'CAVE_OF_FLAMES', 'ENTRANCE', 136, 168, FREE)
+d('CREN', 'MELARIS_MINE', 'MAIN', 159, 290, [[MINISH]])
+d('CREN', 'CRENEL_MINISH_PATHS', 'MELARI', 120, 154, [[MINISH]])
+d('CREN', 'CRENEL_CAVES', 'EXIT_TO_MINES', 184, 152, [[MINISH]])
+d('CREN', 'CRENEL_CAVES', 'PILLAR_CAVE', 56, 78, [[MINISH]])
+d('CREN', 'MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 472, 200, [[MINISH]])
+d('CREN', 'CRENEL_CAVES', 'BRIDGE_SWITCH', 72, 456, [[MINISH]])
+d('CREN', 'CRENEL_CAVES', 'BLOCK_PUSHING', 568, 200, [[MINISH]])
+d('CREN', 'MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 520, 40, [[MINISH, CAPE], [MINISH, PACCI]])
+d('CREN', 'CRENEL_CAVES', 'BLOCK_PUSHING', 88, 440, [[MINISH, CAPE], [MINISH, PACCI]],
+  'one-way: enterable from the far side, exitable only the way you came')
+
+# Past the one-way cane gate. Free to fall into from above; the cane is what
+# it costs to climb back, and the mountain's own entrance is the way out.
+d('CREN', 'CRENEL_CAVES', 'GRIP_RING', 120, 120, [[BOMBS]])
+d('CREN', 'CRENEL_CAVES', 'TO_GRAYBLADE', 120, 240, [[GRIP]])
+d('CREN', 'DOJOS', 'GRAYBLADE', 120, 160, [[GRIP, BRACELETS]],
+  'the block push - priced at the bracelets like every other one')
+d('CREN', 'MT_CRENEL', 'CENTER', 504, 120, FREE)
+d('CREN', 'MT_CRENEL', 'WALL_CLIMB', 160, 377, [[GRIP]], 'by the fusion-revealed chest')
+d('CREN', 'MT_CRENEL', 'TOP', 240, 151, [[GRIP]])
+d('CREN', 'MT_CRENEL', 'WALL_CLIMB', 104, 121, [[GRIP]])
+d('CREN', 'CRENEL_CAVES', 'HERMIT', 120, 120, [[GRIP]])
+d('CREN', 'CRENEL_DIG_CAVE', '0', 56, 325, [[GRIP, MITTS]])
+d('CREN', 'MT_CRENEL', 'TOP', 553, 72, [[GRIP]])
+d('CREN', 'CRENEL_MINISH_PATHS', 'RAIN', 34, 70, [[GRIP, MINISH]])
+# The boulder-hole puzzle: with hole 2 filled this is grip alone, without it
+# grip plus a portal. Both terms recorded; the boulder token has no run-time
+# test, so in practice the placer sees only the minish term and passes.
+d('CREN', 'MT_CRENEL', 'TOP', 904, 64, [[GRIP, MINISH], [GRIP, BOULDER('CREN', 2)]],
+  'by the transformation stone')
+d('CREN', 'CRENEL_CAVES', 'BLOCK_PUSHING', 424, 40, [[MINISH, GRIP]])
+d('CREN', 'MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 296, 40, [[GRIP, MINISH]])
+d('CREN', 'MT_CRENEL', 'ENTRANCE', 861, 54, [[GRIP]])
+d('CREN', 'CRENEL_CAVES', 'LADDER_TO_SPRING_WATER', 120, 136, [[GRIP, BOMBS]])
+d('CREN', 'MT_CRENEL', 'ENTRANCE', 730, 309, [[GRIP, BOMBS]])
+d('CREN', 'CRENEL_MINISH_PATHS', 'SPRING_WATER', 128, 792, [[GRIP, BOMBS, MINISH]])
+d('CREN', 'CRENEL_CAVES', 'HINT_SCRUB', 120, 120, [[GRIP, BOMBS]])
+d('CREN', 'MT_CRENEL', 'ENTRANCE', 994, 416, [[GRIP]], 'exit, back down to Trilby')
+
 # ------------------------------------------------------------------ checks --
 def _fmt(req):
     if req is None:

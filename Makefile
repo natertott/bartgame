@@ -42,6 +42,7 @@ VARIANT_OBJS := \
 	build/USA/src/interrupts.o build/USA/src/interrupts.s build/USA/src/interrupts.i \
 	build/USA/src/itemMetaData.o build/USA/src/itemMetaData.s build/USA/src/itemMetaData.i \
 	build/USA/src/itemUtils.o build/USA/src/itemUtils.s build/USA/src/itemUtils.i \
+	build/USA/src/movement.o build/USA/src/movement.s build/USA/src/movement.i \
 	build/USA/src/manager/ezloHintManager.o build/USA/src/manager/ezloHintManager.s build/USA/src/manager/ezloHintManager.i \
 	build/USA/src/manager/miscManager.o build/USA/src/manager/miscManager.s build/USA/src/manager/miscManager.i \
 	build/USA/src/manager/vaati3StartManager.o build/USA/src/manager/vaati3StartManager.s build/USA/src/manager/vaati3StartManager.i \
