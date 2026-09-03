@@ -75,9 +75,29 @@ VARIANT_OBJS := \
 # remember afterwards. It was not, once, and five stale ROMs went out looking
 # freshly built because their timestamps were the only evidence and nobody
 # reads those.
+#
+# The plain build is the ONE target with no copy of its own, because tmc.gba
+# IS its output - which makes it the one that goes stale. Build any variant
+# after it and tmc.gba is silently that variant instead: measured, with
+# tmc.gba and tmc-audiomin.gba coming out byte-identical after a six-target
+# batch, and only an md5 to tell anyone. Use `make quickstart-all` for a
+# batch; it finishes with the plain build so tmc.gba means what it says.
 quickstart: tools
 	@rm -f $(VARIANT_OBJS)
 	@$(MAKE) GAME_VERSION=USA CUSTOM=1 QUICKSTART=1
+
+# Every shippable variant, in an order that leaves tmc.gba correct. Serial
+# on purpose - they all write the same intermediate files.
+.PHONY: quickstart-all
+quickstart-all:
+	@$(MAKE) quickstart-testkit
+	@$(MAKE) quickstart-d3
+	@$(MAKE) quickstart-testkit-d3
+	@$(MAKE) quickstart-audiolight
+	@$(MAKE) quickstart-audiomin
+	@$(MAKE) quickstart
+	@md5sum tmc.gba tmc-testkit.gba tmc-d3.gba tmc-testkit-d3.gba \
+		tmc-audiolight.gba tmc-audiomin.gba
 
 # The same game, but the player starts holding the kit that opens the gated
 # overworld routes: the Blue Sword, bombs, and the Spin Attack. For walking
