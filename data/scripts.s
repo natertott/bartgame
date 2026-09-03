@@ -603,6 +603,7 @@
 	.include "data/scripts/quickstart/script_QuickStartFuser.inc"
 	.include "data/scripts/quickstart/script_QuickStartHunt.inc"
 	.include "data/scripts/quickstart/script_QuickStartScav.inc"
+	.include "data/scripts/quickstart/script_QuickStartStealth.inc"
 	.include "data/scripts/quickstart/script_QuickStartHubHints.inc"
 	.include "data/scripts/quickstart/script_QuickStartInnkeeper.inc"
 .endif

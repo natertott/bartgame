@@ -401,8 +401,45 @@ The original prerequisite record:
   six for six. The cage puzzle's timeout is the natural next caller.
   One build trap found: this libgcc has no `__umodsi3`, so an unsigned
   modulo is a LINK error - mask to 15 bits and use signed `%`.
-- **Hide-and-seek stealth quest (F2). RESEARCH ANSWERED: YES, it
-  transplants** - and to exactly the entity kind the fake would have
+- ~~Hide-and-seek stealth quest (F2)~~ **SHIPPED, as "the watch".** A
+  giver posts a line of watchmen across their region and asks the player to
+  reach their partner on the far side without being seen. 40 seconds; get
+  there and the partner pays a RARE draw at the player's feet; get caught
+  in a cone, or run out of clock, and the shared F1c stake applies. It is
+  the fourth quest sibling and the first that is not a fight - the region's
+  own wave is suspended for the duration (`QuickStartQuestSwapActive`),
+  because sneaking past sentries while a wave chases you is a fight with
+  extra steps.
+
+  **The watchmen do not walk, they TURN**, and that is a deliberate
+  departure from the brief below. Sweeping sentries beat patrolling ones on
+  three counts, and the third decided it: a facing is *readable* on a GBA
+  screen where a moving cone is not; a stationary sentry cannot walk into a
+  wall, off a ledge or into an arena's one-tile neck, none of which the
+  region offset tables were surveyed to guarantee; and a sweep needs **no
+  per-entity state at all**. game.o gets no .data/.bss, so there is nowhere
+  to keep a patrol cursor - but a facing that is a pure function of the
+  frame counter and the sentry's own fixed tile needs no storage, and is
+  therefore exactly reload-safe: leave the region and come back and every
+  sentry resumes the facing it would have had, because nothing was stored
+  to go stale. Identity is position, like the fusers and the other two
+  givers.
+
+  Everything - giver, watchmen, partner - is the ZELDA npc kind, so the
+  whole quest costs **one gfx sheet**. State is bank 11 offsets 143-156,
+  the run the extension slots gave back when they moved into the QUICKSTART
+  window, and the host is a plain five-bit field because the block was
+  allocated after the pool passed sixteen rows.
+
+  Verified end to end in the emulator
+  (`tools/quickstart/stealth_check.py`), four legs: the giver spawns in the
+  drawn host region; Begin places the line and the partner with a live
+  `GUARD_LINE_OF_SIGHT` emitter parented to each watchman; the sentries
+  sweep through all four facings over 420 frames; and both endings fire -
+  standing in a cone flips the quest FAILED, standing with the partner
+  flips it WON. The research record that made it cheap:
+
+- **F2 research. ANSWERED: YES, it transplants** - and to exactly the entity kind the fake would have
   used. Vanilla's guard sight is not AI in the guard at all: it is a
   self-contained projectile pair (`GUARD_LINE_OF_SIGHT`, projectile 12).
   An invisible emitter rides its parent's position and, while the parent

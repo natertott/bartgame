@@ -48,6 +48,7 @@ const u32 gCustomStringCount2 = 0;
 #include "object.h"
 #include "object/itemOnGround.h"
 #include "script.h"
+#include "projectile.h"
 #include "object/itemForSale.h"
 #include "itemMetaData.h"
 #include "script.h"
@@ -1403,6 +1404,7 @@ extern Script script_QuickStartChooseOne;
 extern Script script_QuickStartFountain;
 extern Script script_QuickStartMerchant;
 extern Script script_QuickStartHunt;
+extern Script script_QuickStartStealth;
 extern Script script_QuickStartScav;
 
 // Per-run (not per-visit, not permanent) - "has the region-intro Ezlo hint
@@ -2657,6 +2659,21 @@ const u8* const gCustomStrings2[] = {
     [15] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
     [16] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
     [17] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
+    // ================== F2, the stealth quest ("the watch") ==============
+    //
+    // 18-23. These live in bank 2 rather than with the other quest lines
+    // because gCustomStrings (bank 0xfe) is exactly full at 256 - see the
+    // compile-time check on it. The three STAKE lines are still bank 0xfe
+    // (217-219): every quest announces its stake with the same words, and
+    // QuickStartApplyFailureStake returns a bank-0xfe index, so the two
+    // failure lines below are only the fallbacks for "the stake tier took
+    // nothing".
+    [18] = (const u8*)"My watch is posted here.\nReach my partner unseen\nand the prize is yours.",
+    [19] = (const u8*)"Straight past them, and\nnot a one the wiser. Take\nit - you earned it.",
+    [20] = (const u8*)"A shout goes up behind\nyou. Seen. The watch\nstands down.",
+    [21] = (const u8*)"Too slow. The watch\nchanges, and your chance\ngoes with it.",
+    [22] = (const u8*)"The watch is done with\nyou for today.",
+    [23] = (const u8*)"Keep low. They only look\none way at a time.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3378,6 +3395,14 @@ static s32 QuickStartScavState(void);
 #define QUICKSTART_HUNT_WON 2
 #define QUICKSTART_HUNT_FAILED 3
 static s32 QuickStartHuntState(void);
+// F2's, up here for the same reason the hunt's are: the wave room's
+// survive-variant decision and the quest-swap guard are both compiled
+// above the quest's own block and have to be able to ask.
+#define QUICKSTART_STEALTH_OFFERED 0
+#define QUICKSTART_STEALTH_RUNNING 1
+#define QUICKSTART_STEALTH_WON 2
+#define QUICKSTART_STEALTH_FAILED 3
+static s32 QuickStartStealthState(void);
 // The survive room's live-clock marker (see QuickStartSetupSurviveRoomContent).
 // FLAG_BANK_11, inside the run wipe's 43-142 sweep; read up here by the
 // ring monitor's abandoned-clock sweep and the HUD clock.
@@ -6241,6 +6266,7 @@ static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot)
 // enemy placer and flag bank with.
 static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot);
+static void QuickStartStealthMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartHandicapMonitor(void);
 
 static void QuickStartRegionMonitor(s32 poolIndex) {
@@ -6279,13 +6305,15 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     QuickStartSetupRegionQuest(region, poolIndex);
     QuickStartHuntMonitor(region, poolIndex);
     QuickStartScavMonitor(region, poolIndex);
+    QuickStartStealthMonitor(region, poolIndex);
     // A survive clock can only truthfully be live inside its own ? room.
     // Seeing the player here, in a region room, means they walked out on
     // the attempt - sweep the marker and the shared HUD clock, but never
     // while a timed quest owns it (a RUNNING quest's clock deliberately
     // freezes outside its host region).
     if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE) && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
-        QuickStartScavState() != QUICKSTART_SCAV_RUNNING) {
+        QuickStartScavState() != QUICKSTART_SCAV_RUNNING &&
+        QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING) {
         ClearLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
         gSave.timer4 = 0;
     }
@@ -10699,7 +10727,8 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
             QsSetRoomFlag(flagBase + 3);
             QsSetRoomFlag(flagBase + 0);
         } else if (!QuickStartGauntletIsHere() && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
-                   QuickStartScavState() != QUICKSTART_SCAV_RUNNING && (s32)Random() % 3 == 0) {
+                   QuickStartScavState() != QUICKSTART_SCAV_RUNNING &&
+                   QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING && (s32)Random() % 3 == 0) {
             QsSetRoomFlag(flagBase + 3);
         }
     }
@@ -10997,6 +11026,31 @@ static void QuickStartHandicapMonitor(void) {
 // (State values live with the scav quest's, further up - the wave room's
 // survive-variant decision reads both.)
 
+// --- F2, the stealth quest ("the watch") -------------------------------
+//
+// Bank 11, offsets 143-156 - the run that the extension-slot state gave
+// back when it moved into the QUICKSTART window (see QuickStartExtSlotFlag),
+// and inside bank 11's own 43-173 run wipe, which is what a per-run quest
+// needs. The host is a FIVE-bit field here rather than the four-plus-a-high
+// -bit shape the QS window's pool indexes use: this block was allocated
+// after the pool passed sixteen rows, so it was simply sized right the
+// first time.
+#define GF_STEALTH_ROLLED 143
+#define GF_STEALTH_HOST_BIT(b) (144 + (b))  // b = 0..4, pool index
+#define GF_STEALTH_SPOT_BIT(b) (149 + (b))  // b = 0..4, index into the region's offsets
+#define GF_STEALTH_STATE_BIT(b) (154 + (b)) // b = 0..1
+// 156-173 free.
+// (State values live with the hunt's, further up - the wave room's
+// survive-variant decision reads them.)
+
+static s32 QuickStartStealthState(void) {
+    return (s32)QuickStartGauntletReadBits(GF_STEALTH_STATE_BIT(0), 2);
+}
+
+static void QuickStartStealthSetState(s32 state) {
+    QuickStartGauntletWriteBits(GF_STEALTH_STATE_BIT(0), 2, (u32)state);
+}
+
 static s32 QuickStartHuntState(void) {
     return (s32)QuickStartGauntletReadBits(GF_HUNT_STATE_BIT(0), 2);
 }
@@ -11254,9 +11308,10 @@ static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
 // Seconds left, or -1 when no hunt is running. ui.c's DrawKeys reads this
 // every frame to decide whether the key slot shows a clock.
 s32 QuickStartHuntSecondsLeft(void) {
-    // The scavenger hunt shares the clock, so the key slot shows it for
-    // whichever of the two timed quests is running.
+    // The scavenger hunt and the stealth quest share the clock, so the key
+    // slot shows it for whichever of the three timed quests is running.
     if ((QuickStartHuntState() != QUICKSTART_HUNT_RUNNING && QuickStartScavState() != QUICKSTART_SCAV_RUNNING &&
+         QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING &&
          !CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE)) ||
         gSave.timer4 == 0) {
         return -1;
@@ -11276,8 +11331,9 @@ s32 QuickStartHuntSecondsLeft(void) {
 void QuickStartHuntCanStart(Entity* entity, ScriptExecutionContext* context) {
     // The scavenger hunt shares the HUD clock (gSave.timer4) and the enemy
     // mark bit, so neither quest may start while the other is running.
-    context->condition =
-        (QuickStartHuntState() == QUICKSTART_HUNT_OFFERED) && (QuickStartScavState() != QUICKSTART_SCAV_RUNNING);
+    context->condition = (QuickStartHuntState() == QUICKSTART_HUNT_OFFERED) &&
+                         (QuickStartScavState() != QUICKSTART_SCAV_RUNNING) &&
+                         (QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING);
 }
 
 void QuickStartHuntIsHandicap(Entity* entity, ScriptExecutionContext* context) {
@@ -11453,7 +11509,11 @@ static void QuickStartScavSetState(s32 state) {
 // alive-counter must not record it - the pre-quest remainder stays put,
 // which is exactly the "quests don't reset the count" rule.
 static bool32 QuickStartQuestSwapActive(void) {
-    return QuickStartHuntState() == QUICKSTART_HUNT_RUNNING || QuickStartScavState() == QUICKSTART_SCAV_RUNNING;
+    // The stealth quest joins the other two: sneaking past a line of
+    // watchmen while the region's own wave chases you is not a stealth
+    // quest, it is a fight with extra steps.
+    return QuickStartHuntState() == QUICKSTART_HUNT_RUNNING || QuickStartScavState() == QUICKSTART_SCAV_RUNNING ||
+           QuickStartStealthState() == QUICKSTART_STEALTH_RUNNING;
 }
 
 static void QuickStartScavRollOnce(void) {
@@ -11660,8 +11720,9 @@ void QuickStartScavIsBuried(Entity* entity, ScriptExecutionContext* context) {
 }
 
 void QuickStartScavCanStart(Entity* entity, ScriptExecutionContext* context) {
-    context->condition =
-        (QuickStartScavState() == QUICKSTART_SCAV_OFFERED) && (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING);
+    context->condition = (QuickStartScavState() == QUICKSTART_SCAV_OFFERED) &&
+                         (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING) &&
+                         (QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING);
 }
 
 void QuickStartScavBegin(Entity* entity, ScriptExecutionContext* context) {
@@ -11823,6 +11884,409 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
         UpdateSpriteForCollisionLayer(npc);
         npc->direction = IdleSouth;
         QuickStartMakeNpcTalkable(npc, &script_QuickStartScav);
+    }
+}
+
+// ==================== F2: the stealth quest ("the watch") ================
+//
+// The fourth quest sibling, and the first that is not a fight. A giver
+// posts a line of WATCHMEN across the region and asks the player to reach
+// their partner on the far side WITHOUT BEING SEEN. Get there inside the
+// clock and the partner pays; get caught in a watchman's line of sight, or
+// run out of time, and the F1c stake applies like any other failed quest.
+//
+// WHAT MAKES THIS BUILDABLE IS THAT THE SIGHT IS NOT AI. Vanilla's guard
+// vision is a self-contained projectile pair (GUARD_LINE_OF_SIGHT,
+// projectile 12): an invisible emitter rides its parent and, while the
+// parent is ON SCREEN, fires a short-lived invisible ray every four ticks
+// in the parent's knockbackDirection with a little angular jitter. Rays
+// die on wall tiles - real occlusion, for free - and a ray touching the
+// player writes `parent->type = 0xff`. That byte IS "spotted!"; everything
+// else in vanilla's sneak rooms is scripted response. It was probed onto a
+// plain ZELDA npc in an ordinary room before any of this was written
+// (tools/quickstart/los_check.py): seen from in front, not seen from
+// behind, effective range between 60 and 70px.
+//
+// THE WATCHMEN DO NOT WALK, THEY TURN. The roadmap's sketch had them
+// patrolling from a table of rows. Sweeping sentries are better here on
+// three counts, and the third is the one that decided it:
+//
+//   * it reads. A player can SEE which way a sentry faces and time the
+//     gap; a walking guard's cone is much harder to judge on a GBA screen.
+//   * a stationary sentry cannot walk into a wall, off a ledge, or into
+//     the arena's one-tile neck, none of which the region offset tables
+//     were surveyed to guarantee.
+//   * it needs NO PER-ENTITY STATE. game.o gets no .data/.bss, so there is
+//     nowhere to keep a patrol cursor; a sweep is a pure function of the
+//     frame counter and the sentry's own (fixed) position. That also makes
+//     it exactly reload-safe: leave the region and come back and every
+//     sentry resumes the facing it would have had, because the facing was
+//     never stored anywhere to go stale.
+//
+// Identity is position, the same as the kinstone fusers and the two other
+// quest givers: a watchman IS "a ZELDA npc standing exactly on watch spot
+// i", which survives the entity table being rebuilt on every room load
+// where a "did I spawn yet" flag would not. Everything - giver, watchmen,
+// partner - is the ZELDA npc kind, so the whole quest costs ONE gfx sheet.
+#define QUICKSTART_STEALTH_SECONDS 40
+#define QUICKSTART_STEALTH_FRAMES (QUICKSTART_STEALTH_SECONDS * 60)
+// How long a sentry holds one facing before turning 90 degrees clockwise.
+// 96 frames is 1.6s a side, 6.4s for a full turn - long enough to plan a
+// dash across one cone, short enough that waiting is never free. A power of
+// two so the sweep is a shift: agbcc emits __udivsi3 for an unsigned divide
+// and this libgcc does not have one.
+#define QUICKSTART_STEALTH_SWEEP_SHIFT 6
+// Three at difficulty 0 up to six at the top. More than six on the region
+// offset tables' spacing starts walling the room off rather than patrolling
+// it, and six cones is already most of a screen.
+#define QUICKSTART_STEALTH_MIN_WATCH 3
+#define QUICKSTART_STEALTH_MAX_WATCH 6
+// How close to the partner counts as arriving. 20px is a little over one
+// tile - the player has to actually stand with them, not wave from across
+// the clearing.
+#define QUICKSTART_STEALTH_REACH 20
+
+static s32 QuickStartStealthWatchCount(void) {
+    s32 n = QUICKSTART_STEALTH_MIN_WATCH + QuickStartGetDifficulty() / 4;
+    if (n > QUICKSTART_STEALTH_MAX_WATCH) {
+        n = QUICKSTART_STEALTH_MAX_WATCH;
+    }
+    return n;
+}
+
+// Where watchman `index` stands, in room-local pixels. Drawn from the
+// region's own enemy-offset table for the reason every other quest draws
+// from it: every entry there is a pre-verified walkable spot in that room,
+// already filtered for item-gated zones by QuickStartPositionAllowed.
+//
+// The stride is coprime-ish with the table length by construction (an odd
+// number from the run seed), so the watch spreads across the whole table
+// instead of clustering next to the giver, and it is a pure function of
+// (seed, region, index) - no state, same answer every frame and every
+// visit.
+static bool32 QuickStartStealthWatchSpot(const QuickStartRegion* region, s32 index, s16* outX, s16* outY) {
+    s32 count = region->enemyOffsetCount;
+    s32 giver, stride, idx, i;
+    u32 h;
+    if (count <= 0) {
+        return FALSE;
+    }
+    giver = (s32)QuickStartGauntletReadBits(GF_STEALTH_SPOT_BIT(0), 5) % count;
+    h = (u32)gSave.run_seed + 0x9Du;
+    h = h * 0x9E3779B9u;
+    h ^= h >> 15;
+    h = h * 0x2C1B3C6Du;
+    h ^= h >> 12;
+    stride = (s32)((h >> 8) & 7) * 2 + 3; // 3,5,7,...,17 - always odd
+    idx = (giver + stride * (index + 1)) % count;
+    // Walk forward off a blocked or giver-occupied draw rather than
+    // dropping the watchman: a hole in the line is a free route through it.
+    for (i = 0; i < count; i++) {
+        s32 at = (idx + i) % count;
+        s16 x, y;
+        if (at == giver) {
+            continue;
+        }
+        x = region->enemyOffsets[at][0];
+        y = region->enemyOffsets[at][1];
+        if (QuickStartPositionAllowed(x, y)) {
+            *outX = x;
+            *outY = y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The sweep. Facing is a pure function of the frame counter and the
+// sentry's own fixed tile, so two sentries side by side are out of phase
+// and the gaps in the line move. 0..3 is what GuardLineOfSight shifts left
+// by three to get a 32-point direction: 0 north, 1 east, 2 south, 3 west.
+static u8 QuickStartStealthFacing(s16 localX, s16 localY) {
+    u32 phase = ((u32)localX >> 4) * 3u + ((u32)localY >> 4) * 5u;
+    return (u8)(((gSave.run_frames >> QUICKSTART_STEALTH_SWEEP_SHIFT) + phase) & 3u);
+}
+
+// Is there already a ZELDA npc standing exactly here? Returns it, or NULL.
+// Exact-match on purpose: everything this quest places is placed by us at
+// integer world coordinates and never moves, so an exact compare is a
+// stronger identity than a radius would be.
+static Entity* QuickStartStealthNpcAt(s32 worldX, s32 worldY) {
+    s32 e;
+    for (e = 0; e < MAX_ENTITIES; e++) {
+        Entity* ent = &gEntities[e].base;
+        if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == worldX && ent->y.HALF.HI == worldY) {
+            return ent;
+        }
+    }
+    return NULL;
+}
+
+// A watchman: the npc, plus the invisible emitter that gives it eyes.
+// The three lines after CreateProjectile are exactly what guard.c does at
+// its own spawn, and the collisionLayer write is load-bearing - the
+// emitter's on-screen test and the ray's tile collision both read it, and
+// an npc created with a zero layer is never looked out of.
+static Entity* QuickStartStealthSpawnWatchman(s32 worldX, s32 worldY) {
+    Entity* npc;
+    Entity* eye;
+    if (!QuickStartGfxBudgetForSpawn()) {
+        return NULL;
+    }
+    npc = CreateNPC(ZELDA, 0, 0);
+    if (npc == NULL) {
+        return NULL;
+    }
+    npc->x.HALF.HI = worldX;
+    npc->y.HALF.HI = worldY;
+    npc->collisionLayer = 1;
+    UpdateSpriteForCollisionLayer(npc);
+    npc->direction = IdleSouth;
+    eye = CreateProjectile(GUARD_LINE_OF_SIGHT);
+    if (eye != NULL) {
+        eye->type = 0;
+        eye->parent = npc;
+        eye->subtimer = 60;
+    }
+    return npc;
+}
+
+// Everything this quest put in the room. Called on both endings and on the
+// give-up path; the emitters go with their parents because
+// GuardLineOfSight's own first act each frame is CopyPosition(parent, this)
+// on a freed entity otherwise.
+static void QuickStartStealthClearWatch(const QuickStartRegion* region) {
+    s32 i, e;
+    for (i = 0; i < QUICKSTART_STEALTH_MAX_WATCH; i++) {
+        s16 wx, wy;
+        if (!QuickStartStealthWatchSpot(region, i, &wx, &wy)) {
+            continue;
+        }
+        {
+            Entity* npc = QuickStartStealthNpcAt(gRoomControls.origin_x + wx, gRoomControls.origin_y + wy);
+            if (npc != NULL) {
+                for (e = 0; e < MAX_ENTITIES; e++) {
+                    Entity* ent = &gEntities[e].base;
+                    if (ent->kind == PROJECTILE && ent->parent == npc) {
+                        DeleteEntity(ent);
+                    }
+                }
+                DeleteEntity(npc);
+            }
+        }
+    }
+    {
+        Entity* partner = QuickStartStealthNpcAt(gRoomControls.origin_x + region->rewardX,
+                                                 gRoomControls.origin_y + region->rewardY);
+        if (partner != NULL) {
+            DeleteEntity(partner);
+        }
+    }
+}
+
+// Where the giver stands - the same draw the hunt and the scavenger hunt
+// use, and the same walk-forward-off-a-blocked-spot rule.
+static bool32 QuickStartStealthSpot(const QuickStartRegion* region, s16* outX, s16* outY) {
+    s32 i, start;
+    if (region->enemyOffsetCount <= 0) {
+        return FALSE;
+    }
+    start = (s32)QuickStartGauntletReadBits(GF_STEALTH_SPOT_BIT(0), 5) % region->enemyOffsetCount;
+    for (i = 0; i < region->enemyOffsetCount; i++) {
+        s32 idx = (start + i) % region->enemyOffsetCount;
+        s16 x = region->enemyOffsets[idx][0];
+        s16 y = region->enemyOffsets[idx][1];
+        if (QuickStartPositionAllowed(x, y)) {
+            *outX = x;
+            *outY = y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// One draw per run, from the region monitor like every other per-run draw.
+// The host is never the hunt's or the scavenger hunt's: all four quests
+// share the HUD clock (gSave.timer4) and are mutually exclusive at run
+// time, so putting two givers in one region would just mean one of them
+// permanently refusing to talk.
+static void QuickStartStealthRollOnce(void) {
+    s32 host, hunt, scav, guard;
+    if (CheckLocalFlagByBank(FLAG_BANK_11, GF_STEALTH_ROLLED)) {
+        return;
+    }
+    hunt = QuickStartReadPoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST);
+    scav = QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST);
+    host = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+    for (guard = 0; guard < QUICKSTART_REGION_POOL_SIZE; guard++) {
+        if (host != hunt && host != scav) {
+            break;
+        }
+        host = (host + 1) % QUICKSTART_REGION_POOL_SIZE;
+    }
+    QuickStartGauntletWriteBits(GF_STEALTH_HOST_BIT(0), 5, (u32)host);
+    QuickStartGauntletWriteBits(GF_STEALTH_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
+    QuickStartStealthSetState(QUICKSTART_STEALTH_OFFERED);
+    SetLocalFlagByBank(FLAG_BANK_11, GF_STEALTH_ROLLED);
+}
+
+// --- The script hooks (data/scripts/quickstart/script_QuickStartStealth.inc)
+void QuickStartStealthCanStart(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = (QuickStartStealthState() == QUICKSTART_STEALTH_OFFERED) &&
+                         (QuickStartHuntState() != QUICKSTART_HUNT_RUNNING) &&
+                         (QuickStartScavState() != QUICKSTART_SCAV_RUNNING);
+}
+
+void QuickStartStealthBegin(Entity* entity, ScriptExecutionContext* context) {
+    if (QuickStartStealthState() != QUICKSTART_STEALTH_OFFERED) {
+        return;
+    }
+    QuickStartLatchFailureStake();
+    gSave.timer4 = QUICKSTART_STEALTH_FRAMES;
+    QuickStartStealthSetState(QUICKSTART_STEALTH_RUNNING);
+    SoundReq(SFX_SECRET);
+}
+
+// Called every frame from QuickStartRegionMonitor for the hosting slot.
+static void QuickStartStealthMonitor(const QuickStartRegion* region, s32 slot) {
+    s32 state, i, n;
+    s16 spotX, spotY;
+    QuickStartStealthRollOnce();
+    if (slot != (s32)QuickStartGauntletReadBits(GF_STEALTH_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE) {
+        return;
+    }
+    state = QuickStartStealthState();
+    if (state == QUICKSTART_STEALTH_RUNNING) {
+        bool32 spotted = FALSE;
+        n = QuickStartStealthWatchCount();
+        // Maintain the line: every watch spot either holds its sentry or
+        // gets one. Re-entering the region rebuilds the whole line from the
+        // same draw, which is why nothing here is stored.
+        for (i = 0; i < n; i++) {
+            s16 wx, wy;
+            Entity* npc;
+            if (!QuickStartStealthWatchSpot(region, i, &wx, &wy)) {
+                continue;
+            }
+            npc = QuickStartStealthNpcAt(gRoomControls.origin_x + wx, gRoomControls.origin_y + wy);
+            if (npc == NULL) {
+                npc = QuickStartStealthSpawnWatchman(gRoomControls.origin_x + wx, gRoomControls.origin_y + wy);
+                if (npc == NULL) {
+                    continue;
+                }
+            }
+            if (npc->type == 0xff) {
+                spotted = TRUE;
+            }
+            // The facing the eyes read, and the sprite the player reads.
+            // Both, every frame: knockbackDirection is what the emitter
+            // shifts into a ray direction, and animationState is the only
+            // thing that tells the player which way the cone points.
+            npc->knockbackDirection = QuickStartStealthFacing(wx, wy);
+            npc->animationState = (u8)(npc->knockbackDirection * 2);
+        }
+        // The partner, standing on the region's reward spot - the far side
+        // of the room from wherever the giver was drawn, and a place every
+        // pool row already guarantees is reachable and 3x3-clear.
+        if (QuickStartStealthNpcAt(gRoomControls.origin_x + region->rewardX,
+                                   gRoomControls.origin_y + region->rewardY) == NULL &&
+            QuickStartGfxBudgetForSpawn()) {
+            Entity* partner = CreateNPC(ZELDA, 0, 0);
+            if (partner != NULL) {
+                partner->x.HALF.HI = gRoomControls.origin_x + region->rewardX;
+                partner->y.HALF.HI = gRoomControls.origin_y + region->rewardY;
+                partner->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(partner);
+                partner->direction = IdleSouth;
+            }
+        }
+        if (spotted) {
+            QuickStartStealthClearWatch(region);
+            QuickStartStealthSetState(QUICKSTART_STEALTH_FAILED);
+            QuickStartQuestEndResetWave(slot);
+            gSave.timer4 = 0;
+            {
+                s32 stakeMsg = QuickStartApplyFailureStake();
+                if (stakeMsg != 0) {
+                    MessageRequest(TEXT_INDEX(TEXT_CUSTOM, stakeMsg));
+                } else {
+                    MessageRequest(TEXT_INDEX(TEXT_CUSTOM2, 20));
+                }
+            }
+            MsgInit();
+            return;
+        }
+        // Arrived. Measured against the partner's spot rather than the
+        // partner entity, so a failed spawn (a full gfx table on a busy
+        // frame) can never make the quest unwinnable.
+        {
+            s32 dx = gPlayerEntity.base.x.HALF.HI - (gRoomControls.origin_x + region->rewardX);
+            s32 dy = gPlayerEntity.base.y.HALF.HI - (gRoomControls.origin_y + region->rewardY);
+            if (dx < 0) {
+                dx = -dx;
+            }
+            if (dy < 0) {
+                dy = -dy;
+            }
+            if (dx + dy <= QUICKSTART_STEALTH_REACH) {
+                QuickStartStealthClearWatch(region);
+                QuickStartStealthSetState(QUICKSTART_STEALTH_WON);
+                QuickStartQuestEndResetWave(slot);
+                gSave.timer4 = 0;
+                QuickStartPlayerDropSpot(&spotX, &spotY);
+                QuickStartSpawnRewardEntity(
+                    QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE), spotX,
+                    spotY);
+                MessageRequest(TEXT_INDEX(TEXT_CUSTOM2, 19));
+                MsgInit();
+                return;
+            }
+        }
+        if (gSave.timer4 != 0) {
+            gSave.timer4--;
+        }
+        if (gSave.timer4 == 0) {
+            QuickStartStealthClearWatch(region);
+            QuickStartStealthSetState(QUICKSTART_STEALTH_FAILED);
+            QuickStartQuestEndResetWave(slot);
+            {
+                s32 stakeMsg = QuickStartApplyFailureStake();
+                if (stakeMsg != 0) {
+                    MessageRequest(TEXT_INDEX(TEXT_CUSTOM, stakeMsg));
+                } else {
+                    MessageRequest(TEXT_INDEX(TEXT_CUSTOM2, 21));
+                }
+            }
+            MsgInit();
+        }
+        return;
+    }
+    if (state != QUICKSTART_STEALTH_OFFERED) {
+        return;
+    }
+    if (!QuickStartStealthSpot(region, &spotX, &spotY)) {
+        return;
+    }
+    {
+        s32 worldX = gRoomControls.origin_x + spotX;
+        s32 worldY = gRoomControls.origin_y + spotY;
+        Entity* npc;
+        if (QuickStartStealthNpcAt(worldX, worldY) != NULL) {
+            return;
+        }
+        if (!QuickStartGfxBudgetForSpawn()) {
+            return;
+        }
+        npc = CreateNPC(ZELDA, 0, 0);
+        if (npc == NULL) {
+            return;
+        }
+        npc->x.HALF.HI = worldX;
+        npc->y.HALF.HI = worldY;
+        npc->collisionLayer = 1;
+        UpdateSpriteForCollisionLayer(npc);
+        npc->direction = IdleSouth;
+        QuickStartMakeNpcTalkable(npc, &script_QuickStartStealth);
     }
 }
 
