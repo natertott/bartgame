@@ -1,6 +1,22 @@
 """F2 research: does the guard line-of-sight mechanism work outside its
 scripted rooms?
 
+SUPERSEDED, AND CURRENTLY DRIFTED. The question this answered - yes, the
+guard LOS transplants onto an ordinary NPC - is now answered by shipped
+code: the stealth quest ("the watch") builds exactly this pair, and
+tools/quickstart/stealth_check.py walks it end to end in a real region,
+including a player standing in a cone and the quest flipping FAILED.
+
+This probe no longer reproduces its own result: BOTH legs now read "not
+spotted", the control included, which by doctrine 8 makes it a statement
+about the harness rather than about the mechanism. It has drifted with the
+room it warps into and the site table it quiets. Verified Sep 2026 that
+this is not caused by the site-index modernisation below - it fails
+identically with the original line. Kept for the offsets and the wiring
+recipe, which are still correct and are what the shipped code uses; fix or
+retire it before trusting a run of it.
+
+
 Static reading says it should: the LOS is a self-contained projectile
 pair (an invisible emitter riding its parent, firing short-lived
 invisible rays in the parent's facing that die on walls), and "spotted"
@@ -39,9 +55,11 @@ def run(player_dx, player_dy, facing, label):
     # The Grimblade dojo, its site forced DONE - a quiet room whose entity
     # free list has real room (NHF's, after a wave, does not: zeroing kind
     # does not unlink a slot, and CreateNPC comes back NULL).
-    base = 16 * 13
-    qs_site_set(c, base, 1)
-    qs_site_set(c, base + 12, 1)
+    # One bit per site now (the 13-bits-a-site block collapsed when kinds
+    # became seed-derived), so "make this room's site inert" is a single
+    # DONE bit at the site's own index - not base 16*13, which under the
+    # new encoding just sets the DONE bits of two sites that do not exist.
+    qs_site_set(c, 16, 1)
     poison_here(c)
     warp(c, 37, 5, 0x78, 0xa0)
     for _ in range(240):

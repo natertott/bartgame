@@ -60,9 +60,11 @@ def main():
     end = int(sys.argv[2]) if len(sys.argv) > 2 else len(rows)
 
     c = boot(ROM)
-    base = 16 * 13
-    qs_site_set(c, base, 1)
-    qs_site_set(c, base + 12, 1)
+    # One bit per site now (the 13-bits-a-site block collapsed when kinds
+    # became seed-derived), so "make this room's site inert" is a single
+    # DONE bit at the site's own index - not base 16*13, which under the
+    # new encoding just sets the DONE bits of two sites that do not exist.
+    qs_site_set(c, 16, 1)
     poison_here(c)
     warp(c, 37, 5, 0x78, 0xa0)
     for _ in range(10):

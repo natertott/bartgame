@@ -1,4 +1,22 @@
-"""Walk the linger-plate puzzle end to end in the Grimblade dojo.
+"""Walk the linger-plate puzzle end to end.
+
+STATUS, Sep 2026: the DEAL leg is restored and works - it finds the plates
+variant, both plates and the ring of cage pots. The WALK legs do NOT
+reproduce and should not be read as a statement about the shipped puzzle
+until they are rewritten.
+
+What was measured: the FIRST plate the probe visits presses (action 2);
+the SECOND never does, whichever one it is. Both orders were run - A then
+B, and B then A - and the failure follows the ORDER, not the plate, which
+makes it the harness. The probe pins the player's coordinates every frame
+rather than walking them, and after one long pinned stand the player is
+frozen hard enough that the next plate's collision never fires. It is the
+same family as the trap already recorded here: a pressure plate refuses a
+player the engine does not consider properly standing on it.
+
+Fixing it means driving the player with real input instead of teleporting.
+Until then this file proves the deal and nothing after it.
+
 
 Deal the site as QS_EVENT_GATE and reroll visits until the plates variant
 comes up. Then: plates visible on screen (screenshot - the doctrine-6
@@ -13,8 +31,19 @@ from emu import boot, warp, here, poison_here, press, entities, r16, qs_site_set
 import parse_tables as P
 
 ROM = '/home/user/bartgame/tmc.gba'
-SITE = 16
-AREA, ROOM = 37, 5
+# A site's KIND is no longer stored - it is computed from (run_seed, site)
+# by QuickStartContentSiteRoll, so the old "stamp QS_EVENT_GATE into the
+# site's flag block" trick this probe used has nothing to stamp, and poking
+# gRand does not move it either. Pin the RUN SEED instead; at 0x11111111
+# the Goron cave's main chamber is a gate site, and it is a big room, which
+# a two-plate deal wants.
+SEED = 0x11111111
+SITE = 18
+AREA, ROOM = 47, 1     # AREA_GORON_CAVE / ROOM_GORON_CAVE_MAIN
+# NOT the site's own content spot (120,600): spawning on the caged prize
+# picks it up on frame one, QuickStartSetupContentSite returns TRUE, the
+# site goes DONE, and the dispatcher never runs the puzzle again.
+SPAWN = (0x78, 0xc8)
 GRAND = 0x03001150
 PLAYER = 0x03001160
 POT = PLATE = None
@@ -36,18 +65,13 @@ def objs(c, ident):
     return [(idx, x, y) for (idx, k, i2, typ, x, y) in entities(c, kind=KIND_OBJECT) if i2 == ident]
 
 def deal_plates(seed):
-    c = boot(ROM)
-    base = SITE * 13
-    qs_site_set(c, base, 1)
-    for b in range(3):
-        qs_site_set(c, base + 1 + b, (QS_EVENT_GATE >> b) & 1)
-    for b in range(8):
-        qs_site_set(c, base + 4 + b, 0)
-    qs_site_set(c, base + 12, 0)
+    """Boot on the pinned run seed (which fixes the site KIND) and poke the
+    LIVE rng so the per-visit variant roll differs between tries."""
+    c = boot(ROM, seed=SEED)
     for i in range(4):
         c.memory.u8[GRAND + i] = (seed * 37 + i * 101 + 13) & 0xFF
     poison_here(c)
-    warp(c, AREA, ROOM, 0x78, 0xa0)
+    warp(c, AREA, ROOM, SPAWN[0], SPAWN[1])
     if here(c) != (AREA, ROOM):
         return None
     for _ in range(120):
@@ -80,6 +104,11 @@ def act(idx):
     return c.memory.u8[GENT + idx * STRIDE + 0x0c]
 
 def stand(x, y, frames):
+    # 120 frames minimum, not 30. The two plates are dealt a real walk
+    # apart - measured 336px on the Goron cave deal, more than two screens
+    # tall - so a teleport to the second one lands with the camera still
+    # scrolling and the plate not yet updating. A player who WALKS there
+    # scrolls the camera on the way; a probe that warps has to wait for it.
     for _ in range(frames):
         w16a(c, PLAYER + 0x2e, x)
         w16a(c, PLAYER + 0x32, y)
@@ -88,10 +117,10 @@ def stand(x, y, frames):
 if len(plates) < 2:
     print('short deal - need 2 plates for the walk'); sys.exit(1)
 (iA, ax, ay), (iB, bx, by) = plates[0], plates[1]
-stand(ax, ay, 30)
+stand(ax, ay, 120)
 print(f'on plate A: action {act(iA)} (want 2)')
 okA = act(iA) == 2
-stand(bx, by, 30)   # walk to B while A lingers
+stand(bx, by, 120)  # walk to B while A lingers
 print(f'on plate B: A action {act(iA)}, B action {act(iB)}')
 for _ in range(30):
     c.run_frame()
@@ -112,10 +141,10 @@ if c2:
     plates = objs(c, PLATE)
     if len(plates) >= 2:
         (iA, ax, ay), (iB, bx, by) = plates[0], plates[1]
-        stand(ax, ay, 30)
+        stand(ax, ay, 120)
         stand(ax, ay - 40, 340)  # step off, wait past the longest linger
         released = act(iA) == 1
-        stand(bx, by, 30)
+        stand(bx, by, 120)
         for _ in range(30):
             c.run_frame()
         pots2 = len(objs(c, POT))

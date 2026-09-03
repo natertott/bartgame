@@ -3096,9 +3096,23 @@ allowlists):
     * It read the failure as a bug in the C. Doctrine 8 is what caught it:
       the control run showed the site DONE bit already set, which no
       amount of staring at the puzzle's own code would have explained.
-    **`plates_check.py` and `roster_soak.py` still use the retired
-    encoding** and should be assumed to be testing nothing until they are
-    ported to the pinned-seed form.
+    `plates_check.py`, `roster_soak.py` and `los_check.py` were all still
+    using the retired encoding; all three are ported. Two of them turned
+    out to have drifted further than that, and both are now labelled in
+    their own headers rather than left to mislead:
+    * **`plates_check.py`**: the deal leg works again, the WALK legs do
+      not. Measured both orders - the FIRST plate the probe visits presses
+      and the SECOND never does, whichever it is - so the failure follows
+      the order, not the plate, which makes it the harness. It pins the
+      player's coordinates every frame instead of walking them, and after
+      one long pinned stand the next plate's collision never fires. Same
+      family as the textbox trap already recorded there.
+    * **`los_check.py`**: both legs now read "not spotted", the control
+      included, so by doctrine 8 it says nothing about the mechanism. The
+      question it asked is answered by shipped code anyway -
+      `stealth_check.py` walks the same LOS pair end to end in a real
+      region. Confirmed the drift is not from the site-index port: it
+      fails identically with the original line.
 
 12. **Ids come from the build, never from a regex over the header.** A hand
     parse of `include/item.h` returned 52 and 57 for the two overworld
