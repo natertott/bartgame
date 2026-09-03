@@ -2474,6 +2474,18 @@ it by running the tier on the same seed against the previous ROM before
 believing it. The underlying weakness - the reserve not defending the
 metric the tier measures - is real and still open.
 
+**Confirmed again, Sep 2026, by the Minish Woods / Lake Hylia batch**, and
+this time the comparison was run rather than reasoned about. Lon Lon Ranch
+failed at 0 free on the derived seed after that batch, so the previous ROM
+(`e3da734`) was rebuilt and pointed at the same tier on the same seed: it
+reads **0 free too, identically**. Not a regression. The rest of the
+comparison went the other way - the old ROM had four gfx failures on that
+seed and the new one has one, with North Hyrule Field going from 1 free to
+5 - and on pinned seed `0x11111111` Lon Lon passes outright while North
+Hyrule Field reproduces its own long-standing 1-free reading. Rebuilding
+the previous ROM costs two `make` runs and settles the question in one
+measurement; do that rather than sweeping more seeds.
+
 ### The Power Bracelets move every block now (Aug 2026)
 
 The survey turned up the same "push a block" obstacle priced two different
