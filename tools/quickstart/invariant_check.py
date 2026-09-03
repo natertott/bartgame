@@ -243,6 +243,66 @@ def check_flags():
             for v in values:
                 blocks[name].append(FLAG_BANKS[bank][0] + origin + v)
 
+    # 0b. QuickStartExtSlotFlag, which is a FUNCTION rather than a macro and
+    #     was therefore invisible to every check below it. That invisibility
+    #     is not hypothetical: the function's first home was three "free"
+    #     runs of FLAG_BANK_11 that were not free, and it sat on SEVENTEEN
+    #     of that bank's own offsets - the handicap snapshot, the inn's
+    #     chest-armed bits and the Western Wood brush payouts - for a whole
+    #     expansion, silently. Paying for a bed moved a region's enemy count.
+    #
+    #     So the allocation is re-derived here from the function's own source
+    #     (its run bases and thresholds) and registered as an ordinary block,
+    #     which puts it under the collision, bank-bounds and run-wipe checks
+    #     like everything else. If the function is rewritten into a shape
+    #     this cannot parse, that is a FAIL rather than a silent skip.
+    m = re.search(r'static u32 QuickStartExtSlotFlag\(.*?\n\}', src, re.S)
+    if m is None:
+        out.append(('FAIL', 'QuickStartExtSlotFlag: not found - the extension-slot '
+                            'allocation can no longer be checked for collisions'))
+    else:
+        body = m.group(0)
+        runs = []          # (upper bound on lin, base, subtract)
+        for line in body.split('\n'):
+            b = re.search(r'if \(lin < (\d+)\)', line)
+            if b:
+                runs.append([int(b.group(1)), None, None])
+            # Only the return INSIDE the most recent `if` fills that run in;
+            # the function's final unguarded return is the tail, matched
+            # separately below. Without the `is None` guard it overwrites
+            # the last run and the whole map shifts.
+            r = re.search(r'return (\d+) \+ lin;', line)
+            if r and runs and runs[-1][1] is None:
+                runs[-1][1], runs[-1][2] = int(r.group(1)), 0
+            r = re.search(r'return (\d+) \+ \(lin - (\d+)\);', line)
+            if r and runs and runs[-1][1] is None:
+                runs[-1][1], runs[-1][2] = int(r.group(1)), int(r.group(2))
+        tail = re.search(r'\n    return (\d+) \+ \(lin - (\d+)\);.*\n\}', body)
+        if not runs or tail is None or any(r[1] is None for r in runs):
+            out.append(('FAIL', 'QuickStartExtSlotFlag: could not parse its run table - '
+                                'keep it as `if (lin < N) return BASE + (lin - M);` lines '
+                                'so this check can still vouch for it'))
+        else:
+            base_slot = ns.get('QUICKSTART_EXT_SLOT_BASE')
+            width = ns.get('QUICKSTART_EXT_SLOT_BITS')
+            origin = ns.get('QUICKSTART_FLAG_ORIGIN')
+            pool = len(P.region_pool())
+            span = max(0, pool - base_slot) * width
+            for lin in range(span):
+                for hi, base, sub in runs:
+                    if lin < hi:
+                        off = base + lin - sub
+                        break
+                else:
+                    off = int(tail.group(1)) + lin - int(tail.group(2))
+                blocks['GF_EXT_SLOT_BIT'].append(FLAG_BANKS[12][0] + origin + off)
+            if span:
+                out.append(('ok', 'GF_EXT_SLOT_BIT (QuickStartExtSlotFlag): %d bits for pool rows %d-%d, '
+                                  'window offsets %d-%d'
+                                  % (span, base_slot, pool - 1,
+                                     min(blocks['GF_EXT_SLOT_BIT']) - FLAG_BANKS[12][0] - origin,
+                                     max(blocks['GF_EXT_SLOT_BIT']) - FLAG_BANKS[12][0] - origin)))
+
     # 1. no bit claimed by two different macros
     for name, bits in sorted(blocks.items()):
         for b in bits:
@@ -562,17 +622,35 @@ RING_ADJ = {
     'CG': ['NHF'],
     'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
     'SHF': ['NHF', 'EH', 'WW'],
-    'EH': ['SHF', 'LLR'],
-    'LLR': ['EH', 'NHF', 'TRIL'],
-    'TRIL': ['LLR', 'NHF', 'WW', 'RV'],
+    'EH': ['SHF', 'LLR', 'MW'],
+    'LLR': ['EH', 'NHF', 'TRIL', 'LH'],
+    'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
     'WW': ['TRIL', 'SHF', 'CW'],
     'RV': ['NHF', 'TRIL'],
     'CW': ['WW', 'WR'],
     'WR': ['CW'],
+    'CREN': ['TRIL'],
+    # Spurs off Eastern Hills and Lon Lon. The MW-LH border in the vanilla
+    # exit lists is NOT an edge here - neither room's arrival component
+    # reaches it. See sQuickStartRingAdjacency in game.c.
+    'MW': ['EH'],
+    'LH': ['LLR'],
 }
+for _a, _ns in RING_ADJ.items():
+    for _b in _ns:
+        assert _a in RING_ADJ[_b], 'ring adjacency is not symmetric: %s -> %s' % (_a, _b)
 # The ring each row of sQuickStartFuserSpots sits in, in table order.
-SPOT_RINGS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW']
+SPOT_RINGS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
+              'MW', 'LH']
 SPOTS_PER_REGION = 9
+# This list is a hand copy of sQuickStartFuserSpotRings, and a hand copy that
+# silently falls behind the table it mirrors is how the fuser tier starts
+# checking the wrong rooms. Count the real table's rows and insist they match.
+_SPOT_ROWS = len(re.findall(r'\{ AREA_\w+, ROOM_\w+,\n\s*\{ \{',
+                            open(GAME_C).read()))
+assert _SPOT_ROWS == len(SPOT_RINGS), (
+    'SPOT_RINGS has %d entries but sQuickStartFuserSpots has %d rows'
+    % (len(SPOT_RINGS), _SPOT_ROWS))
 
 
 def _avalanche(x):

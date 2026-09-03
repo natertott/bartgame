@@ -33,10 +33,14 @@ KINDS = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
 RINGS = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV', 'CW', 'WR']
 ADJ = {  # mirrors sQuickStartRingAdjacency in game.c
     'CG': ['NHF'], 'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
-    'SHF': ['NHF', 'EH', 'WW'], 'EH': ['SHF', 'LLR'],
-    'LLR': ['EH', 'NHF', 'TRIL'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
+    'SHF': ['NHF', 'EH', 'WW'], 'EH': ['SHF', 'LLR', 'MW'],
+    'LLR': ['EH', 'NHF', 'TRIL', 'LH'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
     'WW': ['TRIL', 'SHF', 'CW'], 'RV': ['NHF', 'TRIL'],
     'CW': ['WW', 'WR'], 'WR': ['CW'], 'CREN': ['TRIL'],
+    # Spurs, not a loop: the MW-LH border exists in the exit lists but
+    # neither room's arrival component reaches it. See game.c's own
+    # comment on sQuickStartRingAdjacency.
+    'MW': ['EH'], 'LH': ['LLR'],
 }
 # This table is a hand copy of one in game.c, so it can drift - and it did:
 # Mt Crenel went into the ring, the game started placing steps there, and
@@ -53,7 +57,7 @@ for _a in ADJ:
 # Mt Crenel is deliberately absent: it is a ring member but NOT a pool row,
 # so nothing drops the player there and no region wave loop runs in it.
 POOL_RING = ['CG', 'LLR', 'SHF', 'NHF', 'TRIL', 'EH', 'EH', 'EH',
-             'WW', 'WW', 'WW', 'RV', 'CW', 'WR', 'WR']
+             'WW', 'WW', 'WW', 'RV', 'CW', 'WR', 'WR', 'MW', 'LH']
 SITES = P.content_sites()
 POOL = P.region_pool()
 ITEM_NAME = {v: k for k, v in P.ITEMS.items()}
@@ -87,10 +91,15 @@ def terms_met(req, held):
 
 
 def reachable_regions(c, held):
+    # Five bits, not four: the pool passed sixteen rows with Minish Woods
+    # and Lake Hylia, so each pool-index field grew a high bit in the
+    # 208-212 run (GF_POOL_HI_*). GF_DROP_REGION_BIT(0..3) is still 467.
     drop = 0
     for b in range(4):
         if qs_flag(c, 467 + b):
             drop |= 1 << b
+    if qs_flag(c, 211):
+        drop |= 16
     drop %= len(POOL_RING)
     open_ = {POOL_RING[drop]}
     entry = {}
@@ -159,10 +168,22 @@ def force(c, n):
             on = (detail >> b) & 1
             if where < 12:
                 set_bank_bit(c, QS_BIT0 + 362 + where * 8 + b, on)
-            else:                       # FLAG_BANK_11 extension slots
+            else:
+                # Extension slots. These used to be borrowed scraps of
+                # FLAG_BANK_11 and were colliding with seventeen of that
+                # bank's own offsets; they now live in four free runs of
+                # the QUICKSTART window itself. Mirrors
+                # QuickStartExtSlotFlag in game.c - keep the two in step.
                 lin = (where - 12) * 16 + 2 + b
-                off = 60 + lin if lin < 14 else (121 + lin - 14 if lin < 35 else 143 + lin - 35)
-                set_bank_bit(c, BANK11_BIT0 + off, on)
+                if lin < 39:
+                    off = 617 + lin
+                elif lin < 71:
+                    off = 658 + (lin - 39)
+                elif lin < 84:
+                    off = 496 + (lin - 71)
+                else:
+                    off = 213 + (lin - 84)
+                set_bank_bit(c, QS_BIT0 + off, on)
         return 'wave counter := %d' % detail
     if kind == 3:
         return 'SKIP boss (needs a real kill in the room)'

@@ -73,6 +73,12 @@ GRAVEYARD_KEY = 'graveyard_key'
 FUSION = 'fusion'                        # an unnamed kinstone fusion
 STORY = 'story_flags'
 MAZE = 'maze_solved'                     # Royal Valley's lost woods
+# "This place exists and the survey could not find a way to it." Not a gate -
+# an admission. Untestable at run time exactly like MAZE, so anything carrying
+# it is invisible to the chain placer instead of being offered on a guess.
+# Only the two derived regions (Minish Woods, Lake Hylia) use it; a walked
+# survey of either should delete every one it replaces.
+UNSURVEYED = 'unsurveyed'
 SWITCHES4 = 'boomerang_switches_4'       # all four chamber switches thrown
 BOULDER = lambda region, n: 'boulder:%s:%d' % (region, n)
 
@@ -389,6 +395,83 @@ d('CREN', 'MT_CRENEL', 'ENTRANCE', 730, 309, [[GRIP, BOMBS]])
 d('CREN', 'CRENEL_MINISH_PATHS', 'SPRING_WATER', 128, 792, [[GRIP, BOMBS, MINISH]])
 d('CREN', 'CRENEL_CAVES', 'HINT_SCRUB', 120, 120, [[GRIP, BOMBS]])
 d('CREN', 'MT_CRENEL', 'ENTRANCE', 994, 416, [[GRIP]], 'exit, back down to Trilby')
+
+# --- Minish Woods and Lake Hylia -------------------------------------------
+#
+# NOT WALKED. Every block above this one is the user walking the mapexplore
+# build and writing down what each place cost. These two are DERIVED, and the
+# difference matters enough to say before the rows: the destinations are the
+# rooms' own vanilla exit lists (src/data/transitions.c, so the coordinates
+# and the room names are exact), and the requirements come from flooding the
+# live collision grid out of the running game from the tile the player really
+# arrives on - tools/quickstart/door_reach.py, which is what produced the
+# numbers quoted below.
+#
+# A flood sees GEOMETRY, not gates. It can prove a door is walkable with
+# nothing at all; it cannot tell a wall from a wall-with-a-bomb-crack. So the
+# rows split in two:
+#
+#   * doors the flood REACHES are recorded FREE, which is a fact about the
+#     room and is safe to hand the chain placer;
+#   * doors it does not reach carry UNSURVEYED, an untestable token exactly
+#     like MINISH or MAZE. The placer can never satisfy it, so those places
+#     are invisible rather than wrongly offered. That is the same
+#     conservative direction the Mt Crenel block argues for, taken further
+#     because there is even less to go on.
+#
+# Replace these blocks with a walked survey when one exists. Until then the
+# two regions are honest about being thin: a walkable arena, their border
+# home, one reachable door each, and everything else marked unknown.
+#
+# MINISH WOODS. 63x63 tiles, 1195 open, THIRTY-TWO components. The west-edge
+# arrival lands in a 277-tile band across the middle of the room, and that
+# band touches the west edge and nothing else - not the north edge (the Lake
+# Hylia border), not the south, not the east. The stump mazes, the tree
+# hollows and the Minish cracks are all separate components. Letting the
+# sword cut shrubs adds ten tiles and changes nothing.
+region('MW', 'Minish Woods', ('MINISH_WOODS', 'MAIN', 8, 424),
+       note='derived from the exit list + a collision flood, not walked')
+d('MW', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 456, 429, FREE,
+  'exit; the border the player arrives through, walkable both ways')
+d('MW', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 456, 160, FREE, 'exit')
+d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_BUSINESS_SCRUB', 120, 120, FREE,
+  'the one door the arrival component reaches - 115 tiles of walk, no gate')
+d('MW', 'DEEPWOOD_SHRINE', 'ENTRANCE', 168, 216, [[MINISH, UNSURVEYED]],
+  'the giant stump; Minish-only in vanilla and out of the arrival component')
+d('MW', 'MINISH_HOUSE_INTERIORS', 'MINISH_WOODS_BOMB', 120, 120, [[MINISH, UNSURVEYED]])
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_NORTH_1', 120, 264, [[MINISH, UNSURVEYED]])
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 88, 280, [[MINISH, UNSURVEYED]])
+d('MW', 'BEANSTALKS', 'EASTERN_HILLS', 120, 136, [[FUSION, UNSURVEYED]],
+  'the beanstalk a kinstone fusion grows')
+d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_GREAT_FAIRY', 120, 120, [[UNSURVEYED]],
+  'normal-size door, but in a component the arrival cannot reach')
+d('MW', 'TREE_INTERIORS', 'WITCH_HUT', 120, 136, [[UNSURVEYED]])
+d('MW', 'LAKE_HYLIA', 'MAIN', 0, 952, [[UNSURVEYED]],
+  'exit on paper - the north border - but the north edge is not in the '
+  'arrival component, which is why the ring has no MW-LH edge')
+
+# LAKE HYLIA. 48x60 tiles, 662 open, and most of that open ground is WATER.
+# The west-edge arrival from Lon Lon Ranch lands on a 165-tile north-west
+# shore, which again touches only the west edge. Stockwell's lake house is
+# the one door on it. Everything else - the mayor's cabin, the Waveblade
+# tree, Librari, the Lake Woods cave - is across the lake, which is what the
+# region's Flippers price in QuickStartRegionNeedsSwampKit is about.
+region('LH', 'Lake Hylia', ('LAKE_HYLIA', 'MAIN', 8, 328),
+       note='derived from the exit list + a collision flood, not walked')
+d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, FREE,
+  'exit; the border the player arrives through, walkable both ways')
+d('LH', 'HOUSE_INTERIORS_2', 'STOCKWELL_LAKE_HOUSE', 120, 120, FREE,
+  'the one door the arrival shore reaches - 67 tiles of walk, no gate')
+d('LH', 'HOUSE_INTERIORS_4', 'MAYOR_LAKE_CABIN', 120, 160, [[FLIPPERS, UNSURVEYED]],
+  'far shore')
+d('LH', 'TREE_INTERIORS', 'WAVEBLADE', 120, 120, [[FLIPPERS, UNSURVEYED]])
+d('LH', 'LAKE_WOODS_CAVE', 'MAIN', 584, 424, [[FLIPPERS, UNSURVEYED]])
+d('LH', 'MINISH_HOUSE_INTERIORS', 'LAKE_HYLIA_OCARINA', 120, 120, [[MINISH, UNSURVEYED]])
+d('LH', 'MINISH_HOUSE_INTERIORS', 'LIBRARI', 120, 120, [[MINISH, UNSURVEYED]])
+d('LH', 'MINISH_CAVES', 'LAKE_HYLIA_NORTH', 392, 424, [[MINISH, UNSURVEYED]])
+d('LH', 'MINISH_WOODS', 'MAIN', 0, 16, [[UNSURVEYED]],
+  'exit on paper - the south border - but the south edge is not in the '
+  'arrival component')
 
 # ------------------------------------------------------------------ checks --
 def _fmt(req):

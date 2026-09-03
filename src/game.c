@@ -707,9 +707,12 @@ static void GameTask_Transition(void) {
         // lives in the QUICKSTART flag window and is cleared by the 202-703
         // loop further up.
         // Bit 142: the survive event's live-clock marker (GF_SURVIVE_LIVE).
-        // Bits 143-155: the tail of the extension-slot state (pool slots
-        // 12+, QuickStartExtSlotFlag) - per-run like the window blocks it
-        // extends, so the sweep grew to cover it.
+        // Bits 143-173: nothing of ours any more. The extension-slot state
+        // (pool slots 12+, QuickStartExtSlotFlag) used to have its tail
+        // here; it has moved wholesale into the QUICKSTART window's own
+        // free runs, where the 202-703 loop above clears it. The sweep is
+        // left at 173 rather than trimmed - it is clearing bits nobody
+        // writes, which costs nothing and keeps the range one number.
         for (bit = 43; bit <= 173; bit++) {
             ClearLocalFlagByBank(FLAG_BANK_11, bit);
         }
@@ -1415,6 +1418,25 @@ extern Script script_QuickStartScav;
 // the highest bit allocated down there, and is cleared every run in
 // GameTask_Transition alongside the ladder/2door ranges.
 #define GF_REGION_INTRO_HINT_SHOWN 207
+// --- The pool-index high bits ---------------------------------------------
+// Five fields in this file store a POOL INDEX: which region hides the Earth
+// Element, which hosts the pot quest, which hosts the scavenger hunt's
+// giver and its target, and which one the hub's pit drops the player into.
+// Each was allocated four bits, which encodes 0-15 - and was correct while
+// the pool had at most sixteen rows. The Minish Woods and Lake Hylia rows
+// take it to seventeen, so index 16 needs a fifth bit and every one of
+// those fields would silently wrap to 0 (Castle Garden) without one.
+//
+// The four-bit bases stay where they are - moving five packed blocks to
+// make each contiguously five bits wide would churn the whole map - and
+// the fifth bit of each lives here, in the run the 2-door third-kind spill
+// gave back. Read and written only through QuickStartReadPoolIdx /
+// QuickStartWritePoolIdx, which is what keeps the two halves in step.
+#define GF_POOL_HI_ELEMENT 208
+#define GF_POOL_HI_QUEST_HOST 209
+#define GF_POOL_HI_HUNT_HOST 210
+#define GF_POOL_HI_DROP 211
+#define GF_POOL_HI_SCAV_HOST 212
 
 // RETIRED: the ordered region chain (QUICKSTART_REGION_CHAIN_MAX,
 // GF_REGION_CHAIN_RANDOMIZED 208, POOL_BIT 209-220, REWARD_STATE 221-228 -
@@ -1936,7 +1958,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 84
+#define QUICKSTART_CONTENT_SITE_COUNT 93
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -2607,7 +2629,7 @@ const u8* const gCustomStrings2[] = {
     // because there are 842 rooms, and because a region is a hint while a
     // room name would be an instruction.
     //
-    // 11-15: the compass's line, one per QS_CHAIN_* in enum order, naming
+    // 13-17: the compass's line, one per QS_CHAIN_* in enum order, naming
     // what the task IS. A compass holder gets this instead of the region
     // line, and the exact room as a map marker on top of it
     // (QuickStartChainMapMarker) - so the two surfaces together are "what"
@@ -2627,12 +2649,14 @@ const u8* const gCustomStrings2[] = {
     [8] = (const u8*)"Castor Wilds. Mind the\nswamp - and mind what\nlives in it.",
     [9] = (const u8*)"The Wind Ruins. Old\nstones, and something\nunfinished among them.",
     [10] = (const u8*)"Mount Crenel. Up among\nthe rocks - and it is a\nlong way up.",
+    [11] = (const u8*)"The Minish Woods. Small\npaths, tall trees. Look\nunder things.",
+    [12] = (const u8*)"Lake Hylia. Whatever is\nnext, the water is\nbetween you and it.",
     // -- the compass's five, one per QS_CHAIN_*
-    [11] = (const u8*)"The compass turns. You\nlack something. Find it,\nwherever it hides.",
-    [12] = (const u8*)"The compass points to a\nmarked room. Finish what\nis happening inside it.",
-    [13] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
-    [14] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
-    [15] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
+    [13] = (const u8*)"The compass turns. You\nlack something. Find it,\nwherever it hides.",
+    [14] = (const u8*)"The compass points to a\nmarked room. Finish what\nis happening inside it.",
+    [15] = (const u8*)"The compass points to a\nmarked place. Clear the\nenemies that hold it.",
+    [16] = (const u8*)"The compass shudders. A\nbeast waits at the mark.\nPut it down.",
+    [17] = (const u8*)"The compass points to a\nfavour left undone.\nFinish it.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3290,15 +3314,15 @@ static void QuickStartTrilbyQuirkHook(void) {
 // another move. All of it is cleared by the run-start 202-703 wipe.
 #define QUICKSTART_REGION_STATE_MAX 12
 #define GF_ELEMENT_REGION_ROLLED 332
-#define GF_ELEMENT_REGION_BIT(b) (333 + (b))                             // b = 0..3 -> 333-336
+#define GF_ELEMENT_REGION_BIT(b) (333 + (b))                        // b = 0..3 -> 333-336, +GF_POOL_HI_ELEMENT
 // 337 spare (was going to be a separate element-hint latch; the hint
 // reuses GF_REGION_FINAL_HINT_SHOWN instead).
 #define GF_REGION_REWARD_STATE_BIT(i, b) (338 + (i) * 2 + (b))           // i = 0..11 -> 338-361
 #define GF_REGION_WAVE_BIT(i, b) (362 + (i) * 8 + (b))                   // i = 0..11 -> 362-457
-#define GF_REGION_QUEST_HOST_BIT(b) (458 + (b))                               // b = 0..3 -> 458-461
-#define GF_REGION_HUNT_HOST_BIT(b) (462 + (b))                                // b = 0..3 -> 462-465
+#define GF_REGION_QUEST_HOST_BIT(b) (458 + (b))                          // b = 0..3 -> 458-461, +GF_POOL_HI_QUEST_HOST
+#define GF_REGION_HUNT_HOST_BIT(b) (462 + (b))                           // b = 0..3 -> 462-465, +GF_POOL_HI_HUNT_HOST
 #define GF_DROP_REGION_ROLLED 466
-#define GF_DROP_REGION_BIT(b) (467 + (b))                                     // b = 0..3 -> 467-470
+#define GF_DROP_REGION_BIT(b) (467 + (b))                               // b = 0..3 -> 467-470, +GF_POOL_HI_DROP
 // The pot quest's one-per-run give line (custom string 26, fired by
 // QuickStartSetupRegionQuest). Lives here rather than with the quest's own
 // bank-11 block because that block's neighbours (QUICKSTART_CHARM_BIT at
@@ -3312,7 +3336,7 @@ static void QuickStartTrilbyQuirkHook(void) {
 // drawn region that is never the hunt quest's own - the two share the HUD
 // clock (gSave.timer4), so they must never run at once.
 #define GF_SCAV_ROLLED 474
-#define GF_SCAV_HOST_BIT(b) (475 + (b))                                  // b = 0..3 -> 475-478
+#define GF_SCAV_HOST_BIT(b) (475 + (b))                            // b = 0..3 -> 475-478, +GF_POOL_HI_SCAV_HOST
 #define GF_SCAV_SPOT_BIT(b) (479 + (b))                                  // b = 0..4 -> 479-483
 #define GF_SCAV_STATE_BIT(b) (484 + (b))                                 // b = 0..1 -> 484-485
 // State values + clock, up here rather than with the quest's own code
@@ -3481,44 +3505,65 @@ static s32 QuickStartHuntState(void);
 // confirmed actually picked up.
 // The three per-slot state blocks in the QS window (reward state, wave
 // counter, alive counter) were sized for twelve pool rows and the window
-// has no room to grow them. Slots 12+ (the Castor Wilds / Wind Ruins
-// expansion) route through here instead: 16 bits per extension slot
-// (reward 2, wave 8, alive 6), laid into FLAG_BANK_11's free ranges
-// 60-73, 121-141 and 143-155 - all inside or adjacent to the run wipe,
-// which is extended to cover the 143-155 tail (see GameTask_Transition).
+// has no room to grow them. Slots 12+ (Castor Wilds, the two Wind Ruins
+// rows, then Minish Woods and Lake Hylia) route through here instead: 16
+// bits per extension slot (reward 2, wave 8, alive 6), laid into the
+// QUICKSTART window's own free runs (see QuickStartExtSlotFlag below), all
+// of them inside the 202-703 run wipe.
 #define QUICKSTART_EXT_SLOT_BASE 12
 #define QUICKSTART_EXT_REWARD_OFF 0
 #define QUICKSTART_EXT_WAVE_OFF 2
 #define QUICKSTART_EXT_ALIVE_OFF 10
+#define QUICKSTART_EXT_SLOT_BITS 16
+
+// Where a pool row past the twelfth keeps its state. Sixteen bits each
+// (reward 2, wave 8, alive 6), laid end to end across four runs of the
+// QUICKSTART window - all four inside the 202-703 run wipe, so an extension
+// slot resets per run with no clear loop of its own.
+//
+// THIS USED TO LIVE IN BANK 11, AND IT WAS WRONG. The runs it borrowed
+// there (60-73, 121-141, 143-155) were described as free by their own
+// comment and were not: an audit of every bank-11 allocation found
+// SEVENTEEN colliding offsets. Castor Wilds' alive counter shared 60-71
+// with the stripped-kit handicap's area/room snapshot, its top alive bits
+// shared 121-122 with the inn's chest-armed flags, and Wind Ruins' wave
+// counter shared 131-132 with the Western Wood brush payouts. Paying for a
+// bed really did move a region's enemy count, and taking the handicap
+// really did scribble on Castor Wilds.
+//
+// The four runs used now are the ones the content-site block gave back when
+// its thirteen-bits-a-site layout collapsed to one (see QsCheckSiteFlag) -
+// they were that block's borrowed extension space and nothing else has ever
+// been in them. 39 + 32 + 13 + 21 = 105 bits, so six extension slots fit
+// with room to spare; the compile-time check below is what says so.
 static u32 QuickStartExtSlotFlag(s32 poolIndex, u32 off) {
-    u32 lin = (u32)(poolIndex - QUICKSTART_EXT_SLOT_BASE) * 16 + off; /* 0..47 */
-    if (lin < 14) {
-        return 60 + lin;
+    u32 lin = (u32)(poolIndex - QUICKSTART_EXT_SLOT_BASE) * QUICKSTART_EXT_SLOT_BITS + off;
+    if (lin < 39) {
+        return 617 + lin; // the run above the F7 carrier bits
     }
-    if (lin < 35) {
-        return 121 + (lin - 14);
+    if (lin < 71) {
+        return 658 + (lin - 39); // the retired shop-door/price bits
     }
-    return 143 + (lin - 35);
+    if (lin < 84) {
+        return 496 + (lin - 71); // the moved food block's old home
+    }
+    return 213 + (lin - 84); // the retired 2-door third-kind spill, 213-228
 }
 
 static bool32 QuickStartSlotBitCheck(s32 poolIndex, u32 extOff, u32 windowBit) {
     if (poolIndex >= QUICKSTART_EXT_SLOT_BASE) {
-        return CheckLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
+        return QsCheckFlag(QuickStartExtSlotFlag(poolIndex, extOff));
     }
     return QsCheckFlag(windowBit);
 }
 
 static void QuickStartSlotBitWrite(s32 poolIndex, u32 extOff, u32 windowBit, bool32 on) {
-    if (poolIndex >= QUICKSTART_EXT_SLOT_BASE) {
-        if (on) {
-            SetLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
-        } else {
-            ClearLocalFlagByBank(FLAG_BANK_11, QuickStartExtSlotFlag(poolIndex, extOff));
-        }
-    } else if (on) {
-        QsSetFlag(windowBit);
+    u32 bit = (poolIndex >= QUICKSTART_EXT_SLOT_BASE) ? QuickStartExtSlotFlag(poolIndex, extOff)
+                                                     : windowBit;
+    if (on) {
+        QsSetFlag(bit);
     } else {
-        QsClearFlag(windowBit);
+        QsClearFlag(bit);
     }
 }
 
@@ -3848,6 +3893,57 @@ static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
     { 88, 456 },  { 88, 536 },  { 104, 488 }, { 104, 568 },
 };
 
+// --- MINISH WOODS and LAKE HYLIA - two new spurs off the ring -------------
+//
+// Surveyed the same way as every row above: the live collision grid read
+// out of the running game, flooded from the tile the player actually
+// ARRIVES on when they cross the border (taken from transitions.c, not
+// guessed), candidates farthest-point sampled over strictly-open 3x3
+// neighbourhoods so they spread over the reachable component.
+//
+// The borders, both ways in both cases:
+//   Eastern Hills (South/North) <--> Minish Woods   (EH's east edge)
+//   Lon Lon Ranch               <--> Lake Hylia     (Lon Lon's east edge)
+// The exit lists also carry a Minish Woods <-> Lake Hylia border, and it
+// is deliberately NOT in sQuickStartRingAdjacency: neither room's arrival
+// component reaches that edge (measured - see the adjacency table's own
+// comment), so these are two dead ends rather than a circuit.
+//
+// Both rooms are mostly NOT the arena. Minish Woods is 63x63 tiles with
+// 1195 open tiles spread over 32 disconnected components - the stump
+// mazes, the tree hollows and the Minish-sized cracks are all separate -
+// and the component the west-edge arrival lands in is 277 tiles of it.
+// Lake Hylia is worse: 48x60 tiles, 662 open, and most of that is WATER.
+// The walkable shore component from its own west-edge arrival is 165
+// tiles. The room-square figures below are those components, not the room
+// totals, which is what the size-scaled enemy ceiling wants.
+//
+// Neither room needs a quirk hook: the entity dumps for both found only
+// OBJECT-kind scenery in the arrival components (the Minish Woods' own
+// NPCs live inside the village and the tree interiors, which are other
+// components entirely).
+static const s16 sQuickStartMinishWoodsEnemyOffsets[][2] = {
+    { 360, 488 }, { 568, 504 }, { 184, 392 }, { 440, 392 }, { 104, 456 },
+    { 248, 456 }, { 472, 472 }, { 600, 440 }, { 584, 344 }, { 120, 408 },
+    { 152, 440 }, { 360, 424 }, { 504, 504 }, { 632, 408 }, { 88, 424 },
+    { 184, 456 }, { 200, 424 }, { 392, 472 }, { 440, 440 }, { 536, 488 },
+    { 584, 472 }, { 616, 504 },
+};
+#define QUICKSTART_MINISHWOODS_ROOM_SQUARES 277
+
+// Lake Hylia's spots hug the north-west shore, which is the only dry
+// ground the west-edge arrival can reach without the Flippers. That is
+// also why this region's DROP is priced at the Flippers below - a player
+// dropped here with none of the water kit would have 165 tiles and no way
+// out, exactly the Castor Wilds failure the swamp gate was written for.
+static const s16 sQuickStartLakeHyliaEnemyOffsets[][2] = {
+    { 216, 184 }, { 24, 456 }, { 184, 360 }, { 88, 408 }, { 264, 136 },
+    { 104, 360 }, { 56, 440 }, { 72, 376 }, { 88, 456 }, { 264, 184 },
+    { 72, 424 }, { 136, 360 }, { 264, 104 }, { 280, 120 }, { 280, 152 },
+    { 296, 136 },
+};
+#define QUICKSTART_LAKEHYLIA_ROOM_SQUARES 165
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -4004,8 +4100,35 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartRuinsBelowFortressEnemyOffsets, ARRAY_COUNT(sQuickStartRuinsBelowFortressEnemyOffsets),
       QUICKSTART_RUINSBELOW_ROOM_SQUARES,
       296, 104, QuickStartClearRuinsVanillaEnemies },
+    // MINISH WOODS and LAKE HYLIA - pool slots 15 and 16, the rows that
+    // take the pool past sixteen and forced the pool-index fields to five
+    // bits (see GF_POOL_HI_* above). Entrances are the real border arrival
+    // points off transitions.c; rewards are flood-verified tiles in the
+    // same component, placed a few tiles clear of the arrival so the drop
+    // is visible on entry without landing on the player.
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 8, 424, 0, 0, 0, 0,
+      sQuickStartMinishWoodsEnemyOffsets, ARRAY_COUNT(sQuickStartMinishWoodsEnemyOffsets),
+      QUICKSTART_MINISHWOODS_ROOM_SQUARES,
+      648, 360, NULL },
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 8, 328, 0, 0, 0, 0,
+      sQuickStartLakeHyliaEnemyOffsets, ARRAY_COUNT(sQuickStartLakeHyliaEnemyOffsets),
+      QUICKSTART_LAKEHYLIA_ROOM_SQUARES,
+      312, 104, NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
+// The extension-slot bitfield (QuickStartExtSlotFlag) covers pool rows
+// QUICKSTART_EXT_SLOT_BASE and up in 100 remapped window bits. Every row
+// past the base must fit, or a region's wave/alive/reward state silently
+// lands on somebody else's flag - which is exactly the bug the remap was
+// written to fix, and it was invisible for a whole expansion.
+typedef char QuickStartExtSlotsFit[(((int)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion)) -
+                                     QUICKSTART_EXT_SLOT_BASE) *
+                                            QUICKSTART_EXT_SLOT_BITS <=
+                                        100
+                                        ? 1
+                                        : -1)];
+// And the five-bit pool-index fields cap the pool at 32 rows.
+typedef char QuickStartPoolIndexFits[((int)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion)) <= 32 ? 1 : -1)];
 // (QUICKSTART_TRILBY_POOL_INDEX / QUICKSTART_LONLON_POOL_INDEX retired with
 // the chain draw and the region unlock rules - nothing special-cases either
 // region any more.)
@@ -4088,15 +4211,41 @@ static s32 QuickStartCurrentRegionPoolIndex(void) {
     return -1;
 }
 
-// Which pool region hides the Earth Element this run.
-static s32 QuickStartElementRegionIndex(void) {
+// The five-bit pool-index accessors (see GF_POOL_HI_* above): four bits at
+// `base`, the fifth at `hi`. Every store and load of a pool index goes
+// through this pair so the split can never be half-applied.
+static s32 QuickStartReadPoolIdx(u32 base, u32 hi) {
     s32 b, value = 0;
     for (b = 0; b < 4; b++) {
-        if (QsCheckFlag(GF_ELEMENT_REGION_BIT(b))) {
+        if (QsCheckFlag(base + (u32)b)) {
             value |= (1 << b);
         }
     }
+    if (QsCheckFlag(hi)) {
+        value |= 16;
+    }
     return value % QUICKSTART_REGION_POOL_SIZE;
+}
+
+static void QuickStartWritePoolIdx(u32 base, u32 hi, s32 value) {
+    s32 b;
+    for (b = 0; b < 4; b++) {
+        if (value & (1 << b)) {
+            QsSetFlag(base + (u32)b);
+        } else {
+            QsClearFlag(base + (u32)b);
+        }
+    }
+    if (value & 16) {
+        QsSetFlag(hi);
+    } else {
+        QsClearFlag(hi);
+    }
+}
+
+// Which pool region hides the Earth Element this run.
+static s32 QuickStartElementRegionIndex(void) {
+    return QuickStartReadPoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT);
 }
 
 // Which pool region the hub's pit drops the player into this run - drawn
@@ -4104,13 +4253,7 @@ static s32 QuickStartElementRegionIndex(void) {
 // new run lands somewhere new (per the user, bringing the randomness back
 // after the fixed-Castle-Garden interim).
 static s32 QuickStartDropRegionIndex(void) {
-    s32 b, value = 0;
-    for (b = 0; b < 4; b++) {
-        if (QsCheckFlag(GF_DROP_REGION_BIT(b))) {
-            value |= (1 << b);
-        }
-    }
-    return value % QUICKSTART_REGION_POOL_SIZE;
+    return QuickStartReadPoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP);
 }
 
 // --- The NAMED regions and their map adjacency -----------------------------
@@ -4141,6 +4284,14 @@ enum {
     // it is a ring member, because ring membership is what the win chain's
     // reachability flood walks and Crenel is full of ? rooms now.
     QS_RING_CREN,
+    // Minish Woods and Lake Hylia, which unlike Crenel ARE pool regions -
+    // they drop the player, run wave loops and pay region rewards. Eastern
+    // Hills' east border opens into Minish Woods and Lon Lon Ranch's east
+    // border into Lake Hylia, both ways in both cases. The Minish Woods /
+    // Lake Hylia border between them exists in the exit lists but is not
+    // walkable from either room's arrival - see sQuickStartRingAdjacency.
+    QS_RING_MW,
+    QS_RING_LH,
     QS_RING_COUNT
 };
 
@@ -4158,8 +4309,8 @@ static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL) |
                (1 << QS_RING_RV),
     /* SHF  */ (1 << QS_RING_NHF) | (1 << QS_RING_EH) | (1 << QS_RING_WW),
-    /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR),
-    /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
+    /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_MW),
+    /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_LH),
     /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV) |
                (1 << QS_RING_CREN),
     /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF) | (1 << QS_RING_CW),
@@ -4174,6 +4325,22 @@ static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     // Mt Crenel is a spur off Trilby's west border, and only that: every
     // other edge of the mountain is cliff.
     /* CREN */ (1 << QS_RING_TRIL),
+    // Minish Woods and Lake Hylia are SPURS, not a loop, and the reason is
+    // measured rather than assumed. Both rooms have a border into the
+    // other - Minish Woods' north edge into the lake, the lake's south
+    // edge back - and NEITHER of those edges is reachable on foot from the
+    // arrival the player actually uses. Flooded from the real border
+    // arrival tile (tools/quickstart/door_reach.py), Minish Woods' arrival
+    // component is 277 of its 1195 open tiles and touches the WEST edge
+    // only; Lake Hylia's is 165 of 662 and likewise touches only the west.
+    // Each room's other 30-odd components are the tree hollows, the Minish
+    // cracks and - in the lake's case - the far shore across the water.
+    //
+    // So the walkable graph is EH <-> MW and LLR <-> LH, two dead ends,
+    // and writing the MW-LH edge in here would tell the chain's flood that
+    // a kitless player can walk a circuit they cannot.
+    /* MW   */ (1 << QS_RING_EH),
+    /* LH   */ (1 << QS_RING_LLR),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -4186,6 +4353,7 @@ static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
         QS_RING_WW, QS_RING_WW, QS_RING_WW,
         QS_RING_RV,
         QS_RING_CW, QS_RING_WR, QS_RING_WR,
+        QS_RING_MW, QS_RING_LH,
     };
     return byPool[poolIndex % QUICKSTART_REGION_POOL_SIZE];
 }
@@ -4227,11 +4395,7 @@ static void QuickStartRollElementRegionOnce(void) {
         return;
     }
     drop = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-    for (b = 0; b < 4; b++) {
-        if (drop & (1 << b)) {
-            QsSetFlag(GF_DROP_REGION_BIT(b));
-        }
-    }
+    QuickStartWritePoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP, drop);
     QsSetFlag(GF_DROP_REGION_ROLLED);
     allowed = QuickStartRingWithinTwo(QuickStartRingRegionOfPoolIndex(drop));
     // F7: the win carrier, rolled before the element region because each
@@ -4277,11 +4441,7 @@ static void QuickStartRollElementRegionOnce(void) {
         }
         break;
     }
-    for (b = 0; b < 4; b++) {
-        if (elem & (1 << b)) {
-            QsSetFlag(GF_ELEMENT_REGION_BIT(b));
-        }
-    }
+    QuickStartWritePoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT, elem);
     for (b = 0; b < 2; b++) {
         if (carrier & (1 << b)) {
             QsSetFlag(GF_WIN_CARRIER_BIT(b));
@@ -5837,7 +5997,7 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
 // offsets, so quests are deliberately housed away from it.
 #define GF_QUEST_ROLLED 32
 // (33-34 free - the old 2-bit quest chain-slot field; the quest's host
-// region is the 4-bit QS-window GF_REGION_QUEST_HOST_BIT field now.)
+// region is the 5-bit QS-window GF_REGION_QUEST_HOST_BIT field now.)
 #define GF_QUEST_HIDE_BIT(b) (35 + (b)) // b = 0..3, which pot holds the prize
 #define GF_QUEST_DONE 39
 
@@ -5954,7 +6114,7 @@ static void QuickStartRandomizeQuestOnce(void) {
         return;
     }
     // A POOL index now, not a chain slot - the quest can land in any of the
-    // pool's regions. Stored in the QS window's 4-bit GF_REGION_QUEST_HOST_BIT
+    // pool's regions. Stored in the QS window's 5-bit GF_REGION_QUEST_HOST_BIT
     // field rather than the old 2-bit bank-11 slot field, which cannot
     // count past 3.
     //
@@ -5969,11 +6129,7 @@ static void QuickStartRandomizeQuestOnce(void) {
     if (QuickStartWinCarrier() == QUICKSTART_WIN_QUEST) {
         slot = QuickStartElementRegionIndex();
     }
-    for (b = 0; b < 4; b++) {
-        if (slot & (1 << b)) {
-            QsSetFlag(GF_REGION_QUEST_HOST_BIT(b));
-        }
-    }
+    QuickStartWritePoolIdx(GF_REGION_QUEST_HOST_BIT(0), GF_POOL_HI_QUEST_HOST, slot);
     for (b = 0; b < 4; b++) {
         if (hide & (1 << b)) {
             QuickStartQuestSetFlag(GF_QUEST_HIDE_BIT(b));
@@ -5983,13 +6139,7 @@ static void QuickStartRandomizeQuestOnce(void) {
 }
 
 static s32 QuickStartQuestSlot(void) {
-    s32 b, value = 0;
-    for (b = 0; b < 4; b++) {
-        if (QsCheckFlag(GF_REGION_QUEST_HOST_BIT(b))) {
-            value |= (1 << b);
-        }
-    }
-    return value;
+    return QuickStartReadPoolIdx(GF_REGION_QUEST_HOST_BIT(0), GF_POOL_HI_QUEST_HOST);
 }
 
 static s32 QuickStartQuestHiddenIndex(void) {
@@ -11000,15 +11150,10 @@ static void QuickStartHuntRollOnce(void) {
         return;
     }
     {
-        // Pool index, 4-bit QS-window field - same widening as the pot
+        // Pool index, 5-bit QS-window field - same widening as the pot
         // quest's region draw above.
         s32 huntRegion = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-        s32 b;
-        for (b = 0; b < 4; b++) {
-            if (huntRegion & (1 << b)) {
-                QsSetFlag(GF_REGION_HUNT_HOST_BIT(b));
-            }
-        }
+        QuickStartWritePoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST, huntRegion);
     }
     QuickStartGauntletWriteBits(GF_HUNT_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
     if ((s32)Random() % 3 == 0) {
@@ -11153,16 +11298,8 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot) {
     s32 state;
     s16 spotX, spotY;
     QuickStartHuntRollOnce();
-    {
-        s32 b, huntRegion = 0;
-        for (b = 0; b < 4; b++) {
-            if (QsCheckFlag(GF_REGION_HUNT_HOST_BIT(b))) {
-                huntRegion |= (1 << b);
-            }
-        }
-        if (slot != huntRegion) {
-            return;
-        }
+    if (slot != QuickStartReadPoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST)) {
+        return;
     }
     state = QuickStartHuntState();
     if (state == QUICKSTART_HUNT_RUNNING) {
@@ -11323,20 +11460,12 @@ static void QuickStartScavRollOnce(void) {
     // host - the two givers must never share a region (shared clock,
     // shared enemy mark).
     QuickStartHuntRollOnce();
-    huntRegion = 0;
-    {
-        s32 b;
-        for (b = 0; b < 4; b++) {
-            if (QsCheckFlag(GF_REGION_HUNT_HOST_BIT(b))) {
-                huntRegion |= (1 << b);
-            }
-        }
-    }
+    huntRegion = QuickStartReadPoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST);
     scavRegion = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
     if (scavRegion == huntRegion) {
         scavRegion = (scavRegion + 1) % QUICKSTART_REGION_POOL_SIZE;
     }
-    QuickStartScavWriteBits(GF_SCAV_HOST_BIT(0), 4, (u32)scavRegion);
+    QuickStartWritePoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST, scavRegion);
     QuickStartScavWriteBits(GF_SCAV_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
     QuickStartScavSetState(QUICKSTART_SCAV_OFFERED);
     QsSetFlag(GF_SCAV_ROLLED);
@@ -11532,7 +11661,7 @@ void QuickStartScavCanStart(Entity* entity, ScriptExecutionContext* context) {
 
 void QuickStartScavBegin(Entity* entity, ScriptExecutionContext* context) {
     const QuickStartRegion* region;
-    s32 slot = (s32)QuickStartScavReadBits(GF_SCAV_HOST_BIT(0), 4) % QUICKSTART_REGION_POOL_SIZE;
+    s32 slot = QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST);
     if (QuickStartScavState() != QUICKSTART_SCAV_OFFERED || QuickStartHuntState() == QUICKSTART_HUNT_RUNNING) {
         return;
     }
@@ -11563,7 +11692,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
     s32 state;
     s16 spotX, spotY;
     QuickStartScavRollOnce();
-    if (slot != (s32)QuickStartScavReadBits(GF_SCAV_HOST_BIT(0), 4) % QUICKSTART_REGION_POOL_SIZE) {
+    if (slot != QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST)) {
         return;
     }
     state = QuickStartScavState();
@@ -14327,6 +14456,44 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, QUICKSTART_KINDS_LARGE, 120, 456 },
     { AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, QUICKSTART_KINDS_ANY, 440, 88 },
     { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, QUICKSTART_KINDS_LARGE, 648, 200 },
+    // --- Minish Woods and Lake Hylia -------------------------------------
+    //
+    // The pockets behind the two new pool regions' own doors, taken from
+    // their vanilla exit lists (src/data/transitions.c) and measured with
+    // the same probe the Mt Crenel rows used: warp in at the door's real
+    // arrival coordinate, flood the collision from where the player lands,
+    // take the tile nearest that component's centre of mass among those
+    // with eight-way clearance, preferring one at least four tiles off the
+    // arrival so an event cannot deal itself onto the doorstep.
+    //
+    // SIX of the fifteen doors are deliberately absent. Five rooms - the
+    // business scrub and Great Fairy trees, the Waveblade tree, the Minish
+    // Woods north crack and the Lake Woods cave - have no 3x3-clear tile
+    // anywhere in their arrival component (9 to 37 tiles of floor, all of
+    // it against a wall), and the Minish Woods bomb house has twelve tiles
+    // with its only clear spot one tile from the door. An event with no
+    // room to happen in is worse than no event, and one that spawns on the
+    // doorstep is worse still.
+    //
+    // Most of these rooms are behind a gate the game cannot test - being
+    // Minish, or the far side of the lake - so the win chain will not place
+    // a step in them (see the UNSURVEYED token in world_reach.py). They are
+    // here anyway, for the same reason the Castor Wilds cave rows are: the
+    // content sweep empties every room it enters, and a real vanilla door
+    // that opens onto an emptied room is a bug whether or not the chain
+    // ever points at it.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WITCH_HUT, QUICKSTART_KINDS_SMALL, 136, 88 },
+    { AREA_DEEPWOOD_SHRINE, ROOM_DEEPWOOD_SHRINE_ENTRANCE, QUICKSTART_KINDS_ANY, 168, 152 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, QUICKSTART_KINDS_ANY, 120, 216 },
+    { AREA_BEANSTALKS, ROOM_BEANSTALKS_EASTERN_HILLS, QUICKSTART_KINDS_SMALL, 136, 88 },
+    // Lake Hylia. Stockwell's lake house is the one door on the arrival
+    // shore - 67 tiles of walk from the Lon Lon border with no gate at all -
+    // so it is the only one of these a kitless run will ever open.
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE, QUICKSTART_KINDS_SMALL, 120, 88 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN, QUICKSTART_KINDS_SMALL, 104, 120 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, QUICKSTART_KINDS_SMALL, 104, 88 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, QUICKSTART_KINDS_SMALL, 120, 88 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH, QUICKSTART_KINDS_ANY, 296, 296 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -17989,7 +18156,8 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // Castor Wilds and the Wind Ruins are islands in a swamp. Crossing the
 // sludge needs the Pegasus Boots or Roc's Cape, so a player dropped in with
 // neither can neither explore the region nor leave it - the user's report
-// was landing in both while holding only the Cane of Pacci.
+// was landing in both while holding only the Cane of Pacci. Lake Hylia
+// joins them: without the Flippers its arrival shore is a dead end.
 //
 // The check cannot live in the draw. The drop region is rolled on frame one
 // (QuickStartRollElementRegionOnce), well before the hub's gift round has
@@ -18000,19 +18168,62 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // on every fall, so the chain's own promise - every fall within a run lands
 // in the same place - still holds after the player finds a pair of boots
 // halfway through the run.
+//
+// Lake Hylia is the same shape of problem in a different liquid, so the
+// two-region special case became a small table instead of a second one:
+// each row names a ring region and the items that make it survivable, and
+// a drop into a row whose kit the player does not hold is re-drawn. Castor
+// Wilds and the Wind Ruins are islands in a swamp that the Pegasus Boots
+// or Roc's Cape cross; Lake Hylia is 165 tiles of shore around water that
+// only the Zora Flippers cross.
+typedef struct {
+    u8 ring;
+    u16 itemA;
+    u16 itemB; // 0 when the region has only one out
+} QuickStartRegionKitRule;
+
+static const QuickStartRegionKitRule sQuickStartRegionKitRules[] = {
+    { QS_RING_CW, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
+    { QS_RING_WR, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
+    { QS_RING_LH, ITEM_FLIPPERS, 0 },
+};
+
 static bool32 QuickStartRegionNeedsSwampKit(s32 poolIndex) {
     u8 ring = QuickStartRingRegionOfPoolIndex(poolIndex);
-    return ring == QS_RING_CW || ring == QS_RING_WR;
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRegionKitRules); i++) {
+        if (sQuickStartRegionKitRules[i].ring == ring) {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-static bool32 QuickStartHasSwampKit(void) {
-    return GetInventoryValue(ITEM_PEGASUS_BOOTS) != 0 || GetInventoryValue(ITEM_ROCS_CAPE) != 0;
+// TRUE when the player holds the kit for the region they are being dropped
+// into. Called only from the fall, where the drawn region is known.
+static bool32 QuickStartHasRegionKit(s32 poolIndex) {
+    u8 ring = QuickStartRingRegionOfPoolIndex(poolIndex);
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRegionKitRules); i++) {
+        const QuickStartRegionKitRule* rule = &sQuickStartRegionKitRules[i];
+        if (rule->ring != ring) {
+            continue;
+        }
+        if (GetInventoryValue(rule->itemA) != 0) {
+            return TRUE;
+        }
+        if (rule->itemB != 0 && GetInventoryValue(rule->itemB) != 0) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+    return TRUE;
 }
 
 static s32 QuickStartDropRegionIndexUsable(void) {
     s32 index = QuickStartDropRegionIndex();
-    s32 i, usable, pick, b;
-    if (!QuickStartRegionNeedsSwampKit(index) || QuickStartHasSwampKit()) {
+    s32 i, usable, pick;
+    if (!QuickStartRegionNeedsSwampKit(index) || QuickStartHasRegionKit(index)) {
         return index;
     }
     // Re-draw from the run seed over the rows that ARE usable rather than
@@ -18021,9 +18232,13 @@ static s32 QuickStartDropRegionIndexUsable(void) {
     // place every time. Avalanche mix for the same reason every other
     // seed-derived pick in this file uses one - small moduli of adjacent
     // seeds are not distributed.
+    // "Usable" is per-player, not per-row: a run holding the Flippers but no
+    // boots can be dropped in Lake Hylia and not in the swamp, and there is
+    // no reason to deny it the lake. With one rule per region this is just
+    // the same question asked of every row.
     usable = 0;
     for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-        if (!QuickStartRegionNeedsSwampKit(i)) {
+        if (!QuickStartRegionNeedsSwampKit(i) || QuickStartHasRegionKit(i)) {
             usable++;
         }
     }
@@ -18040,7 +18255,7 @@ static s32 QuickStartDropRegionIndexUsable(void) {
     }
     index = 0;
     for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-        if (QuickStartRegionNeedsSwampKit(i)) {
+        if (QuickStartRegionNeedsSwampKit(i) && !QuickStartHasRegionKit(i)) {
             continue;
         }
         if (pick == 0) {
@@ -18049,13 +18264,7 @@ static s32 QuickStartDropRegionIndexUsable(void) {
         }
         pick--;
     }
-    for (b = 0; b < 4; b++) {
-        if (index & (1 << b)) {
-            QsSetFlag(GF_DROP_REGION_BIT(b));
-        } else {
-            QsClearFlag(GF_DROP_REGION_BIT(b));
-        }
-    }
+    QuickStartWritePoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP, index);
     return index;
 }
 
@@ -19166,6 +19375,24 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN,
       { { 728, 88 }, { 728, 232 }, { 760, 152 }, { 792, 88 }, { 792, 184 },
         { 824, 248 }, { 856, 184 }, { 888, 248 }, { 952, 360 } } },
+    // Minish Woods and Lake Hylia, drawn the same way Castor Wilds' row was:
+    // farthest-point sampled out of each region's own verified enemy-offset
+    // grid with its entrance and reward spot seeded as taken, so a fuser can
+    // never stand on the arrival tile or on the drop.
+    //
+    // Neither row makes the six-tile spacing the big fields keep, and the
+    // rooms are why rather than the method: both arenas are cul-de-sac
+    // components (277 and 165 tiles), and the lake's is a shore strip. The
+    // sampler relaxes the spacing until nine fit - 80px in the woods, 48 on
+    // the shore - which is the same trade Western Wood Center's corridor row
+    // already makes, and for the same reason: only one of the nine is
+    // occupied on any given run.
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN,
+      { { 104, 456 }, { 184, 392 }, { 248, 456 }, { 360, 488 }, { 440, 392 },
+        { 472, 472 }, { 568, 504 }, { 584, 344 }, { 600, 440 } } },
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN,
+      { { 24, 456 }, { 56, 440 }, { 72, 376 }, { 88, 408 }, { 88, 456 },
+        { 104, 360 }, { 184, 360 }, { 216, 184 }, { 264, 136 } } },
 };
 
 // Which named ring region each row of sQuickStartFuserSpots sits in, in the
@@ -19175,6 +19402,7 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
 static const u8 sQuickStartFuserSpotRings[] = {
     QS_RING_CG, QS_RING_LLR, QS_RING_NHF, QS_RING_SHF, QS_RING_TRIL,
     QS_RING_EH, QS_RING_WW, QS_RING_WW, QS_RING_CW,
+    QS_RING_MW, QS_RING_LH,
 };
 
 #define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))

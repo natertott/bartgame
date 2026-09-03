@@ -2749,6 +2749,106 @@ suppressed under QUICKSTART now, which costs nothing - the layouts they point
 at are content this mode never reaches - and that is what makes the top of
 the sword ladder safe to hand out.
 
+### Minish Woods and Lake Hylia, and the pool index that ran out of bits (Sep 2026)
+
+The user: *"begin incorporating the Minish Woods and Lake Hylia as part of
+our overworld regions included. Please fully convert these rooms and bring
+them into the main game mechanics."* Two new pool regions, taking the pool
+from fifteen rows to seventeen - and seventeen is where a lot of quiet
+arithmetic stopped working.
+
+**Seventeen rows do not fit in four bits.** Five separate fields in `game.c`
+store a POOL INDEX: which region hides the Earth Element, which hosts the pot
+quest, which hosts the scavenger hunt's giver, which hosts its target, and
+which one the hub's pit drops the player into. Every one of them was four
+bits wide, which encodes 0-15 and was correct right up to the sixteenth row.
+Row 16 (Lake Hylia) would have wrapped every one of them silently to 0 -
+Castle Garden - so a run that drew the lake would have found the Element in
+the garden and never known why. The four-bit bases stay where they are and
+each grew a fifth bit in the 208-212 run (`GF_POOL_HI_*`), read and written
+only through `QuickStartReadPoolIdx` / `QuickStartWritePoolIdx` so the two
+halves cannot drift apart. A compile-time check now caps the pool at 32 rows.
+
+**Seventeen rows also exposed a live flag collision.** Pool rows past the
+twelfth keep their wave/alive/reward state in `QuickStartExtSlotFlag`, which
+was laid into three runs of `FLAG_BANK_11` its own comment described as free.
+They were not. An audit of every bank-11 allocation found **seventeen**
+colliding offsets: Castor Wilds' alive counter shared 60-71 with the
+stripped-kit handicap's area/room snapshot, its top alive bits shared 121-122
+with the inn's chest-armed flags, and the Wind Ruins' wave counter shared
+131-132 with the Western Wood brush payouts. Paying for a bed really did move
+a region's enemy count, and taking the handicap really did scribble on Castor
+Wilds. The whole block moves into four free runs of the QUICKSTART window
+(617-655, 658-689, 496-508, 213-228), all inside the 202-703 run wipe, so an
+extension slot resets per run with no clear loop of its own.
+
+**The reason it was invisible is that it was a function.** The invariant
+checker's flag tier parses every `#define GF_*` out of `game.c`, expands it
+over its declared range and asserts no bit is claimed twice - and
+`QuickStartExtSlotFlag` is a function, so it was never in the ledger at all.
+The tier now re-derives the function's run table from its own source and
+registers it as an ordinary block, under the same collision, bank-bounds and
+run-wipe checks as everything else. If the function is rewritten into a shape
+the parse cannot follow, that is a FAIL rather than a silent skip.
+
+**Both regions were DERIVED, not walked, and the tables say so.** Every other
+region in `world_reach.py` is the user walking the mapexplore build. These two
+are the rooms' own vanilla exit lists (exact coordinates, exact room names)
+plus a collision flood run from the tile the player really arrives on -
+`tools/quickstart/door_reach.py`, new this pass. A flood sees geometry, not
+gates: it can prove a door is walkable with nothing at all, but it cannot tell
+a wall from a wall with a bomb crack in it. So the rows split. Doors the flood
+reaches are recorded FREE, which is a fact about the room. Doors it does not
+reach carry a new token, `UNSURVEYED` - untestable at run time exactly like
+`MINISH` or `MAZE`, so the chain placer can never satisfy it and those places
+are invisible rather than wrongly offered. Replace the blocks when a walked
+survey exists; until then the two regions are honest about being thin.
+
+**They are spurs, not a loop.** Both rooms have a border into the other -
+Minish Woods' north edge into the lake, the lake's south edge back - and the
+first draft of the ring adjacency wrote that edge in and called the pair the
+overworld's first closed circuit. The flood says otherwise, and the flood
+wins: Minish Woods' arrival component is **277 of its 1195 open tiles** and
+touches the west edge and nothing else; Lake Hylia's is **165 of 662** and
+likewise only the west. Each room's other thirty-odd components are tree
+hollows, Minish cracks and, in the lake's case, the far shore. So the walkable
+graph is EH <-> MW and LLR <-> LH, two dead ends, and the MW-LH edge stays out
+of `sQuickStartRingAdjacency` because writing it in would tell the chain's
+flood a kitless player can walk a circuit they cannot.
+
+**Lake Hylia generalised the swamp gate.** Castor Wilds and the Wind Ruins had
+a two-region special case: dropped in without the Pegasus Boots or Roc's Cape,
+the player can neither explore nor leave. The lake is the same shape of
+problem in a different liquid - 165 tiles of shore around water only the
+Flippers cross - so the special case became a small table
+(`sQuickStartRegionKitRules`) of ring, item, alternative item. A drop into a
+row whose kit the player does not hold is re-drawn, latched, exactly as
+before.
+
+Everything else is the ordinary pool-row work, all of it measured in the
+running game: 22 and 16 enemy offsets, entrances at the real border arrival
+points, rewards flood-verified in the same component, nine fuser spots each
+(farthest-point sampled with entrance and reward seeded as taken - the
+spacing relaxes to 80px in the woods and 48 on the shore, because a cul-de-sac
+shore strip has no room for six-tile spacing), two Ezlo region hint lines
+inserted at the `QS_RING_MW` / `QS_RING_LH` positions, and **nine new ? rooms**
+in the pockets behind the two regions' doors.
+
+Six of the fifteen doors are deliberately absent from the site table. Five
+rooms - the business scrub and Great Fairy trees, the Waveblade tree, the
+Minish Woods north crack and the Lake Woods cave - have no 3x3-clear tile
+anywhere in their arrival component, and the Minish Woods bomb house has
+twelve tiles with its only clear spot one tile from the door. An event with no
+room to happen in is worse than no event, and one that spawns on the doorstep
+is worse still. The nine that remain are there even though most sit behind
+gates the game cannot test, for the same reason the Castor Wilds cave rows
+are: the content sweep empties every room it enters, and a real vanilla door
+that opens onto an emptied room is a bug whether or not the chain ever points
+at it.
+
+`chain_probe.py` reports 0 problems across six seeds, one of which (0x44444444)
+drops into Minish Woods and completes all four pre-steps from there.
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision

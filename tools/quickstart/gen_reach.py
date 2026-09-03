@@ -63,6 +63,9 @@ TOKENS = [
     ('story_flags',     'QS_REACH_STORY',      None),
     ('maze_solved',     'QS_REACH_MAZE',       None),
     ('boomerang_switches_4', 'QS_REACH_SWITCHES4', None),
+    # Minish Woods / Lake Hylia only: "the derived survey could not find a
+    # route here". Untestable on purpose - see world_reach.py's UNSURVEYED.
+    ('unsurveyed',      'QS_REACH_UNSURVEYED', None),
 ]
 BOULDER = ('QS_REACH_BOULDER', 'a boulder pushed into a hole in this region')
 BIT = {name: i for i, (name, _, _) in enumerate(TOKENS)}
@@ -77,10 +80,12 @@ RING = {
     'RV': 'QS_RING_RV', 'TRIL': 'QS_RING_TRIL', 'WW-N': 'QS_RING_WW',
     'WW-C': 'QS_RING_WW', 'WW-S': 'QS_RING_WW', 'CW': 'QS_RING_CW',
     'WR': 'QS_RING_WR', 'CREN': 'QS_RING_CREN',
+    'MW': 'QS_RING_MW', 'LH': 'QS_RING_LH',
 }
 RINGS = ['QS_RING_CG', 'QS_RING_NHF', 'QS_RING_SHF', 'QS_RING_EH',
          'QS_RING_LLR', 'QS_RING_TRIL', 'QS_RING_WW', 'QS_RING_RV',
-         'QS_RING_CW', 'QS_RING_WR', 'QS_RING_CREN']
+         'QS_RING_CW', 'QS_RING_WR', 'QS_RING_CREN', 'QS_RING_MW',
+         'QS_RING_LH']
 
 MAX_TERMS = 3   # the widest requirement in the survey (Lon Lon's east exit:
                 # flippers, or the cape, or Minish plus the Pacci Cane)
