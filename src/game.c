@@ -3914,8 +3914,7 @@ static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
 // mazes, the tree hollows and the Minish-sized cracks are all separate -
 // and the component the west-edge arrival lands in is 277 tiles of it.
 // Lake Hylia is worse: 48x60 tiles, 662 open, and most of that is WATER.
-// The walkable shore component from its own west-edge arrival is 165
-// tiles. The room-square figures below are those components, not the room
+// The walkable shore component off its west edge is 165 tiles. The room-square figures below are those components, not the room
 // totals, which is what the size-scaled enemy ceiling wants.
 //
 // Neither room needs a quirk hook: the entity dumps for both found only
@@ -4110,7 +4109,13 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartMinishWoodsEnemyOffsets, ARRAY_COUNT(sQuickStartMinishWoodsEnemyOffsets),
       QUICKSTART_MINISHWOODS_ROOM_SQUARES,
       648, 360, NULL },
-    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 8, 328, 0, 0, 0, 0,
+    // The lake's entrance is (40,440), not the (8,328) the border arithmetic
+    // suggests: the tile at (8,328) reads collision 0x0f - the cuttable-shrub
+    // class - so it is not standable, and the invariant checker's pool tier
+    // said so. The room's walkable west-edge band is ty 26-29, and (40,440)
+    // is a 3x3-clear tile on it, two tiles in from the border so the anchor
+    // is not sitting on the seam itself. Same 165-tile component either way.
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 40, 440, 0, 0, 0, 0,
       sQuickStartLakeHyliaEnemyOffsets, ARRAY_COUNT(sQuickStartLakeHyliaEnemyOffsets),
       QUICKSTART_LAKEHYLIA_ROOM_SQUARES,
       312, 104, NULL },

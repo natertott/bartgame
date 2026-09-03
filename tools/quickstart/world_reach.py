@@ -452,11 +452,13 @@ d('MW', 'LAKE_HYLIA', 'MAIN', 0, 952, [[UNSURVEYED]],
 
 # LAKE HYLIA. 48x60 tiles, 662 open, and most of that open ground is WATER.
 # The west-edge arrival from Lon Lon Ranch lands on a 165-tile north-west
-# shore, which again touches only the west edge. Stockwell's lake house is
+# shore, which again touches only the west edge. The start below is (40,440)
+# rather than the border's own (8,328): that tile reads collision 0x0f, the
+# cuttable-shrub class, so nothing can stand on it. Same component. Stockwell's lake house is
 # the one door on it. Everything else - the mayor's cabin, the Waveblade
 # tree, Librari, the Lake Woods cave - is across the lake, which is what the
 # region's Flippers price in QuickStartRegionNeedsSwampKit is about.
-region('LH', 'Lake Hylia', ('LAKE_HYLIA', 'MAIN', 8, 328),
+region('LH', 'Lake Hylia', ('LAKE_HYLIA', 'MAIN', 40, 440),
        note='derived from the exit list + a collision flood, not walked')
 d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, FREE,
   'exit; the border the player arrives through, walkable both ways')
