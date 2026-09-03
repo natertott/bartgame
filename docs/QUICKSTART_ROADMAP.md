@@ -507,11 +507,44 @@ The original prerequisite record:
   plate - dismiss hints before measuring; and in a SMALL room the
   mirrored anchor clamps onto the first one, dealing the plates adjacent
   (trivial but survivable - larger rooms spread them).
-  Still open: *watch the eyes* (blink sequence, wrong order resets, F1c
-  stake at high difficulty - the stake helper now exists), *the burning
-  wick* (HELD until key-item logic - fire-gated by design), *overworld
-  switch links* (a plate in one ring region opens a grate in another;
-  ambitious, gives the compass something to point at).
+  ~~*watch the eyes*~~ **#4 SHIPPED as the BLINK SEQUENCE**, the fourth
+  deal of the site's per-visit roll (now an even four-way). Three switches
+  blink one after another; repeat the order to open the cage; a wrong press
+  darkens everything and starts over, and at difficulty 8+ it also costs
+  the F1c stake, once per visit.
+
+  **The display and the input share one channel, and that is the whole
+  design.** A LIGHTABLE_SWITCH's frameIndex is mirrored from its flag every
+  frame (`sub_0809EABC`, called from Action1), so writing the flag from C
+  *lights the switch* - the blink comes free, with no new object and no new
+  sprite, which matters because doctrine 6 says a fixture that is not a
+  real entity sprite will not render in overworld tilesets. But the
+  player's hit toggles that same flag. So the loop is split and only one
+  side owns the flags at a time: 192 frames of SHOW (three 48-frame blinks
+  plus a dark beat) where the game writes them and progress is pinned at
+  zero, then 432 frames of INPUT where the player does.
+
+  The clock is `gRoomTransition.frameCount`, which free-runs and is never
+  reset, so the sequence **loops forever** rather than playing once. That
+  is deliberate and it is also forced: there is nowhere to store a "the
+  show started at frame N" timestamp - game.o gets no .data/.bss and the
+  site's own eight-flag window is full - and a looping show is kinder
+  anyway. Running out of the input window mid-sequence resets progress,
+  which is the pressure.
+
+  Two pieces of storage came from noticing something was already there.
+  The **variant** is two bits, not two booleans: `flagBase + 1` (decoy) and
+  `flagBase + 7` (plates) had a fourth combination that was simply never
+  dealt, so a fourth puzzle needed no new room flag. The **puzzle's own
+  state** (drawn permutation, progress, stake-taken) went to room flags
+  108-113, above the four switch/plate toggle bits - `gRoomVars.flags` has
+  416 bits against an origin of 256, so that is free room rather than a
+  squeeze. A room that cannot hold three switches degrades to the
+  single-switch gate, the same way the linger plates already do.
+
+  Still open: *the burning wick* (HELD until key-item logic - fire-gated by
+  design), *overworld switch links* (a plate in one ring region opens a
+  grate in another; ambitious, gives the compass something to point at).
 - **Phase D cheap events** - ~~survive-N-seconds~~ **SHIPPED** as the
   pilot, exactly as recommended (smallest diff, reuses the wave spawner
   and the quests' HUD clock). It shares QS_EVENT_WAVES' kind value the way
@@ -3045,7 +3078,29 @@ allowlists):
     `arm-none-eabi-nm build/USA/src/game.o` plus the `.text` base. The call
     clobbers the context it hijacks, so it is one question per boot.
 
-11. **Ids come from the build, never from a regex over the header.** A hand
+11. **A probe that forces state can go stale silently.** Sep 2026: the
+    blink-sequence puzzle's first probe reported "the blink does not
+    blink", and every part of that was the harness. Three faults, each
+    worth knowing on its own:
+    * The probe stamped a site's KIND into the flag block, the way
+      `plates_check.py` still does. That encoding is GONE - a site is one
+      DONE bit now and its kind is computed from `(run_seed, site)`
+      (`QuickStartContentSiteRoll`), so poking `gRand` cannot move it.
+      Pin the RUN SEED with `boot(rom, seed=...)` and then ask the ROM
+      which sites that seed makes gate sites (`callrom` on the roll
+      function) - guessing a site's kind is no longer possible.
+    * It spawned the player ON the site's content spot, so the caged prize
+      was picked up on frame one, `QuickStartSetupContentSite` returned
+      TRUE, and the site went DONE before the puzzle ever ran. A ? room
+      probe must land somewhere that is NOT the content spot.
+    * It read the failure as a bug in the C. Doctrine 8 is what caught it:
+      the control run showed the site DONE bit already set, which no
+      amount of staring at the puzzle's own code would have explained.
+    **`plates_check.py` and `roster_soak.py` still use the retired
+    encoding** and should be assumed to be testing nothing until they are
+    ported to the pinned-seed form.
+
+12. **Ids come from the build, never from a regex over the header.** A hand
     parse of `include/item.h` returned 52 and 57 for the two overworld
     keys; `build/USA/enum_include/item.inc`, which is what the ROM was
     compiled against, says 55 and 60. A parser that silently drops the rows

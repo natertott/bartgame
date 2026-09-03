@@ -2674,6 +2674,8 @@ const u8* const gCustomStrings2[] = {
     [21] = (const u8*)"Too slow. The watch\nchanges, and your chance\ngoes with it.",
     [22] = (const u8*)"The watch is done with\nyou for today.",
     [23] = (const u8*)"Keep low. They only look\none way at a time.",
+    // The blink-sequence puzzle's Ezlo line (switch puzzle #4).
+    [24] = (const u8*)"They blink in an order.\nWatch it, then say it\nback to them.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -13038,6 +13040,72 @@ static const u8 sQuickStartLeverRoles[6][3] = {
     { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 },
 };
 
+// --- "Watch the eyes" (#4), the switch site's fourth deal ----------------
+//
+// Three switches blink one after another; repeat the order to open the
+// cage; a wrong press resets the sequence, and at high difficulty it also
+// costs the F1c stake. The same six permutations serve as the sequence -
+// a permutation of three switches is a permutation of three switches, and
+// having one table means one thing to read.
+//
+// THE DISPLAY AND THE INPUT SHARE ONE CHANNEL, which is the whole reason
+// this puzzle is shaped the way it is. A LIGHTABLE_SWITCH's frameIndex is
+// mirrored from its flag every single frame (sub_0809EABC, called from
+// Action1), so writing the flag from here LIGHTS the switch - that is the
+// blink, for free, with no new object and no new sprite. But the player's
+// hit toggles that same flag. If both sides wrote it at once they would
+// fight, so the loop is split in two and only one side owns the flags at
+// a time:
+//
+//   phase   0 .. 191   SHOW  - we own the flags. Each of the three steps
+//                             lights one switch for 48 frames, then a
+//                             48-frame dark beat so the last blink reads
+//                             as a blink rather than a state. Progress is
+//                             held at zero throughout, so a hit landed
+//                             during the show is simply not counted.
+//   phase 192 .. 623   INPUT - the player owns the flags. Correct presses
+//                             stay lit (that IS the progress bar); a wrong
+//                             one clears everything and starts over.
+//
+// The clock is gRoomTransition.frameCount, which free-runs and is never
+// reset - so the sequence LOOPS forever instead of playing once. That is a
+// deliberate kindness and it costs nothing: there is nowhere to store a
+// "the show started at frame N" timestamp (game.o gets no .data/.bss and
+// the site's own eight room-flag window is full), and a player who missed
+// the blink can simply wait for the next pass. Running out of the input
+// window mid-sequence resets progress, which is the pressure.
+#define QS_EYES_STEP 48
+#define QS_EYES_SHOW (QS_EYES_STEP * 4)
+#define QS_EYES_PERIOD (QS_EYES_SHOW + QS_EYES_STEP * 9)
+// The puzzle's own state, in the private room-flag window ABOVE the four
+// switch/plate toggle bits at 104-107. The site's own eight-flag window
+// (flagBase + 0..7) has nothing left, and gRoomVars.flags has 416 bits
+// against an origin of 256, so 108+ is free room rather than a squeeze.
+#define QS_EYES_SEQ_BIT(b) (108 + (b))  // b = 0..2, index into sQuickStartLeverRoles
+#define QS_EYES_PROGRESS_BIT(b) (111 + (b)) // b = 0..1, 0..3 switches correct so far
+#define QS_EYES_STAKE_TAKEN 113             // the failure stake is once per visit
+
+static s32 QuickStartEyesReadField(u32 base, s32 bits) {
+    s32 b, v = 0;
+    for (b = 0; b < bits; b++) {
+        if (QsCheckRoomFlag(base + (u32)b)) {
+            v |= 1 << b;
+        }
+    }
+    return v;
+}
+
+static void QuickStartEyesWriteField(u32 base, s32 bits, s32 value) {
+    s32 b;
+    for (b = 0; b < bits; b++) {
+        if (value & (1 << b)) {
+            QsSetRoomFlag(base + (u32)b);
+        } else {
+            QsClearRoomFlag(base + (u32)b);
+        }
+    }
+}
+
 // The puzzle's switches are LIGHTABLE_SWITCH objects, not HITTABLE_LEVER.
 // A lever has NO sprite of its own - its gObjectDefinitions row reads gfx
 // 0 / sprite 0, and its whole visual is HittableLever_UpdateTile painting
@@ -13512,24 +13580,74 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                     return FALSE;
                 }
             }
-            // Three puzzles share this site now: the closing gate, the
-            // decoy switches, and the linger plates - an even three-way
-            // roll per visit, same rationale as the original coin flip.
+            // FOUR puzzles share this site now: the closing gate, the
+            // decoy switches, the linger plates and the blink sequence -
+            // an even four-way roll per visit, same rationale as the
+            // original coin flip.
+            //
+            // The variant is TWO BITS, not two booleans: flagBase + 1 and
+            // flagBase + 7 were a decoy latch and a plates latch, and the
+            // fourth combination (both set) was simply never dealt. Using
+            // it is what let a fourth puzzle in without another room flag -
+            // the site's own eight-flag window has none to give.
             {
-                s32 variantRoll = (s32)Random() % 3;
+                s32 variantRoll = (s32)Random() % 4;
                 decoy = variantRoll == 1;
-                if (decoy) {
+                if (decoy || variantRoll == 3) {
                     QsSetRoomFlag(flagBase + 1);
                 } else {
                     QsClearRoomFlag(flagBase + 1);
                 }
-                if (variantRoll == 2) {
+                if (variantRoll >= 2) {
                     QsSetRoomFlag(flagBase + 7);
                 } else {
                     QsClearRoomFlag(flagBase + 7);
                 }
+                if (variantRoll == 3) {
+                    // The blink sequence. Three switches fanned out the
+                    // same way the decoy row is - the player is looking at
+                    // all three at once, which a sequence puzzle needs -
+                    // and the order drawn from the same permutation table.
+                    s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
+                    s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
+                    s32 k, dealt = 0;
+                    decoy = FALSE;
+                    QuickStartClampInboard(&px, &py);
+                    for (k = 0; k < 3; k++) {
+                        s16 lx, ly;
+                        if (!QuickStartGateSwitchSpot(px + (k - 1) * 32, py, ptx, pty, &lx, &ly)) {
+                            continue;
+                        }
+                        if (QuickStartSpawnPuzzleSwitch(lx, ly, (u32)k) == NULL) {
+                            continue;
+                        }
+                        dealt++;
+                    }
+                    QuickStartEyesWriteField(QS_EYES_SEQ_BIT(0), 3, (s32)Random() % 6);
+                    QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+                    QsClearRoomFlag(QS_EYES_STAKE_TAKEN);
+                    if (dealt < 3) {
+                        // A room that cannot hold three switches cannot
+                        // hold this puzzle: with two of them there is no
+                        // third blink to repeat and the cage would never
+                        // open. Sweep what was dealt and fall through to
+                        // the single-switch gate, which every room that
+                        // hosts this site can hold - the same degrade the
+                        // linger plates already do.
+                        s32 e;
+                        for (e = 0; e < MAX_ENTITIES; e++) {
+                            Entity* ent = &gEntities[e].base;
+                            if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH &&
+                                QuickStartEntityInCurrentRoom(ent)) {
+                                DeleteEntity(ent);
+                            }
+                        }
+                        QsClearRoomFlag(flagBase + 1);
+                        QsClearRoomFlag(flagBase + 7);
+                    }
+                }
             }
-            if (QsCheckRoomFlag(flagBase + 7)) {
+            if (QsCheckRoomFlag(flagBase + 7) && !QsCheckRoomFlag(flagBase + 1)) {
                 // ---- The linger plates (#3, "hold everything down") ----
                 // Two plates: one dealt ahead of the player, one across
                 // the room (the anchor mirrored over the cage), so the
@@ -13599,7 +13717,7 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 }
             }
             if (QsCheckRoomFlag(flagBase + 7)) {
-                // plates dealt - nothing more to place
+                // plates or blink switches dealt - nothing more to place
             } else if (!decoy && lever == NULL) {
                 s16 lx, ly;
                 s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
@@ -13653,7 +13771,9 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
             }
             if (!QsCheckRoomFlag(flagBase + 5)) {
                 QsSetRoomFlag(flagBase + 5);
-                if (QsCheckRoomFlag(flagBase + 7)) {
+                if (QsCheckRoomFlag(flagBase + 7) && QsCheckRoomFlag(flagBase + 1)) {
+                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, 24), 0);
+                } else if (QsCheckRoomFlag(flagBase + 7)) {
                     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 225), 0);
                 } else if (decoy) {
                     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 32), 0);
@@ -13678,6 +13798,105 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
                 QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
             }
+        }
+        if (QsCheckRoomFlag(flagBase + 7) && QsCheckRoomFlag(flagBase + 1)) {
+            // ---- Watch the eyes (#4), per frame ----
+            //
+            // Two halves of one loop, and which half it is decides who owns
+            // the switch flags this frame. See the block comment on
+            // QS_EYES_STEP for why that split exists at all.
+            const u8* seq = sQuickStartLeverRoles[QuickStartEyesReadField(QS_EYES_SEQ_BIT(0), 3) % 6];
+            s32 phase = gRoomTransition.frameCount % QS_EYES_PERIOD;
+            s32 progress = QuickStartEyesReadField(QS_EYES_PROGRESS_BIT(0), 2);
+            s32 k;
+            if (QsCheckRoomFlag(flagBase + 6)) {
+                return FALSE; // already solved this visit
+            }
+            if (phase < QS_EYES_SHOW) {
+                // SHOW. We own the flags: exactly one switch lit per step,
+                // nothing lit on the fourth (the dark beat), and progress
+                // pinned at zero so a hit landed mid-show is not counted.
+                s32 step = phase / QS_EYES_STEP;
+                for (k = 0; k < 3; k++) {
+                    if (step < 3 && seq[step] == (u8)k) {
+                        QsSetRoomFlag(104 + k);
+                    } else {
+                        QsClearRoomFlag(104 + k);
+                    }
+                }
+                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+                return FALSE;
+            }
+            // INPUT. The player owns the flags now. Correct presses stay
+            // lit, so the lit switches ARE the progress bar; the count of
+            // lit switches against `progress` is what detects a new press
+            // without storing anything per switch.
+            {
+                s32 lit = 0, newest = -1;
+                for (k = 0; k < 3; k++) {
+                    if (QsCheckRoomFlag(104 + k)) {
+                        lit++;
+                    }
+                }
+                if (lit == progress) {
+                    return FALSE; // nothing new this frame
+                }
+                if (lit > progress) {
+                    // Find the lit switch that is not already part of the
+                    // answered prefix. Turning a correct one back OFF gives
+                    // lit < progress and falls through to the wrong branch,
+                    // which is fair: the sequence is no longer displayed.
+                    for (k = 0; k < 3; k++) {
+                        s32 j, inPrefix = 0;
+                        if (!QsCheckRoomFlag(104 + k)) {
+                            continue;
+                        }
+                        for (j = 0; j < progress; j++) {
+                            if (seq[j] == (u8)k) {
+                                inPrefix = 1;
+                            }
+                        }
+                        if (!inPrefix) {
+                            newest = k;
+                            break;
+                        }
+                    }
+                }
+                if (newest >= 0 && progress < 3 && seq[progress] == (u8)newest) {
+                    progress++;
+                    QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, progress);
+                    if (progress >= 3) {
+                        QsSetRoomFlag(flagBase + 6);
+                        QuickStartGateOpen(ptx, pty);
+                        SoundReq(SFX_SECRET);
+                    } else {
+                        SoundReq(SFX_SECRET);
+                    }
+                    return FALSE;
+                }
+                // Wrong. Everything goes dark and the sequence starts over
+                // on the next show. At high difficulty it also costs the
+                // F1c stake - once per visit, and never while a timed quest
+                // owns the latched tier the stake reads.
+                for (k = 0; k < 3; k++) {
+                    QsClearRoomFlag(104 + k);
+                }
+                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+                if (!QsCheckRoomFlag(QS_EYES_STAKE_TAKEN) && !QuickStartQuestSwapActive() &&
+                    QuickStartFailureStakeTier() >= 2) {
+                    QsSetRoomFlag(QS_EYES_STAKE_TAKEN);
+                    QuickStartLatchFailureStake();
+                    {
+                        s32 stakeMsg = QuickStartApplyFailureStake();
+                        if (stakeMsg != 0) {
+                            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, stakeMsg));
+                            MsgInit();
+                        }
+                    }
+                }
+                EnqueueSFX(SFX_110);
+            }
+            return FALSE;
         }
         if (QsCheckRoomFlag(flagBase + 7)) {
             // ---- Linger plates, per frame ----
