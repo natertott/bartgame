@@ -738,13 +738,77 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 ### 2.5 Bosses
 
 - **Multi-boss and boss+wave combos (F6).** Measured: two bosses fit a
-  cleared room, three are marginal, none fit a live diff-12 wave. The
-  #125 "simultaneous dual kill softlocks" blocker DID NOT REPRODUCE when
-  re-tested (see the #125 entry in Known bugs) - the remaining gate is a
-  positive: script a real kill of an engaged boss so the dual-engaged
-  case can be measured before combos ship. Escort-roster combos ship as
-  a per-boss field once measured (blue chuchu + ice wizzrobes is the
-  thematic shortlist head).
+  cleared room, three are marginal, none fit a live diff-12 wave.
+  **THE GATE IS OPEN, and it immediately found something.**
+  `tools/quickstart/boss_kill.py` engages a family for real and kills it.
+  The dual-engaged case measures CLEAN in two of the three allowlisted
+  rooms - Castle Garden and Eastern Hills North: two families, both at
+  intro stage 9 and out of subAction 0, both zeroed on the same frame,
+  both fully gone, player still responsive, same room. No softlock, so
+  #125 stays not-reproduced against ENGAGED bosses now, not just idle ones.
+
+  **Lon Lon Ranch does NOT pass the dual case**, and the failure is
+  specific: with one family it engages at frame 1027 and dies clean like
+  everywhere else, but with two, the second family never finishes its
+  intro (measured to 5000 frames: stages [7, 2], subActions [0, 3] - one
+  live, one parked in the intro dispatcher). The two Helpers are distinct
+  (0x020364f0 and 0x02036530), so it is NOT a shared-scratch collision;
+  the likely suspect is the +/-48px dual placement around that region's
+  reward spot. **Multi-boss must not ship for Lon Lon until that is
+  understood** - and the room-by-room split is the reason the gate was
+  worth opening rather than assuming.
+
+  Escort-roster combos ship as a per-boss field once measured (blue
+  chuchu + ice wizzrobes is the thematic shortlist head).
+
+  **The recorded diagnosis of why the harness could not do this was
+  wrong, and the truth is much simpler.** The note said the engaged fight
+  ignores sword taps at 1 hp because "the peel wants real contact windows
+  the dumb driver doesn't hit". Measured: the family had never engaged at
+  all. Its intro is a nine-stage machine on the body's `Helper` (unk_03),
+  and stages 1 and 2 are gated on the PLAYER'S action byte -
+  `sub_08026328` waits for `action != PLAYER_ROOMTRANSITION`,
+  `sub_08026358` for `action != PLAYER_ROOM_EXIT`. A warped-in player sits
+  in PLAYER_ROOMTRANSITION (action 22) and never leaves on its own, so the
+  intro parked at stage 1 *for as long as anyone watched* - 1500 frames -
+  and every piece stayed at action 1 / subAction 0. subAction 0 is the
+  intro dispatcher and is the one subAction that never calls the peel
+  handler, so no sword tap could ever have registered. The old driver was
+  hitting an inert stack.
+
+  The fix is one line of driver: **walk**. Give the player ordinary
+  movement input and action 22 drops to 1, the intro runs 1 -> 3 -> 5 -> 9,
+  and the fight engages at ~frame 1027.
+
+  This also revises trap #1 from the region-vetting entry below. An
+  undismissed textbox does freeze the stage machine, but pressing A was
+  only ever fixing this by accident - it nudges the player out of the
+  transition action. The general rule is the useful one: **the boss intro
+  will not start until the player is in a normal action state**, and
+  warping alone never puts them there.
+
+  What is real in that harness and what is not, because a probe that blurs
+  it is worthless: the engagement is real (the shipped intro machine,
+  driven by ordinary input); the peel is real (contacts written the way
+  the collision system writes them, with the shipped `sub_08027AA4` doing
+  everything downstream, and iframes respected so a contact counts once
+  per swing); the FINAL BLOW is `health := 0`, because the collision
+  system rather than the receiving entity subtracts health, so a forged
+  contact cannot do it. Everything after the zero is the shipped death
+  path, which is what the dual question is about.
+
+  One race worth knowing: a peel in flight writes
+  `super->child->health = 0xff`, so a single zero landing on the wrong
+  frame is undone and the family walks away immortal - killing after a
+  300-frame peel worked while killing after 1200 frames left all five
+  pieces standing. The driver re-zeros for half a second to cover it.
+
+  And one near-miss worth recording as doctrine: the first run of the
+  responsiveness check reported the player FROZEN after the kill, which
+  would have been a softlock finding. A no-boss control in the same room
+  refused three of the same four directions - the spot is simply hemmed
+  in. **Test all four directions and pass on any**; a one-direction
+  movement check invents softlocks.
 - **New boss forms.** Octorok Boss is the next-cheapest per the vanilla
   inventory's boss ladder. Gleerok/Mazaal/Big Octorok each need a damage
   audit, an arena audit (Mazaal is a multi-entity macro and wants a
