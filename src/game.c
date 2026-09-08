@@ -1838,6 +1838,32 @@ static s32 QuickStartChainCurrentStep(void) {
 #define GF_REGION_FINAL_HINT_SHOWN 229
 static void QuickStartShowRegionFinalHintOnce(void) {
     s32 hint;
+    // NOT BEFORE THE CHAIN HAS RUN. This line used to fire on first entry
+    // to the element region no matter what, which is the user's report
+    // (Sep 2026): "if the player enters the room where the earth element is
+    // located Ezlo says 'The Earth element is here!' and the player can
+    // immediately get to the earth element... essentially making [the
+    // chain] completely optional."
+    //
+    // The DROP was already gated - QuickStartWinCarrierMet refuses until
+    // the four pre-steps are done, verified by calling it in the running
+    // ROM at progress 0/1/3/4/5 and watching it flip only at 4 - so what
+    // actually leaked was the promise, not the item. That is still the bug
+    // the player experienced: being told the Element is here, in the room
+    // it is really in, reads as "go get it", and the chain reads as
+    // optional busywork you can skip.
+    //
+    // Early arrivals get their own line instead, and it uses a per-VISIT
+    // room flag rather than a run-long one on purpose: a player who wanders
+    // back through before finishing the chain should be reminded, not left
+    // to wonder whether they missed something.
+    if (!QuickStartChainPreStepsDone()) {
+        if (!QsCheckRoomFlag(45)) {
+            QsSetRoomFlag(45);
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, 25), 0);
+        }
+        return;
+    }
     if (QsCheckFlag(GF_REGION_FINAL_HINT_SHOWN)) {
         return;
     }
@@ -2096,6 +2122,25 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
     Entity* itemEntity;
     s32 i;
     if (GetInventoryValue(ITEM_EARTH_ELEMENT) != 0) {
+        return;
+    }
+    // THE CHAIN IS THE GATE, and this is the second place that says so.
+    //
+    // The caller already asks QuickStartWinCarrierMet, which refuses until
+    // the four pre-steps are done. But the caller asks it as
+    // `WinCarrierMet() || QsCheckRoomFlag(43)`, and that second clause is a
+    // way past the first: room flag 43 means "an Element was created this
+    // round", and it exists so the despawn-timer refresh keeps running
+    // after the carrier's own condition has gone stale (a cleared wave is
+    // cleared for one frame before the next one spawns). Anything that ever
+    // set 43 without the chain being done would hand over the Element with
+    // the gate wide open.
+    //
+    // Nothing does today - measured. But the whole point of the chain is
+    // that it is not optional, and one gate guarding the run's objective is
+    // one gate too few. This one is at the only place the item is ever
+    // created, so it holds no matter which caller or which flag got here.
+    if (!QuickStartChainPreStepsDone()) {
         return;
     }
     // Refresh the existing Element's despawn timer FIRST, every frame,
@@ -2676,6 +2721,10 @@ const u8* const gCustomStrings2[] = {
     [23] = (const u8*)"Keep low. They only look\none way at a time.",
     // The blink-sequence puzzle's Ezlo line (switch puzzle #4).
     [24] = (const u8*)"They blink in an order.\nWatch it, then say it\nback to them.",
+    // Entering the element region before the chain is finished. Names
+    // the place - that much is fair and useful - without promising the
+    // Element, which is what made the chain look skippable.
+    [25] = (const u8*)"Something sleeps here.\nIt will not wake until\nyour work is done.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 

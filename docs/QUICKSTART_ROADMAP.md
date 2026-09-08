@@ -2995,6 +2995,55 @@ at it.
 `chain_probe.py` reports 0 problems across six seeds, one of which (0x44444444)
 drops into Minish Woods and completes all four pre-steps from there.
 
+### The Earth Element was promised before the chain was run (Sep 2026)
+
+The user: *"if the player enters the room where the earth element is located
+Ezlo says 'The Earth element is here!' and the player can immediately get to
+the earth element without having to go through the other quest events,
+essentially making them completely optional."*
+
+**The drop was already gated; the PROMISE was not.** Asked directly of the
+shipped code in a running ROM - `QuickStartWinCarrierMet` called at chain
+progress 0,1,2,3,4,5 - the answer is 0,0,0,0,0,0: the carrier refuses below
+four completed steps and does not turn true at four either (it still wants
+its own condition). Every way a step could be pre-satisfied is already shut,
+and that was checked one at a time rather than assumed: ITEM steps only pick
+items the player does NOT hold, EVENT steps skip sites already marked done,
+WAVE steps store a TARGET of "this region's count plus one" so waves cleared
+before the step was dealt do not count, and QUEST refuses a quest already
+finished. The chain cannot cascade.
+
+What leaked was `QuickStartShowRegionFinalHintOnce`, which fired on first
+entry to the element region with no chain check at all and announced the
+Element by name. That is the whole reported experience: being told the
+Element is *here*, in the room it really is in, reads as "go get it", and
+everything else on the list reads as optional busywork. The player was told
+the truth about the place and a lie about the timing.
+
+Two changes:
+
+* **the hint waits for the chain.** Before the pre-steps are done, an early
+  arrival gets a different line - it still names the place, which is fair
+  and useful, but promises nothing. That one uses a per-VISIT room flag
+  rather than a run-long one on purpose: someone who wanders back through
+  mid-chain should be reminded, not left wondering what they missed.
+* **the spawner refuses on its own account.** The gate lived only in the
+  caller, and the caller asks `WinCarrierMet() || QsCheckRoomFlag(43)` -
+  that second clause exists so the Element's despawn timer keeps being
+  refreshed after the carrier's condition goes stale, and it is a way past
+  the first. Nothing sets flag 43 early today (measured), but one gate in
+  front of the run's whole objective is one too few, so
+  `QuickStartSpawnWinKeyOnce` now checks the pre-steps itself. It is the
+  only place the item is ever created, so it holds regardless of caller or
+  flag.
+
+`tools/quickstart/element_gate.py` is the regression test, four legs: the
+carrier's answer across the whole progress range; the spawner called
+directly at progress 0 **with flag 43 forced set** (0 elements); the spawner
+at progress 4 (1 element - a gate that never opens is worse than one that
+never closes); and a clean early visit to the element region (no Element in
+the room, early line shown).
+
 ## 4. Vanilla behaviors not yet addressed
 
 Vanilla machinery that still pokes through the mode, needing a decision
