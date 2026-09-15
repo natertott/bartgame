@@ -5,6 +5,9 @@
  * @brief Bottle Player Item
  */
 #include "playerItem/playerItemBottle.h"
+#ifdef QUICKSTART
+extern void QuickStartNoteCharm(u32 bottleContent);
+#endif
 
 #include "item.h"
 #include "object.h"
@@ -194,6 +197,12 @@ void PlayerItemBottle_UseOther(PlayerItemBottleEntity* this) {
             case BOTTLE_CHARM_DIN:
                 gSave.stats.charm = this->bottleContent;
                 gSave.stats.charmTimer = 3600;
+#ifdef QUICKSTART
+                // The byte above still drives Link's palette tint, but it
+                // only holds one charm. Record this one as owned for the rest
+                // of the run so a later charm cannot silently replace it.
+                QuickStartNoteCharm(this->bottleContent);
+#endif
                 SoundReq(SFX_ELEMENT_CHARGE);
         }
     }

@@ -26,7 +26,10 @@ const ItemMetaData gItemMetaData[] = {
     [ITEM_MOLE_MITTS] = { MENU_SLOT_MOLE_MITTS, 0u, 0u, 0u, 0x13u, TEXT_ITEM_GET, 0x13u, 0x5u },
     [ITEM_ROCS_CAPE] = { MENU_SLOT_ROCS_CAPE, 0u, 0u, 0u, 0x14u, TEXT_ITEM_GET, 0x14u, 0x5u },
     [ITEM_PEGASUS_BOOTS] = { MENU_SLOT_PEGASUS_BOOTS, 0u, 0u, 0u, 0x15u, TEXT_ITEM_GET, 0x15u, 0x5u },
-    [ITEM_FIRE_ROD] = { 0x63u, 0u, 0u, 0u, 0x16u, TEXT_ITEM_GET, 0x16u, 0x5u },
+    // menuSlot was 0x63 (the same "not on the grid" sentinel ITEM_NONE uses
+    // above) - reused MENU_SLOT_CANE since ITEM_PACCI_CANE is never granted
+    // under QUICKSTART, so there's no real collision in practice.
+    [ITEM_FIRE_ROD] = { MENU_SLOT_CANE, 0u, 0u, 0u, 0x16u, TEXT_ITEM_GET, 0x16u, 0x5u },
     [ITEM_OCARINA] = { MENU_SLOT_OCARINA, 0u, 0u, 0u, 0x17u, TEXT_ITEM_GET, 0x17u, 0x5u },
     [ITEM_ORB_GREEN] = { 0x63u, 0u, 0u, 0u, 0u, 0u, 0u, 0u },
     [ITEM_ORB_BLUE] = { 0x63u, 0u, 0u, 0u, 0u, 0u, 0u, 0u },
@@ -66,7 +69,12 @@ const ItemMetaData gItemMetaData[] = {
     [ITEM_QST_BOOK3] = { 0x1u, 0u, 0u, 0u, 0x3bu, TEXT_ITEM_GET, 0x3bu, 0x5u },
     [ITEM_QST_GRAVEYARD_KEY] = { 0x1u, 0u, 0u, 0u, 0x3du, TEXT_ITEM_GET, 0x3du, 0x5u },
     [ITEM_QST_TINGLE_TROPHY] = { 0u, 0u, 0u, 0u, 0x95u, TEXT_ITEM_GET, 0x95u, 0x5u },
+#ifdef QUICKSTART
+    /* The medal is the heart-drop charm; vanilla's class 0x3 minted a free bottle on pickup. */
+    [ITEM_QST_CARLOV_MEDAL] = { 0x0u, 0u, 0u, 0u, 0x96u, TEXT_ITEM_GET, 0x96u, 0x5u },
+#else
     [ITEM_QST_CARLOV_MEDAL] = { 0x3u, 0u, 0u, 0u, 0x96u, TEXT_ITEM_GET, 0x96u, 0x5u },
+#endif
     [ITEM_SHELLS] = { 0x3u, 0xeu, 0x1u, 0u, 0x3eu, TEXT_ITEM_GET, 0x77u, 0x5u },
     [ITEM_EARTH_ELEMENT] = { 0x9u, 0u, 0u, 0x2u, 0x40u, TEXT_ITEM_GET, 0x40u, 0x5u },
     [ITEM_FIRE_ELEMENT] = { 0xau, 0u, 0u, 0x2u, 0x41u, TEXT_ITEM_GET, 0x41u, 0x5u },
@@ -133,28 +141,82 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_BLUE_SWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4) },
     [ITEM_UNUSED_SWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5) },
     [ITEM_FOURSWORD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x6) },
+#ifdef QUICKSTART
+    // Bombs and the Bow are shop stock under QUICKSTART. Vanilla never sold
+    // either (Link finds them in dungeons), so both shipped with price 0 and
+    // no confirm-purchase text - which would have made them free and left the
+    // sale with nothing to say. Priced with the other weapons and given the
+    // shield's confirm text, the same borrow the Fairy bottle below documents.
+    //
+    // These two matter more than the rest of the catalog: the bomb bag and
+    // the large quiver are useless without them, and until now neither weapon
+    // was reachable anywhere in the mode.
+    [ITEM_BOMBS] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x1c) },
+    [ITEM_REMOTE_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x8) },
+    [ITEM_BOW] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x9) },
+#else
     [ITEM_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x1c) },
     [ITEM_REMOTE_BOMBS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x8) },
     [ITEM_BOW] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x9) },
+#endif
     [ITEM_LIGHT_ARROW] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xa) },
     [ITEM_BOOMERANG] = { 300, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x24), TEXT_INDEX(TEXT_ITEM_GET, 0xb) },
     [ITEM_MAGIC_BOOMERANG] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xc) },
+#ifdef QUICKSTART
+    [ITEM_SHIELD] = { 150, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x1d) },
+#else
     [ITEM_SHIELD] = { 40, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x1d) },
+#endif
     [ITEM_MIRROR_SHIELD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xe) },
+#ifdef QUICKSTART
+    // These used to be 1 rupee, for a guaranteed "?" room shop (Melari's Mine
+    // East) that has since been retired along with the whole area. Real
+    // prices now, because the hub shop draws its stock from a pool per run
+    // (sQuickStartShopPool, game.c) and any of them can turn up in it - and a
+    // 1-rupee price is worse than it looks: QuickStartGetShopPrice scales by
+    // (4 + roll) / 8 and floors at 5, so a 1-rupee key item would be sold for
+    // five rupees whatever the roll.
+    //
+    // Kept inside [51, 299] like every other QUICKSTART price on this page.
+    // The confirm-purchase text is the shield's, the same borrow documented
+    // on ITEM_BOTTLE_FAIRY below: an item vanilla never sold has no confirm
+    // text of its own (msg id 0), and a sale with nothing to say does not
+    // complete.
+    [ITEM_LANTERN_OFF] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0xf) },
+#else
     [ITEM_LANTERN_OFF] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0xf) },
+#endif
     [ITEM_LANTERN_ON] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x10) },
+#ifdef QUICKSTART
+    [ITEM_GUST_JAR] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x11) },
+#else
     [ITEM_GUST_JAR] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x11) },
+#endif
     [ITEM_PACCI_CANE] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x12) },
+#ifdef QUICKSTART
+    [ITEM_MOLE_MITTS] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x13) },
+    [ITEM_ROCS_CAPE] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x14) },
+    [ITEM_PEGASUS_BOOTS] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x15) },
+#else
     [ITEM_MOLE_MITTS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x13) },
     [ITEM_ROCS_CAPE] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x14) },
     [ITEM_PEGASUS_BOOTS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x15) },
+#endif
+#ifdef QUICKSTART
+    [ITEM_FIRE_ROD] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x16) },
+#else
     [ITEM_FIRE_ROD] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x16) },
+#endif
     [ITEM_OCARINA] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x17) },
     [ITEM_ORB_GREEN] = { 0, 0, 0x0, 0x0 },
     [ITEM_ORB_BLUE] = { 0, 0, 0x0, 0x0 },
     [ITEM_ORB_RED] = { 0, 0, 0x0, 0x0 },
     [ITEM_TRY_PICKUP_OBJECT] = { 0, 0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    [ITEM_BOTTLE1] = { 150, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x20) },
+#else
     [ITEM_BOTTLE1] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x20) },
+#endif
     [ITEM_BOTTLE2] = { 100, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x06), TEXT_INDEX(TEXT_ITEM_GET, 0x20) },
     [ITEM_BOTTLE3] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x20) },
     [ITEM_BOTTLE4] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x20) },
@@ -162,11 +224,30 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_BOTTLE_BUTTER] = { 120, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x21) },
     [ITEM_BOTTLE_MILK] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x22) },
     [ITEM_BOTTLE_HALF_MILK] = { 60, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x23) },
+#ifdef QUICKSTART
+    // 1 rupee for the new guaranteed "?" room shop's stock (round-2 bonus
+    // pool item) - see the ITEM_LANTERN_OFF comment above for the same
+    // reasoning.
+    [ITEM_BOTTLE_RED_POTION] = { 120, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x24) },
+#else
     [ITEM_BOTTLE_RED_POTION] = { 150, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x24) },
+#endif
+#ifdef QUICKSTART
+    [ITEM_BOTTLE_BLUE_POTION] = { 80, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x25) },
+#else
     [ITEM_BOTTLE_BLUE_POTION] = { 60, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x25) },
+#endif
     [ITEM_BOTTLE_WATER] = { 1, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x26) },
     [ITEM_BOTTLE_MINERAL_WATER] = { 5, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x27) },
+#ifdef QUICKSTART
+    // No real vanilla shop ever sold this, so it had no confirm-purchase
+    // text of its own (msg id 0) - reuse the shield's (already proven
+    // functional by our own shop) rather than author new text, same
+    // reasoning for every other QUICKSTART-only price below.
+    [ITEM_BOTTLE_FAIRY] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x28) },
+#else
     [ITEM_BOTTLE_FAIRY] = { 7, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x28) },
+#endif
 #ifdef EU
     [ITEM_BOTTLE_PICOLYTE_RED] = { 100, 0, TEXT_INDEX(TEXT_PICOLYTE, 0x01), TEXT_INDEX(TEXT_ITEM_GET, 0x29) },
     [ITEM_BOTTLE_PICOLYTE_ORANGE] = { 300, 0, TEXT_INDEX(TEXT_PICOLYTE, 0x06), TEXT_INDEX(TEXT_ITEM_GET, 0x2a) },
@@ -205,16 +286,34 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_WIND_ELEMENT] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x43) },
     [ITEM_GRIP_RING] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x44) },
     [ITEM_POWER_BRACELETS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x45) },
+#ifdef QUICKSTART
+    [ITEM_FLIPPERS] = { 250, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x46) },
+#else
     [ITEM_FLIPPERS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x46) },
+#endif
     [ITEM_MAP] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x47) },
+#ifdef QUICKSTART
+    // Was 250 (Grimblade's own catalog price) - lowered to 1 rupee per the
+    // user's own explicit request that the new guaranteed "?" room shop's
+    // stock (round-3 scroll pool, this included) sell for 1 rupee; this is
+    // the same shared price-table entry Grimblade's shop reads too, so its
+    // price drops to match rather than diverging.
+    [ITEM_SKILL_SPIN_ATTACK] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x48) },
+    [ITEM_SKILL_ROLL_ATTACK] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x49) },
+#else
     [ITEM_SKILL_SPIN_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x48) },
     [ITEM_SKILL_ROLL_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x49) },
+#endif
     [ITEM_SKILL_DASH_ATTACK] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4a) },
     [ITEM_SKILL_ROCK_BREAKER] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4b) },
     [ITEM_SKILL_SWORD_BEAM] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4c) },
     [ITEM_SKILL_GREAT_SPIN] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4d) },
     [ITEM_SKILL_DOWN_THRUST] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4e) },
+#ifdef QUICKSTART
+    [ITEM_SKILL_PERIL_BEAM] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x4f) },
+#else
     [ITEM_SKILL_PERIL_BEAM] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x4f) },
+#endif
     [ITEM_DUNGEON_MAP] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x50) },
     [ITEM_COMPASS] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x51) },
     [ITEM_BIG_KEY] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x52) },
@@ -223,7 +322,13 @@ const struct_080FD964 gUnk_080FD964[] = {
     [ITEM_RUPEE5] = { 5, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x55) },
     [ITEM_RUPEE20] = { 20, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x56) },
     [ITEM_RUPEE50] = { 50, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x57) },
+#ifdef QUICKSTART
+    // 1 rupee for the new guaranteed "?" room shop's stock (round-2 bonus
+    // pool item).
+    [ITEM_RUPEE100] = { 1, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x58) },
+#else
     [ITEM_RUPEE100] = { 100, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x58) },
+#endif
     [ITEM_RUPEE200] = { 200, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x59) },
     [ITEM_5A] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5a) },
     [ITEM_JABBERNUT] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x5b) },
@@ -237,23 +342,49 @@ const struct_080FD964 gUnk_080FD964[] = {
 #else
     [ITEM_SHELLS30] = { 200, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x05), TEXT_INDEX(TEXT_ITEM_GET, 0x76) },
 #endif
+#ifdef QUICKSTART
+    [ITEM_HEART_CONTAINER] = { 299, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x62) },
+#else
     [ITEM_HEART_CONTAINER] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x62) },
+#endif
+#ifdef QUICKSTART
+    // Every QUICKSTART shop price on this page is kept in [51, 299] per the
+    // user's request - the real vanilla prices below (300/350/600/600) all
+    // clear that bar unmodified otherwise.
+    [ITEM_HEART_PIECE] = { 299, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x02), TEXT_INDEX(TEXT_ITEM_GET, 0x18) },
+    [ITEM_WALLET] = { 275, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x04), TEXT_INDEX(TEXT_ITEM_GET, 0x64) },
+#else
     [ITEM_HEART_PIECE] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x18) },
     [ITEM_WALLET] = { 80, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x04), TEXT_INDEX(TEXT_ITEM_GET, 0x64) },
-#ifdef EU
+#endif
+#if defined(QUICKSTART)
+    [ITEM_BOMBBAG] = { 299, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x25), TEXT_INDEX(TEXT_ITEM_GET, 0x63) },
+#elif defined(EU)
     [ITEM_BOMBBAG] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x07) },
 #else
     [ITEM_BOMBBAG] = { 600, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x25), TEXT_INDEX(TEXT_ITEM_GET, 0x63) },
 #endif
+#ifdef QUICKSTART
+    [ITEM_LARGE_QUIVER] = { 299, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x07), TEXT_INDEX(TEXT_ITEM_GET, 0x66) },
+#else
     [ITEM_LARGE_QUIVER] = { 600, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x07), TEXT_INDEX(TEXT_ITEM_GET, 0x66) },
+#endif
     [ITEM_KINSTONE_BAG] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x67) },
     [ITEM_BRIOCHE] = { 20, 0, TEXT_INDEX(TEXT_BAKERY, 0x01), TEXT_INDEX(TEXT_ITEM_GET, 0x68) },
     [ITEM_CROISSANT] = { 30, 0, TEXT_INDEX(TEXT_BAKERY, 0x0a), TEXT_INDEX(TEXT_ITEM_GET, 0x69) },
     [ITEM_PIE] = { 40, 0, TEXT_INDEX(TEXT_BAKERY, 0x0b), TEXT_INDEX(TEXT_ITEM_GET, 0x6a) },
     [ITEM_CAKE] = { 60, 0, TEXT_INDEX(TEXT_BAKERY, 0x0c), TEXT_INDEX(TEXT_ITEM_GET, 0x6b) },
+#ifdef QUICKSTART
+    [ITEM_BOMBS10] = { 100, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x03), TEXT_INDEX(TEXT_ITEM_GET, 0x91) },
+#else
     [ITEM_BOMBS10] = { 30, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x03), TEXT_INDEX(TEXT_ITEM_GET, 0x91) },
+#endif
     [ITEM_BOMBS30] = { 80, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x09), TEXT_INDEX(TEXT_ITEM_GET, 0x92) },
+#ifdef QUICKSTART
+    [ITEM_ARROWS10] = { 100, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x08), TEXT_INDEX(TEXT_ITEM_GET, 0x93) },
+#else
     [ITEM_ARROWS10] = { 20, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x08), TEXT_INDEX(TEXT_ITEM_GET, 0x93) },
+#endif
     [ITEM_ARROWS30] = { 50, 0, TEXT_INDEX(TEXT_STOCKWELL, 0x0a), TEXT_INDEX(TEXT_ITEM_GET, 0x94) },
     [ITEM_ARROW_BUTTERFLY] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x70) },
     [ITEM_DIG_BUTTERFLY] = { 0, 0, 0x0, TEXT_INDEX(TEXT_ITEM_GET, 0x71) },

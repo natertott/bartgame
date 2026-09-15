@@ -73,12 +73,55 @@ typedef struct {
     /*0x009*/ u8 available_figurines;        /**< figurines available to get */
     /*0x00A*/ u8 fillerA[22];                /**< unused filler */
     /*0x020*/ u16 map_hints;                 /**< bitmask, used by subtask MapHint */
+#ifdef QUICKSTART
+    /*0x022*/ s16 reward_drop_x;             /**< QUICKSTART: room-local spot the region clear reward
+                                               * was last dropped at (near the player, not the fixed
+                                               * reward spot) - what the state-1 "still lying there?"
+                                               * confirm scans. See QuickStartSpawnRegionRewardItem. */
+    /*0x024*/ s16 reward_drop_y;
+    /**
+     * QUICKSTART: the five-step win chain. Each step is a kind, a place and
+     * a detail whose meaning the kind decides; see the QS_CHAIN_* block in
+     * game.c. Steps are rolled ONE AT A TIME - step n+1 only exists once
+     * step n is done - because each roll has to be made against the
+     * loadout the player actually holds at that moment, which is what
+     * makes the chain winnable by construction rather than by luck.
+     */
+    /*0x026*/ u8 chain_kind[5];
+    /*0x02B*/ u8 chain_where[5];             /**< pool row, site index, or unused */
+    /*0x030*/ u8 chain_detail[5];            /**< item id, wave target, or unused */
+    /*0x035*/ u8 chain_progress;             /**< steps COMPLETED, 0..5 */
+    /*0x036*/ u8 chain_rolled;               /**< steps ROLLED, 0..5; always >= chain_progress */
+    /*0x037*/ u8 chain_hinted;               /**< bit n: the Ezlo hint for step n has been shown */
+    /*0x038*/ u8 filler38[8];                /**< unused filler */
+#else
     /*0x022*/ u8 filler22[30];               /**< unused filler */
+#endif
     /*0x040*/ u32 windcrests;                /**< upper 8 bit Windcrest flags @see WindcrestID
                                               * lower bits used for other things */
+#ifdef QUICKSTART
+    /*0x044*/ u32 run_frames;                /**< QUICKSTART: frames elapsed in the current run,
+                                               * reset to 0 at the top of every run (GameTask_Transition) */
+    /*0x048*/ u32 final_wave_frame;          /**< QUICKSTART: run_frames at the moment the chain's LAST
+                                               * region spawned the wave that gates the Earth Element.
+                                               * Drives the stuck-wave failsafe in
+                                               * QuickStartSpawnRegionRewardOnce; reset per run. */
+    /*0x04C*/ u32 run_seed;                  /**< QUICKSTART: the RNG seed this run is playing on.
+                                               * Written at run start and NOT reset per run, so it
+                                               * survives into the save file and identifies the run
+                                               * after the fact. Doubles as the input when the run
+                                               * is pinned - see GF_SEED_PINNED in game.c. */
+#else
     /*0x044*/ u8 filler44[12];               /**< unused filler */
-    /*0x050*/ u32 enemies_killed;            /**< number of enemies killed */
+#endif
+    /*0x050*/ u32 enemies_killed;            /**< number of enemies killed
+                                               * (QUICKSTART: reset to 0 per run, see GameTask_Transition) */
+#ifdef QUICKSTART
+    /*0x054*/ u32 miniboss_kills;            /**< QUICKSTART: mini-bosses killed this run (reset per run) */
+    /*0x058*/ u32 boss_kills;                /**< QUICKSTART: bosses killed this run (reset per run) */
+#else
     /*0x054*/ u8 filler54[8];                /**< unused filler */
+#endif
     /*0x05C*/ u32 items_bought;              /**< number of items bought in stockwells shop */
     /*0x060*/ u32 areaVisitFlags[8];         /**< Area visit flags. */
     /*0x080*/ char name[FILENAME_LENGTH];    /**< Save file name. */
@@ -101,7 +144,15 @@ typedef struct {
     /*0x4A0*/ u32 timer5;                    /**< "timer5" unused */
     /*0x4A4*/ u32 timer6;                    /**< "timer6" unused */
     /*0x4A8*/ u32 demo_timer;                /**< timer for US demo version playtime limit */
+#ifdef QUICKSTART
+    /*0x4AC*/ u32 meta_xp;                   /**< QUICKSTART: persistent meta-progression currency,
+                                               * accumulated from each run's score, survives the win-loop's
+                                               * DoSoftReset (never reset by GameTask_Transition) - see
+                                               * docs/QUICKSTART_ROADMAP.md */
+    /*0x4B0*/ u32 runs_completed;            /**< QUICKSTART: total wins this save file has ever recorded */
+#else
     /*0x4AC*/ u8 filler4ac[8];               /**< unused filler */
+#endif
 } SaveFile;
 
 /**

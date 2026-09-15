@@ -499,6 +499,12 @@ bool32 sub_0802915C(BusinessScrubEntity* this) {
         case ITEM_BOMBS10:
         case ITEM_ARROWS30:
             return TRUE;
+#ifdef QUICKSTART
+        // The restored field merchant's hearts offer (sales rows 9-11
+        // below) - a repeatable refill, same standing as bombs/arrows.
+        case ITEM_HEART:
+            return TRUE;
+#endif
     }
     return FALSE;
 }
@@ -593,6 +599,18 @@ const struct SalesOffering gUnk_080CC954[] = {
     {0x00, 0x00,    100, TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x0d), TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x02), ITEM_KINSTONE, 0xff, 0xffff},
 #else
     {0x00, 0x00,    200, TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x0d), TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x02), ITEM_KINSTONE, 0xff, 0xffff},
+#endif
+#ifdef QUICKSTART
+    // Rows 9-11: the restored Hyrule Field merchant (game.c's
+    // QuickStartSpawnFieldShopScrub rolls one per room entry). Bit 0 of
+    // the first field makes Action0 start the scrub revealed - the shield-
+    // deflect duel that normally earns the shop can't be required when the
+    // run's item draws may never hand out a shield. 0x04 = the refill sale
+    // path. Bombs/arrows reuse the vanilla offer dialogue and its price;
+    // hearts are new, so their offer line is TEXT_CUSTOM string 228.
+    /*  9 */ {0x05, 0x00, 10, TEXT_INDEX(TEXT_CUSTOM, 228), TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x02), ITEM_HEART, 0xff, 0xffff},
+    /* 10 */ {0x05, 0x00, 30, TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x0b), TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x02), ITEM_BOMBS10, 0xff, 0xffff},
+    /* 11 */ {0x05, 0x00, 30, TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x0e), TEXT_INDEX(TEXT_BUSINESS_SCRUB, 0x02), ITEM_ARROWS30, 0xff, 0xffff},
 #endif
 };
 

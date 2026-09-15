@@ -28,6 +28,15 @@ void MinisterPotho(MinisterPothoEntity* this) {
         sub_08066808,
         sub_0806685C,
     };
+#ifdef QUICKSTART
+    // In Castle Garden Main, this NPC drives script_MinisterPothoIntroCastle,
+    // a CheckPlayerInRegion-gated cutscene that spawns more entities
+    // (including NPC4E, which we already delete globally under QUICKSTART)
+    // and waits on sync flags those deleted entities can never set - a
+    // half-executed cutscene rather than a clean sandbox.
+    DeleteThisEntity();
+    return;
+#endif
     if ((super->flags & ENT_SCRIPTED) != 0) {
         sub_08066864(this);
     } else {

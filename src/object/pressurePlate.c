@@ -61,7 +61,29 @@ void PressurePlate_Init(PressurePlateEntity* this) {
 }
 
 void PressurePlate_Action1(PressurePlateEntity* this) {
-    u8 weight = sub_08088938(this) + get_standing_count(this);
+    u8 weight;
+#ifdef QUICKSTART
+    // The linger plate (type2 != 0), for the "hold everything down" ? room
+    // puzzle: pressed by the PLAYER alone (no statues in a dealt room),
+    // and the press LINGERS type2*16 frames after they step off, sinking
+    // back up only then. That linger is the whole puzzle - two plates far
+    // apart must be down AT ONCE, so the second must be reached while the
+    // first is still sinking. Vanilla plates (type2 == 0) are untouched.
+    if (super->type2 != 0) {
+        if (get_standing_count(this) != 0) {
+            super->action = 2;
+            super->subtimer = 0;
+            super->animationState = 4;
+            super->z.HALF.HI = 0;
+            InitializeAnimation(super, 4);
+            SetFlag(this->flag);
+            EnqueueSFX(SFX_PRESSURE_PLATE);
+            this->field_0x68.HWORD = (u16)(super->type2 << 4);
+        }
+        return;
+    }
+#endif
+    weight = sub_08088938(this) + get_standing_count(this);
     if (super->type + 2 <= weight) {
         super->action = 2;
         super->subtimer = 0;
@@ -87,6 +109,21 @@ void PressurePlate_Action1(PressurePlateEntity* this) {
 }
 
 void PressurePlate_Action2(PressurePlateEntity* this) {
+#ifdef QUICKSTART
+    if (super->type2 != 0) {
+        if (get_standing_count(this) != 0) {
+            // Still held: the clock only runs once they step off.
+            this->field_0x68.HWORD = (u16)(super->type2 << 4);
+        } else if (this->field_0x68.HWORD != 0 && --this->field_0x68.HWORD == 0) {
+            super->action = 1;
+            super->animationState = 0;
+            ClearFlag(this->flag);
+            InitializeAnimation(super, 0);
+            EnqueueSFX(SFX_BUTTON_PRESS);
+        }
+        return;
+    }
+#endif
     if (this->canToggle) {
         u8 weight = sub_08088938(this) + get_standing_count(this);
         if (super->type + 2 > weight) {

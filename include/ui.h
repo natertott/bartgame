@@ -85,7 +85,12 @@ typedef struct {
     u8 dungeonKeys;
     s8 unk_13;
     s8 unk_14;
-    u8 unk_15;
+    // Same dirty-flag/count encoding as unk_13/unk_14 (top bit set + count in
+    // the low 7 bits, see ItemUIElement/sub_0801C25C in ui.c), but for the
+    // extra L item icon specifically - previously unused filler, repurposed
+    // so a bomb/arrow count equipped to L doesn't share unk_13 with the real
+    // A item and render into A's VRAM tiles instead of L's.
+    s8 unk_15;
     u16 buttonX[3]; /**< X coordinates for the button UI elements */
     u16 buttonY[3]; /**< Y coordinates for the button UI elements */
     u8 filler22[0x2];
@@ -103,7 +108,7 @@ extern HUD gHUD;
 
 extern void DrawUIElements(void);
 extern void UpdateUIElements(void);
-extern void CreateUIElement(u32, u32);
+extern UIElement* CreateUIElement(u32, u32);
 extern void sub_0801C2F0(u32, u32);
 extern void sub_0801C25C(void);
 extern void DrawUI(void);

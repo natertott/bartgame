@@ -16,6 +16,28 @@
 extern void sub_0805ECEC(u32, u32, u32, u32);
 extern u32 sub_08000E44(u32);
 
+// Mirrored L button plate (see InitUI/ButtonUIElement_Action0/1): same row
+// as the real R plate (buttonY[2]=0xe), continuing the same 0x18-pixel
+// column rhythm the A/B icons already use (buttonX[0]=0xd0, buttonX[1]=0xb8)
+// one more step to the left so the plate doesn't crowd the B icon directly
+// below/beside it.
+#define BUTTON_L_X 0xa0
+#define BUTTON_L_Y 0xe
+
+// gUIElementDefinitions packs every existing element type into one
+// contiguous OBJ VRAM tile range with zero slack (BUTTON_A/B/R at 0x100 for
+// 14 tiles, TEXT_R at 0x10e for 12, ITEM_A at 0x11a for 8, HEART at 0x122
+// for 4, ITEM_B at 0x126 for 8, EZLONAGSTART/ACTIVE at 0x12e for 8 - dumped
+// straight from ROM to confirm) - reusing ITEM_A's own unk_1a (0x11a) for
+// the extra L item instance below made it fight over the exact same
+// destination tiles as the real A icon: whichever one's graphic got DMA'd
+// there most recently is what BOTH the real and extra icon show, which is
+// exactly the "extra slot just duplicates A" bug this was fixing. 0x136 is
+// the first tile past that whole packed range (right after
+// EZLONAGSTART/ACTIVE's 8), so claiming 8 tiles there for this new icon
+// (matching ITEM_A's own size) doesn't collide with any of the above.
+#define QUICKSTART_ITEM_C_VRAM_TILE 0x136
+
 extern const u16 gUnk_080C8F2C[];
 extern u32 gUnk_085C4620[];
 extern Frame* gSpriteAnimations_322[];
@@ -47,11 +69,12 @@ void DrawHearts(void);
 void DrawChargeBar(void);
 void DrawRupees(void);
 void DrawKeys(void);
-void CreateUIElement(u32, u32);
+UIElement* CreateUIElement(u32, u32);
 void RenderDigits(u32, u32, u32, u32);
 void sub_0801CAFC(UIElement*, u32);
 void sub_0801CB20(UIElement*, UIElementDefinition*);
 UIElement* FindUIElement(u32);
+UIElement* FindUIElementByType2(u32, u32);
 void sub_0801CAD0(UIElement*);
 void sub_0801CAB8(UIElement*, Frame*);
 void EraseChargeBar(void);
@@ -82,6 +105,13 @@ void DrawUIElements(void) {
             definition = &gUIElementDefinitions[element->type];
             gOamCmd._4 = definition->unk_0;
             gOamCmd._6 = definition->unk_2;
+            // Mirrored L button plate: same R plate graphic, flipped
+            // horizontally at draw time via the hardware OAM h-flip bit
+            // (ATTR1 bit 12) instead of needing a second copy of the sprite
+            // data (see the incbin note on gUIElementDefinitions above).
+            if (element->type == UI_ELEMENT_BUTTON_R && element->type2 != 0) {
+                gOamCmd._6 |= 0x1000;
+            }
             gOamCmd._8 = element->unk_18 << 0xc | element->unk_1a;
             DrawDirect(definition->spriteIndex, element->frameIndex);
         }
@@ -112,6 +142,11 @@ void sub_0801C25C(void) {
         tmp = gHUD.unk_14 & 0x7f;
         gHUD.unk_14 = tmp;
         sub_0801C2F0(0x126, tmp);
+    }
+    if (gHUD.unk_15 < 0) {
+        tmp = gHUD.unk_15 & 0x7f;
+        gHUD.unk_15 = tmp;
+        sub_0801C2F0(QUICKSTART_ITEM_C_VRAM_TILE, tmp);
     }
 }
 
@@ -189,7 +224,29 @@ void InitUI(bool32 keepHealthAndRupees) {
     CreateUIElement(UI_ELEMENT_TEXT_R, 9);
     CreateUIElement(UI_ELEMENT_ITEM_A, 0);
     CreateUIElement(UI_ELEMENT_ITEM_B, 0);
+    // QUICKSTART extra L item slot - same ITEM_A element type (type2=1
+    // selects equippedExtra[] instead of equipped[], see
+    // sub_0801CC80/ItemUIElement), just a second instance so both the real A
+    // item and the extra L item can be drawn at once. unk_1a must be
+    // overridden to its own VRAM tile range right after creation -
+    // CreateUIElement() otherwise copies gUIElementDefinitions[type].unk_4,
+    // the SAME destination the real A icon already uses.
+    {
+        UIElement* extraItemL = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+        if (extraItemL != NULL) {
+            extraItemL->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
+        }
+    }
     CreateUIElement(UI_ELEMENT_BUTTON_R, 0);
+    // Mirrored L button plate - a second BUTTON_R instance (type2=1) so it
+    // gets the exact same slide-in/hide behavior as every other button (see
+    // ButtonUIElement_Action0/1), reusing R's own graphic (no new sprite
+    // data needed - see the incbin note on gUIElementDefinitions above) and
+    // flipped horizontally at draw time in DrawUIElements. Shares R's
+    // unk_1a/VRAM tiles on purpose: both instances draw the identical,
+    // unflipped source tiles - only the OAM h-flip bit differs - so there's
+    // no competing-graphic problem like the ITEM_A/B case above.
+    CreateUIElement(UI_ELEMENT_BUTTON_R, 1);
     CreateUIElement(UI_ELEMENT_BUTTON_B, 0);
     CreateUIElement(UI_ELEMENT_BUTTON_A, 0);
     CreateUIElement(UI_ELEMENT_EZLONAGSTART, 0);
@@ -517,10 +574,64 @@ void DrawChargeBar(void) {
     DmaSet(3, gUnk_080C8F7C[chargeState], BufferPos, 0x84000030);
 }
 
+#ifdef QUICKSTART
+// Seconds left on the hunt quest's clock, or -1 when no hunt is running.
+// game.c owns it; see QuickStartHuntMonitor.
+extern s32 QuickStartHuntSecondsLeft(void);
+#endif
+
 void DrawKeys(void) {
     u16* row1;
     u16* row2;
     u32 temp;
+
+#ifdef QUICKSTART
+    // The hunt quest's countdown borrows this counter outright. QUICKSTART
+    // has no dungeons, so AreaHasKeys() is false everywhere it can be
+    // reached and the small-key display is dead weight - which makes its BG0
+    // cells, its icon and its two digit tiles the cheapest numeric readout in
+    // the build, already wired and costing no new VRAM.
+    //
+    // The icon stays the key. It reads as "a thing you are being timed on"
+    // well enough for now; a proper hourglass tile is the follow-up.
+    {
+        s32 huntSeconds = QuickStartHuntSecondsLeft();
+        if (huntSeconds >= 0 && (gHUD.hideFlags & HUD_HIDE_KEYS) == 0) {
+            if (gHUD.unk_10 == 0) {
+                row1 = &gBG0Buffer[0x219];
+                row2 = &gBG0Buffer[0x239];
+                temp = 0xf01c;
+                row1[0] = temp;
+                row1[1] = temp + 1;
+                row2[0] = temp + 2;
+                row2[1] = temp + 3;
+                temp = 0xf076;
+                row1[2] = temp;
+                row2[2] = temp + 1;
+                row1[3] = temp + 2;
+                row2[3] = temp + 3;
+                gScreen.bg0.updated = 1;
+            }
+            // dungeonKeys is the vanilla cache of "what is currently drawn";
+            // reusing it means the digits are only re-rendered when the
+            // number actually changes, i.e. once a second rather than 60
+            // times. Yellow under ten seconds, the same "you are in trouble"
+            // colour an over-cap rupee count uses.
+            if (gHUD.dungeonKeys != (u8)huntSeconds || gHUD.unk_10 == 0) {
+                gHUD.unk_10 = 2;
+                gHUD.dungeonKeys = (u8)huntSeconds;
+                RenderDigits(0x76, (u32)huntSeconds, huntSeconds <= 10, 2);
+            }
+            return;
+        }
+        // Falling through with a stale cache would leave the clock's last
+        // value frozen on screen once the hunt ends, because the vanilla
+        // path only redraws when its own value differs from the cache.
+        if (huntSeconds < 0 && gHUD.unk_10 != 0 && !AreaHasKeys()) {
+            gHUD.dungeonKeys = 0xff;
+        }
+    }
+#endif
 
     if (!(((gHUD.hideFlags & HUD_HIDE_KEYS) == 0) && (AreaHasKeys()))) {
         if (gHUD.unk_10 != 0) {
@@ -560,7 +671,39 @@ void DrawKeys(void) {
     }
 }
 
-void CreateUIElement(u32 type, u32 type2) {
+#ifdef QUICKSTART
+// The pause menu does not keep the HUD's element set - sub_080A70AC
+// (subtask.c) MemClears it and rebuilds it from a KeyButtonLayout table that
+// lives in raw incbin'd ROM asset data, so it cannot simply be given another
+// row. What that table lists is A and B: their button plates and their item
+// icons survive into the menu, and everything else (R, and with it the
+// mirrored L plate and the extra L item icon added in InitUI) does not. The
+// player could see what was on A and B while browsing items but never what
+// was on L.
+//
+// So re-create exactly the pair InitUI creates, right after the vanilla
+// rebuild. Guarded on the A item icon existing, because a screen that shows
+// no equipped items at all (the map, the kinstone bag) should not sprout a
+// lone L icon.
+void QuickStartAddMenuExtraItemSlot(void) {
+    UIElement* element;
+    if (FindUIElementByType2(UI_ELEMENT_ITEM_A, 0) == NULL) {
+        return;
+    }
+    // Same two elements, same reasoning, as InitUI: a second BUTTON_R
+    // instance (type2=1) is the mirrored L plate, and a second ITEM_A
+    // instance (type2=1) is the icon that anchors to it. The VRAM tile
+    // override is not optional - without it the L icon renders into the real
+    // A icon's tiles.
+    CreateUIElement(UI_ELEMENT_BUTTON_R, 1);
+    element = CreateUIElement(UI_ELEMENT_ITEM_A, 1);
+    if (element != NULL) {
+        element->unk_1a = QUICKSTART_ITEM_C_VRAM_TILE;
+    }
+}
+#endif
+
+UIElement* CreateUIElement(u32 type, u32 type2) {
     u32 index;
     UIElement* element;
 
@@ -578,9 +721,10 @@ void CreateUIElement(u32 type, u32 type2) {
             // Permuter trickery. TODO find something more senseful?
             index = type;
             element->buttonElementId = gUIElementDefinitions[index].buttonElementId;
-            return;
+            return element;
         }
     }
+    return NULL;
 }
 
 void sub_0801CAB8(UIElement* element, Frame* frame) {
@@ -632,8 +776,10 @@ void ButtonUIElement(UIElement* element) {
 }
 
 void ButtonUIElement_Action0(UIElement* element) {
-    element->x = gHUD.buttonX[element->type];
-    element->y = gHUD.buttonY[element->type] - 0x20;
+    u32 targetX = (element->type2 == 0) ? gHUD.buttonX[element->type] : BUTTON_L_X;
+    u32 targetY = (element->type2 == 0) ? gHUD.buttonY[element->type] : BUTTON_L_Y;
+    element->x = targetX;
+    element->y = targetY - 0x20;
     element->action = 1;
     element->unk_0_1 = 1;
     sub_0801CAFC(element, element->type);
@@ -645,13 +791,15 @@ void ButtonUIElement_Action1(UIElement* element) {
     u32 y_diff;
     s32 x;
     u32 x_diff;
+    u32 targetX = (element->type2 == 0) ? gHUD.buttonX[element->type] : BUTTON_L_X;
+    u32 targetY = (element->type2 == 0) ? gHUD.buttonY[element->type] : BUTTON_L_Y;
 
     MAX_MOVEMENT = (!element->type2) ? 4 : 8;
 
-    if (element->type2 == 0 && (((gHUD.hideFlags >> element->type) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0)) {
-        y = (s16)gHUD.buttonY[element->type] - 0x28;
+    if (((gHUD.hideFlags >> element->type) & 1) || (gMessage.state & MESSAGE_ACTIVE) != 0) {
+        y = (s16)targetY - 0x28;
     } else {
-        y = (s16)gHUD.buttonY[element->type];
+        y = (s16)targetY;
     }
 
     y -= (s16)element->y;
@@ -667,7 +815,7 @@ void ButtonUIElement_Action1(UIElement* element) {
         element->y += y_diff;
     }
 
-    x = (short)gHUD.buttonX[element->type];
+    x = (short)targetX;
     x -= (short)element->x;
     x_diff = (x < 0) ? -x : x;
 
@@ -685,7 +833,19 @@ void ButtonUIElement_Action1(UIElement* element) {
 u32 sub_0801CC80(UIElement* element) {
     u8 type = element->type;
     u32 buttonId = (type ^ 3) != 0;
-    u32 itemId = gSave.stats.equipped[buttonId];
+    u32 itemId;
+    // type2 is otherwise unused for ITEM_A/ITEM_B elements - repurposed here
+    // so a second ITEM_A instance can show the QUICKSTART extra L slot
+    // (equippedExtra[]) instead of the original A/B pair, without needing a
+    // new UIElementType value. New types aren't an option: this table
+    // (gUIElementDefinitions) is raw incbin'd ROM asset data, not a C array
+    // that can just grow another entry (the mirrored L button plate reuses
+    // BUTTON_R's own type the same way - see InitUI).
+    if (element->type2 != 0) {
+        itemId = gSave.stats.equippedExtra[buttonId];
+    } else {
+        itemId = gSave.stats.equipped[buttonId];
+    }
     if (ItemIsBottle(itemId)) {
         itemId = gSave.stats.bottles[itemId - ITEM_BOTTLE1];
     }
@@ -718,9 +878,20 @@ void ItemUIElement(UIElement* element) {
         uiElementType = 0;
     }
 
-    psVar8 = &gHUD.unk_13;
-    if (uiElementType != 0) {
+    // The extra L item icon (type2 != 0) needs its own dirty-flag/count byte
+    // and VRAM digit destination - it happens to compute the same
+    // uiElementType (0) as the real A item since both share
+    // UI_ELEMENT_ITEM_A, but sharing psVar8/VRAM tiles with the real A icon
+    // would render L's bomb/arrow count into A's tiles instead (visually
+    // showing up wherever A's icon is drawn, near the R plate) rather than
+    // on L's own icon. Check it first so it always wins over the uiElementType
+    // fallback below.
+    if (element->type2 != 0) {
+        psVar8 = &gHUD.unk_15;
+    } else if (uiElementType != 0) {
         psVar8 = &gHUD.unk_14;
+    } else {
+        psVar8 = &gHUD.unk_13;
     }
 
     switch ((s32)element->unk_8) {
@@ -751,7 +922,15 @@ void ItemUIElement(UIElement* element) {
         uVar5 = 4;
     }
     element->unk_18 = uVar5;
-    element2 = FindUIElement(uiElementType);
+    // QUICKSTART extra L item icon: attaches to the mirrored L button plate
+    // (UI_ELEMENT_BUTTON_R, type2=1 - see InitUI) exactly like the real A
+    // item icon attaches to its own button below, so it gets the identical
+    // slide-in and hide-during-message/cutscene behavior for free.
+    if (element->type2 != 0) {
+        element2 = FindUIElementByType2(UI_ELEMENT_BUTTON_R, 1);
+    } else {
+        element2 = FindUIElement(uiElementType);
+    }
     if (element2 != 0) {
         element->x = element2->x;
         element->y = element2->y;
@@ -801,6 +980,21 @@ UIElement* FindUIElement(u32 type) {
     for (index = 0; index < MAX_UI_ELEMENTS; index++) {
         element = &gHUD.elements[index];
         if (element->used != 0 && type == element->type) {
+            return element;
+        }
+    }
+    return NULL;
+}
+
+// Like FindUIElement, but also matches type2 - needed once more than one
+// element of the same type can exist at once (the mirrored L button plate is
+// a second UI_ELEMENT_BUTTON_R instance, see InitUI/ButtonUIElement_Action0).
+UIElement* FindUIElementByType2(u32 type, u32 type2) {
+    UIElement* element;
+    u32 index;
+    for (index = 0; index < MAX_UI_ELEMENTS; index++) {
+        element = &gHUD.elements[index];
+        if (element->used != 0 && type == element->type && type2 == element->type2) {
             return element;
         }
     }

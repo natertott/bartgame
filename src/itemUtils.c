@@ -40,13 +40,64 @@ const u16 gUnk_080FD5A8[] = { 1, 5, 20, 50, 100, 200 };
 
 u32 GetSaleItemConfirmMessageID(u32 item) {
     const struct_080FD964* ptr = &gUnk_080FD964[item];
+#ifdef QUICKSTART
+    // The QUICKSTART shop sells things vanilla never sold - skill scrolls,
+    // butterflies, bottled charms, the rare weapons, a recovery heart - and
+    // an item vanilla never sold has no "buy this for X rupees?" message id
+    // at all (0). MessageNoOverlap(0) opens no textbox, so
+    // ScriptCommand_SaleItemConfirmMessage has nothing to confirm and the
+    // sale stalls with the item still in the player's hands.
+    //
+    // Borrow one generic line for anything the run is pricing itself, rather
+    // than hand-writing a QUICKSTART override into gUnk_080FD964 for each of
+    // the seventeen items involved. TEXT_STOCKWELL 0x02 is already the
+    // confirm text this mode gives the Bow, the Bombs, the boots and the
+    // heart piece: it reads as a plain "is X rupees OK?" and substitutes the
+    // number from gMessage.rupees like every other shop line.
+    //
+    // Gated on QuickStartGetShopPrice rather than applied to every priceless
+    // item, so this cannot make something sellable that the shop is not
+    // actually stocking.
+    if (ptr->saleItemConfirmMessageId == 0 && QuickStartGetShopPrice(item, ptr->itemPrice) >= 0) {
+        return TEXT_INDEX(TEXT_STOCKWELL, 0x02);
+    }
+#endif
     return ptr->saleItemConfirmMessageId;
 }
 
 s32 GetItemPrice(u32 item) {
     const struct_080FD964* ptr = &gUnk_080FD964[item];
+#ifdef QUICKSTART
+    // The shop's prices vary from run to run, and gUnk_080FD964 is const
+    // ROM data, so the randomization can't live in the table - it has to
+    // happen at the one place the price is actually read. This is that
+    // place: every shop path (ScriptCommand_SaleItemConfirmMessage,
+    // CheckShopItemPrice, BuyShopItem) reaches the price through here, so
+    // hooking it keeps the displayed price and the charged price in sync
+    // for free. Returns a negative value for anything the run isn't
+    // pricing itself, which falls through to the vanilla table below.
+    {
+        s32 rolled = QuickStartGetShopPrice(item, ptr->itemPrice);
+        if (rolled >= 0) {
+            return rolled;
+        }
+    }
+#endif
     return ptr->itemPrice;
 }
+
+#ifdef QUICKSTART
+// The food charm/curse hook (game.c). GiveItem is the one chokepoint every
+// grant path shares - ground pickups, chests, scripts - so hooking here
+// covers all of them; it is a no-op for every non-food item id.
+extern void QuickStartNoteFoodItem(u32 item);
+// And the effect mask, for the three drop-rate charms in
+// CreateRandomItemDrop below.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_DROP_RUPEES (1 << 9)
+#define QUICKSTART_FOOD_DROP_KINSTONES (1 << 10)
+#define QUICKSTART_FOOD_DROP_HEARTS (1 << 11)
+#endif
 
 u32 GiveItem(Item item, u32 param_2) {
     u32 uVar4;
@@ -54,6 +105,9 @@ u32 GiveItem(Item item, u32 param_2) {
     u32 uVar9;
     const ItemMetaData* metaData;
 
+#ifdef QUICKSTART
+    QuickStartNoteFoodItem(item);
+#endif
     uVar4 = GetInventoryValue(item);
     metaData = &gItemMetaData[item];
 
@@ -256,7 +310,8 @@ void ModArrows(s32 arrows) {
  *
  * 0: A
  * 1: B
- * 2: Not equipped
+ * 2: C (L)
+ * 3: Not equipped
  */
 EquipSlot IsItemEquipped(u32 itemId) {
     EquipSlot equipSlot;
@@ -265,6 +320,8 @@ EquipSlot IsItemEquipped(u32 itemId) {
         equipSlot = EQUIP_SLOT_A;
     } else if (itemId == gSave.stats.equipped[SLOT_B]) {
         equipSlot = EQUIP_SLOT_B;
+    } else if (itemId == gSave.stats.equippedExtra[0]) {
+        equipSlot = EQUIP_SLOT_C;
     } else {
         equipSlot = EQUIP_SLOT_NONE;
     }
@@ -317,6 +374,44 @@ void ForceEquipItem(u32 itemId, u32 equipSlot) {
         gSave.stats.equipped[otherItemSlot] = otherItem;
         gHUD.unk_13 = 0x7f;
         gHUD.unk_14 = 0x7f;
+    }
+}
+
+// Player-driven equip (subscreen only) for the extra L slot added alongside
+// the original A/B pair. Unlike ForceEquipItem above (which swaps
+// specifically with "the other of A/B", built for NPC-granted item
+// upgrades), this only needs to make sure the same item never ends up parked
+// in more than one slot at once - clear it from wherever else it was, then
+// place it here.
+void ForceEquipExtraSlot(u32 itemId) {
+    if (itemId - 1 >= 0x1f) {
+        return;
+    }
+    if (gSave.stats.equipped[SLOT_A] == itemId) {
+        gSave.stats.equipped[SLOT_A] = ITEM_NONE;
+    }
+    if (gSave.stats.equipped[SLOT_B] == itemId) {
+        gSave.stats.equipped[SLOT_B] = ITEM_NONE;
+    }
+    gSave.stats.equippedExtra[0] = itemId;
+    // unk_13/unk_14 (A/B's own dirty flags) still matter here - the two
+    // checks above can clear A or B's icon out to NONE - but the L icon
+    // itself is drawn from unk_15, not either of those (see ui.c's own
+    // element->type2 check), and always changes in this function, so it
+    // needs marking dirty unconditionally too.
+    gHUD.unk_13 = 0x7f;
+    gHUD.unk_14 = 0x7f;
+    gHUD.unk_15 = 0x7f;
+}
+
+void ToggleExtraEquip(u32 itemId) {
+    if (gSave.stats.equippedExtra[0] == itemId) {
+        gSave.stats.equippedExtra[0] = ITEM_NONE;
+        // Only L's own icon changes on this path (A/B untouched) - unk_15,
+        // not unk_13/14 (see ForceEquipExtraSlot's own comment above).
+        gHUD.unk_15 = 0x7f;
+    } else {
+        ForceEquipExtraSlot(itemId);
     }
 }
 
@@ -409,6 +504,7 @@ void EnableRandomDrops(void) {
     gRoomVars.randomDropsDisabled = FALSE;
 }
 
+extern u8 QuickStartDifficultyForDrops(void);
 extern void SumDropProbabilities(s16*, const s16*, const s16*, const s16*);
 extern u32 SumDropProbabilities2(s16*, const s16*, const s16*, const s16*);
 u32 CreateItemDrop(Entity* arg0, u32 itemId, u32 itemParameter);
@@ -478,6 +574,79 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
             if (gSave.stats.rupees <= 10) {
                 droptable.s.rupee5++;
             }
+#ifdef QUICKSTART
+            // r3 in [1, 12] is the enemy-table range (excludes grass/pot/area/crit tables).
+            if (r3 >= 1 && r3 <= 12) {
+                s32 kinstoneWeight;
+                droptable.s.rupee1 += 300;
+                droptable.s.rupee5 += 250;
+                droptable.s.rupee20 += 100;
+                if (droptable.s.hearts > 0) {
+                    droptable.s.hearts = 2;
+                }
+                // Kinstone pieces are the fusion economy's currency, so
+                // enemies have to actually pay it out - vanilla's own
+                // weights here are tuned for a hundred fusions spread over
+                // a whole playthrough, not for a single run.
+                //
+                // The rate DECAYS with difficulty, per the design: pieces
+                // are abundant while the player is learning and become
+                // something to grind for later. Weights are relative to the
+                // whole summed table (the rupee bumps above are 100-300),
+                // so this puts kinstones in the same band as a common rupee
+                // early and a rarer one late.
+                //
+                // Cut 30% from the original 180/-10/60 after play-testing:
+                // collecting every piece a run needed was turning out to be
+                // no real challenge, which is the opposite of what the
+                // economy is for.
+                //
+                // Then HALVED again (126/-7/42 -> 63/-4/21) for the same
+                // reason, per the user, after the overworld expansion: with
+                // seven regions of endless waves all paying pieces, the
+                // right fusions were still coming too easily. The full
+                // curve analysis is future work; this is the flat cut in
+                // the meantime.
+                kinstoneWeight = 63 - (s32)QuickStartDifficultyForDrops() * 4;
+                if (kinstoneWeight < 21) {
+                    kinstoneWeight = 21;
+                }
+                {
+                    // The drop-rate charms (game.c food charms). Each one
+                    // roughly doubles its category's share of the summed
+                    // table: rupees get a second helping of the flat bumps
+                    // above, kinstones double their decayed weight, and
+                    // hearts jump from the clamped 2 to a real seat at the
+                    // table (30 sits between a common and an uncommon
+                    // rupee). Weights, not guarantees - the roll below is
+                    // still one draw over everything.
+                    u32 foodMask = QuickStartFoodMask();
+                    if (foodMask & QUICKSTART_FOOD_DROP_RUPEES) {
+                        droptable.s.rupee1 += 300;
+                        droptable.s.rupee5 += 250;
+                        droptable.s.rupee20 += 100;
+                    }
+                    if (foodMask & QUICKSTART_FOOD_DROP_KINSTONES) {
+                        kinstoneWeight *= 2;
+                    }
+                    if (foodMask & QUICKSTART_FOOD_DROP_HEARTS) {
+                        droptable.s.hearts = 30;
+                    }
+                }
+                // ASSIGNED, not added. Vanilla's "this enemy never drops
+                // this" sentinel is -999, not 0 (see gEnemyDroptables), and
+                // SumDropProbabilities2 clamps negatives to zero - so
+                // "+= 180" on a -999 field is -819, still clamps to zero,
+                // and the piece never drops. That is exactly why the first
+                // attempt at this produced no kinstones at all in play.
+                // Assigning overrides the sentinel, which is the point:
+                // in this mode every enemy pays kinstones, regardless of
+                // whether its vanilla table allowed them.
+                droptable.s.kinstoneRed = kinstoneWeight;
+                droptable.s.kinstoneBlue = kinstoneWeight;
+                droptable.s.kinstoneGreen = kinstoneWeight;
+            }
+#endif
             ptr2 = &gDroptableModifiers[DROPTABLE_NONE];
             r0 = gSave.stats.hasAllFigurines;
             ptr3 = &gDroptableModifiers[DROPTABLE_NONE];

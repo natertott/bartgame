@@ -274,7 +274,8 @@ typedef enum {
     INPUT_UP = 0x400,
     INPUT_DOWN = 0x800,
     INPUT_ANY_DIRECTION = 0xf00,
-    INPUT_FUSE = 0x1000,       // L, where is it set? sub_080782C0
+    INPUT_FUSE = 0x1000,       // Select, where is it set? sub_080782C0
+    INPUT_USE_ITEM3 = 0x2000, // L - QUICKSTART 3rd item-use slot, see Stats.equippedExtra[0]
     INPUT_LIFT_THROW = 0x8000, // R, IsTryingToPickupObject, sub_08076518
 } PlayerInputState;
 
@@ -579,11 +580,19 @@ typedef struct {
     /*0x1c*/ u16 charmTimer;
     /*0x1e*/ u16 picolyteTimer;
     /*0x20*/ u16 effectTimer;
-    /*0x22*/ u8 filler22[2];
+    // Was unused filler - now holds the extra L item-use slot added alongside
+    // the original A/B pair. Kept as a separate array (rather than growing
+    // `equipped` to 3) so every existing offset in this struct, and
+    // everything after it in SaveFile, stays byte-identical. Only index 0 is
+    // used (the L slot); index 1 is unused dead space left over from an
+    // earlier Select-as-item-button design and kept only to avoid shifting
+    // any offset below it.
+    /*0x22*/ u8 equippedExtra[2];
 } Stats;
 
 #define SLOT_A 0
 #define SLOT_B 1
+#define SLOT_C 2 // L - see Stats.equippedExtra[0]
 
 typedef struct {
     /*0x0*/ u8 field_0x0;
@@ -653,6 +662,10 @@ void CreateEzloHint(u32, u32);
 // game.c
 /** @see Item */
 /*EquipSlot*/ u32 IsItemEquipped(u32 itemId);
+/** @see EquipSlot. Reads gSave.stats.equipped[]/equippedExtra[] uniformly across all 3 slots. */
+u8 GetEquippedItemAtSlot(u32 slot);
+/** @see EquipSlot. Writes gSave.stats.equipped[]/equippedExtra[] uniformly across all 3 slots. */
+void SetEquippedItemAtSlot(u32 slot, u8 itemId);
 /** @see Item */
 u32 GetInventoryValue(u32);
 /** @see Item */

@@ -316,6 +316,45 @@ const Transition gExitList_HyruleField_WesternWoodSouth[] = {
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// All 4 of this region's "? room" doors are on the vanilla-door model now:
+// every one leads to its real vanilla destination and gets its randomized
+// event spawned inside that room instead (game.c:
+// sQuickStartRoomContentSites). Nothing in this list is retargeted anymore.
+//
+// Real doors work here for the reason spelled out in
+// gExitList_HyruleField_NorthHyruleField's own comment below:
+// UpdateDoorTransition gates only on the player's action state and the
+// tile's actTile value, and actTiles are rebuilt from compiled map data on
+// every room load - there's no "arrived via a real transition" prerequisite.
+const Transition gExitList_HyruleField_SouthHyruleField[] = {
+    // Link's House. A 2-room interior (entrance + bedroom) rather than a
+    // dead end, converted anyway per the user's own call to do this "for
+    // all the rooms, regardless of if they are single door rooms or
+    // two-door rooms". Both rooms are content sites, and the pocket is
+    // genuinely closed: the bedroom's only exit is back to the entrance,
+    // and the entrance's only other exit is the border back to this field.
+    { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_2,
+      ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // These 3 are genuine dead-end single rooms whose only exit is a
+    // WARP_TYPE_BORDER straight back here. Border transitions don't even
+    // go through the actTile path real doors use - IsPosInBorderTransitionRegion
+    // only checks facing and which half of the room you're in - so the
+    // return leg is the most reliable kind of transition in the engine.
+    { WARP_TYPE_AREA, 0x3a0, 0x228, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
+      ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // Behind a bombable wall in vanilla (its tile reads ACT_TILE_46 =
+    // BombableWallManager, not a door actTile, until the wall is blown
+    // open). Left exactly as vanilla built it - the player starts with
+    // bombs, so this becomes a genuine hidden ? room rather than a door
+    // that opens on touch like the old synthetic trigger box did.
+    { WARP_TYPE_AREA, 0x118, 0xa8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x58, 0x118, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x178, 0xd8, 0x78, 0xb8, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_SouthHyruleField[] = {
     { WARP_TYPE_AREA, 0x290, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_2,
       ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -327,17 +366,31 @@ const Transition gExitList_HyruleField_SouthHyruleField[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x178, 0xd8, 0x78, 0xb8, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x48, 0x1c8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, north half - see the matching row in
+    // gExitList_HyruleField_NorthHyruleField. Walking out SHF's north gate
+    // lands at NHF's south gate, at the arrival coordinates vanilla's town
+    // north exit used (endX 0x1f8, endY 0x318).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x318, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x3b8, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_EasternHillsSouth[] = {
     { WARP_TYPE_AREA, 0x38, 0x28, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifndef QUICKSTART
+    // Minish Woods is outside the seven-region ring: BLOCKED under
+    // QUICKSTART, no row.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x3c8, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_EasternHillsCenter[] = {
@@ -348,8 +401,11 @@ const Transition gExitList_HyruleField_EasternHillsCenter[] = {
 const Transition gExitList_HyruleField_EasternHillsNorth[] = {
     { WARP_TYPE_AREA, 0x40, 0x48, 0x78, 0x88, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#ifndef QUICKSTART
+    // Minish Woods again: BLOCKED under QUICKSTART, no row.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_LonLonRanch[] = {
@@ -365,6 +421,18 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0xb8, 0x154, 0x38, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, east half. In vanilla the ranch's west border enters
+    // Hyrule Town and the town's west gate exits into Trilby Highlands; the
+    // town is gone here, so this row joins those two journeys into one -
+    // walking out the ranch's west side lands at Trilby's east edge, at the
+    // arrival coordinates vanilla's own town west exit used (endX 0x1d8,
+    // endY 0x230).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x230, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
+      1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    // Veil Falls (both north borders) and Lake Hylia (east) are outside the
+    // ring: BLOCKED, no rows.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1c8, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_EAST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
@@ -373,8 +441,110 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xf0, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// PILOT (vanilla-doors-with-randomized-contents): the 5 tree doors below
+// are back on their REAL vanilla destinations. The old approach retargeted
+// every one of them to Castle Garden Main and reached the "? rooms" through
+// synthetic position-box teleports instead (game.c:
+// sQuickStartLadderEntrances) - that was built on the belief that real
+// WARP_TYPE_AREA doors can't fire under QUICKSTART's direct room load.
+// That belief is wrong: UpdateDoorTransition (scroll.c) gates only on the
+// player's action state and the tile's actTile value, and actTiles are
+// rebuilt from compiled map data by FillActTileForLayer on EVERY room load
+// - there is no "arrived via a real transition" prerequisite anywhere in
+// that path. Confirmed by reading the live actTile table after a direct
+// QUICKSTART warp into this room: all 5 tree doors below read ACT_TILE_40,
+// i.e. fully armed. The historical "never fires" result is far better
+// explained by QUICKSTART's own containment functions, which cancel any
+// transition whose destination isn't allowlisted - a real door firing to
+// AREA_TREE_INTERIORS would have been cancelled the same frame, which is
+// indistinguishable from never firing.
+//
+// The transition data says these rooms are not dead ends - all 4 Boomerang
+// trees list a WARP_TYPE_AREA down into a shared ROOM_CAVES_BOOMERANG hub,
+// and the Fairy Fountain tree into its own cave. In practice those inner
+// doors do NOT fire: probing the live actTile table shows 0x00 at each
+// tree's hub door, so the trees behave as ordinary one-way-in, one-way-out
+// rooms whose only working exit is the border back to this field. That is
+// fine for the "? room" model (the randomization happens INSIDE each room -
+// see sQuickStartRoomContentSites, game.c), but do not rely on the pocket
+// being explorable; it isn't, and the hub is currently unreachable.
+//
+// Nothing in this list is retargeted anymore - the Heart Piece Hallway
+// cave (0x138,0x1e8) was the last holdout and is back on its real vanilla
+// destination too (see its own comment below). The Castle Garden
+// connection (first entry) and the 3 ROOM_CAVES_TO_GRAVEYARD occurrences
+// (a genuine multi-exit through-cave) are untouched in both branches, as
+// before.
+const Transition gExitList_HyruleField_NorthHyruleField[] = {
+    { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1b0, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x240, 0x128, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1b0, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x240, 0x188, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x2f0, 0x138, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
+      ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // BUG FIX (user report: "went into a tree, got the reward, but when I
+    // exited I returned up a ladder in vanilla Hyrule Castle Garden and was
+    // stuck"). This is the mouth of the very Boomerang cave hub the 4
+    // converted trees drop into. While it stayed retargeted it also kept its
+    // synthetic trigger box (entrance index 13, 480-528 x 316-364) - and the
+    // hub's own vanilla exit lands the player at (0x1f8,0x138) = (504,312),
+    // four pixels above that box's top edge. Before the pilot the hub was
+    // unreachable (every tree led to Castle Garden), so the box never
+    // mattered; once the trees opened it, walking out of the cave dropped
+    // the player straight onto a teleport into a drawn pool room, whose own
+    // exit is retargeted to Castle Garden Main - landing them at a Castle
+    // Garden ladder return spot, exactly as reported. Retiring that box
+    // (game.c, sQuickStartLadderEntrances) is what actually fixes it.
+    //
+    // CORRECTION, from probing the live actTile table rather than trusting
+    // the transition data: this door does NOT fire (0x09 everywhere around
+    // (504,340), no door-capable value), and neither does the hub's own
+    // exit back to this field (0x0a at (0xa8,0xb8)), nor the trees' exits
+    // down into the hub (0x00). Only the hub's two ladders up to trees
+    // NW/NE are armed (ACT_TILE_241).
+    //
+    // So the Boomerang cave hub is effectively unreachable in play, and the
+    // "walk out of the cave onto the trigger box" mechanism described above
+    // could not actually have occurred. Retiring the box is still correct -
+    // it removed a hazard that would bite the moment any of those doors
+    // became reachable - but it is NOT a confirmed explanation of the
+    // reported Castle Garden lockout, which remains undiagnosed.
+    //
+    // Pointing this at the real cave rather than Castle Garden is the safer
+    // of the two inert options: if it ever did fire it lands inside the
+    // pilot's own pocket instead of at a Castle Garden ladder spot.
+    { WARP_TYPE_AREA, 0x1f8, 0x154, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_BOOMERANG, 1, TRANSITION_TYPE_NORMAL, 0x4,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0x138, 0x108, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    // The Heart Piece Hallway cave, converted to the vanilla-door model
+    // (the last of this region's doors to be). Its real destination is not
+    // a dead end in vanilla - ROOM_CAVES_HEART_PIECE_HALLWAY also has a
+    // WARP_TYPE_AREA onward into ROOM_CAVES_TO_GRAVEYARD, a genuine
+    // multi-exit through-cave that reaches Royal Valley, i.e. straight out
+    // of the run. That onward door is neutralized in the room's own exit
+    // list instead (gExitList_Caves_HeartPieceHallway below, QUICKSTART
+    // branch), which turns the hallway into the same shape as every other
+    // converted door here: one way in, one border back out.
+    { WARP_TYPE_AREA, 0x138, 0x1e8, 0x78, 0xc8, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0xf4, 0x38, 0x58, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x118, 0xf4, 0x118, 0x58, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_NorthHyruleField[] = {
     { WARP_TYPE_AREA, 0x1f8, 0x38, 0x1f8, 0x208, TRANSITION_SHAPE_AREA_44x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -400,14 +570,69 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, south half. Hyrule Town does not exist in this mode,
+    // but in vanilla it is the connective tissue of the whole ring - walk in
+    // the north gate, out the south gate, and you are in South Hyrule Field.
+    // This row keeps that journey and drops the town from the middle of it:
+    // the south border lands directly at SHF's north gate, at the exact
+    // arrival coordinates vanilla's own town south exit used
+    // (gExitList_HyruleTown_Main: endX 0x1f8, endY 0x10), so the far end is
+    // a spot vanilla itself vouches for.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x10, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    // ROYAL VALLEY, the eighth region - this is the way IN. Royal Valley's
+    // own EAST_SOUTH row back to here was never blocked, so opening this
+    // one makes the crossing two-way at the North Hyrule Field end; the
+    // room's internal geometry is what keeps the region one-way (its
+    // arrival pocket drops into the graveyard over a ledge, and nothing
+    // climbs back).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x260, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_ROYAL_VALLEY,
+      ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    // Veil Falls (east) is still outside the ring and BLOCKED: no border
+    // row, no crossing - IsPosInBorderTransitionRegion fires only on a
+    // matching row, so walking that edge simply stops at it.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST_NORTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x260, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Defensive fallback for the 4 doors this region contributes to the new
+// single-door "? room" pool (game.c: sQuickStartLadderEntrances, entrance
+// indices 15-18) - same reasoning as gExitList_HyruleField_SouthHyruleField's
+// own #ifdef block above. The digging cave (AREA_DIG_CAVES - deferred, its
+// own digging-specific quirks unchecked) and the 2 ROOM_CAVES_TRILBY_HIGHLANDS
+// occurrences (a genuine multi-exit through-cave, deferred as a future
+// "2-door" candidate) are untouched in both branches.
+const Transition gExitList_HyruleField_TrilbyHighlands[] = {
+    // PILOT: all 4 back on their real vanilla destinations. Every one is a
+    // genuine single-room dead end whose only exit is a WARP_TYPE_BORDER
+    // straight back here, which is the most reliable shape for this model
+    // (borders skip the actTile path entirely).
+    //
+    // Two of these open on touch (Percy's Treehouse and the Rupee cave both
+    // read ACT_TILE_40); the other two sit behind vanilla bombable walls -
+    // the Keese Chest and Fairy Fountain cave mouths read ACT_TILE_46
+    // (BombableWallManager) until blown open, so they now have to be bombed
+    // to find, which is the behaviour the user asked to keep.
+    { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x222, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x2a8, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x198, 0x2b2, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x88, 0x94, 0x88, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
 const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     { WARP_TYPE_AREA, 0x40, 0x388, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -419,21 +644,53 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x88, 0x94, 0x88, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x98, 0x284, 0x38, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x118, 0x284, 0x128, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
+#ifdef QUICKSTART
+    // THE TOWN BRIDGE, west half - see the matching row in
+    // gExitList_HyruleField_LonLonRanch. Walking out Trilby's east edge
+    // lands at the ranch's west side, at the arrival coordinates vanilla's
+    // town east exit used (endX 0x8, endY 0x230).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x230, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
+      1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    // ROYAL VALLEY, and it is open in BOTH directions on purpose (the user,
+    // Aug 2026: "the player should be able to walk back and forth between
+    // this seam"). Royal Valley's own SOUTH_WEST row into Trilby was never
+    // blocked, so without this one the crossing was one-way: in from Royal
+    // Valley, and then only onward.
+    //
+    // Where it lands, and why that looked alarming for an hour: the row
+    // puts the player at Trilby's y=16, on a LEDGE at the top of the map
+    // (tx 4-16, ty 0-4) that a collision flood reads as a sealed 48-tile
+    // component. It is not sealed - walking off its south edge at tx 14, 15
+    // or 16 drops the player to ty 9, inside the region's 334-tile main
+    // body. A flood cannot see a ledge (the tile you hop from reads as
+    // floor, the tiles you hop over read as wall), which is what
+    // tools/quickstart/component_map.py now exists to catch. So the drop
+    // is the way on, this row is the way back, and Royal Valley connects
+    // to the Trilby region properly in both directions.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // Mt Crenel (west) is still outside the ring: BLOCKED, no row.
+#else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xf0, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
       0x0, 0x0, 0x0 },
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
+#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_WesternWoodsNorth[] = {
     { WARP_TYPE_AREA, 0xa0, 0x1e8, 0x78, 0x78, TRANSITION_SHAPE_AREA_28x12, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // Castor Wilds joined the ring (the western spur, with the Wind Ruins
+    // behind it), so its border runs vanilla again - the row used to be
+    // compiled out under QUICKSTART.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
@@ -458,16 +715,57 @@ const Transition* const gExitLists_HyruleField[] = {
 
 // TODO this is one table
 const Transition gExitList_CastleGarden_Main[] = {
+    // Every entry here is vanilla, untouched. The two that matter for
+    // QUICKSTART are the cellar ladder and the Grimblade dojo door further
+    // down - those are Castle Garden's two "? room" ladders, and they're on
+    // the vanilla-door model now (their destination rooms get randomized
+    // events spawned inside them; see sQuickStartRoomContentSites, game.c).
+    //
+    // The old comment here claimed WARP_TYPE_AREA doors can never fire
+    // under QUICKSTART because the ACT_TILE they depend on isn't set up on
+    // a direct room load. That is wrong: FillActTileForLayer rebuilds
+    // actTiles from compiled map data on EVERY room load, and probing the
+    // live table confirms both of these doors read ACT_TILE_40 (armed).
+    // What actually cancelled them was QUICKSTART's own containment
+    // functions, which is now handled per-destination instead.
+    //
+    // The remaining 3 WARP_TYPE_AREA doors (Hyrule Castle proper, and the
+    // two Garden Fountains) genuinely do lead somewhere sprawling and are
+    // still blocked by containment (QuickStartEnforceContainment).
     { WARP_TYPE_AREA, 0x1f8, 0x28, 0xd8, 0x208, TRANSITION_SHAPE_AREA_28x12, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x308, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0xe8, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // "? room" ladder 1 of 2: the Great Fairy cellar. A true dead end -
+    // ROOM_HYRULE_CASTLE_CELLAR_0's only exit is straight back here.
     { WARP_TYPE_AREA, 0x68, 0x74, 0x68, 0x1a8, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // "? room" ladder 2 of 2: Grimblade's dojo entrance. Also a true dead
+    // end - ROOM_DOJOS_TO_GRIMBLADE's only exit is straight back here.
     { WARP_TYPE_AREA, 0x3a8, 0x184, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
+    // VANILLA, in both branches, per the user's own call. This row spent most
+    // of the mode's life retargeted: first to Melari's Mine (back when the
+    // mine was the hub and this was how the player walked back to it), then
+    // briefly as a deliberate wall once the mine left the route. Neither is
+    // right now - Castle Garden and North Hyrule Field are physically
+    // adjacent screens and both are regions in the same pool, so the honest
+    // behaviour is the vanilla one: walking off the bottom of Castle Garden
+    // puts you in North Hyrule Field, and NHF's own north border and
+    // WARP_TYPE_AREA door (gExitList_HyruleField_NorthHyruleField, both
+    // already vanilla in both branches) bring you back.
+    //
+    // Unlike the WARP_TYPE_AREA doors elsewhere in this file, a
+    // WARP_TYPE_BORDER entry doesn't depend on GetActTileAtTilePos at all
+    // (IsPosInBorderTransitionRegion, scroll.c, only checks facing direction
+    // and room-half), so it fires reliably under QUICKSTART.
+    //
+    // Both containment functions need an explicit exception for this pair -
+    // see QuickStartIsGardenFieldCrossing (game.c). Without it the crossing
+    // would work only on the runs where this save's chain happened to put
+    // the far side next, i.e. a wall on some runs and a door on others.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x48, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
@@ -723,10 +1021,37 @@ const Transition* const gExitLists_MinishVillage[] = {
 };
 
 const Transition gExitList_MelarisMine_Main[] = {
+#ifdef QUICKSTART
+    // Retargeted to Castor Darknut Hall (game.c's own custom link's
+    // destination for this same box) instead of the old Crenel Minish
+    // Paths - this real door's own position is the exact spot that custom
+    // link covers, and it was found winning the race against it in
+    // practice (same class of bug the Grimblade retarget below already
+    // works around), sending the player to Crenel Minish Paths instead of
+    // Hall. Same destination and spawn either way now, so the race no
+    // longer matters. facing_direction 0x4 (south) matches the user's
+    // request that Link land facing down here.
+    { WARP_TYPE_AREA, 0x78, 0x38, 0x77, 0x4a, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0x78, 0x38, 0x78, 0xa8, TRANSITION_SHAPE_AREA_12x12, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0x70, 0x12c, 0xbc, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x6, 0x0, 0x0, 0x0 },
+    // Back on its vanilla destination. It spent one session retargeted to
+    // AREA_DOJOS/ROOM_DOJOS_GRIMBLADE, from when the shop lived in that
+    // dojo and this door was how the player reached it. The shop has since
+    // moved out to a randomly drawn overworld door and the dojo became an
+    // ordinary "? room" reached the vanilla way (down Castle Garden's
+    // southeast ladder), but this retarget was never undone - so walking
+    // into Melari's Mine's southwest door dropped the player in the dojo,
+    // and leaving the dojo ran its own vanilla chain out to Castle Garden's
+    // southeast ladder, arriving in a Castle Garden that had never been
+    // through the region chain's setup. Reported by the user as being
+    // trapped there. Same row as the #else branch used to hold, no
+    // QUICKSTART divergence left: the room it leads to is a content site
+    // now (sQuickStartRoomContentSites), like Melari's other two.
     { WARP_TYPE_AREA, 0xa8, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x228, 0x220, 0x78, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
@@ -739,6 +1064,18 @@ const Transition* const gExitLists_MelarisMine[] = {
     [ROOM_MELARIS_MINE_MAIN] = gExitList_MelarisMine_Main,
 };
 
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_MinishPaths_ToMinishVillage[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishPaths_ToMinishVillage[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x208, 0x3e0, TRANSITION_SHAPE_BORDER_NORTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -746,6 +1083,7 @@ const Transition gExitList_MinishPaths_ToMinishVillage[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_MinishPaths_CastorWilds[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x28, 0x68, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x0, 0x0, 0x0, 0x0 },
@@ -788,6 +1126,18 @@ const Transition gExitList_CrenelMinishPaths_CrenelWater[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2cc, 0x98, TRANSITION_SHAPE_BORDER_WEST, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 1, TRANSITION_TYPE_INSTANT_MINISH, 0x6,
       0x0, 0x0, 0x0 },
@@ -795,6 +1145,19 @@ const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xf4, 0x108, TRANSITION_SHAPE_BORDER_EAST, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x2, 0x0, 0x0, 0x0 },
@@ -802,6 +1165,7 @@ const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_CrenelMinishPaths[] = {
     [ROOM_CRENEL_MINISH_PATHS_BEAN] = gExitList_CrenelMinishPaths_CrenelBean,
     [ROOM_CRENEL_MINISH_PATHS_SPRING_WATER] = gExitList_CrenelMinishPaths_CrenelWater,
@@ -809,6 +1173,36 @@ const Transition* const gExitLists_CrenelMinishPaths[] = {
     [ROOM_CRENEL_MINISH_PATHS_MELARI] = gExitList_CrenelMinishPaths_MelarisMine,
 };
 
+#ifdef QUICKSTART
+// THE TRILBY LADDER TRAP (user report, Aug 2026: "the player is able to go
+// UP, but cannot go back down... the player gets stuck on this ledge").
+//
+// Measured, not inferred. Trilby Highlands' northwest corner holds a raised
+// pocket - tiles tx 2-12, ty 7-12 - and a flood of the room's collision puts
+// it in a component of its own: 44 tiles against the main room's 334, with
+// nothing joining them. Walking every direction from inside the pocket keeps
+// the player inside it. The Mole Mitts dig cave's mouth is IN that pocket,
+// and vanilla's exit from the cave lands at (0x88,0x78) - back in the pocket
+// again. So the cave was not a way out; it was the pocket's only furniture.
+//
+// The cave is now the way down. Its overworld exit lands at (0x98,0x268)
+// instead - a spot vanilla itself uses as the landing for this region's
+// ROOM_CAVES_TRILBY_HIGHLANDS exit (see gExitList_Caves_TrilbyHighlands
+// below), so it is proven walkable and in the main body of the room rather
+// than measured by us and hoped for.
+//
+// This is the general shape for a one-way overworld pocket that contains a
+// cave: leave the climb alone, and make the cave's exit the descent. It
+// costs one retargeted row per region and needs no new machinery, which
+// matters as more regions come in - see the roadmap's Mole Mitts note.
+const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
+    { WARP_TYPE_AREA, 0x88, 0x44, 0x98, 0x268, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x1a8, 0x78, 0xb8, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
     { WARP_TYPE_AREA, 0x88, 0x44, 0x88, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -816,6 +1210,7 @@ const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_DigCaves1[] = {
     [ROOM_DIG_CAVES_EASTERN_HILLS] = gExitList_NoExitList,
     [ROOM_DIG_CAVES_1] = gExitList_NoExitList,
@@ -823,16 +1218,45 @@ const Transition* const gExitLists_DigCaves1[] = {
     [ROOM_DIG_CAVES_TRILBY_HIGHLANDS] = gExitList_DigCaves1_TrilbyHighlands,
 };
 
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
+const Transition gExitList_MinishHouseInteriors_GentariMain[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_GentariMain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x98, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+// GENTARI_EXIT is no longer QUICKSTART's cave connector - removed entirely
+// per the user's explicit request ("remove GENTARI_EXIT from the pool
+// entirely and only use the rooms we just identified"), now that a real
+// pool of genuine 2-door rooms exists (see game.c:
+// sQuickStart2DoorSmallRoomPool/LargeRoomPool). This room was only ever a
+// workaround (its single real door made bidirectional via a duplicated
+// sQuickStartLinks entry) because no proper 2-door candidates had been
+// surveyed yet. Reverted to pure vanilla - no #ifdef QUICKSTART override.
 const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
     { WARP_TYPE_AREA, 0x48, 0x50, 0x28, 0x70, TRANSITION_SHAPE_AREA_12x28, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_MinishHouseInteriors_Festari[] = {
+    { WARP_TYPE_AREA, 0xe8, 0xe8, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xe8, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_Festari[] = {
     { WARP_TYPE_AREA, 0xe8, 0xe8, 0x258, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -840,36 +1264,97 @@ const Transition gExitList_MinishHouseInteriors_Festari[] = {
       TRANSITION_TYPE_INSTANT_MINISH, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted the same way as the Tree Interiors ladder rooms further down
+// this file - one of the "? room" pool's 20 candidates (game.c,
+// sQuickStartQuestionRoomPool). Every pool room shares the same single
+// landing spot regardless of which of the 3 ladders it ends up assigned
+// to for a given save (south of ladder 0's own pot, clear of all 3
+// ladders' trigger boxes - see QUICKSTART_QUESTION_ROOM_RETURN_* in
+// game.c), since a static compile-time table can't otherwise vary its
+// destination coordinates per save.
+const Transition gExitList_MinishHouseInteriors_Red[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_Red[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x128, 0x238, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_Green[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_Green[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x168, 0x1e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_Blue[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_Blue[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1a8, 0x218, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_SideArea[] = {
+    // Back to a plain "? room" pool entry (the shared Castle Garden return
+    // point every other pool room uses) - the cave-connector's second door
+    // moved to ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT instead, per the
+    // user's own request (this room stays in the small-room pool).
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_SideArea[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x78, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_ShoeMinish[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_ShoeMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e8, 0x2e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_PotMinish[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
+      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_PotMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x48, 0x258, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_MinishHouseInteriors_BarrelMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x378, 0x298, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -887,6 +1372,30 @@ const Transition gExitList_MinishHouseInteriors_NULL2[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted (endX/endY only - area/room/shape all already correctly
+// point back to Melari's Mine) so each house's own real exit lands just
+// outside this file's own QuickStartLink trigger box for that same door
+// (game.c, sQuickStartLinks) instead of vanilla's own landing spot - a
+// symmetric "same door" round trip, same reasoning as Castle Garden's
+// south border. Confirmed walkable open ground at each of these three
+// spots by walking there directly from the door itself in the emulator.
+const Transition gExitList_MinishHouseInteriors_MelariMinesSouthwest[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xa8, 0x20d, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+const Transition gExitList_MinishHouseInteriors_MelariMinesSoutheast[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x228, 0x20d, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+const Transition gExitList_MinishHouseInteriors_MelariMinesEast[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x26c, 0x11e, TRANSITION_SHAPE_BORDER_WEST, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x6, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_MelariMinesSouthwest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xa8, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
@@ -902,46 +1411,117 @@ const Transition gExitList_MinishHouseInteriors_MelariMinesEast[] = {
       0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+// Back on its real vanilla exit (WW-South), same treatment as
+// gExitList_MinishHouseInteriors_SouthHyruleField below and for the same
+// reason: this room left the drawn small-room pool when it became a
+// walk-in content site (the Western Wood Minish door), but its pool-era
+// retarget - south border to Castle Garden at the shared ladder landing -
+// was left behind, which is the user's "exit a ? room, appear at the
+// cellar ladder" report. A walk-in player is minish-sized in here, so
+// vanilla's INSTANT_MINISH type is the correct one again.
 const Transition gExitList_MinishHouseInteriors_HyruleFieldSouthwest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x35, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// Back on its real vanilla exit, and no longer a member of the ladder pool
+// (game.c, sQuickStartSmallRoomPool). It is one of only two Minish-gated
+// destinations in the whole five-region pool - the other is
+// ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE - and the player now has a way in:
+// South Hyrule Field's Minish portal is revealed on entry
+// (QuickStartRevealHiddenLadders), so this is a real "? room" entered the
+// way vanilla built it, by shrinking and walking through the tiny door at
+// (72,456).
+//
+// The retarget it replaces sent this room's south border to Castle Garden,
+// with the transition type flipped from INSTANT_MINISH to NORMAL, because
+// back then the only way in was a normal-size ladder warp. Both halves of
+// that have to go together: leaving INSTANT_MINISH in place while the room
+// was still poolable would trap a normal-size player here, since that type
+// only fires for a minish player.
 const Transition gExitList_MinishHouseInteriors_SouthHyruleField[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x48, 0x1d4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_NextToKnuckle[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_NextToKnuckle[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x28, 0x55, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above
+// gExitList_MinishHouseInteriors_Red (and gExitList_MinishHouseInteriors_
+// HyruleFieldSouthwest just above for why this one specifically needed it
+// added rather than already having it).
+const Transition gExitList_MinishHouseInteriors_Librari[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_Librari[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e8, 0x1b4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+// Back on its real vanilla exit (EH-South) - the second half of the same
+// fix as gExitList_MinishHouseInteriors_HyruleFieldSouthwest above; this
+// is the Eastern Hills Minish house the user's report actually named.
 const Transition gExitList_MinishHouseInteriors_HyruleFieldExit[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x35, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x1b5, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_MinishWoodsBomb[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_MinishWoodsBomb[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x325, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_MinishHouseInteriors_LakeHyliaOcarina[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
+      0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_MinishHouseInteriors_LakeHyliaOcarina[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xc8, 0x1a4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH, 0x4,
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_MinishHouseInteriors[] = {
     [ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN] = gExitList_MinishHouseInteriors_GentariMain,
     [ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT] = gExitList_MinishHouseInteriors_GentariExit,
@@ -1147,6 +1727,37 @@ const Transition gExitList_HouseInteriors2_Cucco[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Link's House is a "? room" now (game.c: sQuickStartRoomContentSites), so
+// this room is entered through its own real vanilla front door from South
+// Hyrule Field, holds a randomized event, and is left the same way.
+//
+// The stairs up to the bedroom are neutralized, and only the stairs: the
+// bedroom room itself does not load correctly outside vanilla's own opening
+// sequence. Confirmed empirically - warping straight into
+// ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM, and walking up these stairs,
+// both land the player in South Hyrule Field at (1384,472) within a second,
+// nowhere near the house. That isn't a softlock, but it is a silent
+// teleport into the middle of a field from a spot the player has no reason
+// to expect one, so the stairs are pointed back into this room instead
+// (arriving at (0x58,0x38), a clear 32px below the stairs tile so the door
+// can't immediately re-fire). Walking up now simply reads as "nothing up
+// there". Same treatment, and same reasoning, as the Heart Piece Hallway's
+// onward door to ROOM_CAVES_TO_GRAVEYARD.
+//
+// The border below is vanilla's own, untouched - that is the exit the
+// player actually uses. It needs the front door to be openable at all,
+// which is a separate fix in game.c (QuickStartRevealHiddenLadders):
+// this house's HOUSE_DOOR_INT ships with unk7d = 1, so it never opens by
+// being walked into, and without that fix this room is a trap.
+// The stairs lead upstairs again, exactly as vanilla. They were looped back
+// into this same room because the bedroom did not survive being entered
+// outside the opening sequence - it ran script_PlayerIntro and spat the
+// player out into South Hyrule Field, which read in play as "the stairs do
+// nothing". That was a symptom of the global START flag never being set,
+// which GameTask_Transition now does; with it set the bedroom loads
+// normally (verified: the player stays in (34,21) and its content site
+// spawns there). So this row is vanilla's again.
 const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
     { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1154,6 +1765,15 @@ const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#else
+const Transition gExitList_HouseInteriors2_LinksHouseEntrance[] = {
+    { WARP_TYPE_AREA, 0x58, 0x18, 0x58, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x290, 0x19c, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#endif
 const Transition gExitList_HouseInteriors2_Dampe[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1a0, 0x1ac, TRANSITION_SHAPE_BORDER_SOUTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1277,11 +1897,20 @@ const Transition gExitList_GreatFairies_Graveyard[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
+const Transition gExitList_GreatFairies_MinishWoods[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_GreatFairies_MinishWoods[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_GreatFairies_MtCrenel[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x148, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1294,11 +1923,34 @@ const Transition* const gExitLists_GreatFairies[] = {
     [ROOM_GREAT_FAIRIES_NOT_IMPLEMENTED] = gExitList_NoExitList,
 };
 
+#ifdef QUICKSTART
+// Stockwell's shop, vanilla's own general store, is QUICKSTART's shop room
+// now (game.c: QuickStartSetupShopRoom). It was picked against the user's
+// own three constraints: currently unused by this mode, and - the part that
+// actually matters - its single vanilla connection is to Hyrule Town, which
+// is NOT one of the overworld regions in this run's pool. So nothing the
+// player can already reach opens onto it, and it can be attached to
+// whichever overworld door the save's own draw picks without colliding with
+// a real connection.
+//
+// The destination here is a placeholder. Which door the shop hangs off
+// varies per save, so the real return leg is written at transition time by
+// QuickStartFixupShopReturn (game.c), the same way every other
+// per-save-variable return in this file is handled. North Hyrule Field is
+// used as the placeholder rather than Hyrule Town purely so a missed fixup
+// lands inside the run instead of escaping it.
+const Transition gExitList_HouseInteriors3_StockwellShop[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors3_StockwellShop[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x258, 0x2fc, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_HouseInteriors3_Cafe[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x198, 0x2fc, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1374,6 +2026,18 @@ const Transition gExitList_HouseInteriors1_PostOffice[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_HouseInteriors1_Library2F[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors1_Library2F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 2, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1381,6 +2045,19 @@ const Transition gExitList_HouseInteriors1_Library2F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_HouseInteriors1_Library1F[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors1_Library1F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x168, 0xb8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1388,6 +2065,7 @@ const Transition gExitList_HouseInteriors1_Library1F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_HouseInteriors1_Inn1F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x388, 0x268, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1421,6 +2099,18 @@ const Transition gExitList_HouseInteriors1_InnWest2F[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_HouseInteriors1_InnEast2F[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0xb8, 0x178, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors1_InnEast2F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a8, 0x230, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 2, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1428,6 +2118,19 @@ const Transition gExitList_HouseInteriors1_InnEast2F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_HouseInteriors1_SchoolWest[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x78, 0x48, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_HouseInteriors1_SchoolWest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2c8, 0xa8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1435,6 +2138,7 @@ const Transition gExitList_HouseInteriors1_SchoolWest[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_HouseInteriors1_SchoolEast[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x328, 0x78, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1492,6 +2196,10 @@ const Transition gExitList_TreeInteriors_PercysTreehouse[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// PILOT: no longer retargeted. This room is now a ? room in place, reached
+// through South Hyrule Field's own real tree door, so its real vanilla exit
+// back to South Hyrule Field is exactly what's wanted - identical in both
+// builds now.
 const Transition gExitList_TreeInteriors_HeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a0, 0x238, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1504,11 +2212,26 @@ const Transition gExitList_TreeInteriors_Waveblade[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted (this room is otherwise never reached as a destination by any
+// real transition - see game.c's Castle Garden hidden-ladder feature) so
+// its one real exit returns to Castle Garden Main, landing south of ladder
+// 0's own pot spot (104,104 - one of the garden's own real, pre-existing
+// HIDDEN_LADDER_DOWN fixtures, per game.c) and clear of that ladder's
+// trigger box (game.c, QuickStartProcessLadderLinks: +/-16px around the
+// pot) so arriving here doesn't immediately re-trigger the ladder.
+const Transition gExitList_TreeInteriors_14[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_TreeInteriors_14[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x210, 0x1d8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_TreeInteriors_BoomerangNorthwest[] = {
     { WARP_TYPE_AREA, 0x78, 0x54, 0x48, 0x88, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_BOOMERANG, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0,
       0x0, 0x0 },
@@ -1537,6 +2260,10 @@ const Transition gExitList_TreeInteriors_BoomerangSoutheast[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// Back on its real vanilla exit (WW-North) - third room of the same fix
+// as the two Minish houses above: promoted to a walk-in content site (the
+// Western Wood heart-piece tree door) but still carrying its pool-era
+// retarget to Castle Garden's shared ladder landing.
 const Transition gExitList_TreeInteriors_WesternWoodsHeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xa0, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1556,11 +2283,22 @@ const Transition gExitList_TreeInteriors_MinishWoodsGreatFairy[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted the same way as gExitList_TreeInteriors_14 above, for ladder 1
+// (pot at 936,376 - the garden's other real HIDDEN_LADDER_DOWN fixture) -
+// landing south of it, clear of its own trigger box.
+const Transition gExitList_TreeInteriors_1C[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a8, 0x1a0, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_TreeInteriors_1C[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x50, 0x298, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_TreeInteriors_MinishWoodsBusinessScrub[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_KINSTONE_BUSINESS_SCRUB, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -1571,11 +2309,21 @@ const Transition gExitList_TreeInteriors_MinishWoodsBusinessScrub[] = {
 const Transition gExitList_TreeInteriors_1E[] = {
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted the same way as gExitList_TreeInteriors_14 above, for ladder 2
+// (bush at 650,310) - landing south of it, clear of its own trigger box.
+const Transition gExitList_TreeInteriors_UnusedHeartContainer[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x28a, 0x15e, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_TreeInteriors_UnusedHeartContainer[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e0, 0x1b8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_TreeInteriors[] = {
     [ROOM_TREE_INTERIORS_WITCH_HUT] = gExitList_TreeInteriors_WitchHut,
     [ROOM_TREE_INTERIORS_1] = gExitList_NoExitList,
@@ -1611,21 +2359,46 @@ const Transition* const gExitLists_TreeInteriors[] = {
     [ROOM_TREE_INTERIORS_UNUSED_HEART_CONTAINER] = gExitList_TreeInteriors_UnusedHeartContainer,
 };
 
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
+const Transition gExitList_Dojos_Grayblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Grayblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x20, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_Dojos_Swiftblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Swiftblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x2e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+const Transition gExitList_Dojos_Waveblade[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
+      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Dojos_Waveblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_Dojos_ToGrimblade[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x3a8, 0x168, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -1781,6 +2554,18 @@ const Transition gExitList_CrenelCaves_PillarCave[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x238, 0xc8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1788,6 +2573,7 @@ const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_CrenelCaves_ExitToMines[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x188, 0x108, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1812,6 +2598,18 @@ const Transition gExitList_CrenelCaves_SpinyChuPuzzle[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x348, 0x68, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
@@ -1819,6 +2617,7 @@ const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_CrenelCaves_WaterHeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x118, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
@@ -1829,6 +2628,18 @@ const Transition gExitList_CrenelCaves_RupeeFairyFountain[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x198, 0xe8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1836,6 +2647,7 @@ const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_CrenelCaves_MushroomKeese[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x148, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1843,6 +2655,18 @@ const Transition gExitList_CrenelCaves_MushroomKeese[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2d8, 0x198, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1850,6 +2674,7 @@ const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
       0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_CrenelCaves_BombBusinessScrub[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x1a8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -1909,6 +2734,21 @@ const Transition gExitList_CastorCaves_WindRuins[] = {
       0x0, 0x0 },
     TransitionListEnd,
 };
+// VANILLA, unconditionally - the QUICKSTART override that stood here is
+// gone rather than corrected, because the two branches had become
+// identical and a #ifdef whose arms agree is just a place for them to
+// disagree again later.
+//
+// What it used to say: both real doors retargeted to the shared 2-door
+// connector return, because this room was a connector candidate. It is a ?
+// room on the vanilla-door model now (sQuickStartRoomContentSites) and it
+// cannot be both - see sQuickStart2DoorSmallRoomPool in game.c, where the
+// row was removed, for the whole story. While it WAS both, these two rows
+// still carried the connector's 0x3fe/0x3fd tags, so walking the stairs
+// threw the player into whichever room the connector had drawn that run -
+// a Trilby tree interior, landing on no valid spot inside it. Hard lock,
+// and user-reported rather than caught by reading, because the table looks
+// perfectly reasonable until you walk it.
 const Transition gExitList_CastorCaves_Darknut[] = {
     { WARP_TYPE_AREA, 0x68, 0x18, 0x188, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1935,6 +2775,14 @@ const Transition* const gExitLists_CastorCaves[] = {
 const Transition gExitList_CastorDarknut_Main[] = {
     TransitionListEnd,
 };
+// RESTORED TO VANILLA, and the retarget it replaces was stale twice over.
+// It sent the hall's door to Melari's Mine, from when the mine was the hub
+// and a custom sQuickStartLinks row covered this same box. The mine stopped
+// being the hub, that link row is gone (the only Melari rows left pair it
+// with Minish House Interiors), and nothing was left behind the redirect -
+// so the hall's one way out pointed at a room this mode no longer routes
+// through at all. It goes back to the cave room it came from, which is what
+// makes the pocket a two-room pocket again.
 const Transition gExitList_CastorDarknut_Hall[] = {
     { WARP_TYPE_AREA, 0x188, 0x18, 0x68, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2178,6 +3026,28 @@ const Transition* const gExitLists_WindTribeTowerRoof[] = {
 };
 
 const Transition gExitList_Caves_Boomerang[] = {
+#ifdef QUICKSTART
+    // Arrival in each tree hollow moved from (0x78,0x38) to (0x78,0x68) -
+    // from just NORTH of the hollow's ladder to just SOUTH of it.
+    //
+    // Vanilla can put the player north of the ladder because vanilla only
+    // ever runs this trip once: the chamber is a one-time prize room and
+    // its ladders exist because the Boomerang chest event drew them. Here
+    // the hollows are ? rooms the player comes and goes from, and the
+    // ladder is a live door in both directions (game.c opens its collision
+    // so the vanilla door can fire at all). North of it, the only way out
+    // of the hollow - its south border to the field - crosses the ladder,
+    // so leaving would send the player straight back down. (120,104) is
+    // open floor on the field side of it, so both ways out are a walk.
+    { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x48, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
+      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#else
     { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
@@ -2186,6 +3056,7 @@ const Transition gExitList_Caves_Boomerang[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+#endif
     { WARP_TYPE_AREA, 0xa8, 0xb8, 0x1f8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
@@ -2225,6 +3096,9 @@ const Transition gExitList_Caves_TrilbyFairyFountain[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// PILOT: no longer retargeted, same reasoning as
+// gExitList_TreeInteriors_HeartPiece above - this cave is a ? room in place
+// now, reached through South Hyrule Field's own (bombable) cave mouth.
 const Transition gExitList_Caves_SouthHyruleFieldFairyFountain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x118, 0xb8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2252,6 +3126,21 @@ const Transition gExitList_Caves_TrilbyHighlands[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// VANILLA, in both branches again. This is the cave under Lon Lon Ranch's
+// shallow water - the one a Kinstone fusion reveals a staircase down into.
+//
+// It spent a long time retargeted at Castle Garden Main, which is the landing
+// spot every room in the old "? room" pool shared. The room was never actually
+// added to that pool, though (nothing in game.c so much as named it), so the
+// retarget was all cost and no benefit: the player fused the Kinstone, walked
+// down the revealed stairs into an empty cave, and its only exit deposited
+// them in Castle Garden. Reported by the user as "this staircase leads
+// nowhere, the player just warps back to the overworld map" - the warp they
+// saw was this exit firing.
+//
+// Back on vanilla, it returns to Lon Lon Ranch at (0x1f8,0x218), just south of
+// the staircase it came from, and the room is a content site now
+// (sQuickStartRoomContentSites, game.c) so there is something down there.
 const Transition gExitList_Caves_LonLonRanchWallet[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x218, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2262,6 +3151,9 @@ const Transition gExitList_Caves_SouthHyruleFieldRupee[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+// PILOT: no longer retargeted - this cave is a ? room in place now, reached
+// through Trilby Highlands' own real cave mouth, so its real vanilla exit
+// back to Trilby is exactly what's wanted. Identical in both builds.
 const Transition gExitList_Caves_TrilbyRupee[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x2b8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2280,6 +3172,33 @@ const Transition gExitList_Caves_HillsKeeseChest[] = {
 const Transition gExitList_Caves_BottleBusinessScrub[] = {
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// This room is North Hyrule Field's Heart Piece Hallway cave on the
+// vanilla-door model now (gExitList_HyruleField_NorthHyruleField above):
+// entered through its own real vanilla cave mouth, with a randomized event
+// spawned inside it (game.c: sQuickStartRoomContentSites). It is no longer
+// a 2-door pool room, so the old "both doors lead back to the Lon Lon
+// Ranch connector ledge" retarget is gone.
+//
+// CORRECTION. The first entry used to be pointed back at this cave's own
+// mouth, on the belief that vanilla's destination - ROOM_CAVES_TO_GRAVEYARD
+// - was a through-cave reaching Royal Valley and so escaping the run. That
+// is wrong, and reading its exit list settles it: all four of its doors are
+// two mouths back into North Hyrule Field, a border south into the same
+// field, and one back into this hallway. The two caves are a closed pocket
+// between them, and always were.
+//
+// So this entry is vanilla again, and the pair connects the way the map
+// suggests it should. ROOM_CAVES_TO_GRAVEYARD is blessed past containment
+// in game.c (QuickStartIsPocketInteriorRoom) and hosts its own ? event.
+const Transition gExitList_Caves_HeartPieceHallway[] = {
+    { WARP_TYPE_AREA, 0x78, 0x38, 0x138, 0x88, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1,
+      TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD,
+      ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_Caves_HeartPieceHallway[] = {
     { WARP_TYPE_AREA, 0x78, 0x38, 0x138, 0x88, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
@@ -2287,6 +3206,7 @@ const Transition gExitList_Caves_HeartPieceHallway[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_Caves_NorthHyruleFieldFairyFountain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS,
       ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2351,6 +3271,18 @@ const Transition gExitList_VeilFallsCaves_Entrance[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_VeilFallsCaves_Exit[] = {
+    { WARP_TYPE_AREA, 0x58, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_VeilFallsCaves_Exit[] = {
     { WARP_TYPE_AREA, 0x58, 0x18, 0x128, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2358,11 +3290,24 @@ const Transition gExitList_VeilFallsCaves_Exit[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_VeilFallsCaves_SecretChest[] = {
     { WARP_TYPE_AREA, 0x58, 0x38, 0x98, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES,
       ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
+    { WARP_TYPE_AREA, 0x58, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_AREA, 0x98, 0x38, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
     { WARP_TYPE_AREA, 0x58, 0x38, 0x98, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2370,6 +3315,7 @@ const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_VeilFallsCaves_BlockPuzzle[] = {
     { WARP_TYPE_AREA, 0x98, 0x38, 0x58, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES,
       ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2377,6 +3323,18 @@ const Transition gExitList_VeilFallsCaves_BlockPuzzle[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_VeilFallsCaves_RupeePath[] = {
+    { WARP_TYPE_AREA, 0x98, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_VeilFallsCaves_RupeePath[] = {
     { WARP_TYPE_AREA, 0x98, 0x18, 0x38, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2384,11 +3342,25 @@ const Transition gExitList_VeilFallsCaves_RupeePath[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above
+// gExitList_MinishHouseInteriors_Red - this room is a small-pool member too
+// (per the user's own room survey), its real exit otherwise leading
+// somewhere entirely outside the QUICKSTART loop (Veil Falls proper) rather
+// than back into it.
+const Transition gExitList_VeilFallsCaves_HeartPiece[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_VeilFallsCaves_HeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x38, TRANSITION_SHAPE_BORDER_SOUTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_VeilFallsCaves[] = {
     [ROOM_VEIL_FALLS_CAVES_HALLWAY_2F] = gExitList_VeilFallsCaves_Hallway2F,
     [ROOM_VEIL_FALLS_CAVES_HALLWAY_1F] = gExitList_VeilFallsCaves_Hallway1F,
@@ -2413,11 +3385,20 @@ const Transition gExitList_RoyalValleyGraves_HeartPiece[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
+const Transition gExitList_RoyalValleyGraves_Gina[] = {
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_RoyalValleyGraves_Gina[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x188, 0x98, TRANSITION_SHAPE_BORDER_SOUTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_RoyalValleyGraves[] = {
     [ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE] = gExitList_RoyalValleyGraves_HeartPiece,
     [ROOM_ROYAL_VALLEY_GRAVES_GINA] = gExitList_RoyalValleyGraves_Gina,
@@ -3162,6 +4143,18 @@ const Transition* const gExitLists_TempleOfDroplets[] = {
     [ROOM_TEMPLE_OF_DROPLETS_3f] = gExitList_NoExitList,
 };
 
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_61_0[] = {
+    { WARP_TYPE_AREA, 0x78, 0x58, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_61_0[] = {
     { WARP_TYPE_AREA, 0x78, 0x58, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_DEEPWOOD_SHRINE, ROOM_DEEPWOOD_SHRINE_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -3169,6 +4162,7 @@ const Transition gExitList_61_0[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_61[] = {
     [ROOM_NULL_61_0] = gExitList_61_0,
 };
@@ -3432,6 +4426,18 @@ const Transition gExitList_DarkHyruleCastle_3FKeatonHallToVaati[] = {
       ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
+    { WARP_TYPE_AREA, 0xa8, 0x28, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
     { WARP_TYPE_AREA, 0xa8, 0x28, 0x78, 0x168, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE_OUTSIDE,
       ROOM_DARK_HYRULE_CASTLE_OUTSIDE_ZELDA_STATUE_PLATFORM, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -3439,6 +4445,7 @@ const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
       ROOM_DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition gExitList_DarkHyruleCastle_2FTopLeftTower[] = {
     { WARP_TYPE_AREA, 0x68, 0x38, 0xa8, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE, ROOM_DARK_HYRULE_CASTLE_3F_TOP_LEFT_TOWER,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -3712,6 +4719,18 @@ const Transition* const gExitLists_VaatisArms[] = {
     [ROOM_VAATIS_ARMS_SECOND] = gExitList_VaatisArms_Second,
 };
 
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
+    { WARP_TYPE_AREA, 0x88, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
     { WARP_TYPE_AREA, 0x88, 0x18, 0xa8, 0x178, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE,
       ROOM_DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -3719,6 +4738,7 @@ const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_DarkHyruleCastleBridge[] = {
     [ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN] = gExitList_DarkHyruleCastleBridge_Main,
 };
@@ -3761,6 +4781,18 @@ const Transition* const gExitLists_HyruleCastle[] = {
     [ROOM_HYRULE_CASTLE_7] = gExitList_NoExitList,
 };
 
+#ifdef QUICKSTART
+// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
+// real doors now lead back to the Lon Lon Ranch cave-connector ledge
+// (0xb8,0x138), same shared return spot every other 2-door pool room
+// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
+// startX/startY/shape/warp_type kept as-is - only destination changes.
+const Transition gExitList_SanctuaryEntrance_Main[] = {
+    { WARP_TYPE_AREA, 0x88, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    TransitionListEnd,
+};
+#else
 const Transition gExitList_SanctuaryEntrance_Main[] = {
     { WARP_TYPE_AREA, 0x88, 0x38, 0xc8, 0x1e8, TRANSITION_SHAPE_AREA_12x12, AREA_SANCTUARY, ROOM_SANCTUARY_HALL, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
@@ -3768,6 +4800,7 @@ const Transition gExitList_SanctuaryEntrance_Main[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
+#endif
 const Transition* const gExitLists_SanctuaryEntrance[] = {
     [ROOM_SANCTUARY_ENTRANCE_MAIN] = gExitList_SanctuaryEntrance_Main,
 };

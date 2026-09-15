@@ -9,6 +9,21 @@ void sub_08075F38(ItemBehavior*, u32);
 void sub_08075F84(ItemBehavior*, u32);
 void sub_08075D88(ItemBehavior*, u32);
 
+// Doubles the Bow's fire rate, per the user's own request. UpdateItemAnim
+// (playerUtils.c) advances the player entity's shared animation by one
+// frame and re-syncs this ItemBehavior's own playerFrame/playerFrameIndex/
+// playerFrameDuration copies from it; every state-transition check in this
+// file (this->playerFrame & 0x80 or & 1) is a threshold/bit test rather
+// than an exact-value match, so advancing the animation twice per real
+// frame - instead of once - safely halves the time the draw/shoot/recover
+// cycle takes without needing to touch the underlying animation asset
+// data, and without affecting any other item's own UpdateItemAnim calls
+// elsewhere (this wrapper is only ever called from this file).
+static void ItemBowUpdateAnimFast(ItemBehavior* this) {
+    UpdateItemAnim(this);
+    UpdateItemAnim(this);
+}
+
 void ItemBow(ItemBehavior* this, u32 index) {
     static void (*const stateFuncs[])(ItemBehavior*, u32) = {
         sub_08075DF4, sub_08075E40, ItemBowShoot, sub_08075F38, sub_08075F84, sub_08075D88,
@@ -31,7 +46,7 @@ void sub_08075DF4(ItemBehavior* this, u32 index) {
 void sub_08075E40(ItemBehavior* this, u32 index) {
     if (gPlayerState.bow_state != 0) {
         if ((gPlayerState.attack_status & 0x80) == 0) {
-            UpdateItemAnim(this);
+            ItemBowUpdateAnimFast(this);
             if ((this->playerFrame & 0x80) != 0) {
                 this->stateID = 2;
                 this->priority &= ~0x80;
@@ -69,7 +84,7 @@ void ItemBowShoot(ItemBehavior* this, u32 index) {
 
 void sub_08075F38(ItemBehavior* this, u32 index) {
     if (((gPlayerState.attack_status & 0x80) == 0) && (gPlayerState.bow_state != 0)) {
-        UpdateItemAnim(this);
+        ItemBowUpdateAnimFast(this);
         if ((this->playerFrame & 1) != 0) {
             this->stateID = 4;
         }
@@ -84,7 +99,7 @@ void sub_08075F84(ItemBehavior* this, u32 index) {
         if (GetInventoryValue(ITEM_ARROW_BUTTERFLY) == 1) {
             sub_08077E3C(this, 5);
         } else {
-            UpdateItemAnim(this);
+            ItemBowUpdateAnimFast(this);
         }
         if ((this->playerFrame & 0x80) == 0) {
             return;

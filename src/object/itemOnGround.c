@@ -384,6 +384,62 @@ bool32 sub_08081420(ItemOnGroundEntity* this) {
 }
 
 bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
+#ifdef QUICKSTART
+    // Kinstones are a currency in this mode, not a discovery. Vanilla sets
+    // the "always narrate" bit (unk3 & 2) on them, so every single piece
+    // stops the game with "You found a Kinstone!" - fine when there are a
+    // hundred fusions across a whole playthrough, intolerable when enemies
+    // drop them by the handful.
+    //
+    // Dropping the always-narrate bit for these four types leaves vanilla's
+    // OWN rule in place - !GetInventoryValue(type), i.e. narrate the first
+    // one only - which is exactly how hearts, bombs and arrows already
+    // behave. GiveItem sets the inventory value on that first pickup, and
+    // the per-run reset clears the inventory, so the message comes back
+    // once per run and then stays quiet.
+    switch (super->type) {
+        case ITEM_KINSTONE:
+        case ITEM_KINSTONE_RED:
+        case ITEM_KINSTONE_BLUE:
+        case ITEM_KINSTONE_GREEN:
+            return !GetInventoryValue(super->type);
+        // The food charms/curses (game.c, QuickStartNoteFoodItem). Never
+        // the item-get cutscene for these: the pastries carry the
+        // always-narrate bit but no working item-get presentation, so
+        // the cutscene path ate the entity without granting anything
+        // (measured: the croissant vanished on touch, no pose, no
+        // inventory, no effect). The plain GiveItem path is the one that
+        // works - and it is also where the food hook lives, so the Ezlo
+        // receipt line does the announcing the cutscene would have.
+        case ITEM_BRIOCHE:
+        case ITEM_CROISSANT:
+        case ITEM_PIE:
+        case ITEM_CAKE:
+        case ITEM_QST_DOGFOOD:
+        case ITEM_QST_MUSHROOM:
+        case ITEM_QST_BOOK1:
+        case ITEM_QST_BOOK2:
+        case ITEM_QST_BOOK3:
+        case ITEM_QST_TINGLE_TROPHY:
+        case ITEM_QST_CARLOV_MEDAL:
+        case ITEM_QST_BROKEN_SWORD:
+        case ITEM_JABBERNUT:
+        // The luck charm. Vanilla treats shells as a silent pickup
+        // (see the bounce-SFX group above), but as a CHARM it has to run
+        // the plain GiveItem path so QuickStartNoteFoodItem sees it and
+        // announces what it did.
+        case ITEM_SHELLS:
+        // F10's two tools take the same plain-GiveItem path: their pickup
+        // receipt (the Ezlo line naming what the tool does / where the
+        // Element region is) lives in QuickStartNoteFoodItem, which only
+        // the plain path reaches reliably.
+        case ITEM_MAP:
+        case ITEM_COMPASS:
+            return FALSE;
+        default:
+            break;
+    }
+#endif
     return ((gItemMetaData[super->type].unk3 & 0x2) || !GetInventoryValue(super->type));
 }
 

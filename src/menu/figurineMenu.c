@@ -32,6 +32,27 @@ u32 sub_080A4CBC(u32);
 void sub_080A4BA0(u32, u32);
 void sub_080A4DB8(u32);
 
+#ifdef QUICKSTART
+// The trophy case, re-pointed at this mode's own catalog (see
+// sQuickStartCatalog, game.c). Vanilla's whole screen is reused: the same
+// scrolling five-row list, the same description panel, the same
+// "not found yet" blanking. Only four things had to change - how many
+// entries there are, which text a row's name comes from, which text the
+// description panel shows, and what the picture pane draws - because the
+// OWNERSHIP test underneath it all is ReadBit(gSave.figurines, idx), and
+// the catalog stores its ledger in that very array (this mode has no
+// figurines, so the bitset was dead storage that the save file already
+// carried across runs).
+extern s32 QuickStartCatalogCount(void);
+extern bool32 QuickStartCatalogOwned(s32 index);
+extern u32 QuickStartCatalogNameText(s32 index);
+extern u32 QuickStartCatalogDescText(s32 index);
+extern u32 QuickStartCatalogItem(s32 index);
+#define FIGURINE_MENU_MAX_ENTRIES QuickStartCatalogCount()
+#else
+#define FIGURINE_MENU_MAX_ENTRIES (!gSave.saw_staffroll ? 130 : 136)
+#endif
+
 const KeyButtonLayout gUnk_0812813C = {
     0xffu,
     0xd8u,
@@ -115,7 +136,7 @@ void FigurineMenu_080A4608(void) {
     }
 
     r1 = gUI.field_0x3;
-    maxFigurines = !gSave.saw_staffroll ? 130 : 136;
+    maxFigurines = FIGURINE_MENU_MAX_ENTRIES;
     if (maxFigurines < r1) {
         r1 = 1;
     }
@@ -248,7 +269,7 @@ void FigurineMenu1_ViewAllFigurines(void) {
         case A_BUTTON:
             break;
     }
-    maxFigurines = !gSave.saw_staffroll ? 130 : 136;
+    maxFigurines = FIGURINE_MENU_MAX_ENTRIES;
     if (figurineIndex <= 0) {
         figurineIndex = 1;
     }
@@ -286,7 +307,7 @@ u32 FigurineMenu_isFigurineOwned(s32 figurineIndex) {
     u32 hasFigurine;
 
     hasFigurine = 0;
-    maxFigurines = !gSave.saw_staffroll ? 130 : 136;
+    maxFigurines = FIGURINE_MENU_MAX_ENTRIES;
     if ((0 < figurineIndex) || (maxFigurines >= figurineIndex)) {
         if (ReadBit(gSave.figurines, figurineIndex)) {
             hasFigurine = 1;
@@ -318,7 +339,7 @@ void FigurineMenu_080A4978(void) {
     gOamCmd.x = 0x9c;
     gOamCmd.y = 0x48;
     DrawDirect(sub_080A4978_draw_constant, 0);
-    maxFigurines = !gSave.saw_staffroll ? 130 : 136;
+    maxFigurines = FIGURINE_MENU_MAX_ENTRIES;
     if ((gMenu.column_idx & 2) != 0) {
         if (maxFigurines >= (gFigurineMenu.figure_idx)) {
             gOamCmd.x = 0xe8;
@@ -369,6 +390,18 @@ void FigurineMenu_080A4978(void) {
             }
         }
     }
+#ifndef QUICKSTART
+    // The picture pane. Suppressed in QUICKSTART: it draws gFigurines[idx],
+    // a per-FIGURINE pose sprite plus a per-figurine art blob DMA'd to
+    // OBJ_VRAM0+0x4000, and this mode's catalog rows are items, not
+    // figurines - entry 5 would show whichever figurine happens to sit at
+    // index 5, which is worse than showing nothing. The two halves have to
+    // go together: keeping the DrawDirect without the matching load draws
+    // the pose against stale VRAM, i.e. garbage. Giving the pane the item's
+    // own inventory icon is the obvious follow-up (the pause menu draws
+    // those with DrawDirect + gSpriteAnimations_322), but that sheet is not
+    // among the ones this screen loads, and half the catalog - hearts,
+    // rupees, refills, skills - has no inventory icon at all.
     if (gMenu.column_idx & 1) {
         if (FigurineMenu_isFigurineOwned(gFigurineMenu.figure_idx)) {
             gOamCmd.x = 0x2c;
@@ -390,6 +423,7 @@ void FigurineMenu_080A4978(void) {
             }
         }
     }
+#endif
 }
 
 void sub_080A4B44(void) {
@@ -467,7 +501,7 @@ void sub_080A4BA0(u32 arg1, u32 arg2) {
         s0.unk14 = arg2;
     }
 
-    maxFigurines = !gSave.saw_staffroll ? 130 : 136;
+    maxFigurines = FIGURINE_MENU_MAX_ENTRIES;
 
     if (r5 <= 0 || maxFigurines < r5) {
         r5 = -1;
@@ -487,6 +521,23 @@ void sub_080A4BA0(u32 arg1, u32 arg2) {
             r0 -= 7;
         MemFill16(r0, s0.unk0, 0x80);
         if (r5 > 0) {
+#ifdef QUICKSTART
+            // r5 keeps vanilla's owned(+0x800)/unowned(+0x8000) encoding,
+            // because that is what keys the per-row redraw cache above and
+            // it has to stay unique per row AND per state. Only the text it
+            // resolves to is ours: QuickStartCatalogNameText does the
+            // locked-row blanking itself, so vanilla's 0x889 "???" swap has
+            // nothing left to do.
+            u32 textId = QuickStartCatalogNameText((s32)((r5 > 0x7fff) ? (r5 - 0x8000) : (r5 - 0x800)));
+            s2.unk8 = textId >> 8;
+            s2.unk9 = textId;
+            s0.unk0 += 0xb;
+            if (gSaveHeader->language == 0) {
+                ShowTextBox((u32)&s2, &s0);
+            } else {
+                ShowTextBox(textId, &s0);
+            }
+#else
             if (r5 > 0x7fff) {
                 r5 = 0x889;
             }
@@ -502,6 +553,7 @@ void sub_080A4BA0(u32 arg1, u32 arg2) {
             } else {
                 ShowTextBox(r5, &s0);
             }
+#endif
         }
         gScreen.bg3.updated = 1;
     }
@@ -539,7 +591,14 @@ u32 sub_080A4CBC(u32 figurineIndex) {
         MemCopy(&gBG1Buffer, (void*)0x600e000, sizeof(gBG1Buffer));
         ownsFigurine = FigurineMenu_isFigurineOwned(figurineIndex);
         if (ownsFigurine != 0) {
+#ifdef QUICKSTART
+            // The description panel: what the thing DOES. Only drawn for a
+            // found entry, which is vanilla's rule and also ours - the
+            // point of the case is that the list fills in as you play.
+            ShowTextBox(QuickStartCatalogDescText((s32)figurineIndex), &gUnk_08128190);
+#else
             ShowTextBox(figurineIndex + 0x900, &gUnk_08128190);
+#endif
         }
         gScreen.bg1.updated = 1;
     }

@@ -13,6 +13,9 @@
 #include "save.h"
 #include "screen.h"
 #include "affine.h"
+#ifdef QUICKSTART
+#include "item.h"
+#endif
 
 typedef struct {
     u8 unk0;
@@ -25,6 +28,15 @@ typedef struct {
 extern u8 gUnk_08128E80[];
 
 extern u16 gUnk_02017AA0[];
+
+#ifdef QUICKSTART
+// F10 feeds from game.c: which fusions this mode's fusers offer, and where
+// the Element region's map marker goes.
+extern u32 QuickStartCompassKinstone(u32 kinstoneId);
+extern u32 QuickStartElementMapMarker(u16* x, u16* y);
+// The win chain's current step, exact to the room (game.c).
+extern u32 QuickStartChainMapMarker(u16* x, u16* y);
+#endif
 
 void sub_080A68D4();
 
@@ -204,6 +216,42 @@ void sub_080A68D4(void) {
         }
     }
 
+#ifdef QUICKSTART
+    // F10's COMPASS inverts and extends the fusion markers. With the
+    // compass in hand, a marker shows for every fusion one of this mode's
+    // fusers offers (QuickStartCompassKinstone, game.c) that is either NOT
+    // yet fused (the compass's whole point: here is a gate you can still
+    // open) or fused with its payout unclaimed (vanilla's own semantics,
+    // which is also the user's clear rule - the icon goes away once the
+    // room is entered / the reward claimed, via
+    // UpdateVisibleFusionMapMarkers). Without the compass the vanilla loop
+    // runs unchanged. The compass also marks the Element's REGION - room
+    // center, never the reward spot (QuickStartElementMapMarker).
+    if (GetInventoryValue(ITEM_COMPASS) != 0) {
+        u16 elementX, elementY;
+        for (i = 10; i <= 100; i++) {
+            if (QuickStartCompassKinstone(i) &&
+                (!CheckKinstoneFused(i) || !CheckFusionMapMarkerDisabled(i))) {
+                uVar4 = gKinstoneWorldEvents[i].mapMarkerIcon;
+                ptr = &gWorldEvents[gKinstoneWorldEvents[i].worldEventId];
+                sub_080A698C(ptr->_c, ptr->_e, DRAW_DIRECT_SPRITE_INDEX, uVar4 + 100);
+            }
+        }
+        if (QuickStartElementMapMarker(&elementX, &elementY)) {
+            sub_080A698C(elementX, elementY, DRAW_DIRECT_SPRITE_INDEX, 2 + 100);
+        }
+        // ...and the win chain's CURRENT step, exact to the room. The
+        // Element marker deliberately stops at a region; this one does
+        // not, because the chain step is the single thing the player is
+        // being asked to do next and the compass line that names it
+        // (gCustomStrings 251-255) says what without saying where. A
+        // different icon so the two are not confused for each other.
+        if (QuickStartChainMapMarker(&elementX, &elementY)) {
+            sub_080A698C(elementX, elementY, DRAW_DIRECT_SPRITE_INDEX, 3 + 100);
+        }
+        return;
+    }
+#endif
     for (i = 10; i <= 100; i++) {
         if (CheckKinstoneFused(i) && !CheckFusionMapMarkerDisabled(i)) {
             uVar4 = gKinstoneWorldEvents[i].mapMarkerIcon;

@@ -51,6 +51,15 @@ void BossDoor(BossDoorEntity* this) {
         BossDoor_Init,    BossDoor_Action1, BossDoor_Action2, BossDoor_Action3,
         BossDoor_Action4, BossDoor_Action5, BossDoor_Action6,
     };
+#ifdef QUICKSTART
+    // Castor Darknut Main's boss door normally stays locked until the
+    // (now-removed, see CutsceneOrchestrator) Darknut cutscene sets its
+    // unlock flag. With that script gone the flag never fires, so the door
+    // would otherwise wall the player into the room forever - remove it so
+    // the south exit into Castor Darknut Hall is always open.
+    DeleteThisEntity();
+    return;
+#endif
     BossDoor_Actions[super->action](this);
 }
 

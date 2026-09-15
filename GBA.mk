@@ -59,9 +59,37 @@ CUSTOM ?=
 # Dev-only hook: boot straight into a chosen room with full equipment instead
 # of the title/file-select flow, for fast iteration. See src/game.c.
 QUICKSTART ?=
-QUICKSTART_AREA ?= AREA_VAATI_3
-QUICKSTART_ROOM ?= ROOM_VAATI_3_0
-COMPARE ?= $(if $(CUSTOM)$(QUICKSTART),0,1)
+# Test build only: start holding the kit the gated overworld routes need
+# (Blue Sword, bombs, Spin Attack) instead of having to find it. Off by
+# default; `make quickstart-testkit` turns it on. See src/game.c.
+QUICKSTART_TESTKIT ?=
+# Playtest build only: the difficulty every run STARTS at, as a floor - a
+# run still climbs from there on a win. 0 (the default) is the shipping
+# curve; `make quickstart-d3` passes 3. See src/game.c.
+QUICKSTART_START_DIFFICULTY ?= 0
+# Playtest build only: trim m4a's mixer to buy frame time. 0 / -1 leave
+# vanilla's 8 channels and its reverb alone (the default, and the whole
+# thing compiles out); `make quickstart-audiolight` passes 4 and 0. See the
+# measurements above QuickStartAudioTrim in src/game.c.
+QUICKSTART_AUDIO_CHANNELS ?= 0
+QUICKSTART_AUDIO_REVERB ?= -1
+# 0 leaves vanilla's 15,768Hz mixer rate alone; 2..6 pick an m4a frequency
+# index (2 = 7,884Hz, 3 = 10,512, 4 = 13,379, 5 = vanilla, 6 = 18,157).
+QUICKSTART_AUDIO_FREQ ?= 0
+# The hub: Home of the Wind Tribe, third floor. See docs/QUICKSTART_HUB.md.
+# Was AREA_CASTOR_DARKNUT / ROOM_CASTOR_DARKNUT_MAIN. Pointing these back
+# there no longer restores the old start: Castor Darknut's waves, its reward
+# chest and its link out to Melari's Mine have all been retired from game.c,
+# so the rooms are empty and have no way onward.
+QUICKSTART_AREA ?= AREA_WIND_TRIBE_TOWER
+QUICKSTART_ROOM ?= ROOM_WIND_TRIBE_TOWER_FLOOR_3
+# Dev-only hook: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM with the entire
+# main quest done except the Vaati fight, for walking the full overworld and
+# recording coordinates. See src/game.c. Mutually exclusive with QUICKSTART.
+MAPEXPLORE ?=
+MAPEXPLORE_AREA ?= AREA_HYRULE_FIELD
+MAPEXPLORE_ROOM ?= ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD
+COMPARE ?= $(if $(CUSTOM)$(QUICKSTART)$(MAPEXPLORE),0,1)
 
 .PHONY: build extract_assets build_assets
 build: $(if $(CUSTOM), build_assets, $(BUILD_DIR)/extracted_assets_$(GAME_VERSION))
@@ -85,7 +113,9 @@ clean:
 # ===============
 
 ASINCLUDE := -I $(BUILD_DIR)/assets -I $(BUILD_DIR)/enum_include
-ASFLAGS := -mcpu=arm7tdmi --defsym $(GAME_VERSION)=1 --defsym REVISION=$(REVISION) --defsym $(GAME_LANGUAGE)=1 $(ASINCLUDE)
+ASFLAGS := -mcpu=arm7tdmi --defsym $(GAME_VERSION)=1 --defsym REVISION=$(REVISION) --defsym $(GAME_LANGUAGE)=1 $(ASINCLUDE) \
+	$(if $(QUICKSTART),--defsym QUICKSTART=1) \
+	$(if $(MAPEXPLORE),--defsym MAPEXPLORE=1)
 
 # TODO try solve this without the glob
 ENUM_ASM_SRCS := $(wildcard include/*.h)
@@ -109,7 +139,9 @@ $(BUILD_DIR)/enum_include/%.inc: include/%.h
 # agbcc includes are separate because we don't want dependency scanning on them
 CINCLUDE := -I include -I $(BUILD_DIR)
 CPPFLAGS := -I $(AGBCC_PATH) -I $(AGBCC_PATH)/include $(CINCLUDE) -nostdinc -undef -D$(GAME_VERSION) -DREVISION=$(REVISION) -D$(GAME_LANGUAGE) \
-	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM))
+	$(if $(QUICKSTART),-DQUICKSTART -DQUICKSTART_AREA=$(QUICKSTART_AREA) -DQUICKSTART_ROOM=$(QUICKSTART_ROOM) -DQUICKSTART_START_DIFFICULTY=$(QUICKSTART_START_DIFFICULTY) -DQUICKSTART_AUDIO_CHANNELS=$(QUICKSTART_AUDIO_CHANNELS) -DQUICKSTART_AUDIO_FREQ=$(QUICKSTART_AUDIO_FREQ) '-DQUICKSTART_AUDIO_REVERB=($(QUICKSTART_AUDIO_REVERB))') \
+	$(if $(QUICKSTART_TESTKIT),-DQUICKSTART_TESTKIT) \
+	$(if $(MAPEXPLORE),-DMAPEXPLORE -DMAPEXPLORE_AREA=$(MAPEXPLORE_AREA) -DMAPEXPLORE_ROOM=$(MAPEXPLORE_ROOM))
 CFLAGS := -O2 -Wimplicit -Wparentheses -Werror -Wno-multichar -g3
 
 interwork := $(BUILD_DIR)/src/interrupts.o \

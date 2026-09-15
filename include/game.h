@@ -156,6 +156,23 @@ void PutItemOnSlot(u32 item);
 void ForceEquipItem(u32 item, /*EquipSlot*/ u32 slot);
 
 /**
+ * Equip an item into the extra L slot (EQUIP_SLOT_C), clearing it from any
+ * other slot (A/B included) it was already sitting in so the same item never
+ * occupies two slots at once.
+ *
+ * @param item The item to equip.
+ */
+void ForceEquipExtraSlot(u32 item);
+
+/**
+ * Subscreen helper bound to L in the item grid: toggles the given item
+ * in/out of the extra L slot on each press.
+ *
+ * @param item The highlighted item.
+ */
+void ToggleExtraEquip(u32 item);
+
+/**
  * Get item price.
  *
  * @param item The item to get the price of.
@@ -356,4 +373,18 @@ extern void sub_08052010(void);
 void ModArrows(s32);
 bool32 ItemIsBottle(u32);
 void ModShells(s32);
+
+#ifdef QUICKSTART
+// Defined in game.c. Returns this run's randomized price for one of the
+// shop's catalog items, or a negative value for anything the run doesn't
+// price itself (the caller then falls back to the vanilla table). Declared
+// here rather than in a QUICKSTART-only header because its one caller,
+// GetItemPrice in itemUtils.c, already includes this file.
+s32 QuickStartGetShopPrice(u32 item, s32 basePrice);
+// Also defined in game.c. Called by ScriptCommand_BuyShopItem (script.c) the
+// moment a sale actually completes, so the shop can advance the heart piece's
+// escalating price and retire a one-off slot. Nothing observable about the
+// shelf itself distinguishes a purchase from a room unload.
+void QuickStartNoteShopPurchase(u32 item);
+#endif
 #endif // GAME_H

@@ -2040,8 +2040,22 @@ static void PlayerRoll(PlayerEntity* this) {
     sPlayerRollStates[super->subAction](this);
 }
 
+// The roll voice clip plays once every ROLL_SOUND_INTERVAL rolls rather
+// than on a time debounce. A debounce was the first attempt and it did not
+// go far enough: rolling is the fastest way to cross a screen, so a player
+// chaining rolls still cleared any reasonable frame gap between them and
+// the "HA!" kept firing. Counting rolls instead caps it regardless of how
+// fast they are strung together.
+// The count lives in gPlayerState.pad[1], the same scratch byte the old
+// time-based debounce used for its "ticks at last roll" value (pad[0] is
+// the sword swing's). A file-static would have been the obvious home, but
+// the linker script discards .bss for player.o, so it has to be a byte that
+// already exists in RAM.
+#define ROLL_SOUND_INTERVAL 4
+
 static void PlayerRollInit(PlayerEntity* this) {
     u32 playerFlags;
+    bool32 playRollSound;
 
     if ((gPlayerState.flags & PL_MOLDWORM_RELEASED) == 0) {
         sub_0806F948(&gPlayerEntity.base);
@@ -2063,12 +2077,21 @@ static void PlayerRollInit(PlayerEntity* this) {
         }
     }
     gPlayerState.flags |= PL_ROLLING;
-    if (Random() & 1) {
-        SoundReq(SFX_PLY_VO5);
-    } else {
-        SoundReq(SFX_PLY_VO4);
+    // Debounce, per the user's own request: only the first roll of a rapid
+    // mashing series makes noise. gPlayerState.pad[1] is genuine unused
+    // scratch space (see player.h, and playerItem/playerItemSword.c's own
+    // pad[0] use for the identical sword-swing debounce) reused here as a
+    // rolling "ticks at last roll" byte.
+    gPlayerState.pad[1]++;
+    playRollSound = (gPlayerState.pad[1] % ROLL_SOUND_INTERVAL) == 0;
+    if (playRollSound) {
+        if (Random() & 1) {
+            SoundReq(SFX_PLY_VO5);
+        } else {
+            SoundReq(SFX_PLY_VO4);
+        }
+        SoundReq(SFX_7E);
     }
-    SoundReq(SFX_7E);
 }
 
 static void PlayerRollUpdate(PlayerEntity* this) {

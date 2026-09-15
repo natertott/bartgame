@@ -217,12 +217,45 @@ bool32 IsCollidingPlayer(Entity* this) {
     return FALSE;
 }
 
+#ifdef QUICKSTART
+extern u8 QuickStartCharmMask(void);
+#define QUICKSTART_CHARM_NAYRU 1
+#define QUICKSTART_CHARM_FARORE 2
+#define QUICKSTART_CHARM_DIN 4
+// The food charms (game.c, QuickStartFoodMask): the three tomes grant
+// elemental immunities, consulted by the fire/ice/shock contact handlers
+// below. Immune means the whole exchange is refused - no status, no
+// damage - and only the knockback/iframes shrug remains, so being immune
+// still LOOKS like something bounced off.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_IMMUNE_FIRE (1 << 6)
+#define QUICKSTART_FOOD_IMMUNE_ICE (1 << 7)
+#define QUICKSTART_FOOD_IMMUNE_SHOCK (1 << 8)
+#endif
+
+// QUICKSTART reads its own ownership mask rather than gSave.stats.charm here,
+// because charms are permanent pickups in that mode and more than one can be
+// held. Every charm the player owns applies, which stacks: Nayru and Farore
+// together divide incoming damage by 8, Din and Farore together triple
+// outgoing. Deliberate - they are the rarest tier of stat upgrade - but it is
+// the number to reach for first if the late game starts feeling trivial.
 s32 CalculateDamage(Entity* org, Entity* tgt) {
     s32 damage;
     s32 health;
+#ifdef QUICKSTART
+    u8 charms = QuickStartCharmMask();
+#endif
 
     if (org->kind == PLAYER) {
         damage = tgt->damage;
+#ifdef QUICKSTART
+        if (charms & QUICKSTART_CHARM_NAYRU) {
+            damage /= 4;
+        }
+        if (charms & QUICKSTART_CHARM_FARORE) {
+            damage /= 2;
+        }
+#else
         switch (gSave.stats.charm) {
             case BOTTLE_CHARM_NAYRU:
                 damage /= 4;
@@ -231,6 +264,7 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
                 damage /= 2;
                 break;
         }
+#endif
         if (damage <= 0)
             damage = 1;
         health = ModHealth(-damage);
@@ -238,6 +272,14 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
     } else {
         damage = tgt->damage;
         if (tgt->kind == PLAYER_ITEM) {
+#ifdef QUICKSTART
+            if (charms & QUICKSTART_CHARM_FARORE) {
+                damage = 3 * damage / 2;
+            }
+            if (charms & QUICKSTART_CHARM_DIN) {
+                damage *= 2;
+            }
+#else
             switch (gSave.stats.charm) {
                 case BOTTLE_CHARM_FARORE:
                     damage = 3 * damage / 2;
@@ -246,6 +288,7 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
                     damage *= 2;
                     break;
             }
+#endif
         }
         health = org->health - damage;
         if (org->kind == ENEMY) {
@@ -410,6 +453,17 @@ CollisionResult sub_08017B58(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017BBC(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The scorched tome: fire cannot burn (or hurt) its holder.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_FIRE) {
+        org->knockbackDuration = 12;
+        org->iframes = 30;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     if ((gPlayerState.flags & (PL_BUSY | PL_MINISH | PL_BURNING | PL_IN_MINECART)) == 0) {
         Entity* e = CreateObject(LINK_FIRE, 1, 0);
         if (e != NULL) {
@@ -429,6 +483,17 @@ CollisionResult sub_08017BBC(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017C40(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The frosted tome: ice cannot freeze (or hurt) its holder.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_ICE) {
+        org->knockbackDuration = 12;
+        org->iframes = 16;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     if ((gPlayerState.flags & (PL_BUSY | PL_MINISH | PL_FROZEN | PL_IN_MINECART)) == 0 &&
         gPlayerState.queued_action == PLAYER_INIT) {
         if (org->action == 1 || org->action == 24) {
@@ -464,6 +529,19 @@ CollisionResult sub_08017CBC(Entity* org, Entity* tgt, u32 direction, ColSetting
 }
 
 CollisionResult sub_08017D28(Entity* org, Entity* tgt, u32 direction, ColSettings* settings) {
+#ifdef QUICKSTART
+    // The crackling tome: sparks cannot paralyze their holder. The
+    // knockback shrug stays; the mobility lock and its 600-frame timer -
+    // the shock itself - are what the immunity refuses.
+    if (QuickStartFoodMask() & QUICKSTART_FOOD_IMMUNE_SHOCK) {
+        org->knockbackDuration = 12;
+        org->iframes = 16;
+        org->knockbackSpeed = 384;
+        if (tgt->iframes == 0)
+            tgt->iframes = -1;
+        return RESULT_COLLISION;
+    }
+#endif
     gPlayerState.mobility = 1;
     ((GenericEntity*)org)->field_0x7a.HWORD = 600;
     org->knockbackDuration = 12;

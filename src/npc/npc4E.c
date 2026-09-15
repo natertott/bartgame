@@ -51,6 +51,14 @@ extern void sub_08096260(Entity*);
 // destroyed once he wears ezlo. Also exists when entering hyrule for the second time
 // and fusing kinstones. Is destroyed as soon as the kinstone is fused.
 void NPC4E(Entity* this) {
+#ifdef QUICKSTART
+    // The Sanctuary Main room's static NPC4E instances drive the
+    // "prevent player from leaving" and picture-viewing cutscene logic -
+    // none of that applies to our quickstart room, and the leave-prevention
+    // script would actively fight the player's free movement.
+    DeleteThisEntity();
+    return;
+#endif
     if (this->action == 0) {
         this->action = 1;
         this->spriteSettings.draw = 4;

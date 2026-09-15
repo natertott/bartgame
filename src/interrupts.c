@@ -266,7 +266,8 @@ static void HandlePlayerLife(Entity* this) {
         return;
 
 #ifdef EU
-    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 90 == 0) {
+    // 180, not vanilla's 90: the low-health warning beeps half as often.
+    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 180 == 0) {
         threshold = gSave.stats.maxHealth / 4;
         if (threshold > 24)
             threshold = 24;
@@ -288,7 +289,8 @@ static void HandlePlayerLife(Entity* this) {
 
     if (gSave.stats.health <= threshold) {
         gRoomVars.needHealthDrop = TRUE;
-        if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 90 == 0) {
+        // 180, not vanilla's 90: the low-health warning beeps half as often.
+    if ((gHUD.hideFlags == HUD_HIDE_NONE) && gRoomTransition.frameCount % 180 == 0) {
             EnqueueSFX(SFX_LOW_HEALTH);
         }
     }
@@ -296,10 +298,18 @@ static void HandlePlayerLife(Entity* this) {
 
     if (gSave.stats.charm == 0) {
         gSave.stats.charmTimer = 0;
-    } else if ((gSave.stats.charmTimer == 0) || --gSave.stats.charmTimer == 0) {
+    }
+#ifndef QUICKSTART
+    else if ((gSave.stats.charmTimer == 0) || --gSave.stats.charmTimer == 0) {
         gSave.stats.charm = 0;
         SoundReq(SFX_ICE_BLOCK_MELT);
     }
+#endif
+    // QUICKSTART: charms do not expire. They are rare permanent pickups here
+    // rather than a 60-second drink, so the timer is simply never ticked -
+    // which also keeps it above the 0xb4 threshold GetPlayerPalette uses to
+    // blink the tint when a charm is about to run out. The run boundary
+    // clears both this and the ownership bits (GameTask_Transition, game.c).
 
     if (gSave.stats.picolyteType == 0) {
         gSave.stats.picolyteTimer = 0;

@@ -140,6 +140,27 @@ extern u32 gUsedPalettes;
 
 void sub_0807BFA8(void);
 
+// gSave.stats.equipped[] holds the original A/B pair; the extra L slot added
+// alongside them lives in the separate equippedExtra[] array (repurposed
+// save-file filler, see Stats in player.h) so nothing about the original 2
+// slots' layout or offsets changes. These two helpers let the rest of the
+// item-equip code address all 3 slots uniformly instead of caring which
+// physical array backs a given slot.
+u8 GetEquippedItemAtSlot(u32 slot) {
+    if (slot == SLOT_A || slot == SLOT_B) {
+        return gSave.stats.equipped[slot];
+    }
+    return gSave.stats.equippedExtra[slot - SLOT_C];
+}
+
+void SetEquippedItemAtSlot(u32 slot, u8 itemId) {
+    if (slot == SLOT_A || slot == SLOT_B) {
+        gSave.stats.equipped[slot] = itemId;
+    } else {
+        gSave.stats.equippedExtra[slot - SLOT_C] = itemId;
+    }
+}
+
 void UpdateActiveItems(PlayerEntity* this) {
     u32 index;
 
@@ -149,6 +170,7 @@ void UpdateActiveItems(PlayerEntity* this) {
         gPlayerState.swim_state == 0 && IsAbleToUseItem(this) && !IsPreventedFromUsingItem()) {
         CreateItemIfInputMatches(gSave.stats.equipped[SLOT_A], INPUT_USE_ITEM1, FALSE);
         CreateItemIfInputMatches(gSave.stats.equipped[SLOT_B], INPUT_USE_ITEM2, FALSE);
+        CreateItemIfInputMatches(gSave.stats.equippedExtra[0], INPUT_USE_ITEM3, FALSE);
         IsTryingToPickupObject();
     }
 
@@ -160,10 +182,17 @@ void UpdateActiveItems(PlayerEntity* this) {
 }
 
 void CreateItemEquippedAtSlot(EquipSlot equipSlot) {
-    if (equipSlot == EQUIP_SLOT_A) {
-        CreateItemIfInputMatches(gSave.stats.equipped[SLOT_A], INPUT_USE_ITEM1, TRUE);
-    } else {
-        CreateItemIfInputMatches(gSave.stats.equipped[SLOT_B], INPUT_USE_ITEM2, TRUE);
+    switch (equipSlot) {
+        case EQUIP_SLOT_A:
+            CreateItemIfInputMatches(gSave.stats.equipped[SLOT_A], INPUT_USE_ITEM1, TRUE);
+            break;
+        case EQUIP_SLOT_C:
+            CreateItemIfInputMatches(gSave.stats.equippedExtra[0], INPUT_USE_ITEM3, TRUE);
+            break;
+        case EQUIP_SLOT_B:
+        default:
+            CreateItemIfInputMatches(gSave.stats.equipped[SLOT_B], INPUT_USE_ITEM2, TRUE);
+            break;
     }
 }
 
@@ -247,8 +276,9 @@ bool32 IsTryingToPickupObject(void) {
     if (!((((gPlayerState.flags & (PL_USE_PORTAL | PL_MINISH | PL_ROLLING)) == 0) &&
            (((gPlayerEntity.unk_79 != 0 || (gPlayerState.heldObject != 0)) ||
              ((gPlayerState.playerInput.newInput & INPUT_LIFT_THROW) != 0)))) &&
-          (((sub_080789A8() != 0 || ((gPlayerState.playerInput.heldInput &
-                                      (INPUT_ANY_DIRECTION | INPUT_USE_ITEM1 | INPUT_USE_ITEM2)) == 0)))))) {
+          (((sub_080789A8() != 0 ||
+             ((gPlayerState.playerInput.heldInput &
+               (INPUT_ANY_DIRECTION | INPUT_USE_ITEM1 | INPUT_USE_ITEM2 | INPUT_USE_ITEM3)) == 0)))))) {
         return FALSE;
     }
     item = CreateItem(ITEM_TRY_PICKUP_OBJECT);
@@ -607,6 +637,8 @@ bool32 IsItemActiveByInput(ItemBehavior* this, PlayerInputState input) {
         val = INPUT_USE_ITEM1;
     } else if (stats->equipped[SLOT_B] == id) {
         val = INPUT_USE_ITEM2;
+    } else if (stats->equippedExtra[0] == id) {
+        val = INPUT_USE_ITEM3;
     } else {
         val = 0;
     }
@@ -2395,16 +2427,47 @@ void sub_08079DCC(void) {
     }
 }
 
+#ifdef QUICKSTART
+// The food charms (game.c). Bit 1 is the Croissant: walk half again as
+// fast. The boost is applied around the position integration only
+// (sub_0800857C reads speed and calls LinearMoveDirectionOLD) and then
+// RESTORED, so it can never compound. The first version bumped the field
+// in place, trusting "the walk state re-derives speed every frame" - but
+// the ROLL only re-derives on frames 0-3 of its animation cycle
+// (PlayerRollUpdate's switch on frame & 0xf) and calls this every frame,
+// so the bump multiplied 1.5x per frame, overflowed the Q8.8 s16, and
+// launched Link through walls and off screen. Boost-move-restore holds
+// for every player state, whether or not it re-derives.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_WALK_SPEED 2
+#endif
+
 void UpdatePlayerMovement(void) {
+#ifdef QUICKSTART
+    s16 qsSavedSpeed = 0;
+    s32 qsBoosted = 0;
+#endif
     if ((gPlayerEntity.base.speed != 0) &&
         (gPlayerEntity.base.speed += gPlayerState.speed_modifier, gPlayerEntity.base.speed < 0x20)) {
         gPlayerEntity.base.speed = 0x20;
     }
+#ifdef QUICKSTART
+    if ((QuickStartFoodMask() & QUICKSTART_FOOD_WALK_SPEED) && gPlayerEntity.base.speed > 0) {
+        qsSavedSpeed = gPlayerEntity.base.speed;
+        qsBoosted = 1;
+        gPlayerEntity.base.speed += gPlayerEntity.base.speed >> 1;
+    }
+#endif
     if ((gPlayerEntity.base.direction & 4) == 0) {
         sub_08079E90(gPlayerEntity.base.direction);
     }
     sub_0800857C(&gPlayerEntity.base);
     sub_0807A5B8(gPlayerEntity.base.direction);
+#ifdef QUICKSTART
+    if (qsBoosted) {
+        gPlayerEntity.base.speed = qsSavedSpeed;
+    }
+#endif
 }
 
 void sub_08079E58(s32 speed, u32 direction) {

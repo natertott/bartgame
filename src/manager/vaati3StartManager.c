@@ -48,6 +48,11 @@ void Vaati3StartManager_Type0(Vaati3StartManager* this) {
 }
 
 void Vaati3StartManager_Type0_Init(Vaati3StartManager* this) {
+#ifdef QUICKSTART
+    // Dev-only: skip the approach/dialogue/Vaati-spawn sequence entirely.
+    DeleteThisEntity();
+    return;
+#endif
     if (CheckLocalFlag(0x7b) == 0) {
         DeleteThisEntity();
     }
@@ -130,7 +135,13 @@ void Vaati3StartManager_Type1(Vaati3StartManager* this) {
 }
 
 void Vaati3StartManager_Type1_Init(Vaati3StartManager* this) {
-    Entity* enemy = CreateEnemy(VAATI_WRATH, 0);
+    Entity* enemy;
+#ifdef QUICKSTART
+    // Dev-only: don't fade in and spawn Vaati Wrath.
+    DeleteThisEntity();
+    return;
+#endif
+    enemy = CreateEnemy(VAATI_WRATH, 0);
     if (enemy != NULL) {
         enemy->x.HALF.HI = gRoomControls.origin_x + 0xb0;
         enemy->y.HALF.HI = gRoomControls.origin_y + 0x48;

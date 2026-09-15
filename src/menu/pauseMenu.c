@@ -110,9 +110,6 @@ void PauseMenu_Variant2(void) {
             case START_BUTTON:
                 iVar1 = 0;
                 break;
-            case L_BUTTON:
-                iVar1 = 1;
-                break;
             case R_BUTTON:
                 iVar1 = 2;
                 break;
@@ -402,6 +399,16 @@ void PauseMenu_ItemMenu_Update(void) {
                     SoundReq(SFX_TEXTBOX_SELECT);
                 }
                 break;
+            case L_BUTTON:
+                // R still flips subscreen pages (see PauseMenu_Variant2), but
+                // L no longer does - it's free here to toggle the highlighted
+                // item in/out of the extra L slot instead, mirroring how A/B
+                // above equip straight from the grid.
+                if (gPauseMenu.items[menuSlot] != 0) {
+                    ToggleExtraEquip(gPauseMenu.items[menuSlot]);
+                    SoundReq(SFX_TEXTBOX_SELECT);
+                }
+                break;
             default:
                 switch (gInput.menuScrollKeys) {
                     case DPAD_UP:
@@ -536,6 +543,13 @@ void PauseMenu_ItemMenu_Draw(void) {
         DrawDirect(sub_080A5384_draw_constant0, 3);
     }
     i = GetMenuSlotForItem(gSave.stats.equipped[SLOT_B]);
+    if (i < MENU_SLOT_COUNT) {
+        entry = &gItemMenuTable[i];
+        gOamCmd.x = entry->x;
+        gOamCmd.y = entry->y;
+        DrawDirect(sub_080A5384_draw_constant0, 3);
+    }
+    i = GetMenuSlotForItem(gSave.stats.equippedExtra[0]);
     if (i < MENU_SLOT_COUNT) {
         entry = &gItemMenuTable[i];
         gOamCmd.x = entry->x;

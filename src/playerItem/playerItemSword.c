@@ -15,6 +15,13 @@
 #include "tiles.h"
 #include "vram.h"
 #include "collision.h"
+#include "main.h"
+
+// How many frames (gMain.ticks, main.c's free-running frame counter) must
+// separate two swings before the swing sound plays again - short enough
+// that a real new attack still gets its sound, long enough to swallow the
+// rest of a rapid mashing series. See PlayerItemSword_Init's own comment.
+#define SWORD_SWING_SOUND_DEBOUNCE_FRAMES 20
 
 typedef struct {
     /*0x00*/ Entity base;
@@ -56,6 +63,17 @@ void PlayerItemSword_Init(PlayerItemSwordEntity* this) {
         SFX_PLY_VO4,
         SFX_PLY_VO5,
     };
+    // Debounce, per the user's own request: only the first swing of a
+    // rapid mashing series makes noise - the swing itself (hitbox, damage,
+    // animation) is completely unaffected, only these two SoundReq calls
+    // below are gated. gPlayerState.pad[0] is genuine unused scratch space
+    // (see player.h - the decomp itself labels it "pad", and nothing else
+    // in the codebase reads or writes it), reused here as a rolling "ticks
+    // at last swing" byte; an 8-bit subtraction against gMain.ticks (a
+    // free-running u16) still measures elapsed frames correctly across a
+    // wraparound.
+    bool32 playSwingSound = (u8)(gMain.ticks - gPlayerState.pad[0]) >= SWORD_SWING_SOUND_DEBOUNCE_FRAMES;
+    gPlayerState.pad[0] = (u8)gMain.ticks;
     if (((super->type == 0) && (gPlayerState.attack_status == 0)) && ((gPlayerState.jump_status & 0x20) == 0)) {
         DeleteThisEntity();
     }
@@ -96,11 +114,15 @@ void PlayerItemSword_Init(PlayerItemSwordEntity* this) {
         }
         gPlayerState.item = super;
         sub_08079BD8(super);
-        SoundReq(gUnk_0812906C[GetRandomByWeight(gUnk_08129068)]);
+        if (playSwingSound) {
+            SoundReq(gUnk_0812906C[GetRandomByWeight(gUnk_08129068)]);
+        }
     } else {
         PlayerItemSword_Action1(this);
     }
-    SoundReq(SFX_10E);
+    if (playSwingSound) {
+        SoundReq(SFX_10E);
+    }
 }
 
 static const s8 gUnk_08129072[][2] = { { 0x0, 0xd },   { 0xf, -0x3 },   { 0x0, -0x16 },   { -0x10, 0xd },

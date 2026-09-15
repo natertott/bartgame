@@ -584,6 +584,7 @@ SECTIONS {
         src/item/itemDebug.o(.text);
         src/item/itemSword.o(.text);
         src/item/itemLantern.o(.text);
+        src/item/itemFireRod.o(.text);
         src/item/itemBoomerang.o(.text);
         src/item/itemBow.o(.text);
         src/item/itemBomb.o(.text);
@@ -1336,6 +1337,7 @@ SECTIONS {
         src/item.o(.rodata);
         src/item/itemSword.o(.rodata);
         src/item/itemLantern.o(.rodata);
+        src/item/itemFireRod.o(.rodata);
         src/item/itemBoomerang.o(.rodata);
         src/item/itemBow.o(.rodata);
         src/item/itemBomb.o(.rodata);

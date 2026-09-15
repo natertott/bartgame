@@ -280,7 +280,13 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
     Entity* child;
     Entity* parent;
 
+#ifndef QUICKSTART
+    // Death-flash freeze. With the camera staying on the player (see the
+    // killing-blow site), freezing them for a beat happening possibly
+    // offscreen serves nothing - and this same line was the old
+    // proxy-at-health-0 permafreeze before the proxy got a delete edge.
     PausePlayer();
+#endif
     if (super->type == 0) {
         if (super->subAction != 12) {
             super->subAction = 12;
@@ -303,6 +309,27 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
                         this->unk_68->base.health = 0;
                         child->health = 0;
                         parent->health = 0;
+#ifdef QUICKSTART
+                        // Vanilla fells the three jelly segments here but
+                        // NOT the invisible hitbox proxy (the type-8
+                        // spawn) - its arena's post-boss room transition
+                        // wiped it, so nothing ever needed to. Spawned in
+                        // the open overworld there is no transition, and
+                        // an invisible, immortal, full-health enemy kept
+                        // the region reading "wave still up" after every
+                        // boss kill. Fell every family piece; the dead
+                        // proxy then removes itself in the else branch
+                        // below.
+                        {
+                            s32 i;
+                            for (i = 0; i < MAX_ENTITIES; i++) {
+                                Entity* ent = &gEntities[i].base;
+                                if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS) {
+                                    ent->health = 0;
+                                }
+                            }
+                        }
+#endif
                         gPauseMenuOptions.disabled = 0;
                         SoundReq(SFX_BOSS_DIE);
                         GenericDeath(super);
@@ -330,6 +357,24 @@ void ChuchuBoss_OnDeath(ChuchuBossEntity* this) {
             this->unk_6d.unk1 = 1;
             DeleteThisEntity();
         }
+#ifdef QUICKSTART
+        // The hitbox proxy has no delete edge outside the vanilla arena
+        // flow: nothing sets its unk1, so at health 0 it sat in this
+        // handler - whose first act is PausePlayer - every frame, freezing
+        // the player for the rest of the run the moment a region boss
+        // died (measured). Once no family piece is left alive, this piece
+        // has no job: let it go.
+        else {
+            s32 i;
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* ent = &gEntities[i].base;
+                if (ent != super && ent->kind == ENEMY && ent->id == CHUCHU_BOSS && ent->health != 0) {
+                    return;
+                }
+            }
+            DeleteThisEntity();
+        }
+#endif
     }
 }
 
@@ -379,7 +424,19 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                 this->unk_84->unk_03 = 0;
                 this->unk_84->unk_04 = 0;
                 this->unk_84->unk_0e = super->x.HALF.HI;
+#ifdef QUICKSTART
+                // The segments' form decides which EnemyDefinition row
+                // (and so which palette family, 43 green / 44 blue) they
+                // load. `super->type` reads 0 by this point even for a
+                // type-4 spawn (measured - type2 keeps the form, type does
+                // not survive to here), so composing the children from
+                // `type` silently dressed a blue boss in green jelly.
+                // type2 was captured from the spawn type above and is 0
+                // for green / 4 for blue, exactly the row offset needed.
+                this->unk_68 = (ChuchuBossEntity*)CreateEnemy(CHUCHU_BOSS, super->type2 | 3);
+#else
                 this->unk_68 = (ChuchuBossEntity*)CreateEnemy(CHUCHU_BOSS, super->type | 3);
+#endif
                 if (this->unk_68) {
                     this->unk_68->base.collisionLayer = super->collisionLayer;
                     this->unk_68->base.x.HALF.HI = super->x.HALF.HI;
@@ -389,7 +446,11 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                     MEMORY_BARRIER;
                     this->unk_68->unk_68 = this;
                 }
+#ifdef QUICKSTART
+                super->parent = CreateEnemy(CHUCHU_BOSS, super->type2 | 2);
+#else
                 super->parent = CreateEnemy(CHUCHU_BOSS, super->type | 2);
+#endif
                 if (super->parent) {
                     super->parent->collisionLayer = super->collisionLayer;
                     super->parent->x.HALF.HI = super->x.HALF.HI;
@@ -400,7 +461,11 @@ void sub_08025DD8(ChuchuBossEntity* this) {
                     this->unk_68->base.child = super->parent;
                     ((ChuchuBossEntity*)super->parent)->unk_68 = this;
                 }
+#ifdef QUICKSTART
+                super->child = CreateEnemy(CHUCHU_BOSS, super->type2 | 1);
+#else
                 super->child = CreateEnemy(CHUCHU_BOSS, super->type | 1);
+#endif
                 if (super->child) {
                     super->child->collisionLayer = super->collisionLayer;
                     super->child->x.HALF.HI = super->x.HALF.HI;
@@ -458,12 +523,28 @@ void sub_08026060(ChuchuBossEntity* this) {
 }
 
 void sub_08026090(ChuchuBossEntity* this) {
+#ifdef QUICKSTART
+    // Orphan guard: everything below mirrors fields out of super->child
+    // (the core). Nothing in the vanilla arena could delete the core out
+    // from under this proxy; in the open overworld several things can
+    // (room unload edges, sweeps), and a proxy mirroring a cleared or
+    // recycled slot is garbage-in-garbage-out with a PausePlayer attached.
+    if (super->child == NULL || super->child->kind != ENEMY || super->child->id != CHUCHU_BOSS) {
+        DeleteThisEntity();
+    }
+#endif
     if (super->subAction == 0) {
         if (super->child->health == 0) {
             super->flags &= ~0x80;
             super->subAction = 1;
             super->timer = 250;
+#ifndef QUICKSTART
+            // Parks the camera on THIS piece - which is invisible and sits
+            // at the original spawn point, wherever the fight wandered.
+            // QUICKSTART leaves the camera with the player for the death
+            // beat too.
             gRoomControls.camera_target = super;
+#endif
         }
         super->flags = super->child->flags;
         super->hitbox = super->child->hitbox;
@@ -474,9 +555,13 @@ void sub_08026090(ChuchuBossEntity* this) {
         }
         CopyPosition(super->child, super);
     } else {
+#ifndef QUICKSTART
         PausePlayer();
+#endif
         if (super->timer-- == 0) {
+#ifndef QUICKSTART
             gRoomControls.camera_target = &gPlayerEntity.base;
+#endif
             DeleteThisEntity();
         }
     }
@@ -550,11 +635,23 @@ void sub_08026110(ChuchuBossEntity* this) {
 }
 
 void sub_0802626C(ChuchuBossEntity* this) {
+#ifdef QUICKSTART
+    // The intro stays as a spawn-animation sequencer (particles, fall,
+    // shake, boss theme) but stops being a CUTSCENE: no menu lock and no
+    // per-frame player freeze. In its Temple arena the player had just
+    // walked through a boss door and had nowhere to be; spawned mid-room
+    // by a region wave this froze them for the intro's full length - in
+    // North Hyrule Field that measured ~21 seconds, most of it watching
+    // the camera crawl (see sub_08026358) - which is the player-facing
+    // half of the user's "camera got really confused" report.
+    gUnk_080CC20C[this->unk_84->unk_03](this);
+#else
     gPauseMenuOptions.disabled = 1;
     gUnk_080CC20C[this->unk_84->unk_03](this);
     if (gPlayerEntity.base.action != PLAYER_ROOMTRANSITION && gPlayerEntity.base.action != PLAYER_ROOM_EXIT) {
         PausePlayer();
     }
+#endif
 }
 
 void sub_080262A8(ChuchuBossEntity* this) {
@@ -563,7 +660,19 @@ void sub_080262A8(ChuchuBossEntity* this) {
     this->unk_80 = 8;
     super->timer = 1;
     sub_080276F4(super, 6, 1);
+#ifdef QUICKSTART
+    // The blue form's intro is Temple-of-Droplets STAGE machinery, not
+    // fight logic: it seizes the camera (camera_target + scrollSpeed),
+    // waits on the player's room-transition action, and paints its arena
+    // tile at a hardcoded TILE_POS(8,11). Spawned mid-room by a region
+    // wave, none of those cues ever arrive, and the measured result was
+    // the boss pieces parked invisible at the spawn point forever. Both
+    // forms take the green intro here; type2 still carries the form, so
+    // the palettes, particles and moveset stay the blue ones.
+    if (1) {
+#else
     if (super->type2 == 0) {
+#endif
         gPlayerState.animation = ANIM_WALK;
         this->unk_84->unk_03 = 1;
     } else {
@@ -594,15 +703,26 @@ void sub_08026358(ChuchuBossEntity* this) {
             this->unk_7c = 0;
             this->unk_7d = 0x1e;
             this->unk_84->unk_03++;
+#ifndef QUICKSTART
+            // The camera grab, at scroll speed 1. In the Temple's little
+            // arena that is a short dolly; in an overworld region it is a
+            // frame-per-pixel crawl across the whole map and back
+            // (measured ~900 frames each way in North Hyrule Field, the
+            // player frozen throughout). QUICKSTART leaves the camera on
+            // the player; the flash (stage 1) and the boss theme (stage
+            // 7) still announce the spawn.
             gPlayerEntity.base.animationState = 0;
             gRoomControls.camera_target = super;
             gRoomControls.scrollSpeed = 1;
+#endif
         } else if (bVar1 < 0x61) {
+#ifndef QUICKSTART
             if (bVar1 < 0x5c) {
                 gPlayerEntity.base.animationState = 4;
             } else {
                 gPlayerEntity.base.animationState = 2;
             }
+#endif
         }
     }
 }
@@ -667,14 +787,21 @@ void sub_080264D4(ChuchuBossEntity* this) {
 void sub_0802650C(ChuchuBossEntity* this) {
     if (((ChuchuBossEntity*)super->child)->unk_81 == 0) {
         this->unk_84->unk_03++;
+#ifndef QUICKSTART
+        // Hands back a camera QUICKSTART never took (sub_08026358).
         gRoomControls.camera_target = &gPlayerEntity.base;
+#endif
     }
     sub_08027870(this);
 }
 
 void sub_0802653C(ChuchuBossEntity* this) {
     if (gRoomControls.reload_flags == 0) {
+#ifndef QUICKSTART
+        // Restores a scroll speed QUICKSTART never changed - and stomping
+        // it here would overwrite whatever another system had set.
         gRoomControls.scrollSpeed = 4;
+#endif
         sub_08027B98(this, 0x90, 0xb0, 4, 0xff);
         sub_08027548(this, 0);
         InitAnimationForceUpdate(super->child, 0);
@@ -1371,11 +1498,22 @@ void sub_080272D4(ChuchuBossEntity* this) {
                     if (sub_08027C54(super->child) == 0 || ((ChuchuBossEntity*)super->child)->unk_84->unk_04 != 2) {
                         SoundReq(SFX_BOSS_HIT);
                     } else {
+#ifdef QUICKSTART
+                        // The killing blow. Keep the functional half (the
+                        // core's death subAction and the fanfare); drop
+                        // the cutscene half (player freeze, camera pan to
+                        // the corpse, menu lock) for the same reason as
+                        // the intro - the corpse can be anywhere in an
+                        // overworld region.
+                        super->child->subAction = 9;
+                        SoundReq(SFX_BOSS_DIE);
+#else
                         PausePlayer();
                         gRoomControls.camera_target = super->child;
                         gPauseMenuOptions.disabled = 1;
                         gRoomControls.camera_target->subAction = 9;
                         SoundReq(SFX_BOSS_DIE);
+#endif
                     }
                 }
             }
@@ -1703,6 +1841,38 @@ void sub_08027A60(ChuchuBossEntity* this) {
     }
 }
 
+#ifdef QUICKSTART
+// How far one conventional weapon hit peels the jelly, in units of the gust
+// stream's own per-contact step. The gust needs 48 steps; a weapon hit is
+// worth 6, so eight hits do what a held Gust Jar does. Contacts are ~17
+// frames apart either way (the collision matrix hands the boss -16 iframes on
+// a weapon hit, the gust path sets 3), which puts eight sword swings at
+// roughly the same 2-3 seconds as holding the jar - deliberate, so the Gust
+// Jar stays the cleanest answer without being the only one.
+#define QUICKSTART_CHUCHU_WEAPON_PEEL 6
+#endif
+
+// QUICKSTART lets conventional weapons peel the jelly, not just the Gust Jar.
+//
+// The vanilla fight is two halves. First the Gust Jar stream (contact source
+// 19) stretches the jelly off the body; then the bare core - super->child,
+// hitType 123 - is an ordinary damage exchange, and already takes the sword,
+// a thrown pot, a bomb or a Fire Rod blast. So only the first half ever
+// needed the jar.
+//
+// That mattered once the Gust Jar stopped being a boot grant and became a
+// WEAPON/TOOL drop: this boss rolls into every region's wave loop, a wave has
+// to go completely clear for the region to progress, and a run that never
+// found a jar could not clear the first half. The cases below feed the same
+// counter the gust stream feeds, so a sword swing, arrow, boomerang, thrown
+// object, Fire Rod blast or Pacci Cane shot peels it too.
+//
+// The list is exactly the set that reaches the armoured body: gCollisionMtx
+// row 125 routes those hurtTypes through CollisionDefault for zero damage,
+// which is enough to set contactFlags. Bombs and the shield are absent on
+// purpose - row 125 maps them to CollisionNoOp, so they never register a
+// contact here at all. Bombs still work on the exposed core, where they are
+// the hardest hit in the table.
 bool32 sub_08027AA4(ChuchuBossEntity* this) {
     u32 uVar3;
     s32 iVar4;
@@ -1712,13 +1882,36 @@ bool32 sub_08027AA4(ChuchuBossEntity* this) {
         return FALSE;
     }
     switch (super->contactFlags & 0x7f) {
+#ifdef QUICKSTART
+        case 4:  // sword
+        case 16: // dash sword
+        case 20: // boomerang
+        case 21: // arrow
+        case 23: // thrown object
+        case 28: // Gust Jar's charged shot
+        case 29: // Pacci Cane projectile
+        case 32: // sword beam / Fire Rod blast
+        case 33: // spiral beam
+#endif
         case 19:
             SoundReq(SFX_WATER_SPLASH);
             CreateObjectWithParent(super, CHUCHU_BOSS_START_PARTICLE, 9, super->type2);
             SoundReq(SFX_155);
             pHelper = this->unk_84;
+#ifdef QUICKSTART
+            if ((super->contactFlags & 0x7f) == 19) {
+                super->iframes = 3;
+                pHelper->unk_06++;
+            } else {
+                // Leave iframes alone - CollisionDefault has already set them
+                // from the matrix, which is what spaces the hits out to one
+                // per swing instead of one per frame of overlap.
+                pHelper->unk_06 += QUICKSTART_CHUCHU_WEAPON_PEEL;
+            }
+#else
             super->iframes = 3;
             pHelper->unk_06++;
+#endif
             iVar4 = pHelper->unk_06;
             uVar3 = (iVar4 / 3);
             if (((u8)uVar3 << 3) != (u8)pHelper->unk_05) {
