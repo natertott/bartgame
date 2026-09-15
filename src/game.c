@@ -9189,7 +9189,30 @@ static const QuickStartQuestionRoomEntry sQuickStartMediumRoomPool[] = {
 // a modest fixed nudge (0,-24), matching this file's other pools'
 // convention of a small generic offset rather than a per-room walked one.
 static const QuickStart2DoorRoomEntry sQuickStart2DoorSmallRoomPool[] = {
-    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 100, 100, 0, -24 },
+    // ROOM_CASTOR_CAVES_DARKNUT used to sit here, and it was the same
+    // double-ownership mistake the Heart Piece Hallway note below already
+    // describes - caught the second time by a user report rather than by
+    // reading, because the symptom is a hard lock: "enter the first room of
+    // Castor Darknut hall (by entering a cave in Castor Wilds), the first
+    // room is fine. Once the player walks down the stairs in this first
+    // room, they arrive in Trilby Highlands inside a tree and the game is
+    // locked."
+    //
+    // The room had picked up THREE owners. It is a 2-door connector here,
+    // so its exits carry the 0x3fe/0x3fd tags and get redirected at run
+    // time to whichever room the connector drew. It is ALSO a ? room
+    // content site (sQuickStartRoomContentSites) reached through its own
+    // real cave mouth, which is why the first room looks fine - that part
+    // works. And it is owned by the Castor Wilds round in the room-owner
+    // table. The stairs are the connector's door, so taking them threw the
+    // player at a drawn pool room - a Trilby tree interior, landing on no
+    // valid spot inside it.
+    //
+    // The ? room wins, for the same reason the Heart Piece Hallway's did:
+    // it is on the vanilla-door model with its own event, and the Castor
+    // Wilds spur needs its pockets to behave like pockets. Its two real
+    // exits go back to being real (see gExitList_CastorCaves_Darknut and
+    // gExitList_CastorDarknut_Hall in transitions.c, both restored).
     // ROOM_CAVES_HEART_PIECE_HALLWAY used to sit here, kept fully vanilla
     // per the user's own request ("we can keep this as it is in vanilla,
     // with a heart piece inside"). It's gone from this pool: it is North
@@ -9212,7 +9235,7 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorSmallRoomPool[] = {
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 100, 100, 0, -24 },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 100, 100, 0, -24 },
 };
-#define QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE 7
+#define QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE 6
 
 // Large pool: miniboss/wave content, EXCEPT the 3 rooms flagged below
 // (QuickStart2DoorWantsOverworldEnemies), which always get the same

@@ -2734,18 +2734,21 @@ const Transition gExitList_CastorCaves_WindRuins[] = {
       0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CastorCaves_Darknut[] = {
-    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA, unconditionally - the QUICKSTART override that stood here is
+// gone rather than corrected, because the two branches had become
+// identical and a #ifdef whose arms agree is just a place for them to
+// disagree again later.
+//
+// What it used to say: both real doors retargeted to the shared 2-door
+// connector return, because this room was a connector candidate. It is a ?
+// room on the vanilla-door model now (sQuickStartRoomContentSites) and it
+// cannot be both - see sQuickStart2DoorSmallRoomPool in game.c, where the
+// row was removed, for the whole story. While it WAS both, these two rows
+// still carried the connector's 0x3fe/0x3fd tags, so walking the stairs
+// threw the player into whichever room the connector had drawn that run -
+// a Trilby tree interior, landing on no valid spot inside it. Hard lock,
+// and user-reported rather than caught by reading, because the table looks
+// perfectly reasonable until you walk it.
 const Transition gExitList_CastorCaves_Darknut[] = {
     { WARP_TYPE_AREA, 0x68, 0x18, 0x188, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2753,7 +2756,6 @@ const Transition gExitList_CastorCaves_Darknut[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_CastorCaves_HeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3c8, 0x48, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2773,22 +2775,17 @@ const Transition* const gExitLists_CastorCaves[] = {
 const Transition gExitList_CastorDarknut_Main[] = {
     TransitionListEnd,
 };
+// RESTORED TO VANILLA, and the retarget it replaces was stale twice over.
+// It sent the hall's door to Melari's Mine, from when the mine was the hub
+// and a custom sQuickStartLinks row covered this same box. The mine stopped
+// being the hub, that link row is gone (the only Melari rows left pair it
+// with Minish House Interiors), and nothing was left behind the redirect -
+// so the hall's one way out pointed at a room this mode no longer routes
+// through at all. It goes back to the cave room it came from, which is what
+// makes the pocket a two-room pocket again.
 const Transition gExitList_CastorDarknut_Hall[] = {
-#ifdef QUICKSTART
-    // Retargeted to Melari's Mine (game.c's own custom link's destination
-    // for this same box) instead of the old Castor Caves - same race
-    // concern as the Melari's Mine side of this pair (see
-    // gExitList_MelarisMine_Main above): this real door's position is the
-    // exact spot that custom link covers. Spawn (120,120) - see that link's
-    // own comment (game.c, sQuickStartLinks) for why this is further from
-    // the door than it first looks: a passive drift near the door pulls the
-    // player back into the return trigger box from anywhere closer.
-    { WARP_TYPE_AREA, 0x188, 0x18, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#else
     { WARP_TYPE_AREA, 0x188, 0x18, 0x68, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#endif
     TransitionListEnd,
 };
 const Transition* const gExitLists_CastorDarknut[] = {
