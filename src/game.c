@@ -10414,11 +10414,285 @@ static u8 QuickStartWaterRoomKind(u8 id, u8* form) {
     return kFlyers[(s32)(gSave.run_frames & 0x7fff) % 6];
 }
 
+// --- Placement reachability --------------------------------------------
+//
+// "Open" is not the same as "the player can get there". The Lon Lon Ranch
+// through-cave is the case that proved it: a 15x16 room split by a solid
+// wall across row 8, with the arrival chamber above it and a second chamber
+// below. Both halves are open floor, both fall inside the fill's rings, so
+// the generator happily laid pots in the lower half - which the player
+// cannot reach from where they come in. The reported symptom was pots
+// "spawning outside the walkable space".
+//
+// So the fill is restricted to the anchor's own connected component. The
+// set is computed ONCE, before any pot exists, which matters: a pot writes
+// collision onto its own tile as it spawns, so a set computed later would
+// see the fill walling itself off and shrink as it went.
+//
+// Flood fill by repeated sweeps rather than a queue: a queue big enough for
+// the worst-case room is far more stack than this is worth, while the
+// bitmap is 512 bytes. It runs once per room entry or per wave, not per
+// frame.
+//
+// The sweeps ALTERNATE direction, and that is not a micro-optimisation. A
+// raster-order-only sweep propagates one tile per pass against the grain,
+// so a corridor that doubles back - which is every cave in this game -
+// needs as many passes as it is long, each pass re-testing every cell's
+// collision. Goron Cave's main room is 15x45, and a one-way flood of it
+// blew a 500,000-instruction budget without finishing; that is a visible
+// hitch on hardware, at the exact moment a wave drops. Sweeping forwards
+// then backwards costs one pass per DIRECTION CHANGE in the path instead,
+// which for real rooms is single digits.
+#define QUICKSTART_REACH_BYTES (64 * 64 / 8)
+#define QUICKSTART_REACH_GET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] & (1 << ((((y) << 6) | (x)) & 7)))
+#define QUICKSTART_REACH_SET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] |= (1 << ((((y) << 6) | (x)) & 7)))
+#define QUICKSTART_REACH_CLR(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] &= ~(1 << ((((y) << 6) | (x)) & 7)))
+
+// `open` comes back holding one bit per tile of QuickStartTileIsOpen, and
+// `bits` the subset of those reachable from the anchor. Filling the open
+// map first is not a convenience for the caller - it is what makes the
+// flood affordable. Every sweep used to re-ask GetCollisionDataAtTilePos
+// about every cell, and that call is ~250 instructions; a 15x45 room cost
+// 1.65 MILLION instructions to flood, six frames of dead air at the moment
+// a wave drops. Paying for the collision lookups once turns the sweeps into
+// bit tests. (The caller gets the open map as well because the placer's own
+// ring walk asks the same question thousands more times, for the same
+// price.)
+static void QuickStartMarkReachableTiles(u8* bits, u8* open, s32 anchorTX, s32 anchorTY) {
+    s32 w = (s32)(gRoomControls.width >> 4);
+    s32 h = (s32)(gRoomControls.height >> 4);
+    s32 x, y, i, changed;
+    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
+        bits[i] = 0;
+        open[i] = 0;
+    }
+    if (w > 64) {
+        w = 64;
+    }
+    if (h > 64) {
+        h = 64;
+    }
+    for (y = 0; y < h; y++) {
+        for (x = 0; x < w; x++) {
+            if (QuickStartTileIsOpen(x, y)) {
+                QUICKSTART_REACH_SET(open, x, y);
+            }
+        }
+    }
+    // Seed from the anchor AND its four neighbours, not the anchor alone.
+    // The anchor is usually the player, and the player is very often
+    // standing on a tile GetCollisionDataAtTilePos calls solid: a doorway,
+    // a stair lip, the seam a room transition drops him on. In the
+    // Grimblade dojo - one of the busiest ? room sites there is - the
+    // arrival tile is the door itself, so a single-tile seed found nothing,
+    // the set came back empty, and the whole reachability rule quietly
+    // switched itself off in exactly the room it was most needed. The
+    // neighbours cost four bit tests and fix it; they cannot leak into the
+    // wrong component, because a tile the player is standing next to is a
+    // tile the player can step onto.
+    {
+        s32 seeded = 0;
+        if (anchorTX >= 0 && anchorTY >= 0 && anchorTX < w && anchorTY < h &&
+            QUICKSTART_REACH_GET(open, anchorTX, anchorTY)) {
+            QUICKSTART_REACH_SET(bits, anchorTX, anchorTY);
+            seeded = 1;
+        } else {
+            static const s8 kNeighbours[4][2] = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
+            for (i = 0; i < 4; i++) {
+                s32 nx = anchorTX + kNeighbours[i][0];
+                s32 ny = anchorTY + kNeighbours[i][1];
+                if (nx >= 0 && ny >= 0 && nx < w && ny < h && QUICKSTART_REACH_GET(open, nx, ny)) {
+                    QUICKSTART_REACH_SET(bits, nx, ny);
+                    seeded = 1;
+                }
+            }
+        }
+        if (!seeded) {
+            return; // caller treats an empty set as "no restriction"
+        }
+    }
+    do {
+        changed = 0;
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w; x++) {
+                if (QUICKSTART_REACH_GET(bits, x, y) || !QUICKSTART_REACH_GET(open, x, y)) {
+                    continue;
+                }
+                if ((x > 0 && QUICKSTART_REACH_GET(bits, x - 1, y)) ||
+                    (y > 0 && QUICKSTART_REACH_GET(bits, x, y - 1)) ||
+                    (x + 1 < w && QUICKSTART_REACH_GET(bits, x + 1, y)) ||
+                    (y + 1 < h && QUICKSTART_REACH_GET(bits, x, y + 1))) {
+                    QUICKSTART_REACH_SET(bits, x, y);
+                    changed = 1;
+                }
+            }
+        }
+        for (y = h - 1; y >= 0; y--) {
+            for (x = w - 1; x >= 0; x--) {
+                if (QUICKSTART_REACH_GET(bits, x, y) || !QUICKSTART_REACH_GET(open, x, y)) {
+                    continue;
+                }
+                if ((x > 0 && QUICKSTART_REACH_GET(bits, x - 1, y)) ||
+                    (y > 0 && QUICKSTART_REACH_GET(bits, x, y - 1)) ||
+                    (x + 1 < w && QUICKSTART_REACH_GET(bits, x + 1, y)) ||
+                    (y + 1 < h && QUICKSTART_REACH_GET(bits, x, y + 1))) {
+                    QUICKSTART_REACH_SET(bits, x, y);
+                    changed = 1;
+                }
+            }
+        }
+    } while (changed);
+}
+
+// An empty set means the seed was unusable - the room is off the map, the
+// player is mid-transition, whatever - and there is nothing to restrict to.
+static bool32 QuickStartReachEmpty(const u8* bits) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
+        if (bits[i] != 0) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+static bool32 QuickStartReachHas(const u8* bits, s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0 || tx >= 64 || ty >= 64) {
+        return FALSE;
+    }
+    return QUICKSTART_REACH_GET(bits, tx, ty) != 0;
+}
+
+// The largest Chebyshev distance from the anchor to any reachable tile.
+// Rings past it cannot hold one, so a caller that only wants reachable
+// ground can stop there.
+//
+// This is what keeps the reachability rule from costing more than it saves.
+// The placer's ring search runs to forty rings and repeats itself once per
+// relax level; in Goron Cave's main room the reachable component is 36
+// tiles inside a 15x45 room, so the first three passes were walking ~6,500
+// cells each to place nothing at all - 1.4 million instructions, five
+// frames, spent proving a negative before the escape-hatch pass did the
+// work. With the bound those passes look at a couple of hundred cells.
+static s32 QuickStartReachMaxRing(const u8* bits, s32 anchorTX, s32 anchorTY) {
+    s32 i, k, best = 0;
+    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
+        s32 b = bits[i];
+        if (b == 0) {
+            continue;
+        }
+        for (k = 0; k < 8; k++) {
+            s32 idx, dx, dy;
+            if ((b & (1 << k)) == 0) {
+                continue;
+            }
+            idx = (i << 3) + k;
+            dx = (idx & 63) - anchorTX;
+            dy = (idx >> 6) - anchorTY;
+            if (dx < 0) {
+                dx = -dx;
+            }
+            if (dy < 0) {
+                dy = -dy;
+            }
+            if (dx < dy) {
+                dx = dy;
+            }
+            if (dx > best) {
+                best = dx;
+            }
+        }
+    }
+    return best;
+}
+
+// The cached forms of QuickStartTileIsOpen / QuickStartTileHasElbowRoom.
+// The map only covers the first 64x64 tiles, so anything past that falls
+// through to the live test rather than being called solid - a handful of
+// overworld rooms really are wider than 1024 pixels, and quietly refusing
+// to spawn anything out there would be a silent behaviour change dressed
+// up as an optimisation.
+static bool32 QuickStartTileIsOpenCached(const u8* open, s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0) {
+        return FALSE;
+    }
+    if (tx >= 64 || ty >= 64) {
+        return QuickStartTileIsOpen(tx, ty);
+    }
+    return QUICKSTART_REACH_GET(open, tx, ty) != 0;
+}
+
+static bool32 QuickStartTileHasElbowRoomCached(const u8* open, s32 tx, s32 ty) {
+    return QuickStartTileIsOpenCached(open, tx, ty) && QuickStartTileIsOpenCached(open, tx - 1, ty) &&
+           QuickStartTileIsOpenCached(open, tx + 1, ty) && QuickStartTileIsOpenCached(open, tx, ty - 1) &&
+           QuickStartTileIsOpenCached(open, tx, ty + 1);
+}
+
+// An empty set means the seed was unusable, in which case the old
+// unrestricted behaviour is better than placing nothing at all.
+//
+// Callers that ask this per CELL over a wide scan must hoist the emptiness
+// test out instead of calling this - it is O(512 bytes) on every miss, and
+// the enemy placer walks forty rings of misses before it relaxes. Doing it
+// the lazy way here cost more than 3.2 million instructions per wave, which
+// is a dropped second of gameplay, not a hitch.
+static bool32 QuickStartReachAllows(const u8* bits, s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0 || tx >= 64 || ty >= 64) {
+        return FALSE;
+    }
+    if (QUICKSTART_REACH_GET(bits, tx, ty)) {
+        return TRUE;
+    }
+    return QuickStartReachEmpty(bits);
+}
+
+// The enemy placer is subject to the same reachability rule as the pot
+// fill, and for the same reason - the user, after a playthrough: "There are
+// some ? rooms where the enemies are spawning behind a wall that the player
+// can't access. Examples include the Goron ? Cave in LLR and the cave
+// behind a bombable wall in EH center... the room is structured such that
+// the player enters through the door and is surrounded on all sides by
+// walls that they cannot pass through. On the other side of those walls are
+// tiles in the room, which are technically stand-able, but the player can
+// never access them."
+//
+// The rings this placer walks do not care about walls, so in a room with a
+// second chamber a wave is dealt partly into a space the player cannot get
+// to: the survive clock never ends, the gauntlet never clears.
+//
+// The flood is seeded from the PLAYER, not from the anchor. The anchor is
+// the site's content spot, which is itself only a claim about where the
+// player will be; the player's own tile is where the player demonstrably
+// IS, so it is the one seed that cannot be wrong. If it is unusable (the
+// player is mid-transition, off the map, standing on something the tile
+// test calls solid) the set comes back empty and QuickStartReachAllows
+// falls back to the old unrestricted behaviour - a wave in the wrong half
+// of the room still beats no wave at all.
 static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
     s32 keepClear;
+    bool32 reachUsable;
+    s32 reachRings;
+    u8 reach[QUICKSTART_REACH_BYTES];
+    u8 openTiles[QUICKSTART_REACH_BYTES];
+    QuickStartMarkReachableTiles(reach, openTiles, (s32)(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                 (s32)(gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4);
+    // The set is only trusted when the ANCHOR is inside it. If it is not,
+    // the flood and the site disagree about the room, and the flood is the
+    // one more likely to be wrong: it cannot see a ledge, and it cannot see
+    // a diggable wall either - Dig Caves' Trilby room has its site spot
+    // behind one, so a player-seeded flood puts the whole site out of
+    // bounds and the wave lands in the wrong chamber instead of at the
+    // event. Restricting to the player's component is worth doing when it
+    // decides WHERE IN THE SITE a body goes; it is not worth doing when it
+    // decides the site is somewhere else entirely.
+    reachUsable = !QuickStartReachEmpty(reach) && QuickStartReachHas(reach, anchorTX, anchorTY);
+    reachRings = reachUsable ? QuickStartReachMaxRing(reach, anchorTX, anchorTY) + 1 : QUICKSTART_SPAWN_MAX_RING;
+    if (reachRings > QUICKSTART_SPAWN_MAX_RING) {
+        reachRings = QUICKSTART_SPAWN_MAX_RING;
+    }
     if (QuickStartRoomIsOverWater()) {
         id = QuickStartWaterRoomKind(id, &form);
     }
@@ -10443,12 +10717,36 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
             count = afford;
         }
     }
-    // Three passes now, not two. 0: elbow room, two tiles of separation,
-    // full keep-clear. 1: any open tile, one tile of separation, full
+    // Four passes now. 0: elbow room, two tiles of separation, full
+    // keep-clear. 1: any open tile, one tile of separation, full
     // keep-clear. 2: the same, but a long-reach kind drops back to the
-    // ordinary keep-clear so a cramped room still gets its fight.
-    for (relax = 0; relax < 3 && placed < count; relax++) {
-        for (ring = 0; ring < QUICKSTART_SPAWN_MAX_RING && placed < count; ring++) {
+    // ordinary keep-clear so a cramped room still gets its fight. 3: pass
+    // 2 again with the reachability set switched off.
+    //
+    // That last pass is an escape hatch, not a fourth try, and the
+    // difference is the `placed > 0` break below. It exists because the
+    // flood is a COLLISION flood and a collision flood cannot see a ledge:
+    // the tile you hop from reads as ordinary floor, the tiles you hop over
+    // read as solid, so two halves of a room joined by a drop come back as
+    // two components (the same blind spot component_map.py was written to
+    // work around). In a ledge-joined room whose site spot is on the far
+    // side, reach and QuickStartTileBelongsToSite can intersect in nothing
+    // at all, and an event that places no enemy is an event that never
+    // completes.
+    //
+    // But a wave that is SHORT is not a wave that is broken, while a wave
+    // topped up into the void is exactly the bug this is here to fix - and
+    // "open" includes the void, because the tiles outside a room's walls
+    // carry collision 0 just like its floor does. Goron Cave's stairs room
+    // is 67 "open" tiles of which 9 are the actual chamber. So the hatch
+    // only opens when the reachable ground produced NOTHING at all.
+    for (relax = 0; relax < 4 && placed < count; relax++) {
+        s32 rings;
+        if (relax == 3 && placed > 0) {
+            break;
+        }
+        rings = (relax < 3) ? reachRings : QUICKSTART_SPAWN_MAX_RING;
+        for (ring = 0; ring < rings && placed < count; ring++) {
             s32 dx, dy;
             for (dy = -ring; dy <= ring; dy++) {
                 for (dx = -ring; dx <= ring; dx++) {
@@ -10462,7 +10760,15 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
                     }
                     tx = anchorTX + dx;
                     ty = anchorTY + dy;
-                    if (relax == 0 ? !QuickStartTileHasElbowRoom(tx, ty) : !QuickStartTileIsOpen(tx, ty)) {
+                    // Cached, not live: this placer creates ENEMIES, and an
+                    // enemy writes no collision, so the snapshot cannot go
+                    // stale underneath the walk. (The pot fill next door
+                    // deliberately keeps asking live, because a pot does.)
+                    if (relax == 0 ? !QuickStartTileHasElbowRoomCached(openTiles, tx, ty)
+                                   : !QuickStartTileIsOpenCached(openTiles, tx, ty)) {
+                        continue;
+                    }
+                    if (relax < 3 && reachUsable && !QuickStartReachHas(reach, tx, ty)) {
                         continue;
                     }
                     if (QuickStartTileNearPlayer(tx, ty, relax < 2 ? keepClear : QUICKSTART_SPAWN_KEEP_CLEAR)) {
@@ -10505,10 +10811,107 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     return placed;
 }
 
-static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty) {
+// --- Survive rooms want enemies that COME TO YOU ------------------------
+//
+// The user, after a playthrough: in "Stand your ground!" rooms "we should
+// only use enemies that actively pursue the player sprite, to help increase
+// the difficulty and make it more interesting", followed by the list below.
+//
+// This is the CROW rule generalised. That one already excluded the Raven
+// from gauntlets and survive clocks for exactly this reason - it "flies a
+// wide erratic circuit and will not commit to the player, so a wave of them
+// is spent chasing rather than fighting, which reads as dead air against
+// the clock". Every wanderer, ambusher and stationary hazard has the same
+// problem; a survive clock is the one event where the enemy declining to
+// engage costs the player nothing, which inverts the whole point.
+//
+// Forms are the ones the tier tables already document (CHUCHU 0/1/2 =
+// green/red/blue, STALFOS 0/1 = red/blue, and so on), so a colour named
+// here means the same body the rest of this file means by it.
+static const u8 sQuickStartPursuers[][2] = {
+    { CHUCHU, 2 },          // blue chuchu
+    { LEEVER, 1 },          // blue leever
+    { PESTO, 1 },           // blue pesto
+    { STALFOS, 1 },         // blue stalfos
+    { STALFOS, 0 },         // red stalfos
+    { TEKTITE, 1 },         // blue tektite
+    { BOW_MOBLIN, 0 },
+    { CLOUD_PIRANHA, 0 },
+    { WIZZROBE_FIRE, 0 },
+    { WIZZROBE_ICE, 0 },
+    { WIZZROBE_WIND, 0 },   // "wizzrobe" - the plain wind caster
+    { GHINI, 0 },
+    { GOBDO, 0 },           // gibdo
+    { HELMASAUR, 0 },
+    { MOLDORM, 0 },
+    { ROCK_CHUCHU, 0 },
+    { SCISSORS_BEETLE, 0 },
+    { SPEAR_MOBLIN, 0 },
+    { SPIKED_BEETLE, 0 },
+    // The two coloured Keatons. Form 0 is deliberately absent: that is the
+    // scavenger hunt's thief, whose entire behaviour is running AWAY from
+    // the player, which is the opposite of what this list is for.
+    { KEATON, 1 },
+    { KEATON, 2 },
+};
+// Three kinds the user named are deliberately NOT here, because
+// tools/quickstart/pursuer_soak.py measured them in the dojo against a
+// pinned, invulnerable player and they cannot do the job:
+//
+//   FLYING_POT   runs its whole action chain (1..5) and deletes itself
+//                after ~47 frames. In a survive room it would evaporate
+//                well before the clock ran out, leaving a hole in the wave.
+//   FLYING_SKULL sits in action 1 forever and moves 3px in 900 frames,
+//                with the player 32px away. It is a bone-pile spawner's
+//                payload, not a standalone enemy.
+//   LAKITU       same: action 1 forever, 0px of movement in 900 frames.
+//                It needs its cloud parent to do anything at all.
+//
+// Spawning any of the three still "works" in the sense that nothing
+// crashes, which is why the admission probe let LAKITU into the tier
+// tables - but alive is not the same as dangerous, and on a survive clock
+// a harmless enemy is worse than no enemy, because it occupies a slot.
+
+#define QUICKSTART_PURSUER_COUNT ((s32)ARRAY_COUNT(sQuickStartPursuers))
+
+static bool32 QuickStartIsPursuer(u8 id, u8 form) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_PURSUER_COUNT; i++) {
+        if (sQuickStartPursuers[i][0] == id && sQuickStartPursuers[i][1] == form) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Difficulty-scaled first, allowlist second. Re-rolling the ordinary pick
+// keeps the difficulty curve doing its job - a survive room at difficulty
+// 12 should still be drawing from the top of the ladder - and only a run of
+// rolls that all land on non-pursuers falls back to a flat draw. Same shape
+// as the Raven re-roll below, for the same reason.
+static void QuickStartPickPursuer(u8 difficulty, u8* outId, u8* outForm) {
+    s32 tries;
+    for (tries = 0; tries < 8; tries++) {
+        QuickStartPickEnemy(difficulty, outId, outForm);
+        if (QuickStartIsPursuer(*outId, *outForm)) {
+            return;
+        }
+    }
+    {
+        s32 pick = (s32)(Random() & 0x7fff) % QUICKSTART_PURSUER_COUNT;
+        *outId = sQuickStartPursuers[pick][0];
+        *outForm = sQuickStartPursuers[pick][1];
+    }
+}
+
+static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
     u8 id, form;
     s32 i, count;
-    QuickStartPickEnemy(difficulty, &id, &form);
+    if (pursuersOnly) {
+        QuickStartPickPursuer(difficulty, &id, &form);
+    } else {
+        QuickStartPickEnemy(difficulty, &id, &form);
+    }
     // No Ravens in a gauntlet or on a survive clock - the user's call, and
     // the behaviour backs it up: a CROW flies a wide erratic circuit and
     // will not commit to the player, so a wave of them is spent chasing
@@ -10518,7 +10921,11 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
     // a run of rolls that all land on the bird falls back to the beetle
     // (possible at low difficulty, where level 1 is a short list).
     for (i = 0; i < 4 && id == CROW; i++) {
-        QuickStartPickEnemy(difficulty, &id, &form);
+        if (pursuersOnly) {
+            QuickStartPickPursuer(difficulty, &id, &form);
+        } else {
+            QuickStartPickEnemy(difficulty, &id, &form);
+        }
     }
     if (id == CROW) {
         id = BEETLE;
@@ -10743,7 +11150,7 @@ static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 con
         // 12 against continuous top-ups is the actual event.
         gSave.timer4 = (u32)(QUICKSTART_SURVIVE_BASE_SECONDS + difficulty) * 60;
         SetLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
-        QuickStartSpawnWave(contentX, contentY, 0, difficulty);
+        QuickStartSpawnWave(contentX, contentY, 0, difficulty, TRUE);
         QuickStartWaveRoomSetWave(flagBase, 1);
         QsSetRoomFlag(flagBase + 0);
         SoundReq(SFX_SECRET);
@@ -10758,7 +11165,7 @@ static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 con
                 // so 3 wraps to 0. Compare, not %: agbcc promotes u8 to
                 // unsigned and emits the __umodsi3 this libgcc lacks.
                 u8 wave = QuickStartWaveRoomGetWave(flagBase);
-                QuickStartSpawnWave(contentX, contentY, (u8)((wave >= 3) ? 0 : wave), difficulty);
+                QuickStartSpawnWave(contentX, contentY, (u8)((wave >= 3) ? 0 : wave), difficulty, TRUE);
                 QuickStartWaveRoomSetWave(flagBase, (u8)((wave + 1) & 3));
             }
             return FALSE;
@@ -10889,7 +11296,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     if ((extra & 0x40) && wave == 0) {
         QuickStartHandicapApply();
     }
-    QuickStartSpawnWave(contentX, contentY, wave, difficulty);
+    QuickStartSpawnWave(contentX, contentY, wave, difficulty, FALSE);
     QsSetRoomFlag(flagBase + 0);
     QuickStartGauntletRemember(wave, TRUE);
     return FALSE;
@@ -12523,84 +12930,6 @@ static bool32 QuickStartPotRoomInApron(s32 dx, s32 dy, s32 apron) {
 // pass two re-seeds and lays the room down for real. Both passes run before
 // a single pot exists, which matters: a pot WRITES collision, so a pass run
 // after any of them are standing would see a different map.
-// --- Pot placement reachability ------------------------------------------
-//
-// "Open" is not the same as "the player can get there". The Lon Lon Ranch
-// through-cave is the case that proved it: a 15x16 room split by a solid
-// wall across row 8, with the arrival chamber above it and a second chamber
-// below. Both halves are open floor, both fall inside the fill's rings, so
-// the generator happily laid pots in the lower half - which the player
-// cannot reach from where they come in. The reported symptom was pots
-// "spawning outside the walkable space".
-//
-// So the fill is restricted to the anchor's own connected component. The
-// set is computed ONCE, before any pot exists, which matters: a pot writes
-// collision onto its own tile as it spawns, so a set computed later would
-// see the fill walling itself off and shrink as it went.
-//
-// Flood fill by repeated sweeps rather than a queue: a queue big enough for
-// the worst-case room is far more stack than this is worth, while the
-// bitmap is 512 bytes and the rooms that host pot lotteries are small. It
-// runs once per room entry, not per frame.
-#define QUICKSTART_REACH_BYTES (64 * 64 / 8)
-#define QUICKSTART_REACH_GET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] & (1 << ((((y) << 6) | (x)) & 7)))
-#define QUICKSTART_REACH_SET(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] |= (1 << ((((y) << 6) | (x)) & 7)))
-#define QUICKSTART_REACH_CLR(bits, x, y) ((bits)[(((y) << 6) | (x)) >> 3] &= ~(1 << ((((y) << 6) | (x)) & 7)))
-
-static void QuickStartMarkReachableTiles(u8* bits, s32 anchorTX, s32 anchorTY) {
-    s32 w = (s32)(gRoomControls.width >> 4);
-    s32 h = (s32)(gRoomControls.height >> 4);
-    s32 x, y, i, changed;
-    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
-        bits[i] = 0;
-    }
-    if (w > 64) {
-        w = 64;
-    }
-    if (h > 64) {
-        h = 64;
-    }
-    if (anchorTX < 0 || anchorTY < 0 || anchorTX >= w || anchorTY >= h || !QuickStartTileIsOpen(anchorTX, anchorTY)) {
-        return; // no seed - caller treats an empty set as "no restriction"
-    }
-    QUICKSTART_REACH_SET(bits, anchorTX, anchorTY);
-    do {
-        changed = 0;
-        for (y = 0; y < h; y++) {
-            for (x = 0; x < w; x++) {
-                if (QUICKSTART_REACH_GET(bits, x, y) || !QuickStartTileIsOpen(x, y)) {
-                    continue;
-                }
-                if ((x > 0 && QUICKSTART_REACH_GET(bits, x - 1, y)) ||
-                    (y > 0 && QUICKSTART_REACH_GET(bits, x, y - 1)) ||
-                    (x + 1 < w && QUICKSTART_REACH_GET(bits, x + 1, y)) ||
-                    (y + 1 < h && QUICKSTART_REACH_GET(bits, x, y + 1))) {
-                    QUICKSTART_REACH_SET(bits, x, y);
-                    changed = 1;
-                }
-            }
-        }
-    } while (changed);
-}
-
-// An empty set means the seed was unusable, in which case the old
-// unrestricted behaviour is better than placing nothing at all.
-static bool32 QuickStartReachAllows(const u8* bits, s32 tx, s32 ty) {
-    s32 i;
-    if (tx < 0 || ty < 0 || tx >= 64 || ty >= 64) {
-        return FALSE;
-    }
-    if (QUICKSTART_REACH_GET(bits, tx, ty)) {
-        return TRUE;
-    }
-    for (i = 0; i < QUICKSTART_REACH_BYTES; i++) {
-        if (bits[i] != 0) {
-            return FALSE;
-        }
-    }
-    return TRUE;
-}
-
 static s32 QuickStartPotRoomFill(const QuickStartPotRoomPreset* preset, u32 seed, s32 anchorTX, s32 anchorTY,
                                  s32 apron, s32 target, s32 winnerIndex, s32 prizeIndex, s32 ownerSite,
                                  bool32 spawn, const u8* reach) {
@@ -12717,6 +13046,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
     s32 target = (open * preset->fill) >> 8;
     s32 apron, actual, winnerIndex;
     u8 reach[QUICKSTART_REACH_BYTES];
+    u8 openTiles[QUICKSTART_REACH_BYTES];
 
     if (target > QUICKSTART_POT_ROOM_MAX_POTS) {
         target = QUICKSTART_POT_ROOM_MAX_POTS;
@@ -12744,7 +13074,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
 
     // Computed here, once, and shared by both passes - and deliberately
     // before a single pot exists, since pots write their own collision.
-    QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
+    QuickStartMarkReachableTiles(reach, openTiles, anchorTX, anchorTY);
     QuickStartPotRoomKeepClear(reach, keepClearTX, keepClearTY);
 
     actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
@@ -12760,7 +13090,7 @@ static void QuickStartPotRoomGenerate(s32 extra, s32 anchorTX, s32 anchorTY, s32
             anchorTY = siteY >> 4;
         }
         // Re-anchoring moves the component too, so the set is rebuilt.
-        QuickStartMarkReachableTiles(reach, anchorTX, anchorTY);
+        QuickStartMarkReachableTiles(reach, openTiles, anchorTX, anchorTY);
         QuickStartPotRoomKeepClear(reach, keepClearTX, keepClearTY);
         actual = QuickStartPotRoomFill(preset, seed, anchorTX, anchorTY, apron, target, -1, prizeIndex, ownerSite,
                                        FALSE, reach);
@@ -14201,9 +14531,40 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                                 enemy->y.HALF.HI = gRoomControls.origin_y + backY;
                             }
                         }
-                    } else if (!PlayerInRange(enemy, 1, 56)) {
-                        enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
-                        enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    } else if (!QsCheckRoomFlag(flagBase + 1)) {
+                        // The leash is a PRE-ENGAGEMENT parking brake, and
+                        // it latches off for good the first time the player
+                        // comes near. It used to be a live distance test -
+                        // park whenever the player is further than 56px -
+                        // and that is a bug the moment the fight starts,
+                        // because 56px is three and a half tiles and combat
+                        // crosses it constantly. The user's report is
+                        // exactly this shape: "the enemy sprite will walk
+                        // toward the player a bit, maybe attack them, but
+                        // will suddenly re-spawn in the center... over and
+                        // over", for every Darknut and the Ball and Chain.
+                        // Back off after a swing, take a knockback, or just
+                        // circle at sword range, and the miniboss is yanked
+                        // back to the middle of the room mid-fight.
+                        //
+                        // What the leash is actually FOR is the room-load
+                        // drift documented above: a miniboss wanders off
+                        // its spawn point within half a second even with
+                        // nobody in the room. That only needs holding until
+                        // the player arrives, so once they have arrived it
+                        // stops entirely.
+                        //
+                        // 96px to latch, not the 56 the parking test uses:
+                        // the radius has to be comfortably wider than the
+                        // distance a real fight is conducted at, or a
+                        // Ball and Chain fought from outside its own reach
+                        // would never trip it and would go on re-centring.
+                        if (PlayerInRange(enemy, 1, 96)) {
+                            QsSetRoomFlag(flagBase + 1);
+                        } else {
+                            enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+                            enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                        }
                     }
                 }
             }
@@ -15337,12 +15698,15 @@ static bool32 QuickStartContentSiteWantsClear(u8 area, u8 room) {
     if (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) {
         return TRUE;
     }
-    // The smithy ships with a workbench row, an anvil, pots and a chest
-    // filling most of its floor, and it is an ANY-kind site now, so it has
-    // to be able to host a miniboss or a 3-wave gauntlet.
-    if (area == AREA_HOUSE_INTERIORS_2 && room == ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH) {
-        return TRUE;
-    }
+    // The smithy used to be on this list, for floor space: it ships with a
+    // workbench row, an anvil, pots and a chest, and it is an ANY-kind site
+    // that has to host a miniboss or a 3-wave gauntlet. Deleting those
+    // OBJECTs turned out to buy nothing. Their collision does not live on
+    // the entity - it is baked into the room's tilemap - so sweeping them
+    // took away the sprites and left the barriers, which is the user's
+    // "big invisible barriers all over the room": the floor looked open and
+    // was not. Keeping the furniture costs the same space it always did,
+    // and at least the space it costs is space the player can SEE.
     return area == AREA_HOUSE_INTERIORS_4 &&
            (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST || room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
 }
@@ -16396,7 +16760,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         QsClearRoomFlag(0);
         return;
     }
-    QuickStartSpawnWave(contentX, contentY, wave, difficulty);
+    QuickStartSpawnWave(contentX, contentY, wave, difficulty, FALSE);
     QsSetRoomFlag(0);
 }
 
@@ -16537,9 +16901,11 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
     // space; clearing them cost a route, and a route is the scarcer thing.
     // (RANCH_HOUSE_EAST stays: its second entrance is a separate minish
     // door, not furniture in this room.)
+    // LINKS_HOUSE_SMITH came off for a different reason - see
+    // QuickStartContentSiteWantsClear: its furniture's collision is in the
+    // tilemap, so clearing the objects left invisible walls behind.
     bool32 clearObjects = (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_EXIT) ||
                           (area == AREA_DOJOS && room == ROOM_DOJOS_GRIMBLADE) ||
-                          (area == AREA_HOUSE_INTERIORS_2 && room == ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH) ||
                           (area == AREA_HOUSE_INTERIORS_4 &&
                            room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
     // Every room that goes through here is a "? room" of some kind, so its
@@ -16668,9 +17034,20 @@ static void QuickStart2DoorSetupRoomContent(void) {
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* enemy = &gEntities[i].base;
                 if (enemy->kind == ENEMY && QuickStartEntityInCurrentRoom(enemy)) {
-                    if (!PlayerInRange(enemy, 1, 56)) {
-                        enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
-                        enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                    // The same pre-engagement parking brake the site-based
+                    // miniboss uses, and latched off the same way - see the
+                    // long note there. As a live distance test this yanked
+                    // the miniboss back to the room's middle every time the
+                    // player crossed 56px, which is constantly once a fight
+                    // is underway. Room flag 1 is free in this branch (this
+                    // path uses 0 and 2 only).
+                    if (!QsCheckRoomFlag(1)) {
+                        if (PlayerInRange(enemy, 1, 96)) {
+                            QsSetRoomFlag(1);
+                        } else {
+                            enemy->x.HALF.HI = gRoomControls.origin_x + contentX;
+                            enemy->y.HALF.HI = gRoomControls.origin_y + contentY;
+                        }
                     }
                     return;
                 }
