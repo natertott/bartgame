@@ -2741,8 +2741,58 @@ const u8* const gCustomStrings2[] = {
     // the place - that much is fair and useful - without promising the
     // Element, which is what made the chain look skippable.
     [25] = (const u8*)"Something sleeps here.\nIt will not wake until\nyour work is done.",
+    // ============ Select with nothing to fuse: "what, and where" =========
+    //
+    // 26-90. The user, after a playthrough: pressing Select next to a
+    // fusion partner should still open the Kinstone screen, but pressing it
+    // with nobody there should have Ezlo name "what region and type of
+    // event they need to unlock next".
+    //
+    // The two banks above each answer HALF of that - [0..12] name the
+    // region and [13..17] name the kind - because the compass decides which
+    // half the player gets. This bank answers both at once, which is what
+    // the request actually asks for, and it is generated rather than
+    // authored: thirteen regions times five step kinds is sixty-five lines,
+    // and sixty-five hand-written lines drift. The index is
+    // QUICKSTART_CHAIN_HINT_PAIR_BASE + ring * QS_CHAIN_KIND_COUNT + kind,
+    // so a new ring region or step kind needs a row or a line inside the
+    // macro and nothing else.
+    //
+    // The ITEM line in each row is dead weight, kept for the arithmetic: an
+    // ITEM step is not anywhere in particular, so it never reaches a row.
+    // Paying thirteen strings to keep the index a multiplication is a good
+    // trade against a jagged table that has to be looked up.
+#define QS_HINT_ROW(region)                                        \
+    (const u8*)"You are missing a\nthing you need. Try\n" region, \
+    (const u8*)"A marked room waits\nunfinished. Look in\n" region, \
+    (const u8*)"Enemies hold a place\nthat matters, in\n" region,  \
+    (const u8*)"A beast waits for you\nto come. Look to\n" region,  \
+    (const u8*)"A favour is undone.\nYou will find it in\n" region
+    QS_HINT_ROW("the castle garden."),
+    QS_HINT_ROW("North Hyrule Field."),
+    QS_HINT_ROW("South Hyrule Field."),
+    QS_HINT_ROW("the eastern hills."),
+    QS_HINT_ROW("Lon Lon Ranch."),
+    QS_HINT_ROW("Trilby Highlands."),
+    QS_HINT_ROW("the western woods."),
+    QS_HINT_ROW("the Royal Valley."),
+    QS_HINT_ROW("Castor Wilds."),
+    QS_HINT_ROW("the Wind Ruins."),
+    QS_HINT_ROW("Mount Crenel."),
+    QS_HINT_ROW("the Minish Woods."),
+    QS_HINT_ROW("Lake Hylia."),
+#undef QS_HINT_ROW
+    // 91-92: the two states where there is no step to point at.
+    [91] = (const u8*)"Nothing is calling to\nyou yet. Go and make\nsomething happen.",
+    [92] = (const u8*)"Your work is done. The\nElement is all that is\nleft to take.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
+
+// The pair bank is addressed arithmetically, so its shape is load-bearing:
+// 26 rows of five starting at 26 ends at 90, and the two no-step lines are
+// 91 and 92. If a region or a step kind is ever added, this is the line
+// that stops the table quietly answering for the wrong thing.
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 93) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -16511,6 +16561,11 @@ static void QuickStartChainBossWatcher(void) {
 // its hard 256-entry ceiling exactly as these were written.
 #define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_RING_*
 #define QUICKSTART_CHAIN_HINT_KIND_BASE QS_RING_COUNT   // +QS_CHAIN_*
+// The third bank, for the Select button: one line per (region, kind) pair,
+// so a single textbox can say both. See gCustomStrings2.
+#define QUICKSTART_CHAIN_HINT_PAIR_BASE 26              // +ring*5 +QS_CHAIN_*
+#define QUICKSTART_HINT_NO_STEP 91
+#define QUICKSTART_HINT_CHAIN_DONE 92
 
 // Which named region a step points at - for the hint, and for the marker.
 static s32 QuickStartChainStepRegion(s32 step) {
@@ -16558,6 +16613,72 @@ static bool32 QuickStartChainStepRoom(s32 step, u8* area, u8* room) {
             break;
     }
     return FALSE;
+}
+
+// --- Select, with nothing to fuse ---------------------------------------
+//
+// Select is the Kinstone Fusion button in this build (ConvInputToState,
+// code_0805EC04.c), which is why CanDispEzloMessage in gameUtils.c is a
+// stub: pressing it used to be how you asked Ezlo where to go, and that
+// consumer was removed when the button changed hands. The user wants the
+// old gesture back on the half of the presses the fusion screen does not
+// want - "if the player presses Select when they are NOT standing next to
+// a sprite, it should play an Ezlo hint telling the player what region and
+// type of event they need to unlock next".
+//
+// So this is the OTHER branch of the same button, deliberately tested the
+// same way playerUtils.c's sub_080782C0 tests it (a current interactable
+// carrying a real kinstone id), so the two cannot both fire and cannot
+// both decline.
+static bool32 QuickStartFuseTargetNearby(void) {
+    const InteractableObject* obj;
+    if (gPossibleInteraction.currentIndex == 0xFF) {
+        return FALSE;
+    }
+    obj = gPossibleInteraction.currentObject;
+    if (obj == NULL || obj->entity == NULL) {
+        return FALSE;
+    }
+    return (u8)(obj->kinstoneId - 1) < 100;
+}
+
+// Unlike QuickStartChainHintOnce this fires as often as the player asks,
+// because the player asked. It is also NOT phase-gated - newInput is a
+// one-frame edge, and a monitor that only looks on one frame in eight
+// would swallow seven presses out of eight.
+static void QuickStartSelectHintMonitor(void) {
+    s32 step, ring, hint;
+    if ((gPlayerState.playerInput.newInput & INPUT_FUSE) == 0) {
+        return;
+    }
+    if (QuickStartFuseTargetNearby()) {
+        return; // the fusion screen's press, not ours
+    }
+    // Same settled-room guard the step hints use: a textbox opened during a
+    // transition lands on top of it.
+    if (!QuickStartRoomSettled() || (gPlayerState.flags & PL_BUSY) || gPlayerState.queued_action != 0) {
+        return;
+    }
+    step = QuickStartChainProgress();
+    if (step >= QUICKSTART_CHAIN_STEPS) {
+        hint = QUICKSTART_HINT_CHAIN_DONE;
+    } else if (step >= (s32)gSave.chain_rolled) {
+        // Dealt steps run out before finished ones do at the very start of
+        // a run, and between a step being paid for and the next being
+        // rolled. There is nothing to point at yet, and saying so is better
+        // than pointing somewhere arbitrary.
+        hint = QUICKSTART_HINT_NO_STEP;
+    } else {
+        ring = QuickStartChainStepRegion(step);
+        if (ring < 0) {
+            // An ITEM step is not in a place. The kind bank's own line for
+            // it already says the right thing.
+            hint = QUICKSTART_CHAIN_HINT_KIND_BASE + QS_CHAIN_ITEM;
+        } else {
+            hint = QUICKSTART_CHAIN_HINT_PAIR_BASE + ring * QS_CHAIN_KIND_COUNT + gSave.chain_kind[step];
+        }
+    }
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, hint), 0);
 }
 
 // One hint per step, fired once the player is settled somewhere the
@@ -19963,6 +20084,9 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartDrawDifficultyHUD();
+    // Every frame, before anything that could consume the press: newInput
+    // is a one-frame edge.
+    QuickStartSelectHintMonitor();
     // Before any content runs, so a reward placed on an earlier frame is
     // already immortal by the time this frame's "is it still there?" check
     // looks for it.
