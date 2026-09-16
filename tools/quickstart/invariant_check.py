@@ -404,6 +404,14 @@ def check_static():
                     (pr.stdout or pr.stderr).strip().split('\n')[-1]))
     except Exception as exc:
         out.append(('WARN', 'could not run gen_reach --check: %s' % exc))
+    # A stale POOL_LISTS entry must report itself as drift, not as a door-tag
+    # failure against a room that is behaving correctly. When
+    # ROOM_CASTOR_CAVES_DARKNUT left the pool, this tier kept demanding the
+    # connector's sentinel tags from it and called the CORRECT vanilla
+    # destinations a bug.
+    for key in P.pool_list_drift():
+        out.append(('FAIL', 'POOL_LISTS still names %s/%s, which is no longer a 2-door '
+                            'pool room - drop it there too' % key))
     for (an, rn), d in P.pool_doors().items():
         doors = d['doors']
         if len(doors) < 2:

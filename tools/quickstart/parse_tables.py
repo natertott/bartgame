@@ -130,8 +130,15 @@ def region_pool():
     return out
 
 
+# The exit list backing each 2-door pool room. HAND-MAINTAINED, and coupled
+# to sQuickStart2DoorSmallRoomPool / LargeRoomPool in game.c: a room that
+# leaves those tables has to leave this one too, or the static tier goes on
+# demanding the connector's sentinel door tags from a room that is no longer
+# a connector. That is not hypothetical - ROOM_CASTOR_CAVES_DARKNUT left the
+# pool (it was double-owned with a ? room content site, and the collision
+# hard-locked a player) and this map kept insisting on its tags. The
+# assertion under pool_doors() is what makes the next one loud.
 POOL_LISTS = {
- ('AREA_CASTOR_CAVES','ROOM_CASTOR_CAVES_DARKNUT'): 'gExitList_CastorCaves_Darknut',
  ('AREA_CRENEL_CAVES','ROOM_CRENEL_CAVES_BRIDGE_SWITCH'): 'gExitList_CrenelCaves_BridgeSwitch',
  ('AREA_CRENEL_CAVES','ROOM_CRENEL_CAVES_CHUCHU_POT_CHEST'): 'gExitList_CrenelCaves_ChuchuPotChest',
  ('AREA_CRENEL_CAVES','ROOM_CRENEL_CAVES_HELMASAUR_HALLWAY'): 'gExitList_CrenelCaves_HelmasaurHallway',
@@ -168,6 +175,17 @@ def pool_doors():
                        'ex': int(ex, 0), 'ey': int(ey, 0), 'shape': sh}
                       for wt, sx, sy, ex, ey, sh in rows[:2]]}
     return out
+
+
+def pool_list_drift():
+    """Rooms named in POOL_LISTS that are no longer 2-door pool members.
+
+    The static tier calls this so a stale entry reports itself as drift -
+    naming the real problem - instead of surfacing as a door-tag failure
+    against a room that is behaving correctly.
+    """
+    live = {(r['areaName'], r['roomName']) for r in pool_rows()}
+    return sorted(k for k in POOL_LISTS if k not in live)
 
 
 def site_index_of(area_name, room_name):
