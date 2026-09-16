@@ -1085,6 +1085,22 @@ static void GameTask_Transition(void) {
         SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 7);
         SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 14);
         SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 15);
+        // The tower ENTRANCE's own two chests, flags 5 and 6, holding items
+        // 28 and 75. Reported by the user as "a set of chests on the first
+        // floor of the Wind Tribe Home that still have items inside" - and
+        // the room naming is why they outlived every other sweep. A player
+        // calls the ground floor the first floor; the ROM calls that room
+        // ENTRANCE and gives the name FLOOR_1 to the storey above it, which
+        // was already sealed by flag 7 above. So every pass that went
+        // looking at "floor 1" found it clean and moved on.
+        //
+        // Surveyed rather than guessed: gSmallChests read live in each
+        // tower room gives type/localFlag/item per registered chest, and
+        // entrance flags 5 and 6 were the only two rooms' worth still
+        // showing live SPECIAL_CHEST entities (every other floor already
+        // read zero).
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 5);
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_WIND_TRIBE_TOWER), 6);
         SetLocalFlagByBank(GetFlagBankOffset(AREA_HOUSE_INTERIORS_2), 22);
     }
     // InitializePlayer() (gameUtils.c) sets PL_NO_CAP on the player whenever
