@@ -5242,10 +5242,9 @@ typedef struct {
 // and how the pick now spreads over the whole list.
 //
 // Deliberately absent:
-//   ITEM_LIGHT_ARROW  - unverified; it can join the direct-grant list
-//                       (QuickStartItemNeedsDirectGrant) and come straight
-//                       in whenever someone wants it.
 //   two loose fairies - that is the FAIRY room kind, not an item.
+// (ITEM_LIGHT_ARROW was listed here as unverified. It is an ordinary rare
+// weapon row now - see its own comment below.)
 //
 // ITEM_RED_SWORD used to be listed here as impossible, on a claim that has
 // since been disproved (see QuickStartItemNeedsDirectGrant). It is now an
@@ -5296,6 +5295,21 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_QST_GRAVEYARD_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    // The Light Arrow, per the user: "an upgrade to the bow in the vanilla
+    // version that lets a player charge up their arrow shots". Rare and
+    // behind the Bow - the same shape as the Magical Boomerang above.
+    //
+    // It needs no new code. item.c already routes it to ItemBow,
+    // itemDefinitions.c gives it its own pullout animation, and
+    // LoadItemGfx (gameUtils.c) loads sprite group 29 when it is owned.
+    // Holding the plain Bow as well is safe, which is worth saying out
+    // loud because the LANTERN's two ids are not: the pause menu's slot
+    // fill loop reassigns its own loop variable for the lantern pair and
+    // spins forever (see sMapExploreItems' comment). The bow pair has no
+    // such special case - both simply land in MENU_SLOT_BOW, higher id
+    // last, so the Light Arrow takes the slot, which is the upgrade
+    // behaving like an upgrade.
+    { ITEM_LIGHT_ARROW, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOW, 0 },
     // --- SKILL UPGRADES --------------------------------------------------
     { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_ROCK_BREAKER, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
@@ -5305,6 +5319,14 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_SKILL_SWORD_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_DOWN_THRUST, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_ROCS_CAPE, 0 },
     { ITEM_SKILL_GREAT_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    // The last three sword arts, per the user ("add all the sword arts
+    // into the pool under the Skill category as rare entries"). Swiftblade
+    // the First's advanced techniques - all three modify the SPIN, so they
+    // sit behind the Spin Attack exactly as Great Spin does. A Long Spin
+    // with nothing to spin is not a reward, it is a dead draw.
+    { ITEM_SKILL_FAST_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    { ITEM_SKILL_FAST_SPLIT, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    { ITEM_SKILL_LONG_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
     // --- STAT UPGRADES ---------------------------------------------------
     // No common tier, per the design. The butterflies each speed up exactly
     // one thing (arrows/digging/swimming) and are read straight off the
@@ -5377,7 +5399,19 @@ static bool32 QuickStartHasEmptyBottle(void) {
             return TRUE;
         }
     }
-    return FALSE;
+    // No empty bottle does not mean the item is wasted any more. GiveItem's
+    // case 4 (itemUtils.c) now grants a NEW bottle when every bottle in
+    // hand is full, and at four full bottles overwrites the first slot - so
+    // a bottled item always lands somewhere, and gating the draw on an
+    // empty bottle would hold back rows that would work fine.
+    //
+    // The test stays rather than the rows losing their requirement, because
+    // this is still the honest question ("will this land?") and the answer
+    // stopped being "only with an empty bottle" rather than stopping being
+    // interesting. It now returns FALSE never; if a future rule reintroduces
+    // a case where a bottled item CAN be dropped on the floor, this is the
+    // one place that has to learn about it.
+    return TRUE;
 }
 
 // Room for one more bottle? GiveItem case 3 walks ITEM_BOTTLE1..4 for the
@@ -5696,6 +5730,29 @@ static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
     // stitched by the area's own scroll seams.
     if (area == AREA_RUINS && room <= ROOM_RUINS_BELOW_FORTRESS_ENTRANCE) {
         return QS_RING_WR;
+    }
+    // Minish Woods and Lake Hylia. Both have had pool rows, reach-table
+    // entries ("free" - nothing gates either one) and content sites for a
+    // while; what they did not have was a line here, and that alone is what
+    // sealed them off. Containment lets a transition through when both ends
+    // are ring rooms, so with these two missing, walking Eastern Hills'
+    // east border or Lon Lon Ranch's east border was cancelled the frame it
+    // fired and the regions were unreachable no matter what the chain
+    // pointed at.
+    //
+    // Only each area's MAIN room. ROOM_LAKE_HYLIA_BEANSTALK is left out
+    // deliberately: its only exits are into the Hylia dig caves, which are
+    // not a content site, so blessing it as a ring room would start
+    // policing it and cancel the only ways out - an unpoliced dead end is
+    // the safe failure here, a sealed one is a lost run.
+    //
+    // Mount Crenel is still absent on purpose. Its base is unmapped, and
+    // the base is the prerequisite for the mountain.
+    if (area == AREA_MINISH_WOODS && room == ROOM_MINISH_WOODS_MAIN) {
+        return QS_RING_MW;
+    }
+    if (area == AREA_LAKE_HYLIA && room == ROOM_LAKE_HYLIA_MAIN) {
+        return QS_RING_LH;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -6623,7 +6680,7 @@ static const QuickStartTierEntry sQuickStartShopPool[] = {
     { ITEM_PACCI_CANE, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NO_FIRE_ROD, 0 },
     { ITEM_GRIP_RING, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
     { ITEM_POWER_BRACELETS, QS_CAT_KEY, QS_TIER_RARE, QS_REQ_NONE, 0 },
-    // --- WEAPONS / TOOLS (10) --------------------------------------------
+    // --- WEAPONS / TOOLS (11) --------------------------------------------
     { ITEM_BOW, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOMBS, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
@@ -6634,6 +6691,7 @@ static const QuickStartTierEntry sQuickStartShopPool[] = {
     { ITEM_REMOTE_BOMBS, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
+    { ITEM_LIGHT_ARROW, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOW, 0 },
     // --- REWARDS (5) -----------------------------------------------------
     // No rupees (see above) and no heart piece (its own slot).
     { ITEM_BOTTLE1, QS_CAT_REWARD, QS_TIER_COMMON, QS_REQ_BOTTLE_ROOM, 1 },
@@ -6641,7 +6699,7 @@ static const QuickStartTierEntry sQuickStartShopPool[] = {
     { ITEM_BOTTLE_RED_POTION, QS_CAT_REWARD, QS_TIER_UNCOMMON, QS_REQ_EMPTY_BOTTLE, 1 },
     { ITEM_HEART_CONTAINER, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_NONE, 1 },
     { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
-    // --- SKILL UPGRADES (8) ----------------------------------------------
+    // --- SKILL UPGRADES (11) ---------------------------------------------
     { ITEM_SKILL_SPIN_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_ROCK_BREAKER, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_ROLL_ATTACK, QS_CAT_SKILL, QS_TIER_COMMON, QS_REQ_NONE, 0 },
@@ -6650,6 +6708,9 @@ static const QuickStartTierEntry sQuickStartShopPool[] = {
     { ITEM_SKILL_SWORD_BEAM, QS_CAT_SKILL, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_SKILL_DOWN_THRUST, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_ROCS_CAPE, 0 },
     { ITEM_SKILL_GREAT_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    { ITEM_SKILL_FAST_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    { ITEM_SKILL_FAST_SPLIT, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
+    { ITEM_SKILL_LONG_SPIN, QS_CAT_SKILL, QS_TIER_RARE, QS_REQ_SPIN_ATTACK, 0 },
     // --- STAT UPGRADES (6) -----------------------------------------------
     { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
     { ITEM_DIG_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_MOLE_MITTS, 0 },
@@ -18320,8 +18381,14 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     // Darknut cave's CW-side door is among the cancelled: that room
     // belongs to the 2-door connector draw, whose own machinery serves
     // and returns it.)
+    // Minish Woods and Lake Hylia join the policed set with the rest of the
+    // ring. Opening their seams without this would have made them the two
+    // places in the game you could walk out of into anything at all - the
+    // Witch Hut, Librari, Deepwood Shrine's depths, the Lake Woods cave -
+    // which is the opposite of bringing a region INTO the run.
     if (!((gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) ||
-          gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS) ||
+          gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
+          gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA) ||
         !QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }

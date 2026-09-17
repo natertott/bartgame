@@ -152,6 +152,54 @@ u32 GiveItem(Item item, u32 param_2) {
             PutItemOnSlot(item);
             break;
         case 4:
+#ifdef QUICKSTART
+            // Bottled contents, per the user: "If the player already has a
+            // full bottle ... the player should receive a NEW bottle with
+            // the item inside, increasing their total number of bottles by
+            // one. If the player has an empty bottle already then they do
+            // not receive a new bottle and the item goes into their empty
+            // bottle. If the player already has four full bottles, then the
+            // item should replace the item in the first bottle slot."
+            //
+            // Vanilla does none of that. Its loop below scans all four
+            // slots for one holding 0x20 (empty) and RETURNS if it finds
+            // none - and an unowned slot holds 0, not 0x20, so a player
+            // with one full bottle fails the scan on slots 1-3 and the
+            // pickup is silently thrown away. That is what this mode has
+            // been doing to every bottled charm, potion and fairy the draw
+            // has handed out.
+            //
+            // Three passes, in the order the request states them, because
+            // the order is the whole rule: an empty bottle is spent before
+            // a new one is granted, and a slot is only overwritten when
+            // there is genuinely nowhere else for the item to go.
+            {
+                s32 slot;
+                for (slot = 0; slot < 4; slot++) {
+                    if (GetInventoryValue(ITEM_BOTTLE1 + slot) != 0 && gSave.stats.bottles[slot] == 0x20) {
+                        break; // an empty bottle already in hand
+                    }
+                }
+                if (slot >= 4) {
+                    for (slot = 0; slot < 4; slot++) {
+                        if (GetInventoryValue(ITEM_BOTTLE1 + slot) == 0) {
+                            // Room for another bottle: the item arrives
+                            // WITH the glass, so the run's bottle count
+                            // goes up by one.
+                            SetInventoryValue(ITEM_BOTTLE1 + slot, 1);
+                            break;
+                        }
+                    }
+                }
+                if (slot >= 4) {
+                    slot = 0; // four full bottles - the first one gives way
+                }
+                gSave.stats.bottles[slot] = (u8)item;
+            }
+            SetInventoryValue(item, 1);
+            SoundReq(SFX_ITEM_GET);
+            break;
+#else
             uVar9 = 0;
             while (gSave.stats.bottles[uVar9] != 0x20) {
                 uVar9++;
@@ -166,6 +214,7 @@ u32 GiveItem(Item item, u32 param_2) {
             SetInventoryValue(item, 1);
             SoundReq(SFX_ITEM_GET);
             break;
+#endif
         case 5:
             ModDungeonKeys(1);
             SoundReq(SFX_103);
@@ -191,6 +240,25 @@ u32 GiveItem(Item item, u32 param_2) {
             } else {
                 SetInventoryValue(ITEM_BOMBS, 0);
             }
+#ifdef QUICKSTART
+            // Bombs arrive with the bag, per the user. Vanilla hands out
+            // the Bomb Bag FIRST and ITEM_BOMBS only ever turns up later,
+            // as the "switch back from Remote Bombs" option - so a mode
+            // that draws ITEM_BOMBS out of a pool gives the player bombs
+            // and no bag to have earned, and every later ITEM_BOMBBAG draw
+            // is spent granting the bag it should have been EXPANDING (see
+            // case 8: the first bag pickup grants bombs, only the second
+            // and later ones raise gSave.stats.bombBagType).
+            //
+            // Granting the bag directly rather than through GiveItem is
+            // what keeps that ladder intact: the run starts at
+            // gBombBagSizes[0] = 10 bombs and each bag found afterwards
+            // steps it to 30, 50, 99. This is exactly what case 0xb below
+            // already does for the Bow and the Large Quiver.
+            if (GetInventoryValue(ITEM_BOMBBAG) == 0) {
+                SetInventoryValue(ITEM_BOMBBAG, 1);
+            }
+#endif
             ModBombs(99);
             LoadItemGfx();
             break;
