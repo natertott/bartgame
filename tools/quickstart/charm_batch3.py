@@ -68,12 +68,17 @@ for _f, _d in (('area.inc', AREAS), ('roomid.inc', ROOMS)):
 
 
 def start():
-    # Castle Garden, not the dojo, and the reason is measured: with NO
-    # charms held at all, a player parked in the Grimblade dojo loses
-    # health - two units over 600 frames at one spot and fourteen at
-    # another. Something in that room hurts a standing player. Castle
-    # Garden holds 16/16 over the same window, which is what a control for
-    # a health-draining curse has to do.
+    # Castle Garden, not the dojo. A player parked in the Grimblade dojo
+    # loses health with no charms held - two units over 600 frames at one
+    # spot, fourteen at another - and the reason is not a hazard in the
+    # room: the dojo is a live ? room and those are its wave's four ROPEs,
+    # ambushers doing their job to somebody standing still. Force the site
+    # DONE and both spots hold 16/16.
+    #
+    # The general rule, since this has now cost two probes: a content site
+    # room is a COMBAT room until its DONE bit says otherwise, and
+    # poison_here does not change that - it only fixes here(). A probe that
+    # needs a still player wants a region room, or qs_site_set(c, site, 1).
     c = boot(ROM)
     poison_here(c)
     warp(c, AREAS['AREA_CASTLE_GARDEN'], ROOMS['ROOM_CASTLE_GARDEN_MAIN'], 0x1f8, 0x1e0)

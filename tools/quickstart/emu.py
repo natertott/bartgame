@@ -126,6 +126,31 @@ def qs_site_set(c, n, v=1):
     _flag_set(c, _site_bit(n), v)
 
 
+def quiet_site(c, area_name, room_name):
+    """Silence a content site's ? room event BY NAME, before warping into it.
+
+    A content site room is a COMBAT room until its DONE bit says otherwise.
+    This has now cost two probes: a parked player in the Grimblade dojo
+    "mysteriously" losing health (it was the site's four ambushing ROPEs),
+    and a roster soak whose player was shot dead at row 8, after which the
+    remaining rows were measured against a frozen game.
+
+    poison_here does NOT do this - it only stops here() being fooled by a
+    stale room byte. Setting the DONE bit does, and doing it by name keeps
+    the probe honest when the site table's row order changes: the magic
+    index 16 for the dojo was correct when it was written and is exactly
+    the kind of constant that silently starts silencing some other room.
+
+    Returns the site index it set, or -1 if the room owns no site (in which
+    case there was nothing to quiet and the caller need not care).
+    """
+    import parse_tables as _P
+    idx = _P.site_index_of(area_name, room_name)
+    if idx >= 0:
+        qs_site_set(c, idx, 1)
+    return idx
+
+
 def _flag_set(c, b, v):
     a = SAVE_FLAGS + (b >> 3)
     m = 1 << (b & 7)

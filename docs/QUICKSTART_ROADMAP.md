@@ -1335,10 +1335,26 @@ looked verified was not:
    that could have triggered it. It measured as "the curse has no
    antidote".
 
-Also found while measuring, and NOT fixed: **a player parked in the
-Grimblade dojo loses health with no charms held at all** - two units over
-600 frames at one spot, fourteen at another. Castle Garden holds 16/16 over
-the same window. Something in that room hurts a standing player.
+**Retracted: the "Grimblade dojo health drain" was not a defect.** The
+measurement was real - a parked player lost two health units over 600
+frames at one spot and fourteen at another - but the cause is that the
+dojo is a live ? room and the probe walked into its wave. Forcing the
+site DONE and repeating both spots: zero enemies, 16/16 health over the
+same window, at both. The four bodies were ROPEs, a legitimate roster row
+(`QS_R_CHAFF | QS_R_AMBUSH`), doing exactly what an ambusher should do to
+somebody standing still. The fourteen-unit spot is simply the one inside
+the spawn cluster.
+
+Doctrine, because this is the second time it has cost a probe: **a content
+site room is a COMBAT room until its DONE bit says otherwise.** Parking a
+player in one and measuring anything about their health, position or state
+measures the wave, not the thing under test. `emu.poison_here` does not
+help here - it only stops `here()` being confused by a stale room byte.
+`qs_site_set(c, <site>, 1)` is what makes a room quiet, and any probe that
+needs a still player belongs in a region room or a site that has been
+silenced. (The first time was the pursuer soak, where a BOW_MOBLIN killed
+the player at row 8 and the remaining sixteen rows were measured against a
+frozen game.)
 
 ### The 09/16 playthrough batch (all five shipped)
 
