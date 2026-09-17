@@ -152,7 +152,12 @@ static void sub_08051DCC(void);
 //   raw 1    - 793   the room-keyed content sites (GF_CONTENT_SITE_BASE),
 //                    13 bits each, room for 61 sites. Raw-addressed, NOT
 //                    through QsCheckFlag - see its own comment below.
-//   raw 794  - 800   spare (the tail of the site block's ceiling).
+//   raw 794  - 799   charms 14-19 (GF_FOOD2_BIT), reached as QsCheckFlag
+//                    offsets 94-99. The window's numbering starts at 101
+//                    only by convention; the accessor is happy below it,
+//                    and this is the one run of free bits left that no
+//                    clear loop and no borrowed-scrap allocation touches.
+//   raw 800          spare (the last of the site block's old ceiling).
 //   raw 801  - 1407  the QUICKSTART window, i.e. QsCheckFlag offsets
 //                    101-707. Everything else in this file lives here.
 //
@@ -627,6 +632,18 @@ static void GameTask_Transition(void) {
         // latches - re-rolled every fresh boot like everything else here, so a
         // new run gets the shop somewhere else at different prices.
         for (bit = 202; bit <= 703; bit++) {
+            QsClearFlag(bit);
+        }
+        // Charms 14-19 (GF_FOOD2_BIT) sit at 94-99, BELOW the sweep above,
+        // in the spare tail between the content site block and the window
+        // proper. Per-run state outside the per-run wipe has to say so out
+        // loud or it quietly becomes permanent - a curse inherited from a
+        // run three resets ago is a bug nobody would think to look for
+        // here.
+        // Literal 94-99 rather than GF_FOOD2_BIT: that macro is declared a
+        // few thousand lines below this and the preprocessor reads top
+        // down. A static assertion next to the macro keeps the two honest.
+        for (bit = 94; bit <= 99; bit++) {
             QsClearFlag(bit);
         }
         // Wipe every per-area LOCAL flag, so each run gets a fresh world.
@@ -2526,78 +2543,16 @@ const u8* const gCustomStrings[] = {
     [129] = (const u8*)"Humble Pie",
     [130] = (const u8*)"Dog Food",
     [131] = (const u8*)"Strange Mushroom",
+    // Charms 14-19. The descriptions that used to start here moved to
+    // bank 2 wholesale - see QuickStartCatalogDescText - which is what
+    // made room for these six without shifting every index above 202.
+    [132] = (const u8*)"Green Orb",
+    [133] = (const u8*)"Blue Orb",
+    [134] = (const u8*)"Red Orb",
+    [135] = (const u8*)"Duelist's Blade",
+    [136] = (const u8*)"Rusted Blade",
+    [137] = (const u8*)"Whetstone",
     // -- catalog DESCRIPTIONS, same order as the names above
-    [132] = (const u8*)"The run's goal. It waits\nin one area each run -\ntake it and you win.",
-    [133] = (const u8*)"Restores one heart.\nFalls from cut grass,\npots and slain foes.",
-    [134] = (const u8*)"One rupee. The shop and\nthe inn both take them,\nso nothing is wasted.",
-    [135] = (const u8*)"Five rupees.",
-    [136] = (const u8*)"Twenty rupees.",
-    [137] = (const u8*)"Refills five bombs, up\nto whatever your bag\nwill hold.",
-    [138] = (const u8*)"Refills five arrows, up\nto whatever your quiver\nwill hold.",
-    [139] = (const u8*)"Fuse a piece at a gated\ndoor to open a new room\nfor the rest of the run.",
-    [140] = (const u8*)"Refills your hearts on\nthe spot. Catch one in\na bottle to save it.",
-    [141] = (const u8*)"Fifty rupees. A common\narea-clear reward.",
-    [142] = (const u8*)"One hundred rupees.",
-    [143] = (const u8*)"Two hundred rupees. The\nrichest single reward\nthis mode drops.",
-    [144] = (const u8*)"Four pieces make one\nwhole Heart Container.",
-    [145] = (const u8*)"One more heart on your\nlife bar, permanently\nfor this run.",
-    [146] = (const u8*)"Holds one potion, fairy\nor charm. More bottles\nmeans more can be held.",
-    [147] = (const u8*)"Refills your hearts when\ndrunk. Keep it for the\nfight you did not expect.",
-    [148] = (const u8*)"Refills hearts AND cures\nwhatever ails you.",
-    [149] = (const u8*)"Revives you where you\nfall - an extra life in\na bottle.",
-    [150] = (const u8*)"Your starting blade. Its\nspin and beam skills are\nlearned separately.",
-    [151] = (const u8*)"A stronger blade. Every\nsword blow you land does\nmore damage.",
-    [152] = (const u8*)"The White Sword reforged.\nMore damage still, and the\nblade some routes demand.",
-    [153] = (const u8*)"Blocks blows from ahead\nand bounces some shots\nstraight back.",
-    [154] = (const u8*)"Blocks what a shield\nblocks, and reflects\nmagic besides.",
-    [155] = (const u8*)"Strikes at range. Some\nfoes a sword cannot kill\nfall to an arrow.",
-    [156] = (const u8*)"Carry far more arrows\nbefore you run dry.",
-    [157] = (const u8*)"Blows open cracked walls\nand kills whatever is\nstanding too close.",
-    [158] = (const u8*)"Bombs you set off when\nYOU choose, not on a\nfuse.",
-    [159] = (const u8*)"Carry far more bombs\nbefore you run dry.",
-    [160] = (const u8*)"Stuns at range and grabs\ndistant items. Kills\nsome flyers outright.",
-    [161] = (const u8*)"A boomerang you steer in\nflight. Reaches what the\nplain one cannot.",
-    [162] = (const u8*)"Sucks in foes, pulls off\nshields, and hauls light\nthings across gaps.",
-    [163] = (const u8*)"Sets fire to what it\ntouches. Lights dark\nrooms as it goes.",
-    [164] = (const u8*)"Shows the whole world on\nthe pause screen, and\nwhere you stand on it.",
-    [165] = (const u8*)"Names the area holding\nthis run's Earth\nElement.",
-    [166] = (const u8*)"Hold the button to run.\nCrash into things and\nthey give way.",
-    [167] = (const u8*)"Jump gaps and ledges,\nand glide a little on\nthe way down.",
-    [168] = (const u8*)"Dig through soft ground\nfor buried things and\nburied ways through.",
-    [169] = (const u8*)"Swim deep water instead\nof being turned back at\nthe shore.",
-    [170] = (const u8*)"Lights dark rooms and\nsets fire to what needs\nburning.",
-    [171] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
-    [172] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
-    [173] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
-    [174] = (const u8*)"Shove the big stone\nblocks by yourself -\nany size, no clones.",
-    [175] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
-    [176] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
-    [177] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
-    [178] = (const u8*)"Roll into a foe and come\nup swinging, in one\nmotion.",
-    [179] = (const u8*)"Dash with the boots and\nthe sword leads, striking\nwhat you run down.",
-    [180] = (const u8*)"Fall from a jump with\nthe blade below you and\nland it point first.",
-    [181] = (const u8*)"At full health your\nsword throws a beam at\nwhatever you face.",
-    [182] = (const u8*)"At ONE heart your sword\nthrows beams - desperate,\nand strongest.",
-    [183] = (const u8*)"You nock and loose\narrows faster than you\ndid before.",
-    [184] = (const u8*)"You dig faster than you\ndid before.",
-    [185] = (const u8*)"You swim faster than you\ndid before.",
-    [186] = (const u8*)"Nayru: you take a\nQUARTER of the damage\nyou otherwise would.",
-    [187] = (const u8*)"Farore: you take half\ndamage AND deal half\nagain as much.",
-    [188] = (const u8*)"Din: your blows do\nDOUBLE damage. Drink it\nand hit things.",
-    [189] = (const u8*)"Charm: your sword knocks\nfoes twice as far as it\nused to.",
-    [190] = (const u8*)"Charm: you walk half\nagain as fast for the\nrest of the run.",
-    [191] = (const u8*)"Charm: nothing can knock\nyou back. You stand\nwhere you stand.",
-    [192] = (const u8*)"Charm: fire cannot burn\nyou - no flames, no\ncontact damage.",
-    [193] = (const u8*)"Charm: ice cannot freeze\nyou. Walk through what\nused to stop you.",
-    [194] = (const u8*)"Charm: sparks cannot\nshock you.",
-    [195] = (const u8*)"Charm: slain foes spill\nrupees far more often.",
-    [196] = (const u8*)"Charm: slain foes drop\nKinstone pieces far more\noften.",
-    [197] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
-    [198] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
-    [199] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
-    [200] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
-    [201] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
-    [202] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
     // -- everything that is not the catalog. These moved up by two when
     //    the Tempered Sword row was added; they are the only custom
     //    strings anything refers to by a literal number, so the three
@@ -2785,6 +2740,103 @@ const u8* const gCustomStrings2[] = {
     // 91-92: the two states where there is no step to point at.
     [91] = (const u8*)"Nothing is calling to\nyou yet. Go and make\nsomething happen.",
     [92] = (const u8*)"Your work is done. The\nElement is all that is\nleft to take.",
+    // ============ 93-98: charms 14-19, the six leftover ids ==============
+    //
+    // Ezlo's receipt line, one per charm, in GF_FOOD_FLAG index order
+    // starting at 14 (QUICKSTART_FOOD2_TEXT_BASE). They live here rather
+    // than beside the other thirteen because bank 0's 33+n run walked into
+    // the inn's dialogue at 46 and there is no room to shift it.
+    [93] = (const u8*)"CURSE: something rots\nin you. Rupees and\nkinstones hold it back.",
+    [94] = (const u8*)"CURSE: the world blurs,\nas if seen from under\ndeep water.",
+    [95] = (const u8*)"CURSE: the light dims.\nEmbers, and long\nshadows, from here on.",
+    [96] = (const u8*)"A duelist's edge. Your\nsword bites deeper than\nit did.",
+    [97] = (const u8*)"CURSE: a rusted blade.\nIt lands soft, and it\nmoves nothing.",
+    [98] = (const u8*)"Whetstone. Your sword\nthrows its beam at any\nhealth now.",
+    // ======== 99+: the catalog DESCRIPTIONS, one per row in table order
+    //
+    // They used to live in bank 0 at 132+, directly above the catalog
+    // NAMES. That arrangement could not grow: adding a catalog row
+    // pushed the description block up by one and walked it into the
+    // thirty-odd unrelated strings above it. Bank 2 has the room, and
+    // splitting names from descriptions costs exactly one base
+    // constant (QuickStartCatalogDescText).
+    [99] = (const u8*)"The run's goal. It waits\nin one area each run -\ntake it and you win.",
+    [100] = (const u8*)"Restores one heart.\nFalls from cut grass,\npots and slain foes.",
+    [101] = (const u8*)"One rupee. The shop and\nthe inn both take them,\nso nothing is wasted.",
+    [102] = (const u8*)"Five rupees.",
+    [103] = (const u8*)"Twenty rupees.",
+    [104] = (const u8*)"Refills five bombs, up\nto whatever your bag\nwill hold.",
+    [105] = (const u8*)"Refills five arrows, up\nto whatever your quiver\nwill hold.",
+    [106] = (const u8*)"Fuse a piece at a gated\ndoor to open a new room\nfor the rest of the run.",
+    [107] = (const u8*)"Refills your hearts on\nthe spot. Catch one in\na bottle to save it.",
+    [108] = (const u8*)"Fifty rupees. A common\narea-clear reward.",
+    [109] = (const u8*)"One hundred rupees.",
+    [110] = (const u8*)"Two hundred rupees. The\nrichest single reward\nthis mode drops.",
+    [111] = (const u8*)"Four pieces make one\nwhole Heart Container.",
+    [112] = (const u8*)"One more heart on your\nlife bar, permanently\nfor this run.",
+    [113] = (const u8*)"Holds one potion, fairy\nor charm. More bottles\nmeans more can be held.",
+    [114] = (const u8*)"Refills your hearts when\ndrunk. Keep it for the\nfight you did not expect.",
+    [115] = (const u8*)"Refills hearts AND cures\nwhatever ails you.",
+    [116] = (const u8*)"Revives you where you\nfall - an extra life in\na bottle.",
+    [117] = (const u8*)"Your starting blade. Its\nspin and beam skills are\nlearned separately.",
+    [118] = (const u8*)"A stronger blade. Every\nsword blow you land does\nmore damage.",
+    [119] = (const u8*)"The White Sword reforged.\nMore damage still, and the\nblade some routes demand.",
+    [120] = (const u8*)"Blocks blows from ahead\nand bounces some shots\nstraight back.",
+    [121] = (const u8*)"Blocks what a shield\nblocks, and reflects\nmagic besides.",
+    [122] = (const u8*)"Strikes at range. Some\nfoes a sword cannot kill\nfall to an arrow.",
+    [123] = (const u8*)"Carry far more arrows\nbefore you run dry.",
+    [124] = (const u8*)"Blows open cracked walls\nand kills whatever is\nstanding too close.",
+    [125] = (const u8*)"Bombs you set off when\nYOU choose, not on a\nfuse.",
+    [126] = (const u8*)"Carry far more bombs\nbefore you run dry.",
+    [127] = (const u8*)"Stuns at range and grabs\ndistant items. Kills\nsome flyers outright.",
+    [128] = (const u8*)"A boomerang you steer in\nflight. Reaches what the\nplain one cannot.",
+    [129] = (const u8*)"Sucks in foes, pulls off\nshields, and hauls light\nthings across gaps.",
+    [130] = (const u8*)"Sets fire to what it\ntouches. Lights dark\nrooms as it goes.",
+    [131] = (const u8*)"Shows the whole world on\nthe pause screen, and\nwhere you stand on it.",
+    [132] = (const u8*)"Names the area holding\nthis run's Earth\nElement.",
+    [133] = (const u8*)"Hold the button to run.\nCrash into things and\nthey give way.",
+    [134] = (const u8*)"Jump gaps and ledges,\nand glide a little on\nthe way down.",
+    [135] = (const u8*)"Dig through soft ground\nfor buried things and\nburied ways through.",
+    [136] = (const u8*)"Swim deep water instead\nof being turned back at\nthe shore.",
+    [137] = (const u8*)"Lights dark rooms and\nsets fire to what needs\nburning.",
+    [138] = (const u8*)"Plays the songs that\ncarry you across the\nworld in one step.",
+    [139] = (const u8*)"Flips heavy things over\nand fires you up out of\nholes.",
+    [140] = (const u8*)"Grip and pull without\nbeing shaken loose or\nburned.",
+    [141] = (const u8*)"Shove the big stone\nblocks by yourself -\nany size, no clones.",
+    [142] = (const u8*)"Hold B to charge, then\nrelease for a sweep that\nhits all around you.",
+    [143] = (const u8*)"A longer, wider spin\nthat keeps turning. Needs\nthe Spin Attack first.",
+    [144] = (const u8*)"Your sword breaks rocks\nthat used to need bombs\nor bracelets.",
+    [145] = (const u8*)"Roll into a foe and come\nup swinging, in one\nmotion.",
+    [146] = (const u8*)"Dash with the boots and\nthe sword leads, striking\nwhat you run down.",
+    [147] = (const u8*)"Fall from a jump with\nthe blade below you and\nland it point first.",
+    [148] = (const u8*)"At full health your\nsword throws a beam at\nwhatever you face.",
+    [149] = (const u8*)"At ONE heart your sword\nthrows beams - desperate,\nand strongest.",
+    [150] = (const u8*)"You nock and loose\narrows faster than you\ndid before.",
+    [151] = (const u8*)"You dig faster than you\ndid before.",
+    [152] = (const u8*)"You swim faster than you\ndid before.",
+    [153] = (const u8*)"Nayru: you take a\nQUARTER of the damage\nyou otherwise would.",
+    [154] = (const u8*)"Farore: you take half\ndamage AND deal half\nagain as much.",
+    [155] = (const u8*)"Din: your blows do\nDOUBLE damage. Drink it\nand hit things.",
+    [156] = (const u8*)"Charm: your sword knocks\nfoes twice as far as it\nused to.",
+    [157] = (const u8*)"Charm: you walk half\nagain as fast for the\nrest of the run.",
+    [158] = (const u8*)"Charm: nothing can knock\nyou back. You stand\nwhere you stand.",
+    [159] = (const u8*)"Charm: fire cannot burn\nyou - no flames, no\ncontact damage.",
+    [160] = (const u8*)"Charm: ice cannot freeze\nyou. Walk through what\nused to stop you.",
+    [161] = (const u8*)"Charm: sparks cannot\nshock you.",
+    [162] = (const u8*)"Charm: slain foes spill\nrupees far more often.",
+    [163] = (const u8*)"Charm: slain foes drop\nKinstone pieces far more\noften.",
+    [164] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
+    [165] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
+    [166] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
+    [167] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
+    [168] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
+    [169] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
+    [170] = (const u8*)"CURSE: a heart rots\naway every half minute.\nLoot holds it back.",
+    [171] = (const u8*)"CURSE: the whole world\nis seen through deep,\nmoving water.",
+    [172] = (const u8*)"CURSE: the light never\ncomes back up. Embers,\nand long shadows.",
+    [173] = (const u8*)"Your sword bites for\none more than it did.\nEvery swing, all run.",
+    [174] = (const u8*)"CURSE: a blunt edge.\nOne less from every\nswing you land.",
+    [175] = (const u8*)"The sword beam no\nlonger waits on full\nhealth. Throw it hurt.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -2792,7 +2844,7 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
 // 91 and 92. If a region or a step kind is ever added, this is the line
 // that stops the table quietly answering for the wrong thing.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 93) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 176) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3604,6 +3656,35 @@ static s32 QuickStartStealthState(void);
 // move again. Per-run flags, all inside the run wipe's 202-703, so nothing
 // carries over from a save written before the move.
 #define GF_FOOD_BIT(n) (581 + (n)) // n = 0..13 -> 581-594
+// Charms 14-19, the six leftover ids. They do NOT continue the block above:
+// 595 is GF_TINGLE_PAID_BIT and 599 GF_SCAV_MODE_BIT, so extending 581 by
+// six would have quietly overwritten Tingle's payout latches and the
+// scavenger hunt's mode.
+//
+// 94-99, i.e. raw 794-799, which is the seven-bit spare tail named in the
+// bank map at the top of this file - the gap between the content site
+// block's ceiling and the start of the QUICKSTART window proper.
+//
+// The first attempt put them at 101-106 on the strength of a script that
+// scanned GF_* defines and called it free. It is not: 101-173 is the
+// ladder pool's block, allocated by a run-start clear loop rather than by
+// any macro the script could see. The symptom was that giving ONE charm
+// lit five mask bits at once, and the "creeping rot" curse drained health
+// in the control run too - a collision that reads as the new feature being
+// broken when it is actually the neighbours being overwritten. Anything
+// allocated here from now on should be checked against the run-start clear
+// loops and QuickStartExtSlotFlag's four borrowed runs, not just the
+// macros.
+//
+// Like 101 would have been, this block is BELOW the 202-703 run wipe, so
+// it gets an explicit clear of its own at run start.
+#define GF_FOOD2_BIT(n) (94 + (n) - 14) // n = 14..19 -> 94-99
+
+// Which flag holds charm n. Two blocks, one question.
+#define GF_FOOD_FLAG(n) (((n) < 14) ? GF_FOOD_BIT(n) : GF_FOOD2_BIT(n))
+// The run-start sweep clears 101-106 by literal, because this macro is
+// declared below it. Break the build if the two ever disagree.
+typedef char QuickStartFood2BlockFits[(GF_FOOD2_BIT(14) == 94 && GF_FOOD2_BIT(19) == 99) ? 1 : -1];
 // Tingle's fusion has paid out (see sQuickStartTingles). One bit per row,
 // per run - the heart container is a once-per-run prize, and the run wipe
 // covers 202-703 so a new run puts Tingle back with his fusion unspent.
@@ -3624,7 +3705,30 @@ static s32 QuickStartStealthState(void);
 // The last idea from the original F4 wish list: rarer loot, run-long.
 // Read once, in QuickStartDrawItem's tier roll.
 #define QUICKSTART_FOOD_RARE_LUCK (1 << 13)
-#define QUICKSTART_FOOD_COUNT 14
+// The six leftover ids, made into charms and curses. The three orbs are
+// the ones that reach outside the usual levers - one drains you, two
+// change what the screen looks like - and the three swords sharpen or
+// blunt the one thing every run does constantly.
+#define QUICKSTART_FOOD_CURSE_ROT (1 << 14)    // ORB_GREEN: slow poison
+#define QUICKSTART_FOOD_CURSE_BLUR (1 << 15)   // ORB_BLUE: mosaic
+#define QUICKSTART_FOOD_CURSE_DIM (1 << 16)    // ORB_RED: darkened screen
+#define QUICKSTART_FOOD_SWORD_EDGE (1 << 17)   // QST_SWORD: +1 sword damage
+#define QUICKSTART_FOOD_CURSE_BLUNT (1 << 18)  // UNUSED_SWORD: -1 sword damage
+#define QUICKSTART_FOOD_BEAM_ANY (1 << 19)     // GREEN_SWORD: beam off full health
+#define QUICKSTART_FOOD_COUNT 20
+
+// Creeping Rot's numbers. A full heart is EIGHT health units in this
+// engine and a run starts with two hearts, so the obvious "one heart every
+// eight seconds" would kill a fresh run in seventeen. One unit every 256
+// frames is a heart roughly every 34 seconds, and it stops at a quarter
+// heart rather than killing: the curse's job is to keep the player one hit
+// from death and hunting for pickups, not to end runs on its own.
+// Where charms 14-19 keep their Ezlo receipt lines (bank 2, TEXT_CUSTOM2).
+#define QUICKSTART_FOOD2_TEXT_BASE 93
+
+#define QUICKSTART_ROT_PERIOD_MASK 255
+#define QUICKSTART_ROT_FLOOR 2
+#define QUICKSTART_ROT_HEAL 2
 #define QUICKSTART_CHEAP_SHOP_PRICE 50
 
 // D2: the persistent living-enemy count. Six bits per pool region (wave
@@ -5212,6 +5316,7 @@ enum {
     QS_REQ_FLIPPERS,     // the swim butterfly only speeds up swimming
     QS_REQ_SPIN_ATTACK,  // Great Spin is an upgrade to it
     QS_REQ_ROCS_CAPE,    // Down Thrust needs something to come down from
+    QS_REQ_SWORD_BEAM,   // the Whetstone has nothing to sharpen without it
     QS_REQ_EMPTY_BOTTLE, // potions, fairies and charms all FILL a bottle
     QS_REQ_BOTTLE_ROOM,  // a new empty bottle needs a free bottle slot
     QS_REQ_NO_PACCI,     // the Fire Rod shares the Cane's inventory cell
@@ -5366,6 +5471,20 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     // siblings, so a run that finds it early gets a noticeably richer rest
     // of the run - which is the point of a luck charm.
     { ITEM_SHELLS, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 }, // charm: rarer rewards
+    // Batch three: the last six ids in the game with no use at all. Three
+    // of these reach past the levers the earlier charms use - one drains
+    // the player between pickups, two change what the screen looks like -
+    // so they are RARE rather than uncommon: a run should meet at most one
+    // or two, and meeting one should be an event.
+    { ITEM_ORB_GREEN, QS_CAT_CHARM, QS_TIER_RARE, QS_REQ_NONE, 0 },   // curse: creeping rot
+    { ITEM_ORB_BLUE, QS_CAT_CHARM, QS_TIER_RARE, QS_REQ_NONE, 0 },    // curse: drowned sight
+    { ITEM_ORB_RED, QS_CAT_CHARM, QS_TIER_RARE, QS_REQ_NONE, 0 },     // curse: ember haze
+    // The three swords stay UNCOMMON with the rest of the charm roster:
+    // a point of damage either way is the same order of effect as the
+    // pastries, not the same order as a curse that dims the screen.
+    { ITEM_QST_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },     // charm: +1 sword damage
+    { ITEM_UNUSED_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },  // curse: -1 sword damage
+    { ITEM_GREEN_SWORD, QS_CAT_CHARM, QS_TIER_UNCOMMON, QS_REQ_SWORD_BEAM, 0 }, // charm: beam at any health
     // F10: the two findable tools. The MAP activates the START-screen map
     // (the pause menu already gates that screen on GetInventoryValue(ITEM_MAP)
     // - see pauseMenu.c PauseMenu_Variant2); the COMPASS turns on the map's
@@ -5877,6 +5996,10 @@ static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
             return GetInventoryValue(ITEM_FLIPPERS) != 0;
         case QS_REQ_SPIN_ATTACK:
             return GetInventoryValue(ITEM_SKILL_SPIN_ATTACK) != 0;
+        // The Whetstone lifts the sword beam's full-health condition. With
+        // no beam to throw there is nothing for it to lift, so it waits.
+        case QS_REQ_SWORD_BEAM:
+            return GetInventoryValue(ITEM_SKILL_SWORD_BEAM) != 0;
         case QS_REQ_ROCS_CAPE:
             return GetInventoryValue(ITEM_ROCS_CAPE) != 0;
         case QS_REQ_EMPTY_BOTTLE:
@@ -11772,22 +11895,22 @@ static s32 QuickStartApplyFailureStake(void) {
         s32 heldCount = 0;
         s32 i;
         for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartStakeCharms); i++) {
-            if (QsCheckFlag(GF_FOOD_BIT(sQuickStartStakeCharms[i][0]))) {
+            if (QsCheckFlag(GF_FOOD_FLAG(sQuickStartStakeCharms[i][0]))) {
                 held[heldCount++] = i;
             }
         }
         if (heldCount != 0) {
             // Signed modulo on a masked value: this libgcc has no __umodsi3.
             i = held[((s32)(Random() & 0x7fff)) % heldCount];
-            QsClearFlag(GF_FOOD_BIT(sQuickStartStakeCharms[i][0]));
+            QsClearFlag(GF_FOOD_FLAG(sQuickStartStakeCharms[i][0]));
             SetInventoryValue(sQuickStartStakeCharms[i][1], 0);
             tookCharm = TRUE;
         } else {
             // No charm to take: a curse goes on instead. Same three the
             // pastries carry; first one not already active.
             for (i = 3; i <= 5; i++) {
-                if (!QsCheckFlag(GF_FOOD_BIT(i))) {
-                    QsSetFlag(GF_FOOD_BIT(i));
+                if (!QsCheckFlag(GF_FOOD_FLAG(i))) {
+                    QsSetFlag(GF_FOOD_FLAG(i));
                     cursed = TRUE;
                     break;
                 }
@@ -20994,7 +21117,7 @@ u32 QuickStartFoodMask(void) {
     s32 n;
     u32 mask = 0;
     for (n = 0; n < QUICKSTART_FOOD_COUNT; n++) {
-        if (QsCheckFlag(GF_FOOD_BIT(n))) {
+        if (QsCheckFlag(GF_FOOD_FLAG(n))) {
             mask |= 1 << n;
         }
     }
@@ -21119,6 +21242,12 @@ static const QuickStartCatalogEntry sQuickStartCatalog[] = {
     { ITEM_QST_CARLOV_MEDAL, QS_CAT_CHARM },
     { ITEM_QST_BROKEN_SWORD, QS_CAT_CHARM },
     { ITEM_SHELLS, QS_CAT_CHARM },
+    { ITEM_ORB_GREEN, QS_CAT_CHARM },
+    { ITEM_ORB_BLUE, QS_CAT_CHARM },
+    { ITEM_ORB_RED, QS_CAT_CHARM },
+    { ITEM_QST_SWORD, QS_CAT_CHARM },
+    { ITEM_UNUSED_SWORD, QS_CAT_CHARM },
+    { ITEM_GREEN_SWORD, QS_CAT_CHARM },
     { ITEM_PIE, QS_CAT_CHARM },
     { ITEM_QST_DOGFOOD, QS_CAT_CHARM },
     { ITEM_QST_MUSHROOM, QS_CAT_CHARM },
@@ -21134,9 +21263,16 @@ static const QuickStartCatalogEntry sQuickStartCatalog[] = {
 // and the count check below is what keeps it honest.
 #define QUICKSTART_CATALOG_LOCKED_STRING 60
 #define QUICKSTART_CATALOG_NAME_BASE 61
-#define QUICKSTART_CATALOG_DESC_BASE (QUICKSTART_CATALOG_NAME_BASE + QUICKSTART_CATALOG_COUNT)
-// Build breaks if the two blocks run off the end of a u8 text index.
-typedef char QuickStartCatalogStringsFit[(QUICKSTART_CATALOG_DESC_BASE + QUICKSTART_CATALOG_COUNT <= 256) ? 1 : -1];
+// The descriptions live in the OTHER bank now, and the reason is growth.
+// Both blocks used to sit in gCustomStrings, names at 61 and descriptions
+// immediately above them - which meant adding a single catalog row pushed
+// the description block up by one and walked its top end into the thirty
+// or so unrelated strings living above it. Splitting the two costs one
+// base constant and buys a bank with room to spare.
+#define QUICKSTART_CATALOG_DESC_BASE 99
+// Build breaks if either block runs off the end of a u8 text index.
+typedef char QuickStartCatalogNamesFit[(QUICKSTART_CATALOG_NAME_BASE + QUICKSTART_CATALOG_COUNT <= 256) ? 1 : -1];
+typedef char QuickStartCatalogDescsFit[(QUICKSTART_CATALOG_DESC_BASE + QUICKSTART_CATALOG_COUNT <= 256) ? 1 : -1];
 // ...and if the ledger outgrows the bitset it borrows.
 typedef char QuickStartCatalogLedgerFits[(QUICKSTART_CATALOG_COUNT < 288) ? 1 : -1];
 
@@ -21162,7 +21298,7 @@ u32 QuickStartCatalogNameText(s32 index) {
 }
 
 u32 QuickStartCatalogDescText(s32 index) {
-    return TEXT_INDEX(TEXT_CUSTOM, (QUICKSTART_CATALOG_DESC_BASE + index - 1));
+    return TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_CATALOG_DESC_BASE + index - 1));
 }
 
 // The item id behind an entry, for the menu's picture pane.
@@ -21194,6 +21330,33 @@ void QuickStartMarkCatalogItem(u32 item) {
 
 void QuickStartNoteFoodItem(u32 item) {
     s32 n;
+    // Creeping Rot's antidote, FIRST - before the charm switch below,
+    // because that switch ends in `default: return` and a rupee is not a
+    // charm. Putting this after it made the whole thing unreachable for
+    // every item that could possibly have healed anything, which measured
+    // as "the curse has no antidote" rather than as a misplaced block.
+    //
+    // Every rupee and every kinstone puts a quarter heart back. That is
+    // what makes the curse a pressure to keep moving and looting rather
+    // than a timer to sit still through.
+    if (QsCheckFlag(GF_FOOD_FLAG(14))) {
+        switch (item) {
+            case ITEM_RUPEE1:
+            case ITEM_RUPEE5:
+            case ITEM_RUPEE20:
+            case ITEM_RUPEE50:
+            case ITEM_RUPEE100:
+            case ITEM_RUPEE200:
+            case ITEM_KINSTONE:
+            case ITEM_KINSTONE_RED:
+            case ITEM_KINSTONE_BLUE:
+            case ITEM_KINSTONE_GREEN:
+                ModHealth(QUICKSTART_ROT_HEAL);
+                break;
+            default:
+                break;
+        }
+    }
     QuickStartMarkCatalogItem(item);
     // F10's two tools ride this same GiveItem chokepoint for their pickup
     // receipts (this runs BEFORE GiveItem sets the inventory bit, so a zero
@@ -21261,15 +21424,43 @@ void QuickStartNoteFoodItem(u32 item) {
         case ITEM_SHELLS:
             n = 13;
             break;
+        // The six leftover ids. The three orbs are the ones that reach
+        // past the usual levers - one drains the player, two change what
+        // the screen looks like - and the three swords sharpen or blunt
+        // the single action every run performs thousands of times.
+        case ITEM_ORB_GREEN:
+            n = 14; // curse: creeping rot
+            break;
+        case ITEM_ORB_BLUE:
+            n = 15; // curse: drowned sight
+            break;
+        case ITEM_ORB_RED:
+            n = 16; // curse: ember haze
+            break;
+        case ITEM_QST_SWORD:
+            n = 17; // charm: duelist's edge
+            break;
+        case ITEM_UNUSED_SWORD:
+            n = 18; // curse: rusted blade
+            break;
+        case ITEM_GREEN_SWORD:
+            n = 19; // charm: whetstone
+            break;
         default:
             return;
     }
-    if (!QsCheckFlag(GF_FOOD_BIT(n))) {
-        QsSetFlag(GF_FOOD_BIT(n));
+    if (!QsCheckFlag(GF_FOOD_FLAG(n))) {
+        QsSetFlag(GF_FOOD_FLAG(n));
         // The first thirteen announce through consecutive strings 33..45.
         // The fourteenth cannot: 46 is already the inn's first bed offer,
         // so it has its own slot rather than shifting five other blocks.
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, ((n == 13) ? 59 : (33 + n))), 0);
+        // Charms 14-19 gave up on bank 0 entirely and announce out of bank
+        // 2, which has room.
+        if (n >= 14) {
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_FOOD2_TEXT_BASE + n - 14)), 0);
+        } else {
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, ((n == 13) ? 59 : (33 + n))), 0);
+        }
     }
 }
 
@@ -21301,7 +21492,13 @@ static bool32 QuickStartEnemyShootsProjectiles(u32 id) {
 // on the next pass. CHUCHU_BOSS pieces are exempt from every enemy-side
 // effect: their fields double as scripted stage machinery.
 static void QuickStartApplyFoodEffects(void) {
-    u8 mask = QuickStartFoodMask();
+    // u32, not u8. QuickStartFoodMask returns fourteen bits and this local
+    // was truncating to eight - harmless only by luck, because every effect
+    // applied here happens to live in bits 0-5. Any new charm above bit 7
+    // added to this function would have been silently dead, and the symptom
+    // (a charm that announces itself and then does nothing) is one of the
+    // worse ones to chase.
+    u32 mask = QuickStartFoodMask();
     u32 v;
     s32 i;
     if (mask == 0) {
@@ -21319,6 +21516,50 @@ static void QuickStartApplyFoodEffects(void) {
     if (mask & QUICKSTART_FOOD_STEADFAST) {
         gPlayerEntity.base.knockbackDuration = 0;
         gPlayerEntity.base.knockbackSpeed = 0;
+    }
+    // Creeping Rot. One health unit every 256 frames, floored at a quarter
+    // heart: the curse's job is to hold the player one hit from death and
+    // keep them hunting pickups, not to end runs by itself while they read
+    // a signpost. gSave.run_frames is the clock because it already ticks
+    // once a frame here and needs no storage of its own.
+    if ((mask & QUICKSTART_FOOD_CURSE_ROT) && (gSave.run_frames & QUICKSTART_ROT_PERIOD_MASK) == 0 &&
+        gSave.stats.health > QUICKSTART_ROT_FLOOR) {
+        ModHealth(-1);
+    }
+    // Drowned Sight and Ember Haze, the two that change what the screen
+    // looks like. Both are written every frame rather than once, because
+    // room loads and the fade controller reset these registers underneath
+    // us; re-asserting is cheaper than tracking who else touched them.
+    if (mask & QUICKSTART_FOOD_CURSE_BLUR) {
+        // A mosaic is per-LAYER: REG_MOSAIC sets the block size but does
+        // nothing until a background opts in through bit 6 of its own
+        // control register. OR the bit in rather than assigning, so the
+        // room's own priority/charblock setup is left exactly as it was.
+        // Every background EXCEPT while a textbox is up. The world and the
+        // text share BG0 in this engine, so blurring the layer blurs the
+        // dialogue with it - the first version of this made every Ezlo
+        // line in the run unreadable, which a screenshot caught and a
+        // register read never would have. Dropping BG0 from the set
+        // instead just removed the blur from the world, since that is
+        // where the world is drawn. So: blur everything, and stand down
+        // for the frames something is being said.
+        if (gMessage.state == 0) {
+            REG_MOSAIC = 0x1111;
+            REG_BG0CNT |= BGCNT_MOSAIC;
+            REG_BG1CNT |= BGCNT_MOSAIC;
+            REG_BG2CNT |= BGCNT_MOSAIC;
+            REG_BG3CNT |= BGCNT_MOSAIC;
+        } else {
+            REG_BG0CNT &= ~BGCNT_MOSAIC;
+        }
+    }
+    // Deliberately skipped while a fade is running. SetFade drives exactly
+    // these registers, so writing them mid-fade fights the transition and
+    // the visible result is a flicker on every door in the game.
+    if ((mask & QUICKSTART_FOOD_CURSE_DIM) && !gFadeControl.active) {
+        REG_BLDCNT = BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 |
+                     BLDCNT_TGT1_BG3 | BLDCNT_TGT1_OBJ | BLDCNT_TGT1_BD;
+        REG_BLDY = 6; // of 16 - dim enough to read as dusk, not as a fade
     }
     if (mask & (QUICKSTART_FOOD_SWORD_KNOCKBACK | QUICKSTART_FOOD_CURSE_ENEMY_SPEED | QUICKSTART_FOOD_CURSE_FIRE_RATE)) {
         for (i = 0; i < MAX_ENTITIES; i++) {

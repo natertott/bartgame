@@ -1265,6 +1265,81 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/17 batch: two regions opened, and the item pools widened
+
+- **Minish Woods and Lake Hylia are in the run.** Both had pool rows,
+  reach-table entries and content sites already; the entire seal was one
+  missing case in `QuickStartRingRegionOfRoom`, because containment only
+  passes a transition when BOTH ends are ring rooms. Measured before and
+  after with `tools/quickstart/seam_gate.py`: before, the three ways in
+  were cancelled and every way OUT of both regions was allowed (the Minish
+  caves, the Great Fairy tree, the Lake Woods cave); after, the ways in are
+  open and the ways out are policed. Doctrine: **a region can be fully
+  built and still be unreachable** - pool row, reach entry and site table
+  all present is not the same as a door the mode will let you walk through.
+  Second doctrine, from choosing the controls: the Witch Hut, Librari and
+  Mount Crenel's entrance all looked like obvious "should be sealed"
+  destinations and all three are correctly ALLOWED, because each is a
+  content site and a site's door is blessed wherever it lives.
+  Mount Crenel stays out of the ring on the user's instruction (its base is
+  unmapped). Worth recording that its ? rooms are already reachable from
+  Trilby as pocket sites - what Crenel lacks is a pool row, not a door.
+- **Bottled items stopped evaporating.** `GiveItem` case 4 scanned all four
+  bottle slots for one holding 0x20 and returned if it found none - and an
+  UNOWNED slot holds 0, not 0x20, so a player with one full bottle failed
+  the scan and the pickup was destroyed in silence. Now: spend an empty
+  bottle, else grant a NEW bottle with the item in it, else (four full)
+  overwrite slot 0.
+- **Bombs grant the Bomb Bag.** Vanilla's order is bag first, ITEM_BOMBS
+  only later as the "switch back from Remote Bombs" option, so a mode that
+  draws ITEM_BOMBS from a pool left the player with no bag and spent the
+  next bag draw granting what it should have expanded. Measured: bombs then
+  three bags walks 10 -> 30 -> 50 -> 99 and caps.
+- **Light Arrow and the last three sword arts** joined the draw, behind the
+  Bow and the Spin Attack respectively. The risk that needed measuring was
+  the pause menu - the Lantern's two ids hang its slot-fill loop and the
+  bow's two share a slot - and with both owned the menu runs.
+- **The last six unused ids became charms and curses**: Creeping Rot (a
+  slow poison held back by rupees and kinstones), Drowned Sight (mosaic),
+  Ember Haze (a dimmed screen), Duelist's Edge (+1 sword damage), Rusted
+  Blade (-1), and the Whetstone (the sword beam stops requiring full
+  health). `tools/quickstart/charm_batch3.py` measures all of it, 26
+  checks.
+
+Four things that batch taught, all of them the same shape - the thing that
+looked verified was not:
+
+1. **A free-flag scan that only reads macros is not a free-flag scan.** The
+   six new charms were first put at 101-106 on the strength of a script
+   that parsed every `GF_*` define and found a 20-wide gap. 101-173 is the
+   ladder pool's block, allocated by a run-start clear LOOP that no macro
+   describes. The symptom was not a crash: giving one charm lit five mask
+   bits, and the poison curse drained health in the control run too. They
+   now live at 94-99, the spare tail the content-site block gave back when
+   it collapsed to one bit per site - and `invariant_check.py` confirms it.
+   Anything allocated here must be checked against the clear loops and
+   `QuickStartExtSlotFlag`'s four borrowed runs, not just the macros.
+2. **Write-only registers read back as garbage.** `REG_MOSAIC` and
+   `REG_BLDY` both returned 0x30b8 - the same open-bus value - so a probe
+   that "read" them was verifying nothing, twice. Visual effects are
+   measured on the frame buffer now.
+3. **A screenshot catches what a register read cannot.** The blur worked
+   perfectly and made every line of dialogue in the run unreadable, because
+   the world and the text share BG0. Dropping BG0 from the mosaic set just
+   removed the blur from the world. The fix - blur everything, stand down
+   while a message is up - is only findable by looking at the picture.
+4. **Mind what a `default: return` is standing in front of.** Creeping
+   Rot's antidote was added after the charm switch in
+   `QuickStartNoteFoodItem`; that switch ends in `default: return`, and a
+   rupee is not a charm, so the antidote was unreachable for every item
+   that could have triggered it. It measured as "the curse has no
+   antidote".
+
+Also found while measuring, and NOT fixed: **a player parked in the
+Grimblade dojo loses health with no charms held at all** - two units over
+600 frames at one spot, fourteen at another. Castle Garden holds 16/16 over
+the same window. Something in that room hurts a standing player.
+
 ### The 09/16 playthrough batch (all five shipped)
 
 Five notes from a playthrough of the difficulty-3 build.

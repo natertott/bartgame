@@ -3195,7 +3195,17 @@ void PlayerShrinkByRay(void) {
 
 /** Returns which kind of sword projectile is created. */
 u32 GetSwordBeam(void) {
+#ifdef QUICKSTART
+    // The Whetstone charm (ITEM_GREEN_SWORD). Vanilla only throws the beam
+    // at FULL health, which in a mode that starts the player on two hearts
+    // means the skill is usually inert exactly when it would matter. The
+    // charm drops that condition and leaves everything else about the beam
+    // alone.
+    if ((gPlayerState.skills & SKILL_SWORD_BEAM) &&
+        (gSave.stats.health == gSave.stats.maxHealth || (QuickStartFoodMask() & (1 << 19)))) {
+#else
     if ((gPlayerState.skills & SKILL_SWORD_BEAM) && gSave.stats.health == gSave.stats.maxHealth) {
+#endif
         return 0xf;
     } else {
         if ((gPlayerState.skills & SKILL_PERIL_BEAM) && gSave.stats.health <= 8) {

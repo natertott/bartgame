@@ -219,6 +219,11 @@ bool32 IsCollidingPlayer(Entity* this) {
 
 #ifdef QUICKSTART
 extern u8 QuickStartCharmMask(void);
+// The food charm/curse mask, for the two sword rows. Separate from the
+// bottled-charm mask above: those are drunk, these are carried.
+extern u32 QuickStartFoodMask(void);
+#define QUICKSTART_FOOD_SWORD_EDGE (1 << 17)
+#define QUICKSTART_FOOD_CURSE_BLUNT (1 << 18)
 #define QUICKSTART_CHARM_NAYRU 1
 #define QUICKSTART_CHARM_FARORE 2
 #define QUICKSTART_CHARM_DIN 4
@@ -278,6 +283,25 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
             }
             if (charms & QUICKSTART_CHARM_DIN) {
                 damage *= 2;
+            }
+            {
+                // The Duelist's Edge and the Rusted Blade. Flat +1 / -1
+                // rather than a multiplier, deliberately: the bottled
+                // charms above already own the multiplicative band, and a
+                // flat point is worth most against the cheap bodies a run
+                // spends its time on and least against a boss - which is
+                // the right shape for something the player finds lying on
+                // the floor.
+                u32 food = QuickStartFoodMask();
+                if (food & QUICKSTART_FOOD_SWORD_EDGE) {
+                    damage++;
+                }
+                if (food & QUICKSTART_FOOD_CURSE_BLUNT) {
+                    damage--;
+                    if (damage < 1) {
+                        damage = 1;
+                    }
+                }
             }
 #else
             switch (gSave.stats.charm) {

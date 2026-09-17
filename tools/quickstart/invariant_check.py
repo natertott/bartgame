@@ -146,7 +146,12 @@ FLAG_PARAM_RANGES = {
 # Macros that only exist to be composed into the ones above; their own range
 # is covered by their users, and expanding them separately would report the
 # whole block as a self-collision.
-FLAG_BASE_MACROS = ('GF_CONTENT_SITE_BASE', 'GF_SLOT_BASE')
+# Macros that are not allocations. GF_CONTENT_SITE_BASE and GF_SLOT_BASE are
+# the bases their own blocks are measured from; GF_FOOD_FLAG is a DISPATCHER -
+# a ternary that picks between GF_FOOD_BIT and GF_FOOD2_BIT, both of which are
+# checked here in their own right. Sending a dispatcher through the numeric
+# evaluator asks it to evaluate `a ? b : c` and it correctly refuses.
+FLAG_BASE_MACROS = ('GF_CONTENT_SITE_BASE', 'GF_SLOT_BASE', 'GF_FOOD_FLAG')
 
 # Bits that are deliberately NOT cleared at the start of a run. The seed pin
 # is the clearest case: its entire job is to survive into the next run.
