@@ -1265,6 +1265,60 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/21 batch: the three regions are actually reachable now
+
+The 09/17 entry below claims Minish Woods and Lake Hylia were opened. They
+were not, and the way that went wrong is the most useful thing in this
+entry.
+
+`QuickStartRingRegionOfRoom` learned both regions and containment stopped
+cancelling the crossing - that part was real, and `seam_gate.py` measured
+it honestly. What `seam_gate.py` cannot see is whether a crossing EXISTS:
+it stages the transition itself, by writing `area_next`, `room_next` and
+`transitioningOut`, then runs the containment functions over it. The
+borders had been deleted from `src/data/transitions.c` outright, under
+`#ifndef QUICKSTART`, each with a comment saying the region was "outside
+the ring". So the gate was opened on a door that was not there, the probe
+happily confirmed the policy, and the player stayed exactly as stuck.
+
+**Doctrine: a gate probe measures the policy, never the route.** The
+question "can the player get there" is only ever answered by walking.
+`tools/quickstart/region_walk.py` does that now - eight legs, in and back
+out of all three regions.
+
+Restored, and walked: Eastern Hills North and South into Minish Woods, Lon
+Lon Ranch into Lake Hylia, Trilby Highlands into Mount Crenel. Veil Falls'
+two north borders stay deleted on purpose - that region has no pool row,
+no sites and no survey.
+
+A second thing the walk taught, which cost the first run of the probe
+three of its four legs: **an overworld border is open only in bands.**
+Sweeping Eastern Hills North's east edge in 64px steps, y=40 and y=104
+cross, y=168 through y=360 do not, y=424 crosses again. The rest is cliff.
+"Held RIGHT and nothing happened" is evidence about terrain, not about the
+transition table, and every coordinate in the probe is now a measured
+crossing rather than a guess.
+
+**Mount Crenel is a full region now**, not just a set of ? rooms. It was
+the odd case: its sites were blessed as pocket destinations, so the
+mountain's interiors were reachable in policy while the mountain itself
+had no restored way in, no ring membership and no containment once you
+were on it. It now has all five of its rooms in the ring (they are joined
+by the area's own scroll seams, so naming only the arrival room would have
+policed one screen and left the rest open to the Cavern of Flames), and a
+pool row: entrance (1000,424), which is where the restored border actually
+deposits the player, and reward (872,408), ten tiles along the same
+flooded component. Ten spawn points, not the usual sixteen - the arrival
+ledge is 52 tiles of the room's 467 open ones, the rest of the mountain
+being behind the climb, which is exactly what `reach.h` already prices at
+BOMBS plus the GRIP RING.
+
+Added while growing both: a compile-time check that
+`QuickStartRingRegionOfPoolIndex`'s `byPool` array is the same length as
+the pool. The index is taken modulo the POOL's size and read out of
+`byPool`, so a mismatch reads off the end and a region answers to the
+wrong ring - and nothing enforced it until these two had to grow together.
+
 ### The 09/17 batch: two regions opened, and the item pools widened
 
 - **Minish Woods and Lake Hylia are in the run.** Both had pool rows,

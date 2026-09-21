@@ -385,12 +385,15 @@ const Transition gExitList_HyruleField_SouthHyruleField[] = {
 const Transition gExitList_HyruleField_EasternHillsSouth[] = {
     { WARP_TYPE_AREA, 0x38, 0x28, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_HOUSE_INTERIORS,
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#ifndef QUICKSTART
-    // Minish Woods is outside the seven-region ring: BLOCKED under
-    // QUICKSTART, no row.
+    // RESTORED. These borders were deleted under QUICKSTART with the note
+    // that the region was "outside the ring". Both regions ARE in the ring
+    // now - QuickStartRingRegionOfRoom learned them, and containment stopped
+    // cancelling the crossing - but opening the POLICY on a door whose DATA
+    // had been removed left the player exactly as stuck as before. The gate
+    // probe that "verified" the earlier change staged the transition by hand
+    // and so measured the policy, never the route.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x3c8, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
-#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_EasternHillsCenter[] = {
@@ -401,11 +404,9 @@ const Transition gExitList_HyruleField_EasternHillsCenter[] = {
 const Transition gExitList_HyruleField_EasternHillsNorth[] = {
     { WARP_TYPE_AREA, 0x40, 0x48, 0x78, 0x88, TRANSITION_SHAPE_AREA_28x12, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#ifndef QUICKSTART
-    // Minish Woods again: BLOCKED under QUICKSTART, no row.
+    // RESTORED - see the Eastern Hills South row above.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x2, 0x0, 0x0, 0x0 },
-#endif
     TransitionListEnd,
 };
 const Transition gExitList_HyruleField_LonLonRanch[] = {
@@ -430,8 +431,13 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
     // endY 0x230).
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x230, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
-    // Veil Falls (both north borders) and Lake Hylia (east) are outside the
-    // ring: BLOCKED, no rows.
+    // Lake Hylia's east border is RESTORED: the region is in the ring now,
+    // and the containment change alone could not help while the row that
+    // carries the player across was still deleted. Veil Falls' two north
+    // borders stay blocked - that region has no pool row, no sites and no
+    // survey, so it is still somewhere a run has no business walking into.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
+      0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
@@ -674,7 +680,12 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     // to the Trilby region properly in both directions.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    // Mt Crenel (west) is still outside the ring: BLOCKED, no row.
+    // Mount Crenel's west border, RESTORED. The mountain is a ring region
+    // now: it was already full of ? rooms that containment blessed as
+    // pocket sites, which made it the odd case where the DESTINATIONS were
+    // reachable in policy and the mountain itself had no way in.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xfff, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
+      0x6, 0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },

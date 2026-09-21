@@ -4189,6 +4189,23 @@ static const s16 sQuickStartLakeHyliaEnemyOffsets[][2] = {
 };
 #define QUICKSTART_LAKEHYLIA_ROOM_SQUARES 165
 
+// MOUNT CRENEL's entrance ledge. Ten spawn points rather than the usual
+// sixteen, because there is only so much room: the arrival component is 52
+// tiles of the room's 467 open ones, the rest of the mountain being behind
+// the climb. That is the right size - reach.h already prices the region at
+// BOMBS plus the GRIP RING, so a run drawn here without them is meant to
+// be fighting on the ledge, not scaling the cliff.
+//
+// Surveyed by walking Trilby's west edge at y=424 (the one band of that
+// edge that is not cliff), reading where the border actually put the
+// player, and flooding the ROM's own QuickStartMarkReachableTiles from
+// that tile. Every offset below is inside that flood.
+static const s16 sQuickStartMtCrenelEnemyOffsets[][2] = {
+    { 984, 392 }, { 952, 424 }, { 952, 376 }, { 920, 408 }, { 888, 424 },
+    { 888, 376 }, { 856, 408 }, { 840, 440 }, { 840, 376 }, { 792, 440 },
+};
+#define QUICKSTART_MTCRENEL_ROOM_SQUARES 52
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -4365,6 +4382,20 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartLakeHyliaEnemyOffsets, ARRAY_COUNT(sQuickStartLakeHyliaEnemyOffsets),
       QUICKSTART_LAKEHYLIA_ROOM_SQUARES,
       312, 104, NULL },
+    // MOUNT CRENEL, the last named region to get a pool row. It has had ?
+    // rooms for a long time and no row, which is why it kept reading as
+    // "blocked": the mountain's own SITES were reachable in policy while
+    // the mountain was not a place the run could drop you, pay you, or run
+    // a wave loop in.
+    //
+    // Entrance (1000,424) is not a guess - it is where the restored Trilby
+    // border actually deposits the player, read off the walk. Reward
+    // (872,408) is ten tiles along the same flooded component, far enough
+    // that it does not land underfoot on arrival.
+    { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1000, 424, 0, 0, 0, 0,
+      sQuickStartMtCrenelEnemyOffsets, ARRAY_COUNT(sQuickStartMtCrenelEnemyOffsets),
+      QUICKSTART_MTCRENEL_ROOM_SQUARES,
+      872, 408, NULL },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // The extension-slot bitfield (QuickStartExtSlotFlag) covers pool rows
@@ -4604,8 +4635,16 @@ static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
         QS_RING_WW, QS_RING_WW, QS_RING_WW,
         QS_RING_RV,
         QS_RING_CW, QS_RING_WR, QS_RING_WR,
-        QS_RING_MW, QS_RING_LH,
+        QS_RING_MW, QS_RING_LH, QS_RING_CREN,
     };
+    // The index is taken modulo the POOL's size but read out of byPool, so
+    // the two must be the same length or a perfectly legal pool index reads
+    // off the end of this array and a region answers to the wrong ring.
+    // Nothing enforced that until Mount Crenel became the eighteenth row
+    // and both had to grow together.
+    {
+        typedef char QuickStartByPoolMatchesPool[(ARRAY_COUNT(byPool) == QUICKSTART_REGION_POOL_SIZE) ? 1 : -1];
+    }
     return byPool[poolIndex % QUICKSTART_REGION_POOL_SIZE];
 }
 
@@ -5872,6 +5911,20 @@ static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
     }
     if (area == AREA_LAKE_HYLIA && room == ROOM_LAKE_HYLIA_MAIN) {
         return QS_RING_LH;
+    }
+    // The whole mountain. Unlike the two regions above, Mount Crenel is
+    // five rooms joined by AREA_MT_CRENEL's own scroll seams - Entrance,
+    // Center, Wall Climb, Top and the Cavern of Flames forecourt - so
+    // naming only the arrival room would leave containment policing the
+    // first screen and nothing else, and a player one screen up would be
+    // free to walk into the Cavern of Flames.
+    //
+    // Crenel was the odd one out before this: its ? rooms were already
+    // blessed as pocket sites, so the mountain's DESTINATIONS were
+    // reachable in policy while the mountain itself had no restored way in
+    // and no containment once you were there.
+    if (area == AREA_MT_CRENEL && room <= ROOM_MT_CRENEL_ENTRANCE) {
+        return QS_RING_CREN;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -18511,7 +18564,8 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     // which is the opposite of bringing a region INTO the run.
     if (!((gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) ||
           gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
-          gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA) ||
+          gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
+          gRoomControls.area == AREA_MT_CRENEL) ||
         !QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
