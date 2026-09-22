@@ -392,8 +392,39 @@ def check_flags():
     return out
 
 
+def check_variant_objs(out):
+    """Every source whose text is conditional on QUICKSTART or MAPEXPLORE
+    must be listed in the Makefile's VARIANT_OBJS.
+
+    None of those objects depends on the flags that select a variant, so
+    make happily reuses one built for a different build. The Makefile's own
+    comment lists three hybrid ROMs this has produced; the fourth was a
+    mapexplore build that would not LINK, because a QUICKSTART block added
+    to playerItemUtils.c referenced a function that only exists in
+    QUICKSTART's game.o while its own stale object was kept.
+
+    The regeneration command is written in that comment. This runs it.
+    """
+    import subprocess
+    mk = open(os.path.join(P.ROOT, 'Makefile')).read()
+    i = mk.index('VARIANT_OBJS := \\')
+    j = mk.index('\n\n', i)
+    listed = {m for m in re.findall(r'build/USA/(\S+)\.o', mk[i:j])}
+    pr = subprocess.run(['grep', '-rl', 'QUICKSTART\\|MAPEXPLORE', 'src/', 'data/', 'asm/',
+                         '--include=*.c', '--include=*.s'], capture_output=True, text=True, cwd=P.ROOT)
+    want = {re.sub(r'\.(c|s)$', '', l.strip()) for l in pr.stdout.split('\n') if l.strip()}
+    for m in sorted(want - listed):
+        out.append(('FAIL', 'VARIANT_OBJS is missing %s - a stale object from another '
+                            'variant will be reused' % m))
+    for m in sorted(listed - want):
+        out.append(('WARN', 'VARIANT_OBJS lists %s, which no longer mentions either flag' % m))
+    if not (want - listed):
+        out.append(('PASS', 'VARIANT_OBJS covers all %d variant-conditional sources' % len(want)))
+
+
 def check_static():
     out = []
+    check_variant_objs(out)
     # The generated reachability table against the survey it came from. This
     # is the drift trap this project keeps walking into in a new costume: the
     # header is committed, so an edit to world_reach.py that nobody

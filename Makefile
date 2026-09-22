@@ -60,6 +60,7 @@ VARIANT_OBJS := \
 	build/USA/src/object/specialChest.o build/USA/src/object/specialChest.s build/USA/src/object/specialChest.i \
 	build/USA/src/playerItem/playerItemBomb.o build/USA/src/playerItem/playerItemBomb.s build/USA/src/playerItem/playerItemBomb.i \
 	build/USA/src/playerItem/playerItemBottle.o build/USA/src/playerItem/playerItemBottle.s build/USA/src/playerItem/playerItemBottle.i \
+	build/USA/src/playerItemUtils.o build/USA/src/playerItemUtils.s build/USA/src/playerItemUtils.i \
 	build/USA/src/playerUtils.o build/USA/src/playerUtils.s build/USA/src/playerUtils.i \
 	build/USA/src/roomInit.o build/USA/src/roomInit.s build/USA/src/roomInit.i \
 	build/USA/src/script.o build/USA/src/script.s build/USA/src/script.i \
