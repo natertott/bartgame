@@ -1080,6 +1080,36 @@ static void GameTask_Transition(void) {
     // report). WARP_EVENT_END's only other consumers are Wind Tribe NPC
     // dialogue variants, and the hub sweep deletes those NPCs anyway.
     SetGlobalFlag(WARP_EVENT_END);
+    // Mount Crenel's bean, planted and watered before the run starts.
+    //
+    // Vanilla gates the climb behind an errand: find the bean, carry a
+    // bottle of water up the mountain, pour it on the planted seed, ride
+    // the sprout. None of that survives into this mode - the bottle is a
+    // draw item, the water source is a vanilla scripted spot, and the
+    // errand is exactly the kind of multi-room chore a run has no room
+    // for - so the mountain was simply not traversable. Same treatment
+    // Trilby's boulder crossing gets, and for the same reason.
+    //
+    // These are the two flags CrenelBeanSprout reads (crenelBeanSprout.c,
+    // type 0): OUT means the bean has been taken, PUT means it has gone
+    // into the hole. With both set the sprout initialises into its grown
+    // state and lays its own climbable tile, so this drives vanilla's
+    // mechanism rather than faking the result.
+    SetGlobalFlag(WATERBEAN_OUT);
+    SetGlobalFlag(WATERBEAN_PUT);
+    // The five BEANDEMO flags are the kinstone-fusion beanstalks (Crenel
+    // Summit, Lake Hylia, Wind Ruins, Eastern Hills, Western Wood), each
+    // "has grown" once its fusion is done. Crenel's is the one the user
+    // asked about; the other four are set alongside it because they are
+    // the same mechanism in the same sentence of the request ("all seeds
+    // in the Mount Crenel/Base region that need watering"), and because a
+    // half-grown set would make which beanstalk works depend on which
+    // fusion a run happened to roll.
+    SetGlobalFlag(BEANDEMO_00);
+    SetGlobalFlag(BEANDEMO_01);
+    SetGlobalFlag(BEANDEMO_02);
+    SetGlobalFlag(BEANDEMO_03);
+    SetGlobalFlag(BEANDEMO_04);
     // Seal the inn's three reward chests for the new run. Their local
     // flags (8/9/10 in the tower's bank) are what SpecialChest reads to
     // delete itself, so sealing here means the player's FIRST visit
@@ -2019,7 +2049,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 93
+#define QUICKSTART_CONTENT_SITE_COUNT 94
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -13438,6 +13468,67 @@ static bool32 QuickStartSetupPotRoomContent(s32 extra, s32 contentX, s32 content
 // to set (OpenSmallChest sets it on a successful, registered open) - no
 // ground-item polling needed here since that flag is itself an
 // unambiguous, persistent "was this actually opened" signal.
+// Paint a chest into the room's TILEMAP, which is the only reason a chest
+// is ever visible.
+//
+// SPECIAL_CHEST carries no sprite. Its gObjectDefinitions row has type 0,
+// so LoadObjectSprite takes the "Object has no sprite" branch, sets
+// ENT_DID_INIT and returns - measured: spriteIndex 0, spriteVramOffset 0,
+// spriteSettings.draw 0. The object is pure behaviour. What the player
+// sees is a chest drawn into the room's own map data, which is why every
+// vanilla chest looks right and every chest this mode CREATED was
+// invisible while still offering its R-trigger "Open" prompt - that prompt
+// comes from the gSmallChests tile entry, which is a third thing again.
+//
+// Two details, both measured against the inn, whose three chests are real
+// and really visible:
+//
+//   * The tile is TILE_TYPE_116, not 115. tiles.h labels 116 "CHEST_OPEN"
+//     and 115 "CHEST", and the label is misleading: the inn's closed,
+//     unopened chests read back as type 0x74 (index 17). 115 (index 16) is
+//     what painted nothing at all in the first attempt at this.
+//   * The LAYER varies by room and must be chosen, not assumed. Every room
+//     checked carries the art - but outdoor rooms hold it on the bottom
+//     layer and interiors on the top, with the Goron cave holding it on
+//     both. Painting the wrong layer writes tile index 0xFFFF and draws
+//     nothing.
+//
+// Last, SetTileType only asks for a visible-tile refresh when
+// gRoomControls.scroll_flags bit 0 is CLEAR. It is set in every scrolling
+// overworld room (the garden reads 0x07), so the map data changed - the
+// tile even turned solid - and the screen was never told. Hence the
+// explicit poke.
+static void QuickStartPaintChestTile(s32 localX, s32 localY) {
+    u32 pos = TILE_POS(localX >> 4, localY >> 4);
+    // The PLAYER's layer first, not the top one. Both of this engine's
+    // other visible tile edits - button.c and hiddenLadderDown.c - paint
+    // super->collisionLayer, and for good reason: a room may carry the
+    // chest art in its tileIndices for a layer it never actually draws.
+    // Preferring TOP put the chest on the unrendered layer of a cave whose
+    // tileIndices listed it for both, and the map data was correct and the
+    // screen was still empty.
+    u32 which = gPlayerEntity.base.collisionLayer == LAYER_TOP ? LAYER_TOP : LAYER_BOTTOM;
+    MapLayer* layer = GetLayerByIndex(which);
+    if (layer == NULL || layer->tileIndices[TILE_TYPE_116] == 0xFFFF) {
+        which = (which == LAYER_TOP) ? LAYER_BOTTOM : LAYER_TOP;
+        layer = GetLayerByIndex(which);
+    }
+    if (layer == NULL || layer->tileIndices[TILE_TYPE_116] == 0xFFFF) {
+        return; // this room's tileset has no chest to draw
+    }
+    SetTileType(TILE_TYPE_116, pos, which);
+    // ...and then actually put it on the screen. SetTileType edits the map
+    // DATA - measured, the target tile went from index 318 to 17 and even
+    // turned solid - but in a scrolling room it skips the screen write
+    // entirely (it only does that work when gRoomControls.scroll_flags bit
+    // 0 is clear, and every scrolling overworld room has it set). That is
+    // why the chest was still invisible after the tile type and layer were
+    // both corrected. button.c is the model: every visible tile edit in
+    // this engine calls SetTileType AND SetTile.
+    SetTile(layer->tileIndices[TILE_TYPE_116], pos, which);
+    gUpdateVisibleTiles = 1;
+}
+
 static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     static const s16 offsets[3] = { -16, 0, 16 };
     s32 winnerSlot, prizeIndex;
@@ -13466,6 +13557,8 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
                 chest->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(chest);
             }
+            // The object is the behaviour; this is the picture.
+            QuickStartPaintChestTile(localX, contentY);
             if (i == winnerSlot) {
                 s32 j;
                 TileEntity* slot = NULL;
@@ -15846,6 +15939,13 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // Darknut hall is a 34-tile chamber with 6 elbow-room tiles, the south
     // cave 67 tiles with 31. Spots are each room's own centre tile.
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, QUICKSTART_KINDS_SMALL, 104, 104 },
+    // Castor Darknut Main - the room the Darknut itself stands in, in
+    // vanilla. It had no site, so once the mode stripped its vanilla
+    // occupant the room was simply empty: two doors and nothing between
+    // them. LARGE because it is a 17x13 arena with 117 tiles reachable
+    // from the seam, which is what a miniboss wants; content spot (136,104)
+    // is the centre of that flood.
+    { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_MAIN, QUICKSTART_KINDS_LARGE, 136, 104 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, QUICKSTART_KINDS_ANY, 104, 104 },
     // --- Mt Crenel ------------------------------------------------------
     //
@@ -17191,6 +17291,8 @@ static void QuickStart2DoorSetupChestLotteryContent(s32 contentX, s32 contentY) 
                 chest->flags |= ENT_PERSIST;
                 UpdateSpriteForCollisionLayer(chest);
             }
+            // The object is the behaviour; this is the picture.
+            QuickStartPaintChestTile(localX, contentY);
             if (i == winnerSlot) {
                 s32 j;
                 TileEntity* slot = NULL;
@@ -22947,16 +23049,16 @@ static void QuickStartUpdateItemChoice(void) {
             // one can match: the per-run reset clears the inventory, and
             // rounds 1 and 2 hand out key items and rewards, so round 3 is
             // the first skill of the run.
-            if (phase == 4) {
-                s32 i;
-                for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
-                    u16 skillItem = sQuickStartTiers[i].item;
-                    if ((sQuickStartTiers[i].cat & QS_CAT_SKILL) && GetInventoryValue(skillItem) != 0) {
-                        MessageRequest(TEXT_INDEX(TEXT_ITEM_GET, gItemMetaData[skillItem].textId));
-                        break;
-                    }
-                }
-            }
+            // ...and this is where that reasoning was wrong, which is why
+            // the message still never appeared. The scan is right; the
+            // MOMENT is not. `pickedUp` becomes true the frame the ground
+            // item entity disappears, and the entity disappears when the
+            // item-get cutscene STARTS - GiveItem, the call that actually
+            // sets the inventory value, does not run until that cutscene
+            // ENDS. So this loop ran against an inventory that did not hold
+            // the skill yet, matched nothing, and the round advanced in
+            // silence. The same scan now runs in phase 5, past the guard
+            // that waits for the cutscene to finish. See there.
             QuickStartHubSetPhase(phase + 1);
         }
         return;

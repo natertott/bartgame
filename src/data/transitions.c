@@ -1206,14 +1206,18 @@ const Transition* const gExitLists_CrenelMinishPaths[] = {
 // cave: leave the climb alone, and make the cave's exit the descent. It
 // costs one retargeted row per region and needs no new machinery, which
 // matters as more regions come in - see the roadmap's Mole Mitts note.
-const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
-    { WARP_TYPE_AREA, 0x88, 0x44, 0x98, 0x268, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD,
-      ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x1a8, 0x78, 0xb8, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA on the user's instruction: every transition that is
+// not deliberately BLOCKED should land where vanilla lands it. The
+// QUICKSTART row that stood here differed from vanilla in one field - the
+// landing, 0x98,0x268 instead of 0x88,0x78 - to turn this cave's mouth
+// into the descent out of a one-way overworld pocket. That was a
+// deliberate design, and it is also what made the ladder out of the Trilby
+// dig cave "transport you somewhere weird": you climb out of a cave and
+// arrive three hundred pixels from its mouth.
+//
+// The pocket problem it solved is real and is now unsolved again. If the
+// Mole Mitts pocket above this cave turns out to be one-way in play, the
+// fix wants to be a route rather than a teleport.
 const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
     { WARP_TYPE_AREA, 0x88, 0x44, 0x88, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
