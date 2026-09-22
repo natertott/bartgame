@@ -51,6 +51,13 @@ void ClearSmallChests(void) {
     MemClear(gSmallChests, sizeof(gSmallChests));
 }
 
+#ifdef QUICKSTART
+// The dig-room chest gamble (game.c). QUICKSTART_CHEST_ENEMY is the marker
+// parked in a small chest's _3 to say "this one holds an enemy".
+#define QUICKSTART_CHEST_ENEMY 0xE7
+extern void QuickStartOpenChestEnemy(u32 pos, u32 layer, u32 id);
+#endif
+
 void OpenSmallChest(u32 pos, u32 layer) {
     TileEntity* t = gSmallChests;
     u32 found = 0;
@@ -64,7 +71,19 @@ void OpenSmallChest(u32 pos, u32 layer) {
     if ((layer >> 1) == ((u32)(t->_6 << 31) >> 31)) {
         if (found) {
             SetLocalFlag(t->localFlag);
+#ifdef QUICKSTART
+            // A dig room's chest holds a body about one time in three
+            // (game.c, QuickStartRestockSmallChests). The marker lives in
+            // the tile entry's _3, which is otherwise just the item's
+            // parameter, and _2 carries the enemy id instead of an item.
+            if (t->_3 == QUICKSTART_CHEST_ENEMY) {
+                QuickStartOpenChestEnemy(pos, layer, t->_2);
+            } else {
+                CreateItemEntity(t->_2, t->_3, 0);
+            }
+#else
             CreateItemEntity(t->_2, t->_3, 0);
+#endif
         } else {
             CreateItemEntity(ITEM_FAIRY, 0, 0);
         }

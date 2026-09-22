@@ -2049,7 +2049,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 93
+#define QUICKSTART_CONTENT_SITE_COUNT 92
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -13616,6 +13616,69 @@ static bool32 QuickStartSetupChestLotteryContent(s32 extra, s32 contentX, s32 co
 // nothing to protect here. Our chest-lottery rows are skipped by their
 // reserved local flags - their prize is already our economy's.
 #define QUICKSTART_CHEST_REDRAWN 0x51
+
+// --- Dig rooms -----------------------------------------------------------
+//
+// The user: dig rooms stop being "? rooms", stay populated with enemies,
+// and "about a third of the time the chests inside dig rooms should
+// contain an enemy instead of an item. When the player opens the chest,
+// the enemy should pop out into the room."
+//
+// Six areas are dig rooms. They are the little Mole Mitts pockets, and
+// they all share the shape this feature wants: small, enclosed, one or two
+// chests, nothing else going on.
+static bool32 QuickStartIsDigRoom(void) {
+    u8 area = gRoomControls.area;
+    return area == AREA_HYRULE_DIG_CAVES || area == AREA_DIG_CAVES || area == AREA_CRENEL_DIG_CAVE ||
+           area == AREA_VEIL_FALLS_DIG_CAVE || area == AREA_CASTOR_WILDS_DIG_CAVE || area == AREA_HYLIA_DIG_CAVES;
+}
+
+// The marker that says "this chest holds a body, not a prize", parked in
+// the tile entry's _3. A normal restock leaves _3 at 0 and OpenSmallChest
+// passes it straight to CreateItemEntity as the item's parameter, so any
+// value no real item uses will do; 0xE7 is picked to be obvious in a
+// memory dump.
+#define QUICKSTART_CHEST_ENEMY 0xE7
+
+// Called from OpenSmallChest (playerItemUtils.c) instead of the item
+// payout. The chest's own tile position is where the enemy appears, so it
+// really does come out of the box.
+void QuickStartOpenChestEnemy(u32 pos, u32 layer, u32 id) {
+    Entity* e = CreateEnemy((u8)id, 0);
+    if (e == NULL) {
+        // Nothing spawnable - pay the ordinary consolation rather than
+        // giving the player an empty chest for their trouble.
+        CreateItemEntity(ITEM_FAIRY, 0, 0);
+        return;
+    }
+    e->x.HALF.HI = gRoomControls.origin_x + (s32)((pos & 0x3f) << 4) + 8;
+    e->y.HALF.HI = gRoomControls.origin_y + (s32)((pos >> 6) << 4) + 8;
+    e->collisionLayer = (u8)((layer >> 1) ? 2 : 1);
+    UpdateSpriteForCollisionLayer(e);
+}
+
+// Dig rooms keep their enemies even though they are no longer events.
+// Once per visit, a small difficulty-scaled handful on reachable ground -
+// the same placer every other spawn uses, so the reachability rule applies
+// here too. No reward, no clear condition, no flag beyond "already done":
+// the room is furniture with teeth, not a task.
+#define QUICKSTART_DIG_ROOM_POPULATED_FLAG 47
+static void QuickStartSetupDigRoom(void) {
+    u8 id, form;
+    s32 count;
+    if (!QuickStartRoomSettled() || QsCheckRoomFlag(QUICKSTART_DIG_ROOM_POPULATED_FLAG)) {
+        return;
+    }
+    QsSetRoomFlag(QUICKSTART_DIG_ROOM_POPULATED_FLAG);
+    QuickStartPickEnemy(QuickStartGetDifficulty(), &id, &form);
+    count = 2 + QuickStartGetDifficulty() / 4;
+    if (count > 5) {
+        count = 5;
+    }
+    QuickStartSpawnEnemiesOnOpenTiles(id, form, (s32)(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x),
+                                      (s32)(gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y), count, -1);
+}
+
 static void QuickStartRestockSmallChests(void) {
     s32 i;
     // The hub inn's three chests are the innkeeper's, not the drop
@@ -13635,8 +13698,21 @@ static void QuickStartRestockSmallChests(void) {
             t->localFlag <= QUICKSTART_CHEST_LOTTERY_FLAG(2)) {
             continue;
         }
-        t->_2 = (u8)QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP);
-        t->_3 = 0;
+        // A dig room's chest is a gamble: roughly one in three holds
+        // something that comes out swinging. The draw is from the PURSUER
+        // allowlist rather than the whole roster, because an enemy that
+        // bursts out of a box and then wanders off is a joke rather than a
+        // surprise - and these are the kinds measured to close on the
+        // player (see sQuickStartPursuers).
+        if (QuickStartIsDigRoom() && ((s32)(Random() & 0x7fff) % 3) == 0) {
+            u8 id, form;
+            QuickStartPickPursuer(QuickStartGetDifficulty(), &id, &form);
+            t->_2 = id;
+            t->_3 = QUICKSTART_CHEST_ENEMY;
+        } else {
+            t->_2 = (u8)QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP);
+            t->_3 = 0;
+        }
         t->_7 = QUICKSTART_CHEST_REDRAWN;
     }
 }
@@ -15747,7 +15823,9 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // not cross it, and it was right to reject the spot. In a 27-tile
     // corridor "deep" is three tiles, and the entrance's own run is the
     // only segment guaranteed reachable the moment the player walks in.
-    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_SMALL, 184, 104 },
+    // (Dig rooms are no longer content sites - the user's call. The one
+    // that was here, Trilby's, is the last of them. They get their own
+    // treatment instead: QuickStartSetupDigRoom below.)
     // The SAME room's main body, which had nothing in it at all. Measured:
     // the room is 30x60 and holds seven walkable components, and the one
     // the entrance lands in - the 27-tile corridor the row above serves -
@@ -20695,6 +20773,8 @@ static void QuickStartRoomMonitor(void) {
         QuickStartSpawnShopMerchantOnce(QUICKSTART_SHOP_MERCHANT_X, QUICKSTART_SHOP_MERCHANT_Y);
         QuickStartMaintainShop(sQuickStartShopRoomItemOffsets);
     // (The pool's three room-content branches are retired with it.)
+    } else if (QuickStartIsDigRoom()) {
+        QuickStartSetupDigRoom();
     } else if (QuickStartFindContentSiteForCurrentRoom() >= 0) {
         // A real vanilla room, reached through its own real vanilla door,
         // that simply has a randomized event spawned inside it. No pool

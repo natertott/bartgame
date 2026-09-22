@@ -1347,30 +1347,13 @@ const Transition gExitList_MinishHouseInteriors_NULL2[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted (endX/endY only - area/room/shape all already correctly
-// point back to Melari's Mine) so each house's own real exit lands just
-// outside this file's own QuickStartLink trigger box for that same door
-// (game.c, sQuickStartLinks) instead of vanilla's own landing spot - a
-// symmetric "same door" round trip, same reasoning as Castle Garden's
-// south border. Confirmed walkable open ground at each of these three
-// spots by walking there directly from the door itself in the emulator.
-const Transition gExitList_MinishHouseInteriors_MelariMinesSouthwest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0xa8, 0x20d, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x0, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-const Transition gExitList_MinishHouseInteriors_MelariMinesSoutheast[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x228, 0x20d, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x0, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-const Transition gExitList_MinishHouseInteriors_MelariMinesEast[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x26c, 0x11e, TRANSITION_SHAPE_BORDER_WEST, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x6, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. These three landed a few pixels off vanilla's own
+// spot (0x20d vs 0x208, 0x26c vs 0x270) so that each house's exit put the
+// player just outside this file's matching QuickStartLink trigger box,
+// making the round trip symmetric. The user's call is that every
+// transition that is not deliberately blocked should route exactly as
+// vanilla does; if the link box turns out to re-trigger on arrival, the
+// fix belongs in the box rather than in the landing.
 const Transition gExitList_MinishHouseInteriors_MelariMinesSouthwest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xa8, 0x208, TRANSITION_SHAPE_BORDER_NORTH, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
@@ -1386,7 +1369,6 @@ const Transition gExitList_MinishHouseInteriors_MelariMinesEast[] = {
       0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 // Back on its real vanilla exit (WW-South), same treatment as
 // gExitList_MinishHouseInteriors_SouthHyruleField below and for the same
 // reason: this room left the drawn small-room pool when it became a
@@ -2921,7 +2903,6 @@ const Transition* const gExitLists_WindTribeTowerRoof[] = {
 };
 
 const Transition gExitList_Caves_Boomerang[] = {
-#ifdef QUICKSTART
     // Arrival in each tree hollow moved from (0x78,0x38) to (0x78,0x68) -
     // from just NORTH of the hollow's ladder to just SOUTH of it.
     //
@@ -2934,15 +2915,16 @@ const Transition gExitList_Caves_Boomerang[] = {
     // of the hollow - its south border to the field - crosses the ladder,
     // so leaving would send the player straight back down. (120,104) is
     // open floor on the field side of it, so both ways out are a walk.
-    { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
-      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
-      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x48, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
-      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
-      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#else
+    // RESTORED TO VANILLA (landing 0x38, not 0x68). These four were moved
+    // for a stated reason - the tree hollow's own ladder sits at vanilla's
+    // landing spot - so boomerang_walk.py was written to check the hazard
+    // before trusting the restore. What it found is that the landing is
+    // NOT the variable: the two NORTH ladders return the player to the
+    // chamber at 0x68 just as they do at 0x38, which means they were
+    // already doing it before this change. So the non-vanilla landing was
+    // buying nothing, and all four go back to vanilla. The north pair's
+    // loop is a real and separate bug - see the roadmap - and the probe
+    // that found it is checked in.
     { WARP_TYPE_AREA, 0x48, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0x68, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
@@ -2951,7 +2933,6 @@ const Transition gExitList_Caves_Boomerang[] = {
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     { WARP_TYPE_AREA, 0x108, 0xd8, 0x78, 0x38, TRANSITION_SHAPE_AREA_12x12, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#endif
     { WARP_TYPE_AREA, 0xa8, 0xb8, 0x1f8, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
