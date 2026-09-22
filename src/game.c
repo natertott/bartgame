@@ -2049,7 +2049,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 94
+#define QUICKSTART_CONTENT_SITE_COUNT 93
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -9166,15 +9166,26 @@ static u8 QuickStartPickSmallKind(void) {
             kind = QS_EVENT_FAIRY;
             break;
         default:
-            kind = QS_EVENT_CHEST_LOTTERY;
+            // WAS QS_EVENT_CHEST_LOTTERY, pulled from the draw on the
+            // user's instruction. The chests spawn and can be opened and
+            // have never been visible, so the event reads as an empty
+            // room. Three real defects in the painting were found and
+            // fixed - wrong tile type, wrong layer, missing screen write,
+            // see QuickStartPaintChestTile - and it still does not draw.
+            // Better no event than a broken one.
+            //
+            // Nothing else is deleted: the setup function, the prize
+            // table and SpecialChest's own three-chest branch all stay, so
+            // putting it back is a one-line change in each of the two
+            // kind rolls once the redraw is understood.
+            kind = QS_EVENT_WAVES;
             break;
     }
     if (!QuickStartKindUnlocked(kind)) {
         // The fallback used to be the item drop, which would quietly put
         // rule 1 back - a save that has not earned the lotteries yet would
-        // meet nothing but free prizes. Split it instead, so an early save
-        // gets the same mix of fight and talk the pool is built around.
-        kind = (kind == QS_EVENT_CHEST_LOTTERY) ? QS_EVENT_WAVES : QS_EVENT_NPC;
+        // meet nothing but free prizes. Talk, not a free prize.
+        kind = QS_EVENT_NPC;
     }
     return kind;
 }
@@ -9220,7 +9231,8 @@ static u8 QuickStartPickAnyKind(void) {
             kind = QS_EVENT_POT_LOTTERY;
             break;
         case 14:
-            kind = QS_EVENT_CHEST_LOTTERY;
+            // WAS QS_EVENT_CHEST_LOTTERY - see the small pool's roll.
+            kind = QS_EVENT_MINIBOSS;
             break;
         default:
             kind = QS_EVENT_FAIRY;
@@ -15756,7 +15768,20 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // See the world-reachability section of the roadmap: this room is the
     // worked example for why tile CLASS, not tile position, is what a
     // requirements model has to be built on.
-    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, QUICKSTART_KINDS_ANY, 232, 648 },
+    // REMOVED: a second Trilby dig cave site at (232,648). The room is
+    // 30x60 tiles and both of its doors open near the top; flooding from
+    // either arrival reaches 27 tiles, all inside x7-18 / y3-8. The spot
+    // at tile (14,40) is open ground the player cannot get to, so the
+    // event was built where nobody could finish it. The room keeps its
+    // first site, which is in that component.
+    //
+    // (The invariant checker's site tier is what caught this - it warps in
+    // and demands something spawn within 48px of each content spot. It had
+    // been passing only because the site happened to roll a kind that
+    // places its content directly at the anchor and never consults
+    // reachability; once the chest lottery left the draw and the site
+    // rolled a wave instead, the placer did consult it and there was
+    // nothing to place on.)
     // --- The Minish-layer rooms the ring never wired up ------------------
     //
     // A sweep of every exit the seven ring regions have, filtered to the
@@ -18595,14 +18620,11 @@ static void QuickStartEnforceLonLonContainment(void) {
     // time rather than compared against a single constant. Replaces the
     // old GENTARI_EXIT-specific exception now that the connector draws from
     // a real pool instead of one fixed room.
-    {
-        u8 doorTargetArea, doorTargetRoom;
-        QuickStart2DoorGetTarget(&doorTargetArea, &doorTargetRoom);
-        if (gRoomTransition.player_status.area_next == doorTargetArea &&
-            gRoomTransition.player_status.room_next == doorTargetRoom) {
-            return;
-        }
-    }
+    // (RETIRED with the 2-door pool. This exception was NOT flag-guarded:
+    // with no draw rolled, QuickStart2DoorGetTarget still resolves to pool
+    // row 0, so leaving it in place would have blessed a transition from
+    // the ranch into whichever room that is - a containment hole with no
+    // door behind it today and no reason to keep.)
     QuickStartGetSlotTarget(3, &ladder3TargetArea, &ladder3TargetRoom);
     if (gRoomTransition.player_status.area_next == ladder3TargetArea &&
         gRoomTransition.player_status.room_next == ladder3TargetRoom) {
@@ -18684,13 +18706,10 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     // pool room this save's draw resolved to - same "varies per save,
     // resolve at check time" reasoning as QuickStartEnforceLonLonContainment's
     // own cave-connector exception.
-    if (gRoomControls.room == ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD && QsCheckFlag(GF_RIVER_RANDOMIZED)) {
-        u8 targetArea, targetRoom;
-        QuickStartRiverBridgeGetTarget(&targetArea, &targetRoom);
-        if (gRoomTransition.player_status.area_next == targetArea && gRoomTransition.player_status.room_next == targetRoom) {
-            return;
-        }
-    }
+    // (RETIRED with the 2-door pool. This one was guarded by
+    // GF_RIVER_RANDOMIZED, which nothing sets any more, so it was already
+    // inert - removed so the next reader is not misled into thinking the
+    // bridge still draws a room.)
     // The restored vanilla "? room" doors leaving these 3 field rooms - the
     // 5 North Hyrule Field trees plus its Heart Piece Hallway cave, South
     // Hyrule Field's 3 doors plus Link's House, and Trilby Highlands' 4.
@@ -20454,8 +20473,25 @@ static void QuickStartRoomMonitor(void) {
     // destination, so a redirected door is judged on where it is actually
     // going rather than on its vanilla destination.
     QuickStartProcessDoorRedirects();
-    QuickStartFixupCaveConnectorReturn();
-    QuickStartFixupRiverBridgeReturn();
+    // RETIRED: the 2-door "? room" pool, all three of its draws.
+    //
+    // One mechanic with three entrances - Lon Lon Ranch's cave connector,
+    // North Hyrule Field's river bridge and its through-cave - each drawing
+    // a room per run from sQuickStart2DoorSmallRoomPool/LargeRoomPool and
+    // retargeting both of that room's doors to a shared return ledge. The
+    // user's call: "Remove the 2-door ? room pool entirely. We do not need
+    // it anymore." All nineteen pool rooms have their vanilla wiring back
+    // (src/data/transitions.c), which is most of what the retarget audit
+    // was reporting.
+    //
+    // The machinery below it is left in place and simply never driven: the
+    // room tables, the GF_2DOOR_* flags, the setup and fixup functions and
+    // the containment exceptions are all still compiled. Nothing calls
+    // them, so nothing draws a room, no door is rewritten and no content
+    // is built. Re-enabling means restoring these calls and re-collapsing
+    // those nineteen exit lists - a smaller and more reversible change
+    // than excising a mechanic that touches 185 lines of this file.
+
     // Every per-run draw is rolled unconditionally, not in a specific room.
     //
     // These used to live in Melari's Mine's own branch, on the reasoning
@@ -20477,9 +20513,7 @@ static void QuickStartRoomMonitor(void) {
     if (QuickStartPhase(1)) {
         QuickStartRollElementRegionOnce();
         QuickStartRandomizeSlotsOnce();
-        QuickStart2DoorRandomizeOnce();
-        QuickStartRandomizeRiverBridgeOnce();
-        QuickStartRandomizeCaveOnce();
+        // (2-door pool draws retired - see the note above.)
         QuickStartRandomizeMelariEastOnce();
         QuickStartRandomizeMelariSoutheastOnce();
         QuickStartRandomizeShopOnce();
@@ -20561,7 +20595,7 @@ static void QuickStartRoomMonitor(void) {
     // Same reasoning again - North Hyrule Field's river bridge has two
     // entrances (either bank), each targeting a different real room every
     // save.
-    QuickStartProcessRiverBridgeLink();
+    // (The river bridge's two entrances are retired with the pool.)
     // (The region chain's own "onward" exit boxes used to be processed
     // here too - retired with the overworld expansion, the ring's regions
     // connect by their real vanilla borders now.)
@@ -20660,25 +20694,7 @@ static void QuickStartRoomMonitor(void) {
         // (184,216), the room's only way in or out.
         QuickStartSpawnShopMerchantOnce(QUICKSTART_SHOP_MERCHANT_X, QUICKSTART_SHOP_MERCHANT_Y);
         QuickStartMaintainShop(sQuickStartShopRoomItemOffsets);
-    } else if (QuickStart2DoorIsCurrentRoom()) {
-        // Whichever real 2-door pool room the save's cave-connector draw
-        // resolved to (see QuickStart2DoorRandomizeOnce/GetTarget) - its own
-        // obstacle clear and content roll are both handled inside
-        // QuickStart2DoorSetupRoomContent (it skips the clear entirely for
-        // ROOM_CAVES_HEART_PIECE_HALLWAY, kept fully vanilla).
-        QuickStart2DoorSetupRoomContent();
-    } else if (QuickStartRiverBridgeIsCurrentRoom()) {
-        // Whichever real 2-door pool room North Hyrule Field's own river
-        // bridge draw resolved to (see QuickStartRandomizeRiverBridgeOnce/
-        // QuickStartRiverBridgeGetTarget) - a separate draw from the cave
-        // connector above, so this can never be the same physical room as
-        // that branch.
-        QuickStartSetupRiverBridgeRoomContent();
-    } else if (QuickStartCaveIsCurrentRoom()) {
-        // Whichever real 2-door pool room North Hyrule Field's own cave
-        // mouth draw resolved to - a third, separate draw from the two
-        // above, so this can never be the same physical room as either.
-        QuickStartSetupCaveRoomContent();
+    // (The pool's three room-content branches are retired with it.)
     } else if (QuickStartFindContentSiteForCurrentRoom() >= 0) {
         // A real vanilla room, reached through its own real vanilla door,
         // that simply has a randomized event spawned inside it. No pool

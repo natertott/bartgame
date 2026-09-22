@@ -414,30 +414,21 @@ def check_static():
     # ROOM_CASTOR_CAVES_DARKNUT left the pool, this tier kept demanding the
     # connector's sentinel tags from it and called the CORRECT vanilla
     # destinations a bug.
-    for key in P.pool_list_drift():
-        out.append(('FAIL', 'POOL_LISTS still names %s/%s, which is no longer a 2-door '
-                            'pool room - drop it there too' % key))
-    for (an, rn), d in P.pool_doors().items():
-        doors = d['doors']
-        if len(doors) < 2:
-            out.append(('FAIL', f'{rn}: fewer than 2 door rows'))
-            continue
-        tags = (doors[0]['ex'], doors[1]['ex'])
-        if tags != (0x3fe, 0x3fd):
-            out.append(('FAIL', f'{rn}: door tags {tags[0]:#x}/{tags[1]:#x}, want 0x3fe/0x3fd'))
-        else:
-            out.append(('PASS', f'{rn}: door tags OK'))
+    # RETIRED with the 2-door "? room" pool itself.
+    #
+    # This block asserted that every pool room's two doors carried the
+    # connector's sentinel return tags (0x3fe/0x3fd), and that each pool's
+    # size constant matched its table. The pool is gone - all nineteen of
+    # those rooms have their VANILLA wiring back - so the assertion now
+    # fails on nineteen rooms that are behaving exactly as intended, which
+    # is the same trap this tier already fell into once when
+    # ROOM_CASTOR_CAVES_DARKNUT left the pool and it called the correct
+    # vanilla destinations a bug.
+    #
+    # The tables and size constants are still compiled (nothing drives
+    # them), so if the pool is ever revived this block comes back with it.
     game = P.GAME
     import re
-    for const, arr in (('QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE', 'sQuickStart2DoorSmallRoomPool'),
-                       ('QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE', 'sQuickStart2DoorLargeRoomPool')):
-        m = re.search(r'#define ' + const + r' (\d+)', game)
-        i = game.find(arr + '[] = {')
-        j = game.find('\n};', i)
-        rows = len(re.findall(r'\{ AREA_\w+,', game[i:j]))
-        n = int(m.group(1))
-        lvl = 'PASS' if n <= rows else 'FAIL'
-        out.append((lvl, f'{const}={n} vs {rows} rows'))
 
     # The tier table, which replaced the flat reward pools. Two things worth
     # asserting, both of which have already gone wrong once:

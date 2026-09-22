@@ -1075,18 +1075,9 @@ const Transition* const gExitLists_MelarisMine[] = {
     [ROOM_MELARIS_MINE_MAIN] = gExitList_MelarisMine_Main,
 };
 
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_MinishPaths_ToMinishVillage[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_MinishPaths_ToMinishVillage[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x208, 0x3e0, TRANSITION_SHAPE_BORDER_NORTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -1094,7 +1085,6 @@ const Transition gExitList_MinishPaths_ToMinishVillage[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_MinishPaths_CastorWilds[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x28, 0x68, TRANSITION_SHAPE_BORDER_NORTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x0, 0x0, 0x0, 0x0 },
@@ -1137,18 +1127,9 @@ const Transition gExitList_CrenelMinishPaths_CrenelWater[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2cc, 0x98, TRANSITION_SHAPE_BORDER_WEST, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 1, TRANSITION_TYPE_INSTANT_MINISH, 0x6,
       0x0, 0x0, 0x0 },
@@ -1156,19 +1137,9 @@ const Transition gExitList_CrenelMinishPaths_Rainfall[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_EAST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xf4, 0x108, TRANSITION_SHAPE_BORDER_EAST, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x2, 0x0, 0x0, 0x0 },
@@ -1176,7 +1147,6 @@ const Transition gExitList_CrenelMinishPaths_MelarisMine[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_CrenelMinishPaths[] = {
     [ROOM_CRENEL_MINISH_PATHS_BEAN] = gExitList_CrenelMinishPaths_CrenelBean,
     [ROOM_CRENEL_MINISH_PATHS_SPRING_WATER] = gExitList_CrenelMinishPaths_CrenelWater,
@@ -1206,6 +1176,7 @@ const Transition* const gExitLists_CrenelMinishPaths[] = {
 // cave: leave the climb alone, and make the cave's exit the descent. It
 // costs one retargeted row per region and needs no new machinery, which
 // matters as more regions come in - see the roadmap's Mole Mitts note.
+#endif
 // RESTORED TO VANILLA on the user's instruction: every transition that is
 // not deliberately BLOCKED should land where vanilla lands it. The
 // QUICKSTART row that stood here differed from vanilla in one field - the
@@ -1225,7 +1196,6 @@ const Transition gExitList_DigCaves1_TrilbyHighlands[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_DigCaves1[] = {
     [ROOM_DIG_CAVES_EASTERN_HILLS] = gExitList_NoExitList,
     [ROOM_DIG_CAVES_1] = gExitList_NoExitList,
@@ -1260,18 +1230,9 @@ const Transition gExitList_MinishHouseInteriors_GentariExit[] = {
       TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_MinishHouseInteriors_Festari[] = {
-    { WARP_TYPE_AREA, 0xe8, 0xe8, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0xe8, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_MinishHouseInteriors_Festari[] = {
     { WARP_TYPE_AREA, 0xe8, 0xe8, 0x258, 0x68, TRANSITION_SHAPE_AREA_12x12, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1279,7 +1240,6 @@ const Transition gExitList_MinishHouseInteriors_Festari[] = {
       TRANSITION_TYPE_INSTANT_MINISH, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 #ifdef QUICKSTART
 // Retargeted the same way as the Tree Interiors ladder rooms further down
 // this file - one of the "? room" pool's 20 candidates (game.c,
@@ -2041,18 +2001,9 @@ const Transition gExitList_HouseInteriors1_PostOffice[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_HouseInteriors1_Library2F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x78, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_HouseInteriors1_Library2F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 2, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2060,19 +2011,9 @@ const Transition gExitList_HouseInteriors1_Library2F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_HouseInteriors1_Library1F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_HouseInteriors1_Library1F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x168, 0xb8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2080,7 +2021,6 @@ const Transition gExitList_HouseInteriors1_Library1F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_HouseInteriors1_Inn1F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x388, 0x268, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2114,18 +2054,9 @@ const Transition gExitList_HouseInteriors1_InnWest2F[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_HouseInteriors1_InnEast2F[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 2, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0xb8, 0x178, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_HouseInteriors1_InnEast2F[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a8, 0x230, TRANSITION_SHAPE_BORDER_SOUTH_WEST, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 2, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2133,19 +2064,9 @@ const Transition gExitList_HouseInteriors1_InnEast2F[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_HouseInteriors1_SchoolWest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x78, 0x48, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_HouseInteriors1_SchoolWest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2c8, 0xa8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2153,7 +2074,6 @@ const Transition gExitList_HouseInteriors1_SchoolWest[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_HouseInteriors1_SchoolEast[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x328, 0x78, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2569,18 +2489,9 @@ const Transition gExitList_CrenelCaves_PillarCave[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x238, 0xc8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2588,7 +2499,6 @@ const Transition gExitList_CrenelCaves_BridgeSwitch[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_CrenelCaves_ExitToMines[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x188, 0x108, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -2613,18 +2523,9 @@ const Transition gExitList_CrenelCaves_SpinyChuPuzzle[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x38, 0x28, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x348, 0x68, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
@@ -2632,7 +2533,6 @@ const Transition gExitList_CrenelCaves_ChuchuPotChest[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_CrenelCaves_WaterHeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x118, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
@@ -2643,18 +2543,9 @@ const Transition gExitList_CrenelCaves_RupeeFairyFountain[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x68, 0x18, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x198, 0xe8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2662,7 +2553,6 @@ const Transition gExitList_CrenelCaves_HelmasaurHallway[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_CrenelCaves_MushroomKeese[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x148, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2670,18 +2560,9 @@ const Transition gExitList_CrenelCaves_MushroomKeese[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fe, 0x3fe, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x2d8, 0x198, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2689,7 +2570,6 @@ const Transition gExitList_CrenelCaves_LadderToSpringWater[] = {
       0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_CrenelCaves_BombBusinessScrub[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xb8, 0x1a8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -3286,18 +3166,9 @@ const Transition gExitList_VeilFallsCaves_Entrance[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_VeilFallsCaves_Exit[] = {
-    { WARP_TYPE_AREA, 0x58, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_VeilFallsCaves_Exit[] = {
     { WARP_TYPE_AREA, 0x58, 0x18, 0x128, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -3305,24 +3176,14 @@ const Transition gExitList_VeilFallsCaves_Exit[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_VeilFallsCaves_SecretChest[] = {
     { WARP_TYPE_AREA, 0x58, 0x38, 0x98, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES,
       ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
-    { WARP_TYPE_AREA, 0x58, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_AREA, 0x98, 0x38, 0x3fd, 0x3fd, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
     { WARP_TYPE_AREA, 0x58, 0x38, 0x98, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -3330,7 +3191,6 @@ const Transition gExitList_VeilFallsCaves_SecretStaircases[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_VeilFallsCaves_BlockPuzzle[] = {
     { WARP_TYPE_AREA, 0x98, 0x38, 0x58, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES,
       ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -3338,18 +3198,9 @@ const Transition gExitList_VeilFallsCaves_BlockPuzzle[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_VeilFallsCaves_RupeePath[] = {
-    { WARP_TYPE_AREA, 0x98, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_VeilFallsCaves_RupeePath[] = {
     { WARP_TYPE_AREA, 0x98, 0x18, 0x38, 0x28, TRANSITION_SHAPE_AREA_12x12, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -3357,7 +3208,6 @@ const Transition gExitList_VeilFallsCaves_RupeePath[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 #ifdef QUICKSTART
 // Retargeted - see the "? room" pool comment above
 // gExitList_MinishHouseInteriors_Red - this room is a small-pool member too
@@ -4158,18 +4008,9 @@ const Transition* const gExitLists_TempleOfDroplets[] = {
     [ROOM_TEMPLE_OF_DROPLETS_3f] = gExitList_NoExitList,
 };
 
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_61_0[] = {
-    { WARP_TYPE_AREA, 0x78, 0x58, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_61_0[] = {
     { WARP_TYPE_AREA, 0x78, 0x58, 0xa8, 0xd8, TRANSITION_SHAPE_AREA_12x12, AREA_DEEPWOOD_SHRINE, ROOM_DEEPWOOD_SHRINE_ENTRANCE,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -4177,7 +4018,6 @@ const Transition gExitList_61_0[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_61[] = {
     [ROOM_NULL_61_0] = gExitList_61_0,
 };
@@ -4441,18 +4281,9 @@ const Transition gExitList_DarkHyruleCastle_3FKeatonHallToVaati[] = {
       ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
-    { WARP_TYPE_AREA, 0xa8, 0x28, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
     { WARP_TYPE_AREA, 0xa8, 0x28, 0x78, 0x168, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE_OUTSIDE,
       ROOM_DARK_HYRULE_CASTLE_OUTSIDE_ZELDA_STATUE_PLATFORM, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -4460,7 +4291,6 @@ const Transition gExitList_DarkHyruleCastle_3FTripleDarknut[] = {
       ROOM_DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_DarkHyruleCastle_2FTopLeftTower[] = {
     { WARP_TYPE_AREA, 0x68, 0x38, 0xa8, 0x48, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE, ROOM_DARK_HYRULE_CASTLE_3F_TOP_LEFT_TOWER,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -4734,18 +4564,9 @@ const Transition* const gExitLists_VaatisArms[] = {
     [ROOM_VAATIS_ARMS_SECOND] = gExitList_VaatisArms_Second,
 };
 
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
-    { WARP_TYPE_AREA, 0x88, 0x18, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
     { WARP_TYPE_AREA, 0x88, 0x18, 0xa8, 0x178, TRANSITION_SHAPE_AREA_12x12, AREA_DARK_HYRULE_CASTLE,
       ROOM_DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -4753,7 +4574,6 @@ const Transition gExitList_DarkHyruleCastleBridge_Main[] = {
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_DarkHyruleCastleBridge[] = {
     [ROOM_DARK_HYRULE_CASTLE_BRIDGE_MAIN] = gExitList_DarkHyruleCastleBridge_Main,
 };
@@ -4796,18 +4616,9 @@ const Transition* const gExitLists_HyruleCastle[] = {
     [ROOM_HYRULE_CASTLE_7] = gExitList_NoExitList,
 };
 
-#ifdef QUICKSTART
-// Retargeted as a QUICKSTART "2-door ? room" pool candidate - both
-// real doors now lead back to the Lon Lon Ranch cave-connector ledge
-// (0xb8,0x138), same shared return spot every other 2-door pool room
-// uses (see game.c: sQuickStart2DoorSmallRoomPool/LargeRoomPool). Real
-// startX/startY/shape/warp_type kept as-is - only destination changes.
-const Transition gExitList_SanctuaryEntrance_Main[] = {
-    { WARP_TYPE_AREA, 0x88, 0x38, 0x3fe, 0x3fe, TRANSITION_SHAPE_AREA_12x12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3fd, 0x3fd, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// RESTORED TO VANILLA. This room was a 2-door "? room" pool candidate;
+// both of its doors were retargeted to a shared return ledge in Lon Lon
+// Ranch. The pool is retired, so the room keeps its own wiring again.
 const Transition gExitList_SanctuaryEntrance_Main[] = {
     { WARP_TYPE_AREA, 0x88, 0x38, 0xc8, 0x1e8, TRANSITION_SHAPE_AREA_12x12, AREA_SANCTUARY, ROOM_SANCTUARY_HALL, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
@@ -4815,7 +4626,6 @@ const Transition gExitList_SanctuaryEntrance_Main[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_SanctuaryEntrance[] = {
     [ROOM_SANCTUARY_ENTRANCE_MAIN] = gExitList_SanctuaryEntrance_Main,
 };
