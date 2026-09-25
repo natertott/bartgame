@@ -1265,6 +1265,69 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/25 boss batch: the chuchu's dead window, and a second boss
+
+**The chuchu was hittable only in four of its twelve phases.** The user's
+report was "green and blue are sometimes resistant, sometimes susceptible",
+and the colour turned out to have nothing to do with it - both forms measure
+identically. `sub_08027AA4`, the handler that lets a weapon peel the jelly,
+is not called from the tick; it is called by hand from the subAction
+handlers for 1, 2, 3 and 5 and from nowhere else. Whether a swing counted
+depended on which animation the boss happened to be playing.
+
+Measured with `tools/quickstart/chuchu_windows.py`, delivering a contact on
+every clear-iframe frame: **subAction 11 - the re-armour after a core hit -
+took 52 frames of contacts and advanced the peel counter zero times.** The
+tick now calls the peel itself whenever the body's hitType is 0x7D (the
+armoured jelly) and the running handler is not one of the four that already
+do. After: the same probe records 40 advances in subAction 11, and the whole
+fight moves several times faster because no phase is dead any more.
+
+**The Big Octorok is in.** It is the mode's second boss, drawn 50/50 against
+the chuchu in the wave loop's boss deal. Getting it there took four separate
+findings, all measured with `tools/quickstart/octorok_boss.py`:
+
+1. *Nothing can hurt it.* Not the sword, not an arrow, not anything, in any
+   phase. The only thing in `octorokBoss.c` that takes health off the body
+   is the Burning sequence, and the only way into Burning is touching the
+   FROZEN tail with contact source 7 - the Lantern, and nothing else.
+   `COLLISION_ON` is called in exactly one place, and that place runs after
+   the boss has already been hurt once. A run without a Lantern would meet a
+   wave it could never clear. The family now reads weapon contacts on ANY
+   piece and takes a health off the body, which drops it into the shipped
+   OnDeath -> Hit chain that advances the phase.
+2. *The hit was landing on the wrong entity.* Forged contacts on the body
+   advanced the fight perfectly while a real sword did nothing: the body
+   carries no hitbox of its own, so a swing touches a leg, the mouth or the
+   tail. Reading only the body made a boss a probe could kill and a player
+   could not.
+3. *The intro is a cutscene that cannot run here.* It hides the player,
+   teleports them to a fixed offset above the boss, takes the camera,
+   disables the pause menu and then waits on them walking 30 units into an
+   arena that does not exist. QUICKSTART skips it: Init goes straight to
+   ACTION1.
+4. *The phase change was a softlock.* `Hit_SubAction1` only counts its timer
+   down once the boss has walked to a HARDCODED screen position - the middle
+   of the Temple of Droplets. In an overworld room that spot can be inside a
+   wall, so the timer never reached zero, the phase never completed, and the
+   player stayed frozen. The timer now runs regardless; the boss still walks
+   toward the spot, it just no longer waits to arrive.
+
+Also generalised: every `id == CHUCHU_BOSS` exemption in game.c - the GFX
+reserve trimmer, the enemy census, the Trilby pocket clamp, the charm that
+speeds enemies up - now asks `QuickStartIsBossId`, so the next boss cannot
+inherit half of them.
+
+Measured after: a plain sword standing beside the Big Octorok takes its body
+from 3 health to 2 in 300 frames, and the full eight-phase fight runs to the
+death sequence with the family gone at frame 1759.
+
+**Still open:** the harness cannot chase an eleven-piece boss around an
+overworld room well enough to kill it free-roaming - it lands almost nothing
+while the family wanders. That is a driving problem, not a game one (the
+same driver kills an ordinary Octorok in 300 frames), but it means the
+free-roam kill is unverified and the fight's real-play pacing is unmeasured.
+
 ### The 09/25 traversability audit: what the world graph does and does not know
 
 The user asked for the inventory before the graph: every entrance, exit,

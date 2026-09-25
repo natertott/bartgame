@@ -571,6 +571,37 @@ void sub_08026110(ChuchuBossEntity* this) {
     s32 uVar2;
     s32 uVar3;
 
+#ifdef QUICKSTART
+    // A weapon has to count in EVERY armoured phase, not only in the four
+    // whose handler happens to ask.
+    //
+    // sub_08027AA4 is never called from the tick. It is called by hand out
+    // of the subAction handlers for 1, 2, 3 and 5, and from nowhere else,
+    // so whether a sword swing registers is decided by which animation the
+    // boss is playing when it lands. That is the player's report - the same
+    // sword works, then does not - and the colour has nothing to do with
+    // it. Measured with tools/quickstart/chuchu_windows.py, delivering a
+    // contact on every clear-iframe frame: subAction 11, the re-armour
+    // after a core hit, took 52 frames of contacts and advanced the peel
+    // counter zero times. Both forms measured identically, which is the
+    // rest of the report explained: green and blue differ in palette and
+    // moveset, not in what they will take.
+    //
+    // The guard is the hitType, not a list of phases, because the hitType
+    // is what decides whether a contact can register at all: 0x7D is the
+    // armoured body the peel is about. The peeled and exposed-core phases
+    // carry a different one and must not run this - there the CORE is the
+    // target and the collision system does real damage to it.
+    //
+    // The subAction test only skips the four handlers that already call the
+    // peel themselves, plus the intro and the death. sub_08027AA4 does not
+    // clear CONTACT_NOW, so calling it twice in one frame would count one
+    // swing twice.
+    if (super->hitType == 0x7D && super->subAction >= 4 && super->subAction != 5 &&
+        super->subAction != 12) {
+        sub_08027AA4(this);
+    }
+#endif
     gUnk_080CC1DC[super->subAction](this);
     if ((this->unk_84->unk_08 == 0) && ((u8)this->unk_84->unk_05 != 0)) {
         if (super->subAction == 8) {

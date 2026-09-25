@@ -3460,6 +3460,21 @@ static void QuickStartClearRuinsVanillaEnemies(void) {
 // somehow ends up outside (knockback through a seam frame, a future
 // movement change) is pulled back to the pocket's edge. Idempotent, cheap,
 // runs only while a boss exists.
+// Is this enemy id a piece of a BOSS family?
+//
+// Every boss-shaped exemption in this file used to spell CHUCHU_BOSS,
+// because the chuchu was the only boss the mode had. It is not any more, and
+// each of those exemptions was load-bearing for reasons that have nothing to
+// do with which boss it is: the GFX reserve trimmer must not eat a set-piece
+// family one piece at a time, the enemy census must not count a dead piece
+// and freeze the wave loop, the Trilby clamp must keep the whole family in
+// its pocket, and the charm that speeds enemies up must not speed up a boss.
+// Naming the concept once is what stops the next boss inheriting half of
+// them.
+static bool32 QuickStartIsBossId(u32 id) {
+    return id == CHUCHU_BOSS || id == OCTOROK_BOSS;
+}
+
 #define QUICKSTART_TRILBY_POCKET_MIN_X 32
 #define QUICKSTART_TRILBY_POCKET_MAX_X 160
 #define QUICKSTART_TRILBY_POCKET_MIN_Y 576
@@ -3470,7 +3485,7 @@ static void QuickStartTrilbyQuirkHook(void) {
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         s32 lx, ly;
-        if (ent->kind != ENEMY || ent->id != CHUCHU_BOSS) {
+        if (ent->kind != ENEMY || !QuickStartIsBossId(ent->id)) {
             continue;
         }
         lx = ent->x.HALF.HI - gRoomControls.origin_x;
@@ -4899,7 +4914,7 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
         }
         if (ent->kind == ENEMY && !QuickStartEntityIsShopScrub(ent) && QuickStartEntityInCurrentRoom(ent)) {
             count++;
-            if (ent->id == CHUCHU_BOSS) {
+            if (QuickStartIsBossId(ent->id)) {
                 *hasBoss = TRUE;
             }
         }
@@ -5011,6 +5026,34 @@ static s32 QuickStartEscalatedDifficulty(const QuickStartRegion* region, u8 wave
     return escalated;
 }
 
+// The mode's boss roster: the Green and Electric chuchu, and the Big
+// Octorok.
+//
+// The Big Octorok belongs here and not in sQuickStartElites, because it is
+// not an elite - it is an eleven-piece family with a zMalloc'd heap, affine
+// sprites and a phase machine, which is the same shape the wave loop's GFX
+// gate and deferral latch were built around for the chuchu. Measured
+// (tools/quickstart/octorok_boss.py): dropped into an overworld room it
+// composes all eleven pieces, allocates its heap, and is still alive and
+// fighting 900 frames later, so nothing about the Temple of Droplets arena
+// is load-bearing for it.
+//
+// One draw, four outcomes, so the two families are equally likely and the
+// chuchu keeps its own form coin-flip inside its half. The caller consumes
+// the Random() unconditionally, for the reason the chuchu's flip always
+// did: the RNG stream must not depend on which region the player happens to
+// be standing in when a wave comes up.
+static Entity* QuickStartCreateWaveBoss(s32 roll) {
+    switch (roll & 3) {
+        case 0:
+            return CreateEnemy(CHUCHU_BOSS, 0);
+        case 1:
+            return CreateEnemy(CHUCHU_BOSS, 4);
+        default:
+            return CreateEnemy(OCTOROK_BOSS, 0);
+    }
+}
+
 // Returns TRUE if a wave (or the boss) actually spawned; FALSE while a
 // rolled boss is deferred waiting for gfx. The caller only marks the room
 // "wave up" on TRUE.
@@ -5045,7 +5088,7 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
     // real. The room simply stays quiet for those few seconds.
     if (QsCheckRoomFlag(QUICKSTART_BOSS_OWED_FLAG)) {
         if (QuickStartReclaimableGfxSlots() >= QUICKSTART_BOSS_SPAWN_MIN_GFX) {
-            Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
+            Entity* boss = QuickStartCreateWaveBoss((s32)Random());
             QsClearRoomFlag(QUICKSTART_BOSS_OWED_FLAG);
             if (boss != NULL) {
                 s16 bossX = region->rewardX;
@@ -5103,7 +5146,7 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
             // (sub_08027AA4) keys on contact flags, not type2, so it
             // covers both forms - and it even passes type2 to the splash
             // particle so the effects match the palette.
-            Entity* boss = CreateEnemy(CHUCHU_BOSS, ((s32)Random() & 1) ? 4 : 0);
+            Entity* boss = QuickStartCreateWaveBoss((s32)Random());
             if (boss != NULL) {
                 s16 bossX = region->rewardX;
                 s16 bossY = region->rewardY;
@@ -6447,7 +6490,7 @@ static bool32 QuickStartWinBossAlive(void) {
         if ((s32)ent->prev < 0) {
             continue;
         }
-        if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS && ent->health > 0 &&
+        if (ent->kind == ENEMY && QuickStartIsBossId(ent->id) && ent->health > 0 &&
             QuickStartEntityInCurrentRoom(ent)) {
             return TRUE;
         }
@@ -10321,7 +10364,7 @@ static bool32 QuickStartEnemyIsOurs(Entity* ent) {
     // and re-entered (measured: core + jelly gone 180 frames after the
     // kill, proxy still there at +900). A dead boss piece is not an
     // enemy for any purpose this predicate serves.
-    if (ent->id == CHUCHU_BOSS && ent->health == 0) {
+    if (QuickStartIsBossId(ent->id) && ent->health == 0) {
         return FALSE;
     }
     return (ent->flags & ENT_PERSIST) || QuickStartEntityInCurrentRoom(ent);
@@ -10453,7 +10496,7 @@ static void QuickStartEnforceGfxReserve(void) {
             // gRoomControls.camera_target on a cleared slot at (0,0),
             // which is the black screen half of that report. Setpieces
             // are not density fill; only the fill is ever surplus.
-            if (enemy->id == CHUCHU_BOSS || enemy == gRoomControls.camera_target ||
+            if (QuickStartIsBossId(enemy->id) || enemy == gRoomControls.camera_target ||
                 QuickStartEntityIsShopScrub(enemy)) {
                 continue;
             }
@@ -16969,7 +17012,7 @@ static void QuickStartChainBossWatcher(void) {
     }
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
-        if (ent->kind == ENEMY && ent->id == CHUCHU_BOSS && QuickStartEntityInCurrentRoom(ent)) {
+        if (ent->kind == ENEMY && QuickStartIsBossId(ent->id) && QuickStartEntityInCurrentRoom(ent)) {
             live++;
         }
     }
@@ -21816,7 +21859,7 @@ static void QuickStartApplyFoodEffects(void) {
     if (mask & (QUICKSTART_FOOD_SWORD_KNOCKBACK | QUICKSTART_FOOD_CURSE_ENEMY_SPEED | QUICKSTART_FOOD_CURSE_FIRE_RATE)) {
         for (i = 0; i < MAX_ENTITIES; i++) {
             Entity* ent = &gEntities[i].base;
-            if (ent->kind != ENEMY || ent->id == CHUCHU_BOSS) {
+            if (ent->kind != ENEMY || QuickStartIsBossId(ent->id)) {
                 continue;
             }
             if ((mask & QUICKSTART_FOOD_SWORD_KNOCKBACK) && ent->knockbackDuration != 0 && ent->knockbackSpeed != 0 &&

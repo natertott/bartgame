@@ -117,6 +117,12 @@ void OctorokBoss_Hit(OctorokBossEntity* this) {
         OctorokBoss_Hit_SubAction0, OctorokBoss_Hit_SubAction1, OctorokBoss_Hit_SubAction2, OctorokBoss_Hit_SubAction3,
         OctorokBoss_Hit_SubAction4, OctorokBoss_Hit_SubAction5, OctorokBoss_Hit_SubAction6,
     };
+#ifndef QUICKSTART
+    // The hit sequence is a cutscene in vanilla: the camera moves to the
+    // tail and the player is frozen for 90 frames, every phase. Out here the
+    // boss is one enemy in a wave and the player may be being chased by the
+    // rest of it, so the phase change happens in real time and they keep
+    // control. The mode's chuchu lost the same freeze for the same reason.
     if (this->bossPhase == 0) {
         if (super->subAction != 3) {
             gRoomControls.camera_target = &this->heap->tailObjects[0]->base;
@@ -129,10 +135,13 @@ void OctorokBoss_Hit(OctorokBossEntity* this) {
             PausePlayer();
         }
     }
+#endif
     OctorokBoss_Hit_SubActions[super->subAction](this);
+#ifndef QUICKSTART
     if (super->subAction > 3) {
         PausePlayer();
     }
+#endif
     sub_0800445C(super);
     SetAffineInfo(super, this->unk_76, this->unk_74, this->angle.HWORD);
 }
@@ -143,8 +152,14 @@ void OctorokBoss_Hit_SubAction0(OctorokBossEntity* this) {
     this->heap->fallingStonesTimer = 0;
     if (this->bossPhase == 4) {
         super->subAction = 4;
+#ifndef QUICKSTART
+        // Vanilla disables the pause menu for the death sequence and never
+        // re-enables it from here - Intro_SubAction5 is what clears it, and
+        // the mode has no intro. A permanently unopenable menu is a bricked
+        // run, so neither the lockout nor the freeze happens here.
         gPauseMenuOptions.disabled = 1;
         PausePlayer();
+#endif
         SoundReq(SFX_BOSS_DIE);
     } else {
         if (IS_FROZEN(this) == FALSE) {
@@ -173,6 +188,17 @@ void OctorokBoss_Hit_SubAction1(OctorokBossEntity* this) {
         // Move to the center of the screen before freezing
         diffX = 0x108 + gRoomControls.origin_x - super->x.HALF.HI + 0x4;
         diffY = gRoomControls.origin_y - super->y.HALF.HI + 0x8c;
+#ifdef QUICKSTART
+        // The timer runs whatever happens. Vanilla only counts down once the
+        // boss has walked to a HARDCODED screen spot - origin + (0x108,
+        // 0x8c), the middle of the Temple of Droplets arena. Measured: in an
+        // overworld room that spot can be inside a wall, the boss never
+        // arrives, the timer never reaches zero and the phase change never
+        // completes - with the player frozen, which is a softlock rather
+        // than a stuck enemy. It still WALKS toward the spot; it just no
+        // longer waits on getting there.
+        this->timer--;
+#endif
         if (diffX > 8 || diffY > 8) {
             this->heap->field_0x2 = 1;
 #if defined(JP) || defined(DEMO_JP) || defined(EU)
@@ -198,7 +224,9 @@ void OctorokBoss_Hit_SubAction1(OctorokBossEntity* this) {
                 super->type2 = 1;
             }
             this->heap->field_0x2 = frozen;
+#ifndef QUICKSTART
             this->timer--;
+#endif
         }
     } else {
         u32 i;
@@ -209,6 +237,8 @@ void OctorokBoss_Hit_SubAction1(OctorokBossEntity* this) {
         if ((gRoomTransition.frameCount & 2) != 0) {
             CreateObjectWithParent(super, OCTOROK_BOSS_OBJECT, 6, 0);
         }
+        // The frozen branch has no position gate in vanilla either, so it
+        // keeps its own decrement in both builds.
         this->timer--;
     }
     if (this->timer == 0) {
@@ -260,9 +290,12 @@ void OctorokBoss_Hit_SubAction4(OctorokBossEntity* this) {
     Entity* object;
     super->subAction = 5;
     object = CreateObjectWithParent(super, OCTOROK_BOSS_OBJECT, 9, 0);
+#ifndef QUICKSTART
+    // Same reason as the hit sequence: the camera stays with the player.
     if (object != NULL) {
         gRoomControls.camera_target = object;
     }
+#endif
 }
 
 void OctorokBoss_Hit_SubAction5(OctorokBossEntity* this) {
@@ -313,11 +346,100 @@ void OctorokBoss_Hit_SubAction6(OctorokBossEntity* this) {
     }
 }
 
+#ifdef QUICKSTART
+// How long the Big Octorok shrugs off weapon hits between them. The vanilla
+// fight has no such number because the vanilla fight has no weapon hits;
+// this is one phase of health per ~8 swings at the sword's own swing rate,
+// which is about what the chuchu's jelly costs.
+#define QUICKSTART_OCTOROK_WEAPON_IFRAMES 24
+
+// Contact sources that count as "the player hit it with something".
+//
+// Not invented: a contact source and a hurtType are the same number (see
+// include/collision.h - COL_BOOMERANG 0x14, COL_ARROW 0x15, COL_PACCI 0x1d,
+// COL_SWORD_BEAM 0x21), so this list can be checked against the collision
+// matrix directly, and was. Row 0x5f - the Big Octorok's unfrozen hitType -
+// routes every one of these through CollisionDefault with tgtDamage 0,
+// which is exactly the shape the chuchu's peel relies on: no damage, but
+// contactFlags get set, so the boss can see the hit and decide what it
+// means. The sources this list leaves out (the lantern, the small gust,
+// the shield) are CollisionNoOp on that row and never arrive at all.
+static bool32 QuickStartOctorokWeaponHit(u32 contactFlags) {
+    switch (contactFlags & 0x7f) {
+        case 4:  // sword
+        case 16: // dash sword
+        case 20: // boomerang
+        case 21: // arrow
+        case 23: // thrown object
+        case 27: // the Gust Jar's big pull
+        case 28: // the Gust Jar's charged shot
+        case 29: // Pacci Cane
+        case 32: // sword beam / Fire Rod
+        case 33: // spiral beam
+            return TRUE;
+    }
+    return FALSE;
+}
+#endif
+
 void OctorokBoss_OnTick(OctorokBossEntity* this) {
     static void (*const OctorokBoss_Actions[])(OctorokBossEntity*) = {
         OctorokBoss_Init, OctorokBoss_Action1, OctorokBoss_Hit, OctorokBoss_Intro, OctorokBoss_Burning,
     };
 
+#ifdef QUICKSTART
+    // QUICKSTART: a weapon can hurt the Big Octorok. In vanilla nothing can.
+    //
+    // Measured (tools/quickstart/octorok_boss.py), and it is worth stating
+    // because it is not what a reading of the fight suggests: the WHOLE's
+    // health does not move for a sword, an arrow or anything else, in any
+    // phase. The only thing in the whole file that takes health off it is
+    // OctorokBoss_Burning_SubAction1's `super->health = 0`, and the only
+    // thing that reaches Burning is the object created when the TAIL_END is
+    // frozen AND touched by contact source 7 - the Lantern, and nothing but
+    // the Lantern. COLLISION_ON is called in exactly one place too
+    // (Hit_SubAction3), i.e. AFTER the boss has already been hurt once.
+    //
+    // That is a boss the mode cannot ship as it stands. A run that never
+    // drew a Lantern would meet a wave it can never clear, and the wave
+    // loop needs every region to go completely clear to progress.
+    //
+    // So the family grows a weapon path of its own, parallel to the vanilla
+    // one rather than replacing it: a weapon contact takes one health off
+    // the WHOLE, and at zero the shipped OnDeath -> Hit -> Hit_SubAction3
+    // chain runs untouched, which is what advances bossPhase, re-rolls the
+    // health for the next phase and turns collision on. The Lantern route
+    // still exists and is still the fastest way through a frozen phase.
+    //
+    // contactFlags is cleared here because nothing else clears it on the
+    // WHOLE - the TAIL_END clears its own, the body never had a reader.
+    // ACTION1 only: HIT and BURNING are the shipped damage sequences, and
+    // a swing landing during one would eat the phase the last one just
+    // paid for. The mode has no INTRO to worry about - Init goes straight
+    // to ACTION1.
+    // ANY piece, not just the body. Measured: forged contacts on the WHOLE
+    // advance the fight perfectly, and a real sword never lands one - the
+    // body carries no bounding box of its own, so what a swing actually
+    // touches is a leg, the mouth or the tail. Reading only the body made a
+    // boss that a probe could kill and a player could not.
+    {
+        Entity* body = (super->type == WHOLE) ? super : super->parent;
+        if (body != NULL && body->action == ACTION1 && body->iframes == 0 &&
+            (super->contactFlags & CONTACT_NOW) != 0 &&
+            QuickStartOctorokWeaponHit(super->contactFlags)) {
+            super->contactFlags = 0;
+            body->iframes = -QUICKSTART_OCTOROK_WEAPON_IFRAMES;
+            SoundReq(SFX_BOSS_HIT);
+            if (body->health > 1) {
+                body->health--;
+            } else {
+                // GetNextFunction routes health 0 to OnDeath on the next
+                // frame, the same door the Burning path goes through.
+                body->health = 0;
+            }
+        }
+    }
+#endif
     OctorokBoss_Actions[super->action](this);
     super->spriteRendering.b3 = 3;
 }
@@ -396,6 +518,25 @@ void OctorokBoss_Init(OctorokBossEntity* this) {
                     this->heap->tailObjects[tail + 1] = (OctorokBossEntity*)super->child;
                 }
             }
+#ifdef QUICKSTART
+            // No intro. The vanilla one is a Temple-of-Droplets cutscene and
+            // every line of it is a problem out here: it HIDES the player
+            // (spriteSettings.draw = 0), TELEPORTS them to a fixed offset
+            // above the boss, takes the camera, disables the pause menu, and
+            // then waits on gPlayerEntity.animationState reaching 4 after
+            // walking them 30 units into an arena that does not exist. A
+            // wave enemy cannot do any of that to a player who was busy
+            // fighting something else a second ago.
+            //
+            // Straight to the fight instead, which is what the chuchu's blue
+            // form already does for the same reason. SetAttackTimer is the
+            // one thing the intro's last stage did that the fight needs.
+            super->action = ACTION1;
+            super->subAction = 0;
+            this->timer = 0x3c;
+            OctorokBoss_SetAttackTimer(this);
+            break;
+#else
             super->action = INTRO;
             super->subAction = 0;
             this->timer = 0x3c;
@@ -404,6 +545,7 @@ void OctorokBoss_Init(OctorokBossEntity* this) {
             gPlayerEntity.base.y.HALF.HI = super->y.HALF.HI - 0xa0;
             gRoomControls.camera_target = super;
             break;
+#endif
         case LEG_BR:
         case LEG_FR:
         case LEG_FL:
@@ -634,6 +776,13 @@ void OctorokBoss_Action1(OctorokBossEntity* this) {
             UpdateAnimationSingleFrame(super);
             if (IS_FROZEN((OctorokBossEntity*)super->parent)) {
                 sub_08036AF0(this, GET_TAIL_RADIUS(this), 0x10);
+                // Source 7 is the Lantern, and in vanilla it is the only
+                // thing this branch will ever look at. QUICKSTART does not
+                // widen it: the weapon path in OctorokBoss_OnTick consumes a
+                // weapon contact before the dispatch reaches here, so a
+                // widening would be a branch that can never be taken. The
+                // Lantern route is left exactly as it was and is still the
+                // fastest way through a frozen phase.
                 if ((super->contactFlags & 0x7f) == 7) {
                     COLLISION_OFF(super);
                     object = CreateObjectWithParent(super, OCTOROK_BOSS_OBJECT, 0, 0);

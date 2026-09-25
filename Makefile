@@ -36,6 +36,7 @@ VARIANT_OBJS := \
 	build/USA/src/data/transitions.o build/USA/src/data/transitions.s build/USA/src/data/transitions.i \
 	build/USA/src/enemy/businessScrub.o build/USA/src/enemy/businessScrub.s build/USA/src/enemy/businessScrub.i \
 	build/USA/src/enemy/chuchuBoss.o build/USA/src/enemy/chuchuBoss.s build/USA/src/enemy/chuchuBoss.i \
+	build/USA/src/enemy/octorokBoss.o build/USA/src/enemy/octorokBoss.s build/USA/src/enemy/octorokBoss.i \
 	build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i \
 	build/USA/src/gameUtils.o build/USA/src/gameUtils.s build/USA/src/gameUtils.i \
 	build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i \
