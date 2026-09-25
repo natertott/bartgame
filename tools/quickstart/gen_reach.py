@@ -106,6 +106,8 @@ def req_masks(req, where):
     'never'. A requirement with more alternatives than fit is an error rather
     than a silent truncation - truncating would make a place look HARDER than
     it is, which strands runs."""
+    if req is None:
+        return []          # the survey found no route at all - never satisfiable
     if not req:
         return [0]
     terms = sorted({term_mask(t) for t in req})

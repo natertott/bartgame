@@ -99,9 +99,18 @@ def region(key, name, start, room_req=None, note=''):
     SURVEY[key] = dict(name=name, start=start, dests=[], room_req=room_req or [], note=note)
 
 
-def d(key, area, room, x, y, req=None, note=''):
+# Two different "no requirement list" cases, and collapsing them cost four
+# places their gate: omitting the argument means FREE, and passing None
+# means the survey looked and found NO WAY IN from its start. The old
+# signature turned both into [[]] - free - so Lon Lon's Veil Falls pocket,
+# Trilby's Royal Valley pocket and the two Wind Ruins armos pockets all read
+# as walk-in-and-take-it, and reach.h was generated saying so.
+_OMITTED = object()
+
+
+def d(key, area, room, x, y, req=_OMITTED, note=''):
     SURVEY[key]['dests'].append(dict(area=area, room=room, local=(x, y),
-                                     req=(req if req is not None else [[]]), note=note))
+                                     req=([[]] if req is _OMITTED else req), note=note))
 
 
 # --- South Hyrule Field ----------------------------------------------------

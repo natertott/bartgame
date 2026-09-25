@@ -1265,6 +1265,55 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/25 traversability audit: what the world graph does and does not know
+
+The user asked for the inventory before the graph: every entrance, exit,
+seam and room in every overworld region, and a matrix saying, for each
+ordered pair, whether anyone has ever measured the walk from one to the
+other. `tools/quickstart/traversal_audit.py` generates it from the
+repository - `transitions.c` for doors, `gAreaRoomHeaders` for scroll
+seams, `world_reach.py` for the walked survey, `overworld_paths.py` for
+the port model, `region_walk.py` for the emulator legs - into
+`docs/QUICKSTART_TRAVERSAL_AUDIT.md` and `docs/quickstart_traversal.json`.
+
+The headline number: **17 regions, 416 places, 13,886 ordered pairs, and
+8,981 of them (65%) with no measurement and no inference at all.** 170
+places have never been priced from anywhere.
+
+Four things the audit found that were not visible before it existed.
+
+**`d()` conflated "free" with "no way in".** `world_reach.py`'s row
+builder replaced a `None` requirement with `[[]]`, so the four rows written
+to say *the survey looked and found no route* - Lon Lon's Veil Falls
+pocket, Trilby's Royal Valley pocket, and the two Wind Ruins armos pockets
+- were compiled into `reach.h` as FREE. The placer was being told it could
+drop a step in a pocket nobody can walk into. Fixed with a sentinel
+default, and `gen_reach.req_masks` now emits "never" for `None`.
+
+**Abutment is not a seam.** The first draft read any two room rectangles
+that touch as a scroll seam and invented about a dozen crossings, including
+a Wind Ruins / Western Wood border. The engine scroll-walks only between
+rooms of the SAME area; across areas the only crossing is a
+`WARP_TYPE_BORDER` row. The audit now reports cross-area abutment
+separately, as *Flush on the map, no crossing* - 38 places where the world
+map looks joined and is not, each one a border we could add or a wall a
+player will walk into expecting a path.
+
+**A door is priced by the room behind it, but only when it is the only
+door.** The survey records what it cost to END UP somewhere, never where
+the door was. Where exactly one door leads to a priced room, the room's
+price is also the door's; where several do, the survey cannot say which one
+it used and the audit leaves those doors unmeasured rather than guessing.
+That one rule moved coverage from 79% unmeasured to 65%.
+
+**Where the holes are.** Wind Ruins (93% unmeasured) and Mount Crenel
+(77%) are the worst, and both for the same reason: they are several rooms
+joined by internal scroll seams that no survey has walked. Hyrule Castle
+Garden has never been surveyed at all. Minish Woods and Lake Hylia are
+better covered but their coverage is FLOOD-derived, and 27 of their places
+are priced only in `unsurveyed` - a token with no run-time test, so the
+placer can never satisfy it and never offers those places.
+
 ### The 09/21 batch: the three regions are actually reachable now
 
 The 09/17 entry below claims Minish Woods and Lake Hylia were opened. They
