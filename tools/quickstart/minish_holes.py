@@ -78,7 +78,7 @@ def room_name(area, room):
 
 def main():
     ring = [(r['areaName'], r['roomName'], r['area'], r['room']) for r in P.region_pool()]
-    # Room record symbol for each ring room, via the area's own room list.
+    # Room record symbol for each region room, via the area's own room list.
     total = 0
     for an, rn, area, room in ring:
         area_sym = 'Area_' + ''.join(w.capitalize() for w in an[5:].split('_'))

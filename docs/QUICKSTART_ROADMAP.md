@@ -352,7 +352,7 @@ The original prerequisite record:
   slash-everything diff over North Hyrule Field
   (solid-before/open-after is what separates a bush from trampled grass)
   identified tile types 427-431 (collision 0x0f) as THE cuttable-shrub
-  class - present by the hundreds in every ring region
+  class - present by the hundreds in every named region
   (`tools/quickstart/hide_survey.py`) - and diggable ground is simply
   `actTiles == TILE_ACT_DIG (0xd)`, which exists ONLY in the three
   Eastern Hills rooms, so buried is rare by geography on top of its Mole
@@ -543,7 +543,7 @@ The original prerequisite record:
   single-switch gate, the same way the linger plates already do.
 
   Still open: *the burning wick* (HELD until key-item logic - fire-gated by
-  design), *overworld switch links* (a plate in one ring region opens a
+  design), *overworld switch links* (a plate in one named region opens a
   grate in another; ambitious, gives the compass something to point at).
 - **Phase D cheap events** - ~~survive-N-seconds~~ **SHIPPED** as the
   pilot, exactly as recommended (smallest diff, reuses the wave spawner
@@ -1054,7 +1054,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
     river crossing would want exactly those two spots.
 - **Regions beyond the ring (E).** Castor Wilds / Royal Valley each mean:
   un-block a border, extend the ring-room test, survey, add fusers,
-  re-run ring.py + the checker. The adjacency map and distance-2 element
+  re-run region_crossings.py + the checker. The adjacency map and distance-2 element
   rule absorb new regions as one enum row plus edges. Routine now - a
   breadth call, not an engineering risk.
 - ~~ROYAL VALLEY: surveyed and ready to wire~~ **IN THE POOL** (user, Aug
@@ -1089,7 +1089,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
      Trilby has 24 separate components and this one touches none of the
      other 23. Leaving Royal Valley was therefore a trap, not a shortcut.
      Opening the row needed a second thing as well: containment cancels a
-     ring room's transitions to anywhere unblessed, and Royal Valley is not
+     region room's transitions to anywhere unblessed, and Royal Valley is not
      in the pool yet, so `QuickStartIsPocketInteriorRoom` names it
      explicitly for now. That naming retires the day the region joins the
      pool. Both directions walked end to end.
@@ -1100,7 +1100,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
      drops them to ty 9, inside the region's 334-tile main body. So Royal
      Valley connects to the Trilby region properly: drop in, walk back
      north to return.
-  2. `game.c`: a `sQuickStartRegionPool` row, a `QS_RING_*` enum entry, its
+  2. `game.c`: a `sQuickStartRegionPool` row, a `QS_REGION_*` enum entry, its
      adjacency edges (NHF and Trilby), and the pool-index mapping.
   3. ~~Containment decisions~~ **PARTLY DONE.** Four of Main's five vanilla
      doors are content sites now (user's call): **Dampe's house**, the
@@ -1109,7 +1109,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
      Crypt stays blocked**, also per the user - no site row, so containment
      keeps its door shut. Gina's grave is worth knowing about: its exit
      list carries a SECOND border, to Castle Garden Main, and Castle Garden
-     is a ring room, so the pocket rule lets that through - the room is a
+     is a region room, so the pocket rule lets that through - the room is a
      real shortcut out of Royal Valley rather than a dead end.
      Still open: **the Lost Woods maze**. Both its doors are unblessed, so
      the puzzle is scenery until someone decides otherwise.
@@ -1123,9 +1123,9 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   **As shipped**: pool row 12 of a state block sized for exactly 12,
   `roomSquares` 242 and `maxEnemies` 18 over the graveyard component,
   entrance (296,856) and reward (184,904), 28 surveyed spawn spots. It is
-  the eighth named region (`QS_RING_RV`), adjacent to North Hyrule Field
+  the eighth named region (`QS_REGION_RV`), adjacent to North Hyrule Field
   and Trilby. North Hyrule Field's `WEST_NORTH` border is open, which is
-  the only way in. `QuickStartIsRingRegionRoom` names it, so the temporary
+  the only way in. `QuickStartIsNamedRegionRoom` names it, so the temporary
   pocket-interior exception added for the Trilby seam is retired.
   Measured after wiring: mixed waves of 9-11 enemies at difficulty 0
   through 12, a steady 60fps walking, at least 12 free GFX slots at every
@@ -1174,8 +1174,8 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   particular. `sQuickStartRoomOwners` is that missing map: 49 pocket rooms,
   each with the region-bit mask of whatever region's door leads into it.
   It is DERIVED, not hand-listed - `tools/quickstart/room_owner.py` walks
-  each ring region's own `WARP_TYPE_AREA` doors transitively (never back
-  out through a ring room, or every pocket ends up owned by everything),
+  each named region's own `WARP_TYPE_AREA` doors transitively (never back
+  out through a region room, or every pocket ends up owned by everything),
   its Minish holes via the SpecialWarpManager property chain, its
   `sQuickStartLinks` boxes, and the two scroll seams that carry no row
   anywhere. The walk partitions cleanly: no pocket in the pool comes out
@@ -1211,7 +1211,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 - **The Minish layer as a parallel network (#102) - the SURVEY IS DONE and
   its findings are wired** (the user, Aug 2026: sweep every Minish hole,
   room and treehouse in the ring and add the unwired ones as ? rooms).
-  `minish_sweep.py` walks every exit the eleven ring rooms have, filters
+  `minish_sweep.py` walks every exit the eleven region rooms have, filters
   to the Minish-layer areas and cross-references
   `sQuickStartRoomContentSites`. Result: 26 Minish-layer exits, and only
   six destinations with nothing in them.
@@ -1250,7 +1250,7 @@ a frame cost. Frame-rate samples have to assert the room did not change.
     not a room but a whole area behind a BORDER exit from Eastern Hills
     South and North - opening it is the "regions beyond the ring"
     decision below, with everything that entails (survey, fusers,
-    ring.py, the checker), not a room wiring. It is the natural next
+    region_crossings.py, the checker), not a room wiring. It is the natural next
     region if the ring grows.
   - What remains of #102 is the part still blocked behind #103: the
     holes and entrances the user is collecting that do not fire at all.
@@ -1264,6 +1264,57 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 ## 3. Known bugs and issues
 
 Open defects and unexplained reports, roughly by player impact.
+
+### The 09/25 integration batch: the expansion regions join the rules
+
+"Ring" is retired as a word. The regions are regions: `QS_REGION_*`,
+`sQuickStartRegionAdjacency`, `QuickStartRegionOfRoom`,
+`QuickStartRegionsWithinTwo`, and `tools/quickstart/ring.py` is now
+`region_crossings.py`. Nothing about the graph changed - only what it is
+called.
+
+**Twenty-two ? rooms belonged to no region at all.** Minish Woods, Lake
+Hylia and the mountain had no rows in `sQuickStartRoomOwners`, and an
+unowned room reports region mask 0 - which `QuickStartKeyRegionOk` reads as
+a REFUSAL. Every gated key was silently barred from those rooms.
+`room_owner.py` now knows the three regions (and two more scroll seams it
+could not derive: Grayblade's dojo above its ante room, and the Darknut
+arena beside its hall), and the regenerated table covers 80 rooms instead of
+64. One room is still deliberately unowned: Melari's Mine's south-west
+room, which has no way back to the overworld.
+
+**All three can host bosses now**, vetted to parity with Castle Garden by
+the new `tools/quickstart/boss_arena.py`: family composes, intro finishes on
+the control's own frame (1027), the peel handler runs for the same 1184
+frames, the family dies, the player is still in the room. An earlier pass
+read all three as "never engaged" and it was the harness: the driver walks
+the player in a straight line, and in a region whose arrival component
+touches a border that walks out of the room before the intro finishes. The
+CONTROL failed the same way, which is the only reason the reading was
+caught.
+
+**The kinstone economy reached none of them.** Minish Woods, Lake Hylia and
+Mount Crenel had zero fusers between them. Worse, checking the existing
+table against the ROM's own `gKinstoneWorldEvents -> gWorldEvents` chain
+(`kinstone_audit.py`) showed four of Castor Wilds' five fusions do not fire
+in Castor Wilds at all - KINSTONE_40's event is in North Hyrule Field,
+KINSTONE_58's in South Hyrule Field, and KINSTONE_44's and KINSTONE_56's in
+MINISH WOODS - and 40 and 58 were ALREADY listed against those rooms, so
+the table held two rows for one fusion. The duplicates are gone, 44 and 56
+moved to the woods where their chests are, and the three regions now hold
+eight fusions between them. Mount Crenel also gained the fuser-spot row it
+never had.
+
+**Two stack overflows, both found by growing the tables.**
+`QuickStartFuserPlacements` sized `counts` and `cands` at a literal 9 - the
+spot table's row count on the day it was written, which Minish Woods and
+Lake Hylia had already taken to eleven, so every run's placement pass wrote
+two bytes past the end of a stack array. `QuickStartSpawnRegionFusers` had
+the same shape with `hostRoom[34]`/`hostSpot[34]` against a table that is
+now 41 rows, and that one was VISIBLE: the invariant checker reported four
+fusers that should have been standing somewhere and were not. Both are now
+sized by a stated ceiling with a compile-time assert holding the real table
+under it.
 
 ### The 09/25 boss batch: the chuchu's dead window, and a second boss
 
@@ -1383,7 +1434,7 @@ The 09/17 entry below claims Minish Woods and Lake Hylia were opened. They
 were not, and the way that went wrong is the most useful thing in this
 entry.
 
-`QuickStartRingRegionOfRoom` learned both regions and containment stopped
+`QuickStartRegionOfRoom` learned both regions and containment stopped
 cancelling the crossing - that part was real, and `seam_gate.py` measured
 it honestly. What `seam_gate.py` cannot see is whether a crossing EXISTS:
 it stages the transition itself, by writing `area_next`, `room_next` and
@@ -1426,7 +1477,7 @@ being behind the climb, which is exactly what `reach.h` already prices at
 BOMBS plus the GRIP RING.
 
 Added while growing both: a compile-time check that
-`QuickStartRingRegionOfPoolIndex`'s `byPool` array is the same length as
+`QuickStartRegionOfPoolIndex`'s `byPool` array is the same length as
 the pool. The index is taken modulo the POOL's size and read out of
 `byPool`, so a mismatch reads off the end and a region answers to the
 wrong ring - and nothing enforced it until these two had to grow together.
@@ -1435,8 +1486,8 @@ wrong ring - and nothing enforced it until these two had to grow together.
 
 - **Minish Woods and Lake Hylia are in the run.** Both had pool rows,
   reach-table entries and content sites already; the entire seal was one
-  missing case in `QuickStartRingRegionOfRoom`, because containment only
-  passes a transition when BOTH ends are ring rooms. Measured before and
+  missing case in `QuickStartRegionOfRoom`, because containment only
+  passes a transition when BOTH ends are region rooms. Measured before and
   after with `tools/quickstart/seam_gate.py`: before, the three ways in
   were cancelled and every way OUT of both regions was allowed (the Minish
   caves, the Great Fairy tree, the Lake Woods cave); after, the ways in are
@@ -1799,7 +1850,7 @@ HP->0-for-one-frame on STALFOS is its collapse mechanic, not a death.
   **Five are now content sites** - NHF east (`MINISH_CRACKS_EAST_HYRULE_CASTLE`,
   the user's), NHF west (`DOJOS_TO_GREATBLADE`), Lon Lon's Minish path and
   its north crack, and Trilby's Knuckle house. Each is a dead-end pocket
-  with one border back to the ring room its hole is in, so blessing them
+  with one border back to the region room its hole is in, so blessing them
   opens no route out of the run; all five are checker-verified "landed,
   spots OK, 1 chest spawn verified". The two beanstalk climbs stay out for
   the same reason the beanstalk fusions do - they leave the ring.
@@ -2242,7 +2293,7 @@ and fires where `gWorldEvents` says it does, so what moves is the SPRITE:
 the sprite offering the Trilby fusion may be standing in North Hyrule
 Field. Candidate hosts are the fusion's own room plus every fuser room
 whose named region is adjacent on the map graph - the same
-`sQuickStartRingAdjacency` the element's hiding place already uses - so a
+`sQuickStartRegionAdjacency` the element's hiding place already uses - so a
 fusion can still turn up exactly where it always did.
 
 Three rules keep it from breaking a run:
@@ -3076,7 +3127,7 @@ put four of six probe seeds' first step inside the Wind Ruins - correctly,
 for a drop that was never going to happen.
 
 **Telling the player, without telling them everything.** Ezlo names the
-REGION and nothing else (`gCustomStrings` 241-250, one per ring region) - a
+REGION and nothing else (`gCustomStrings` 241-250, one per named region) - a
 region rather than a room because 842 rooms do not fit in a 256-slot string
 table, and because "somewhere in Trilby Highlands" is a hint while a room
 name is an instruction. The COMPASS changes both surfaces at once: Ezlo's
@@ -3174,7 +3225,7 @@ Two consequences, both erring toward offering the placer less:
   not stranded - they just cannot climb back up. What a run cannot do is
   bounce between the halves.
 
-`QS_RING_CREN` joins the ring as a spur off Trilby's west border. It is a
+`QS_REGION_CREN` joins the ring as a spur off Trilby's west border. It is a
 ring member but **not** a pool row: nothing drops the player there and no
 region wave loop runs in it, so Crenel hosts EVENT steps and nothing else.
 
@@ -3197,7 +3248,7 @@ Without those two items Crenel never appears, which is the same check run
 from the other side.
 
 That verification also caught a drift the moment it was introduced: the
-probe's hand-copied ring adjacency had never heard of Crenel, so it called
+probe's hand-copied region adjacency had never heard of Crenel, so it called
 six correct placements unreachable. It now asserts its region set against the
 generator's and that the adjacency is symmetric, so a missing region is loud
 rather than a wrong verdict.
@@ -3275,14 +3326,14 @@ survey exists; until then the two regions are honest about being thin.
 
 **They are spurs, not a loop.** Both rooms have a border into the other -
 Minish Woods' north edge into the lake, the lake's south edge back - and the
-first draft of the ring adjacency wrote that edge in and called the pair the
+first draft of the region adjacency wrote that edge in and called the pair the
 overworld's first closed circuit. The flood says otherwise, and the flood
 wins: Minish Woods' arrival component is **277 of its 1195 open tiles** and
 touches the west edge and nothing else; Lake Hylia's is **165 of 662** and
 likewise only the west. Each room's other thirty-odd components are tree
 hollows, Minish cracks and, in the lake's case, the far shore. So the walkable
 graph is EH <-> MW and LLR <-> LH, two dead ends, and the MW-LH edge stays out
-of `sQuickStartRingAdjacency` because writing it in would tell the chain's
+of `sQuickStartRegionAdjacency` because writing it in would tell the chain's
 flood a kitless player can walk a circuit they cannot.
 
 **Lake Hylia generalised the swamp gate.** Castor Wilds and the Wind Ruins had
@@ -3300,7 +3351,7 @@ points, rewards flood-verified in the same component, nine fuser spots each
 (farthest-point sampled with entrance and reward seeded as taken - the
 spacing relaxes to 80px in the woods and 48 on the shore, because a cul-de-sac
 shore strip has no room for six-tile spacing), two Ezlo region hint lines
-inserted at the `QS_RING_MW` / `QS_RING_LH` positions, and **nine new ? rooms**
+inserted at the `QS_REGION_MW` / `QS_REGION_LH` positions, and **nine new ? rooms**
 in the pockets behind the two regions' doors.
 
 Six of the fifteen doors are deliberately absent from the site table. Five
@@ -3376,10 +3427,10 @@ or a sweep.
   Hills.** Story/kinstone flags a run sets can conjure vanilla NPCs at
   their scripted spots (the EH farm crew walling the stairs was this;
   those three rooms now sweep per-frame). The same class could surface in
-  any other ring room - Western Wood and SHF have story spawns too.
-  Consider generalizing the EH sweep to every ring region (it already
+  any other region room - Western Wood and SHF have story spawns too.
+  Consider generalizing the EH sweep to every named region (it already
   spares our ZELDA-kind NPCs) rather than waiting for the next report.
-- **Vanilla ground pickups survive in ring regions.** Lon Lon Ranch still
+- **Vanilla ground pickups survive in named regions.** Lon Lon Ranch still
   ships its NE heart piece and a red rupee from vanilla room data (found
   during the four-fix verification). Free loot outside the mode's reward
   economy - decide: sweep them, or accept them as flavor.

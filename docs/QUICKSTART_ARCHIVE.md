@@ -117,7 +117,7 @@ route.
 Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills (3 rooms),
 South Hyrule Field, Western Wood (3 rooms), and Trilby Highlands circle the
 missing Hyrule Town. Travel between them is free and vanilla-shaped - every
-seam and border between two ring rooms works exactly as vanilla built it.
+seam and border between two region rooms works exactly as vanilla built it.
 Two synthetic "town bridge" borders stitch the gap the town leaves (NHF
 south <-> SHF north; LLR west <-> Trilby east), each landing at the exact
 coordinates vanilla's own town exits delivered a through-traveler to.
@@ -126,14 +126,14 @@ Wilds, Royal Valley, Mt Crenel) is compiled away under QUICKSTART - walking
 that edge just stops. The old per-run warp boxes between regions
 (`QuickStartProcessRegionChainLinks`) are retired.
 
-Ring facts a maintainer needs (all emulator-verified, `tools/quickstart/ring.py`):
+Region-graph facts a maintainer needs (all emulator-verified, `tools/quickstart/region_crossings.py`):
 - SHF's east seam opens into Eastern Hills **North**, not South - the south
   rooms' west edges are vanilla walls. SHF's west edge is fully walled too:
   Western Wood is entered from Trilby, through WW-North.
 - The ring's walking order: CG - NHF - (bridge) - SHF - EH-N - {EH-C - EH-S}
   - LLR - (bridge) - Trilby - WW-N - WW-C - WW-S.
-- Containment collapsed to one rule: any transition between two ring rooms
-  passes (`QuickStartIsRingCrossing`); pockets/? rooms keep their own
+- Containment collapsed to one rule: any transition between two region rooms
+  passes (`QuickStartIsRegionCrossing`); pockets/? rooms keep their own
   allowances; everything else cancels as a safety net behind the data-level
   blocks.
 
@@ -183,8 +183,8 @@ fall within a run, rerolled between runs
 (`QuickStartProcessHubHoleLink` reads it). The element region is then
 drawn by rejection so it lies within TWO named regions of the drop, where
 "named region" collapses the 11 pool rooms to the seven ring names
-(`QuickStartRingRegionOfPoolIndex`) and distance is counted on the ring's
-adjacency map (`sQuickStartRingAdjacency`: map edges plus the two town
+(`QuickStartRegionOfPoolIndex`) and distance is counted on the ring's
+adjacency map (`sQuickStartRegionAdjacency`: map edges plus the two town
 bridges, so NHF touches LLR and Trilby). The user's worked example, which
 the tables reproduce exactly: land in Castle Garden and the element can be
 in CG (0 away), NHF (1), or LLR / SHF / Trilby (2) - never EH or WW (3).
@@ -696,7 +696,7 @@ New events assembled from proven vanilla parts, cheapest first:
   5. *The burning wick* (HELD until key-item logic) - light all torches
      before the first burns out; fire-gated, and deliberately the first
      client of the "drawn only when the kit is guaranteed" rule.
-  6. *Overworld switch links* (ambitious) - a plate in one ring region
+  6. *Overworld switch links* (ambitious) - a plate in one named region
      opens a grate in another, reusing the proven NHF bridge machinery;
      the free-roam ring becomes the puzzle box, and the compass gets
      something to point at.
@@ -894,7 +894,7 @@ sequencing lives in section 8.
   (`QUICKSTART_HUNT_FRAMES`), a live enemy-group swap mid-room, and win/lose
   states in 2 bits. New pieces, in order of risk: (a) *buried* items - find
   vanilla's dig-spot mechanism (Mole Mitts digs fire a tile action; survey
-  which act tiles in ring rooms are diggable, or paint our own the way the
+  which act tiles in region rooms are diggable, or paint our own the way the
   bridge's donor-tile fill paints tiles); (b) *under-bush* items - hook the
   grass-cut drop path (`CreateRandomItemDrop` is already ours in
   itemUtils.c; a per-run drawn tile in the host region overrides the roll
@@ -1279,7 +1279,7 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
      `SetTileType` - foreign artwork, the Boomerang-chamber failure mode.
      Retired; `QuickStartFillBoulderHoles` (drives vanilla's own
      PushableRock settle path, which lays the correct art) now covers
-     every ring region. Ring-scoped so 2-door cave rock puzzles stay
+     every named region. Ring-scoped so 2-door cave rock puzzles stay
      puzzles. All three Lon Lon holes verified walkable with clean art;
      Trilby's own crossing still fills.
 
@@ -1426,7 +1426,7 @@ special tiles, vanilla contents) live in `docs/QUICKSTART_ROOM_SURVEY.md`.
   pre-expansion five-room list, so a correctly-targeted exit into an
   EH/WW room would have been CANCELLED by containment - invisible while
   the retargets pointed at Castle Garden, surfaced the moment they were
-  fixed. It now accepts every ring room. Verified: all three rooms exit
+  fixed. It now accepts every region room. Verified: all three rooms exit
   to their real fields (EH-S / WW-S / WW-N).
 - **Acro-Bandit slowdown (user-reported).** 3-4 on screen visibly slows
   the game. Suspected cause: each ACRO_BANDIT placement is a 5-entity gang
@@ -1548,9 +1548,9 @@ been prototyped unless it says so.
   wave whose roster was random: store the count only and redraw kinds -
   close enough, and infinitely cheaper than storing the roster.
 - **E - regions beyond the ring.** Castor Wilds / Royal Valley each mean:
-  un-block a border in transitions.c, extend `QuickStartIsRingRegionRoom`,
-  survey (grid + reward + entrance), add fusers, re-run ring.py + checker.
-  The ring adjacency map (`sQuickStartRingAdjacency`) and the distance-2
+  un-block a border in transitions.c, extend `QuickStartIsNamedRegionRoom`,
+  survey (grid + reward + entrance), add fusers, re-run region_crossings.py + checker.
+  The region adjacency map (`sQuickStartRegionAdjacency`) and the distance-2
   element rule absorb new named regions by adding one enum row and its
   edges. No new mechanism anywhere - this is the "routine by now" path E
   was always meant to be.

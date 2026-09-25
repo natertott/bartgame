@@ -1,4 +1,4 @@
-"""What can the scavenger hunt hide UNDER, per ring region?
+"""What can the scavenger hunt hide UNDER, per named region?
 
 The two F1 hide modes need tiles the player transforms on purpose:
   * under-bush: a tile the sword CUTS - solid before, open after. Found
@@ -6,7 +6,7 @@ The two F1 hide modes need tiles the player transforms on purpose:
     slashing diff (scratchpad cut_diff) proved transformable.
   * buried: a tile the Mole Mitts DIG - actTiles reads TILE_ACT_DIG (0xd).
 
-Prints per ring region how many of each exist and a few sample tiles, so
+Prints per named region how many of each exist and a few sample tiles, so
 the runtime picker's fallback logic is grounded in what is actually there.
 """
 import sys, os, collections

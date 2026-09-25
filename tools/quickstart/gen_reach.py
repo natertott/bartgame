@@ -71,21 +71,21 @@ BOULDER = ('QS_REACH_BOULDER', 'a boulder pushed into a hole in this region')
 BIT = {name: i for i, (name, _, _) in enumerate(TOKENS)}
 BOULDER_BIT = len(TOKENS)
 
-# survey region key -> the QS_RING_* the game knows it by. Three of the
-# survey's regions are thirds of one ring region (Eastern Hills, Western
+# survey region key -> the QS_REGION_* the game knows it by. Three of the
+# survey's regions are thirds of one named region (Eastern Hills, Western
 # Wood); the ring does not subdivide them and neither does travel.
 RING = {
-    'SHF': 'QS_RING_SHF', 'EH-N': 'QS_RING_EH', 'EH-C': 'QS_RING_EH',
-    'EH-S': 'QS_RING_EH', 'LLR': 'QS_RING_LLR', 'NHF': 'QS_RING_NHF',
-    'RV': 'QS_RING_RV', 'TRIL': 'QS_RING_TRIL', 'WW-N': 'QS_RING_WW',
-    'WW-C': 'QS_RING_WW', 'WW-S': 'QS_RING_WW', 'CW': 'QS_RING_CW',
-    'WR': 'QS_RING_WR', 'CREN': 'QS_RING_CREN',
-    'MW': 'QS_RING_MW', 'LH': 'QS_RING_LH',
+    'SHF': 'QS_REGION_SHF', 'EH-N': 'QS_REGION_EH', 'EH-C': 'QS_REGION_EH',
+    'EH-S': 'QS_REGION_EH', 'LLR': 'QS_REGION_LLR', 'NHF': 'QS_REGION_NHF',
+    'RV': 'QS_REGION_RV', 'TRIL': 'QS_REGION_TRIL', 'WW-N': 'QS_REGION_WW',
+    'WW-C': 'QS_REGION_WW', 'WW-S': 'QS_REGION_WW', 'CW': 'QS_REGION_CW',
+    'WR': 'QS_REGION_WR', 'CREN': 'QS_REGION_CREN',
+    'MW': 'QS_REGION_MW', 'LH': 'QS_REGION_LH',
 }
-RINGS = ['QS_RING_CG', 'QS_RING_NHF', 'QS_RING_SHF', 'QS_RING_EH',
-         'QS_RING_LLR', 'QS_RING_TRIL', 'QS_RING_WW', 'QS_RING_RV',
-         'QS_RING_CW', 'QS_RING_WR', 'QS_RING_CREN', 'QS_RING_MW',
-         'QS_RING_LH']
+RINGS = ['QS_REGION_CG', 'QS_REGION_NHF', 'QS_REGION_SHF', 'QS_REGION_EH',
+         'QS_REGION_LLR', 'QS_REGION_TRIL', 'QS_REGION_WW', 'QS_REGION_RV',
+         'QS_REGION_CW', 'QS_REGION_WR', 'QS_REGION_CREN', 'QS_REGION_MW',
+         'QS_REGION_LH']
 
 MAX_TERMS = 3   # the widest requirement in the survey (Lon Lon's east exit:
                 # flippers, or the cape, or Minish plus the Pacci Cane)
@@ -149,32 +149,32 @@ def build():
     A('#define QS_REACH_TERMS %d' % MAX_TERMS)
     A('')
     A('typedef struct {')
-    A('    u8 region;   // QS_RING_*')
+    A('    u8 region;   // QS_REGION_*')
     A('    u8 area;')
     A('    u8 room;')
     A('    u32 req[%d]; // alternatives; 0 = free, ~0u = never' % MAX_TERMS)
     A('} QuickStartReachDest;')
     A('')
 
-    # Region entry requirements, indexed by QS_RING_*.
+    # Region entry requirements, indexed by QS_REGION_*.
     A('// What it costs to be inside a region AT ALL, straight from the')
-    A('// survey\'s own per-region room_req. A ring region with no survey')
+    A('// survey\'s own per-region room_req. A named region with no survey')
     A('// entry (Hyrule Castle Garden) gets "never": the survey never walked')
     A('// it, so nothing in it can be proven reachable.')
     A('static const u32 sQuickStartReachRegion[][%d] = {' % MAX_TERMS)
-    ring_req = {}
+    region_req = {}
     for key, r in W.SURVEY.items():
         masks = req_masks(r['room_req'], 'region ' + key)
         ring = RING[key]
         # Two survey regions sharing a ring: the ring is enterable if EITHER is.
-        if ring in ring_req:
-            ring_req[ring] = sorted(set(ring_req[ring]) | set(masks))
-            if len(ring_req[ring]) > MAX_TERMS:
+        if ring in region_req:
+            region_req[ring] = sorted(set(region_req[ring]) | set(masks))
+            if len(region_req[ring]) > MAX_TERMS:
                 raise SystemExit('%s merged past MAX_TERMS' % ring)
         else:
-            ring_req[ring] = masks
+            region_req[ring] = masks
     for ring in RINGS:
-        masks = ring_req.get(ring)
+        masks = region_req.get(ring)
         if masks is None:
             cells = ['~0u'] * MAX_TERMS
             note = 'never - not surveyed'
@@ -226,9 +226,9 @@ if __name__ == '__main__':
         if cur != text:
             print('STALE: %s does not match world_reach.py - rerun gen_reach.py' % OUT)
             sys.exit(1)
-        print('%s is up to date (%d destinations)' % (OUT, text.count('{ QS_RING_')))
+        print('%s is up to date (%d destinations)' % (OUT, text.count('{ QS_REGION_')))
     else:
         open(OUT, 'w').write(text)
-        print('wrote %s (%d destination rows)' % (OUT, text.count('{ QS_RING_')))
+        print('wrote %s (%d destination rows)' % (OUT, text.count('{ QS_REGION_')))
         for w in SKIPPED:
             print('  skipped (room name is not an enum member): %s' % w)

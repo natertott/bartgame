@@ -136,7 +136,7 @@ def rect_of(area_name, room_name_):
 
 
 # ------------------------------------------------------------- the regions --
-# A region's OVERWORLD rooms - the ones QuickStartRingRegionOfRoom blesses.
+# A region's OVERWORLD rooms - the ones QuickStartRegionOfRoom blesses.
 # Everything else a region owns (caves, houses, minish paths) hangs off these
 # through doors and is discovered, not listed.
 HF = 'AREA_HYRULE_FIELD'

@@ -192,7 +192,7 @@ REGIONS = {
     # region gate (cape-or-boots) already prices.
     'CW':   dict(name='Castor Wilds',   ports=['E', 'SWS']),
     # The Wind Ruins: one way in (the Castor Wilds border at its north end).
-    # Its six rooms are ring members; the entrance strip and the armos
+    # Its six rooms are region members; the entrance strip and the armos
     # field below the fortress are pool regions, the rest are corridors.
     'WR':   dict(name='Wind Ruins',     ports=['N']),
 }

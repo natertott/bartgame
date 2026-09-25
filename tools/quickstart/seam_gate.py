@@ -1,7 +1,7 @@
 """Which region seams does containment let the player walk?
 
 Minish Woods and Lake Hylia had pool rows, reach-table entries and content
-sites, and were still unreachable: QuickStartRingRegionOfRoom had no line
+sites, and were still unreachable: QuickStartRegionOfRoom had no line
 for either area, so every border out of Eastern Hills or Lon Lon Ranch into
 them was cancelled the frame it fired.
 

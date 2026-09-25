@@ -1,15 +1,15 @@
-"""The seven-region overworld ring: every crossing, both ways, plus the walls.
+"""The overworld region graph: every crossing, both ways, plus the walls.
 
-The ring (Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills,
+The core loop (Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills,
 South Hyrule Field, Western Wood, Trilby Highlands) circles the missing
-Hyrule Town. Travel between ring rooms is free and vanilla-shaped; the two
+Hyrule Town. Travel between region rooms is free and vanilla-shaped; the two
 "town bridge" borders (transitions.c) stitch the gap the town leaves, and
-every border out of the ring is compiled away under QUICKSTART.
+every border out of that loop is compiled away under QUICKSTART.
 
 This walks each crossing at a known-good coordinate (found by sweeping the
 seams once; see the CROSSINGS table) and each blocked edge, and reports
 PASS/FAIL. Run it after anything that touches transitions.c, the containment
-functions, or the ring rooms' collision.
+functions, or the region rooms' collision.
 
 Two probe lessons baked in, both of which produced false "broken" results
 before they were learned:
@@ -19,7 +19,7 @@ before they were learned:
     Trilby), and SHF's east edge opens into Eastern Hills NORTH, not South -
     the south rooms' west edges are vanilla walls too.
 
-Usage: python3 tools/quickstart/ring.py [seed]
+Usage: python3 tools/quickstart/region.py [seed]
 """
 import sys
 

@@ -31,7 +31,7 @@ BANK12_BIT0 = QS_BIT0 - 700          # FLAG_BANK_12 offset 0
 BANK11_BIT0 = BANK12_BIT0 + (0x9C0 - 0xA80)
 KINDS = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
 RINGS = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV', 'CW', 'WR']
-ADJ = {  # mirrors sQuickStartRingAdjacency in game.c
+ADJ = {  # mirrors sQuickStartRegionAdjacency in game.c
     'CG': ['NHF'], 'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
     'SHF': ['NHF', 'EH', 'WW'], 'EH': ['SHF', 'LLR', 'MW'],
     'LLR': ['EH', 'NHF', 'TRIL', 'LH'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
@@ -39,7 +39,7 @@ ADJ = {  # mirrors sQuickStartRingAdjacency in game.c
     'CW': ['WW', 'WR'], 'WR': ['CW'], 'CREN': ['TRIL'],
     # Spurs, not a loop: the MW-LH border exists in the exit lists but
     # neither room's arrival component reaches it. See game.c's own
-    # comment on sQuickStartRingAdjacency.
+    # comment on sQuickStartRegionAdjacency.
     'MW': ['EH'], 'LH': ['LLR'],
 }
 # This table is a hand copy of one in game.c, so it can drift - and it did:
@@ -47,14 +47,14 @@ ADJ = {  # mirrors sQuickStartRingAdjacency in game.c
 # this model called every one of them unreachable because it had never heard
 # of the region. The names come from the generator, so at least a MISSING
 # region is loud now rather than a wrong verdict.
-assert set(ADJ) == {r.replace('QS_RING_', '') for r in G.RINGS}, (
+assert set(ADJ) == {r.replace('QS_REGION_', '') for r in G.RINGS}, (
     'chain_probe ADJ is out of step with gen_reach RINGS: %s'
-    % (set(ADJ) ^ {r.replace('QS_RING_', '') for r in G.RINGS}))
+    % (set(ADJ) ^ {r.replace('QS_REGION_', '') for r in G.RINGS}))
 # ...and symmetric, which the game's own table is.
 for _a in ADJ:
     for _b in ADJ[_a]:
-        assert _a in ADJ[_b], 'ring adjacency is not symmetric: %s -> %s' % (_a, _b)
-# Mt Crenel is deliberately absent: it is a ring member but NOT a pool row,
+        assert _a in ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
+# Mt Crenel is deliberately absent: it is a region member but NOT a pool row,
 # so nothing drops the player there and no region wave loop runs in it.
 POOL_RING = ['CG', 'LLR', 'SHF', 'NHF', 'TRIL', 'EH', 'EH', 'EH',
              'WW', 'WW', 'WW', 'RV', 'CW', 'WR', 'WR', 'MW', 'LH']
@@ -104,7 +104,7 @@ def reachable_regions(c, held):
     open_ = {POOL_RING[drop]}
     entry = {}
     for key, r in W.SURVEY.items():
-        ring = G.RING[key].replace('QS_RING_', '')
+        ring = G.RING[key].replace('QS_REGION_', '')
         entry.setdefault(ring, []).extend(r['room_req'] or [[]])
     changed = True
     while changed:
@@ -121,7 +121,7 @@ def reachable_regions(c, held):
 
 def room_reachable(regions, held, area, room):
     for key, r in W.SURVEY.items():
-        ring = G.RING[key].replace('QS_RING_', '')
+        ring = G.RING[key].replace('QS_REGION_', '')
         if ring not in regions:
             continue
         for e in r['dests']:

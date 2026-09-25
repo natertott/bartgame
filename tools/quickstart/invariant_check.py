@@ -668,25 +668,25 @@ RING_ADJ = {
     'CREN': ['TRIL'],
     # Spurs off Eastern Hills and Lon Lon. The MW-LH border in the vanilla
     # exit lists is NOT an edge here - neither room's arrival component
-    # reaches it. See sQuickStartRingAdjacency in game.c.
+    # reaches it. See sQuickStartRegionAdjacency in game.c.
     'MW': ['EH'],
     'LH': ['LLR'],
 }
 for _a, _ns in RING_ADJ.items():
     for _b in _ns:
-        assert _a in RING_ADJ[_b], 'ring adjacency is not symmetric: %s -> %s' % (_a, _b)
+        assert _a in RING_ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
 # The ring each row of sQuickStartFuserSpots sits in, in table order.
-SPOT_RINGS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
-              'MW', 'LH']
+SPOT_REGIONS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
+                'MW', 'LH', 'CREN']
 SPOTS_PER_REGION = 9
-# This list is a hand copy of sQuickStartFuserSpotRings, and a hand copy that
+# This list is a hand copy of sQuickStartFuserSpotRegions, and a hand copy that
 # silently falls behind the table it mirrors is how the fuser tier starts
 # checking the wrong rooms. Count the real table's rows and insist they match.
 _SPOT_ROWS = len(re.findall(r'\{ AREA_\w+, ROOM_\w+,\n\s*\{ \{',
                             open(GAME_C).read()))
-assert _SPOT_ROWS == len(SPOT_RINGS), (
-    'SPOT_RINGS has %d entries but sQuickStartFuserSpots has %d rows'
-    % (len(SPOT_RINGS), _SPOT_ROWS))
+assert _SPOT_ROWS == len(SPOT_REGIONS), (
+    'SPOT_REGIONS has %d entries but sQuickStartFuserSpots has %d rows'
+    % (len(SPOT_REGIONS), _SPOT_ROWS))
 
 
 def _avalanche(x):
@@ -718,9 +718,9 @@ def fuser_placements(run_seed):
             continue
         cands = [home]
         for r in range(len(spot_rooms)):
-            if r == home or SPOT_RINGS[r] == 'CW':
+            if r == home or SPOT_REGIONS[r] == 'CW':
                 continue
-            if SPOT_RINGS[r] in RING_ADJ[SPOT_RINGS[home]]:
+            if SPOT_REGIONS[r] in RING_ADJ[SPOT_REGIONS[home]]:
                 cands.append(r)
         h = _avalanche((run_seed + 0xF0 + f['kinstone']) & 0xFFFFFFFF)
         host = cands[(h & 0x7fff) % len(cands)]

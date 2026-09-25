@@ -387,7 +387,7 @@ const Transition gExitList_HyruleField_EasternHillsSouth[] = {
       ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
     // RESTORED. These borders were deleted under QUICKSTART with the note
     // that the region was "outside the ring". Both regions ARE in the ring
-    // now - QuickStartRingRegionOfRoom learned them, and containment stopped
+    // now - QuickStartRegionOfRoom learned them, and containment stopped
     // cancelling the crossing - but opening the POLICY on a door whose DATA
     // had been removed left the player exactly as stuck as before. The gate
     // probe that "verified" the earlier change staged the transition by hand
@@ -680,7 +680,7 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     // to the Trilby region properly in both directions.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-    // Mount Crenel's west border, RESTORED. The mountain is a ring region
+    // Mount Crenel's west border, RESTORED. The mountain is a named region
     // now: it was already full of ? rooms that containment blessed as
     // pocket sites, which made it the odd case where the DESTINATIONS were
     // reachable in policy and the mountain itself had no way in.

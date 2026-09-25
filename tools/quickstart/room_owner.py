@@ -7,12 +7,12 @@ of all, whose whole safety property is "never drop inside the region this
 key opens", and whose failure mode is a key sealed behind the very door it
 unlocks.
 
-This derives the map instead of hand-listing it. Every ring region's own
+This derives the map instead of hand-listing it. Every named region's own
 WARP_TYPE_AREA doors name the rooms they lead into; those rooms belong to
 that region. Some pockets are only reached through another pocket (the
 Boomerang chamber from the tree hollows, Grimblade's dojo from its ante
 room, Goron Cave Main from its stairs), so ownership follows doors
-transitively - but never back out through a ring room, or every pocket
+transitively - but never back out through a region room, or every pocket
 would end up owned by everything.
 
 Minish holes are included too: they are room-property special warps with
@@ -38,7 +38,7 @@ import parse_tables as P
 import exit_lists as X
 import minish_holes as M
 
-RING = {  # room name -> the QS_RING_* name it is
+RING = {  # room name -> the QS_REGION_* name it is
     'ROOM_CASTLE_GARDEN_MAIN': 'CG',
     'ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD': 'NHF',
     'ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD': 'SHF',
@@ -58,6 +58,18 @@ RING = {  # room name -> the QS_RING_* name it is
     'ROOM_RUINS_LADDER_TO_TEKTITES': 'WR',
     'ROOM_RUINS_FORTRESS_ENTRANCE': 'WR',
     'ROOM_RUINS_BELOW_FORTRESS_ENTRANCE': 'WR',
+    # The three regions the expansion opened. Their pockets were unowned
+    # until now, which is not cosmetic: an unowned room reports region mask
+    # 0, and mask 0 is a REFUSAL for every gated key - so twenty-two ? rooms
+    # in Minish Woods, Lake Hylia and the mountain were quietly outside
+    # every region-scoped rule the mode has.
+    'ROOM_MINISH_WOODS_MAIN': 'MW',
+    'ROOM_LAKE_HYLIA_MAIN': 'LH',
+    'ROOM_MT_CRENEL_ENTRANCE': 'CREN',
+    'ROOM_MT_CRENEL_CENTER': 'CREN',
+    'ROOM_MT_CRENEL_WALL_CLIMB': 'CREN',
+    'ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE': 'CREN',
+    'ROOM_MT_CRENEL_TOP': 'CREN',
 }
 # Two ? rooms are joined to their parent by a SCROLL SEAM, not by any kind
 # of transition: rooms inside one area share a pixel grid and the player
@@ -71,6 +83,13 @@ SEAMS = {
     'ROOM_DOJOS_GRIMBLADE': ('AREA_DOJOS', 'ROOM_DOJOS_TO_GRIMBLADE'),
     'ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH':
         ('AREA_HOUSE_INTERIORS_2', 'ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE'),
+    # Two more of the same shape, found when the expansion regions were
+    # added and their pockets came out unowned: Grayblade's dojo sits above
+    # its ante room exactly as Grimblade's does, and the Darknut arena
+    # adjoins its hall the same way. Both are content sites, so both were
+    # refusing every gated key for want of a row nobody could derive.
+    'ROOM_DOJOS_GRAYBLADE': ('AREA_DOJOS', 'ROOM_DOJOS_TO_GRAYBLADE'),
+    'ROOM_CASTOR_DARKNUT_MAIN': ('AREA_CASTOR_DARKNUT', 'ROOM_CASTOR_DARKNUT_HALL'),
 }
 
 # Owning a region is necessary but not sufficient for a key drop. Some
@@ -108,9 +127,10 @@ SEALED = {
     'ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST': 'ITEM_QST_LONLON_KEY',
 }
 
-ENUM = {'CG': 'QS_RING_CG', 'NHF': 'QS_RING_NHF', 'SHF': 'QS_RING_SHF', 'EH': 'QS_RING_EH',
-        'LLR': 'QS_RING_LLR', 'TRIL': 'QS_RING_TRIL', 'WW': 'QS_RING_WW', 'RV': 'QS_RING_RV',
-        'CW': 'QS_RING_CW', 'WR': 'QS_RING_WR'}
+ENUM = {'CG': 'QS_REGION_CG', 'NHF': 'QS_REGION_NHF', 'SHF': 'QS_REGION_SHF', 'EH': 'QS_REGION_EH',
+        'LLR': 'QS_REGION_LLR', 'TRIL': 'QS_REGION_TRIL', 'WW': 'QS_REGION_WW', 'RV': 'QS_REGION_RV',
+        'CW': 'QS_REGION_CW', 'WR': 'QS_REGION_WR', 'MW': 'QS_REGION_MW',
+        'LH': 'QS_REGION_LH', 'CREN': 'QS_REGION_CREN'}
 
 
 def doors_from(room_name):

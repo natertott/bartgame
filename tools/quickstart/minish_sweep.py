@@ -1,6 +1,6 @@
 """Sweep the ring for Minish-layer destinations and say which are wired.
 
-Every exit the seven ring regions have, filtered to the Minish-ish areas
+Every exit the seven named regions have, filtered to the Minish-ish areas
 (the paths, the village, the cracks, the holes, the rafters, the caves,
 plus TREE_INTERIORS and the MINISH_HOUSE_INTERIORS the shrink-doors lead
 into), cross-referenced against sQuickStartRoomContentSites.
@@ -17,7 +17,7 @@ TRANS = open('/home/user/bartgame/src/data/transitions.c').read()
 GAME = open('/home/user/bartgame/src/game.c').read()
 
 RING = [r['roomName'] for r in P.region_pool()]
-print(f'{len(RING)} ring rooms: {[r[5:] for r in RING]}\n')
+print(f'{len(RING)} region rooms: {[r[5:] for r in RING]}\n')
 
 MINISH_AREAS = {a for a in P.AREAS if
                 ('MINISH' in a or a == 'AREA_TREE_INTERIORS' or

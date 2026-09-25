@@ -2469,7 +2469,7 @@ const u8* const gCustomStrings[] = {
     [50] = (const u8*)"You wake up\nfeeling rested!",
     // F10: the MAP and COMPASS receipts. The compass names the Element's
     // REGION - never the spot - so [52]-[58] follow the ring enum order
-    // (QS_RING_CG..QS_RING_WW, see QuickStartRingRegionOfPoolIndex).
+    // (QS_REGION_CG..QS_REGION_WW, see QuickStartRegionOfPoolIndex).
     [51] = (const u8*)"The world map!\nPress START to see\nwhere you stand.",
     [52] = (const u8*)"The compass hums...\nthe Element waits in\nthe Castle Garden!",
     [53] = (const u8*)"The compass hums...\nthe Element waits in\nNorth Hyrule Field!",
@@ -2672,7 +2672,7 @@ const u32 gCustomStringCount = ARRAY_COUNT(gCustomStrings);
 const u8* const gCustomStrings2[] = {
     // ===================== The win chain's two hint banks ================
     //
-    // 0-10: Ezlo's line, one per QS_RING_* in enum order, naming the REGION
+    // 0-10: Ezlo's line, one per QS_REGION_* in enum order, naming the REGION
     // the current step is in and nothing more. A region rather than a room
     // because there are 842 rooms, and because a region is a hint while a
     // room name would be an instruction.
@@ -2683,8 +2683,8 @@ const u8* const gCustomStrings2[] = {
     // (QuickStartChainMapMarker) - so the two surfaces together are "what"
     // plus "where", and neither alone is both.
     //
-    // Both banks are indexed arithmetically off QS_RING_* and QS_CHAIN_*,
-    // so a new ring region or a new step kind needs a line inserted at the
+    // Both banks are indexed arithmetically off QS_REGION_* and QS_CHAIN_*,
+    // so a new named region or a new step kind needs a line inserted at the
     // matching position or every line after it answers for the wrong thing.
     [0] = (const u8*)"Something in the castle\ngarden is waiting for\nyou to find it.",
     [1] = (const u8*)"North Hyrule Field\nholds what comes next.\nI feel it from here.",
@@ -2740,7 +2740,7 @@ const u8* const gCustomStrings2[] = {
     // authored: thirteen regions times five step kinds is sixty-five lines,
     // and sixty-five hand-written lines drift. The index is
     // QUICKSTART_CHAIN_HINT_PAIR_BASE + ring * QS_CHAIN_KIND_COUNT + kind,
-    // so a new ring region or step kind needs a row or a line inside the
+    // so a new named region or step kind needs a row or a line inside the
     // macro and nothing else.
     //
     // The ITEM line in each row is dead weight, kept for the arithmetic: an
@@ -3517,7 +3517,7 @@ static void QuickStartTrilbyQuirkHook(void) {
 // QuickStartUpdateSwitchBridges' donor-tile comment). Trilby's
 // QuickStartFillBoulderHoles does the same job by driving vanilla's own
 // PushableRock settle path, which lays the correct art - so that function
-// now covers every ring region (Lon Lon's three rocks included) and this
+// now covers every named region (Lon Lon's three rocks included) and this
 // solver is gone.
 
 // ---- The overworld regions (free-roam) ----
@@ -3528,7 +3528,7 @@ static void QuickStartTrilbyQuirkHook(void) {
 // Element in place of its normal reward - "the Element is SOMEWHERE, go
 // find it" - and ends the run (QuickStartSpawnWinKeyOnce/
 // QuickStartCheckWinCondition above, both region-agnostic). Travel between
-// regions is real walking across the ring (see QuickStartIsRingRegionRoom);
+// regions is real walking across the ring (see QuickStartIsNamedRegionRoom);
 // nothing warps.
 
 // --- Per-region run state (the free-roam structure) ------------------------
@@ -3541,7 +3541,7 @@ static void QuickStartTrilbyQuirkHook(void) {
 //
 // Storage sits in the QS window's free range (the retired content-site
 // span, after the shop's block which ends at 331), sized for 12 regions so
-// the three still-unintegrated ring rooms and future growth fit without
+// the three still-unintegrated region rooms and future growth fit without
 // another move. All of it is cleared by the run-start 202-703 wipe.
 #define QUICKSTART_REGION_STATE_MAX 12
 #define GF_ELEMENT_REGION_ROLLED 332
@@ -4196,7 +4196,7 @@ static const s16 sQuickStartWesternWoodsNorthEnemyOffsets[][2] = {
 //   Eastern Hills (South/North) <--> Minish Woods   (EH's east edge)
 //   Lon Lon Ranch               <--> Lake Hylia     (Lon Lon's east edge)
 // The exit lists also carry a Minish Woods <-> Lake Hylia border, and it
-// is deliberately NOT in sQuickStartRingAdjacency: neither room's arrival
+// is deliberately NOT in sQuickStartRegionAdjacency: neither room's arrival
 // component reaches that edge (measured - see the adjacency table's own
 // comment), so these are two dead ends rather than a circuit.
 //
@@ -4596,34 +4596,34 @@ static s32 QuickStartDropRegionIndex(void) {
 // distance can exceed map distance. That is fine - the rule shapes where
 // the element may HIDE, not a route.
 enum {
-    QS_RING_CG,
-    QS_RING_NHF,
-    QS_RING_SHF,
-    QS_RING_EH,
-    QS_RING_LLR,
-    QS_RING_TRIL,
-    QS_RING_WW,
-    QS_RING_RV,
-    QS_RING_CW,
-    QS_RING_WR,
+    QS_REGION_CG,
+    QS_REGION_NHF,
+    QS_REGION_SHF,
+    QS_REGION_EH,
+    QS_REGION_LLR,
+    QS_REGION_TRIL,
+    QS_REGION_WW,
+    QS_REGION_RV,
+    QS_REGION_CW,
+    QS_REGION_WR,
     // Mt Crenel, hanging off Trilby's west border. It is NOT a pool region -
     // nothing drops the player there and it hosts no region wave loop - but
-    // it is a ring member, because ring membership is what the win chain's
+    // it is a region member, because ring membership is what the win chain's
     // reachability flood walks and Crenel is full of ? rooms now.
-    QS_RING_CREN,
+    QS_REGION_CREN,
     // Minish Woods and Lake Hylia, which unlike Crenel ARE pool regions -
     // they drop the player, run wave loops and pay region rewards. Eastern
     // Hills' east border opens into Minish Woods and Lon Lon Ranch's east
     // border into Lake Hylia, both ways in both cases. The Minish Woods /
     // Lake Hylia border between them exists in the exit lists but is not
-    // walkable from either room's arrival - see sQuickStartRingAdjacency.
-    QS_RING_MW,
-    QS_RING_LH,
-    QS_RING_COUNT
+    // walkable from either room's arrival - see sQuickStartRegionAdjacency.
+    QS_REGION_MW,
+    QS_REGION_LH,
+    QS_REGION_COUNT
 };
 
 // The walked survey, compiled. Included HERE rather than at the top of the
-// file because its rows are written in QS_RING_* terms and the enum is
+// file because its rows are written in QS_REGION_* terms and the enum is
 // directly above; a header that names constants it cannot see is a header
 // that goes stale silently. Generated by tools/quickstart/gen_reach.py from
 // tools/quickstart/world_reach.py - edit the survey, not the header.
@@ -4631,27 +4631,27 @@ enum {
 
 // u16, not u8: ten rings no longer fit an 8-bit mask. Every consumer
 // already works in u32 locals.
-static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
-    /* CG   */ (1 << QS_RING_NHF),
-    /* NHF  */ (1 << QS_RING_CG) | (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_TRIL) |
-               (1 << QS_RING_RV),
-    /* SHF  */ (1 << QS_RING_NHF) | (1 << QS_RING_EH) | (1 << QS_RING_WW),
-    /* EH   */ (1 << QS_RING_SHF) | (1 << QS_RING_LLR) | (1 << QS_RING_MW),
-    /* LLR  */ (1 << QS_RING_EH) | (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_LH),
-    /* TRIL */ (1 << QS_RING_LLR) | (1 << QS_RING_NHF) | (1 << QS_RING_WW) | (1 << QS_RING_RV) |
-               (1 << QS_RING_CREN),
-    /* WW   */ (1 << QS_RING_TRIL) | (1 << QS_RING_SHF) | (1 << QS_RING_CW),
+static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
+    /* CG   */ (1 << QS_REGION_NHF),
+    /* NHF  */ (1 << QS_REGION_CG) | (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL) |
+               (1 << QS_REGION_RV),
+    /* SHF  */ (1 << QS_REGION_NHF) | (1 << QS_REGION_EH) | (1 << QS_REGION_WW),
+    /* EH   */ (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_MW),
+    /* LLR  */ (1 << QS_REGION_EH) | (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_LH),
+    /* TRIL */ (1 << QS_REGION_LLR) | (1 << QS_REGION_NHF) | (1 << QS_REGION_WW) | (1 << QS_REGION_RV) |
+               (1 << QS_REGION_CREN),
+    /* WW   */ (1 << QS_REGION_TRIL) | (1 << QS_REGION_SHF) | (1 << QS_REGION_CW),
     // Royal Valley touches North Hyrule Field (its WNW border) and Trilby
     // (the north seam). Both edges are real crossings the player walks.
-    /* RV   */ (1 << QS_RING_NHF) | (1 << QS_RING_TRIL),
+    /* RV   */ (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL),
     // Castor Wilds hangs off Western Wood North's west border; the Wind
     // Ruins hang off Castor Wilds' south-west border. A straight spur off
     // the ring's western side.
-    /* CW   */ (1 << QS_RING_WW) | (1 << QS_RING_WR),
-    /* WR   */ (1 << QS_RING_CW),
+    /* CW   */ (1 << QS_REGION_WW) | (1 << QS_REGION_WR),
+    /* WR   */ (1 << QS_REGION_CW),
     // Mt Crenel is a spur off Trilby's west border, and only that: every
     // other edge of the mountain is cliff.
-    /* CREN */ (1 << QS_RING_TRIL),
+    /* CREN */ (1 << QS_REGION_TRIL),
     // Minish Woods and Lake Hylia are SPURS, not a loop, and the reason is
     // measured rather than assumed. Both rooms have a border into the
     // other - Minish Woods' north edge into the lake, the lake's south
@@ -4666,21 +4666,21 @@ static const u16 sQuickStartRingAdjacency[QS_RING_COUNT] = {
     // So the walkable graph is EH <-> MW and LLR <-> LH, two dead ends,
     // and writing the MW-LH edge in here would tell the chain's flood that
     // a kitless player can walk a circuit they cannot.
-    /* MW   */ (1 << QS_RING_EH),
-    /* LH   */ (1 << QS_RING_LLR),
+    /* MW   */ (1 << QS_REGION_EH),
+    /* LH   */ (1 << QS_REGION_LLR),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
 // order is CG, LLR, SHF, NHF, TRIL, then EH South/Center/North, then WW
 // South/Center/North.
-static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
+static u8 QuickStartRegionOfPoolIndex(s32 poolIndex) {
     static const u8 byPool[] = {
-        QS_RING_CG, QS_RING_LLR, QS_RING_SHF, QS_RING_NHF, QS_RING_TRIL,
-        QS_RING_EH, QS_RING_EH, QS_RING_EH,
-        QS_RING_WW, QS_RING_WW, QS_RING_WW,
-        QS_RING_RV,
-        QS_RING_CW, QS_RING_WR, QS_RING_WR,
-        QS_RING_MW, QS_RING_LH, QS_RING_CREN,
+        QS_REGION_CG, QS_REGION_LLR, QS_REGION_SHF, QS_REGION_NHF, QS_REGION_TRIL,
+        QS_REGION_EH, QS_REGION_EH, QS_REGION_EH,
+        QS_REGION_WW, QS_REGION_WW, QS_REGION_WW,
+        QS_REGION_RV,
+        QS_REGION_CW, QS_REGION_WR, QS_REGION_WR,
+        QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN,
     };
     // The index is taken modulo the POOL's size but read out of byPool, so
     // the two must be the same length or a perfectly legal pool index reads
@@ -4695,13 +4695,13 @@ static u8 QuickStartRingRegionOfPoolIndex(s32 poolIndex) {
 
 // Every named region within two map steps of `ring`, as a bitmask
 // (including itself).
-static u32 QuickStartRingWithinTwo(u8 ring) {
-    u32 one = (1u << ring) | sQuickStartRingAdjacency[ring];
+static u32 QuickStartRegionsWithinTwo(u8 ring) {
+    u32 one = (1u << ring) | sQuickStartRegionAdjacency[ring];
     u32 two = one;
     s32 r;
-    for (r = 0; r < QS_RING_COUNT; r++) {
+    for (r = 0; r < QS_REGION_COUNT; r++) {
         if (one & (1u << r)) {
-            two |= sQuickStartRingAdjacency[r];
+            two |= sQuickStartRegionAdjacency[r];
         }
     }
     return two;
@@ -4713,7 +4713,7 @@ static u32 QuickStartRingWithinTwo(u8 ring) {
 // First the pit's DROP region: uniform over the whole pool, so a run can
 // begin anywhere in the ring. Then the ELEMENT region: uniform over the
 // pool rows whose named region is within TWO map steps of the drop's
-// (QuickStartRingWithinTwo) - close enough that finding it is a hunt, not
+// (QuickStartRegionsWithinTwo) - close enough that finding it is a hunt, not
 // a tour. The rejection loop terminates because the drop's own region is
 // always within its own two steps.
 //
@@ -4732,7 +4732,7 @@ static void QuickStartRollElementRegionOnce(void) {
     drop = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
     QuickStartWritePoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP, drop);
     QsSetFlag(GF_DROP_REGION_ROLLED);
-    allowed = QuickStartRingWithinTwo(QuickStartRingRegionOfPoolIndex(drop));
+    allowed = QuickStartRegionsWithinTwo(QuickStartRegionOfPoolIndex(drop));
     // F7: the win carrier, rolled before the element region because each
     // carrier restricts where the element may land. An even three-way
     // draw from the run seed through the avalanche mix - NOT Random():
@@ -4756,7 +4756,7 @@ static void QuickStartRollElementRegionOnce(void) {
     if (carrier == QUICKSTART_WIN_BOSS) {
         bool32 bossable = FALSE;
         for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-            if ((allowed & (1u << QuickStartRingRegionOfPoolIndex(i))) &&
+            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) &&
                 QuickStartRegionAllowsBoss(&sQuickStartRegionPool[i])) {
                 bossable = TRUE;
                 break;
@@ -4768,7 +4768,7 @@ static void QuickStartRollElementRegionOnce(void) {
     }
     for (;;) {
         elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-        if (!(allowed & (1u << QuickStartRingRegionOfPoolIndex(elem)))) {
+        if (!(allowed & (1u << QuickStartRegionOfPoolIndex(elem)))) {
             continue;
         }
         if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
@@ -4937,6 +4937,27 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
 // a new region gets bosses when someone has watched one work there.
 static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
     if (region->area == AREA_CASTLE_GARDEN && region->room == ROOM_CASTLE_GARDEN_MAIN) {
+        return TRUE;
+    }
+    // The three expansion regions, vetted to PARITY with Castle Garden by
+    // tools/quickstart/boss_arena.py: the family composes, the intro
+    // finishes on the same frame the control does (1027), the peel handler
+    // runs for the same 1184 frames, the whole family dies and the player
+    // is still in the room afterwards.
+    //
+    // An earlier pass read all three as "never engaged" and it was the
+    // HARNESS, not the rooms: the driver walks the player in a straight
+    // line, and in a region whose arrival component touches a border -
+    // which is all three - that walks out of the room before the intro
+    // finishes, unloading the family with it. The control failed the same
+    // way, which is the only reason the reading was caught.
+    if (region->area == AREA_MINISH_WOODS && region->room == ROOM_MINISH_WOODS_MAIN) {
+        return TRUE;
+    }
+    if (region->area == AREA_LAKE_HYLIA && region->room == ROOM_LAKE_HYLIA_MAIN) {
+        return TRUE;
+    }
+    if (region->area == AREA_MT_CRENEL && region->room == ROOM_MT_CRENEL_ENTRANCE) {
         return TRUE;
     }
     if (region->area != AREA_HYRULE_FIELD) {
@@ -5769,8 +5790,8 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
 // Which overworld region a "? room" hangs off.
 //
 // Derived rather than hand-listed: tools/quickstart/room_owner.py walks
-// each ring region's own WARP_TYPE_AREA doors transitively (never back out
-// through a ring room, or every pocket would end up owned by everything),
+// each named region's own WARP_TYPE_AREA doors transitively (never back out
+// through a region room, or every pocket would end up owned by everything),
 // its Minish holes via the SpecialWarpManager property chain, its
 // sQuickStartLinks boxes, and the two scroll seams that carry no row at
 // all. The walk partitions cleanly - no pocket in the pool comes out
@@ -5798,192 +5819,216 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
 typedef struct {
     u8 area;
     u8 room;
-    u16 regions;  // bitmask of QS_RING_* (u16: ten rings outgrew a byte)
+    u16 regions;  // bitmask of QS_REGION_* (u16: ten rings outgrew a byte)
     u16 sealedBy; // the key whose own gate seals this room, 0 if none
 } QuickStartRoomOwner;
 
 static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
+
+// generated by tools/quickstart/room_owner.py
     { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0,
-      (1 << QS_RING_CG), 0 },
+      (1 << QS_REGION_CG), 0 },
     { AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1,
-      (1 << QS_RING_CG), 0 },
+      (1 << QS_REGION_CG), 0 },
     { AREA_DOJOS, ROOM_DOJOS_GRIMBLADE,
-      (1 << QS_RING_CG), 0 },
+      (1 << QS_REGION_CG), 0 },
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST,
-      (1 << QS_RING_CG), 0 },
+      (1 << QS_REGION_CG), 0 },
     { AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST,
-      (1 << QS_RING_CG), 0 },
+      (1 << QS_REGION_CG), 0 },
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN,
-      (1 << QS_RING_CG), 0 },
-    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST,
-      (1 << QS_RING_EH), 0 },
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
-      (1 << QS_RING_EH), 0 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT,
-      (1 << QS_RING_EH), 0 },
-    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST,
-      (1 << QS_RING_LLR), ITEM_QST_LONLON_KEY },
-    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST,
-      (1 << QS_RING_LLR), ITEM_QST_LONLON_KEY },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LON_LON_RANCH,
-      (1 << QS_RING_LLR), 0 },
-    { AREA_CAVES, ROOM_CAVES_BOOMERANG,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
-      (1 << QS_RING_NHF), 0 },
-    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD,
-      (1 << QS_RING_RV), 0 },
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE,
-      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
-    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA,
-      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
-    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE,
-      (1 << QS_RING_RV), ITEM_QST_GRAVEYARD_KEY },
-    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE,
-      (1 << QS_RING_SHF), 0 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN,
-      (1 << QS_RING_TRIL), 0 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS,
-      (1 << QS_RING_TRIL), 0 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST,
-      (1 << QS_RING_TRIL), 0 },
-    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE,
-      (1 << QS_RING_TRIL), 0 },
-    // Reached only through the dig cave's bombable wall, so ownership
-    // follows the same transitive-door chain room_owner.py derives
-    // (TRIL ring -> dig cave -> this pool).
-    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
-      (1 << QS_RING_TRIL), 0 },
-    // The western spur's pockets: the heart-piece cave and the north
-    // through-cave hang off Castor Wilds, the Wind Ruins cave off the
-    // Ruins' entrance strip.
-    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE,
-      (1 << QS_RING_CW), 0 },
-    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH,
-      (1 << QS_RING_CW), 0 },
-    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
-      (1 << QS_RING_WR), 0 },
-    // The Castor Wilds round's nine extension pockets: the Wilds' Minish
-    // cracks, the Bow minish path, both dojo rooms and the Minish water
-    // cave hang off Castor Wilds' own doors and holes; the last crack
-    // hangs off the Wind Ruins' entrance strip.
-    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE,
-      (1 << QS_RING_CW), 0 },
-    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I,
-      (1 << QS_RING_CW), 0 },
-    { AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1,
-      (1 << QS_RING_CW), 0 },
-    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
-      (1 << QS_RING_WR), 0 },
+      (1 << QS_REGION_CG), 0 },
+    { AREA_CAVE_OF_FLAMES, ROOM_CAVE_OF_FLAMES_ENTRANCE,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_GRIP_RING,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HERMIT,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER,
+      (1 << QS_REGION_CREN), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT,
-      (1 << QS_RING_CW), 0 },
+      (1 << QS_REGION_CW), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE,
+      (1 << QS_REGION_CW), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH,
-      (1 << QS_RING_CW), 0 },
-    { AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS,
-      (1 << QS_RING_TRIL), 0 },
+      (1 << QS_REGION_CW), 0 },
+    { AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_MAIN,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW,
+      (1 << QS_REGION_CW), 0 },
+    { AREA_CAVES, ROOM_CAVES_HILLS_KEESE_CHEST,
+      (1 << QS_REGION_EH), 0 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_FARM_HOUSE,
+      (1 << QS_REGION_EH), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT,
+      (1 << QS_REGION_EH), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST,
+      (1 << QS_REGION_LLR), ITEM_QST_LONLON_KEY },
+    { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST,
+      (1 << QS_REGION_LLR), ITEM_QST_LONLON_KEY },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LON_LON_RANCH,
+      (1 << QS_REGION_LLR), 0 },
+    { AREA_BEANSTALKS, ROOM_BEANSTALKS_EASTERN_HILLS,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_DEEPWOOD_SHRINE, ROOM_DEEPWOOD_SHRINE_ENTRANCE,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WITCH_HUT,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_CAVES, ROOM_CAVES_BOOMERANG,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_REGION_NHF), 0 },
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD,
+      (1 << QS_REGION_RV), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE,
+      (1 << QS_REGION_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA,
+      (1 << QS_REGION_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE,
+      (1 << QS_REGION_RV), ITEM_QST_GRAVEYARD_KEY },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE,
+      (1 << QS_REGION_SHF), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN,
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS,
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST,
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN,
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE,
+      (1 << QS_REGION_TRIL), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE,
-      (1 << QS_RING_TRIL), 0 },
+      (1 << QS_REGION_TRIL), 0 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
-      (1 << QS_RING_TRIL), 0 },
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
+      (1 << QS_REGION_WR), 0 },
+    { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
+      (1 << QS_REGION_WR), 0 },
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY,
-      (1 << QS_RING_WW), 0 },
+      (1 << QS_REGION_WW), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST,
-      (1 << QS_RING_WW), 0 },
+      (1 << QS_REGION_WW), 0 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE,
-      (1 << QS_RING_WW), 0 },
+      (1 << QS_REGION_WW), 0 },
 };
 
 // Which named region a room IS, for the twelve rooms that are regions.
 // -1 for everything else, including every pocket.
-static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
+static s32 QuickStartRegionOfRoom(u8 area, u8 room) {
     if (area == AREA_CASTLE_GARDEN && room == ROOM_CASTLE_GARDEN_MAIN) {
-        return QS_RING_CG;
+        return QS_REGION_CG;
     }
     if (area == AREA_ROYAL_VALLEY && room == ROOM_ROYAL_VALLEY_MAIN) {
-        return QS_RING_RV;
+        return QS_REGION_RV;
     }
     if (area == AREA_CASTOR_WILDS && room == ROOM_CASTOR_WILDS_MAIN) {
-        return QS_RING_CW;
+        return QS_REGION_CW;
     }
-    // Every Wind Ruins room is a ring member - the three big spaces are
+    // Every Wind Ruins room is a region member - the three big spaces are
     // pool regions, the connectors (Beanstalk, Tektites, the ladder room,
     // the fortress forecourt) are free-travel corridors between them, all
     // stitched by the area's own scroll seams.
     if (area == AREA_RUINS && room <= ROOM_RUINS_BELOW_FORTRESS_ENTRANCE) {
-        return QS_RING_WR;
+        return QS_REGION_WR;
     }
     // Minish Woods and Lake Hylia. Both have had pool rows, reach-table
     // entries ("free" - nothing gates either one) and content sites for a
     // while; what they did not have was a line here, and that alone is what
     // sealed them off. Containment lets a transition through when both ends
-    // are ring rooms, so with these two missing, walking Eastern Hills'
+    // are region rooms, so with these two missing, walking Eastern Hills'
     // east border or Lon Lon Ranch's east border was cancelled the frame it
     // fired and the regions were unreachable no matter what the chain
     // pointed at.
     //
     // Only each area's MAIN room. ROOM_LAKE_HYLIA_BEANSTALK is left out
     // deliberately: its only exits are into the Hylia dig caves, which are
-    // not a content site, so blessing it as a ring room would start
+    // not a content site, so blessing it as a region room would start
     // policing it and cancel the only ways out - an unpoliced dead end is
     // the safe failure here, a sealed one is a lost run.
     //
     // Mount Crenel is still absent on purpose. Its base is unmapped, and
     // the base is the prerequisite for the mountain.
     if (area == AREA_MINISH_WOODS && room == ROOM_MINISH_WOODS_MAIN) {
-        return QS_RING_MW;
+        return QS_REGION_MW;
     }
     if (area == AREA_LAKE_HYLIA && room == ROOM_LAKE_HYLIA_MAIN) {
-        return QS_RING_LH;
+        return QS_REGION_LH;
     }
     // The whole mountain. Unlike the two regions above, Mount Crenel is
     // five rooms joined by AREA_MT_CRENEL's own scroll seams - Entrance,
@@ -5997,28 +6042,28 @@ static s32 QuickStartRingRegionOfRoom(u8 area, u8 room) {
     // reachable in policy while the mountain itself had no restored way in
     // and no containment once you were there.
     if (area == AREA_MT_CRENEL && room <= ROOM_MT_CRENEL_ENTRANCE) {
-        return QS_RING_CREN;
+        return QS_REGION_CREN;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
     }
     switch (room) {
         case ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD:
-            return QS_RING_NHF;
+            return QS_REGION_NHF;
         case ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD:
-            return QS_RING_SHF;
+            return QS_REGION_SHF;
         case ROOM_HYRULE_FIELD_LON_LON_RANCH:
-            return QS_RING_LLR;
+            return QS_REGION_LLR;
         case ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS:
-            return QS_RING_TRIL;
+            return QS_REGION_TRIL;
         case ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH:
         case ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER:
         case ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH:
-            return QS_RING_EH;
+            return QS_REGION_EH;
         case ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH:
         case ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER:
         case ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH:
-            return QS_RING_WW;
+            return QS_REGION_WW;
         default:
             return -1;
     }
@@ -6035,13 +6080,13 @@ static const QuickStartRoomOwner* QuickStartRoomOwnerOf(u8 area, u8 room) {
     return NULL;
 }
 
-// The regions the player is currently inside, as a mask. A ring room is its
+// The regions the player is currently inside, as a mask. A region room is its
 // own region; a pocket is whatever region its door hangs off. 0 means "no
 // idea", which for a gated key is a refusal rather than a pass - the whole
 // point of the rule is that an unknown location is exactly where a key
 // must not go.
 static u32 QuickStartCurrentRegionMask(void) {
-    s32 ring = QuickStartRingRegionOfRoom(gRoomControls.area, gRoomControls.room);
+    s32 ring = QuickStartRegionOfRoom(gRoomControls.area, gRoomControls.room);
     const QuickStartRoomOwner* owner;
     if (ring >= 0) {
         return 1u << ring;
@@ -6052,12 +6097,12 @@ static u32 QuickStartCurrentRegionMask(void) {
 
 typedef struct {
     u16 item;
-    u16 regions; // bitmask of QS_RING_* (u16: ten rings outgrew a byte)
+    u16 regions; // bitmask of QS_REGION_* (u16: ten rings outgrew a byte)
 } QuickStartKeyRegions;
 
 static const QuickStartKeyRegions sQuickStartKeyRegions[] = {
-    { ITEM_QST_LONLON_KEY, (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_EH) },
-    { ITEM_QST_GRAVEYARD_KEY, (1 << QS_RING_NHF) | (1 << QS_RING_TRIL) | (1 << QS_RING_RV) },
+    { ITEM_QST_LONLON_KEY, (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_EH) },
+    { ITEM_QST_GRAVEYARD_KEY, (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_RV) },
 };
 
 // TRUE for anything that is not a gated key. For a key, TRUE only where
@@ -11046,7 +11091,7 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     s32 relax, ring, placed = 0;
     s32 keepClear;
     bool32 reachUsable;
-    s32 reachRings;
+    s32 reachRegions;
     u8 reach[QUICKSTART_REACH_BYTES];
     u8 openTiles[QUICKSTART_REACH_BYTES];
     QuickStartMarkReachableTiles(reach, openTiles, (s32)(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4,
@@ -11061,9 +11106,9 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     // decides WHERE IN THE SITE a body goes; it is not worth doing when it
     // decides the site is somewhere else entirely.
     reachUsable = !QuickStartReachEmpty(reach) && QuickStartReachHas(reach, anchorTX, anchorTY);
-    reachRings = reachUsable ? QuickStartReachMaxRing(reach, anchorTX, anchorTY) + 1 : QUICKSTART_SPAWN_MAX_RING;
-    if (reachRings > QUICKSTART_SPAWN_MAX_RING) {
-        reachRings = QUICKSTART_SPAWN_MAX_RING;
+    reachRegions = reachUsable ? QuickStartReachMaxRing(reach, anchorTX, anchorTY) + 1 : QUICKSTART_SPAWN_MAX_RING;
+    if (reachRegions > QUICKSTART_SPAWN_MAX_RING) {
+        reachRegions = QUICKSTART_SPAWN_MAX_RING;
     }
     if (QuickStartRoomIsOverWater()) {
         id = QuickStartWaterRoomKind(id, &form);
@@ -11117,7 +11162,7 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
         if (relax == 3 && placed > 0) {
             break;
         }
-        rings = (relax < 3) ? reachRings : QUICKSTART_SPAWN_MAX_RING;
+        rings = (relax < 3) ? reachRegions : QUICKSTART_SPAWN_MAX_RING;
         for (ring = 0; ring < rings && placed < count; ring++) {
             s32 dx, dy;
             for (dy = -ring; dy <= ring; dy++) {
@@ -12504,7 +12549,7 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 thiefX
 // A bush, for this quest, is a tile the sword turns from solid to open.
 // Measured with a slash-everything diff over North Hyrule Field
 // (scratchpad cut_diff): the 427-431 tile-type family (collision 0x0f) is
-// the cuttable shrub class, uniformly, and it exists in every ring region
+// the cuttable shrub class, uniformly, and it exists in every named region
 // by the hundreds (tools/quickstart/hide_survey.py). Diggable ground is
 // simpler: gMapBottom.actTiles reads TILE_ACT_DIG (0xd) - which the
 // survey found ONLY in the three Eastern Hills rooms, so the buried mode
@@ -15905,7 +15950,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // nothing to place on.)
     // --- The Minish-layer rooms the ring never wired up ------------------
     //
-    // A sweep of every exit the seven ring regions have, filtered to the
+    // A sweep of every exit the seven named regions have, filtered to the
     // Minish areas and cross-referenced against this table, found six
     // destinations with no content in them (minish_sweep.py). Five are
     // here; the sixth is AREA_MINISH_WOODS, which is not a room but a
@@ -15968,7 +16013,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // holes have always worked and nobody's else's did.
     //
     // Each of the five below is a dead-end pocket with exactly one border
-    // back to the ring room its hole is in (Knuckle's has two, both to ring
+    // back to the region room its hole is in (Knuckle's has two, both to ring
     // rooms), so blessing them opens no route out of the run. Spots are
     // flood-surveyed from each hole's own arrival tile.
     //
@@ -15997,7 +16042,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, QUICKSTART_KINDS_SMALL, 72, 88 },
     // Trilby Highlands. 18 reachable tiles, 3 fully clear. This one is
     // also a real shortcut - its two borders reach Trilby AND Castle
-    // Garden - but both ends are ring rooms the player can already walk
+    // Garden - but both ends are region rooms the player can already walk
     // between, so it shortens a trip rather than opening a route.
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, QUICKSTART_KINDS_SMALL, 104, 88 },
 
@@ -16016,7 +16061,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // flood-surveyed from each door's own arrival coordinates.
     //
     // GINA'S GRAVE IS THE ODD ONE: its exit list carries a SECOND border,
-    // to Castle Garden Main. Castle Garden is a ring room, so the pocket
+    // to Castle Garden Main. Castle Garden is a region room, so the pocket
     // rule lets that through, which makes this room a real shortcut out of
     // Royal Valley rather than a dead end. That is a routing fact worth
     // knowing before the region ships, not a bug - both ends are places the
@@ -16365,8 +16410,8 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
         return TRUE;
     }
     // (Royal Valley Main used to be named here, to open the Trilby seam
-    // before the region had a pool row. It is a ring room now -
-    // QuickStartIsRingRegionRoom - so ring-to-ring crossings cover that
+    // before the region had a pool row. It is a region room now -
+    // QuickStartIsNamedRegionRoom - so ring-to-ring crossings cover that
     // seam and the exception is retired.)
     // The North Hyrule Field fairy fountain tree. It is no longer a content
     // site itself - its event moved down the staircase into the cave, which
@@ -16394,10 +16439,10 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
 
 // The overworld rooms that own those interiors - i.e. every room a pocket
 // interior's own real exit can legitimately put the player back in.
-static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room);
+static bool32 QuickStartIsNamedRegionRoom(u8 area, u8 room);
 
 static bool32 QuickStartIsPocketOverworldRoom(u8 area, u8 room) {
-    // Every ring room owns pocket doors now - the overworld expansion put
+    // Every region room owns pocket doors now - the overworld expansion put
     // content sites in all seven named regions - so the owning-overworld
     // set IS the ring. This was a hardcoded five-room list from before the
     // expansion, which silently cancelled walking OUT of any site whose
@@ -16405,7 +16450,7 @@ static bool32 QuickStartIsPocketOverworldRoom(u8 area, u8 room) {
     // invisible as long as those sites' exits were still mis-retargeted at
     // Castle Garden (a destination the old list allowed), and surfaced the
     // moment the retargets were fixed back to their vanilla fields.
-    return QuickStartIsRingRegionRoom(area, room);
+    return QuickStartIsNamedRegionRoom(area, room);
 }
 
 // Is this transition a legitimate move inside the pocket? Two shapes are
@@ -16682,16 +16727,16 @@ static u32 QuickStartReachableRegions(u32 held) {
     // really use. Reading the raw bits instead put four of six probe seeds'
     // first step inside the Wind Ruins - correctly, for a drop that was
     // never going to happen.
-    u32 open = 1u << QuickStartRingRegionOfPoolIndex(QuickStartDropRegionIndexUsable());
+    u32 open = 1u << QuickStartRegionOfPoolIndex(QuickStartDropRegionIndexUsable());
     s32 pass, r, t;
-    for (pass = 0; pass < QS_RING_COUNT; pass++) {
+    for (pass = 0; pass < QS_REGION_COUNT; pass++) {
         u32 grown = open;
-        for (r = 0; r < QS_RING_COUNT; r++) {
+        for (r = 0; r < QS_REGION_COUNT; r++) {
             if (!(open & (1u << r))) {
                 continue;
             }
-            for (t = 0; t < QS_RING_COUNT; t++) {
-                if (!(sQuickStartRingAdjacency[r] & (1u << t)) || (grown & (1u << t))) {
+            for (t = 0; t < QS_REGION_COUNT; t++) {
+                if (!(sQuickStartRegionAdjacency[r] & (1u << t)) || (grown & (1u << t))) {
                     continue;
                 }
                 if (QuickStartReachTermsMet(sQuickStartReachRegion[t], held)) {
@@ -16734,7 +16779,7 @@ static bool32 QuickStartReachRoomOk(u32 regions, u32 held, u8 area, u8 room) {
 // likewise - so being able to ENTER the named region is the whole test and
 // no destination row is needed.
 static bool32 QuickStartReachPoolOk(u32 regions, s32 poolIndex) {
-    return (regions & (1u << QuickStartRingRegionOfPoolIndex(poolIndex))) != 0;
+    return (regions & (1u << QuickStartRegionOfPoolIndex(poolIndex))) != 0;
 }
 
 // --- What makes a candidate legal ----------------------------------------
@@ -17042,8 +17087,8 @@ static void QuickStartChainBossWatcher(void) {
 // and their own legs.
 // Both banks live in gCustomStrings2 (TEXT_CUSTOM2) - the first table hit
 // its hard 256-entry ceiling exactly as these were written.
-#define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_RING_*
-#define QUICKSTART_CHAIN_HINT_KIND_BASE QS_RING_COUNT   // +QS_CHAIN_*
+#define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_REGION_*
+#define QUICKSTART_CHAIN_HINT_KIND_BASE QS_REGION_COUNT   // +QS_CHAIN_*
 // The third bank, for the Select button: one line per (region, kind) pair,
 // so a single textbox can say both. See gCustomStrings2.
 #define QUICKSTART_CHAIN_HINT_PAIR_BASE 26              // +ring*5 +QS_CHAIN_*
@@ -17067,7 +17112,7 @@ static s32 QuickStartChainStepRegion(s32 step) {
         case QS_CHAIN_WAVE:
         case QS_CHAIN_BOSS:
         case QS_CHAIN_QUEST:
-            return QuickStartRingRegionOfPoolIndex(gSave.chain_where[step]);
+            return QuickStartRegionOfPoolIndex(gSave.chain_where[step]);
         default:
             break;
     }
@@ -18607,7 +18652,7 @@ static bool32 QuickStartTransitionStaysInSameRoom(void) {
 // Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills (3 rooms),
 // South Hyrule Field, Western Wood (3 rooms), and Trilby Highlands. Per the
 // user's overworld-expansion redesign, travel between these is FREE and
-// vanilla-shaped: every border between two ring rooms works exactly as
+// vanilla-shaped: every border between two region rooms works exactly as
 // vanilla built it, plus the two "town bridge" borders that stitch the gap
 // the missing town leaves (NHF south <-> SHF north, LLR west <-> Trilby
 // east - see transitions.c). The old per-run warp boxes between regions are
@@ -18618,16 +18663,16 @@ static bool32 QuickStartTransitionStaysInSameRoom(void) {
 // and Mt Crenel are compiled out under QUICKSTART, so those edges simply
 // stop the player. The containment functions below are the safety net for
 // door-type transitions, not the primary wall.
-static bool32 QuickStartIsRingRegionRoom(u8 area, u8 room) {
-    return QuickStartRingRegionOfRoom(area, room) >= 0;
+static bool32 QuickStartIsNamedRegionRoom(u8 area, u8 room) {
+    return QuickStartRegionOfRoom(area, room) >= 0;
 }
 
-// A transition between two ring rooms, in either direction - always allowed,
+// A transition between two region rooms, in either direction - always allowed,
 // unconditionally, so the ring reads as one connected map rather than
 // opening and closing per run. (Replaces QuickStartIsGardenFieldCrossing,
 // which allowed exactly one such pair.)
-static bool32 QuickStartIsRingCrossing(u8 fromArea, u8 fromRoom, u8 toArea, u8 toRoom) {
-    return QuickStartIsRingRegionRoom(fromArea, fromRoom) && QuickStartIsRingRegionRoom(toArea, toRoom);
+static bool32 QuickStartIsRegionCrossing(u8 fromArea, u8 fromRoom, u8 toArea, u8 toRoom) {
+    return QuickStartIsNamedRegionRoom(fromArea, fromRoom) && QuickStartIsNamedRegionRoom(toArea, toRoom);
 }
 
 static void QuickStartEnforceContainment(void) {
@@ -18663,9 +18708,9 @@ static void QuickStartEnforceContainment(void) {
                                      gRoomTransition.player_status.room_next)) {
         return;
     }
-    // A contained ring room (Castle Garden) leaving for any other ring room
+    // A contained region room (Castle Garden) leaving for any other region room
     // - free travel across the whole ring, per the overworld expansion.
-    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+    if (QuickStartIsRegionCrossing(gRoomControls.area, gRoomControls.room,
                                  gRoomTransition.player_status.area_next,
                                  gRoomTransition.player_status.room_next)) {
         return;
@@ -18705,11 +18750,11 @@ static void QuickStartEnforceLonLonContainment(void) {
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
         return;
     }
-    // Any other ring room - free travel, including the west "town bridge"
+    // Any other region room - free travel, including the west "town bridge"
     // border into Trilby Highlands and the ranch's own seam down into
     // Eastern Hills North. (Also covers a transition back into the ranch
     // itself, which the old self-room check allowed explicitly.)
-    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+    if (QuickStartIsRegionCrossing(gRoomControls.area, gRoomControls.room,
                                  gRoomTransition.player_status.area_next,
                                  gRoomTransition.player_status.room_next)) {
         return;
@@ -18792,7 +18837,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
-    // Every AREA_HYRULE_FIELD ring room is policed here now - the ranch
+    // Every AREA_HYRULE_FIELD region room is policed here now - the ranch
     // keeps its own function below only because its exception list (wallet
     // cave, ranch houses, Goron cave, the 2-door connector) is longer.
     // The western spur (Castor Wilds, the Wind Ruins) is policed by the
@@ -18811,13 +18856,13 @@ static void QuickStartEnforceFieldRegionContainment(void) {
           gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
           gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
           gRoomControls.area == AREA_MT_CRENEL) ||
-        !QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
+        !QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
-    // Any other ring room - free travel across the whole ring, including
+    // Any other region room - free travel across the whole ring, including
     // the two "town bridge" borders and Castle Garden. See
-    // QuickStartIsRingCrossing.
-    if (QuickStartIsRingCrossing(gRoomControls.area, gRoomControls.room,
+    // QuickStartIsRegionCrossing.
+    if (QuickStartIsRegionCrossing(gRoomControls.area, gRoomControls.room,
                                  gRoomTransition.player_status.area_next,
                                  gRoomTransition.player_status.room_next)) {
         return;
@@ -19145,14 +19190,14 @@ static void QuickStartUpdateSwitchBridges(void) {
 
 static void QuickStartFillBoulderHoles(void) {
     s32 i, dx, dy;
-    // Every ring region, not just Trilby any more: this replaced Lon Lon
+    // Every named region, not just Trilby any more: this replaced Lon Lon
     // Ranch's retired teleport-and-stamp solver (whose SetTileType write
     // left a black square over each filled hole - see the RETIRED note by
     // QuickStartClearEasternHillsNpcs), and driving vanilla's own settle
-    // path is the method that renders correctly. Scoped to ring rooms so a
+    // path is the method that renders correctly. Scoped to region rooms so a
     // 2-door pool cave's pushable-rock PUZZLE is never solved out from
     // under the player.
-    if (!QuickStartIsRingRegionRoom(gRoomControls.area, gRoomControls.room)) {
+    if (!QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
     // Settled-room guard (QuickStartRoomSettled) - the scan and the
@@ -19335,7 +19380,7 @@ static void QuickStartFixupRoomFixtures(void) {
 // region the chain drew next. The ring's regions connect by their real
 // vanilla borders now (plus the two "town bridge" borders in transitions.c),
 // so walking between regions needs no synthetic trigger at all - see
-// QuickStartIsRingRegionRoom. The struct's exit box fields go with the next
+// QuickStartIsNamedRegionRoom. The struct's exit box fields go with the next
 // region-table reshape.
 
 // Is this one of the hub's rooms? The tower is one area (four floors) and
@@ -19931,7 +19976,7 @@ static void QuickStartSpawnHubHintsOnce(void) {
 //
 // Lake Hylia is the same shape of problem in a different liquid, so the
 // two-region special case became a small table instead of a second one:
-// each row names a ring region and the items that make it survivable, and
+// each row names a named region and the items that make it survivable, and
 // a drop into a row whose kit the player does not hold is re-drawn. Castor
 // Wilds and the Wind Ruins are islands in a swamp that the Pegasus Boots
 // or Roc's Cape cross; Lake Hylia is 165 tiles of shore around water that
@@ -19943,13 +19988,13 @@ typedef struct {
 } QuickStartRegionKitRule;
 
 static const QuickStartRegionKitRule sQuickStartRegionKitRules[] = {
-    { QS_RING_CW, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
-    { QS_RING_WR, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
-    { QS_RING_LH, ITEM_FLIPPERS, 0 },
+    { QS_REGION_CW, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
+    { QS_REGION_WR, ITEM_PEGASUS_BOOTS, ITEM_ROCS_CAPE },
+    { QS_REGION_LH, ITEM_FLIPPERS, 0 },
 };
 
 static bool32 QuickStartRegionNeedsSwampKit(s32 poolIndex) {
-    u8 ring = QuickStartRingRegionOfPoolIndex(poolIndex);
+    u8 ring = QuickStartRegionOfPoolIndex(poolIndex);
     s32 i;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRegionKitRules); i++) {
         if (sQuickStartRegionKitRules[i].ring == ring) {
@@ -19962,7 +20007,7 @@ static bool32 QuickStartRegionNeedsSwampKit(s32 poolIndex) {
 // TRUE when the player holds the kit for the region they are being dropped
 // into. Called only from the fall, where the drawn region is known.
 static bool32 QuickStartHasRegionKit(s32 poolIndex) {
-    u8 ring = QuickStartRingRegionOfPoolIndex(poolIndex);
+    u8 ring = QuickStartRegionOfPoolIndex(poolIndex);
     s32 i;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartRegionKitRules); i++) {
         const QuickStartRegionKitRule* rule = &sQuickStartRegionKitRules[i];
@@ -21001,20 +21046,46 @@ static const QuickStartFuser sQuickStartFusers[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_3A },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_48 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, KINSTONE_4C },
-    // Castor Wilds: five fusions, every one with a vanilla payload inside
-    // the region itself (user report: no kinstone sprites spawned here at
-    // all). KINSTONE_56/57/58 are the hole-reveal fusions for the Wilds'
-    // own Minish cracks - the very rooms the extension sites wire as
-    // ? rooms, so fusing IS how those doors open. KINSTONE_40 uncovers the
-    // west-edge pocket and KINSTONE_44 the Scarblade dojo hole (its world
-    // event also pays the Fast Spin scroll). Shapes 16/17/18 - all pieces
-    // the enemy droptable mints (18 is the single most-served shape in the
-    // existing scatter).
-    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_40 },
-    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_44 },
-    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_56 },
+    // Castor Wilds. This block used to claim "every one with a vanilla
+    // payload inside the region itself" and four of its five rows were not:
+    // checked against the ROM's own gKinstoneWorldEvents ->  gWorldEvents
+    // chain (tools/quickstart/kinstone_audit.py), KINSTONE_40's event fires
+    // in NORTH HYRULE FIELD, KINSTONE_58's in SOUTH HYRULE FIELD, and
+    // KINSTONE_44's and KINSTONE_56's in MINISH WOODS. Worse, 40 and 58
+    // were already listed against those rooms further up, so the table held
+    // two rows for one fusion - two sprites, one gate, one of them a spot
+    // spent on nothing.
+    //
+    // 57 stays: it is the one whose event really is here (entity rails at
+    // (40,232)). 44 and 56 move to Minish Woods, where their chests are.
+    // 49, 3E and 5B replace the deleted duplicates and are Castor Wilds'
+    // own, from the same audit.
     { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_57 },
-    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_58 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_49 },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_3E },
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, KINSTONE_5B },
+    // Minish Woods. Five fusions, every one verified by the audit to fire
+    // in ROOM_MINISH_WOODS_MAIN. KINSTONE_27 is the best of them: its event
+    // sits at (528,456), which is the business-scrub tree door - the ONE
+    // door the west-edge arrival component actually reaches, so this is the
+    // fusion a kitless player can both reach and use. 47's chest is in the
+    // same band at (200,360). 44, 56 and 4E fire further into the woods,
+    // which is the same bargain Castor Wilds' far-bank fusions make.
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, KINSTONE_27 },
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, KINSTONE_47 },
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, KINSTONE_44 },
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, KINSTONE_56 },
+    { AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, KINSTONE_4E },
+    // Lake Hylia. Both of its two. Their events are across the water rather
+    // than on the arrival shore, which is the region's own price anyway -
+    // QuickStartRegionNeedsSwampKit charges the Flippers to be dropped
+    // here, so a run operating in the lake is expected to be able to swim.
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, KINSTONE_12 },
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, KINSTONE_34 },
+    // Mount Crenel's entrance. Its one fusion, a chest at (120,88) - up the
+    // climb rather than on the arrival ledge, which matches what reach.h
+    // already charges for the region (bombs plus the Grip Ring).
+    { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, KINSTONE_63 },
 };
 
 // --- F10: the COMPASS's pause-map feeds (called from pauseMenuScreen6.c) --
@@ -21091,6 +21162,17 @@ u32 QuickStartChainMapMarker(u16* x, u16* y) {
 // room at that spacing, and a uniform row is worth more than one extra spot
 // in three of the five regions.
 #define QUICKSTART_FUSER_SPOTS_PER_REGION 9
+// The most rows the spot table may grow to. agbcc will not size a local
+// array from ARRAY_COUNT of a table declared later in the file, so the
+// ceiling is stated here and a compile-time assert in
+// QuickStartFuserPlacements holds the real table under it.
+#define QUICKSTART_FUSER_SPOT_ROOMS_MAX 16
+// Same idea for the fusion table itself. QuickStartSpawnRegionFusers held
+// its placement buffers at a literal 34, which was the row count on the day
+// it was written; the table is bigger now, and a placement pass writing
+// past the end of a stack array is how the fuser tier started reporting
+// sprites that were never spawned.
+#define QUICKSTART_FUSER_COUNT_MAX 64
 
 typedef struct {
     u8 area;
@@ -21155,16 +21237,29 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN,
       { { 24, 456 }, { 56, 440 }, { 72, 376 }, { 88, 408 }, { 88, 456 },
         { 104, 360 }, { 184, 360 }, { 216, 184 }, { 264, 136 } } },
+    // Mount Crenel's entrance ledge. Nine of the ten points in
+    // sQuickStartMtCrenelEnemyOffsets - every one of them inside the flood
+    // that the walked border arrival produced, which is the same
+    // provenance Castor Wilds', Minish Woods' and Lake Hylia's rows have.
+    // The tenth ({ 840, 376 }) is dropped because it sits between two
+    // others; the reward spot (872, 408) is not in the list at all.
+    //
+    // The ledge is 52 tiles, so these are as far apart as 52 tiles allow.
+    // That is the same trade Western Wood Center's corridor row makes, and
+    // it costs nothing: only one of the nine is occupied on a given run.
+    { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE,
+      { { 792, 440 }, { 840, 440 }, { 856, 408 }, { 888, 376 }, { 888, 424 },
+        { 920, 408 }, { 952, 376 }, { 952, 424 }, { 984, 392 } } },
 };
 
-// Which named ring region each row of sQuickStartFuserSpots sits in, in the
+// Which named named region each row of sQuickStartFuserSpots sits in, in the
 // same order. A parallel array rather than a field on the struct so the spot
 // table can still be pasted over wholesale by
 // tools/quickstart/find_fuser_spots.py without hand-editing every row.
-static const u8 sQuickStartFuserSpotRings[] = {
-    QS_RING_CG, QS_RING_LLR, QS_RING_NHF, QS_RING_SHF, QS_RING_TRIL,
-    QS_RING_EH, QS_RING_WW, QS_RING_WW, QS_RING_CW,
-    QS_RING_MW, QS_RING_LH,
+static const u8 sQuickStartFuserSpotRegions[] = {
+    QS_REGION_CG, QS_REGION_LLR, QS_REGION_NHF, QS_REGION_SHF, QS_REGION_TRIL,
+    QS_REGION_EH, QS_REGION_WW, QS_REGION_WW, QS_REGION_CW,
+    QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN,
 };
 
 #define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))
@@ -21220,7 +21315,7 @@ static s32 QuickStartFuserSpotSlot(s32 spotRoom, s32 arrival) {
 //
 // The candidate hosts are the fusion's own room plus every spot room whose
 // named region is ADJACENT to its home region on the map graph
-// (sQuickStartRingAdjacency - the same one-step metric the element's hiding
+// (sQuickStartRegionAdjacency - the same one-step metric the element's hiding
 // place already uses). Its own room is always a candidate, so a fusion can
 // still turn up where it always did.
 //
@@ -21237,15 +21332,25 @@ static s32 QuickStartFuserSpotSlot(s32 spotRoom, s32 arrival) {
 // room, and then to any room with space, so a fusion can never be dropped for
 // want of a spot. With 34 fusions and 81 spots there is always room.
 static void QuickStartFuserPlacements(u8* outRoom, u8* outSpot) {
-    u8 counts[9]; // QUICKSTART_FUSER_SPOT_ROOMS - agbcc wants a constant here
+    // Sized by the CEILING, not by "nine", and checked against the table.
+    // These two were literal 9s from when the spot table had nine rows.
+    // Minish Woods and Lake Hylia took it to eleven and nobody widened
+    // them, so the zeroing loop below wrote counts[9] and counts[10] off
+    // the end of a nine-byte stack array every time a run placed its
+    // fusions, and `cands` could take a twelfth candidate the same way.
+    u8 counts[QUICKSTART_FUSER_SPOT_ROOMS_MAX];
     s32 i, r;
+    {
+        typedef char QuickStartFuserSpotRoomsFit[
+            (QUICKSTART_FUSER_SPOT_ROOMS <= QUICKSTART_FUSER_SPOT_ROOMS_MAX) ? 1 : -1];
+    }
     for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
         counts[r] = 0;
     }
     for (i = 0; i < QUICKSTART_FUSER_COUNT; i++) {
         const QuickStartFuser* fuser = &sQuickStartFusers[i];
         s32 home = QuickStartFuserSpotRoomIndex(fuser->area, fuser->room);
-        s32 cands[9];
+        s32 cands[QUICKSTART_FUSER_SPOT_ROOMS_MAX];
         s32 n = 0, host;
         u32 h;
         if (home < 0) {
@@ -21255,11 +21360,11 @@ static void QuickStartFuserPlacements(u8* outRoom, u8* outSpot) {
         }
         cands[n++] = home;
         for (r = 0; r < QUICKSTART_FUSER_SPOT_ROOMS; r++) {
-            if (r == home || sQuickStartFuserSpotRings[r] == QS_RING_CW) {
+            if (r == home || sQuickStartFuserSpotRegions[r] == QS_REGION_CW) {
                 continue;
             }
-            if (sQuickStartRingAdjacency[sQuickStartFuserSpotRings[home]] &
-                (1u << sQuickStartFuserSpotRings[r])) {
+            if (sQuickStartRegionAdjacency[sQuickStartFuserSpotRegions[home]] &
+                (1u << sQuickStartFuserSpotRegions[r])) {
                 cands[n++] = r;
             }
         }
@@ -21665,7 +21770,7 @@ void QuickStartNoteFoodItem(u32 item) {
             } else {
                 CreateEzloHint(
                     TEXT_INDEX(TEXT_CUSTOM,
-                               (52 + QuickStartRingRegionOfPoolIndex(QuickStartElementRegionIndex()))),
+                               (52 + QuickStartRegionOfPoolIndex(QuickStartElementRegionIndex()))),
                     0);
             }
         }
@@ -22521,9 +22626,13 @@ static void QuickStartBrushFusionPayout(void) {
 #define QUICKSTART_FUSERS_PLACED_FLAG 47
 
 static void QuickStartSpawnRegionFusers(void) {
-    u8 hostRoom[34], hostSpot[34]; // QUICKSTART_FUSER_COUNT
+    u8 hostRoom[QUICKSTART_FUSER_COUNT_MAX], hostSpot[QUICKSTART_FUSER_COUNT_MAX];
     s32 i, hereRoom;
     bool32 complete = TRUE;
+    {
+        typedef char QuickStartFusersFit[
+            (QUICKSTART_FUSER_COUNT <= QUICKSTART_FUSER_COUNT_MAX) ? 1 : -1];
+    }
     // Settled-room guard (QuickStartRoomSettled): this runs OUTSIDE the
     // region dispatch, and its "already spawned" identity is an exact
     // origin-relative coordinate match - computed against a mid-transition
