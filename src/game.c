@@ -2049,7 +2049,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 92
+#define QUICKSTART_CONTENT_SITE_COUNT 106
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -5842,7 +5842,11 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING,
       (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_CHUCHU_POT_CHEST,
+      (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_FAIRY_FOUNTAIN,
       (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_GRIP_RING,
       (1 << QS_REGION_CREN), 0 },
@@ -5850,9 +5854,17 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB,
       (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_MUSHROOM_KEESE,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_SPINY_CHU_PUZZLE,
+      (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE,
       (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_WATER_HEART_PIECE,
+      (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_CRENEL,
       (1 << QS_REGION_CREN), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT,
       (1 << QS_REGION_CW), 0 },
@@ -5884,15 +5896,21 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_EH), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT,
       (1 << QS_REGION_EH), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_WAVEBLADE,
+      (1 << QS_REGION_LH), 0 },
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE,
       (1 << QS_REGION_LH), 0 },
     { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN,
       (1 << QS_REGION_LH), 0 },
     { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH,
       (1 << QS_REGION_LH), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA,
       (1 << QS_REGION_LH), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI,
+      (1 << QS_REGION_LH), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
       (1 << QS_REGION_LH), 0 },
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH,
       (1 << QS_REGION_LLR), 0 },
@@ -5914,7 +5932,17 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_MW), 0 },
     { AREA_DEEPWOOD_SHRINE, ROOM_DEEPWOOD_SHRINE_ENTRANCE,
       (1 << QS_REGION_MW), 0 },
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_MINISH_WOODS,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1,
+      (1 << QS_REGION_MW), 0 },
     { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BARREL_MINISH,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB,
+      (1 << QS_REGION_MW), 0 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY,
       (1 << QS_REGION_MW), 0 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WITCH_HUT,
       (1 << QS_REGION_MW), 0 },
@@ -16209,6 +16237,46 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, QUICKSTART_KINDS_SMALL, 104, 88 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, QUICKSTART_KINDS_SMALL, 120, 88 },
     { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH, QUICKSTART_KINDS_ANY, 296, 296 },
+    // --- The expansion regions catch up --------------------------------
+    //
+    // Minish Woods had four ? rooms, Lake Hylia five and the mountain
+    // eight, against North Hyrule Field's fourteen and Lon Lon's eleven.
+    // The rooms to close that gap already existed: every one below is a
+    // pocket its region owns (tools/quickstart/room_owner.py) that simply
+    // had no row here.
+    //
+    // Each spot is PROPOSED, not invented: tools/quickstart/site_candidates.py
+    // boots the ROM, lands the player on the room's real arrival - the
+    // (endX, endY) of the transition row that points into it - floods the
+    // walkable grid from there, and takes the open tile farthest from that
+    // arrival. Farthest, because landing ON the content spot means
+    // collecting the reward on the spawn frame. The kind follows the
+    // room's own measured floor: >= 50 open tiles ANY, 25-49 LARGE, under
+    // that SMALL, the same size rule the Aug 2026 reclassification used.
+    //
+    // Mount Crenel: six more, all in the Crenel caves and the mountain's
+    // Great Fairy.
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_FAIRY_FOUNTAIN, QUICKSTART_KINDS_ANY, 184, 40 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_MUSHROOM_KEESE, QUICKSTART_KINDS_ANY, 40, 232 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_CHUCHU_POT_CHEST, QUICKSTART_KINDS_LARGE, 40, 56 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_SPINY_CHU_PUZZLE, QUICKSTART_KINDS_LARGE, 136, 72 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_WATER_HEART_PIECE, QUICKSTART_KINDS_SMALL, 104, 168 },
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_CRENEL, QUICKSTART_KINDS_ANY, 200, 120 },
+    // Minish Woods: five more. The two Minish-sized ones are behind the
+    // Minish Cap like everything else in the woods; the Great Fairy and the
+    // north cave are not.
+    { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_MINISH_WOODS, QUICKSTART_KINDS_ANY, 200, 120 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BARREL_MINISH, QUICKSTART_KINDS_ANY, 104, 120 },
+    { AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1, QUICKSTART_KINDS_LARGE, 56, 56 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY, QUICKSTART_KINDS_LARGE, 56, 72 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, QUICKSTART_KINDS_SMALL, 104, 72 },
+    // Lake Hylia: three more. Its two Minish cracks are entered through
+    // holes rather than doors, so no transition row points into them and
+    // the proposer has no arrival to land on - they stay out until
+    // something can measure them.
+    { AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, QUICKSTART_KINDS_ANY, 184, 40 },
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE, QUICKSTART_KINDS_LARGE, 56, 72 },
+    { AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, QUICKSTART_KINDS_SMALL, 552, 408 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward

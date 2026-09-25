@@ -1265,6 +1265,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/25 integration batch, part two: content, and where it can go
+
+Fourteen new ? rooms, all in the three expansion regions, all in pockets
+those regions already owned and simply had no row for. Content sites per
+region now read CREN 16, NHF 14, CW 12, LLR 11, **MW 9**, SHF 8, TRIL 8,
+**LH 8** - which is the shape the user asked for, against the 4/5/8 the
+three started at.
+
+Every spot is proposed by `tools/quickstart/site_candidates.py` rather than
+chosen by eye: it boots the ROM, lands the player on the room's REAL arrival
+(the `endX, endY` of the transition row that points into it - for a
+WARP_TYPE_AREA row that pair is the landing inside the destination, which is
+why Eastern Hills North's farm-house door reads (64,72) -> (120,136)),
+floods the walkable grid from there, and takes the open tile farthest from
+the arrival. Farthest, because landing ON the content spot collects the
+reward on the spawn frame. The kind comes from the room's own measured
+floor: 50+ open tiles ANY, 25-49 LARGE, under that SMALL.
+
+Two Lake Hylia rooms are deliberately still out - its two Minish cracks are
+entered through holes rather than doors, so no transition row points into
+them and the proposer has no arrival to stand on.
+
+**Open measurement: Mount Crenel's entrance has two different answers.**
+Flooded from the Trilby border arrival it is 52 tiles (which is what
+`QUICKSTART_MTCRENEL_ROOM_SQUARES` and the region's ten enemy offsets are
+built on); flooded from the survey's own coordinate,
+`tools/quickstart/crenel_spots.py` reports 198. Both cannot be the
+component a player arriving from Trilby stands in. Until that is settled the
+enemy grid stays at the conservative reading, because the expensive way to
+be wrong here is the one the user already reported once - enemies spawning
+behind a wall.
+
 ### The 09/25 integration batch: the expansion regions join the rules
 
 "Ring" is retired as a word. The regions are regions: `QS_REGION_*`,
