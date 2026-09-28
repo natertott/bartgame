@@ -1320,6 +1320,15 @@ fusion-revealed and the row wrong.
 
 ### The 09/28 batch: the last of the pool, and a door that would not let go
 
+**Melari's Mine is back on vanilla too**, which takes RETARGETED to 5 and
+empties the category of leftovers entirely - all five that remain are the
+missing-Hyrule-Town stitching. That door had been pointed at Castor Darknut
+Hall to stop it racing a custom `sQuickStartLinks` box covering the same
+spot; both Castor Darknut Hall <-> Melari's Mine link rows were retired from
+that table a while ago, so there was nothing left to race. Nothing is
+orphaned: Darknut Hall's real way in is `gExitList_CastorCaves_Darknut`
+inside Castor Wilds, which the walked survey uses and which is untouched.
+
 **The single-door "? room" pool's retargets are gone.** Twenty-one exit
 lists still sent their only door to Castle Garden Main - three dojos, three
 tree hollows, ten Minish house interiors, Gina's grave, the Veil Falls

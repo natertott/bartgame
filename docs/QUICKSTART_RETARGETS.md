@@ -13,12 +13,13 @@ RETARGETED from 65 to 27. Retiring the SINGLE-door pool's retargets took it
 from 27 to 6 - twenty-one rooms whose only door sent the player to Castle
 Garden Main (three dojos, three tree hollows, ten Minish house interiors,
 Gina's grave, the Veil Falls heart-piece cave, the Minish Woods Great Fairy)
-now open where they really open.
+now open where they really open. Melari's Mine's door went back to vanilla
+too, taking it to 5.
 
-The six that remain are all deliberate and none of them is a pool leftover:
-four Hyrule Town borders stitched into neighbouring field rooms because the
-mode has no town, Stockwell's shop moved into the overworld, and Melari's
-Mine's door aligned with the custom link it was racing.
+**Every one of the five that remain is the same thing:** the mode has no
+Hyrule Town, so the four field rooms that border it are stitched to each
+other instead, and Stockwell's shop - a Hyrule Town interior - opens into
+North Hyrule Field. Nothing is left over from any retired feature.
 
 | class | exit list | door (warp, x, y) | vanilla | this build |
 |---|---|---|---|---|

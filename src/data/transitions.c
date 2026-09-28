@@ -1032,22 +1032,18 @@ const Transition* const gExitLists_MinishVillage[] = {
 };
 
 const Transition gExitList_MelarisMine_Main[] = {
-#ifdef QUICKSTART
-    // Retargeted to Castor Darknut Hall (game.c's own custom link's
-    // destination for this same box) instead of the old Crenel Minish
-    // Paths - this real door's own position is the exact spot that custom
-    // link covers, and it was found winning the race against it in
-    // practice (same class of bug the Grimblade retarget below already
-    // works around), sending the player to Crenel Minish Paths instead of
-    // Hall. Same destination and spawn either way now, so the race no
-    // longer matters. facing_direction 0x4 (south) matches the user's
-    // request that Link land facing down here.
-    { WARP_TYPE_AREA, 0x78, 0x38, 0x77, 0x4a, TRANSITION_SHAPE_AREA_12x12, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-#else
+    // VANILLA. This door spent a long time pointed at Castor Darknut Hall,
+    // to stop it racing a custom sQuickStartLinks box that covered the same
+    // spot and sent the player somewhere else. That race is over: both
+    // Castor Darknut Hall <-> Melari's Mine link rows were retired from
+    // sQuickStartLinks, so nothing competes with this door any more and the
+    // retarget was pure leftover.
+    //
+    // Nothing is orphaned by putting it back. Castor Darknut Hall's real
+    // vanilla way in is gExitList_CastorCaves_Darknut, inside Castor Wilds,
+    // which is untouched and is the route the walked survey uses.
     { WARP_TYPE_AREA, 0x78, 0x38, 0x78, 0xa8, TRANSITION_SHAPE_AREA_12x12, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI,
       1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
-#endif
     { WARP_TYPE_AREA, 0x70, 0x12c, 0xbc, 0x138, TRANSITION_SHAPE_AREA_12x12, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x6, 0x0, 0x0, 0x0 },
     // Back on its vanilla destination. It spent one session retargeted to
