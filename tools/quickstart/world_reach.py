@@ -66,6 +66,11 @@ BOOTS = 'boots'
 MITTS = 'mitts'                # Mole Mitts, "dig mitts" in the survey
 GUST = 'gust_jar'
 MINISH = 'minish_cap'          # being able to shrink
+# The Ocarina of Wind. A gate rather than a convenience in exactly one
+# place: Lake Hylia's wind-crest pocket has no walkable route in at all, so
+# warping to the crest IS the entrance. Testable at run time, unlike MINISH,
+# so a place priced at it is offerable rather than invisible.
+OCARINA = 'ocarina'
 LONLON_KEY = 'lonlon_key'
 GRAVEYARD_KEY = 'graveyard_key'
 
@@ -159,9 +164,15 @@ region('LLR', 'Lon Lon Ranch', ('HYRULE_FIELD', 'LON_LON_RANCH', 298, 968))
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 13, 565, [[BOMBS]], 'exit')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', -6, 157, FREE, 'exit')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 15, [[PACCI]], 'exit')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 32936, -1184, None,
-  'POCKET, unreachable from this room at all - only from its Veil Falls side. '
-  'Holds a fusion-rewarded chest.')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 168, 55, None,
+  'POCKET at tile (10,3), holding a kinstone chest. The mapexplore survey '
+  'walked it and prices it at the Cane of Pacci - the only way in is up to '
+  'Veil Falls and back down. It stays NOT REACHABLE here because this build '
+  "has no Veil Falls: Lon Lon Ranch's two border rows to it and North Hyrule "
+  "Field's one are compiled out under QUICKSTART (docs/QUICKSTART_RETARGETS."
+  'md, the three BLOCKED rows), so the cane buys nothing. Re-price this at '
+  '[[PACCI]] the day Veil Falls is opened. The coordinate was 32936,-1184 - '
+  'a mid-transition stamp, not a place.')
 d('LLR', 'MINISH_CRACKS', 'LON_LON_RANCH_NORTH', 120, 56, [[PACCI, MINISH]])
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 396, 253, [[MINISH, PACCI]],
   'POCKET (tornado float). Only spawn content here when these are held.')
@@ -571,16 +582,191 @@ d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, FREE,
   'exit; the border the player arrives through, walkable both ways')
 d('LH', 'HOUSE_INTERIORS_2', 'STOCKWELL_LAKE_HOUSE', 120, 120, FREE,
   'the one door the arrival shore reaches - 67 tiles of walk, no gate')
-d('LH', 'HOUSE_INTERIORS_4', 'MAYOR_LAKE_CABIN', 120, 160, [[FLIPPERS, UNSURVEYED]],
-  'far shore')
-d('LH', 'TREE_INTERIORS', 'WAVEBLADE', 120, 120, [[FLIPPERS, UNSURVEYED]])
-d('LH', 'LAKE_WOODS_CAVE', 'MAIN', 584, 424, [[FLIPPERS, UNSURVEYED]])
-d('LH', 'MINISH_HOUSE_INTERIORS', 'LAKE_HYLIA_OCARINA', 120, 120, [[MINISH, UNSURVEYED]])
-d('LH', 'MINISH_HOUSE_INTERIORS', 'LIBRARI', 120, 120, [[MINISH, UNSURVEYED]])
-d('LH', 'MINISH_CAVES', 'LAKE_HYLIA_NORTH', 392, 424, [[MINISH, UNSURVEYED]])
-d('LH', 'MINISH_WOODS', 'MAIN', 0, 16, [[UNSURVEYED]],
-  'exit on paper - the south border - but the south edge is not in the '
-  'arrival component')
+# Everything the arrival shore cannot reach has MOVED, not been deleted: the
+# walked survey found that Lake Hylia is four disconnected places, and each
+# of the rooms that used to sit here carrying UNSURVEYED now sits in the
+# block that can actually get to it.
+#
+#   the mayor's cabin, the Waveblade tree and dojo, the Minish caves and
+#   cracks, the dig caves, the Temple of Droplets   -> LH-LADDER
+#   Librari and the Ocarina house                   -> LH-CREST
+#   the Minish Woods border                         -> LH-SW
+#
+# LAKE_WOODS_CAVE/MAIN is the one that changes direction rather than price:
+# it is not somewhere you go from this shore, it is the LADDER you arrive
+# through, and the MW block owns that row.
+d('LH', 'LAKE_WOODS_CAVE', 'MAIN', 584, 424, None,
+  'the Lake Woods ladder is an ENTRANCE to the lake, not a destination from '
+  'this shore - see the LH-LADDER block, which starts where it lets out')
+d('LH', 'MINISH_WOODS', 'MAIN', 0, 16, None,
+  "the south border is in the isolated south-west corner, not in this "
+  'shore\'s component - see LH-SW')
+
+
+# --- Minish Village --------------------------------------------------------
+#
+# WALKED, Sep 2026, from the village's SOUTH entrance. Its own map rather
+# than a handful of rows inside Minish Woods: the village is fourteen doors
+# and two rooms, and hanging all of that off the MW start would have said
+# nothing about what is reachable once you are actually inside it.
+#
+# The whole place is Minish-sized, so the Minish Cap is the price of being
+# here at all - that is the region requirement below, not a token on every
+# row. The Flippers ride along with it because the only measured way in is
+# the Minish path from Minish Woods, which the MW block prices at
+# [[MINISH, FLIPPERS]] (and whose Flippers term is that survey's own
+# uncertainty about the floating leaves - if the leaves turn out to be free,
+# this whole region gets cheaper with it).
+#
+# "No blockers except for various story flags/events" is the survey's verdict
+# on every door not named below. The mode pays the village's story at boot
+# (M_PRIEST_TALK, M_PRIEST_MOVE, M_ELDER_TALK1ST, M_ELDER_TALK2ND,
+# MORI_00_KOBITO, KOBITO_MORI_1ST and the rest, in GameTask_Transition), for
+# the same reason the Crenel bean is pre-grown: a run cannot do a chore that
+# needs a story it is not playing. So those doors are FREE here rather than
+# carrying an unpayable STORY token.
+region('MV', 'Minish Village', ('MINISH_VILLAGE', 'MAIN', 520, 934),
+       room_req=[[MINISH, FLIPPERS]],
+       note="the user's walked survey, from the village's south entrance")
+d('MV', 'MINISH_VILLAGE', 'SIDE_HOUSE_AREA', 115, 115, FREE,
+  'tile (7,7); a HEART CONTAINER, and it costs nothing once you are in the '
+  'village. Reached across the seam the two village rooms share - there is '
+  'no transition row between them.')
+d('MV', 'MINISH_HOUSE_INTERIORS', 'SIDE_AREA', 128, 120, [[FLIPPERS]],
+  'tile (8,7); the one door inside the village with a real gate on it')
+# The rest of the village's doors, from its own exit list. All FREE per the
+# survey; listed individually rather than summarised so the chain placer can
+# use them and so a later measurement has somewhere to land.
+d('MV', 'MINISH_HOUSE_INTERIORS', 'GENTARI_MAIN', 120, 120, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'GENTARI_EXIT', 104, 80, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'RED', 128, 120, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'GREEN', 128, 120, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'BLUE', 128, 120, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'SHOE_MINISH', 120, 120, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'POT_MINISH', 120, 200, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'BARREL_MINISH', 120, 320, FREE)
+d('MV', 'MINISH_HOUSE_INTERIORS', 'FESTARI', 232, 184, FREE,
+  'Festari has to have moved out of the doorway; the mode sets M_PRIEST_MOVE '
+  'at boot, so the story gate is already paid')
+d('MV', 'MINISH_PATHS', 'MINISH_VILLAGE', 120, 24, FREE, 'exit, back to the path')
+d('MV', 'MINISH_WOODS', 'MAIN', 456, 824, FREE, 'exit, north-west')
+d('MV', 'MINISH_WOODS', 'MAIN', 424, 840, FREE, 'exit, west-north')
+
+# --- Lake Hylia: the wind-crest pocket -------------------------------------
+#
+# WALKED. A patch of ground with a wind crest, a tree stump and two Minish
+# rooms on it, and NO walkable route in from anywhere: the only way to stand
+# here is to play the Ocarina and warp to the crest at (168,440), tile
+# (10,27). That makes the Ocarina the entrance rather than a shortcut, which
+# is why it is the region requirement.
+#
+# It is also the one gate in this whole table the game can actually TEST and
+# that the survey did not already have a token for - ITEM_OCARINA is real
+# inventory, unlike MINISH or MAZE - so everything in here is offerable to
+# the chain placer instead of invisible to it.
+region('LH-CREST', 'Lake Hylia (wind-crest pocket)', ('LAKE_HYLIA', 'MAIN', 168, 440),
+       room_req=[[OCARINA]],
+       note='no walkable route in at all; the Ocarina warp IS the entrance')
+d('LH-CREST', 'MINISH_HOUSE_INTERIORS', 'LAKE_HYLIA_OCARINA', 120, 120, FREE,
+  'tile (7,7); nothing beyond getting to the crest')
+d('LH-CREST', 'MINISH_CAVES', 'LAKE_HYLIA_LIBRARI', 72, 104, [[MINISH, FUSION]],
+  'tile (4,6); the cave mouth is revealed by a kinstone fusion')
+d('LH-CREST', 'MINISH_HOUSE_INTERIORS', 'LIBRARI', 120, 120,
+  [[MINISH, FUSION, FLIPPERS], [MINISH, FUSION, CAPE]],
+  'tile (7,7); through the fusion-revealed cave, whose crossing takes the '
+  'Flippers or the cape - so this is the crest, the cap, the fusion and one '
+  'of those two')
+
+# --- Lake Hylia: the isolated south-west corner ----------------------------
+#
+# WALKED. A corner of Lake Hylia with three ways out of the region and no
+# way into the rest of it. Nothing in here is gated; the corner is simply
+# somewhere you arrive from a neighbour rather than from the lake.
+region('LH-SW', 'Lake Hylia (south-west corner)', ('LAKE_HYLIA', 'MAIN', 8, 757),
+       note='cut off from the rest of Lake Hylia; entered from MW or LLR')
+d('LH-SW', 'LAKE_HYLIA', 'MAIN', 188, 952, FREE,
+  'exit, tile (11,59) -> MINISH_WOODS/MAIN (428,16)')
+d('LH-SW', 'LAKE_HYLIA', 'MAIN', 8, 907, FREE,
+  'exit, tile (0,56) -> HYRULE_FIELD/LON_LON_RANCH (712,907)')
+
+# --- Lake Hylia: the ladder pocket, which is most of the lake --------------
+#
+# WALKED, and it replaces almost everything the flood guessed. The start is
+# where the Lake Woods cave ladder from MINISH_WOODS lets the player out -
+# LAKE_HYLIA/MAIN (328,856), tile (20,53) - and from there the lake opens up
+# in three price bands: free on the near shore, the Flippers or the cape to
+# cross, and the cape plus the Mole Mitts for the whole dig-cave system.
+#
+# The dig caves are worth naming: HYLIA_DIG_CAVES/1 alone holds SEVEN golden
+# chests and its own exit into a Lon Lon Ranch pocket with a heart piece in
+# it. That is the densest single room in the survey and all of it sits
+# behind the same two items.
+region('LH-LADDER', 'Lake Hylia (from the Lake Woods ladder)',
+       ('LAKE_HYLIA', 'MAIN', 328, 856),
+       note="the user's walked survey; entered from MINISH_WOODS via "
+            'LAKE_WOODS_CAVE/MAIN')
+# --- the near shore -------------------------------------------------------
+d('LH-LADDER', 'HOUSE_INTERIORS_4', 'MAYOR_LAKE_CABIN', 120, 160, FREE,
+  'tile (7,10); assuming the door is unlocked')
+d('LH-LADDER', 'MINISH_PATHS', 'LAKE_HYLIA', 120, 24, [[MINISH, BOOTS]],
+  'tile (7,1)')
+d('LH-LADDER', 'HOUSE_INTERIORS_4', 'MAYOR_LAKE_CABIN', 184, 72, [[MINISH, BOOTS]],
+  "tile (11,4); the cabin's second way in, a Minish door")
+# --- across the water -----------------------------------------------------
+d('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 423, 791, [[FLIPPERS]],
+  'tile (26,49); a HEART PIECE')
+d('LH-LADDER', 'HOUSE_INTERIORS_2', 'STOCKWELL_LAKE_HOUSE', 120, 120, [[FLIPPERS]],
+  'tile (7,7)')
+d('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 8, 445, [[FLIPPERS]],
+  'exit, tile (0,27) -> Lon Lon Ranch')
+d('LH-LADDER', 'TREE_INTERIORS', 'WAVEBLADE', 120, 120, [[FLIPPERS], [CAPE]],
+  "tile (7,7); the dojo's atrium, NOT content of its own - the survey also "
+  'suspects a kinstone fusion here, unconfirmed, so this is an upper bound '
+  'on the crossing and a lower bound on the total')
+d('LH-LADDER', 'DOJOS', 'WAVEBLADE', 120, 152, [[FLIPPERS], [CAPE]],
+  'tile (7,9); through the atrium above, same unconfirmed fusion')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '0', 136, 135, [[FLIPPERS, MITTS], [CAPE, MITTS]],
+  'tile (8,8)')
+# --- the cape half of the lake -------------------------------------------
+d('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 530, 242, [[CAPE]],
+  'tile (33,15); a HEART PIECE')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 744, 247, [[CAPE, MITTS]], 'tile (46,15)')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 776, 136, [[CAPE, MITTS]], 'tile (48,8)')
+d('LH-LADDER', 'LAKE_HYLIA', 'BEANSTALK', 904, 72, [[CAPE, MITTS]], 'tile (56,4)')
+d('LH-LADDER', 'LAKE_HYLIA', 'BEANSTALK', 520, 120, [[CAPE, MITTS]], 'tile (32,7)')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 923, 198, [[CAPE, MITTS]],
+  'tile (57,12); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 215, 102, [[CAPE, MITTS]],
+  'tile (13,6); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 442, 102, [[CAPE, MITTS]],
+  'tile (27,6); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 843, 54, [[CAPE, MITTS]],
+  'tile (52,3); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 664, 359, [[CAPE, MITTS]],
+  'tile (41,22); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 536, 359, [[CAPE, MITTS]],
+  'tile (33,22); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 520, 311, [[CAPE, MITTS]],
+  'tile (32,19); GOLDEN CHEST')
+d('LH-LADDER', 'HYLIA_DIG_CAVES', '1', 136, 263, [[CAPE, MITTS]],
+  'tile (8,16); the dig system\'s own exit, out into a Lon Lon Ranch pocket '
+  'at LON_LON_RANCH (568,104)')
+d('LH-LADDER', 'HYRULE_FIELD', 'LON_LON_RANCH', 537, 127, [[CAPE, MITTS]],
+  'tile (33,7); a HEART PIECE, in the Lon Lon pocket the dig caves open into '
+  '- priced from HERE, which is the only route the survey found to it')
+# --- the Minish layer, which wants boots and water as well ----------------
+d('LH-LADDER', 'MINISH_CRACKS', 'LAKE_HYLIA_EAST', 152, 48,
+  [[BOOTS, MINISH, FLIPPERS]], 'tile (9,3)')
+d('LH-LADDER', 'MINISH_CAVES', 'LAKE_HYLIA_NORTH', 392, 424,
+  [[BOOTS, MINISH, FLIPPERS]], 'tile (24,26)')
+d('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 536, 936, [[BOOTS, MINISH, FLIPPERS]],
+  'exit, tile (33,58) - a Minish hole out to MINISH_WOODS/MAIN (776,40)')
+d('LH-LADDER', 'MINISH_CAVES', 'MINISH_WOODS_NORTH_1', 120, 264,
+  [[BOOTS, MINISH, FLIPPERS]],
+  'reached from the Minish Woods pocket the hole above lets out in, not from '
+  'the woods proper')
+d('LH-LADDER', 'TEMPLE_OF_DROPLETS', 'ENTRANCE', 264, 200,
+  [[BOOTS, MINISH, FLIPPERS], [BOOTS, MINISH, CAPE]], 'tile (16,12)')
 
 # ------------------------------------------------------------------ checks --
 def _fmt(req):

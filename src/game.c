@@ -2179,7 +2179,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 106
+#define QUICKSTART_CONTENT_SITE_COUNT 105
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -16545,7 +16545,14 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // the proposer has no arrival to land on - they stay out until
     // something can measure them.
     { AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, QUICKSTART_KINDS_ANY, 184, 40 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE, QUICKSTART_KINDS_LARGE, 56, 72 },
+    // (The Waveblade TREE is not a site. Per the user it is the dojo's
+    // atrium and nothing else - one screen you walk through on the way in -
+    // so putting an event in it made two ? rooms out of one place. It is
+    // still blessed as a pocket interior in QuickStartIsPocketInteriorRoom,
+    // because Lake Hylia is policed and the tree is the room the door from
+    // the lake actually opens into; without that blessing the door would be
+    // cancelled the frame it fired and the dojo behind it would be
+    // unreachable. Same standing as the Boomerang tree hollows.)
     { AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, QUICKSTART_KINDS_SMALL, 552, 408 },
 };
 // What this site's kill pays, if its row overrides the default. Same
@@ -16759,12 +16766,99 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == AREA_TREE_INTERIORS && room == ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN) {
         return TRUE;
     }
+    // Lake Hylia's Waveblade tree. The dojo behind it is the content site;
+    // the tree is the atrium the lake's door opens into, and the two are a
+    // pair. It stopped being a site when the user pointed out that it is
+    // just a room you walk through, which left it needing a name here or
+    // the door in would be cancelled and the dojo lost with it.
+    if (area == AREA_TREE_INTERIORS && room == ROOM_TREE_INTERIORS_WAVEBLADE) {
+        return TRUE;
+    }
     // Castor Wilds' north through-cave: two doors, both back out to the
     // Wilds, linking the dry banks the swamp separates. A pure connector -
     // no site row, no flags - but it needs blessing here or Castor Wilds'
     // own internal traversal dies at both cave mouths. Same standing as
     // North Hyrule Field's through-cave above.
     if (area == AREA_CASTOR_CAVES && room == ROOM_CASTOR_CAVES_NORTH) {
+        return TRUE;
+    }
+    // LAKE HYLIA's pockets, from the same walked survey.
+    //
+    // tools/quickstart/survey_gate.py asked the gate about every place the
+    // survey names and found seven cancelled on the way in. Six of them are
+    // ordinary pockets and are blessed here; the seventh is the Temple of
+    // Droplets, a DUNGEON, which stays out - that is a decision about what
+    // this mode contains, not an oversight.
+    //
+    // What the six actually are, from their own exit lists:
+    //
+    //   MINISH_PATHS/LAKE_HYLIA      two borders: back to the lake, and into
+    //                                the mayor's cabin (already a site).
+    //   MINISH_CRACKS/LAKE_HYLIA_EAST  one border, back to the lake.
+    //   MINISH_CAVES/LAKE_HYLIA_LIBRARI  two doors, both back to the lake.
+    //                                The house it leads to (Librari) was
+    //                                already blessed, so the route was open
+    //                                at both ends and shut in the middle.
+    //   HYLIA_DIG_CAVES/0 and /1     the dig system. /1 holds SEVEN golden
+    //                                chests and its own hole out into a Lon
+    //                                Lon Ranch pocket with a heart piece in
+    //                                it - the densest room in the survey,
+    //                                and all of it was unreachable.
+    //   LAKE_HYLIA/BEANSTALK         not a beanstalk to the clouds despite
+    //                                the name: its only three doors go into
+    //                                HYLIA_DIG_CAVES/1. A surface island
+    //                                inside the dig system. It is left OUT
+    //                                of QuickStartRegionOfRoom on purpose
+    //                                (naming it a region room would start
+    //                                policing it and cancel its own way
+    //                                out); blessing it as a pocket is the
+    //                                other half of that decision.
+    //
+    // Nothing here leaves the run: every exit lands in Lake Hylia, in Lon
+    // Lon Ranch, in a content site, or deeper in the same pocket.
+    if (area == AREA_MINISH_PATHS && room == ROOM_MINISH_PATHS_LAKE_HYLIA) {
+        return TRUE;
+    }
+    if (area == AREA_MINISH_CRACKS && room == ROOM_MINISH_CRACKS_LAKE_HYLIA_EAST) {
+        return TRUE;
+    }
+    if (area == AREA_MINISH_CAVES && room == ROOM_MINISH_CAVES_LAKE_HYLIA_LIBRARI) {
+        return TRUE;
+    }
+    if (area == AREA_HYLIA_DIG_CAVES) {
+        return TRUE;
+    }
+    if (area == AREA_LAKE_HYLIA && room == ROOM_LAKE_HYLIA_BEANSTALK) {
+        return TRUE;
+    }
+    // MINISH VILLAGE, and the Minish path that leads to it.
+    //
+    // The user's walked survey of Minish Woods found that most of the woods
+    // is not reachable from the seam at all - it is reachable THROUGH the
+    // village, down a Minish path at [[MINISH, FLIPPERS]]. Which made the
+    // village the most load-bearing pocket in the region and, until now,
+    // a cancelled one: MINISH_WOODS is a policed region room, so its door
+    // into MINISH_PATHS/MINISH_VILLAGE needed a blessing and did not have
+    // one. Exactly the shape Melari's Mine was in.
+    //
+    // Three rooms, and the third is the one that would have trapped a
+    // player. The path and the village proper are what the woods opens
+    // into. MINISH_VILLAGE/SIDE_HOUSE_AREA is blessed because its only door
+    // leads into MINISH_HOUSE_INTERIORS, a CONTAINED area, so walking back
+    // out of the side house is policed and passes only if the room it
+    // returns to is a pocket interior. The village's other eleven doors all
+    // return to MINISH_VILLAGE/MAIN and are covered by blessing that.
+    //
+    // No way out of the run is opened: the path's two borders go to the
+    // village and back to Minish Woods, and the village's own borders go to
+    // the path and back to Minish Woods (src/data/transitions.c, all
+    // vanilla - the pool retargets that used to point ten of these houses
+    // at Castle Garden are long gone).
+    if (area == AREA_MINISH_PATHS && room == ROOM_MINISH_PATHS_MINISH_VILLAGE) {
+        return TRUE;
+    }
+    if (area == AREA_MINISH_VILLAGE &&
+        (room == ROOM_MINISH_VILLAGE_MAIN || room == ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA)) {
         return TRUE;
     }
     // Mount Crenel's Minish holes, and Melari's Mine behind them.
@@ -22469,8 +22563,13 @@ typedef struct {
 // Coordinates read straight off vanilla's own placements
 // (entity_headers.s npc_raw subtype=0x1b / the Lon Lon delayed list):
 // Tingle himself in South Hyrule Field, Ankle in Lon Lon Ranch, David
-// Jr. in Trilby Highlands. The fourth sibling's stump is Lake Hylia,
-// outside the ring, so Knuckle sits this mode out.
+// Jr. in Trilby Highlands, and Knuckle at his Lake Hylia stump.
+//
+// Knuckle used to sit this mode out, on the grounds that Lake Hylia was
+// outside the ring. It has not been for a while - the lake is a named
+// region with a pool row, content sites and a walked survey - so the
+// exclusion was stale rather than deliberate, and the user asked for him
+// back. His spot is (325,279), tile (20,17), from the same walked survey.
 //
 // Kinstones: all three take the same red piece (0x71), mirroring
 // vanilla, where the sibling fusions are one family. 2A/2B are the two
@@ -22487,6 +22586,13 @@ static const QuickStartTingle sQuickStartTingles[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, KINSTONE_2A, 0, 0x3b8, 0x118 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, KINSTONE_2B, 1, 0xb8, 0x108 },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, KINSTONE_2C, 2, 0xb8, 0x78 },
+    // KINSTONE_28 rather than 2D: 2D is already a fuser row in North Hyrule
+    // Field. Which id a tingle row carries does not matter beyond being
+    // unique - the fusion cutscene is skipped for all of them
+    // (QuickStartKinstoneIsTingle) and the payout is the point - and the
+    // four GF_TINGLE_PAID_BIT slots were sized for four siblings from the
+    // start, so the fourth needed no new state.
+    { AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, KINSTONE_28, 3, 0x145, 0x117 },
 };
 
 // Exported for kinstoneMenu.c's KinstoneMenu_Type2: is this fusion one of

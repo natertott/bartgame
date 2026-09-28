@@ -1317,6 +1317,82 @@ business scrub's tree is recorded FREE because the collision flood reaches
 it, but KINSTONE_27's world event fires at exactly that door, so it may be
 fusion-revealed and the row wrong.
 
+### Minish Village and Lake Hylia, walked
+
+The user walked the mapexplore build again and measured Minish Village and
+three separate pieces of Lake Hylia. Transcribed into `world_reach.py`; the
+reach table goes from 195 destination rows to 240.
+
+**Lake Hylia is four places, not one.** That is the finding that reshaped the
+block. The survey walked it from four different entrances and they do not
+connect: the Lon Lon shore (the old `LH` start), a wind-crest pocket with no
+walkable route in at all, an isolated south-west corner that only touches
+Minish Woods and Lon Lon Ranch, and the big ladder pocket where the Lake
+Woods cave lets out - which is most of the lake. Four survey keys now, the
+same treatment Eastern Hills and Western Wood already get, all mapping to
+`QS_REGION_LH`. Every row that used to sit on the Lon Lon shore carrying
+`UNSURVEYED` has MOVED to the block that can actually reach it.
+
+**A new token, `OCARINA`.** The wind-crest pocket has no route in: playing
+the Ocarina and warping to the crest IS the entrance. It is also the only
+new gate in the table the game can genuinely test - `ITEM_OCARINA` is real
+inventory, unlike `MINISH` or `MAZE` - so everything in that pocket is
+offerable to the chain placer rather than invisible to it.
+
+**The dig caves are the densest room in the survey.** `HYLIA_DIG_CAVES/1`
+holds seven golden chests and its own hole out into a Lon Lon Ranch pocket
+with a heart piece in it, all behind Roc's Cape plus the Mole Mitts. None of
+it was reachable.
+
+**Minish Village is its own map**, fourteen doors and two rooms, walked from
+the south entrance. Everything in it is free once you are inside except the
+side house, which wants the Flippers; the heart container in
+`SIDE_HOUSE_AREA` costs nothing. The story flags the survey notes are
+already paid at boot.
+
+**And most of it was cancelled.** `tools/quickstart/survey_gate.py` is the
+new standing check: for every room the survey names, it finds the rooms
+whose exit lists lead into it and asks the shipped containment functions
+from the real door, from both sides. A room is a TRAP only if every one of
+its own exits is cancelled. Nine rooms were blessed as a result -
+
+  * Minish Village's path, the village and its side-house area. The village
+    is the route to most of Minish Woods, so this was the most load-bearing
+    cancelled pocket in the game. `MINISH_VILLAGE/SIDE_HOUSE_AREA` is the
+    one that would have trapped a player: its only door leads into a
+    CONTAINED area, so walking back out is policed.
+  * Lake Hylia's Minish path, its east crack, the Librari cave (whose house
+    on the far side was already blessed - the route was open at both ends
+    and shut in the middle), both dig caves, and `LAKE_HYLIA/BEANSTALK`,
+    which despite the name is not a climb to the clouds: its only three
+    doors go into `HYLIA_DIG_CAVES/1`.
+
+The Temple of Droplets stays shut. It is a dungeon, and that is a decision
+about what this mode contains rather than an oversight.
+
+**Getting the probe right took two tries, and the first one lied.** Asking
+"from this region's survey start, can I reach X" is the wrong question for
+anything two doors deep - there is no transition between them at all, and a
+cancelled answer to an imaginary door is noise. That version reported
+Melari's Mine's side rooms as traps by asking whether they could return to a
+Mount Crenel room they have never had a door to. Walking the exit table
+instead is what makes the answer mean something.
+
+**Also from this pass.** The Waveblade TREE is no longer a content site -
+per the user it is the dojo's atrium and nothing else, so putting an event
+in it made two ? rooms out of one place; it stays blessed as a pocket, since
+Lake Hylia is policed and it is the room the lake's door opens into.
+Knuckle, the fourth Tingle sibling, is back at his Lake Hylia stump
+(325,279) - he was excluded on the grounds that the lake was outside the
+ring, which stopped being true some time ago. And Lon Lon Ranch's kinstone
+pocket at tile (10,3) is now correctly described: mapexplore prices it at
+the Cane of Pacci via Veil Falls, and it stays NOT REACHABLE here because
+this build compiles the Veil Falls borders out.
+
+Still cancelled, all pre-existing and none from this survey: Trilby's dig
+cave, Mount Crenel's ladder to the spring water, and the Minish Woods
+business-scrub tree with the kinstone cave behind it.
+
 ### Where a run lands, and when a region pays
 
 **Nothing this mode places may sit on a region's landing square.**

@@ -38,7 +38,7 @@ This is an inventory of what has been MEASURED about walking around this world, 
 | `EH-N` | Eastern Hills North | 14 | 4 | 1 | 7 | 1 | 64% |
 | `EH-C` | Eastern Hills Center | 10 | 3 | 1 | 5 | 0 | 71% |
 | `EH-S` | Eastern Hills South | 10 | 3 | 1 | 5 | 0 | 60% |
-| `LLR` | Lon Lon Ranch | 26 | 4 | 6 | 12 | 3 | 55% |
+| `LLR` | Lon Lon Ranch | 25 | 4 | 6 | 12 | 2 | 51% |
 | `TRIL` | Trilby Highlands | 30 | 5 | 7 | 15 | 2 | 53% |
 | `WW-N` | Western Wood North | 14 | 4 | 1 | 6 | 2 | 56% |
 | `WW-C` | Western Wood Center | 11 | 3 | 1 | 5 | 1 | 56% |
@@ -47,8 +47,8 @@ This is an inventory of what has been MEASURED about walking around this world, 
 | `CW` | Castor Wilds | 32 | 2 | 7 | 21 | 1 | 28% |
 | `WR` | Wind Ruins | 38 | 22 | 2 | 12 | 1 | 92% |
 | `MW` | Minish Woods | 40 | 4 | 10 | 20 | 5 | 31% |
-| `LH` | Lake Hylia | 23 | 4 | 7 | 11 | 0 | 31% |
-| `CREN` | Mount Crenel | 74 | 15 | 23 | 32 | 3 | 76% |
+| `LH` | Lake Hylia | 23 | 4 | 7 | 11 | 0 | 89% |
+| `CREN` | Mount Crenel | 77 | 15 | 23 | 35 | 3 | 74% |
 
 ## Region to region
 
@@ -671,7 +671,7 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968).
 | 10 | room | `CAVES/LON_LON_RANCH_WALLET` | fusion | walked survey | reached through HYRULE_FIELD/LON_LON_RANCH |
 | 11 | door | `door (136,852) -> GORON_CAVE/STAIRS` | boulder:LLR:3 OR minish_cap | implied: the only door to a priced room |  |
 | 12 | room | `GORON_CAVE/STAIRS` | boulder:LLR:3 OR minish_cap | walked survey | reached through HYRULE_FIELD/LON_LON_RANCH |
-| 13 | door | `door (184,340) -> CAVES/LON_LON_RANCH` | ? | — | 2 doors lead to CAVES/LON_LON_RANCH, so the survey's price for that room cannot be pinned on this one |
+| 13 | door | `door (184,340) -> CAVES/LON_LON_RANCH` | IMPOSSIBLE | walked survey | POCKET at tile (10,3), holding a kinstone chest. The mapexplore survey walked it and prices it at the Cane of Pacci - the only way in is up to Veil Falls and back down. It stays NOT REACHABLE here because this build has no Veil Falls: Lon Lon Ranch's two border rows to it and North Hyrule Field's one are compiled out under QUICKSTART (docs/QUICKSTART_RETARGETS.md, the three BLOCKED rows), so the cane buys nothing. Re-price this at [[PACCI]] the day Veil Falls is opened. The coordinate was 32936,-1184 - a mid-transition stamp, not a place.; 2 doors lead to CAVES/LON_LON_RANCH, so the survey's price for that room cannot be pinned on this one ⚠ |
 | 14 | seam | `border west (south half) -> HYRULE_FIELD/TRILBY_HIGHLANDS` | bombs | walked survey | exit |
 | 15 | room | `HYRULE_FIELD/TRILBY_HIGHLANDS` | ? | — | LEAVES this region, into TRIL |
 | 16 | seam | `border east -> LAKE_HYLIA/MAIN` | flippers OR cape OR minish_cap+pacci OR boulder:LLR:2 | walked survey | exit |
@@ -682,77 +682,74 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968).
 | 21 | room | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | ? | — | LEAVES this region, into NHF |
 | 22 | spot | `HYRULE_FIELD/LON_LON_RANCH (-6,157)` | free | walked survey | exit |
 | 23 | spot | `HYRULE_FIELD/LON_LON_RANCH (88,15)` | pacci | walked survey | exit |
-| 24 | spot | `HYRULE_FIELD/LON_LON_RANCH (32936,-1184)` | IMPOSSIBLE | walked survey | POCKET, unreachable from this room at all - only from its Veil Falls side. Holds a fusion-rewarded chest. ⚠ |
-| 25 | room | `MINISH_CRACKS/LON_LON_RANCH_NORTH` | minish_cap+pacci | walked survey | named by the survey; no row from this region room reaches it directly |
-| 26 | room | `MINISH_PATHS/LON_LON_RANCH` | boots+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 24 | room | `MINISH_CRACKS/LON_LON_RANCH_NORTH` | minish_cap+pacci | walked survey | named by the survey; no row from this region room reaches it directly |
+| 25 | room | `MINISH_PATHS/LON_LON_RANCH` | boots+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
 
 **Evidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
- 1 . i i i i i - i i i i i - i - i - - - - - i i - i i   HYRULE_FIELD/LON_LON_RANCH
- 2 S . s S s S - S s S s S - S - S - - - - - S S X S S   START  HYRULE_FIELD/LON_LON_RANCH
- 3 i i . D i i - i i i i i - i - i - - - - - i i - i i   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 4 i i d . i i - i i i i i - i - i - - - - - i i - i i   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
- 5 i i i i . D - i i i i i - i - i - - - - - i i - i i   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 6 i i i i d . - i i i i i - i - i - - - - - i i - i i   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
- 7 - - - - - - . D - - - - - - - - - - - - - - - - - -   door (232,436) -> CAVES/LON_LON_RANCH
- 8 i i i i i i d . i i i i d i - i - - - - - i i - i i   CAVES/LON_LON_RANCH
- 9 i i i i i i - i . D i i - i - i - - - - - i i - i i   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
-10 i i i i i i - i d . i i - i - i - - - - - i i - i i   CAVES/LON_LON_RANCH_WALLET
-11 i i i i i i - i i i . D - i - i - - - - - i i - i i   door (136,852) -> GORON_CAVE/STAIRS
-12 i i i i i i - i i i d . - i - i - - - - - i i - i i   GORON_CAVE/STAIRS
-13 - - - - - - - D - - - - . - - - - - - - - - - - - -   door (184,340) -> CAVES/LON_LON_RANCH
-14 i i i i i i - i i i i i - . D P - - - P - i i - i i   border west (south half) -> HYRULE_FIELD/TRILB
-15 - - - - - - - - - - - - - d . - - - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
-16 i i i i i i - i i i i i - P - . W - - P - i i - i i   border east -> LAKE_HYLIA/MAIN
-17 - - - - - - - - - - - - - - - d . - - - - - - - - -   LAKE_HYLIA/MAIN
-18 - - - - - - - - - - - - - - - - - . D - - - - - - -   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
-19 - - - - - - - - - - - - - - - - - d . - - - - - - -   HYRULE_FIELD/EASTERN_HILLS_NORTH
-20 - - - - - - - - - - - - - P - P - - - . D - - - - -   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
-21 - - - - - - - - - - - - - - - - - - - d . - - - - -   HYRULE_FIELD/NORTH_HYRULE_FIELD
-22 i i i i i i - i i i i i - i - i - - - - - . i - i i   HYRULE_FIELD/LON_LON_RANCH (-6,157)
-23 i i i i i i - i i i i i - i - i - - - - - i . - i i   HYRULE_FIELD/LON_LON_RANCH (88,15)
-24 - - - - - - - - - - - - - - - - - - - - - - - . - -   HYRULE_FIELD/LON_LON_RANCH (32936,-1184)
-25 i i i i i i - i i i i i - i - i - - - - - i i - . i   MINISH_CRACKS/LON_LON_RANCH_NORTH
-26 i i i i i i - i i i i i - i - i - - - - - i i - i .   MINISH_PATHS/LON_LON_RANCH
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+ 1 . i i i i i - i i i i i - i - i - - - - - i i i i   HYRULE_FIELD/LON_LON_RANCH
+ 2 S . s S s S - S s S s S X S - S - - - - - S S S S   START  HYRULE_FIELD/LON_LON_RANCH
+ 3 i i . D i i - i i i i i - i - i - - - - - i i i i   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 4 i i d . i i - i i i i i - i - i - - - - - i i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
+ 5 i i i i . D - i i i i i - i - i - - - - - i i i i   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 6 i i i i d . - i i i i i - i - i - - - - - i i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
+ 7 - - - - - - . D - - - - - - - - - - - - - - - - -   door (232,436) -> CAVES/LON_LON_RANCH
+ 8 i i i i i i d . i i i i d i - i - - - - - i i i i   CAVES/LON_LON_RANCH
+ 9 i i i i i i - i . D i i - i - i - - - - - i i i i   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
+10 i i i i i i - i d . i i - i - i - - - - - i i i i   CAVES/LON_LON_RANCH_WALLET
+11 i i i i i i - i i i . D - i - i - - - - - i i i i   door (136,852) -> GORON_CAVE/STAIRS
+12 i i i i i i - i i i d . - i - i - - - - - i i i i   GORON_CAVE/STAIRS
+13 - - - - - - - D - - - - . - - - - - - - - - - - -   door (184,340) -> CAVES/LON_LON_RANCH
+14 i i i i i i - i i i i i - . D P - - - P - i i i i   border west (south half) -> HYRULE_FIELD/TRILB
+15 - - - - - - - - - - - - - d . - - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
+16 i i i i i i - i i i i i - P - . W - - P - i i i i   border east -> LAKE_HYLIA/MAIN
+17 - - - - - - - - - - - - - - - d . - - - - - - - -   LAKE_HYLIA/MAIN
+18 - - - - - - - - - - - - - - - - - . D - - - - - -   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
+19 - - - - - - - - - - - - - - - - - d . - - - - - -   HYRULE_FIELD/EASTERN_HILLS_NORTH
+20 - - - - - - - - - - - - - P - P - - - . D - - - -   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
+21 - - - - - - - - - - - - - - - - - - - d . - - - -   HYRULE_FIELD/NORTH_HYRULE_FIELD
+22 i i i i i i - i i i i i - i - i - - - - - . i i i   HYRULE_FIELD/LON_LON_RANCH (-6,157)
+23 i i i i i i - i i i i i - i - i - - - - - i . i i   HYRULE_FIELD/LON_LON_RANCH (88,15)
+24 i i i i i i - i i i i i - i - i - - - - - i i . i   MINISH_CRACKS/LON_LON_RANCH_NORTH
+25 i i i i i i - i i i i i - i - i - - - - - i i i .   MINISH_PATHS/LON_LON_RANCH
 ```
 
 **Confidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
- 1 . 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   HYRULE_FIELD/LON_LON_RANCH
- 2 3 . 2 3 2 3 0 3 2 3 2 3 0 3 0 3 0 0 0 0 0 3 3 3 3 3   START  HYRULE_FIELD/LON_LON_RANCH
- 3 1 1 . 4 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 4 1 1 3 . 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
- 5 1 1 1 1 . 4 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 6 1 1 1 1 3 . 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
- 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (232,436) -> CAVES/LON_LON_RANCH
- 8 1 1 1 1 1 1 3 . 1 1 1 1 3 1 0 1 0 0 0 0 0 1 1 0 1 1   CAVES/LON_LON_RANCH
- 9 1 1 1 1 1 1 0 1 . 4 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
-10 1 1 1 1 1 1 0 1 3 . 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 1   CAVES/LON_LON_RANCH_WALLET
-11 1 1 1 1 1 1 0 1 1 1 . 4 0 1 0 1 0 0 0 0 0 1 1 0 1 1   door (136,852) -> GORON_CAVE/STAIRS
-12 1 1 1 1 1 1 0 1 1 1 3 . 0 1 0 1 0 0 0 0 0 1 1 0 1 1   GORON_CAVE/STAIRS
-13 0 0 0 0 0 0 0 4 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0   door (184,340) -> CAVES/LON_LON_RANCH
-14 1 1 1 1 1 1 0 1 1 1 1 1 0 . 4 2 0 0 0 2 0 1 1 0 1 1   border west (south half) -> HYRULE_FIELD/TRILB
-15 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
-16 1 1 1 1 1 1 0 1 1 1 1 1 0 2 0 . 4 0 0 2 0 1 1 0 1 1   border east -> LAKE_HYLIA/MAIN
-17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0   LAKE_HYLIA/MAIN
-18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
-19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0   HYRULE_FIELD/EASTERN_HILLS_NORTH
-20 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 0 0 . 4 0 0 0 0 0   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
-21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0   HYRULE_FIELD/NORTH_HYRULE_FIELD
-22 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 . 1 0 1 1   HYRULE_FIELD/LON_LON_RANCH (-6,157)
-23 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 . 0 1 1   HYRULE_FIELD/LON_LON_RANCH (88,15)
-24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0   HYRULE_FIELD/LON_LON_RANCH (32936,-1184)
-25 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 . 1   MINISH_CRACKS/LON_LON_RANCH_NORTH
-26 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 0 1 .   MINISH_PATHS/LON_LON_RANCH
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+ 1 . 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   HYRULE_FIELD/LON_LON_RANCH
+ 2 3 . 2 3 2 3 0 3 2 3 2 3 3 3 0 3 0 0 0 0 0 3 3 3 3   START  HYRULE_FIELD/LON_LON_RANCH
+ 3 1 1 . 4 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 4 1 1 3 . 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
+ 5 1 1 1 1 . 4 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 6 1 1 1 1 3 . 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
+ 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (232,436) -> CAVES/LON_LON_RANCH
+ 8 1 1 1 1 1 1 3 . 1 1 1 1 3 1 0 1 0 0 0 0 0 1 1 1 1   CAVES/LON_LON_RANCH
+ 9 1 1 1 1 1 1 0 1 . 4 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
+10 1 1 1 1 1 1 0 1 3 . 1 1 0 1 0 1 0 0 0 0 0 1 1 1 1   CAVES/LON_LON_RANCH_WALLET
+11 1 1 1 1 1 1 0 1 1 1 . 4 0 1 0 1 0 0 0 0 0 1 1 1 1   door (136,852) -> GORON_CAVE/STAIRS
+12 1 1 1 1 1 1 0 1 1 1 3 . 0 1 0 1 0 0 0 0 0 1 1 1 1   GORON_CAVE/STAIRS
+13 0 0 0 0 0 0 0 4 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0   door (184,340) -> CAVES/LON_LON_RANCH
+14 1 1 1 1 1 1 0 1 1 1 1 1 0 . 4 2 0 0 0 2 0 1 1 1 1   border west (south half) -> HYRULE_FIELD/TRILB
+15 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
+16 1 1 1 1 1 1 0 1 1 1 1 1 0 2 0 . 4 0 0 2 0 1 1 1 1   border east -> LAKE_HYLIA/MAIN
+17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0   LAKE_HYLIA/MAIN
+18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
+19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0   HYRULE_FIELD/EASTERN_HILLS_NORTH
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 0 0 . 4 0 0 0 0   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
+21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0   HYRULE_FIELD/NORTH_HYRULE_FIELD
+22 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 . 1 1 1   HYRULE_FIELD/LON_LON_RANCH (-6,157)
+23 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 . 1 1   HYRULE_FIELD/LON_LON_RANCH (88,15)
+24 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 . 1   MINISH_CRACKS/LON_LON_RANCH_NORTH
+25 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 0 0 0 0 1 1 1 .   MINISH_PATHS/LON_LON_RANCH
 ```
 
-26 nodes, 650 ordered pairs, **361 with no data** (55%).
+25 nodes, 600 ordered pairs, **311 with no data** (51%).
 
 ### Trilby Highlands  `TRIL`
 
@@ -1530,24 +1527,24 @@ Survey start: `LAKE_HYLIA/MAIN` at (40, 440). derived from the exit list + a col
 |--:|:--|:--|:--|:--|:--|
 | 1 | room | `LAKE_HYLIA/MAIN` | free | the survey start stands in it | the region itself |
 | 2 | start | `START  LAKE_HYLIA/MAIN` | free | the survey start | derived from the exit list + a collision flood, not walked |
-| 3 | door | `door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN` | flippers+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 4 | room | `HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN` | flippers+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN; far shore ⚠ |
+| 3 | door | `door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN` | ? | — |  |
+| 4 | room | `HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN` | ? | — | reached through LAKE_HYLIA/MAIN |
 | 5 | door | `door (288,56) -> HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE` | free | implied: the only door to a priced room |  |
 | 6 | room | `HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE` | free | flood-derived | reached through LAKE_HYLIA/MAIN; the one door the arrival shore reaches - 67 tiles of walk, no gate |
-| 7 | door | `door (256,696) -> TREE_INTERIORS/WAVEBLADE` | flippers+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 8 | room | `TREE_INTERIORS/WAVEBLADE` | flippers+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN ⚠ |
-| 9 | door | `door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 10 | room | `MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA` | minish_cap+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN ⚠ |
-| 11 | door | `door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRARI` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 12 | room | `MINISH_HOUSE_INTERIORS/LIBRARI` | minish_cap+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN ⚠ |
-| 13 | door | `door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 14 | room | `MINISH_CAVES/LAKE_HYLIA_NORTH` | minish_cap+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN ⚠ |
-| 15 | door | `door (328,884) -> LAKE_WOODS_CAVE/MAIN` | flippers+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 16 | room | `LAKE_WOODS_CAVE/MAIN` | flippers+unsurveyed | flood-derived | reached through LAKE_HYLIA/MAIN ⚠ |
+| 7 | door | `door (256,696) -> TREE_INTERIORS/WAVEBLADE` | ? | — |  |
+| 8 | room | `TREE_INTERIORS/WAVEBLADE` | ? | — | reached through LAKE_HYLIA/MAIN |
+| 9 | door | `door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA` | ? | — |  |
+| 10 | room | `MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA` | ? | — | reached through LAKE_HYLIA/MAIN |
+| 11 | door | `door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRARI` | ? | — |  |
+| 12 | room | `MINISH_HOUSE_INTERIORS/LIBRARI` | ? | — | reached through LAKE_HYLIA/MAIN |
+| 13 | door | `door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH` | ? | — |  |
+| 14 | room | `MINISH_CAVES/LAKE_HYLIA_NORTH` | ? | — | reached through LAKE_HYLIA/MAIN |
+| 15 | door | `door (328,884) -> LAKE_WOODS_CAVE/MAIN` | IMPOSSIBLE | implied: the only door to a priced room |  ⚠ |
+| 16 | room | `LAKE_WOODS_CAVE/MAIN` | IMPOSSIBLE | flood-derived | reached through LAKE_HYLIA/MAIN; the Lake Woods ladder is an ENTRANCE to the lake, not a destination from this shore - see the LH-LADDER block, which starts where it lets out ⚠ |
 | 17 | seam | `border west -> HYRULE_FIELD/LON_LON_RANCH` | free | implied: the only door to a priced room |  |
 | 18 | room | `HYRULE_FIELD/LON_LON_RANCH` | free | flood-derived | LEAVES this region, into LLR; exit; the border the player arrives through, walkable both ways |
 | 19 | seam | `border south (west half) -> MINISH_WOODS/MAIN` | ? | — | 2 doors lead to MINISH_WOODS/MAIN, so the survey's price for that room cannot be pinned on this one |
-| 20 | room | `MINISH_WOODS/MAIN` | unsurveyed | flood-derived | LEAVES this region, into MW; exit on paper - the south border - but the south edge is not in the arrival component ⚠ |
+| 20 | room | `MINISH_WOODS/MAIN` | IMPOSSIBLE | flood-derived | LEAVES this region, into MW; the south border is in the isolated south-west corner, not in this shore's component - see LH-SW ⚠ |
 | 21 | seam | `border south (east half) -> MINISH_WOODS/MAIN` | ? | — | 2 doors lead to MINISH_WOODS/MAIN, so the survey's price for that room cannot be pinned on this one |
 | 22 | seam | `scroll seam north 0-768 -> LAKE_HYLIA/BEANSTALK` | ? | — | no transition row, the player walks off the edge (into a room outside the region) |
 | 23 | room | `LAKE_HYLIA/BEANSTALK` | ? | — | across a scroll seam |
@@ -1557,26 +1554,26 @@ Survey start: `LAKE_HYLIA/MAIN` at (40, 440). derived from the exit list + a col
 ```
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2
    1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
- 1 . i i i i i i i i i i i i i i i i i - i - - -   LAKE_HYLIA/MAIN
- 2 F . s F s F s F s F s F s F s F s F - F - - -   START  LAKE_HYLIA/MAIN
- 3 i i . D i i i i i i i i i i i i i i - i - - -   door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE
- 4 i i d . i i i i i i i i i i i i i i - i - - -   HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN
- 5 i i i i . D i i i i i i i i i i i i - i - - -   door (288,56) -> HOUSE_INTERIORS_2/STOCKWELL_L
- 6 i i i i d . i i i i i i i i i i i i - i - - -   HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE
- 7 i i i i i i . D i i i i i i i i i i - i - - -   door (256,696) -> TREE_INTERIORS/WAVEBLADE
- 8 i i i i i i d . i i i i i i i i i i - i - - -   TREE_INTERIORS/WAVEBLADE
- 9 i i i i i i i i . D i i i i i i i i - i - - -   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
-10 i i i i i i i i d . i i i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
-11 i i i i i i i i i i . D i i i i i i - i - - -   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
-12 i i i i i i i i i i d . i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LIBRARI
-13 i i i i i i i i i i i i . D i i i i - i - - -   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
-14 i i i i i i i i i i i i d . i i i i - i - - -   MINISH_CAVES/LAKE_HYLIA_NORTH
-15 i i i i i i i i i i i i i i . D i i - i - - -   door (328,884) -> LAKE_WOODS_CAVE/MAIN
-16 i i i i i i i i i i i i i i d . i i - i - - -   LAKE_WOODS_CAVE/MAIN
-17 i i i i i i i i i i i i i i i i . W - i - - -   border west -> HYRULE_FIELD/LON_LON_RANCH
-18 i i i i i i i i i i i i i i i i d . - i - - -   HYRULE_FIELD/LON_LON_RANCH
+ 1 . i - - i i - - - - - - - - - - i i - - - - -   LAKE_HYLIA/MAIN
+ 2 F . - - s F - - - - - - - - X X s F - X - - -   START  LAKE_HYLIA/MAIN
+ 3 - - . D - - - - - - - - - - - - - - - - - - -   door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE
+ 4 - - d . - - - - - - - - - - - - - - - - - - -   HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN
+ 5 i i - - . D - - - - - - - - - - i i - - - - -   door (288,56) -> HOUSE_INTERIORS_2/STOCKWELL_L
+ 6 i i - - d . - - - - - - - - - - i i - - - - -   HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE
+ 7 - - - - - - . D - - - - - - - - - - - - - - -   door (256,696) -> TREE_INTERIORS/WAVEBLADE
+ 8 - - - - - - d . - - - - - - - - - - - - - - -   TREE_INTERIORS/WAVEBLADE
+ 9 - - - - - - - - . D - - - - - - - - - - - - -   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
+10 - - - - - - - - d . - - - - - - - - - - - - -   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
+11 - - - - - - - - - - . D - - - - - - - - - - -   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
+12 - - - - - - - - - - d . - - - - - - - - - - -   MINISH_HOUSE_INTERIORS/LIBRARI
+13 - - - - - - - - - - - - . D - - - - - - - - -   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
+14 - - - - - - - - - - - - d . - - - - - - - - -   MINISH_CAVES/LAKE_HYLIA_NORTH
+15 - - - - - - - - - - - - - - . D - - - - - - -   door (328,884) -> LAKE_WOODS_CAVE/MAIN
+16 - - - - - - - - - - - - - - d . - - - - - - -   LAKE_WOODS_CAVE/MAIN
+17 i i - - i i - - - - - - - - - - . W - - - - -   border west -> HYRULE_FIELD/LON_LON_RANCH
+18 i i - - i i - - - - - - - - - - d . - - - - -   HYRULE_FIELD/LON_LON_RANCH
 19 - - - - - - - - - - - - - - - - - - . D - - -   border south (west half) -> MINISH_WOODS/MAIN
-20 i i i i i i i i i i i i i i i i i i d . d - -   MINISH_WOODS/MAIN
+20 - - - - - - - - - - - - - - - - - - d . d - -   MINISH_WOODS/MAIN
 21 - - - - - - - - - - - - - - - - - - - D . - -   border south (east half) -> MINISH_WOODS/MAIN
 22 - - - - - - - - - - - - - - - - - - - - - . D   scroll seam north 0-768 -> LAKE_HYLIA/BEANSTAL
 23 - - - - - - - - - - - - - - - - - - - - - d .   LAKE_HYLIA/BEANSTALK
@@ -1587,32 +1584,32 @@ Survey start: `LAKE_HYLIA/MAIN` at (40, 440). derived from the exit list + a col
 ```
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2
    1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3
- 1 . 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   LAKE_HYLIA/MAIN
- 2 1 . 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 0 1 0 0 0   START  LAKE_HYLIA/MAIN
- 3 1 1 . 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE
- 4 1 1 3 . 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN
- 5 1 1 1 1 . 4 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   door (288,56) -> HOUSE_INTERIORS_2/STOCKWELL_L
- 6 1 1 1 1 3 . 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE
- 7 1 1 1 1 1 1 . 4 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   door (256,696) -> TREE_INTERIORS/WAVEBLADE
- 8 1 1 1 1 1 1 3 . 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   TREE_INTERIORS/WAVEBLADE
- 9 1 1 1 1 1 1 1 1 . 4 1 1 1 1 1 1 1 1 0 1 0 0 0   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
-10 1 1 1 1 1 1 1 1 3 . 1 1 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
-11 1 1 1 1 1 1 1 1 1 1 . 4 1 1 1 1 1 1 0 1 0 0 0   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
-12 1 1 1 1 1 1 1 1 1 1 3 . 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LIBRARI
-13 1 1 1 1 1 1 1 1 1 1 1 1 . 4 1 1 1 1 0 1 0 0 0   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
-14 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 1 1 0 1 0 0 0   MINISH_CAVES/LAKE_HYLIA_NORTH
-15 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 4 1 1 0 1 0 0 0   door (328,884) -> LAKE_WOODS_CAVE/MAIN
-16 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 0 1 0 0 0   LAKE_WOODS_CAVE/MAIN
-17 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 4 0 1 0 0 0   border west -> HYRULE_FIELD/LON_LON_RANCH
-18 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 . 0 1 0 0 0   HYRULE_FIELD/LON_LON_RANCH
+ 1 . 1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0   LAKE_HYLIA/MAIN
+ 2 1 . 0 0 2 1 0 0 0 0 0 0 0 0 3 3 2 1 0 3 0 0 0   START  LAKE_HYLIA/MAIN
+ 3 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (672,888) -> HOUSE_INTERIORS_4/MAYOR_LAKE
+ 4 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   HOUSE_INTERIORS_4/MAYOR_LAKE_CABIN
+ 5 1 1 0 0 . 4 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0   door (288,56) -> HOUSE_INTERIORS_2/STOCKWELL_L
+ 6 1 1 0 0 3 . 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0   HOUSE_INTERIORS_2/STOCKWELL_LAKE_HOUSE
+ 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (256,696) -> TREE_INTERIORS/WAVEBLADE
+ 8 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   TREE_INTERIORS/WAVEBLADE
+ 9 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
+10 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
+11 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
+12 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0   MINISH_HOUSE_INTERIORS/LIBRARI
+13 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
+14 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0   MINISH_CAVES/LAKE_HYLIA_NORTH
+15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0   door (328,884) -> LAKE_WOODS_CAVE/MAIN
+16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0   LAKE_WOODS_CAVE/MAIN
+17 1 1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0   border west -> HYRULE_FIELD/LON_LON_RANCH
+18 1 1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0   HYRULE_FIELD/LON_LON_RANCH
 19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0   border south (west half) -> MINISH_WOODS/MAIN
-20 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 . 3 0 0   MINISH_WOODS/MAIN
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 3 0 0   MINISH_WOODS/MAIN
 21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 . 0 0   border south (east half) -> MINISH_WOODS/MAIN
 22 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4   scroll seam north 0-768 -> LAKE_HYLIA/BEANSTAL
 23 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 .   LAKE_HYLIA/BEANSTALK
 ```
 
-23 nodes, 506 ordered pairs, **158 with no data** (31%).
+23 nodes, 506 ordered pairs, **455 with no data** (89%).
 
 ### Mount Crenel  `CREN`
 
@@ -1689,174 +1686,183 @@ Survey start: `MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE` at (101, 271). surveyed down
 | 65 | seam | `TOP | scroll seam south 384-1008 -> MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE` | ? | — | no transition row, the player walks off the edge (into another room of this region); 3 doors lead to MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE, so the survey's price for that room cannot be pinned on this one |
 | 66 | room | `MELARIS_MINE/MAIN` | minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
 | 67 | room | `CRENEL_MINISH_PATHS/MELARI` | minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
-| 68 | room | `DOJOS/GRAYBLADE` | bracelets+grip | walked survey | named by the survey; no row from this region room reaches it directly; the block push - priced at the bracelets like every other one |
-| 69 | spot | `MT_CRENEL/TOP (240,151)` | grip | walked survey |  |
-| 70 | room | `CRENEL_DIG_CAVE/0` | grip+mitts | walked survey | named by the survey; no row from this region room reaches it directly |
-| 71 | room | `CRENEL_MINISH_PATHS/RAIN` | grip+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
-| 72 | spot | `MT_CRENEL/TOP (904,64)` | grip+minish_cap OR boulder:CREN:2+grip | walked survey | by the transformation stone |
-| 73 | spot | `MT_CRENEL/ENTRANCE (861,54)` | grip | walked survey |  |
-| 74 | room | `CRENEL_MINISH_PATHS/SPRING_WATER` | bombs+grip+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 68 | room | `MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHWEST` | minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 69 | room | `MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHEAST` | minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 70 | room | `MINISH_HOUSE_INTERIORS/MELARI_MINES_EAST` | minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 71 | room | `DOJOS/GRAYBLADE` | bracelets+grip | walked survey | named by the survey; no row from this region room reaches it directly; the block push - priced at the bracelets like every other one |
+| 72 | spot | `MT_CRENEL/TOP (240,151)` | grip | walked survey |  |
+| 73 | room | `CRENEL_DIG_CAVE/0` | grip+mitts | walked survey | named by the survey; no row from this region room reaches it directly |
+| 74 | room | `CRENEL_MINISH_PATHS/RAIN` | grip+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 75 | spot | `MT_CRENEL/TOP (904,64)` | grip+minish_cap OR boulder:CREN:2+grip | walked survey | by the transformation stone |
+| 76 | spot | `MT_CRENEL/ENTRANCE (861,54)` | grip | walked survey |  |
+| 77 | room | `CRENEL_MINISH_PATHS/SPRING_WATER` | bombs+grip+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
 
 **Evidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
- 1 . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - - - - - -   MT_CRENEL/ENTRANCE
- 2 - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - d - - d - - - - - - - - - - -   MT_CRENEL/CENTER
- 3 - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - d - - - - - - d - d - - - - - - - - - -   MT_CRENEL/WALL_CLIMB
- 4 - - - . - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - d - - d - - - - - d i i i i i i i i i   MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
- 5 - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - - - - - - - - - - d - - d - - - - - - - - - - - - -   MT_CRENEL/TOP
- 6 - - - S - . - - - - - - S S - - s S - - - S - - - S - - - - - s S S - - S S S s S s S s S s S s S s S S - - - - - - - - - - - - - S S S S S S S S S   START  MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
- 7 - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (664,40) -> CRENEL_CAVES/RUPEE
- 8 - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/RUPEE_FAIRY_FOUINTAIN
- 9 - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (408,216) -> CRENEL_CAVES/HELM
-10 - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/HELMASAUR_HALLWAY
-11 - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (312,312) -> CRENEL_CAVES/MUSH
-12 - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/MUSHROOM_KEESE
-13 - - - i - i - - - - - - . D - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   ENTRANCE | door (728,392) -> CRENEL_CAVES/LADD
-14 - - - i - i - - - - - - d . - - i i - - d i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/LADDER_TO_SPRING_WATER
-15 - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (184,408) -> CRENEL_CAVES/BOMB
-16 - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/BOMB_BUSINESS_SCRUB
-17 - - - i - i - - - - - - i i - - . D - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   ENTRANCE | door (952,360) -> CRENEL_CAVES/HINT
-18 - - - i - i - - - - - - i i - - d . - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/HINT_SCRUB
-19 - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (456,24) -> MINISH_CAVES/BEAN_
-20 - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   MINISH_CAVES/BEAN_PESTO
-21 - - - - - - - - - - - - - D - - - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (728,340) -> CRENEL_CAVES/LADD
-22 - - - i - i - - - - - - i i - - i i - - - . D - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   ENTRANCE | border east (south half) -> HYRULE_
-23 - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
-24 - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (168,72) -> CRENEL_CAVES/FAIRY_F
-25 - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/FAIRY_FOUNTAIN
-26 - - - i - i - - - - - - i i - - i i - - - i - - - . D - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CENTER | door (760,40) -> CRENEL_CAVES/SPINY_C
-27 - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/SPINY_CHU_PUZZLE
-28 - - - - - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (840,88) -> CRENEL_CAVES/CHUCHU_
-29 - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/CHUCHU_POT_CHEST
-30 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (56,264) -> CRENEL_CAVES/WATER_H
-31 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/WATER_HEART_PIECE
-32 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - . D i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   WALL_CLIMB | door (168,88) -> CRENEL_CAVES/HER
-33 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - d . i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/HERMIT
-34 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i . D - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   WALL_CLIMB | door (328,488) -> GREAT_FAIRIES/C
-35 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   GREAT_FAIRIES/CRENEL
-36 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   WALL_CLIMB | border north -> MT_CRENEL/TOP
-37 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - . D i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (296,24) -> C
-38 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . d - - - - - - - - - - - - d - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/BLOCK_PUSHING
-39 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i D . i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (520,24) -> C
-40 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i . D i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (472,184) -> 
-41 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i d . i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/PILLAR_CAVE
-42 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i . D i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (568,184) -> 
-43 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i d . i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/BRIDGE_SWITCH
-44 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i . D i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (392,248) -> 
-45 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i d . i i i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/EXIT_TO_MINES
-46 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i . D i i i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (520,328) -> 
-47 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i d . i i i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/TO_GRAYBLADE
-48 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i . D i i i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (488,472) -> 
-49 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i d . i i i - - - - - - - - - - - - - i i i i i i i i i   CRENEL_CAVES/GRIP_RING
-50 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i . D i - - - - - - - - - - - - - i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (104,114) -> 
-51 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i d . i - - - - - - - - - - - - - i i i i i i i i i   CAVE_OF_FLAMES/ENTRANCE
-52 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i D i i i i i i i i i i i i i . - - - - - - - - - - - - - i i i i i i i i i   TOP | door (808,52) -> CRENEL_CAVES/BLOCK_PUSH
-53 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - -   TOP | border south -> MT_CRENEL/WALL_CLIMB
-54 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - -   ENTRANCE | scroll seam north 0-1008 -> MT_CREN
-55 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - -   CENTER | scroll seam north 0-384 -> MT_CRENEL/
-56 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - -   CENTER | scroll seam north 384-1008 -> MT_CREN
-57 D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - -   CENTER | scroll seam south 0-1008 -> MT_CRENEL
-58 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam north 0-384 -> MT_CRE
-59 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam east 0-608 -> MT_CREN
-60 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam south 0-384 -> MT_CRE
-61 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam north 
-62 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam west 0
-63 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam south 
-64 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - -   TOP | scroll seam south 0-384 -> MT_CRENEL/WAL
-65 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - -   TOP | scroll seam south 384-1008 -> MT_CRENEL/
-66 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - . i i i i i i i i   MELARIS_MINE/MAIN
-67 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i . i i i i i i i   CRENEL_MINISH_PATHS/MELARI
-68 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i . i i i i i i   DOJOS/GRAYBLADE
-69 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i . i i i i i   MT_CRENEL/TOP (240,151)
-70 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i . i i i i   CRENEL_DIG_CAVE/0
-71 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i . i i i   CRENEL_MINISH_PATHS/RAIN
-72 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i . i i   MT_CRENEL/TOP (904,64)
-73 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i . i   MT_CRENEL/ENTRANCE (861,54)
-74 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i .   CRENEL_MINISH_PATHS/SPRING_WATER
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - - - - - - - - -   MT_CRENEL/ENTRANCE
+ 2 - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - d - - d - - - - - - - - - - - - - -   MT_CRENEL/CENTER
+ 3 - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - d - - - - - - d - d - - - - - - - - - - - - -   MT_CRENEL/WALL_CLIMB
+ 4 - - - . - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - d - - d - - - - - d i i i i i i i i i i i i   MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
+ 5 - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - - - - - - - - - - d - - d - - - - - - - - - - - - - - - -   MT_CRENEL/TOP
+ 6 - - - S - . - - - - - - S S - - s S - - - S - - - S - - - - - s S S - - S S S s S s S s S s S s S s S S - - - - - - - - - - - - - S S S S S S S S S S S S   START  MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
+ 7 - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (664,40) -> CRENEL_CAVES/RUPEE
+ 8 - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/RUPEE_FAIRY_FOUINTAIN
+ 9 - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (408,216) -> CRENEL_CAVES/HELM
+10 - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/HELMASAUR_HALLWAY
+11 - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (312,312) -> CRENEL_CAVES/MUSH
+12 - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/MUSHROOM_KEESE
+13 - - - i - i - - - - - - . D - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   ENTRANCE | door (728,392) -> CRENEL_CAVES/LADD
+14 - - - i - i - - - - - - d . - - i i - - d i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/LADDER_TO_SPRING_WATER
+15 - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (184,408) -> CRENEL_CAVES/BOMB
+16 - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/BOMB_BUSINESS_SCRUB
+17 - - - i - i - - - - - - i i - - . D - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   ENTRANCE | door (952,360) -> CRENEL_CAVES/HINT
+18 - - - i - i - - - - - - i i - - d . - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/HINT_SCRUB
+19 - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (456,24) -> MINISH_CAVES/BEAN_
+20 - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   MINISH_CAVES/BEAN_PESTO
+21 - - - - - - - - - - - - - D - - - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | door (728,340) -> CRENEL_CAVES/LADD
+22 - - - i - i - - - - - - i i - - i i - - - . D - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   ENTRANCE | border east (south half) -> HYRULE_
+23 - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
+24 - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (168,72) -> CRENEL_CAVES/FAIRY_F
+25 - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/FAIRY_FOUNTAIN
+26 - - - i - i - - - - - - i i - - i i - - - i - - - . D - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CENTER | door (760,40) -> CRENEL_CAVES/SPINY_C
+27 - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/SPINY_CHU_PUZZLE
+28 - - - - - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (840,88) -> CRENEL_CAVES/CHUCHU_
+29 - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/CHUCHU_POT_CHEST
+30 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CENTER | door (56,264) -> CRENEL_CAVES/WATER_H
+31 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/WATER_HEART_PIECE
+32 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - . D i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   WALL_CLIMB | door (168,88) -> CRENEL_CAVES/HER
+33 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - d . i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/HERMIT
+34 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i . D - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   WALL_CLIMB | door (328,488) -> GREAT_FAIRIES/C
+35 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   GREAT_FAIRIES/CRENEL
+36 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   WALL_CLIMB | border north -> MT_CRENEL/TOP
+37 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - . D i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (296,24) -> C
+38 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . d - - - - - - - - - - - - d - - - - - - - - - - - - - - - - - - - - - - - - -   CRENEL_CAVES/BLOCK_PUSHING
+39 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i D . i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (520,24) -> C
+40 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i . D i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (472,184) -> 
+41 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i d . i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/PILLAR_CAVE
+42 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i . D i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (568,184) -> 
+43 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i d . i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/BRIDGE_SWITCH
+44 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i . D i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (392,248) -> 
+45 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i d . i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/EXIT_TO_MINES
+46 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i . D i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (520,328) -> 
+47 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i d . i i i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/TO_GRAYBLADE
+48 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i . D i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (488,472) -> 
+49 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i d . i i i - - - - - - - - - - - - - i i i i i i i i i i i i   CRENEL_CAVES/GRIP_RING
+50 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i . D i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVERN_OF_FLAMES_ENTRANCE | door (104,114) -> 
+51 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i d . i - - - - - - - - - - - - - i i i i i i i i i i i i   CAVE_OF_FLAMES/ENTRANCE
+52 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i D i i i i i i i i i i i i i . - - - - - - - - - - - - - i i i i i i i i i i i i   TOP | door (808,52) -> CRENEL_CAVES/BLOCK_PUSH
+53 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - - - - -   TOP | border south -> MT_CRENEL/WALL_CLIMB
+54 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - - - -   ENTRANCE | scroll seam north 0-1008 -> MT_CREN
+55 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - - -   CENTER | scroll seam north 0-384 -> MT_CRENEL/
+56 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - - -   CENTER | scroll seam north 384-1008 -> MT_CREN
+57 D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - - -   CENTER | scroll seam south 0-1008 -> MT_CRENEL
+58 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam north 0-384 -> MT_CRE
+59 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam east 0-608 -> MT_CREN
+60 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - - -   WALL_CLIMB | scroll seam south 0-384 -> MT_CRE
+61 - - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam north 
+62 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam west 0
+63 - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - - -   CAVERN_OF_FLAMES_ENTRANCE | scroll seam south 
+64 - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - - -   TOP | scroll seam south 0-384 -> MT_CRENEL/WAL
+65 - - - D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - . - - - - - - - - - - - -   TOP | scroll seam south 384-1008 -> MT_CRENEL/
+66 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - . i i i i i i i i i i i   MELARIS_MINE/MAIN
+67 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i . i i i i i i i i i i   CRENEL_MINISH_PATHS/MELARI
+68 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i . i i i i i i i i i   MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHWEST
+69 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i . i i i i i i i i   MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHEAST
+70 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i . i i i i i i i   MINISH_HOUSE_INTERIORS/MELARI_MINES_EAST
+71 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i . i i i i i i   DOJOS/GRAYBLADE
+72 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i . i i i i i   MT_CRENEL/TOP (240,151)
+73 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i . i i i i   CRENEL_DIG_CAVE/0
+74 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i . i i i   CRENEL_MINISH_PATHS/RAIN
+75 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i . i i   MT_CRENEL/TOP (904,64)
+76 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i . i   MT_CRENEL/ENTRANCE (861,54)
+77 - - - i - i - - - - - - i i - - i i - - - i - - - i - - - - - i i i - - i - i i i i i i i i i i i i i i - - - - - - - - - - - - - i i i i i i i i i i i .   CRENEL_MINISH_PATHS/SPRING_WATER
 ```
 
 **Confidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
- 1 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/ENTRANCE
- 2 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 3 0 0 3 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/CENTER
- 3 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/WALL_CLIMB
- 4 0 0 0 . 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 3 0 0 3 0 0 0 0 0 3 1 1 1 1 1 1 1 1 1   MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
- 5 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/TOP
- 6 0 0 0 3 0 . 0 0 0 0 0 0 3 3 0 0 2 3 0 0 0 3 0 0 0 3 0 0 0 0 0 2 3 3 0 0 3 3 3 2 3 2 3 2 3 2 3 2 3 2 3 3 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3 3 3 3 3 3 3   START  MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
- 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (664,40) -> CRENEL_CAVES/RUPEE
- 8 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/RUPEE_FAIRY_FOUINTAIN
- 9 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (408,216) -> CRENEL_CAVES/HELM
-10 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/HELMASAUR_HALLWAY
-11 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (312,312) -> CRENEL_CAVES/MUSH
-12 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/MUSHROOM_KEESE
-13 0 0 0 1 0 1 0 0 0 0 0 0 . 4 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   ENTRANCE | door (728,392) -> CRENEL_CAVES/LADD
-14 0 0 0 1 0 1 0 0 0 0 0 0 3 . 0 0 1 1 0 0 3 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/LADDER_TO_SPRING_WATER
-15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (184,408) -> CRENEL_CAVES/BOMB
-16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/BOMB_BUSINESS_SCRUB
-17 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 . 4 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   ENTRANCE | door (952,360) -> CRENEL_CAVES/HINT
-18 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 3 . 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/HINT_SCRUB
-19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (456,24) -> MINISH_CAVES/BEAN_
-20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MINISH_CAVES/BEAN_PESTO
-21 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (728,340) -> CRENEL_CAVES/LADD
-22 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 . 4 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   ENTRANCE | border east (south half) -> HYRULE_
-23 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
-24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (168,72) -> CRENEL_CAVES/FAIRY_F
-25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/FAIRY_FOUNTAIN
-26 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 . 4 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CENTER | door (760,40) -> CRENEL_CAVES/SPINY_C
-27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/SPINY_CHU_PUZZLE
-28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (840,88) -> CRENEL_CAVES/CHUCHU_
-29 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/CHUCHU_POT_CHEST
-30 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (56,264) -> CRENEL_CAVES/WATER_H
-31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/WATER_HEART_PIECE
-32 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 . 4 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   WALL_CLIMB | door (168,88) -> CRENEL_CAVES/HER
-33 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 3 . 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/HERMIT
-34 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 . 4 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   WALL_CLIMB | door (328,488) -> GREAT_FAIRIES/C
-35 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   GREAT_FAIRIES/CRENEL
-36 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | border north -> MT_CRENEL/TOP
-37 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 . 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (296,24) -> C
-38 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 3 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/BLOCK_PUSHING
-39 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 4 . 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (520,24) -> C
-40 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 . 4 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (472,184) -> 
-41 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 3 . 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/PILLAR_CAVE
-42 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 . 4 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (568,184) -> 
-43 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 3 . 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/BRIDGE_SWITCH
-44 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 . 4 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (392,248) -> 
-45 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 3 . 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/EXIT_TO_MINES
-46 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 . 4 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (520,328) -> 
-47 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 3 . 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/TO_GRAYBLADE
-48 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 . 4 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (488,472) -> 
-49 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 3 . 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/GRIP_RING
-50 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 . 4 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (104,114) -> 
-51 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 3 . 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   CAVE_OF_FLAMES/ENTRANCE
-52 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 4 1 1 1 1 1 1 1 1 1 1 1 1 1 . 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1   TOP | door (808,52) -> CRENEL_CAVES/BLOCK_PUSH
-53 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   TOP | border south -> MT_CRENEL/WALL_CLIMB
-54 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | scroll seam north 0-1008 -> MT_CREN
-55 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam north 0-384 -> MT_CRENEL/
-56 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam north 384-1008 -> MT_CREN
-57 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam south 0-1008 -> MT_CRENEL
-58 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam north 0-384 -> MT_CRE
-59 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam east 0-608 -> MT_CREN
-60 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam south 0-384 -> MT_CRE
-61 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam north 
-62 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam west 0
-63 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam south 
-64 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0   TOP | scroll seam south 0-384 -> MT_CRENEL/WAL
-65 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0   TOP | scroll seam south 384-1008 -> MT_CRENEL/
-66 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 . 1 1 1 1 1 1 1 1   MELARIS_MINE/MAIN
-67 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 . 1 1 1 1 1 1 1   CRENEL_MINISH_PATHS/MELARI
-68 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 . 1 1 1 1 1 1   DOJOS/GRAYBLADE
-69 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 . 1 1 1 1 1   MT_CRENEL/TOP (240,151)
-70 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 . 1 1 1 1   CRENEL_DIG_CAVE/0
-71 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 . 1 1 1   CRENEL_MINISH_PATHS/RAIN
-72 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 . 1 1   MT_CRENEL/TOP (904,64)
-73 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 . 1   MT_CRENEL/ENTRANCE (861,54)
-74 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 .   CRENEL_MINISH_PATHS/SPRING_WATER
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/ENTRANCE
+ 2 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 3 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/CENTER
+ 3 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/WALL_CLIMB
+ 4 0 0 0 . 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 3 0 0 3 0 0 0 0 0 3 1 1 1 1 1 1 1 1 1 1 1 1   MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
+ 5 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MT_CRENEL/TOP
+ 6 0 0 0 3 0 . 0 0 0 0 0 0 3 3 0 0 2 3 0 0 0 3 0 0 0 3 0 0 0 0 0 2 3 3 0 0 3 3 3 2 3 2 3 2 3 2 3 2 3 2 3 3 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3 3 3 3 3 3 3 3 3 3   START  MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE
+ 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (664,40) -> CRENEL_CAVES/RUPEE
+ 8 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/RUPEE_FAIRY_FOUINTAIN
+ 9 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (408,216) -> CRENEL_CAVES/HELM
+10 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/HELMASAUR_HALLWAY
+11 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (312,312) -> CRENEL_CAVES/MUSH
+12 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/MUSHROOM_KEESE
+13 0 0 0 1 0 1 0 0 0 0 0 0 . 4 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   ENTRANCE | door (728,392) -> CRENEL_CAVES/LADD
+14 0 0 0 1 0 1 0 0 0 0 0 0 3 . 0 0 1 1 0 0 3 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/LADDER_TO_SPRING_WATER
+15 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (184,408) -> CRENEL_CAVES/BOMB
+16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/BOMB_BUSINESS_SCRUB
+17 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 . 4 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   ENTRANCE | door (952,360) -> CRENEL_CAVES/HINT
+18 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 3 . 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/HINT_SCRUB
+19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (456,24) -> MINISH_CAVES/BEAN_
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MINISH_CAVES/BEAN_PESTO
+21 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | door (728,340) -> CRENEL_CAVES/LADD
+22 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 . 4 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   ENTRANCE | border east (south half) -> HYRULE_
+23 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
+24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (168,72) -> CRENEL_CAVES/FAIRY_F
+25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/FAIRY_FOUNTAIN
+26 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 . 4 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CENTER | door (760,40) -> CRENEL_CAVES/SPINY_C
+27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/SPINY_CHU_PUZZLE
+28 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (840,88) -> CRENEL_CAVES/CHUCHU_
+29 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/CHUCHU_POT_CHEST
+30 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | door (56,264) -> CRENEL_CAVES/WATER_H
+31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/WATER_HEART_PIECE
+32 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 . 4 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   WALL_CLIMB | door (168,88) -> CRENEL_CAVES/HER
+33 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 3 . 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/HERMIT
+34 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 . 4 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   WALL_CLIMB | door (328,488) -> GREAT_FAIRIES/C
+35 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   GREAT_FAIRIES/CRENEL
+36 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | border north -> MT_CRENEL/TOP
+37 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 . 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (296,24) -> C
+38 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 3 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CRENEL_CAVES/BLOCK_PUSHING
+39 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 4 . 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (520,24) -> C
+40 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 . 4 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (472,184) -> 
+41 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 3 . 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/PILLAR_CAVE
+42 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 . 4 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (568,184) -> 
+43 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 3 . 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/BRIDGE_SWITCH
+44 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 . 4 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (392,248) -> 
+45 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 3 . 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/EXIT_TO_MINES
+46 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 . 4 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (520,328) -> 
+47 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 3 . 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/TO_GRAYBLADE
+48 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 . 4 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (488,472) -> 
+49 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 3 . 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CRENEL_CAVES/GRIP_RING
+50 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 . 4 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVERN_OF_FLAMES_ENTRANCE | door (104,114) -> 
+51 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 3 . 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   CAVE_OF_FLAMES/ENTRANCE
+52 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 4 1 1 1 1 1 1 1 1 1 1 1 1 1 . 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1   TOP | door (808,52) -> CRENEL_CAVES/BLOCK_PUSH
+53 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   TOP | border south -> MT_CRENEL/WALL_CLIMB
+54 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   ENTRANCE | scroll seam north 0-1008 -> MT_CREN
+55 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam north 0-384 -> MT_CRENEL/
+56 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam north 384-1008 -> MT_CREN
+57 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CENTER | scroll seam south 0-1008 -> MT_CRENEL
+58 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam north 0-384 -> MT_CRE
+59 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam east 0-608 -> MT_CREN
+60 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   WALL_CLIMB | scroll seam south 0-384 -> MT_CRE
+61 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam north 
+62 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam west 0
+63 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CAVERN_OF_FLAMES_ENTRANCE | scroll seam south 
+64 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0   TOP | scroll seam south 0-384 -> MT_CRENEL/WAL
+65 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0   TOP | scroll seam south 384-1008 -> MT_CRENEL/
+66 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 . 1 1 1 1 1 1 1 1 1 1 1   MELARIS_MINE/MAIN
+67 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 . 1 1 1 1 1 1 1 1 1 1   CRENEL_MINISH_PATHS/MELARI
+68 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 . 1 1 1 1 1 1 1 1 1   MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHWEST
+69 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 . 1 1 1 1 1 1 1 1   MINISH_HOUSE_INTERIORS/MELARI_MINES_SOUTHEAST
+70 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 . 1 1 1 1 1 1 1   MINISH_HOUSE_INTERIORS/MELARI_MINES_EAST
+71 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 . 1 1 1 1 1 1   DOJOS/GRAYBLADE
+72 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 . 1 1 1 1 1   MT_CRENEL/TOP (240,151)
+73 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 . 1 1 1 1   CRENEL_DIG_CAVE/0
+74 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 . 1 1 1   CRENEL_MINISH_PATHS/RAIN
+75 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 . 1 1   MT_CRENEL/TOP (904,64)
+76 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 . 1   MT_CRENEL/ENTRANCE (861,54)
+77 0 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0 1 1 0 0 0 1 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 .   CRENEL_MINISH_PATHS/SPRING_WATER
 ```
 
-74 nodes, 5402 ordered pairs, **4153 with no data** (76%).
+77 nodes, 5852 ordered pairs, **4387 with no data** (74%).

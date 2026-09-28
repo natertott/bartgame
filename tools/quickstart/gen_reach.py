@@ -53,6 +53,7 @@ TOKENS = [
     ('boots',           'QS_REACH_BOOTS',      'ITEM_PEGASUS_BOOTS'),
     ('mitts',           'QS_REACH_MITTS',      'ITEM_MOLE_MITTS'),
     ('gust_jar',        'QS_REACH_GUST',       'ITEM_GUST_JAR'),
+    ('ocarina',         'QS_REACH_OCARINA',    'ITEM_OCARINA'),
     ('lonlon_key',      'QS_REACH_LONLON_KEY', 'ITEM_QST_LONLON_KEY'),
     ('graveyard_key',   'QS_REACH_GRAVE_KEY',  'ITEM_QST_GRAVEYARD_KEY'),
     # Not an item, but the game keeps a count it can read.
@@ -81,6 +82,14 @@ RING = {
     'WW-C': 'QS_REGION_WW', 'WW-S': 'QS_REGION_WW', 'CW': 'QS_REGION_CW',
     'WR': 'QS_REGION_WR', 'CREN': 'QS_REGION_CREN',
     'MW': 'QS_REGION_MW', 'LH': 'QS_REGION_LH',
+    # Sub-starts. Lake Hylia is not one place: the border shore, the
+    # wind-crest pocket, the isolated south-west corner and the ladder
+    # pocket are four disconnected components with four different entrances,
+    # and the survey walked them separately. Minish Village hangs off Minish
+    # Woods and is its own map. Same treatment Eastern Hills and Western
+    # Wood already get - several survey keys, one region the ring knows.
+    'LH-CREST': 'QS_REGION_LH', 'LH-SW': 'QS_REGION_LH', 'LH-LADDER': 'QS_REGION_LH',
+    'MV': 'QS_REGION_MW',
 }
 RINGS = ['QS_REGION_CG', 'QS_REGION_NHF', 'QS_REGION_SHF', 'QS_REGION_EH',
          'QS_REGION_LLR', 'QS_REGION_TRIL', 'QS_REGION_WW', 'QS_REGION_RV',
