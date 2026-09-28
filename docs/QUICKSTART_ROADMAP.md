@@ -1317,6 +1317,71 @@ business scrub's tree is recorded FREE because the collision flood reaches
 it, but KINSTONE_27's world event fires at exactly that door, so it may be
 fusion-revealed and the row wrong.
 
+### Where a run lands, and when a region pays
+
+**Nothing this mode places may sit on a region's landing square.**
+`tools/quickstart/drop_spots.py` measured what was waiting at the eighteen
+coordinates the Cloud Tops pit drops a run onto: fourteen had one of that
+region's own enemy offsets within three tiles, four had one on the EXACT
+pixel (South Hyrule Field, North Hyrule Field, Trilby Highlands, Royal
+Valley), and eight cost the player health while they stood still after
+landing. `QuickStartOnRegionDropSpot` is the rule, checked inside
+`QuickStartPositionAllowed` so it governs the quest pots and the
+hunt/scavenger/stealth givers drawn off the same table as well as the waves.
+It costs 21 of the pool's 616 offsets - 3.4%, never more than three in one
+region - and it cannot be undone by a later edit to an offset table, which
+moving eighteen coordinates by hand could. After it: 0 of 18 landings have
+anything of ours in the square, and none loses health. (One vanilla Wind
+Ruins enemy stands about twenty pixels from the below-fortress landing. This
+mode neither places nor moves it.)
+
+**Castor Wilds landed in the swamp**, and that one was a coordinate, not a
+rule: (984,264) is act tile 0x13. Moved 51px to (968,312), the nearest dry
+tile with four dry neighbours.
+
+Finding it needed the right oracle. `gPlayerState.floor_type` looks like the
+answer and is not - once the player is standing in swamp it stops tracking,
+so teleporting around the room and reading it back said all 1933 open tiles
+in Castor Wilds were swamp, and all 72 of its enemy offsets with them, which
+would have meant the region had no dry ground at all. Reading the ACT TILE
+out of `gActTilePtrs` and mapping it through the ROM's own
+`gMapActTileToSurfaceType` says 1039 of those tiles are ordinary ground.
+`emu.act_at()` is that read, for anything that needs it next.
+
+**A region no longer pays its clear reward on arrival.** The reward state
+machine has three states, and state 1 - "dropped, not yet confirmed
+collected" - had an unconditional payout at the bottom of it. On a re-entry
+the room load wipes room flag 1, and the item that was on the floor was
+wiped with the room, so the "still lying there?" scan misses and the next
+thing that happens is a fresh reward at the player's feet before they have
+taken a step. State 1 is easy to be left in: the promotion to 2 only happens
+if the player is still in the room when the item leaves the floor, so
+walking out through a ? room, a cave or a fusion reload first leaves the
+region paying again on every arrival for the rest of the run. The single
+shared `gSave.reward_drop_x/y` - one pair for eighteen regions - makes the
+scan miss more often rather than causing it. The re-drop now requires
+`QuickStartRegionWaveCleared()`, the same bar the first payout has always
+had; flag 0 is wiped by the room load too, so that is false on arrival by
+construction, and the endless wave loop means the reward is never lost.
+
+Two things this batch did NOT find, said plainly. The settled-room guard in
+`QuickStartRegionMonitor` still holds: eleven walk-ins across borders and
+scroll seams, with a wave up behind the player, paid nothing on arrival on
+the current build - and nothing on the pre-fix build either, so that path is
+not where the report comes from. And `QuickStartSpawnRegionWave` used to
+return TRUE for a deal that placed zero enemies, arming flag 0 on an empty
+room; that is a real defect (a phantom clear, plus an inflated wave counter)
+and it is fixed by returning the placement count, but it was measured NOT to
+happen on arrival in any of the eighteen regions, so it is hardening rather
+than the fix. `tools/quickstart/region_arrival.py --armed` is the standing
+check that no region reads as a cleared wave while the player is arriving.
+
+One residual, not fixed: `gSave.reward_drop_x/y` is still one pair for all
+eighteen regions, so a stale coordinate that happens to have an unrelated
+ground item on it can set room flag 1 and promote a region to "collected"
+that never paid. Narrow, and no longer able to cause a payout; closing it
+properly means recording the owning slot in the save.
+
 ### Melari's Mine, live: the mountain's Minish holes were all cancelled
 
 The mine's route was never missing from the data. Every row on it - the

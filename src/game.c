@@ -438,7 +438,7 @@ static void QuickStartSetupCaveRoomContent(void);
 static bool32 QuickStartCaveIsCurrentRoom(void);
 static void QuickStartPickEnemy(u8, u8*, u8*);
 static void QuickStartSpawnEnemyGroup(const s16 (*)[2], s32, s32, s32);
-static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*)[2], s32, s32, s32, u8);
+static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*)[2], s32, s32, s32, u8);
 static void QuickStartSpawnWinKeyOnce(s16, s16);
 static void QuickStartCheckWinCondition(void);
 static s32 QuickStartCountItemsHeld(void);
@@ -4528,7 +4528,15 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // 12-14, whose per-slot state lives in FLAG_BANK_11 via the
     // QuickStartSlotBit* routers (the QS window's own blocks were sized
     // for twelve rows).
-    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 984, 264, 0, 0, 0, 0,
+    // Landing moved from (984,264) to (968,312), 51px, the nearest dry
+    // tile with four dry neighbours. (984,264) is act tile 0x13 - swamp -
+    // so the sky drop put the player into the sludge, sinking, on the frame
+    // a run began; the user reported exactly that. Found and verified by
+    // tools/quickstart/drop_spots.py, which reads the act tile under the
+    // coordinate rather than gPlayerState.floor_type: floor_type sticks
+    // once the player is in swamp, and reading it back said all 1933 open
+    // tiles in this room were swamp when 1039 of them are dry ground.
+    { AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 968, 312, 0, 0, 0, 0,
       sQuickStartCastorWildsEnemyOffsets, ARRAY_COUNT(sQuickStartCastorWildsEnemyOffsets),
       QUICKSTART_CASTORWILDS_ROOM_SQUARES,
       920, 216, NULL },
@@ -5331,8 +5339,32 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
         }
     }
     escalated = QuickStartEscalatedDifficulty(region, wave);
-    QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
-                                          QuickStartRoomEnemyCeiling(region->roomSquares), (u8)escalated);
+    // A deal that placed NOTHING is not a wave, and saying it is was the
+    // "I walk into a region and the clear reward is already on the floor"
+    // report. Room flag 0 means "a wave is up", and the caller sets it on
+    // TRUE; QuickStartRegionWaveCleared then reads flag 0 plus an empty
+    // room as a clear, so an empty deal paid the region's one-time reward
+    // on the arrival frame and advanced the wave counter with it - which is
+    // also why the first real wave in that region came out a tier harder
+    // than wave 0, and why a boss could roll immediately behind the phantom
+    // prize.
+    //
+    // Empty deals are not rare on arrival, which is why this shows up as
+    // "quite often". The room has just loaded, the GFX table has not
+    // finished reclaiming, and QuickStartGfxBudgetForSpawn refuses every
+    // placement; the entity budget and the archetype draw can each end at
+    // zero too. tools/quickstart/region_arrival.py caught a ground item
+    // appearing at frame ~84 with zero enemies alive in 7 of the 18
+    // regions, well before the real wave turned up.
+    //
+    // FALSE is the right answer rather than a new state: the caller already
+    // treats FALSE as "no wave up, try again next frame", which is exactly
+    // what a room that could not afford one should do.
+    if (QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount, region->roomSquares,
+                                              QuickStartRoomEnemyCeiling(region->roomSquares),
+                                              (u8)escalated) == 0) {
+        return FALSE;
+    }
     return TRUE;
 }
 
@@ -5477,8 +5509,14 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
         u8 remainder = QuickStartRegionGetAliveCount(slot);
         if (remainder > 0) {
             s32 escalated = QuickStartEscalatedDifficulty(region, wave);
-            QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount,
-                                                  region->roomSquares, remainder, (u8)escalated);
+            // Same rule as the fresh deal below (see QuickStartSpawnRegionWave):
+            // a resume that placed nothing must not arm flag 0, or the
+            // interrupted wave reads as finished the moment the player walks
+            // back in and pays out a clear nobody earned.
+            if (QuickStartSpawnEnemyGroupAtDifficulty(region->enemyOffsets, region->enemyOffsetCount,
+                                                      region->roomSquares, remainder, (u8)escalated) == 0) {
+                return;
+            }
             // Leave the stored remainder as-is: the watcher above min-updates
             // it to whatever actually spawned on the next settled frame.
             QsSetRoomFlag(0);
@@ -6632,6 +6670,37 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
     }
     if (QsCheckRoomFlag(1)) {
         QuickStartSetRegionRewardState(slot, 2);
+        return;
+    }
+    // THE RE-DROP IS EARNED, not handed over on arrival.
+    //
+    // Without this gate the line below is an unconditional payout on the
+    // first settled frame of every re-entry into a region that is still in
+    // state 1 - dropped but never confirmed collected. Room flags are wiped
+    // by the room load, so flag 1 is clear; the item that was on the floor
+    // was wiped with the room, so the scan above misses; and the next thing
+    // that happens is a fresh reward at the player's feet before they have
+    // taken a step. That is the user's report: "the player walks into a new
+    // region and receives the room clear reward instantly ... quite often".
+    //
+    // State 1 is easy to be left in. Clearing the wave pays the reward and
+    // sets state 1; the promotion to 2 only happens if the player is still
+    // in the room when the item leaves the floor. Walk out first - through a
+    // ? room door, a cave, a seam, a fusion reload - and the region stays at
+    // 1 for the rest of the run, paying again on every arrival.
+    //
+    // gSave.reward_drop_x/y makes it worse rather than causing it: there is
+    // ONE pair for all eighteen regions, so a later region's drop overwrites
+    // it and the scan above is then asking about a coordinate in a different
+    // room. It can only miss, and a miss used to mean "re-drop".
+    //
+    // Requiring the clear keeps the re-drop doing its real job - restoring a
+    // reward that was wiped before pickup - while making it impossible on
+    // arrival, because flag 0 ("a wave is up") is itself wiped by the room
+    // load, so QuickStartRegionWaveCleared is false on arrival whether or
+    // not the room is empty. The region deals endless waves, so the reward
+    // is never unreachable: clear the room again and it comes back.
+    if (!QuickStartRegionWaveCleared()) {
         return;
     }
     QuickStartSpawnRegionRewardItem(region, slot);
@@ -8989,11 +9058,63 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
       ITEM_POWER_BRACELETS },
 };
 
+// A clear square around each region's own landing spot, which nothing this
+// file places may sit inside.
+//
+// The pit in Cloud Tops drops the player at sQuickStartRegionPool's
+// entranceX/entranceY (QuickStartProcessHubHoleLink) and that is the first
+// ground a run touches. tools/quickstart/drop_spots.py measured what was
+// waiting there: FOURTEEN of the eighteen regions had one of their own enemy
+// offsets within three tiles of the landing spot, and in four - South Hyrule
+// Field, North Hyrule Field, Trilby Highlands and Royal Valley - an offset
+// sat on the EXACT pixel. Eight regions cost the player health while they
+// stood still after landing. The user's report is literally that: "the site
+// the player drops into is also a spawn point for an enemy ... when the
+// player drops they instantly take damage".
+//
+// Fixing it by moving eighteen coordinates would fix it once. This is the
+// rule instead, so a later edit to any offset table cannot put it back. It
+// costs 21 of the 616 offsets across the whole pool - 3.4%, and never more
+// than three in one region - and the placer simply draws from what is left.
+//
+// A square, not a radius: this is "keep the landing clear", and a box is
+// what that means without a multiply. It sits in QuickStartPositionAllowed
+// rather than in the enemy spawner so it governs the OTHER things drawn off
+// the same offset table too - the quest pots, and the hunt/scavenger/stealth
+// givers and watchmen - which is the difference between a clear landing and
+// one where a stealth watchman busts the run on frame one. The region
+// reward and the win key do not come through here (they place at
+// rewardX/rewardY through their own open-tile search), so nothing about
+// where a region pays out changes.
+#define QUICKSTART_DROP_CLEAR_PX 48
+
+static bool32 QuickStartOnRegionDropSpot(s16 localX, s16 localY) {
+    s32 poolIndex = QuickStartCurrentRegionPoolIndex();
+    const QuickStartRegion* region;
+    s32 dx, dy;
+    if (poolIndex < 0) {
+        return FALSE;
+    }
+    region = &sQuickStartRegionPool[poolIndex];
+    dx = (s32)localX - (s32)region->entranceX;
+    dy = (s32)localY - (s32)region->entranceY;
+    if (dx < 0) {
+        dx = -dx;
+    }
+    if (dy < 0) {
+        dy = -dy;
+    }
+    return dx < QUICKSTART_DROP_CLEAR_PX && dy < QUICKSTART_DROP_CLEAR_PX;
+}
+
 // Whether something may be placed at this room-local spot in the current
 // room. TRUE for anywhere not inside a gated box, and for a gated box whose
-// item the player is carrying.
+// item the player is carrying - and never on the region's landing square.
 static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
     s32 i;
+    if (QuickStartOnRegionDropSpot(localX, localY)) {
+        return FALSE;
+    }
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartGatedZones); i++) {
         const QuickStartGatedZone* zone = &sQuickStartGatedZones[i];
         if (gRoomControls.area != zone->area || gRoomControls.room != zone->room) {
@@ -9036,10 +9157,17 @@ static bool32 QuickStartAcroBanditCapReached(void) {
     return QuickStartKindAtLiveCap(ACRO_BANDIT, QuickStartGetDifficulty());
 }
 
-static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
+// Returns HOW MANY enemies actually landed, which is not the same question
+// as "was a wave dealt". Every clamp in here can end at zero - the entity
+// budget, the GFX ceiling, a shape whose roles are all unaffordable, a
+// reachability filter that rejects every offset - and a caller that treats
+// a zero-placement deal as a wave arms a room that is empty. See
+// QuickStartSpawnRegionWave, which is where that went wrong.
+static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares,
                                                    s32 maxEnemies, u8 difficulty) {
     s32 indices[72];
     s32 i, j, r, tmp, count, density, cap, allowed, gfxCap, entityBudget;
+    s32 placed = 0;
     Entity* enemy;
     u8 id, form;
     u8 kindIds[QUICKSTART_MAX_ENEMY_KINDS];
@@ -9064,7 +9192,7 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
     }
     offsetCount = allowed;
     if (offsetCount == 0) {
-        return;
+        return 0;
     }
     for (i = 0; i < offsetCount - 1; i++) {
         r = (s32)Random() % (offsetCount - i);
@@ -9116,7 +9244,7 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
         }
     }
     if (cap < 1) {
-        return;
+        return 0;
     }
     if (count > cap) {
         count = cap;
@@ -9308,8 +9436,10 @@ static void QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 o
             enemy->flags |= ENT_PERSIST;
             UpdateSpriteForCollisionLayer(enemy);
             entityBudget -= QuickStartKindEntityCost(id);
+            placed++;
         }
     }
+    return placed;
 }
 
 static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {

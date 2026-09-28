@@ -193,6 +193,34 @@ def coll_at(c, tx, ty):
     return c.memory.u8[COLL + tx + (ty << 6)]
 
 
+# gActTilePtrs (asm/src/veneer.s) - four RAM pointers, one per collision
+# layer, each to that layer's act-tile byte map. The ROM address of the
+# ARRAY is fixed; the buffers it points at are not, so the pointer is read
+# out of the running game rather than hardcoded.
+ACT_TILE_PTRS = 0x08000278
+
+
+def act_tile_base(c, layer=1):
+    a = ACT_TILE_PTRS + layer * 4
+    return (c.memory.u8[a] | (c.memory.u8[a + 1] << 8) |
+            (c.memory.u8[a + 2] << 16) | (c.memory.u8[a + 3] << 24))
+
+
+def act_at(c, tx, ty, layer=1):
+    """The act tile at a room tile - what the surface under a standing
+    player is derived from (gMapActTileToSurfaceType).
+
+    Read the MAP, not the player. gPlayerState.floor_type looks like the
+    same answer and is not: once the player is standing in swamp it stops
+    tracking, so teleporting around the room and reading it back reports
+    swamp everywhere. Measured in Castor Wilds - all 1933 open tiles came
+    back SURFACE_SWAMP, while the act tiles say 1039 of them are ordinary
+    dry ground. Same masking the ROM uses (arm_GetActTileAtTilePos): six
+    bits each, so this is only correct for rooms up to 64 tiles square.
+    """
+    return c.memory.u8[act_tile_base(c, layer) + ((tx & 0x3f) + ((ty & 0x3f) << 6))]
+
+
 def snap(c, path):
     """Save the current frame as a PNG (rendering ground truth - the one way
     to catch the sprites-never-render VRAM failure class).
