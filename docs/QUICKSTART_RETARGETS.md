@@ -9,7 +9,16 @@ on purpose. `MOVED` - same room, different landing - is empty: all seven have be
 put back to vanilla.
 
 Retiring the 2-door "? room" pool returned 19 rooms' doors to vanilla and cut
-RETARGETED from 65 to 27.
+RETARGETED from 65 to 27. Retiring the SINGLE-door pool's retargets took it
+from 27 to 6 - twenty-one rooms whose only door sent the player to Castle
+Garden Main (three dojos, three tree hollows, ten Minish house interiors,
+Gina's grave, the Veil Falls heart-piece cave, the Minish Woods Great Fairy)
+now open where they really open.
+
+The six that remain are all deliberate and none of them is a pool leftover:
+four Hyrule Town borders stitched into neighbouring field rooms because the
+mode has no town, Stockwell's shop moved into the overworld, and Melari's
+Mine's door aligned with the custom link it was racing.
 
 | class | exit list | door (warp, x, y) | vanilla | this build |
 |---|---|---|---|---|

@@ -1203,20 +1203,16 @@ const Transition* const gExitLists_DigCaves1[] = {
     [ROOM_DIG_CAVES_TRILBY_HIGHLANDS] = gExitList_DigCaves1_TrilbyHighlands,
 };
 
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_MinishHouseInteriors_GentariMain[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). Every Minish Village
+// house below opens back into the village, which is the point: the user's
+// walked survey routes a large part of Minish Woods THROUGH the village,
+// and a village whose houses all exit to Castle Garden is not a place a
+// route can pass through.
 const Transition gExitList_MinishHouseInteriors_GentariMain[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x98, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 // GENTARI_EXIT is no longer QUICKSTART's cave connector - removed entirely
 // per the user's explicit request ("remove GENTARI_EXIT from the pool
 // entirely and only use the rooms we just identified"), now that a real
@@ -1240,96 +1236,36 @@ const Transition gExitList_MinishHouseInteriors_Festari[] = {
       TRANSITION_TYPE_INSTANT_MINISH, 0x0, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted the same way as the Tree Interiors ladder rooms further down
-// this file - one of the "? room" pool's 20 candidates (game.c,
-// sQuickStartQuestionRoomPool). Every pool room shares the same single
-// landing spot regardless of which of the 3 ladders it ends up assigned
-// to for a given save (south of ladder 0's own pot, clear of all 3
-// ladders' trigger boxes - see QUICKSTART_QUESTION_ROOM_RETURN_* in
-// game.c), since a static compile-time table can't otherwise vary its
-// destination coordinates per save.
-const Transition gExitList_MinishHouseInteriors_Red[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_Red[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x128, 0x238, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_Green[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_Green[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x168, 0x1e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_Blue[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_Blue[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1a8, 0x218, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_SideArea[] = {
-    // Back to a plain "? room" pool entry (the shared Castle Garden return
-    // point every other pool room uses) - the cave-connector's second door
-    // moved to ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT instead, per the
-    // user's own request (this room stays in the small-room pool).
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_SideArea[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x78, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_ShoeMinish[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_ShoeMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e8, 0x2e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_PotMinish[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
-      TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_MinishHouseInteriors_PotMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x48, 0x258, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_MinishHouseInteriors_BarrelMinish[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x378, 0x298, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
@@ -1402,36 +1338,18 @@ const Transition gExitList_MinishHouseInteriors_SouthHyruleField[] = {
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_NextToKnuckle[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired).
 const Transition gExitList_MinishHouseInteriors_NextToKnuckle[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x28, 0x55, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above
-// gExitList_MinishHouseInteriors_Red (and gExitList_MinishHouseInteriors_
-// HyruleFieldSouthwest just above for why this one specifically needed it
-// added rather than already having it).
-const Transition gExitList_MinishHouseInteriors_Librari[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired).
 const Transition gExitList_MinishHouseInteriors_Librari[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e8, 0x1b4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 // Back on its real vanilla exit (EH-South) - the second half of the same
 // fix as gExitList_MinishHouseInteriors_HyruleFieldSouthwest above; this
 // is the Eastern Hills Minish house the user's report actually named.
@@ -1440,45 +1358,31 @@ const Transition gExitList_MinishHouseInteriors_HyruleFieldExit[] = {
       1, TRANSITION_TYPE_INSTANT_MINISH, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). This one exits into
+// HYRULE TOWN, which the mode's overworld does not contain - but the room
+// is a Minish hole in that same town, so nothing in a run can reach it to
+// use the door. Left vanilla rather than special-cased: an unreachable room
+// with an honest door is better than a reachable-looking one with a lie in
+// it, and containment already polices the case if that ever changes.
 const Transition gExitList_MinishHouseInteriors_HyruleTown[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x1b5, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_MinishWoodsBomb[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). The user's survey
+// reaches this one through Minish Village, so its door back into the woods
+// is part of a measured route now.
 const Transition gExitList_MinishHouseInteriors_MinishWoodsBomb[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x138, 0x325, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_MinishHouseInteriors_LakeHyliaOcarina[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
-      0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired).
 const Transition gExitList_MinishHouseInteriors_LakeHyliaOcarina[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xc8, 0x1a4, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_INSTANT_MINISH, 0x4,
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_MinishHouseInteriors[] = {
     [ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN] = gExitList_MinishHouseInteriors_GentariMain,
     [ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT] = gExitList_MinishHouseInteriors_GentariExit,
@@ -1854,20 +1758,16 @@ const Transition gExitList_GreatFairies_Graveyard[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_GreatFairies_MinishWoods[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). This one matters
+// twice: the fairy and the tree hollow above her are a PAIR, and the user's
+// walked survey reaches them only through Eastern Hills North's Pacci-cane
+// ledge, so sending the fairy's door to Castle Garden severed the one
+// pocket in Minish Woods that has a measured way in.
 const Transition gExitList_GreatFairies_MinishWoods[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_GreatFairies_MtCrenel[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x148, 0x1f8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
@@ -2129,26 +2029,14 @@ const Transition gExitList_TreeInteriors_Waveblade[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted (this room is otherwise never reached as a destination by any
-// real transition - see game.c's Castle Garden hidden-ladder feature) so
-// its one real exit returns to Castle Garden Main, landing south of ladder
-// 0's own pot spot (104,104 - one of the garden's own real, pre-existing
-// HIDDEN_LADDER_DOWN fixtures, per game.c) and clear of that ladder's
-// trigger box (game.c, QuickStartProcessLadderLinks: +/-16px around the
-// pot) so arriving here doesn't immediately re-trigger the ladder.
-const Transition gExitList_TreeInteriors_14[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired, and the Castle Garden
+// hidden-ladder feature it fed with it). This is a Minish Woods tree, so it
+// opens back into Minish Woods.
 const Transition gExitList_TreeInteriors_14[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x210, 0x1d8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_TreeInteriors_BoomerangNorthwest[] = {
     { WARP_TYPE_AREA, 0x78, 0x54, 0x48, 0x88, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_BOOMERANG, 1, TRANSITION_TYPE_NORMAL, 0x0, 0x0,
       0x0, 0x0 },
@@ -2200,22 +2088,13 @@ const Transition gExitList_TreeInteriors_MinishWoodsGreatFairy[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted the same way as gExitList_TreeInteriors_14 above, for ladder 1
-// (pot at 936,376 - the garden's other real HIDDEN_LADDER_DOWN fixture) -
-// landing south of it, clear of its own trigger box.
-const Transition gExitList_TreeInteriors_1C[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3a8, 0x1a0, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). This is the Trilby
+// Highlands tree from the user's door-loop report - it goes back to Trilby.
 const Transition gExitList_TreeInteriors_1C[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x50, 0x298, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_TreeInteriors_MinishWoodsBusinessScrub[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x78, 0x78, TRANSITION_SHAPE_AREA_12x12, AREA_CAVES, ROOM_CAVES_KINSTONE_BUSINESS_SCRUB, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -2226,21 +2105,13 @@ const Transition gExitList_TreeInteriors_MinishWoodsBusinessScrub[] = {
 const Transition gExitList_TreeInteriors_1E[] = {
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted the same way as gExitList_TreeInteriors_14 above, for ladder 2
-// (bush at 650,310) - landing south of it, clear of its own trigger box.
-const Transition gExitList_TreeInteriors_UnusedHeartContainer[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x28a, 0x15e, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). A Lake Hylia tree,
+// back into Lake Hylia.
 const Transition gExitList_TreeInteriors_UnusedHeartContainer[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1e0, 0x1b8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_TreeInteriors[] = {
     [ROOM_TREE_INTERIORS_WITCH_HUT] = gExitList_TreeInteriors_WitchHut,
     [ROOM_TREE_INTERIORS_1] = gExitList_NoExitList,
@@ -2276,46 +2147,24 @@ const Transition* const gExitLists_TreeInteriors[] = {
     [ROOM_TREE_INTERIORS_UNUSED_HEART_CONTAINER] = gExitList_TreeInteriors_UnusedHeartContainer,
 };
 
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_Dojos_Grayblade[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA. The single-door "? room" pool these three belonged to is retired,
+// and with it the retarget that sent every one of its rooms' only door to
+// Castle Garden Main. A dojo's door goes back where the dojo is.
 const Transition gExitList_Dojos_Grayblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x20, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_Dojos_Swiftblade[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_Dojos_Swiftblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x2e8, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
-#ifdef QUICKSTART
-const Transition gExitList_Dojos_Waveblade[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
 const Transition gExitList_Dojos_Waveblade[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x78, 0x58, TRANSITION_SHAPE_BORDER_SOUTH, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
       1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition gExitList_Dojos_ToGrimblade[] = {
     { WARP_TYPE_AREA, 0x78, 0x48, 0x3a8, 0x168, TRANSITION_SHAPE_AREA_12x12, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1,
       TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
@@ -3189,24 +3038,14 @@ const Transition gExitList_VeilFallsCaves_RupeePath[] = {
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above
-// gExitList_MinishHouseInteriors_Red - this room is a small-pool member too
-// (per the user's own room survey), its real exit otherwise leading
-// somewhere entirely outside the QUICKSTART loop (Veil Falls proper) rather
-// than back into it.
-const Transition gExitList_VeilFallsCaves_HeartPiece[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). Its real exit does
+// lead outside the QUICKSTART loop, into Veil Falls proper, and that is now
+// a containment question rather than a reason to rewrite the door.
 const Transition gExitList_VeilFallsCaves_HeartPiece[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x38, 0x38, TRANSITION_SHAPE_BORDER_SOUTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x4,
       0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_VeilFallsCaves[] = {
     [ROOM_VEIL_FALLS_CAVES_HALLWAY_2F] = gExitList_VeilFallsCaves_Hallway2F,
     [ROOM_VEIL_FALLS_CAVES_HALLWAY_1F] = gExitList_VeilFallsCaves_Hallway1F,
@@ -3231,20 +3070,13 @@ const Transition gExitList_RoyalValleyGraves_HeartPiece[] = {
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#ifdef QUICKSTART
-// Retargeted - see the "? room" pool comment above gExitList_MinishHouseInteriors_Red.
-const Transition gExitList_RoyalValleyGraves_Gina[] = {
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x68, 0x90, TRANSITION_SHAPE_BORDER_SOUTH, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, TRANSITION_TYPE_NORMAL,
-      0x4, 0x0, 0x0, 0x0 },
-    TransitionListEnd,
-};
-#else
+// VANILLA (the single-door "? room" pool is retired). Gina's grave opens
+// back into the valley it stands in.
 const Transition gExitList_RoyalValleyGraves_Gina[] = {
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x188, 0x98, TRANSITION_SHAPE_BORDER_SOUTH, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },
     TransitionListEnd,
 };
-#endif
 const Transition* const gExitLists_RoyalValleyGraves[] = {
     [ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE] = gExitList_RoyalValleyGraves_HeartPiece,
     [ROOM_ROYAL_VALLEY_GRAVES_GINA] = gExitList_RoyalValleyGraves_Gina,

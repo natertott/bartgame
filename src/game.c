@@ -1766,8 +1766,75 @@ static const s16 sQuickStartGardenEnemyOffsets[65][2] = {
 // (docs/QUICKSTART_ROADMAP.md secs 3.1/3.2), this same call just needs to move
 // to wherever "region position 1 this run" resolves to - it's independent
 // of which physical region that turns out to be.
+// Is the player standing on one of this room's own exits?
+//
+// Vanilla already pulls a player who lingers on a door straight back through
+// it, and that is harmless right up until something FREEZES them there. A
+// room-entry Ezlo hint does exactly that. The user's report: walk out of the
+// Trilby Highlands tree, the hint plays the instant the field loads, the
+// door takes them back inside, and it happens again every single time - an
+// inescapable loop out of two features that are each fine alone.
+//
+// So no room-entry hint fires while the player is on a door. The latch is
+// not set either, so the hint is postponed rather than lost: it plays the
+// moment they take a step.
+//
+// The box is deliberately wider than the engine's own trigger rectangles
+// (gShapeDimensions tops out at 22px): being a few pixels too cautious
+// delays a line by a frame or two, and being too tight brings the loop back.
+// A row with no start position is a BORDER, whose trigger is the room edge
+// its shape names rather than any rectangle.
+#define QUICKSTART_DOOR_GUARD_PX 28
+static bool32 QuickStartPlayerOnExitTrigger(void) {
+    const Transition* exits;
+    s32 lx, ly, w, h;
+    if (gArea.pCurrentRoomInfo == NULL) {
+        return FALSE;
+    }
+    exits = gArea.pCurrentRoomInfo->exits;
+    if (exits == NULL) {
+        return FALSE;
+    }
+    lx = (s32)gPlayerEntity.base.x.HALF.HI - (s32)gRoomControls.origin_x;
+    ly = (s32)gPlayerEntity.base.y.HALF.HI - (s32)gRoomControls.origin_y;
+    w = (s32)gRoomControls.width;
+    h = (s32)gRoomControls.height;
+    for (; exits->warp_type != WARP_TYPE_END_OF_LIST; exits++) {
+        if (exits->startX != 0 || exits->startY != 0) {
+            s32 dx = lx - (s32)exits->startX;
+            s32 dy = ly - (s32)exits->startY;
+            if (dx < 0) {
+                dx = -dx;
+            }
+            if (dy < 0) {
+                dy = -dy;
+            }
+            if (dx <= QUICKSTART_DOOR_GUARD_PX && dy <= QUICKSTART_DOOR_GUARD_PX) {
+                return TRUE;
+            }
+            continue;
+        }
+        if ((exits->shape & 0x03) && ly <= QUICKSTART_DOOR_GUARD_PX) {
+            return TRUE;
+        }
+        if ((exits->shape & 0x30) && ly >= h - QUICKSTART_DOOR_GUARD_PX) {
+            return TRUE;
+        }
+        if ((exits->shape & 0x0c) && lx >= w - QUICKSTART_DOOR_GUARD_PX) {
+            return TRUE;
+        }
+        if ((exits->shape & 0xc0) && lx <= QUICKSTART_DOOR_GUARD_PX) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 static void QuickStartShowRegionIntroHintOnce(void) {
     if (QsCheckFlag(GF_REGION_INTRO_HINT_SHOWN)) {
+        return;
+    }
+    if (QuickStartPlayerOnExitTrigger()) {
         return;
     }
     QsSetFlag(GF_REGION_INTRO_HINT_SHOWN);
@@ -1920,6 +1987,13 @@ static void QuickStartShowRegionFinalHintOnce(void) {
     // room flag rather than a run-long one on purpose: a player who wanders
     // back through before finishing the chain should be reminded, not left
     // to wonder whether they missed something.
+    // The door guard, and this is the line the user's loop was built on:
+    // "Something sleeps here" is room-flag gated, so it fires on EVERY entry
+    // into the element region - including the entry that happens when a door
+    // drags the player back out of a tree. See QuickStartPlayerOnExitTrigger.
+    if (QuickStartPlayerOnExitTrigger()) {
+        return;
+    }
     if (!QuickStartChainPreStepsDone()) {
         if (!QsCheckRoomFlag(45)) {
             QsSetRoomFlag(45);
@@ -6734,7 +6808,7 @@ static void QuickStartSetupRegionQuest(const QuickStartRegion* region, s32 slot)
     // player stands in the host region while the quest is live - before
     // this the pots just appeared unannounced and the completion line was
     // the quest's first words (the F1b dialogue pass).
-    if (!QsCheckFlag(GF_REGION_QUEST_HINT)) {
+    if (!QsCheckFlag(GF_REGION_QUEST_HINT) && !QuickStartPlayerOnExitTrigger()) {
         QsSetFlag(GF_REGION_QUEST_HINT);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 26), 0);
     }

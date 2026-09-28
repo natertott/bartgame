@@ -1265,6 +1265,49 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/28 batch: the last of the pool, and a door that would not let go
+
+**The single-door "? room" pool's retargets are gone.** Twenty-one exit
+lists still sent their only door to Castle Garden Main - three dojos, three
+tree hollows, ten Minish house interiors, Gina's grave, the Veil Falls
+heart-piece cave and the Minish Woods Great Fairy. They are all vanilla
+again, which took RETARGETED from 27 to 6 (`docs/QUICKSTART_RETARGETS.md`).
+The six left are the four town-bridge borders, Stockwell's shop and Melari's
+Mine's custom-link alignment - all deliberate.
+
+Two of those restorations matter beyond tidiness. The Great Fairy's door and
+the tree hollow above her are a PAIR, and the user's walked survey reaches
+them only through Eastern Hills North's Pacci-cane ledge - so retargeting the
+fairy severed the one pocket in Minish Woods with a measured way in. And ten
+Minish Village houses all exiting to Castle Garden made a village the survey
+routes a large part of Minish Woods THROUGH into somewhere a route cannot
+pass.
+
+One restoration is knowingly odd: `MinishHouseInteriors_HyruleTown` exits
+into Hyrule Town, which the mode's overworld does not contain. The room is a
+Minish hole in that same town, so nothing in a run can reach it to use the
+door; left vanilla rather than special-cased.
+
+**The Ezlo-hint door loop.** The user's report: walk out of the Trilby
+Highlands tree, "Something sleeps here" plays the instant the field loads,
+the door pulls the player back inside because they are still standing on it,
+and it repeats forever. Two features that are each fine alone - vanilla
+takes a player who lingers on a door, and the element region announces
+itself on entry - and the hint's freeze is what closes the loop. The hint is
+room-flag gated, so it fires on EVERY entry, including the entry the door
+itself causes.
+
+`QuickStartPlayerOnExitTrigger` now suppresses every room-entry hint while
+the player stands on one of the room's own exits, and does NOT set the
+latch, so the line is postponed rather than lost.
+`tools/quickstart/door_hint_loop.py` measures it, and two things about that
+probe are worth keeping: `emu.warp()` runs 300 frames of its own, so a
+player who arrives at the reward spot and is moved to the door afterwards
+has already heard the hint; and the player must be PINNED on the door,
+because left alone the engine takes them through it, they come back out
+elsewhere, and the hint fires there quite correctly. An earlier version of
+the probe did neither and reported a working fix as broken twice.
+
 ### The 09/25 integration batch, part two: content, and where it can go
 
 Fourteen new ? rooms, all in the three expansion regions, all in pockets
