@@ -89,7 +89,7 @@ RING = {
     # Woods and is its own map. Same treatment Eastern Hills and Western
     # Wood already get - several survey keys, one region the ring knows.
     'LH-CREST': 'QS_REGION_LH', 'LH-SW': 'QS_REGION_LH', 'LH-LADDER': 'QS_REGION_LH',
-    'MV': 'QS_REGION_MW',
+    'MV': 'QS_REGION_MW', 'CREN-BASE': 'QS_REGION_CREN',
 }
 RINGS = ['QS_REGION_CG', 'QS_REGION_NHF', 'QS_REGION_SHF', 'QS_REGION_EH',
          'QS_REGION_LLR', 'QS_REGION_TRIL', 'QS_REGION_WW', 'QS_REGION_RV',

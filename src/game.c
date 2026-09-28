@@ -16782,6 +16782,37 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == AREA_CASTOR_CAVES && room == ROOM_CASTOR_CAVES_NORTH) {
         return TRUE;
     }
+    // MOUNT CRENEL'S BASE, from the user's uphill survey.
+    //
+    // Five caves hanging off MT_CRENEL/ENTRANCE, all of them cancelled:
+    // survey_gate.py found six of that room's nine doors refused, and the
+    // base is where a run ARRIVES on the mountain (the border up from
+    // Trilby), so this was most of the region's ground floor.
+    //
+    // The three the survey names - the ladder to the spring water, the
+    // Helmasaur hallway, the bomb-scrub cave - plus Bean Pesto's Minish cave
+    // and the rupee fairy fountain, which the same room's exit list turned
+    // up alongside them. Every one is a dead end that returns to
+    // MT_CRENEL/ENTRANCE and nowhere else; the Helmasaur hallway also joins
+    // CRENEL_CAVES/MUSHROOM_KEESE, which is already a content site.
+    //
+    // Worth recording why a flood never found any of this: the arrival
+    // component in MT_CRENEL/ENTRANCE is 52 tiles of the room's 467 open
+    // ones, and not one of these doors is inside it. The base is behind BOMB
+    // WALLS, and a collision flood reads a bomb wall as a wall. That is the
+    // answer to the "52 tiles from the border arrival but 198 from the
+    // survey's own coordinate" question the traversal audit has been
+    // carrying.
+    if (area == AREA_CRENEL_CAVES &&
+        (room == ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER ||
+         room == ROOM_CRENEL_CAVES_HELMASAUR_HALLWAY ||
+         room == ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB ||
+         room == ROOM_CRENEL_CAVES_RUPEE_FAIRY_FOUINTAIN)) {
+        return TRUE;
+    }
+    if (area == AREA_MINISH_CAVES && room == ROOM_MINISH_CAVES_BEAN_PESTO) {
+        return TRUE;
+    }
     // LAKE HYLIA's pockets, from the same walked survey.
     //
     // tools/quickstart/survey_gate.py asked the gate about every place the

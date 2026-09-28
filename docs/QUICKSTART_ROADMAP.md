@@ -1317,6 +1317,59 @@ business scrub's tree is recorded FREE because the collision flood reaches
 it, but KINSTONE_27's world event fires at exactly that door, so it may be
 fusion-revealed and the row wrong.
 
+### Mount Crenel's Base, walked uphill
+
+The user walked the base from its one entrance - the border up from Trilby
+Highlands. The existing `CREN` block walked the same mountain DOWNHILL from
+the Cavern of Flames forecourt with the Grip Ring already in hand, which is
+a different set of prices; this is the uphill story, and it is the one a run
+actually lives, because Trilby is where the ring puts the player. New survey
+key `CREN-BASE`; reach.h 240 -> 253 rows.
+
+**The whole base is behind bombs**, and that answers a question this project
+has been carrying. A collision flood from the Trilby arrival finds a
+52-tile component in a room with 467 open tiles, and not one of the survey's
+coordinates is inside it. "52 tiles from the border arrival but 198 from the
+survey's own coordinate" (`docs/QUICKSTART_TRAVERSAL_AUDIT.md`) was never two
+measurements of the same thing - a flood reads a bomb wall as a wall.
+
+**The bean errand is not priced, and that is deliberate.** The survey's
+framing is that a BOTTLE gates everything past the hint-scrub cave, because
+the vine has to be watered, and that certain beans want the green miner's
+water from `CRENEL_MINISH_PATHS/SPRING_WATER` as well. True of vanilla and of
+mapexplore. Not true here: `GameTask_Transition` sets `WATERBEAN_OUT` and
+`WATERBEAN_PUT` at boot, and both `CrenelBeanSprout` entities in
+`MT_CRENEL/ENTRANCE` were measured sitting in **action 4** - their grown
+state, climbable tile already laid - in the shipped difficulty-3 ROM. Same
+treatment and same reasoning as the FESTARI row: the gate is open before the
+run starts, so charging a route for it prices something no run can affect. If
+the pre-grow is ever removed, every row gains the bottle and the vine row
+gains the green water with it.
+
+**The Grip Ring alternative is real in the tile data.** The user's note that
+the ring skips the whole base checks out: act tile 0x50, a climb surface, in
+a seven-tile band at tx 50-56, ty 0-2 - pixels 800-912 across the top of the
+Entrance screen, landing exactly where the survey says (`MT_CRENEL/CENTER`
+at 856,274).
+
+**Five more cancelled caves, now blessed.** `survey_gate.py` found six of
+`MT_CRENEL/ENTRANCE`'s nine doors refused, and the base is where a run
+ARRIVES on the mountain, so this was most of the region's ground floor: the
+ladder to the spring water, the Helmasaur hallway, the bomb-scrub cave, Bean
+Pesto's Minish cave, and the rupee fairy fountain the same exit list turned
+up alongside them. Every one is a dead end back to `MT_CRENEL/ENTRANCE`.
+All nine of that room's exits are open now.
+
+Not done, recorded rather than guessed: the user wants `MINISH_CAVES/BEAN_PESTO`
+filled with tough enemies rather than drawn as a general-purpose ? room. It
+is not a content site today, so nothing has to be removed first - it needs
+its own placement, the way Melari's Mine has one.
+
+Across the whole survey, three places are still cancelled and one is a trap,
+all pre-existing: Trilby's dig cave, and the Minish Woods business-scrub tree
+with the kinstone cave behind it (no way in, and no way out either - so not
+an active trap, but it would be if a door ever opened).
+
 ### Minish Village and Lake Hylia, walked
 
 The user walked the mapexplore build again and measured Minish Village and

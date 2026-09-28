@@ -768,6 +768,80 @@ d('LH-LADDER', 'MINISH_CAVES', 'MINISH_WOODS_NORTH_1', 120, 264,
 d('LH-LADDER', 'TEMPLE_OF_DROPLETS', 'ENTRANCE', 264, 200,
   [[BOOTS, MINISH, FLIPPERS], [BOOTS, MINISH, CAPE]], 'tile (16,12)')
 
+
+# --- Mount Crenel's Base ---------------------------------------------------
+#
+# WALKED, from the one entrance - the border up from Trilby Highlands. The
+# CREN block above walked the same mountain DOWNHILL from the Cavern of
+# Flames forecourt with the Grip Ring already in hand, which is a completely
+# different set of prices; this is the uphill story, and it is the one a run
+# actually lives, because Trilby is where the ring puts the player.
+#
+# THE WHOLE BASE IS BEHIND BOMBS. One cave is free of them and everything
+# else is not. A collision flood from the Trilby arrival agrees and is worth
+# recording, because it explains a number this project has been puzzled by:
+# the arrival component is 52 tiles of the room's 467 open ones, and not ONE
+# of the coordinates below is inside it. A flood sees geometry, not gates, so
+# a bomb wall reads as a wall - "52 tiles from the border arrival but 198
+# from the survey's own coordinate" (docs/QUICKSTART_TRAVERSAL_AUDIT.md) was
+# never two different measurements of the same thing. It was the bombs.
+#
+# THE BEAN ERRAND IS NOT PRICED HERE, AND THAT IS DELIBERATE. The survey's
+# own framing is that a BOTTLE is a prerequisite for everything past the
+# hint-scrub cave, because the vine has to be watered, and that certain beans
+# want the green miner's water from CRENEL_MINISH_PATHS/SPRING_WATER on top
+# of that. All true of vanilla and of the mapexplore build this was walked
+# in. It is not true here: GameTask_Transition sets WATERBEAN_OUT and
+# WATERBEAN_PUT at boot, and both CrenelBeanSprout entities in
+# MT_CRENEL/ENTRANCE were measured sitting in action 4 - their grown state,
+# climbable tile already laid - in the shipped difficulty-3 ROM. Same
+# treatment, and the same reasoning, as the FESTARI row in Minish Woods: the
+# gate is open before the run starts, so charging a route for it would price
+# something no run can do anything about either way.
+#
+# If the pre-grow is ever removed, every row below gains the bottle and the
+# vine row gains the green water with it.
+region('CREN-BASE', "Mount Crenel's Base", ('MT_CRENEL', 'ENTRANCE', 994, 416),
+       note='walked uphill from the Trilby border; the CREN block above is '
+            'the same mountain walked downhill with the Grip Ring')
+d('CREN-BASE', 'CRENEL_CAVES', 'HINT_SCRUB', 120, 93, [[BOMBS]],
+  'tile (7,5); the only thing in the base that is not behind the bean')
+d('CREN-BASE', 'CRENEL_CAVES', 'LADDER_TO_SPRING_WATER', 120, 136, [[BOMBS]],
+  'tile (7,8)')
+d('CREN-BASE', 'MT_CRENEL', 'ENTRANCE', 728, 312, [[BOMBS]],
+  'tile (45,19); the ledge the player has to reach for the green water')
+d('CREN-BASE', 'CRENEL_MINISH_PATHS', 'SPRING_WATER', 128, 792, [[BOMBS, MINISH]],
+  'tile (8,49); where the green miner\'s water comes from. Vanilla needs it '
+  'for the beans; this build has already grown them.')
+d('CREN-BASE', 'CRENEL_CAVES', 'MUSHROOM_KEESE', 184, 312, [[BOMBS]], 'tile (11,19)')
+d('CREN-BASE', 'CRENEL_CAVES', 'HELMASAUR_HALLWAY', 104, 40, [[BOMBS]], 'tile (6,2)')
+d('CREN-BASE', 'MT_CRENEL', 'ENTRANCE', 408, 232, [[BOMBS]], 'tile (25,14)')
+d('CREN-BASE', 'MT_CRENEL', 'ENTRANCE', 123, 103, [[BOMBS, MINISH]],
+  'tile (7,6); a GOLDEN CHEST')
+d('CREN-BASE', 'MINISH_CAVES', 'BEAN_PESTO', 152, 424, [[BOMBS, GUST, MINISH]],
+  'tile (9,26); holds a chest. The user wants it filled with tough enemies '
+  'rather than drawn as a general-purpose ? room - a content job, recorded '
+  'here so the reachability half is not measured twice.')
+d('CREN-BASE', 'CRENEL_MINISH_PATHS', 'BEAN', 128, 792, [[BOMBS, GUST, MINISH]],
+  'tile (8,49)')
+d('CREN-BASE', 'CRENEL_CAVES', 'BOMB_BUSINESS_SCRUB', 120, 120, FREE,
+  'the survey stamped this one at (-1336,-1912), which is a mid-transition '
+  'reading rather than a place; the coordinate here is the door\'s own '
+  'vanilla arrival. Free either way.')
+d('CREN-BASE', 'MT_CRENEL', 'CENTER', 280, 376, [[BOMBS, GUST, MINISH]],
+  'tile (17,23); up the vine at ENTRANCE (280,12), tile (17,0). In vanilla '
+  'this also wants the green bean planted and watered with the miner\'s '
+  'water - pre-paid here, see the block comment.')
+# --- the alternative that skips all of it ---------------------------------
+# The user: "if the player has the grip ring then they can skip all of the
+# above routes". The wall is real in the tile data - act tile 0x50, a climb
+# surface, in a seven-tile band at tx 50-56, ty 0-2, which is pixels 800-912
+# across the top of the Entrance screen and lands exactly where the survey
+# says it does.
+d('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, [[GRIP]],
+  'tile (53,17); the climb near the base entrance, which skips the bombs, '
+  'the bean and the Minish layer entirely')
+
 # ------------------------------------------------------------------ checks --
 def _fmt(req):
     if req is None:
