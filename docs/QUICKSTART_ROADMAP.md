@@ -1365,10 +1365,28 @@ filled with tough enemies rather than drawn as a general-purpose ? room. It
 is not a content site today, so nothing has to be removed first - it needs
 its own placement, the way Melari's Mine has one.
 
-Across the whole survey, three places are still cancelled and one is a trap,
-all pre-existing: Trilby's dig cave, and the Minish Woods business-scrub tree
-with the kinstone cave behind it (no way in, and no way out either - so not
-an active trap, but it would be if a door ever opened).
+**And then the last three, on the user's say-so.** Trilby's dig cave was the
+third "open at the far end, shut at the mouth" of this batch - the fairy
+fountain behind it was already a site, so only Trilby's own door into the
+cave was broken, and the walked survey has that cave as the ONLY way into a
+Trilby pocket holding a tingle event and a Minish house. Blessed per room
+rather than per area, because AREA_DIG_CAVES is one 480x960 map shared by
+four rooms and blessing the area would bless three the player cannot reach.
+
+The Minish Woods business-scrub tree was the survey's one TRAP: Tree
+Interiors is a contained area, so both of its exits were policed and both
+failed - the kinstone cave because it was not blessed, the border back to the
+woods because walking OUT of a pocket needs the pocket itself blessed.
+Nothing could reach it, so nothing was ever stuck, but it was one open door
+from being a real trap. The cave behind it went with it.
+
+That does not settle the fusion question on that door. The flood reaches it
+with nothing while KINSTONE_27's world event fires at exactly (528,456), and
+the survey records FREE as the cheaper of two readings. Blessing is policy;
+whatever gates the door in the world is untouched.
+
+`survey_gate.py` now reports NOTHING CANCELLED across 249 policed
+transitions in 152 rooms.
 
 ### Minish Village and Lake Hylia, walked
 

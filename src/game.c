@@ -16782,6 +16782,42 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == AREA_CASTOR_CAVES && room == ROOM_CASTOR_CAVES_NORTH) {
         return TRUE;
     }
+    // The last three rooms survey_gate.py had cancelled.
+    //
+    // TRILBY'S DIG CAVE. Another "open at the far end, shut at the mouth":
+    // the room behind it, CAVES/TRILBY_MITTS_FAIRY_FOUNTAIN, is a content
+    // site and was already blessed, so the only broken edge was Trilby's own
+    // door into the cave. Per room rather than per area on purpose -
+    // AREA_DIG_CAVES is one 480x960 map shared by four rooms, and blessing
+    // the area would bless three the player cannot walk to.
+    //
+    // It costs more than one cave. The walked survey has the dig cave as the
+    // ONLY way into a Trilby pocket holding a tingle event and a Minish
+    // house (world_reach.py, TRIL, the [[MITTS]] rows), so the cancelled
+    // door took that pocket with it.
+    if (area == AREA_DIG_CAVES && room == ROOM_DIG_CAVES_TRILBY_HIGHLANDS) {
+        return TRUE;
+    }
+    // THE MINISH WOODS BUSINESS SCRUB, and the kinstone cave behind it. The
+    // tree was the one TRAP in the whole survey: AREA_TREE_INTERIORS is a
+    // contained area, so both of its exits are policed, and both failed -
+    // the cave because it was not blessed, the border back out to the woods
+    // because walking OUT of a pocket needs the pocket itself blessed.
+    // Nothing could reach it, so nothing was ever stuck; it was one open
+    // door away from being a real trap.
+    //
+    // This does NOT answer the fusion question the survey flags. The
+    // collision flood reaches this door with nothing, but KINSTONE_27's
+    // world event fires at (528,456), which is exactly it, so the row is
+    // recorded FREE and marked as the cheaper of two readings. Blessing is
+    // policy - it stops containment cancelling the door - and leaves
+    // whatever gates the door in the world exactly as it was.
+    if (area == AREA_TREE_INTERIORS && room == ROOM_TREE_INTERIORS_MINISH_WOODS_BUSINESS_SCRUB) {
+        return TRUE;
+    }
+    if (area == AREA_CAVES && room == ROOM_CAVES_KINSTONE_BUSINESS_SCRUB) {
+        return TRUE;
+    }
     // MOUNT CRENEL'S BASE, from the user's uphill survey.
     //
     // Five caves hanging off MT_CRENEL/ENTRANCE, all of them cancelled:
