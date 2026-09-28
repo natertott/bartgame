@@ -46,7 +46,7 @@ This is an inventory of what has been MEASURED about walking around this world, 
 | `RV` | Royal Valley | 21 | 2 | 7 | 10 | 1 | 65% |
 | `CW` | Castor Wilds | 32 | 2 | 7 | 21 | 1 | 28% |
 | `WR` | Wind Ruins | 38 | 22 | 2 | 12 | 1 | 92% |
-| `MW` | Minish Woods | 27 | 4 | 10 | 12 | 0 | 32% |
+| `MW` | Minish Woods | 40 | 4 | 10 | 20 | 5 | 31% |
 | `LH` | Lake Hylia | 23 | 4 | 7 | 11 | 0 | 31% |
 | `CREN` | Mount Crenel | 74 | 15 | 23 | 32 | 3 | 76% |
 
@@ -1077,7 +1077,7 @@ Survey start: `ROYAL_VALLEY/MAIN` at (-536, 416). the only real entrance
  9 i i - - i i - - . D i i i - - - - i - i i   door (88,132) -> ROYAL_VALLEY_GRAVES/HEART_PIE
 10 i i - - i i - - d . i i i - - - - i - i i   ROYAL_VALLEY_GRAVES/HEART_PIECE
 11 i i - - i i - - i i . D i - - - - i - i i   door (392,132) -> ROYAL_VALLEY_GRAVES/GINA
-12 i i - - i i - - i i i . i - - - - i - i i   ROYAL_VALLEY_GRAVES/GINA
+12 i i - - i i - - i i d . i - - - - i - i i   ROYAL_VALLEY_GRAVES/GINA
 13 i i - - i i - - i i i i . D X - - i - i i   border south (west half) -> HYRULE_FIELD/TRILB
 14 - - - - - - - - - - - - d . - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
 15 - - - - - - - - - - - - P - . D - - - - -   border east (south half) -> HYRULE_FIELD/NORTH
@@ -1105,7 +1105,7 @@ Survey start: `ROYAL_VALLEY/MAIN` at (-536, 416). the only real entrance
  9 1 1 0 0 1 1 0 0 . 4 1 1 1 0 0 0 0 1 0 1 1   door (88,132) -> ROYAL_VALLEY_GRAVES/HEART_PIE
 10 1 1 0 0 1 1 0 0 3 . 1 1 1 0 0 0 0 1 0 1 1   ROYAL_VALLEY_GRAVES/HEART_PIECE
 11 1 1 0 0 1 1 0 0 1 1 . 4 1 0 0 0 0 1 0 1 1   door (392,132) -> ROYAL_VALLEY_GRAVES/GINA
-12 1 1 0 0 1 1 0 0 1 1 1 . 1 0 0 0 0 1 0 1 1   ROYAL_VALLEY_GRAVES/GINA
+12 1 1 0 0 1 1 0 0 1 1 3 . 1 0 0 0 0 1 0 1 1   ROYAL_VALLEY_GRAVES/GINA
 13 1 1 0 0 1 1 0 0 1 1 1 1 . 4 3 0 0 1 0 1 1   border south (west half) -> HYRULE_FIELD/TRILB
 14 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
 15 0 0 0 0 0 0 0 0 0 0 0 0 2 0 . 4 0 0 0 0 0   border east (south half) -> HYRULE_FIELD/NORTH
@@ -1177,7 +1177,7 @@ Survey start: `CASTOR_WILDS/MAIN` at (1000, 33329). swamp crossing is the price 
 10 i i - i - i i i i . D i i i i - - i - i i i i i i i i i i i i i   door (968,56) -> CASTOR_CAVES/HEART_PIECE
 11 i i - i - i i i i d . i i i i - - i - i i i i i i i i i i i i i   CASTOR_CAVES/HEART_PIECE
 12 i i - i - i i i i i i . D i i - - i - i i i i i i i i i i i i i   door (56,724) -> DOJOS/SWIFTBLADE_I
-13 i i - i - i i i i i i i . i i - - i - i i i i i i i i i i i i i   DOJOS/SWIFTBLADE_I
+13 i i - i - i i i i i i d . i i - - i - i i i i i i i i i i i i i   DOJOS/SWIFTBLADE_I
 14 i i - i - i i i i i i i i . D - - i - i i i i i i i i i i i i i   door (952,760) -> MINISH_CAVES/SOUTHEAST_WATER
 15 i i - i - i i i i i i i i d . - - i - i i i i i i i i i i i i i   MINISH_CAVES/SOUTHEAST_WATER_1
 16 - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - -   border east (south half) -> HYRULE_FIELD/WESTE
@@ -1216,7 +1216,7 @@ Survey start: `CASTOR_WILDS/MAIN` at (1000, 33329). swamp crossing is the price 
 10 1 1 0 1 0 1 1 1 1 . 4 1 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (968,56) -> CASTOR_CAVES/HEART_PIECE
 11 1 1 0 1 0 1 1 1 1 3 . 1 1 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   CASTOR_CAVES/HEART_PIECE
 12 1 1 0 1 0 1 1 1 1 1 1 . 4 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (56,724) -> DOJOS/SWIFTBLADE_I
-13 1 1 0 1 0 1 1 1 1 1 1 1 . 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   DOJOS/SWIFTBLADE_I
+13 1 1 0 1 0 1 1 1 1 1 1 3 . 1 1 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   DOJOS/SWIFTBLADE_I
 14 1 1 0 1 0 1 1 1 1 1 1 1 1 . 4 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (952,760) -> MINISH_CAVES/SOUTHEAST_WATER
 15 1 1 0 1 0 1 1 1 1 1 1 1 1 3 . 0 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_CAVES/SOUTHEAST_WATER_1
 16 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   border east (south half) -> HYRULE_FIELD/WESTE
@@ -1381,107 +1381,146 @@ Survey start: `RUINS/ENTRANCE` at (32812, -2624). only reachable through Castor 
 
 ### Minish Woods  `MW`
 
-Survey start: `MINISH_WOODS/MAIN` at (8, 424). derived from the exit list + a collision flood, not walked
+Survey start: `MINISH_WOODS/MAIN` at (8, 424). the user's walked survey, Sep 2026, from the west-central seam
 
 | # | kind | place | cost from start | evidence | notes |
 |--:|:--|:--|:--|:--|:--|
 | 1 | room | `MINISH_WOODS/MAIN` | free | the survey start stands in it | the region itself |
-| 2 | start | `START  MINISH_WOODS/MAIN` | free | the survey start | derived from the exit list + a collision flood, not walked |
-| 3 | door | `door (312,792) -> MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 4 | room | `MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB` | minish_cap+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN ⚠ |
-| 5 | door | `door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 6 | room | `DEEPWOOD_SHRINE/ENTRANCE` | minish_cap+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN; the giant stump; Minish-only in vanilla and out of the arrival component ⚠ |
+| 2 | start | `START  MINISH_WOODS/MAIN` | free | the survey start | the user's walked survey, Sep 2026, from the west-central seam |
+| 3 | door | `door (312,792) -> MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB` | flippers+minish_cap | implied: the only door to a priced room | golden kinstone chest, tile (12,23) - reaching it costs nothing; the wind crest, tile (18,44) - via the village |
+| 4 | room | `MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB` | flippers+minish_cap | flood-derived | reached through MINISH_WOODS/MAIN; via the village |
+| 5 | door | `door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE` | ? | — |  |
+| 6 | room | `DEEPWOOD_SHRINE/ENTRANCE` | ? | — | reached through MINISH_WOODS/MAIN |
 | 7 | door | `door (936,16) -> BEANSTALKS/EASTERN_HILLS` | fusion+unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 8 | room | `BEANSTALKS/EASTERN_HILLS` | fusion+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN; the beanstalk a kinstone fusion grows ⚠ |
+| 8 | room | `BEANSTALKS/EASTERN_HILLS` | fusion+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN; the beanstalk a kinstone fusion grows - not in the walked survey ⚠ |
 | 9 | door | `door (528,456) -> TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB` | free | implied: the only door to a priced room |  |
-| 10 | room | `TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB` | free | flood-derived | reached through MINISH_WOODS/MAIN; the one door the arrival component reaches - 115 tiles of walk, no gate |
-| 11 | door | `door (112,72) -> TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY` | unsurveyed | implied: the only door to a priced room |  ⚠ |
-| 12 | room | `TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY` | unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN; normal-size door, but in a component the arrival cannot reach ⚠ |
+| 10 | room | `TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB` | free | flood-derived | reached through MINISH_WOODS/MAIN; the business scrub's tree, tile (7,7). The survey says 'kinstone fusion maybe?' and the ROM half agrees - KINSTONE_27's world event fires at (528,456), which is this door - but the collision flood reaches it with nothing. Recorded FREE, the cheaper of the two readings, and flagged: if the door really is fusion-revealed this row is wrong and wants a fusion. |
+| 11 | door | `door (112,72) -> TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY` | fusion+pacci | implied: the only door to a priced room |  |
+| 12 | room | `TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY` | fusion+pacci | flood-derived | reached through MINISH_WOODS/MAIN; entered from Eastern Hills North's Pacci ledge, not from the woods; the survey believes the tree itself is fusion-gated as well |
 | 13 | door | `door (704,72) -> TREE_INTERIORS/WITCH_HUT` | unsurveyed | implied: the only door to a priced room |  ⚠ |
 | 14 | room | `TREE_INTERIORS/WITCH_HUT` | unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN ⚠ |
 | 15 | door | `door (952,56) -> MINISH_CAVES/MINISH_WOODS_NORTH_1` | minish_cap+unsurveyed | implied: the only door to a priced room |  ⚠ |
 | 16 | room | `MINISH_CAVES/MINISH_WOODS_NORTH_1` | minish_cap+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN ⚠ |
 | 17 | door | `door (72,536) -> MINISH_CAVES/MINISH_WOODS_SOUTHWEST` | ? | — | 3 doors lead to MINISH_CAVES/MINISH_WOODS_SOUTHWEST, so the survey's price for that room cannot be pinned on this one |
-| 18 | room | `MINISH_CAVES/MINISH_WOODS_SOUTHWEST` | minish_cap+unsurveyed | flood-derived | reached through MINISH_WOODS/MAIN ⚠ |
+| 18 | room | `MINISH_CAVES/MINISH_WOODS_SOUTHWEST` | flippers+minish_cap | flood-derived | reached through MINISH_WOODS/MAIN; west mouth - via the village; the long ice path to a heart piece; centre mouth, tile (19,17) - via the village; a chest, and half water; east mouth, tile (33,17) - via the village; a chest |
 | 19 | door | `door (104,536) -> MINISH_CAVES/MINISH_WOODS_SOUTHWEST` | ? | — | 3 doors lead to MINISH_CAVES/MINISH_WOODS_SOUTHWEST, so the survey's price for that room cannot be pinned on this one |
 | 20 | door | `door (136,536) -> MINISH_CAVES/MINISH_WOODS_SOUTHWEST` | ? | — | 3 doors lead to MINISH_CAVES/MINISH_WOODS_SOUTHWEST, so the survey's price for that room cannot be pinned on this one |
 | 21 | seam | `border west (north half) -> HYRULE_FIELD/EASTERN_HILLS_NORTH` | free | implied: the only door to a priced room |  |
-| 22 | room | `HYRULE_FIELD/EASTERN_HILLS_NORTH` | free | flood-derived | LEAVES this region, into EH-N; exit; the border the player arrives through, walkable both ways |
+| 22 | room | `HYRULE_FIELD/EASTERN_HILLS_NORTH` | free | flood-derived | LEAVES this region, into EH-N; exit; the border the player arrives through, walked both ways |
 | 23 | seam | `border west (south half) -> HYRULE_FIELD/EASTERN_HILLS_SOUTH` | free | implied: the only door to a priced room |  |
 | 24 | room | `HYRULE_FIELD/EASTERN_HILLS_SOUTH` | free | flood-derived | LEAVES this region, into EH-S; exit |
 | 25 | seam | `border north (west half) -> LAKE_HYLIA/MAIN` | ? | — | 2 doors lead to LAKE_HYLIA/MAIN, so the survey's price for that room cannot be pinned on this one |
-| 26 | room | `LAKE_HYLIA/MAIN` | unsurveyed | flood-derived | LEAVES this region, into LH; exit on paper - the north border - but the north edge is not in the arrival component, which is why the ring has no MW-LH edge ⚠ |
+| 26 | room | `LAKE_HYLIA/MAIN` | unsurveyed | flood-derived | LEAVES this region, into LH; exit on paper - the north border - and still nothing has walked it ⚠ |
 | 27 | seam | `border north (east half) -> LAKE_HYLIA/MAIN` | ? | — | 2 doors lead to LAKE_HYLIA/MAIN, so the survey's price for that room cannot be pinned on this one |
+| 28 | spot | `MINISH_WOODS/MAIN (410,699)` | free | flood-derived | heart piece, tile (25,43) |
+| 29 | room | `CAVES/KINSTONE_BUSINESS_SCRUB` | free | flood-derived | named by the survey; no row from this region room reaches it directly; connected to the tree above, and carries the same fusion question |
+| 30 | room | `LAKE_WOODS_CAVE/MAIN` | mitts | flood-derived | named by the survey; no row from this region room reaches it directly; tile (37,47); this part of the cave holds two golden chests |
+| 31 | room | `MINISH_CRACKS/MINISH_WOODS_SOUTH` | minish_cap | flood-derived | named by the survey; no row from this region room reaches it directly; tile (7,3) |
+| 32 | spot | `MINISH_WOODS/MAIN (907,599)` | fusion | flood-derived | golden fusion chest, tile (56,37) - the fusion is the whole cost |
+| 33 | spot | `MINISH_WOODS/MAIN (667,743)` | fusion | flood-derived | golden fusion chest, tile (41,46) - the fusion is the whole cost |
+| 34 | room | `MINISH_PATHS/MINISH_VILLAGE` | flippers+minish_cap | flood-derived | named by the survey; no row from this region room reaches it directly; tile (8,48), the way in; the leaves may be a cheaper crossing - unmeasured; a kinstone fusion event on that path, tile (6,32) |
+| 35 | room | `MINISH_VILLAGE/MAIN` | flippers+minish_cap | flood-derived | named by the survey; no row from this region room reaches it directly; tile (32,62); the village proper |
+| 36 | room | `MINISH_HOUSE_INTERIORS/FESTARI` | flippers+minish_cap | flood-derived | named by the survey; no row from this region room reaches it directly; tile (16,4); the village's third door. The survey adds a story gate here - Festari has to have moved out of the doorway - and the mode pays it at boot (M_PRIEST_MOVE, with the rest of the village story), for the same reason the Crenel bean is pre-grown: it is a chore a run cannot do. So the token is gone rather than unpriced. |
+| 37 | spot | `MINISH_WOODS/MAIN (424,840)` | flippers+minish_cap | flood-derived | tile (26,52); the third village entrance, reached through the village |
+| 38 | spot | `MINISH_WOODS/MAIN (84,679)` | flippers+minish_cap | flood-derived | golden kinstone chest, tile (5,42) - via the village |
+| 39 | room | `DEEPWOOD_SHRINE_ENTRY/MAIN` | flippers+minish_cap | flood-derived | named by the survey; no row from this region room reaches it directly; tile (7,14); the giant stump |
+| 40 | room | `GREAT_FAIRIES/MINISH_WOODS` | pacci | flood-derived | named by the survey; no row from this region room reaches it directly; the fairy below that tree - same pocket, same cane |
 
 **Evidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
- 1 . i i i i i i i i i i i i i i i - i - - i i i i - i -   MINISH_WOODS/MAIN
- 2 F . s F s F s F s F s F s F s F - F - - s F s F - F -   START  MINISH_WOODS/MAIN
- 3 i i . D i i i i i i i i i i i i - i - - i i i i - i -   door (312,792) -> MINISH_HOUSE_INTERIORS/MINIS
- 4 i i i . i i i i i i i i i i i i - i - - i i i i - i -   MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB
- 5 i i i i . D i i i i i i i i i i - i - - i i i i - i -   door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE
- 6 i i i i i . i i i i i i i i i i - i - - i i i i - i -   DEEPWOOD_SHRINE/ENTRANCE
- 7 i i i i i i . D i i i i i i i i - i - - i i i i - i -   door (936,16) -> BEANSTALKS/EASTERN_HILLS
- 8 i i i i i i i . i i i i i i i i - i - - i i i i - i -   BEANSTALKS/EASTERN_HILLS
- 9 i i i i i i i i . D i i i i i i - i - - i i i i - i -   door (528,456) -> TREE_INTERIORS/MINISH_WOODS_
-10 i i i i i i i i d . i i i i i i - i - - i i i i - i -   TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB
-11 i i i i i i i i i i . D i i i i - i - - i i i i - i -   door (112,72) -> TREE_INTERIORS/MINISH_WOODS_G
-12 i i i i i i i i i i d . i i i i - i - - i i i i - i -   TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY
-13 i i i i i i i i i i i i . D i i - i - - i i i i - i -   door (704,72) -> TREE_INTERIORS/WITCH_HUT
-14 i i i i i i i i i i i i d . i i - i - - i i i i - i -   TREE_INTERIORS/WITCH_HUT
-15 i i i i i i i i i i i i i i . D - i - - i i i i - i -   door (952,56) -> MINISH_CAVES/MINISH_WOODS_NOR
-16 i i i i i i i i i i i i i i d . - i - - i i i i - i -   MINISH_CAVES/MINISH_WOODS_NORTH_1
-17 - - - - - - - - - - - - - - - - . D - - - - - - - - -   door (72,536) -> MINISH_CAVES/MINISH_WOODS_SOU
-18 i i i i i i i i i i i i i i i i d . d d i i i i - i -   MINISH_CAVES/MINISH_WOODS_SOUTHWEST
-19 - - - - - - - - - - - - - - - - - D . - - - - - - - -   door (104,536) -> MINISH_CAVES/MINISH_WOODS_SO
-20 - - - - - - - - - - - - - - - - - D - . - - - - - - -   door (136,536) -> MINISH_CAVES/MINISH_WOODS_SO
-21 i i i i i i i i i i i i i i i i - i - - . W i i - i -   border west (north half) -> HYRULE_FIELD/EASTE
-22 i i i i i i i i i i i i i i i i - i - - d . i i - i -   HYRULE_FIELD/EASTERN_HILLS_NORTH
-23 i i i i i i i i i i i i i i i i - i - - i i . D - i -   border west (south half) -> HYRULE_FIELD/EASTE
-24 i i i i i i i i i i i i i i i i - i - - i i d . - i -   HYRULE_FIELD/EASTERN_HILLS_SOUTH
-25 - - - - - - - - - - - - - - - - - - - - - - - - . D -   border north (west half) -> LAKE_HYLIA/MAIN
-26 i i i i i i i i i i i i i i i i - i - - i i i i d . d   LAKE_HYLIA/MAIN
-27 - - - - - - - - - - - - - - - - - - - - - - - - - D .   border north (east half) -> LAKE_HYLIA/MAIN
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+ 1 . i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   MINISH_WOODS/MAIN
+ 2 F . s F - - s F s F s F s F s F - F - - s F s F - F - F F F F F F F F F F F F F   START  MINISH_WOODS/MAIN
+ 3 i i . D - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   door (312,792) -> MINISH_HOUSE_INTERIORS/MINIS
+ 4 i i d . - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB
+ 5 - - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE
+ 6 - - - - - . - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   DEEPWOOD_SHRINE/ENTRANCE
+ 7 i i i i - - . D i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   door (936,16) -> BEANSTALKS/EASTERN_HILLS
+ 8 i i i i - - i . i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   BEANSTALKS/EASTERN_HILLS
+ 9 i i i i - - i i . D i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   door (528,456) -> TREE_INTERIORS/MINISH_WOODS_
+10 i i i i - - i i d . i i i i i i - i - - i i i i - i - i i i i i i i i i i i i i   TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB
+11 i i i i - - i i i i . D i i i i - i - - i i i i - i - i i i i i i i i i i i i i   door (112,72) -> TREE_INTERIORS/MINISH_WOODS_G
+12 i i i i - - i i i i d . i i i i - i - - i i i i - i - i i i i i i i i i i i i i   TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY
+13 i i i i - - i i i i i i . D i i - i - - i i i i - i - i i i i i i i i i i i i i   door (704,72) -> TREE_INTERIORS/WITCH_HUT
+14 i i i i - - i i i i i i d . i i - i - - i i i i - i - i i i i i i i i i i i i i   TREE_INTERIORS/WITCH_HUT
+15 i i i i - - i i i i i i i i . D - i - - i i i i - i - i i i i i i i i i i i i i   door (952,56) -> MINISH_CAVES/MINISH_WOODS_NOR
+16 i i i i - - i i i i i i i i d . - i - - i i i i - i - i i i i i i i i i i i i i   MINISH_CAVES/MINISH_WOODS_NORTH_1
+17 - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - - - - -   door (72,536) -> MINISH_CAVES/MINISH_WOODS_SOU
+18 i i i i - - i i i i i i i i i i d . d d i i i i - i - i i i i i i i i i i i i i   MINISH_CAVES/MINISH_WOODS_SOUTHWEST
+19 - - - - - - - - - - - - - - - - - D . - - - - - - - - - - - - - - - - - - - - -   door (104,536) -> MINISH_CAVES/MINISH_WOODS_SO
+20 - - - - - - - - - - - - - - - - - D - . - - - - - - - - - - - - - - - - - - - -   door (136,536) -> MINISH_CAVES/MINISH_WOODS_SO
+21 i i i i - - i i i i i i i i i i - i - - . W i i - i - i i i i i i i i i i i i i   border west (north half) -> HYRULE_FIELD/EASTE
+22 i i i i - - i i i i i i i i i i - i - - d . i i - i - i i i i i i i i i i i i i   HYRULE_FIELD/EASTERN_HILLS_NORTH
+23 i i i i - - i i i i i i i i i i - i - - i i . D - i - i i i i i i i i i i i i i   border west (south half) -> HYRULE_FIELD/EASTE
+24 i i i i - - i i i i i i i i i i - i - - i i d . - i - i i i i i i i i i i i i i   HYRULE_FIELD/EASTERN_HILLS_SOUTH
+25 - - - - - - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - -   border north (west half) -> LAKE_HYLIA/MAIN
+26 i i i i - - i i i i i i i i i i - i - - i i i i d . d i i i i i i i i i i i i i   LAKE_HYLIA/MAIN
+27 - - - - - - - - - - - - - - - - - - - - - - - - - D . - - - - - - - - - - - - -   border north (east half) -> LAKE_HYLIA/MAIN
+28 i i i i - - i i i i i i i i i i - i - - i i i i - i - . i i i i i i i i i i i i   MINISH_WOODS/MAIN (410,699)
+29 i i i i - - i i i i i i i i i i - i - - i i i i - i - i . i i i i i i i i i i i   CAVES/KINSTONE_BUSINESS_SCRUB
+30 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i . i i i i i i i i i i   LAKE_WOODS_CAVE/MAIN
+31 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i . i i i i i i i i i   MINISH_CRACKS/MINISH_WOODS_SOUTH
+32 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i . i i i i i i i i   MINISH_WOODS/MAIN (907,599)
+33 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i . i i i i i i i   MINISH_WOODS/MAIN (667,743)
+34 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i . i i i i i i   MINISH_PATHS/MINISH_VILLAGE
+35 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i . i i i i i   MINISH_VILLAGE/MAIN
+36 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i . i i i i   MINISH_HOUSE_INTERIORS/FESTARI
+37 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i . i i i   MINISH_WOODS/MAIN (424,840)
+38 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i . i i   MINISH_WOODS/MAIN (84,679)
+39 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i . i   DEEPWOOD_SHRINE_ENTRY/MAIN
+40 i i i i - - i i i i i i i i i i - i - - i i i i - i - i i i i i i i i i i i i .   GREAT_FAIRIES/MINISH_WOODS
 ```
 
 **Confidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
- 1 . 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   MINISH_WOODS/MAIN
- 2 1 . 2 1 2 1 2 1 2 1 2 1 2 1 2 1 0 1 0 0 2 1 2 1 0 1 0   START  MINISH_WOODS/MAIN
- 3 1 1 . 4 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   door (312,792) -> MINISH_HOUSE_INTERIORS/MINIS
- 4 1 1 1 . 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB
- 5 1 1 1 1 . 4 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE
- 6 1 1 1 1 1 . 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   DEEPWOOD_SHRINE/ENTRANCE
- 7 1 1 1 1 1 1 . 4 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   door (936,16) -> BEANSTALKS/EASTERN_HILLS
- 8 1 1 1 1 1 1 1 . 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   BEANSTALKS/EASTERN_HILLS
- 9 1 1 1 1 1 1 1 1 . 4 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   door (528,456) -> TREE_INTERIORS/MINISH_WOODS_
-10 1 1 1 1 1 1 1 1 3 . 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB
-11 1 1 1 1 1 1 1 1 1 1 . 4 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   door (112,72) -> TREE_INTERIORS/MINISH_WOODS_G
-12 1 1 1 1 1 1 1 1 1 1 3 . 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0   TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY
-13 1 1 1 1 1 1 1 1 1 1 1 1 . 4 1 1 0 1 0 0 1 1 1 1 0 1 0   door (704,72) -> TREE_INTERIORS/WITCH_HUT
-14 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 0 1 0 0 1 1 1 1 0 1 0   TREE_INTERIORS/WITCH_HUT
-15 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 4 0 1 0 0 1 1 1 1 0 1 0   door (952,56) -> MINISH_CAVES/MINISH_WOODS_NOR
-16 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 . 0 1 0 0 1 1 1 1 0 1 0   MINISH_CAVES/MINISH_WOODS_NORTH_1
-17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0   door (72,536) -> MINISH_CAVES/MINISH_WOODS_SOU
-18 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 . 3 3 1 1 1 1 0 1 0   MINISH_CAVES/MINISH_WOODS_SOUTHWEST
-19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 . 0 0 0 0 0 0 0 0   door (104,536) -> MINISH_CAVES/MINISH_WOODS_SO
-20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 . 0 0 0 0 0 0 0   door (136,536) -> MINISH_CAVES/MINISH_WOODS_SO
-21 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 . 4 1 1 0 1 0   border west (north half) -> HYRULE_FIELD/EASTE
-22 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 3 . 1 1 0 1 0   HYRULE_FIELD/EASTERN_HILLS_NORTH
-23 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 . 4 0 1 0   border west (south half) -> HYRULE_FIELD/EASTE
-24 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 3 . 0 1 0   HYRULE_FIELD/EASTERN_HILLS_SOUTH
-25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0   border north (west half) -> LAKE_HYLIA/MAIN
-26 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 3 . 3   LAKE_HYLIA/MAIN
-27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 .   border north (east half) -> LAKE_HYLIA/MAIN
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+ 1 . 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_WOODS/MAIN
+ 2 1 . 2 1 0 0 2 1 2 1 2 1 2 1 2 1 0 1 0 0 2 1 2 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   START  MINISH_WOODS/MAIN
+ 3 1 1 . 4 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (312,792) -> MINISH_HOUSE_INTERIORS/MINIS
+ 4 1 1 3 . 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_HOUSE_INTERIORS/MINISH_WOODS_BOMB
+ 5 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (456,600) -> DEEPWOOD_SHRINE/ENTRANCE
+ 6 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   DEEPWOOD_SHRINE/ENTRANCE
+ 7 1 1 1 1 0 0 . 4 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (936,16) -> BEANSTALKS/EASTERN_HILLS
+ 8 1 1 1 1 0 0 1 . 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   BEANSTALKS/EASTERN_HILLS
+ 9 1 1 1 1 0 0 1 1 . 4 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (528,456) -> TREE_INTERIORS/MINISH_WOODS_
+10 1 1 1 1 0 0 1 1 3 . 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   TREE_INTERIORS/MINISH_WOODS_BUSINESS_SCRUB
+11 1 1 1 1 0 0 1 1 1 1 . 4 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (112,72) -> TREE_INTERIORS/MINISH_WOODS_G
+12 1 1 1 1 0 0 1 1 1 1 3 . 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   TREE_INTERIORS/MINISH_WOODS_GREAT_FAIRY
+13 1 1 1 1 0 0 1 1 1 1 1 1 . 4 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (704,72) -> TREE_INTERIORS/WITCH_HUT
+14 1 1 1 1 0 0 1 1 1 1 1 1 3 . 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   TREE_INTERIORS/WITCH_HUT
+15 1 1 1 1 0 0 1 1 1 1 1 1 1 1 . 4 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   door (952,56) -> MINISH_CAVES/MINISH_WOODS_NOR
+16 1 1 1 1 0 0 1 1 1 1 1 1 1 1 3 . 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_CAVES/MINISH_WOODS_NORTH_1
+17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (72,536) -> MINISH_CAVES/MINISH_WOODS_SOU
+18 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 3 . 3 3 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_CAVES/MINISH_WOODS_SOUTHWEST
+19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (104,536) -> MINISH_CAVES/MINISH_WOODS_SO
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (136,536) -> MINISH_CAVES/MINISH_WOODS_SO
+21 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 . 4 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   border west (north half) -> HYRULE_FIELD/EASTE
+22 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 3 . 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   HYRULE_FIELD/EASTERN_HILLS_NORTH
+23 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 . 4 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   border west (south half) -> HYRULE_FIELD/EASTE
+24 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 3 . 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1   HYRULE_FIELD/EASTERN_HILLS_SOUTH
+25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0   border north (west half) -> LAKE_HYLIA/MAIN
+26 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 3 . 3 1 1 1 1 1 1 1 1 1 1 1 1 1   LAKE_HYLIA/MAIN
+27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 . 0 0 0 0 0 0 0 0 0 0 0 0 0   border north (east half) -> LAKE_HYLIA/MAIN
+28 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 . 1 1 1 1 1 1 1 1 1 1 1 1   MINISH_WOODS/MAIN (410,699)
+29 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 . 1 1 1 1 1 1 1 1 1 1 1   CAVES/KINSTONE_BUSINESS_SCRUB
+30 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 . 1 1 1 1 1 1 1 1 1 1   LAKE_WOODS_CAVE/MAIN
+31 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 . 1 1 1 1 1 1 1 1 1   MINISH_CRACKS/MINISH_WOODS_SOUTH
+32 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 . 1 1 1 1 1 1 1 1   MINISH_WOODS/MAIN (907,599)
+33 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 . 1 1 1 1 1 1 1   MINISH_WOODS/MAIN (667,743)
+34 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 . 1 1 1 1 1 1   MINISH_PATHS/MINISH_VILLAGE
+35 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 . 1 1 1 1 1   MINISH_VILLAGE/MAIN
+36 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 . 1 1 1 1   MINISH_HOUSE_INTERIORS/FESTARI
+37 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 . 1 1 1   MINISH_WOODS/MAIN (424,840)
+38 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 . 1 1   MINISH_WOODS/MAIN (84,679)
+39 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 . 1   DEEPWOOD_SHRINE_ENTRY/MAIN
+40 1 1 1 1 0 0 1 1 1 1 1 1 1 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 .   GREAT_FAIRIES/MINISH_WOODS
 ```
 
-27 nodes, 702 ordered pairs, **230 with no data** (32%).
+40 nodes, 1560 ordered pairs, **493 with no data** (31%).
 
 ### Lake Hylia  `LH`
 
@@ -1527,9 +1566,9 @@ Survey start: `LAKE_HYLIA/MAIN` at (40, 440). derived from the exit list + a col
  7 i i i i i i . D i i i i i i i i i i - i - - -   door (256,696) -> TREE_INTERIORS/WAVEBLADE
  8 i i i i i i d . i i i i i i i i i i - i - - -   TREE_INTERIORS/WAVEBLADE
  9 i i i i i i i i . D i i i i i i i i - i - - -   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
-10 i i i i i i i i i . i i i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
+10 i i i i i i i i d . i i i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
 11 i i i i i i i i i i . D i i i i i i - i - - -   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
-12 i i i i i i i i i i i . i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LIBRARI
+12 i i i i i i i i i i d . i i i i i i - i - - -   MINISH_HOUSE_INTERIORS/LIBRARI
 13 i i i i i i i i i i i i . D i i i i - i - - -   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
 14 i i i i i i i i i i i i d . i i i i - i - - -   MINISH_CAVES/LAKE_HYLIA_NORTH
 15 i i i i i i i i i i i i i i . D i i - i - - -   door (328,884) -> LAKE_WOODS_CAVE/MAIN
@@ -1557,9 +1596,9 @@ Survey start: `LAKE_HYLIA/MAIN` at (40, 440). derived from the exit list + a col
  7 1 1 1 1 1 1 . 4 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   door (256,696) -> TREE_INTERIORS/WAVEBLADE
  8 1 1 1 1 1 1 3 . 1 1 1 1 1 1 1 1 1 1 0 1 0 0 0   TREE_INTERIORS/WAVEBLADE
  9 1 1 1 1 1 1 1 1 . 4 1 1 1 1 1 1 1 1 0 1 0 0 0   door (200,408) -> MINISH_HOUSE_INTERIORS/LAKE_
-10 1 1 1 1 1 1 1 1 1 . 1 1 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
+10 1 1 1 1 1 1 1 1 3 . 1 1 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LAKE_HYLIA_OCARINA
 11 1 1 1 1 1 1 1 1 1 1 . 4 1 1 1 1 1 1 0 1 0 0 0   door (488,424) -> MINISH_HOUSE_INTERIORS/LIBRA
-12 1 1 1 1 1 1 1 1 1 1 1 . 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LIBRARI
+12 1 1 1 1 1 1 1 1 1 1 3 . 1 1 1 1 1 1 0 1 0 0 0   MINISH_HOUSE_INTERIORS/LIBRARI
 13 1 1 1 1 1 1 1 1 1 1 1 1 . 4 1 1 1 1 0 1 0 0 0   door (696,88) -> MINISH_CAVES/LAKE_HYLIA_NORTH
 14 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 1 1 0 1 0 0 0   MINISH_CAVES/LAKE_HYLIA_NORTH
 15 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 4 1 1 0 1 0 0 0   door (328,884) -> LAKE_WOODS_CAVE/MAIN

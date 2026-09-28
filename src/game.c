@@ -1110,6 +1110,37 @@ static void GameTask_Transition(void) {
     SetGlobalFlag(BEANDEMO_02);
     SetGlobalFlag(BEANDEMO_03);
     SetGlobalFlag(BEANDEMO_04);
+    // Ezlo's two Minish-portal lectures in Minish Woods, marked as already
+    // heard. The user, surveying the woods: "there is an Ezlo scene that
+    // plays out whenever Link approaches the tree stump near the bottom
+    // right portion of the map; we need to suppress that."
+    //
+    // These are the "has been told" flags for exactly those two scenes
+    // (flags.h: MORI_00_KOBITO "Ezlo explains Minish Portals 1 in Minish
+    // Woods", MORI_ENTRANCE_1ST "...Portals 2"), so setting them drives
+    // vanilla's own suppression rather than deleting anything. The PORTALS
+    // themselves are untouched, which matters: the walked survey routes a
+    // large part of the woods through a Minish path, so the stumps have to
+    // keep working - it is only the lecture that goes.
+    SetGlobalFlag(MORI_00_KOBITO);
+    SetGlobalFlag(MORI_ENTRANCE_1ST);
+    // Minish Village's own story, pre-cleared, for the same reason the
+    // Crenel bean is: it is a multi-room chore a run has no room for, and
+    // the survey routes a large part of Minish Woods THROUGH the village.
+    // The entrance scene is marked seen; Gentari has been talked to twice
+    // (which is what opens his curtains); and FESTARI HAS MOVED ASIDE -
+    // the user's own note, "the minish priest guy has to be moved out of
+    // the way of the entrance inside minish village", is that gate.
+    //
+    // This is why the survey's FESTARI row does not carry a story token:
+    // the gate is open before the run starts, so charging a route for it
+    // would price something no run can do anything about either way.
+    SetGlobalFlag(KOBITO_MORI_1ST);
+    SetGlobalFlag(M_PRIEST_TALK);
+    SetGlobalFlag(M_PRIEST_MOVE);
+    SetGlobalFlag(M_ELDER_TALK1ST);
+    SetGlobalFlag(M_ELDER_TALK2ND);
+    SetGlobalFlag(TAIMA_SAIBAI_1ST);
     // Seal the inn's three reward chests for the new run. Their local
     // flags (8/9/10 in the tower's bank) are what SpecialChest reads to
     // delete itself, so sealing here means the player's FIRST visit
@@ -1378,6 +1409,31 @@ static void GameTask_Transition(void) {
     // still thinks we're in the "walking to the festival for the first
     // time" opening state.
     SetGlobalFlag(TABIDACHI);
+    // Minish Village's story, so the village can actually be WALKED.
+    //
+    // The user, surveying Minish Woods: "the current build of mapexplore
+    // does not allow for exploration of the village from the south entrance
+    // because there is a story event blocking it... some horse carts
+    // blocking the road. We will need to map out Minish Village itself as a
+    // sub-area, but also build a version of mapexplore with the above
+    // blocker removed so that we can finish fully measuring Minish Woods."
+    //
+    // These are the village's own story flags: entrance scene seen, Gentari
+    // talked to twice (his curtains open on the second), Festari moved
+    // aside, and the pico-bloom minish spoken to. The main-quest flags above
+    // do not cover them - a dungeon-clear flag says nothing about whether a
+    // villager has stepped out of a doorway.
+    //
+    // If the carts survive this, they are gated on something else and the
+    // next step is a coordinate for them rather than another guess.
+    SetGlobalFlag(KOBITO_MORI_1ST);
+    SetGlobalFlag(M_PRIEST_TALK);
+    SetGlobalFlag(M_PRIEST_MOVE);
+    SetGlobalFlag(M_ELDER_TALK1ST);
+    SetGlobalFlag(M_ELDER_TALK2ND);
+    SetGlobalFlag(TAIMA_SAIBAI_1ST);
+    SetGlobalFlag(MORI_00_KOBITO);
+    SetGlobalFlag(MORI_ENTRANCE_1ST);
     // "Zelda enters Town in South Hyrule Field" - without this, that same
     // room-init function treats this as the very first visit and loads the
     // game's actual opening-cutscene entity list (gUnk_080F70A8: Zelda and
@@ -23498,6 +23554,40 @@ static void QuickStartUpdate(void) {
 }
 #endif
 
+#ifdef MAPEXPLORE
+// Minish Village's south road, opened so the village can be measured.
+//
+// The user could not explore the village from the south in the previous
+// mapexplore build and described the blocker as horse carts across the road.
+// Measured: the carts really are there - FURNITURE objects (id 77, type 24)
+// at local (500,872) and (540,872) - and deleting all three of the room's
+// FURNITURE entities changes nothing at all. Their collision is baked into
+// the room's TILEMAP, which is the same thing the smithy's "big invisible
+// barriers" turned out to be. Flooded from the south arrival tile (32,62),
+// the pocket is 31 tiles of a 1009-tile room, sealed off by two solid rows
+// at ty 54-55 while the village proper sits open at ty 40-51.
+//
+// So the two rows are opened, by COLLISION ONLY. TILE_TYPE_0 puts the
+// collision back to plain floor and leaves the graphics alone, so the carts
+// are still drawn and are simply walked through. For a measuring build that
+// is the honest shape: the blocker is gone and it is still obvious where it
+// was.
+//
+// MAPEXPLORE only. None of this belongs in a run - and if the carts turn out
+// to be a story gate the mode should pay at boot rather than punch through,
+// this is the measurement that says which tiles to look at.
+static void MapExploreOpenMinishVillage(void) {
+    s32 tx;
+    if (gRoomControls.area != AREA_MINISH_VILLAGE || gRoomControls.room != ROOM_MINISH_VILLAGE_MAIN) {
+        return;
+    }
+    for (tx = 29; tx <= 35; tx++) {
+        SetTileType(TILE_TYPE_0, TILE_POS(tx, 54), LAYER_BOTTOM);
+        SetTileType(TILE_TYPE_0, TILE_POS(tx, 55), LAYER_BOTTOM);
+    }
+}
+#endif
+
 static void GameMain_ChangeRoom(void) {
     UpdateEntities();
     if (!UpdateLightLevel())
@@ -23508,6 +23598,9 @@ static void GameMain_ChangeRoom(void) {
     UpdateManagers();
 #ifdef QUICKSTART
     QuickStartUpdate();
+#endif
+#ifdef MAPEXPLORE
+    MapExploreOpenMinishVillage();
 #endif
     FlushSprites();
     DrawUIElements();
@@ -23598,6 +23691,9 @@ static void GameMain_Update(void) {
         QuickStartUpdateItemChoice();
     }
     QuickStartRoomMonitor();
+#endif
+#ifdef MAPEXPLORE
+    MapExploreOpenMinishVillage();
 #endif
     DrawUIElements();
     UpdateCarriedObject();

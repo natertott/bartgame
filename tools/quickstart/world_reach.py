@@ -439,25 +439,113 @@ d('CREN', 'MT_CRENEL', 'ENTRANCE', 994, 416, [[GRIP]], 'exit, back down to Trilb
 # hollows and the Minish cracks are all separate components. Letting the
 # sword cut shrubs adds ten tiles and changes nothing.
 region('MW', 'Minish Woods', ('MINISH_WOODS', 'MAIN', 8, 424),
-       note='derived from the exit list + a collision flood, not walked')
+       note="the user's walked survey, Sep 2026, from the west-central seam")
+# WALKED. This block was flood-derived guesswork until the user walked it;
+# almost everything below is a real measurement now, and the shape of the
+# region turned out to be quite unlike what the flood suggested.
+#
+# THE ONE THING TO KNOW ABOUT MINISH WOODS: most of it is not reachable from
+# the seam at all. It is reachable through MINISH VILLAGE, which is reachable
+# through a Minish path, which wants the Minish Cap and (probably) the
+# Flippers. Everything below marked "via the village" inherits that, which is
+# why a region that looks like open woodland prices most of its contents at
+# two key items.
+#
+# A NOTE ON THE START. The user described the west-central seam as the one
+# "shared by Lon Lon Ranch". The ROM disagrees and so does a walk: Minish
+# Woods' west border rows go to EASTERN_HILLS_NORTH (north half) and
+# EASTERN_HILLS_SOUTH (south half), and tools/quickstart/region_walk.py has
+# driven EH-North -> MW and MW -> EH-North for real. Lon Lon Ranch is flush
+# against the woods' NORTH edge with no border row at all (see "Flush on the
+# map, no crossing" in docs/QUICKSTART_TRAVERSAL_AUDIT.md). Treated as a slip
+# of the pen about which neighbour, not about which seam - the coordinates
+# match the west-central one exactly - but it is worth confirming, because if
+# there really is a Lon Lon crossing here the region graph gains an edge.
 d('MW', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 456, 429, FREE,
-  'exit; the border the player arrives through, walkable both ways')
+  'exit; the border the player arrives through, walked both ways')
 d('MW', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 456, 160, FREE, 'exit')
+
+# --- free from the seam ---------------------------------------------------
+d('MW', 'MINISH_WOODS', 'MAIN', 200, 374, FREE,
+  'golden kinstone chest, tile (12,23) - reaching it costs nothing')
+d('MW', 'MINISH_WOODS', 'MAIN', 410, 699, FREE, 'heart piece, tile (25,43)')
 d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_BUSINESS_SCRUB', 120, 120, FREE,
-  'the one door the arrival component reaches - 115 tiles of walk, no gate')
-d('MW', 'DEEPWOOD_SHRINE', 'ENTRANCE', 168, 216, [[MINISH, UNSURVEYED]],
-  'the giant stump; Minish-only in vanilla and out of the arrival component')
-d('MW', 'MINISH_HOUSE_INTERIORS', 'MINISH_WOODS_BOMB', 120, 120, [[MINISH, UNSURVEYED]])
-d('MW', 'MINISH_CAVES', 'MINISH_WOODS_NORTH_1', 120, 264, [[MINISH, UNSURVEYED]])
-d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 88, 280, [[MINISH, UNSURVEYED]])
+  "the business scrub's tree, tile (7,7). The survey says 'kinstone fusion "
+  "maybe?' and the ROM half agrees - KINSTONE_27's world event fires at "
+  "(528,456), which is this door - but the collision flood reaches it with "
+  "nothing. Recorded FREE, the cheaper of the two readings, and flagged: if "
+  "the door really is fusion-revealed this row is wrong and wants a fusion.")
+d('MW', 'CAVES', 'KINSTONE_BUSINESS_SCRUB', 121, 122, FREE,
+  'connected to the tree above, and carries the same fusion question')
+
+# --- one item each --------------------------------------------------------
+d('MW', 'LAKE_WOODS_CAVE', 'MAIN', 600, 767, [[MITTS]],
+  'tile (37,47); this part of the cave holds two golden chests')
+d('MW', 'MINISH_CRACKS', 'MINISH_WOODS_SOUTH', 120, 56, [[MINISH]], 'tile (7,3)')
+d('MW', 'MINISH_WOODS', 'MAIN', 907, 599, [[FUSION]],
+  'golden fusion chest, tile (56,37) - the fusion is the whole cost')
+d('MW', 'MINISH_WOODS', 'MAIN', 667, 743, [[FUSION]],
+  'golden fusion chest, tile (41,46) - the fusion is the whole cost')
+
+# --- the Minish Village route ---------------------------------------------
+# The Flippers here are the survey's own uncertainty, kept as a cost rather
+# than dropped: "there are some leaves that can transport you across the
+# water if you don't have zoras flippers, but I'm not sure if they're gated
+# by a story flag event or not". Pricing the crossing at the Flippers is the
+# expensive reading; if the leaves turn out to be free, every row below gets
+# cheaper and a lot of Minish Woods opens up earlier.
+d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 136, 776, [[MINISH, FLIPPERS]],
+  'tile (8,48), the way in; the leaves may be a cheaper crossing - unmeasured')
+d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 106, 519, [[MINISH, FLIPPERS]],
+  'a kinstone fusion event on that path, tile (6,32)')
+d('MW', 'MINISH_VILLAGE', 'MAIN', 520, 992, [[MINISH, FLIPPERS]],
+  'tile (32,62); the village proper')
+d('MW', 'MINISH_HOUSE_INTERIORS', 'FESTARI', 257, 79, [[MINISH, FLIPPERS]],
+  "tile (16,4); the village's third door. The survey adds a story gate here "
+  '- Festari has to have moved out of the doorway - and the mode pays it at '
+  'boot (M_PRIEST_MOVE, with the rest of the village story), for the same '
+  "reason the Crenel bean is pre-grown: it is a chore a run cannot do. So "
+  'the token is gone rather than unpriced.')
+d('MW', 'MINISH_WOODS', 'MAIN', 424, 840, [[MINISH, FLIPPERS]],
+  'tile (26,52); the third village entrance, reached through the village')
+d('MW', 'MINISH_WOODS', 'MAIN', 297, 704, [[MINISH, FLIPPERS]],
+  'the wind crest, tile (18,44) - via the village')
+d('MW', 'MINISH_WOODS', 'MAIN', 84, 679, [[MINISH, FLIPPERS]],
+  'golden kinstone chest, tile (5,42) - via the village')
+d('MW', 'MINISH_HOUSE_INTERIORS', 'MINISH_WOODS_BOMB', 120, 120, [[MINISH, FLIPPERS]],
+  'via the village')
+d('MW', 'DEEPWOOD_SHRINE_ENTRY', 'MAIN', 120, 232, [[MINISH, FLIPPERS]],
+  'tile (7,14); the giant stump')
+# The three southwest cave mouths are ONE linked room with three entrances.
+# Left cave: a long ice path to a heart piece. Centre: a chest, half water.
+# Right: a chest. The user wants all three wired as ? rooms carefully, which
+# is a content job rather than a reachability one - recorded here so the
+# reachability half is not measured twice.
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 88, 280, [[MINISH, FLIPPERS]],
+  'west mouth - via the village; the long ice path to a heart piece')
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 312, 280, [[MINISH, FLIPPERS]],
+  'centre mouth, tile (19,17) - via the village; a chest, and half water')
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 536, 280, [[MINISH, FLIPPERS]],
+  'east mouth, tile (33,17) - via the village; a chest')
+
+# --- the Pacci pocket, which is not entered from Minish Woods at all -------
+# The Great Fairy and the tree hollow above her sit in a pocket whose only
+# way in is Eastern Hills North's own exit at (472,72), and reaching THAT
+# inside Eastern Hills needs the Cane of Pacci. So the cane is the price of
+# everything in here, even though nothing in Minish Woods asks for it.
+d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_GREAT_FAIRY', 120, 120, [[PACCI, FUSION]],
+  "entered from Eastern Hills North's Pacci ledge, not from the woods; the "
+  'survey believes the tree itself is fusion-gated as well')
+d('MW', 'GREAT_FAIRIES', 'MINISH_WOODS', 120, 120, [[PACCI]],
+  'the fairy below that tree - same pocket, same cane')
+
+# --- still unmeasured -----------------------------------------------------
 d('MW', 'BEANSTALKS', 'EASTERN_HILLS', 120, 136, [[FUSION, UNSURVEYED]],
-  'the beanstalk a kinstone fusion grows')
-d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_GREAT_FAIRY', 120, 120, [[UNSURVEYED]],
-  'normal-size door, but in a component the arrival cannot reach')
+  'the beanstalk a kinstone fusion grows - not in the walked survey')
 d('MW', 'TREE_INTERIORS', 'WITCH_HUT', 120, 136, [[UNSURVEYED]])
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_NORTH_1', 120, 264, [[MINISH, UNSURVEYED]])
 d('MW', 'LAKE_HYLIA', 'MAIN', 0, 952, [[UNSURVEYED]],
-  'exit on paper - the north border - but the north edge is not in the '
-  'arrival component, which is why the ring has no MW-LH edge')
+  'exit on paper - the north border - and still nothing has walked it')
 
 # LAKE HYLIA. 48x60 tiles, 662 open, and most of that open ground is WATER.
 # The west-edge arrival from Lon Lon Ranch lands on a 165-tile north-west

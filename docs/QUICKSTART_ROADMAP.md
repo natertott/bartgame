@@ -1265,6 +1265,59 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The 09/28 survey: Minish Woods, walked
+
+The user walked Minish Woods from the west-central seam and sent the
+measurements. The region's block in `world_reach.py` was flood-derived
+guesswork; it is a real survey now - 27 destinations against the old 11, and
+only four still carrying `unsurveyed`. Minish Woods goes from 77% of its
+traversal matrix unmeasured to **31%**, which makes it the best-measured
+region in the game.
+
+**The shape of the region is not what the flood suggested.** Most of Minish
+Woods is not reachable from the seam at all: it is reachable through MINISH
+VILLAGE, which is reachable through a Minish path, which wants the Minish Cap
+and (probably) the Flippers. Nine destinations inherit that, which is why a
+region that looks like open woodland prices most of its contents at two key
+items.
+
+Three things the survey changed beyond the table:
+
+* **The Minish Village story is pre-cleared at boot** - entrance scene seen,
+  Gentari talked to twice, and Festari moved out of his doorway. The survey
+  named that last one as a gate; the mode pays it for the same reason the
+  Crenel bean is pre-grown, so the FESTARI row carries no story token.
+* **Ezlo's two Minish-portal lectures are marked as already heard**
+  (`MORI_00_KOBITO`, `MORI_ENTRANCE_1ST`) - the user's "Ezlo scene that plays
+  out whenever Link approaches the tree stump". The portals themselves are
+  untouched: the survey routes half the woods through one.
+* **A note on the start.** The user described the west-central seam as the
+  one "shared by Lon Lon Ranch". The ROM says Eastern Hills - the west border
+  rows go to EH North and EH South - and `region_walk.py` has driven both
+  directions for real. Lon Lon is flush against the woods' NORTH edge with no
+  border row at all. Treated as a slip about which neighbour rather than
+  which seam, since the coordinates match the west-central one exactly, but
+  worth confirming: if there is a Lon Lon crossing there, the region graph
+  gains an edge.
+
+**Minish Village is walkable in `mapexplore` now.** The user could not get in
+from the south and described horse carts across the road. The carts are real
+(FURNITURE objects at local (500,872) and (540,872)) and deleting all three
+of the room's FURNITURE entities changes nothing: their collision is baked
+into the room's TILEMAP - the same thing the smithy's "big invisible
+barriers" turned out to be. Flooded from the south arrival the pocket was 31
+tiles of a 1009-tile room, sealed by two solid rows at ty 54-55.
+`MapExploreOpenMinishVillage` opens those rows by collision only, leaving the
+art, so the carts are still drawn and simply walked through. After: the same
+arrival reaches **952 of 1023** tiles. MAPEXPLORE only - the run still meets
+the real wall, and enters the village by the Minish path the survey measured.
+
+**Still unmeasured in the woods:** the Witch's Hut, the north Minish cave,
+the fusion beanstalk, and the north border into Lake Hylia. Also flagged: the
+business scrub's tree is recorded FREE because the collision flood reaches
+it, but KINSTONE_27's world event fires at exactly that door, so it may be
+fusion-revealed and the row wrong.
+
 ### The 09/28 batch: the last of the pool, and a door that would not let go
 
 **The single-door "? room" pool's retargets are gone.** Twenty-one exit
