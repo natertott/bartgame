@@ -152,12 +152,26 @@ def links_from(room_name):
     return out
 
 
+def ring_area_of(room_name):
+    """The AREA_* a ring room lives in, by longest matching name prefix.
+
+    This used to be looked up in sQuickStartRegionPool, which only lists ONE
+    room per region - so four of Mount Crenel's five rooms resolved to None
+    and their Minish holes were never read. The mine is behind two of them.
+    """
+    best = None
+    for area in P.AREAS:
+        if room_name.startswith('ROOM_' + area[5:] + '_') and (best is None or len(area) > len(best)):
+            best = area
+    return best
+
+
 def minish_holes_from(room_name):
     """Destinations of this room's Minish holes, via the room-property chain."""
     out = []
-    area_name = next((r['areaName'] for r in P.region_pool() if r['roomName'] == room_name), None)
-    room_no = next((r['room'] for r in P.region_pool() if r['roomName'] == room_name), None)
-    if area_name is None:
+    area_name = ring_area_of(room_name)
+    room_no = P.ROOMS.get(room_name)
+    if area_name is None or room_no is None:
         return out
     area_sym = 'Area_' + ''.join(w.capitalize() for w in area_name[5:].split('_'))
     rooms = M.AREA_LISTS.get(area_sym)

@@ -368,6 +368,16 @@ region('CREN', 'Mt Crenel', ('MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 101, 271)
 d('CREN', 'CAVE_OF_FLAMES', 'ENTRANCE', 136, 168, FREE)
 d('CREN', 'MELARIS_MINE', 'MAIN', 159, 290, [[MINISH]])
 d('CREN', 'CRENEL_MINISH_PATHS', 'MELARI', 120, 154, [[MINISH]])
+# The mine's three side rooms. NOT separately walked - these are the mine's
+# own three vanilla WARP_TYPE_AREA doors (gExitList_MelarisMine_Main[2..4]),
+# each landing at the arrival the row itself names, so they cost exactly
+# what the mine costs and nothing more. Rows matter here because
+# QuickStartReachRoomOk refuses a room with no row at all, and the
+# south-west one is a content site: without these it could never host a
+# gated placement no matter what the player was carrying.
+d('CREN', 'MINISH_HOUSE_INTERIORS', 'MELARI_MINES_SOUTHWEST', 120, 40, [[MINISH]])
+d('CREN', 'MINISH_HOUSE_INTERIORS', 'MELARI_MINES_SOUTHEAST', 120, 40, [[MINISH]])
+d('CREN', 'MINISH_HOUSE_INTERIORS', 'MELARI_MINES_EAST', 36, 86, [[MINISH]])
 d('CREN', 'CRENEL_CAVES', 'EXIT_TO_MINES', 184, 152, [[MINISH]])
 d('CREN', 'CRENEL_CAVES', 'PILLAR_CAVE', 56, 78, [[MINISH]])
 d('CREN', 'MT_CRENEL', 'CAVERN_OF_FLAMES_ENTRANCE', 472, 200, [[MINISH]])

@@ -3310,26 +3310,29 @@ static const QuickStartLink sQuickStartLinks[] = {
     // QuickStartProcessRegionChainLinks - and the pit in Cloud Tops does that
     // job now.
     //
-    // Melari's Mine's two remaining real doors (Minish House Interiors -
-    // Southeast, East), opened for future NPCs. Each trigger box is that
-    // door's own real coordinates (gExitList_MelarisMine_Main[3], [4]
-    // respectively, both AREA_12x12 -> box +6/+6); each interior room's own
-    // return trip uses its single real exit (a WARP_TYPE_BORDER, retargeted
-    // in transitions.c) rather than a table row here, same reasoning as
-    // Castle Garden's south border - it already reliably fires without
-    // needing GetActTileAtTilePos. Both interior rooms are small,
-    // single-screen, and confirmed reachable from Melari's Mine's existing
-    // walkable network (each door's immediate approach connects back to
-    // already-verified ground within a few hundred frames of walking).
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0xa8, 0xae, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0x78, 0x64 },
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x228, 0x22e, 0x220, 0x226, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0x78, 0x64 },
-    { AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0x280, 0x286, 0x11c, 0x122, AREA_MINISH_HOUSE_INTERIORS,
-      ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0x78, 0x64 },
-    // The Southwest door (the first of the three rows above) spent a
-    // session pointing at the shop in the Grimblade dojo instead of at its
-    // own vanilla room, both here and in transitions.c. The shop has moved
+    // RETIRED: Melari's Mine's three side-room boxes (Minish House
+    // Interiors - Southwest, Southeast, East). Each one was a trigger box
+    // sitting on top of a real vanilla WARP_TYPE_AREA door, on that door's
+    // own coordinates (gExitList_MelarisMine_Main[2], [3], [4], all
+    // AREA_12x12 -> box +6/+6) and leading to the same room the door leads
+    // to. Per the user's standing rule - only vanilla door mechanics, never
+    // a warp box layered on a door - the boxes go and the doors stay.
+    //
+    // This is not purely cosmetic. All three boxes landed the player at
+    // (0x78,0x64) while the doors land at the rooms' own vanilla arrivals
+    // ((0x78,0x28) for the two south rooms, (0x24,0x56) for East), so
+    // whichever won the race decided where the player came out. Their
+    // return trips were vanilla already (gExitList_MinishHouseInteriors_
+    // MelariMines{Southwest,Southeast,East}, one WARP_TYPE_BORDER each back
+    // into the mine), so the round trip is vanilla end to end now.
+    //
+    // That the doors themselves fire is not an assumption: the comment on
+    // gExitList_MelarisMine_Main[0] records that door racing a box that
+    // covered the same spot, which is what made it need retargeting in the
+    // first place.
+    // The Southwest door (the first of the three retired rows above) spent
+    // a session pointing at the shop in the Grimblade dojo instead of at
+    // its own vanilla room, both here and in transitions.c. The shop has moved
     // out - first to a randomly drawn overworld door, now to the hub - and
     // the dojo became a plain "? room" entered the way vanilla always
     // intended - down Castle Garden's southeast ladder, through the ante
@@ -5942,10 +5945,15 @@ static bool32 QuickStartRewardDelivered(u16 item, s16 localX, s16 localY) {
 // off that key's list wholesale, but the row is what stays correct if it is
 // ever added back.
 //
-// One content site is deliberately absent: Melari's Mine's south-west room
-// hangs off Melari's Mine, which is not in the ring at all. No region owns
-// it, and an unowned room refuses every gated key - which is the right
-// answer for a room with no way back to the overworld.
+// Melari's Mine's south-west room used to be deliberately absent here: the
+// mine hung off nothing, so no region owned the room, and an unowned room
+// refuses every gated key. The mine is a Mount Crenel pocket again, reached
+// through the mountain's own Minish holes, so the room is owned by CREN
+// like the rest of that cluster and the exception is gone. Finding it took
+// a fix in the generator too: room_owner.py looked a ring room's area up in
+// sQuickStartRegionPool, which names only ONE room per region, so four of
+// Mount Crenel's five rooms resolved to nothing and their Minish holes were
+// never walked. Two of those four are how the mine is entered.
 typedef struct {
     u8 area;
     u8 room;
@@ -5995,6 +6003,8 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     { AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER,
       (1 << QS_REGION_CREN), 0 },
     { AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_CRENEL,
+      (1 << QS_REGION_CREN), 0 },
+    { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST,
       (1 << QS_REGION_CREN), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT,
       (1 << QS_REGION_CW), 0 },
@@ -16627,6 +16637,53 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     if (area == AREA_CASTOR_CAVES && room == ROOM_CASTOR_CAVES_NORTH) {
         return TRUE;
     }
+    // Mount Crenel's Minish holes, and Melari's Mine behind them.
+    //
+    // The mountain has six holes (tools/quickstart/minish_holes.py, run over
+    // AREA_MT_CRENEL): the Cavern of Flames forecourt has three - two into
+    // CRENEL_MINISH_PATHS/MELARI and one straight down into the mine - and
+    // the Entrance screen has three more, into CRENEL_MINISH_PATHS/BEAN,
+    // CRENEL_MINISH_PATHS/SPRING_WATER and MINISH_CRACKS/MT_CRENEL.
+    // SPRING_WATER is a content site, so it was already blessed and already
+    // worked; the other four landed somewhere nothing had named, and
+    // QuickStartEnforceFieldRegionContainment cancelled the warp the same
+    // frame it fired, because both mountain rooms are named region rooms and
+    // so are policed. That is the "fall in and land nowhere" shape the
+    // ring's own holes had before they were blessed.
+    //
+    // Melari's Mine is what this is really for. Its vanilla route in is a
+    // Minish hole in the forecourt (or the paths room next door, which has
+    // its own south border into the mine), and its vanilla route out is the
+    // same pair - plus three real WARP_TYPE_AREA doors into the Minish
+    // house rooms hanging off it. Blessing the mine covers those three
+    // doors' RETURN trip too: Minish House Interiors is a contained area, so
+    // walking back out of Melari's southwest/southeast/east rooms is checked
+    // by QuickStartEnforceContainment, and "the destination is a pocket
+    // interior" is the clause that lets it through.
+    //
+    // CRENEL_MINISH_PATHS/RAIN is blessed with them. No hole in the room
+    // data reaches it - whatever does (the walked survey has it at
+    // [[GRIP, MINISH]] off the summit) is not an exit_region_raw box - but
+    // both of its borders run back to MT_CRENEL/TOP, a policed region room,
+    // so it is the same cancel waiting to happen and the same one-line fix.
+    //
+    // Nothing here opens a way out of the run. Every one of these rooms is a
+    // dead end whose only exits lead back into Mount Crenel or deeper into
+    // the same pocket: BEAN and MINISH_CRACKS/MT_CRENEL return to the
+    // Entrance screen, RAIN to the mountain Top, MELARI to the forecourt and
+    // to the mine, and the mine to MELARI, the forecourt and its own three
+    // interiors (src/data/transitions.c, all vanilla).
+    if (area == AREA_MELARIS_MINE && room == ROOM_MELARIS_MINE_MAIN) {
+        return TRUE;
+    }
+    if (area == AREA_CRENEL_MINISH_PATHS &&
+        (room == ROOM_CRENEL_MINISH_PATHS_MELARI || room == ROOM_CRENEL_MINISH_PATHS_BEAN ||
+         room == ROOM_CRENEL_MINISH_PATHS_RAIN)) {
+        return TRUE;
+    }
+    if (area == AREA_MINISH_CRACKS && room == ROOM_MINISH_CRACKS_MT_CRENEL) {
+        return TRUE;
+    }
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
         if (area == sQuickStartRoomContentSites[i].area && room == sQuickStartRoomContentSites[i].room) {
             return TRUE;
@@ -18655,15 +18712,22 @@ static void QuickStartSetupCaveRoomContent(void) {
 // one real exit each has is already individually retargeted in transitions.c,
 // same mechanism as Tree Interiors' ladder rooms below.
 //
-// AREA_CASTOR_DARKNUT and AREA_MELARIS_MINE were on this list and are not any
-// more, and dropping them is load-bearing rather than cosmetic. Castle
-// Garden's south border still points at Melari's Mine (transitions.c) from
-// when the mine was the hub; with the mine no longer contained, a transition
-// from contained Castle Garden to non-contained Melari's Mine is exactly what
-// the cancel at the bottom of QuickStartEnforceContainment is for, so that
-// edge is now a wall - which is what it should be, since walking out of the
-// bottom of Castle Garden used to hand the player a free warp to region slot
-// 0. Putting either area back on the route means putting it back on this list.
+// AREA_CASTOR_DARKNUT and AREA_MELARIS_MINE were on this list and are not
+// any more, and they should stay off it. Both are ordinary pockets now,
+// reached the vanilla way (the Darknut hall through Castor Wilds' own cave,
+// Melari's Mine through Mount Crenel's Minish holes), and a pocket does not
+// want an area-wide net: the net exists to catch the OTHER real exits of a
+// room that has many, and each of these has only the exits that are meant
+// to work. Melari's Mine's side of the job is done by
+// QuickStartIsPocketInteriorRoom instead, which blesses the mine and the
+// Crenel Minish paths so the holes into them are not cancelled - and, in
+// the other direction, so the three Minish house rooms hanging off the mine
+// can be walked back out of.
+//
+// Castle Garden's south border is NOT involved. It pointed at Melari's Mine
+// when the mine was the hub; that retarget is long gone and the border is
+// on its own vanilla destination, with no row for it in the retarget report
+// (docs/QUICKSTART_RETARGETS.md).
 static bool32 QuickStartAreaContained(u8 area) {
     return area == AREA_CASTLE_GARDEN || area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
 }
@@ -19568,11 +19632,10 @@ static void QuickStartFixupRoomFixtures(void) {
 // warped the player straight out of it to region slot 0 the moment they
 // arrived, so a playthrough reached the overworld without walking the hub.
 // Home of the Wind Tribe is the hub now and the pit in Cloud Tops is how a
-// run reaches slot 0, so the mine is off the route entirely - which also
-// retires the free warp this handed anyone who walked out of the bottom of
-// Castle Garden (whose south border still points at the mine; see
-// transitions.c). The mine's own content is left intact per the user - the
-// area comes back when the region pool grows.
+// run reaches slot 0, so nothing about the mine should eject anybody. It is
+// a live Mount Crenel pocket again, entered through the mountain's own
+// Minish holes and running its own wave and heart-piece reward - which is
+// exactly why this must stay retired.
 // RETIRED: QuickStartProcessRegionChainLinks, the per-run warp boxes that
 // teleported the player from each region's "onward" exit box to whichever
 // region the chain drew next. The ring's regions connect by their real
@@ -21016,13 +21079,24 @@ static void QuickStartRoomMonitor(void) {
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();
     QuickStartSpawnTrophyCaseOnce();
-    // Melari's Mine and its three side rooms are DORMANT, not deleted. The
-    // mine was the hub and nothing routes into it any more (its one remaining
-    // inbound pointer, Castle Garden's south border, is walled by containment
-    // now that the area is off the contained list), so none of these branches
-    // can fire today. They are kept whole per the user: the area comes back
-    // when the region pool grows, and re-pointing one transition is all it
-    // takes. Nothing here costs anything while it is unreachable.
+    // Melari's Mine and its three side rooms, LIVE again. The mine spent the
+    // hub era as the start room, then a stretch dormant with nothing routing
+    // into it; it is an ordinary Mount Crenel pocket now, entered the way
+    // vanilla always intended - shrink at a Minish portal on the Cavern of
+    // Flames forecourt and drop through one of its three holes, either
+    // straight down into the mine or west into CRENEL_MINISH_PATHS/MELARI
+    // and out its south border. Getting there took no new transition: every
+    // row on that route was already vanilla. What it took was blessing the
+    // destinations in QuickStartIsPocketInteriorRoom, since both mountain
+    // rooms are policed region rooms and an unblessed Minish hole is
+    // cancelled the frame it fires.
+    //
+    // So all three branches below now run. The mine clears its NPCs, spawns
+    // its wave off sQuickStartMineEnemyOffsets and pays a heart piece for
+    // clearing it (QuickStartSpawnMelarisMineRewardOnce, ITEM_5A); the
+    // southeast and east side rooms roll their own chest-or-NPC content off
+    // the GF_MELARI_* flags. The southwest room is a content site and is
+    // served by the ordinary site machinery instead.
     if (gRoomControls.area == AREA_MELARIS_MINE && gRoomControls.room == ROOM_MELARIS_MINE_MAIN) {
         QuickStartClearMelarisMineObstacles();
         QuickStartSpawnMelarisMineRewardOnce();

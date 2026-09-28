@@ -1187,10 +1187,9 @@ a frame cost. Frame-rate samples have to assert the room did not change.
   the lower half the player can walk out of - both graves are behind the
   graveyard gate and Dampe's house is behind the Lost Woods maze - so all
   three carry `sealedBy`. The ranch house halves carry it against the Lon
-  Lon Key. One content site has no owner at all (Melari's Mine's south-west
-  room hangs off Melari's Mine, which is not in the ring), and an unowned
-  room refuses every gated key - the right answer for a room with no way
-  back to the overworld.
+  Lon Key. (Melari's Mine's south-west room used to be the one content site
+  with no owner at all, because the mine hung off nothing; the mine is a
+  Mount Crenel pocket again and the room is owned by CREN.)
   **Verified against the ROM, not against a model.**
   `tools/quickstart/key_regions.py` warps into 17 rooms and calls the
   shipped `QuickStartKeyRegionAllowed` directly, expected answer per case,
@@ -1318,6 +1317,70 @@ business scrub's tree is recorded FREE because the collision flood reaches
 it, but KINSTONE_27's world event fires at exactly that door, so it may be
 fusion-revealed and the row wrong.
 
+### Melari's Mine, live: the mountain's Minish holes were all cancelled
+
+The mine's route was never missing from the data. Every row on it - the
+holes, the paths room's south border, the mine's three side-room doors and
+their three borders back - was already vanilla. What stopped it was policy.
+
+`tools/quickstart/minish_holes.py`, run over `AREA_MT_CRENEL`, finds six
+holes. The Cavern of Flames forecourt has three (two into
+`CRENEL_MINISH_PATHS/MELARI`, one straight down into `MELARIS_MINE/MAIN`);
+the Entrance screen has three more (`CRENEL_MINISH_PATHS/BEAN`,
+`CRENEL_MINISH_PATHS/SPRING_WATER`, `MINISH_CRACKS/MT_CRENEL`). Both
+mountain rooms are named region rooms, so
+`QuickStartEnforceFieldRegionContainment` polices them, and only
+SPRING_WATER was blessed - it is a content site. The other four landed in
+rooms nothing had named and were cancelled the frame they fired, which from
+the player's side is the "fall in and land nowhere" the ring's own holes
+showed before they were blessed. `QuickStartIsPocketInteriorRoom` now names
+the mine, the three Crenel Minish path rooms and the Mt Crenel crack. Every
+one is a dead end whose exits run back into the mountain or deeper into the
+same pocket, so nothing here opens a way out of the run.
+
+Blessing the mine fixes the other direction too, and that one could have
+trapped a player: the mine's three side rooms live in
+`AREA_MINISH_HOUSE_INTERIORS`, a CONTAINED area, so walking back out of them
+is checked - and passes only because "the destination is a pocket interior"
+is now true of the mine.
+
+**Verified against the ROM.** `tools/quickstart/melari_gate.py` stages each
+transition the way vanilla's door and border code does and runs all three
+containment functions: 17 checks, 13 that must pass and 4 controls that must
+still be refused. Note what is NOT a control - a side room leaving for
+another side room is allowed by construction, because
+`QuickStartEnforceContainment`'s last line only cancels when the destination
+is outside the contained set. The controls leave the contained area for a
+Crenel cave with no site row. A live census in the mine finds 28 enemies and
+no NPCs (the wave and the clear both running), and the two bespoke side
+rooms roll their content - the east room came up NPC, the south-east a
+chest.
+
+**Three warp boxes retired.** `sQuickStartLinks` carried a trigger box for
+each of the mine's three side-room doors, sitting on that door's own
+coordinates and leading to the same room - a box layered on a door, which
+the standing rule forbids. Not cosmetic either: the boxes landed the player
+at (0x78,0x64) while the doors land at each room's vanilla arrival, so
+whichever won the race decided where the player came out. The doors are
+unopposed now and the round trip is vanilla end to end.
+
+**A generator bug came out with it.** `room_owner.py` looked a ring room's
+area up in `sQuickStartRegionPool`, which names only ONE room per region, so
+four of Mount Crenel's five rooms resolved to nothing and their Minish holes
+were never walked - and two of those four are how the mine is entered. Fixed
+by resolving the area from the room name; the owner table goes from 136
+pocket rooms to 142, and Melari's Mine's south-west room - the last content
+site with no owner - is owned by CREN.
+
+**Reach rows for the three side rooms**, at `[[MINISH]]`, the same price as
+the mine. `QuickStartReachRoomOk` refuses a room with no row at all, so
+without these the south-west room could never host a gated placement no
+matter what the player was carrying.
+
+**Castle Garden's south border was already vanilla** and is not in
+`docs/QUICKSTART_RETARGETS.md`. Three comments in `game.c` still said it
+pointed at the mine, left over from the hub era; they are corrected.
+
 ### The 09/28 batch: the last of the pool, and a door that would not let go
 
 **Melari's Mine is back on vanilla too**, which takes RETARGETED to 5 and
@@ -1417,8 +1480,8 @@ a REFUSAL. Every gated key was silently barred from those rooms.
 `room_owner.py` now knows the three regions (and two more scroll seams it
 could not derive: Grayblade's dojo above its ante room, and the Darknut
 arena beside its hall), and the regenerated table covers 80 rooms instead of
-64. One room is still deliberately unowned: Melari's Mine's south-west
-room, which has no way back to the overworld.
+64. (Melari's Mine's south-west room was left unowned in this batch and is
+owned by CREN as of the mine's reinstatement below.)
 
 **All three can host bosses now**, vetted to parity with Castle Garden by
 the new `tools/quickstart/boss_arena.py`: family composes, intro finishes on
