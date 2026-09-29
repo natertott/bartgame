@@ -1317,6 +1317,100 @@ business scrub's tree is recorded FREE because the collision flood reaches
 it, but KINSTONE_27's world event fires at exactly that door, so it may be
 fusion-revealed and the row wrong.
 
+### Four asks: faces, landings, wanderers, and a shelf in the doorway
+
+**The fusers wear eight faces now, not one.** `sQuickStartFuserCast` -
+Zelda, a townsperson, a kid, the postman, Beedle, Brocco, Sturgeon, a maid -
+and a room draws one per run. ONE PER ROOM rather than one per fuser, and
+that is the GFX budget talking rather than taste: every NPC id costs a
+sheet, and four faces in a room would cost four in a mode that already
+defers boss spawns waiting for sixteen slots. A room-wide draw keeps the
+cost at the single sheet the Zelda-only rule had. Nothing in the cast is a
+story actor, a swept animal, or an id the mode already means something by.
+
+That broke the sweeps, which is worth naming because the fix is not the
+obvious one. `QuickStartClearEasternHillsNpcs` deleted every NPC whose id
+was not ZELDA - exact while every QUICKSTART NPC was a Zelda, and fatal to a
+fuser the moment it was not. Widening it to the whole cast by id alone would
+also have spared a VANILLA townsperson wearing the drawn face, so
+`QuickStartIsOurNpc` asks for the scripted bit as well: `StartCutscene` sets
+`ENT_SCRIPTED` on everything this file makes talkable or fusable, and a
+vanilla NPC standing in a field is not scripted.
+
+Measured, not assumed: `tools/quickstart/hub_variety.py` walks all twelve
+fuser rooms and reports which face each drew and whether the NPCs standing
+there carry a sprite index. All eight faces turn up, every one renders.
+
+**Two to four landings per region, one drawn per run**, from
+`sQuickStartRegionDropSpots` - 65 across the eighteen regions, found by
+`drop_spots.py --multi`. The first row of each is the landing the region
+always used, so a run can still come out where it did; the rest are spread
+as far apart as the floor allows, which is what turns one trajectory into
+several.
+
+Every spot is in the SAME connected component as that original landing, and
+that is a safety property rather than a limit of the search. The far side of
+a bombable wall - the example the request gives - is the more interesting
+version and also the one that can end a run before it starts: a player who
+draws no bombs and lands on the wrong side has no way out unless that pocket
+carries a border of its own. That needs a per-component exit analysis, and
+until it exists the cross-component drop stays out.
+
+The clear square follows the drawn landing rather than the pool row's fixed
+entrance - otherwise the protected ground and the ground the player falls
+onto would be different tiles three runs in four. `drop_spots.py` had to
+learn the same thing: it audited the fixed entrance and immediately reported
+four regions with an enemy on a landing they were not going to use. It reads
+the live run seed and audits what the run actually draws now. All 18 pass.
+
+**The hub's wanderers move and turn.** Four placements each, drawn per run,
+every coordinate checked against the live collision map. Most are
+deliberately not 3x3 clear - standing against a wall is the thing being
+asked for, and a spot with three tiles of air around it is the middle of the
+floor - and each carries a facing that puts its back to whatever it stands
+against. The wind-crest signpost does not wander: all four of its variants
+are the same tile, because it is a landmark. Verified across pinned seeds:
+the arrangement changes with the seed and reproduces exactly for the same
+one.
+
+The hint pool went from 18 lines to 31. These are the first pool entries in
+BANK 2 - bank one is closed at its 256-line ceiling - so the pool became a
+table of full `TEXT_INDEX` values rather than bare indices. Two compile-time
+asserts did real work here: the pool deals without replacement by walking
+with a stride of 5, so a pool of 30 would have dealt one line to two
+wanderers, and `QuickStartHintPoolDealsDistinct` refused to build it. Thirty
+one it is.
+
+**The shop's heart is out of the doorway**, and finding out why it was there
+took reading tile data. The passage into the upper hall is a STAIRCASE:
+column tx 3 of rows 8-12 carries act tile 0x29 with collision 0x27, and its
+top landing is tile (3,7). The heart sat at (64,120), tile (4,7) - the very
+next tile east. The catalog moves two tiles east, which clears tiles 2-4 on
+all three rows, and translating the block rather than re-spacing it keeps
+the geometry every one of those eight spots was verified in.
+
+The merchant had to move too, and THAT is the part the checker taught us.
+Shifting the catalog east put a shelf beside the shopkeeper and the lift
+test failed on it - as it had once before, at (176,120). One cause explains
+both: `QuickStartMakeNpcTalkable` gives every sign and shopkeeper a
+deliberately oversized 40x40 interact box, and a shelf inside it answers R
+with dialogue instead of lifting. Both failures were one tile away in one
+axis; the six that passed were two clear. So the rule is a spacing rule, the
+merchant stands in the north-WEST corner now, and the catalog runs east of
+them. Every item lifts.
+
+**A correction to the last batch's write-up.** The claim that
+`gPlayerState.floor_type` sticks once the player is in swamp was made with a
+probe that wrote the player's position to entity offsets 0x30 and 0x34 -
+which are y's LOW half and z's LOW half, not x and y. The integer halves are
+0x2e and 0x32 (x is a Q16.16 SplitWord at 0x2c). That probe never moved the
+player at all, so it could not have shown what it claimed. Re-run with the
+right offsets, the finding HOLDS - 204 sampled positions across Castor Wilds
+all read SURFACE_SWAMP while the act tiles say 105 of them are dry ground -
+so `drop_spots.py` reading act tiles instead is still the right call. It was
+the evidence that was wrong, not the conclusion. The shipped tool never used
+the bad offsets.
+
 ### Mount Crenel's Base, walked uphill
 
 The user walked the base from its one entrance - the border up from Trilby

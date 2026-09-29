@@ -112,6 +112,31 @@ def offset_tables():
     return out
 
 
+GSAVE = 0x02002A40
+RUN_SEED = GSAVE + 0x4C
+
+
+def drop_table():
+    """sQuickStartRegionDropSpots, in pool order."""
+    i = P.GAME.find('static const QuickStartRegionDropSpots sQuickStartRegionDropSpots[] = {')
+    body = re.sub(r'//[^\n]*', '', P.GAME[i:P.GAME.find('\n};', i)])
+    rows = []
+    for m in re.finditer(r'\{\s*(\d+),\s*\{(.*?)\}\s*\}\s*,', body, re.S):
+        pts = [(int(a), int(b)) for a, b in
+               re.findall(r'\{\s*(-?\d+)\s*,\s*(-?\d+)\s*\}', m.group(2))]
+        rows.append(pts[:int(m.group(1))])
+    return rows
+
+
+def drawn_index(c, poolIndex, count):
+    """The spot this boot's run seed picks - the same arithmetic
+    QuickStartRegionDropSpot uses, read off the live save rather than
+    recomputed from a seed the probe chose."""
+    seed = (c.memory.u8[RUN_SEED] | (c.memory.u8[RUN_SEED + 1] << 8) |
+            (c.memory.u8[RUN_SEED + 2] << 16) | (c.memory.u8[RUN_SEED + 3] << 24))
+    return (((seed >> 11) + poolIndex * 7) & 0x7fff) % count if count else 0
+
+
 def pool_rows():
     i = P.GAME.find('static const QuickStartRegion sQuickStartRegionPool[] = {')
     body = re.sub(r'//[^\n]*', '', P.GAME[i:P.GAME.find('\n};', i)])
@@ -193,20 +218,39 @@ def wave_placement(area, room, ex, ey, offs):
 
 
 def audit():
+    """Audit the landing the run ACTUALLY draws, not the table's first row.
+
+    The clear square follows the drawn spot (QuickStartOnRegionDropSpot), so
+    auditing the pool row's fixed entrance asks about ground the rule is not
+    protecting this run - which is exactly what this reported the first time
+    the multi-spot table went in: four regions with an enemy placed on a
+    landing they were not going to use.
+    """
     tables = offset_tables()
     rows = pool_rows()
-    print(f'{len(rows)} region pool rows\n')
+    spots = drop_table()
+    if len(spots) != len(rows):
+        print(f'drop table has {len(spots)} rows, pool has {len(rows)} - out of step')
+        return 2
+    print(f'{len(rows)} region pool rows, {sum(len(x) for x in spots)} landings\n')
     bad = 0
-    for area, room, ex, ey, tab, rx, ry in rows:
+    for idx, (area, room, ex, ey, tab, rx, ry) in enumerate(rows):
         offs = tables.get(tab, [])
-        # The shipped rule is a square, so measure a square (see
-        # QuickStartOnRegionDropSpot).
-        box = [o for o in offs if abs(o[0] - ex) < CLEAR_PX and abs(o[1] - ey) < CLEAR_PX]
-        exact = [o for o in offs if o == (ex, ey)]
         c = in_room(area, room, ex, ey)
         if c is None:
             print(f'{room[5:]:<38} never landed - INCONCLUSIVE')
             continue
+        # Every listed landing's surface is static, so check them all; the
+        # rest of the checks only mean anything for the one this run drew.
+        unsafe = [p for p in spots[idx] if surface_of(c, p[0], p[1]) not in SAFE]
+        ex, ey = spots[idx][drawn_index(c, idx, len(spots[idx]))]
+        del c
+        c = in_room(area, room, ex, ey)
+        if c is None:
+            print(f'{room[5:]:<38} never landed on its drawn spot - INCONCLUSIVE')
+            continue
+        box = [o for o in offs if abs(o[0] - ex) < CLEAR_PX and abs(o[1] - ey) < CLEAR_PX]
+        exact = [o for o in offs if o == (ex, ey)]
         surf = surface_of(c, ex, ey)
         hp0 = c.memory.u8[HEALTH]
         for _ in range(LAND_FRAMES // 6):
@@ -221,6 +265,8 @@ def audit():
         notes = []
         if surf not in SAFE:
             notes.append(f'SURFACE {sname(surf)}')
+        if unsafe:
+            notes.append(f'{len(unsafe)} listed landing(s) on an unsafe surface')
         if hp1 < hp0:
             notes.append(f'LOST {hp0 - hp1} HP in the first {LAND_FRAMES} frames')
         if live:
@@ -230,7 +276,8 @@ def audit():
         suppressed = (f'{len(box)} row(s) suppressed' if box else 'clear')
         if exact:
             suppressed += f' ({len(exact)} of them exactly on it)'
-        print(f'{room[5:]:<38} ({ex:>4},{ey:>4}) {sname(surf):<14} hp {hp0}->{hp1}  '
+        print(f'{room[5:]:<38} drew ({ex:>4},{ey:>4}) of {len(spots[idx])} '
+              f'{sname(surf):<14} hp {hp0}->{hp1}  '
               f'{"; ".join(notes) if notes else "ok"}, {suppressed}')
     print(f'\n{bad} of {len(rows)} drop spot(s) with a finding')
     return 1 if bad else 0
@@ -302,5 +349,109 @@ def propose():
     return 0
 
 
+def components(c, tw, th):
+    seen, comps = set(), []
+    for sy in range(th):
+        for sx in range(tw):
+            if (sx, sy) in seen or coll_at(c, sx, sy) != 0:
+                continue
+            comp = {(sx, sy)}
+            q = collections.deque([(sx, sy)])
+            while q:
+                x, y = q.popleft()
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nx, ny = x + dx, y + dy
+                    if (nx, ny) in comp or not (0 <= nx < tw and 0 <= ny < th):
+                        continue
+                    if coll_at(c, nx, ny) != 0:
+                        continue
+                    comp.add((nx, ny))
+                    q.append((nx, ny))
+            seen |= comp
+            comps.append(comp)
+    return comps
+
+
+def multi(want=4):
+    """Several landing spots per region, spread across its arrival component.
+
+    The user: "if we expand the number of possible drop sites within a
+    single region we can also expand the various combinations of paths
+    available to the player."
+
+    SAME COMPONENT AS THE CURRENT LANDING, deliberately. Dropping into a
+    different pocket - the far side of a bombable wall, say - is the more
+    interesting version of this and it is also the one that can strand a
+    run: a player with no bombs, dropped on the wrong side, has no way out
+    unless that pocket carries a border of its own. That needs a
+    per-component exit analysis this does not do, so every spot proposed
+    here is walkable from the landing the region already uses.
+
+    Within that, spots are chosen to be FAR APART: the first is the current
+    landing, and each one after it is the safe tile that maximises the
+    distance to the nearest spot already chosen. That is what turns one
+    trajectory into several - a run that starts in the north-east corner of
+    a thousand-pixel region opens different doors first than one that starts
+    in the south-west.
+    """
+    tables = offset_tables()
+    for area, room, ex, ey, tab, rx, ry in pool_rows():
+        offs = set(tables.get(tab, []))
+        c = in_room(area, room, ex, ey)
+        if c is None:
+            print(f'{room[5:]:<38} never landed - SKIPPED')
+            continue
+        w, h = room_dims(c)
+        tw, th = w // 16, h // 16
+        stx, sty = ex // 16, ey // 16
+        comp = None
+        for cand in components(c, tw, th):
+            if (stx, sty) in cand:
+                comp = cand
+                break
+        if comp is None:
+            # The landing tile is not plain-open (Castle Garden's is a
+            # LIGHT_GRADE slope); fall back to the nearest component.
+            near = min(((abs(tx - stx) + abs(ty - sty), tx, ty)
+                        for cc in components(c, tw, th) for (tx, ty) in cc),
+                       default=None)
+            if near is None:
+                print(f'{room[5:]:<38} no open tile - SKIPPED')
+                del c
+                continue
+            for cand in components(c, tw, th):
+                if (near[1], near[2]) in cand:
+                    comp = cand
+                    break
+        ok = []
+        for (tx, ty) in comp:
+            if not (1 <= tx < tw - 1 and 1 <= ty < th - 1):
+                continue
+            if any(coll_at(c, tx + dx, ty + dy) != 0
+                   for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                continue
+            lx, ly = tx * 16 + 8, ty * 16 + 8
+            if surface_of(c, lx, ly) not in SAFE:
+                continue
+            if any(surface_of(c, lx + dx * 16, ly + dy * 16) not in SAFE
+                   for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                continue
+            ok.append((lx, ly))
+        chosen = [(ex, ey)]
+        while len(chosen) < want and ok:
+            best = max(ok, key=lambda p: min(math.dist(p, q) for q in chosen))
+            if min(math.dist(best, q) for q in chosen) < 96:
+                break   # nothing left that is meaningfully somewhere else
+            chosen.append(best)
+            ok.remove(best)
+        del c
+        spread = ', '.join(f'{{ {x}, {y} }}' for x, y in chosen)
+        print(f'    // {room[5:]}  ({len(comp)} tiles in the arrival component)')
+        print(f'    {{ {spread} }},')
+    return 0
+
+
 if __name__ == '__main__':
+    if '--multi' in sys.argv:
+        sys.exit(multi())
     sys.exit(propose() if '--propose' in sys.argv else audit())

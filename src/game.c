@@ -379,6 +379,11 @@ static void QuickStartRandomizeSlotsOnce(void);
 static void QuickStartSetupSlotRoomContent(s32);
 static void QuickStart2DoorClearRoomObstacles(u8, u8);
 static bool32 QuickStartIsBoomerangTree(u8, u8);
+// The fuser cast and the sweep test that spares it. Both live with the
+// fuser tables far below; the Eastern Hills sweep is compiled up here.
+static s32 QuickStartFuserSpotRoomIndex(u8, u8);
+static u8 QuickStartFuserCastId(s32);
+static bool32 QuickStartIsOurNpc(Entity*, s32);
 static void QuickStartEnforceContainment(void);
 static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
@@ -2997,6 +3002,37 @@ const u8* const gCustomStrings2[] = {
     [173] = (const u8*)"Your sword bites for\none more than it did.\nEvery swing, all run.",
     [174] = (const u8*)"CURSE: a blunt edge.\nOne less from every\nswing you land.",
     [175] = (const u8*)"The sword beam no\nlonger waits on full\nhealth. Throw it hurt.",
+
+    // ===================== More for the hub's wanderers ==================
+    //
+    // The pool the six of them deal from (sQuickStartHintPool) was eighteen
+    // lines; the user asked for it to be bigger, so here are twelve more and
+    // it is thirty. Six spots drawn without replacement from thirty means a
+    // player would have to see the hub five times before a line could
+    // possibly repeat, and the deal is re-seeded every run.
+    //
+    // These are the first pool entries to live in BANK 2 - the first table
+    // hit its 256-line ceiling exactly - which is why the pool became a
+    // table of full TEXT_INDEX values rather than bare bank-1 indices.
+    [176] = (const u8*)"The mountain's base is\nall bomb walls. Bring\nsomething that goes bang.",
+    [177] = (const u8*)"Shrink at a portal on\nCrenel and you can walk\ninto Melari's Mine.",
+    [178] = (const u8*)"Most of the woods is\nreached THROUGH the\nMinish village, not past it.",
+    [179] = (const u8*)"The lake keeps its best\nchests underground. Dig\nmitts, and a cape to get there.",
+    [180] = (const u8*)"A wind crest can be\nplayed to. Some ground\nhas no other way in.",
+    [181] = (const u8*)"Kinstone folk stand\nstill and wait. Press L\nwhen you are beside one.",
+    [182] = (const u8*)"Clear a region's wave\nand it pays. Clear it\nagain and it keeps paying.",
+    [183] = (const u8*)"Bosses do not care what\nyou hit them with. Sword,\narrow, boomerang - all of it.",
+    [184] = (const u8*)"Dig caves hide behind\nsoft earth. The Mole\nMitts find what maps do not.",
+    [185] = (const u8*)"A charm and a curse look\nthe same on the floor.\nThat is the wager.",
+    [186] = (const u8*)"Fall from the clouds and\nyou land in the same\nregion all run. Learn it.",
+    [187] = (const u8*)"The Element is never far\nfrom where you land.\nTwo regions at the most.",
+    // Thirteen, not twelve, and the build is what insisted: the pool deals
+    // without replacement by walking it with a stride of 5, which only
+    // visits distinct entries while the stride and the size are coprime.
+    // Twelve would have made the pool 30, and 30 is a multiple of 5 - the
+    // QuickStartHintPoolDealsDistinct assert caught it at compile time,
+    // which is exactly what it is there for. Thirteen makes it 31.
+    [188] = (const u8*)"Nothing carries between\nruns. Spend it while you\nstill have somewhere to spend it.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3004,7 +3040,14 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
 // 91 and 92. If a region or a step kind is ever added, this is the line
 // that stops the table quietly answering for the wrong thing.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 176) ? 1 : -1];
+//
+// 176 -> 189 for the thirteen new wanderer hints. Appending is safe by
+// construction: everything the arithmetic addresses lives at 92 or below,
+// and nothing reads this bank by "last entry". The assert stays a tripwire
+// on the table's total shape - if it fires again, check whether the new
+// lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
+// (not fine, the arithmetic has moved).
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 189) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3547,13 +3590,14 @@ static void QuickStartClearLonLonRanchAnimals(void) {
 // givers, signs, the merchant), same protection rule as
 // QuickStartClearHubRoom's sweep.
 static void QuickStartClearEasternHillsNpcs(void) {
+    s32 hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* ent = &gEntities[i].base;
         if (ent == gRoomControls.camera_target) {
             continue;
         }
-        if (ent->kind == NPC && ent->id != ZELDA) {
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, hereRoom)) {
             DeleteEntity(ent);
         }
     }
@@ -7674,11 +7718,57 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice) {
 //
 // Nothing here is on a shelf, in an alcove, or in a separate collision
 // component, which is the whole reason for moving the shop into the hub.
-#define QUICKSTART_SHOP_MERCHANT_X 192
-#define QUICKSTART_SHOP_MERCHANT_Y 104
+//
+// SHIFTED TWO TILES EAST, and the merchant with it. The user: "the items are
+// kind of awkwardly spaced. The heart slightly blocks the door/passageway
+// into the shop area."
+//
+// The passage is a STAIRCASE, and it took reading the tile data to see it:
+// column tx 3 of rows 8-12 carries act tile 0x29, the horizontal ground-to-
+// ground slope, with collision 0x27. That is the flight joining the upper
+// hall to the lower block, and its top landing is tile (3,7) - pixels
+// 48-63, 112-127. The heart sat at (64,120), tile (4,7): the very next tile
+// east of the landing, so anyone coming up the stairs walked into it. The
+// far row's first item at (48,88) stood in the same column two rows up.
+//
+// The whole catalog moves east by 32px, which leaves tiles 2, 3 and 4 clear
+// on all three rows - the landing, its approach and one tile of breathing
+// room. Translating the block rather than re-spacing it is deliberate: every
+// one of these eight spots was emulator-verified liftable in its current
+// relative geometry, and an even re-space across the hall is exactly what
+// failed last time (at (176,120) the heart piece spawned and would not lift).
+// This keeps each item's relationship to its neighbours and to the walkway
+// identical and only slides the whole thing over.
+//
+// THE MERCHANT MOVES TO THE WEST END, and that is the part of this change
+// that was measured rather than designed.
+//
+// Shifting the catalog east put a shelf next to the merchant, and the
+// checker failed it: the item at (176,88) would not lift. So did (176,120)
+// in an earlier attempt, with the merchant at (192,104). One cause explains
+// both, and it is not the floor - it is the merchant's INTERACT BOX.
+// QuickStartMakeNpcTalkable gives every sign and shopkeeper
+// sQuickStartNpcInteractHitbox, deliberately oversized at { 0, 0, 20, 20 },
+// because the engine's own 8x8 NPC window is too unforgiving to find in an
+// open field. Forty pixels square, centred on the merchant, swallows any
+// shelf within one tile: pressing R there opens the shopkeeper's dialogue
+// instead of lifting the stock. Both failures were exactly one tile away in
+// one axis and zero or one in the other; the six spots that passed were all
+// two tiles clear.
+//
+// So the rule is a spacing rule: no shelf within 20px of the merchant in
+// BOTH axes. The merchant stands at (64,88) now - the hall's north-west
+// corner, against the back wall, where a shopkeeper faces everyone who
+// comes up the stairs - and the catalog runs east of them. Tile (4,5) is
+// two rows above the stair landing at (3,7), so it is beside the entrance
+// without being in it.
+#define QUICKSTART_SHOP_MERCHANT_X 64
+#define QUICKSTART_SHOP_MERCHANT_Y 88
 static const s16 sQuickStartShopRoomItemOffsets[][2] = {
-    { 64, 120 }, { 96, 120 }, { 128, 120 }, { 160, 120 }, // near row, the permanent four
-    { 48, 88 },  { 80, 88 },  { 112, 88 },  { 144, 88 },  // far row, the one-off four
+    // Near row: (80,120) is 16px from the merchant in x but 32px in y, so it
+    // is outside the box - the rule is both axes, not either.
+    { 80, 120 }, { 112, 120 }, { 144, 120 }, { 176, 120 }, // near row, the permanent four
+    { 96, 88 },  { 128, 88 },  { 160, 88 },  { 192, 88 },  // far row, the one-off four
 };
 
 // --- Castle Garden hidden ladders -----------------------------------------
@@ -9058,6 +9148,104 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
       ITEM_POWER_BRACELETS },
 };
 
+// ==================== Where a run lands, per region =====================
+//
+// The user: "we need to add more drop locations from the Hub World within
+// each overworld region. Currently, the player only ever drops in the same
+// place per region. If we expand the number of possible drop sites within a
+// single region we can also expand the various combinations of paths
+// available to the player."
+//
+// Two to four spots per region, one drawn per run. The first row of each is
+// the landing the region has always used, so a run can still come out where
+// it used to; the rest are spread as far from it and from each other as the
+// region's own walkable floor allows.
+//
+// EVERY SPOT IS IN THE SAME CONNECTED COMPONENT as that original landing,
+// and that is a safety property rather than a limitation of the search.
+// Dropping into a different pocket - the far side of a bombable wall, which
+// is the example the request gives - is the more interesting version of
+// this and also the one that can end a run before it starts: a player who
+// draws no bombs, dropped on the wrong side, has no way out unless that
+// pocket carries a border of its own. Deciding that needs a per-component
+// exit analysis, so it is deliberately not done here.
+//
+// Found and verified by tools/quickstart/drop_spots.py --multi: open tile,
+// four open neighbours, a surface a run may begin on (read from the act
+// tile, not from gPlayerState.floor_type - see that file), and at least six
+// tiles from every spot already chosen so the choice actually changes where
+// the run starts. The two small regions that offer fewer than four - Eastern
+// Hills South and Mount Crenel's entrance - simply have nowhere else to
+// stand; their components are 71 and 52 tiles.
+#define QUICKSTART_DROP_SPOTS_MAX 4
+
+typedef struct {
+    u8 count;
+    s16 spots[QUICKSTART_DROP_SPOTS_MAX][2];
+} QuickStartRegionDropSpots;
+
+// Indexed BY POOL INDEX, so the row order here is sQuickStartRegionPool's
+// row order and nothing else. The assert below is what keeps them together.
+static const QuickStartRegionDropSpots sQuickStartRegionDropSpots[] = {
+    // CASTLE_GARDEN_MAIN - 188 tiles in the arrival component
+    { 4, { { 504, 480 }, { 616, 296 }, { 696, 488 }, { 312, 488 } } },
+    // HYRULE_FIELD_LON_LON_RANCH - 728 tiles in the arrival component
+    { 4, { { 344, 870 }, { 40, 136 }, { 680, 296 }, { 88, 552 } } },
+    // HYRULE_FIELD_SOUTH_HYRULE_FIELD - 462 tiles in the arrival component
+    { 4, { { 504, 264 }, { 728, 584 }, { 440, 632 }, { 312, 72 } } },
+    // HYRULE_FIELD_NORTH_HYRULE_FIELD - 928 tiles in the arrival component
+    { 4, { { 504, 456 }, { 920, 216 }, { 872, 760 }, { 248, 744 } } },
+    // HYRULE_FIELD_TRILBY_HIGHLANDS - 334 tiles in the arrival component
+    { 4, { { 360, 360 }, { 24, 408 }, { 408, 72 }, { 344, 648 } } },
+    // HYRULE_FIELD_EASTERN_HILLS_SOUTH - 71 tiles in the arrival component
+    { 2, { { 328, 104 }, { 424, 168 }, { 0, 0 }, { 0, 0 } } },
+    // HYRULE_FIELD_EASTERN_HILLS_CENTER - 91 tiles in the arrival component
+    { 3, { { 248, 104 }, { 56, 72 }, { 152, 56 }, { 0, 0 } } },
+    // HYRULE_FIELD_EASTERN_HILLS_NORTH - 135 tiles in the arrival component
+    { 4, { { 264, 264 }, { 344, 456 }, { 424, 248 }, { 328, 344 } } },
+    // HYRULE_FIELD_WESTERN_WOODS_SOUTH - 88 tiles in the arrival component
+    { 3, { { 200, 104 }, { 40, 56 }, { 40, 152 }, { 0, 0 } } },
+    // HYRULE_FIELD_WESTERN_WOODS_CENTER - 115 tiles in the arrival component
+    { 3, { { 264, 88 }, { 424, 24 }, { 408, 136 }, { 0, 0 } } },
+    // HYRULE_FIELD_WESTERN_WOODS_NORTH - 541 tiles in the arrival component
+    { 4, { { 248, 360 }, { 360, 24 }, { 40, 552 }, { 296, 616 } } },
+    // ROYAL_VALLEY_MAIN - 242 tiles in the arrival component
+    { 4, { { 296, 856 }, { 88, 984 }, { 440, 744 }, { 408, 952 } } },
+    // CASTOR_WILDS_MAIN - 644 tiles in the arrival component
+    { 4, { { 968, 312 }, { 88, 184 }, { 520, 328 }, { 744, 104 } } },
+    // RUINS_ENTRANCE - 79 tiles in the arrival component
+    { 4, { { 216, 456 }, { 40, 424 }, { 136, 376 }, { 120, 488 } } },
+    // RUINS_BELOW_FORTRESS_ENTRANCE - 137 tiles in the arrival component
+    { 4, { { 120, 104 }, { 344, 120 }, { 232, 40 }, { 40, 40 } } },
+    // MINISH_WOODS_MAIN - 277 tiles in the arrival component
+    { 4, { { 8, 424 }, { 664, 392 }, { 344, 488 }, { 184, 392 } } },
+    // LAKE_HYLIA_MAIN - 267 tiles in the arrival component
+    { 4, { { 40, 440 }, { 392, 88 }, { 248, 760 }, { 184, 216 } } },
+    // MT_CRENEL_ENTRANCE - 52 tiles in the arrival component
+    { 2, { { 1000, 424 }, { 840, 440 }, { 0, 0 }, { 0, 0 } } },
+};
+
+typedef char QuickStartDropSpotsMatchPool[(ARRAY_COUNT(sQuickStartRegionDropSpots) ==
+                                           QUICKSTART_REGION_POOL_SIZE)
+                                              ? 1
+                                              : -1];
+
+// Which of this region's landings the run uses. Same arithmetic as every
+// other per-run draw in this file: mixed from the run seed and the pool
+// index, so it is stable for a whole run, different in the next one, and
+// reproduced exactly by a pinned seed.
+static void QuickStartRegionDropSpot(s32 poolIndex, s16* outX, s16* outY) {
+    const QuickStartRegionDropSpots* row = &sQuickStartRegionDropSpots[poolIndex];
+    // SIGNED modulo, and the & 0x7fff above it is what makes that safe.
+    // agbcc has no __umodsi3, so an unsigned % by a runtime divisor does not
+    // link at all - the row count is runtime here, unlike every other draw
+    // in this file, which divides by a table's compile-time size.
+    s32 pick = (s32)((((u32)gSave.run_seed >> 11) + (u32)poolIndex * 7u) & 0x7fff);
+    s32 i = (row->count > 0) ? pick % (s32)row->count : 0;
+    *outX = row->spots[i][0];
+    *outY = row->spots[i][1];
+}
+
 // A clear square around each region's own landing spot, which nothing this
 // file places may sit inside.
 //
@@ -9090,14 +9278,18 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
 
 static bool32 QuickStartOnRegionDropSpot(s16 localX, s16 localY) {
     s32 poolIndex = QuickStartCurrentRegionPoolIndex();
-    const QuickStartRegion* region;
+    s16 dropX, dropY;
     s32 dx, dy;
     if (poolIndex < 0) {
         return FALSE;
     }
-    region = &sQuickStartRegionPool[poolIndex];
-    dx = (s32)localX - (s32)region->entranceX;
-    dy = (s32)localY - (s32)region->entranceY;
+    // The square follows the LANDING THIS RUN DREW, not the pool row's
+    // fixed entrance - otherwise the clear ground and the place the player
+    // actually falls onto would be different tiles in three runs out of
+    // four, and the whole rule would protect nothing.
+    QuickStartRegionDropSpot(poolIndex, &dropX, &dropY);
+    dx = (s32)localX - (s32)dropX;
+    dy = (s32)localY - (s32)dropY;
     if (dx < 0) {
         dx = -dx;
     }
@@ -20261,11 +20453,35 @@ extern Script script_QuickStartHubHint3;
 extern Script script_QuickStartHubHint4;
 extern Script script_QuickStartHubHint5;
 
+// Four placements per wanderer, one drawn per run.
+//
+// The user: "they are all facing the same direction in a very stale way. It
+// would be nice to vary their location, their orientation, to place them a
+// little more naturally like near walls or other features of the room."
+//
+// So a spot is a POSITION AND A FACING, and each hint owns four of them.
+// Every coordinate below was checked against the live collision map
+// (scratchpad hubspots.py) - open tile, inside the room, not the stair
+// column and not the wind crest. Most of them are deliberately NOT 3x3
+// clear: standing against a wall is the thing being asked for, and a spot
+// with three tiles of air around it is the middle of the floor.
+//
+// Facing is chosen to put the wanderer's back to whatever they are standing
+// against, which is what makes a placement read as deliberate rather than
+// dropped: IdleEast against the west wall, IdleWest against the east wall,
+// IdleSouth under the north wall, IdleNorth above the south one.
+#define QUICKSTART_HUB_SPOT_VARIANTS 4
+
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 facing;
+} QuickStartHubSpot;
+
 typedef struct {
     u8 area;
     u8 room;
-    s16 x;
-    s16 y;
+    QuickStartHubSpot spots[QUICKSTART_HUB_SPOT_VARIANTS];
     Script* script;
 } QuickStartHubHint;
 
@@ -20291,9 +20507,29 @@ typedef struct {
 // deal is stable for the whole run and different in the next one with no
 // new bits claimed anywhere. (A3's seed pin therefore reproduces the hint
 // deal too, which is what a pinned run should do.)
-static const u8 sQuickStartHintPool[] = {
-    20,  21,  22,  23,  24,  25, // the original six
-    204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215,
+// FULL TEXT_INDEX values, not bare indices. The pool outgrew bank 1 - which
+// is closed at its 256-line ceiling - so entries now come from either bank
+// and each one carries its own category. TEXT_INDEX is a compile-time
+// constant expression, so this costs nothing at run time and
+// QuickStartHubHintPick simply hands the value over.
+static const u16 sQuickStartHintPool[] = {
+    TEXT_INDEX(TEXT_CUSTOM, 20),  TEXT_INDEX(TEXT_CUSTOM, 21),  // the original six
+    TEXT_INDEX(TEXT_CUSTOM, 22),  TEXT_INDEX(TEXT_CUSTOM, 23),
+    TEXT_INDEX(TEXT_CUSTOM, 24),  TEXT_INDEX(TEXT_CUSTOM, 25),
+    TEXT_INDEX(TEXT_CUSTOM, 204), TEXT_INDEX(TEXT_CUSTOM, 205),
+    TEXT_INDEX(TEXT_CUSTOM, 206), TEXT_INDEX(TEXT_CUSTOM, 207),
+    TEXT_INDEX(TEXT_CUSTOM, 208), TEXT_INDEX(TEXT_CUSTOM, 209),
+    TEXT_INDEX(TEXT_CUSTOM, 210), TEXT_INDEX(TEXT_CUSTOM, 211),
+    TEXT_INDEX(TEXT_CUSTOM, 212), TEXT_INDEX(TEXT_CUSTOM, 213),
+    TEXT_INDEX(TEXT_CUSTOM, 214), TEXT_INDEX(TEXT_CUSTOM, 215),
+    // Twelve more, in bank 2 (see gCustomStrings2).
+    TEXT_INDEX(TEXT_CUSTOM2, 176), TEXT_INDEX(TEXT_CUSTOM2, 177),
+    TEXT_INDEX(TEXT_CUSTOM2, 178), TEXT_INDEX(TEXT_CUSTOM2, 179),
+    TEXT_INDEX(TEXT_CUSTOM2, 180), TEXT_INDEX(TEXT_CUSTOM2, 181),
+    TEXT_INDEX(TEXT_CUSTOM2, 182), TEXT_INDEX(TEXT_CUSTOM2, 183),
+    TEXT_INDEX(TEXT_CUSTOM2, 184), TEXT_INDEX(TEXT_CUSTOM2, 185),
+    TEXT_INDEX(TEXT_CUSTOM2, 186), TEXT_INDEX(TEXT_CUSTOM2, 187),
+    TEXT_INDEX(TEXT_CUSTOM2, 188),
 };
 
 #define QUICKSTART_HINT_POOL_SIZE ((s32)ARRAY_COUNT(sQuickStartHintPool))
@@ -20310,12 +20546,38 @@ typedef char QuickStartHintPoolDealsDistinct[((QUICKSTART_HINT_POOL_SIZE % QUICK
                                                  : -1];
 
 static const QuickStartHubHint sQuickStartHubHints[] = {
-    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 88, 264, &script_QuickStartHubHint0 },
-    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_ENTRANCE, 152, 264, &script_QuickStartHubHint1 },
-    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_2, 88, 264, &script_QuickStartHubHint2 },
-    { AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_2, 152, 264, &script_QuickStartHubHint3 },
-    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 392, 408, &script_QuickStartHubHint4 },
-    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 536, 408, &script_QuickStartHubHint5 },
+    // The tower's two lower halls are the same shape: rows 15-17 fully open
+    // across tiles 2-12, with the staircase landing at tiles 2-4 of rows
+    // 13-14 above them. West wanderer, then east wanderer, in each.
+    { AREA_WIND_TRIBE_TOWER,
+      ROOM_WIND_TRIBE_TOWER_ENTRANCE,
+      { { 88, 264, IdleSouth }, { 40, 248, IdleEast }, { 40, 280, IdleEast }, { 56, 280, IdleNorth } },
+      &script_QuickStartHubHint0 },
+    { AREA_WIND_TRIBE_TOWER,
+      ROOM_WIND_TRIBE_TOWER_ENTRANCE,
+      { { 152, 264, IdleSouth }, { 200, 248, IdleWest }, { 200, 280, IdleWest }, { 168, 248, IdleSouth } },
+      &script_QuickStartHubHint1 },
+    { AREA_WIND_TRIBE_TOWER,
+      ROOM_WIND_TRIBE_TOWER_FLOOR_2,
+      { { 88, 264, IdleSouth }, { 40, 248, IdleEast }, { 40, 280, IdleEast }, { 72, 280, IdleNorth } },
+      &script_QuickStartHubHint2 },
+    { AREA_WIND_TRIBE_TOWER,
+      ROOM_WIND_TRIBE_TOWER_FLOOR_2,
+      { { 152, 264, IdleSouth }, { 200, 248, IdleWest }, { 200, 280, IdleWest }, { 152, 280, IdleNorth } },
+      &script_QuickStartHubHint3 },
+    // Cloud Tops is open sky rather than a hall, so its variants were found
+    // by sweeping for open tiles within five of the original spot that touch
+    // one or two wall tiles - a ledge edge to stand at rather than a wall to
+    // lean on. The wind crest (30,26) and the signpost (34,28) are excluded
+    // from the sweep so no wanderer can land on either.
+    { AREA_CLOUD_TOPS,
+      ROOM_CLOUD_TOPS_CLOUD_TOPS,
+      { { 392, 408, IdleSouth }, { 376, 392, IdleSouth }, { 392, 424, IdleNorth }, { 376, 424, IdleEast } },
+      &script_QuickStartHubHint4 },
+    { AREA_CLOUD_TOPS,
+      ROOM_CLOUD_TOPS_CLOUD_TOPS,
+      { { 536, 408, IdleSouth }, { 552, 408, IdleWest }, { 536, 376, IdleSouth }, { 568, 408, IdleWest } },
+      &script_QuickStartHubHint5 },
     // The wind crest signpost, one tile south of the crest itself at
     // (488,424) - so it stands on the path anyone walking up to warp home
     // already takes. Measured: tile (30,27) is open with 3x3 clearance and
@@ -20328,8 +20590,26 @@ static const QuickStartHubHint sQuickStartHubHints[] = {
     // heading out after the item draft walked into this sign every single
     // run. It stands a few tiles east now - still beside the crest and on
     // the way to it, no longer in the doorway's line.
-    { AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 552, 456, &script_QuickStartWindCrestSign },
+    // The signpost does NOT wander: it is a fixed landmark beside the crest,
+    // so all four of its variants are the same tile. It rides this table for
+    // the spawner and the sweep-immunity that come with it.
+    { AREA_CLOUD_TOPS,
+      ROOM_CLOUD_TOPS_CLOUD_TOPS,
+      { { 552, 456, IdleSouth }, { 552, 456, IdleSouth }, { 552, 456, IdleSouth }, { 552, 456, IdleSouth } },
+      &script_QuickStartWindCrestSign },
 };
+
+// Which of a hint's four placements this run uses.
+//
+// Same arithmetic as the hint draw below and for the same reasons: the run
+// seed is already per-run, already saved and already what every other
+// per-run choice derives from, so this needs no new state and a pinned seed
+// reproduces the whole arrangement. The hint index is mixed in so the six
+// wanderers move independently rather than all shifting together.
+static const QuickStartHubSpot* QuickStartHubSpotFor(s32 hint) {
+    s32 variant = (s32)(((gSave.run_seed >> 7) + (u32)hint * 3u) & 0x7fff) % QUICKSTART_HUB_SPOT_VARIANTS;
+    return &sQuickStartHubHints[hint].spots[variant];
+}
 
 // Idempotent by position rather than by flag, the same way
 // QuickStartSpawnStarterChoiceOnce is: these rooms are re-entered constantly,
@@ -20408,8 +20688,10 @@ static s32 QuickStartHubHintSlot(Entity* npc) {
     s32 i;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubHints); i++) {
         const QuickStartHubHint* hint = &sQuickStartHubHints[i];
+        const QuickStartHubSpot* spot = QuickStartHubSpotFor(i);
         if (gRoomControls.area == hint->area && gRoomControls.room == hint->room &&
-            npc->x.HALF.HI == gRoomControls.origin_x + hint->x && npc->y.HALF.HI == gRoomControls.origin_y + hint->y) {
+            npc->x.HALF.HI == gRoomControls.origin_x + spot->x &&
+            npc->y.HALF.HI == gRoomControls.origin_y + spot->y) {
             return i;
         }
     }
@@ -20434,18 +20716,19 @@ void QuickStartHubHintPick(Entity* entity, ScriptExecutionContext* context) {
         // moved and no spot matches). Say the first hint rather than
         // nothing: a silent NPC reads as broken, a slightly wrong hint
         // does not.
-        context->intVariable = TEXT_INDEX(TEXT_CUSTOM, sQuickStartHintPool[0]);
+        context->intVariable = sQuickStartHintPool[0];
         return;
     }
     base = (s32)(gSave.run_seed & 0x7fff) % QUICKSTART_HINT_POOL_SIZE;
     index = (base + slot * QUICKSTART_HINT_STRIDE) % QUICKSTART_HINT_POOL_SIZE;
-    context->intVariable = TEXT_INDEX(TEXT_CUSTOM, sQuickStartHintPool[index]);
+    context->intVariable = sQuickStartHintPool[index];
 }
 
 static void QuickStartSpawnHubHintsOnce(void) {
     s32 i, j;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubHints); i++) {
         const QuickStartHubHint* hint = &sQuickStartHubHints[i];
+        const QuickStartHubSpot* spot = QuickStartHubSpotFor(i);
         Entity* npc;
         bool32 present = FALSE;
         if (gRoomControls.area != hint->area || gRoomControls.room != hint->room) {
@@ -20453,8 +20736,8 @@ static void QuickStartSpawnHubHintsOnce(void) {
         }
         for (j = 0; j < MAX_ENTITIES; j++) {
             Entity* ent = &gEntities[j].base;
-            if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == gRoomControls.origin_x + hint->x &&
-                ent->y.HALF.HI == gRoomControls.origin_y + hint->y) {
+            if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == gRoomControls.origin_x + spot->x &&
+                ent->y.HALF.HI == gRoomControls.origin_y + spot->y) {
                 present = TRUE;
                 break;
             }
@@ -20464,13 +20747,20 @@ static void QuickStartSpawnHubHintsOnce(void) {
         }
         npc = CreateNPC(ZELDA, 0, 0);
         if (npc != NULL) {
-            npc->x.HALF.HI = gRoomControls.origin_x + hint->x;
-            npc->y.HALF.HI = gRoomControls.origin_y + hint->y;
+            npc->x.HALF.HI = gRoomControls.origin_x + spot->x;
+            npc->y.HALF.HI = gRoomControls.origin_y + spot->y;
             npc->collisionLayer = 1;
             npc->flags |= ENT_PERSIST;
             UpdateSpriteForCollisionLayer(npc);
-            npc->direction = IdleSouth;
+            npc->direction = spot->facing;
+            // animationState is what actually holds a standing NPC's facing -
+            // QuickStartMakeNpcTalkable sets it to IdleSouth for every NPC it
+            // touches, so the varied facing has to be written AFTER that call
+            // or it is overwritten a line later. direction is set as well
+            // because the two are read by different paths.
             QuickStartMakeNpcTalkable(npc, hint->script);
+            npc->animationState = spot->facing;
+            npc->direction = spot->facing;
         }
     }
 }
@@ -20643,8 +20933,16 @@ static void QuickStartProcessHubHoleLink(void) {
     first = &sQuickStartRegionPool[QuickStartDropRegionIndexUsable()];
     gRoomTransition.player_status.area_next = first->area;
     gRoomTransition.player_status.room_next = first->room;
-    gRoomTransition.player_status.start_pos_x = first->entranceX;
-    gRoomTransition.player_status.start_pos_y = first->entranceY;
+    {
+        // One of this region's two-to-four landings, drawn per run - see
+        // sQuickStartRegionDropSpots. The pool row's own entranceX/entranceY
+        // is the first of them, so a run can still come out where it always
+        // did; it is no longer the only place it can.
+        s16 dropX, dropY;
+        QuickStartRegionDropSpot(QuickStartDropRegionIndexUsable(), &dropX, &dropY);
+        gRoomTransition.player_status.start_pos_x = dropX;
+        gRoomTransition.player_status.start_pos_y = dropY;
+    }
     gRoomTransition.player_status.layer = 1;
 }
 
@@ -23200,9 +23498,68 @@ static void QuickStartBrushFusionPayout(void) {
 // behaviour the gfx reserve exists to make possible.
 #define QUICKSTART_FUSERS_PLACED_FLAG 47
 
+// ==================== The fuser cast ====================================
+//
+// The user: "Can we replace the Zelda-only sprites with other character
+// sprites? It's a bit stale only seeing Zelda."
+//
+// ONE SPRITE PER ROOM, DRAWN PER RUN, and that shape is forced by the GFX
+// budget rather than chosen for looks. Every NPC id costs a sheet, and a
+// room with four fusers wearing four faces costs four sheets in a mode that
+// already defers BOSS spawns waiting for sixteen slots to come free
+// (QUICKSTART_BOSS_SPAWN_MIN_GFX). Drawing one id for the whole room keeps
+// the cost exactly what it was - one sheet - while the player still meets a
+// different character in every region, and different ones again next run.
+//
+// Eight faces, all of them ordinary standing townsfolk. Nothing here is a
+// story actor with its own cutscene state (no Vaati, no kings, no Ezlo), an
+// animal this mode sweeps (COW, CUCCO, CUCCO_CHICK are deleted in Lon Lon),
+// or an id the mode already means something by (TINGLE_SIBLINGS is the
+// tingle rows, ZELDA is every other QUICKSTART NPC). ZELDA stays in the
+// cast as one face of eight - she is the id every one of these was verified
+// against, so keeping her in means the known-good case is still dealt.
+static const u8 sQuickStartFuserCast[] = {
+    ZELDA, TPWNSPERSON, KID, POSTMAN, BEEDLE, BROCCO, STURGEON, MAID,
+};
+
+// Which face this room's fusers wear this run. Room index mixed with the
+// run seed, the same arithmetic the hub wanderers and the hint deal use:
+// the seed is already per-run and already saved, so a pinned seed
+// reproduces the whole cast and no new state is claimed.
+//
+// Keyed on the room rather than on the fuser row on purpose. Keying per row
+// would put several faces in one room and pay several sheets for it.
+static u8 QuickStartFuserCastId(s32 roomIndex) {
+    u32 pick = ((gSave.run_seed >> 3) + (u32)roomIndex * 5u) & 0x7fff;
+    return sQuickStartFuserCast[pick % (u32)ARRAY_COUNT(sQuickStartFuserCast)];
+}
+
+// Is this NPC one of ours, for the every-frame sweeps that clear a region's
+// vanilla population?
+//
+// The sweeps used to read "id == ZELDA", which was exact while every
+// QUICKSTART NPC was a Zelda. With the cast in play a fuser in Eastern
+// Hills would be deleted the frame it spawned, so the test has to widen -
+// but widening it to the whole cast by id alone would also spare a VANILLA
+// townsperson that happened to share the drawn face. The scripted bit is
+// what closes that: StartCutscene sets ENT_SCRIPTED on every NPC this file
+// makes talkable or fusable, and a vanilla NPC standing in a field is not
+// scripted. So: any Zelda, or anything scripted wearing this room's own
+// drawn face.
+static bool32 QuickStartIsOurNpc(Entity* ent, s32 roomIndex) {
+    if (ent->id == ZELDA) {
+        return TRUE;
+    }
+    if (roomIndex < 0) {
+        return FALSE;
+    }
+    return (ent->flags & ENT_SCRIPTED) != 0 && ent->id == QuickStartFuserCastId(roomIndex);
+}
+
 static void QuickStartSpawnRegionFusers(void) {
     u8 hostRoom[QUICKSTART_FUSER_COUNT_MAX], hostSpot[QUICKSTART_FUSER_COUNT_MAX];
     s32 i, hereRoom;
+    u8 castId;
     bool32 complete = TRUE;
     {
         typedef char QuickStartFusersFit[
@@ -23233,6 +23590,7 @@ static void QuickStartSpawnRegionFusers(void) {
         // different answer depending on where the player is standing.
         QuickStartFuserPlacements(hostRoom, hostSpot);
     }
+    castId = (hereRoom >= 0) ? QuickStartFuserCastId(hereRoom) : (u8)ZELDA;
     for (; i < QUICKSTART_FUSER_COUNT; i++) {
         const QuickStartFuser* fuser = &sQuickStartFusers[i];
         s32 worldX, worldY, e;
@@ -23256,9 +23614,12 @@ static void QuickStartSpawnRegionFusers(void) {
         // exact coordinate match can only ever be this row's own sprite - and
         // it survives the entity list being rebuilt, which a "did I spawn
         // yet" flag would not.
+        // The identity check has to ask about the face this room actually
+        // drew, not about Zelda - otherwise every frame would fail to
+        // recognize the fuser it spawned last frame and spawn another.
         alreadyThere = FALSE;
         for (e = 0; e < MAX_ENTITIES; e++) {
-            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == ZELDA &&
+            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == castId &&
                 gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
                 alreadyThere = TRUE;
                 break;
@@ -23272,13 +23633,10 @@ static void QuickStartSpawnRegionFusers(void) {
             break;
         }
         {
-            // ZELDA for the same reason the merchant and the ? room signs
-            // use her: her entity kind is the one proven to work with the
-            // generic StartCutscene script attachment. Every fuser in a
-            // room shares the one sheet, so the whole set costs a single
-            // gfx slot. Cosmetic placeholder, per the "reuse a resident
-            // sprite" call - a real fusion-stone sprite is the follow-up.
-            Entity* npc = CreateNPC(ZELDA, 0, 0);
+            // This room's drawn face (sQuickStartFuserCast). Every fuser in
+            // a room shares it, so the whole set still costs a single gfx
+            // slot - the property the old Zelda-only rule had, kept.
+            Entity* npc = CreateNPC(castId, 0, 0);
             if (npc == NULL) {
                 complete = FALSE;
                 break;

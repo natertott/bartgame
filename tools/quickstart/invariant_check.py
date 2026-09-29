@@ -742,7 +742,12 @@ def emu_fusers(rom):
     """
     from emu import boot, warp, here, room_dims, coll_at, GENT, MAX_ENT, STRIDE, ROOM_CONTROLS, r16, poison_here
     KIN = 0x02002a40 + 0x114 + 301  # gSave.kinstones.fusedKinstones
-    ZELDA, NPC_KIND = 0x28, 7
+    # Any NPC kind, not Zelda specifically: a room's fusers wear a face drawn
+    # per run from sQuickStartFuserCast now, so filtering on ZELDA reported
+    # every fuser in the game as missing. The position match is what
+    # identifies a fuser anyway - no two scatter spots in a region are within
+    # six tiles - so the id was never doing the work.
+    NPC_KIND = 7
     by_room = collections.OrderedDict()
     for f in P.fusers():
         by_room.setdefault((f['areaName'], f['roomName'], f['area'], f['room']), []).append(f)
@@ -789,8 +794,7 @@ def emu_fusers(rom):
         live = {(r16(c, GENT + i * STRIDE + 0x2e) - r16(c, ROOM_CONTROLS + 6),
                  r16(c, GENT + i * STRIDE + 0x32) - r16(c, ROOM_CONTROLS + 8))
                 for i in range(MAX_ENT)
-                if c.memory.u8[GENT + i * STRIDE + 8] == NPC_KIND
-                and c.memory.u8[GENT + i * STRIDE + 9] == ZELDA}
+                if c.memory.u8[GENT + i * STRIDE + 8] == NPC_KIND}
         msgs = []
         for f in rows:
             kid = f['kinstone']
@@ -1050,13 +1054,17 @@ def emu_rooms(rom, start, end):
 # deliberately rather than parsed: this tier's job is to catch the table
 # drifting off the floor it was measured against, and a parser that reads the
 # same numbers it is checking cannot do that.
-HUB_SHOP_SPOTS = [(64, 120), (96, 120), (128, 120), (160, 120),
-                  (48, 88), (80, 88), (112, 88), (144, 88)]
+HUB_SHOP_SPOTS = [(80, 120), (112, 120), (144, 120), (176, 120),
+                  (96, 88), (128, 88), (160, 88), (192, 88)]
 # Slots 1 and 2 - ten arrows and ten bombs. Gated on owning the Bow / Bombs,
 # so on a fresh run these two shelves are correctly empty.
-HUB_SHOP_AMMO_SPOTS = [(96, 120), (128, 120)]
+HUB_SHOP_AMMO_SPOTS = [(112, 120), (144, 120)]
 HUB_SHOP_WALKWAY_Y = 104
-HUB_MERCHANT = (192, 104)
+# North-WEST corner. The merchant's interact box is 40x40 (see the layout
+# comment in game.c), so a shelf within one tile of them cannot be lifted -
+# pressing R opens the dialogue instead. This tier is what caught that,
+# twice.
+HUB_MERCHANT = (64, 88)
 PLAYER_STATE = 0x03003f80
 # Where the player arrives on the roof from Floor 3, and where its reward goes.
 ROOF_ARRIVAL = (184, 328)
