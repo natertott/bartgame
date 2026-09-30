@@ -1264,6 +1264,48 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Lon Lon's two slots, bought properly
+
+The face batch left Lon Lon Ranch one slot under the GFX floor, and the
+choice was to live with it or find out where the room's slots actually go.
+The user picked finding out. It was the right call: the answer was not the
+faces at all.
+
+**Dumping all 44 slots settled the question in one run.** `GfxSlot` carries
+`slotCount` and `referenceCount` (include/vram.h), so a dump attributes
+every slot to its owner:
+
+* 4 slots pinned by the system (referenceCount 128).
+* 8 in status 3, `GFX_SLOT_FOLLOWER` - and these are NOT free, they are the
+  tails of multi-slot sheets. Slot 5 has `slotCount` 4 and owns 6, 7 and 8;
+  slot 13 has 3 and owns 14 and 15. The accounting is honest and
+  `QuickStartReclaimableGfxSlots` is right to exclude them.
+* ~10 for the room's own content.
+* 2 for the fuser face, shared by all eight fusers (referenceCount 8).
+* **19 for 19 enemies, one slot each.**
+
+That last line is the finding. Enemies arrive through `LoadSwapGFX`, not a
+shared sheet, so nineteen enemies of a SINGLE kind held nineteen of the
+forty-four slots. The per-room `sQuickStartRegionSheetBudgets` lever does not
+bind here at all, because it limits distinct KINDS and the cost is per
+ENTITY.
+
+**So the ceiling was wrong, not the cast.** `QuickStartRoomEnemyCeiling` was
+`14 + roomSquares / 50`, capped at 28. Lon Lon is a big room, so its area
+earned it 28; its sprite table can afford about 21 once the room's content
+and one face are paid for. The wave took 23 and left 1.
+
+The ceiling now also asks what the table can still spend - what the wave
+already holds, plus what is reclaimable, less the hard floor and the sheets
+a face still has to buy - with a floor of `QUICKSTART_ENEMY_CEILING_MIN` so a
+wave can never be starved into never clearing.
+
+Measured after: Lon Lon goes from 0 free slots to **4**, double the floor,
+and its wave peaks at 19 enemies instead of 23. Every other region room is
+unchanged and in double digits; the new term only binds where the table is
+actually tight. That is the whole point of pricing against the resource
+instead of against room area.
+
 ### The GFX bill for faces that actually draw
 
 The face batch above broke `invariant_check.py`'s GFX floor in two rooms, and

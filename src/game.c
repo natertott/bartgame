@@ -8801,6 +8801,13 @@ static const QuickStartArchetype* QuickStartRollArchetype(u8 difficulty) {
 #define QUICKSTART_GFX_RESERVE 4
 #define QUICKSTART_GFX_HARD_FLOOR 2
 
+// What a room's drawn fuser face costs the GFX table, measured in Lon Lon
+// Ranch. It lives up here with the rest of the GFX budget rather than next
+// to the cast, because two different things reserve against it: the fuser
+// placement waits for it, and QuickStartRoomEnemyCeiling holds it back from
+// the wave so the face still has somewhere to land.
+#define QUICKSTART_FUSER_FACE_SHEETS 2
+
 static s32 QuickStartReclaimableGfxSlots(void);
 
 static s32 QuickStartFreeGfxSlots(void) {
@@ -8917,10 +8924,52 @@ static bool32 QuickStartGfxBudgetForSpawn(void) {
 // floor this high is safe ONLY because the budget is now charged in true
 // entity cost (QuickStartKindEntityCost): 15 on the meter is 15 frame-time
 // enemies no matter which kinds the draw picks.
+// How many enemies are standing here right now. Each one costs a GFX slot
+// of its own, so this is also "how much of the sprite table the wave is
+// currently holding".
+static s32 QuickStartLiveEnemyCount(void) {
+    s32 i, n = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY) {
+            n++;
+        }
+    }
+    return n;
+}
+
+// Never cap a wave below this, whatever the sprite table says. A region
+// whose wave cannot reach four enemies is a region whose clear counter
+// crawls, and that is a worse failure than a thin GFX reserve.
+#define QUICKSTART_ENEMY_CEILING_MIN 4
+
 static s32 QuickStartRoomEnemyCeiling(s32 roomSquares) {
     s32 ceiling = 14 + roomSquares / 50;
+    s32 live, gfxCeiling;
     if (ceiling > QUICKSTART_MAX_LIVE_ENEMIES) {
         ceiling = QUICKSTART_MAX_LIVE_ENEMIES;
+    }
+    // AREA IS THE WRONG CEILING ON ITS OWN, and Lon Lon Ranch is the room
+    // that proves it. Every live enemy holds its own slot - they arrive
+    // through LoadSwapGFX, not a shared sheet, so nineteen enemies of one
+    // single kind held nineteen of the forty-four slots (measured). Lon
+    // Lon's area earns it a ceiling of 28, and its sprite table can afford
+    // about 21 once the room's own content and one fuser face are paid
+    // for; the wave took 23 and left 1 free against a floor of 2.
+    //
+    // So the ceiling is also whatever the table can still spend: what the
+    // wave already holds, plus what is reclaimable, less the hard floor and
+    // the sheets a fuser face still has to buy. In a room with headroom
+    // this never binds - every other region room measured double-digit
+    // free slots - and in a tight one it is the difference between a
+    // reserve and none.
+    live = QuickStartLiveEnemyCount();
+    gfxCeiling = live + QuickStartReclaimableGfxSlots()
+                 - (QUICKSTART_GFX_HARD_FLOOR + QUICKSTART_FUSER_FACE_SHEETS);
+    if (gfxCeiling < QUICKSTART_ENEMY_CEILING_MIN) {
+        gfxCeiling = QUICKSTART_ENEMY_CEILING_MIN;
+    }
+    if (ceiling > gfxCeiling) {
+        ceiling = gfxCeiling;
     }
     return ceiling;
 }
@@ -23534,11 +23583,6 @@ static void QuickStartBrushFusionPayout(void) {
 // behaviour the gfx reserve exists to make possible.
 #define QUICKSTART_FUSERS_PLACED_FLAG 47
 
-// What a room's drawn face costs the GFX table, measured in Lon Lon Ranch:
-// entering with the face already placed settles at 4 reclaimable slots and
-// deferring it settles at 4 too, so the set itself is worth about two while
-// the room is still loading. The wait below is sized off this.
-#define QUICKSTART_FUSER_FACE_SHEETS 2
 
 // ==================== The fuser cast ====================================
 //
