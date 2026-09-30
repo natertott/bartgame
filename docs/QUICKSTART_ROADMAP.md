@@ -1264,6 +1264,66 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Where enemies spawn: Trilby, Lake Hylia, and the Mount Crenel problem
+
+Three user reports about spawn coverage, two fixed and one that turns out to
+be a design decision rather than a bug.
+
+`tools/quickstart/spawn_spread.py` is the tool: flood the room's collision
+from the tile the player actually arrives at, farthest-point sample the LAND
+in that component, and report coverage before and after. `--map` prints an
+ASCII coverage map with tile indices, which is what located the bare ground
+in seconds instead of by eye.
+
+**Land, not "walkable".** Lake Hylia's water is walkable COLLISION, so a
+flood alone happily proposes the middle of the lake. Its arrival component
+is 1586 tiles and only 617 are land. The act tile is what tells them apart
+(`mapActTileToSurfaceType.c`), and the proposer rejects pit, slope, ice,
+swamp and both water tiles. Castor Wilds' swamp is the same trap in the
+other direction, already known from the drop-site work.
+
+* **Trilby Highlands**: 28 spots covering 66% of its 923 land tiles. The
+  bare block was tiles (1,48)-(13,58) - the southwest corner the user named.
+  Worth noting the existing rows labelled "the southwest pocket" are a
+  DIFFERENT pocket up at rows 35-43, which is why the area read as served.
+  48 spots now, **100%**.
+* **Lake Hylia**: 16 spots, all inside x 24-296 y 104-456 of a 48x60 room,
+  covering 35% of the land. 39 spots now, **93%**. The proposer runs out of
+  legal candidates before 48 - that is the lake, not a bug.
+* **Eastern Hills North boss spot**: moved from (264,264) to **(128,272)**.
+  Measured rather than eyeballed: the largest square of clear, non-water,
+  in-component tiles in the room is TEN tiles on a side, spanning x 3-12 by
+  y 12-21, and (128,272) is its centre. The old spot was tile (16,16) inside
+  a six-tile block on the far side of the dividing wall - and not the field
+  the farmhouse looks out on, whose door the survey puts at y 136, directly
+  above the new square.
+
+**Mount Crenel cannot be expanded the same way, and the reason is worth
+recording.** Its arrival component is **69 tiles of the room's 831**. The
+other components - 402, 244, 47 and 29 tiles - are the mountain proper, and
+the current ten spots already cover 100% of the strip the player arrives in.
+
+The room holds 21 climb-wall act tiles and none of them bridges two
+components. What DOES reach the mountain is the cave network: twelve
+transitions land inside this room at scattered coordinates - (312,328) from
+CRENEL_CAVES_MUSHROOM_KEESE, (408,232) from HELMASAUR_HALLWAY, (184,424)
+from BOMB_BUSINESS_SCRUB, (728,408) from LADDER_TO_SPRING_WATER, and so on.
+So a player reaches those components by LEAVING THE ROOM and coming back out
+somewhere else, and most of those caves are priced at bombs or the Grip Ring.
+
+That matters because `QuickStartRegionWaveCleared` returns FALSE while ANY
+enemy is in the room. One enemy dealt onto the mountain is a region that can
+never be cleared for a player without the cave's key - which blocks the
+chain step, the region reward, and possibly the run. So the spots were NOT
+expanded, and the decision goes to the user: gate the extra spots on the kit
+that opens the matching cave, or scope the wave-clear test to the player's
+own component. Either is a real mechanic change, not a table edit.
+
+**GFX cost checked.** Spreading spawns across more of a room loads more
+sheets. Trilby falls from 15 free slots to 3 and Lake Hylia from 20 to 11;
+every region room is still above `QUICKSTART_GFX_HARD_FLOOR`, and the
+GFX-aware enemy ceiling from the previous batch is what keeps it that way.
+
 ### Lon Lon's two slots, bought properly
 
 The face batch left Lon Lon Ranch one slot under the GFX floor, and the

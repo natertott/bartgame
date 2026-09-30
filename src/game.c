@@ -4166,16 +4166,31 @@ static const s16 sQuickStartNorthFieldEnemyOffsets[][2] = {
 };
 #define QUICKSTART_NORTHFIELD_ROOM_SQUARES 775
 
+// Spread with tools/quickstart/spawn_spread.py, which floods the room's
+// collision from the arrival tile and farthest-point samples the LAND in it.
+//
+// The user: "There is a large swath of walkable land in the southwest corner
+// of the room where no enemies spawn." Measured: the arrival component is
+// 1089 tiles, 923 of them land, and the old 28 spots covered 66% of it - the
+// bare block was tiles (1,48)-(13,58), the whole southwest corner. The
+// earlier "southwest pocket" rows are a DIFFERENT pocket, up at rows 35-43.
+//
+// 48 spots now, 100% of the land within 96px of one. A spot is only offered
+// with 3x3 clearance, at least 56px from every other, and never on a pit,
+// slope, ice, swamp or water act tile.
 static const s16 sQuickStartTrilbyEnemyOffsets[][2] = {
-    { 120, 24 },  { 360, 120}, { 408, 120}, { 456, 120}, { 360, 168}, { 312, 360}, { 360, 360},
-    { 24, 408 },  { 360, 408}, { 360, 456}, { 312, 504}, { 360, 504}, { 408, 504}, { 360, 552},
-    { 408, 552}, { 456, 552}, { 360, 840}, { 312, 888}, { 360, 888}, { 360, 936},
-    // The southwest pocket, tiles (1,35)-(10,44) - opened by the solved
-    // boulder crossing + restored through-cave, flood-verified open (see
-    // QuickStartTrilbyQuirkHook). Eight spots spread across it per the
-    // user's request that the field host spawns.
-    { 40, 584 },  { 120, 584}, { 24, 632 }, { 104, 632}, { 40, 664 },  { 120, 664}, { 56, 696 },
-    { 136, 696},
+    { 360, 120 }, { 408, 120 }, { 456, 120 }, { 360, 168 },
+    { 312, 360 }, { 360, 360 }, { 24, 408 }, { 360, 408 },
+    { 360, 456 }, { 312, 504 }, { 360, 504 }, { 408, 504 },
+    { 360, 552 }, { 408, 552 }, { 456, 552 }, { 360, 840 },
+    { 312, 888 }, { 360, 888 }, { 360, 936 }, { 40, 584 },
+    { 120, 584 }, { 24, 632 }, { 104, 632 }, { 40, 664 },
+    { 120, 664 }, { 56, 696 }, { 136, 696 }, { 88, 136 },
+    { 88, 920 }, { 168, 440 }, { 280, 728 }, { 40, 264 },
+    { 184, 824 }, { 232, 136 }, { 424, 728 }, { 40, 808 },
+    { 280, 616 }, { 200, 344 }, { 360, 264 }, { 232, 920 },
+    { 440, 872 }, { 120, 776 }, { 104, 408 }, { 120, 856 },
+    { 152, 168 }, { 344, 760 }, { 40, 344 }, { 296, 424 },
 };
 #define QUICKSTART_TRILBY_ROOM_SQUARES 450
 
@@ -4403,11 +4418,35 @@ static const s16 sQuickStartMinishWoodsEnemyOffsets[][2] = {
 // also why this region's DROP is priced at the Flippers below - a player
 // dropped here with none of the water kit would have 165 tiles and no way
 // out, exactly the Castor Wilds failure the swamp gate was written for.
+// Spread with tools/quickstart/spawn_spread.py - see the Trilby table above
+// for the method.
+//
+// The user: "In Lake Hylia, there is ample walkable land both surrounding
+// the water, but also island in the water." The old 16 spots all sat within
+// x 24-296, y 104-456, one corner of a 48x60 room, and covered 35% of the
+// land. 39 spots now, 93%.
+//
+// Note the denominator. The arrival component is 1586 walkable tiles but
+// only 617 are LAND - Lake Hylia's water is walkable COLLISION, so a flood
+// alone happily proposes the middle of the lake. The act tile is what tells
+// land from water, and this table is filtered on it.
+//
+// The three island components (121, 42 and 40 tiles) are deliberately NOT
+// filled. A region's wave-clear counts every enemy in the room, so one
+// enemy stranded on an island is a region that can never be cleared; the
+// islands need their reachability established before anything is dealt onto
+// them.
 static const s16 sQuickStartLakeHyliaEnemyOffsets[][2] = {
-    { 216, 184 }, { 24, 456 }, { 184, 360 }, { 88, 408 }, { 264, 136 },
-    { 104, 360 }, { 56, 440 }, { 72, 376 }, { 88, 456 }, { 264, 184 },
-    { 72, 424 }, { 136, 360 }, { 264, 104 }, { 280, 120 }, { 280, 152 },
-    { 296, 136 },
+    { 216, 184 }, { 24, 456 }, { 184, 360 }, { 88, 408 },
+    { 264, 136 }, { 104, 360 }, { 56, 440 }, { 72, 376 },
+    { 88, 456 }, { 264, 184 }, { 72, 424 }, { 136, 360 },
+    { 264, 104 }, { 280, 120 }, { 280, 152 }, { 296, 136 },
+    { 712, 776 }, { 312, 920 }, { 152, 712 }, { 504, 824 },
+    { 392, 248 }, { 56, 632 }, { 248, 792 }, { 440, 920 },
+    { 360, 840 }, { 216, 648 }, { 184, 264 }, { 184, 88 },
+    { 152, 792 }, { 392, 168 }, { 248, 712 }, { 376, 904 },
+    { 152, 184 }, { 648, 776 }, { 104, 664 }, { 200, 744 },
+    { 328, 88 }, { 328, 184 }, { 472, 872 },
 };
 #define QUICKSTART_LAKEHYLIA_ROOM_SQUARES 165
 
@@ -4523,7 +4562,19 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       248, 104, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 264, 264, 0, 0, 0, 0,
       sQuickStartEasternHillsNorthEnemyOffsets, ARRAY_COUNT(sQuickStartEasternHillsNorthEnemyOffsets), 458,
-      264, 264, QuickStartClearEasternHillsNpcs },
+      // Boss/reward spot moved from (264,264) to the farmland below the
+      // farmhouse, per the user: "The boss should spawn in the
+      // farmland/field in front of the house. It's a nice large square
+      // area, perfect for hosting a boss battle."
+      //
+      // Measured rather than eyeballed. The largest square of clear,
+      // non-water, in-component tiles in this room is TEN tiles on a side,
+      // spanning tiles x 3-12 by y 12-21, and its centre is (128, 272).
+      // The old spot was tile (16,16), inside a six-tile block on the far
+      // side of the dividing wall - a boss with half the room to move in,
+      // and not the field the farmhouse looks out on (the house door is at
+      // y 136, directly above this square).
+      128, 272, QuickStartClearEasternHillsNpcs },
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 200, 104, 0, 0, 0, 0,
       sQuickStartWesternWoodsSouthEnemyOffsets, ARRAY_COUNT(sQuickStartWesternWoodsSouthEnemyOffsets), 217,
       200, 104, NULL },
