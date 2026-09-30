@@ -217,14 +217,23 @@ def _tiers():
     body = GAME[i:GAME.find('\n};', i)]
     body = re.sub(r'//[^\n]*', '', body)
     out = []
-    for m in re.finditer(r'\{\s*(ITEM_\w+),\s*(QS_CAT_\w+),\s*(QS_TIER_\w+),\s*(QS_REQ_\w+),\s*(\d+)', body):
+    for m in re.finditer(r'\{\s*(ITEM_\w+),\s*(QS_CAT_\w+(?:\s*\|\s*QS_CAT_\w+)*),'
+                         r'\s*(QS_TIER_\w+),\s*(QS_REQ_\w+),\s*(\d+)', body):
         out.append(dict(item=m.group(1), cat=m.group(2), tier=m.group(3),
                         req=m.group(4), repeatable=int(m.group(5))))
     return out
 
 
 TIERS = _tiers()
-KEY_ITEMS = [e['item'] for e in TIERS if e['cat'] == 'QS_CAT_KEY']
+# cat is a bitmask in the C ("QS_CAT_WEAPON | QS_CAT_KEY" for bombs), so
+# membership is a set test on the split, never equality.
+def cat_set(text):
+    return {t.strip() for t in text.split('|')}
+
+
+for _e in TIERS:
+    _e['cats'] = cat_set(_e['cat'])
+KEY_ITEMS = [e['item'] for e in TIERS if 'QS_CAT_KEY' in e['cats']]
 
 # Items the mode hands over at boot (GameTask_Transition), so they are held
 # before round 1 and can never be offered. Only the two that carry a reach
@@ -240,9 +249,9 @@ BOOT_ITEMS = {'ITEM_OCARINA', 'ITEM_SMITH_SWORD'}
 # then writes the three Castor Wilds statue bits directly, which does not
 # touch fusedCount - and fusedCount is what QuickStartHeldReachMask reads.
 # (The fusedCount = 100 line in game.c is in the MAPEXPLORE branch.) So the
-# strict cohort never holds it; the found cohort takes it after the first
-# completed step, on the reasoning that a player who clears content fuses
-# something.
+# strict cohort never holds it; the rewards cohort takes it after the first
+# region clear, on the reasoning that a player who clears a region fuses
+# something along the way.
 
 # QuickStartRegionNeedsSwampKit / QuickStartHasRegionKit. A drop into one of
 # these regions is RE-DRAWN if the player is not carrying the kit that makes
@@ -252,6 +261,104 @@ BOOT_ITEMS = {'ITEM_OCARINA', 'ITEM_SMITH_SWORD'}
 KIT_RULES = {'CW': ('ITEM_PEGASUS_BOOTS', 'ITEM_ROCS_CAPE'),
              'WR': ('ITEM_PEGASUS_BOOTS', 'ITEM_ROCS_CAPE'),
              'LH': ('ITEM_FLIPPERS',)}
+
+# ------------------------------------------------- the region clear draw --
+#
+# THE CORRECTION THAT MATTERS. A first pass at this modelled the two
+# cohorts as "the placer's own view" and "the placer's view plus a free key
+# item per step", and reported that the reachable world never grows. The
+# user pushed back: "If the player clears a wave or a boss, then they are
+# granted an item. Wouldn't that expand the reachability for the run?"
+#
+# They are right, and the mechanism is QuickStartSpawnRegionRewardItem:
+#
+#     chosenItem = QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_ALL);
+#
+# QS_CAT_ALL is QS_CAT_DROP | QS_CAT_KEY, so a region clear is the one draw
+# in the mode that CAN pay a key item, and every WAVE and BOSS step is a
+# region clear. The chain rolls one step at a time (QuickStartChainRollStep
+# is called from the previous step's completion), reading the live
+# inventory, so anything a clear pays is in the placer's hands before the
+# next step is dealt. The sphere really does grow; what the earlier model
+# measured was only its floor.
+#
+# So the draw is modelled exactly rather than hand-waved. The seed is six
+# bits of Random(), which makes the whole outcome space 64 equiprobable
+# values, and both the tier and the pick come out of it:
+#
+#     tier: seed % 10   ->  0-5 common, 6-8 uncommon, 9 rare
+#     pick: (seed % 10) * 7 + seed / 10        (QuickStartDrawPick)
+#
+# then QuickStartTierPick walks the usable entries of that (category, tier)
+# and reduces the pick by subtraction.
+
+QS_CAT_DROP = {'QS_CAT_REWARD', 'QS_CAT_WEAPON', 'QS_CAT_SKILL',
+               'QS_CAT_STAT', 'QS_CAT_CHARM'}
+QS_CAT_ALL = QS_CAT_DROP | {'QS_CAT_KEY'}
+TIER_ORDER = ['QS_TIER_COMMON', 'QS_TIER_UNCOMMON', 'QS_TIER_RARE']
+
+# QuickStartKeyRegions: the only two items whose draw depends on WHERE the
+# player is standing. Everything else is allowed everywhere.
+KEY_REGIONS = {'ITEM_QST_LONLON_KEY': {'NHF', 'TRIL', 'EH'},
+               'ITEM_QST_GRAVEYARD_KEY': {'NHF', 'TRIL', 'RV'}}
+
+# QuickStartTierEntryUsable's switch, for the requirements that are a plain
+# inventory test. The two bottle requirements are treated as satisfied:
+# they gate REWARD and WEAPON rows only, so they cannot move the reach mask
+# either way, and modelling a bottle inventory would add state for nothing.
+REQ_HAS = {'QS_REQ_BOMBS': 'ITEM_BOMBS', 'QS_REQ_BOW': 'ITEM_BOW',
+           'QS_REQ_MOLE_MITTS': 'ITEM_MOLE_MITTS',
+           'QS_REQ_FLIPPERS': 'ITEM_FLIPPERS',
+           'QS_REQ_SPIN_ATTACK': 'ITEM_SKILL_SPIN_ATTACK',
+           'QS_REQ_SWORD_BEAM': 'ITEM_SKILL_SWORD_BEAM',
+           'QS_REQ_ROCS_CAPE': 'ITEM_ROCS_CAPE',
+           'QS_REQ_RED_SWORD': 'ITEM_RED_SWORD'}
+REQ_LACKS = {'QS_REQ_NO_PACCI': 'ITEM_PACCI_CANE',
+             'QS_REQ_NO_FIRE_ROD': 'ITEM_FIRE_ROD'}
+
+
+def tier_entry_usable(e, owned, where_region):
+    if not e['repeatable'] and e['item'] in owned:
+        return False
+    if e['item'] == 'ITEM_BOOMERANG' and 'ITEM_MAGIC_BOOMERANG' in owned:
+        return False
+    if e['item'] == 'ITEM_RED_SWORD' and 'ITEM_BLUE_SWORD' in owned:
+        return False
+    allowed = KEY_REGIONS.get(e['item'])
+    if allowed is not None and where_region not in allowed:
+        return False
+    if e['req'] in REQ_HAS:
+        return REQ_HAS[e['req']] in owned
+    if e['req'] in REQ_LACKS:
+        return REQ_LACKS[e['req']] not in owned
+    return True
+
+
+def tier_pick(cats, tier, pick, owned, where_region):
+    usable = [e for e in TIERS if (e['cats'] & cats) and e['tier'] == tier
+              and tier_entry_usable(e, owned, where_region)]
+    if not usable:
+        return None
+    if pick < 0:
+        pick = -pick
+    return usable[pick % len(usable)]['item']
+
+
+def draw_item(seed6, cats, owned, where_region):
+    """QuickStartDrawItem, for a six-bit seed. Returns an item name."""
+    roll = abs(seed6) % 10
+    tier = 0 if roll < 6 else (1 if roll < 9 else 2)
+    pick = roll * 7 + abs(seed6) // 10
+    for t in range(tier, -1, -1):
+        got = tier_pick(cats, TIER_ORDER[t], pick, owned, where_region)
+        if got:
+            return got
+    for t in range(tier + 1, 3):
+        got = tier_pick(cats, TIER_ORDER[t], pick, owned, where_region)
+        if got:
+            return got
+    return 'ITEM_HEART_PIECE'
+
 
 WIN_WAVE, WIN_BOSS, WIN_QUEST = 0, 1, 2
 CARRIER_NAME = {WIN_WAVE: 'WAVE', WIN_BOSS: 'BOSS', WIN_QUEST: 'QUEST'}
@@ -349,10 +456,18 @@ def reachable_regions(held, drop_region):
     return open_
 
 
+# The dest table indexed by room. QuickStartReachRoomOk scans all 273 rows
+# every call, which is the right shape on a GBA with no allocator; here it
+# is called about 2.7 billion times over a full sweep, so the same answer
+# is reached through a dict of the rows that can possibly match. Same
+# predicate, same result - sim_validate.py checks it against the ROM.
+DESTS_BY_ROOM = {}
+for _d in DESTS:
+    DESTS_BY_ROOM.setdefault((_d[1], _d[2]), []).append((_d[0], _d[3]))
+
+
 def reach_room_ok(regions, held, area, room):
-    for dr, da, dro, terms, _, _ in DESTS:
-        if da != area or dro != room:
-            continue
+    for dr, terms in DESTS_BY_ROOM.get((area, room), ()):
         if not (regions >> dr) & 1:
             continue
         if terms_met(terms, held):
@@ -406,7 +521,10 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
                     and (POOL[i]['area'], POOL[i]['room']) in BOSS_ROOMS
                     and not used(KIND_BOSS, i)]
         if kind == KIND_QUEST:
-            if reach_pool_ok(regions, quest_slot) and not used(KIND_QUEST, 0):
+            # Guarded on the SLOT, matching the fix in game.c. Before that
+            # fix the guard asked about 0 while the store wrote the slot,
+            # so 31.7% of runs were dealt the quest twice.
+            if reach_pool_ok(regions, quest_slot) and not used(KIND_QUEST, quest_slot):
                 return [quest_slot]
             return []
         return []
@@ -451,6 +569,17 @@ for i, p in enumerate(POOL):
 
 ROOM_INDEX = {(a, r): i for i, (a, r, _, _) in enumerate(ALL_ROOMS)}
 
+# Which rooms belong to each region, for the per-region openness measure.
+# A room the survey reaches from two regions counts in both - it really is
+# a room of both, and either entrance is a way in.
+REGION_ROOMS = {}
+for (_a, _r), _names in ROOM_REGION.items():
+    for _nm in _names:
+        REGION_ROOMS.setdefault(_nm, set()).add((_a, _r))
+REGION_SIZE = {k: len(v) for k, v in REGION_ROOMS.items()}
+REGION_ROOM_INDEX = {k: [ROOM_INDEX[ar] for ar in v]
+                     for k, v in REGION_ROOMS.items()}
+
 
 def snapshot(regions, held, label):
     """One checkpoint, as BITMASKS rather than name lists.
@@ -469,9 +598,22 @@ def snapshot(regions, held, label):
     for i, s in enumerate(SITES):
         if reach_room_ok(regions, held, s['area'], s['room']):
             sm |= 1 << i
+    # PER REGION, not just the region count. The user: "We are not simply
+    # concerned with whether the player can walk into the entrance of a
+    # region but whether or not they can explore the rooms in that region."
+    # Mount Crenel is the case that makes the point - its entry price is
+    # free, so a region-count metric scores it as fully open, while the
+    # rooms behind the entrance are priced at the Grip Ring and a run
+    # without one can only stand on the doorstep. `per_region` is how many
+    # of each region's rooms this loadout can actually get into.
+    per = {}
+    for name, idxs in REGION_ROOM_INDEX.items():
+        got = sum(1 for i in idxs if (rm >> i) & 1)
+        if got:
+            per[name] = got
     return dict(label=label, regions=regions, rooms='%x' % rm, sites='%x' % sm,
                 nrooms=bin(rm).count('1'), nsites=bin(sm).count('1'),
-                nregions=bin(regions).count('1'))
+                nregions=bin(regions).count('1'), per_region=per)
 
 
 def simulate(seed, cohort, rng):
@@ -485,7 +627,7 @@ def simulate(seed, cohort, rng):
                         ({'QS_CAT_REWARD', 'QS_CAT_STAT'}, {'QS_TIER_RARE'}),
                         ({'QS_CAT_SKILL'}, {'QS_TIER_COMMON', 'QS_TIER_UNCOMMON'})):
         pool = [e['item'] for e in TIERS
-                if e['cat'] in cats and (tiers is None or e['tier'] in tiers)
+                if (e['cats'] & cats) and (tiers is None or e['tier'] in tiers)
                 and (e['repeatable'] or e['item'] not in owned)]
         seen, uniq = set(), []
         for it in pool:
@@ -505,7 +647,7 @@ def simulate(seed, cohort, rng):
     carrier, element_pool = roll_carrier_and_element(seed, drop_pool, rng)
     quest_slot = element_pool if carrier == WIN_QUEST else rng.randrange(POOL_SIZE)
 
-    checkpoints, steps = [], []
+    checkpoints, steps, rewards = [], [], []
     prior, sites_done = set(), set()
     fused = False
     held = held_mask(owned)
@@ -523,10 +665,22 @@ def simulate(seed, cohort, rng):
             prior.add((kind, where))
             if kind == KIND_EVENT:
                 sites_done.add(where)
-            if cohort == 'found':
-                got = chain_pick_item(seed, 1000 + step, owned)
+            # A WAVE or a BOSS step is a region clear, and a region clear
+            # pays QuickStartSpawnRegionRewardItem's draw over QS_CAT_ALL -
+            # the one draw in the mode that can hand over a key item. An
+            # EVENT (a "? room") pays QS_CAT_DROP, which excludes key items
+            # by definition, so it cannot move the reach mask; a QUEST pays
+            # its own table. Only the region clears are modelled as growth,
+            # and they are modelled with the real draw rather than a
+            # guaranteed key item.
+            if cohort == 'rewards' and kind in (KIND_WAVE, KIND_BOSS):
+                got = draw_item(rng.randrange(64), QS_CAT_ALL, owned,
+                                REGION_NAMES[BY_POOL[where]])
                 if got:
                     owned.add(got)
+                    rewards.append(got)
+                # Clearing a region is also where a run's kinstone fusions
+                # happen; the fusion bit follows the first clear.
                 fused = True
         steps.append(dict(step=step, kind=KIND_NAME[kind], where=where, detail=detail))
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
@@ -539,7 +693,7 @@ def simulate(seed, cohort, rng):
                 element_region=REGION_NAMES[BY_POOL[element_pool]],
                 carrier=CARRIER_NAME[carrier],
                 quest_slot=quest_slot, picks=picks, steps=steps,
-                checkpoints=checkpoints)
+                rewards=rewards, checkpoints=checkpoints)
 
 
 def main():
@@ -547,7 +701,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--runs', type=int, default=5000)
     ap.add_argument('--out', default=os.path.join(ROOT, 'docs', 'sim_runs.json'))
-    ap.add_argument('--cohorts', default='strict,found')
+    ap.add_argument('--cohorts', default='strict,rewards')
     a = ap.parse_args()
     rng = random.Random(0xC0FFEE)
     runs = []
@@ -564,7 +718,8 @@ def main():
                 site_kinds=[s['kinds'] for s in SITES],
                 pool_rooms=[f"{p['areaName'][5:]}/{p['roomName'][5:]}" for p in POOL],
                 pool_regions=[REGION_NAMES[b] for b in BY_POOL],
-                region_names=REGION_NAMES, region_long=REGION_LONG)
+                region_names=REGION_NAMES, region_long=REGION_LONG,
+                region_size=REGION_SIZE)
     with open(a.out, 'w') as f:
         json.dump(dict(meta=meta, runs=runs), f)
     print(f'{len(runs)} runs -> {a.out}')

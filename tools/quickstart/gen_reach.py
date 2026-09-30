@@ -78,6 +78,7 @@ BOULDER_BIT = len(TOKENS)
 RING = {
     'SHF': 'QS_REGION_SHF', 'EH-N': 'QS_REGION_EH', 'EH-C': 'QS_REGION_EH',
     'EH-S': 'QS_REGION_EH', 'LLR': 'QS_REGION_LLR', 'NHF': 'QS_REGION_NHF',
+    'CG': 'QS_REGION_CG',
     'RV': 'QS_REGION_RV', 'TRIL': 'QS_REGION_TRIL', 'WW-N': 'QS_REGION_WW',
     'WW-C': 'QS_REGION_WW', 'WW-S': 'QS_REGION_WW', 'CW': 'QS_REGION_CW',
     'WR': 'QS_REGION_WR', 'CREN': 'QS_REGION_CREN',
@@ -166,10 +167,13 @@ def build():
     A('')
 
     # Region entry requirements, indexed by QS_REGION_*.
-    A('// What it costs to be inside a region AT ALL, straight from the')
-    A('// survey\'s own per-region room_req. A named region with no survey')
-    A('// entry (Hyrule Castle Garden) gets "never": the survey never walked')
-    A('// it, so nothing in it can be proven reachable.')
+    A('// What it costs to GET INTO a region at all. world_reach.ENTRY states')
+    A('// the crossing price directly for the regions whose only crossing is')
+    A("// priced on the neighbour's side; every other region falls back to")
+    A("// its own room_req, which is the cost of moving around inside it and")
+    A('// is the same thing for a region you can walk straight into. A named')
+    A('// region with neither gets "never" - nothing in it can be proven')
+    A('// reachable, so the chain will not place a step there.')
     A('static const u32 sQuickStartReachRegion[][%d] = {' % MAX_TERMS)
     region_req = {}
     for key, r in W.SURVEY.items():
@@ -182,6 +186,12 @@ def build():
                 raise SystemExit('%s merged past MAX_TERMS' % ring)
         else:
             region_req[ring] = masks
+    # An explicit ENTRY row wins over the room_req derivation: it is the
+    # price of the crossing, which is the question this table asks.
+    for ring, req in getattr(W, 'ENTRY', {}).items():
+        if ring not in RINGS:
+            raise SystemExit('ENTRY names an unknown ring: %s' % ring)
+        region_req[ring] = req_masks(req, 'ENTRY ' + ring)
     for ring in RINGS:
         masks = region_req.get(ring)
         if masks is None:

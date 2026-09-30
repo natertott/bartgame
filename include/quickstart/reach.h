@@ -55,19 +55,22 @@ typedef struct {
     u32 req[3]; // alternatives; 0 = free, ~0u = never
 } QuickStartReachDest;
 
-// What it costs to be inside a region AT ALL, straight from the
-// survey's own per-region room_req. A named region with no survey
-// entry (Hyrule Castle Garden) gets "never": the survey never walked
-// it, so nothing in it can be proven reachable.
+// What it costs to GET INTO a region at all. world_reach.ENTRY states
+// the crossing price directly for the regions whose only crossing is
+// priced on the neighbour's side; every other region falls back to
+// its own room_req, which is the cost of moving around inside it and
+// is the same thing for a region you can walk straight into. A named
+// region with neither gets "never" - nothing in it can be proven
+// reachable, so the chain will not place a step there.
 static const u32 sQuickStartReachRegion[][3] = {
-    /* QS_REGION_CG   */ { ~0u, ~0u, ~0u },  // never - not surveyed
+    /* QS_REGION_CG   */ { 0, ~0u, ~0u },  // free
     /* QS_REGION_NHF  */ { 0x00000001u, ~0u, ~0u },  // gated
     /* QS_REGION_SHF  */ { 0, ~0u, ~0u },  // free
     /* QS_REGION_EH   */ { 0, ~0u, ~0u },  // free
     /* QS_REGION_LLR  */ { 0, ~0u, ~0u },  // free
     /* QS_REGION_TRIL */ { 0, ~0u, ~0u },  // free
     /* QS_REGION_WW   */ { 0, ~0u, ~0u },  // free
-    /* QS_REGION_RV   */ { 0, ~0u, ~0u },  // free
+    /* QS_REGION_RV   */ { 0x0000000cu, ~0u, ~0u },  // gated
     /* QS_REGION_CW   */ { 0x00000040u, 0x00000400u, ~0u },  // gated
     /* QS_REGION_WR   */ { 0x00000040u, 0x00000400u, ~0u },  // gated
     /* QS_REGION_CREN */ { 0, 0x00000208u, ~0u },  // gated
@@ -143,6 +146,12 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { QS_REGION_NHF, AREA_DOJOS, ROOM_DOJOS_GREATBLADE, { 0x00010020u, ~0u, ~0u } },
     { QS_REGION_NHF, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, { 0x0000000cu, ~0u, ~0u } },
     { QS_REGION_NHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, { 0x0000000cu, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, { 0, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, { 0x00020000u, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1, { 0x00020000u, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN, { 0x00020000u, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, { 0x00020000u, ~0u, ~0u } },
+    { QS_REGION_CG, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, { 0x00020000u, ~0u, ~0u } },
     { QS_REGION_RV, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, { 0, ~0u, ~0u } },
     { QS_REGION_RV, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_FOREST_MAZE, { 0, ~0u, ~0u } },
     { QS_REGION_RV, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, { 0x00080100u, ~0u, ~0u } },

@@ -118,6 +118,35 @@ def d(key, area, room, x, y, req=_OMITTED, note=''):
                                      req=([[]] if req is _OMITTED else req), note=note))
 
 
+# ------------------------------------------------------------ entry cost --
+# A region's `room_req` is what it costs to move around INSIDE the region
+# once you are standing in it. That is not the same question as what it
+# costs to GET IN, and for a region whose only crossing is priced on the
+# NEIGHBOUR's side - as an exit row in the neighbour's own block - the entry
+# cost is simply not present in this table's per-region field. gen_reach was
+# reading room_req as the entry price, so those regions came out free.
+#
+# ENTRY states the crossing cost directly, per ring region, and gen_reach
+# prefers it over room_req wherever it has a row. Only regions whose entry
+# price differs from their room_req belong here; everything else is left to
+# the derivation.
+ENTRY = {
+    # The only real way in is North Hyrule Field's WNW border
+    # (link NHF WNW <-> RV E). NHF's own block prices the walk to that
+    # border at bombs AND bracelets - it is reachable only through the
+    # TO_GRAVEYARD pocket, which is behind a bombable wall and a lift.
+    # Trilby's N port is a link on paper only: TRIL's own first row is the
+    # pocket that port sits in, and it is marked "only reachable from Royal
+    # Valley", so the crossing runs one way, downhill, out of the valley.
+    #
+    # The user, who has played it: "Royal Valley requires the power
+    # bracelets to be able to reach." The survey agrees; it had simply
+    # recorded the price in the neighbour's block, where the region table
+    # could not see it. Royal Valley read FREE and was counted reachable in
+    # 100% of 50,000 simulated runs.
+    'QS_REGION_RV': [[BOMBS, BRACELETS]],
+}
+
 # --- South Hyrule Field ----------------------------------------------------
 region('SHF', 'South Hyrule Field', ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', -904, -2216),
        note='the start stamp itself was taken mid-transition (see --check)')
@@ -219,6 +248,31 @@ d('NHF', 'DOJOS', 'GREATBLADE', 120, 200, [[FUSION, FLIPPERS]])
 d('NHF', 'CAVES', 'TO_GRAVEYARD', 59, 110, [[BOMBS, BRACELETS]], 'POCKET')
 d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, [[BOMBS, BRACELETS]],
   'exit, reachable ONLY through the TO_GRAVEYARD pocket above')
+
+# --- Hyrule Castle Garden --------------------------------------------------
+# NOT WALKED. Derived from transitions.c (link CG S <-> NHF N is a plain
+# WARP_TYPE_BORDER row, no gate on either side) and from the five content
+# sites the mode already places in the garden, every one of which is a
+# Minish room. The user, who has played it: "Hyrule Castle Garden is always
+# guaranteed to be reachable - it directly connects to NHF with no item
+# requirement to pass between the two."
+#
+# Before this block existed the garden had NO survey entry, and gen_reach
+# prices a region with no entry at "never". So the one region of the ring
+# that costs nothing to walk into was the one region the chain believed it
+# could never reach: measured over 50,000 simulated runs, Castle Garden was
+# counted reachable in 7% of them - exactly the share of runs that DROP
+# there, since the drop region is admitted unconditionally.
+region('CG', 'Hyrule Castle Garden', ('CASTLE_GARDEN', 'MAIN', 504, 480),
+       note='derived from the exit list and the site table, not walked')
+d('CG', 'CASTLE_GARDEN', 'MAIN', 504, 36, FREE, 'exit, south to North Hyrule Field')
+d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '0', 136, 104, [[MINISH]])
+d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '1', 136, 104, [[MINISH]])
+d('CG', 'MINISH_CRACKS', 'HYRULE_CASTLE_GARDEN', 152, 104, [[MINISH]])
+d('CG', 'GARDEN_FOUNTAINS', 'EAST', 120, 80, [[MINISH]],
+  'reached through the minish holes above')
+d('CG', 'GARDEN_FOUNTAINS', 'WEST', 120, 80, [[MINISH]],
+  'reached through the minish holes above')
 
 # --- Royal Valley ----------------------------------------------------------
 region('RV', 'Royal Valley', ('ROYAL_VALLEY', 'MAIN', -536, 416),

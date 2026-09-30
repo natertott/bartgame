@@ -7,7 +7,7 @@ win chain leans on to host its requirements; how the reachable world grows
 as a run progresses; and what the common and rare shapes of a run are.
 
 Every number here is over BOTH cohorts unless a chart says otherwise - see
-sim.py for what strict and found mean. Where they disagree the disagreement
+sim.py for what strict and rewards mean. Where they disagree the disagreement
 is the finding, so the two are drawn together rather than averaged.
 
     python3 tools/quickstart/sim_report.py --in docs/sim_runs.json \
@@ -31,8 +31,39 @@ INK = '#1c1c1f'
 MUTED = '#6b6b76'
 GRID = '#e3e3e8'
 SERIES = ['#3b6ea5', '#c0603a', '#5b8c5a', '#8a6fa8', '#b58b2a', '#4f8f96']
-COHORT_COLOR = {'strict': '#3b6ea5', 'found': '#c0603a'}
+COHORT_COLOR = {'strict': '#3b6ea5', 'rewards': '#c0603a'}
 CKPT = ['after selection', 'after req 1', 'after req 2', 'after req 3', 'after req 4']
+
+
+def entry_prices(region_names):
+    """Read sQuickStartReachRegion back out of reach.h, as readable text.
+
+    Printed in the report so the entry prices are auditable by someone who
+    knows the world - which is how the two wrong ones were caught.
+    """
+    import re as _re
+    here = os.path.dirname(os.path.abspath(__file__))
+    hdr = open(os.path.join(here, '..', '..', 'include', 'quickstart', 'reach.h')).read()
+    bits = {}
+    for m in _re.finditer(r'#define QS_REACH_(\w+)\s+\(1u?\s*<<\s*(\d+)\)', hdr):
+        bits[int(m.group(2))] = m.group(1).lower()
+    body = hdr[hdr.index('sQuickStartReachRegion'):]
+    body = body[:body.index('};')]
+    out = {}
+    for m in _re.finditer(r'/\* QS_REGION_(\w+)\s*\*/\s*\{([^}]*)\}', body):
+        terms = []
+        for cell in m.group(2).split(','):
+            cell = cell.strip()
+            if not cell or cell == '~0u':
+                continue
+            if cell == '0':
+                terms.append('free')
+                continue
+            v = int(cell.rstrip('u'), 0)
+            terms.append(' + '.join(bits.get(i, 'bit%d' % i)
+                                    for i in range(32) if (v >> i) & 1))
+        out[m.group(1)] = ' or '.join(terms) if terms else 'never'
+    return out
 
 
 def style(ax, title=None, xlabel=None, ylabel=None):
@@ -84,6 +115,8 @@ def main():
     ROOM_REGIONS = meta['room_regions']
     REGIONS = meta['region_names']
     RLONG = meta['region_long']
+    REGION_SIZE = meta.get('region_size', {})
+    ENTRY_PRICE = entry_prices(REGIONS)
     SITE_ROOMS = meta['site_rooms']
     SITE_KINDS = meta['site_kinds']
     POOL_ROOMS = meta['pool_rooms']
@@ -141,6 +174,54 @@ def main():
     fig.suptitle('Percentage of runs in which each region is reachable',
                  color=INK, fontsize=12, x=0.01, ha='left', fontweight='600')
     save(fig, os.path.join(a.charts, '02_region_openness.png'))
+
+    # ---- 2b. ENTERED vs EXPLORABLE --------------------------------------
+    #
+    # The user's correction, made into a measurement: "We are not simply
+    # concerned with whether the player can walk into the entrance of a
+    # region but whether or not they can explore the rooms in that region."
+    #
+    # QuickStartReachableRegions answers the first question and
+    # QuickStartReachPoolOk is built on it, so a region whose ENTRY is free
+    # but whose interior is priced scores as fully open to the chain while
+    # the player stands on the doorstep. Mount Crenel is the case: free to
+    # walk into, and everything past the entrance wants the Grip Ring.
+    #
+    # Left bar: share of runs that can be inside the region at all.
+    # Right bar: the median share of that region's own rooms those runs can
+    # actually get into. A tall left bar over a short right one is a region
+    # the chain believes is open and the player experiences as a wall.
+    co = cohorts[0]
+    entered, explor = [], []
+    for i, rg in enumerate(REGIONS):
+        runs_in = [r for r in by_cohort[co]
+                   if (r['checkpoints'][4]['regions'] >> i) & 1]
+        entered.append(len(runs_in) / len(by_cohort[co]) * 100)
+        size = REGION_SIZE.get(rg, 0)
+        if runs_in and size:
+            fr = [r['checkpoints'][4]['per_region'].get(rg, 0) / size * 100
+                  for r in runs_in]
+            explor.append(float(np.median(fr)))
+        else:
+            explor.append(0.0)
+    order = np.argsort(-np.array(entered))
+    fig, ax = plt.subplots(figsize=(13, 4.6))
+    x = np.arange(len(REGIONS))
+    ax.bar(x - 0.2, np.array(entered)[order], width=0.38, color=SERIES[0],
+           label='runs that can be inside the region')
+    ax.bar(x + 0.2, np.array(explor)[order], width=0.38, color=SERIES[1],
+           label="median %% of that region's rooms those runs can enter")
+    ax.set_xticks(x)
+    ax.set_xticklabels([RLONG[REGIONS[i]] for i in order], rotation=28,
+                       ha='right', fontsize=8)
+    ax.set_ylim(0, 105)
+    style(ax, ylabel='% of runs  /  % of rooms')
+    ax.legend(frameon=False, fontsize=8, labelcolor=MUTED, loc='lower left')
+    fig.suptitle('Entered is not explored  (strict cohort, fourth requirement)',
+                 color=INK, fontsize=12, x=0.01, ha='left', fontweight='600')
+    save(fig, os.path.join(a.charts, '02b_entered_vs_explored.png'))
+    out['entered'] = {REGIONS[i]: entered[i] for i in range(len(REGIONS))}
+    out['explorable'] = {REGIONS[i]: explor[i] for i in range(len(REGIONS))}
 
     # ---- 3. per-room reachability, final checkpoint ---------------------
     freq = {co: np.zeros(len(ROOMS)) for co in cohorts}
@@ -367,7 +448,8 @@ def main():
     out['dupquest'] = dupq
 
     _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
-              REGIONS, RLONG, SITE_ROOMS, SITE_KINDS, POOL_ROOMS, POOL_REGIONS)
+              REGIONS, RLONG, SITE_ROOMS, SITE_KINDS, POOL_ROOMS, POOL_REGIONS,
+              ENTRY_PRICE)
     return 0
 
 
@@ -381,55 +463,109 @@ def _site_region(site_room, rooms, room_regions):
 
 
 def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
-              REGIONS, RLONG, SITE_ROOMS, SITE_KINDS, POOL_ROOMS, POOL_REGIONS):
+              REGIONS, RLONG, SITE_ROOMS, SITE_KINDS, POOL_ROOMS, POOL_REGIONS,
+              ENTRY_PRICE):
     freq = out['freq']
     L = []
     W = L.append
     N = len(by_cohort[cohorts[0]])
-    W('# What 50,000 simulated runs say about this game\n')
+    W(f'# What {len(runs):,} simulated runs say about this game\n')
     W(f'{len(runs):,} runs - {N:,} in each of two loadout cohorts - played through the '
       'three hub selection rounds and all five Earth Element requirements, '
       'with reachability measured at five checkpoints.\n')
     W('Generated by `tools/quickstart/sim_report.py` from `tools/quickstart/sim.py`. '
       'The reach model is validated against the shipped ROM by '
-      '`tools/quickstart/sim_validate.py` - 302 of 302 random cases agree.\n')
+      '`tools/quickstart/sim_validate.py` - 402 of 402 random cases agree.\n')
 
     kindtot = collections.Counter()
     for r in runs:
         for st in r['steps']:
             kindtot[st['kind']] += 1
-    flat = all(np.isclose(np.mean([r['checkpoints'][c]['nrooms'] for r in by_cohort['strict']]),
-                          np.mean([r['checkpoints'][0]['nrooms'] for r in by_cohort['strict']]))
-               for c in range(5)) if 'strict' in by_cohort else False
+    _h = out['host'][cohorts[0]]
+    out['host_share'] = {r: _h.get(r, 0) / max(1, sum(_h.values())) * 100 for r in REGIONS}
     W('\n## Headline findings\n')
-    W(f'**1. The ITEM fallback never fires.** Across {sum(kindtot.values()):,} requirement rolls '
-      f'({len(runs):,} runs x 5), the chain dealt ITEM **{kindtot["ITEM"]} times**. There is always '
-      'at least one placed candidate, so the branch the code calls "the guaranteed floor and the '
-      'reason the chain can never wedge" is dead in practice.\n')
-    W('**2. The reachable world does not grow.** That is the consequence of (1). '
-      "QuickStartChainPickItem's comment says an ITEM step is drawn so that \"finishing the step "
-      'GROWS the sphere, which is what lets the next step be placed further out than this one '
-      'was". With no ITEM steps, nothing in the chain ever hands the player a key item, and '
-      'completing a WAVE, BOSS, EVENT or QUEST step grants nothing the reach model can see. In the '
-      'strict cohort the number of reachable rooms is **identical at all five checkpoints** '
-      f'({np.mean([r["checkpoints"][0]["nrooms"] for r in by_cohort["strict"]]):.1f} rooms, '
-      f'{np.mean([r["checkpoints"][0]["nregions"] for r in by_cohort["strict"]]):.2f} regions). '
-      'A run is exactly as big at the end as it was after the hub.\n')
-    W(f'**3. Nearly a third of runs waste a requirement.** {out["dupquest"]/len(runs)*100:.1f}% are dealt '
-      'the side quest twice over - a guard comparing against the wrong value. Detailed below.\n')
-    W('**4. Almost half the mapped world is invisible to the chain.** '
+    W('This is the SECOND pass. The first one reported that the reachable world '
+      'never grows and that three regions were priced absurdly; the user pushed back on both, '
+      'and was right on both. What changed, and what the corrected model says, is below. The '
+      'errors are kept on the record in "What the first pass got wrong" rather than quietly '
+      'overwritten.\n')
+    strict0 = np.mean([r['checkpoints'][0]['nrooms'] for r in by_cohort['strict']])
+    strict4 = np.mean([r['checkpoints'][4]['nrooms'] for r in by_cohort['strict']])
+    rw0 = np.mean([r['checkpoints'][0]['nrooms'] for r in by_cohort['rewards']])
+    rw4 = np.mean([r['checkpoints'][4]['nrooms'] for r in by_cohort['rewards']])
+    W(f'**1. The world does grow, and the region clear is what grows it.** Not the chain. '
+      f'Across {sum(kindtot.values()):,} requirement rolls ({len(runs):,} runs x 5) the chain '
+      f'dealt ITEM **{kindtot["ITEM"]} times** - there is always a placed candidate of another '
+      'kind, so the branch the code calls "the guaranteed floor and the reason the chain can '
+      'never wedge" is unreachable in practice. But `QuickStartSpawnRegionRewardItem` draws over '
+      '`QS_CAT_ALL`, which includes key items, and every WAVE and BOSS step is a region clear. '
+      f'Modelling that draw faithfully, a run goes from {rw0:.1f} reachable rooms after the hub '
+      f'to {rw4:.1f} by the fourth requirement. The placer sees it too, because '
+      '`QuickStartChainRollStep` is called from the previous step\'s completion and reads the '
+      'live inventory. So the escalation the design wants is happening - it just runs through '
+      'the loot table rather than through the ITEM step written for it.\n')
+    W(f'**2. The ITEM step is still dead, and that is still worth deciding about.** '
+      f'{kindtot["ITEM"]} rolls in {sum(kindtot.values()):,}. It is the only *guaranteed* grant '
+      'in the chain; everything the region clear pays is a 64-way draw that may hand over a '
+      f'bottle. The floor is the strict cohort, which assumes a player picks up nothing: '
+      f'{strict0:.1f} rooms after the hub and {strict4:.1f} by the fourth requirement - flat, '
+      'because with no ITEM step nothing in the chain itself opens a door.\n')
+    W('**3. The duplicate-quest bug is fixed.** The first pass measured 15,827 of 50,000 runs '
+      '(31.7%) being dealt the side quest as two separate requirements; the second copy was '
+      'already satisfied when it landed, so those runs silently lost one of their five steps. '
+      'The guard asked `QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, 0)` while the store '
+      'wrote `chain_where[step] = QuickStartQuestSlot()`, so it only ever matched the 1 run in '
+      '18 whose quest sits in pool row 0 - and of the 15,827 duplicate runs, zero had slot 0. '
+      'The guard now asks about the slot. This sweep, run against the fixed logic, reports '
+      f'**{out["dupquest"]}** duplicate-quest runs in {len(runs):,}.\n')
+    W('**4. Two regions were priced wrongly, and the cause is structural.** Hyrule Castle Garden '
+      'had no survey block at all, so `gen_reach` priced it "never" and the chain believed the one '
+      'region of the ring that costs nothing to walk into was permanently out of reach - it was '
+      'counted reachable in 7% of runs, exactly the share that DROP there. Royal Valley was priced '
+      'FREE and counted reachable in 100% of runs, when its only crossing wants bombs and the '
+      'Power Bracelets. Both are the same bug: the region table was built from each region\'s '
+      '`room_req`, which is the cost of moving around INSIDE it, and for a region whose entry '
+      'price is recorded as an exit row in its NEIGHBOUR\'s block that price was simply not read. '
+      'FIXED with an explicit `ENTRY` table plus a Castle Garden block.\n')
+    W('**4b. Fixing the prices exposes a design question: Royal Valley is now nearly dead '
+      'content.** With its real entry price in, it is reachable in '
+      f'{out["entered"].get("RV", 0):.0f}% of runs and hosts '
+      f'{out["host_share"].get("RV", 0):.1f}% of all placed requirements. That is the honest '
+      'number, not a bug - bombs AND the Power Bracelets is a steep toll for a spur with one '
+      'way in - but a whole region, its graveyard, its maze and its dojo are now content most '
+      'runs will never see. The lever is the toll: the crossing is priced that way because the '
+      "walk to it runs through North Hyrule Field's TO_GRAVEYARD pocket, and a second route in "
+      '(or a drop site inside the valley, which already exists) would change the picture '
+      'without touching the survey.\n')
+    W('**5. "Reachable" was measuring the wrong thing, and Mount Crenel is the proof.** '
+      '`QuickStartReachPoolOk` asks only whether the player can be INSIDE a region, so a region '
+      'that is free to enter scores as fully open even when everything past the entrance is '
+      'priced. The mountain is free to walk into and its interior wants the Grip Ring. The report '
+      'now measures both: how often a region can be entered, and what share of its rooms those '
+      'runs can actually get into. See "Entered is not explored".\n')
+    W('**6. Almost half the mapped world is still invisible to the chain.** '
       f'{sum(len(v) for v in out["causes"].values())} of {len(ROOMS)} rooms and '
       f'{int((out["site_reach"] == 0).sum())} of {len(SITE_ROOMS)} ? room sites are never counted '
-      'as reachable under any loadout a run can assemble. Two causes account for most of it: '
-      'the untestable `MINISH` token, and bombs not being a key item.\n')
+      'reachable under any loadout a run can assemble. Bombs joining `QS_CAT_KEY` this pass '
+      'removes one of the two big causes; the untestable `MINISH` token is the other and is still '
+      'open.\n')
 
     W('\n## The two cohorts\n')
     W('| cohort | what the player is assumed to hold |\n|---|---|')
     W('| `strict` | the three hub picks, plus whatever the chain\'s own ITEM steps hand over. '
       'This is exactly what the placer sees, and a floor for reach. |')
-    W('| `found` | the same, plus one unheld key item per completed placed step and the '
-      'fusion bit - standing in for drops and prizes picked up on the way. A ceiling. |')
-    W('\nThe truth is between them. Where they disagree, that gap is the finding.\n')
+    W('| `rewards` | the same, plus the actual region clear reward on every WAVE and BOSS '
+      'step, drawn the way `QuickStartSpawnRegionRewardItem` draws it - '
+      '`QuickStartDrawItem(Random() & 0x3f, QS_CAT_ALL)`, modelled over all 64 equiprobable '
+      'seeds with the real tier curve and the real usability tests. Plus the fusion bit after '
+      'the first clear. |')
+    W('\nThe truth is between them, and much nearer `rewards`: a player who finishes five '
+      'requirements has cleared regions, and a region clear pays out. `strict` is kept because '
+      'it is exactly what the placer would see if the player picked up nothing, which makes it '
+      'the honest floor.\n')
+    W('\nEVENT and QUEST steps are deliberately NOT modelled as growth. A "? room" pays '
+      '`QS_CAT_DROP`, which excludes key items by construction, and a quest pays its own table; '
+      'neither can move the reach mask.\n')
 
     W('\n## Reachability\n')
     W('![growth](sim/01_growth.png)\n')
@@ -440,6 +576,44 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
           f'item selection, {np.median(last):.0f} by the fourth requirement '
           f'(10th-90th percentile {np.percentile(last,10):.0f}-{np.percentile(last,90):.0f}).')
     W('\n![regions](sim/02_region_openness.png)\n')
+
+    W('\n### What the model now believes a region costs to enter\n')
+    W('Two of these were wrong until this pass, and both were caught by a reader rather than '
+      'by the tooling, so the whole table is printed for audit. A row that looks wrong probably '
+      'is: the entry price is what it costs to CROSS INTO the region, not what it costs to walk '
+      'around inside once there.\n')
+    W('| region | entry price | reachable in |\n|---|---|---|')
+    for r in REGIONS:
+        W(f'| {RLONG[r]} | `{ENTRY_PRICE.get(r, "?")}` | {out["entered"].get(r, 0):.0f}% of runs |')
+    W('')
+
+    W('\n### Entered is not explored\n')
+    W('The measure above asks whether a run can be INSIDE a region. That is also the only '
+      'question `QuickStartReachPoolOk` asks, which means it is the question the chain uses when '
+      'it decides where a WAVE or a BOSS step may go. It is not the same as how much of the '
+      'region the player can walk.\n')
+    W('![entered](sim/02b_entered_vs_explored.png)\n')
+    gaps = sorted(((out['entered'][r] - out['explorable'][r], r) for r in REGIONS
+                   if out['entered'][r] > 25), reverse=True)[:6]
+    W('| region | runs that can be inside it | median share of its rooms they can enter |'
+      '\n|---|---|---|')
+    for _g, r in gaps:
+        W(f'| {RLONG[r]} | {out["entered"][r]:.0f}% | {out["explorable"][r]:.0f}% |')
+    W('\nOne caveat before reading those numbers as gameplay, because the first pass of this '
+      'report made exactly that mistake: the denominator is every room the survey attributes to '
+      'the region, and a large share of those are Minish cracks and Minish houses that the '
+      'reach model can never count (see "Rooms the reach model never counts"). So a low '
+      'explorable share is partly a statement about the region and partly a statement about the '
+      '`MINISH` token. North Hyrule Field is the clearest case of the second kind. Mount Crenel '
+      'is the clearest case of the first: its interior is priced at the Grip Ring, which the '
+      'model CAN test, so its gap is real.\n')
+    W('\nThe widest gaps are regions the chain treats as open and the player experiences as a '
+      'doorstep. Mount Crenel is the designed example - free to walk into, Grip Ring for '
+      'everything past the entrance - and it is worth deciding whether a wave or a boss placed '
+      '"in Mount Crenel" should have to be placed somewhere the player can actually stand, or '
+      'whether the entrance strip is enough (for a wave, which spawns around the player, it '
+      'probably is; for a boss, which spawns at the region\'s fixed reward spot, it matters).\n')
+
     W('![rooms](sim/03_room_frequency.png)\n')
 
     strict = freq[cohorts[0]]
@@ -456,16 +630,19 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
     W('| rooms | cause |\n|---|---|')
     for cause, names in sorted(out['causes'].items(), key=lambda kv: -len(kv[1])):
         W(f'| **{len(names)}** | {cause} |')
-    W('\nThe two that matter are the first two.\n')
-    W('- **`MINISH` has no run-time test.** Being Minish is a state, not an inventory item, '
-      'so `QuickStartHeldReachMask` can never set the bit and every term containing it is '
-      'permanently false. That is a deliberate conservative choice in the reach model - but '
-      'the cost of it, measured here, is that a large block of rooms is invisible to the '
-      'chain even though the player has a Minish Cap and the portals work.')
-    W('- **Bombs are not a `QS_CAT_KEY` item.** Neither hub round 1 nor a chain ITEM step can '
-      'ever hand them over, so every bomb-priced room is out of the chain\'s reach unless a '
-      'random drop happens to supply them - which nothing in the placement logic can count on. '
-      "Mount Crenel's base is the clearest casualty: its whole cave network is priced at bombs.")
+    W('\n- **`MINISH` has no run-time test** and is now the single largest cause. Being Minish '
+      'is a state, not an inventory item, so `QuickStartHeldReachMask` can never set the bit '
+      'and every term containing it is permanently false. That is a deliberate conservative '
+      'choice in the reach model; the cost of it, measured here, is that a large block of rooms '
+      'is invisible to the chain even though the player has a Minish Cap and the portals work. '
+      'It is the one remaining decision that would move this number materially.')
+    W('- **Bombs used to be the other big cause, and are not any more.** They were '
+      '`QS_CAT_WEAPON` only, so neither hub round 1 (which draws `QS_CAT_KEY`) nor a chain ITEM '
+      'step could ever hand them over, and fourteen bomb-priced rooms - the whole of Mount '
+      "Crenel's base among them - sat outside the chain's reach for the life of a run. The row "
+      'is `QS_CAT_WEAPON | QS_CAT_KEY` now: bombs stay a weapon for the shop and the "? room" '
+      'drop pool and are a key item everywhere reach is decided. This run is measured with that '
+      'change in.')
     W('\n<details><summary>All of them</summary>\n')
     W('\n| room | region |\n|---|---|')
     for nm in sorted(both_never):
@@ -475,12 +652,12 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
 
     order = np.argsort(-strict)
     W('\n### The 15 most reachable rooms - the staleness watchlist\n')
-    W('| room | strict | found |\n|---|---|---|')
+    W('| room | strict | rewards |\n|---|---|---|')
     for i in order[:15]:
         W(f'| `{ROOMS[i]}` | {strict[i]:.1f}% | {freq[cohorts[1]][i]:.1f}% |')
     rare = [i for i in order if strict[i] > 0][-15:]
     W('\n### The 15 rarest rooms that are reachable at all\n')
-    W('| room | strict | found |\n|---|---|---|')
+    W('| room | strict | rewards |\n|---|---|---|')
     for i in rare:
         W(f'| `{ROOMS[i]}` | {strict[i]:.2f}% | {freq[cohorts[1]][i]:.2f}% |')
 
@@ -488,7 +665,7 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
     W('![kinds](sim/04_step_kinds.png)\n')
     W('![hosts](sim/05_host_regions.png)\n')
     hosts = out['host']
-    W('\n| region | % of placed requirements (strict) | (found) |\n|---|---|---|')
+    W('\n| region | % of placed requirements (strict) | (rewards) |\n|---|---|---|')
     tot = {co: sum(hosts[co].values()) or 1 for co in cohorts}
     for rg in sorted(REGIONS, key=lambda r: -hosts[cohorts[0]].get(r, 0)):
         W(f'| {RLONG[rg]} | {hosts[cohorts[0]].get(rg,0)/tot[cohorts[0]]*100:.1f}% '
@@ -523,21 +700,50 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
 
     W('\n![distance](sim/09_distance.png)\n')
 
-    W('\n## A bug this turned up\n')
-    W(f'**{out["dupquest"]:,} of {len(runs):,} runs ({out["dupquest"]/len(runs)*100:.1f}%) are dealt '
-      'the side quest as TWO separate requirements.** There is only one quest per run, so the '
-      'second one is already satisfied the moment it is dealt - the run silently loses one of '
-      'its five steps.\n')
-    W("The cause is a two-line mismatch in `QuickStartChainRollStep`'s helpers:\n")
+    W('\n## The bug this turned up, and its fix\n')
+    W('The first pass measured **15,827 of 50,000 runs (31.7%)** being dealt the side quest as '
+      'TWO separate requirements. There is only one quest per run, so the second copy was '
+      'already satisfied the moment it was dealt and the run silently lost one of its five '
+      'steps. The cause was a two-line mismatch in `QuickStartChainRollStep`\'s helpers:\n')
     W('```c\n'
-      '// the guard asks whether where == 0 ...\n'
+      '// the guard asked whether where == 0 ...\n'
       '!QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, 0)\n\n'
       '// ... but the store writes the pool row, which is 0 in only 1 case of 18\n'
       'gSave.chain_where[step] = (u8)QuickStartQuestSlot();\n'
       '```\n')
-    W('The simulation agrees exactly with that reading: of the runs that got two quest steps, '
-      '**zero** had a quest slot of 0. The comment above the guard says "One quest per run", '
-      'so the intent is not in doubt - the guard simply compares against the wrong value.\n')
+    W('The simulation agreed exactly with that reading: of the 15,827 duplicate runs, **zero** '
+      'had a quest slot of 0. The comment above the guard reads "One quest per run", so the '
+      'intent was never in doubt.\n')
+    W('The guard now asks about `(u8)QuickStartQuestSlot()`. Over this run of '
+      f'{len(runs):,} the simulator, carrying the same fix, reports **{out["dupquest"]}** '
+      'duplicate-quest runs.\n')
+
+    W('\n## What the first pass got wrong\n')
+    W('Three of the four headline findings in the first version of this report were wrong or '
+      'badly overstated, and all three were caught by the user reading them rather than by the '
+      'tooling. They are recorded here because the failure mode is worth keeping: in each case '
+      'the simulation faithfully reproduced what the code does, and the error was in what the '
+      'measurement was taken to MEAN.\n')
+    W('| the claim | why it was wrong |\n|---|---|')
+    W('| "The reachable world does not grow." | It does. Every WAVE and BOSS step is a region '
+      'clear, and `QuickStartSpawnRegionRewardItem` draws over `QS_CAT_ALL`, key items included. '
+      'The chain rolls one step at a time off the live inventory, so the placer sees those '
+      'grants. What the first pass measured was a cohort defined to pick nothing up; its '
+      'flatness was a tautology, not a finding. The reward draw is now modelled exactly. |')
+    W('| "Castle Garden is reachable in 7% of runs." | True as measured, and the measurement '
+      'was of a data gap, not of the world. Castle Garden had no survey block, so it was priced '
+      '"never" and only a run that DROPPED there ever saw it. The crossing from North Hyrule '
+      'Field is a plain border with no gate. |')
+    W('| "Royal Valley and Mount Crenel are reachable in 100% of runs." | Royal Valley was '
+      'priced FREE when its only crossing wants bombs and the Power Bracelets. Mount Crenel is '
+      'genuinely free to ENTER, but the number was reported as if it meant the region was open, '
+      'when everything past the entrance is priced at the Grip Ring. Both are now measured '
+      'properly - the first as a corrected entry price, the second with a separate '
+      'explorability measure. |')
+    W('\nThe common root of the two pricing errors: `gen_reach` built the region entry table '
+      'from each region\'s own `room_req`, which is the cost of moving around INSIDE a region. '
+      'For a region whose entry price is recorded as an exit row in its NEIGHBOUR\'s survey '
+      'block, that price was never read. `world_reach.ENTRY` now states crossings directly.\n')
 
     W('\n## The shape of a run\n')
     W('![paths](sim/08_pathways.png)\n')

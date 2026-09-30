@@ -1264,6 +1264,125 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The second pass: three of four findings were wrong, and a reader caught them
+
+The 50,000-run report went out with four headline findings. The user read it
+and pushed back on three of them, and was right on all three. This entry is
+the correction, the fixes it produced, and a re-run at 100,000.
+
+**What was asked for, and shipped.**
+
+* **The quest guard is fixed.** `QuickStartChainCountCandidates` now asks
+  `!QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, (u8)QuickStartQuestSlot())`,
+  matching what `QuickStartChainStore` actually writes. The duplicate-quest
+  rate goes 31.7% -> 0.
+* **Bombs join `QS_CAT_KEY`.** The row is `QS_CAT_WEAPON | QS_CAT_KEY`, so
+  bombs stay a weapon for the shop and the "? room" drop pool and are a key
+  item everywhere reach is decided: hub round 1 can offer them and a chain
+  ITEM step can grant them. `cat` was already a mask at every call site but
+  two - `QuickStartChainPickItem` used `==` and `!=`; both are mask tests
+  now. Fourteen bomb-priced rooms come back into the chain's reach,
+  including the whole of Mount Crenel's base.
+
+**Correction 1: the reachable world DOES grow.** The user: "If the player
+clears a wave or a boss, then they are granted an item. Wouldn't that expand
+the reachability for the run?" Yes. `QuickStartSpawnRegionRewardItem` draws
+`QuickStartDrawItem(Random() & 0x3f, QS_CAT_ALL)` and `QS_CAT_ALL` includes
+key items, so a region clear is the one draw in the mode that can hand one
+over - and every WAVE and BOSS step is a region clear. The chain rolls one
+step at a time off the live inventory (`QuickStartChainRollStep` is called
+from the previous step's completion), so the placer sees those grants.
+
+The first report's `found` cohort was a hand-wave - "one unheld key item per
+completed step" - and its `strict` cohort was defined to pick nothing up. Of
+course strict was flat; that was a tautology dressed as a finding. The
+`rewards` cohort now models the real draw: six bits of seed, 64 equiprobable
+outcomes, the real 60/30/10 tier curve, the real `QuickStartTierEntryUsable`
+tests including the two region-gated quest keys. Measured: a run goes
+**39.6 reachable rooms after the hub to 54.2 by the fourth requirement**.
+
+The ITEM step is still never dealt - 0 in 500,000 requirement rolls - and
+that is still worth a decision, because it is the only GUARANTEED grant in
+the chain while everything a region clear pays is a draw that might be a
+bottle. But it is not load-bearing for growth, which is what the first pass
+claimed.
+
+**Correction 2: two region entry prices were wrong, and the cause is
+structural.** The user: "Hyrule Castle Garden is always guaranteed to be
+reachable - it directly connects to NHF with no item requirement... On the
+other hand, Royal Valley requires the power bracelets to be able to reach."
+Both correct, and the evidence for both was already in our own tables.
+
+`gen_reach` built `sQuickStartReachRegion` from each survey region's
+`room_req`. That field is the cost of moving around INSIDE a region once you
+are standing in it - it is not the cost of the crossing. For a region whose
+entry price is recorded as an exit row in its NEIGHBOUR's block, the price
+was simply never read.
+
+* **Castle Garden had no survey block at all**, so it fell through to
+  "never". The one region of the ring that costs nothing to walk into was
+  the one region the chain believed it could never reach: 7% of runs,
+  which is exactly the share that DROP there. It has a block now (derived
+  from transitions.c and the site table, not walked - marked as such), and
+  it is reachable in 100% of runs and hosts 5.3% of requirements.
+* **Royal Valley was priced FREE** and counted reachable in 100% of runs.
+  Its only way in is North Hyrule Field's WNW border, and NHF's own block
+  prices the walk to that border at `[[BOMBS, BRACELETS]]` - it is behind
+  the TO_GRAVEYARD pocket. Trilby's N port is a link on paper only: TRIL's
+  first row is that pocket, marked "only reachable from Royal Valley", so
+  the crossing runs one way, out of the valley.
+
+The fix is `world_reach.ENTRY`, a small explicit table of crossing prices
+that `gen_reach` prefers over the `room_req` derivation. The report prints
+every region's entry price for audit, because that is how these two were
+caught.
+
+**A consequence worth a decision: Royal Valley is now nearly dead content.**
+Reachable in 7% of runs, hosting 0.2% of requirements. That is the honest
+number rather than a bug, but a whole region - graveyard, maze, dojo - is
+now something most runs never see. The lever is the toll.
+
+**Correction 3: "reachable" was measuring the wrong thing.** The user: "We
+are not simply concerned with whether the player can walk into the entrance
+of a region but whether or not they can explore the rooms in that region."
+`QuickStartReachPoolOk` asks only whether the player can be INSIDE a region,
+and that is also the test the chain uses to decide where a WAVE or BOSS step
+may go. Mount Crenel is free to enter and everything past the entrance wants
+the Grip Ring, so a region-count metric scored the mountain as wide open.
+
+Every checkpoint now records reachable rooms PER REGION, and the report
+carries an "entered is not explored" chart and table. Mount Crenel: enterable
+in 100% of runs, median 10% of its rooms actually reachable.
+
+Two honest caveats on that measure, both stated in the report. The
+denominator is every room the survey attributes to the region, and a large
+share of those are Minish rooms the model can never count, so a low
+explorable share is partly about the region and partly about the `MINISH`
+token - North Hyrule Field's 8% is mostly the second kind. And the placement
+semantics are NOT changed: a wave spawns around the player, so an entrance
+strip is arguably fine for one; a boss spawns at the region's fixed reward
+spot, so for a boss it matters. That is left as a decision rather than
+taken unilaterally.
+
+**What the corrected sweep says.** 100,000 runs (50,000 per cohort) in 1m43s
+- the first version's per-region loop re-scanned all 273 destination rows per
+room and took 25 minutes for half the sample; indexing the table by room
+made it 60x faster with the same answers (`sim_validate.py`: 402/402 against
+the ROM). Dead rooms fall from 69 of 154 to **58 of 159**, and `MINISH` is
+now 47 of those 58 - the one remaining decision that would move the number.
+Run variety is healthy: 61,950 distinct requirement-region sequences, the
+most common at 0.01%.
+
+**The doctrine.** Every one of the three errors was a faithful simulation of
+what the code does, reported as something it does not mean. The model was
+right and the interpretation was wrong, which is the failure mode a
+validator cannot catch - `sim_validate.py` agreed with the ROM at every
+stage, including while the report was saying the world never grows. What
+caught it was a reader who knew the world. So the report now prints its
+inputs - the full entry-price table above all - for exactly that kind of
+audit, and keeps its own wrong answers on the page under "What the first
+pass got wrong" instead of quietly overwriting them.
+
 ### 50,000 simulated runs: four things the model says out loud
 
 A full-run simulator now exists. `tools/quickstart/sim.py` reimplements the

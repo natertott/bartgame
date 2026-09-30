@@ -5715,7 +5715,13 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_BOTTLE_FAIRY, QS_CAT_REWARD, QS_TIER_RARE, QS_REQ_EMPTY_BOTTLE, 1 },
     // --- WEAPONS / TOOLS -------------------------------------------------
     { ITEM_BOW, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
-    { ITEM_BOMBS, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
+    // Bombs are BOTH. They stay a weapon for the shop and the "? room"
+    // drop pool, and they are a key item because the world prices fourteen
+    // rooms at bombs - the whole of Mount Crenel's base among them - and
+    // until this row said so neither the opening selection (which draws
+    // QS_CAT_KEY) nor a chain ITEM step could ever hand them over, so all
+    // fourteen sat outside the chain's reach for the life of a run.
+    { ITEM_BOMBS, QS_CAT_WEAPON | QS_CAT_KEY, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     // Bag and quiver stack to type 3, so they stay drawable once owned.
     { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 1 },
@@ -17452,10 +17458,16 @@ static bool32 QuickStartReachTermsMet(const u32* terms, u32 held) {
 //
 // The DROP region is admitted unconditionally, and that is not a shortcut.
 // An entry requirement is the price of GETTING IN, and the player is
-// already inside the one they were dropped in. Hyrule Castle Garden is the
-// case that proves it matters: the survey never walked it, so its entry
-// row reads "never", and a run starting there would otherwise have nowhere
-// at all to put step 0.
+// already inside the one they were dropped in. Royal Valley is the case
+// that proves it matters: its only crossing costs bombs and the Power
+// Bracelets, so a kitless run dropped in the valley would otherwise have
+// nowhere at all to put step 0.
+//
+// (Hyrule Castle Garden used to be that example, for the wrong reason: it
+// had no survey block, so it was priced "never" and the drop was the ONLY
+// way a run ever saw it - 7% of runs, measured. It has a block now and the
+// crossing from North Hyrule Field is free, which is what it always was on
+// the cartridge.)
 static u32 QuickStartReachableRegions(u32 held) {
     // The USABLE drop, not the rolled one. A raw roll can land on Castor
     // Wilds or the Wind Ruins, which a run without Pegasus Boots or Roc's
@@ -17581,7 +17593,7 @@ static u16 QuickStartChainPickItem(u32 salt) {
     s32 i, n = 0, want;
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
         const QuickStartTierEntry* row = &sQuickStartTiers[i];
-        if (row->cat == QS_CAT_KEY && GetInventoryValue(row->item) == 0) {
+        if ((row->cat & QS_CAT_KEY) && GetInventoryValue(row->item) == 0) {
             n++;
         }
     }
@@ -17591,7 +17603,7 @@ static u16 QuickStartChainPickItem(u32 salt) {
     want = (s32)(QuickStartChainHash(salt) & 0x7fff) % n;
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
         const QuickStartTierEntry* row = &sQuickStartTiers[i];
-        if (row->cat != QS_CAT_KEY || GetInventoryValue(row->item) != 0) {
+        if (!(row->cat & QS_CAT_KEY) || GetInventoryValue(row->item) != 0) {
             continue;
         }
         if (want-- == 0) {
@@ -17639,7 +17651,14 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
             // somewhere the player can get to.
             if (!QuickStartQuestFlag(GF_QUEST_DONE) &&
                 QuickStartReachPoolOk(regions, QuickStartQuestSlot()) &&
-                !QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, 0)) {
+                // The SLOT, not 0. QuickStartChainStore writes
+                // chain_where = QuickStartQuestSlot(), so a guard asking
+                // about 0 only ever matched the 1 run in 18 whose quest
+                // happens to sit in pool row 0. Measured over 50,000
+                // simulated runs before the fix: 31.7% of runs were dealt
+                // the quest twice, and not one of those had slot 0.
+                !QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST,
+                                            (u8)QuickStartQuestSlot())) {
                 n = 1;
             }
             break;
@@ -23882,10 +23901,11 @@ static void QuickStartSpawnChoiceRow(u8 catMask, u8 tierMask) {
 
 // Round 1: the run's key item. Which one the player takes is what decides
 // the overworld path to the Earth Element (see
-// QuickStartRandomizeRegionChainOnce below). All 9 QS_CAT_KEY entries are
+// QuickStartRandomizeRegionChainOnce below). All 10 QS_CAT_KEY entries are
 // candidates - the previous hardcoded array listed only 5 - though the
-// Ocarina of Wind is granted at boot and so is never usable here, leaving 8
-// in practice.
+// Ocarina of Wind is granted at boot and so is never usable here, leaving 9
+// in practice. Bombs are the tenth and they carry QS_CAT_WEAPON as well;
+// their row in sQuickStartTiers says why a weapon belongs on this shelf.
 #define QUICKSTART_CHOICE_ROW_1_CATS QS_CAT_KEY
 #define QUICKSTART_CHOICE_ROW_1_TIERS QS_TIER_ANY
 // Round 2: rare rewards and stat upgrades, per the user - the round that
