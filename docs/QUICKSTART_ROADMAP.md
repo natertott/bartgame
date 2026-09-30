@@ -1264,6 +1264,100 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### 50,000 simulated runs: four things the model says out loud
+
+A full-run simulator now exists. `tools/quickstart/sim.py` reimplements the
+parts of the mode that are driven by `gSave.run_seed` and nothing else - the
+three hub selection rounds, the drop-region roll and its kit redraw, the
+carrier and element-region rolls, the quest slot, and all five iterations of
+`QuickStartChainRollStep` - and measures reachability at the five checkpoints
+the user asked for: after the item selection and after each of the first four
+requirements. `tools/quickstart/sim_validate.py` calls the ROM's own
+`QuickStartReachRoomOk` through `callrom` on random (loadout, room) pairs and
+the model agrees **302 of 302**, so what follows is the shipped gate's answer,
+not a Python approximation of it.
+
+Two cohorts, run 25,000 each. `strict` holds only the three hub picks plus
+whatever the chain's own ITEM steps hand over - exactly the placer's view, and
+a floor. `found` adds one unheld key item per completed step plus the fusion
+bit, standing in for drops picked up on the way - a ceiling. Where they
+disagree, the gap IS the finding.
+
+Full write-up and nine charts: `docs/QUICKSTART_SIM_REPORT.md`, `docs/sim/`.
+The 70 MB run dump is not committed; `sim.py` regenerates it in about seven
+minutes.
+
+**1. The ITEM fallback never fires.** Across 250,000 requirement rolls, the
+chain dealt ITEM **zero times**. There is always at least one placed
+candidate for one of the other four kinds, so the branch the code calls "the
+guaranteed floor and the reason the chain can never wedge" has never once
+been taken. It is not wrong - it is unreachable.
+
+**2. Therefore the reachable world does not grow.** This is a direct
+consequence of (1), and it is the most important number here.
+`QuickStartChainPickItem`'s own comment says an ITEM step exists so that
+"finishing the step GROWS the sphere, which is what lets the next step be
+placed further out than this one was". With no ITEM steps, no chain step ever
+grants a key item, and clearing a WAVE, BOSS, EVENT or QUEST grants nothing
+the reach model can see. In the strict cohort the reachable-room count is
+**identical at all five checkpoints** - 39.5 rooms, 10.46 regions, start to
+finish. The intended escalation is not happening; a run is exactly as large
+at the Earth Element as it was walking out of the hub. (The `found` cohort
+grows 39.5 -> 66.8, which says the growth that does happen comes from loot
+the placer cannot count on, not from the chain.)
+
+**3. 31.7% of runs are dealt the side quest twice.** 15,827 of 50,000. There
+is one quest per run, so the second copy is already satisfied when it lands
+and the run silently loses a step. The cause is a two-line mismatch: the
+guard asks `!QuickStartChainAlreadyUsed(step, QS_CHAIN_QUEST, 0)` but the
+store writes `gSave.chain_where[step] = (u8)QuickStartQuestSlot()`, so the
+guard only matches when the slot happens to be 0 - 1 case in 18. The
+simulation confirms the reading exactly: of the 15,827 duplicate runs,
+**zero** had slot 0. The comment above the guard reads "One quest per run",
+so the intent is not in question.
+
+**4. 69 of 154 rooms and 58 of 105 ? room sites are never counted
+reachable.** Read this one carefully, because the obvious reading is wrong:
+these rooms are not sealed in the world, and a player can walk into most of
+them. What is true is that `QuickStartReachRoomOk` never returns TRUE for
+them under any loadout a run can assemble, so the chain can never place a
+requirement there and the mode believes they are out of reach. Two causes
+account for 56 of the 69:
+
+* **`MINISH` has no run-time test (42 rooms).** Being Minish is a state, not
+  an inventory item, so `QuickStartHeldReachMask` can never set the bit and
+  every term containing it is permanently false. That was a deliberate
+  conservative choice; this is the first measurement of what it costs.
+* **Bombs are not a `QS_CAT_KEY` item (14 rooms).** Neither a round-1 hub
+  offer nor a chain ITEM step can ever hand them over, so every bomb-priced
+  room is outside the chain's reach. Mount Crenel's base - freshly surveyed,
+  blessed and wired up - is the clearest casualty: its entire cave network is
+  priced at bombs, so none of it can host a requirement.
+
+The rest: 3 MAZE, 3 BOULDER-ish, 2 UNSURVEYED, 2 with no survey row at all
+(`CASTLE_GARDEN/MAIN`, `RUINS/ENTRANCE`), 2 priced `never` outright.
+
+**What the distribution looks like where it does work.** Host regions are led
+by Trilby 13.6%, Lake Hylia 13.6% and Eastern Hills 12.7%; the tail is Castor
+Wilds 1.3%, Wind Ruins 1.1%, Castle Garden 0.4%. Twelve open-field rooms host
+about 6.5% of all requirements each, and twelve ? room sites carry roughly
+8.6% each - those are the staleness watchlist. Run-to-run variety in the large
+is fine: 38,037 distinct requirement-region sequences across 50,000 runs, the
+most common accounting for 0.06%.
+
+Two systems key off the live RNG stream rather than the run seed, so no
+seed-driven model can name what a particular run gets; the report gives the
+distribution the tables deal instead. ? room kinds in sixteenths: SMALL is
+7 WAVES / 3 NPC / 3 POT_LOTTERY / 1 FAIRY, LARGE is 7/6 MINIBOSS/2 GATE/1,
+ANY is 4/5/2/1/3/1. Enemy rosters by tier: 10/15/17/12/11 distinct kinds for
+levels 1-5, so a difficulty-3 run has roughly forty in play.
+
+Nothing here is fixed yet - this entry is the measurement. (1)+(2) are one
+design question (should the chain grant key items, and if the ITEM branch is
+meant to be the mechanism, why is it never picked), (3) is a one-line fix,
+and (4) is two policy calls: whether bombs join `QS_CAT_KEY`, and whether
+`MINISH` becomes testable.
+
 ### The 09/28 survey: Minish Woods, walked
 
 The user walked Minish Woods from the west-central seam and sent the
