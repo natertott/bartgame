@@ -1,5 +1,12 @@
 # QUICKSTART Roadmap
 
+> **New to this project? Read `docs/HANDOFF.md` first.** It and its three
+> companions (`HANDOFF_GAME.md`, `HANDOFF_STATUS.md`, `HANDOFF_ISSUES.md`)
+> summarise the game, the current state, the known traps and the working
+> constraints. This roadmap is the authoritative long-form record - the
+> handoff tells you which entry of it to read.
+
+
 Streamlined for the forward-direction reassessment (Aug 2026). This
 document is forward-looking only: it holds the vision, the outstanding
 work, and the open problems. Everything already shipped - the completed
