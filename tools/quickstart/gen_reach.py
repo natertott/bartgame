@@ -101,6 +101,60 @@ MAX_TERMS = 3   # the widest requirement in the survey (Lon Lon's east exit:
                 # flippers, or the cape, or Minish plus the Pacci Cane)
 
 
+MINISH = W.MINISH      # the survey's own token name, not a second spelling
+BOOTS = W.BOOTS
+
+
+def expand_minish(req, ring):
+    """Replace the `minish_cap` token with what shrinking COSTS in `ring`.
+
+    The token used to be a flat untestable bit, so every route priced at
+    "be Minish" was permanently false and 42 rooms were invisible to the
+    chain. It is really two things: the ability, which is free (PL_MINISH is
+    a state, not an item), and a transform point within reach, which is what
+    actually varies. world_reach.MINISH_PORTAL prices the second per region,
+    measured from the room entity lists by minish_portals.py.
+
+      free region   -> drop the token; whatever else the term wanted stands
+      boots region  -> the token becomes `boots`
+      no portal     -> keep it untestable, so the row stays unreachable
+
+    Conservative in the one direction that matters: a region with no known
+    transform point keeps its rows shut rather than opening them on a guess.
+    """
+    # req is None for a destination the survey found NO way into. That is
+    # not a requirement to expand, it is the absence of one.
+    if not req:
+        return req
+    price = getattr(W, 'MINISH_PORTAL', {}).get(ring, None)
+    out = []
+    for term in req:
+        if MINISH not in term:
+            out.append(term)
+            continue
+        if price is None:
+            out.append(term)          # untestable, unchanged
+            continue
+        rest = [t for t in term if t != MINISH]
+        if not price:                 # free: the stump costs nothing
+            out.append(rest)
+        else:
+            for extra in price:       # e.g. [[BOOTS]]
+                merged = list(rest)
+                for tok in extra:
+                    if tok not in merged:
+                        merged.append(tok)
+                out.append(merged)
+    # de-duplicate while keeping order; a term that became empty means FREE
+    seen, uniq = set(), []
+    for t in out:
+        k = tuple(sorted(t))
+        if k not in seen:
+            seen.add(k)
+            uniq.append(t)
+    return uniq
+
+
 def term_mask(term):
     m = 0
     for t in term:
@@ -220,7 +274,8 @@ def build():
             if area not in P.AREAS or room not in P.ROOMS:
                 SKIPPED.append(where)
                 continue
-            masks = req_masks(e['req'], where)
+            req = expand_minish(e['req'], RING[key])
+            masks = req_masks(req, where)
             masks = list(masks) + [None] * (MAX_TERMS - len(masks))
             rows.append((RING[key], area, room, masks, where))
     A('// Every place the survey walked to, as (region, area, room) plus what')

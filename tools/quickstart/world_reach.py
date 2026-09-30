@@ -118,6 +118,58 @@ def d(key, area, room, x, y, req=_OMITTED, note=''):
                                      req=([[]] if req is _OMITTED else req), note=note))
 
 
+# ------------------------------------------------------- becoming Minish --
+# What it costs to SHRINK inside each ring region.
+#
+# The user: "In order to reach a Minish room, there are a few requirements:
+# 1) the player must have the Minish cap ... 2) there must be a tree
+# stump/stone/pot nearby for the player to transform into a Minish ... There
+# are other regions/rooms, though, where the tree stump/stone/portal is
+# initially hidden ... hidden underneath specials trees that the player must
+# ram with the Pegasus boots to reveal the stump."
+#
+# Requirement 1 is free: being Minish is PL_MINISH, a player STATE, and
+# there is no Minish Cap in item.h to test. Requirement 2 is the whole gate,
+# and it is DATA, not a judgement call. A transform point is a
+# MINISH_PORTAL_MANAGER (manager subtype 3,
+# src/manager/minishPortalManager.c); a TREE_HIDING_PORTAL object sitting on
+# top of one is the tree, and treeHidingPortal.c only opens it on
+# PLAYER_BOUNCE, which is a Pegasus Boots dash.
+#
+# Measured by tools/quickstart/minish_portals.py. Two earlier passes got
+# this wrong and are worth remembering: looking for portal OBJECTS found
+# five points in the whole ring, and widening to every portal-ish object id
+# "found" Lon Lon a free MINISH_SIZED_ENTRANCE - which is a Minish-only
+# DOORWAY, since it tests PL_MINISH before it fires. Somewhere to go once
+# small is not a way to get small.
+#
+# This table reproduces all four of the user's own observations
+# independently: Lon Lon free (stumps at (344,544) and (280,48) with no tree
+# on them), Eastern Hills free via its South third (72,128), and North
+# Hyrule Field and Hyrule Castle Garden both tree-hidden.
+#
+# A region is FREE if ANY of its rooms has an unhidden stump - the thirds of
+# Eastern Hills and Western Wood are one walkable region across scroll
+# seams, so a stump in one third serves all of it.
+MINISH_PORTAL = {
+    'QS_REGION_CG':   [[BOOTS]],   # (840,240), under a tree
+    'QS_REGION_NHF':  [[BOOTS]],   # (808,528), under a tree
+    'QS_REGION_SHF':  [[BOOTS]],   # (88,544), under a tree
+    'QS_REGION_LLR':  [],          # (344,544) and (280,48) in the open
+    'QS_REGION_TRIL': [],          # (56,160)
+    'QS_REGION_EH':   [],          # (72,128), in the South third
+    'QS_REGION_WW':   [],          # (120,128), in the South third
+    'QS_REGION_CW':   [],          # (152,192)
+    'QS_REGION_WR':   [],          # (56,480) and (168,48)
+    'QS_REGION_MW':   [],          # (296,880) and (920,944)
+    'QS_REGION_LH':   [],          # (184,496) and (296,392) in the open
+    'QS_REGION_CREN': [],          # (760,216)
+    # Royal Valley has NO transform point in any of its rooms. A Minish
+    # destination there stays untestable - the player would have to arrive
+    # already small, which nothing in the model can currently prove.
+    'QS_REGION_RV':   None,
+}
+
 # ------------------------------------------------------------ entry cost --
 # A region's `room_req` is what it costs to move around INSIDE the region
 # once you are standing in it. That is not the same question as what it

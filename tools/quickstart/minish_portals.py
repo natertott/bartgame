@@ -43,10 +43,27 @@ SRC = open(os.path.join(ROOT, 'data', 'map', 'entity_headers.s')).read()
 LINES = SRC.split('\n')
 
 # object.inc
-JAR_PORTAL, MINISH_PORTAL_STONE, TREE_HIDING_PORTAL = 56, 116, 156
-FREE_PORTALS = {JAR_PORTAL: 'jar', MINISH_PORTAL_STONE: 'stone'}
-PORTAL_NAME = {JAR_PORTAL: 'JAR_PORTAL', MINISH_PORTAL_STONE: 'MINISH_PORTAL_STONE',
-               TREE_HIDING_PORTAL: 'TREE_HIDING_PORTAL'}
+# THE TRANSFORM POINT IS A MANAGER, NOT AN OBJECT, and two scans went wrong
+# before that landed. The first looked for jar/stone/tree OBJECTS and found
+# five points in the whole ring, contradicting the user twice. The second
+# widened to every portal-ish object id and "found" Lon Lon a free one -
+# a MINISH_SIZED_ENTRANCE, which minishSizedEntrance.c shows is a
+# Minish-ONLY DOORWAY (it tests gPlayerState.flags & PL_MINISH before it
+# will fire), so it is somewhere to go once small, not a way to get small.
+#
+# What actually shrinks the player is MINISH_PORTAL_MANAGER (manager
+# subtype 3, src/manager/minishPortalManager.c): stand in its 0x40 proximity
+# box and it sets gArea.portal_mode. Its `type` field is the PT_* kind.
+MINISH_PORTAL_MANAGER = 3
+PT_NAME = {0: 'PT_TREESTUMP', 1: 'PT_ROCK', 2: 'PT_2', 3: 'PT_DUNGEON',
+           4: 'PT_JAR', 5: 'PT_5', 6: 'PT_TOD'}
+
+# A TREE_HIDING_PORTAL object sitting on the same spot as a portal manager
+# is the tree the user described - the stump underneath is unusable until
+# the tree is rammed with the Pegasus Boots (treeHidingPortal.c triggers on
+# PLAYER_BOUNCE). A manager with no tree on top of it is free.
+TREE_HIDING_PORTAL = 156
+TREE_NEAR = 48   # pixels; tree and stump are authored at the same spot
 
 AREA_LISTS = {}
 for m in re.finditer(r'^(Area_\w+)::.*?\n((?:\t\.4byte .*\n)+)', SRC, re.M):
@@ -79,38 +96,31 @@ def kv(line):
 
 
 def portals_in(room_symbol):
-    """Every transform point in a room's entity lists, as (kind, x, y)."""
-    found = []
+    """Every transform point in a room, as (pt_type, x, y, hidden)."""
+    managers, trees = [], []
     for prop in properties(room_symbol):
         for line in block(prop):
-            if 'object' not in line:
-                continue
             d = kv(line)
-            oid = d.get('subtype')
-            if oid in PORTAL_NAME:
-                found.append((oid, d.get('x', 0), d.get('y', 0)))
-    return found
+            if 'manager' in line and d.get('subtype') == MINISH_PORTAL_MANAGER:
+                managers.append((d.get('type', 0), d.get('x', 0), d.get('y', 0)))
+            elif 'object' in line and d.get('subtype') == TREE_HIDING_PORTAL:
+                trees.append((d.get('x', 0), d.get('y', 0)))
+    out = []
+    for t, x, y in managers:
+        hidden = any(abs(x - tx) <= TREE_NEAR and abs(y - ty) <= TREE_NEAR
+                     for tx, ty in trees)
+        out.append((t, x, y, hidden))
+    return out
 
 
-def scan_all():
-    """Every room in every area, not just the eighteen region rooms - a
-    transform point in a sub-room still serves the region it hangs off."""
-    rows = []
-    for area_sym, rooms in sorted(AREA_LISTS.items()):
-        for idx, room_sym in enumerate(rooms):
-            found = portals_in(room_sym)
-            if found:
-                rows.append((area_sym, idx, room_sym, found))
-    print('every room carrying a transform point:')
-    for area_sym, idx, room_sym, found in rows:
-        kinds = ', '.join('%s@(%d,%d)' % (PORTAL_NAME[k], x, y) for k, x, y in found)
-        free = any(k in FREE_PORTALS for k, _, _ in found)
-        print('  %-34s room %-3d %-18s %s'
-              % (area_sym, idx, 'FREE' if free else 'BOOTS', kinds))
-    print('\n  %d room(s) with a transform point; %d of them FREE'
-          % (len(rows), sum(1 for _, _, _, f in rows
-                            if any(k in FREE_PORTALS for k, _, _ in f))))
-    return 0
+def describe(found):
+    free = [f for f in found if not f[3]]
+    if not found:
+        return 'none', ''
+    price = 'FREE' if free else 'BOOTS (all hidden)'
+    txt = ', '.join('%s@(%d,%d)%s' % (PT_NAME.get(t, t), x, y, ' [under tree]' if h else '')
+                    for t, x, y, h in found)
+    return price, txt
 
 
 def main():
@@ -126,18 +136,11 @@ def main():
             print('%-38s no room list for %s' % (rn[5:], area_sym))
             continue
         found = portals_in(rooms[room])
-        if not found:
-            print('%-38s none' % rn[5:])
-            verdicts[rn] = ('none', [])
-            continue
-        kinds = sorted({PORTAL_NAME[k] for k, _, _ in found})
-        free = [f for f in found if f[0] in FREE_PORTALS]
-        price = 'FREE' if free else 'BOOTS (tree only)'
-        verdicts[rn] = (price, kinds)
-        print('%-38s %-18s %s' % (rn[5:], price, ', '.join(
-            '%s@(%d,%d)' % (PORTAL_NAME[k][:18], x, y) for k, x, y in found)))
+        price, txt = describe(found)
+        verdicts[rn] = (price, txt)
+        print('%-38s %-18s %s' % (rn[5:], price, txt))
     print('\nsummary')
-    for price in ('FREE', 'BOOTS (tree only)', 'none'):
+    for price in ('FREE', 'BOOTS (all hidden)', 'none'):
         rooms = [r[5:] for r, (p, _) in verdicts.items() if p == price]
         print('  %-18s %d: %s' % (price, len(rooms), ', '.join(rooms) or '-'))
     return 0

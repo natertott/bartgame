@@ -1264,6 +1264,72 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The MINISH model, encoded: 58 dead rooms become 8
+
+The first pass at this measured the wrong thing twice and came back asking
+the user to confirm a contradiction. They said "Try again." They were right
+to: the contradiction was mine, not theirs, and the third measurement
+reproduces all four of their own observations independently.
+
+**What the first two passes got wrong.**
+
+* Pass one looked for portal OBJECTS - `JAR_PORTAL`, `MINISH_PORTAL_STONE`,
+  `TREE_HIDING_PORTAL` - and concluded the whole ring has five transform
+  points, all boots-gated. That contradicted the user on Lon Lon and Eastern
+  Hills South.
+* Pass two widened to every portal-ish id in `object.inc` and "found" Lon Lon
+  a free `MINISH_SIZED_ENTRANCE`. Reading `minishSizedEntrance.c` killed
+  that: it tests `gPlayerState.flags & PL_MINISH` before it will fire, so it
+  is a Minish-only DOORWAY. Somewhere to go once small is not a way to get
+  small.
+* The transform point is **not an object at all**. It is
+  `MINISH_PORTAL_MANAGER`, manager subtype 3
+  (`src/manager/minishPortalManager.c`), which sets `gArea.portal_mode` when
+  the player stands in its proximity box. Its `type` field is the `PT_*`
+  kind. Both earlier scans read only `object` lines, so they could not have
+  seen one.
+
+**The rule, now that the mechanism is right.** A region can shrink if it has
+a portal manager with no `TREE_HIDING_PORTAL` sitting on top of it; if every
+manager has a tree on it, the price is the Pegasus Boots, because
+`treeHidingPortal.c` only opens on `PLAYER_BOUNCE` - a boots dash. Measured
+per region by `tools/quickstart/minish_portals.py`:
+
+    FREE   LLR, TRIL, EH, WW, CW, WR, MW, LH, CREN
+    BOOTS  CG, NHF, SHF
+    NONE   RV
+
+All four of the user's statements check out against that table without being
+fitted to it: Lon Lon free (two bare stumps, at (344,544) and (280,48)),
+Eastern Hills free through its South third at (72,128), and North Hyrule
+Field and Castle Garden both tree-hidden.
+
+**How it is encoded.** `world_reach.MINISH_PORTAL` prices the shrink per ring
+region and `gen_reach.expand_minish` substitutes it wherever a survey row
+asked for `minish_cap`: a free region drops the token, a boots region turns
+it into `boots`, and a region with no portal keeps the untestable bit so its
+rows stay shut. Conservative in the one direction that matters - Royal
+Valley is not opened on a guess.
+
+**Measured over 50,000 simulated runs**, and the reach model still agrees
+with the shipped ROM 402 of 402:
+
+    rooms never reachable      58 of 159  ->   8 of 159
+    ? room sites never reached 48 of 105  ->  18 of 105
+    reachable rooms, strict    median 38  ->  median 55
+    reachable rooms, rewards   median 66  ->  median 72
+
+The untestable `MINISH` bit is now referenced by exactly one line in
+reach.h - its own `#define`. Every destination row has been expanded to real
+items.
+
+**One live probe is discarded rather than reported as evidence.** A test that
+warped the player onto each stump and read `gArea.portal_mode` returned zero
+everywhere, including in the negative control, so by the usual rule it says
+nothing about the mechanism - wrong struct offsets, most likely. The static
+entity-list read stands on its own, and it is corroborated by four
+independent observations from someone who has played the rooms.
+
 ### The MINISH model, step one: where you can actually shrink
 
 The user answered the open question from the simulation report - yes, MINISH
