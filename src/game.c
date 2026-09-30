@@ -3652,10 +3652,27 @@ static bool32 QuickStartIsBossId(u32 id) {
     return id == CHUCHU_BOSS || id == OCTOROK_BOSS;
 }
 
-#define QUICKSTART_TRILBY_POCKET_MIN_X 32
-#define QUICKSTART_TRILBY_POCKET_MAX_X 160
-#define QUICKSTART_TRILBY_POCKET_MIN_Y 576
-#define QUICKSTART_TRILBY_POCKET_MAX_Y 704
+// Trilby's boss arena: the WHOLE west strip, not just the pocket at the top
+// of it.
+//
+// The user: "the bosses are blocked from going all the way down to this part
+// of the room", of the southwest corner. They were describing this clamp.
+// The old box was x 32-160, y 576-704 - tiles (2,36) to (10,44) - which the
+// comments all called "the southwest pocket"; measured, that is the MID-WEST
+// pocket, and the room's actual southwest corner is tiles (1,49) to (13,58),
+// a whole separate body of land below it. The enemy spawn table had the
+// identical mix-up, for the identical reason.
+//
+// The new box runs tiles (1,36) to (11,58). Measured with the room's own
+// collision: 79% of it is walkable, against 78% for the old one, so the
+// arena is three times the size at the same density rather than a bigger
+// box full of rock. The two halves are joined along the west edge, which is
+// continuously open from row 36 to row 58, so the boss can walk between
+// them rather than being teleported.
+#define QUICKSTART_TRILBY_POCKET_MIN_X 24
+#define QUICKSTART_TRILBY_POCKET_MAX_X 184
+#define QUICKSTART_TRILBY_POCKET_MIN_Y 584
+#define QUICKSTART_TRILBY_POCKET_MAX_Y 936
 
 static void QuickStartTrilbyQuirkHook(void) {
     s32 i;
@@ -3678,6 +3695,21 @@ static void QuickStartTrilbyQuirkHook(void) {
         }
         if (ly > QUICKSTART_TRILBY_POCKET_MAX_Y) {
             ly = QUICKSTART_TRILBY_POCKET_MAX_Y;
+        }
+        // Land the clamp on OPEN GROUND. A box clamp puts the boss on the
+        // box's edge, and neither this box nor the old one is a clean
+        // rectangle - the old one already held 18 non-walkable tiles and 10
+        // bad boundary tiles, so it could park a boss inside rock, and the
+        // bigger box would only have made that more likely. Snapping costs
+        // one tile test on the frames the clamp actually fires.
+        if (!QuickStartTileIsOpen(lx >> 4, ly >> 4)) {
+            s16 sx, sy;
+            if (QuickStartFindOpenTileNear(lx, ly, 3, &sx, &sy)) {
+                lx = sx;
+                ly = sy;
+            } else {
+                continue;   // nothing open nearby: leave it where it was
+            }
         }
         ent->x.HALF.HI = gRoomControls.origin_x + lx;
         ent->y.HALF.HI = gRoomControls.origin_y + ly;
@@ -5458,11 +5490,12 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
             if (boss != NULL) {
                 s16 bossX = region->rewardX;
                 s16 bossY = region->rewardY;
-                // Trilby's arena is the enclosed southwest pocket, not the
-                // reward spot - centered in its widest open band (tile
-                // (5,37)) so the whole family fits inside the pocket's
-                // solid ring. The clamp in QuickStartTrilbyQuirkHook keeps
-                // it there.
+                // Trilby's arena is the west strip, not the reward spot.
+                // The spawn stays at tile (5,37), the widest open band at
+                // the top of it, so the whole family still composes clear
+                // of rock; what changed is that the clamp in
+                // QuickStartTrilbyQuirkHook now lets the fight move down
+                // into the southwest corner instead of pinning it up here.
                 if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
                     bossX = 88;
                     bossY = 600;

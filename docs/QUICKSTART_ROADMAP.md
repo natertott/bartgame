@@ -1264,6 +1264,59 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Trilby's boss arena was the wrong pocket
+
+The user: "the bosses are blocked from going all the way down to this part
+of the room", of the southwest corner.
+
+They were describing `QuickStartTrilbyQuirkHook`'s clamp, and it is the SAME
+naming mix-up the enemy spawn table had. The box was x 32-160, y 576-704 -
+tiles (2,36) to (10,44) - and every comment around it calls that "the
+enclosed southwest pocket". Measured, it is the MID-WEST pocket. The room's
+actual southwest corner is tiles (1,49) to (13,58), a separate body of land
+below it, and the clamp was teleporting the boss back out of it every frame.
+
+**The new box is tiles (1,36) to (11,58)**, chosen by measuring four
+candidates against the room's own collision rather than by drawing a bigger
+rectangle:
+
+    current    x 2-10  y 36-44   78% walkable
+    extended A x 1-13  y 36-58   71%
+    extended B x 1-11  y 36-58   79%   <- chosen
+    extended C x 1-10  y 36-52   88%, but stops short of rows 53-58
+
+B is three times the area at the same density as the old box. The two halves
+join along the west edge, which is continuously open from row 36 to row 58,
+so the boss walks between them instead of being teleported.
+
+**The clamp now lands on open ground.** Neither box is a clean rectangle -
+the OLD one already contained 18 non-walkable tiles and 10 bad boundary
+tiles, so it could park a boss inside rock, and tripling the area would only
+have made that more likely. After clamping, the hook snaps to the nearest
+open tile (`QuickStartFindOpenTileNear`, radius 3) and leaves the boss alone
+if nothing is open nearby. That fixes a pre-existing hazard, not just the
+one this change would have introduced.
+
+**What is NOT verified, stated plainly.** Three behavioural probes were
+written and all three are discarded under the usual rule, because each one
+failed identically on its own control:
+
+* borrowing a live enemy and rewriting its id to CHUCHU_BOSS - the entity
+  does not survive being re-identified;
+* spawning one through `QuickStartCreateWaveBoss` with `call_keep` - same;
+* `boss_region.py`, the purpose-built vetting tool, reports "engaged NEVER"
+  for Trilby. Rebuilding at the PREVIOUS commit and re-running gives the
+  identical line, so that is the harness or a pre-existing condition and not
+  a regression from this change. It does report the family composing with
+  five pieces in both builds, so the boss still spawns.
+
+So this batch has a measured arena and no in-play confirmation that the boss
+now walks into the southwest. The arithmetic and the collision are checked;
+the behaviour is for the user to see. `boss_region.py`'s lost engagement
+detection is worth its own look - its docstring warns that an open textbox
+freezes the boss's stage machine, which is exactly the kind of thing that
+drifts.
+
 ### The MINISH model, encoded: 58 dead rooms become 8
 
 The first pass at this measured the wrong thing twice and came back asking
