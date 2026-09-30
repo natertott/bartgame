@@ -1264,6 +1264,69 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The MINISH model, step one: where you can actually shrink
+
+The user answered the open question from the simulation report - yes, MINISH
+should be modelled - and described the shape: "In order to reach a Minish
+room ... 1) the player must have the Minish cap ... 2) there must be a tree
+stump/stone/pot nearby for the player to transform into a Minish ... There
+are other regions/rooms, though, where the tree stump/stone/portal is
+initially hidden. Sometimes they require another item to reveal ... These
+stumps are hidden underneath specials trees that the player must ram with the
+Pegasus boots."
+
+**Requirement 1 is free and requirement 2 is the whole gate.** Being Minish
+is `PL_MINISH`, a player STATE, not an inventory item - there is no Minish
+Cap in `item.h` to test. So what the reach model has been calling `minish_cap`
+is really "can this player reach a transform point from here".
+
+**The game ships the distinction as three object types**, so the price is
+readable rather than a judgement call: `MINISH_PORTAL_STONE` (116) and
+`JAR_PORTAL` (56) stand in the open; `TREE_HIDING_PORTAL` (156) is hidden
+until rammed. `treeHidingPortal.c` confirms the ram: its trigger tests
+`gPlayerEntity.base.action == PLAYER_BOUNCE`, which is a Pegasus Boots dash,
+and `TreeHidingPortal_Init` deletes the tree outright once its flag is set.
+
+`tools/quickstart/minish_portals.py` reads them out of
+`data/map/entity_headers.s`, and an emulator scan of the live entity list in
+all eighteen region rooms agrees with it exactly.
+
+**What the ring actually has.** Five transform points, every one of them a
+tree, every one of them unrevealed at boot (action 0):
+
+    CASTLE_GARDEN_MAIN, HYRULE_FIELD_SOUTH_HYRULE_FIELD,
+    HYRULE_FIELD_LON_LON_RANCH, HYRULE_FIELD_NORTH_HYRULE_FIELD,
+    LAKE_HYLIA_MAIN
+
+The other thirteen region rooms have none - including Castor Wilds, which
+has SEVEN Minish holes and no way to become Minish in the room, and Minish
+Woods, which has four.
+
+**Widening the scan to every room in the game is what makes sense of that.**
+42 rooms carry a transform point and 37 are free - but the free ones are
+`JAR_PORTAL`s inside houses (House Interiors 1-4, Hyrule Town) and
+`MINISH_PORTAL_STONE`s in late dungeons (Fortress of Winds, Palace of Winds,
+Vaati 3). The overworld's only transform points are those five trees.
+
+**Which gives the model its real shape**, and it is nicer than the flat token
+it replaces: a Minish destination costs *the cheapest way to reach any
+transform point that connects to it*. The survey already prices reaching
+every room, so a jar portal inside the farm house costs whatever the farm
+house costs - `[[BOMBS]]` from Eastern Hills North, per that block's own row.
+The token stops being a magic bit and becomes ordinary composition.
+
+**Two things the measurement contradicts, and they are recorded rather than
+resolved.** The user named Lon Lon Ranch's stump as one "given freely", and
+said "the player can reach the Minish room in Eastern Hills South with ONLY
+the Minish cap". Measured, Lon Lon's portal is a TREE_HIDING_PORTAL at
+(312,352) - boots - and Eastern Hills South has no transform point at all in
+any of its rooms. The likely reconciliation is the house jar portals (the
+ranch house and the farm house both have one), which would make the access
+free-once-inside but priced at whatever the door costs. Confirmed before
+encoding, because a wrong price here makes rooms look reachable that are
+not - the failure direction the whole conservative-token policy exists to
+avoid.
+
 ### Mount Crenel keeps its waves and loses its wave rewards
 
 The decision on the previous entry's open question. The user: "disable wave
