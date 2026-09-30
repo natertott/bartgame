@@ -1264,6 +1264,95 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Faces that actually draw, and a difficulty curve that gates nothing
+
+Two user reports, both about variety, both fixed by measuring instead of
+reading tables.
+
+**Four of the eight fuser faces were drawing garbage.** The user: "The 'Kid'
+and 'Postman' sprites are working well. The other two are having
+visual/GFX glitches." Measured: TPWNSPERSON, BEEDLE, BROCCO and STURGEON are
+all broken; ZELDA, KID, POSTMAN and MAID are all fine.
+
+Nothing in the tables predicted which. A broken face is placed, carries a
+sprite index, and passes every check `hub_variety.py` makes - it just
+renders as scrambled tiles, because its sheet is not in the room's loaded
+gfx group and the OAM indexes into whatever is. The first cast was picked by
+reading the NPC enum for "ordinary standing townsfolk", which is exactly the
+kind of table-reading this project keeps getting caught by.
+
+`tools/quickstart/fuser_faces.py` is the fix for that. It forces each cast
+slot by SEARCHING A RUN SEED rather than patching - `QuickStartFuserCastId`
+is `(((run_seed >> 3) + roomIndex * 5) & 0x7fff) % count`, so for a fixed
+room a seed exists for every slot and the shipped path runs unmodified - then
+brings the face to the camera and saves a PNG. Thirty-six candidates were
+drawn that way.
+
+The cast is now twelve faces, every one of them looked at:
+
+    ZELDA, KID, POSTMAN, MAID, TALON, MALON,
+    MUTOH, GORMAN, WHEATON, PITA, REM, ANJU
+
+Three that render correctly are still excluded, because they bring their own
+furniture: Stockwell arrives behind his shop counter, the hurdy-gurdy man
+with his organ cart. Both look absurd standing in a field.
+
+One trap on the way: growing the cast from 8 to anything else broke the
+link with `undefined reference to '__umodsi3'`. `QuickStartFuserCastId` used
+an unsigned `%` by `ARRAY_COUNT`, which agbcc turns into a mask only when
+the count is a power of two. Signed modulo on the masked value, the same
+shape `QuickStartRegionDropSpot` already uses.
+
+**Difficulty was gating content, not weighting it.** The user: "The
+difficulty scaling should not be about what tiers or types of enemies are
+possible, but rather the chance that various tiers spawn. At difficulty
+three, the majority of enemies should be sampled from the lower tiers, but
+we should still be seeing enemies from the higher tiers on occasion."
+
+The old table read `{ 30, 50, 20, 0, 0, 0 }` at difficulty 3. Levels 4 and 5
+and the Elites were not rare at the shipped difficulty, they were
+IMPOSSIBLE - a hard unlock gate wearing a weighted die's clothes. A player at
+the baseline could finish a run having met 42 of the roster's 71 entries and
+never learn the other 29 exist.
+
+The curve is generated now, by `tools/quickstart/tier_curve.py`: a discrete
+gaussian over the six columns whose peak walks from level 1 at step 0 to
+level 4 at step 12, with the Elite column damped to 18% of its natural
+weight and a per-column FLOOR. The floor is the part that answers the brief -
+a gaussian alone puts 0.4% in level 5 at step 3, and integer rounding turns
+that back into the same gate. From step 3 up, no column is ever zero.
+
+Difficulty 3 now deals 65% from levels 1-2, 26% level 3, and 9% from levels
+4, 5 and the Elites together.
+
+The Elite column stays tiny at every step, and that is not timidity: four of
+its six entries are Darknut forms, so it IS the Darknut dial, and the pile
+of five Darknuts the user reported is what the wave rework exists to
+prevent. At step 12 it is 4%. Level 5 climbs much higher (35% at the top)
+because it holds no Darknut any more - it is Wizzrobes, the golden variants
+and the Wisps, eleven entries wide. That is the one number this batch
+changed most from the old table's "level 5 tops out at 7%", and the reason
+that cap existed no longer applies.
+
+Density is untouched: the user asked about WHICH enemies spawn, not how
+many, and that column is tuned against the entity budget.
+
+**Both changes are measured, not asserted.** `tier_curve.py --check`
+compares the table in game.c against the generator and asserts the sums, the
+floors and that the mean level never falls as difficulty rises.
+`tools/quickstart/tier_mix.py` goes further and measures the ROM: it walks
+into region rooms, lets the wave spawn, and maps every live enemy back to
+its roster level. Over 1,216 live enemies at difficulty 3 across ten rooms
+and six seeds it reports L1 30.2%, L2 30.2%, L3 28.1%, L4 9.8%, L5 1.6%,
+Elite 0.2%.
+
+Worth noting that the measured mix is NOT the table's own numbers - L1 runs
+higher and L2 lower than the weights say. That is the archetype composition
+builder and the live caps reshaping waves after the level is rolled, which is
+working as designed. The table sets the draw; it does not set the outcome.
+The number that matters is that the top three columns are 11.6% of spawns
+where they used to be exactly 0.
+
 ### The second pass: three of four findings were wrong, and a reader caught them
 
 The 50,000-run report went out with four headline findings. The user read it

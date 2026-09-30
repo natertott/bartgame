@@ -8285,45 +8285,62 @@ typedef struct {
 
 #define QUICKSTART_MIN_DENSITY 5
 
-// Retuned per the user's brief on difficulty pacing: "Levels 1, 2, and 3
-// should scale in difficulty noticeably but fairly. Once we have set a
-// baseline difficulty at 3, we should then seek to explore the variety of
-// enemy combinations more so than just pure difficulty."
+// EVERY TIER IS POSSIBLE AT EVERY DIFFICULTY; ONLY THE ODDS MOVE.
 //
-// So steps 0-3 are the POWER ramp: all level-1 chaff, then a 1/2 blend,
-// then level 2 with a taste of 3, with the density climbing alongside. A
-// player meets no elite at all before step 4.
+// The user: "By difficulty 3 the player should have the chance to see
+// enemies from any of the possible tiers, up to tier 5. The difficulty
+// scaling should not be about what tiers or types of enemies are possible,
+// but rather the chance that various tiers spawn. At difficulty three, the
+// majority of enemies should be sampled from the lower tiers, but we
+// should still be seeing enemies from the higher tiers on occasion."
 //
-// Steps 4-12 are the VARIETY ramp. The weights deliberately STOP marching
-// toward level 5 and settle into a level-2/3/4 band that barely moves;
-// what actually changes with difficulty above the baseline is the
-// composition (sQuickStartArchetypes below), the density, and a slowly
-// widening elite allowance (sQuickStartLiveCaps). Level 5 tops out at 7%
-// weight rather than the old 50%.
+// The previous table did the opposite: difficulty 3 read { 30, 50, 20, 0,
+// 0, 0 }, so levels 4 and 5 and the Elites were not rare at the shipped
+// difficulty, they were IMPOSSIBLE - a hard unlock gate wearing the
+// clothes of a weighted die. A player at the baseline could finish a run
+// having met 42 of the roster's 71 entries and never learn the other 29
+// exist.
 //
-// The old curve is why high difficulty read as "Darknuts again": at step
-// 12 it drew level 5 half the time, and two of that level's five entries
-// are Darknut forms, so 61% of waves loaded a Darknut kind and the
-// uniform-thirds fill then made about five of them. Weight alone was not
-// the whole fix - the live caps and the composition builder are the rest -
-// but a top tier that dominates the draw made everything else moot.
-// Six columns now: levels 1-5 plus the Elites. The Elite weight is
-// deliberately tiny and late - it is a spice, and the live caps mean even
-// a lucky roll cannot field more than three of them.
+// The curve is generated rather than hand-typed, by
+// tools/quickstart/tier_curve.py: a discrete gaussian over the six columns
+// whose peak walks from level 1 at step 0 to level 4 at step 12, with the
+// Elite column damped to 18% of its natural weight and a per-column FLOOR
+// that keeps the far tail from rounding to zero. The floor is the part
+// that answers the brief - a gaussian alone puts 0.4% in level 5 at step 3
+// and integer rounding turns that into the same gate as before. Re-run
+// that script after any edit here; it asserts the sums and that the mean
+// level never falls as difficulty rises.
+//
+// What a difficulty-3 wave now draws: 65% from levels 1-2, 26% level 3,
+// and 9% from levels 4, 5 and the Elites together. In a five-enemy wave
+// that is a better-than-even chance of one enemy from above the old
+// ceiling, which is "on occasion" rather than "never" or "constantly".
+//
+// The Elite column stays tiny at every step, and that is not timidity: four
+// of its six entries are Darknut forms, so it IS the Darknut dial, and the
+// pile of five Darknuts the user reported is what the whole rework exists
+// to prevent. At step 12 it is 4%, which with sQuickStartLiveCaps means a
+// Darknut is an event. Level 5 can afford to climb much higher (35% at the
+// top) because it holds no Darknut at all any more - it is Wizzrobes, the
+// golden variants and the Wisps, eleven entries wide.
+//
+// Density is unchanged: the user asked about WHICH enemies spawn, not how
+// many, and that column was tuned against the entity budget.
 static const QuickStartDifficultyTier sQuickStartDifficultyTiers[QUICKSTART_MAX_DIFFICULTY + 1] = {
-    /*  0 */ { { 100, 0, 0, 0, 0, 0 }, 25 },
-    /*  1 */ { { 75, 25, 0, 0, 0, 0 }, 22 },
-    /*  2 */ { { 50, 45, 5, 0, 0, 0 }, 17 },
-    /*  3 */ { { 30, 50, 20, 0, 0, 0 }, 13 }, // baseline established here
-    /*  4 */ { { 25, 45, 27, 3, 0, 0 }, 12 },
-    /*  5 */ { { 22, 43, 30, 5, 0, 0 }, 11 },
-    /*  6 */ { { 20, 40, 32, 7, 1, 0 }, 10 },
-    /*  7 */ { { 18, 38, 32, 9, 2, 1 }, 10 },
-    /*  8 */ { { 16, 35, 33, 11, 3, 2 }, 9 },
-    /*  9 */ { { 14, 33, 33, 13, 4, 3 }, 8 },
-    /* 10 */ { { 12, 31, 33, 15, 5, 4 }, 7 },
-    /* 11 */ { { 10, 29, 33, 17, 6, 5 }, 6 },
-    /* 12 */ { { 10, 27, 32, 18, 7, 6 }, 6 },
+    //        L1  L2  L3  L4  L5  EL    density
+    /*  0 */ { { 58, 36,  6,  0,  0,  0 }, 25 },
+    /*  1 */ { { 45, 42, 11,  1,  1,  0 }, 22 },
+    /*  2 */ { { 34, 42, 19,  3,  1,  1 }, 17 },
+    /*  3 */ { { 25, 40, 26,  6,  2,  1 }, 13 }, // the shipped baseline
+    /*  4 */ { { 18, 37, 32, 10,  2,  1 }, 12 },
+    /*  5 */ { { 13, 33, 34, 16,  3,  1 }, 11 },
+    /*  6 */ { {  9, 27, 35, 22,  6,  1 }, 10 },
+    /*  7 */ { {  6, 22, 34, 27, 10,  1 }, 10 },
+    /*  8 */ { {  4, 17, 32, 31, 15,  1 },  9 },
+    /*  9 */ { {  3, 13, 29, 33, 21,  1 },  8 },
+    /* 10 */ { {  3, 10, 25, 34, 26,  2 },  7 },
+    /* 11 */ { {  2,  8, 22, 34, 31,  3 },  6 },
+    /* 12 */ { {  1,  7, 19, 34, 35,  4 },  6 },
 };
 
 static const QuickStartDifficultyTier* QuickStartGetDifficultyTier(u8 difficulty) {
@@ -23530,15 +23547,35 @@ static void QuickStartBrushFusionPayout(void) {
 // the cost exactly what it was - one sheet - while the player still meets a
 // different character in every region, and different ones again next run.
 //
-// Eight faces, all of them ordinary standing townsfolk. Nothing here is a
-// story actor with its own cutscene state (no Vaati, no kings, no Ezlo), an
-// animal this mode sweeps (COW, CUCCO, CUCCO_CHICK are deleted in Lon Lon),
-// or an id the mode already means something by (TINGLE_SIBLINGS is the
-// tingle rows, ZELDA is every other QUICKSTART NPC). ZELDA stays in the
-// cast as one face of eight - she is the id every one of these was verified
-// against, so keeping her in means the known-good case is still dealt.
+// EVERY ENTRY HERE WAS LOOKED AT. The first cast was picked by reading the
+// NPC enum for "ordinary standing townsfolk", and four of its eight faces
+// drew garbage in the field - the user: "The 'Kid' and 'Postman' sprites
+// are working well. The other two are having visual/GFX glitches."
+// TPWNSPERSON, BEEDLE, BROCCO and STURGEON were all broken; Zelda, Kid,
+// Postman and the Maid were all fine. Nothing in the tables predicted
+// which: a broken face is placed, carries a sprite index and answers every
+// check hub_variety.py makes, it just renders as scrambled tiles, because
+// its sheet is not in the room's loaded gfx group and the OAM indexes into
+// whatever is.
+//
+// So the cast is now chosen from RENDERED EVIDENCE.
+// tools/quickstart/fuser_faces.py forces each cast slot by searching a run
+// seed (no patching - the shipped QuickStartFuserCastId path runs
+// unmodified), brings the face to the camera and saves a PNG. Thirty-six
+// candidates were drawn that way and these twelve are the ones that came
+// out as coherent characters. Re-run it after any change here.
+//
+// Also excluded on purpose, independent of whether they draw: story actors
+// with their own cutscene state (Vaati, the kings, Ezlo), animals this mode
+// sweeps (COW, CUCCO, CUCCO_CHICK are deleted in Lon Lon), ids the mode
+// already means something by (TINGLE_SIBLINGS is the tingle rows), and the
+// three that draw correctly but bring their own furniture with them -
+// Stockwell arrives behind his shop counter, the hurdy-gurdy man with his
+// organ cart, both of which look absurd standing in a field.
 static const u8 sQuickStartFuserCast[] = {
-    ZELDA, TPWNSPERSON, KID, POSTMAN, BEEDLE, BROCCO, STURGEON, MAID,
+    ZELDA, KID, POSTMAN, MAID,
+    TALON, MALON, MUTOH, GORMAN,
+    WHEATON, PITA, REM, ANJU,
 };
 
 // Which face this room's fusers wear this run. Room index mixed with the
@@ -23549,8 +23586,13 @@ static const u8 sQuickStartFuserCast[] = {
 // Keyed on the room rather than on the fuser row on purpose. Keying per row
 // would put several faces in one room and pay several sheets for it.
 static u8 QuickStartFuserCastId(s32 roomIndex) {
-    u32 pick = ((gSave.run_seed >> 3) + (u32)roomIndex * 5u) & 0x7fff;
-    return sQuickStartFuserCast[pick % (u32)ARRAY_COUNT(sQuickStartFuserCast)];
+    // SIGNED modulo on a masked value. agbcc emits __umodsi3 for an
+    // unsigned % by anything but a constant power of two, and its runtime
+    // library does not provide one - so an eight-entry cast linked and a
+    // nine-entry cast would not. The mask keeps the value positive, which
+    // makes the signed form exact.
+    s32 pick = (s32)(((gSave.run_seed >> 3) + (u32)roomIndex * 5u) & 0x7fff);
+    return sQuickStartFuserCast[pick % (s32)ARRAY_COUNT(sQuickStartFuserCast)];
 }
 
 // Is this NPC one of ours, for the every-frame sweeps that clear a region's
