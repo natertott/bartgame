@@ -8328,10 +8328,10 @@ typedef struct {
 // many, and that column was tuned against the entity budget.
 static const QuickStartDifficultyTier sQuickStartDifficultyTiers[QUICKSTART_MAX_DIFFICULTY + 1] = {
     //        L1  L2  L3  L4  L5  EL    density
-    /*  0 */ { { 58, 36,  6,  0,  0,  0 }, 25 },
-    /*  1 */ { { 45, 42, 11,  1,  1,  0 }, 22 },
-    /*  2 */ { { 34, 42, 19,  3,  1,  1 }, 17 },
-    /*  3 */ { { 25, 40, 26,  6,  2,  1 }, 13 }, // the shipped baseline
+    /*  0 */ { { 100,  0,  0,  0,  0,  0 }, 25 },  // tutorial ramp, hand-tuned
+    /*  1 */ { { 75, 25,  0,  0,  0,  0 }, 22 },
+    /*  2 */ { { 50, 45,  5,  0,  0,  0 }, 17 },
+    /*  3 */ { { 25, 40, 26,  6,  2,  1 }, 13 },  // the shipped baseline
     /*  4 */ { { 18, 37, 32, 10,  2,  1 }, 12 },
     /*  5 */ { { 13, 33, 34, 16,  3,  1 }, 11 },
     /*  6 */ { {  9, 27, 35, 22,  6,  1 }, 10 },
@@ -23534,6 +23534,12 @@ static void QuickStartBrushFusionPayout(void) {
 // behaviour the gfx reserve exists to make possible.
 #define QUICKSTART_FUSERS_PLACED_FLAG 47
 
+// What a room's drawn face costs the GFX table, measured in Lon Lon Ranch:
+// entering with the face already placed settles at 4 reclaimable slots and
+// deferring it settles at 4 too, so the set itself is worth about two while
+// the room is still loading. The wait below is sized off this.
+#define QUICKSTART_FUSER_FACE_SHEETS 2
+
 // ==================== The fuser cast ====================================
 //
 // The user: "Can we replace the Zelda-only sprites with other character
@@ -23573,9 +23579,8 @@ static void QuickStartBrushFusionPayout(void) {
 // Stockwell arrives behind his shop counter, the hurdy-gurdy man with his
 // organ cart, both of which look absurd standing in a field.
 static const u8 sQuickStartFuserCast[] = {
-    ZELDA, KID, POSTMAN, MAID,
-    TALON, MALON, MUTOH, GORMAN,
-    WHEATON, PITA, REM, ANJU,
+    ZELDA, POSTMAN, WHEATON, PITA,
+    REM, ANJU, KID,
 };
 
 // Which face this room's fusers wear this run. Room index mixed with the
@@ -23650,6 +23655,29 @@ static void QuickStartSpawnRegionFusers(void) {
         // a single ordered pass, and reading it any other way would give a
         // different answer depending on where the player is standing.
         QuickStartFuserPlacements(hostRoom, hostSpot);
+    }
+    // WAIT for the room's own load to finish before buying a sprite sheet.
+    //
+    // A fuser face costs a sheet, and until this gate the set was placed the
+    // frame the room settled - while the loader was still holding the
+    // transient sheets of the room it came from. Measured in Lon Lon Ranch
+    // at the shipped difficulty: reclaimable slots dipped to 0 for the first
+    // ~71 frames of a visit, under QUICKSTART_GFX_HARD_FLOOR, and only then
+    // climbed to 4. Waiting costs about a second of the fusers not being
+    // there yet; not waiting costs the room its whole reserve at the exact
+    // moment the player walks in.
+    //
+    // The bar is "can pay the sheet AND still hold the hard floor", not
+    // QuickStartGfxBudgetForNewKind. That predicate wants more than
+    // QUICKSTART_GFX_RESERVE (4) free, and Lon Lon Ranch's ceiling is
+    // exactly 4 - measured - so gating on it starved the room's fusers
+    // FOREVER: eight fusions that no longer existed, which is a far worse
+    // bug than the dip it was fixing. Returning WITHOUT latching
+    // QUICKSTART_FUSERS_PLACED_FLAG is what makes this a retry, and a retry
+    // that can never succeed is indistinguishable from a deletion.
+    if (hereRoom >= 0 &&
+        QuickStartReclaimableGfxSlots() < QUICKSTART_GFX_HARD_FLOOR + QUICKSTART_FUSER_FACE_SHEETS) {
+        return;
     }
     castId = (hereRoom >= 0) ? QuickStartFuserCastId(hereRoom) : (u8)ZELDA;
     for (; i < QUICKSTART_FUSER_COUNT; i++) {

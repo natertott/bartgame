@@ -1264,6 +1264,62 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The GFX bill for faces that actually draw
+
+The face batch above broke `invariant_check.py`'s GFX floor in two rooms, and
+chasing it down was worth more than the fix.
+
+**North Hyrule Field: two sheets, not one.** Five of the twelve faces call
+`LoadExtraSpriteData` and so cost a SECOND sprite sheet - KID (the user's own
+"working well" example), CASTLE_MAID, TALON, MUTOH and GORMAN. NHF fell from
+7 free slots to 1. The cast is seven now, six of them single-sheet, KID kept
+because the user named it: ZELDA, POSTMAN, WHEATON, PITA, REM, ANJU, KID.
+TALON and MALON are also out for a second reason - they are Lon Lon Ranch's
+own vanilla residents, and `QuickStartIsOurNpc` spares any scripted NPC
+wearing the room's drawn face, so drawing Malon in Lon Lon would have spared
+the vanilla Malon from the region sweep.
+
+**The tutorial ramp is hand-tuned for a reason.** Generating steps 0-2 from
+the same gaussian widened step 0 from `{ 100, 0, 0, 0, 0, 0 }` to
+`{ 58, 36, 6, 0, 0, 0 }` - three levels of enemy kinds instead of one, each
+kind its own sheet. Those three rows are fixed data again; the brief starts
+at difficulty 3 and step 3 is unchanged at 65/26/9.
+
+**Two wrong turns, both instructive.**
+
+* A room flag was claimed for a "wear the plain face" latch without checking
+  the number. 46 is already `QUICKSTART_REMAINDERS_SWEPT_FLAG`, so setting it
+  made Lon Lon skip `QuickStartResetOtherWaveRemainders` - a wave bug wearing
+  a GFX bug's clothes, and it corrupted an hour of measurements. The defines
+  are scattered through 24,000 lines; grep `_FLAG [0-9]` before claiming one.
+* The plain-face idea was wrong anyway. `git show`-ing the pre-commit build
+  and reading the live NPC ids showed Lon Lon used to wear STURGEON - one of
+  the four BROKEN faces - and had 2 free slots. The old faces were cheap
+  because they were broken: a face whose sheet never loads costs nothing.
+  Lon Lon's "pass" was an artifact of the bug the user reported.
+
+**What actually fixed it: wait for the room to finish loading.** The fuser
+set was placed the frame the room settled, while the loader still held the
+previous room's sheets. Deferring until the room can pay for the face and
+still hold `QUICKSTART_GFX_HARD_FLOOR` removed the dip everywhere except Lon
+Lon. The first attempt gated on `QuickStartGfxBudgetForNewKind` (more than 4
+free) and STARVED Lon Lon, whose ceiling is exactly 4 - eight fusions with no
+sprite, forever, because a retry that can never succeed is a deletion. Caught
+by counting NPCs after the change rather than trusting the GFX number.
+
+**What is left, and it is a real trade-off, not an oversight.** Lon Lon Ranch
+tops out at 4 reclaimable slots and a working face costs 3, so it dips to 1
+against a floor of 2 for about a second on entry, then settles at 4. The room
+cannot host a face that renders AND keep the floor. The floor exists so a
+boss spawn can find sixteen slots; Lon Lon never has sixteen and defers
+either way, so the practical cost of the dip is likely nil - but that is a
+judgement about the guard, so it is recorded here rather than fixed by
+quietly lowering it.
+
+`tools/quickstart/gfx_floor.py` is the tool this produced: the invariant
+check's own GFX measurement for one room at one difficulty, so a change can
+be iterated in a minute instead of the twenty-five the full sweep takes.
+
 ### Faces that actually draw, and a difficulty curve that gates nothing
 
 Two user reports, both about variety, both fixed by measuring instead of

@@ -38,11 +38,21 @@ LEVELS = 6
 # budget (QUICKSTART_MAX_LIVE_ENEMIES, QuickStartRoomEnemyCeiling).
 DENSITY = [25, 22, 17, 13, 12, 11, 10, 10, 9, 8, 7, 6, 6]
 
-# Steps 0-2 are the tutorial ramp and keep a little gating; from step 3 -
-# the shipped baseline - every column is live.
-FLOOR = {0: [0, 0, 0, 0, 0, 0],
-         1: [0, 0, 1, 1, 1, 0],
-         2: [0, 0, 1, 2, 1, 1]}
+# Steps 0-2 are NOT generated. They are the tutorial ramp, they sit below
+# the shipped difficulty, and the brief is explicit that it starts at three:
+# "By difficulty 3 the player should have the chance to see enemies from any
+# of the possible tiers."
+#
+# They are also the rows the GFX budget was tuned against, and that is not a
+# detail. A first pass generated them from the same gaussian, which widened
+# step 0 from { 100, 0, 0, 0, 0, 0 } to { 58, 36, 6, 0, 0, 0 } - three levels
+# of enemy kinds instead of one, each kind costing its own sprite sheet - and
+# Lon Lon Ranch went from 2 free GFX slots to 0, under
+# QUICKSTART_GFX_HARD_FLOOR. Measured with tools/quickstart/gfx_floor.py; a
+# room pinned at zero can never deliver the sixteen slots a boss spawn needs.
+FIXED_LOW = {0: [100, 0, 0, 0, 0, 0],
+             1: [75, 25, 0, 0, 0, 0],
+             2: [50, 45, 5, 0, 0, 0]}
 FLOOR_DEFAULT = [0, 0, 1, 4, 2, 1]
 ELITE_DAMP = 0.18
 
@@ -50,6 +60,9 @@ ELITE_DAMP = 0.18
 def curve():
     rows = []
     for d in range(MAXD + 1):
+        if d in FIXED_LOW:
+            rows.append(list(FIXED_LOW[d]))
+            continue
         mu = 0.15 + d * (3.45 / MAXD)
         sigma = 0.85 + d * (0.55 / MAXD)
         w = [math.exp(-((i - mu) ** 2) / (2 * sigma * sigma)) for i in range(LEVELS)]
@@ -60,7 +73,7 @@ def curve():
         order = sorted(range(LEVELS), key=lambda i: -(pct[i] - ints[i]))
         for i in order[:100 - sum(ints)]:
             ints[i] += 1
-        floor = FLOOR.get(d, FLOOR_DEFAULT)
+        floor = FLOOR_DEFAULT
         for i in range(LEVELS):
             if ints[i] < floor[i]:
                 need = floor[i] - ints[i]
