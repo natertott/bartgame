@@ -193,6 +193,31 @@ def _boss_rooms():
 BOSS_ROOMS = _boss_rooms()
 
 
+def _no_wave_rooms():
+    """The rooms QuickStartRegionAllowsWave says NO to.
+
+    Mount Crenel: its wave cannot be counted to zero by every loadout, so
+    it pays no clear reward and can never carry a WAVE requirement. Parsed
+    rather than hardcoded so the model cannot drift from the C.
+    """
+    i = GAME.find('static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region) {')
+    if i < 0:
+        return set()
+    body = GAME[i:GAME.find('\n}\n', i)]
+    out = set()
+    for m in re.finditer(r'region->area == (AREA_\w+) && region->room == (ROOM_\w+)', body):
+        out.add((P.AREAS[m.group(1)], P.ROOMS[m.group(2)]))
+    return out
+
+
+NO_WAVE_ROOMS = _no_wave_rooms()
+
+
+def wave_ok(pool_index):
+    p = POOL[pool_index]
+    return (p['area'], p['room']) not in NO_WAVE_ROOMS
+
+
 def _sites():
     """Content sites, with the kind class each one draws from."""
     i = GAME.find('sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {')
@@ -409,11 +434,20 @@ def roll_carrier_and_element(seed, drop, rng):
                    (POOL[i]['area'], POOL[i]['room']) in BOSS_ROOMS
                    for i in range(POOL_SIZE)):
             carrier = WIN_WAVE
+    # The same pre-check the C gained for WAVE, and for the same reason: a
+    # wave is no longer something every region hosts, so the loop below
+    # could otherwise spin on a mask whose only member is Mount Crenel.
+    if carrier == WIN_WAVE:
+        if not any((allowed >> BY_POOL[i]) & 1 and wave_ok(i)
+                   for i in range(POOL_SIZE)):
+            carrier = WIN_QUEST
     while True:
         elem = rng.randrange(POOL_SIZE)
         if not (allowed >> BY_POOL[elem]) & 1:
             continue
         if carrier == WIN_BOSS and (POOL[elem]['area'], POOL[elem]['room']) not in BOSS_ROOMS:
+            continue
+        if carrier == WIN_WAVE and not wave_ok(elem):
             continue
         return carrier, elem
 
@@ -514,7 +548,8 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
                     and not used(KIND_EVENT, i)]
         if kind == KIND_WAVE:
             return [i for i in range(POOL_SIZE)
-                    if reach_pool_ok(regions, i) and not used(KIND_WAVE, i)]
+                    if reach_pool_ok(regions, i) and wave_ok(i)
+                    and not used(KIND_WAVE, i)]
         if kind == KIND_BOSS:
             return [i for i in range(POOL_SIZE)
                     if reach_pool_ok(regions, i)
@@ -673,7 +708,11 @@ def simulate(seed, cohort, rng):
             # its own table. Only the region clears are modelled as growth,
             # and they are modelled with the real draw rather than a
             # guaranteed key item.
-            if cohort == 'rewards' and kind in (KIND_WAVE, KIND_BOSS):
+            # A BOSS step in a wave-less region still pays nothing: the
+            # clear reward is gated on QuickStartRegionAllowsWave, not on
+            # which requirement sat there.
+            if (cohort == 'rewards' and kind in (KIND_WAVE, KIND_BOSS)
+                    and wave_ok(where)):
                 got = draw_item(rng.randrange(64), QS_CAT_ALL, owned,
                                 REGION_NAMES[BY_POOL[where]])
                 if got:

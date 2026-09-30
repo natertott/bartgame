@@ -1264,6 +1264,44 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Mount Crenel keeps its waves and loses its wave rewards
+
+The decision on the previous entry's open question. The user: "disable wave
+clear rewards for Mount Crenel entirely. Items should not drop when the
+player kills all enemies, and a WAVE CLEAR for any of the Crenel sites
+should never be a win requirement."
+
+`QuickStartRegionAllowsWave` is the twin of `QuickStartRegionAllowsBoss`, and
+three places now ask it:
+
+* `QuickStartSpawnRegionRewardOnce` pays no clear reward there. The guard
+  sits AFTER the element branch on purpose - the Earth Element may still be
+  placed in Mount Crenel under a BOSS or QUEST carrier, and neither of those
+  depends on emptying the room.
+* `QuickStartChainWaveOk` keeps WAVE requirements off it, the same shape as
+  the boss allowlist and for the same reason: a requirement a region cannot
+  host is a step that can never be finished.
+* `QuickStartRollElementRegionOnce` will not put a WAVE-carrier element
+  there. That needed a second pre-check as well: the existing comment called
+  a wave "the classic fallback, which every room hosts by construction", and
+  that stopped being true the moment one room stopped hosting one. Without
+  it the element loop could spin forever on a distance-2 mask whose only
+  member is the mountain.
+
+Waves still SPAWN on Crenel. The mountain is not meant to be empty and
+fighting in it is fine; what is withdrawn is everything that depends on
+counting the room to zero.
+
+**Measured in the ROM, with controls.** Forcing a clear in each region and
+reading `gSave.reward_drop_x/y` - which only `QuickStartSpawnRegionRewardItem`
+writes: Mount Crenel stays (0,0) after a clear, Trilby pays at (360,360),
+Lake Hylia at (40,440). The controls are the point: a probe that reports "no
+payout" everywhere proves nothing.
+
+Simulated over 4,000 runs with `sim.py` taught the same rule: **0** WAVE
+steps placed in Mount Crenel out of 9,956, and **0** WAVE-carrier elements
+there, while BOSS (239) and QUEST (115) carriers still use it.
+
 ### Where enemies spawn: Trilby, Lake Hylia, and the Mount Crenel problem
 
 Three user reports about spawn coverage, two fixed and one that turns out to

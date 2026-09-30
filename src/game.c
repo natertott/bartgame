@@ -4958,6 +4958,7 @@ static u32 QuickStartRegionsWithinTwo(u8 ring) {
 // The old chain draw's Zora Flippers special case (force Trilby last)
 // stays retired: no key item re-routes the run.
 static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region);
+static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region);
 
 static void QuickStartRollElementRegionOnce(void) {
     s32 drop, elem, b, carrier, i;
@@ -5002,12 +5003,33 @@ static void QuickStartRollElementRegionOnce(void) {
             carrier = QUICKSTART_WIN_WAVE;
         }
     }
+    // ...and the same pre-check for WAVE, which used to be free: the
+    // comment above says a wave is something "every room hosts by
+    // construction", and since Mount Crenel that is no longer true. Without
+    // this the elem loop below would spin forever on a mask whose only
+    // member is the mountain.
+    if (carrier == QUICKSTART_WIN_WAVE) {
+        bool32 waveable = FALSE;
+        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) &&
+                QuickStartRegionAllowsWave(&sQuickStartRegionPool[i])) {
+                waveable = TRUE;
+                break;
+            }
+        }
+        if (!waveable) {
+            carrier = QUICKSTART_WIN_QUEST;
+        }
+    }
     for (;;) {
         elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
         if (!(allowed & (1u << QuickStartRegionOfPoolIndex(elem)))) {
             continue;
         }
         if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
+            continue;
+        }
+        if (carrier == QUICKSTART_WIN_WAVE && !QuickStartRegionAllowsWave(&sQuickStartRegionPool[elem])) {
             continue;
         }
         break;
@@ -5171,6 +5193,35 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
 // scroll into a 480x208 room mid-spawn) - and the rest of the ring is
 // paused, not vetted, so the list is an allowlist rather than a blocklist:
 // a new region gets bosses when someone has watched one work there.
+// May this region host a WAVE - as a clear reward, or as a win requirement?
+//
+// Mount Crenel may not, and the reason is geometry rather than taste. Its
+// entrance room is 63x30 tiles with 831 walkable ones, and the component
+// the player ARRIVES in is 69 of them. The rest of the mountain is reached
+// by leaving the room through a cave and coming back out somewhere else -
+// twelve transitions land inside this room at scattered coordinates, from
+// CRENEL_CAVES_MUSHROOM_KEESE at (312,328) to BOMB_BUSINESS_SCRUB at
+// (184,424) - and most of those caves are priced at bombs or the Grip Ring.
+// The room's 21 climb-wall tiles bridge no two components.
+//
+// QuickStartRegionWaveCleared counts every ENEMY in the ROOM, not in the
+// player's own component. So one enemy that ends up on the mountain is a
+// region that can never be cleared by a player without that cave's key -
+// which would block the clear reward, the chain step sitting on it, and
+// potentially the run.
+//
+// The user, given that measurement: "disable wave clear rewards for Mount
+// Crenel entirely. Items should not drop when the player kills all enemies,
+// and a WAVE CLEAR for any of the Crenel sites should never be a win
+// requirement."
+//
+// Waves still SPAWN here - the mountain is not meant to be empty, and
+// fighting in it is fine. What is withdrawn is anything that depends on
+// counting the room to zero.
+static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region) {
+    return !(region->area == AREA_MT_CRENEL && region->room == ROOM_MT_CRENEL_ENTRANCE);
+}
+
 static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
     if (region->area == AREA_CASTLE_GARDEN && region->room == ROOM_CASTLE_GARDEN_MAIN) {
         return TRUE;
@@ -6744,6 +6795,13 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
             QuickStartRescueStuckFinalWave(region);
         }
         QuickStartCheckWinCondition();
+        return;
+    }
+    // No clear reward where a clear cannot be counted on. This sits AFTER
+    // the element branch above on purpose: the Earth Element may still be
+    // placed in Mount Crenel under a BOSS or QUEST carrier, and that path
+    // does not depend on emptying the room.
+    if (!QuickStartRegionAllowsWave(region)) {
         return;
     }
     state = QuickStartGetRegionRewardState(slot);
@@ -17670,6 +17728,14 @@ static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
 // A boss. Reachable AND on the boss allowlist - the same gate the F7
 // carrier uses, for the same reason: a region that cannot host a boss
 // would be a step that never appears at all.
+// The wave twin of QuickStartChainBossOk, and it exists for the same
+// reason: a region that cannot host the requirement would be a step that
+// can never be finished.
+static bool32 QuickStartChainWaveOk(u32 regions, s32 poolIndex) {
+    return QuickStartReachPoolOk(regions, poolIndex) &&
+           QuickStartRegionAllowsWave(&sQuickStartRegionPool[poolIndex]);
+}
+
 static bool32 QuickStartChainBossOk(u32 regions, s32 poolIndex) {
     return QuickStartReachPoolOk(regions, poolIndex) &&
            QuickStartRegionAllowsBoss(&sQuickStartRegionPool[poolIndex]);
@@ -17749,7 +17815,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
             break;
         case QS_CHAIN_WAVE:
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (QuickStartReachPoolOk(regions, i) &&
+                if (QuickStartChainWaveOk(regions, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
                     n++;
                 }
@@ -17806,7 +17872,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 h
             break;
         case QS_CHAIN_WAVE:
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (!QuickStartReachPoolOk(regions, i) ||
+                if (!QuickStartChainWaveOk(regions, i) ||
                     QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
                     continue;
                 }
