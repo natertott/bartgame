@@ -24,6 +24,15 @@ script_0800B6D4:
 	JumpIf script_0800B6A6
 	WaitUntilTextboxCloses
 	SetLocalFlag IZUMI_01_FAIRY
+.ifdef QUICKSTART
+	@ QUICKSTART: same swap as script_GreatFairyBombs - vanilla's test, our
+	@ RARE draw at the player's feet, her thanks, the vanilla fade-out.
+	Call QuickStartFairyHonestyReward
+	MessageNoOverlap TEXT_CUSTOM2, 193
+	WaitUntilTextboxCloses
+	Jump script_0800B6A6
+.else
 	GivePlayerItem ITEM_WALLET
 	Jump script_0800B698
+.endif
 	.2byte 0x0000

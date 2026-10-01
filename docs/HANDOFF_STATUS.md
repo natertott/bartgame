@@ -6,7 +6,7 @@ every batch entry there explains not just what changed but what was measured
 and what was got wrong on the way. Read the roadmap entry for any area you
 are about to touch; this file tells you which entry to look for.
 
-Current head when this was written: **`61bf9d3`**, branch
+Current head when this was written: **`7c659be`** (this batch is the commit on top of it), branch
 `claude/gba-fan-game-start-ptuvhn`.
 
 ---
@@ -69,12 +69,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   brought 50 rooms and 30 content sites back into the chain's reach. The gate
   sweep says all 258 policed transitions are clean, but that is a lot of
   newly exercised surface.
-- **Ride the leaves to Minish Village without the Flippers, in the shipped
-  d3 ROM.** The vanilla walkthrough and `lilypadSmall.c` both say the crossing
-  is free, so the survey dropped the Flippers from fourteen Minish Woods rows
-  and the village's own price (Oct 2026). If the leaves do not carry a Minish
-  player in this build, a chain step in the village is a stranded run.
-  `docs/QUICKSTART_GUIDE_FINDINGS.md` §1.1.
+- **Bomb the Crenel fairy's wall and answer her honestly, in play.** The
+  orchestrator that runs her script is kept now (it used to be deleted with
+  every other cutscene orchestrator) and the payout function drops a RARE
+  item in the emulator, but nobody has watched the whole vanilla question
+  land in this build. Same for the Minish Woods fairy and her rupees.
 - **Seven more guide-derived survey corrections await a walk each** -
   findings doc §1.2 lists the walk for every one.
 

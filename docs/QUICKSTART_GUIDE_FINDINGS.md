@@ -32,7 +32,7 @@ a proposal with the walk that would settle it.
 | **MW: the Minish Village route** (path, village, Festari, wind crest, gold chest, bomb Minish house, Deepwood forecourt, three SW cave mouths) and **MV room requirement** | `MINISH + FLIPPERS` | `MINISH` | The survey carried the Flippers as its own doubt ("leaves ... not sure if gated by a story flag"). The guide rides the leaves to the village at the very start of the game with no items (Heart Piece #2 comes before dungeon one). The leaves are `LILYPAD_SMALL` objects authored unconditionally into `MINISH_PATHS/ToMinishVillage` and `lilypadSmall.c` tests only `PL_MINISH`. No flag exists. |
 | **MW: Business Scrub tree** + its cave | `FREE` (flagged) | `FUSION` | Survey: "kinstone fusion maybe?", flood reached it. Guide: Fusion #13 opens it. `KINSTONE_27`'s world event fires at (528,456), this door, and the mode `MemClear`s kinstones at boot and pre-fuses only the three Castor statues - the tree starts closed every run. A live fuser for KINSTONE_27 stands in Minish Woods. **This was a FREE row on a gated door - the dangerous direction.** |
 | **MW: Great Fairy tree** | `PACCI + FUSION` | `PACCI` | Survey "believes the tree itself is fusion-gated as well". Guide takes Big Wallet #2 with the cane alone, no fusion; `kinstone_audit.py` has no world event on that door. |
-| **CG: both fountain rooms** | `MINISH` ("through the minish holes") | `FUSION` | Vanilla drains each fountain with a shared fusion (#78/#79). World events `KINSTONE_18`/`KINSTONE_35`, type 5 "remove water", sit at (776,72)/(232,72) - the two fountain doors - and both fusers are live in the mode's Castle Garden fuser table. The Minish holes were never the way in. |
+| **CG: both fountain rooms** | `MINISH` ("through the minish holes") | `FUSION`, and a second term `FUSION + MINISH` | Vanilla drains each fountain with a shared fusion (#78/#79). World events `KINSTONE_18`/`KINSTONE_35`, type 5 "remove water", sit at (776,72)/(232,72) - the two fountain doors - and both fusers are live in the mode's Castle Garden fuser table. **The user's correction:** draining a fountain opens TWO entrances, one for full-size Link and one only a Minish Link fits through, so each row carries both terms. The Minish holes were never the way in on their own. |
 | **CG: Grimblade's dojo** (two rooms) | missing | `SWORD` | Site 16, listed never-reachable by the simulation. Guide: "slash the bushes ... ladder leading down" in the SE corner; door (936,388), bush object (936,376). |
 | **CG: castle cellar ladder** | missing | `SWORD` | The hedge-maze tunnel into the castle's lower hall. Vanilla also wants a guard sneak; the mode clears `GUARD_1` every frame. Recorded because it is the way *into* Hyrule Castle. |
 | **RV: Great Dragonfly Fairy** | missing | `BOMBS` | Content site. Guide: "the lonely posts? Place a bomb between them" - right at the valley entrance, before the maze. |
@@ -50,11 +50,12 @@ prices them FREE. Fourteen rows, including the Deepwood Shrine forecourt and
 the three south-west cave mouths. Site 16 becomes placeable. Two fairy
 fountains gain honest prices.
 
-**What they risk.** If the leaves do *not* carry a Minish player in this
-build, a chain step placed in the village is a stranded run. Two independent
-sources say they do (the vanilla route, the object's own code) and the user
-rode them in the mapexplore build. It still wants one walk in the shipped d3
-ROM: shrink at the MW stump, ride to the village with no Flippers.
+**What they risk - settled.** If the leaves did *not* carry a Minish player
+in this build, a chain step placed in the village would be a stranded run.
+Two independent sources said they do (the vanilla route, the object's own
+code), and the user then **confirmed it in play**: "the leaves will carry you
+without needing zoras flippers or anything else, they only require you to be
+in Minish form." The row stands.
 
 ### 1.2 Proposed, not applied (each needs a walk)
 
@@ -64,7 +65,7 @@ ROM: shrink at the MW stump, ride to the village with no Flippers.
 | LH-CREST: Librari's house | `MINISH+FUSION+FLIPPERS` or `+CAPE` | "diving into the holes to let the spiked logs pass" - ducking, not swimming; no water named | Is there water on the Minish road to Librari? If not, drop the water term. |
 | LH: Waveblade's tree | "suspects a kinstone fusion here, unconfirmed" | reached by swimming and stairs, no fusion; no world event on the door | Confirm and delete the suspicion from the note. |
 | CW: south-west corner (Swiftblade I, gold cave) | `BOULDER1 / FLIPPERS+SWORD / MINISH+SWORD` | the vanilla land route passes two Eyegores that only the Bow destroys | Does the boulder route pass an Eyegore in this build? If so the term wants `BOW`. |
-| RV: the forest maze | `LANTERN + MAZE`, both untestable | the maze is a FIXED path - up, left, left, up, right, up (south exits at once); the lantern only lets you read the signs that say so | Walk it dark. If it goes, `MAZE` is knowledge, not kit: retire the token (always true) and have Ezlo speak the sequence on entry. **This is the lever on "Royal Valley is dead content" (7% reachable, 0.2% of requirements).** |
+| RV: the forest maze | `LANTERN + MAZE`, both untestable | the maze is a FIXED path - up, left, left, up, right, up (south exits at once); the lantern only lets you read the signs that say so | **APPLIED (Oct 2026, at the user's go-ahead).** The route is already randomized per run and the signs already read it out, so the Lantern was never the gate: both tokens came off the six maze-side rows (the valley north of the maze, Dampe's house, and the graveyard side now priced at the key alone, the crypt at key + Bracelets), and `QuickStartMazeMonitor` has Ezlo speak each pass's direction to a player with no Lantern. The two maze doors were walked in the shipped ROM: south door in, south border out. |
 | RV: the graveyard key | `GRAVEYARD_KEY`, untestable | Dampe gives it, a Takkuri steals it, you ram its tree with the Pegasus Boots | If the key route is ever made live it costs `BOOTS` in vanilla. |
 | LLR: the Veil Falls pocket (168,55) | `NOT REACHABLE` | reached only by going up to Veil Falls and back down; fusion #85's chest (KINSTONE_60) sits there | Re-price at `PACCI` the day Veil Falls opens, as the row already says. |
 
@@ -217,6 +218,19 @@ vanilla and would need per-run reset).
 
 Ranked by how much already exists in the ROM and how little it costs in the
 currency that binds (sprite sheets).
+
+**Status (Oct 2026).** The user asked for everything below except 7 and 8 to
+be re-purposed. Reading the ROM first: items 1, 2, 3, 5 and 11 were already
+live (the golden trio sit in the Elites tier, the three butterflies are STAT
+rows, the thieving crows are in the roster, fusers already scatter across
+adjacent regions, and the roster carries the item-reactive enemies), and 9 was
+already the Ocarina-as-entrance rule. What shipped new: **4** (fickle fusers,
+4% per difficulty point from difficulty 2, and a per-room permutation of the
+offers so the same spots pay out different fusions each run), **6** (the
+Minish Woods and Crenel fairies ask their vanilla questions and pay a RARE
+draw), **10** (wave rooms go dark at 5% per difficulty point) and the maze
+row from §1.2. The roadmap entry "Vanilla mechanics re-purposed" has the
+measurements.
 
 1. **Golden enemies** (`OCTOROK_GOLDEN`, `TEKTITE_GOLDEN`, `ROPE_GOLDEN`;
    ids 0x3c-0x3e). Vanilla spawns one per fusion as a bounty worth 100-200

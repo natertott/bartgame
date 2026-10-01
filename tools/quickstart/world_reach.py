@@ -340,12 +340,17 @@ d('CG', 'CASTLE_GARDEN', 'MAIN', 504, 36, FREE, 'exit, south to North Hyrule Fie
 d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '0', 136, 104, [[MINISH]])
 d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '1', 136, 104, [[MINISH]])
 d('CG', 'MINISH_CRACKS', 'HYRULE_CASTLE_GARDEN', 152, 104, [[MINISH]])
-d('CG', 'GARDEN_FOUNTAINS', 'EAST', 120, 80, [[FUSION]],
+#   * The user, having played it: each drained fountain opens TWO ways in,
+#     "one is reachable as a full sized link, one is reachable only as
+#     Minish Link". Both are behind the drain, so the full-size door is the
+#     price and the Minish door is the second term, recorded so nobody
+#     re-measures it.
+d('CG', 'GARDEN_FOUNTAINS', 'EAST', 120, 80, [[FUSION], [FUSION, MINISH]],
   'the north-east fountain, drained by a kinstone fusion (KINSTONE_18); a '
-  'heart piece in vanilla')
-d('CG', 'GARDEN_FOUNTAINS', 'WEST', 120, 80, [[FUSION]],
+  'heart piece in vanilla. Two doors once drained: one full-size, one Minish')
+d('CG', 'GARDEN_FOUNTAINS', 'WEST', 120, 80, [[FUSION], [FUSION, MINISH]],
   'the north-west fountain, drained by a kinstone fusion (KINSTONE_35); a '
-  'fairy fountain in vanilla')
+  'fairy fountain in vanilla. Two doors once drained: one full-size, one Minish')
 d('CG', 'DOJOS', 'TO_GRIMBLADE', 120, 104, [[SWORD]],
   'ladder under the bushes in the south-east corner; guide: "slash the '
   'bushes there to reveal a ladder leading down"')
@@ -372,14 +377,23 @@ d('RV', 'ROYAL_VALLEY', 'FOREST_MAZE', -248, -3240, FREE,
   'at once) and the lantern only lets you read the signs that say so - a '
   'player who knows the path walks it dark. See the findings doc for the '
   'design lever this hands Royal Valley.')
-d('RV', 'ROYAL_VALLEY', 'MAIN', -888, 440, [[LANTERN, MAZE]])
-d('RV', 'HOUSE_INTERIORS_2', 'DAMPE', -376, -312, [[LANTERN, MAZE]])
-d('RV', 'ROYAL_VALLEY', 'MAIN', 244, 331, [[LANTERN, MAZE, GRAVEYARD_KEY]],
+# THE MAZE IS FREE (Oct 2026). These rows used to carry LANTERN + MAZE, and
+# MAZE was untestable, so everything past the Lost Woods was invisible to the
+# chain. The vanilla guide retired both: the maze is a fixed sequence of
+# turns (this mode randomises it per run and re-aims vanilla's own signs to
+# read it out), and the lantern never opened anything - it lit the sign. For
+# a player with no lantern Ezlo now speaks each step on each pass
+# (QuickStartMazeMonitor), so the route is knowable with nothing at all. The
+# user approved retiring the token; the walk that confirms the dark maze is
+# steerable blind is still owed.
+d('RV', 'ROYAL_VALLEY', 'MAIN', -888, 440, FREE, 'north of the maze')
+d('RV', 'HOUSE_INTERIORS_2', 'DAMPE', -376, -312, FREE)
+d('RV', 'ROYAL_VALLEY', 'MAIN', 244, 331, [[GRAVEYARD_KEY]],
   'the gate to the upper pocket - everything above it inherits this')
-d('RV', 'ROYAL_VALLEY_GRAVES', 'HEART_PIECE', 120, 120, [[LANTERN, MAZE, GRAVEYARD_KEY]])
-d('RV', 'ROYAL_VALLEY_GRAVES', 'GINA', -168, 280, [[LANTERN, MAZE, GRAVEYARD_KEY]])
+d('RV', 'ROYAL_VALLEY_GRAVES', 'HEART_PIECE', 120, 120, [[GRAVEYARD_KEY]])
+d('RV', 'ROYAL_VALLEY_GRAVES', 'GINA', -168, 280, [[GRAVEYARD_KEY]])
 d('RV', 'ROYAL_VALLEY', 'CRYPT', None, None,
-  [[LANTERN, MAZE, GRAVEYARD_KEY, BRACELETS]], 'the royal crypt')
+  [[GRAVEYARD_KEY, BRACELETS]], 'the royal crypt')
 
 # --- Trilby Highlands ------------------------------------------------------
 region('TRIL', 'Trilby Highlands', ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 465, 124),
@@ -672,6 +686,9 @@ d('MW', 'MINISH_WOODS', 'MAIN', 667, 743, [[FUSION]],
 # MINISH_PATHS/ToMinishVillage's entity list (data/map/entity_headers.s) whose
 # only gate is `gPlayerState.flags & PL_MINISH` (src/object/lilypadSmall.c)
 # - no story flag anywhere. The crossing costs being Minish and nothing else.
+# CONFIRMED IN PLAY by the user (Oct 2026): "the leaves will carry you
+# without needing zoras flippers or anything else, they only require you to
+# be in Minish form."
 d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 136, 776, [[MINISH]],
   'tile (8,48), the way in; the leaves are the crossing, and they are free')
 d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 106, 519, [[MINISH]],

@@ -42,6 +42,21 @@ so nobody re-invents them:
   a paused game. Press A several times after warping.
 - **`pkill -f <something>` can match your own shell** and kill the command
   you are in the middle of. It killed a heredoc before it wrote its file.
+- **`callrom.call` is one question per boot - it clobbers the game
+  context.** Running frames after it measures garbage: the first dark-room
+  probe called `sub_0805BB00` this way, saw `lightLevel` change and the screen
+  not, and nearly reported the engine call broken. `call_keep` restores the
+  context; use it whenever the game has to keep playing afterwards.
+- **An Ezlo line may be open when you warp into a region.** A forced
+  `InitItemGetSequence` fired into `PLAYER_TALKEZLO` did nothing and left the
+  player stuck with the textbox closed. Dismiss the line (slow A presses,
+  wait for action 1 and `gMessage.state` 0) before handing the player
+  anything; the game code's own guard is `QuickStartPlayerCanBeHandedItem`.
+- **`gEntities` scans do not see aux player entities.** The item-get pair
+  (`LINK_HOLDING_ITEM`, `LINK_ANIMATION`) lives in `gAuxPlayerEntities`;
+  `entities()` and `QuickStartItemGetCutsceneRunning` both read 0 while the
+  pose is on screen. Read the player's action (8 = `PLAYER_ITEMGET`) and
+  `gMessage.state` instead.
 - **`emu.press` takes `c.KEY_A`**, not the string `'A'`.
 - **Entity coordinates**: integer x is at **0x2e** and integer y at **0x32**.
   0x30 and 0x34 are the LOW halves. Writing those moves nothing and reads

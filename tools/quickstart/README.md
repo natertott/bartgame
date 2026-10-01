@@ -37,6 +37,12 @@
   `--summary` is the finding - how much of each dungeon sits behind the
   sword-level clone puzzles this mode cannot pay. Static; no emulator.
   `docs/QUICKSTART_GUIDE_FINDINGS.md` is the write-up.
+- `wave_reentry.py` - regression test for the walk-out-and-back exploit on
+  3-wave ? rooms (Oct 2026): finds the run's first WAVES site through the
+  ROM's own `QuickStartContentSiteRoll`, enters, warps out to Castle Garden
+  and back four times, and reads the seam-gauntlet record and the floor.
+  PASS is wave 0 every time and no item. Before the fix it printed the
+  user's report verbatim: wave 0, 1, 2, reward.
 - `find_fuser_spots.py` - proposes `sQuickStartFusers` rows. Boots each
   region with its gates still shut, floods the walkable graph from the
   region entrance, and picks the closest fully-open tile to each gate that

@@ -1271,6 +1271,148 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Five reported bugs, measured and fixed (Oct 2026)
+
+The user's list, in their order, with what the emulator said before and
+after. Every one of these was reproduced before it was touched (doctrine 8),
+and two of them turned out to be something other than what the report
+assumed.
+
+**1. The starting skill: no dialogue, and the Zelda sprite vanishes.** Two
+bugs under one report. The dialogue: a skill taken off the hub floor runs
+vanilla's own item-get pair (`CreateItemEntity`'s `LINK_ANIMATION` +
+`LINK_HOLDING_ITEM`), which reaches its textbox about ten frames after the
+pick - and phase 5 ended with a `RELOAD_ALL` three frames after the pick,
+which recycled the pair before it spoke. Measured both ways: with the reload,
+`gMessage` never opens and the player's action never leaves `PLAYER_NORMAL`;
+without it, "You learned the secret Spin Attack fighting technique!" prints
+and closes on A. The reload was the combat room's clean slate and had no job
+left, so it is gone. (An explicit `InitItemGetSequence` was tried first and
+produced the line twice - the vanilla pair was never broken, only killed.)
+The sprite: the "Choose one of these items!" sign is a ZELDA NPC that
+`QuickStartDeleteGroundItemsAndSigns` tore down with every row, and only the
+phases that spawned a next row put it back - so it vanished after the FIRST
+pick, not the third; the user noticed it at the third. It is respawned by
+every phase now, and after the last pick it stays with a goodbye line
+(`script_QuickStartChosen`, custom string 194). Found along the way:
+`QuickStartItemGetCutsceneRunning` has never once returned TRUE - both halves
+of the pair are aux player entities, invisible to a `gEntities` scan - so
+every phase has advanced two frames after its pick since the hub was built.
+Left as it is, documented at the function: the rounds are proven with it
+answering FALSE.
+
+**2. Walk out of a wave room and back in, three times, and the reward
+drops.** Reproduced exactly (`scratchpad/wave_reentry.py`: enter, warp out
+to Castle Garden, re-enter - wave 0, 1, 2, reward, no kills). The seam-
+gauntlet record (`GF_SEAM_GAUNTLET_*`, FLAG_BANK_11) survives the room on
+purpose, because a seam scroll wipes the room flags mid-fight; but a door is
+not a seam. Leaving through one deletes the wave, and the next visit found a
+live record whose wave had "no enemies left" - so it cleared, advanced and
+dealt the next one. The tell is the enemies: across a seam they persist
+(`ENT_PERSIST`; the leash hauls them back), so a record - or a survive clock
+- with NONE of ours alive on its first frame in the room is a fight that was
+walked out on. `QuickStartSetupWaveRoomContent` reconciles once per visit
+(`QUICKSTART_WAVE_ROOM_SYNCED_FLAG`, flagBase+7, the window's last bit):
+forget the record, clear `GF_SURVIVE_LIVE` and the clock. After: four
+re-entries, wave 0 every time, no item. The survive variant was caught in
+the same measurement (every other re-entry rolled it) and resets the same
+way.
+
+**3. Tingle's fusion: too many boxes.** Tingle's, then Ezlo's, then the
+container's. Ezlo's (`CreateEzloHint` of custom string 203) is cut from
+`QuickStartTinglePayout`; the string stays in the table unreferenced.
+
+**4. A chain step's reward can be lost.** The step completed wherever the
+last enemy died, Ezlo's hint for the NEXT step played, the item dropped at
+the player's feet, and a player who had already walked off left a KEY item
+on a floor the room load wiped - with the next step already priced against
+owning it. The user's two options were "force it on the player or make it
+persistent"; forced is what shipped, and it is vanilla's own hand-over:
+`QuickStartChainMonitor` now runs `InitItemGetSequence` (the routine every
+swordsman's `GivePlayerItem` runs) - Link holds it up, the item-get line
+plays, `GiveItem` lands it, nothing touches the floor. Direct-grant
+equipment (swords, keys) keeps its direct grant. Both the payout and
+`QuickStartChainHintOnce` wait on one test, `QuickStartPlayerCanBeHandedItem`
+(normal action, not busy, not swimming, no queued action, no textbox, no door
+firing), which is what puts the hint AFTER the item instead of before.
+Measured in Castle Garden: the sequence from our frame context gives the
+pose, the text, the item (Bow 0 -> 1) and the player back in 219 frames. One
+caveat from the measurement: fired while Ezlo was mid-sentence it did
+nothing and left the player stuck - exactly the window the guard refuses.
+
+**5. The Crenel Base boss, squeezed in by the entrance.** Removed, not moved,
+and the user leaned that way: the region's arrival component is the 52-tile
+ledge, the reward spot the boss spawns at is ten tiles along it, and every
+larger space on the mountain is behind the bombable wall or the climb.
+`QuickStartRegionAllowsBoss` says no for `ROOM_MT_CRENEL_ENTRANCE`, which the
+BOSS carrier, the chain's BOSS step and the wave loop's 10% roll all already
+consult - the same way the mountain's wave rewards were withdrawn earlier.
+`boss_arena.py` still lists the room as a candidate; it is a parity tool,
+not an allowlist.
+
+### Vanilla mechanics re-purposed, and the maze doors walked (Oct 2026)
+
+The user's go-ahead on `docs/QUICKSTART_GUIDE_FINDINGS.md` §4 (everything
+but the four shops and Simon's gauntlet) and on the Royal Valley maze
+proposal, plus two corrections of theirs: the leaves to Minish Village need
+Minish form and nothing else (confirmed in play), and a drained Castle Garden
+fountain opens TWO entrances - one for full-size Link and one only a Minish
+Link fits through. The survey rows carry both terms now.
+
+Reading the ROM before writing anything: five of the eleven mechanics were
+already live (the golden trio in the Elites tier, the three Joy Butterflies as
+STAT rows, the thieving crows, cross-region fuser scatter, the item-reactive
+enemies) and the Ocarina-as-entrance rule was already the wind-crest
+treatment. What shipped new, with its measurement:
+
+* **The maze costs knowledge, not kit.** The route was already a per-run
+  function of the seed and the signs already read it out, so the Lantern was
+  never the gate. Six rows lost `LANTERN + MAZE` (the valley north of the
+  maze and Dampe's house are FREE; the graveyard side costs the key alone;
+  the crypt the key and the Bracelets), the gated-zone row asks for the key
+  alone, and `QuickStartMazeMonitor` has Ezlo speak each pass's direction
+  (custom strings 190-192) to a player with no Lantern. The doors were walked
+  in the shipped ROM, since a comment in the zone table claimed containment
+  cancelled them: the south door at (120,808) goes in, the maze's south border
+  comes out. (The first walk stood the player in the trees at (120,700) and
+  went nowhere; the collision dump found the path, which is what a failed
+  control is for.) The comment was wrong and is corrected.
+* **Fickle fusers, and shared offers.** `QuickStartSpawnRegionFusers` rolls
+  each room's second and later fusers against 4% per difficulty point from
+  difficulty 2 (0% at 1, 48% at 12 - `QuickStartFuserFickleChance`); a
+  fickle one is a talk-only NPC with vanilla's "not in the mood" shrug
+  (string 189). The room's first fuser always fuses, so no room goes dark.
+  The offers are also permuted per room per run (a keyed Fisher-Yates over
+  the room's unfused ids), so the same spot pays different fusions across
+  runs - vanilla's shared-fusion shape without its pool bookkeeping.
+  Measured with `callrom`: the roll lands 13.2% at d3 and 44.0% at d12 over
+  400 draws each; across all 18 regions the ZELDA-faced fuser census goes
+  36 fuse / 12 talk at d3 to 30 / 18 at d12. (The first census, filtered on
+  the ZELDA id, found nothing - fusers wear cast faces. The interaction
+  table's candidate type is the honest reading: 2 fuses, 1 talks.)
+* **Dark wave rooms.** 5% per difficulty point (15% at d3, 60% at d12),
+  rolled once per visit with the room's variant and applied every settled
+  frame (`QuickStartDarkRoomRoll`/`Apply`, room flags 48/49). The engine's
+  own darkness: `sub_0805BB00(0x80, 1)`, the Lantern widens the circle, the
+  room loads light again. Measured: mean screen brightness 148.5 -> 86.0 on
+  apply, unchanged on a control call with the flag clear, idempotent on a
+  second call. (The first measurement showed no change at all and was the
+  harness - `callrom.call` clobbers the game context; `call_keep` is the one
+  that lets frames run afterwards.)
+* **The Great Fairies' honesty tests.** The Minish Woods and Crenel fairy
+  rooms keep their vanilla fairy and orchestrator (site dispatch skips them),
+  the vanilla scripts ask their questions, and the reward branch under
+  `QUICKSTART` is ours: a RARE draw at the player's feet
+  (`QuickStartFairyHonestyReward`), her thanks (string 193), the vanilla
+  fade-out, and the site's DONE bit. Their `IZUMI_*` flags are cleared at run
+  start. **The measurement that mattered:** the entity scan found both rooms
+  holding the fairy and NO orchestrator - `cutsceneOrchestrator.c` deletes
+  every orchestrator under `QUICKSTART`, a Castor Darknut-era sweep. It now
+  excepts these two rooms (the graveyard keeps its Fountain of Sacrifice).
+  After: both rooms hold both objects, and the payout function drops an item
+  when called in the Crenel room. Not yet watched end to end in play; on the
+  handoff list.
+
 ### The vanilla walkthrough, read against the survey
 
 The user uploaded Banjo2553's 100% walkthrough of the vanilla game (8,730

@@ -362,6 +362,8 @@ static void QuickStartSpawnStarterChoiceOnce(void);
 static void QuickStartRefreshItemTimers(void);
 static void QuickStartRefreshPlacedItemTimers(void);
 static void QuickStartDeleteGroundItemsAndSigns(void);
+static bool32 QuickStartItemGetCutsceneRunning(void);
+static bool32 QuickStartPlayerCanBeHandedItem(void);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartClearCastleGuards(void);
@@ -1067,6 +1069,13 @@ static void GameTask_Transition(void) {
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_LEFT);
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_MIDDLE);
     WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_RIGHT);
+    // The two Great Fairy honesty tests (Crenel, Minish Woods) are once per
+    // RUN. Vanilla latches each behind a local flag of the fairies' own
+    // area and heals on every visit after; the save keeps those flags
+    // across this mode's runs, so they are cleared here with the rest of
+    // the per-run state (QuickStartFairyHonestyReward is the payout).
+    ClearLocalFlagByBank(GetFlagBankOffset(AREA_GREAT_FAIRIES), IZUMI_01_FAIRY);
+    ClearLocalFlagByBank(GetFlagBankOffset(AREA_GREAT_FAIRIES), IZUMI_02_FAIRY);
     // The fused bits alone are NOT the passage (user report: the path to
     // the Ruins stayed blocked). The passage tiles at (1,58)-(3,59) are
     // stamped solid by the statue NPC whenever HIKYOU_00_SEKIZOU is unset
@@ -1525,6 +1534,7 @@ static void GameMain_InitRoom(void) {
 
 #ifdef QUICKSTART
 extern Script script_QuickStartChooseOne;
+extern Script script_QuickStartChosen;
 extern Script script_QuickStartFountain;
 extern Script script_QuickStartMerchant;
 extern Script script_QuickStartHunt;
@@ -3033,6 +3043,21 @@ const u8* const gCustomStrings2[] = {
     // QuickStartHintPoolDealsDistinct assert caught it at compile time,
     // which is exactly what it is there for. Thirteen makes it 31.
     [188] = (const u8*)"Nothing carries between\nruns. Spend it while you\nstill have somewhere to spend it.",
+    // --- The vanilla-walkthrough batch (Oct 2026) -------------------------
+    // 189: a fuser that is not in the mood - vanilla's own fickleness,
+    // difficulty-scaled (QuickStartSpawnRegionFusers). 190-192: the Lost
+    // Woods maze, one direction per pass, spoken by Ezlo to a player with no
+    // lantern to read the signs by (QuickStartMazeMonitor). 193: the Great
+    // Fairy's thanks after an honest answer, in place of vanilla's named
+    // upgrade (QuickStartFairyHonestyReward).
+    [189] = (const u8*)"Hmm... not now. I'm in\nno mood to fuse.\nCome back another time.",
+    [190] = (const u8*)"Dark as pitch in here.\nThe sign says UP.",
+    [191] = (const u8*)"Dark as pitch in here.\nThe sign says RIGHT.",
+    [192] = (const u8*)"Dark as pitch in here.\nThe sign says LEFT.",
+    [193] = (const u8*)"You spoke the truth.\nTake this with my\nblessing.",
+    // 194: the hub sign after the last pick (script_QuickStartChosen) - it
+    // stays in the room now instead of vanishing with the item row.
+    [194] = (const u8*)"Your gifts are chosen.\nThe rest is up to you.\nGood luck out there!",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3041,13 +3066,16 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // 91 and 92. If a region or a step kind is ever added, this is the line
 // that stops the table quietly answering for the wrong thing.
 //
-// 176 -> 189 for the thirteen new wanderer hints. Appending is safe by
+// 176 -> 189 for the thirteen new wanderer hints, 189 -> 194 for the
+// vanilla-walkthrough batch (fickle fuser, maze directions, fairy thanks),
+// 194 -> 195 for the hub sign's farewell line.
+// Appending is safe by
 // construction: everything the arithmetic addresses lives at 92 or below,
 // and nothing reads this bank by "last entry". The assert stays a tripwire
 // on the table's total shape - if it fires again, check whether the new
 // lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
 // (not fine, the arithmetic has moved).
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 189) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 195) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -4634,9 +4662,11 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     // a Lantern because of that; the walked survey says otherwise, and the
     // survey wins: the entrance and the E->S crossing are walkable with no
     // Lantern at all, so a run drawn here without one is playable, not
-    // stranded. What the Lantern really gates is the Lost Woods maze and
-    // everything past it, which is enforced below as a gated zone rather
-    // than here as a region-wide price.
+    // stranded. The Lantern used to be read as the gate on the Lost Woods
+    // maze too; it is not (Oct 2026) - the maze's signs read out the run's
+    // route and Ezlo speaks each step to a lantern-less player
+    // (QuickStartMazeMonitor), so the graveyard zone below asks for the key
+    // alone.
     // And it is a ONE-WAY VALVE: in from North Hyrule Field's WNW border,
     // out to Trilby's north edge, with no route back up inside the room.
     { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 296, 856, 0, 0, 0, 0,
@@ -5276,8 +5306,21 @@ static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
     if (region->area == AREA_LAKE_HYLIA && region->room == ROOM_LAKE_HYLIA_MAIN) {
         return TRUE;
     }
+    // Mount Crenel's Base is OUT, per the user (Oct 2026): "the boss is
+    // currently squeezed in a tiny area right by the entrance". The parity
+    // run above only ever proved the family composes and the fight
+    // finishes; it said nothing about there being room to fight it in, and
+    // there is not. The region's arrival component is the 52-tile entrance
+    // ledge (sQuickStartMtCrenelEnemyOffsets), and the reward spot the boss
+    // spawns at is ten tiles along it - every other part of the mountain is
+    // behind the bombable wall or the climb, so there is no larger arena to
+    // move it to without the Bombs the region does not promise. The
+    // mountain already withdrew its wave rewards for a related reason
+    // (QuickStartRegionAllowsWave); its boss goes the same way, and with
+    // it the BOSS carrier and the chain's BOSS step stop landing there
+    // (both already consult this function).
     if (region->area == AREA_MT_CRENEL && region->room == ROOM_MT_CRENEL_ENTRANCE) {
-        return TRUE;
+        return FALSE;
     }
     if (region->area != AREA_HYRULE_FIELD) {
         return FALSE;
@@ -9314,18 +9357,20 @@ static const QuickStartGatedZone sQuickStartGatedZones[] = {
     // them touch.
     //
     // The 262-tile MIDDLE (y 368-655) has no zone row because it has no
-    // spots: it is reached only by solving the Lost Woods maze, whose two
-    // doors are still cancelled by containment, so anything placed there
-    // would be an enemy nobody can kill and a wave that never clears.
+    // spots: it is reached only by solving the Lost Woods maze. (The maze
+    // doors themselves are open - walked Oct 2026, south door in, south
+    // border out - but nothing is placed in the middle, so a wave can
+    // never be waiting there for a player who has not solved it.)
     //
-    // The north component's row carries the LANTERN as well as the key.
-    // Getting to the gate at all means crossing that same dark maze, so the
-    // survey prices the graveyard at Lantern AND maze AND key. The
-    // maze-solved fact is not an inventory item and cannot be asked for
-    // here, but the Lantern is the gate ON the maze, so asking for it
-    // covers the ground the survey actually walked.
+    // The north component's row used to carry the LANTERN as well as the
+    // key, as "the gate ON the maze" that stands between the valley floor
+    // and this gate. The vanilla guide retired that reading (Oct 2026): the
+    // lantern only lights the sign that names each step, and the maze's
+    // signs already read out this run's route, which Ezlo now also speaks
+    // to a lantern-less player on every pass (QuickStartMazeMonitor). The
+    // maze costs nothing a run can lack, so the key is the whole price.
     { AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, 479, 64, 351,
-      ITEM_QST_GRAVEYARD_KEY, 0, ITEM_LANTERN_OFF },
+      ITEM_QST_GRAVEYARD_KEY, 0, 0 },
 
     // --- Lon Lon Ranch's two pockets ------------------------------------
     // Both come from the walked survey (tools/quickstart/world_reach.py),
@@ -11013,7 +11058,57 @@ static void QuickStartGetLadderContentOffset(s32 slotIndex, s16* contentX, s16* 
 // own reward-drop state); flag 4 = the one-time hint has been shown; flags
 // 5-6 = which wave is in progress, 0-2 (wave 1/2/3).
 #define QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG 4
+
+// ---- Dark wave rooms (Oct 2026, from the vanilla guide) --------------------
+//
+// Vanilla uses darkness as a SOFT gate everywhere it uses it - Veil Falls'
+// caves, the Temple's maze, the Palace's compass hall, Grimblade's dojo,
+// Percy's house: walkable blind, readable lit. A wave room rolled dark is
+// the same trade: nothing is blocked, the fight is just harder to read, and
+// a lit lantern shows the room - which is the first reason the Lantern has
+// had to exist in the item pool outside the Lost Woods.
+//
+// The darkness is vanilla's own. A DARKNESS tile entity does nothing but
+// call sub_0805BB00(level, 1): fill BG3, raise the LIGHT_MANAGER, set the
+// room's light level and the lantern-window light type. The level is what
+// vanilla's dark rooms author (tile_entity type=0x9, paramB=0x8000 -> 0x80);
+// 0 is pitch black, 0x100 is daylight. UnDarkRoom on the next room load
+// takes it down again, exactly as it would for a tile.
+//
+// Rolled once per visit where the wave room decides its variant, latched in
+// room flag 48 (gRoomVars, wiped with the room), applied once in flag 49.
+// Chance is five points per difficulty step - 15% at the shipped
+// difficulty 3, 60% at 12 - so it is seen early and common late.
+#define QUICKSTART_DARK_ROOM_FLAG 48
+#define QUICKSTART_DARK_APPLIED_FLAG 49
+#define QUICKSTART_DARK_ROOM_LIGHT 0x80
+extern void sub_0805BB00(u32 lightLevel, u32 lightType);
+
+static u32 QuickStartDarkRoomChance(u8 difficulty) {
+    if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
+        difficulty = QUICKSTART_MAX_DIFFICULTY;
+    }
+    return (u32)difficulty * 5;
+}
+
+static void QuickStartDarkRoomRoll(void) {
+    // No __umodsi3 in this libgcc: mask to 15 bits and use signed %.
+    if (((s32)(Random() & 0x7fff) % 100) < (s32)QuickStartDarkRoomChance(QuickStartGetDifficulty())) {
+        QsSetRoomFlag(QUICKSTART_DARK_ROOM_FLAG);
+    }
+}
+
+static void QuickStartDarkRoomApply(void) {
+    if (!QsCheckRoomFlag(QUICKSTART_DARK_ROOM_FLAG) || QsCheckRoomFlag(QUICKSTART_DARK_APPLIED_FLAG)) {
+        return;
+    }
+    QsSetRoomFlag(QUICKSTART_DARK_APPLIED_FLAG);
+    sub_0805BB00(QUICKSTART_DARK_ROOM_LIGHT, 1);
+}
 #define QUICKSTART_WAVE_ROOM_WAVE_BIT(b) (5 + (b)) // b = 0,1
+// flagBase + 7: "this visit has been reconciled against the seam record and
+// the survive clock" (QuickStartSetupWaveRoomContent). Last of the 8.
+#define QUICKSTART_WAVE_ROOM_SYNCED_FLAG 7
 
 static u8 QuickStartWaveRoomGetWave(u32 flagBase) {
     return (QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_WAVE_BIT(0)) ? 1 : 0) |
@@ -12339,8 +12434,36 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     // Grimblade's seam wiped these very flags mid-fight), and so does a
     // live survive clock, for the same seam; a RUNNING timed quest owns
     // the HUD clock, so those visits are always the gauntlet.
+    QuickStartDarkRoomApply();
+    // ABANDONED IS NOT CLEARED. The seam record and the survive clock both
+    // outlive the room on purpose (a seam scroll wipes the room flags
+    // mid-fight), and both used to be taken at their word on the first
+    // frame of every visit. A door is not a seam: leaving through one
+    // deletes the wave, and coming back found a live record whose wave
+    // had "no enemies left" - so it cleared, advanced, and dealt the next
+    // one. Measured (tools: scratchpad wave_reentry.py): enter, leave,
+    // re-enter three times with no kills - wave 0, 1, 2, reward. The
+    // user's report exactly. The tell is the enemies themselves: across a
+    // seam they persist (ENT_PERSIST, the leash below hauls them back), so
+    // a record or clock with NONE of ours alive anywhere on its first
+    // frame here is a fight that was walked out on, and it is forgotten so
+    // the gauntlet - or the clock - starts over from the beginning. Once
+    // per visit; after this frame the room flags carry the truth.
+    if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_SYNCED_FLAG)) {
+        QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_SYNCED_FLAG);
+        if (QuickStartCountRoomEnemies() == 0) {
+            if (QuickStartGauntletIsHere() && CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED)) {
+                QuickStartGauntletForget();
+            }
+            if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE)) {
+                ClearLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE);
+                gSave.timer4 = 0;
+            }
+        }
+    }
     if (!QsCheckRoomFlag(flagBase + 1)) {
         QsSetRoomFlag(flagBase + 1);
+        QuickStartDarkRoomRoll();
         if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE) && gSave.timer4 != 0) {
             QsSetRoomFlag(flagBase + 3);
             QsSetRoomFlag(flagBase + 0);
@@ -18184,13 +18307,25 @@ static void QuickStartSelectHintMonitor(void) {
 
 // One hint per step, fired once the player is settled somewhere the
 // textbox will not land on top of a room transition.
+// Can the player be handed something RIGHT NOW - an item-get sequence
+// started, an Ezlo line queued - and have it reach them? Not mid-cutscene,
+// not swimming, not with a textbox open or another queued action waiting,
+// not with a door already firing, and not while another item-get is on
+// screen. Both the chain's payout and its hints wait on this, which is
+// what orders them: the item first (the player is frozen holding it up),
+// the next step's hint once they are free again.
+static bool32 QuickStartPlayerCanBeHandedItem(void) {
+    return gPlayerEntity.base.action == PLAYER_NORMAL && !(gPlayerState.flags & PL_BUSY) &&
+           gPlayerState.swim_state == 0 && gPlayerState.queued_action == 0 && !(gMessage.state & MESSAGE_ACTIVE) &&
+           !gRoomTransition.transitioningOut && !QuickStartItemGetCutsceneRunning();
+}
+
 static void QuickStartChainHintOnce(s32 step) {
     s32 hint, ring;
     if (gSave.chain_hinted & (1 << step)) {
         return;
     }
-    if (!QuickStartRoomSettled() || (gPlayerState.flags & PL_BUSY) ||
-        gPlayerState.queued_action != 0) {
+    if (!QuickStartRoomSettled() || !QuickStartPlayerCanBeHandedItem()) {
         return;
     }
     if (GetInventoryValue(ITEM_COMPASS) != 0) {
@@ -18253,10 +18388,28 @@ static void QuickStartChainMonitor(void) {
     // item every time.
     reward = (u16)QuickStartChainPickItem((u32)step * 13 + 1);
     if (reward != 0) {
-        s16 lx = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-        s16 ly = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-        if (!QuickStartRoomSettled() || !QuickStartRewardDelivered(reward, lx, ly)) {
+        // FORCED into the player's hands, not dropped at their feet. The
+        // drop lost items: the step completes wherever the last enemy died
+        // or the lever was struck, Ezlo's hint for the next step plays
+        // first, and a player who walked off during it left a KEY item on
+        // a floor the room load then wiped - gone for the run, with the
+        // chain's next step already priced against owning it (user
+        // report). So the reward is vanilla's own item-get sequence (the
+        // one GivePlayerItem runs): Link holds it up, the item-get line
+        // plays, GiveItem lands it in the inventory, and nothing is ever on
+        // the floor to lose. Equipment with no floor form takes the direct
+        // grant it always did. Waits for a frame the player can actually
+        // be handed something - the pick is a pure function of the seed
+        // and the step, so retrying asks for the same item every time -
+        // and QuickStartChainHintOnce waits on the same test, which is
+        // what puts the next step's hint AFTER the item instead of before.
+        if (!QuickStartRoomSettled() || !QuickStartPlayerCanBeHandedItem()) {
             return;
+        }
+        if (QuickStartItemNeedsDirectGrant(reward)) {
+            QuickStartSpawnRewardEntity(reward, 0, 0);
+        } else {
+            InitItemGetSequence(reward, 0, 0);
         }
     }
     gSave.chain_progress = (u8)(step + 1);
@@ -18357,9 +18510,11 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         }
         return;
     }
+    QuickStartDarkRoomApply();
     if (!QsCheckRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
         QsSetRoomFlag(QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
+        QuickStartDarkRoomRoll();
     }
     difficulty = QuickStartGetDifficulty();
     wave = QuickStartWaveRoomGetWave(0);
@@ -21981,6 +22136,23 @@ static void QuickStartRoomMonitor(void) {
                     sQuickStartRoomContentSites[site].room == ROOM_GREAT_FAIRIES_GRAVEYARD) {
                     continue;
                 }
+                // The Crenel and Minish Woods Great Fairy rooms keep their
+                // VANILLA content (Oct 2026, from the walkthrough): the
+                // fairy and her cutscene orchestrator are left standing
+                // rather than swept, so the honesty test plays exactly as
+                // written - throw a bomb in the Crenel pool, or offer the
+                // woods fairy your rupees - and the only thing that changes
+                // is the payout, which the two scripts hand to
+                // QuickStartFairyHonestyReward under QUICKSTART. Skipping
+                // the site dispatch is what keeps the room un-swept; the
+                // site row stays for the containment blessing and for the
+                // chain, whose EVENT step the reward resolves by setting
+                // this site's DONE bit.
+                if (sQuickStartRoomContentSites[site].area == AREA_GREAT_FAIRIES &&
+                    (sQuickStartRoomContentSites[site].room == ROOM_GREAT_FAIRIES_CRENEL ||
+                     sQuickStartRoomContentSites[site].room == ROOM_GREAT_FAIRIES_MINISH_WOODS)) {
+                    continue;
+                }
                 QuickStartSetupContentSite(site);
             }
         }
@@ -23548,6 +23720,29 @@ static void QuickStartSacrificeMonitor(void) {
     }
 }
 
+// ==================== The Great Fairies' honesty tests ====================
+//
+// Vanilla's two honesty quizzes - the Crenel fairy asks whether it was the
+// golden or the silver bomb you threw (neither), the Minish Woods fairy asks
+// for all your rupees (say yes and she takes none) - run unmodified in their
+// rooms (the site dispatch leaves both un-swept, see QuickStartRoomMonitor).
+// Only the payout is ours: script_GreatFairyBombs and script_GreatFairyRupees
+// `Call` this under QUICKSTART where vanilla hands over a named upgrade. A
+// RARE draw at the player's feet, the same purse the stealth partner pays
+// from, and the room's content-site DONE bit so a chain EVENT step placed
+// here is satisfied by passing the test. Lying keeps vanilla's own price:
+// the thunderbolt and an emptied bomb bag.
+void QuickStartFairyHonestyReward(Entity* this, ScriptExecutionContext* context) {
+    s16 x, y;
+    s32 site = QuickStartFindContentSiteForCurrentRoom();
+    QuickStartPlayerDropSpot(&x, &y);
+    QuickStartSpawnRewardEntity(QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
+                                x, y);
+    if (site >= 0) {
+        QsSetSiteFlag(GF_CONTENT_SITE_DONE(site));
+    }
+}
+
 static void QuickStartMazeMonitor(void) {
     s32 i;
     if (gRoomControls.area != AREA_ROYAL_VALLEY || gRoomControls.room != ROOM_ROYAL_VALLEY_FOREST_MAZE) {
@@ -23562,6 +23757,21 @@ static void QuickStartMazeMonitor(void) {
         if (ent->kind == ENEMY && QuickStartEntityInCurrentRoom(ent)) {
             DeleteEntity(ent);
         }
+    }
+    // THE ROUTE, SPOKEN. The vanilla guide makes the point the survey had
+    // been pricing around: the maze is knowledge, not kit. The lantern never
+    // opened anything here - it only lit the sign that tells the step - and
+    // a player who knows the step walks the dark. The signs already read
+    // out this run's route (QuickStartMazeSignPos); for a player with no
+    // lantern to find them by, Ezlo says the same word on every pass, so the
+    // route is knowable with no item at all and the Royal Valley survey can
+    // stop asking for one (world_reach.py, the RV block). Steps 1-5 are the
+    // five directions; 0, 6 and 7 are the vanilla state machine's reset,
+    // cleared and came-in-from-the-north values, which have nothing to say.
+    if (!GetInventoryValue(ITEM_LANTERN_OFF) && !GetInventoryValue(ITEM_LANTERN_ON) && gArea.unk_0c_1 >= 1 &&
+        gArea.unk_0c_1 <= 5) {
+        u32 dir = QuickStartMazeStep(gArea.unk_0c_1);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (dir == 0) ? 190 : (dir == 1) ? 191 : 192), 0);
     }
     {
         s32 n4 = (s32)ARRAY_COUNT(sQuickStartLevel4);
@@ -23611,7 +23821,12 @@ static void QuickStartTinglePayout(void) {
             continue;
         }
         QsSetFlag(GF_TINGLE_PAID_BIT(i));
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 203), 0);
+        // No Ezlo line here any more. The user counted the boxes after a
+        // Tingle fusion - Tingle's own, then Ezlo's, then the container's
+        // "You got a Heart Container" - and cut Ezlo's: the fusion text and
+        // the item-get text already say everything his did. gCustomStrings
+        // 203 stays in the table (bank one is addressed by index) but is
+        // unreferenced.
     }
 }
 
@@ -23816,6 +24031,33 @@ static bool32 QuickStartIsOurNpc(Entity* ent, s32 roomIndex) {
     return (ent->flags & ENT_SCRIPTED) != 0 && ent->id == QuickStartFuserCastId(roomIndex);
 }
 
+// ---- Fickle fusers (Oct 2026, from the vanilla guide) ----------------------
+//
+// Vanilla's GetFusionToOffer rolls a per-fuser stability against
+// Random() % 100 and simply refuses - the guide's "*FICKLE*" markers, "exit
+// the school and re-enter it until she does". That is the economy knob the
+// vision asks for ("abundant early, grind-worthy later") already in the
+// engine's shape, so it comes across as a chance that climbs with
+// difficulty: nothing at 0-1, four points a step after, 48% at the top.
+// A fickle fuser keeps the face and the spot and loses only the L prompt
+// (script_QuickStartFuserFickle); the roll is per sprite per visit.
+extern Script script_QuickStartFuserFickle;
+
+static u32 QuickStartFuserFickleChance(u8 difficulty) {
+    if (difficulty <= 1) {
+        return 0;
+    }
+    if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
+        difficulty = QUICKSTART_MAX_DIFFICULTY;
+    }
+    return (u32)difficulty * 4;
+}
+
+static bool32 QuickStartFuserRollFickle(void) {
+    // No __umodsi3 in this libgcc: mask to 15 bits and use signed %.
+    return ((s32)(Random() & 0x7fff) % 100) < (s32)QuickStartFuserFickleChance(QuickStartGetDifficulty());
+}
+
 static void QuickStartSpawnRegionFusers(void) {
     u8 hostRoom[QUICKSTART_FUSER_COUNT_MAX], hostSpot[QUICKSTART_FUSER_COUNT_MAX];
     s32 i, hereRoom;
@@ -23874,62 +24116,112 @@ static void QuickStartSpawnRegionFusers(void) {
         return;
     }
     castId = (hereRoom >= 0) ? QuickStartFuserCastId(hereRoom) : (u8)ZELDA;
-    for (; i < QUICKSTART_FUSER_COUNT; i++) {
-        const QuickStartFuser* fuser = &sQuickStartFusers[i];
-        s32 worldX, worldY, e;
-        s16 localX, localY;
-        bool32 alreadyThere;
-        if (hostRoom[i] != (u8)hereRoom) {
-            continue;
-        }
-        // The fused check comes AFTER the placement, which is decided for
-        // every row whether or not its gate is still shut - so opening one
-        // gate does not shuffle the fusers that are still standing.
-        if (CheckKinstoneFused(fuser->kinstoneId)) {
-            continue;
-        }
-        localX = sQuickStartFuserSpots[hereRoom].spots[hostSpot[i]][0];
-        localY = sQuickStartFuserSpots[hereRoom].spots[hostSpot[i]][1];
-        worldX = gRoomControls.origin_x + localX;
-        worldY = gRoomControls.origin_y + localY;
-        // Position is the identity check. No two spots in a region are within
-        // six tiles of each other (find_fuser_spots.py enforces that), so an
-        // exact coordinate match can only ever be this row's own sprite - and
-        // it survives the entity list being rebuilt, which a "did I spawn
-        // yet" flag would not.
-        // The identity check has to ask about the face this room actually
-        // drew, not about Zelda - otherwise every frame would fail to
-        // recognize the fuser it spawned last frame and spawn another.
-        alreadyThere = FALSE;
-        for (e = 0; e < MAX_ENTITIES; e++) {
-            if (gEntities[e].base.kind == NPC && gEntities[e].base.id == castId &&
-                gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
-                alreadyThere = TRUE;
-                break;
+    if (hereRoom >= 0) {
+        // SHARED OFFERS (Oct 2026, from the vanilla guide). Vanilla's "shared
+        // fusions" are a pool any of ~45 fusers can pay out once; the
+        // carry-over here is that WHICH gate a standing fuser offers is no
+        // longer the table row that owns its spot. The room's still-shut
+        // gates are dealt across the room's placed spots by a permutation,
+        // so the stone that opened the pond last run offers the chest this
+        // run. The fusion menu still shows the world-event marker, so the
+        // player learns where a fusion lands by asking, not by position.
+        //
+        // The permutation is keyed, not rolled: run seed, this room, and
+        // how many of the room's gates are already open. A rolled shuffle
+        // would re-deal on every pass of this function, and a pass can be
+        // PARTIAL (the gfx gate below breaks out), which would stand two
+        // sprites on one gate and none on another. Keyed, every pass of a
+        // visit deals the same hand; a completed fusion changes the key,
+        // and the room reload that follows a fusion respawns the set anyway.
+        u8 rows[QUICKSTART_FUSER_COUNT_MAX];
+        u8 ids[QUICKSTART_FUSER_COUNT_MAX];
+        s32 n = 0, k, fusedCount = 0;
+        u32 h;
+        for (i = 0; i < QUICKSTART_FUSER_COUNT; i++) {
+            if (hostRoom[i] != (u8)hereRoom) {
+                continue;
             }
+            // The fused check comes AFTER the placement, which is decided
+            // for every row whether or not its gate is still shut - so
+            // opening one gate does not move the fusers still standing.
+            if (CheckKinstoneFused(sQuickStartFusers[i].kinstoneId)) {
+                fusedCount++;
+                continue;
+            }
+            rows[n] = (u8)i;
+            ids[n] = sQuickStartFusers[i].kinstoneId;
+            n++;
         }
-        if (alreadyThere) {
-            continue;
+        h = ((u32)gSave.run_seed + 0x3A5u + (u32)hereRoom * 0x9Fu + (u32)fusedCount * 0x1F1u) * 0x9E3779B9u;
+        h ^= h >> 15;
+        h = h * 0x2C1B3C6Du;
+        h ^= h >> 12;
+        for (k = n - 1; k > 0; k--) {
+            s32 j;
+            u8 t;
+            h = h * 1103515245u + 12345u;
+            // No __umodsi3 in this libgcc: mask to 15 bits and use signed %.
+            j = (s32)((h >> 8) & 0x7fff) % (k + 1);
+            t = ids[k];
+            ids[k] = ids[j];
+            ids[j] = t;
         }
-        if (!QuickStartGfxBudgetForSpawn()) {
-            complete = FALSE;
-            break;
-        }
-        {
-            // This room's drawn face (sQuickStartFuserCast). Every fuser in
-            // a room shares it, so the whole set still costs a single gfx
-            // slot - the property the old Zelda-only rule had, kept.
-            Entity* npc = CreateNPC(castId, 0, 0);
-            if (npc == NULL) {
+        for (k = 0; k < n; k++) {
+            s32 worldX, worldY, e;
+            s16 localX, localY;
+            bool32 alreadyThere;
+            localX = sQuickStartFuserSpots[hereRoom].spots[hostSpot[rows[k]]][0];
+            localY = sQuickStartFuserSpots[hereRoom].spots[hostSpot[rows[k]]][1];
+            worldX = gRoomControls.origin_x + localX;
+            worldY = gRoomControls.origin_y + localY;
+            // Position is the identity check. No two spots in a region are
+            // within six tiles of each other (find_fuser_spots.py enforces
+            // that), so an exact coordinate match can only ever be this
+            // spot's own sprite - and it survives the entity list being
+            // rebuilt, which a "did I spawn yet" flag would not.
+            // The identity check has to ask about the face this room
+            // actually drew, not about Zelda - otherwise every frame would
+            // fail to recognize the fuser it spawned last frame and spawn
+            // another.
+            alreadyThere = FALSE;
+            for (e = 0; e < MAX_ENTITIES; e++) {
+                if (gEntities[e].base.kind == NPC && gEntities[e].base.id == castId &&
+                    gEntities[e].base.x.HALF.HI == worldX && gEntities[e].base.y.HALF.HI == worldY) {
+                    alreadyThere = TRUE;
+                    break;
+                }
+            }
+            if (alreadyThere) {
+                continue;
+            }
+            if (!QuickStartGfxBudgetForSpawn()) {
                 complete = FALSE;
                 break;
             }
-            npc->x.HALF.HI = worldX;
-            npc->y.HALF.HI = worldY;
-            npc->collisionLayer = 1;
-            UpdateSpriteForCollisionLayer(npc);
-            npc->direction = IdleSouth;
-            QuickStartMakeNpcFuser(npc, fuser->kinstoneId);
+            {
+                // This room's drawn face (sQuickStartFuserCast). Every fuser
+                // in a room shares it, so the whole set still costs a single
+                // gfx slot - the property the old Zelda-only rule had, kept.
+                Entity* npc = CreateNPC(castId, 0, 0);
+                if (npc == NULL) {
+                    complete = FALSE;
+                    break;
+                }
+                npc->x.HALF.HI = worldX;
+                npc->y.HALF.HI = worldY;
+                npc->collisionLayer = 1;
+                UpdateSpriteForCollisionLayer(npc);
+                npc->direction = IdleSouth;
+                // FICKLENESS. Rolled once, here, as the sprite is born -
+                // and so re-rolled by the next visit, which is how vanilla's
+                // fickle fusers work too. The first-dealt fuser of a room
+                // never is, so a region always has a gate on offer.
+                if (k > 0 && QuickStartFuserRollFickle()) {
+                    QuickStartMakeNpcTalkable(npc, &script_QuickStartFuserFickle);
+                } else {
+                    QuickStartMakeNpcFuser(npc, ids[k]);
+                }
+            }
         }
     }
     // Tingle rides the same loop's tail: same identity check, same
@@ -24060,6 +24352,15 @@ static s32 QuickStartChoiceRowRemaining(void) {
 // a soft-lock, not a glitch. CreateItemEntity builds exactly this pair
 // (LINK_HOLDING_ITEM plus the LINK_ANIMATION that drives its frames, both
 // kind OBJECT), and both are deleted when the sequence ends.
+//
+// MEASURED NEVER TRUE (Oct 2026): both halves of the pair are AUX player
+// entities (CreateAuxPlayerEntity, gAuxPlayerEntities), not members of
+// gEntities, so this scan does not see them and every phase has advanced
+// two frames after its pick for as long as it has existed. Left as it is
+// on purpose: the rounds' timing is proven with it answering FALSE, and a
+// guard that started working would hold each phase for the whole pose
+// and textbox - a change nobody has asked for. The MESSAGE_ACTIVE check
+// on phase 5 is the one that actually waits.
 static bool32 QuickStartItemGetCutsceneRunning(void) {
     s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
@@ -24182,20 +24483,31 @@ static void QuickStartSpawnChoiceRow(u8 catMask, u8 tierMask) {
 #define QUICKSTART_CHOICE_ROW_3_CATS QS_CAT_SKILL
 #define QUICKSTART_CHOICE_ROW_3_TIERS QS_TIER_NOT_RARE
 
-static void QuickStartSpawnStarterChoice(void) {
-    Entity* npc;
-
-    QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_1_CATS, QUICKSTART_CHOICE_ROW_1_TIERS);
-
-    npc = CreateNPC(ZELDA, 0, 0);
+// The hub's sign: a ZELDA-faced NPC one row above the item row. It is
+// torn down with every row (QuickStartDeleteGroundItemsAndSigns, so the
+// interaction table can be reset cleanly) and put straight back by the
+// phase that spawns the next row - and, since Oct 2026, by the phase that
+// ends the selection too, with script_QuickStartChosen in place of the
+// instructions. Before that the sign simply vanished with the last row,
+// which the user saw as "the Zelda sprite in the room disappears" the
+// moment the skill was taken.
+#define QUICKSTART_HUB_SIGN_X 120
+#define QUICKSTART_HUB_SIGN_Y 40
+static void QuickStartSpawnHubSign(Script* script) {
+    Entity* npc = CreateNPC(ZELDA, 0, 0);
     if (npc != NULL) {
-        npc->x.HALF.HI = gRoomControls.origin_x + 120;
-        npc->y.HALF.HI = gRoomControls.origin_y + 40;
+        npc->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SIGN_X;
+        npc->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SIGN_Y;
         npc->collisionLayer = 1;
         npc->flags |= ENT_PERSIST;
         UpdateSpriteForCollisionLayer(npc);
-        QuickStartMakeNpcTalkable(npc, &script_QuickStartChooseOne);
+        QuickStartMakeNpcTalkable(npc, script);
     }
+}
+
+static void QuickStartSpawnStarterChoice(void) {
+    QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_1_CATS, QUICKSTART_CHOICE_ROW_1_TIERS);
+    QuickStartSpawnHubSign(&script_QuickStartChooseOne);
 }
 
 // Scan rather than a flag, since this needs to survive repeated calls
@@ -24370,6 +24682,21 @@ static void QuickStartUpdateItemChoice(void) {
         if (phase == 5 && (gMessage.state & MESSAGE_ACTIVE)) {
             return;
         }
+        // The skill's "You learned the secret ... technique!" line needs
+        // nothing from here any more. It never did: the floor pickup runs
+        // vanilla's own item-get pair (CreateItemEntity's LINK_ANIMATION +
+        // LINK_HOLDING_ITEM, both AUX player entities, which is why the
+        // scan above never sees them), and that pair reaches its textbox
+        // about ten frames after the pick. What killed it was the
+        // RELOAD_ALL this branch used to end phase 5 with, three frames
+        // after the pick - the reload recycled the pair before it spoke.
+        // Measured both ways (Oct 2026): with the reload, no message and
+        // the player's action never leaves PLAYER_NORMAL; without it, the
+        // vanilla line prints and closes on A. An explicit
+        // InitItemGetSequence here was tried first and produced the line
+        // TWICE, so it went. The Sep 2026 "fix" that removed the phase-4
+        // scan never landed a replacement; this is the replacement, and
+        // it is a deletion.
         // These were spawned with ENT_PERSIST so an incidental reload
         // elsewhere (e.g. a menu-triggered one) can't wipe them out before
         // the player has chosen - which also means they won't get cleared
@@ -24394,6 +24721,7 @@ static void QuickStartUpdateItemChoice(void) {
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_2_CATS, QUICKSTART_CHOICE_ROW_2_TIERS);
+            QuickStartSpawnHubSign(&script_QuickStartChooseOne);
             QuickStartHubSetPhase(2);
         } else if (phase == 3) {
             // No manual maxHealth bump here any more. This used to add 8
@@ -24414,6 +24742,7 @@ static void QuickStartUpdateItemChoice(void) {
             gPlayerEntity.base.x.HALF.HI = gRoomControls.origin_x + QUICKSTART_HUB_SPAWN_X;
             gPlayerEntity.base.y.HALF.HI = gRoomControls.origin_y + QUICKSTART_HUB_SPAWN_Y;
             QuickStartSpawnChoiceRow(QUICKSTART_CHOICE_ROW_3_CATS, QUICKSTART_CHOICE_ROW_3_TIERS);
+            QuickStartSpawnHubSign(&script_QuickStartChooseOne);
             QuickStartHubSetPhase(4);
         } else {
             // UpdatePlayerSkills (playerUtils.c) is what actually turns the
@@ -24440,22 +24769,16 @@ static void QuickStartUpdateItemChoice(void) {
             // "spawn if the room is empty" poll resurrected enemies the
             // player had already killed every time they walked back in.
             QuickStartHubSetPhase(10);
-            // reload_flags alone is not self-executing: it's only consumed by
-            // UpdateScroll's Scroll0/Scroll2 handlers (see scroll.c), which are
-            // what actually clear it back to 0 and let GameMain_ChangeRoom hand
-            // control back to GameMain_Update. The vanilla door-transition path
-            // (sub_0807BD14 in playerUtils.c) always pairs reload_flags = 1 with
-            // scrollAction = 2 for exactly this reason. scrollAction's steady-
-            // state value during normal play is 1 (Scroll1, plain camera
-            // follow), which never touches reload_flags at all - so setting
-            // reload_flags without also resetting scrollAction here left it
-            // permanently stuck at 1 with the room transition never completing:
-            // a real, silent soft-lock (substate parked on GAMEMAIN_CHANGEROOM
-            // forever), not a crash - this is what looked like "the game
-            // freezes" during real play. Scroll0 is the handler that clears
-            // reload_flags and hands substate back, so force that path.
-            gRoomControls.scrollAction = 0;
-            gRoomControls.reload_flags = RELOAD_ALL;
+            // The sign stays, with its goodbye line.
+            QuickStartSpawnHubSign(&script_QuickStartChosen);
+            // RETIRED (Oct 2026): the RELOAD_ALL that used to end the
+            // selection. It was the combat room's reload - a clean slate
+            // for wave 1 - and with no combat phase it had nothing left to
+            // do except re-run the room's graphics load under a sign and a
+            // trophy case that were staying anyway. (Its own history: a
+            // reload_flags write without scrollAction = 0 parked the game
+            // in GAMEMAIN_CHANGEROOM forever - the "freeze" of the early
+            // builds. Nothing here needs either now.)
         }
         return;
     }

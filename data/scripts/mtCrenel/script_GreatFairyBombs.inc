@@ -25,8 +25,20 @@ script_0800B734:
 script_0800B794:
 	WaitUntilTextboxCloses
 	SetLocalFlag IZUMI_02_FAIRY
+.ifdef QUICKSTART
+	@ QUICKSTART: the honesty test is vanilla's, the prize is ours. A RARE
+	@ draw lands at the player's feet (src/game.c QuickStartFairyHonestyReward),
+	@ the fairy says her thanks, and the vanilla fade-out ends the scene. The
+	@ item-get wait at script_0800B698 is skipped: a dropped item has no
+	@ item-get sequence to wait on.
+	Call QuickStartFairyHonestyReward
+	MessageNoOverlap TEXT_CUSTOM2, 193
+	WaitUntilTextboxCloses
+	Jump script_0800B6A6
+.else
 	GivePlayerItem ITEM_BOMBBAG
 	Jump script_0800B698
+.endif
 script_0800B7A2:
 	MessageNoOverlap TEXT_ITEM_GET, 0x90
 	WaitUntilTextboxCloses

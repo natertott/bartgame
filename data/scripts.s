@@ -595,12 +595,14 @@
 
 .ifdef QUICKSTART
 	.include "data/scripts/quickstart/script_QuickStartChooseOne.inc"
+	.include "data/scripts/quickstart/script_QuickStartChosen.inc"
 	.include "data/scripts/quickstart/script_QuickStartFountain.inc"
 	.include "data/scripts/quickstart/script_QuickStartMerchant.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc0.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc1.inc"
 	.include "data/scripts/quickstart/script_QuickStartLadderNpc2.inc"
 	.include "data/scripts/quickstart/script_QuickStartFuser.inc"
+	.include "data/scripts/quickstart/script_QuickStartFuserFickle.inc"
 	.include "data/scripts/quickstart/script_QuickStartHunt.inc"
 	.include "data/scripts/quickstart/script_QuickStartScav.inc"
 	.include "data/scripts/quickstart/script_QuickStartStealth.inc"
