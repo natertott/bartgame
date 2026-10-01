@@ -27,6 +27,16 @@
   gate it opens, and which droppable piece id matches its shape. Re-run it
   after adding a region or a ? room - a new room can drag in gates the
   fuser table does not know about.
+- `guide_reach.py` - reachability for the places the ring never visits
+  (Veil Falls, Hyrule Castle and the Sanctuary, Dark Hyrule Castle, the
+  Cloud Tops, all six dungeons and the Royal Crypt), transcribed from the
+  vanilla walkthrough in `world_reach.py`'s vocabulary plus `KEYS(n)`,
+  `BIG_KEY` and `CLONES(n)`. Feeds nothing. `--check` validates every room
+  name against `roomid.h`; `--adjacency AREA` reads `room_headers.s` for
+  rooms that share an edge (dungeon rooms have no transition rows);
+  `--summary` is the finding - how much of each dungeon sits behind the
+  sword-level clone puzzles this mode cannot pay. Static; no emulator.
+  `docs/QUICKSTART_GUIDE_FINDINGS.md` is the write-up.
 - `find_fuser_spots.py` - proposes `sQuickStartFusers` rows. Boots each
   region with its gates still shut, floods the walkable graph from the
   region entrance, and picks the closest fully-open tile to each gate that

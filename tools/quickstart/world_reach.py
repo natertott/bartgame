@@ -315,23 +315,63 @@ d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, [[BOMBS, BRACELETS]],
 # could never reach: measured over 50,000 simulated runs, Castle Garden was
 # counted reachable in 7% of them - exactly the share of runs that DROP
 # there, since the drop region is admitted unconditionally.
+#
+# SUPPLEMENTED from the vanilla walkthrough (docs/QUICKSTART_GUIDE_FINDINGS.md),
+# Oct 2026. Three things the derived block had wrong or missing, each checked
+# against the ROM's own data before it was changed:
+#   * The two fountain rooms are NOT behind the Minish holes. Vanilla drains
+#     each fountain with a kinstone fusion (shared fusions #78/#79 in the
+#     guide); the world events are KINSTONE_18 / KINSTONE_35, type 5 "remove
+#     water / open path", at (776,72) and (232,72) - the two fountain doors -
+#     and both fusers are live in this mode's Castle Garden fuser table
+#     (tools/quickstart/kinstone_audit.py). So the price is the fusion.
+#   * Grimblade's dojo was missing entirely - the ladder is under bushes in
+#     the garden's south-east corner (door at (936,388), bush object at
+#     (936,376) in entity_headers.s). A sword is the whole cost. It is content
+#     site 16, which the simulation listed as never reachable.
+#   * The hedge-maze ladder in the north-west corner leads through
+#     HYRULE_CASTLE_CELLAR into the castle's lower hall. Vanilla also makes
+#     the player sneak past guards to reach it; this mode clears GUARD_1
+#     every frame (QuickStartClearCastleGuards), so the bushes are the cost.
 region('CG', 'Hyrule Castle Garden', ('CASTLE_GARDEN', 'MAIN', 504, 480),
-       note='derived from the exit list and the site table, not walked')
+       note='derived from the exit list and the site table, not walked; '
+            'supplemented from the vanilla guide')
 d('CG', 'CASTLE_GARDEN', 'MAIN', 504, 36, FREE, 'exit, south to North Hyrule Field')
 d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '0', 136, 104, [[MINISH]])
 d('CG', 'CASTLE_GARDEN_MINISH_HOLES', '1', 136, 104, [[MINISH]])
 d('CG', 'MINISH_CRACKS', 'HYRULE_CASTLE_GARDEN', 152, 104, [[MINISH]])
-d('CG', 'GARDEN_FOUNTAINS', 'EAST', 120, 80, [[MINISH]],
-  'reached through the minish holes above')
-d('CG', 'GARDEN_FOUNTAINS', 'WEST', 120, 80, [[MINISH]],
-  'reached through the minish holes above')
+d('CG', 'GARDEN_FOUNTAINS', 'EAST', 120, 80, [[FUSION]],
+  'the north-east fountain, drained by a kinstone fusion (KINSTONE_18); a '
+  'heart piece in vanilla')
+d('CG', 'GARDEN_FOUNTAINS', 'WEST', 120, 80, [[FUSION]],
+  'the north-west fountain, drained by a kinstone fusion (KINSTONE_35); a '
+  'fairy fountain in vanilla')
+d('CG', 'DOJOS', 'TO_GRIMBLADE', 120, 104, [[SWORD]],
+  'ladder under the bushes in the south-east corner; guide: "slash the '
+  'bushes there to reveal a ladder leading down"')
+d('CG', 'DOJOS', 'GRIMBLADE', 120, 88, [[SWORD]],
+  "Grimblade's dojo, through the room above; dark until its torches are lit "
+  'in vanilla, which a ? room does not care about')
+d('CG', 'HYRULE_CASTLE_CELLAR', '0', 104, 392, [[SWORD]],
+  'ladder under the bushes in the north-west hedge alcove; the tunnel lets '
+  "out in the castle's lower hall (HYRULE_CASTLE/3). Not a content site - "
+  'recorded because it is the way INTO Hyrule Castle')
 
 # --- Royal Valley ----------------------------------------------------------
 region('RV', 'Royal Valley', ('ROYAL_VALLEY', 'MAIN', -536, 416),
        note='the only real entrance')
 d('RV', 'ROYAL_VALLEY', 'MAIN', 118, 1000, FREE, 'exit')
+d('RV', 'GREAT_FAIRIES', 'GRAVEYARD', 120, 120, [[BOMBS]],
+  "the Great Dragonfly Fairy's cave, content site. Added from the vanilla "
+  'guide (Oct 2026): "climb down ... see the lonely posts? Place a bomb '
+  'between them to blow up an entry" - right at the valley entrance, before '
+  'the maze, so bombs are the whole cost from this start')
 d('RV', 'ROYAL_VALLEY', 'FOREST_MAZE', -248, -3240, FREE,
-  'free to reach; the LANTERN is what solves it')
+  'free to reach; the LANTERN is what solves it. NOTE from the guide: the '
+  'maze is a FIXED sequence (up, left, left, up, right, up; south exits it '
+  'at once) and the lantern only lets you read the signs that say so - a '
+  'player who knows the path walks it dark. See the findings doc for the '
+  'design lever this hands Royal Valley.')
 d('RV', 'ROYAL_VALLEY', 'MAIN', -888, 440, [[LANTERN, MAZE]])
 d('RV', 'HOUSE_INTERIORS_2', 'DAMPE', -376, -312, [[LANTERN, MAZE]])
 d('RV', 'ROYAL_VALLEY', 'MAIN', 244, 331, [[LANTERN, MAZE, GRAVEYARD_KEY]],
@@ -512,6 +552,10 @@ d('CREN', 'DOJOS', 'GRAYBLADE', 120, 160, [[GRIP, BRACELETS]],
   'the block push - priced at the bracelets like every other one')
 d('CREN', 'MT_CRENEL', 'CENTER', 504, 120, FREE)
 d('CREN', 'MT_CRENEL', 'WALL_CLIMB', 160, 377, [[GRIP]], 'by the fusion-revealed chest')
+d('CREN', 'GREAT_FAIRIES', 'CRENEL', 120, 120, [[GRIP, BOMBS]],
+  "the Great Mayfly Fairy's cave, content site. Added from the vanilla guide "
+  '(Oct 2026): half-way up Crenel Wall, "get on the right-side ledge, and '
+  'bomb the wall at its end" - so the climb plus a bomb')
 d('CREN', 'MT_CRENEL', 'TOP', 240, 151, [[GRIP]])
 d('CREN', 'MT_CRENEL', 'WALL_CLIMB', 104, 121, [[GRIP]])
 d('CREN', 'CRENEL_CAVES', 'HERMIT', 120, 120, [[GRIP]])
@@ -596,14 +640,17 @@ d('MW', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 456, 160, FREE, 'exit')
 d('MW', 'MINISH_WOODS', 'MAIN', 200, 374, FREE,
   'golden kinstone chest, tile (12,23) - reaching it costs nothing')
 d('MW', 'MINISH_WOODS', 'MAIN', 410, 699, FREE, 'heart piece, tile (25,43)')
-d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_BUSINESS_SCRUB', 120, 120, FREE,
-  "the business scrub's tree, tile (7,7). The survey says 'kinstone fusion "
-  "maybe?' and the ROM half agrees - KINSTONE_27's world event fires at "
-  "(528,456), which is this door - but the collision flood reaches it with "
-  "nothing. Recorded FREE, the cheaper of the two readings, and flagged: if "
-  "the door really is fusion-revealed this row is wrong and wants a fusion.")
-d('MW', 'CAVES', 'KINSTONE_BUSINESS_SCRUB', 121, 122, FREE,
-  'connected to the tree above, and carries the same fusion question')
+d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_BUSINESS_SCRUB', 120, 120, [[FUSION]],
+  "the business scrub's tree, tile (7,7). Was FREE with a flag on it - the "
+  "survey said 'kinstone fusion maybe?' and a collision flood reached the "
+  "door with nothing. The flood was wrong about the gate, not the geometry: "
+  "the vanilla guide opens this tree with Fusion #13 (the Castor Wilds "
+  "business scrub), KINSTONE_27's world event fires at (528,456), which is "
+  "this door, and this mode clears gSave.kinstones at boot and pre-fuses "
+  "only the three Castor statues - so the tree starts CLOSED every run. "
+  "Priced at the fusion; KINSTONE_27 has a live fuser in Minish Woods.")
+d('MW', 'CAVES', 'KINSTONE_BUSINESS_SCRUB', 121, 122, [[FUSION]],
+  'connected to the tree above, behind the same fusion')
 
 # --- one item each --------------------------------------------------------
 d('MW', 'LAKE_WOODS_CAVE', 'MAIN', 600, 767, [[MITTS]],
@@ -615,44 +662,48 @@ d('MW', 'MINISH_WOODS', 'MAIN', 667, 743, [[FUSION]],
   'golden fusion chest, tile (41,46) - the fusion is the whole cost')
 
 # --- the Minish Village route ---------------------------------------------
-# The Flippers here are the survey's own uncertainty, kept as a cost rather
-# than dropped: "there are some leaves that can transport you across the
+# The Flippers used to ride on every row here as the survey's own
+# uncertainty: "there are some leaves that can transport you across the
 # water if you don't have zoras flippers, but I'm not sure if they're gated
-# by a story flag event or not". Pricing the crossing at the Flippers is the
-# expensive reading; if the leaves turn out to be free, every row below gets
-# cheaper and a lot of Minish Woods opens up earlier.
-d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 136, 776, [[MINISH, FLIPPERS]],
-  'tile (8,48), the way in; the leaves may be a cheaper crossing - unmeasured')
-d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 106, 519, [[MINISH, FLIPPERS]],
+# by a story flag event or not". Answered, Oct 2026, from two directions.
+# The vanilla guide rides the leaves to the village at the very start of the
+# game with no items at all (Heart Piece #2 comes before the first dungeon);
+# and the leaves are LILYPAD_SMALL objects authored unconditionally into
+# MINISH_PATHS/ToMinishVillage's entity list (data/map/entity_headers.s) whose
+# only gate is `gPlayerState.flags & PL_MINISH` (src/object/lilypadSmall.c)
+# - no story flag anywhere. The crossing costs being Minish and nothing else.
+d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 136, 776, [[MINISH]],
+  'tile (8,48), the way in; the leaves are the crossing, and they are free')
+d('MW', 'MINISH_PATHS', 'MINISH_VILLAGE', 106, 519, [[MINISH]],
   'a kinstone fusion event on that path, tile (6,32)')
-d('MW', 'MINISH_VILLAGE', 'MAIN', 520, 992, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_VILLAGE', 'MAIN', 520, 992, [[MINISH]],
   'tile (32,62); the village proper')
-d('MW', 'MINISH_HOUSE_INTERIORS', 'FESTARI', 257, 79, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_HOUSE_INTERIORS', 'FESTARI', 257, 79, [[MINISH]],
   "tile (16,4); the village's third door. The survey adds a story gate here "
   '- Festari has to have moved out of the doorway - and the mode pays it at '
   'boot (M_PRIEST_MOVE, with the rest of the village story), for the same '
   "reason the Crenel bean is pre-grown: it is a chore a run cannot do. So "
   'the token is gone rather than unpriced.')
-d('MW', 'MINISH_WOODS', 'MAIN', 424, 840, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_WOODS', 'MAIN', 424, 840, [[MINISH]],
   'tile (26,52); the third village entrance, reached through the village')
-d('MW', 'MINISH_WOODS', 'MAIN', 297, 704, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_WOODS', 'MAIN', 297, 704, [[MINISH]],
   'the wind crest, tile (18,44) - via the village')
-d('MW', 'MINISH_WOODS', 'MAIN', 84, 679, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_WOODS', 'MAIN', 84, 679, [[MINISH]],
   'golden kinstone chest, tile (5,42) - via the village')
-d('MW', 'MINISH_HOUSE_INTERIORS', 'MINISH_WOODS_BOMB', 120, 120, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_HOUSE_INTERIORS', 'MINISH_WOODS_BOMB', 120, 120, [[MINISH]],
   'via the village')
-d('MW', 'DEEPWOOD_SHRINE_ENTRY', 'MAIN', 120, 232, [[MINISH, FLIPPERS]],
+d('MW', 'DEEPWOOD_SHRINE_ENTRY', 'MAIN', 120, 232, [[MINISH]],
   'tile (7,14); the giant stump')
 # The three southwest cave mouths are ONE linked room with three entrances.
 # Left cave: a long ice path to a heart piece. Centre: a chest, half water.
 # Right: a chest. The user wants all three wired as ? rooms carefully, which
 # is a content job rather than a reachability one - recorded here so the
 # reachability half is not measured twice.
-d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 88, 280, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 88, 280, [[MINISH]],
   'west mouth - via the village; the long ice path to a heart piece')
-d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 312, 280, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 312, 280, [[MINISH]],
   'centre mouth, tile (19,17) - via the village; a chest, and half water')
-d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 536, 280, [[MINISH, FLIPPERS]],
+d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 536, 280, [[MINISH]],
   'east mouth, tile (33,17) - via the village; a chest')
 
 # --- the Pacci pocket, which is not entered from Minish Woods at all -------
@@ -660,9 +711,12 @@ d('MW', 'MINISH_CAVES', 'MINISH_WOODS_SOUTHWEST', 536, 280, [[MINISH, FLIPPERS]]
 # way in is Eastern Hills North's own exit at (472,72), and reaching THAT
 # inside Eastern Hills needs the Cane of Pacci. So the cane is the price of
 # everything in here, even though nothing in Minish Woods asks for it.
-d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_GREAT_FAIRY', 120, 120, [[PACCI, FUSION]],
-  "entered from Eastern Hills North's Pacci ledge, not from the woods; the "
-  'survey believes the tree itself is fusion-gated as well')
+d('MW', 'TREE_INTERIORS', 'MINISH_WOODS_GREAT_FAIRY', 120, 120, [[PACCI]],
+  "entered from Eastern Hills North's Pacci ledge, not from the woods. The "
+  'survey believed the tree itself was fusion-gated as well; the vanilla '
+  'guide walks in with the cane alone (Big Wallet #2, no fusion named) and '
+  'no kinstone world event lands on this door (kinstone_audit.py), so the '
+  'fusion term is dropped')
 d('MW', 'GREAT_FAIRIES', 'MINISH_WOODS', 120, 120, [[PACCI]],
   'the fairy below that tree - same pocket, same cane')
 
@@ -718,11 +772,11 @@ d('LH', 'MINISH_WOODS', 'MAIN', 0, 16, None,
 #
 # The whole place is Minish-sized, so the Minish Cap is the price of being
 # here at all - that is the region requirement below, not a token on every
-# row. The Flippers ride along with it because the only measured way in is
-# the Minish path from Minish Woods, which the MW block prices at
-# [[MINISH, FLIPPERS]] (and whose Flippers term is that survey's own
-# uncertainty about the floating leaves - if the leaves turn out to be free,
-# this whole region gets cheaper with it).
+# row. The Flippers USED to ride along with it, as the MW survey's own
+# uncertainty about the floating leaves on the path in. The leaves are free
+# (see the Minish Village route in the MW block: the vanilla guide rides them
+# with no items, and the lilypad object tests only PL_MINISH), so the region
+# costs exactly what being small costs.
 #
 # "No blockers except for various story flags/events" is the survey's verdict
 # on every door not named below. The mode pays the village's story at boot
@@ -732,7 +786,7 @@ d('LH', 'MINISH_WOODS', 'MAIN', 0, 16, None,
 # needs a story it is not playing. So those doors are FREE here rather than
 # carrying an unpayable STORY token.
 region('MV', 'Minish Village', ('MINISH_VILLAGE', 'MAIN', 520, 934),
-       room_req=[[MINISH, FLIPPERS]],
+       room_req=[[MINISH]],
        note="the user's walked survey, from the village's south entrance")
 d('MV', 'MINISH_VILLAGE', 'SIDE_HOUSE_AREA', 115, 115, FREE,
   'tile (7,7); a HEART CONTAINER, and it costs nothing once you are in the '

@@ -114,7 +114,10 @@ This is the project's biggest asset and its biggest source of false findings.
 
 **Analysis tools worth knowing:** `sim.py` (100k runs in ~2 min),
 `sim_report.py`, `spawn_spread.py` (spawn coverage, `--map` prints an ASCII
-coverage map), `minish_portals.py`, `component_map.py` (ledge-aware
+coverage map), `minish_portals.py`, `guide_reach.py` (Veil Falls, the
+castle, the Cloud Tops and every dungeon mapped from the vanilla
+walkthrough - feeds nothing, `--summary` shows how clone-gated each dungeon
+is; see `docs/QUICKSTART_GUIDE_FINDINGS.md`), `component_map.py` (ledge-aware
 components - slow), `tier_mix.py` (what levels actually spawn),
 `fuser_faces.py` (renders each NPC face to PNG), `drop_spots.py`,
 `boss_region.py` / `boss_arena.py` (**currently drifted** - see

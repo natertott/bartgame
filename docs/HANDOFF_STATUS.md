@@ -69,6 +69,14 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   brought 50 rooms and 30 content sites back into the chain's reach. The gate
   sweep says all 258 policed transitions are clean, but that is a lot of
   newly exercised surface.
+- **Ride the leaves to Minish Village without the Flippers, in the shipped
+  d3 ROM.** The vanilla walkthrough and `lilypadSmall.c` both say the crossing
+  is free, so the survey dropped the Flippers from fourteen Minish Woods rows
+  and the village's own price (Oct 2026). If the leaves do not carry a Minish
+  player in this build, a chain step in the village is a stranded run.
+  `docs/QUICKSTART_GUIDE_FINDINGS.md` §1.1.
+- **Seven more guide-derived survey corrections await a walk each** -
+  findings doc §1.2 lists the walk for every one.
 
 ### Design decisions waiting on a call
 
@@ -80,7 +88,20 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 - **Royal Valley is near-dead content.** With its real entry price (bombs AND
   Power Bracelets) it is reachable in 7% of runs and hosts 0.2% of
   requirements. A whole region with a graveyard, a maze and a dojo that most
-  runs never see. The lever is the toll or a second route in.
+  runs never see. The lever is the toll or a second route in. **A cheaper
+  lever surfaced from the vanilla guide:** the forest maze is a fixed
+  six-move path and the lantern only reads the signs - retire the untestable
+  `MAZE` token and have Ezlo speak the path (findings doc §1.2).
+- **Port vanilla quests as a fifth quest sibling?** Assessed in
+  `docs/QUICKSTART_GUIDE_FINDINGS.md` §6: eleven port cleanly (the courier
+  family is seven of them), six need surgery, the rest are Hyrule Town. Two
+  blockers to decide first: the mode has spent most `ITEM_QST_*` ids as
+  charms, and `QuickStartIsOurNpc` deletes every non-ZELDA face. Recommended
+  first three: the courier, Gregal's ghost, Percy's Monster Lady.
+- **Make `FUSION` a testable token.** Eighteen survey rows and 41 live fusers,
+  and the placer can satisfy none of them because `QS_REACH_FUSION` has no
+  run-time test - yet `gSave.kinstones.fusedKinstones` records every open
+  gate. Findings doc §1.3.
 - **8 rooms and 18 content sites are still never reachable.** Down from 58
   and 48. Worth a pass to see which are genuine and which are survey gaps.
 - **Mount Crenel's spawn area is a 69-tile entrance strip** of an 831-tile
@@ -118,6 +139,7 @@ headers first.
 |---|---|
 | `docs/QUICKSTART_ROADMAP.md` | The real history. Sections: 1 vision, 2 outstanding features, 3 known bugs, 4 vanilla behaviours, 5 everything else (**the numbered doctrine list lives here**). |
 | `docs/QUICKSTART_SIM_REPORT.md` | The simulation study and its corrections. |
+| `docs/QUICKSTART_GUIDE_FINDINGS.md` | The vanilla walkthrough read against the survey: applied and proposed reach corrections, the Veil Falls / castle / dungeon maps, mechanics to re-purpose, the quest-porting assessment. |
 | `docs/QUICKSTART_TRAVERSAL_AUDIT.md`, `docs/quickstart_traversal.json` | What the world graph does and does not know. |
 | `docs/QUICKSTART_RETARGETS.md` | Door retargeting table. |
 | `tools/quickstart/README.md` | The probe inventory. |

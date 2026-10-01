@@ -1271,6 +1271,90 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The vanilla walkthrough, read against the survey
+
+The user uploaded Banjo2553's 100% walkthrough of the vanilla game (8,730
+lines) and asked four things of it: supplement the reachability survey, map
+Veil Falls / Hyrule Castle / every dungeon from the guide alone, list the
+vanilla mechanics worth re-purposing, and assess whether vanilla's quests can
+be ported into the run. The long answer is **`docs/QUICKSTART_GUIDE_FINDINGS.md`**;
+this entry records what changed in the build and the two things learned
+about method.
+
+**Seven survey rows changed, and every one of them sat on a row the survey
+had already marked uncertain or derived.** That was the rule for touching the
+walked data with a secondary source: the guide could tie-break a doubt the
+survey had recorded, never overturn a measurement, and each change had to be
+confirmed in the ROM's own data first.
+
+* **The leaves to Minish Village are free.** The MW block carried the
+  Flippers on fourteen rows as "not sure if they're gated by a story flag".
+  The guide rides them to the village before the first dungeon with no items;
+  `MINISH_PATHS/ToMinishVillage` authors the `LILYPAD_SMALL` objects
+  unconditionally and `lilypadSmall.c` tests only `PL_MINISH`. Fourteen rows
+  and Minish Village's own room requirement lost the Flippers; since the
+  woods have open stumps, `gen_reach` prices the whole village route FREE now.
+  The largest single reach change since the MINISH model. **Wants one walk in
+  the shipped ROM** - shrink at the MW stump, ride to the village without the
+  Flippers - because a wrong answer here strands a chain step.
+* **The Minish Woods scrub tree was FREE on a gated door.** The flood that
+  priced it reached the door; the door is opened by Fusion #13 and the mode
+  clears every fusion bit at boot. Now `FUSION`. The dangerous direction, and
+  the kind of error a collision flood cannot see (doctrine 7 again).
+* **Castle Garden's fountains are drained by fusions, not entered through
+  Minish holes** - world events `KINSTONE_18`/`_35` "remove water" at the two
+  doors, both fusers live in CG. Grimblade's dojo (site 16, "never
+  reachable") and the castle-cellar ladder were missing outright; both are
+  bushes and a sword. The Great Fairy caves in Royal Valley and on Crenel
+  Wall - content sites - had no rows; `BOMBS` and `GRIP + BOMBS`.
+* The Great Fairy tree in Minish Woods lost a `FUSION` term the survey only
+  "believed" was there; no world event lands on that door.
+
+`reach.h` moved by 41 lines, all accounted for. `world_reach.py --check` and
+`gen_reach.py --check` are clean; `sim_validate.py` and `invariant_check.py`
+were run against the rebuilt difficulty-3 ROM (results recorded in the commit
+that follows this entry).
+
+**Seven more corrections are PROPOSED and not applied**, each with the walk
+that would settle it (findings doc §1.2). The one worth saying here: **the
+Royal Valley maze is a fixed six-move path** (up, left, left, up, right, up)
+and the lantern only reads the signs that say so. `MAZE` is knowledge, not
+kit. Retiring the token and having Ezlo speak the path is the cheapest change
+available against "Royal Valley is dead content".
+
+**The non-ring areas are mapped in `tools/quickstart/guide_reach.py`** - 11
+areas, 231 rows, same vocabulary as the survey plus `KEYS(n)`, `BIG_KEY` and
+`CLONES(n)`, validated against `roomid.h` (0 naming problems), with a
+room-rectangle adjacency reader because dungeon rooms adjoin by door tiles
+and have no transition rows. It feeds nothing; it is the map for the day Veil
+Falls or a dungeon is opened. Its `--summary` is the finding: **every dungeon
+from the third on is built on the sword-level clone**, which this mode cannot
+pay - Palace of Winds 97% clone-gated, Dark Hyrule Castle 70%, the Crypt 57%,
+the Temple 55%, the Fortress 30%; Deepwood Shrine and the Cave of Flames 0%.
+Only the first two dungeons could ever be run end to end with this mode's
+items.
+
+**Quest porting: yes, as a fifth sibling of the four quests that already
+ship, not as a new system.** The findings doc §6 has the full table -
+eleven vanilla quests port cleanly (the courier family is seven of them),
+six need geometry surgery, the rest are Hyrule Town or warps. Two
+incompatibilities found by reading rather than guessing: the mode has
+already spent `ITEM_QST_DOGFOOD`, `_MUSHROOM`, `_BOOK1-3`, `_TINGLE_TROPHY`,
+`_CARLOV_MEDAL` and `_BROKEN_SWORD` as charms and curses, so a courier
+cannot carry them; and `QuickStartIsOurNpc` deletes any face that is not
+ZELDA or the room's fuser, which is every vanilla quest NPC. Sheet costs
+were measured by grepping `LoadExtraSpriteData`: Smith, Percy, Talon,
+Melari, Syrup and the Hurdy-Gurdy Man are two-sheet faces; Potho, Gregal,
+the Moblin Lady, Dampe, Stockwell, Rem, Anju and the rest are one.
+
+**Method, two notes.** First: the vanilla guide is a *third* source on the
+world, after the walked survey and the ROM's data, and it is good at a thing
+neither of the others is - it says what the player was *carrying* when a
+place was reached, which is the price. Second: it could only be trusted
+where it could be checked. Every row it changed was confirmed against a
+world-event table, an entity list or an object's source before the survey
+moved, and the seven rows it could not be checked on are proposals.
+
 ### Trilby's boss arena was the wrong pocket
 
 The user: "the bosses are blocked from going all the way down to this part
