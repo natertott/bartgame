@@ -69,6 +69,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   brought 50 rooms and 30 content sites back into the chain's reach. The gate
   sweep says all 258 policed transitions are clean, but that is a lot of
   newly exercised surface.
+- **Play the two keys.** Find the Lon Lon Key, open the ranch house by either
+  door and cross it; find the graveyard key, come through the maze and talk
+  to Dampe at the gate. Every leg is measured in the emulator
+  (`docs/QUICKSTART_ROADMAP.md`, "The two door keys"), none has been watched
+  in play, and the keyed chain pair hangs a win step on them.
 - **Bomb the Crenel fairy's wall and answer her honestly, in play.** The
   orchestrator that runs her script is kept now (it used to be deleted with
   every other cutscene orchestrator) and the payout function drops a RARE
@@ -79,11 +84,10 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Design decisions waiting on a call
 
-- **The `ITEM` chain step never fires.** 0 times in 500,000 requirement
-  rolls. It is the chain's only *guaranteed* item grant; everything the
-  region clear pays is a 64-way draw that might be a bottle. Either force one
-  into the chain or accept that growth runs through the loot table and retire
-  the branch.
+- **The `ITEM` chain step** fires now, as the first half of the keyed pair
+  (Oct 2026: find the Lon Lon or graveyard key, then clear what it locks;
+  39% of simulated runs). The remaining question is taste: one roll in six
+  per eligible step is the current odds.
 - **Royal Valley is near-dead content.** With its real entry price (bombs AND
   Power Bracelets) it is reachable in 7% of runs and hosts 0.2% of
   requirements. A whole region with a graveyard, a maze and a dojo that most

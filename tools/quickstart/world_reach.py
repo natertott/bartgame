@@ -265,8 +265,11 @@ d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 184, 298, [[BRACELETS]],
 d('LLR', 'CAVES', 'LON_LON_RANCH_WALLET', 120, -1032, [[FUSION]])
 d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_WEST', 245, 90, [[MINISH], [LONLON_KEY]],
   'the minish route needs the room to keep its vanilla content')
-d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_EAST', -632, 120, [[BOULDER('LLR', 1)], [MINISH]],
-  'free once the boulder is in; there is also a separate minish door')
+d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_EAST', -632, 120, [[LONLON_KEY]],
+  'both house doors are locked until the Lon Lon Key is held (Oct 2026, '
+  'game.c QuickStartRanchHouseMonitor): the back door is scripted like the '
+  'front one, and the west room\'s two interior blockers stay vanilla-solid, '
+  'so neither the boulder route nor the Minish hole reaches this room')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 710, 753,
   [[FLIPPERS], [CAPE], [MINISH, PACCI]], 'exit')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 707, 907, [[BOULDER('LLR', 2)]])

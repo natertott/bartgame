@@ -57,6 +57,16 @@ so nobody re-invents them:
   `entities()` and `QuickStartItemGetCutsceneRunning` both read 0 while the
   pose is on screen. Read the player's action (8 = `PLAYER_ITEMGET`) and
   `gMessage.state` instead.
+- **A warp onto a solid tile leaves the player unable to move for the rest
+  of that run** - every later `w16` placement reads back fine and the
+  player still never walks. Warp onto open ground (`coll_at` == 0) and
+  place from there.
+- **The Castle Garden -> Royal Valley warp does not land** (`here()` reads
+  the poisoned room byte). Trilby -> Royal Valley does.
+- **Vanilla Dampe registers as a talk target only after he has been off
+  screen once** (`script_DampeOuside` loops on an on-screen check first), so
+  a warp beside him is never answered. Land at the maze exit, then walk or
+  place.
 - **`emu.press` takes `c.KEY_A`**, not the string `'A'`.
 - **Entity coordinates**: integer x is at **0x2e** and integer y at **0x32**.
   0x30 and 0x34 are the LOW halves. Writing those moves nothing and reads

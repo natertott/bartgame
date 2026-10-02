@@ -77,6 +77,7 @@ NEVER = U32
 
 REGION_NAMES = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV',
                 'CW', 'WR', 'CREN', 'MW', 'LH']
+REGION_INDEX = {name: i for i, name in enumerate(REGION_NAMES)}
 REGION_LONG = {
     'CG': 'Hyrule Castle Garden', 'NHF': 'North Hyrule Field',
     'SHF': 'South Hyrule Field', 'EH': 'Eastern Hills',
@@ -235,6 +236,22 @@ def _sites():
 
 
 SITES = _sites()
+
+
+def _sealed():
+    """sQuickStartRoomOwners' sealedBy: (area, room) -> ITEM_QST_* key name."""
+    i = GAME.find('static const QuickStartRoomOwner sQuickStartRoomOwners[] = {')
+    body = GAME[i:GAME.find('\n};', i)]
+    out = {}
+    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+),\s*\n?\s*[^}]*?,\s*(ITEM_QST_\w+) \}', body):
+        out[(P.AREAS[m.group(1)], P.ROOMS[m.group(2)])] = m.group(3)
+    return out
+
+
+SEALED = _sealed()
+CHAIN_KEYS = ['ITEM_QST_LONLON_KEY', 'ITEM_QST_GRAVEYARD_KEY']
+KEY_BIT = {'ITEM_QST_LONLON_KEY': 'QS_REACH_LONLON_KEY',
+           'ITEM_QST_GRAVEYARD_KEY': 'QS_REACH_GRAVE_KEY'}
 
 
 def _tiers():
@@ -565,6 +582,28 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
         return []
 
     h = chain_hash(seed, step)
+    # The keyed pair (QuickStartChainRollKeyedPair): an ITEM step for a door
+    # key, then an EVENT at a site that key seals, priced with the key held.
+    # One roll in six while a step is left for the far side of the lock.
+    if step + 1 < 4 and ((h >> 10) & 0x7fff) % 6 == 0:
+        first = (h >> 12) & 1
+        for k in range(2):
+            key = CHAIN_KEYS[(first + k) & 1]
+            if key in owned:
+                continue
+            drop = {REGION_INDEX[r] for r in KEY_REGIONS[key]}
+            if not any((regions >> r) & 1 for r in drop):
+                continue
+            held_key = held | TOKEN_BITS[KEY_BIT[key]]
+            sealed = [i for i, s in enumerate(SITES)
+                      if SEALED.get((s['area'], s['room'])) == key
+                      and i not in sites_done and s['gate'] == 0
+                      and reach_room_ok(regions, held_key, s['area'], s['room'])
+                      and not used(KIND_EVENT, i)]
+            if not sealed:
+                continue
+            site = sealed[(h & 0x7fff) % len(sealed)]
+            return [(KIND_ITEM, 0, key), (KIND_EVENT, site, None)]
     rot = (h >> 8) & 3
     for k in range(4):
         kind = KORDER[(k + rot) & 3]
@@ -574,8 +613,8 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
             where = 0 if kind == KIND_QUEST else pick
             if kind == KIND_QUEST:
                 where = quest_slot
-            return kind, where
-    return KIND_ITEM, 0
+            return [(kind, where, None)]
+    return [(KIND_ITEM, 0, chain_pick_item(seed, step * 7 + 3, owned))]
 
 
 # The ? room kind distribution, in sixteenths, per kind class. Read off the
@@ -688,12 +727,17 @@ def simulate(seed, cohort, rng):
     held = held_mask(owned)
     regions = reachable_regions(held, drop_region)
     checkpoints.append(snapshot(regions, held, 'after selection'))
+    dealt = []
     for step in range(5):
-        kind, where = roll_step(seed, step, prior, regions, held, owned,
-                                quest_slot, sites_done)
-        detail = None
+        if not dealt:
+            dealt = roll_step(seed, step, prior, regions, held, owned,
+                              quest_slot, sites_done)
+        kind, where, detail = dealt.pop(0)
         if kind == KIND_ITEM:
-            detail = chain_pick_item(seed, step * 7 + 3, owned)
+            # A keyed ITEM step is paid by the next reward in the key's own
+            # regions (QuickStartDrawItem's override); a fallback ITEM step
+            # picked its key item at roll time. Either way the run holds it
+            # before the next step is rolled.
             if detail:
                 owned.add(detail)
         else:

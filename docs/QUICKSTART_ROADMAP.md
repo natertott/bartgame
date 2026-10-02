@@ -1271,6 +1271,95 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The two door keys, run vanilla's way, and the keyed chain step (Oct 2026)
+
+The user: the ranch house's back door was open, its front door locked on a
+key, and walking from the back room into the front one left Link "walking
+continuously while the player is locked out of any controls"; the graveyard
+key opened nothing. Both doors should be locked until their key, the keys
+should be rewards that turn up somewhere every run, and finding a key then
+clearing what it locks should be an option in the win chain. "Research how
+this happens in vanilla so that we can properly emulate it."
+
+**What vanilla does.** The ranch house is one global flag, `INLOCK` ("gave
+the key to Talon"): clear, the front door is a script-driven `HOUSE_DOOR_EXT`
+(`script_LonLonRanchDoor`, waiting on the flag) and the west room loads two
+`HOUSE_DOOR_INT` blockers with timer 1, which `HouseDoorInterior_Action1`
+reads as never pushable - one across the doorway to the east room, one
+inside the front door; set, the script jiggles the door open and hands it
+to the plain walk-up type (`sub_0808692C`), and the blockers are not loaded.
+The back door was never locked: the north field is reached THROUGH the
+house. The graveyard key is a three-state item - 1 Dampe handed it over, 2
+Dampe opened the gate (`script_DampeOuside`: value 2 + `sub_0806BEFC`
+retiles it) - and Royal Valley's room init loads the closed gate, its
+tiles, and Dampe beside it whenever the value is not 2, plus the Takkuri
+theft (crows, key-on-the-tree) unless `HAKA_KEY_LOST`/`HAKA_KEY_FOUND` say
+that chapter is over.
+
+**The bug, reproduced.** In through the open back door, west through the
+doorway, and the seam scroll walks the player into the west room's blocker
+at (184,88): `PLAYER_ROOMTRANSITION` pushing on a door that cannot open from
+that side. The earlier fix had stripped `ENT_SCRIPTED` off the front door
+when the key was held and never touched the blockers, so even a key-holder
+could not cross the house.
+
+**What shipped.**
+* `INLOCK` follows the key: `QuickStartRanchHouseMonitor` sets it the frame
+  the run holds the Lon Lon Key. In the ranch it then takes every scripted
+  door (the front door is type2 3, script-driven with no `ENT_SCRIPTED` bit
+  at all) off its script the way `sub_0808692C` does - the script itself
+  never gets there, because its jiggle waits four times on a sync flag only
+  Talon's cutscene sets. Without the key it hands the back door the same
+  script, which holds it shut. A door still in action 0 keeps its own init:
+  converting a freshly spawned door straight to action 1 left it invisible
+  and unpushable (measured). Inside the house with the flag set the
+  blockers are deleted, as a load with the flag set would never have made
+  them; `QuickStartFixupRoomFixtures` no longer makes those two pushable,
+  so a Minish player through the hole gets the west room and nothing past
+  it. Survey: `RANCH_HOUSE_EAST` is `LONLON_KEY` now (was boulder or
+  Minish). Measured on the shipped ROM: no key, both doors hold the player
+  at y 651; key first or key later, either door enters its room, and the
+  interior crosses both ways (west room arrival 104,120 -> east room
+  25,90 -> west room 183,90, action 1 throughout).
+* The graveyard needed one line of state and no code: the run reset sets
+  `HAKA_KEY_LOST` and `HAKA_KEY_FOUND` (and clears `INLOCK`), and vanilla's
+  own Dampe - who was standing by the gate all along with his script parked
+  on `CheckGlobalFlag HAKA_KEY_LOST` - does the rest. Measured: talk to him
+  holding the key (value 1), value 2, the gate tiles change and the player
+  walks through (local y 400 -> 263). The gated zone behind the gate now
+  opens at value 2, not at "held". A ZELDA-faced gatekeeper of our own was
+  built first and found standing on top of him; it went. One trap on the way:
+  the first draft of the run-reset lines was anchored after
+  `SetGlobalFlag(KAKERA_COMPLETE)`, which exists only in the
+  `#elif defined(MAPEXPLORE)` branch of `GameTask_Transition` - a
+  frame-by-frame trace of the flag bits is what found it.
+* **The keyed chain pair** (`QuickStartChainRollKeyedPair`): one roll in six
+  while a step is left for the far side of the lock deals an ITEM step for
+  one of the two keys and, in the same roll, an EVENT step at a content
+  site that key seals (`sQuickStartRoomOwners.sealedBy`: the ranch house's
+  two rooms, the graveyard's two), priced against the reach mask WITH the
+  key - the one time a sealed site can be dealt before the run holds its
+  key. The ITEM kind was the chain's dead branch (0 of 500,000 rolls); it
+  is honest now because while the step is current `QuickStartDrawItem` pays
+  that key out of the very next reward drawn in one of its own regions
+  (`sQuickStartKeyRegions` - a ? room, a clear, a quest, a fairy), and the
+  pair is only dealt when those regions overlap what the run can reach.
+  Ezlo's line for the step names the key and the regions (strings 195-196,
+  compass or not). `QuickStartChainRollStep` returns how many steps it dealt
+  and the monitor rolls only what is new. `sim.py` mirrors it (`SEALED`,
+  `CHAIN_KEYS`); 10,000 runs put a keyed pair in 39% of runs, 96% of them
+  the ranch key - the graveyard pair wants Royal Valley reachable at roll
+  time, which it rarely is. Measured on the ROM: 8 of 24 seeds deal
+  `ITEM(55) -> EVENT(site 26/27)` with `chain_rolled` 2, and with the pair
+  current the draw returns the key in North Hyrule Field (mask 0x2, allowed)
+  and the normal item in Castle Garden (allowed 0).
+
+Harness notes from the way there, for `docs/HANDOFF_ISSUES.md`: a warp onto
+a solid tile leaves the player unable to move for the rest of the run; the
+Castle Garden -> Royal Valley warp does not land (Trilby -> Royal Valley
+does); vanilla Dampe only registers as a talk target after he has been off
+screen once, so a warp beside him never gets an answer.
+
 ### The shoe merchant's fusions, and Mount Crenel populated (Oct 2026)
 
 Two more from the user, the morning after the five.

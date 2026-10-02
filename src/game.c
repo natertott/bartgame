@@ -364,6 +364,8 @@ static void QuickStartRefreshPlacedItemTimers(void);
 static void QuickStartDeleteGroundItemsAndSigns(void);
 static bool32 QuickStartItemGetCutsceneRunning(void);
 static bool32 QuickStartPlayerCanBeHandedItem(void);
+static u16 QuickStartChainWantedKey(void);
+static bool32 QuickStartIsRanchHouseRoom(u8 area, u8 room);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartClearCastleGuards(void);
@@ -1032,7 +1034,7 @@ static void GameTask_Transition(void) {
     // user, Aug 2026: "I want to restore the vanilla behavior of these keys
     // and make it a goal for the player in our game to hunt down these
     // keys"). See sQuickStartKeyRegions for where it may drop, and
-    // QuickStartUnlockRanchHouseDoors for what it opens.
+    // QuickStartRanchHouseMonitor for what it opens.
     // Kinstone bag, granted at boot per the user's request - without it
     // owned, NPCs offering a fusion simply can't be interacted with
     // (kinstone.c gates the fusion prompt on GetInventoryValue(ITEM_KINSTONE_BAG)),
@@ -1370,6 +1372,21 @@ static void GameTask_Transition(void) {
     // this is what looked like Zelda "randomly" appearing in unrelated
     // areas. Clear it so that companion never spawns.
     ClearGlobalFlag(ZELDA_CHASE);
+    // The two overworld keys, in vanilla's own terms (Oct 2026). These sit in the QUICKSTART branch
+    // of this function on purpose: the first draft put them after the
+    // MAPEXPLORE branch's identical ZELDA_CHASE line and they never built.
+    //  * INLOCK is "gave the key to Talon". Clear, the ranch house is shut -
+    //    the front door's script waits on it and the west room loads two
+    //    interior blockers; set, both go away. QuickStartRanchHouseMonitor
+    //    sets it the moment the run holds the Lon Lon Key.
+    //  * HAKA_KEY_LOST/FOUND are the Takkuri theft of the graveyard key.
+    //    Both set means "that chapter is over": Royal Valley's room init
+    //    then loads neither the crows nor the key-on-the-tree, only the
+    //    closed gate (while the key's value is not 2) and his own Dampe
+    //    beside it, who opens it for a key-holder exactly as in vanilla.
+    ClearGlobalFlag(INLOCK);
+    SetGlobalFlag(HAKA_KEY_LOST);
+    SetGlobalFlag(HAKA_KEY_FOUND);
     // Now that the region pool includes real overworld Hyrule Field rooms
     // (not just Castle Garden/Lon Lon Ranch), the same early-game state that
     // ZELDA_CHASE covers above also affects those rooms directly:
@@ -1535,6 +1552,7 @@ static void GameMain_InitRoom(void) {
 #ifdef QUICKSTART
 extern Script script_QuickStartChooseOne;
 extern Script script_QuickStartChosen;
+extern Script script_LonLonRanchDoor;
 extern Script script_QuickStartFountain;
 extern Script script_QuickStartMerchant;
 extern Script script_QuickStartHunt;
@@ -3058,6 +3076,11 @@ const u8* const gCustomStrings2[] = {
     // 194: the hub sign after the last pick (script_QuickStartChosen) - it
     // stays in the room now instead of vanishing with the item row.
     [194] = (const u8*)"Your gifts are chosen.\nThe rest is up to you.\nGood luck out there!",
+    // 195-196: Ezlo's line for a chain step that asks for one of the two
+    // door keys (QuickStartChainHintOnce) - WHERE the economy pays it out,
+    // since that is the whole puzzle of an ITEM step.
+    [195] = (const u8*)"Talon's ranch key is\nout there. The north\nfield, the hills, or\nTrilby will give it up.",
+    [196] = (const u8*)"Dampe's graveyard key is\nout there. The north\nfield, Trilby, or the\nvalley will give it up.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3068,14 +3091,15 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 //
 // 176 -> 189 for the thirteen new wanderer hints, 189 -> 194 for the
 // vanilla-walkthrough batch (fickle fuser, maze directions, fairy thanks),
-// 194 -> 195 for the hub sign's farewell line.
+// 194 -> 195 for the hub sign's farewell line, 195 -> 197 for the two
+// key hints.
 // Appending is safe by
 // construction: everything the arithmetic addresses lives at 92 or below,
 // and nothing reads this bank by "last entry". The assert stays a tripwire
 // on the table's total shape - if it fires again, check whether the new
 // lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
 // (not fine, the arithmetic has moved).
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 195) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 197) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -6728,6 +6752,16 @@ static u16 QuickStartDrawAtTier(s32 pick, u8 catMask, s32 tier) {
 static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     s32 roll = seed;
     s32 tier;
+    // A door key the chain is currently asking for (QuickStartChainWantedKey)
+    // is the next reward paid out in any region allowed to carry it - a ?
+    // room, a clear, a quest, a fairy. That is the guarantee behind a keyed
+    // chain step: the key is not left to the region-clear draw's luck.
+    {
+        u16 wanted = QuickStartChainWantedKey();
+        if (wanted != 0 && QuickStartKeyRegionAllowed(wanted)) {
+            return wanted;
+        }
+    }
     if (roll < 0) {
         roll = -roll;
     }
@@ -9602,6 +9636,13 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
         // (requiredItem OR altItem) AND alsoItem - see the struct.
         if (zone->alsoItem != 0 && GetInventoryValue(zone->alsoItem) == 0) {
             return FALSE;
+        }
+        // The graveyard key is a three-state item in vanilla: 1 held, 2
+        // used on the gate. The zone behind the gate opens at 2 - the
+        // gatekeeper's doing - not at "held", or a key still in the pocket
+        // would deal enemies behind a gate that is still shut.
+        if (zone->requiredItem == ITEM_QST_GRAVEYARD_KEY) {
+            return GetInventoryValue(ITEM_QST_GRAVEYARD_KEY) == 2;
         }
         if (GetInventoryValue(zone->requiredItem) != 0) {
             return TRUE;
@@ -16591,7 +16632,7 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // door is a scripted HOUSE_DOOR_EXT running vanilla's key gate, which
     // nothing in this run satisfies, and the east room's route onward is
     // barred by the interior door. Both are unlocked in game.c
-    // (QuickStartUnlockRanchHouseDoors and the HOUSE_DOOR_INT unk7d clear),
+    // (QuickStartRanchHouseMonitor; the HOUSE_DOOR_INT unk7d clear skips this house now),
     // so each room is a normal one-door "? room" now, entered by its own
     // front door and left the same way.
     { AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, QUICKSTART_KINDS_SMALL, 0x68, 0x60 },  // arrives (0x68,0x78)
@@ -18102,24 +18143,126 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 h
 // ITEM is the guaranteed floor and the reason the chain can never wedge:
 // "be holding X" needs no reachable room at all, only that the economy can
 // still hand X over, and the economy runs everywhere the player already is.
-static void QuickStartChainRollStep(s32 step) {
+// --- The keyed pair: find the key, then clear what it locks ---------------
+//
+// The user (Oct 2026): "the player must find the key, unlock the
+// house/graveyard, and then complete a challenge in what lies beyond." Two
+// steps dealt together: an ITEM step for one of the two door keys, and an
+// EVENT step at a content site sealed by that key (sQuickStartRoomOwners'
+// sealedBy - the ranch house's two rooms, the graveyard's two). The EVENT
+// is priced against the reach mask WITH the key, which is the one time a
+// sealed site can be dealt before the run holds its key.
+//
+// The ITEM step is the half that used to be dead (0 of 500,000 rolls; it
+// was only ever the fallback when nothing else fit). It is kept honest two
+// ways: the pair is only dealt when the key's own drop regions
+// (sQuickStartKeyRegions) overlap what the run can reach, and while the
+// step is current QuickStartDrawItem pays that key out of the very next
+// reward drawn in one of those regions.
+static const u16 sQuickStartChainKeys[2] = { ITEM_QST_LONLON_KEY, ITEM_QST_GRAVEYARD_KEY };
+
+static u32 QuickStartKeyReachBit(u16 key) {
+    return (key == ITEM_QST_LONLON_KEY) ? QS_REACH_LONLON_KEY : QS_REACH_GRAVE_KEY;
+}
+
+static u32 QuickStartKeyDropRegions(u16 key) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartKeyRegions); i++) {
+        if (sQuickStartKeyRegions[i].item == key) {
+            return sQuickStartKeyRegions[i].regions;
+        }
+    }
+    return 0;
+}
+
+static bool32 QuickStartChainSealedOk(u16 key, s32 step, u32 regions, u32 heldKey, s32 site) {
+    const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
+    const QuickStartRoomOwner* owner = QuickStartRoomOwnerOf(entry->area, entry->room);
+    return owner != NULL && owner->sealedBy == key && QuickStartChainEventOk(regions, heldKey, site) &&
+           !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)site);
+}
+
+// Deals the pair into step and step+1, or returns FALSE having touched
+// nothing. `h` is the step's own hash, so the pair is as seeded as a
+// single step.
+static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, u32 regions, u32 held) {
+    s32 k, i;
+    s32 first = (s32)((h >> 12) & 1);
+    for (k = 0; k < 2; k++) {
+        u16 key = sQuickStartChainKeys[(first + k) & 1];
+        u32 heldKey = held | QuickStartKeyReachBit(key);
+        s32 n = 0, want;
+        if (GetInventoryValue(key) != 0 || (regions & QuickStartKeyDropRegions(key)) == 0) {
+            continue;
+        }
+        for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+            if (QuickStartChainSealedOk(key, step + 1, regions, heldKey, i)) {
+                n++;
+            }
+        }
+        if (n == 0) {
+            continue;
+        }
+        gSave.chain_kind[step] = QS_CHAIN_ITEM;
+        gSave.chain_where[step] = 0;
+        gSave.chain_detail[step] = (u8)key;
+        gSave.chain_kind[step + 1] = QS_CHAIN_EVENT;
+        gSave.chain_detail[step + 1] = 0;
+        want = (s32)(h & 0x7fff) % n;
+        for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+            if (QuickStartChainSealedOk(key, step + 1, regions, heldKey, i) && want-- == 0) {
+                gSave.chain_where[step + 1] = (u8)i;
+                break;
+            }
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// The door key the current step is waiting on, or 0.
+static u16 QuickStartChainWantedKey(void) {
+    s32 step = QuickStartChainCurrentStep();
+    u16 item;
+    if (step < 0 || gSave.chain_kind[step] != QS_CHAIN_ITEM) {
+        return 0;
+    }
+    item = gSave.chain_detail[step];
+    if ((item == ITEM_QST_LONLON_KEY || item == ITEM_QST_GRAVEYARD_KEY) && GetInventoryValue(item) == 0) {
+        return item;
+    }
+    return 0;
+}
+
+// Returns how many steps were dealt: 2 for a keyed pair, else 1.
+static s32 QuickStartChainRollStep(s32 step) {
     static const u8 kOrder[4] = { QS_CHAIN_EVENT, QS_CHAIN_WAVE, QS_CHAIN_BOSS, QS_CHAIN_QUEST };
     u32 held = QuickStartHeldReachMask();
     u32 regions = QuickStartReachableRegions(held);
     u32 h = QuickStartChainHash((u32)step);
     s32 rot = (s32)((h >> 8) & 3);
     s32 k;
+    // One roll in six, when there is a step left for the far side of the
+    // lock - three eligible steps, so about two runs in five carry a pair
+    // (the simulator put one-in-three at two runs in three, which made it
+    // the norm rather than an option). Signed modulo on a masked value (no
+    // __umodsi3 in this libgcc).
+    if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS && ((s32)((h >> 10) & 0x7fff) % 6) == 0 &&
+        QuickStartChainRollKeyedPair(step, h, regions, held)) {
+        return 2;
+    }
     for (k = 0; k < 4; k++) {
         u8 kind = kOrder[(k + rot) & 3];
         s32 n = QuickStartChainCountCandidates(kind, step, regions, held);
         if (n > 0) {
             QuickStartChainStore(kind, step, (s32)(h & 0x7fff) % n, regions, held);
-            return;
+            return 1;
         }
     }
     gSave.chain_kind[step] = QS_CHAIN_ITEM;
     gSave.chain_where[step] = 0;
     gSave.chain_detail[step] = (u8)QuickStartChainPickItem((u32)step * 7 + 3);
+    return 1;
 }
 
 // --- Has the current step been finished? ---------------------------------
@@ -18316,7 +18459,11 @@ static void QuickStartSelectHintMonitor(void) {
         hint = QUICKSTART_HINT_NO_STEP;
     } else {
         ring = QuickStartChainStepRegion(step);
-        if (ring < 0) {
+        if (QuickStartChainWantedKey() != 0) {
+            // A door key the chain wants: the line that names it and the
+            // regions that pay it.
+            hint = (QuickStartChainWantedKey() == ITEM_QST_LONLON_KEY) ? 195 : 196;
+        } else if (ring < 0) {
             // An ITEM step is not in a place. The kind bank's own line for
             // it already says the right thing.
             hint = QUICKSTART_CHAIN_HINT_KIND_BASE + QS_CHAIN_ITEM;
@@ -18350,7 +18497,10 @@ static void QuickStartChainHintOnce(s32 step) {
     if (!QuickStartRoomSettled() || !QuickStartPlayerCanBeHandedItem()) {
         return;
     }
-    if (GetInventoryValue(ITEM_COMPASS) != 0) {
+    if (QuickStartChainWantedKey() != 0) {
+        // A door key: name it and the regions that pay it, compass or not.
+        hint = (QuickStartChainWantedKey() == ITEM_QST_LONLON_KEY) ? 195 : 196;
+    } else if (GetInventoryValue(ITEM_COMPASS) != 0) {
         hint = QUICKSTART_CHAIN_HINT_KIND_BASE + gSave.chain_kind[step];
     } else {
         ring = QuickStartChainStepRegion(step);
@@ -18388,8 +18538,7 @@ static void QuickStartChainMonitor(void) {
         return;
     }
     if (gSave.chain_rolled == 0) {
-        QuickStartChainRollStep(0);
-        gSave.chain_rolled = 1;
+        gSave.chain_rolled = (u8)QuickStartChainRollStep(0);
         gSave.chain_hinted = 0;
         return;
     }
@@ -18437,8 +18586,10 @@ static void QuickStartChainMonitor(void) {
     gSave.chain_progress = (u8)(step + 1);
     gSave.chain_hinted &= (u8)~QS_CHAIN_LATCH;  // the next step starts clean
     if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS) {
-        QuickStartChainRollStep(step + 1);
-        gSave.chain_rolled = (u8)(step + 2);
+        // A keyed pair dealt the next step already; roll only what is new.
+        if (gSave.chain_rolled < step + 2) {
+            gSave.chain_rolled = (u8)(step + 1 + QuickStartChainRollStep(step + 1));
+        }
     } else {
         gSave.chain_rolled = QUICKSTART_CHAIN_PRE_STEPS;
     }
@@ -20401,47 +20552,115 @@ static void QuickStartFillBoulderHoles(void) {
     }
 }
 
-// Lon Lon Ranch's house doors.
+// Lon Lon Ranch's house, run the way vanilla runs it (Oct 2026).
 //
-// The player starts with the Lon Lon Key and still cannot open the
-// front-left door, which left both ranch house rooms unreachable. The cause
-// is not the key and not the interior door: both exterior doors are
-// HOUSE_DOOR_EXT objects, and the west one runs with ENT_SCRIPTED set, so
-// HouseDoorExterior_Type2 hands its open/closed state to a script instead
-// of to the ordinary "stand against it holding up" check
-// (sub_08086954). That script is vanilla's own key/story gate, and nothing
-// in this run ever satisfies it.
+// Vanilla's state is ONE global flag, INLOCK ("gave the key to Talon"):
+//  * clear: the front door is a scripted HOUSE_DOOR_EXT running
+//    script_LonLonRanchDoor, which waits on INLOCK; the west room loads two
+//    HOUSE_DOOR_INT blockers (gUnk_080F36FC: one across the doorway to the
+//    east room, one inside the front door), both with timer 1, which
+//    HouseDoorInterior_Action1 reads as "never pushable";
+//  * set: the door script plays its jiggle and hands the door to the plain
+//    walk-up-to-open type (sub_0808692C), and the blockers are not loaded.
+// The back door was never locked in vanilla - geography did that, since
+// the north field is reached THROUGH the house. In this mode the field has
+// its own ways in, so the back door is locked the same way the front one
+// is: the unscripted door the HOUSE_DOOR_EXT spawner (type2 0, which reads
+// the room's door property table and creates the real doors whenever they
+// scroll on screen) made is handed the same script, and both wait on the
+// same flag.
 //
-// Rather than fight the script, this does what vanilla's own sub_0808692C
-// does: drops ENT_SCRIPTED, puts the door back on the plain walk-up-to-open
-// type, and resets its timer. The door then behaves like every other house
-// door in the game.
+// The user's report, reproduced: in through the open back door, west
+// through the doorway, and the seam scroll walks the player into the west
+// room's blocker at (184,88) - PLAYER_ROOMTRANSITION pushing against a
+// door that cannot open from that side. "The animation of Link walking
+// plays continuously." The earlier fix here stripped ENT_SCRIPTED off the
+// front door when the key was held and never touched the blockers, so even
+// a key-holder could not cross the house.
 //
-// AND IT NOW WANTS THE KEY. This used to run unconditionally - the house
-// was simply open, and the player was handed the Lon Lon Key at boot for a
-// door that did not check it. Both halves of that are gone: the key is a
-// drop now, and until the run finds one the ranch house doors stay on
-// vanilla's own script, which is to say shut. That is the "later change if
-// it should be earned instead" this comment used to promise.
-static void QuickStartUnlockRanchHouseDoors(void) {
+// So: INLOCK follows the key. The frame the run holds the Lon Lon Key the
+// flag is set, the door scripts open both doors themselves, and the
+// blockers - if the player is already inside - are deleted here, exactly
+// as a room load with INLOCK set would never have made them.
+typedef struct {
+    Entity base;
+    u16 unk_68;
+    u16 unk_6a;
+    u8 unk_6c;
+    u8 unused1[23];
+    ScriptExecutionContext* context;
+} QuickStartHouseDoorExt;
+
+static bool32 QuickStartIsRanchHouseRoom(u8 area, u8 room) {
+    return area == AREA_HOUSE_INTERIORS_4 &&
+           (room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST || room == ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST);
+}
+
+static void QuickStartRanchHouseMonitor(void) {
     s32 i;
-    if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
-        return;
+    bool32 open;
+    if (GetInventoryValue(ITEM_QST_LONLON_KEY) != 0 && !CheckGlobalFlag(INLOCK)) {
+        SetGlobalFlag(INLOCK);
     }
-    if (GetInventoryValue(ITEM_QST_LONLON_KEY) == 0) {
-        return;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        if (ent->kind != OBJECT || ent->id != HOUSE_DOOR_EXT || !QuickStartEntityInCurrentRoom(ent)) {
-            continue;
+    open = CheckGlobalFlag(INLOCK) != 0;
+    if (gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            QuickStartHouseDoorExt* door = (QuickStartHouseDoorExt*)ent;
+            // The spawner is type2 0; the doors it makes are type2 1-3.
+            // Vanilla's front door is type2 3 - script-driven with no
+            // ENT_SCRIPTED bit at all - so "scripted" is read as either.
+            // Runs every frame and tests the flag rather than a latch
+            // because a type-1 door deletes itself off screen and is made
+            // again, unscripted, when it scrolls back on.
+            bool32 scripted;
+            if (ent->kind != OBJECT || ent->id != HOUSE_DOOR_EXT || ent->type2 == 0 ||
+                !QuickStartEntityInCurrentRoom(ent)) {
+                continue;
+            }
+            scripted = (ent->flags & ENT_SCRIPTED) != 0 || ent->type2 == 3;
+            // A door still in action 0 has not run its own init (hitbox,
+            // sprite, frame), so only its type and script bits are set and
+            // the init is left to run - with ENT_SCRIPTED it parks itself
+            // in action 2, without it in action 1. Measured: converting a
+            // freshly spawned front door straight to action 1 left it
+            // invisible and unpushable.
+            if (open) {
+                // What the door script's own last line does
+                // (sub_0808692C): off the script, onto the plain
+                // walk-up-to-open type. Measured: the script itself never
+                // gets there here, because its jiggle waits four times on
+                // a sync flag that only Talon's cutscene sets.
+                if (scripted) {
+                    ent->flags &= ~ENT_SCRIPTED;
+                    ent->type2 = 2;
+                    if (ent->action != 0) {
+                        ent->action = (ent->frameIndex == 0) ? 1 : 2;
+                        ent->subAction = 0;
+                        ent->timer = 8;
+                    }
+                }
+            } else if (!scripted) {
+                // The back door, locked the way the front one is: handed
+                // the same script, which holds it shut (frame 0) until the
+                // flag - and this monitor then takes it off again.
+                ent->flags |= ENT_SCRIPTED;
+                door->context = StartCutscene(ent, &script_LonLonRanchDoor);
+                if (ent->action != 0) {
+                    ent->action = 2;
+                    ent->frameIndex = 0;
+                    ent->subAction = 0;
+                }
+            }
         }
-        if (ent->flags & ENT_SCRIPTED) {
-            ent->flags &= ~ENT_SCRIPTED;
-            ent->type2 = 2;
-            ent->action = (ent->frameIndex == 0) ? 1 : 2;
-            ent->subAction = 0;
-            ent->timer = 8;
+        return;
+    }
+    if (open && QuickStartIsRanchHouseRoom(gRoomControls.area, gRoomControls.room)) {
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (ent->kind == OBJECT && ent->id == HOUSE_DOOR_INT && QuickStartEntityInCurrentRoom(ent)) {
+                DeleteEntity(ent);
+            }
         }
     }
 }
@@ -20478,7 +20697,12 @@ static void QuickStartFixupRoomFixtures(void) {
         if (entity->kind != OBJECT || !QuickStartEntityInCurrentRoom(entity)) {
             continue;
         }
-        if (entity->id == HOUSE_DOOR_INT && entity->action == 1) {
+        // Not the ranch house's two blockers (QuickStartRanchHouseMonitor):
+        // making those pushable would open the house from the inside to a
+        // Minish player who came in through the hole, which is the route
+        // the key is meant to gate.
+        if (entity->id == HOUSE_DOOR_INT && entity->action == 1 &&
+            !QuickStartIsRanchHouseRoom(gRoomControls.area, gRoomControls.room)) {
             // Link's House has the same problem one level down. Its front
             // door is a HOUSE_DOOR_INT, and HouseDoorInterior_Action1
             // (src/object/houseDoorInterior.c) only opens on "stand against
@@ -21969,7 +22193,7 @@ static void QuickStartRoomMonitor(void) {
     // chamber's five entrances and its chest.
     if (QuickStartPhase(3)) {
         QuickStartOpenBoomerangChamber();
-        QuickStartUnlockRanchHouseDoors();
+        QuickStartRanchHouseMonitor();
     }
     // Slot 4. Per pushable rock this scans a 7x7 tile block, and it only
     // ever has anything to do on the frames just after the player pushes
@@ -23422,6 +23646,25 @@ u32 QuickStartKinstoneIsTingle(u32 kinstoneId) {
     }
     return 0;
 }
+
+// ==================== The graveyard gate, run vanilla's way ==============
+//
+// Vanilla's graveyard key is a three-state item: 1 means Dampe handed it
+// over (script_DampeInside), 2 means he opened the gate for you
+// (script_DampeOuside: SetInventoryValue 2 + sub_0806BEFC, which retiles
+// the gate open; Royal Valley's room init loads the closed gate, and Dampe
+// beside it, whenever the value is not 2). The key is a drop here
+// (QS_CAT_KEY, paid in North Hyrule Field, Trilby or the valley's lower
+// half - sQuickStartKeyRegions), and Dampe's half needed NO code: he was
+// standing by the gate all along, with his script parked forever on
+// `CheckGlobalFlag HAKA_KEY_LOST` - the Takkuri theft that never happens
+// in this mode. The run reset sets HAKA_KEY_LOST and HAKA_KEY_FOUND, and
+// vanilla's own Dampe does the rest: talk to him holding the key, he sets
+// it to 2, retiles the gate, and the valley's north opens. Measured: value
+// 1 -> 2 on the talk, the gate tiles change, the player walks through,
+// and on re-entry the room init leaves the gate open and Dampe gone.
+// (A ZELDA-faced gatekeeper of our own was built first and found standing
+// on top of him; it went.)
 
 // ==================== The Lost Woods maze, randomized ====================
 //
