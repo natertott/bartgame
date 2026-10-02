@@ -4510,22 +4510,44 @@ static const s16 sQuickStartLakeHyliaEnemyOffsets[][2] = {
 };
 #define QUICKSTART_LAKEHYLIA_ROOM_SQUARES 165
 
-// MOUNT CRENEL's entrance ledge. Ten spawn points rather than the usual
-// sixteen, because there is only so much room: the arrival component is 52
-// tiles of the room's 467 open ones, the rest of the mountain being behind
-// the climb. That is the right size - reach.h already prices the region at
-// BOMBS plus the GRIP RING, so a run drawn here without them is meant to
-// be fighting on the ledge, not scaling the cliff.
+// MOUNT CRENEL, the whole mountain (Oct 2026). The first table was ten
+// points on the entrance ledge - the 69-tile component the Trilby border
+// lands in - and the roadmap entry that declined to go further ("Where
+// enemies spawn ... the Mount Crenel problem") did so because one enemy on
+// a component the player cannot reach is a region that can never be
+// cleared. That reason is gone: the mountain's clear rewards were withdrawn
+// (QuickStartRegionAllowsWave) and so were its boss and WAVE steps, so
+// nothing here depends on counting the room to zero. The user, twice: the
+// enemies "are still just confined to the entrance of Mount Crenel base".
 //
-// Surveyed by walking Trilby's west edge at y=424 (the one band of that
-// edge that is not cliff), reading where the border actually put the
-// player, and flooding the ROM's own QuickStartMarkReachableTiles from
-// that tile. Every offset below is inside that flood.
+// So the spots now cover every land component the room has: the ledge
+// (69 tiles, the ten original points), the mountain proper (402 tiles, 14
+// spots), the middle shelf (244, 7), and the two pockets the cave network
+// lands the player in (47 and 29, one each). 33 spots, 92% of 777 land
+// tiles within 96px of one; farthest-point sampled with 3x3 clearance and
+// 56px spacing off a flood of the room's collision and act tiles, the same
+// sampler as Trilby's and Lake Hylia's (tools/quickstart/spawn_spread.py,
+// run over all components rather than the arrival one). A player on the
+// ledge now sees the mountain populated above them; the bodies on the
+// other components are reachable the way the components are - through the
+// caves, with bombs or the Grip Ring - and until then they are scenery.
+// One consequence to know: a wave with survivors out of reach never reads
+// as cleared, so the next wave of a visit is not dealt until the player
+// leaves and comes back, which every entry already does.
 static const s16 sQuickStartMtCrenelEnemyOffsets[][2] = {
     { 984, 392 }, { 952, 424 }, { 952, 376 }, { 920, 408 }, { 888, 424 },
     { 888, 376 }, { 856, 408 }, { 840, 440 }, { 840, 376 }, { 792, 440 },
+    { 56, 24 },   { 328, 392 }, { 824, 24 },  { 600, 200 }, { 280, 104 },
+    { 552, 408 }, { 136, 328 }, { 952, 120 }, { 424, 280 }, { 72, 200 },
+    { 680, 88 },  { 728, 296 }, { 616, 312 }, { 424, 424 }, { 776, 120 },
+    { 232, 312 }, { 520, 248 }, { 200, 120 }, { 856, 104 }, { 72, 120 },
+    { 888, 40 },  { 552, 344 }, { 648, 168 },
 };
-#define QUICKSTART_MTCRENEL_ROOM_SQUARES 52
+// Half the land, the same ratio Trilby's 450 keeps to its 923 land tiles:
+// a ceiling of 22 (14 + 400/50) and a wave sized for a mountain rather
+// than a ledge. The GFX ceiling in QuickStartRoomEnemyCeiling still has
+// the last word.
+#define QUICKSTART_MTCRENEL_ROOM_SQUARES 400
 
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
@@ -22191,6 +22213,28 @@ static void QuickStartRoomMonitor(void) {
 // fine for precisely-scripted test input but not for normal player movement.
 // Give our sign NPCs a much larger interact zone instead.
 static const Rect sQuickStartNpcInteractHitbox = { 0, 0, 20, 20 };
+
+// Is this NPC one the mode placed and scripted (a fuser, a talkable sign,
+// a quest giver)? Answered from the interaction table rather than a marker
+// on the entity: every one of ours is registered there with this file's own
+// hitbox, and no vanilla NPC can be, because the Rect is static to this
+// file. Exported for the NPC handlers whose type-0 init starts a vanilla
+// script of their own over whatever StartCutscene already gave them -
+// Rem's (src/npc/rem.c) was the first found, by the user: "the shoe
+// merchant sprite ... plays its default vanilla dialogue, and then the
+// player is frozen in place." Measured before the fix: every Rem-faced
+// fuser in Trilby sat in the candidate list as INTERACTION_TALK with
+// kinstone 0, his script's own registration, and none as FUSE.
+u32 QuickStartNpcIsOurs(Entity* ent) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(gPossibleInteraction.candidates); i++) {
+        const InteractableObject* cand = &gPossibleInteraction.candidates[i];
+        if (cand->entity == ent && cand->customHitbox == &sQuickStartNpcInteractHitbox) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 static void QuickStartMakeNpcTalkable(Entity* npc, Script* script) {
     s32 index;

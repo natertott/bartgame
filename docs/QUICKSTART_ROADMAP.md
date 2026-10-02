@@ -1271,6 +1271,50 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The shoe merchant's fusions, and Mount Crenel populated (Oct 2026)
+
+Two more from the user, the morning after the five.
+
+**Rem could not fuse.** "The player can speak to the sprite, which causes it
+to play its default vanilla dialogue, and then the player is frozen in
+place." Rem is one of the seven fuser faces, and his NPC handler is the one
+whose type-0 init does more than the others': `sub_0806A3D8` (src/npc/rem.c)
+calls `StartCutscene(super, &script_Rem)` unconditionally, over the
+`script_QuickStartFuser` the spawner had just given him, and `script_Rem`'s
+first line registers him as a TALK target. The other six faces init through
+`InitScriptForNPC`, which leaves the script pointer alone - which is why
+they were fine and he was not. Measured in Trilby with the default run seed
+(whose face there is Rem): seven Rem fusers, all `INTERACTION_TALK` with
+kinstone 0, none `FUSE`. The fix is a question the handler can ask:
+`QuickStartNpcIsOurs(Entity*)` answers from the interaction table, where
+every NPC the mode places is registered with game.c's own static hitbox and
+no vanilla NPC can be. Rem's init parks ours in action 5 (`nullsub_503`)
+and returns; the type-0 update loop still runs `ExecuteScriptForEntity`
+every frame, which is all the fuser script needs. After: the same seven
+stand in action 5, five of them `FUSE` and two `TALK` with kinstone 0 - the
+fickle roll from the batch before, not Rem's script. The function is there
+for the next face whose handler does the same thing.
+
+**Crenel's enemies were confined to the ledge.** By design, as the earlier
+entry "Where enemies spawn ... the Mount Crenel problem" records: its ten
+spots covered the 69-tile arrival component only, because a body on a
+component the player cannot reach is a region that can never be cleared.
+That premise expired when the mountain's clear rewards, boss and WAVE steps
+were all withdrawn (`QuickStartRegionAllowsWave`/`AllowsBoss`); nothing on
+Crenel counts the room to zero any more, and the user asked twice. So the
+table now covers every land component the room has - the ledge's ten, 14 on
+the mountain proper (402 tiles), 7 on the middle shelf (244), one each in
+the two pockets the cave network lands in (47, 29): 33 spots, 92% of 777
+land tiles within 96px of one, sampled the same way as Trilby's
+(`spawn_spread.py`'s sampler run over the union of components). Room squares
+go 52 -> 400, half the land, Trilby's ratio. Measured from the Trilby
+arrival at d3: 22 enemies, 7 on the ledge, 12 on the mountain, 2 on the
+shelf, 1 in a pocket, none on a solid tile. The known consequence is in the
+table's comment: a wave with survivors out of reach never reads as cleared,
+so a visit deals one wave; the next comes with the next entry. The "two
+answers" measurement that was left open (52 vs 198 tiles) is moot - the
+flood is over the whole room now.
+
 ### Five reported bugs, measured and fixed (Oct 2026)
 
 The user's list, in their order, with what the emulator said before and
@@ -2674,7 +2718,7 @@ Two Lake Hylia rooms are deliberately still out - its two Minish cracks are
 entered through holes rather than doors, so no transition row points into
 them and the proposer has no arrival to stand on.
 
-**Open measurement: Mount Crenel's entrance has two different answers.**
+**Open measurement (closed Oct 2026 - the spawn table covers every component now, see "The shoe merchant's fusions, and Mount Crenel populated"): Mount Crenel's entrance has two different answers.**
 Flooded from the Trilby border arrival it is 52 tiles (which is what
 `QUICKSTART_MTCRENEL_ROOM_SQUARES` and the region's ten enemy offsets are
 built on); flooded from the survey's own coordinate,

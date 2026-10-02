@@ -78,7 +78,24 @@ void sub_0806a370(RemEntity* this) {
     }
 }
 
+#ifdef QUICKSTART
+extern u32 QuickStartNpcIsOurs(Entity*);
+#endif
+
 void sub_0806A3D8(RemEntity* this) {
+#ifdef QUICKSTART
+    // A Rem the mode placed as a kinstone fuser (game.c, sQuickStartFuserCast)
+    // already carries its script from StartCutscene and its FUSE entry in
+    // the interaction table. This init would start script_Rem over it -
+    // whose first line registers him as a TALK target and whose dialogue
+    // then parks the player - so for ours it is skipped: action 5 is
+    // nullsub_503, and sub_0806a370 still runs ExecuteScriptForEntity every
+    // frame, which is all the fuser script needs.
+    if (QuickStartNpcIsOurs(super)) {
+        super->action = 5;
+        return;
+    }
+#endif
     super->action = 1;
     super->timer = 180;
     SetEntityPriority(super, PRIO_MESSAGE);
