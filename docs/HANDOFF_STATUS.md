@@ -142,6 +142,7 @@ headers first.
 |---|---|
 | `docs/QUICKSTART_ROADMAP.md` | The real history. Sections: 1 vision, 2 outstanding features, 3 known bugs, 4 vanilla behaviours, 5 everything else (**the numbered doctrine list lives here**). |
 | `docs/QUICKSTART_SIM_REPORT.md` | The simulation study and its corrections. |
+| `docs/QUICKSTART_CARRY_AND_TESTBED.md` | Two designs, not yet built: the item-carry quest (carry token + rebuild on arrival) and the scenario-in-the-save feature testbed. |
 | `docs/QUICKSTART_GUIDE_FINDINGS.md` | The vanilla walkthrough read against the survey: applied and proposed reach corrections, the Veil Falls / castle / dungeon maps, mechanics to re-purpose, the quest-porting assessment. |
 | `docs/QUICKSTART_TRAVERSAL_AUDIT.md`, `docs/quickstart_traversal.json` | What the world graph does and does not know. |
 | `docs/QUICKSTART_RETARGETS.md` | Door retargeting table. |
