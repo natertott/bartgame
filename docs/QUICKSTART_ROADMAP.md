@@ -1271,6 +1271,56 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The feature testbed and the carry quest (Oct 2026)
+
+The user: "I need a mode where I can test individual features of our game
+in an isolated way... every little thing in our game that could come up",
+and "a sprite in one part of the map could instruct the player to go fetch
+an item from another map region and carry it back to them". Both built as
+designed in `docs/QUICKSTART_CARRY_AND_TESTBED.md`, which now carries the
+as-built notes and the usage.
+
+**The testbed.** Eight bytes in the save (`SaveFile.scenario_*`, the old
+`filler38`) name a scenario; `QuickStartScenarioRunStart` reads them once
+at run start and the four dealers consult them when they roll. Kinds:
+SITE (a site deals a named event), BOSS (a row deals a named boss form on
+every wave), QUEST (a named quest hosted in a named row - pot, hunt, scav,
+stealth, carry), CHAIN (step 0 dealt verbatim), REGION (arrive with waves
+banked), FUSER (a spot room wears a named face), ROOM (any room, any
+tile). A scenario skips the hub, hands out a kit (none / the test kit /
+that plus every traversal item), pins the difficulty, pre-rolls the pit's
+drop region to the landing's region and lands the player there.
+`tools/quickstart/scenario.py` writes the bytes into a `.sav` (or, for
+the harness, into EWRAM on boot) and `list`s the catalogue.
+`scenario_probe.py` boots every kind: 15/15, with a no-scenario control
+landing in the hub. Kind 0 - every save ever written - changes nothing.
+
+**The carry quest.** A fourth quest giver (Zelda-faced, own region, own
+bank-11 bits 156-173) asks for a parcel - one of five vanilla trading
+props as a `SHOP_ITEM` - lying on the reward spot of a region next door
+(adjacency table, preferring a region the kit can reach, chosen at accept
+time). Lifting is vanilla's; the seam is bridged by one save byte: stash
+on `transitioningOut`, respawn at the feet on the far side and lift it
+again through vanilla's own interaction path (the player forced into the
+talk state with the lift queued; the prop's init clears `interactType`,
+so the lift waits one frame for it; the queued action is then returned to
+normal by hand because no shop textbox will do it). While held, the
+prop's pedestal is kept under the player, so a hit, a shrink or a fall
+drops it at the feet via `sub_080819B4`'s own put-back. Left behind, it
+goes home. Delivery is a proximity test at the giver or the script's
+first `Call`, pays a RARE draw at the feet, and counts as the run's side
+quest (`QuickStartSideQuestDone`: pot OR carry) for the chain's QUEST
+step and carrier. `carry_probe.py` plays it end to end: 9/9.
+
+**Measured.** Borders fire while carrying; a forced drop lands within a
+tile; the rebuilt hold takes ~100 frames after a seam; all five parcels
+draw; a parcel carried into the hub or a fairy's room goes home instead.
+**Not measured:** the `.sav` slot write - the harness's mgba crashes with
+any save attached (both `autoload_save` and `load_save`), so the checksum
+arithmetic is transcribed from `src/save.c` and awaits a real save. The
+in-hub console (design doc sec 2.3) is not built.
+
+
 ### The two door keys, run vanilla's way, and the keyed chain step (Oct 2026)
 
 The user: the ranch house's back door was open, its front door locked on a

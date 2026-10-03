@@ -56,6 +56,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | Mount Crenel: waves keep spawning, lose their clear reward and can never be a win requirement | "Mount Crenel keeps its waves..." |
 | The MINISH model - 58 dead rooms became 8 | "The MINISH model, encoded..." |
 | Trilby's boss arena was clamped to the wrong pocket | "Trilby's boss arena..." |
+| The feature testbed (a scenario in the save, `scenario.py`) and the carry quest | "The feature testbed and the carry quest" |
 
 ---
 
@@ -81,6 +82,18 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   land in this build. Same for the Minish Woods fairy and her rupees.
 - **Seven more guide-derived survey corrections await a walk each** -
   findings doc §1.2 lists the walk for every one.
+- **Try `scenario.py` on a real save.** Start the game once so the
+  emulator writes `tmc-d3.sav`, then `python3 tools/quickstart/scenario.py
+  room AREA_ROYAL_VALLEY ROOM_ROYAL_VALLEY_MAIN 18 53 --sav tmc-d3.sav` and
+  boot. Landing in Royal Valley proves the slot write and its checksum; the
+  game calling the file corrupt means the arithmetic transcribed from
+  `src/save.c` is wrong (the harness's mgba cannot attach a save to check
+  it). `clear` afterwards - a scenario persists until cleared.
+- **Play the carry quest.** `scenario.py quest CARRY CG --kit test` puts
+  its giver in Castle Garden with the parcel in North Hyrule Field. Every
+  leg is measured (`carry_probe.py`, 9/9) but the feel of carrying through
+  a wave - the hit that drops it at your feet, the walk back for it - has
+  not been watched.
 
 ### Design decisions waiting on a call
 
@@ -127,6 +140,10 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 - **The entitlement half of the meta loop.** `QUICKSTART_UNLOCKS_ENABLED` is
   0. The catalog, the score and the trophy case all exist; what is missing is
   gating content on cross-run benchmarks.
+- **The testbed's in-hub console** (`docs/QUICKSTART_CARRY_AND_TESTBED.md`
+  sec 2.3, second door): a ZELDA-faced picker behind a `QUICKSTART_TESTBED`
+  define, for scenarios on a cart with no cable. The save bytes and every
+  override already exist; the console is only a script that writes them.
 
 ### Known-stale tooling
 

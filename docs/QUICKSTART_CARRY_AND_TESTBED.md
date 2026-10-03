@@ -4,8 +4,9 @@ Written Oct 2026 against head `c04b478`, in answer to two questions: can a
 player carry a thing across screens and deliver it for a reward, and how
 does one test any single feature of the mode without waiting for a run to
 deal it. Both answers are built on what the ROM already does, read from
-the source and measured in the emulator where it mattered. Neither is
-implemented; this is the plan.
+the source and measured in the emulator where it mattered. Both are built
+now (head after `ace5020`); section 3 at the end records what changed from
+the plan and how to use them.
 
 ---
 
@@ -273,3 +274,98 @@ catalogue doubles as the list of what the matrix covers.
 
 Nothing here touches the shipped game's behaviour when `scenario_kind` is
 0, which it is on every save the game has ever written.
+
+
+---
+
+## 3. As built (Oct 2026)
+
+### 3.1 The testbed
+
+Everything in sec 2.2 shipped, with these differences:
+
+* The save layout is `scenario_kind, a, b, c, d, kitdiff, carry_item,
+  carry_want` - a fourth parameter byte `d` and kit/difficulty packed into
+  one byte (bits 0-3 difficulty, bits 4-5 kit), because the carry quest
+  needed two bytes of its own.
+* `d` means: SITE - pool row + 1 to pre-roll as the drop region (a site's
+  room is not a region room, so containment needs telling which region is
+  open; 0 leaves the drop random); CHAIN - the landing row for an ITEM or
+  QUEST step; ROOM - the landing tile's y.
+* REGION takes a wave count to bank (`QuickStartRegionSetWaveCount`).
+* BOSS forces the boss on EVERY wave of that row, not only wave 0, so the
+  fight can be repeated without leaving; `b` picks the form (0 green, 1
+  blue, 2 octorok).
+* QUEST kinds are POT 0, HUNT 1, SCAV 2, STEALTH 3, CARRY 4. The other
+  three quests' draws step aside from the forced row, so the four givers
+  stay in separate regions as in a run.
+* The drop pre-roll needed one change in `QuickStartRollElementRegionOnce`:
+  a drop already rolled is kept (nothing else sets `GF_DROP_REGION_ROLLED`).
+
+Usage:
+
+```
+python3 tools/quickstart/scenario.py list                        # the catalogue
+python3 tools/quickstart/scenario.py site 27 MINIBOSS 0 --sav tmc-d3.sav
+python3 tools/quickstart/scenario.py boss TRIL OCTOROK --kit test --diff 8
+python3 tools/quickstart/scenario.py quest CARRY CG
+python3 tools/quickstart/scenario.py chain EVENT 27 0 --land NHF
+python3 tools/quickstart/scenario.py region NHF 3
+python3 tools/quickstart/scenario.py fuser 1 REM
+python3 tools/quickstart/scenario.py room AREA_ROYAL_VALLEY ROOM_ROYAL_VALLEY_MAIN 18 53
+python3 tools/quickstart/scenario.py show --sav tmc-d3.sav
+python3 tools/quickstart/scenario.py clear
+```
+
+The `.sav` must already exist (start the game once). The tool finds the
+emulator's byte layout from the file itself - mGBA stores this EEPROM save
+in 8-byte blocks back to front, measured from its header - and rewrites the
+slot checksums. **The slot write is untested against the game**: the
+harness's mgba binding crashes with any save file attached, so the
+arithmetic is transcribed from `src/save.c` and the first real `.sav` is
+the test. If the game calls the file corrupt afterwards, suspect
+`_file_checksum`. The harness itself does not need the file:
+`scenario.boot(rom, kind, a, b, c, d, kit, diff)` writes the bytes into
+EWRAM on every title frame, which is how `scenario_probe.py` (15/15) and
+`carry_probe.py` run.
+
+A scenario persists until cleared, including across the save the run
+start writes - remember to `clear` before playing for real.
+
+Not built: the in-hub console (sec 2.3, second door).
+
+### 3.2 The carry quest
+
+Shipped as in sec 1, with these findings:
+
+* **The seam rebuild is vanilla's lift, not a copy of its five lines.**
+  Writing `heldObject`/`carriedEntity` by hand leaves the player's state
+  machine unaware and the hold is gone in a frame. What works is what the
+  interaction dispatch writes for `INTERACTION_LIFT_SHOP_ITEM`: queued
+  action `PLAYER_08070E9C`, `ForceSetPlayerState(PL_STATE_TALKEZLO)`, the
+  prop's `interactType = INTERACTION_TALK`, `gRoomVars.shopItemType`. Two
+  wrinkles, both measured: the prop's own init calls `AddInteractableObject`
+  which clears `interactType`, so the lift is written one frame after the
+  spawn; and the queued action only returns to normal when a textbox
+  closes (the shop's price line), so once the hold has taken the prop
+  monitor calls `ResetPlayerAnimationAndAction` itself.
+* **Drops at the feet come free.** Vanilla sets `gRoomVars.shopItemType`
+  at a lift and its drop path puts the prop back at its pedestal; keeping
+  the pedestal under the player each held frame turns every forced drop
+  into "at your feet". A hit drops it (traced: a wave enemy's knockback in
+  NHF); contact damage with iframes and no knockback does not.
+* **Parcels** are `ITEM_QST_BOOK2, MUSHROOM, CARLOV_MEDAL, BOOK1,
+  TINGLE_TROPHY`. Not the Dog Food: `ItemForSale_Action1` special-cases
+  type 0x36 into Stockwell's purchase cutscene. All five draw (the medal
+  is large).
+* **The parcel's region** is chosen when the quest is accepted, from the
+  rows adjacent to the giver's, preferring one `QuickStartReachableRegions`
+  says the current kit reaches. Ezlo names it with the region bank's own
+  line (`gCustomStrings2[0..12]`) on the next quiet frame after the ask;
+  state 1 is "accepted, not yet named", state 2 "named".
+* **The side quest is either quest.** `QuickStartSideQuestDone()` (pot
+  done OR carry won) feeds the chain's QUEST step, its candidate count and
+  the QUEST win carrier; the pot quest's own setup still reads
+  `GF_QUEST_DONE` alone, so finishing the carry does not close the pots.
+* **Hub and fairy rooms refuse the parcel**: carried in, it goes home. The
+  shop would try to sell it and the fountain would take it as an offering.

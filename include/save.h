@@ -93,7 +93,22 @@ typedef struct {
     /*0x035*/ u8 chain_progress;             /**< steps COMPLETED, 0..5 */
     /*0x036*/ u8 chain_rolled;               /**< steps ROLLED, 0..5; always >= chain_progress */
     /*0x037*/ u8 chain_hinted;               /**< bit n: the Ezlo hint for step n has been shown */
-    /*0x038*/ u8 filler38[8];                /**< unused filler */
+    /**
+     * QUICKSTART: the feature testbed and the carry quest
+     * (docs/QUICKSTART_CARRY_AND_TESTBED.md). A scenario is written into the
+     * save from outside (tools/quickstart/scenario.py) and read once at run
+     * start; kind 0 is a normal run and leaves everything below unread.
+     * The two carry bytes are the quest's own state and are reset per run.
+     */
+    /*0x038*/ u8 scenario_kind;              /**< 0 = none; else QS_SCN_* (game.c) */
+    /*0x039*/ u8 scenario_a;                 /**< meaning per kind - see the QS_SCN_* table */
+    /*0x03A*/ u8 scenario_b;
+    /*0x03B*/ u8 scenario_c;
+    /*0x03C*/ u8 scenario_d;
+    /*0x03D*/ u8 scenario_kitdiff;           /**< bits 0-3: difficulty (0 = the build's own);
+                                              *   bits 4-5: kit (0 normal, 1 test kit, 2 everything) */
+    /*0x03E*/ u8 carry_item;                 /**< the parcel in Link's hands across a room seam, or 0 */
+    /*0x03F*/ u8 carry_want;                 /**< the parcel the carry quest asks for, or 0 */
 #else
     /*0x022*/ u8 filler22[30];               /**< unused filler */
 #endif

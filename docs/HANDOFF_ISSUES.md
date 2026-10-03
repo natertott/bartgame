@@ -71,8 +71,37 @@ so nobody re-invents them:
 - **Entity coordinates**: integer x is at **0x2e** and integer y at **0x32**.
   0x30 and 0x34 are the LOW halves. Writing those moves nothing and reads
   back what you wrote, so the mistake is self-consistent and silent.
+- **mgba cannot attach a save file here.** Both `core.autoload_save()`
+  and `core.load_save(vfile)` segfault within the first hundred frames of
+  the boot, after writing only the EEPROM header. Anything that needs the
+  game to READ save state goes through EWRAM instead (`seed.boot_pinned`,
+  `scenario.boot` hammer the bytes on every title frame); anything that
+  needs a real `.sav` is a user test.
+- **`DeleteEntity` through `callrom.call_keep` never returns** on a
+  `SHOP_ITEM` (budget exhausted). Shove the entity off screen (write its
+  x at 0x2e) or leave the room; a seam deletes every non-persistent entity.
+- **`CreateObject` through `call_keep` does not take** - the entity list
+  shows nothing afterwards. Spawn through the game's own monitors (set the
+  state they read and run frames).
+- **Pressing A while carrying a shop prop DROPS it.** A probe's
+  "dismiss the textbox" A-presses after a seam put the carry quest's parcel
+  on the floor every time and looked like a rebuild failure. Check
+  `gMessage.state & 0x7f` before pressing anything.
+- **A lift only registers after walking INTO the prop.** Placing the
+  player a tile away and pressing R does nothing; hold UP into it for ~16
+  frames first, then R (the interaction box has to overlap).
 
 ## 3. Language and toolchain traps (agbcc, C89)
+
+- **A zero-extended byte is "known non-negative" to agbcc, and a signed
+  `%` on it becomes `__umodsi3`** - which this libgcc lacks, so the LINK
+  fails, not the compile. `(s32)gSave.some_u8 % QUICKSTART_REGION_POOL_SIZE`
+  does it; `(s32)Random() % n` does not (sign unknown). Reduce a byte with a
+  subtract loop (`QuickStartScenarioRow`) or mask through a u32 call result.
+- **An entity's own init can undo what you wrote on its spawn frame.**
+  `ItemForSale_Init` -> `AddInteractableObject` clears `interactType`; a
+  lift written the frame the prop is created is gone before its Action1
+  reads it. Wait for `action == 1`, then write.
 
 - **No unsigned `%` by a runtime divisor.** agbcc emits `__umodsi3` and the
   runtime library does not have one, so it fails at LINK time, not compile.
