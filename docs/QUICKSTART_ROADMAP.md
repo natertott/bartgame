@@ -1319,6 +1319,9 @@ draw; a parcel carried into the hub or a fairy's room goes home instead.
 any save attached (both `autoload_save` and `load_save`), so the checksum
 arithmetic is transcribed from `src/save.c` and awaits a real save. The
 in-hub console (design doc sec 2.3) is not built.
+`invariant_check.py`: 0 failures once its flag ledger learned that
+`GF_CARRY_*` is bank 11 (the first full run reported 18 collisions that
+were all that one missing line); sim_validate 402/402.
 
 
 ### The two door keys, run vanilla's way, and the keyed chain step (Oct 2026)
