@@ -416,6 +416,10 @@ static void QuickStartQuestEndResetWave(s32 slot);
 static bool32 QuickStartFindOpenTileNear(s32, s32, s32, s16*, s16*);
 static bool32 QuickStartTileIsOpen(s32, s32);
 static bool32 QuickStartLeverAtTile(s32, s32);
+// The two-room blink memory event (replaces the switch-puzzle site).
+static s32 QuickStartMemorySite(s32 role);
+static bool32 QuickStartSetupMemoryRoomContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase);
+static u32 QuickStartChainHash(u32 salt);
 void QuickStartMarkCatalogItem(u32);
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
@@ -3104,6 +3108,12 @@ const u8* const gCustomStrings2[] = {
     [199] = (const u8*)"Not yet? It is still\nout there, next door.\nCarry it to me.",
     [200] = (const u8*)"You carried it all the\nway here! Take this -\nit is yours, and gladly.",
     [201] = (const u8*)"I have what I wanted.\nThank you again, and\ngood luck out there.",
+    // 202-205: the blink memory event's two sprites (script_QuickStartMemory).
+    // The lesson's second line is the old [24] above, which already said it.
+    [202] = (const u8*)"Three eyes, and a secret\nbetween them. Watch how\nthey blink, and keep the\norder in your head.",
+    [203] = (const u8*)"Three eyes here too -\nbut these are asleep.\nSomewhere far off, their\ntwins blink in an order.",
+    [204] = (const u8*)"Strike these three in\nthat same order. Get it\nwrong, and you will\nhave company.",
+    [205] = (const u8*)"You remembered. Well\ndone - what fell was\nyours to take.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3115,14 +3125,15 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // 176 -> 189 for the thirteen new wanderer hints, 189 -> 194 for the
 // vanilla-walkthrough batch (fickle fuser, maze directions, fairy thanks),
 // 194 -> 195 for the hub sign's farewell line, 195 -> 197 for the two
-// key hints, 197 -> 202 for the carry quest's giver.
+// key hints, 197 -> 202 for the carry quest's giver, 202 -> 206 for the
+// blink memory sprites.
 // Appending is safe by
 // construction: everything the arithmetic addresses lives at 92 or below,
 // and nothing reads this bank by "last entry". The assert stays a tripwire
 // on the table's total shape - if it fires again, check whether the new
 // lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
 // (not fine, the arithmetic has moved).
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 202) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 206) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -9989,15 +10000,15 @@ enum {
     QS_EVENT_POT_LOTTERY,
     QS_EVENT_CHEST_LOTTERY,
     QS_EVENT_FAIRY,
-    // The switch-puzzle site (Phase D): a caged prize plus switches.
-    // Value 7 fills the kind field's 3-bit range exactly, so the two
-    // puzzles share it and a per-visit coin flip picks which one this
-    // stay gets: the CLOSING GATE (#1 - one switch, opens the cage for a
-    // shrinking timed window) or the DECOY SWITCHES (#2 - three identical
-    // switches dealt prize/trap/dud blind; per the user, NO tell - a pure
-    // gamble). Sword-only by design either way (switches answer any hit),
-    // so it needs no unlock and no kit check.
-    QS_EVENT_GATE,
+    // Value 7, once the switch-puzzle site (a caged prize plus a closing
+    // gate, decoy switches, linger plates or a blink sequence). RETIRED Oct
+    // 2026, per the user: the cage's pots could simply be lifted and the
+    // puzzles were broken or awkward in most rooms. The value is the
+    // two-room BLINK MEMORY event now, never dealt by a picker: one lesson
+    // site where three switches blink in a seed-drawn order, one recital
+    // site elsewhere where striking them in that order pays - see
+    // QuickStartMemorySite and QuickStartSetupMemoryRoomContent.
+    QS_EVENT_MEMORY,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -10125,9 +10136,11 @@ static u8 QuickStartPickAnyKind(void) {
             kind = QS_EVENT_MINIBOSS;
             break;
         case 8:
+            kind = QS_EVENT_POT_LOTTERY;
+            break;
         case 9:
         case 10:
-            kind = QS_EVENT_GATE;
+            kind = QS_EVENT_CHEST_LOTTERY;
             break;
         case 11:
         case 12:
@@ -10176,7 +10189,7 @@ static u8 QuickStartPickLargeKind(void) {
             break;
         case 13:
         case 14:
-            kind = QS_EVENT_GATE;
+            kind = QS_EVENT_WAVES;
             break;
         default:
             kind = QS_EVENT_FAIRY;
@@ -12189,22 +12202,16 @@ static void QuickStartPickPursuer(u8 difficulty, u8* outId, u8* outForm) {
     }
 }
 
-static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
+// One roster draw with the wave room's guards: no Crow (four redraws, then
+// a Beetle), no Acro Bandit past its cap.
+static void QuickStartPickWaveEnemy(u8 difficulty, bool32 pursuersOnly, u8* outId, u8* outForm) {
+    s32 i;
     u8 id, form;
-    s32 i, count;
     if (pursuersOnly) {
         QuickStartPickPursuer(difficulty, &id, &form);
     } else {
         QuickStartPickEnemy(difficulty, &id, &form);
     }
-    // No Ravens in a gauntlet or on a survive clock - the user's call, and
-    // the behaviour backs it up: a CROW flies a wide erratic circuit and
-    // will not commit to the player, so a wave of them is spent chasing
-    // rather than fighting, which reads as dead air against the clock and
-    // as a stalemate in a cramped room. Re-roll rather than substitute
-    // outright, so the wave still gets a difficulty-appropriate draw; only
-    // a run of rolls that all land on the bird falls back to the beetle
-    // (possible at low difficulty, where level 1 is a short list).
     for (i = 0; i < 4 && id == CROW; i++) {
         if (pursuersOnly) {
             QuickStartPickPursuer(difficulty, &id, &form);
@@ -12216,19 +12223,40 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
         id = BEETLE;
         form = 0;
     }
-    // Single-kind spawn + the gang cap = a capped acro pick would place
-    // nothing and the empty wave would read as instantly cleared. Trade
-    // the pick for a beetle instead of consuming another Random() so the
-    // RNG stream stays put.
     if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
         id = BEETLE;
         form = 0;
     }
+    *outId = id;
+    *outForm = form;
+}
+
+static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
+    u8 id, form;
+    s32 i, count, kinds, k, placed = 0;
     count = 4 + difficulty / 2 + wave * 2;
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
     }
-    if (QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1) == 0) {
+    // MIXED waves (Oct 2026, the user: "every wave is the same type of
+    // enemy... we should have waves spawn with multiple varieties"). The
+    // first wave draws two roster entries, later waves three, and the head
+    // count is split between them - the first draw takes the remainder.
+    // Each draw is independent, so a wave may still come up all one kind,
+    // just rarely. The fallback ring below keeps the first draw.
+    kinds = (wave == 0) ? 2 : 3;
+    if (kinds > count) {
+        kinds = count;
+    }
+    QuickStartPickWaveEnemy(difficulty, pursuersOnly, &id, &form);
+    for (k = kinds - 1; k >= 1; k--) {
+        u8 id2, form2;
+        s32 share = count / kinds;
+        QuickStartPickWaveEnemy(difficulty, pursuersOnly, &id2, &form2);
+        placed += QuickStartSpawnEnemiesOnOpenTiles(id2, form2, contentX, contentY, share, -1);
+        count -= share;
+    }
+    if (QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1) == 0 && placed == 0) {
         // A wave that places nobody reads as instantly cleared, and three
         // of those in a row hand the reward over for free. That was only
         // ever theoretical while gauntlets lived in roomy sites; now that
@@ -15704,6 +15732,213 @@ static void QuickStartGateSpawnPressure(s32 ptx, s32 pty) {
     QuickStartSpawnEnemiesOnOpenTiles(BOBOMB, 0, ptx * 16 + 8, pty * 16 + 8, bombs, -1);
 }
 
+// ==================== The blink memory event (Oct 2026) ====================
+//
+// The user retired the switch-puzzle site outright ("the player can just
+// walk up and pick up a pot and throw it away... the switches do not work,
+// no enemies appear") and asked for one puzzle rebuilt across TWO linked
+// ? rooms. Both hold three switches and a Zelda sprite. In the LESSON room
+// the switches blink in an order and the sprite says to remember it;
+// nothing else happens there, a hit included. In the RECITAL room, placed
+// elsewhere, the sprite asks for the order back: strike the three in that
+// order and the prize drops; strike a wrong one and a wave spawns.
+//
+// The two sites are a pure function of the run seed (QuickStartMemorySite),
+// chosen among sites that may host anything, never gated ones, never two in
+// one room - so nothing needs storing and a pinned seed replays the pair.
+// The site roll deals them QS_EVENT_MEMORY with the role in extra bit 0.
+//
+// What the win chain sees: both sites are ordinary EVENT candidates. The
+// lesson site is DONE the moment its sprite has been talked to (the
+// script's own Call), and unlike every other site its content stays after
+// DONE so the blink can be watched again. The recital is a candidate only
+// while the lesson's room is also reachable (QuickStartChainEventOk) - and
+// it can be brute-forced anyway, six orders at the price of a wave each,
+// so a chain step on it can never be a wall. Its DONE is the prize taken.
+//
+// The display and the input share one channel, as the old blink puzzle
+// found: a LIGHTABLE_SWITCH mirrors its flag into its sprite every frame,
+// so writing the flag lights it (the lesson's blink) and the player's hit
+// toggles it (the recital's input). Each room owns the flags one way.
+#define QS_MEMORY_ROLE_RECITAL 1
+#define QS_MEMORY_SOLVED_FLAG 6 // flagBase + 6: the order was given, pay out
+#define QS_MEMORY_PAID_FLAG 3   // flagBase + 3: the prize has been delivered
+#define QS_MEMORY_SHORT_FLAG 7  // flagBase + 7: the room could not hold three switches
+extern Script script_QuickStartMemory;
+
+static const u8* QuickStartMemorySequence(void) {
+    // Signed modulo on a masked value - no __umodsi3 in this libgcc.
+    return sQuickStartLeverRoles[(s32)(QuickStartChainHash(0x3E73u) & 0x7fff) % 6];
+}
+
+static Entity* QuickStartMemoryNpcAt(s16 contentX, s16 contentY) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == NPC && ent->id == ZELDA && ent->x.HALF.HI == gRoomControls.origin_x + contentX &&
+            ent->y.HALF.HI == gRoomControls.origin_y + contentY) {
+            return ent;
+        }
+    }
+    return NULL;
+}
+
+static bool32 QuickStartSetupMemoryRoomContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
+    const u8* seq = QuickStartMemorySequence();
+    bool32 recital = (extra & QS_MEMORY_ROLE_RECITAL) != 0;
+    s32 ptx = contentX >> 4, pty = contentY >> 4;
+    s16 prizeX = contentX, prizeY = (s16)(contentY + 16);
+    s32 k;
+    // The prize lands a tile south of the sprite, snapped to open ground;
+    // recomputed every frame from fixed inputs so the pickup watch looks
+    // where the drop went.
+    if (!QuickStartTileIsOpen(ptx, pty + 1)) {
+        s16 sx, sy;
+        if (QuickStartFindOpenTileNear(contentX, contentY + 16, 1, &sx, &sy)) {
+            prizeX = sx;
+            prizeY = sy;
+        } else {
+            prizeX = contentX;
+            prizeY = contentY;
+        }
+    }
+    if (!QsCheckRoomFlag(flagBase + 0)) {
+        // First frame of a visit: three switches in a row north of the
+        // sprite (the same fan the old blink puzzle used, so the player sees
+        // all three at once), every one dark, progress zero.
+        s32 ax = contentX, ay = contentY, dealt = 0;
+        QuickStartClampInboard(&ax, &ay);
+        for (k = 0; k < 3; k++) {
+            s16 lx, ly;
+            if (QuickStartGateSwitchSpot(ax + (k - 1) * 32, ay - 32, ptx, pty, &lx, &ly) &&
+                QuickStartSpawnPuzzleSwitch(lx, ly, (u32)k) != NULL) {
+                dealt++;
+            }
+        }
+        QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+        if (dealt < 3) {
+            // A room that cannot seat three switches cannot ask a question
+            // of three answers: sweep what was dealt and mark the stay
+            // short - the lesson still teaches by word, the recital simply
+            // pays.
+            s32 e;
+            for (e = 0; e < MAX_ENTITIES; e++) {
+                Entity* ent = &gEntities[e].base;
+                if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH && QuickStartEntityInCurrentRoom(ent)) {
+                    DeleteEntity(ent);
+                }
+            }
+            QsSetRoomFlag(flagBase + QS_MEMORY_SHORT_FLAG);
+            if (recital) {
+                QsSetRoomFlag(flagBase + QS_MEMORY_SOLVED_FLAG);
+            }
+        }
+        QsSetRoomFlag(flagBase + 0);
+    }
+    // The sprite, on every frame it is missing (a full table on the deal
+    // frame is the usual reason).
+    if (QuickStartMemoryNpcAt(contentX, contentY) == NULL && QuickStartGfxBudgetForSpawn()) {
+        Entity* npc = CreateNPC(ZELDA, 0, 0);
+        if (npc != NULL) {
+            npc->x.HALF.HI = gRoomControls.origin_x + contentX;
+            npc->y.HALF.HI = gRoomControls.origin_y + contentY;
+            npc->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcTalkable(npc, &script_QuickStartMemory);
+        }
+    }
+    if (!recital) {
+        // THE LESSON: the show, forever. Each step lights one switch for
+        // QS_EYES_STEP frames, then a dark beat as long as the show so the
+        // order reads as an order; the free-running frame clock loops it.
+        // The flags are rewritten every frame, so a hit changes nothing
+        // but the switch's own click. DONE comes from the sprite's script
+        // (QuickStartMemoryLessonTaught), never from here.
+        s32 phase = gRoomTransition.frameCount % QS_EYES_PERIOD;
+        s32 step = (phase < QS_EYES_SHOW) ? phase / QS_EYES_STEP : 3;
+        if (QsCheckRoomFlag(flagBase + QS_MEMORY_SHORT_FLAG)) {
+            return FALSE;
+        }
+        for (k = 0; k < 3; k++) {
+            if (step < 3 && seq[step] == (u8)k) {
+                QsSetRoomFlag(104 + k);
+            } else {
+                QsClearRoomFlag(104 + k);
+            }
+        }
+        return FALSE;
+    }
+    // THE RECITAL.
+    if (QsCheckRoomFlag(flagBase + QS_MEMORY_SOLVED_FLAG)) {
+        // Paid when the prize has been taken (a direct-grant prize is taken
+        // the moment it is delivered). Same seen-then-gone watch every
+        // dropped prize uses.
+        if (!QsCheckRoomFlag(flagBase + QS_MEMORY_PAID_FLAG)) {
+            u16 rewardItem = QuickStartDrawItem((extra >> 1) & 0x3f, QS_CAT_DROP);
+            if (!QuickStartGroundItemAt(prizeX, prizeY) && QuickStartRewardDelivered(rewardItem, prizeX, prizeY)) {
+                QsSetRoomFlag(flagBase + QS_MEMORY_PAID_FLAG);
+            }
+            return FALSE;
+        }
+        return !QuickStartGroundItemAt(prizeX, prizeY);
+    }
+    {
+        s32 progress = QuickStartEyesReadField(QS_EYES_PROGRESS_BIT(0), 2);
+        s32 lit = 0, newest = -1;
+        for (k = 0; k < 3; k++) {
+            if (QsCheckRoomFlag(104 + k)) {
+                lit++;
+            }
+        }
+        if (lit == progress) {
+            return FALSE;
+        }
+        if (lit < progress) {
+            // A lit switch struck again went dark: not an answer, just
+            // relight the prefix the player already earned.
+            for (k = 0; k < progress; k++) {
+                QsSetRoomFlag(104 + seq[k]);
+            }
+            return FALSE;
+        }
+        for (k = 0; k < 3; k++) {
+            s32 j, inPrefix = 0;
+            if (!QsCheckRoomFlag(104 + k)) {
+                continue;
+            }
+            for (j = 0; j < progress; j++) {
+                if (seq[j] == (u8)k) {
+                    inPrefix = 1;
+                }
+            }
+            if (!inPrefix) {
+                newest = k;
+                break;
+            }
+        }
+        if (newest >= 0 && seq[progress] == (u8)newest) {
+            progress++;
+            QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, progress);
+            SoundReq(SFX_SECRET);
+            if (progress >= 3) {
+                QsSetRoomFlag(flagBase + QS_MEMORY_SOLVED_FLAG);
+            }
+            return FALSE;
+        }
+        // Wrong. Everything dark, the order starts over, and the room
+        // gets company: a real wave, the same deal a gauntlet room's first
+        // wave is.
+        for (k = 0; k < 3; k++) {
+            QsClearRoomFlag(104 + k);
+        }
+        QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+        SoundReq(SFX_PLY_VO7);
+        QuickStartSpawnWave(contentX, contentY, 0, QuickStartGetDifficulty(), FALSE);
+    }
+    return FALSE;
+}
+
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     // One correction for every kind: if the table's content spot is solid
     // or out of bounds, snap it to the nearest open tile before anything is
@@ -15778,542 +16013,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
                 QsSetRoomFlag(flagBase + 0);
             }
         }
-    } else if (kind == QS_EVENT_GATE) {
-        // ---- The switch-puzzle site: closing gate OR decoy switches ----
-        // Room-flag windows (per visit): +0 initialized, +1 variant (set
-        // = decoy switches, clear = closing gate), +3 prize seen, +4 the
-        // gate switch's last-seen on bit, +5 hint shown, +6 cage open.
-        s32 ptx;
-        s32 pty;
-        Entity* lever = NULL;
-        s32 i;
-        u32 t;
-        // The cage anchors on the site's content spot, and content spots
-        // (picked as reward-drop tiles) often sit on the door's approach
-        // line - the user kept meeting the puzzle "right in front of the
-        // ? room door". Pull the anchor through the same inboard clamp
-        // the switches use before anything keys off it, then re-snap to
-        // open ground. Pure arithmetic over the room's fixed dimensions,
-        // so every frame of the visit recomputes the same spot (the
-        // pickup watch below must keep looking where the prize was put).
-        {
-            s32 ax = contentX;
-            s32 ay = contentY;
-            QuickStartClampInboard(&ax, &ay);
-            if (ax != contentX || ay != contentY) {
-                s16 fixedX, fixedY;
-                contentX = (s16)ax;
-                contentY = (s16)ay;
-                if (!QuickStartTileIsOpen(contentX >> 4, contentY >> 4) &&
-                    QuickStartFindOpenTileNear(contentX, contentY, 1, &fixedX, &fixedY)) {
-                    contentX = fixedX;
-                    contentY = fixedY;
-                }
-            }
-        }
-        ptx = contentX >> 4;
-        pty = contentY >> 4;
-        for (i = 0; i < MAX_ENTITIES; i++) {
-            Entity* ent = &gEntities[i].base;
-            if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH && QuickStartEntityInCurrentRoom(ent)) {
-                lever = ent;
-                break;
-            }
-        }
-        if (!QsCheckRoomFlag(flagBase + 0)) {
-            // First frame of a visit: prize into the cage spot, lever(s)
-            // near where the player is standing (they just walked in, so
-            // "near the player" IS "near the entrance"), cage shut, clock
-            // zero. The variant is a fresh coin flip every visit: the
-            // whole room state (levers, cage, unclaimed prize) rebuilds
-            // per visit anyway, so re-entering may deal a different
-            // puzzle, which suits a gamble room.
-            bool32 decoy;
-            // A prize from a previous visit can still be sitting on the
-            // spot: the item carries ENT_PERSIST, scroll-seam re-entries
-            // do not clear persistent entities, and the per-visit room
-            // flags (which say "drop one") DO reset. Adopt it rather than
-            // stacking a second prize on top.
-            if (!QuickStartGroundItemAt(contentX, contentY)) {
-                u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-                // A direct-grant prize (the level-2 sword) is handed over
-                // rather than caged, so the cage below has nothing to hold
-                // and the puzzle is already paid. Bail before dealing it.
-                if (QuickStartItemNeedsDirectGrant(rewardItem)) {
-                    QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
-                    QsSetRoomFlag(flagBase + 0);
-                    QsSetRoomFlag(flagBase + 3);
-                    return TRUE;
-                }
-                if (QuickStartSpawnRewardEntity(rewardItem, contentX, contentY) == NULL) {
-                    return FALSE;
-                }
-            }
-            // FOUR puzzles share this site now: the closing gate, the
-            // decoy switches, the linger plates and the blink sequence -
-            // an even four-way roll per visit, same rationale as the
-            // original coin flip.
-            //
-            // The variant is TWO BITS, not two booleans: flagBase + 1 and
-            // flagBase + 7 were a decoy latch and a plates latch, and the
-            // fourth combination (both set) was simply never dealt. Using
-            // it is what let a fourth puzzle in without another room flag -
-            // the site's own eight-flag window has none to give.
-            {
-                s32 variantRoll = (s32)Random() % 4;
-                decoy = variantRoll == 1;
-                if (decoy || variantRoll == 3) {
-                    QsSetRoomFlag(flagBase + 1);
-                } else {
-                    QsClearRoomFlag(flagBase + 1);
-                }
-                if (variantRoll >= 2) {
-                    QsSetRoomFlag(flagBase + 7);
-                } else {
-                    QsClearRoomFlag(flagBase + 7);
-                }
-                if (variantRoll == 3) {
-                    // The blink sequence. Three switches fanned out the
-                    // same way the decoy row is - the player is looking at
-                    // all three at once, which a sequence puzzle needs -
-                    // and the order drawn from the same permutation table.
-                    s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-                    s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-                    s32 k, dealt = 0;
-                    decoy = FALSE;
-                    QuickStartClampInboard(&px, &py);
-                    for (k = 0; k < 3; k++) {
-                        s16 lx, ly;
-                        if (!QuickStartGateSwitchSpot(px + (k - 1) * 32, py, ptx, pty, &lx, &ly)) {
-                            continue;
-                        }
-                        if (QuickStartSpawnPuzzleSwitch(lx, ly, (u32)k) == NULL) {
-                            continue;
-                        }
-                        dealt++;
-                    }
-                    QuickStartEyesWriteField(QS_EYES_SEQ_BIT(0), 3, (s32)Random() % 6);
-                    QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
-                    QsClearRoomFlag(QS_EYES_STAKE_TAKEN);
-                    if (dealt < 3) {
-                        // A room that cannot hold three switches cannot
-                        // hold this puzzle: with two of them there is no
-                        // third blink to repeat and the cage would never
-                        // open. Sweep what was dealt and fall through to
-                        // the single-switch gate, which every room that
-                        // hosts this site can hold - the same degrade the
-                        // linger plates already do.
-                        s32 e;
-                        for (e = 0; e < MAX_ENTITIES; e++) {
-                            Entity* ent = &gEntities[e].base;
-                            if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH &&
-                                QuickStartEntityInCurrentRoom(ent)) {
-                                DeleteEntity(ent);
-                            }
-                        }
-                        QsClearRoomFlag(flagBase + 1);
-                        QsClearRoomFlag(flagBase + 7);
-                    }
-                }
-            }
-            if (QsCheckRoomFlag(flagBase + 7) && !QsCheckRoomFlag(flagBase + 1)) {
-                // ---- The linger plates (#3, "hold everything down") ----
-                // Two plates: one dealt ahead of the player, one across
-                // the room (the anchor mirrored over the cage), so the
-                // route between them crosses the prize. Both must be down
-                // AT ONCE; the linger is the clock, tightening with
-                // difficulty, and the two are dealt a real walk apart (see
-                // QuickStartGatePlateSpot - they used to be able to land on
-                // the same tile, which made the puzzle one step). A room
-                // that cannot hold both falls back to the single-switch
-                // gate below rather than dealing an unsolvable one.
-                s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-                s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-                s32 linger = 300 - (s32)QuickStartGetDifficulty() * 12;
-                s16 firstX = 0, firstY = 0;
-                bool32 haveFirst = FALSE;
-                bool32 placed = FALSE;
-                s32 k;
-                QuickStartClampInboard(&px, &py);
-                for (k = 0; k < 2; k++) {
-                    s16 lx, ly;
-                    s32 ax = (k == 0) ? px : (ptx * 16 + 8) * 2 - px;
-                    s32 ay = (k == 0) ? py : (pty * 16 + 8) * 2 - py;
-                    bool32 got;
-                    QuickStartClampInboard(&ax, &ay);
-                    // Plate two is searched with plate one as a second
-                    // point to keep away from. Mirroring the anchor over
-                    // the cage was supposed to do that on its own, but the
-                    // mirror is CLAMPED back inboard, and in a room as
-                    // small as a dojo the clamp puts it straight back where
-                    // it started - which is how the pair ended up stacked.
-                    if (k == 1 && haveFirst) {
-                        got = QuickStartGatePlateSpot(ax, ay, ptx, pty, firstX >> 4, firstY >> 4, &lx, &ly);
-                    } else {
-                        got = QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly);
-                    }
-                    if (!got) {
-                        continue;
-                    }
-                    if (QuickStartSpawnPuzzlePlate(lx, ly, (u32)k, (u32)linger) == NULL) {
-                        continue;
-                    }
-                    if (k == 0) {
-                        firstX = lx;
-                        firstY = ly;
-                        haveFirst = TRUE;
-                    } else {
-                        placed = TRUE;
-                    }
-                }
-                if (!placed) {
-                    // The room cannot hold two plates a walk apart. That
-                    // used to deal ONE, which is not a hard puzzle - it is
-                    // an unsolvable one: both bits can never be up, so the
-                    // cage never opens and the only way to the prize is
-                    // lifting a primed pot. Sweep the lone plate and fall
-                    // through to the single-switch gate below, which any
-                    // room that hosts this site can hold.
-                    s32 e;
-                    for (e = 0; e < MAX_ENTITIES; e++) {
-                        Entity* ent = &gEntities[e].base;
-                        if (ent->kind == OBJECT && ent->id == PRESSURE_PLATE &&
-                            QuickStartEntityInCurrentRoom(ent)) {
-                            DeleteEntity(ent);
-                        }
-                    }
-                    QsClearRoomFlag(flagBase + 7);
-                }
-            }
-            if (QsCheckRoomFlag(flagBase + 7)) {
-                // plates or blink switches dealt - nothing more to place
-            } else if (!decoy && lever == NULL) {
-                s16 lx, ly;
-                s32 ax = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-                s32 ay = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-                // Separated from the cage on purpose: the window is priced
-                // off this distance, so a switch dealt beside the prize
-                // used to hand it over for free.
-                if (QuickStartGateSwitchSpot(ax, ay, ptx, pty, &lx, &ly)) {
-                    lever = QuickStartSpawnPuzzleSwitch(lx, ly, 0);
-                }
-            } else if (decoy) {
-                // Three switches dealt blind: one frees the prize, one
-                // springs the trap, one is a dud - and nothing in the
-                // room distinguishes them (per the user: a total gamble,
-                // no eye-switch tell). Anchors fan out 2 tiles left/right
-                // of the player so the row reads as one obvious cluster.
-                const u8* roles = sQuickStartLeverRoles[(s32)Random() % 6];
-                s32 px = gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x;
-                s32 py = gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y;
-                s32 k;
-                QuickStartClampInboard(&px, &py);
-                for (k = 0; k < 3; k++) {
-                    s16 lx, ly;
-                    Entity* newLever;
-                    // One search per switch, from that switch's own anchor.
-                    // It enforces everything the hand-rolled loop here used
-                    // to (open ground, no double-deal, off the cage, inboard
-                    // of the door band) plus the separation the window is
-                    // priced from; when a neighbour's search funnels into a
-                    // claimed tile the helper's own pushed anchors find the
-                    // next one. Degenerate geometry still just deals fewer
-                    // switches - a short deal is survivable because a
-                    // trap-pot cage is always liftable.
-                    if (!QuickStartGateSwitchSpot(px + (k - 1) * 32, py, ptx, pty, &lx, &ly)) {
-                        continue;
-                    }
-                    newLever = QuickStartSpawnPuzzleSwitch(lx, ly, (u32)(1 + k));
-                    if (newLever == NULL) {
-                        continue;
-                    }
-                    QS_SWITCH_ROLE(newLever) = roles[k];
-                }
-            }
-            QuickStartGateWriteTimer(0);
-            // Clearance 2: at deal time the player is standing in the
-            // doorway they entered through (see QuickStartGateClose).
-            QuickStartGateClose(ptx, pty, 2);
-            QsClearRoomFlag(flagBase + 6);
-            if (!decoy && lever != NULL && lever->frameIndex != 0) {
-                QsSetRoomFlag(flagBase + 4);
-            }
-            if (!QsCheckRoomFlag(flagBase + 5)) {
-                QsSetRoomFlag(flagBase + 5);
-                if (QsCheckRoomFlag(flagBase + 7) && QsCheckRoomFlag(flagBase + 1)) {
-                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, 24), 0);
-                } else if (QsCheckRoomFlag(flagBase + 7)) {
-                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 225), 0);
-                } else if (decoy) {
-                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 32), 0);
-                } else {
-                    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 31), 0);
-                }
-            }
-            QsSetRoomFlag(flagBase + 0);
-            return FALSE;
-        }
-        // Pickup watch - same earned/vanished semantics as the item drop.
-        if (QuickStartGroundItemAt(contentX, contentY)) {
-            QsSetRoomFlag(flagBase + 3);
-        } else if (QsCheckRoomFlag(flagBase + 3)) {
-            if (QuickStartPlayerNearSpot(contentX, contentY)) {
-                return TRUE;
-            }
-            // Despawned unclaimed (the cage held the player off past the
-            // ground-item timer) - put it back and keep playing.
-            QsClearRoomFlag(flagBase + 3);
-            {
-                u16 rewardItem = QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP);
-                QuickStartSpawnRewardEntity(rewardItem, contentX, contentY);
-            }
-        }
-        if (QsCheckRoomFlag(flagBase + 7) && QsCheckRoomFlag(flagBase + 1)) {
-            // ---- Watch the eyes (#4), per frame ----
-            //
-            // Two halves of one loop, and which half it is decides who owns
-            // the switch flags this frame. See the block comment on
-            // QS_EYES_STEP for why that split exists at all.
-            const u8* seq = sQuickStartLeverRoles[QuickStartEyesReadField(QS_EYES_SEQ_BIT(0), 3) % 6];
-            s32 phase = gRoomTransition.frameCount % QS_EYES_PERIOD;
-            s32 progress = QuickStartEyesReadField(QS_EYES_PROGRESS_BIT(0), 2);
-            s32 k;
-            if (QsCheckRoomFlag(flagBase + 6)) {
-                return FALSE; // already solved this visit
-            }
-            if (phase < QS_EYES_SHOW) {
-                // SHOW. We own the flags: exactly one switch lit per step,
-                // nothing lit on the fourth (the dark beat), and progress
-                // pinned at zero so a hit landed mid-show is not counted.
-                s32 step = phase / QS_EYES_STEP;
-                for (k = 0; k < 3; k++) {
-                    if (step < 3 && seq[step] == (u8)k) {
-                        QsSetRoomFlag(104 + k);
-                    } else {
-                        QsClearRoomFlag(104 + k);
-                    }
-                }
-                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
-                return FALSE;
-            }
-            // INPUT. The player owns the flags now. Correct presses stay
-            // lit, so the lit switches ARE the progress bar; the count of
-            // lit switches against `progress` is what detects a new press
-            // without storing anything per switch.
-            {
-                s32 lit = 0, newest = -1;
-                for (k = 0; k < 3; k++) {
-                    if (QsCheckRoomFlag(104 + k)) {
-                        lit++;
-                    }
-                }
-                if (lit == progress) {
-                    return FALSE; // nothing new this frame
-                }
-                if (lit > progress) {
-                    // Find the lit switch that is not already part of the
-                    // answered prefix. Turning a correct one back OFF gives
-                    // lit < progress and falls through to the wrong branch,
-                    // which is fair: the sequence is no longer displayed.
-                    for (k = 0; k < 3; k++) {
-                        s32 j, inPrefix = 0;
-                        if (!QsCheckRoomFlag(104 + k)) {
-                            continue;
-                        }
-                        for (j = 0; j < progress; j++) {
-                            if (seq[j] == (u8)k) {
-                                inPrefix = 1;
-                            }
-                        }
-                        if (!inPrefix) {
-                            newest = k;
-                            break;
-                        }
-                    }
-                }
-                if (newest >= 0 && progress < 3 && seq[progress] == (u8)newest) {
-                    progress++;
-                    QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, progress);
-                    if (progress >= 3) {
-                        QsSetRoomFlag(flagBase + 6);
-                        QuickStartGateOpen(ptx, pty);
-                        SoundReq(SFX_SECRET);
-                    } else {
-                        SoundReq(SFX_SECRET);
-                    }
-                    return FALSE;
-                }
-                // Wrong. Everything goes dark and the sequence starts over
-                // on the next show. At high difficulty it also costs the
-                // F1c stake - once per visit, and never while a timed quest
-                // owns the latched tier the stake reads.
-                for (k = 0; k < 3; k++) {
-                    QsClearRoomFlag(104 + k);
-                }
-                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
-                if (!QsCheckRoomFlag(QS_EYES_STAKE_TAKEN) && !QuickStartQuestSwapActive() &&
-                    QuickStartFailureStakeTier() >= 2) {
-                    QsSetRoomFlag(QS_EYES_STAKE_TAKEN);
-                    QuickStartLatchFailureStake();
-                    {
-                        s32 stakeMsg = QuickStartApplyFailureStake();
-                        if (stakeMsg != 0) {
-                            MessageRequest(TEXT_INDEX(TEXT_CUSTOM, stakeMsg));
-                            MsgInit();
-                        }
-                    }
-                }
-                EnqueueSFX(SFX_110);
-            }
-            return FALSE;
-        }
-        if (QsCheckRoomFlag(flagBase + 7)) {
-            // ---- Linger plates, per frame ----
-            // Both plate bits up at once = the cage opens, once, for good.
-            // The plates keep sinking and rising on their own after that;
-            // they just no longer gate anything. flagBase + 6 (cleared at
-            // the deal) is the opened latch.
-            if (!QsCheckRoomFlag(flagBase + 6) && QsCheckRoomFlag(104 + 0) && QsCheckRoomFlag(104 + 1)) {
-                QsSetRoomFlag(flagBase + 6);
-                QuickStartGateOpen(ptx, pty);
-                SoundReq(SFX_SECRET);
-            } else if (!QsCheckRoomFlag(flagBase + 6) &&
-                       (QsCheckRoomFlag(104 + 0) || QsCheckRoomFlag(104 + 1))) {
-                // One plate down and the other still up: the run between
-                // them is the puzzle, so it is contested. Same pack the
-                // closing gate arms, and the same live-count guard, so
-                // stepping on and off cannot flood the room.
-                QuickStartGateSpawnPressure(ptx, pty);
-            }
-            return FALSE;
-        }
-        if (QsCheckRoomFlag(flagBase + 1)) {
-            // ---- Decoy switches, per frame: resolve fresh pulls ----
-            // A switch's frameIndex mirrors its flag2 flag, flipping
-            // 0<->1 on every hit; a fresh deal starts every switch OFF,
-            // so "on and not yet DONE" is exactly "pulled for the first
-            // time". The roll happened at the deal - resolving here just
-            // reads the stamped role.
-            for (i = 0; i < MAX_ENTITIES; i++) {
-                Entity* ent = &gEntities[i].base;
-                if (ent->kind != OBJECT || ent->id != LIGHTABLE_SWITCH || !QuickStartEntityInCurrentRoom(ent)) {
-                    continue;
-                }
-                if (QS_SWITCH_ROLE(ent) & QUICKSTART_LEVER_ROLE_DONE) {
-                    continue;
-                }
-                if (ent->frameIndex == 0) {
-                    continue;
-                }
-                QS_SWITCH_ROLE(ent) |= QUICKSTART_LEVER_ROLE_DONE;
-                switch (QS_SWITCH_ROLE(ent) & 3) {
-                    case QUICKSTART_LEVER_ROLE_PRIZE:
-                        // The right guess opens the cage on a clock too -
-                        // it used to stay open for the rest of the visit,
-                        // which made the win half of a gamble room a free
-                        // walk. DOUBLE the closing gate's window, because
-                        // this variant's pull is one-shot: the switch is
-                        // marked DONE, so a lapse here cannot be re-pulled
-                        // the way the gate's single switch can, and the
-                        // player has already paid the 1-in-3 gamble. A
-                        // lapsed cage is still liftable at the price of a
-                        // primed pot, so it is a cost, not a lockout.
-                        if (!QsCheckRoomFlag(flagBase + 6)) {
-                            s32 window = QuickStartGateWindowFor((ent->x.HALF.HI - gRoomControls.origin_x) >> 4,
-                                                                 (ent->y.HALF.HI - gRoomControls.origin_y) >> 4, ptx,
-                                                                 pty);
-                            window += window;
-                            if (window > QUICKSTART_GATE_WINDOW_MAX) {
-                                window = QUICKSTART_GATE_WINDOW_MAX;
-                            }
-                            QuickStartGateWriteTimer((u32)window);
-                            QuickStartGateOpen(ptx, pty);
-                            QsSetRoomFlag(flagBase + 6);
-                            QuickStartGateSpawnPressure(ptx, pty);
-                        }
-                        SoundReq(SFX_SECRET);
-                        break;
-                    case QUICKSTART_LEVER_ROLE_TRAP: {
-                        // The bite: the cage machinery aimed at the
-                        // PLAYER. GateClose skips the tile under their
-                        // feet and only fills open tiles, so this rings
-                        // them in primed pots - lift one and eat the
-                        // blast, or hope the room left a gap.
-                        //
-                        // And now company with it. Per the user, a wrong
-                        // switch has to cost something; being ringed in
-                        // was easy to miss, because a trap-pot cage is
-                        // liftable and the player often walked straight
-                        // out of it without noticing they had sprung
-                        // anything. A pack landing on the cage cannot be
-                        // missed.
-                        s32 playerTX = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
-                        s32 playerTY = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
-                        QuickStartGateClose(playerTX, playerTY, 0);
-                        QuickStartGateSpawnPressure(playerTX, playerTY);
-                        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 240), 0);
-                        SoundReq(SFX_MENU_ERROR);
-                        break;
-                    }
-                    default: {
-                        // The dud used to be exactly nothing - the
-                        // switch's own click and no more - which is what
-                        // made a three-way gamble read as "press them
-                        // until one works". It takes the purse now: a
-                        // difficulty-scaled toll, and never more than the
-                        // player is carrying, so it is a setback rather
-                        // than a wipe. A player with nothing to take gets
-                        // the sound and the sting of having spent their
-                        // guess.
-                        u16 toll = (u16)(20 + (s32)QuickStartGetDifficulty() * 5);
-                        if (gSave.stats.rupees != 0) {
-                            gSave.stats.rupees =
-                                (gSave.stats.rupees > toll) ? (u16)(gSave.stats.rupees - toll) : 0;
-                            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 239), 0);
-                        }
-                        SoundReq(SFX_MENU_ERROR);
-                        break;
-                    }
-                }
-            }
-            // Falls through to the shared clock below rather than
-            // returning: both variants run on the same countdown now.
-        } else if (lever != NULL) {
-            // Any flip of the switch (either direction) restarts the window.
-            u32 lt = (lever->frameIndex != 0) ? 1 : 0;
-            u32 seen = QsCheckRoomFlag(flagBase + 4) ? 1 : 0;
-            if (lt != seen) {
-                s32 window;
-                if (lt) {
-                    QsSetRoomFlag(flagBase + 4);
-                } else {
-                    QsClearRoomFlag(flagBase + 4);
-                }
-                window = QuickStartGateWindowFor((lever->x.HALF.HI - gRoomControls.origin_x) >> 4,
-                                                 (lever->y.HALF.HI - gRoomControls.origin_y) >> 4, ptx, pty);
-                QuickStartGateWriteTimer((u32)window);
-                if (!QsCheckRoomFlag(flagBase + 6)) {
-                    QuickStartGateOpen(ptx, pty);
-                    QsSetRoomFlag(flagBase + 6);
-                }
-                QuickStartGateSpawnPressure(ptx, pty);
-                SoundReq(SFX_SECRET);
-            }
-        }
-        t = QuickStartGateReadTimer();
-        if (t > 0) {
-            QuickStartGateWriteTimer(t - 1);
-        } else if (QsCheckRoomFlag(flagBase + 6)) {
-            // Clock ran out: shut it again. Per-tile the close skips the
-            // player's own tile, and a trap-pot cage is liftable from the
-            // inside anyway (at the price of the primed pot), so it can
-            // never become a jail. Clearance 0 on purpose: sparing a
-            // 2-tile halo here would let the player park beside the cage
-            // and cancel the re-close - the timer IS this variant.
-            QuickStartGateClose(ptx, pty, 0);
-            QsClearRoomFlag(flagBase + 6);
-        }
-        return FALSE;
+    } else if (kind == QS_EVENT_MEMORY) {
+        return QuickStartSetupMemoryRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
@@ -18026,9 +17727,96 @@ static bool32 QuickStartIsPocketTransition(u8 fromArea, u8 fromRoom, u8 toArea, 
 // Borrowed and put back below so a site's roll can be replayed on demand.
 extern u32 gRand;
 
+// The lesson (role 0) and recital (role 1) sites of the blink memory
+// event: a pure function of the run seed over the sites that may host
+// anything (SMALL/LARGE/ANY kinds, no kinstone gate), the recital never in
+// the lesson's room. Walked rather than stored - 105 rows twice is nothing
+// next to a frame, and it is asked a handful of times per visit.
+static bool32 QuickStartMemorySiteEligible(s32 site) {
+    const QuickStartContentSite* e = &sQuickStartRoomContentSites[site];
+    return e->gateKinstone == 0 && (e->kinds == QUICKSTART_KINDS_SMALL || e->kinds == QUICKSTART_KINDS_LARGE ||
+                                    e->kinds == QUICKSTART_KINDS_ANY);
+}
+
+static s32 QuickStartMemorySite(s32 role) {
+    s32 i, n = 0, pick, lesson = -1;
+    u8 lessonArea = 0xff, lessonRoom = 0xff;
+    if (role != 0) {
+        lesson = QuickStartMemorySite(0);
+        if (lesson >= 0) {
+            lessonArea = sQuickStartRoomContentSites[lesson].area;
+            lessonRoom = sQuickStartRoomContentSites[lesson].room;
+        }
+    }
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartMemorySiteEligible(i) &&
+            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom)) {
+            n++;
+        }
+    }
+    if (n == 0) {
+        return -1;
+    }
+    pick = (s32)(QuickStartChainHash(0x3E73u + (u32)role * 77u) & 0x7fff) % n;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartMemorySiteEligible(i) &&
+            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom)) {
+            if (pick-- == 0) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+// Which memory room the player is standing in: 0 lesson, 1 recital, -1 neither.
+static s32 QuickStartMemoryRoleHere(void) {
+    s32 role;
+    for (role = 0; role < 2; role++) {
+        s32 site = QuickStartMemorySite(role);
+        if (site >= 0 && sQuickStartRoomContentSites[site].area == gRoomControls.area &&
+            sQuickStartRoomContentSites[site].room == gRoomControls.room) {
+            return role;
+        }
+    }
+    return -1;
+}
+
+// --- The script hooks (data/scripts/quickstart/script_QuickStartMemory.inc)
+void QuickStartMemoryIsLesson(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartMemoryRoleHere() == 0;
+}
+
+void QuickStartMemoryIsSolved(Entity* entity, ScriptExecutionContext* context) {
+    s32 site = QuickStartMemorySite(1);
+    context->condition = site >= 0 && QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site)) != 0;
+}
+
+// The lesson is learned the moment it is told: the site is DONE for the
+// chain's purposes (its content stays - see QuickStartSetupContentSite).
+void QuickStartMemoryLessonTaught(Entity* entity, ScriptExecutionContext* context) {
+    s32 site = QuickStartMemorySite(0);
+    if (site >= 0) {
+        QsSetSiteFlag(GF_CONTENT_SITE_DONE(site));
+    }
+}
+
 static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
     u8 kind, extra;
     u32 savedRand = gRand;
+    // The blink memory pair, before the dice: the role in bit 0, a draw
+    // seed above it for the recital's prize.
+    if (site == QuickStartMemorySite(0)) {
+        *outKind = QS_EVENT_MEMORY;
+        *outExtra = 0;
+        return;
+    }
+    if (site == QuickStartMemorySite(1)) {
+        *outKind = QS_EVENT_MEMORY;
+        *outExtra = (u8)(QS_MEMORY_ROLE_RECITAL |
+                         (((s32)((QuickStartChainHash(0x3E73u + 154u) >> 3) & 0x7fff) % QUICKSTART_DRAW_SEED_RANGE) << 1));
+        return;
+    }
     // The testbed's SITE scenario: this one site deals exactly what the
     // save says, every time. Before the stream is borrowed, so nothing
     // else in the room sees a difference.
@@ -18191,7 +17979,10 @@ static void QuickStartSetupContentSite(s32 site) {
     if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
         return;
     }
-    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
+    // A DONE site is finished content - except the memory lesson, whose
+    // DONE is "the sprite has been heard" and whose blink must stay
+    // watchable for as long as the recital is unanswered.
+    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site)) && site != QuickStartMemorySite(0)) {
         return;
     }
     QuickStartContentSiteRoll(site, &kind, &extra);
@@ -18353,6 +18144,17 @@ static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
     }
     if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
         return FALSE;
+    }
+    // The memory recital asks for an order taught elsewhere: a step on it
+    // wants the lesson's room inside reach too. (It can be brute-forced
+    // regardless - six orders, a wave per miss - so this is courtesy, not
+    // safety.)
+    if (site == QuickStartMemorySite(1)) {
+        s32 lesson = QuickStartMemorySite(0);
+        if (lesson >= 0 && !QuickStartReachRoomOk(regions, held, sQuickStartRoomContentSites[lesson].area,
+                                                  sQuickStartRoomContentSites[lesson].room)) {
+            return FALSE;
+        }
     }
     return QuickStartReachRoomOk(regions, held, entry->area, entry->room);
 }

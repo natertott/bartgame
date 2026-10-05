@@ -58,7 +58,7 @@ STATUS_FILE = 0x4D435A33  # 'MCZ3' as agbcc evaluates the multichar constant
 
 KINDS = {'NONE': 0, 'SITE': 1, 'BOSS': 2, 'QUEST': 3, 'CHAIN': 4, 'REGION': 5, 'FUSER': 6, 'ROOM': 7}
 KIND_NAMES = {v: k for k, v in KINDS.items()}
-EVENTS = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY', 'FAIRY', 'GATE']
+EVENTS = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY', 'FAIRY', 'MEMORY']
 CHAIN = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
 QUESTS = ['POT', 'HUNT', 'SCAV', 'STEALTH', 'CARRY']
 BOSSES = {'GREEN': 0, 'CHUCHU': 0, 'BLUE': 1, 'ELECTRIC': 1, 'OCTOROK': 2}

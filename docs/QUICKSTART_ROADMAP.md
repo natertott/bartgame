@@ -1271,6 +1271,57 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The switch puzzles retired; the two-room blink memory event; mixed waves (Oct 2026)
+
+The user: the switch-puzzle ? rooms were "completely broken" - the cage's
+pots could be lifted and thrown, the layouts were awkward, the switches did
+not work and no enemies came for a wrong switch - so they are retired
+outright and the blink puzzle rebuilt across TWO linked rooms; and the
+three-wave room should mix its enemies.
+
+**Retired.** `QS_EVENT_GATE` and all four of its variants (closing gate,
+decoy switches, linger plates, blink sequence) are gone from the dispatch
+and the kind pickers; the sixteenths they took in the ANY picker went to
+the pot lottery, the chest lottery and the NPC, and the LARGE picker's one
+share to a gauntlet. The puzzle helpers the new event reuses (the switch
+spawner, the inboard clamp, the switch-spot finder, the permutation table)
+stay; the cage, timer and plate helpers are dead code pending a sweep.
+
+**The blink memory event (`QS_EVENT_MEMORY`, value 7).** Two sites per
+run, a pure function of the run seed over the sites that may host anything
+(`QuickStartMemorySite`): a LESSON, where three switches north of a Zelda
+sprite light one at a time in a seed-drawn order, forever, and a hit changes
+nothing but the click (the room rewrites the flags every frame); and a
+RECITAL elsewhere - never the same room - where the sprite asks for the
+order back. The right three strikes drop a prize a tile south of the
+sprite; a wrong one darkens everything, resets, and deals a real wave.
+
+What the win chain sees: both are ordinary EVENT candidates. The lesson is
+DONE the moment its sprite has been talked to (the script's own Call), and
+alone among sites keeps its content after DONE so the blink stays
+watchable; the recital is a candidate only while the lesson's room is also
+in reach, and can be brute-forced regardless (six orders, a wave each), so
+a step on it is never a wall. Its DONE is the prize taken. The testbed's
+SITE scenario deals it as kind 7 with the role in extra bit 0.
+
+Measured (`tools/quickstart/memory_probe.py`, 9/9): distinct rooms;
+three switches and a sprite in each; the lesson blinks in the seed's order
+and ignores a strike; the lesson latches DONE and keeps its content on a
+second visit; a wrong first strike in the recital spawns enemies and
+resets; the right order drops the prize and taking it latches DONE. One
+trap for anyone probing it: the three switches are NOT left-to-right in
+flag order once the spot finder nudges one past its neighbour - read each
+switch's own flag id (entity +0x86).
+
+**Mixed waves.** `QuickStartSpawnWave` draws two roster entries for the
+first wave and three for later ones and splits the head count between
+them (the first draw keeps the remainder; the fallback ring keeps the
+first draw). Independent draws, so a wave can still come up all one kind,
+just rarely. Measured in the ranch house's gauntlet: wave 0 {48:2, 63:3},
+wave 1 {63:2, 20:1, 88:4}, wave 2 {2:3, 89:6}. The same spawner serves
+the survive room's pursuers and the recital's punishment wave.
+
+
 ### The wave recentering is gone; Lake Hylia and Lon Lon host no clear challenge (Oct 2026)
 
 The user: "all the enemies in certain areas (like SHF, NHF) will spawn to

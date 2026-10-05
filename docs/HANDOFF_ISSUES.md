@@ -75,6 +75,11 @@ so nobody re-invents them:
 - **Warps out of Castle Garden do not land while Ezlo's hint is on
   screen** - dismiss (A) before the warp, or boot per region with the
   testbed's REGION scenario instead of warping between regions.
+- **Writing health 0 does not clear every enemy kind.** The wave-mix probe
+  zeroed +0x45 on a gauntlet wave and the same five slots were still there
+  900 frames later; zeroing the KIND byte (+0x08) drops the entity from the
+  table and the room reads clear. Use the kind byte when the point is "make
+  the wave gone", health only when the death path itself is under test.
 - **`emu.press` takes `c.KEY_A`**, not the string `'A'`.
 - **Entity coordinates**: integer x is at **0x2e** and integer y at **0x32**.
   0x30 and 0x34 are the LOW halves. Writing those moves nothing and reads

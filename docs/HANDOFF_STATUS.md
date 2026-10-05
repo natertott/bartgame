@@ -57,6 +57,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | The MINISH model - 58 dead rooms became 8 | "The MINISH model, encoded..." |
 | Trilby's boss arena was clamped to the wrong pocket | "Trilby's boss arena..." |
 | The feature testbed (a scenario in the save, `scenario.py`) and the carry quest | "The feature testbed and the carry quest" |
+| Switch puzzles retired; the two-room blink memory event; mixed gauntlet waves | "The switch puzzles retired" |
 | The stuck-wave recentering retired; Lake Hylia and Lon Lon Ranch host no clear challenge | "The wave recentering is gone" |
 | Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
 
@@ -91,6 +92,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   game calling the file corrupt means the arithmetic transcribed from
   `src/save.c` is wrong (the harness's mgba cannot attach a save to check
   it). `clear` afterwards - a scenario persists until cleared.
+- **Play the blink memory pair.** Both rooms are measured end to end with
+  forged strikes; what nobody has watched is the feel - whether a 48-frame
+  blink with a dark beat reads as an order at a glance, whether the three
+  switches sit where the player expects, and whether the sprite's lines
+  land. `scenario.py site N MEMORY 0` (lesson) / `site N MEMORY 1`
+  (recital) puts either room under test, in any site.
 - **Watch for a wave that never clears in Castle Garden, Royal Valley,
   Castor Wilds, the Wind Ruins or Minish Woods.** The pull-to-centre
   failsafe is gone everywhere, and only Lake Hylia and Lon Lon Ranch were
@@ -156,6 +163,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 - **The entitlement half of the meta loop.** `QUICKSTART_UNLOCKS_ENABLED` is
   0. The catalog, the score and the trophy case all exist; what is missing is
   gating content on cross-run benchmarks.
+- **Sweep the dead switch-puzzle helpers** (`QuickStartGateReadTimer`,
+  `GateWriteTimer`, `GateRingPots`, `GateClose`, `GateOpen`,
+  `GatePlateSpot`, `GateWindowFor`, `SpawnPuzzlePlate`, the decoy role
+  byte) - unreferenced since the gate site was retired; agbcc does not
+  warn on them.
 - **The testbed's in-hub console** (`docs/QUICKSTART_CARRY_AND_TESTBED.md`
   sec 2.3, second door): a ZELDA-faced picker behind a `QUICKSTART_TESTBED`
   define, for scenarios on a cart with no cable. The save bytes and every
