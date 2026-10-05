@@ -1271,6 +1271,42 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The wave recentering is gone; Lake Hylia and Lon Lon host no clear challenge (Oct 2026)
+
+The user: "all the enemies in certain areas (like SHF, NHF) will spawn to
+a central location after a fixed amount of time. This feature is left over
+from previous builds... We need to remove this feature, if it's safe."
+Safe for certain in NHF, SHF, EH, WW and Trilby; Lon Lon Ranch has a pocket
+reachable only from Veil Falls and Lake Hylia two separate pockets, and
+rather than keep the pull there, "don't allow wave clear challenges in
+these regions with isolated pockets, the way we are currently doing for
+Crenel Heights."
+
+**Done exactly that.** `QuickStartRescueStuckFinalWave` - ninety seconds
+of an uncleared wave, then every survivor to the reward spot - is retired
+everywhere, both call sites (the per-region loop and the WAVE carrier's
+element gate). `QuickStartRegionAllowsWave` now refuses Lake Hylia and Lon
+Lon Ranch alongside Mount Crenel's Base: waves still spawn there as
+scenery, but there is no clear reward, no chain WAVE step and no WAVE win
+carrier in either. The simulator reads that list from the C and follows.
+
+**What a flood cannot tell you.** Two floods were tried to classify every
+region's spawn offsets as reachable or pocketed from the landing - the
+ROM's own `QuickStartMarkReachableTiles` and a plain collision flood - and
+they agree with each other and disagree with the user: both call 25 of
+South Hyrule Field's 48 offsets isolated, in a field that is walkable end
+to end. One-way ledges are walls to a flood, so "not 4-connected to the
+landing" is not "unreachable", and the measurement was set aside; the
+region list above is the user's knowledge, not the tool's. Castle Garden,
+Royal Valley, Castor Wilds, the Wind Ruins and Minish Woods keep their
+clear challenges with no pull behind them - Royal Valley, Castor Wilds and
+both Ruins rooms measured zero offsets outside the landing's component or
+a gated zone, Castle Garden and Minish Woods did not measure cleanly, and
+none of the five was on the user's safe list. If a wave in one of those
+ever will not go to zero, that region joins the refusal list; the cost is
+one line.
+
+
 ### The Oct 2026 boss batch: any blade, no freeze, fewer, roomier, one reward, keys everywhere
 
 The user: bosses "often not working and happening too often"; the chuchus

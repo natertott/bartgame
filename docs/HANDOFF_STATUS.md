@@ -57,6 +57,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | The MINISH model - 58 dead rooms became 8 | "The MINISH model, encoded..." |
 | Trilby's boss arena was clamped to the wrong pocket | "Trilby's boss arena..." |
 | The feature testbed (a scenario in the save, `scenario.py`) and the carry quest | "The feature testbed and the carry quest" |
+| The stuck-wave recentering retired; Lake Hylia and Lon Lon Ranch host no clear challenge | "The wave recentering is gone" |
 | Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
 
 ---
@@ -90,6 +91,14 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   game calling the file corrupt means the arithmetic transcribed from
   `src/save.c` is wrong (the harness's mgba cannot attach a save to check
   it). `clear` afterwards - a scenario persists until cleared.
+- **Watch for a wave that never clears in Castle Garden, Royal Valley,
+  Castor Wilds, the Wind Ruins or Minish Woods.** The pull-to-centre
+  failsafe is gone everywhere, and only Lake Hylia and Lon Lon Ranch were
+  taken off the clear-challenge list; those five were neither on the
+  user's safe list nor measurable (see the roadmap entry). A surviving
+  enemy nobody can reach in one of them now stalls that region's reward
+  and any chain WAVE step placed there. One line in
+  `QuickStartRegionAllowsWave` retires the region.
 - **Fight each boss with whatever sword a run gives you.** The any-blade
   fix is measured with the Four Sword from the test kit; the Smith's Sword
   was the one case that always worked. The chuchu's walk-home freeze is

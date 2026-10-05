@@ -5362,7 +5362,24 @@ static s32 QuickStartCountRegionEnemies(bool32* hasBoss) {
 // fighting in it is fine. What is withdrawn is anything that depends on
 // counting the room to zero.
 static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region) {
-    return !(region->area == AREA_MT_CRENEL && region->room == ROOM_MT_CRENEL_ENTRANCE);
+    if (region->area == AREA_MT_CRENEL && region->room == ROOM_MT_CRENEL_ENTRANCE) {
+        return FALSE;
+    }
+    // Oct 2026, with the stuck-wave recentering gone (see where
+    // QuickStartRescueStuckFinalWave used to be): a region whose ground has
+    // pockets the player cannot reach from inside it can no longer be
+    // trusted to go completely clear, so it hosts no clear challenge - no
+    // clear reward, no chain WAVE step, no WAVE carrier - exactly as Mount
+    // Crenel's Base. Per the user: Lake Hylia (two separate pockets) and
+    // Lon Lon Ranch (the fusion-chest pocket, reachable only from Veil
+    // Falls). Waves still spawn there as scenery.
+    if (region->area == AREA_LAKE_HYLIA && region->room == ROOM_LAKE_HYLIA_MAIN) {
+        return FALSE;
+    }
+    if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
@@ -5682,71 +5699,15 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
 // already been earned. That reward (QuickStartSpawnRegionRewardOnce) still
 // only ever comes from wave 0's own clear, via its own once-only reward-
 // state gate, completely untouched by this loop continuing past it.
-// How long the chain's last region will wait for its Element-gating wave to
-// be finished before pulling any survivor to the reward spot - see
-// QuickStartRescueStuckFinalWave.
-#define QUICKSTART_STUCK_WAVE_FRAMES (90 * 60)
-
-// The win depends on one specific room going completely enemy-free, so a
-// single enemy the player cannot get at ends the run then and there. The
-// spawn tables cannot rule that out on their own: they were built from a
-// collision scan for open 3x3 neighbourhoods, which says a tile is standable
-// but nothing about whether it is connected to where the player comes in,
-// and even a perfectly connected spawn point is no guarantee once enemies
-// start moving - a Crow or a Peahat can drift somewhere with no route back.
-// sQuickStartGatedZones handles the cases that have been walked and written
-// down; this handles the rest, without needing any of them enumerated.
-//
-// If the wave that gates the Element has been up for
-// QUICKSTART_STUCK_WAVE_FRAMES and is still not clear, every surviving enemy
-// is moved to the reward spot, where the player necessarily can reach them.
-// The timer then restarts, so an enemy that somehow wanders off again gets
-// pulled back rather than stranding the run on the second attempt.
-//
-// Runs in EVERY region, not just the chain's last.
-//
-// It was scoped to the last slot on the reasoning that elsewhere a stranded
-// enemy only costs a loot drop. That was wrong about how the mode plays: a
-// region's wave gates its reward AND its onward exit, so an enemy the player
-// cannot reach stalls the whole run, not one item. Lon Lon Ranch is where the
-// user hit it - its waves could not be cleared at all, because some spawn
-// ground there is not connected to where the player walks in.
-//
-// The last slot keeps its own separate clock (gSave.final_wave_frame, started
-// when the Element-gating wave spawns) because the win depends on that exact
-// room going empty; every other region shares the run-scoped one below.
-static void QuickStartRescueStuckFinalWave(const QuickStartRegion* region) {
-    s32 i;
-    if (gSave.run_frames - gSave.final_wave_frame < QUICKSTART_STUCK_WAVE_FRAMES) {
-        return;
-    }
-    gSave.final_wave_frame = gSave.run_frames;
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        s16 spotX, spotY;
-        if (ent->kind != ENEMY || !QuickStartEntityInCurrentRoom(ent)) {
-            continue;
-        }
-        // Spread them, don't stack them. Every survivor used to be dropped on
-        // the reward spot itself - the same single tile - so a rescue of five
-        // stranded enemies produced five sprites occupying one square, which
-        // is unreadable and unfightable. QuickStartFindOpenTileNear spirals
-        // out from the reward spot and refuses any tile with another enemy
-        // within two, so they land spaced across the open ground around it.
-        if (!QuickStartFindOpenTileNear(region->rewardX, region->rewardY, 2, &spotX, &spotY)) {
-            spotX = region->rewardX;
-            spotY = region->rewardY;
-        }
-        ent->x.HALF.HI = gRoomControls.origin_x + spotX;
-        ent->y.HALF.HI = gRoomControls.origin_y + spotY;
-        ent->collisionLayer = 1;
-        UpdateSpriteForCollisionLayer(ent);
-    }
-}
-
-// gSave.final_wave_frame is the stuck-wave clock, and one is enough for all
-// the regions: only one is ever loaded, so the last slot's use of it and every
-// other region's cannot overlap.
+// RETIRED (Oct 2026): QuickStartRescueStuckFinalWave. For ninety seconds
+// of an uncleared wave it pulled every survivor to the reward spot, a
+// leftover from builds where the player could not reach all of a region.
+// The user: "all the enemies in certain areas (like SHF, NHF) will spawn to
+// a central location after a fixed amount of time... We need to remove
+// this feature." Gone everywhere; the regions whose ground has pockets the
+// player cannot reach from inside (Lake Hylia, Lon Lon Ranch) host no clear
+// challenge instead - QuickStartRegionAllowsWave. gSave.final_wave_frame
+// stays: the boss-owed deferral still keys its timeout off it.
 static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32 slot) {
     u8 wave = QuickStartRegionGetWaveCount(slot);
     // The quest-end latch (see QuickStartQuestEndResetWave): a timed quest
@@ -5784,15 +5745,6 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
                 } else if (live < alive) {
                     QuickStartRegionSetAliveCount(slot, (u8)live);
                 }
-            }
-            // A wave that will not clear stalls the region's reward AND its
-            // onward exit, so pull stranded enemies back to the reward spot
-            // wherever it happens - this used to run only in the chain's last
-            // region. See QuickStartRescueStuckFinalWave.
-            // Same treatment: a stranded enemy has been stranded for
-            // several seconds by the time this matters at all.
-            if (QuickStartPhase(6)) {
-                QuickStartRescueStuckFinalWave(region);
             }
             return;
         }
@@ -6967,8 +6919,6 @@ static void QuickStartSpawnRegionRewardOnce(const QuickStartRegion* region, s32 
         QuickStartWinBossWatcher();
         if (QuickStartWinCarrierMet() || QsCheckRoomFlag(43)) {
             QuickStartSpawnWinKeyOnce(region->rewardX, region->rewardY);
-        } else if (QuickStartWinCarrier() == QUICKSTART_WIN_WAVE) {
-            QuickStartRescueStuckFinalWave(region);
         }
         QuickStartCheckWinCondition();
         return;

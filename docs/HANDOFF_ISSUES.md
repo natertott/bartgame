@@ -67,6 +67,14 @@ so nobody re-invents them:
   screen once** (`script_DampeOuside` loops on an on-screen check first), so
   a warp beside him is never answered. Land at the maze exit, then walk or
   place.
+- **A tile flood cannot classify pockets.** Both the ROM's
+  `QuickStartMarkReachableTiles` and a 4-neighbour collision flood call
+  half of South Hyrule Field unreachable from its landing - one-way ledges
+  are walls to a flood. "Not connected to the landing" is not
+  "unreachable"; do not retire spawn offsets or regions on that number.
+- **Warps out of Castle Garden do not land while Ezlo's hint is on
+  screen** - dismiss (A) before the warp, or boot per region with the
+  testbed's REGION scenario instead of warping between regions.
 - **`emu.press` takes `c.KEY_A`**, not the string `'A'`.
 - **Entity coordinates**: integer x is at **0x2e** and integer y at **0x32**.
   0x30 and 0x34 are the LOW halves. Writing those moves nothing and reads
