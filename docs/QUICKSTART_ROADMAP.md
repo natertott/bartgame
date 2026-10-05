@@ -1271,6 +1271,80 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The Oct 2026 boss batch: any blade, no freeze, fewer, roomier, one reward, keys everywhere
+
+The user: bosses "often not working and happening too often"; the chuchus
+and the Big Octorok "sometimes don't take damage from a regular sword hit,
+sometimes they do"; the chuchu "gets stuck and frozen and the player has
+to leave the room and come back"; the spawns in South Hyrule Field and
+Lon Lon Ranch are cramped; a wave-clear chain step pays two key items;
+and key items should come from ? rooms and quests too. Every item measured
+with the new testbed (`scenario.py boss ROW FORM`) and a free-roam driver.
+
+**Which sword you held decided whether the boss could be hurt.** The
+chuchu's peel handler (`sub_08027AA4`) and the Octorok's weapon hook each
+listed contact source 4 ("sword") and 16 ("dash sword"). A sword's contact
+source is the ITEM's hurtType: the Smith's Sword is 4, the White Sword 5,
+the Four Sword 6, a spin attack 0x18-0x1a by blade, a thrust 0xb/0xc, a
+charged swing 8-0xa or 0xd. Measured (`chuchu_contact.py`): a Four Sword
+swing sets `contactFlags 0x86` on the body - CONTACT_NOW | 6 - and the peel
+counter did not move once in 4000 frames of swinging, while the body's
+iframes went to -16 on every swing. The earlier "fix" that opened the dead
+phases was measured by forging contacts with source 4, which is why it
+passed. Both bosses now take ANY player weapon: every source below 0x40
+except 0 and the small gust.
+
+**The freeze is the walk home.** After a peel-and-rearmour the body enters
+subAction 10, which slides the family sideways to the exact x it spawned
+at (`Helper.unk_0e`) and does nothing else until `x == home`. Deepwood's
+floor is flat; a field is not, and the first free-roam run sat in that
+state for 3586 frames, then 752 more. Ninety frames of not arriving now
+makes wherever it stands the new home (the spare `Helper.unk_0d` counts).
+
+**Fewer bosses.** The wave roll is 5% (was 10); the chain deals at most one
+BOSS step, none when the win carrier is already BOSS, and only in every
+other run (a per-run coin off the chain hash), so a run owes one boss at
+most and the roll is the only extra. Simulated over 3000 strict runs: a
+required boss in 55% of runs (the carrier's third plus the coin's
+half of the rest), against four runs in five before the coin and up to
+several per run before the cap. The simulator mirrors all three rules.
+
+**Roomier spawns.** `QuickStartRegion` grew `bossX/bossY`; the Trilby
+special case became a row. Measured from the collision map (scratchpad
+`open_space.py`: the largest all-open square inside the arrival component
+and outside every gated zone): Lon Lon's reward spot had a clearance of
+ZERO tiles, South Field's two. Lon Lon's boss stands at (312, 792) and
+South Field's at (488, 408), both clearance three; both compose there
+(`boss_spots.py`).
+
+**One reward per chain step.** The chain no longer pays its own key item
+on top of the step's content; a WAVE step is the region clear's draw and
+nothing more. The next step is still rolled against what the player holds,
+so placement is unchanged; what changed is the pace of the kit.
+
+**Keys everywhere.** `QS_CAT_DROP` includes `QS_CAT_KEY`, so ? rooms,
+quests, gauntlets, the roof and the fairies can all pay a key item at the
+tier the table gives it.
+
+**Measured after, free-roam with the Four Sword only, on the testbed's
+BOSS scenario in Castle Garden (`tools/quickstart/boss_fight.py`, which
+teleports the player beside the body when stuck so what it measures is the
+damage path): the green chuchu's whole family dead at frame 4648 (445
+swings), the blue's at 7028 (775), the Big Octorok's at 1963 (256) - no
+stall anywhere outside vanilla's ~1300-frame entrance. Before the batch
+the same driver logged 1281 swings on the blue chuchu with the peel
+counter at 0 and 12000 frames on the Octorok without landing a blow, and
+the green chuchu spent 3586 of its frames in the walk-home state.
+
+**Tooling:** `parse_tables.region_pool` learned the two new row fields (the
+chain probe and the catalogue both read the pool, and three rows had
+vanished from it). `chain_probe.py` runs to progress 4 again - the old
+ROM's item-get payout had stopped its forced steps from ever advancing -
+but its own Python reach model predates the MINISH model and calls two
+Minish-house sites unreachable that the ROM (and sim_validate, 402/402)
+place inside reach; listed under known-stale tooling.
+
+
 ### The feature testbed and the carry quest (Oct 2026)
 
 The user: "I need a mode where I can test individual features of our game

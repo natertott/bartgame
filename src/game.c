@@ -1650,6 +1650,16 @@ typedef struct QuickStartRegion_ {
     // Garden's guard removal) - called unconditionally every frame this
     // region is current, same as those functions already run today.
     void (*quirkHook)(void);
+    // Where the boss family composes. 0/0 (the default a short initializer
+    // leaves) means the reward spot. Set for the rooms whose reward spot is
+    // cramped: measured from the collision map (scratchpad open_space.py,
+    // the largest all-open square inside the arrival component and outside
+    // every gated zone), Lon Lon Ranch's reward spot had a clearance of
+    // ZERO tiles and South Hyrule Field's two; these have three. Trilby's
+    // west strip, which used to be a special case in the wave spawner, is
+    // a row here now.
+    s16 bossX;
+    s16 bossY;
 } QuickStartRegion;
 
 typedef struct {
@@ -4637,7 +4647,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 344, 870, 288, 336, 928, 956,
       sQuickStartLonLonRanchEnemyOffsets, ARRAY_COUNT(sQuickStartLonLonRanchEnemyOffsets), QUICKSTART_LONLON_ROOM_SQUARES,
       264, 712,
-      QuickStartLonLonRanchQuirkHook },
+      QuickStartLonLonRanchQuirkHook, 312, 792 },
     // South Hyrule Field - entrance (504,264) and reward spot (648,552) are
     // both verified-open, non-water tiles from the collision scan. Exit box
     // is the user-surveyed top edge (467,10)-(539,10) padded to a 0-30 y
@@ -4646,7 +4656,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 504, 264, 460, 546, 0, 30,
       sQuickStartSouthFieldEnemyOffsets, ARRAY_COUNT(sQuickStartSouthFieldEnemyOffsets), QUICKSTART_SOUTHFIELD_ROOM_SQUARES,
       648, 552,
-      NULL },
+      NULL, 488, 408 },
     // North Hyrule Field - entrance (504,456) and reward spot (744,504) are
     // verified-open. Exit box is the user-surveyed bottom edge
     // (484,797)-(524,797) padded to a 770-800 y band. Needs
@@ -4664,7 +4674,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
       360, 504,
-      QuickStartTrilbyQuirkHook },
+      QuickStartTrilbyQuirkHook, 88, 600 },
     // The six overworld-expansion rooms. Exit boxes are dead fields (the
     // warp mechanic is retired) and zeroed. No quirk hooks: the outdoor
     // entity dumps found only OBJECT-kind scenery, no enemy-kind blockers.
@@ -5226,8 +5236,12 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // sec 3.3, this session's scratchpad/test_gfx_boss_cost.py).
 // 20 -> 10 per the user, alongside the second charm batch: with the ring
 // fully populated and every region's wave loop rolling this, one in five
-// was making bosses routine rather than an event.
-#define QUICKSTART_REGION_BOSS_WAVE_CHANCE 10
+// was making bosses routine rather than an event. 10 -> 5 (Oct 2026, the
+// user again: "happening too often"): on top of this roll a run can owe a
+// boss to a chain BOSS step and to the BOSS win carrier, and the chain now
+// deals at most one BOSS step and none when the carrier is BOSS, so a
+// run meets one required boss at most and this roll is the only extra.
+#define QUICKSTART_REGION_BOSS_WAVE_CHANCE 5
 // GFX slots (free-or-evictable - QuickStartReclaimableGfxSlots, since
 // the loader reclaims unreferenced sheets on demand) a room must offer
 // before the boss roll may fire. The family + start particles cost 14
@@ -5507,6 +5521,18 @@ static Entity* QuickStartCreateWaveBoss(s32 roll) {
 // Returns TRUE if a wave (or the boss) actually spawned; FALSE while a
 // rolled boss is deferred waiting for gfx. The caller only marks the room
 // "wave up" on TRUE.
+// The boss family's spot in this region: the row's own bossX/bossY, else
+// the reward spot.
+static void QuickStartRegionBossSpot(const QuickStartRegion* region, s16* outX, s16* outY) {
+    if (region->bossX != 0 || region->bossY != 0) {
+        *outX = region->bossX;
+        *outY = region->bossY;
+    } else {
+        *outX = region->rewardX;
+        *outY = region->rewardY;
+    }
+}
+
 static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave) {
     s32 escalated;
     // F7 BOSS carrier: the element region deals the boss from its very
@@ -5545,12 +5571,8 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
             Entity* boss = QuickStartCreateWaveBoss(QuickStartScenarioBossRoll((s32)Random()));
             QsClearRoomFlag(QUICKSTART_BOSS_OWED_FLAG);
             if (boss != NULL) {
-                s16 bossX = region->rewardX;
-                s16 bossY = region->rewardY;
-                if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
-                    bossX = 88;
-                    bossY = 600;
-                }
+                s16 bossX, bossY;
+                QuickStartRegionBossSpot(region, &bossX, &bossY);
                 boss->x.HALF.HI = gRoomControls.origin_x + bossX;
                 boss->y.HALF.HI = gRoomControls.origin_y + bossY;
                 boss->collisionLayer = 1;
@@ -5602,18 +5624,11 @@ static bool32 QuickStartSpawnRegionWave(const QuickStartRegion* region, u8 wave)
             // particle so the effects match the palette.
             Entity* boss = QuickStartCreateWaveBoss(QuickStartScenarioBossRoll((s32)Random()));
             if (boss != NULL) {
-                s16 bossX = region->rewardX;
-                s16 bossY = region->rewardY;
-                // Trilby's arena is the west strip, not the reward spot.
-                // The spawn stays at tile (5,37), the widest open band at
-                // the top of it, so the whole family still composes clear
-                // of rock; what changed is that the clamp in
-                // QuickStartTrilbyQuirkHook now lets the fight move down
-                // into the southwest corner instead of pinning it up here.
-                if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS) {
-                    bossX = 88;
-                    bossY = 600;
-                }
+                // Per-row boss spot (QuickStartRegionBossSpot): Trilby's
+                // west strip, Lon Lon's and South Field's open ground, the
+                // reward spot everywhere else.
+                s16 bossX, bossY;
+                QuickStartRegionBossSpot(region, &bossX, &bossY);
                 boss->x.HALF.HI = gRoomControls.origin_x + bossX;
                 boss->y.HALF.HI = gRoomControls.origin_y + bossY;
                 boss->collisionLayer = 1;
@@ -5859,9 +5874,13 @@ static void QuickStartSpawnRegionEnemiesOnce(const QuickStartRegion* region, s32
 // why they get their own category rather than riding QS_CAT_STAT: a
 // future caller can ask for "drops but no gambles" by masking it out.
 #define QS_CAT_CHARM (1 << 5)
-// What a "? room" may pay: everything except key items, per the user's rule
-// that those come from the opening selection and the shop.
-#define QS_CAT_DROP (QS_CAT_REWARD | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT | QS_CAT_CHARM)
+// What a "? room", a quest, a gauntlet or the roof may pay: everything,
+// key items included (Oct 2026, the user: "Key Items should not only be
+// restricted to wave clears and boss clears"). The old rule kept keys to
+// the opening selection, the shop and the region clear; now every draw
+// can hand one over, at the tier the table gives it. QS_CAT_ALL is kept as
+// a name for the region clear's draw, which has always meant everything.
+#define QS_CAT_DROP (QS_CAT_REWARD | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT | QS_CAT_CHARM | QS_CAT_KEY)
 #define QS_CAT_ALL (QS_CAT_DROP | QS_CAT_KEY)
 
 #define QS_TIER_COMMON 0
@@ -18485,6 +18504,24 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
             }
             break;
         case QS_CHAIN_BOSS:
+            // One required boss per run at most (the user: "happening too
+            // often"): no BOSS step when the win carrier is already a boss,
+            // no second one after a first - and only every other run deals
+            // one at all (a per-run coin off the chain hash). Simulated:
+            // without the coin 71% of non-BOSS-carrier runs still dealt a
+            // boss step, which with the carrier's third put a required
+            // boss in four runs of five; the coin halves that.
+            if (QuickStartWinCarrier() == QUICKSTART_WIN_BOSS || (QuickStartChainHash(0xB055u) & 1u) != 0) {
+                break;
+            }
+            for (i = 0; i < step; i++) {
+                if (gSave.chain_kind[i] == QS_CHAIN_BOSS) {
+                    break;
+                }
+            }
+            if (i < step) {
+                break;
+            }
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
                 if (QuickStartChainBossOk(regions, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i)) {
@@ -18977,7 +19014,6 @@ static void QuickStartChainHintOnce(s32 step) {
 // faster than a room load.
 static void QuickStartChainMonitor(void) {
     s32 step;
-    u16 reward;
     if (!QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
         return;  // the drop region is what reachability is measured from
     }
@@ -19002,39 +19038,17 @@ static void QuickStartChainMonitor(void) {
     if (!QuickStartChainStepMet(step)) {
         return;
     }
-    // Pay first, advance second. The reward is what grows the sphere the
-    // NEXT step is placed inside, so it has to be in the player's hands
-    // before that roll happens - and if the drop cannot land this tick (no
-    // free entity slot, a cutscene, a room mid-load) we simply try again
-    // next tick rather than advancing without it. The pick is a pure
-    // function of the seed and the step, so retrying asks for the same
-    // item every time.
-    reward = (u16)QuickStartChainPickItem((u32)step * 13 + 1);
-    if (reward != 0) {
-        // FORCED into the player's hands, not dropped at their feet. The
-        // drop lost items: the step completes wherever the last enemy died
-        // or the lever was struck, Ezlo's hint for the next step plays
-        // first, and a player who walked off during it left a KEY item on
-        // a floor the room load then wiped - gone for the run, with the
-        // chain's next step already priced against owning it (user
-        // report). So the reward is vanilla's own item-get sequence (the
-        // one GivePlayerItem runs): Link holds it up, the item-get line
-        // plays, GiveItem lands it in the inventory, and nothing is ever on
-        // the floor to lose. Equipment with no floor form takes the direct
-        // grant it always did. Waits for a frame the player can actually
-        // be handed something - the pick is a pure function of the seed
-        // and the step, so retrying asks for the same item every time -
-        // and QuickStartChainHintOnce waits on the same test, which is
-        // what puts the next step's hint AFTER the item instead of before.
-        if (!QuickStartRoomSettled() || !QuickStartPlayerCanBeHandedItem()) {
-            return;
-        }
-        if (QuickStartItemNeedsDirectGrant(reward)) {
-            QuickStartSpawnRewardEntity(reward, 0, 0);
-        } else {
-            InitItemGetSequence(reward, 0, 0);
-        }
-    }
+    // No payout of the chain's own (Oct 2026). Every step kind but ITEM is
+    // content that already pays - the region clear's draw, the ? room's
+    // prize, the quest's reward - and the chain used to hand a KEY item on
+    // top of that, so a WAVE step was worth two items (user report: "the
+    // player will receive two key items, one for the wave clear itself and
+    // one for the win chain"). The step's own content is the reward now;
+    // the sphere the next step is placed inside grows from those rewards,
+    // and from key items reaching every drop pool (QS_CAT_DROP). An ITEM
+    // step's reward is the item itself. The next step is still rolled
+    // against what the player holds at this moment, so nothing about
+    // winnability changes - only the pace of the kit.
     gSave.chain_progress = (u8)(step + 1);
     gSave.chain_hinted &= (u8)~QS_CHAIN_LATCH;  // the next step starts clean
     if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS) {

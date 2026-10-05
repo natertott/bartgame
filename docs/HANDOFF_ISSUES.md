@@ -91,6 +91,21 @@ so nobody re-invents them:
   player a tile away and pressing R does nothing; hold UP into it for ~16
   frames first, then R (the interaction box has to overlap).
 
+- **Forged contacts prove the handler, not the weapon.** Writing
+  `contactFlags = CONTACT_NOW | 4` on a boss piece showed the chuchu's peel
+  working in every phase - and a real Four Sword swing arrives as source
+  6, which that handler ignored. When a probe forges an input, also record
+  what the real input looks like once (`chuchu_contact.py` does), or the
+  probe will pass for a blade nobody is holding.
+- **Enemy pieces are not updated while the player stands in a textbox**,
+  and the boss driver's first 1400 frames were Ezlo's hints. Dismiss text
+  before timing anything.
+- **A free-roam driver cannot path around a boss family.** Pushing toward
+  the nearest piece parks the player against a leg for thousands of
+  frames (the Octorok logged 0 swings in 12000). `boss_stall.py` teleports
+  beside the body when stuck for 40 frames; that measures the damage
+  path, not pathfinding, and says so.
+
 ## 3. Language and toolchain traps (agbcc, C89)
 
 - **A zero-extended byte is "known non-negative" to agbcc, and a signed

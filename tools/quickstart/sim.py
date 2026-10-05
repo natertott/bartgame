@@ -552,7 +552,7 @@ KIND_NAME = {KIND_ITEM: 'ITEM', KIND_EVENT: 'EVENT', KIND_WAVE: 'WAVE',
 KORDER = [KIND_EVENT, KIND_WAVE, KIND_BOSS, KIND_QUEST]
 
 
-def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
+def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None):
     """QuickStartChainRollStep. `prior` is the (kind, where) of earlier steps."""
     def used(kind, where):
         return (kind, where) in prior
@@ -568,6 +568,12 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done):
                     if reach_pool_ok(regions, i) and wave_ok(i)
                     and not used(KIND_WAVE, i)]
         if kind == KIND_BOSS:
+            # One required boss per run at most (QuickStartChainCountCandidates,
+            # Oct 2026): no BOSS step when the win carrier is BOSS, and no
+            # second one after a first.
+            if (carrier == WIN_BOSS or any(k == KIND_BOSS for k, _w in prior)
+                    or (chain_hash(seed, 0xB055) & 1)):
+                return []
             return [i for i in range(POOL_SIZE)
                     if reach_pool_ok(regions, i)
                     and (POOL[i]['area'], POOL[i]['room']) in BOSS_ROOMS
@@ -731,7 +737,7 @@ def simulate(seed, cohort, rng):
     for step in range(5):
         if not dealt:
             dealt = roll_step(seed, step, prior, regions, held, owned,
-                              quest_slot, sites_done)
+                              quest_slot, sites_done, carrier=carrier)
         kind, where, detail = dealt.pop(0)
         if kind == KIND_ITEM:
             # A keyed ITEM step is paid by the next reward in the key's own

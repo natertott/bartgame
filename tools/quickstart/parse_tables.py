@@ -121,12 +121,13 @@ def region_pool():
     NUM = r'(0x[0-9a-fA-F]+|\d+)'
     for m in re.finditer(
             r'\{ (AREA_\w+), (ROOM_\w+), ' + ', '.join([NUM] * 6) + r',(?:.*?)'
-            + NUM + r', ' + NUM + r',\s*\n?\s*(?:QuickStart\w+|NULL) \}', body, re.S):
+            + NUM + r', ' + NUM + r',\s*\n?\s*(?:QuickStart\w+|NULL)(?:, ' + NUM + r', ' + NUM + r')? \}', body, re.S):
         an, rn = m.group(1), m.group(2)
         out.append({'areaName': an, 'roomName': rn, 'area': AREAS[an], 'room': ROOMS[rn],
                     'entrance': (int(m.group(3), 0), int(m.group(4), 0)),
                     'exitBox': (int(m.group(5), 0), int(m.group(6), 0), int(m.group(7), 0), int(m.group(8), 0)),
-                    'reward': (int(m.group(9), 0), int(m.group(10), 0))})
+                    'reward': (int(m.group(9), 0), int(m.group(10), 0)),
+                    'boss': ((int(m.group(11), 0), int(m.group(12), 0)) if m.group(11) else None)})
     return out
 
 

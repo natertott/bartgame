@@ -57,6 +57,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | The MINISH model - 58 dead rooms became 8 | "The MINISH model, encoded..." |
 | Trilby's boss arena was clamped to the wrong pocket | "Trilby's boss arena..." |
 | The feature testbed (a scenario in the save, `scenario.py`) and the carry quest | "The feature testbed and the carry quest" |
+| Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
 
 ---
 
@@ -89,6 +90,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   game calling the file corrupt means the arithmetic transcribed from
   `src/save.c` is wrong (the harness's mgba cannot attach a save to check
   it). `clear` afterwards - a scenario persists until cleared.
+- **Fight each boss with whatever sword a run gives you.** The any-blade
+  fix is measured with the Four Sword from the test kit; the Smith's Sword
+  was the one case that always worked. The chuchu's walk-home freeze is
+  fixed by a timeout that has not been watched in play - if a chuchu ever
+  stands still for longer than two seconds without hopping, that is the
+  thing to report, with the room.
 - **Play the carry quest.** `scenario.py quest CARRY CG --kit test` puts
   its giver in Castle Garden with the parcel in North Hyrule Field. Every
   leg is measured (`carry_probe.py`, 9/9) but the feel of carrying through
@@ -146,6 +153,13 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   override already exist; the console is only a script that writes them.
 
 ### Known-stale tooling
+
+- **`chain_probe.py`'s reach model predates the MINISH model.** It runs
+  again (the chain's payout removal unblocked its forced steps) but calls
+  Minish-house sites "UNREACHABLE" that the ROM places inside reach;
+  `sim_validate.py` (402/402) is the authoritative reach check. Its
+  verdicts on EVENT steps at sites 29 and 37 are noise until it learns
+  the MINISH tokens.
 
 `plates_check.py` and `los_check.py` both carry headers saying which of their
 legs no longer measure anything. Do not trust them without reading those

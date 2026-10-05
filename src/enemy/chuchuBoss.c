@@ -1404,6 +1404,23 @@ void sub_08027064(ChuchuBossEntity* this) {
             this->unk_84->unk_03++;
         } else {
             ProcessMovement0(super);
+#ifdef QUICKSTART
+            // THE FREEZE. This stage slides the family sideways back to the
+            // exact x it spawned at (unk_0e, written once at composition)
+            // and nothing else happens until x == home. In the Deepwood
+            // arena the floor is flat and open; in an overworld region
+            // anything in the way - a fence, a tree, the player - leaves
+            // it sliding against the obstacle for good. Measured
+            // (scratchpad boss_stall.py): 3586 frames in subAction 10,
+            // stage 0, with the body's x never reaching home, which is the
+            // user's "gets stuck and frozen and the player has to leave the
+            // room and come back". A second and a half of not arriving
+            // makes wherever it stands the new home; unk_0d was a spare
+            // byte of the Helper and is reset where this state is entered.
+            if (++this->unk_84->unk_0d >= 90) {
+                this->unk_84->unk_0e = super->x.HALF.HI;
+            }
+#endif
         }
     } else if (pEVar10->unk_7d != 0 && pEVar5->unk_7d != 0 && pEVar7->unk_7d != 0) {
         if (this->unk_7c-- == 0) {
@@ -1912,17 +1929,33 @@ bool32 sub_08027AA4(ChuchuBossEntity* this) {
     if ((super->contactFlags & CONTACT_NOW) == 0) {
         return FALSE;
     }
+#ifdef QUICKSTART
+    // ANY player weapon, not a list. The list this replaced named "4: sword"
+    // and "16: dash sword", and that is the Smith's Sword only: the sword's
+    // contact source is the ITEM's hurtType (playerItemSword.c), so the
+    // White Sword and the Four Sword land as 5 and 6, a spin attack as
+    // 0x18-0x1a by blade, a thrust as 0xb/0xc, a charged swing as 8-0xa or
+    // 0xd. Measured (scratchpad chuchu_contact.py): a Four Sword swing sets
+    // contactFlags 0x86 on the body - CONTACT_NOW | 6 - and the peel
+    // counter never moved in 4000 frames of swinging. Which blade a run
+    // happened to draw decided whether the boss could be hurt at all,
+    // which is the user's "sometimes susceptible, sometimes resistant".
+    //
+    // Sources are hurtTypes, all below 0x40; the matrix flags that reach
+    // contactFlags another way (0xca/0xcc, COL_FLAG_2/4) sit above it, and
+    // source 0 is a contact with no weapon behind it (the proxy reads one
+    // from Link's own body). 19 is the gust stream and keeps its own
+    // branch below.
+    {
+        u32 src = super->contactFlags & 0x7f;
+        if (src == 0 || src >= 0x40) {
+            return FALSE;
+        }
+    }
+#endif
     switch (super->contactFlags & 0x7f) {
 #ifdef QUICKSTART
-        case 4:  // sword
-        case 16: // dash sword
-        case 20: // boomerang
-        case 21: // arrow
-        case 23: // thrown object
-        case 28: // Gust Jar's charged shot
-        case 29: // Pacci Cane projectile
-        case 32: // sword beam / Fire Rod blast
-        case 33: // spiral beam
+        default:
 #endif
         case 19:
             SoundReq(SFX_WATER_SPLASH);
@@ -2000,6 +2033,9 @@ void sub_08027BBC(ChuchuBossEntity* this) {
 
     super->subAction = 10;
     this->unk_84->unk_01 = 0;
+#ifdef QUICKSTART
+    this->unk_84->unk_0d = 0; // the walk-home timeout, see sub_08027064
+#endif
     sub_080276F4(this, 7, 1);
     ((ChuchuBossEntity*)super->child)->unk_7d = 0;
     super->speed = 0;

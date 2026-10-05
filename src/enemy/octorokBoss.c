@@ -365,20 +365,14 @@ void OctorokBoss_Hit_SubAction6(OctorokBossEntity* this) {
 // means. The sources this list leaves out (the lantern, the small gust,
 // the shield) are CollisionNoOp on that row and never arrive at all.
 static bool32 QuickStartOctorokWeaponHit(u32 contactFlags) {
-    switch (contactFlags & 0x7f) {
-        case 4:  // sword
-        case 16: // dash sword
-        case 20: // boomerang
-        case 21: // arrow
-        case 23: // thrown object
-        case 27: // the Gust Jar's big pull
-        case 28: // the Gust Jar's charged shot
-        case 29: // Pacci Cane
-        case 32: // sword beam / Fire Rod
-        case 33: // spiral beam
-            return TRUE;
-    }
-    return FALSE;
+    // Any player weapon: every hurtType below 0x40 except the small gust
+    // (19, vanilla's own business) and source 0 (a contact with no weapon
+    // behind it). The list this replaced named only the Smith's Sword's
+    // source (4) and its dash (16); the White and Four Swords land as 5
+    // and 6, spins as 0x18-0x1a, thrusts as 0xb/0xc - see the chuchu's
+    // sub_08027AA4 for the measurement.
+    u32 src = contactFlags & 0x7f;
+    return src != 0 && src < 0x40 && src != COL_SMALL_GUST;
 }
 #endif
 
