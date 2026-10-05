@@ -57,6 +57,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | The MINISH model - 58 dead rooms became 8 | "The MINISH model, encoded..." |
 | Trilby's boss arena was clamped to the wrong pocket | "Trilby's boss arena..." |
 | The feature testbed (a scenario in the save, `scenario.py`) and the carry quest | "The feature testbed and the carry quest" |
+| Scenario saves (`make_sav.py`, 23 files), kit 2 = everything, upgrades/butterflies to COMMON, ammo drop weight | "Scenario saves with a full kit" |
 | Switch puzzles retired; the two-room blink memory event; mixed gauntlet waves | "The switch puzzles retired" |
 | The stuck-wave recentering retired; Lake Hylia and Lon Lon Ranch host no clear challenge | "The wave recentering is gone" |
 | Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
@@ -92,6 +93,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   game calling the file corrupt means the arithmetic transcribed from
   `src/save.c` is wrong (the harness's mgba cannot attach a save to check
   it). `clear` afterwards - a scenario persists until cleared.
+- **Load one scenario save.** `make_sav.py`'s layout is transcribed from
+  `src/save.c` and self-verifies under `scenario.py show`, but no save it
+  wrote has been loaded by the game (the harness's mgba cannot attach
+  one). If file 1 shows up and starts in Castle Garden with the Big
+  Octorok, every other file will too; if the file select is empty, try
+  `--plain`, and if that fails too the checksum arithmetic is the suspect.
 - **Play the blink memory pair.** Both rooms are measured end to end with
   forged strikes; what nobody has watched is the feel - whether a 48-frame
   blink with a dark beat reads as an order at a glance, whether the three

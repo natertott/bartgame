@@ -713,6 +713,21 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 droptable.s.kinstoneRed = kinstoneWeight;
                 droptable.s.kinstoneBlue = kinstoneWeight;
                 droptable.s.kinstoneGreen = kinstoneWeight;
+                // Ammunition, Oct 2026 (the user: "enemies should drop
+                // [arrows and bombs] much more often"). The rupee boosts
+                // above add 650 to the pool and the vanilla table gives a
+                // bomb or arrow drop a handful of points, so against that
+                // pool they were near-invisible. Each gets a weight of the
+                // rupee-1 order the moment its weapon is held - a run
+                // without a bow has no use for arrows, and vanilla's own
+                // table already hands nothing to a player who cannot
+                // carry it.
+                if (GetInventoryValue(ITEM_BOMBS) != 0 || GetInventoryValue(ITEM_REMOTE_BOMBS) != 0) {
+                    droptable.s.bombs += 200;
+                }
+                if (GetInventoryValue(ITEM_BOW) != 0) {
+                    droptable.s.arrows += 200;
+                }
             }
 #endif
             ptr2 = &gDroptableModifiers[DROPTABLE_NONE];

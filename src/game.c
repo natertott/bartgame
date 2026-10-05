@@ -5955,8 +5955,12 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     { ITEM_BOMBS, QS_CAT_WEAPON | QS_CAT_KEY, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     { ITEM_BOOMERANG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_NONE, 0 },
     // Bag and quiver stack to type 3, so they stay drawable once owned.
-    { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 1 },
-    { ITEM_LARGE_QUIVER, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOW, 1 },
+    // COMMON, not uncommon (Oct 2026, the user: "the bomb bag and quiver
+    // upgrades have never shown up"). In the forty-row uncommon tier each
+    // was 1-in-40 of a 30% band - under one draw in a hundred, and only
+    // once its weapon was held. The common tier is fifteen rows.
+    { ITEM_BOMBBAG, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOMBS, 1 },
+    { ITEM_LARGE_QUIVER, QS_CAT_WEAPON, QS_TIER_COMMON, QS_REQ_BOW, 1 },
     { ITEM_REMOTE_BOMBS, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOMBS, 0 },
     { ITEM_BOTTLE1, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_BOTTLE_ROOM, 1 },
     { ITEM_GUST_JAR, QS_CAT_WEAPON, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
@@ -6022,9 +6026,11 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     // one thing (arrows/digging/swimming) and are read straight off the
     // inventory bit by itemBow.c, itemMoleMitts.c and playerUtils.c, so they
     // need no new code - only the item they upgrade.
-    { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_BOW, 0 },
-    { ITEM_DIG_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_MOLE_MITTS, 0 },
-    { ITEM_SWIM_BUTTERFLY, QS_CAT_STAT, QS_TIER_UNCOMMON, QS_REQ_FLIPPERS, 0 },
+    // COMMON for the same reason as the bag and quiver above: three
+    // uncommon rows behind three prerequisites had "never shown up".
+    { ITEM_ARROW_BUTTERFLY, QS_CAT_STAT, QS_TIER_COMMON, QS_REQ_BOW, 0 },
+    { ITEM_DIG_BUTTERFLY, QS_CAT_STAT, QS_TIER_COMMON, QS_REQ_MOLE_MITTS, 0 },
+    { ITEM_SWIM_BUTTERFLY, QS_CAT_STAT, QS_TIER_COMMON, QS_REQ_FLIPPERS, 0 },
     // Charms arrive bottled and become permanent when drunk
     // (QuickStartNoteCharm -> QUICKSTART_CHARM_BIT -> CalculateDamage). That
     // framework has been live and unreachable since it was built: nothing
@@ -17741,6 +17747,13 @@ static bool32 QuickStartMemorySiteEligible(s32 site) {
 static s32 QuickStartMemorySite(s32 role) {
     s32 i, n = 0, pick, lesson = -1;
     u8 lessonArea = 0xff, lessonRoom = 0xff;
+    // The testbed's SITE scenario dealing this kind puts the named site in
+    // the named role, so the sprite in that room answers for the room it
+    // is actually in.
+    if (QuickStartScenario(QS_SCN_SITE) && gSave.scenario_b == QS_EVENT_MEMORY &&
+        (s32)(gSave.scenario_c & QS_MEMORY_ROLE_RECITAL) == role) {
+        return gSave.scenario_a;
+    }
     if (role != 0) {
         lesson = QuickStartMemorySite(0);
         if (lesson >= 0) {
@@ -25254,17 +25267,41 @@ static void QuickStartGrantTestKit(void) {
 
 // The kit above plus every traversal item the hub's three rows could have
 // dealt - for a scenario that must be reachable whatever the dice say.
+// Kit 2, "everything" (Oct 2026, the user: "In every build, Link should
+// have a full kit, full hearts, all items and powerups"): the test kit,
+// then every weapon, key item, skill and butterfly the tier table knows
+// (the charms and curses are status effects, not kit, and stay out), max
+// hearts, a full wallet, bag and quiver, and red potions in two bottles -
+// the same ceiling MAPEXPLORE starts at.
 static void QuickStartGrantEverythingKit(void) {
+    s32 i;
     QuickStartGrantTestKit();
-    SetInventoryValue(ITEM_PEGASUS_BOOTS, 1);
-    SetInventoryValue(ITEM_ROCS_CAPE, 1);
-    SetInventoryValue(ITEM_MOLE_MITTS, 1);
-    SetInventoryValue(ITEM_FLIPPERS, 1);
-    SetInventoryValue(ITEM_GUST_JAR, 1);
-    SetInventoryValue(ITEM_PACCI_CANE, 1);
+    for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
+        const QuickStartTierEntry* e = &sQuickStartTiers[i];
+        if ((e->cat & (QS_CAT_KEY | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT)) && !(e->cat & QS_CAT_CHARM) &&
+            e->item != ITEM_BOMBS && e->item != ITEM_REMOTE_BOMBS && e->item != ITEM_BOOMERANG &&
+            e->item != ITEM_RED_SWORD && e->item != ITEM_BOTTLE1) {
+            SetInventoryValue(e->item, 1);
+        }
+    }
+    // The pairs the table keeps apart: remote bombs replace bombs and the
+    // magic boomerang the boomerang, so grant the stronger half of each.
+    SetInventoryValue(ITEM_BOMBS, 1);
+    SetInventoryValue(ITEM_MAGIC_BOOMERANG, 1);
     SetInventoryValue(ITEM_BOW, 1);
-    SetInventoryValue(ITEM_BOOMERANG, 1);
-    SetInventoryValue(ITEM_FIRE_ROD, 1);
+    gSave.stats.heartPieces = 0;
+    gSave.stats.maxHealth = 0xA0; // 40 hearts, script.c's own cap
+    gSave.stats.health = gSave.stats.maxHealth;
+    gSave.stats.walletType = 3;
+    gSave.stats.rupees = 999;
+    gSave.stats.bombBagType = 3;
+    gSave.stats.bombCount = 99;
+    gSave.stats.quiverType = 3;
+    gSave.stats.arrowCount = 99;
+    SetInventoryValue(ITEM_BOTTLE1, 1);
+    SetInventoryValue(ITEM_BOTTLE2, 1);
+    gSave.stats.bottles[0] = ITEM_BOTTLE_RED_POTION;
+    gSave.stats.bottles[1] = ITEM_BOTTLE_RED_POTION;
 }
 
 // Where the scenario lands the player. FALSE for a kind with nowhere to go.

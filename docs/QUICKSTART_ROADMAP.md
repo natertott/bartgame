@@ -1271,6 +1271,50 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Scenario saves with a full kit; the upgrades that never showed; ammo drops (Oct 2026)
+
+The user: "build me a few scenario files" for every boss, the carry quest
+and as many ? room trials as reasonable, every one with "a full kit, full
+hearts, all items and powerups"; the bomb bag, quiver and joy butterflies
+"have never shown up"; and enemies should drop arrows and bombs "much more
+often".
+
+**Kit 2 is everything now.** `QuickStartGrantEverythingKit` walks the tier
+table and grants every weapon, key item, skill and butterfly (the charms
+and curses stay out - they are status effects), takes the stronger half of
+each exclusive pair (bombs, magic boomerang), and sets 40 hearts, a full
+wallet with 999 rupees, bag and quiver level 3 with 99 each, and red
+potions in two bottles - MAPEXPLORE's ceiling. Measured: a BOSS scenario
+booted with kit 2 reports every listed item owned.
+
+**`tools/quickstart/make_sav.py`** builds a complete `.sav` around a
+scenario with no save to start from: it boots the ROM once, takes the
+game's own freshly started SaveFile and SaveHeader out of EWRAM, writes
+the scenario in, and lays the image out as `src/save.c` does (signature,
+header, file 0 with 'MCZ3' statuses and CalculateChecksum, the other
+slots INIT), stored 8-byte-reversed as mGBA keeps this game's EEPROM.
+Twenty-three saves ship as a zip: the three bosses (and a green chuchu in
+Trilby), the five quests, every ? room kind at the ranch house's ANY site
+including the rare drop, the elite miniboss, both NPC moods, the stripped
+gauntlet and both memory rooms, and a plain North Field landing. The
+memory rooms needed one more line: a SITE scenario dealing kind 7 now puts
+the named site in the named role, so the sprite there answers for the
+room it stands in. `scenario.py show` reads every file back with its
+checksums verifying; what has NOT been done is loading one in the game,
+because the harness's mgba cannot attach a save - the README says to try
+`--plain` if the file select comes up empty.
+
+**The missing upgrades.** `ITEM_BOMBBAG`, `ITEM_LARGE_QUIVER` and the three
+butterflies sat in the forty-row UNCOMMON tier behind a prerequisite: each
+was 1-in-40 of a 30% band, under one draw in a hundred, and only once its
+weapon was held. All five are COMMON now (prerequisites kept), fifteen
+rows at 60%.
+
+**Ammo.** The QUICKSTART drop block added 650 points of rupees to every
+enemy's table and nothing to bombs or arrows, which the vanilla rows weigh
+in single digits. Each gets 200 the moment its weapon is held.
+
+
 ### The switch puzzles retired; the two-room blink memory event; mixed waves (Oct 2026)
 
 The user: the switch-puzzle ? rooms were "completely broken" - the cage's
