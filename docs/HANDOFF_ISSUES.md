@@ -47,6 +47,22 @@ so nobody re-invents them:
   probe called `sub_0805BB00` this way, saw `lightLevel` change and the screen
   not, and nearly reported the engine call broken. `call_keep` restores the
   context; use it whenever the game has to keep playing afterwards.
+- **`call_keep` between the frames of a wave still being dealt loses the
+  rest of the wave.** A mixed wave lands its kinds on consecutive frames;
+  calling into the ROM on the first of them (to flood from the player's
+  tile) meant the second kind never arrived and no later wave did either.
+  Record what you need (the player's tile) and make the call after the
+  run - room geometry does not change.
+- **`call_keep(QuickStartMarkReachableTiles)` can reset the game.** In
+  Trilby Highlands (site 13) a flood call at frame 200 sent the game to
+  room (0,0) on the very next frame, with every flag reading zero; in the
+  Boomerang cave the same call was harmless. A probe that floods BEFORE it
+  kills and waits measures a title screen and reports "the wave never
+  came". Flood last, or flood in Python off the collision map
+  (`emu.coll_at`, as `multisite2.py` in the scratchpad did).
+- **Zeroing an enemy's kind byte is the kill the wave counter believes**;
+  a health write leaves some kinds standing. `spawn_audit.py` does this
+  between waves.
 - **An Ezlo line may be open when you warp into a region.** A forced
   `InitItemGetSequence` fired into `PLAYER_TALKEZLO` did nothing and left the
   player stuck with the textbox closed. Dismiss the line (slow A presses,

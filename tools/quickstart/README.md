@@ -104,3 +104,15 @@
 
   Exit 0 = green (WARNs allowed), 1 = a placement invariant is broken.
   See its docstring for tiers and what each one proves.
+- `spawn_audit.py` - where the ? room gauntlet actually puts its enemies.
+  Boots every eligible content site (SMALL/LARGE/ANY, no kinstone gate)
+  through the testbed with WAVES forced, steps one frame at a time so each
+  body is recorded on the frame it appears, kills the wave and waits for
+  the next, three waves per room. Every body is checked against the game's
+  own flood from the player's tile, a second flood from the content spot,
+  the open set and the room rectangle's rim; flagged rooms get an ASCII
+  map and a screenshot in `--out DIR`. It cannot tell a neighbour
+  chamber's event from a spill in the three multi-site rooms, and the RIM
+  tag is advisory (Minish paths walk their top row):
+
+      python3 tools/quickstart/spawn_audit.py --rom tmc-d3.gba --out /tmp/audit [--sites 4,13]

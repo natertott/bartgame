@@ -61,6 +61,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | Switch puzzles retired; the two-room blink memory event; mixed gauntlet waves | "The switch puzzles retired" |
 | The stuck-wave recentering retired; Lake Hylia and Lon Lon Ranch host no clear challenge | "The wave recentering is gone" |
 | Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
+| Enemy difficulty lags the counter by two (d5 spawns like old d3), three hearts and a bottled fairy at run start, the 100-room spawn audit, the per-kind escape hatch closed, multi-site gauntlets count their own chamber and own their seam record | "The spawn audit: void corners, multi-site gauntlets" |
 
 ---
 
@@ -68,6 +69,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Needs the user, not an agent
 
+- **Play a three-wave room in a small cave at the new curve** (Grip Ring,
+  the Heart Piece hallway, the Castor Darknut cave): the third wave is
+  shorter there now instead of spilling over the wall. The spawn audit
+  measures tiles, not whether the fight feels right.
+- **Clear one Boomerang cave chamber's gauntlet** while another chamber's
+  miniboss is alive: the second wave should now come.
 - **In-play confirmation that the Trilby boss now walks into the southwest.**
   The arena is measured; every behavioural probe failed on its own control.
 - **A general playtest of the newly opened Minish rooms.** The MINISH model
@@ -158,6 +165,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Straightforward work, not started
 
+- **Size the gauntlet's waves to the chamber.** `QuickStartSpawnWave` asks
+  for 4 + difficulty/2 + 2 per wave regardless of floor; with the hatch
+  closed a cramped room simply gets fewer bodies. A capacity estimate from
+  the reach set (the region waves already clamp to their offset pool)
+  would make the third wave deliberate rather than whatever fit.
 - **`MINISH_CAVES/BEAN_PESTO`** should be filled with tough enemies rather
   than used as a general-purpose ? room. The user asked for this a while ago;
   it is recorded and never actioned.
@@ -182,6 +194,10 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Known-stale tooling
 
+- **`spawn_audit.py` cannot tell a neighbour chamber's event from a
+  spill** in the three multi-site rooms (Boomerang cave, Trilby Highlands,
+  Goron Cave main), and counts Mount Crenel's ambient region waves as the
+  site's. Its VOID tag there is noise; read the per-room map it writes.
 - **`chain_probe.py`'s reach model predates the MINISH model.** It runs
   again (the chain's payout removal unblocked its forced steps) but calls
   Minish-house sites "UNREACHABLE" that the ROM places inside reach;

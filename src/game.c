@@ -459,6 +459,7 @@ static void QuickStartSiteContentSpot(s32, s16*, s16*);
 static u8 QuickStartSiteRewardTier(s32);
 static void QuickStartPotRoomGenerate(s32, s32, s32, s32, s32, s32);
 static u8 QuickStartGetDifficulty(void);
+static u8 QuickStartEnemyDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
 static void QuickStart2DoorRandomizeOnce(void);
@@ -870,12 +871,12 @@ static void GameTask_Transition(void) {
     // play through a full win, check after DoSoftReset) that it carries
     // over from the previous run otherwise. Every run starts broke.
     gSave.stats.rupees = 0;
-    // 2 hearts to start, per the user's own request (was 3) - a full heart
-    // is 8 health units in this engine (see the ITEM_HEART_CONTAINER comment
-    // on phase 3's bonus-reward handling below, and DrawHearts/ui.c:
-    // gHUD.maxHealth = gSave.stats.maxHealth/2, itself in quarter-heart
-    // units).
-    gSave.stats.maxHealth = 16;
+    // 3 hearts to start, per the user's latest request (it was 2, and 3
+    // before that) - a full heart is 8 health units in this engine (see the
+    // ITEM_HEART_CONTAINER comment on phase 3's bonus-reward handling below,
+    // and DrawHearts/ui.c: gHUD.maxHealth = gSave.stats.maxHealth/2, itself
+    // in quarter-heart units).
+    gSave.stats.maxHealth = 24;
     gSave.stats.health = gSave.stats.maxHealth;
     // Run-scoped scoring counters (see docs/QUICKSTART_ROADMAP.md) - all
     // reset to 0 here so each run's score reflects only that run. meta_xp
@@ -1221,15 +1222,20 @@ static void GameTask_Transition(void) {
     // bedroom runs script_PlayerIntro outright, which is why the stairs
     // appeared to dump the player back downstairs. One flag fixes all three.
     SetGlobalFlag(START);
-    // Pre-grant one empty bottle. GiveItem's bottle-fill path (itemUtils.c)
-    // only fills a slot already marked empty (0x20) and silently does
-    // nothing otherwise, so anything that arrives bottled needs this to
-    // exist first. Originally it was here for the fixed Red Potion the
-    // second selection round used to offer; now that round draws the rare
-    // REWARD/STAT band, and this one bottle is what makes four of its six
-    // entries - the bottled fairy and the three charms - drawable at all.
-    gSave.stats.bottles[0] = 0x20;
+    // Two bottles at run start: one with a fairy in it, one empty (the
+    // user's request - a bottled fairy is the one safety net a three-heart
+    // start needs). The EMPTY one matters as much as the fairy: GiveItem's
+    // bottle-fill path (itemUtils.c) only fills a slot already marked empty
+    // (0x20) and silently does nothing otherwise, so anything that arrives
+    // bottled needs an empty slot to exist first. Originally one empty
+    // bottle was here for the fixed Red Potion the second selection round
+    // used to offer; now that round draws the rare REWARD/STAT band, and
+    // the empty bottle is what makes four of its six entries - the bottled
+    // fairy and the three charms - drawable at all.
+    gSave.stats.bottles[0] = ITEM_BOTTLE_FAIRY;
+    gSave.stats.bottles[1] = 0x20;
     SetInventoryValue(ITEM_BOTTLE1, 1);
+    SetInventoryValue(ITEM_BOTTLE2, 1);
 #elif defined(MAPEXPLORE)
     // Dev-only: boot into MAPEXPLORE_AREA/MAPEXPLORE_ROOM (South Hyrule
     // Field by default, right outside Hyrule Castle Town's south gate) with
@@ -5511,7 +5517,7 @@ static s32 QuickStartEscalationSteps(const QuickStartRegion* region, u8 wave) {
 }
 
 static s32 QuickStartEscalatedDifficulty(const QuickStartRegion* region, u8 wave) {
-    s32 escalated = (s32)QuickStartGetDifficulty() + QuickStartEscalationSteps(region, wave);
+    s32 escalated = (s32)QuickStartEnemyDifficulty() + QuickStartEscalationSteps(region, wave);
     if (escalated > QUICKSTART_MAX_DIFFICULTY) {
         escalated = QUICKSTART_MAX_DIFFICULTY;
     }
@@ -8189,6 +8195,33 @@ static void QuickStartIncrementDifficulty(void) {
     }
 }
 
+// The run's difficulty as the ENEMY spawners see it: two steps behind the
+// counter, floored at 0.
+//
+// The user, on the shipped difficulty-3 build: "The current difficulty on
+// tmc-3d feels very high. I would say this should be difficulty 5 in terms
+// of the enemies spawning." So the roster and the density that used to
+// arrive at counter value 3 now arrive at 5, and every other counter value
+// shifts with it; the counter itself - the HUD readout, the drop weights,
+// the stake tiers, the dark-room and fickle-fuser odds, the increment on a
+// win - is untouched, so a save's progress still reads the same number.
+//
+// Only enemy COMPOSITION and COUNT read through this: the tier table
+// (QuickStartPickEnemy / QuickStartPickPursuer), the per-kind live caps,
+// the region escalation base, and every "+ difficulty / N" head count.
+// Lagging the counter rather than re-tuning the tier table keeps the
+// table's own comments (and tools/quickstart/tier_curve.py) truthful about
+// what each row holds.
+#define QUICKSTART_ENEMY_DIFFICULTY_LAG 2
+
+static u8 QuickStartEnemyDifficulty(void) {
+    u8 difficulty = QuickStartGetDifficulty();
+    if (difficulty > QUICKSTART_ENEMY_DIFFICULTY_LAG) {
+        return difficulty - QUICKSTART_ENEMY_DIFFICULTY_LAG;
+    }
+    return 0;
+}
+
 // Persistent HUD readout of the current run's difficulty (the user asked
 // "is there a way to display the current difficulty... a counter on the
 // HUD"). Uses the exact same BG0-tilemap digit mechanism DrawRupees/
@@ -9691,7 +9724,7 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
 // there is one implementation of "how many of these may be alive" rather
 // than two that can drift apart.
 static bool32 QuickStartAcroBanditCapReached(void) {
-    return QuickStartKindAtLiveCap(ACRO_BANDIT, QuickStartGetDifficulty());
+    return QuickStartKindAtLiveCap(ACRO_BANDIT, QuickStartEnemyDifficulty());
 }
 
 // Returns HOW MANY enemies actually landed, which is not the same question
@@ -9980,7 +10013,7 @@ static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 of
 }
 
 static void QuickStartSpawnEnemyGroup(const s16 (*offsets)[2], s32 offsetCount, s32 roomSquares, s32 maxEnemies) {
-    QuickStartSpawnEnemyGroupAtDifficulty(offsets, offsetCount, roomSquares, maxEnemies, QuickStartGetDifficulty());
+    QuickStartSpawnEnemyGroupAtDifficulty(offsets, offsetCount, roomSquares, maxEnemies, QuickStartEnemyDifficulty());
 }
 
 // QS_EVENT_WAVES (see QuickStartSetupWaveRoomContent) is a 3-wave combat
@@ -11277,7 +11310,7 @@ static s32 QuickStartMinibossCount(u8 id) {
     if (!QuickStartEnemyIsWizzrobe(id)) {
         return 1;
     }
-    count = QUICKSTART_WIZZROBE_MIN + QuickStartGetDifficulty() / 2;
+    count = QUICKSTART_WIZZROBE_MIN + QuickStartEnemyDifficulty() / 2;
     if (count > QUICKSTART_WIZZROBE_MAX) {
         count = QUICKSTART_WIZZROBE_MAX;
     }
@@ -11479,6 +11512,39 @@ static s32 QuickStartCountRoomEnemies(void) {
     count = 0;
     for (i = 0; i < MAX_ENTITIES; i++) {
         if (QuickStartEnemyIsOurs(&gEntities[i].base)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// The same count, restricted to the chamber of the site at contentX/
+// contentY (QuickStartTileBelongsToSite: nearest site wins). In a room with
+// one site this is QuickStartCountRoomEnemies exactly; the 2-door pools
+// pass their own coordinates, find no site, and get the room count too.
+//
+// This is the miniboss kind's own rule (see the ownerSite comment in
+// QuickStartSetupEventContent) applied to the wave gauntlet, which had
+// been left counting the whole room. In the Boomerang cave - five sites,
+// four sealed chambers with their own doors - a gauntlet's first wave went
+// down and the second never came, because the other chambers' events were
+// still standing in the headcount: measured by tools/quickstart/
+// spawn_audit.py, which killed wave 0 and saw only the neighbours' fights
+// re-deal. The player, who cannot reach those chambers from this one,
+// reads that as a wave room that cannot be finished. Trilby Highlands'
+// two-site cave and Goron Cave's main room had the same exposure.
+static s32 QuickStartCountSiteEnemies(s32 contentX, s32 contentY) {
+    s32 ownerSite = QuickStartFindSiteAt(contentX, contentY);
+    s32 i, count;
+    if (ownerSite < 0) {
+        return QuickStartCountRoomEnemies();
+    }
+    count = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* enemy = &gEntities[i].base;
+        if (QuickStartEnemyIsOurs(enemy) &&
+            QuickStartTileBelongsToSite((enemy->x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                        (enemy->y.HALF.HI - gRoomControls.origin_y) >> 4, ownerSite)) {
             count++;
         }
     }
@@ -11972,7 +12038,12 @@ static bool32 QuickStartReachAllows(const u8* bits, s32 tx, s32 ty) {
 // test calls solid) the set comes back empty and QuickStartReachAllows
 // falls back to the old unrestricted behaviour - a wave in the wrong half
 // of the room still beats no wave at all.
-static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
+//
+// `allowHatch` is the fourth pass below, the one that drops the reachability
+// rule. Every caller but the mixed wave leaves it on; the mixed wave passes
+// it only for the kind that is placed while the wave is still empty.
+static s32 QuickStartSpawnEnemiesOnOpenTilesEx(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite,
+                                               bool32 allowHatch) {
     s32 anchorTX = anchorX >> 4;
     s32 anchorTY = anchorY >> 4;
     s32 relax, ring, placed = 0;
@@ -11993,6 +12064,21 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     // decides WHERE IN THE SITE a body goes; it is not worth doing when it
     // decides the site is somewhere else entirely.
     reachUsable = !QuickStartReachEmpty(reach) && QuickStartReachHas(reach, anchorTX, anchorTY);
+    // Second seed: the ANCHOR itself. The player's own tile is the best
+    // seed there is when it works, and it fails in a specific, common way:
+    // the arrival tile is a doorway whose four neighbours are all wall
+    // (the Minish water cave south of Lake Hylia, on every wave -
+    // measured by tools/quickstart/spawn_audit.py).
+    // Without a set at all the ring walk below accepts any tile with
+    // collision 0, and that INCLUDES the void outside the room's walls -
+    // the top rows of a cave's rectangle - which is where the user's
+    // "enemies in the very corner of the room" come from. The site's
+    // content spot is a floor tile of the site's own chamber by
+    // construction, so a flood from it is the chamber, and never the void.
+    if (!reachUsable) {
+        QuickStartMarkReachableTiles(reach, openTiles, anchorTX, anchorTY);
+        reachUsable = !QuickStartReachEmpty(reach);
+    }
     reachRegions = reachUsable ? QuickStartReachMaxRing(reach, anchorTX, anchorTY) + 1 : QUICKSTART_SPAWN_MAX_RING;
     if (reachRegions > QUICKSTART_SPAWN_MAX_RING) {
         reachRegions = QUICKSTART_SPAWN_MAX_RING;
@@ -12046,7 +12132,7 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     // only opens when the reachable ground produced NOTHING at all.
     for (relax = 0; relax < 4 && placed < count; relax++) {
         s32 rings;
-        if (relax == 3 && placed > 0) {
+        if (relax == 3 && (placed > 0 || !allowHatch)) {
             break;
         }
         rings = (relax < 3) ? reachRegions : QUICKSTART_SPAWN_MAX_RING;
@@ -12113,6 +12199,10 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
         }
     }
     return placed;
+}
+
+static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 anchorY, s32 count, s32 ownerSite) {
+    return QuickStartSpawnEnemiesOnOpenTilesEx(id, form, anchorX, anchorY, count, ownerSite, TRUE);
 }
 
 // --- Survive rooms want enemies that COME TO YOU ------------------------
@@ -12240,6 +12330,10 @@ static void QuickStartPickWaveEnemy(u8 difficulty, bool32 pursuersOnly, u8* outI
 static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
     u8 id, form;
     s32 i, count, kinds, k, placed = 0;
+    // The wave is placed as its SITE's, so in a multi-site room it cannot
+    // be dealt into a neighbouring chamber - the same chamber the headcount
+    // above now stops at. -1 (no restriction) for the 2-door pools.
+    s32 owner = QuickStartFindSiteAt(contentX, contentY);
     count = 4 + difficulty / 2 + wave * 2;
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
@@ -12259,10 +12353,17 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
         u8 id2, form2;
         s32 share = count / kinds;
         QuickStartPickWaveEnemy(difficulty, pursuersOnly, &id2, &form2);
-        placed += QuickStartSpawnEnemiesOnOpenTiles(id2, form2, contentX, contentY, share, -1);
+        // The escape hatch (the placer's fourth pass, which drops the
+        // reachability rule) is per CALL, and a mixed wave is several
+        // calls: the second kind opened it whenever the player's pocket
+        // was already full of the first kind, and three bodies went over
+        // the wall - the Lake Woods cave ladder landing, measured by
+        // tools/quickstart/spawn_audit.py. The hatch exists so a wave
+        // places SOMEBODY; once it has, a short wave is the right answer.
+        placed += QuickStartSpawnEnemiesOnOpenTilesEx(id2, form2, contentX, contentY, share, owner, placed == 0);
         count -= share;
     }
-    if (QuickStartSpawnEnemiesOnOpenTiles(id, form, contentX, contentY, count, -1) == 0 && placed == 0) {
+    if (QuickStartSpawnEnemiesOnOpenTilesEx(id, form, contentX, contentY, count, owner, placed == 0) == 0 && placed == 0) {
         // A wave that places nobody reads as instantly cleared, and three
         // of those in a row hand the reward over for free. That was only
         // ever theoretical while gauntlets lived in roomy sites; now that
@@ -12284,7 +12385,8 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
                         continue;
                     }
                     if (!QuickStartTileIsOpen(tx, ty) ||
-                        QuickStartTileNearPlayer(tx, ty, QUICKSTART_SPAWN_KEEP_CLEAR)) {
+                        QuickStartTileNearPlayer(tx, ty, QUICKSTART_SPAWN_KEEP_CLEAR) ||
+                        !QuickStartTileBelongsToSite(tx, ty, owner)) {
                         continue;
                     }
                     enemy = CreateEnemy(id, form);
@@ -12341,6 +12443,18 @@ static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficul
 // would lose the wave counter in exactly that frame if the player happened
 // to cross the seam during it.
 #define GF_SEAM_GAUNTLET_SPAWNED 58
+// WHICH SITE the record belongs to, 0..104, or 127 for a 2-door pool room
+// (no site). Room alone was not enough: the Boomerang cave has five sites,
+// Trilby Highlands two, and whenever two of them roll the gauntlet they
+// shared one record keyed to the room. Site A cleared its wave and wrote
+// "wave 1, not spawned"; site B, still fighting wave 0, read that as its
+// own state and dealt wave 1 on top of its wave 0; A then read B's
+// "spawned" and, with nothing in its own chamber, cleared again. A never
+// got a second wave and B drowned in them - measured by stepping the
+// Boomerang cave with its north-west chamber's wave killed and watching
+// the south-west chamber receive every wave after it. Seven bits in the
+// gap between the inn chests (121-123) and the Western Wood brush (131).
+#define GF_SEAM_GAUNTLET_SITE_BIT(b) (124 + (b)) // b = 0..6
 
 static void QuickStartGauntletWriteBits(s32 base, s32 count, u32 value) {
     s32 b;
@@ -12366,16 +12480,18 @@ static u32 QuickStartGauntletReadBits(s32 base, s32 count) {
 
 // Is the live gauntlet record this room's? Room ids only reach 15 in the
 // areas that host events, so five bits is ample.
-static bool32 QuickStartGauntletIsHere(void) {
+static bool32 QuickStartGauntletIsHere(s32 site) {
     return CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_LIVE) != 0 &&
            QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_AREA_BIT(0), 7) == gRoomControls.area &&
-           QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_ROOM_BIT(0), 5) == gRoomControls.room;
+           QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_ROOM_BIT(0), 5) == gRoomControls.room &&
+           QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_SITE_BIT(0), 7) == (u32)(site & 0x7f);
 }
 
-static void QuickStartGauntletRemember(u8 wave, bool32 spawned) {
+static void QuickStartGauntletRemember(u8 wave, bool32 spawned, s32 site) {
     SetLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_LIVE);
     QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_AREA_BIT(0), 7, gRoomControls.area);
     QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_ROOM_BIT(0), 5, gRoomControls.room);
+    QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_SITE_BIT(0), 7, (u32)(site & 0x7f));
     QuickStartGauntletWriteBits(GF_SEAM_GAUNTLET_WAVE_BIT(0), 2, wave);
     if (spawned) {
         SetLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED);
@@ -12458,7 +12574,7 @@ u8 QuickStartCharmMask(void);
 #define QUICKSTART_SURVIVE_BASE_SECONDS 20
 
 static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
-    u8 difficulty = QuickStartGetDifficulty();
+    u8 difficulty = QuickStartEnemyDifficulty();
     if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 224), 0);
@@ -12479,7 +12595,7 @@ static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 con
     if (gSave.timer4 != 0) {
         gSave.timer4--;
         if (gSave.timer4 != 0) {
-            if (QuickStartCountRoomEnemies() < 3 && gSave.timer4 > 120) {
+            if (QuickStartCountSiteEnemies(contentX, contentY) < 3 && gSave.timer4 > 120) {
                 // The 2-bit counter cycles 0-3; sizes only go up to wave 2,
                 // so 3 wraps to 0. Compare, not %: agbcc promotes u8 to
                 // unsigned and emits the __umodsi3 this libgcc lacks.
@@ -12517,6 +12633,9 @@ static bool32 QuickStartSetupSurviveRoomContent(s32 extra, s32 contentX, s32 con
 // ladder/door slot vs. a content site's own GF_CONTENT_SITE_DONE bit).
 static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 contentY, u32 flagBase) {
     u8 wave, difficulty;
+    // Which site this gauntlet is (-1 for a 2-door pool room): the seam
+    // record is tagged with it, and the headcount stops at its chamber.
+    s32 site = QuickStartFindSiteAt(contentX, contentY);
     if (QsCheckRoomFlag(flagBase + 2)) {
         // All 3 waves cleared, reward already dropped - watch for the
         // pickup. Same "gone is not the same as taken" rule as the item-drop
@@ -12554,8 +12673,8 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     // per visit; after this frame the room flags carry the truth.
     if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_SYNCED_FLAG)) {
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_SYNCED_FLAG);
-        if (QuickStartCountRoomEnemies() == 0) {
-            if (QuickStartGauntletIsHere() && CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED)) {
+        if (QuickStartCountSiteEnemies(contentX, contentY) == 0) {
+            if (QuickStartGauntletIsHere(site) && CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED)) {
                 QuickStartGauntletForget();
             }
             if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE)) {
@@ -12570,7 +12689,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SURVIVE_LIVE) && gSave.timer4 != 0) {
             QsSetRoomFlag(flagBase + 3);
             QsSetRoomFlag(flagBase + 0);
-        } else if (!QuickStartGauntletIsHere() && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
+        } else if (!QuickStartGauntletIsHere(site) && QuickStartHuntState() != QUICKSTART_HUNT_RUNNING &&
                    QuickStartScavState() != QUICKSTART_SCAV_RUNNING &&
                    QuickStartStealthState() != QUICKSTART_STEALTH_RUNNING && (s32)Random() % 3 == 0) {
             QsSetRoomFlag(flagBase + 3);
@@ -12583,13 +12702,13 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
     }
-    difficulty = QuickStartGetDifficulty();
+    difficulty = QuickStartEnemyDifficulty();
     // The seam record outranks the room flags, because the room flags are
     // exactly what a seam crossing destroys. When it is this room's, it is
     // both the wave counter AND the "already spawned" latch; the room flags
     // are still written below so a room without a seam behaves identically
     // whether or not the record survives.
-    if (QuickStartGauntletIsHere()) {
+    if (QuickStartGauntletIsHere(site)) {
         wave = (u8)QuickStartGauntletReadBits(GF_SEAM_GAUNTLET_WAVE_BIT(0), 2);
         QuickStartWaveRoomSetWave(flagBase, wave);
         if (CheckLocalFlagByBank(FLAG_BANK_11, GF_SEAM_GAUNTLET_SPAWNED)) {
@@ -12605,7 +12724,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         // literally, if they chased the player over a seam, so haul them
         // back before deciding the wave is clear.
         QuickStartLeashStrayEnemies(contentX, contentY);
-        if (QuickStartCountRoomEnemies() > 0) {
+        if (QuickStartCountSiteEnemies(contentX, contentY) > 0) {
             return FALSE;
         }
         // Cleared.
@@ -12631,7 +12750,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
         // below spawn it on the next frame.
         QuickStartWaveRoomSetWave(flagBase, wave + 1);
         QsClearRoomFlag(flagBase + 0);
-        QuickStartGauntletRemember(wave + 1, FALSE);
+        QuickStartGauntletRemember(wave + 1, FALSE, site);
         return FALSE;
     }
     // Extra bit 6 makes this a stripped-kit gauntlet. Applied on the way into
@@ -12645,7 +12764,7 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     }
     QuickStartSpawnWave(contentX, contentY, wave, difficulty, FALSE);
     QsSetRoomFlag(flagBase + 0);
-    QuickStartGauntletRemember(wave, TRUE);
+    QuickStartGauntletRemember(wave, TRUE, site);
     return FALSE;
 }
 
@@ -13120,14 +13239,14 @@ static void QuickStartHuntClearPack(void) {
 static void QuickStartHuntSpawnPack(s16 spotX, s16 spotY) {
     u8 id, form;
     s32 count, i;
-    QuickStartPickEnemy(QuickStartGetDifficulty() + 2, &id, &form);
+    QuickStartPickEnemy(QuickStartEnemyDifficulty() + 2, &id, &form);
     // Same capped-acro substitution as QuickStartSpawnWave: an empty pack
     // would hand the hunt an instant win.
     if (id == ACRO_BANDIT && QuickStartAcroBanditCapReached()) {
         id = BEETLE;
         form = 0;
     }
-    count = QUICKSTART_HUNT_MIN_ENEMIES + QuickStartGetDifficulty() / 2;
+    count = QUICKSTART_HUNT_MIN_ENEMIES + QuickStartEnemyDifficulty() / 2;
     if (count > QUICKSTART_HUNT_MAX_ENEMIES) {
         count = QUICKSTART_HUNT_MAX_ENEMIES;
     }
@@ -13458,7 +13577,7 @@ static void QuickStartScavReleasePack(const QuickStartRegion* region, s16 thiefX
     QuickStartSpawnEnemiesOnOpenTiles(KEATON, 0, thiefX, thiefY, 1, -1);
     // The swarm, around the conversation: bodies, a positioning tax, and
     // one ranged kind - instance-heavy, kind-light on purpose.
-    beetles = 6 + QuickStartGetDifficulty() / 2;
+    beetles = 6 + QuickStartEnemyDifficulty() / 2;
     if (beetles > 10) {
         beetles = 10;
     }
@@ -13793,7 +13912,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot) {
 #define QUICKSTART_STEALTH_REACH 20
 
 static s32 QuickStartStealthWatchCount(void) {
-    s32 n = QUICKSTART_STEALTH_MIN_WATCH + QuickStartGetDifficulty() / 4;
+    s32 n = QUICKSTART_STEALTH_MIN_WATCH + QuickStartEnemyDifficulty() / 4;
     if (n > QUICKSTART_STEALTH_MAX_WATCH) {
         n = QUICKSTART_STEALTH_MAX_WATCH;
     }
@@ -15087,8 +15206,8 @@ static void QuickStartSetupDigRoom(void) {
         return;
     }
     QsSetRoomFlag(QUICKSTART_DIG_ROOM_POPULATED_FLAG);
-    QuickStartPickEnemy(QuickStartGetDifficulty(), &id, &form);
-    count = 2 + QuickStartGetDifficulty() / 4;
+    QuickStartPickEnemy(QuickStartEnemyDifficulty(), &id, &form);
+    count = 2 + QuickStartEnemyDifficulty() / 4;
     if (count > 5) {
         count = 5;
     }
@@ -15123,7 +15242,7 @@ static void QuickStartRestockSmallChests(void) {
         // player (see sQuickStartPursuers).
         if (QuickStartIsDigRoom() && ((s32)(Random() & 0x7fff) % 3) == 0) {
             u8 id, form;
-            QuickStartPickPursuer(QuickStartGetDifficulty(), &id, &form);
+            QuickStartPickPursuer(QuickStartEnemyDifficulty(), &id, &form);
             t->_2 = id;
             t->_3 = QUICKSTART_CHEST_ENEMY;
         } else {
@@ -15940,7 +16059,7 @@ static bool32 QuickStartSetupMemoryRoomContent(s32 extra, s16 contentX, s16 cont
         }
         QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
         SoundReq(SFX_PLY_VO7);
-        QuickStartSpawnWave(contentX, contentY, 0, QuickStartGetDifficulty(), FALSE);
+        QuickStartSpawnWave(contentX, contentY, 0, QuickStartEnemyDifficulty(), FALSE);
     }
     return FALSE;
 }
@@ -18920,7 +19039,7 @@ static void QuickStart2DoorSetupWaveRoomContent(s32 contentX, s32 contentY) {
         CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
         QuickStartDarkRoomRoll();
     }
-    difficulty = QuickStartGetDifficulty();
+    difficulty = QuickStartEnemyDifficulty();
     wave = QuickStartWaveRoomGetWave(0);
     if (QsCheckRoomFlag(0)) {
         if (QuickStartCountRoomEnemies() > 0) {
@@ -22095,7 +22214,7 @@ static void QuickStartRoofMonitor(void) {
         return;
     }
     if (!QsCheckRoomFlag(0)) {
-        u8 difficulty = QuickStartGetDifficulty() + QUICKSTART_ROOF_DIFFICULTY_BONUS;
+        u8 difficulty = QuickStartEnemyDifficulty() + QUICKSTART_ROOF_DIFFICULTY_BONUS;
         if (difficulty > QUICKSTART_MAX_DIFFICULTY) {
             difficulty = QUICKSTART_MAX_DIFFICULTY;
         }
@@ -24445,8 +24564,8 @@ static void QuickStartBrushFusionPayout(void) {
         }
         if (challenge) {
             u8 id, form;
-            s32 count = 3 + (s32)QuickStartGetDifficulty() / 4;
-            QuickStartPickEnemy(QuickStartGetDifficulty(), &id, &form);
+            s32 count = 3 + (s32)QuickStartEnemyDifficulty() / 4;
+            QuickStartPickEnemy(QuickStartEnemyDifficulty(), &id, &form);
             QuickStartSpawnEnemiesOnOpenTiles(id, form, lx, ly, count, -1);
         }
         SetLocalFlagByBank(FLAG_BANK_11, GF_WW_BRUSH_PAID_BIT(i));

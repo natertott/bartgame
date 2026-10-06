@@ -1271,6 +1271,102 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The spawn audit: void corners, multi-site gauntlets, a softer curve, three hearts (Oct 2026)
+
+The user, on the shipped build: "The current difficulty on tmc-3d feels
+very high. I would say this should be difficulty 5 in terms of the enemies
+spawning"; runs should start with three hearts, "one bottle with a fairy
+inside, and one empty bottle"; and "some of the ? rooms have enemies that
+are spawning into the very corner of the room, usually the upper-right
+corner... affecting the winability of certain ? events like three wave
+clear rooms. Do an audit on all of the eligible ? rooms."
+
+**The curve.** `QuickStartEnemyDifficulty()` is the run's counter minus
+two, floored at zero, and it is what every enemy roster and head count
+reads now: the tier table (`QuickStartPickEnemy` / `PickPursuer`), the
+live caps, the region escalation base, the gauntlet, survive, hunt, scav,
+stealth, dig, roof, memory and challenge counts, the miniboss coven size.
+The counter itself - HUD, drop weights, stake tiers, dark-room and fickle
+odds, the increment on a win - is untouched, so a save's number still
+means what it did. Measured: a pinned counter of 5 answers enemy
+difficulty 3, 3 answers 1, 12 answers 10.
+
+**Three hearts, two bottles.** `maxHealth` 24 at run start; bottle 1
+holds a fairy, bottle 2 is empty (the empty one is what keeps the rare
+band's bottled rewards drawable). Measured from the save after a boot:
+health 24/24, bottles [fairy, empty].
+
+**The audit** is `tools/quickstart/spawn_audit.py`: every SMALL/LARGE/ANY
+site without a kinstone gate (100 of the 105), booted through the testbed
+with the WAVES event forced and a full kit, stepped one frame at a time so
+each enemy is recorded on the frame it appears, then killed wave by wave
+for three waves. Each body is checked against the game's own flood from
+the player's tile, a second flood from the content spot, the open set, and
+the room rectangle's rim. First run: 1,872 bodies, 196 flagged, 24 rooms.
+Of those, the Great Fairy rooms deal no site event by design, two Crenel
+rooms held the seed's quest giver instead of a wave (other seeds deal
+waves), Mount Crenel's count is the region's own ambient waves, three
+Minish rooms are rim-flagged walkable water or path tiles, and the
+Boomerang cave's "void" is its other four chambers. What was left were
+two real defects.
+
+**Defect 1: mixed waves opened the escape hatch per kind.** The placer's
+fourth pass drops the reachability rule so a wave never places nobody;
+it opens when a CALL placed nothing, and a mixed wave is two or three
+calls. In a small chamber the first kind filled the floor, the last kind
+found no tile at one-tile separation, and the hatch put it on the open
+tiles outside the walls - the top rows of the cave's rectangle, both
+upper corners of Grip Ring's, the left rim of the Castor Darknut cave,
+both void columns beside the Heart Piece hallway, the ladder corridor in
+the Lake Woods cave. Always the third wave, always the overflow kind.
+That is the user's corner. Now `QuickStartSpawnEnemiesOnOpenTilesEx`
+takes `allowHatch`, and `QuickStartSpawnWave` passes it only while the
+wave is still empty: a short third wave in a cramped room, never a body
+over the wall. And when the player's seed fails outright (a doorway with
+four wall neighbours - the Minish water cave south of Lake Hylia, every
+wave) the placer floods from the content spot before it gives up on
+reachability at all.
+
+**Defect 2: a gauntlet in a multi-site room counted the whole room.**
+`QuickStartCountRoomEnemies` is every enemy of ours anywhere; the Boomerang
+cave has five sites in four sealed chambers, Trilby Highlands two, Goron
+Cave's main room four. Kill a chamber's first wave and the second never
+came while a neighbour's miniboss stood - a wave room the player cannot
+finish from inside it. `QuickStartCountSiteEnemies` applies the miniboss
+kind's own ownership rule (`QuickStartTileBelongsToSite`, nearest site
+wins) to the gauntlet's headcount, the survive top-up and the re-entry
+sync, and the wave itself is now placed as its site's so it cannot land
+in the chamber next door.
+
+**Defect 3: two gauntlets in one room shared the seam record.** The
+seam-gauntlet record (FLAG_BANK_11 43-58, the state that survives
+Grimblade's scroll seam) was keyed to the ROOM. Whenever two sites in the
+Boomerang cave or Trilby Highlands both rolled the gauntlet - the fixed
+testbed seed does exactly that - they read each other's state: A cleared
+its wave and wrote "wave 1, not spawned", B dealt wave 1 on top of its
+own wave 0, A read B's "spawned" and cleared again. A never got a second
+wave. Measured with a pure-Python chamber flood and a chamber-only kill
+(no ROM call before the kill - see HANDOFF_ISSUES): on the pre-fix ROM
+Trilby Highlands' west chamber never received wave 1 while the east
+chamber held 8; on the fixed ROM both rooms deal waves 1 and 2 into the
+killed chamber within five frames with the neighbour's five enemies still
+standing. The record carries a 7-bit site tag now (bits 124-130, the gap
+between the inn chests and the Western Wood brush), and
+`QuickStartGauntletIsHere(site)` / `Remember(wave, spawned, site)` take
+the site.
+
+**Measured after the fixes** (same audit, same rooms): the Heart Piece
+hallway deals 3/3/3 instead of 3/7/9 with the overflow in the void, Grip
+Ring 5/5/5, Exit to Mines 4/4/4, the Castor Darknut cave 5/5/5, the Lake
+Woods ladder landing 2/2/2 - every body on the player's floor, zero
+flagged in those rooms. What still flags is the by-design residue above.
+
+**Not changed, worth knowing.** Wave sizes are still 4 + difficulty/2 +
+2 per wave; in a 3-wide hallway the third wave is now short rather than
+spilled. The rim flag is advisory: Minish path rooms genuinely walk their
+top row.
+
+
 ### Scenario saves with a full kit; the upgrades that never showed; ammo drops (Oct 2026)
 
 The user: "build me a few scenario files" for every boss, the carry quest
