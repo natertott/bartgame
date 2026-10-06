@@ -1359,7 +1359,11 @@ the site.
 hallway deals 3/3/3 instead of 3/7/9 with the overflow in the void, Grip
 Ring 5/5/5, Exit to Mines 4/4/4, the Castor Darknut cave 5/5/5, the Lake
 Woods ladder landing 2/2/2 - every body on the player's floor, zero
-flagged in those rooms. What still flags is the by-design residue above.
+flagged in those rooms. The full pass on the shipped ROM: 1,898 bodies
+over 100 rooms, and the only tiles off the player's floor are the three
+multi-site rooms' neighbour chambers and Mount Crenel's ambient region
+waves; the rest of what flags is the rim tag on walkable Minish path and
+beanstalk tiles, and the five rooms that deal no wave by design.
 
 **Not changed, worth knowing.** Wave sizes are still 4 + difficulty/2 +
 2 per wave; in a 3-wide hallway the third wave is now short rather than
