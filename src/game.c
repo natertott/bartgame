@@ -12205,6 +12205,64 @@ static s32 QuickStartSpawnEnemiesOnOpenTiles(u8 id, u8 form, s32 anchorX, s32 an
     return QuickStartSpawnEnemiesOnOpenTilesEx(id, form, anchorX, anchorY, count, ownerSite, TRUE);
 }
 
+// --- Sizing a wave to its chamber ----------------------------------------
+//
+// The user, Oct 2026, after the spawn audit closed the escape hatch and
+// cramped rooms started getting short third waves: "Size the gauntlet
+// waves to the chamber too. We want to go by enemy density per available
+// square, scaling with difficulty. At very high difficulties we might have
+// an enemy every 5 squares, while at lower difficulties it could be every
+// 9 squares or every 16 squares."
+//
+// So a wave is the chamber's floor divided by this row, plus one body per
+// wave, never fewer than two and never more than the room's live cap.
+// Indexed by the ENEMY difficulty (QuickStartEnemyDifficulty, the counter
+// less two), one tile per 16x16 square. Against the rooms the audit
+// measured: a 15x10 cave's chamber is 60-70 floor tiles, so the shipped
+// counter of 3 (row 1) deals 4/5/6 where the old flat formula dealt
+// 4/6/8; counter 5 (row 3) deals 5/6/7; the top of the curve (row 10) 11
+// and then the cap. The 3-wide Heart Piece hallway (27 tiles) deals 2/2/2
+// at the bottom and 5/6/7 at the top instead of 9 bodies it cannot hold;
+// the Grimblade dojo (86 tiles) reaches the cap of 12 at row 7.
+static const u8 sQuickStartWaveTilesPerEnemy[QUICKSTART_MAX_DIFFICULTY + 1] = {
+    //  0   1   2   3   4   5   6   7   8   9  10  11  12
+    16, 15, 14, 12, 11, 10, 9,  8,  7,  7,  6,  5,  5,
+};
+
+// How many floor tiles the wave has to work with: the placer's own view
+// (the player-seeded flood when it holds the anchor, the anchor-seeded one
+// otherwise), restricted to the owning site's share of a multi-site room.
+// 0 when neither seed finds any floor, which the caller treats as "size it
+// the old way".
+static s32 QuickStartChamberTileCount(s32 anchorX, s32 anchorY, s32 ownerSite) {
+    s32 anchorTX = anchorX >> 4;
+    s32 anchorTY = anchorY >> 4;
+    s32 w = (s32)(gRoomControls.width >> 4);
+    s32 h = (s32)(gRoomControls.height >> 4);
+    s32 x, y, count = 0;
+    u8 reach[QUICKSTART_REACH_BYTES];
+    u8 openTiles[QUICKSTART_REACH_BYTES];
+    QuickStartMarkReachableTiles(reach, openTiles, (s32)(gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4,
+                                 (s32)(gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4);
+    if (QuickStartReachEmpty(reach) || !QuickStartReachHas(reach, anchorTX, anchorTY)) {
+        QuickStartMarkReachableTiles(reach, openTiles, anchorTX, anchorTY);
+    }
+    if (w > 64) {
+        w = 64;
+    }
+    if (h > 64) {
+        h = 64;
+    }
+    for (y = 0; y < h; y++) {
+        for (x = 0; x < w; x++) {
+            if (QUICKSTART_REACH_GET(reach, x, y) && QuickStartTileBelongsToSite(x, y, ownerSite)) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
 // --- Survive rooms want enemies that COME TO YOU ------------------------
 //
 // The user, after a playthrough: in "Stand your ground!" rooms "we should
@@ -12330,11 +12388,24 @@ static void QuickStartPickWaveEnemy(u8 difficulty, bool32 pursuersOnly, u8* outI
 static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
     u8 id, form;
     s32 i, count, kinds, k, placed = 0;
+    s32 tiles, row;
     // The wave is placed as its SITE's, so in a multi-site room it cannot
     // be dealt into a neighbouring chamber - the same chamber the headcount
     // above now stops at. -1 (no restriction) for the 2-door pools.
     s32 owner = QuickStartFindSiteAt(contentX, contentY);
-    count = 4 + difficulty / 2 + wave * 2;
+    // Sized to the floor (sQuickStartWaveTilesPerEnemy above); the old flat
+    // 4 + difficulty/2 + 2 per wave only when no seed finds any floor at
+    // all, which is the same case the placer gives up on reachability for.
+    tiles = QuickStartChamberTileCount(contentX, contentY, owner);
+    row = (difficulty > QUICKSTART_MAX_DIFFICULTY) ? QUICKSTART_MAX_DIFFICULTY : difficulty;
+    if (tiles > 0) {
+        count = tiles / (s32)sQuickStartWaveTilesPerEnemy[row] + wave;
+        if (count < 2) {
+            count = 2;
+        }
+    } else {
+        count = 4 + difficulty / 2 + wave * 2;
+    }
     if (count > QUICKSTART_WAVE_ROOM_OFFSET_COUNT) {
         count = QUICKSTART_WAVE_ROOM_OFFSET_COUNT;
     }

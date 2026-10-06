@@ -1271,6 +1271,53 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Gauntlet waves sized to the chamber (Oct 2026)
+
+The user, right after the spawn audit: "Size the gauntlet waves to the
+chamber too. We want to go by enemy density per available square,
+scaling with difficulty. At very high difficulties we might have an
+enemy every 5 squares, while at lower difficulties it could be every 9
+squares or every 16 squares."
+
+`QuickStartSpawnWave` now asks `QuickStartChamberTileCount` for the floor
+it has: the placer's own flood (player-seeded when it holds the content
+spot, anchor-seeded otherwise), restricted to the owning site's share of
+a multi-site room. The wave is that floor divided by
+`sQuickStartWaveTilesPerEnemy[enemy difficulty]`, plus one body per wave,
+never fewer than two, still capped at the room's twelve. The row:
+
+| enemy difficulty | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| tiles per enemy | 16 | 15 | 14 | 12 | 11 | 10 | 9 | 8 | 7 | 7 | 6 | 5 | 5 |
+
+Enemy difficulty is the counter less two, so the shipped counter of 3 is
+row 1 and the user's "difficulty 5" is row 3. The old flat 4 + d/2 + 2
+per wave survives only for a wave whose seeds find no floor at all.
+
+Measured on the shipped ROM with `spawn_audit.py --diff 3` and `--diff
+12` (bodies on the frame they appear; at the top of the curve the count
+includes the extra entities a multi-body kind brings, so a capped wave of
+12 placements can read 15-18):
+
+| room | at counter 3 | at counter 12 |
+|---|---|---|
+| South Field rupee cave (15x10) | 4/5/6 | 12-cap every wave |
+| Grimblade dojo | 5/6/7 | 12-cap every wave |
+| Castor Darknut hall (17x13) | 7/8/9 | 12-cap every wave |
+| Minish cave north of Lake Hylia | 6/7/8 | 12-cap, 16 on the third |
+| Castor Darknut cave, Grip Ring | 2/3/4 | 7/5/5 (the floor fills) |
+| Heart Piece hallway (3 wide) | 2/2/3 | 5/3/3 (the floor fills) |
+| Lake Woods ladder landing | 2/2/2 | 3/5/2 |
+
+The Boomerang cave and Trilby Highlands still deal waves 1 and 2 into
+the killed chamber with the neighbour's enemies standing (now 3 and 2
+bodies a wave at the shipped counter, their chambers being 41 and 27
+tiles).
+
+The survive variant draws its top-ups through the same sizing, and so do
+the memory room's wrong-answer wave and the seam gauntlet.
+
+
 ### The spawn audit: void corners, multi-site gauntlets, a softer curve, three hearts (Oct 2026)
 
 The user, on the shipped build: "The current difficulty on tmc-3d feels
@@ -1365,10 +1412,10 @@ multi-site rooms' neighbour chambers and Mount Crenel's ambient region
 waves; the rest of what flags is the rim tag on walkable Minish path and
 beanstalk tiles, and the five rooms that deal no wave by design.
 
-**Not changed, worth knowing.** Wave sizes are still 4 + difficulty/2 +
-2 per wave; in a 3-wide hallway the third wave is now short rather than
-spilled. The rim flag is advisory: Minish path rooms genuinely walk their
-top row.
+**Not changed, worth knowing.** The rim flag is advisory: Minish path
+rooms genuinely walk their top row. (Wave sizes were still the flat 4 +
+difficulty/2 + 2 per wave when this shipped; the entry above this one
+sizes them to the chamber.)
 
 
 ### Scenario saves with a full kit; the upgrades that never showed; ammo drops (Oct 2026)
