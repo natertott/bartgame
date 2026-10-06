@@ -116,3 +116,12 @@
   tag is advisory (Minish paths walk their top row):
 
       python3 tools/quickstart/spawn_audit.py --rom tmc-d3.gba --out /tmp/audit [--sites 4,13]
+- `boulder_probe.py` - the one-way boulders in the ROM: no auto-fill (the
+  Trilby rock stays at its spot; with its flag set the manager puts it in
+  the hole), the held mask's boulder and north-field bits, Percy's
+  treehouse through `QuickStartReachTestRoom`, and a collision-flood
+  partition of Lon Lon Ranch and Trilby from every surveyed landing with
+  each boulder out and in. The partition is collision only - blind to
+  ledges - so read it beside the walked survey, not instead of it:
+
+      python3 tools/quickstart/boulder_probe.py --rom tmc-d3.gba

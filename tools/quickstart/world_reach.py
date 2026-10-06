@@ -87,6 +87,46 @@ UNSURVEYED = 'unsurveyed'
 SWITCHES4 = 'boomerang_switches_4'       # all four chamber switches thrown
 BOULDER = lambda region, n: 'boulder:%s:%d' % (region, n)
 
+# WHICH boulder is which, and the save flag that says it is in its hole.
+#
+# Every one-way boulder in the ring is a MOVEABLE_OBJECT_MANAGER entry in
+# data/map/entity_headers.s (manager subtype 0x20): it creates the
+# PUSHABLE_ROCK at the rock's spot, or ON the hole when its flag is already
+# set, and pushableRock.c sets that flag the moment the rock settles into
+# the hole (sub_0808A644). The flag is a LOCAL flag of the room's area, so
+# it is wiped with everything else at run start (GameTask_Transition's
+# FLAG_BANK_1.. sweep) - a new run gets its boulders back - and it can be
+# read from anywhere with CheckLocalFlagByBank(GetFlagBankOffset(area), n).
+# That is what makes a boulder token TESTABLE at run time (Oct 2026): the
+# auto-fill that used to solve every hole on arrival is retired, the
+# player pushes them, and the chain placer sees which ones are in.
+#
+# Numbers are the user's (survey of 2026-10-06); flag indices are the USA
+# build's (the .else branch of each entity list - EU_JP's are two lower in
+# Lon Lon Ranch). hole = where the rock ends up, rock = where it starts.
+#   key                 area               flag  rock         hole
+BOULDER_FLAGS = {
+    BOULDER('LLR', 1):  ('HYRULE_FIELD', 0x7b),   # rock (488,904) hole (472,904), the south-east corner
+    BOULDER('LLR', 2):  ('HYRULE_FIELD', 0x7c),   # rock (216,904) hole (232,904), by the Goron cave
+    BOULDER('LLR', 3):  ('HYRULE_FIELD', 0x7a),   # rock (184,200) hole (168,200), the north field's west gate
+    BOULDER('TRIL', 1): ('HYRULE_FIELD', 0x92),   # rock (344,664) hole (344,648), pushed north from the south
+    BOULDER('WW-N', 1): ('HYRULE_FIELD', 0x93),   # rock (408,424) hole (424,424), pushed east toward South Field
+    BOULDER('CW', 1):   ('CASTOR_WILDS', 0x15),   # rock (536,808) hole (536,792)
+    BOULDER('CW', 2):   ('CASTOR_WILDS', 0x16),   # rock (696,920) hole (680,920)
+    BOULDER('CW', 3):   ('CASTOR_WILDS', 0x1e),   # rock (696,328) hole (696,344)
+    BOULDER('CREN', 1): ('MT_CRENEL', 0x3f),      # TOP: rock (760,88) hole (744,88)
+    BOULDER('CREN', 2): ('MT_CRENEL', 0x40),      # TOP: rock (952,136) hole (712,24) - numbering ASSUMED, see the report
+    BOULDER('LH', 1):   ('LAKE_HYLIA', 0x07),     # rock (40,536) hole (40,520), on the arrival shore - NOT surveyed
+    BOULDER('WR', 1):   ('RUINS', 0x25),          # ENTRANCE: rock (184,488) hole (168,488) - NOT surveyed
+    BOULDER('WR', 2):   ('RUINS', 0x2a),          # FORTRESS_ENTRANCE: rock (136,88) hole (120,88) - NOT surveyed
+}
+# Lon Lon Ranch's north field. The user: "the LLR house key is basically
+# equivalent to having boulder #3 pushed in (but the reverse is not true)",
+# and every north-field row says so. One token for the pair keeps a row
+# that already has three alternatives from needing six: the game sets it
+# when boulder 3's flag is up OR the Lon Lon Key is held.
+LLR_NORTH = 'llr_north'
+
 FREE = []                                # reachable with nothing extra
 
 # --------------------------------------------------------------- the table --
@@ -116,6 +156,62 @@ _OMITTED = object()
 def d(key, area, room, x, y, req=_OMITTED, note=''):
     SURVEY[key]['dests'].append(dict(area=area, room=room, local=(x, y),
                                      req=([[]] if req is _OMITTED else req), note=note))
+
+
+# ------------------------------------------------------------- entrances --
+# A survey key can be an ENTRANCE of a region rather than the region itself
+# (Oct 2026). The region's own key stays the start the ring's drop lands at;
+# 'LLR@E903' is the same ranch walked from where the south-east Lake Hylia
+# border puts the player. Rooms are priced from each entrance separately,
+# and gen_reach floods ENTRANCES, not regions, so what a room costs depends
+# on where the run actually came in. ENTRANCES maps the key to its region's
+# key; LINKS says which entrance a given exit row lands at.
+ENTRANCES = {}
+
+
+def entrance(key, of, name, start, room_req=None, note=''):
+    region(key, name, start, room_req, note)
+    ENTRANCES[key] = of
+
+
+def copy_dests(src, dst, drop=(), add=(), skip=()):
+    """Replay `src`'s rows into `dst`: `drop` tokens are removed from every
+    term (a gate this entrance is already past), `add` tokens are appended
+    to every term (a gate this entrance is behind), `skip` coordinates are
+    left out (the entrance's own landing, or a row not re-measured)."""
+    for e in SURVEY[src]['dests']:
+        if (e['area'], e['room'], e['local']) in skip or (e['area'], e['room']) in skip:
+            continue
+        req = e['req']
+        if req is not None:
+            new = []
+            # FREE is [] - one empty term, not no terms - or an added gate
+            # would vanish from exactly the rows it matters most for.
+            for term in (req or [[]]):
+                t = [tok for tok in term if tok not in drop]
+                for tok in add:
+                    if tok not in t:
+                        t.append(tok)
+                k = tuple(sorted(t))
+                if k not in [tuple(sorted(x)) for x in new]:
+                    new.append(t)
+            req = new
+        SURVEY[dst]['dests'].append(dict(area=e['area'], room=e['room'], local=e['local'],
+                                         req=req, note=e['note']))
+
+
+# Where an exit row lands. (survey key, (area, room, x, y) of one of that
+# key's rows) -> the survey key of the ENTRANCE on the far side. A row with
+# a None requirement is a crossing the survey found impossible from that
+# start, listed so gen_reach does not fall back to a free default for it.
+# Crossings between regions that have no entry here keep the old reading:
+# any node of the one region reaches the other's own start at its entry
+# price.
+LINKS = {}
+
+
+def link(key, area, room, x, y, to):
+    LINKS[(key, area, room, x, y)] = to
 
 
 # ------------------------------------------------------- becoming Minish --
@@ -200,22 +296,107 @@ ENTRY = {
 }
 
 # --- South Hyrule Field ----------------------------------------------------
-region('SHF', 'South Hyrule Field', ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', -904, -2216),
-       note='the start stamp itself was taken mid-transition (see --check)')
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 893, 282, [[SWORD]])
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 120, [[SWORD]])
-d('SHF', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', -744, -296, [[BOMBS]])
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 264, 266, [[FLIPPERS]])
-d('SHF', 'CAVES', 'SOUTH_HYRULE_FIELD_RUPEE', -152, -1032, [[FUSION]])
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 84, 111, [[SWORD]])
-d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_ENTRANCE', 120, -312, [[STORY]],
-  'nothing but story flags')
-d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_BEDROOM', -1208, -392, FREE)
-d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_ENTRANCE', 244, 92, FREE)
-d('SHF', 'TREE_INTERIORS', 'SOUTH_HYRULE_FIELD_HEART_PIECE', -392, 120, [[SWORD, FUSION]])
-d('SHF', 'MINISH_HOUSE_INTERIORS', 'SOUTH_HYRULE_FIELD', -184, -856, [[SWORD, BOOTS, MINISH]])
-d('SHF', 'MINISH_CAVES', 'OUTSIDE_LINKS_HOUSE', -1352, 184, [[SWORD, MINISH, BOOTS, FLIPPERS]])
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 952, 294, [[PACCI, SWORD]])
+#
+# RE-WALKED 2026-10-06 from three of its entrances. The old block was one
+# start whose stamp was taken mid-transition; its rows are below, replaced
+# where the new walk priced the same place and carried over where it did
+# not (marked). The user's entrance names: "North" is the border from North
+# Hyrule Field (the QUICKSTART town bridge, landing (504,16)); "NNE" is the
+# scroll seam into Eastern Hills North at (997,121); "NNW" is the scroll
+# seam into Western Wood North at (8,111).
+region('SHF', 'South Hyrule Field', ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16),
+       note='the north entrance, from North Hyrule Field; walked 2026-10-06')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, FREE, 'exit north -> NORTH_HYRULE_FIELD; the start itself')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, [[SWORD]], 'exit NNW -> WESTERN_WOODS_NORTH (468,431), which is the dead-end side of its boulder')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, [[SWORD]], 'exit NNE -> EASTERN_HILLS_NORTH')
+d('SHF', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[BOMBS]])
+d('SHF', 'CAVES', 'SOUTH_HYRULE_FIELD_RUPEE', 120, 120, [[SWORD, FUSION]])
+d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_ENTRANCE', 120, 120, FREE,
+  "Link's house; the old STORY token is gone - the mode sets the flags at boot")
+d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_SMITH', 96, 104, FREE)
+d('SHF', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_BEDROOM', 88, 40, FREE)
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 86, 574, [[SWORD, BOOTS]],
+  'the Minish stump under a tree; the boots reveal it')
+d('SHF', 'MINISH_HOUSE_INTERIORS', 'SOUTH_HYRULE_FIELD', 120, 120, [[SWORD, BOOTS, MINISH]])
+d('SHF', 'MINISH_CAVES', 'OUTSIDE_LINKS_HOUSE', 120, 93, [[SWORD, BOOTS, MINISH, FLIPPERS]])
+d('SHF', 'TREE_INTERIORS', 'SOUTH_HYRULE_FIELD_HEART_PIECE', 120, 120, [[SWORD, FUSION]])
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 772, 375, [[SWORD, FUSION]], 'kinstone gold chest')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 708, 301, [[SWORD]], 'wind crest')
+# Carried over from the old block, not re-measured on 2026-10-06.
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 264, 266, [[FLIPPERS]], 'carried over (pre-2026-10-06 start), a spot across water')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 952, 294, [[PACCI, SWORD]], 'carried over (pre-2026-10-06 start), a cane pocket')
+# The four scroll seams the walk did not price, from the port model
+# (overworld_paths.py: SHF N->W costs a sword, N->E nothing). Coordinates
+# are the middle of each seam band, not a stamp.
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, [[SWORD]], 'exit west 320-480 -> WESTERN_WOODS_CENTER; PORT MODEL, not walked')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, [[SWORD]], 'exit west 480-688 -> WESTERN_WOODS_SOUTH; PORT MODEL, not walked')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, FREE, 'exit east 224-480 -> EASTERN_HILLS_CENTER; PORT MODEL, not walked')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, FREE, 'exit east 480-688 -> EASTERN_HILLS_SOUTH; PORT MODEL, not walked')
+for _k in ('SHF',):
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'NHF')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, 'WW-N@E')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, 'EH-N')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, 'WW-C')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, 'WW-S')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, 'EH-C')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, 'EH-S')
+
+# From the NNE seam (Eastern Hills North). The landing pocket holds the
+# heart-piece tree, the gold chest and the wind crest; a sword (bushes)
+# gets out of it westward. The user's list prices the smith's room at
+# "nothing" while the house entrance it is behind costs a sword - read as a
+# slip, priced at the sword, and flagged for re-measurement.
+entrance('SHF@NNE', 'SHF', 'South Hyrule Field (from Eastern Hills North)',
+         ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121), note='walked 2026-10-06')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> NORTH_HYRULE_FIELD')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, [[SWORD]], 'exit NNW -> WESTERN_WOODS_NORTH')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, FREE, 'exit NNE -> EASTERN_HILLS_NORTH; the start itself')
+d('SHF@NNE', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[SWORD, BOMBS]])
+d('SHF@NNE', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_ENTRANCE', 120, 120, [[SWORD]])
+d('SHF@NNE', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_SMITH', 96, 104, [[SWORD]], 'the list says "nothing" behind a sword-priced entrance; taken as a slip')
+d('SHF@NNE', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_BEDROOM', 88, 40, [[SWORD]])
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 86, 574, [[SWORD, BOOTS]], 'the Minish stump under a tree')
+d('SHF@NNE', 'MINISH_HOUSE_INTERIORS', 'SOUTH_HYRULE_FIELD', 120, 120, [[SWORD, BOOTS, MINISH]])
+d('SHF@NNE', 'MINISH_CAVES', 'OUTSIDE_LINKS_HOUSE', 120, 93, [[SWORD, BOOTS, MINISH, FLIPPERS]])
+d('SHF@NNE', 'TREE_INTERIORS', 'SOUTH_HYRULE_FIELD_HEART_PIECE', 120, 120, [[FUSION]])
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 772, 375, [[FUSION]], 'kinstone gold chest')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 708, 301, FREE, 'wind crest')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, [[SWORD]], 'exit west 320-480 -> WESTERN_WOODS_CENTER; PORT MODEL')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, [[SWORD]], 'exit west 480-688 -> WESTERN_WOODS_SOUTH; PORT MODEL')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, FREE, 'exit east 224-480 -> EASTERN_HILLS_CENTER; PORT MODEL')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, FREE, 'exit east 480-688 -> EASTERN_HILLS_SOUTH; PORT MODEL')
+
+# From the NNW seam (Western Wood North's boulder side). Water gives a
+# second way to Link's house for a run with the Flippers and no sword. The
+# heart-piece tree's line in the list is cut off after "sword and"; priced
+# as from the north entrance (sword and the fusion) and flagged.
+entrance('SHF@NNW', 'SHF', 'South Hyrule Field (from Western Wood North)',
+         ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111), note='walked 2026-10-06')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> NORTH_HYRULE_FIELD')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, FREE, 'exit NNW -> WESTERN_WOODS_NORTH; the start itself (the list prices it at a sword)')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, [[SWORD]], 'exit NNE -> EASTERN_HILLS_NORTH')
+d('SHF@NNW', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[SWORD, BOMBS], [FLIPPERS, BOMBS]])
+d('SHF@NNW', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_ENTRANCE', 120, 120, [[SWORD], [FLIPPERS]])
+d('SHF@NNW', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_SMITH', 96, 104, [[SWORD], [FLIPPERS]])
+d('SHF@NNW', 'HOUSE_INTERIORS_2', 'LINKS_HOUSE_BEDROOM', 88, 40, [[SWORD], [FLIPPERS]])
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 86, 574, [[BOOTS, SWORD], [BOOTS, FLIPPERS]], 'the Minish stump under a tree')
+d('SHF@NNW', 'MINISH_HOUSE_INTERIORS', 'SOUTH_HYRULE_FIELD', 120, 120, [[BOOTS, MINISH, SWORD], [BOOTS, MINISH, FLIPPERS]])
+d('SHF@NNW', 'MINISH_CAVES', 'OUTSIDE_LINKS_HOUSE', 120, 93, [[BOOTS, MINISH, FLIPPERS]])
+d('SHF@NNW', 'TREE_INTERIORS', 'SOUTH_HYRULE_FIELD_HEART_PIECE', 120, 120, [[SWORD, FUSION]], 'the list is cut off after "sword and"; assumed sword and the fusion')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 772, 375, [[FUSION, SWORD]], 'kinstone gold chest')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 708, 301, [[SWORD]], 'wind crest')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, [[SWORD]], 'exit west 320-480 -> WESTERN_WOODS_CENTER; PORT MODEL')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, [[SWORD]], 'exit west 480-688 -> WESTERN_WOODS_SOUTH; PORT MODEL')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, [[SWORD]], 'exit east 224-480 -> EASTERN_HILLS_CENTER; PORT MODEL')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, [[SWORD]], 'exit east 480-688 -> EASTERN_HILLS_SOUTH; PORT MODEL')
+for _k in ('SHF@NNE', 'SHF@NNW'):
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'NHF')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, 'WW-N@E')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, 'EH-N')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, 'WW-C')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, 'WW-S')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, 'EH-C')
+    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, 'EH-S')
 
 # --- Eastern Hills North ---------------------------------------------------
 region('EH-N', 'Eastern Hills North', ('HYRULE_FIELD', 'EASTERN_HILLS_NORTH', -6, 428))
@@ -226,54 +407,142 @@ d('EH-N', 'DIG_CAVES', 'EASTERN_HILLS', 56, 181, [[BOMBS, MITTS]])
 d('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 460, 80, [[BOMBS, PACCI]], 'exit')
 d('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 308, -2, [[BOMBS]], 'exit')
 d('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 268, 532, FREE, 'exit')
+# The seam the start stands on, so the crossing into South Hyrule Field's
+# NNE pocket has a row to hang its (free) price on. Lon Lon Ranch's south
+# border lands at the north edge, behind the (308,-2) bombs - a landing
+# this block has not been walked from; see the 2026-10-06 report.
+d('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 0, 428, FREE, 'exit west -> SOUTH_HYRULE_FIELD (997,121); the start itself')
+link('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 0, 428, 'SHF@NNE')
+link('EH-N', 'HYRULE_FIELD', 'EASTERN_HILLS_NORTH', 308, -2, 'LLR')
 
 # --- Eastern Hills Center --------------------------------------------------
 region('EH-C', 'Eastern Hills Center', ('HYRULE_FIELD', 'EASTERN_HILLS_CENTER', 257, 31))
 d('EH-C', 'HYRULE_FIELD', 'EASTERN_HILLS_CENTER', 169, 251, FREE, 'exit')
 d('EH-C', 'HYRULE_FIELD', 'EASTERN_HILLS_CENTER', 344, 249, FREE, 'exit')
+d('EH-C', 'HYRULE_FIELD', 'EASTERN_HILLS_CENTER', 0, 120, FREE, 'exit west -> SOUTH_HYRULE_FIELD; PORT MODEL (overworld_paths EH W), not walked')
+link('EH-C', 'HYRULE_FIELD', 'EASTERN_HILLS_CENTER', 0, 120, 'SHF')
 d('EH-C', 'CAVES', 'HILLS_KEESE_CHEST', -712, -1032, [[BOMBS]])
 
 # --- Eastern Hills South ---------------------------------------------------
 region('EH-S', 'Eastern Hills South', ('HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 330, -3))
 d('EH-S', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 465, 170, FREE, 'exit')
+d('EH-S', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 0, 100, FREE, 'exit west -> SOUTH_HYRULE_FIELD; PORT MODEL (overworld_paths EH W), not walked')
+link('EH-S', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 0, 100, 'SHF')
 d('EH-S', 'MINISH_HOUSE_INTERIORS', 'HYRULE_FIELD_EXIT', -1032, -856, [[MINISH]])
 d('EH-S', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 167, 8, [[BOMBS]],
   'exit; the survey notes the reverse direction is this table plus bombs')
 
 # --- Lon Lon Ranch ---------------------------------------------------------
-region('LLR', 'Lon Lon Ranch', ('HYRULE_FIELD', 'LON_LON_RANCH', 298, 968))
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 13, 565, [[BOMBS]], 'exit')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', -6, 157, FREE, 'exit')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 15, [[PACCI]], 'exit')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 168, 55, None,
-  'POCKET at tile (10,3), holding a kinstone chest. The mapexplore survey '
-  'walked it and prices it at the Cane of Pacci - the only way in is up to '
-  'Veil Falls and back down. It stays NOT REACHABLE here because this build '
-  "has no Veil Falls: Lon Lon Ranch's two border rows to it and North Hyrule "
-  "Field's one are compiled out under QUICKSTART (docs/QUICKSTART_RETARGETS."
-  'md, the three BLOCKED rows), so the cane buys nothing. Re-price this at '
-  '[[PACCI]] the day Veil Falls is opened. The coordinate was 32936,-1184 - '
-  'a mid-transition stamp, not a place.')
-d('LLR', 'MINISH_CRACKS', 'LON_LON_RANCH_NORTH', 120, 56, [[PACCI, MINISH]])
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 396, 253, [[MINISH, PACCI]],
-  'POCKET (tornado float). Only spawn content here when these are held.')
-d('LLR', 'MINISH_PATHS', 'LON_LON_RANCH', -864, 728, [[BOOTS, MINISH]])
-d('LLR', 'CAVES', 'LON_LON_RANCH', 86, 81, [[BRACELETS]],
-  'the main part is behind a pushable block')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 184, 298, [[BRACELETS]],
-  'POCKET out of the cave above - where Tingle sits. Gate content on this.')
-d('LLR', 'CAVES', 'LON_LON_RANCH_WALLET', 120, -1032, [[FUSION]])
+#
+# RE-WALKED 2026-10-06 from every entrance, with the boulders UNFILLED. The
+# ranch is cut in half: boulder 3 (hole (168,200)) is the gate between the
+# west corridor - the south, the Trilby and North Field entrances, Veil
+# Falls - and the north field, which the ranch house also crosses when the
+# Lon Lon Key is held. Boulder 3 is pushed from the north-field side, so a
+# player who arrives there walks south for nothing. Boulder 1 (hole
+# (472,904)) walls the south-east Lake Hylia landing off from the south;
+# it is pushed from that landing only. Boulder 2 (hole (232,904)) guards
+# the Goron cave and, per the user, can be pushed once boulder 1 is in by
+# a player with the Minish cap. LLR_NORTH is "boulder 3 in OR the key".
+#
+# The user's numbering is the one used here (the previous block's 2 and 3
+# are 1 and 2 now; its 1 was the house door, which is the key).
+region('LLR', 'Lon Lon Ranch', ('HYRULE_FIELD', 'LON_LON_RANCH', 298, 968),
+       note='the south entrance, from Eastern Hills North; walked 2026-10-06 with the boulders unfilled')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 298, 968, FREE, 'exit south -> EASTERN_HILLS_NORTH; the start itself')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, [[BOMBS]], 'exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, FREE, 'exit north-west -> NORTH_HYRULE_FIELD')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, [[PACCI]], 'exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md)')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, [[LLR_NORTH]], 'exit east -> LAKE_HYLIA, from the north field')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, [[LLR_NORTH, PACCI, MINISH], [LLR_NORTH, FLIPPERS], [LLR_NORTH, CAPE]],
+  "exit east -> LAKE_HYLIA's south-west corner, over water from the north field")
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 903, [[BOULDER('LLR', 1)]], "exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1")
+d('LLR', 'GORON_CAVE', 'STAIRS', 120, 120, [[FUSION, BOULDER('LLR', 2)]],
+  'the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06)')
+d('LLR', 'GORON_CAVE', 'MAIN', 120, 632, [[FUSION, BOULDER('LLR', 2)]],
+  'the first chamber; the deeper three are the kinstone-gated miniboss sites')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 166, 54, None,
+  'POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, '
+  'and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens.')
+d('LLR', 'MINISH_CRACKS', 'LON_LON_RANCH_NORTH', 120, 87, [[LLR_NORTH, PACCI, MINISH]])
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 427, 278, [[LLR_NORTH, PACCI, MINISH]], 'POCKET (tornado float)')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 313, 391, [[LLR_NORTH, BOOTS]], 'the Minish stump under a tree in the north field; the boots reveal it')
+d('LLR', 'MINISH_PATHS', 'LON_LON_RANCH', 121, 391, [[LLR_NORTH, BOOTS, MINISH]], 'chest')
+d('LLR', 'MINISH_PATHS', 'LON_LON_RANCH', 120, 89, [[LLR_NORTH, BOOTS, MINISH]], 'heart piece')
+d('LLR', 'CAVES', 'LON_LON_RANCH_WALLET', 120, 120, [[LLR_NORTH, FUSION]])
+d('LLR', 'CAVES', 'LON_LON_RANCH', 168, 216, [[LLR_NORTH, BRACELETS]],
+  'the stone inside wants the Power Bracelets; the cave leads up to the Tingle pocket')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 184, 279, [[LLR_NORTH, BRACELETS]], 'POCKET out of the cave above - Tingle')
+d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_EAST', 120, 120, [[LONLON_KEY]])
 d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_WEST', 245, 90, [[MINISH], [LONLON_KEY]],
-  'the minish route needs the room to keep its vanilla content')
-d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_EAST', -632, 120, [[LONLON_KEY]],
-  'both house doors are locked until the Lon Lon Key is held (Oct 2026, '
-  'game.c QuickStartRanchHouseMonitor): the back door is scripted like the '
-  'front one, and the west room\'s two interior blockers stay vanilla-solid, '
-  'so neither the boulder route nor the Minish hole reaches this room')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 710, 753,
-  [[FLIPPERS], [CAPE], [MINISH, PACCI]], 'exit')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 707, 907, [[BOULDER('LLR', 2)]])
-d('LLR', 'GORON_CAVE', 'STAIRS', 120, 120, [[BOULDER('LLR', 3)], [MINISH]])
+  'carried over (not in the 2026-10-06 lists); the minish route needs the room to keep its vanilla content')
+
+
+def _llr_links(k):
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 298, 968, 'EH-N')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, 'TRIL@E')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, 'NHF')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, 'LH')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, 'LH-SW')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 903, 'LH-SW')
+
+
+_llr_links('LLR')
+
+# The south-east Lake Hylia landing, (712,903). Boulder 1 is pushed from
+# here and from nowhere else, so the ranch costs what it costs from the
+# south once that is done; the user's list for this start is the south
+# list without the (712,903) row.
+entrance('LLR@E903', 'LLR', 'Lon Lon Ranch (from the south-east Lake Hylia border)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 712, 903), note='walked 2026-10-06; boulder 1 is pushed from here')
+copy_dests('LLR', 'LLR@E903', skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (712, 903))])
+d('LLR@E903', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 903, FREE, "exit east -> LAKE_HYLIA's south-west corner; the start itself")
+_llr_links('LLR@E903')
+
+# The middle Lake Hylia landing, (712,445): the north field. Nothing here
+# wants boulder 3 or the key - boulder 3 is pushed from this side - and the
+# south exit is free. The user's list omits the (712,903) exit; it keeps
+# the south list's price (boulder 1).
+entrance('LLR@E445', 'LLR', 'Lon Lon Ranch (from the middle Lake Hylia border)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 712, 445), note='walked 2026-10-06; the north field')
+copy_dests('LLR', 'LLR@E445', drop=(LLR_NORTH,), skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (712, 445))])
+d('LLR@E445', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, FREE, 'exit east -> LAKE_HYLIA; the start itself')
+_llr_links('LLR@E445')
+
+# The lower Lake Hylia landing, (712,750): the user prices everything from
+# here as from (712,445) "plus the Roc's Cape". From the field side the
+# crossing takes the Flippers or the Pacci cane and the cap as well; the
+# asymmetry is flagged in the report.
+entrance('LLR@E750', 'LLR', 'Lon Lon Ranch (from the lower Lake Hylia border)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 712, 750), note='walked 2026-10-06; the cape gets off the landing')
+copy_dests('LLR@E445', 'LLR@E750', add=(CAPE,), skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (712, 750))])
+d('LLR@E750', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, FREE, "exit east -> LAKE_HYLIA's south-west corner; the start itself")
+_llr_links('LLR@E750')
+
+# The west landing, (8,560), from Trilby Highlands (vanilla's Hyrule Town
+# border): a pocket behind a bombable wall. "The same as starting from the
+# Southern exit, except add 'and bombs' to every requirement."
+entrance('LLR@W', 'LLR', 'Lon Lon Ranch (from Trilby Highlands)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 8, 560), note='walked 2026-10-06; behind a bombable wall')
+copy_dests('LLR', 'LLR@W', add=(BOMBS,), skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (8, 560))])
+d('LLR@W', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, FREE, 'exit west -> TRILBY_HIGHLANDS; the start itself')
+_llr_links('LLR@W')
+
+# The north-west landing, (10,163), from North Hyrule Field: the west
+# corridor, "the same as starting from the Southern exit".
+entrance('LLR@NW', 'LLR', 'Lon Lon Ranch (from North Hyrule Field)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 10, 163), note='walked 2026-10-06')
+copy_dests('LLR', 'LLR@NW', skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (10, 163))])
+d('LLR@NW', 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, FREE, 'exit north-west -> NORTH_HYRULE_FIELD; the start itself')
+_llr_links('LLR@NW')
+
+# The north landing, (88,16), from Veil Falls - which this build has no way
+# into. Recorded for the day it opens; nothing links to it.
+entrance('LLR@N', 'LLR', 'Lon Lon Ranch (from Veil Falls, BLOCKED)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 88, 16), note='walked 2026-10-06; no crossing lands here in this build')
+copy_dests('LLR', 'LLR@N', skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (88, 16))])
+d('LLR@N', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, FREE, 'exit north -> Veil Falls; the start itself, BLOCKED')
+_llr_links('LLR@N')
 
 # --- North Hyrule Field ----------------------------------------------------
 # Every row carries the start's own bushes: a sword. Recorded once here
@@ -295,6 +564,9 @@ d('NHF', 'TREE_INTERIORS', 'NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN', None, None, [[FU
 d('NHF', 'CAVES', 'NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN', -376, -1432, [[FUSION]],
   'the same fusion as the tree above')
 d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, [[BOMBS]], 'exit')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'LLR@NW')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 9, 607, 'TRIL')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'SHF')
 d('NHF', 'MINISH_CRACKS', 'EAST_HYRULE_CASTLE', -936, 48, [[MINISH, BOOTS]])
 d('NHF', 'CAVES', 'TO_GRAVEYARD', -104, 216, [[BOMBS]])
 d('NHF', 'CAVES', 'HEART_PIECE_HALLWAY', -1000, -1000, [[BOMBS]])
@@ -303,6 +575,7 @@ d('NHF', 'DOJOS', 'GREATBLADE', 120, 200, [[FUSION, FLIPPERS]])
 d('NHF', 'CAVES', 'TO_GRAVEYARD', 59, 110, [[BOMBS, BRACELETS]], 'POCKET')
 d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, [[BOMBS, BRACELETS]],
   'exit, reachable ONLY through the TO_GRAVEYARD pocket above')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 5, 93, 'RV')
 
 # --- Hyrule Castle Garden --------------------------------------------------
 # NOT WALKED. Derived from transitions.c (link CG S <-> NHF N is a plain
@@ -369,6 +642,7 @@ d('CG', 'HYRULE_CASTLE_CELLAR', '0', 104, 392, [[SWORD]],
 region('RV', 'Royal Valley', ('ROYAL_VALLEY', 'MAIN', -536, 416),
        note='the only real entrance')
 d('RV', 'ROYAL_VALLEY', 'MAIN', 118, 1000, FREE, 'exit')
+link('RV', 'ROYAL_VALLEY', 'MAIN', 118, 1000, 'TRIL@N')
 d('RV', 'GREAT_FAIRIES', 'GRAVEYARD', 120, 120, [[BOMBS]],
   "the Great Dragonfly Fairy's cave, content site. Added from the vanilla "
   'guide (Oct 2026): "climb down ... see the lonely posts? Place a bomb '
@@ -399,43 +673,134 @@ d('RV', 'ROYAL_VALLEY', 'CRYPT', None, None,
   [[GRAVEYARD_KEY, BRACELETS]], 'the royal crypt')
 
 # --- Trilby Highlands ------------------------------------------------------
-region('TRIL', 'Trilby Highlands', ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 465, 124),
-       note='the entrance that connects to North Hyrule Field')
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 32880, -1184, None,
-  'POCKET, only reachable from Royal Valley')
-d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 264, 229, [[FUSION, FLIPPERS, MITTS]],
-  'the fusion lays the land in front of the mouth')
-d('TRIL', 'CAVES', 'TRILBY_MITTS_FAIRY_FOUNTAIN', -1496, -360, [[FUSION, FLIPPERS, MITTS]])
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 16, 415, FREE, 'exit')
-d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 88, 229, [[MITTS]])
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', -872, -1080, [[MITTS]],
-  'POCKET with a tingle event and a minish house, only via the dig cave')
-d('TRIL', 'MINISH_HOUSE_INTERIORS', 'NEXT_TO_KNUCKLE', -472, -856, [[MITTS, MINISH]])
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 560, FREE, 'exit')
-d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', -824, -600, FREE, 'the two-ladder cave, near side')
-d('TRIL', 'CAVES', 'BOTTLE_BUSINESS_SCRUB', -6, 95, [[BOMBS]],
-  'THE bombable wall off the two-ladder cave')
-d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', -1064, -600, [[BRACELETS]],
-  'the other pocket of the two-ladder cave, from its far side')
-d('TRIL', 'CAVES', 'TRILBY_KEESE_CHEST', -152, -296,
-  [[BOMBS, BOULDER('TRIL', 1)], [BOMBS, BRACELETS]])
-d('TRIL', 'CAVES', 'TRILBY_RUPEE', -440, -1032, [[FUSION]], 'in the boulder pocket')
-d('TRIL', 'TREE_INTERIORS', 'PERCYS_TREEHOUSE', -136, 120, FREE, 'in the boulder pocket')
-d('TRIL', 'CAVES', 'TRILBY_FAIRY_FOUNTAIN', -472, -296, [[BOMBS]], 'in the boulder pocket')
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 343, 953, FREE, 'in the boulder pocket')
+#
+# RE-WALKED 2026-10-06 from four entrances with the boulder UNFILLED. The
+# boulder (rock (344,664), hole (344,648)) is pushed north, from the south
+# side only, and walls the south-west off from the rest: Percy's treehouse,
+# the rupee and fairy-fountain caves, the Keese chest cave, the near half
+# of the two-ladder cave and the seam into Western Wood North are "boulder
+# in OR the Power Bracelets" from every entrance but the south, where they
+# are free and the push is how you leave. The old block was walked with the
+# hole auto-filled, which is why it priced the same places free.
+region('TRIL', 'Trilby Highlands', ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129),
+       note='the north-east entrance, from North Hyrule Field; walked 2026-10-06 with the boulder unfilled')
+_TB = BOULDER('TRIL', 1)
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129, FREE, 'exit east (north half) -> NORTH_HYRULE_FIELD; the start itself')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, FREE, 'exit east (south half) -> LON_LON_RANCH (8,560); the user calls it the Hyrule Town exit')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 8, 414, FREE, 'exit west -> MT_CRENEL/ENTRANCE, Mount Crenel Base')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953, [[_TB], [BRACELETS]], 'exit south -> WESTERN_WOODS_NORTH; in the boulder pocket')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 32880, -1184, None, 'POCKET at the Royal Valley landing, only reachable from Royal Valley; the valley is inaccessible from here')
+d('TRIL', 'TREE_INTERIORS', 'PERCYS_TREEHOUSE', 120, 120, [[_TB], [BRACELETS]], 'in the boulder pocket')
+d('TRIL', 'CAVES', 'TRILBY_RUPEE', 120, 120, [[FUSION, _TB], [FUSION, BRACELETS]], 'in the boulder pocket')
+d('TRIL', 'CAVES', 'TRILBY_KEESE_CHEST', 120, 120, [[BOMBS, _TB], [BOMBS, BRACELETS]], 'in the boulder pocket')
+d('TRIL', 'CAVES', 'TRILBY_FAIRY_FOUNTAIN', 120, 120, [[BOMBS, _TB], [BOMBS, BRACELETS]], 'in the boulder pocket')
+d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', 56, 56, [[_TB], [BRACELETS]],
+  "the two-ladder cave's pocket half, tile (3,3): through its pocket door, or from the far half with the bracelets")
+d('TRIL', 'CAVES', 'TRILBY_HIGHLANDS', 296, 56, FREE, "the two-ladder cave's near half, tile (18,3)")
+d('TRIL', 'CAVES', 'BOTTLE_BUSINESS_SCRUB', 25, 90, [[BOMBS]], 'THE bombable wall off the near half of the two-ladder cave; not a ? room')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 280, 455, FREE, 'kinstone gold chest')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 393, 71, [[FUSION]], 'gold kinstone chest')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 88, 184, [[MITTS]], 'dig cave entrance 1, from the field door at (136,148)')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 71, 70, [[MITTS]], 'gold chest from entrance 1')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 299, 103, [[MITTS]], 'gold chest from entrance 1')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 136, 104, [[MITTS]], 'the ladder up to the Tingle pocket')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 183, 135, [[MITTS]], 'POCKET: the Tingle fusion, up the ladder from the dig cave')
+d('TRIL', 'MINISH_HOUSE_INTERIORS', 'NEXT_TO_KNUCKLE', 120, 120, [[MITTS, MINISH]])
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 264, 215, [[FUSION, MITTS, FLIPPERS], [FUSION, MITTS, CAPE]],
+  'dig cave entrance 2: a fusion lays land in front of the dig spot at (264,249), then the Flippers or the cape reach it')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 231, 183, [[FUSION, MITTS, FLIPPERS], [FUSION, MITTS, CAPE]], 'gold chest from entrance 2')
+d('TRIL', 'DIG_CAVES', 'TRILBY_HIGHLANDS', 424, 106, [[FUSION, MITTS, FLIPPERS], [FUSION, MITTS, CAPE]], 'the ladder down to the fiery cave, from entrance 2')
+d('TRIL', 'CAVES', 'TRILBY_MITTS_FAIRY_FOUNTAIN', 184, 40, [[FUSION, MITTS, FLIPPERS], [FUSION, MITTS, CAPE]])
+
+
+def _tril_links(k):
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129, 'NHF')
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, 'LLR@W')
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 8, 414, 'CREN-BASE')
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953, 'WW-N')
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 32880, -1184, 'RV')
+
+
+_tril_links('TRIL')
+
+# The south seam, from Western Wood North: the boulder pocket itself. The
+# push is free from here, so the whole region is.
+entrance('TRIL@S', 'TRIL', 'Trilby Highlands (from Western Wood North)',
+         ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953), note='walked 2026-10-06; the boulder is pushed from here')
+copy_dests('TRIL', 'TRIL@S', drop=(_TB,), skip=[('HYRULE_FIELD', 'TRILBY_HIGHLANDS', (363, 953))])
+d('TRIL@S', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953, FREE, 'exit south -> WESTERN_WOODS_NORTH; the start itself')
+_tril_links('TRIL@S')
+
+# The east landing (472,560), from Lon Lon Ranch's bombable pocket. Same
+# as the north-east.
+entrance('TRIL@E', 'TRIL', 'Trilby Highlands (from Lon Lon Ranch)',
+         ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560), note='walked 2026-10-06')
+copy_dests('TRIL', 'TRIL@E')
+_tril_links('TRIL@E')
+
+# The Royal Valley landing: a pocket that drops into the main body one
+# way. Same prices as the north-east once down.
+entrance('TRIL@N', 'TRIL', 'Trilby Highlands (from Royal Valley)',
+         ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 40, 16), note='walked 2026-10-06; a one-way drop out of the landing pocket')
+copy_dests('TRIL', 'TRIL@N', skip=[('HYRULE_FIELD', 'TRILBY_HIGHLANDS', (32880, -1184))])
+_tril_links('TRIL@N')
 
 # --- Western Wood North ----------------------------------------------------
-region('WW-N', 'Western Wood North', ('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 343, -3))
-d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 467, 430, [[BOULDER('WW-N', 1)]],
-  'exit; free from THIS start (push the boulder), but blocked outright for '
-  'anyone entering through it')
-d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 232, 263, [[FUSION]], 'POCKET')
-d('WW-N', 'TREE_INTERIORS', 'WESTERN_WOODS_HEART_PIECE', 120, -56, [[FUSION]])
-d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', -848, -1656, [[FUSION]], 'POCKET')
-d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 6, 97, FREE, 'exit')
-d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 48, 633, [[FUSION]], 'exit')
+#
+# RE-WALKED 2026-10-06 from all four entrances with the boulder UNFILLED.
+# The boulder (rock (408,424), hole (424,424)) sits right in front of the
+# seam from South Hyrule Field and is pushed east, from inside: from the
+# west, north and south entrances the region is one open walk and that
+# seam costs nothing (you push it); from South Hyrule Field the landing is
+# a vestibule from which EVERYTHING is "blocked by boulder" - the token,
+# which is only ever set from the far side.
+region('WW-N', 'Western Wood North', ('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 343, 0),
+       note='the north entrance, from Trilby Highlands; walked 2026-10-06 with the boulder unfilled')
+_WB = BOULDER('WW-N', 1)
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 343, 0, FREE, 'exit north -> TRILBY_HIGHLANDS (363,953); the start itself')
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 6, 97, FREE, 'exit west -> CASTOR_WILDS')
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 284, 636, FREE, 'exit south -> WESTERN_WOODS_CENTER')
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 33, 633, [[FUSION]], "exit south -> WESTERN_WOODS_CENTER's Percy pocket; the fusion lays the way")
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 468, 431, FREE, 'exit east -> SOUTH_HYRULE_FIELD (8,111); the boulder is in front of it and is pushed from here')
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 199, 74, [[FUSION, MITTS]], 'kinstone dig site; the fusion clears the branch, the mitts dig the prize')
+d('WW-N', 'TREE_INTERIORS', 'WESTERN_WOODS_HEART_PIECE', 120, 120, [[FUSION]])
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 235, 263, [[FUSION]], 'POCKET: kinstone gold chest')
+# Carried over from the old block, not re-measured on 2026-10-06.
 d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 416, 648, [[FUSION]],
-  'POCKET entered from Western Wood Center, with a second fusion-only pocket inside it')
+  'carried over: POCKET entered from Western Wood Center, with a second fusion-only pocket inside it')
+d('WW-N', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', -848, -1656, [[FUSION]], 'carried over: POCKET (mid-transition stamp)')
+
+
+def _wwn_links(k):
+    link(k, 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 343, 0, 'TRIL@S')
+    link(k, 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 6, 97, 'CW')
+    link(k, 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 284, 636, 'WW-C')
+    link(k, 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 33, 633, 'WW-C')
+    link(k, 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 468, 431, 'SHF@NNW')
+
+
+_wwn_links('WW-N')
+
+entrance('WW-N@W', 'WW-N', 'Western Wood North (from Castor Wilds)',
+         ('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 6, 97), note='walked 2026-10-06')
+copy_dests('WW-N', 'WW-N@W', skip=[('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', (6, 97))])
+d('WW-N@W', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 6, 97, FREE, 'exit west -> CASTOR_WILDS; the start itself')
+_wwn_links('WW-N@W')
+
+entrance('WW-N@S', 'WW-N', 'Western Wood North (from Western Wood Center)',
+         ('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 284, 636), note='walked 2026-10-06')
+copy_dests('WW-N', 'WW-N@S', skip=[('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', (284, 636))])
+d('WW-N@S', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 284, 636, FREE, 'exit south -> WESTERN_WOODS_CENTER; the start itself')
+_wwn_links('WW-N@S')
+
+# The vestibule behind the boulder, where the seam from South Hyrule Field
+# lands. Every row is the boulder token: nothing here is walkable until it
+# has been pushed from the far side, earlier in the run.
+entrance('WW-N@E', 'WW-N', 'Western Wood North (from South Hyrule Field, behind the boulder)',
+         ('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 468, 431), note='walked 2026-10-06; a vestibule - everything is blocked by the boulder')
+copy_dests('WW-N', 'WW-N@E', add=(_WB,), skip=[('HYRULE_FIELD', 'WESTERN_WOODS_NORTH', (468, 431))])
+d('WW-N@E', 'HYRULE_FIELD', 'WESTERN_WOODS_NORTH', 468, 431, FREE, 'exit east -> SOUTH_HYRULE_FIELD; the start itself')
+_wwn_links('WW-N@E')
 
 # --- Western Wood Center ---------------------------------------------------
 region('WW-C', 'Western Wood Center', ('HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 277, -2))
@@ -443,6 +808,8 @@ d('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 48, -3, [[FUSION]],
   'POCKET, gated by the same fusion that opens WW-N (48,633)')
 d('WW-C', 'HOUSE_INTERIORS_2', 'PERCY', 120, -88, [[FUSION]], 'inside that pocket')
 d('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 414, 15, FREE, 'exit')
+d('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 277, 0, FREE, 'exit north -> WESTERN_WOODS_NORTH (284,636); the start itself')
+link('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 277, 0, 'WW-N@S')
 d('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 414, 158, FREE, 'exit')
 d('WW-C', 'HYRULE_FIELD', 'WESTERN_WOODS_CENTER', 307, 154, FREE, 'exit')
 
@@ -672,6 +1039,7 @@ d('MW', 'CAVES', 'KINSTONE_BUSINESS_SCRUB', 121, 122, [[FUSION]],
 # --- one item each --------------------------------------------------------
 d('MW', 'LAKE_WOODS_CAVE', 'MAIN', 600, 767, [[MITTS]],
   'tile (37,47); this part of the cave holds two golden chests')
+link('MW', 'LAKE_WOODS_CAVE', 'MAIN', 600, 767, 'LH-LADDER')
 d('MW', 'MINISH_CRACKS', 'MINISH_WOODS_SOUTH', 120, 56, [[MINISH]], 'tile (7,3)')
 d('MW', 'MINISH_WOODS', 'MAIN', 907, 599, [[FUSION]],
   'golden fusion chest, tile (56,37) - the fusion is the whole cost')
@@ -760,6 +1128,11 @@ region('LH', 'Lake Hylia', ('LAKE_HYLIA', 'MAIN', 40, 440),
        note='derived from the exit list + a collision flood, not walked')
 d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, FREE,
   'exit; the border the player arrives through, walkable both ways')
+link('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, 'LLR@E445')
+# The wind crest is the Ocarina's warp target; the pocket around it has no
+# walkable way in (LH-CREST), so this is the edge into it.
+d('LH', 'LAKE_HYLIA', 'MAIN', 168, 440, [[OCARINA]], 'the wind crest: the Ocarina warp is the way into its pocket')
+link('LH', 'LAKE_HYLIA', 'MAIN', 168, 440, 'LH-CREST')
 d('LH', 'HOUSE_INTERIORS_2', 'STOCKWELL_LAKE_HOUSE', 120, 120, FREE,
   'the one door the arrival shore reaches - 67 tiles of walk, no gate')
 # Everything the arrival shore cannot reach has MOVED, not been deleted: the
@@ -868,6 +1241,10 @@ d('LH-SW', 'LAKE_HYLIA', 'MAIN', 188, 952, FREE,
   'exit, tile (11,59) -> MINISH_WOODS/MAIN (428,16)')
 d('LH-SW', 'LAKE_HYLIA', 'MAIN', 8, 907, FREE,
   'exit, tile (0,56) -> HYRULE_FIELD/LON_LON_RANCH (712,907)')
+d('LH-SW', 'LAKE_HYLIA', 'MAIN', 8, 757, FREE,
+  'exit, the start itself -> HYRULE_FIELD/LON_LON_RANCH (712,757), the lower landing that wants the cape')
+link('LH-SW', 'LAKE_HYLIA', 'MAIN', 8, 907, 'LLR@E903')
+link('LH-SW', 'LAKE_HYLIA', 'MAIN', 8, 757, 'LLR@E750')
 
 # --- Lake Hylia: the ladder pocket, which is most of the lake --------------
 #
@@ -899,6 +1276,7 @@ d('LH-LADDER', 'HOUSE_INTERIORS_2', 'STOCKWELL_LAKE_HOUSE', 120, 120, [[FLIPPERS
   'tile (7,7)')
 d('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 8, 445, [[FLIPPERS]],
   'exit, tile (0,27) -> Lon Lon Ranch')
+link('LH-LADDER', 'LAKE_HYLIA', 'MAIN', 8, 445, 'LLR@E445')
 d('LH-LADDER', 'TREE_INTERIORS', 'WAVEBLADE', 120, 120, [[FLIPPERS], [CAPE]],
   "tile (7,7); the dojo's atrium, NOT content of its own - the survey also "
   'suspects a kinstone fusion here, unconfirmed, so this is an upper bound '
@@ -1021,6 +1399,7 @@ d('CREN-BASE', 'MT_CRENEL', 'CENTER', 280, 376, [[BOMBS, GUST, MINISH]],
 d('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, [[GRIP]],
   'tile (53,17); the climb near the base entrance, which skips the bombs, '
   'the bean and the Minish layer entirely')
+link('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, 'CREN')
 
 # ------------------------------------------------------------------ checks --
 def _fmt(req):

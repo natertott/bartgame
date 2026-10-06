@@ -53,6 +53,26 @@ so nobody re-invents them:
   tile) meant the second kind never arrived and no later wave did either.
   Record what you need (the player's tile) and make the call after the
   run - room geometry does not change.
+- **A pool row's own room never runs the site loop.** The room monitor
+  runs the region monitor for a named region room and the content-site
+  dispatch for everything else, so a site row keyed to a pool row's room
+  (Mount Crenel's entrance was one) is a row that never happens. Check
+  `QuickStartIsNamedRegionRoom` before adding a site to a region room.
+- **Changing the eligible-site set moves every seeded pick.** Retiring
+  site 17 moved the memory event's lesson onto site 82 and the memory
+  probe failed 3 of 9 on a room that had nothing to do with the change.
+  Expect seed-keyed probes to land somewhere new after any site change.
+  Retiring site 82 then moved the recital onto site 99, the barrel house,
+  where the boot puts the player next to the sprite: a dismiss() that
+  pressed A six times blind TALKED to the sprite on the sixth press and
+  every object in the room froze behind its textbox (a forged switch hit
+  sat unconsumed for 40 frames). `memory_probe.py` now presses only while
+  the player's action byte reads message (0x16) or talking (0x7), and the
+  blink watch starts from the sequence's own first switch. Never dismiss
+  by count.
+- **`gen_reach.py --check` must be byte-stable across processes.** A set
+  iterated for output order made it cry STALE every other run; iterate
+  `RINGS` order.
 - **`call_keep(QuickStartMarkReachableTiles)` can reset the game.** In
   Trilby Highlands (site 13) a flood call at frame 200 sent the game to
   room (0,0) on the very next frame, with every flag reading zero; in the

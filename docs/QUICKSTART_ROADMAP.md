@@ -1271,6 +1271,75 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The boulders are the player's again; reach is per entrance (Oct 2026)
+
+The user: "There are several 1-way boulders scattered throughout the game
+that we are automatically filling in by default... I want to go back to
+NOT filling in the boulder into the hole so that we can exploit this and
+make the overworld puzzle-solving aspect of the game even more dynamic and
+more fun", with a re-walk of Western Wood North, Trilby Highlands, South
+Hyrule Field and Lon Lon Ranch from every entrance, boulders in place.
+The full record - what went in, every conflict with the old survey, every
+slip in the new lists, and what is still unmeasured - is
+`docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`.
+
+**The auto-fill is gone.** `QuickStartFillBoulderHoles` drove every
+pushable rock in a region room into its hole on arrival; it is retired and
+nothing touches the rocks. Measured: Trilby's rock sits at (344,664) on
+arrival, and in its hole at (344,648) when its flag is set beforehand.
+
+**Each boulder is a testable fact.** A rock that settles in a hole sets a
+local flag of its area (pushableRock.c), the run start wipes those, and
+`QuickStartHeldReachMask` reads them: `QS_REACH_BOULDER_*` bits, one per
+boulder a survey row names (`world_reach.BOULDER_FLAGS`, decoded from the
+MOVEABLE_OBJECT_MANAGER entries in entity_headers.s). `QS_REACH_LLR_NORTH`
+is boulder 3 OR the Lon Lon Key - the user's equivalence, one bit.
+Measured: the Trilby bit follows flag 0x92; the north-field bit follows
+flag 0x7a and the key; Percy's treehouse from the Trilby drop answers
+no / yes-with-the-boulder / yes-with-the-bracelets.
+
+**Reach is a graph of entrances now.** A survey key can be an ENTRANCE
+(`LLR@E903` is the ranch from the south-east lake landing); the generator
+emits nodes (36), priced edges (210: every exit row landing at the far
+side's node, `world_reach.LINKS`, plus the old ring reading wherever no
+link is spelled out) and rooms per node (548). `QuickStartReachComputeFrom`
+floods it from the drop's node; `QuickStartReachRoomOk` and `PoolOk` ask
+per node. The sim mirrors it and `sim_validate` agrees with the ROM on
+402/402 random (drop, kit, room) questions - the kits now include the
+boulder bits.
+
+**What it cost in rooms.** Trilby's south-west pocket (Percy's treehouse,
+the rupee, fairy and Keese caves, the seam into Western Wood North) is
+"boulder in OR the bracelets" from every entrance but the south; Lon Lon's
+north field is "boulder 3 or the key" from the south, west and North Field
+landings; Western Wood North's South Field seam lands in a vestibule. The
+chain never places a step behind a boulder the run has not pushed, and
+places one there the moment it has.
+
+**Trilby's boss arena moved.** It was clamped into the pocket (tiles
+(1,36)-(11,58)); with the boulder back that is ground a run without the
+bracelets cannot stand on. The arrival component with the boulder in
+place is 332 tiles, and its largest clear block is the field between the
+entrance and the reward spot, tiles (19,26)-(26,35), 98% walkable; the
+clamp is that box and the boss composes at (360,472), two tiles above the
+reward.
+
+**Two sites retired** (`QuickStartSiteRetired`; the rows stay so indexes
+hold): Goron Cave's stair room, at the user's word ("this should NOT be a
+? room"), and Mount Crenel's entrance (site 82), which had never
+dispatched at all - it is the Crenel pool row's own room, and a pool
+room runs its region monitor instead of the site loop. Found because the
+memory event's seeded pick landed on it once site 17 left the eligible
+set: a lesson with no switches.
+
+**Measured and not yet explained** (report section 3b): the ranch cave's
+lower door (232,436) is in the south half of Lon Lon in a collision
+flood with no boulder in, where the walk prices the cave at boulder 3 or
+the key. The flood's first reading, that the south-east lake landing
+joined the south half with no boulder, was the probe counting empty
+holes as floor; with pits excluded it agrees with the walk.
+
+
 ### Gauntlet waves sized to the chamber (Oct 2026)
 
 The user, right after the spawn audit: "Size the gauntlet waves to the

@@ -31,7 +31,14 @@ def check(name, ok, detail=''):
 def run(c, n):
     for _ in range(n): c.run_frame()
 def dismiss(c):
-    for _ in range(6): press(c, c.KEY_A, 3, 12)
+    """Press A until the player is free (action 0). A fixed count is wrong
+    when the boot lands the player beside the sprite (the barrel house,
+    site 99): every other press TALKS to it, and six presses ends with its
+    textbox open and every object frozen behind it."""
+    for _ in range(12):
+        if c.memory.u8[PLAYER + 0x0c] not in (0x16, 0x7):   # message / talking
+            return
+        press(c, c.KEY_A, 3, 15)
 def room_flag(c, n):
     b = 256 + n
     return (c.memory.u8[ROOMVARS + 0x14 + (b >> 3)] >> (b & 7)) & 1
@@ -78,8 +85,11 @@ for f in range(900):
         order.append(lit[0])
     if f == 300 and sw:
         forge_hit(c, sw[0][0])
-cycle = order[:3] if len(order) >= 3 else order
-check('lesson: switches blink in the seed order', len(order) >= 3 and all(order[i] == seq[i % 3] for i in range(len(order))),
+# the watch may start mid-cycle (dismiss() presses a variable number of
+# times), so judge from the first time the sequence's own first switch lit
+start = order.index(seq[0]) if seq[0] in order else len(order)
+cycle = order[start:]
+check('lesson: switches blink in the seed order', len(cycle) >= 3 and all(cycle[i] == seq[i % 3] for i in range(len(cycle))),
       'seen %s seq %s' % (order[:9], seq))
 C.call_keep(c, C.map_sym('QuickStartMemoryLessonTaught'), (0, 0))
 check('lesson: the sprite latches DONE', site_done(c, L) == 1)

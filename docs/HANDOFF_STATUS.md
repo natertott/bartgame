@@ -63,6 +63,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 | Bosses take any blade, the chuchu's walk-home freeze, 5% boss roll and a one-boss cap, roomier Lon Lon/South Field spawns, one reward per chain step, key items in every drop pool | "The Oct 2026 boss batch" |
 | Enemy difficulty lags the counter by two (d5 spawns like old d3), three hearts and a bottled fairy at run start, the 100-room spawn audit, the per-kind escape hatch closed, multi-site gauntlets count their own chamber and own their seam record | "The spawn audit: void corners, multi-site gauntlets" |
 | Gauntlet waves sized to the chamber: floor tiles / a per-difficulty density (16 down to 5 tiles per enemy) + 1 per wave | "Gauntlet waves sized to the chamber" |
+| Boulder auto-fill retired; boulders are run-time reach bits; reach floods a graph of entrances (36 nodes); four regions re-walked per entrance; Trilby arena moved; sites 17 and 82 retired | "The boulders are the player's again" |
 
 ---
 
@@ -70,6 +71,18 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Needs the user, not an agent
 
+- **Answer the survey report.** `docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`
+  sections 3 and 4 list eight conflicts with the old survey and thirteen
+  slips or ambiguities in the new lists, each with the reading the model
+  took. The two that matter most: who can push Lon Lon's boulder 1, and
+  whether a Minish route skips boulder 2 into the Goron cave.
+- **Walk the unsurveyed landings** (report section 5): Eastern Hills North
+  from the Lon Lon border, South Field's four port-model seams, Trilby from
+  Crenel, Lake Hylia's shore and the Wind Ruins with their own boulders
+  in place.
+- **Push a boulder in play** and check the chain offers the pocket after:
+  Trilby from the south (the treehouse), Lon Lon from the lake (the north
+  field). The probes set the flags; nobody has pushed one.
 - **Play a three-wave room in a small cave and in the Grimblade dojo at
   the new curve.** The waves are sized to the floor now (a 15x10 cave
   deals 4/5/6 at the shipped counter, the dojo 6/7/8); the density row is
@@ -192,6 +205,14 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Known-stale tooling
 
+- **Collision floods are blind to ledges and one-way drops**, and the
+  boulder probe's Lon Lon partition shows it: the E445 landing reaches
+  nothing but its own border, where the walk reaches the whole north
+  field. Read `boulder_probe.py`'s tables as "what collision alone
+  allows", never as the walk.
+- **`chain_probe.py` still reads the old region-mask API** (its own
+  `reachable_regions`); the ROM's flood is per node now
+  (`QuickStartReachTestRoom` / `QuickStartReachTestRegions`).
 - **`spawn_audit.py` cannot tell a neighbour chamber's event from a
   spill** in the three multi-site rooms (Boomerang cave, Trilby Highlands,
   Goron Cave main), and counts Mount Crenel's ambient region waves as the

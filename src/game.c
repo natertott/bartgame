@@ -3761,10 +3761,18 @@ static bool32 QuickStartIsBossId(u32 id) {
 // box full of rock. The two halves are joined along the west edge, which is
 // continuously open from row 36 to row 58, so the boss can walk between
 // them rather than being teleported.
-#define QUICKSTART_TRILBY_POCKET_MIN_X 24
-#define QUICKSTART_TRILBY_POCKET_MAX_X 184
-#define QUICKSTART_TRILBY_POCKET_MIN_Y 584
-#define QUICKSTART_TRILBY_POCKET_MAX_Y 936
+// The MAIN field now, not the south-west pocket (Oct 2026). The pocket is
+// behind the boulder again - the auto-fill that opened it is retired - so
+// a boss clamped into it was a boss the player could not reach without
+// the bracelets. Measured from the collision map with the boulder in
+// place (scratchpad tril_box.py): the arrival component is 332 tiles, and
+// tiles (19,26)-(26,35) - px 304-431 x 416-575, the field between the
+// entrance (360,360) and the reward spot (360,504) - are 98% walkable, the
+// largest clear block in it. The boss spot sits two tiles above the reward.
+#define QUICKSTART_TRILBY_POCKET_MIN_X 312
+#define QUICKSTART_TRILBY_POCKET_MAX_X 424
+#define QUICKSTART_TRILBY_POCKET_MIN_Y 424
+#define QUICKSTART_TRILBY_POCKET_MAX_Y 568
 
 static void QuickStartTrilbyQuirkHook(void) {
     s32 i;
@@ -4691,7 +4699,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 360, 360, 465, 480, 525, 600,
       sQuickStartTrilbyEnemyOffsets, ARRAY_COUNT(sQuickStartTrilbyEnemyOffsets), QUICKSTART_TRILBY_ROOM_SQUARES,
       360, 504,
-      QuickStartTrilbyQuirkHook, 88, 600 },
+      QuickStartTrilbyQuirkHook, 360, 472 },
     // The six overworld-expansion rooms. Exit boxes are dead fields (the
     // warp mechanic is retired) and zeroed. No quirk hooks: the outdoor
     // entity dumps found only OBJECT-kind scenery, no enemy-kind blockers.
@@ -17923,6 +17931,24 @@ static bool32 QuickStartIsPocketTransition(u8 fromArea, u8 fromRoom, u8 toArea, 
 // Borrowed and put back below so a site's roll can be replayed on demand.
 extern u32 gRand;
 
+// A site row that stays in the table (so every index after it keeps its
+// meaning - the scenario saves name sites by index) but hosts nothing:
+// never dispatched, never a memory room, never a chain step. The Goron
+// cave's stair room is the one so far - the user, 2026-10-06, of
+// GORON_CAVE/STAIRS: "this should NOT be a ? room".
+static bool32 QuickStartSiteRetired(s32 site) {
+    const QuickStartContentSite* e = &sQuickStartRoomContentSites[site];
+    /* Goron Cave stairs: the user ruled it out as a ? room (Oct 2026 survey). */
+    if (e->area == AREA_GORON_CAVE && e->room == ROOM_GORON_CAVE_STAIRS)
+        return TRUE;
+    /* Mt. Crenel entrance is a region pool row's own room: the region monitor
+     * runs there and the content-site dispatch is never reached, so a lesson
+     * or chain step stored on this site could never fire. */
+    if (e->area == AREA_MT_CRENEL && e->room == ROOM_MT_CRENEL_ENTRANCE)
+        return TRUE;
+    return FALSE;
+}
+
 // The lesson (role 0) and recital (role 1) sites of the blink memory
 // event: a pure function of the run seed over the sites that may host
 // anything (SMALL/LARGE/ANY kinds, no kinstone gate), the recital never in
@@ -17930,8 +17956,8 @@ extern u32 gRand;
 // next to a frame, and it is asked a handful of times per visit.
 static bool32 QuickStartMemorySiteEligible(s32 site) {
     const QuickStartContentSite* e = &sQuickStartRoomContentSites[site];
-    return e->gateKinstone == 0 && (e->kinds == QUICKSTART_KINDS_SMALL || e->kinds == QUICKSTART_KINDS_LARGE ||
-                                    e->kinds == QUICKSTART_KINDS_ANY);
+    return e->gateKinstone == 0 && !QuickStartSiteRetired(site) &&
+           (e->kinds == QUICKSTART_KINDS_SMALL || e->kinds == QUICKSTART_KINDS_LARGE || e->kinds == QUICKSTART_KINDS_ANY);
 }
 
 static s32 QuickStartMemorySite(s32 role) {
@@ -18234,6 +18260,25 @@ static u32 QuickStartHeldReachMask(void) {
     if (gSave.kinstones.fusedCount != 0) {
         held |= QS_REACH_FUSION;
     }
+    // The boulders (Oct 2026). Each rock the survey names sets a local flag
+    // of its area the moment it settles into its hole (pushableRock.c,
+    // sub_0808A644), and the run start wipes every area's local flags, so
+    // the flag is exactly "this run pushed it in". The auto-fill that used
+    // to solve every hole on arrival is retired; the player does the
+    // pushing, and the chain placer sees it here.
+    for (i = 0; i < QS_REACH_BOULDER_BITS; i++) {
+        if (CheckLocalFlagByBank(GetFlagBankOffset(sQuickStartReachBoulders[i].area),
+                                 sQuickStartReachBoulders[i].flag)) {
+            held |= (1u << (QS_REACH_BOULDER_BASE + i));
+        }
+    }
+    // Lon Lon Ranch's north field: boulder 3 in its hole OR the Lon Lon Key
+    // (the ranch house crosses the same wall). The user: "the LLR house
+    // key is basically equivalent to having boulder #3 pushed in".
+    if (CheckLocalFlagByBank(GetFlagBankOffset(QS_REACH_LLR_NORTH_AREA), QS_REACH_LLR_NORTH_FLAG) ||
+        GetInventoryValue(ITEM_QST_LONLON_KEY) != 0) {
+        held |= QS_REACH_LLR_NORTH;
+    }
     return held;
 }
 
@@ -18269,7 +18314,55 @@ static bool32 QuickStartReachTermsMet(const u32* terms, u32 held) {
 // way a run ever saw it - 7% of runs, measured. It has a block now and the
 // crossing from North Hyrule Field is free, which is what it always was on
 // the cartridge.)
-static u32 QuickStartReachableRegions(u32 held) {
+// The reach of a run, computed once per question: what the player holds,
+// which NODES of the survey graph that reaches from the drop, and - derived
+// from the nodes - which ring regions. A node is a start the survey was
+// walked from: a region's own drop start, or one of its surveyed entrances
+// (include/quickstart/reach.h, from world_reach.py). The edges are the
+// exits each start priced, landing at the far side's node, so Lon Lon
+// Ranch entered from the lake is a different place from Lon Lon Ranch
+// entered from the south - which, with boulder 3 across the middle, it is.
+//
+// On the stack, never static: game.c owns no .bss. 36 node bytes.
+typedef struct {
+    u32 held;
+    u32 regions;
+    u8 node[QS_REACH_NODES];
+} QuickStartReach;
+
+static void QuickStartReachComputeFrom(QuickStartReach* r, s32 pool, u32 held) {
+    s32 i;
+    bool32 changed;
+    r->held = held;
+    r->regions = 0;
+    for (i = 0; i < QS_REACH_NODES; i++) {
+        r->node[i] = 0;
+    }
+    // The drop's own node is admitted unconditionally, and that is not a
+    // shortcut: an edge's price is the price of GETTING THERE, and the
+    // player is already standing on this one. Royal Valley is the case
+    // that proves it matters: its only crossing costs bombs and the Power
+    // Bracelets, so a kitless run dropped in the valley would otherwise
+    // have nowhere at all to put step 0.
+    r->node[sQuickStartReachPoolNode[pool % QUICKSTART_REGION_POOL_SIZE]] = 1;
+    do {
+        changed = FALSE;
+        for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachEdges); i++) {
+            const QuickStartReachEdge* e = &sQuickStartReachEdges[i];
+            if (r->node[e->from] != 0 && r->node[e->to] == 0 && QuickStartReachTermsMet(e->req, held)) {
+                r->node[e->to] = 1;
+                changed = TRUE;
+            }
+        }
+    } while (changed);
+    for (i = 0; i < QS_REACH_NODES; i++) {
+        if (r->node[i] != 0) {
+            r->regions |= (1u << sQuickStartReachNodes[i].region);
+        }
+    }
+}
+
+static void QuickStartReachCompute(QuickStartReach* r, u32 held) {
     // The USABLE drop, not the rolled one. A raw roll can land on Castor
     // Wilds or the Wind Ruins, which a run without Pegasus Boots or Roc's
     // Cape cannot be inside at all; QuickStartDropRegionIndexUsable redraws
@@ -18278,49 +18371,56 @@ static u32 QuickStartReachableRegions(u32 held) {
     // really use. Reading the raw bits instead put four of six probe seeds'
     // first step inside the Wind Ruins - correctly, for a drop that was
     // never going to happen.
-    u32 open = 1u << QuickStartRegionOfPoolIndex(QuickStartDropRegionIndexUsable());
-    s32 pass, r, t;
-    for (pass = 0; pass < QS_REGION_COUNT; pass++) {
-        u32 grown = open;
-        for (r = 0; r < QS_REGION_COUNT; r++) {
-            if (!(open & (1u << r))) {
-                continue;
-            }
-            for (t = 0; t < QS_REGION_COUNT; t++) {
-                if (!(sQuickStartRegionAdjacency[r] & (1u << t)) || (grown & (1u << t))) {
-                    continue;
-                }
-                if (QuickStartReachTermsMet(sQuickStartReachRegion[t], held)) {
-                    grown |= (1u << t);
-                }
-            }
-        }
-        if (grown == open) {
-            break;
-        }
-        open = grown;
-    }
-    return open;
+    QuickStartReachComputeFrom(r, QuickStartDropRegionIndexUsable(), held);
 }
 
+// Which named regions the player could walk to from where this run dropped
+// them, given what they are carrying: the ring-level view of the flood
+// above, for the callers that only need to know about regions.
+static u32 QuickStartReachableRegions(u32 held) {
+    QuickStartReach r;
+    QuickStartReachCompute(&r, held);
+    return r.regions;
+}
+
+// Two windows for the harness (tools/quickstart/sim_validate.py), which
+// mirrors the flood in Python and checks the two agree on random
+// (drop, held, room) questions. Not static so the symbol is plain to find;
+// nothing in the game calls them.
+u32 QuickStartReachTestRoom(u32 pool, u32 held, u32 area, u32 room);
+u32 QuickStartReachTestRegions(u32 pool, u32 held);
+
 // Can the player get INTO this specific room? A room can appear in the
-// survey more than once - two regions reaching it, or one region reaching
-// it two ways - and any single satisfied row is enough.
-static bool32 QuickStartReachRoomOk(u32 regions, u32 held, u8 area, u8 room) {
+// survey many times - priced from several nodes, or from one node two
+// ways - and any single satisfied row whose node the flood reached is
+// enough.
+static bool32 QuickStartReachRoomOk(const QuickStartReach* r, u8 area, u8 room) {
     s32 i;
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachDests); i++) {
         const QuickStartReachDest* dest = &sQuickStartReachDests[i];
         if (dest->area != area || dest->room != room) {
             continue;
         }
-        if (!(regions & (1u << dest->region))) {
+        if (r->node[dest->node] == 0) {
             continue;
         }
-        if (QuickStartReachTermsMet(dest->req, held)) {
+        if (QuickStartReachTermsMet(dest->req, r->held)) {
             return TRUE;
         }
     }
     return FALSE;
+}
+
+u32 QuickStartReachTestRoom(u32 pool, u32 held, u32 area, u32 room) {
+    QuickStartReach r;
+    QuickStartReachComputeFrom(&r, (s32)pool, held);
+    return QuickStartReachRoomOk(&r, (u8)area, (u8)room) ? 1 : 0;
+}
+
+u32 QuickStartReachTestRegions(u32 pool, u32 held) {
+    QuickStartReach r;
+    QuickStartReachComputeFrom(&r, (s32)pool, held);
+    return r.regions;
 }
 
 // A region pool row's own room. Every pool row is inside its named region
@@ -18329,8 +18429,13 @@ static bool32 QuickStartReachRoomOk(u32 regions, u32 held, u8 area, u8 room) {
 // one region stitched by its own scroll seams, and the two Wind Ruins rows
 // likewise - so being able to ENTER the named region is the whole test and
 // no destination row is needed.
-static bool32 QuickStartReachPoolOk(u32 regions, s32 poolIndex) {
-    return (regions & (1u << QuickStartRegionOfPoolIndex(poolIndex))) != 0;
+//
+// Per NODE now: the row's own landing node has to be in the flood. For a
+// region with one node that is the old test; for Lon Lon Ranch it means
+// "can the player get to the south half", which is where its wave, boss
+// and quest spots are.
+static bool32 QuickStartReachPoolOk(const QuickStartReach* r, s32 poolIndex) {
+    return r->node[sQuickStartReachPoolNode[poolIndex % QUICKSTART_REGION_POOL_SIZE]] != 0;
 }
 
 // --- What makes a candidate legal ----------------------------------------
@@ -18340,9 +18445,9 @@ static bool32 QuickStartReachPoolOk(u32 regions, s32 poolIndex) {
 // and if the site is kinstone-gated, that fusion must ALREADY be done -
 // which is how a gated ? room becomes an ordinary event step rather than a
 // kind of its own.
-static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
+static bool32 QuickStartChainEventOk(const QuickStartReach* r, s32 site) {
     const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
-    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site))) {
+    if (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(site)) || QuickStartSiteRetired(site)) {
         return FALSE;
     }
     if (entry->gateKinstone != 0 && !CheckKinstoneFused(entry->gateKinstone)) {
@@ -18354,12 +18459,12 @@ static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
     // safety.)
     if (site == QuickStartMemorySite(1)) {
         s32 lesson = QuickStartMemorySite(0);
-        if (lesson >= 0 && !QuickStartReachRoomOk(regions, held, sQuickStartRoomContentSites[lesson].area,
+        if (lesson >= 0 && !QuickStartReachRoomOk(r, sQuickStartRoomContentSites[lesson].area,
                                                   sQuickStartRoomContentSites[lesson].room)) {
             return FALSE;
         }
     }
-    return QuickStartReachRoomOk(regions, held, entry->area, entry->room);
+    return QuickStartReachRoomOk(r, entry->area, entry->room);
 }
 
 // A boss. Reachable AND on the boss allowlist - the same gate the F7
@@ -18368,13 +18473,13 @@ static bool32 QuickStartChainEventOk(u32 regions, u32 held, s32 site) {
 // The wave twin of QuickStartChainBossOk, and it exists for the same
 // reason: a region that cannot host the requirement would be a step that
 // can never be finished.
-static bool32 QuickStartChainWaveOk(u32 regions, s32 poolIndex) {
-    return QuickStartReachPoolOk(regions, poolIndex) &&
+static bool32 QuickStartChainWaveOk(const QuickStartReach* r, s32 poolIndex) {
+    return QuickStartReachPoolOk(r, poolIndex) &&
            QuickStartRegionAllowsWave(&sQuickStartRegionPool[poolIndex]);
 }
 
-static bool32 QuickStartChainBossOk(u32 regions, s32 poolIndex) {
-    return QuickStartReachPoolOk(regions, poolIndex) &&
+static bool32 QuickStartChainBossOk(const QuickStartReach* r, s32 poolIndex) {
+    return QuickStartReachPoolOk(r, poolIndex) &&
            QuickStartRegionAllowsBoss(&sQuickStartRegionPool[poolIndex]);
 }
 
@@ -18439,12 +18544,12 @@ static u16 QuickStartChainPickItem(u32 salt) {
 // passes rather than a candidate array: the arrays would be 73 and 15
 // entries of stack in a function called from the frame loop, and counting
 // is the same work twice.
-static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 held) {
+static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartReach* r) {
     s32 i, n = 0;
     switch (kind) {
         case QS_CHAIN_EVENT:
             for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-                if (QuickStartChainEventOk(regions, held, i) &&
+                if (QuickStartChainEventOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)i)) {
                     n++;
                 }
@@ -18452,7 +18557,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
             break;
         case QS_CHAIN_WAVE:
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (QuickStartChainWaveOk(regions, i) &&
+                if (QuickStartChainWaveOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
                     n++;
                 }
@@ -18478,7 +18583,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
                 break;
             }
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (QuickStartChainBossOk(regions, i) &&
+                if (QuickStartChainBossOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i)) {
                     n++;
                 }
@@ -18488,7 +18593,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
             // One quest per run, and it has to still be open and standing
             // somewhere the player can get to.
             if (!QuickStartSideQuestDone() &&
-                QuickStartReachPoolOk(regions, QuickStartQuestSlot()) &&
+                QuickStartReachPoolOk(r, QuickStartQuestSlot()) &&
                 // The SLOT, not 0. QuickStartChainStore writes
                 // chain_where = QuickStartQuestSlot(), so a guard asking
                 // about 0 only ever matched the 1 run in 18 whose quest
@@ -18507,7 +18612,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, u32 regions, u32 he
 }
 
 // Pick the `want`-th candidate of `kind` and write it into step `step`.
-static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 held) {
+static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartReach* r) {
     s32 i;
     gSave.chain_kind[step] = kind;
     gSave.chain_where[step] = 0;
@@ -18515,7 +18620,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 h
     switch (kind) {
         case QS_CHAIN_EVENT:
             for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-                if (!QuickStartChainEventOk(regions, held, i) ||
+                if (!QuickStartChainEventOk(r, i) ||
                     QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)i)) {
                     continue;
                 }
@@ -18527,7 +18632,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 h
             break;
         case QS_CHAIN_WAVE:
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (!QuickStartChainWaveOk(regions, i) ||
+                if (!QuickStartChainWaveOk(r, i) ||
                     QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i)) {
                     continue;
                 }
@@ -18549,7 +18654,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, u32 regions, u32 h
             break;
         case QS_CHAIN_BOSS:
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-                if (!QuickStartChainBossOk(regions, i) ||
+                if (!QuickStartChainBossOk(r, i) ||
                     QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i)) {
                     continue;
                 }
@@ -18611,28 +18716,33 @@ static u32 QuickStartKeyDropRegions(u16 key) {
     return 0;
 }
 
-static bool32 QuickStartChainSealedOk(u16 key, s32 step, u32 regions, u32 heldKey, s32 site) {
+static bool32 QuickStartChainSealedOk(u16 key, s32 step, const QuickStartReach* rKey, s32 site) {
     const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
     const QuickStartRoomOwner* owner = QuickStartRoomOwnerOf(entry->area, entry->room);
-    return owner != NULL && owner->sealedBy == key && QuickStartChainEventOk(regions, heldKey, site) &&
+    return owner != NULL && owner->sealedBy == key && QuickStartChainEventOk(rKey, site) &&
            !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)site);
 }
 
 // Deals the pair into step and step+1, or returns FALSE having touched
 // nothing. `h` is the step's own hash, so the pair is as seeded as a
 // single step.
-static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, u32 regions, u32 held) {
+static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, const QuickStartReach* r) {
     s32 k, i;
     s32 first = (s32)((h >> 12) & 1);
     for (k = 0; k < 2; k++) {
         u16 key = sQuickStartChainKeys[(first + k) & 1];
-        u32 heldKey = held | QuickStartKeyReachBit(key);
+        // The reach once the key is held - its own flood, since the Lon
+        // Lon Key is also the north field's gate (QS_REACH_LLR_NORTH), so
+        // holding it moves nodes as well as rooms.
+        QuickStartReach rKey;
         s32 n = 0, want;
-        if (GetInventoryValue(key) != 0 || (regions & QuickStartKeyDropRegions(key)) == 0) {
+        if (GetInventoryValue(key) != 0 || (r->regions & QuickStartKeyDropRegions(key)) == 0) {
             continue;
         }
+        QuickStartReachCompute(&rKey, r->held | QuickStartKeyReachBit(key) |
+                                          ((key == ITEM_QST_LONLON_KEY) ? QS_REACH_LLR_NORTH : 0));
         for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-            if (QuickStartChainSealedOk(key, step + 1, regions, heldKey, i)) {
+            if (QuickStartChainSealedOk(key, step + 1, &rKey, i)) {
                 n++;
             }
         }
@@ -18646,7 +18756,7 @@ static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, u32 regions, u32 hel
         gSave.chain_detail[step + 1] = 0;
         want = (s32)(h & 0x7fff) % n;
         for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-            if (QuickStartChainSealedOk(key, step + 1, regions, heldKey, i) && want-- == 0) {
+            if (QuickStartChainSealedOk(key, step + 1, &rKey, i) && want-- == 0) {
                 gSave.chain_where[step + 1] = (u8)i;
                 break;
             }
@@ -18673,8 +18783,7 @@ static u16 QuickStartChainWantedKey(void) {
 // Returns how many steps were dealt: 2 for a keyed pair, else 1.
 static s32 QuickStartChainRollStep(s32 step) {
     static const u8 kOrder[4] = { QS_CHAIN_EVENT, QS_CHAIN_WAVE, QS_CHAIN_BOSS, QS_CHAIN_QUEST };
-    u32 held = QuickStartHeldReachMask();
-    u32 regions = QuickStartReachableRegions(held);
+    QuickStartReach reach;
     u32 h = QuickStartChainHash((u32)step);
     s32 rot = (s32)((h >> 8) & 3);
     s32 k;
@@ -18686,20 +18795,21 @@ static s32 QuickStartChainRollStep(s32 step) {
         gSave.chain_detail[0] = gSave.scenario_c;
         return 1;
     }
+    QuickStartReachCompute(&reach, QuickStartHeldReachMask());
     // One roll in six, when there is a step left for the far side of the
     // lock - three eligible steps, so about two runs in five carry a pair
     // (the simulator put one-in-three at two runs in three, which made it
     // the norm rather than an option). Signed modulo on a masked value (no
     // __umodsi3 in this libgcc).
     if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS && ((s32)((h >> 10) & 0x7fff) % 6) == 0 &&
-        QuickStartChainRollKeyedPair(step, h, regions, held)) {
+        QuickStartChainRollKeyedPair(step, h, &reach)) {
         return 2;
     }
     for (k = 0; k < 4; k++) {
         u8 kind = kOrder[(k + rot) & 3];
-        s32 n = QuickStartChainCountCandidates(kind, step, regions, held);
+        s32 n = QuickStartChainCountCandidates(kind, step, &reach);
         if (n > 0) {
-            QuickStartChainStore(kind, step, (s32)(h & 0x7fff) % n, regions, held);
+            QuickStartChainStore(kind, step, (s32)(h & 0x7fff) % n, &reach);
             return 1;
         }
     }
@@ -18809,7 +18919,7 @@ static s32 QuickStartChainStepRegion(s32 step) {
             for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachDests); i++) {
                 if (sQuickStartReachDests[i].area == entry->area &&
                     sQuickStartReachDests[i].room == entry->room) {
-                    return sQuickStartReachDests[i].region;
+                    return sQuickStartReachNodes[sQuickStartReachDests[i].node].region;
                 }
             }
             return -1;
@@ -20787,39 +20897,20 @@ static void QuickStartStirRandom(void) {
     }
 }
 
-// Trilby Highlands' boulder-and-hole crossing, solved on arrival.
-//
-// A large part of the region's south and west sits behind it, and the hole
-// ships open, so that ground was unreachable and any wave enemy placed
-// there could never be cleared. Vanilla's puzzle is to shove the boulder
-// one tile into the hole; under QUICKSTART it simply starts shoved.
-//
-// This does not fake the result - it drives vanilla's own mechanism.
-// PushableRock's init path (sub_0808A644, pushableRock.c) already contains
-// the whole "am I sitting on a hole" case: it checks its tile's actTile for
-// ACT_TILE_25/ACT_TILE_240, and if so lays SPECIAL_TILE_21 over the hole,
-// sets the puzzle's own flag and drops the rock into its settled state. So
-// moving the rock onto the hole and bouncing it back to action 0 makes the
-// game solve the puzzle itself, exactly as though the player had pushed it.
-//
-// The hole is found by scanning rather than hardcoded: the boulder sits at
-// (344,664) with its hole one tile north at (344,648), but a search of the
-// tiles around whatever rock is present costs nothing and keeps this
-// working if either moves.
-// The tail of PushableRockEntity (src/object/pushableRock.c), mirrored here
-// because that struct lives in its own .c file with no header. Only the two
-// fields below are read: PushableRock_Init -> sub_0808A644 stashes the tile
-// that was under the rock before it stamped its own solid SPECIAL_TILE_27
-// over it, and that is exactly what has to be put back before the rock is
-// moved anywhere.
-typedef struct {
-    Entity base;
-    u8 unk_68[8];
-    u16 tileIndex;
-    u8 collisionData;
-    u8 unk_73;
-    u16 tilePos;
-} QuickStartPushableRock;
+// RETIRED (Oct 2026): QuickStartFillBoulderHoles and the QuickStartPushableRock
+// mirror that went with it. Every one-way boulder in the ring used to be
+// driven into its hole the moment its room settled, so the pockets behind
+// them were always open. The user wants the puzzle back: "these
+// boulder-and-hole choke points prevent the player from going one direction;
+// once the boulder has been pushed into the hole, however, this choke point
+// now becomes a two-way passage. I want to go back to NOT filling in the
+// boulder into the hole so that we can exploit this." So nothing touches the
+// rocks now. What replaced the fill is on the OTHER side of the equation:
+// each boulder's own settled flag is a QS_REACH_BOULDER_* bit in the held
+// mask (include/quickstart/reach.h, QuickStartHeldReachMask), and the
+// survey prices the pockets on it, so the chain placer never puts a step
+// behind a boulder the player has not pushed - and does put one there the
+// moment they have.
 
 // Switch-operated bridges: a gap in a real vanilla structure that closes
 // when the room's own switch is thrown, and stays closed for the rest of
@@ -20917,61 +21008,6 @@ static void QuickStartUpdateSwitchBridges(void) {
     }
 }
 
-static void QuickStartFillBoulderHoles(void) {
-    s32 i, dx, dy;
-    // Every named region, not just Trilby any more: this replaced Lon Lon
-    // Ranch's retired teleport-and-stamp solver (whose SetTileType write
-    // left a black square over each filled hole - see the RETIRED note by
-    // QuickStartClearEasternHillsNpcs), and driving vanilla's own settle
-    // path is the method that renders correctly. Scoped to region rooms so a
-    // 2-door pool cave's pushable-rock PUZZLE is never solved out from
-    // under the player.
-    if (!QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
-        return;
-    }
-    // Settled-room guard (QuickStartRoomSettled) - the scan and the
-    // teleport below are origin-relative.
-    if (!QuickStartRoomSettled()) {
-        return;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* rock = &gEntities[i].base;
-        if (rock->kind != OBJECT || rock->id != PUSHABLE_ROCK || !QuickStartEntityInCurrentRoom(rock)) {
-            continue;
-        }
-        // action 3 is "already settled into a hole" - leave those alone, or
-        // this would re-trigger the fill every frame.
-        if (rock->action == 0 || rock->action == 3) {
-            continue;
-        }
-        for (dy = -3; dy <= 3; dy++) {
-            for (dx = -3; dx <= 3; dx++) {
-                s32 lx = (rock->x.HALF.HI - gRoomControls.origin_x) + dx * 16;
-                s32 ly = (rock->y.HALF.HI - gRoomControls.origin_y) + dy * 16;
-                u32 tilePos = TILE_POS(lx >> 4, ly >> 4);
-                u32 actTile = GetActTileAtTilePos(tilePos, rock->collisionLayer);
-                if (actTile != ACT_TILE_25 && actTile != ACT_TILE_240) {
-                    continue;
-                }
-                // Put the rock's original tile back before moving it.
-                // PushableRock_Init stamps SPECIAL_TILE_27 - a solid tile -
-                // wherever the rock is standing, and vanilla only ever
-                // un-stamps it in PushableRock_Action1, on the frame a real
-                // push starts. Teleporting the rock skipped that, so the
-                // solid tile stayed behind at the rock's starting spot and
-                // read in play as an invisible wall right where the boulder
-                // used to be (reported by the user). This is the same
-                // SetTile(tileIndex, tilePos) call Action1 makes.
-                SetTile(((QuickStartPushableRock*)rock)->tileIndex, ((QuickStartPushableRock*)rock)->tilePos,
-                        rock->collisionLayer);
-                rock->x.HALF.HI = gRoomControls.origin_x + ((lx >> 4) * 16 + 8);
-                rock->y.HALF.HI = gRoomControls.origin_y + ((ly >> 4) * 16 + 8);
-                rock->action = 0;
-                return;
-            }
-        }
-    }
-}
 
 // Lon Lon Ranch's house, run the way vanilla runs it (Oct 2026).
 //
@@ -22619,12 +22655,9 @@ static void QuickStartRoomMonitor(void) {
         QuickStartOpenBoomerangChamber();
         QuickStartRanchHouseMonitor();
     }
-    // Slot 4. Per pushable rock this scans a 7x7 tile block, and it only
-    // ever has anything to do on the frames just after the player pushes
-    // one into a hole - which takes far longer than eight frames.
-    if (QuickStartPhase(4)) {
-        QuickStartFillBoulderHoles();
-    }
+    // (Slot 4 used to drive every pushable rock into its hole here -
+    // QuickStartFillBoulderHoles, retired Oct 2026; see the note where it
+    // was defined. The boulders are the player's to push again.)
     // NOT staggered: a switch bridge appearing is the direct answer to the
     // player hitting a switch, and a delay there reads as the switch not
     // working.
@@ -22804,6 +22837,9 @@ static void QuickStartRoomMonitor(void) {
                 // not a rolled site event.
                 if (sQuickStartRoomContentSites[site].area == AREA_GREAT_FAIRIES &&
                     sQuickStartRoomContentSites[site].room == ROOM_GREAT_FAIRIES_GRAVEYARD) {
+                    continue;
+                }
+                if (QuickStartSiteRetired(site)) {
                     continue;
                 }
                 // The Crenel and Minish Woods Great Fairy rooms keep their

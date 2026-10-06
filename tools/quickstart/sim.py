@@ -101,7 +101,11 @@ TOKEN_BITS = _token_bits()
 # containing one is permanently false. game.c says so; this mirrors it.
 UNTESTABLE = (TOKEN_BITS['QS_REACH_MINISH'] | TOKEN_BITS['QS_REACH_STORY'] |
               TOKEN_BITS['QS_REACH_MAZE'] | TOKEN_BITS['QS_REACH_SWITCHES4'] |
-              TOKEN_BITS['QS_REACH_UNSURVEYED'] | TOKEN_BITS['QS_REACH_BOULDER'])
+              TOKEN_BITS['QS_REACH_UNSURVEYED'])
+# The boulder bits and the derived north-field bit ARE testable in the game
+# (a rock's settled flag; the flag or the Lon Lon key) but this model never
+# pushes a rock, so they stay clear here - the conservative run.
+BOULDER_BITS = sum(v for k, v in TOKEN_BITS.items() if k.startswith('QS_REACH_BOULDER_'))
 ITEM_BITS = int(re.search(r'#define QS_REACH_ITEM_BITS (\d+)', REACH_H).group(1))
 REACH_ITEMS = [t.strip() for t in
                re.search(r'static const u16 sQuickStartReachItems\[\] = \{(.*?)\};',
@@ -109,31 +113,46 @@ REACH_ITEMS = [t.strip() for t in
 ITEM_TO_BIT = {name: 1 << i for i, name in enumerate(REACH_ITEMS)}
 
 
-def _region_entry():
-    body = re.search(r'static const u32 sQuickStartReachRegion\[\]\[3\] = \{(.*?)\n\};',
+def _nodes():
+    body = re.search(r'static const QuickStartReachNode sQuickStartReachNodes\[QS_REACH_NODES\] = \{(.*?)\n\};',
                      REACH_H, re.S).group(1)
     out = []
-    for line in body.strip().split('\n'):
-        m = re.search(r'\{(.*?)\}', line)
-        if not m:
-            continue
-        out.append([NEVER if t.strip() == '~0u' else int(t.strip().rstrip('u'), 0)
-                    for t in m.group(1).split(',')])
+    for m in re.finditer(r'\{ (QS_REGION_\w+), (AREA_\w+), (ROOM_\w+), (\d) \}', body):
+        out.append((RIDX[m.group(1)[10:]], P.AREAS[m.group(2)], P.ROOMS[m.group(3)], int(m.group(4))))
     return out
 
 
-REGION_ENTRY = _region_entry()
+NODES = _nodes()
+
+
+def _terms_of(cell_text):
+    return [NEVER if t.strip() == '~0u' else int(t.strip().rstrip('u'), 0) for t in cell_text.split(',')]
+
+
+def _edges():
+    body = re.search(r'static const QuickStartReachEdge sQuickStartReachEdges\[\] = \{(.*?)\n\};', REACH_H, re.S).group(1)
+    return [(int(m.group(1)), int(m.group(2)), _terms_of(m.group(3)))
+            for m in re.finditer(r'\{\s*(\d+),\s*(\d+), \{(.*?)\} \}', body)]
+
+
+EDGES = _edges()
+
+
+def _pool_node():
+    body = re.search(r'static const u8 sQuickStartReachPoolNode\[\] = \{(.*?)\n\};', REACH_H, re.S).group(1)
+    return [int(m.group(1)) for m in re.finditer(r'^\s*(\d+),', body, re.M)]
+
+
+POOL_NODE = _pool_node()
 
 
 def _dests():
     body = re.search(r'static const QuickStartReachDest sQuickStartReachDests\[\] = \{(.*?)\n\};',
                      REACH_H, re.S).group(1)
     out = []
-    for m in re.finditer(r'\{ (QS_REGION_\w+), (AREA_\w+), (ROOM_\w+), \{(.*?)\} \}', body):
-        terms = [NEVER if t.strip() == '~0u' else int(t.strip().rstrip('u'), 0)
-                 for t in m.group(4).split(',')]
-        out.append((RIDX[m.group(1)[10:]], P.AREAS[m.group(2)], P.ROOMS[m.group(3)],
-                    terms, m.group(2), m.group(3)))
+    for m in re.finditer(r'\{\s*(\d+), (AREA_\w+), (ROOM_\w+), 0, \{(.*?)\} \}', body):
+        out.append((int(m.group(1)), P.AREAS[m.group(2)], P.ROOMS[m.group(3)],
+                    _terms_of(m.group(4)), m.group(2), m.group(3)))
     return out
 
 
@@ -236,6 +255,22 @@ def _sites():
 
 
 SITES = _sites()
+
+
+def _retired_sites():
+    """QuickStartSiteRetired: rows that stay in the table but host nothing.
+    Parsed so the model cannot drift from the C."""
+    i = GAME.find('static bool32 QuickStartSiteRetired(s32 site) {')
+    if i < 0:
+        return set()
+    body = GAME[i:GAME.find('\n}\n', i)]
+    return {(P.AREAS[m.group(1)], P.ROOMS[m.group(2)])
+            for m in re.finditer(r'e->area == (AREA_\w+) && e->room == (ROOM_\w+)', body)}
+
+
+for _s in SITES:
+    if (_s['area'], _s['room']) in _retired_sites():
+        _s['gate'] = -1   # never a candidate, like a kinstone-gated row
 
 
 def _sealed():
@@ -487,24 +522,31 @@ def terms_met(terms, held):
     return False
 
 
-def reachable_regions(held, drop_region):
-    """QuickStartReachableRegions: the drop region unconditionally, then a
-    flood admitting a neighbour whose entry price is paid."""
-    open_ = 1 << drop_region
-    for _ in range(len(REGION_NAMES)):
-        grown = open_
-        for r in range(len(REGION_NAMES)):
-            if not (open_ >> r) & 1:
-                continue
-            for t in range(len(REGION_NAMES)):
-                if not (ADJACENCY[r] >> t) & 1 or (grown >> t) & 1:
-                    continue
-                if terms_met(REGION_ENTRY[t], held):
-                    grown |= 1 << t
-        if grown == open_:
-            break
-        open_ = grown
-    return open_
+def reachable_nodes(held, drop_pool):
+    """QuickStartReachComputeFrom: the drop's node unconditionally, then a
+    flood along every edge whose price is paid. Returns a node bitmask."""
+    nodes = 1 << POOL_NODE[drop_pool % POOL_SIZE]
+    changed = True
+    while changed:
+        changed = False
+        for frm, to, terms in EDGES:
+            if (nodes >> frm) & 1 and not (nodes >> to) & 1 and terms_met(terms, held):
+                nodes |= 1 << to
+                changed = True
+    return nodes
+
+
+def regions_of(nodes):
+    out = 0
+    for i, (ring, _a, _r, _e) in enumerate(NODES):
+        if (nodes >> i) & 1:
+            out |= 1 << ring
+    return out
+
+
+def reachable_regions(held, drop_pool):
+    """The ring-level view (QuickStartReachableRegions)."""
+    return regions_of(reachable_nodes(held, drop_pool))
 
 
 # The dest table indexed by room. QuickStartReachRoomOk scans all 273 rows
@@ -517,17 +559,17 @@ for _d in DESTS:
     DESTS_BY_ROOM.setdefault((_d[1], _d[2]), []).append((_d[0], _d[3]))
 
 
-def reach_room_ok(regions, held, area, room):
-    for dr, terms in DESTS_BY_ROOM.get((area, room), ()):
-        if not (regions >> dr) & 1:
+def reach_room_ok(nodes, held, area, room):
+    for node, terms in DESTS_BY_ROOM.get((area, room), ()):
+        if not (nodes >> node) & 1:
             continue
         if terms_met(terms, held):
             return True
     return False
 
 
-def reach_pool_ok(regions, pool_index):
-    return bool((regions >> BY_POOL[pool_index]) & 1)
+def reach_pool_ok(nodes, pool_index):
+    return bool((nodes >> POOL_NODE[pool_index % POOL_SIZE]) & 1)
 
 
 def chain_hash(seed, salt):
@@ -552,7 +594,7 @@ KIND_NAME = {KIND_ITEM: 'ITEM', KIND_EVENT: 'EVENT', KIND_WAVE: 'WAVE',
 KORDER = [KIND_EVENT, KIND_WAVE, KIND_BOSS, KIND_QUEST]
 
 
-def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None):
+def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None, drop_pool=0):
     """QuickStartChainRollStep. `prior` is the (kind, where) of earlier steps."""
     def used(kind, where):
         return (kind, where) in prior
@@ -598,13 +640,19 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
             if key in owned:
                 continue
             drop = {REGION_INDEX[r] for r in KEY_REGIONS[key]}
-            if not any((regions >> r) & 1 for r in drop):
+            if not any((regions_of(regions) >> r) & 1 for r in drop):
                 continue
+            # Its own flood with the key held (QuickStartChainRollKeyedPair):
+            # the Lon Lon Key is also the north field's gate, so holding it
+            # moves nodes as well as rooms.
             held_key = held | TOKEN_BITS[KEY_BIT[key]]
+            if key == 'ITEM_QST_LONLON_KEY':
+                held_key |= TOKEN_BITS['QS_REACH_LLR_NORTH']
+            nodes_key = reachable_nodes(held_key, drop_pool)
             sealed = [i for i, s in enumerate(SITES)
                       if SEALED.get((s['area'], s['room'])) == key
                       and i not in sites_done and s['gate'] == 0
-                      and reach_room_ok(regions, held_key, s['area'], s['room'])
+                      and reach_room_ok(nodes_key, held_key, s['area'], s['room'])
                       and not used(KIND_EVENT, i)]
             if not sealed:
                 continue
@@ -641,8 +689,8 @@ ALL_ROOMS = sorted({(a, r, an, rn) for _, a, r, _, an, rn in DESTS} |
                    {(p['area'], p['room'], p['areaName'], p['roomName']) for p in POOL})
 ROOM_KEY = {(a, r): f'{an[5:]}/{rn[5:]}' for a, r, an, rn in ALL_ROOMS}
 ROOM_REGION = {}
-for dr, da, dro, _, _, _ in DESTS:
-    ROOM_REGION.setdefault((da, dro), set()).add(REGION_NAMES[dr])
+for dn, da, dro, _, _, _ in DESTS:
+    ROOM_REGION.setdefault((da, dro), set()).add(REGION_NAMES[NODES[dn][0]])
 for i, p in enumerate(POOL):
     ROOM_REGION.setdefault((p['area'], p['room']), set()).add(REGION_NAMES[BY_POOL[i]])
 
@@ -731,13 +779,13 @@ def simulate(seed, cohort, rng):
     prior, sites_done = set(), set()
     fused = False
     held = held_mask(owned)
-    regions = reachable_regions(held, drop_region)
-    checkpoints.append(snapshot(regions, held, 'after selection'))
+    regions = reachable_nodes(held, drop_pool)
+    checkpoints.append(snapshot(regions_of(regions), held, 'after selection'))
     dealt = []
     for step in range(5):
         if not dealt:
             dealt = roll_step(seed, step, prior, regions, held, owned,
-                              quest_slot, sites_done, carrier=carrier)
+                              quest_slot, sites_done, carrier=carrier, drop_pool=drop_pool)
         kind, where, detail = dealt.pop(0)
         if kind == KIND_ITEM:
             # A keyed ITEM step is paid by the next reward in the key's own
@@ -773,9 +821,9 @@ def simulate(seed, cohort, rng):
                 fused = True
         steps.append(dict(step=step, kind=KIND_NAME[kind], where=where, detail=detail))
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
-        regions = reachable_regions(held, drop_region)
+        regions = reachable_nodes(held, drop_pool)
         if step < 4:
-            checkpoints.append(snapshot(regions, held, f'after requirement {step + 1}'))
+            checkpoints.append(snapshot(regions_of(regions), held, f'after requirement {step + 1}'))
     return dict(seed=seed, cohort=cohort,
                 drop_pool=drop_pool, drop_region=REGION_NAMES[drop_region],
                 element_pool=element_pool,

@@ -832,6 +832,30 @@ def grid_block(M, R):
     return head, w
 
 
+def md_entrances(R, out):
+    """The region priced from each of its surveyed ENTRANCES (world_reach
+    keys 'KEY@NAME'), one table each. These are measurements from a
+    different start than the matrix above, so they are listed, not merged:
+    merging would hide exactly the thing they were walked to show."""
+    keys = [k for k, base in WR.ENTRANCES.items() if base == R.key]
+    if not keys:
+        return
+    out.append('')
+    out.append('**Entrance surveys** - the same region priced from where each border lands the player (2026-10-06).')
+    for k in keys:
+        sv = WR.SURVEY[k]
+        sa, sr, sx, sy = sv['start']
+        out.append('')
+        out.append('*%s* - `%s` landing `%s` at (%s, %s). %s' % (sv['name'], k, short('AREA_' + sa, 'ROOM_%s_%s' % (sa, sr)), sx, sy, sv.get('note', '')))
+        out.append('')
+        out.append('| place | cost from this landing | notes |')
+        out.append('|:--|:--|:--|')
+        for e in sv['dests']:
+            an, rn = 'AREA_' + e['area'], 'ROOM_%s_%s' % (e['area'], e['room'])
+            loc = ('(%s,%s)' % e['local']) if e['local'][0] is not None else ''
+            out.append('| `%s %s` | %s | %s |' % (short(an, rn), loc, fmt_req(_dnf(e['req'])), e['note'].replace('|', '/')))
+
+
 def md_region(R, out):
     M = Matrix(R)
     n = len(R.nodes)
@@ -877,8 +901,8 @@ def md_region(R, out):
     out.append('%d nodes, %d ordered pairs, **%d with no data** (%d%%).' % (
         n, n * (n - 1), c.get('-', 0),
         (100 * c.get('-', 0) // (n * (n - 1))) if n > 1 else 0))
+    md_entrances(R, out)
     return M
-
 
 def write_md(path):
     regs = all_regions()
@@ -991,6 +1015,12 @@ def write_json(path):
             room_req=_dnf((R.survey or {}).get('room_req') or []),
             start=R.start['label'] if R.start else None,
             rooms=[short(a, r) for a, r in R.rooms],
+            entrances=[dict(key=k, name=WR.SURVEY[k]['name'], start=WR.SURVEY[k]['start'],
+                            note=WR.SURVEY[k].get('note', ''),
+                            dests=[dict(area=e['area'], room=e['room'], local=list(e['local']),
+                                        req=_dnf(e['req']), note=e['note'])
+                                   for e in WR.SURVEY[k]['dests']])
+                       for k, base in WR.ENTRANCES.items() if base == R.key],
             nodes=[dict(i=nd['idx'], kind=nd['kind'], label=nd['label'],
                         area=nd['area'], room=nd['room'], x=nd['x'], y=nd['y'],
                         req=(None if nd['req'] == '?' else nd['req']),
