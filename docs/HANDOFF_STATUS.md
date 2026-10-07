@@ -44,6 +44,8 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The Crenel vine actually grows now (two local flags at run start); a user report, measured and fixed | "The Crenel vine was never grown" |
+| The third simulation pass: 50,000 runs, a simulator checkpoint bug fixed first, the report regenerated with a third-pass narrative | "The third simulation pass" |
 | The golden kinstone gates: the Source of the Flow stone and the Castor statues roll sealed or open per run; the pieces are key items and win-chain keys | "The golden kinstone gates" |
 | Veil Falls integrated: pool row, 12 sites, 5 fusers, borders restored, vortex removed; the boulder survey's answers applied | "Veil Falls is the fourteenth region" |
 | 50,000-run simulation study, and a second pass that corrected three of its four headline findings | "50,000 simulated runs...", "The second pass..." |
@@ -87,8 +89,8 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   sealed - on the delivered ROM the door is open and measured so.
 - **Play a drop into Veil Falls.** The landing, fuser spots and sites are
   measured; the climb was driven with the ring; nobody has played a run
-  there. Item 11 of section 4 (which row "Trilby has only one boulder"
-  answered) is still open.
+  there. (Item 11 of section 4 is resolved: the user confirmed Lon Lon's
+  boulder 3 for the (712,750) exit.)
 - **Walk the unsurveyed landings** (report section 5): Eastern Hills North
   from the Lon Lon border, South Field's four port-model seams, Trilby from
   Crenel, Lake Hylia's shore and the Wind Ruins with their own boulders
@@ -176,6 +178,22 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   water as open; whether a land enemy dealt there can act is unmeasured.
 
 ### Design decisions waiting on a call
+
+- **The Lon Lon key pair dominates the chain** (sim, third pass): 40% of
+  runs carry an ITEM step and 49% go to the ranch house; the graveyard
+  key, the flow piece and the statue set are dealt 431, 6 and 0 times in
+  25,000. Lower the one-in-six pair roll, or round-robin the four keys
+  from the step index so the first eligible one does not always win.
+- **Drops are per pool row, not per region**: Eastern Hills and Western
+  Wood take 20% of drops each. Draw a region first, then one of its rows,
+  if "any region, evenly" is the intent.
+- **The Wind Ruins' pool row lands in a room the reach model has no row
+  for** (`RUINS/ENTRANCE`), and its other two rooms are priced "never",
+  so the chain can never place anything in the Ruins' own rooms. The
+  Ruins want a walk (their entrance stamp is mid-transition too).
+- **Four Mount Crenel cave sites have no survey row** (fairy fountain,
+  chuchu pot chest, spiny chu puzzle, water heart piece) and so can never
+  host a requirement.
 
 - **The `ITEM` chain step** fires now, as the first half of the keyed pair
   (Oct 2026: find the Lon Lon or graveyard key, then clear what it locks;

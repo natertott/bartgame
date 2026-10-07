@@ -1271,6 +1271,92 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The Crenel vine was never grown (Oct 2026, a user report)
+
+The user: "if the player first spawns above the seed's vine and climbs
+down, then everything glitches out. When the seam transitions to the lower
+part of the map, the seed is NOT grown and the player is stuck inside the
+mountain side wall."
+
+**Measured, and the report is exact.** On the shipped ROM both
+`CrenelBeanSprout` entities in `MT_CRENEL/ENTRANCE` sat in action 4 with
+the three tiles above the bean at x=17 solid wall (collision 0x0f). A
+player below the vine holding UP went nowhere; a player walking down
+Center's vine (map data, climbable) came through the seam onto tile
+(17,0) of Entrance, solid, and stood inside the mountain. Action 4 is not
+"grown": it is the seed in its hole waiting for the water
+(`CrenelBeanSprout_Action4` watches for the watered tile and only then
+starts the grow cutscene). The run start set `WATERBEAN_OUT` and
+`WATERBEAN_PUT`, which are global and only get the bean INTO the hole;
+the vine itself is laid when the sprout's `type2` LOCAL flag is set
+(`YAMA_04_00` for the Entrance bean, `YAMA_04_01` for the base's), which
+the grow cutscene does, and the run start's local-flag sweep wipes both
+every run. The earlier note that "both sprouts were measured sitting in
+action 4, their grown state" misread the state.
+
+**The fix** is two lines after the sweep, beside the Castor passage flag:
+set both local flags (`SetLocalFlagByBank(GetFlagBankOffset(AREA_MT_CRENEL),
+YAMA_04_0x)`). With the flag set each sprout takes vanilla's own
+"already grown" path at init (`sub_080969A4`): lays the vine's foot and
+its climb tiles and deletes itself. `crenel_vine_probe.py` (3/3): no
+sprout left, tiles (17,0)-(17,1) are climb tiles over a walkable foot; a
+player at (280,56) holding UP is in Center after 18 presses; a player
+walking down from Center crosses the seam, takes Ezlo's region line, and
+reaches the floor at (280,127). The survey's "pre-paid" reading of the
+vine row is now true; its comment and the roadmap paragraph that quoted
+the bad measurement are corrected.
+
+### The third simulation pass: 50,000 runs over the entrance-aware world (Oct 2026)
+
+The user asked for "many simulator runs... the same metrics as before"
+and a report naming rooms never or rarely reached and flows that are too
+common or too rare. `docs/QUICKSTART_SIM_REPORT.md` is regenerated
+(25,000 runs per cohort), with a third-pass narrative; the charts in
+`docs/sim/` with it. The headline, in short:
+
+- **A bug in the simulator, caught before publishing:** `snapshot` was
+  handed the region mask and asked `reach_room_ok` - which indexes
+  NODES - about it, so every per-room count taken since the entrance
+  model counted about 10 rooms per run and 161 of 181 rooms never
+  reached. The second published report predates the entrance model and
+  was not affected. Fixed; the study was re-run.
+- **The world is smaller than the second pass said**: median 41 of 181
+  rooms after the hub (was 59 of 164), because a run holds ONE key item
+  from the hub and the entrance-aware table no longer lets a region's
+  nodes reach each other for free or counts every boulder as pushed.
+  Strict stays flat (42.9 to 43.7); rewards grows to 56.1.
+- **The Lon Lon key dominates the chain**: 40% of runs carry an ITEM
+  step and 49% are sent to the ranch house. Keyed deals per 25,000
+  runs: Lon Lon 9,370, graveyard 431, flow piece 6, statue set 0. The
+  pair roll (one in six) nearly always finds the Lon Lon key eligible.
+  Levers: a lower pair chance, or a round-robin over the keys from the
+  step index instead of letting the first eligible key win.
+- **Drops follow pool rows, not regions**: Eastern Hills and Western
+  Wood (three rows each) take 20% of drops each and a third of all
+  placed requirements between them; Lake Hylia 0.6%, Castor Wilds and
+  the Ruins about 1%, Veil Falls 3.2%.
+- **The golden gates do what they should** (50% sealed each, never a
+  drop or an element behind a sealed one) **and the chain barely uses
+  them** (flow pair 6 times, statue set never; 71 pieces from
+  region-clear draws). Reasons as in the gates entry: bombs plus lantern
+  at roll time, or a Castor boulder pushed.
+- **Nearly dead content**: Royal Valley entered 7%, Lake Hylia 9%, the
+  Wind Ruins 1%, Veil Falls 21% (mostly the Lon Lon strip); Castor Wilds
+  entered 98% with a median 0% of its rooms explorable (swamp kit).
+- **Never reached by any loadout, 9 rooms**: the Wind Ruins' three (the
+  pool row's own room has NO survey row; the other two are priced
+  "never"), the Goron cave (behind Lon Lon's boulder 2, which the model
+  never pushes), the two unsurveyed Minish Woods rooms, Mount Crenel's
+  dig cave and the falls' heart-piece nook. 12 of 117 sites never
+  reachable, four of them Mount Crenel caves with no survey row.
+- **Rarest reachable rooms** (strict, under 0.1%): the Waveblade dojo,
+  Castor's dig cave and south caves, the Hylia dig caves, the lake
+  beanstalk, the Minish paths, the falls' block puzzle and dig cave.
+
+Also fixed on the way: `sim_report.py` read a region table that the
+entrance-aware header no longer has (the entry prices now come from the
+graph's edges), and its cause classifier knows boulders and the gates.
+
 ### The golden kinstone gates: the Source of the Flow and the Castor statues (Oct 2026)
 
 The user: "We should incorporate the golden kinstone fusion (from the
@@ -3168,13 +3254,14 @@ framing is that a BOTTLE gates everything past the hint-scrub cave, because
 the vine has to be watered, and that certain beans want the green miner's
 water from `CRENEL_MINISH_PATHS/SPRING_WATER` as well. True of vanilla and of
 mapexplore. Not true here: `GameTask_Transition` sets `WATERBEAN_OUT` and
-`WATERBEAN_PUT` at boot, and both `CrenelBeanSprout` entities in
-`MT_CRENEL/ENTRANCE` were measured sitting in **action 4** - their grown
-state, climbable tile already laid - in the shipped difficulty-3 ROM. Same
-treatment and same reasoning as the FESTARI row: the gate is open before the
-run starts, so charging a route for it prices something no run can affect. If
-the pre-grow is ever removed, every row gains the bottle and the vine row
-gains the green water with it.
+`WATERBEAN_PUT` at boot and (since Oct 2026, see "The Crenel vine was never
+grown") Mount Crenel's two "bean sprouted" local flags, so the sprouts lay
+their vines at init. This paragraph used to say the sprouts "were measured
+sitting in action 4 - their grown state"; action 4 is the seed waiting for
+water, and the reading was wrong. Same treatment and same reasoning as the
+FESTARI row: the gate is open before the run starts, so charging a route for
+it prices something no run can affect. If the pre-grow is ever removed, every
+row gains the bottle and the vine row gains the green water with it.
 
 **The Grip Ring alternative is real in the tile data.** The user's note that
 the ring skips the whole base checks out: act tile 0x50, a climb surface, in

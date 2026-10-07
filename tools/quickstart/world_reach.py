@@ -1400,13 +1400,17 @@ d('LH-LADDER', 'TEMPLE_OF_DROPLETS', 'ENTRANCE', 264, 200,
 # hint-scrub cave, because the vine has to be watered, and that certain beans
 # want the green miner's water from CRENEL_MINISH_PATHS/SPRING_WATER on top
 # of that. All true of vanilla and of the mapexplore build this was walked
-# in. It is not true here: GameTask_Transition sets WATERBEAN_OUT and
-# WATERBEAN_PUT at boot, and both CrenelBeanSprout entities in
-# MT_CRENEL/ENTRANCE were measured sitting in action 4 - their grown state,
-# climbable tile already laid - in the shipped difficulty-3 ROM. Same
-# treatment, and the same reasoning, as the FESTARI row in Minish Woods: the
-# gate is open before the run starts, so charging a route for it would price
-# something no run can do anything about either way.
+# in. It is not true here: the run start sets WATERBEAN_OUT and WATERBEAN_PUT
+# (global) and, since 2026-10-07, Mount Crenel's local flags YAMA_04_00 and
+# YAMA_04_01 - the two sprouts' "has grown" flags - so each CrenelBeanSprout
+# lays its vine at init and deletes itself (crenel_vine_probe.py: the base
+# climbs into Center, Center climbs down onto the floor). The earlier
+# reading, "both sprouts sitting in action 4, their grown state", was wrong:
+# action 4 is the seed in its hole waiting for the water, and the vine above
+# it was solid wall until the user climbed down onto it. Same treatment, and
+# the same reasoning, as the FESTARI row in Minish Woods: the gate is open
+# before the run starts, so charging a route for it would price something no
+# run can do anything about either way.
 #
 # If the pre-grow is ever removed, every row below gains the bottle and the
 # vine row gains the green water with it.

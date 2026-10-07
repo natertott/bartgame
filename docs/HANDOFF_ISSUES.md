@@ -181,6 +181,22 @@ so nobody re-invents them:
 - **A probe that hardcodes a reach bit is wrong the day a token is
   inserted.** `boulder_probe.py` had `1 << 25` for Trilby's boulder; the
   golden-gate tokens moved every boulder up two. Read `sim.TOKEN_BITS`.
+- **A bitmask is only as good as the thing it indexes.** `sim.snapshot`
+  took the REGION mask and asked `reach_room_ok`, which indexes NODES,
+  about it; every room count came out as ~10 and nobody noticed until a
+  report said 161 of 181 rooms were never reached. When a function's
+  argument changes meaning (entrance model: regions became nodes), grep
+  every caller for what it passes, not just whether it compiles.
+- **"Action 4" is not a state name.** The Crenel sprout's action 4 was
+  read as "grown" and recorded that way in two documents; it is the seed
+  waiting for water. Read the handler before naming a state, and measure
+  the thing the state is supposed to produce (here: a climb tile), not the
+  state number.
+- **A probe that presses a direction through a textbox measures the
+  textbox.** The Crenel vine's first probe reported the player stuck at
+  the vine top; it was Ezlo's region line. Use the state-aware dismiss
+  (`memory_probe.py`, `veilfalls_probe.py`, `crenel_vine_probe.py`) after
+  every room change, including scroll seams.
 - **`KinstoneSave` has `fuserOffers[128]` between `fuserProgress` and
   `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
   at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.

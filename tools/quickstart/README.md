@@ -125,6 +125,13 @@
   ledges - so read it beside the walked survey, not instead of it:
 
       python3 tools/quickstart/boulder_probe.py --rom tmc-d3.gba
+- `crenel_vine_probe.py` - Mount Crenel's bean vine (Oct 2026): no sprout
+  entity left in Entrance (a grown sprout lays its vine and deletes
+  itself), the two tiles above the bean are climb tiles over a walkable
+  foot, a player below the vine climbs into Center, and a player walking
+  down from Center crosses the seam and reaches the Entrance floor:
+
+      python3 tools/quickstart/crenel_vine_probe.py --rom tmc-d3.gba
 - `veilfalls_probe.py` - Veil Falls, the fourteenth region, and the two
   golden-kinstone gates (Oct 2026). Pinned seeds are booted until both
   gates have been seen sealed and open; with the Source of the Flow gate

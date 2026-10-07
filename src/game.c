@@ -1155,13 +1155,28 @@ static void GameTask_Transition(void) {
     // for - so the mountain was simply not traversable. Same treatment
     // Trilby's boulder crossing gets, and for the same reason.
     //
-    // These are the two flags CrenelBeanSprout reads (crenelBeanSprout.c,
-    // type 0): OUT means the bean has been taken, PUT means it has gone
-    // into the hole. With both set the sprout initialises into its grown
-    // state and lays its own climbable tile, so this drives vanilla's
-    // mechanism rather than faking the result.
+    // These are two of the three flags CrenelBeanSprout reads
+    // (crenelBeanSprout.c): OUT means the bean has been taken, PUT means it
+    // has gone into the hole. They are GLOBAL, so they survive the run
+    // start's local-flag sweep.
     SetGlobalFlag(WATERBEAN_OUT);
     SetGlobalFlag(WATERBEAN_PUT);
+    // The third is the one that matters, and it was missing until the user
+    // climbed down the vine (Oct 2026): each sprout's `type2` is a LOCAL
+    // flag of Mount Crenel - YAMA_04_00 for the Entrance screen's bean, 78,
+    // YAMA_04_01 for the base's, 79 - that the grow cutscene sets once the
+    // seed has been watered. With OUT and PUT set but that flag clear the
+    // sprout initialises into action 4, which is "planted, waiting for the
+    // water", and the vine above it is solid wall: climbing from below does
+    // nothing, and a player who climbs DOWN from Center (whose vine tiles
+    // are map data) lands at the seam on a solid tile inside the mountain.
+    // Measured on the shipped ROM, both sprouts in action 4; an earlier
+    // measurement read action 4 as "grown". The sweep wipes the local flag
+    // every run, so set it here, after the sweep: with it set the sprout
+    // lays the whole vine at its init (sub_080969A4) and deletes itself,
+    // which is vanilla's own "already grown" path.
+    SetLocalFlagByBank(GetFlagBankOffset(AREA_MT_CRENEL), YAMA_04_00);
+    SetLocalFlagByBank(GetFlagBankOffset(AREA_MT_CRENEL), YAMA_04_01);
     // The five BEANDEMO flags are the kinstone-fusion beanstalks (Crenel
     // Summit, Lake Hylia, Wind Ruins, Eastern Hills, Western Wood), each
     // "has grown" once its fusion is done. Crenel's is the one the user

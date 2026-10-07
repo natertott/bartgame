@@ -780,8 +780,15 @@ REGION_ROOM_INDEX = {k: [ROOM_INDEX[ar] for ar in v]
                      for k, v in REGION_ROOMS.items()}
 
 
-def snapshot(regions, held, label):
+def snapshot(nodes, held, label):
     """One checkpoint, as BITMASKS rather than name lists.
+
+    Takes the NODE mask (the entrance-aware flood's own result) and derives
+    the region mask itself. It used to be handed the region mask and then
+    asked reach_room_ok - which indexes NODES - about it, so every room
+    count in the second report's successor data was taken against the
+    wrong bits: about 10 rooms per run instead of 40-plus. Caught when the
+    third pass reported 161 of 181 rooms never reachable.
 
     154 rooms and 105 sites per checkpoint, five checkpoints per run, tens
     of thousands of runs: written as names this was 12MB per thousand runs
@@ -789,13 +796,14 @@ def snapshot(regions, held, label):
     A hex mask is lossless, three orders of magnitude smaller, and the
     report expands it back through meta.room_names.
     """
+    regions = regions_of(nodes)
     rm = 0
     for (a, r), i in ROOM_INDEX.items():
-        if reach_room_ok(regions, held, a, r):
+        if reach_room_ok(nodes, held, a, r):
             rm |= 1 << i
     sm = 0
     for i, s in enumerate(SITES):
-        if reach_room_ok(regions, held, s['area'], s['room']):
+        if reach_room_ok(nodes, held, s['area'], s['room']):
             sm |= 1 << i
     # PER REGION, not just the region count. The user: "We are not simply
     # concerned with whether the player can walk into the entrance of a
@@ -853,7 +861,7 @@ def simulate(seed, cohort, rng):
     fused = False
     held = held_mask(owned)
     regions = reachable_nodes(held, drop_pool)
-    checkpoints.append(snapshot(regions_of(regions), held, 'after selection'))
+    checkpoints.append(snapshot(regions, held, 'after selection'))
     dealt = []
     for step in range(5):
         if not dealt:
@@ -896,7 +904,7 @@ def simulate(seed, cohort, rng):
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
         regions = reachable_nodes(held, drop_pool)
         if step < 4:
-            checkpoints.append(snapshot(regions_of(regions), held, f'after requirement {step + 1}'))
+            checkpoints.append(snapshot(regions, held, f'after requirement {step + 1}'))
     return dict(seed=seed, cohort=cohort,
                 drop_pool=drop_pool, drop_region=REGION_NAMES[drop_region],
                 element_pool=element_pool,

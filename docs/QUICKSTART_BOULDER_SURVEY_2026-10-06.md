@@ -186,8 +186,9 @@ noted in brackets.
     Hylia border, which you wrote up as "Boulder must be pushed in" and
     nothing else - no boulder number. It is not about Trilby. The model
     puts Lon Lon's boulder 3 there, because your list from the east
-    entrance names boulder 3 for the same exit. [Boulder 3 assumed; **say
-    which Lon Lon boulder you meant** if it was not 3.]
+    entrance names boulder 3 for the same exit. [Boulder 3 - CONFIRMED by
+    the user 2026-10-07: "Boulder #3 must be pushed in to access that
+    exit."]
 12. **The Veil Falls entrance** is surveyed as a start, and this build has
     no way into Veil Falls. [Recorded; nothing links to it.]
 13. **Dig cave entrance 2's Flippers-or-cape.** The fusion lays land in
@@ -259,8 +260,8 @@ follows.
   the ranch's south entrance, where the boulder has no number. The model
   keeps Lon Lon's boulder 3 there, because your list from the ranch's east
   entrance names boulder 3 for that same exit. Item 11 is reworded above
-  to say so; the question that remains is only "was that Lon Lon's boulder
-  3?".
+  to say so. **Resolved 2026-10-07:** the user confirmed it is Lon Lon's
+  boulder 3. Nothing moved; the model already had it.
 - **Second pass, 2026-10-07 (the Veil Falls answers):** the Power
   Bracelets are added to the block-puzzle room and to the ledge chest
   ("this requirement applies to the final room right before the ledge
