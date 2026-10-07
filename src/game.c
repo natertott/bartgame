@@ -19167,6 +19167,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
 // skipped; a sealed one is dealt exactly like a door key, with the Ruins'
 // or the falls' sites behind it (sealedBy) as the far side of the lock.
 #define QUICKSTART_CHAIN_KEYS 4
+#define QUICKSTART_CHAIN_PAIR_MOD 10 // the keyed pair is rolled one step in this many
 static const u16 sQuickStartChainKeys[QUICKSTART_CHAIN_KEYS] = { ITEM_QST_LONLON_KEY, ITEM_QST_GRAVEYARD_KEY,
                                                                  QUICKSTART_ITEM_GOLD_FLOW,
                                                                  QUICKSTART_ITEM_GOLD_STATUES };
@@ -19244,42 +19245,50 @@ static bool32 QuickStartChainSealedOk(u16 key, s32 step, const QuickStartReach* 
 // Deals the pair into step and step+1, or returns FALSE having touched
 // nothing. `h` is the step's own hash, so the pair is as seeded as a
 // single step.
+//
+// ONE key per roll, round-robin (the user, after the third simulation
+// pass: "Round-robin the four chain keys and lower the pair roll"). The
+// loop this replaces tried all four and let the first eligible one win,
+// and the Lon Lon key is nearly always eligible - its drop regions are the
+// ring's heart and its sealed sites are the ranch house - so it took 95%
+// of the pairs and half of all runs were sent to the ranch house. Now the
+// seed picks a starting key and the step index walks the table from it:
+// the key a roll asks about is a different one at each step, and a key
+// that is not eligible means no pair this step, not a fallback to the one
+// that always is. Deals per key then follow each key's own eligibility,
+// which is the fair reading of "four keys".
 static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, const QuickStartReach* r) {
-    s32 k, i;
-    s32 first = (s32)((h >> 12) & (QUICKSTART_CHAIN_KEYS - 1));
-    for (k = 0; k < QUICKSTART_CHAIN_KEYS; k++) {
-        s32 which = (first + k) & (QUICKSTART_CHAIN_KEYS - 1);
-        u16 key = sQuickStartChainKeys[which];
-        // The reach once the key is held - its own flood (QuickStartKeyReachBit).
-        QuickStartReach rKey;
-        s32 n = 0, want;
-        if (QuickStartHasItem(key) || (r->regions & QuickStartKeyDropRegions(key)) == 0) {
-            continue;
-        }
-        QuickStartReachCompute(&rKey, r->held | QuickStartKeyReachBit(key));
-        for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-            if (QuickStartChainSealedOk(key, step + 1, &rKey, i)) {
-                n++;
-            }
-        }
-        if (n == 0) {
-            continue;
-        }
-        gSave.chain_kind[step] = QS_CHAIN_ITEM;
-        gSave.chain_where[step] = 0;
-        gSave.chain_detail[step] = (u8)QUICKSTART_CHAIN_KEY_DETAIL(which);
-        gSave.chain_kind[step + 1] = QS_CHAIN_EVENT;
-        gSave.chain_detail[step + 1] = 0;
-        want = (s32)(h & 0x7fff) % n;
-        for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-            if (QuickStartChainSealedOk(key, step + 1, &rKey, i) && want-- == 0) {
-                gSave.chain_where[step + 1] = (u8)i;
-                break;
-            }
-        }
-        return TRUE;
+    s32 i;
+    s32 which = ((s32)((h >> 12) & (QUICKSTART_CHAIN_KEYS - 1)) + step) & (QUICKSTART_CHAIN_KEYS - 1);
+    u16 key = sQuickStartChainKeys[which];
+    // The reach once the key is held - its own flood (QuickStartKeyReachBit).
+    QuickStartReach rKey;
+    s32 n = 0, want;
+    if (QuickStartHasItem(key) || (r->regions & QuickStartKeyDropRegions(key)) == 0) {
+        return FALSE;
     }
-    return FALSE;
+    QuickStartReachCompute(&rKey, r->held | QuickStartKeyReachBit(key));
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartChainSealedOk(key, step + 1, &rKey, i)) {
+            n++;
+        }
+    }
+    if (n == 0) {
+        return FALSE;
+    }
+    gSave.chain_kind[step] = QS_CHAIN_ITEM;
+    gSave.chain_where[step] = 0;
+    gSave.chain_detail[step] = (u8)QUICKSTART_CHAIN_KEY_DETAIL(which);
+    gSave.chain_kind[step + 1] = QS_CHAIN_EVENT;
+    gSave.chain_detail[step + 1] = 0;
+    want = (s32)(h & 0x7fff) % n;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartChainSealedOk(key, step + 1, &rKey, i) && want-- == 0) {
+            gSave.chain_where[step + 1] = (u8)i;
+            break;
+        }
+    }
+    return TRUE;
 }
 
 // The door key the current step is waiting on, or 0.
@@ -19312,12 +19321,14 @@ static s32 QuickStartChainRollStep(s32 step) {
         return 1;
     }
     QuickStartReachCompute(&reach, QuickStartHeldReachMask());
-    // One roll in six, when there is a step left for the far side of the
-    // lock - three eligible steps, so about two runs in five carry a pair
-    // (the simulator put one-in-three at two runs in three, which made it
-    // the norm rather than an option). Signed modulo on a masked value (no
-    // __umodsi3 in this libgcc).
-    if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS && ((s32)((h >> 10) & 0x7fff) % 6) == 0 &&
+    // One roll in ten, when there is a step left for the far side of the
+    // lock. It was one in six, and with the old "first eligible key wins"
+    // loop that put a pair in 40% of runs; with one key per roll
+    // (QuickStartChainRollKeyedPair) one in ten puts it in about one run in
+    // ten in the simulator (QUICKSTART_CHAIN_PAIR_MOD, mirrored by sim.py's
+    // PAIR_MOD). Signed modulo on a masked value (no __umodsi3 in this
+    // libgcc).
+    if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS && ((s32)((h >> 10) & 0x7fff) % QUICKSTART_CHAIN_PAIR_MOD) == 0 &&
         QuickStartChainRollKeyedPair(step, h, &reach)) {
         return 2;
     }

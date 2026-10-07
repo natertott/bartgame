@@ -32,9 +32,9 @@ BANK11_BIT0 = BANK12_BIT0 + (0x9C0 - 0xA80)
 KINDS = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
 RINGS = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV', 'CW', 'WR']
 ADJ = {  # mirrors sQuickStartRegionAdjacency in game.c
-    'CG': ['NHF'], 'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
+    'CG': ['NHF'], 'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV', 'VF'],
     'SHF': ['NHF', 'EH', 'WW'], 'EH': ['SHF', 'LLR', 'MW'],
-    'LLR': ['EH', 'NHF', 'TRIL', 'LH'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
+    'LLR': ['EH', 'NHF', 'TRIL', 'LH', 'VF'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
     'WW': ['TRIL', 'SHF', 'CW'], 'RV': ['NHF', 'TRIL'],
     'CW': ['WW', 'WR'], 'WR': ['CW'], 'CREN': ['TRIL'], 'VF': ['LLR', 'NHF'],
     # Spurs, not a loop: the MW-LH border exists in the exit lists but
@@ -56,8 +56,11 @@ for _a in ADJ:
         assert _a in ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
 # Mt Crenel is deliberately absent: it is a region member but NOT a pool row,
 # so nothing drops the player there and no region wave loop runs in it.
-POOL_RING = ['CG', 'LLR', 'SHF', 'NHF', 'TRIL', 'EH', 'EH', 'EH',
-             'WW', 'WW', 'WW', 'RV', 'CW', 'WR', 'WR', 'MW', 'LH']
+# Read from game.c's byPool through the simulator rather than hand-copied:
+# the copy had stopped at Lake Hylia while the pool grew Mount Crenel and
+# Veil Falls rows.
+import sim as _S
+POOL_RING = [_S.REGION_NAMES[i] for i in _S.BY_POOL]
 SITES = P.content_sites()
 POOL = P.region_pool()
 ITEM_NAME = {v: k for k, v in P.ITEMS.items()}

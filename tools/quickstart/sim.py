@@ -299,6 +299,7 @@ STATUE_PIECES = ('QUICKSTART_ITEM_GOLD_LEFT', 'QUICKSTART_ITEM_GOLD_MIDDLE', 'QU
 # An OPEN gate is carried in `owned` as a sentinel, since every function
 # here already takes the owned set and the C's QuickStartHasItem counts an
 # open gate's pieces as held.
+PAIR_MOD = 10  # QUICKSTART_CHAIN_PAIR_MOD: the keyed pair is rolled one step in this many
 GATE_OPEN = {'QUICKSTART_ITEM_GOLD_FLOW': 'GATE_FLOW_OPEN',
              'QUICKSTART_ITEM_GOLD_STATUES': 'GATE_STATUES_OPEN'}
 
@@ -704,10 +705,14 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     # The keyed pair (QuickStartChainRollKeyedPair): an ITEM step for a door
     # key, then an EVENT at a site that key seals, priced with the key held.
     # One roll in six while a step is left for the far side of the lock.
-    if step + 1 < 4 and ((h >> 10) & 0x7fff) % 6 == 0:
+    # One roll in PAIR_MOD, and ONE key per roll, round-robin from the step
+    # (the user, after the third pass: "Round-robin the four chain keys and
+    # lower the pair roll"). The old loop tried every key and let the first
+    # eligible one win, which was the Lon Lon key in 95% of pairs.
+    if step + 1 < 4 and ((h >> 10) & 0x7fff) % PAIR_MOD == 0:
         first = (h >> 12) & 3
-        for k in range(4):
-            key = CHAIN_KEYS[(first + k) & 3]
+        for k in range(1):
+            key = CHAIN_KEYS[(first + step) & 3]
             if has_item(key, owned):
                 continue
             drop = {REGION_INDEX[r] for r in KEY_REGIONS[key]}

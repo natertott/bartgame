@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The keyed pair asks about one key per roll, round-robin from the step, one roll in ten: ITEM steps in 9% of runs (was 40%), ranch-house visits 24% (was 49%) | "The keyed pair, round-robin and one in ten" |
 | The Crenel vine actually grows now (two local flags at run start); a user report, measured and fixed | "The Crenel vine was never grown" |
 | The third simulation pass: 50,000 runs, a simulator checkpoint bug fixed first, the report regenerated with a third-pass narrative | "The third simulation pass" |
 | The golden kinstone gates: the Source of the Flow stone and the Castor statues roll sealed or open per run; the pieces are key items and win-chain keys | "The golden kinstone gates" |
@@ -179,11 +180,6 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Design decisions waiting on a call
 
-- **The Lon Lon key pair dominates the chain** (sim, third pass): 40% of
-  runs carry an ITEM step and 49% go to the ranch house; the graveyard
-  key, the flow piece and the statue set are dealt 431, 6 and 0 times in
-  25,000. Lower the one-in-six pair roll, or round-robin the four keys
-  from the step index so the first eligible one does not always win.
 - **Drops are per pool row, not per region**: Eastern Hills and Western
   Wood take 20% of drops each. Draw a region first, then one of its rows,
   if "any region, evenly" is the intent.
@@ -195,10 +191,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   chuchu pot chest, spiny chu puzzle, water heart piece) and so can never
   host a requirement.
 
-- **The `ITEM` chain step** fires now, as the first half of the keyed pair
-  (Oct 2026: find the Lon Lon or graveyard key, then clear what it locks;
-  39% of simulated runs). The remaining question is taste: one roll in six
-  per eligible step is the current odds.
+- **The `ITEM` chain step** fires as the first half of the keyed pair: find
+  a key (one of four since the golden gates), then clear what it locks. The
+  user settled the odds after the third simulation pass: one key per roll,
+  round-robin from the step, one roll in ten (`QUICKSTART_CHAIN_PAIR_MOD`).
+  See the roadmap entry "The keyed pair, round-robin" for the measured
+  rates.
 - **Royal Valley is near-dead content.** With its real entry price (bombs AND
   Power Bracelets) it is reachable in 7% of runs and hosts 0.2% of
   requirements. A whole region with a graveyard, a maze and a dojo that most
@@ -261,7 +259,13 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   allows", never as the walk.
 - **`chain_probe.py` still reads the old region-mask API** (its own
   `reachable_regions`); the ROM's flood is per node now
-  (`QuickStartReachTestRoom` / `QuickStartReachTestRegions`).
+  (`QuickStartReachTestRoom` / `QuickStartReachTestRegions`). Oct 2026: its
+  hand-copied adjacency gained Veil Falls and its pool list is read from
+  the simulator, but it dies at `G.RING['SHF@NNE']` - it indexes the
+  survey by region and the survey is keyed by entrance now. Rewriting its
+  reach half on `sim.reachable_nodes` is the fix; until then
+  `sim_validate.py` is the reach check and `scenario_probe.py` the chain
+  check.
 - **`spawn_audit.py` cannot tell a neighbour chamber's event from a
   spill** in the three multi-site rooms (Boomerang cave, Trilby Highlands,
   Goron Cave main), and counts Mount Crenel's ambient region waves as the

@@ -1271,6 +1271,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The keyed pair, round-robin and one in ten (Oct 2026)
+
+The user, on the third simulation pass: "Round-robin the four chain keys
+and lower the pair roll."
+
+**Before:** `QuickStartChainRollKeyedPair` tried all four keys from a
+seed-chosen start and dealt the first eligible one; the Lon Lon key is
+nearly always eligible, so it took 95% of pairs, 40% of runs carried an
+ITEM step and 49% were sent to the ranch house. **After:** one key per
+roll, `(seed hash + step) mod 4`, so each step asks about a different key
+and an ineligible key means no pair that step rather than a fallback; and
+the roll is one step in ten (`QUICKSTART_CHAIN_PAIR_MOD`, was six). The
+simulator mirrors both (`sim.PAIR_MOD`, the same rotation).
+
+**Measured, 50,000 runs** (`docs/QUICKSTART_SIM_REPORT.md` regenerated):
+ITEM steps in 9% of runs (was 40%); ranch-house visits in 24% of strict
+runs and 20% of rewards runs (was 49%) - the rest of that figure is the
+house being an ordinary ? room site. Keyed deals per 25,000 rewards runs:
+Lon Lon 1,759 (was 9,370), graveyard 298 (was 431), the flow piece 1, the
+statue set 0. The Lon Lon key still leads because it is eligible far more
+often; the golden keys are bounded by eligibility (bombs and lantern at
+roll time; a Castor boulder pushed), not by the roll. Steps overall: EVENT
+54%, WAVE 24%, QUEST 14%, BOSS 5%, ITEM 3%. Nothing else in the report
+moved: reach, drops and the dead regions are as the third pass said.
+
+`scenario_probe` 15/15, `sim_validate` 402/402, the vine probe 3/3 on the
+rebuilt ROM. `chain_probe.py` gained Veil Falls in its hand-copied
+adjacency and reads the pool from the simulator now, but its reach model
+still predates the entrance model (it indexes the survey by region, not by
+entrance) and it does not run to the end; it stays on the known-stale
+list.
+
 ### The Crenel vine was never grown (Oct 2026, a user report)
 
 The user: "if the player first spawns above the seed's vine and climbs
