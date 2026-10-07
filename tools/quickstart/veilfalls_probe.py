@@ -1,10 +1,19 @@
 """Veil Falls, the fourteenth region (Oct 2026): is it wired the way the
 walked survey and the integration say?
 
-  DOOR     cave #1's door is open in this build: walking north from the
-           North Field corridor enters VEIL_FALLS_CAVES/ENTRANCE (vanilla
-           seals it with the Source of the Flow stone until a fusion; that
-           NPC is deleted at init under QUICKSTART).
+  ROLL     the two golden-kinstone gates (Oct 2026) roll sealed on some
+           pinned seeds and open on others (GF_GOLD_GATE_SEALED_BIT).
+  DOOR     gate open: no stone, walking north from the North Field
+           corridor enters VEIL_FALLS_CAVES/ENTRANCE, SOURCE_FLOW is held.
+  GATE     gate sealed: the Source of the Flow stone stands and the cave
+           stays shut, SOURCE_FLOW is not held and the piece is wanted;
+           with the fusion written the stone goes and the cave opens.
+  DROP     a drop forced onto the falls' pool row stands when the gate is
+           open and is re-drawn elsewhere when it is sealed.
+  PIECE    QuickStartSpawnRewardEntity lays the piece as a kinstone.
+  STATUES  the Castor Wilds passage: open roll walkable and STATUES held;
+           sealed roll solid, not held, the set key pays its first piece;
+           the passage flag the rock cutscene sets opens it.
   VORTEX   the whirlwind on the Top screen is gone (it carried a player
            into Cloud Tops, which the mode does not include).
   CLIMB    the big waterfall is a Grip Ring climb: with the ring a player
@@ -70,15 +79,105 @@ def flood(c, sx, sy):
     return seen
 
 VF = P.AREAS['AREA_VEIL_FALLS']; TOP = P.AREAS['AREA_VEIL_FALLS_TOP']
-c = S.boot(ROM, 0)
-# ---- the door
-poison_here(c); warp(c, VF, 0, 56, 560, frames=300); dismiss(c)
-for i in range(60):
-    press(c, c.KEY_UP, 8, 0)
-    if here(c) != (VF, 0):
+CAVE1 = (P.AREAS['AREA_VEIL_FALLS_CAVES'], P.ROOMS['ROOM_VEIL_FALLS_CAVES_ENTRANCE'])
+import sim
+bits = sim.TOKEN_BITS
+# ---- the golden-kinstone gates (Oct 2026). QuickStartRollGoldGates seals
+# each of the two from the run seed at run start; the roll is
+# GF_GOLD_GATE_SEALED_BIT(g), QUICKSTART window offsets 227 (the Source of
+# the Flow) and 228 (the Castor Wilds statues). Pinned seeds are booted
+# until both states of both gates have been seen.
+from emu import QS_BIT0, SAVE_FLAGS, KIND_NPC, GENT, STRIDE
+def qflag(c, n):
+    b = QS_BIT0 + n
+    return (c.memory.u8[SAVE_FLAGS + (b >> 3)] >> (b & 7)) & 1
+seeds, tally = {}, {'flow': [0, 0], 'statues': [0, 0]}
+for sd in range(1, 41):
+    c = S.boot(ROM, 0, seed=sd, frames=60)
+    f, st = qflag(c, 227), qflag(c, 228)
+    tally['flow'][f] += 1; tally['statues'][st] += 1
+    seeds.setdefault(('flow', f), sd); seeds.setdefault(('statues', st), sd)
+    if len(seeds) == 4 and sd >= 16:
         break
-check('DOOR: cave #1 opens from the corridor', here(c) == (P.AREAS['AREA_VEIL_FALLS_CAVES'], P.ROOMS['ROOM_VEIL_FALLS_CAVES_ENTRANCE']),
-      'room %s after %d frames' % (here(c), (i + 1) * 8))
+check('ROLL: both gates seal on some seeds and open on others', len(seeds) == 4,
+      'of %d seeds, flow open/sealed %s, statues open/sealed %s' % (sd, tally['flow'], tally['statues']))
+STONE = 78  # NPC_UNK_4E, the Source of the Flow (type 11)
+def door(c):
+    """Stand in the corridor below cave #1 and walk north: (room reached, stones seen)."""
+    poison_here(c); warp(c, VF, 0, 56, 560, frames=300); dismiss(c)
+    stones = len(entities(c, KIND_NPC, STONE))
+    for i in range(60):
+        press(c, c.KEY_UP, 8, 0)
+        if here(c) != (VF, 0):
+            break
+    return here(c), stones
+def held(c): return C.call_keep(c, C.game_sym('QuickStartHeldReachMask'), ())
+def has(c, item): return C.call_keep(c, C.game_sym('QuickStartHasItem'), (item,))
+GOLD_FLOW, GOLD_STATUES, GOLD_LEFT = 0x26d, 0x300, 0x26a
+# -- open: the old behaviour, which is also the control for the sealed half
+c = S.boot(ROM, 0, seed=seeds[('flow', 0)])
+room, stones = door(c)
+check('DOOR: gate open - no stone, cave #1 opens from the corridor', room == CAVE1 and stones == 0,
+      'room %s, %d stones' % (room, stones))
+check('DOOR: gate open - SOURCE_FLOW held, the piece counts as owned',
+      (held(c) & bits['QS_REACH_SOURCE_FLOW']) != 0 and has(c, GOLD_FLOW) == 1, 'held %#x has %d' % (held(c), has(c, GOLD_FLOW)))
+# -- sealed: the stone stands, the mask lacks the bit, the piece is wanted
+cs = S.boot(ROM, 0, seed=seeds[('flow', 1)])
+room, stones = door(cs)
+check('GATE: sealed - the stone stands and cave #1 stays shut', room == (VF, 0) and stones == 1,
+      'room %s, %d stones' % (room, stones))
+check('GATE: sealed - SOURCE_FLOW not held, the piece is wanted',
+      (held(cs) & bits['QS_REACH_SOURCE_FLOW']) == 0 and has(cs, GOLD_FLOW) == 0, 'held %#x has %d' % (held(cs), has(cs, GOLD_FLOW)))
+# -- the drop draw skips the falls while sealed (pool row 18 is the falls)
+pool_vf = P.region_pool().index(next(r for r in P.region_pool() if r['roomName'] == 'ROOM_VEIL_FALLS_MAIN'))
+def drop_after_forcing(c):
+    C.call_keep(c, C.game_sym('QuickStartWritePoolIdx'), (467, 211, pool_vf))  # GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP
+    return C.call_keep(c, C.game_sym('QuickStartDropRegionIndexUsable'), ())
+d_open, d_sealed = drop_after_forcing(c), drop_after_forcing(cs)
+check('DROP: a falls drop stands when open and is re-drawn when sealed', d_open == pool_vf and d_sealed != pool_vf,
+      'open -> %d, sealed -> %d (falls = %d)' % (d_open, d_sealed, pool_vf))
+# -- fuse it: the fused bit plus the count, as the fusion would leave them
+KINSTONES = 0x02002a40 + 0x114     # gSave.kinstones; fusedKinstones[] at +0x12D (after fuserProgress and fuserOffers), fusedCount at +3
+cs.memory.u8[KINSTONES + 0x12D + (9 >> 3)] |= 1 << (9 & 7)   # KINSTONE_SOURCE_FLOW = 9
+cs.memory.u8[KINSTONES + 3] += 1
+room, stones = door(cs)
+check('GATE: fused - the stone goes, the cave opens, SOURCE_FLOW held',
+      room == CAVE1 and stones == 0 and (held(cs) & bits['QS_REACH_SOURCE_FLOW']) != 0 and has(cs, GOLD_FLOW) == 1,
+      'room %s, %d stones, held %#x' % (room, stones, held(cs)))
+# -- the reward spawner puts a golden piece down as a kinstone
+c = S.boot(ROM, 0, seed=seeds[('flow', 1)])
+poison_here(c); warp(c, VF, 0, 296, 500, frames=300); dismiss(c)
+before = {e[0] for e in entities(c, KIND_OBJECT)}
+C.call_keep(c, C.game_sym('QuickStartSpawnRewardEntity'), (GOLD_FLOW, 296, 460))
+new = [e for e in entities(c, KIND_OBJECT) if e[0] not in before]
+kin = [(e, c.memory.u8[GENT + e[0] * STRIDE + 11]) for e in new if e[2] == 0 and e[3] == P.ITEMS['ITEM_KINSTONE']]
+check('PIECE: QuickStartSpawnRewardEntity lays a GROUND_ITEM kinstone of piece 0x6d',
+      len(kin) == 1 and kin[0][1] == 0x6d, 'new objects %s kinstones %s' % (new, kin))
+# -- the statues: the passage tiles (1,58)-(3,59) are stamped solid while
+# HIKYOU_00_SEKIZOU is unset (castorWildsStatue.c); the open roll sets it
+# at run start, the sealed one leaves it to the rock cutscene.
+CW, CWM = P.AREAS['AREA_CASTOR_WILDS'], P.ROOMS['ROOM_CASTOR_WILDS_MAIN']
+PASSAGE = [(1, 58), (2, 58), (3, 58), (3, 59)]
+def passage(c):
+    poison_here(c); warp(c, CW, CWM, 56, 880, frames=300); dismiss(c)
+    return [coll_at(c, tx, ty) for tx, ty in PASSAGE]
+co = S.boot(ROM, 0, seed=seeds[('statues', 0)]); so = passage(co)
+cs = S.boot(ROM, 0, seed=seeds[('statues', 1)]); ss = passage(cs)
+check('STATUES: open - passage walkable, STATUES held, the set counts as owned',
+      here(co) == (CW, CWM) and all(v == 0 for v in so) and (held(co) & bits['QS_REACH_STATUES']) != 0 and has(co, GOLD_STATUES) == 1,
+      'coll %s held %#x' % (so, held(co)))
+pay = C.call_keep(cs, C.game_sym('QuickStartKeyPayoutItem'), (GOLD_STATUES,))
+check('STATUES: sealed - passage solid, STATUES not held, the set pays its first piece',
+      here(cs) == (CW, CWM) and all(v != 0 for v in ss) and (held(cs) & bits['QS_REACH_STATUES']) == 0
+      and has(cs, GOLD_STATUES) == 0 and pay == GOLD_LEFT,
+      'coll %s held %#x payout %#x' % (ss, held(cs), pay))
+# -- the flag the third fusion's cutscene sets opens it: set it as the
+# cutscene would (SetLocalFlag in the wilds) and come back in.
+C.call_keep(cs, C.map_sym('SetLocalFlag'), (29,))  # HIKYOU_00_SEKIZOU
+ss2 = passage(cs)
+check('STATUES: sealed, then the passage flag - walkable and STATUES held',
+      all(v == 0 for v in ss2) and (held(cs) & bits['QS_REACH_STATUES']) != 0, 'coll %s held %#x' % (ss2, held(cs)))
+c = S.boot(ROM, 0, seed=seeds[('flow', 0)])
 # ---- the vortex: stand where it stood; no BIG_VORTEX object, no Cloud Tops
 objs = P._enum(open(os.path.join(P.ROOT, 'include/object.h')).read())
 poison_here(c); warp(c, TOP, 0, 88, 60, frames=400); dismiss(c)

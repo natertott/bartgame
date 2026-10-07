@@ -278,15 +278,52 @@ def _sealed():
     i = GAME.find('static const QuickStartRoomOwner sQuickStartRoomOwners[] = {')
     body = GAME[i:GAME.find('\n};', i)]
     out = {}
-    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+),\s*\n?\s*[^}]*?,\s*(ITEM_QST_\w+) \}', body):
+    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+),\s*\n?\s*[^}]*?,\s*((?:ITEM_QST|QUICKSTART_ITEM_GOLD)_\w+) \}', body):
         out[(P.AREAS[m.group(1)], P.ROOMS[m.group(2)])] = m.group(3)
     return out
 
 
 SEALED = _sealed()
-CHAIN_KEYS = ['ITEM_QST_LONLON_KEY', 'ITEM_QST_GRAVEYARD_KEY']
+# sQuickStartChainKeys: the two door keys and, since Oct 2026, the two
+# golden-kinstone gates (the Source of the Flow's piece, the statues' set
+# of three). QuickStartKeyReachBit folds the north field into the Lon Lon
+# key here too.
+CHAIN_KEYS = ['ITEM_QST_LONLON_KEY', 'ITEM_QST_GRAVEYARD_KEY',
+              'QUICKSTART_ITEM_GOLD_FLOW', 'QUICKSTART_ITEM_GOLD_STATUES']
 KEY_BIT = {'ITEM_QST_LONLON_KEY': 'QS_REACH_LONLON_KEY',
-           'ITEM_QST_GRAVEYARD_KEY': 'QS_REACH_GRAVE_KEY'}
+           'ITEM_QST_GRAVEYARD_KEY': 'QS_REACH_GRAVE_KEY',
+           'QUICKSTART_ITEM_GOLD_FLOW': 'QS_REACH_SOURCE_FLOW',
+           'QUICKSTART_ITEM_GOLD_STATUES': 'QS_REACH_STATUES'}
+STATUE_PIECES = ('QUICKSTART_ITEM_GOLD_LEFT', 'QUICKSTART_ITEM_GOLD_MIDDLE', 'QUICKSTART_ITEM_GOLD_RIGHT')
+# QuickStartRollGoldGates: each gate is sealed when chain_hash(0x60 + g) is odd.
+# An OPEN gate is carried in `owned` as a sentinel, since every function
+# here already takes the owned set and the C's QuickStartHasItem counts an
+# open gate's pieces as held.
+GATE_OPEN = {'QUICKSTART_ITEM_GOLD_FLOW': 'GATE_FLOW_OPEN',
+             'QUICKSTART_ITEM_GOLD_STATUES': 'GATE_STATUES_OPEN'}
+
+
+def roll_gates(seed, owned):
+    for g, key in enumerate(('QUICKSTART_ITEM_GOLD_FLOW', 'QUICKSTART_ITEM_GOLD_STATUES')):
+        if not (chain_hash(seed, 0x60 + g) & 1):
+            owned.add(GATE_OPEN[key])
+
+
+def has_item(item, owned):
+    """QuickStartHasItem. A golden piece is held when drawn (this model
+    treats a held piece as fused, as it treats a held door key as used), or
+    when its gate rolled open; the statue set when all three are."""
+    if item == 'QUICKSTART_ITEM_GOLD_FLOW':
+        return 'GATE_FLOW_OPEN' in owned or item in owned
+    if item in STATUE_PIECES:
+        return 'GATE_STATUES_OPEN' in owned or item in owned or 'QUICKSTART_ITEM_GOLD_STATUES' in owned
+    if item == 'QUICKSTART_ITEM_GOLD_STATUES':
+        return all(has_item(pc, owned) for pc in STATUE_PIECES)
+    return item in owned
+
+
+def is_pseudo(item):
+    return item.startswith('QUICKSTART_ITEM_')
 
 
 def _tiers():
@@ -294,7 +331,7 @@ def _tiers():
     body = GAME[i:GAME.find('\n};', i)]
     body = re.sub(r'//[^\n]*', '', body)
     out = []
-    for m in re.finditer(r'\{\s*(ITEM_\w+),\s*(QS_CAT_\w+(?:\s*\|\s*QS_CAT_\w+)*),'
+    for m in re.finditer(r'\{\s*((?:ITEM|QUICKSTART_ITEM)_\w+),\s*(QS_CAT_\w+(?:\s*\|\s*QS_CAT_\w+)*),'
                          r'\s*(QS_TIER_\w+),\s*(QS_REQ_\w+),\s*(\d+)', body):
         out.append(dict(item=m.group(1), cat=m.group(2), tier=m.group(3),
                         req=m.group(4), repeatable=int(m.group(5))))
@@ -310,7 +347,8 @@ def cat_set(text):
 
 for _e in TIERS:
     _e['cats'] = cat_set(_e['cat'])
-KEY_ITEMS = [e['item'] for e in TIERS if 'QS_CAT_KEY' in e['cats']]
+# QuickStartChainPickItem skips the golden pieces (they are the keyed pair's).
+KEY_ITEMS = [e['item'] for e in TIERS if 'QS_CAT_KEY' in e['cats'] and not is_pseudo(e['item'])]
 
 # Items the mode hands over at boot (GameTask_Transition), so they are held
 # before round 1 and can never be offered. Only the two that carry a reach
@@ -323,8 +361,9 @@ KEY_ITEMS = [e['item'] for e in TIERS if 'QS_CAT_KEY' in e['cats']]
 BOOT_ITEMS = {'ITEM_OCARINA', 'ITEM_SMITH_SWORD'}
 
 # QS_REACH_FUSION is NOT held at boot. QUICKSTART wipes gSave.kinstones and
-# then writes the three Castor Wilds statue bits directly, which does not
-# touch fusedCount - and fusedCount is what QuickStartHeldReachMask reads.
+# then (when the statue gate rolled open) writes the three Castor Wilds
+# statue bits directly, which does not touch fusedCount - and fusedCount is
+# what QuickStartHeldReachMask reads.
 # (The fusedCount = 100 line in game.c is in the MAPEXPLORE branch.) So the
 # strict cohort never holds it; the rewards cohort takes it after the first
 # region clear, on the reasoning that a player who clears a region fuses
@@ -377,7 +416,12 @@ TIER_ORDER = ['QS_TIER_COMMON', 'QS_TIER_UNCOMMON', 'QS_TIER_RARE']
 # QuickStartKeyRegions: the only two items whose draw depends on WHERE the
 # player is standing. Everything else is allowed everywhere.
 KEY_REGIONS = {'ITEM_QST_LONLON_KEY': {'NHF', 'TRIL', 'EH'},
-               'ITEM_QST_GRAVEYARD_KEY': {'NHF', 'TRIL', 'RV'}}
+               'ITEM_QST_GRAVEYARD_KEY': {'NHF', 'TRIL', 'RV'},
+               'QUICKSTART_ITEM_GOLD_FLOW': {'NHF', 'LLR', 'RV', 'TRIL'},
+               'QUICKSTART_ITEM_GOLD_LEFT': {'CW', 'WW', 'TRIL'},
+               'QUICKSTART_ITEM_GOLD_MIDDLE': {'CW', 'WW', 'TRIL'},
+               'QUICKSTART_ITEM_GOLD_RIGHT': {'CW', 'WW', 'TRIL'},
+               'QUICKSTART_ITEM_GOLD_STATUES': {'CW', 'WW', 'TRIL'}}
 
 # QuickStartTierEntryUsable's switch, for the requirements that are a plain
 # inventory test. The two bottle requirements are treated as satisfied:
@@ -395,7 +439,7 @@ REQ_LACKS = {'QS_REQ_NO_PACCI': 'ITEM_PACCI_CANE',
 
 
 def tier_entry_usable(e, owned, where_region):
-    if not e['repeatable'] and e['item'] in owned:
+    if not e['repeatable'] and has_item(e['item'], owned):
         return False
     if e['item'] == 'ITEM_BOOMERANG' and 'ITEM_MAGIC_BOOMERANG' in owned:
         return False
@@ -450,9 +494,22 @@ def avalanche(seed, add):
     return h
 
 
+def gate_row_passable(pool_index, owned):
+    """QuickStartGoldGateRowPassable: the falls behind the stone, the Ruins
+    behind the statues, while that gate is sealed and unfused."""
+    region = REGION_NAMES[BY_POOL[pool_index]]
+    if region == 'VF':
+        return has_item('QUICKSTART_ITEM_GOLD_FLOW', owned)
+    if region == 'WR':
+        return has_item('QUICKSTART_ITEM_GOLD_STATUES', owned)
+    return True
+
+
 def pool_usable(pool_index, owned):
     rule = KIT_RULES.get(REGION_NAMES[BY_POOL[pool_index]])
-    return rule is None or any(i in owned for i in rule)
+    if not (rule is None or any(i in owned for i in rule)):
+        return False
+    return gate_row_passable(pool_index, owned)
 
 
 def drop_index_usable(seed, raw, owned):
@@ -475,7 +532,7 @@ def regions_within_two(region):
     return two
 
 
-def roll_carrier_and_element(seed, drop, rng):
+def roll_carrier_and_element(seed, drop, rng, owned=frozenset()):
     """QuickStartRollElementRegionOnce. The carrier is seed-derived; the
     element region is a Random() draw rejected until it lands within two
     regions of the drop (and on a boss room, for the BOSS carrier)."""
@@ -493,9 +550,17 @@ def roll_carrier_and_element(seed, drop, rng):
         if not any((allowed >> BY_POOL[i]) & 1 and wave_ok(i)
                    for i in range(POOL_SIZE)):
             carrier = WIN_QUEST
+    # A row behind a sealed golden gate is skipped while some other row
+    # satisfies the carrier (the C's openRow pre-count).
+    open_row = any((allowed >> BY_POOL[i]) & 1 and gate_row_passable(i, owned)
+                   and (carrier != WIN_BOSS or (POOL[i]['area'], POOL[i]['room']) in BOSS_ROOMS)
+                   and (carrier != WIN_WAVE or wave_ok(i))
+                   for i in range(POOL_SIZE))
     while True:
         elem = rng.randrange(POOL_SIZE)
         if not (allowed >> BY_POOL[elem]) & 1:
+            continue
+        if open_row and not gate_row_passable(elem, owned):
             continue
         if carrier == WIN_BOSS and (POOL[elem]['area'], POOL[elem]['room']) not in BOSS_ROOMS:
             continue
@@ -510,6 +575,12 @@ def held_mask(items):
     m = 0
     for it in items:
         m |= ITEM_TO_BIT.get(it, 0)
+    # The golden gates (QuickStartHeldReachMask): rolled open, or - in this
+    # model - the piece(s) held.
+    if has_item('QUICKSTART_ITEM_GOLD_FLOW', items):
+        m |= TOKEN_BITS['QS_REACH_SOURCE_FLOW']
+    if has_item('QUICKSTART_ITEM_GOLD_STATUES', items):
+        m |= TOKEN_BITS['QS_REACH_STATUES']
     return m
 
 
@@ -634,10 +705,10 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     # key, then an EVENT at a site that key seals, priced with the key held.
     # One roll in six while a step is left for the far side of the lock.
     if step + 1 < 4 and ((h >> 10) & 0x7fff) % 6 == 0:
-        first = (h >> 12) & 1
-        for k in range(2):
-            key = CHAIN_KEYS[(first + k) & 1]
-            if key in owned:
+        first = (h >> 12) & 3
+        for k in range(4):
+            key = CHAIN_KEYS[(first + k) & 3]
+            if has_item(key, owned):
                 continue
             drop = {REGION_INDEX[r] for r in KEY_REGIONS[key]}
             if not any((regions_of(regions) >> r) & 1 for r in drop):
@@ -747,6 +818,7 @@ def snapshot(regions, held, label):
 def simulate(seed, cohort, rng):
     """One run. `rng` picks which of the three offered items the player takes."""
     owned = set(BOOT_ITEMS)
+    roll_gates(seed, owned)
     # --- the three hub rounds. Only round 1 (key items) and round 3's Spin
     # Attack move the reach mask, but all three are dealt so the record is
     # the real loadout.
@@ -756,6 +828,7 @@ def simulate(seed, cohort, rng):
                         ({'QS_CAT_SKILL'}, {'QS_TIER_COMMON', 'QS_TIER_UNCOMMON'})):
         pool = [e['item'] for e in TIERS
                 if (e['cats'] & cats) and (tiers is None or e['tier'] in tiers)
+                and not is_pseudo(e['item'])   # QuickStartCollectChoiceCandidates skips the pieces
                 and (e['repeatable'] or e['item'] not in owned)]
         seen, uniq = set(), []
         for it in pool:
@@ -772,7 +845,7 @@ def simulate(seed, cohort, rng):
     # re-draw, which IS seed-derived and does depend on what round 1 gave.
     drop_pool = drop_index_usable(seed, rng.randrange(POOL_SIZE), owned)
     drop_region = BY_POOL[drop_pool]
-    carrier, element_pool = roll_carrier_and_element(seed, drop_pool, rng)
+    carrier, element_pool = roll_carrier_and_element(seed, drop_pool, rng, owned)
     quest_slot = element_pool if carrier == WIN_QUEST else rng.randrange(POOL_SIZE)
 
     checkpoints, steps, rewards = [], [], []

@@ -143,7 +143,10 @@ def main():
     held = C.call_keep(c, C.game_sym('QuickStartHeldReachMask'), ())
     c2 = boot(rom)
     held0 = C.call_keep(c2, C.game_sym('QuickStartHeldReachMask'), ())
-    TRIL_BIT, NORTH_BIT = 1 << 25, 1 << 22
+    # From the generated header, not hardcoded: the boulder bits moved when
+    # the two golden-gate tokens went in ahead of them (Oct 2026).
+    import sim
+    TRIL_BIT, NORTH_BIT = sim.TOKEN_BITS['QS_REACH_BOULDER_TRIL_1'], sim.TOKEN_BITS['QS_REACH_LLR_NORTH']
     t2 = (held & TRIL_BIT) and not (held0 & TRIL_BIT)
     print('PASS' if t2 else 'FAIL', 'held mask: boulder TRIL bit %s with the flag, %s without' % (bool(held & TRIL_BIT), bool(held0 & TRIL_BIT)))
     ok &= t2

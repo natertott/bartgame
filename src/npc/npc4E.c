@@ -56,8 +56,17 @@ void NPC4E(Entity* this) {
     // "prevent player from leaving" and picture-viewing cutscene logic -
     // none of that applies to our quickstart room, and the leave-prevention
     // script would actively fight the player's free movement.
-    DeleteThisEntity();
-    return;
+    //
+    // Type 11 is the Source of the Flow, the stone face that seals Veil
+    // Falls' cave #1 until KINSTONE_SOURCE_FLOW is fused with it. Since Oct
+    // 2026 that is a gate the run rolls (QuickStartRollGoldGates, game.c): when
+    // it rolled open the stone goes with the rest; when it rolled sealed the
+    // stone stays and runs its vanilla script - the fusion prompt, and its
+    // own removal once the fusion is done.
+    if (!(this->type == 11 && QuickStartSourceFlowStands())) {
+        DeleteThisEntity();
+        return;
+    }
 #endif
     if (this->action == 0) {
         this->action = 1;

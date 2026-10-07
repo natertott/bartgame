@@ -73,6 +73,15 @@ MINISH = 'minish_cap'          # being able to shrink
 OCARINA = 'ocarina'
 LONLON_KEY = 'lonlon_key'
 GRAVEYARD_KEY = 'graveyard_key'
+# The two golden-kinstone gates (Oct 2026). Each run rolls them open or
+# sealed at its start (GF_GATE_SEALED_BIT in game.c): open, the way stands
+# as it always did; sealed, the gate wants its golden piece(s) fused at the
+# stone itself, and those pieces are key items the economy pays out
+# (QUICKSTART_ITEM_GOLD_*). Testable at run time - game.c reads the gate's
+# own state (rolled open, or the fusion done) into the held mask - so a
+# place behind one is offerable, never invisible.
+SOURCE_FLOW = 'source_flow'      # the Source of the Flow stone at cave #1's mouth, Veil Falls
+STATUES = 'golden_statues'       # the three sleeping statues at Castor Wilds' south-west passage
 
 # World state. Anything that is not carried but must have HAPPENED.
 FUSION = 'fusion'                        # an unnamed kinstone fusion
@@ -590,10 +599,11 @@ link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, 'LLR@NW')
 # North Hyrule Field from Veil Falls: the falls' corridor lands in the bomb
 # pocket at (1000,111), and the field's own row prices that pocket at the
 # bombs from the start, so the pocket is priced at the bombs the other way
-# too. INFERRED from the field's row and the measured landing; UNWALKED.
+# too. The user confirmed it (second pass, 2026-10-07): leaving the pocket
+# takes the bombs.
 entrance('NHF@VF', 'NHF', 'North Hyrule Field (from Veil Falls, the east bomb pocket)',
          ('HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1000, 111), room_req=[[SWORD]],
-         note='Oct 2026; measured landing, rows copied from the start with the bombs added (inferred)')
+         note='Oct 2026; measured landing, rows copied from the start with the bombs added; the user confirmed the bombs (second pass)')
 copy_dests('NHF', 'NHF@VF', add=(BOMBS,), skip=[('HYRULE_FIELD', 'NORTH_HYRULE_FIELD', (999, 112))])
 d('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, FREE, 'exit east -> VEIL_FALLS (8,639); the start itself')
 link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'VF@NHF')
@@ -864,8 +874,12 @@ d('CW', 'CASTOR_CAVES', 'SOUTH', 120, 152,
   [[FLIPPERS, SWORD], [BOULDER('CW', 1), BOW, MINISH, SWORD],
    [BOULDER('CW', 1), BOULDER('CW', 2), SWORD]],
   'three routes: neither boulder in, boulder 1 only, or both')
-d('CW', 'CASTOR_WILDS', 'MAIN', 39, 952, [[BOULDER('CW', 1)], [BOULDER('CW', 2)]],
-  'exit to the southern pocket')
+d('CW', 'CASTOR_WILDS', 'MAIN', 39, 952, [[BOULDER('CW', 1), STATUES], [BOULDER('CW', 2), STATUES]],
+  'exit to the southern pocket, and south over the border into the Wind Ruins; the three statues at tiles '
+  '(1-3,58-59) stand aside only once all three are fused, or the run rolled their gate open')
+# The Ruins hang off this one crossing: the link prices it at the row above
+# instead of the ring adjacency's default (the Ruins' own swamp kit).
+link('CW', 'CASTOR_WILDS', 'MAIN', 39, 952, 'WR')
 d('CW', 'CASTOR_CAVES', 'NORTH', 296, 120, FREE, 'right-hand pocket of a two-entrance room')
 d('CW', 'CASTOR_CAVES', 'HEART_PIECE', 120, 120, [[FLIPPERS]])
 d('CW', 'DOJOS', 'TO_SCARBLADE', -648, -56, [[FLIPPERS, FUSION]])
@@ -1450,11 +1464,13 @@ link('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, 'CREN')
 # CAVE #1 is the Source of the Flow's cave. In vanilla a stone face (NPC4E,
 # type 11) seals it until the player fuses KINSTONE_SOURCE_FLOW with it -
 # the gold piece King Gustaf's ghost hands over in the Royal Crypt
-# (script_KingGustav.inc, GiveKinstone 0x6d). This build deletes that NPC at
-# its init (npc4E.c, under QUICKSTART), and the door was measured OPEN:
-# walking north from (56,560) enters VEIL_FALLS_CAVES/ENTRANCE in 80
-# frames (scratchpad vf_door2.py). The user asked for it open; it is.
-# The cave is dark, and the user prices the dark at the Lantern.
+# (script_KingGustav.inc, GiveKinstone 0x6d). Since Oct 2026 the stone is a
+# GATE the run rolls (SOURCE_FLOW above): open, the NPC is deleted at its
+# init (npc4E.c) and the door was measured OPEN - walking north from
+# (56,560) enters VEIL_FALLS_CAVES/ENTRANCE in 80 frames; sealed, the stone
+# stands and the piece is a key item (QUICKSTART_ITEM_GOLD_FLOW) the
+# economy pays out in the neighbouring regions. The cave is dark, and the
+# user prices the dark at the Lantern.
 #
 # Beyond cave #1 the falls are a Grip Ring climb: the big waterfall (tiles
 # 17-27, rows 18-28, collision 0x2b over act tile 0x50) climbs from the
@@ -1472,7 +1488,7 @@ region('VF', 'Veil Falls', ('VEIL_FALLS', 'MAIN', 296, 500),
        note='the drop plateau at the foot of the big falls, tile (18,31); rows inferred from the North Field walk')
 d('VF', 'VEIL_FALLS_CAVES', 'ENTRANCE', 56, 120, [[LANTERN]], 'cave #1, dark')
 d('VF', 'VEIL_FALLS_CAVES', 'EXIT', 79, 66, [[LANTERN]], "cave #1's upper room, dark")
-d('VF', 'VEIL_FALLS', 'MAIN', 8, 639, [[LANTERN]], 'exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket, down through cave #1')
+d('VF', 'VEIL_FALLS', 'MAIN', 8, 639, [[LANTERN, SOURCE_FLOW]], 'exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket, down through cave #1 and out past the stone')
 d('VF', 'VEIL_FALLS', 'MAIN', 216, 472, FREE, 'tile (13,29), where cave #1 opens onto this plateau')
 d('VF', 'VEIL_FALLS', 'MAIN', 358, 199, [[GRIP, FUSION]], 'gold chest, tile (22,12), on the top plateau; KINSTONE_61 lays it')
 d('VF', 'VEIL_FALLS', 'MAIN', 248, 254, [[GRIP]], 'the wind crest, tile (15,15)')
@@ -1485,9 +1501,8 @@ d('VF', 'VEIL_FALLS_TOP', '0', 430, 153, [[GRIP]], 'exit north -> the ledge abov
 d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_RUPEE_PATH', 152, 40, [[GRIP]])
 d('VF', 'VEIL_FALLS', 'MAIN', 168, 216, [[GRIP]], 'tile (10,13)')
 d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_HEART_PIECE', 120, 42, [[GRIP, FLIPPERS, FUSION]],
-  'the nook behind the small upper-left waterfall; the user: grip and flippers. KINSTONE_13 (world event type 9, marker '
-  'at the nook\'s door (56,40)) is what reveals it in vanilla, so the fusion is added here - RE-MEASURE whether the cave '
-  'opens without it')
+  'the nook behind the small upper-left waterfall; the user: grip and flippers, and (second pass) the fusion too. '
+  'KINSTONE_13 (world event type 9, marker at the nook\'s door (56,40)) is what reveals it')
 d('VF', 'VEIL_FALLS', 'MAIN', 154, 611, [[FLIPPERS]], 'heart piece, tile (9,38), in the pool below the plateau')
 d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 232, 625, [[FUSION, MITTS, FLIPPERS]], 'dig-cave entrance 2, tile (14,39); KINSTONE_1F lays the land in front')
 d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 227, 299, [[FUSION, MITTS, FLIPPERS]], 'heart piece, tile (14,18), from entrance 2')
@@ -1505,8 +1520,8 @@ d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 443, 86, [[FUSION, MITTS, FLIPPERS]], 'gold 
 # the lantern; UNWALKED.
 d('VF', 'VEIL_FALLS_CAVES', 'SECRET_CHEST', 152, 72, [[LANTERN, BOMBS]], "through cave #1's bombable wall; a 50-shell chest. INFERRED")
 d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_STAIRCASE', 88, 72, [[LANTERN, BOMBS]], 'dark; INFERRED')
-d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[LANTERN, BOMBS]], 'the block puzzle; INFERRED')
-d('VF', 'VEIL_FALLS', 'MAIN', 200, 360, [[LANTERN, BOMBS]], "the ledge chest, tile (12,22), out of the block puzzle's south door; INFERRED")
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[LANTERN, BOMBS, BRACELETS]], 'the block puzzle; the user: the Power Bracelets move the blocks. Route INFERRED')
+d('VF', 'VEIL_FALLS', 'MAIN', 200, 360, [[LANTERN, BOMBS, BRACELETS]], "the ledge chest, tile (12,22), out of the block puzzle's south door; the bracelets are the puzzle before it. Route INFERRED")
 # The Lon Lon side is the other pocket: nothing here walks to it.
 link('VF', 'VEIL_FALLS', 'MAIN', 8, 639, 'NHF@VF')
 link('VF', 'VEIL_FALLS_TOP', '0', 430, 153, 'VF')
@@ -1515,31 +1530,31 @@ link('VF', 'VEIL_FALLS_TOP', '0', 430, 153, 'VF')
 # "cave #1" as the Lantern (the user: "this cave is dark, so it requires
 # the lantern") and the drop plateau added as a destination.
 entrance('VF@NHF', 'VF', 'Veil Falls (from North Hyrule Field)', ('VEIL_FALLS', 'MAIN', 8, 639),
-         note='walked 2026-10-06; the corridor to cave #1')
+         note='walked 2026-10-06; the corridor to cave #1. Every row past the corridor also carries SOURCE_FLOW: the stone at the cave mouth (Oct 2026)')
 d('VF@NHF', 'VEIL_FALLS', 'MAIN', 8, 639, FREE, 'exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket; the start itself')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'ENTRANCE', 56, 120, [[LANTERN]], 'cave #1, dark')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'EXIT', 79, 66, [[LANTERN]], 'through cave #1')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 216, 472, [[LANTERN]], 'tile (13,29): must go through cave #1')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 296, 500, [[LANTERN]], 'the drop plateau, tile (18,31): through cave #1 (added)')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 358, 199, [[LANTERN, GRIP, FUSION]], 'gold chest, tile (22,12)')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 248, 254, [[LANTERN, GRIP]], 'wind crest, tile (15,15)')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_1F', 184, 120, [[LANTERN, GRIP]])
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_ROOM', 106, 90, [[LANTERN, GRIP]])
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 88, [[LANTERN, GRIP]], 'tile (12,5)')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_2F', 56, 120, [[LANTERN, GRIP]])
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 344, 56, [[LANTERN, GRIP]], 'tile (21,3)')
-d('VF@NHF', 'VEIL_FALLS_TOP', '0', 430, 153, [[LANTERN, GRIP]], 'tile (26,9)')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_RUPEE_PATH', 152, 40, [[LANTERN, GRIP]])
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 168, 216, [[LANTERN, GRIP]], 'tile (10,13)')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_HEART_PIECE', 120, 42, [[LANTERN, GRIP, FLIPPERS, FUSION]], 'the user: cave #1, grip and flippers; the fusion is the KINSTONE_13 reveal, added')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 154, 611, [[LANTERN, FLIPPERS]], 'heart piece, tile (9,38): the user prices it at the flippers; the lantern is the cave on the way (added)')
-d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 232, 625, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'dig-cave entrance 2')
-d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 227, 299, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'heart piece from entrance 2')
-d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 443, 86, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'gold chest from entrance 2')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'SECRET_CHEST', 152, 72, [[LANTERN, BOMBS]], 'INFERRED, see the VF block')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_STAIRCASE', 88, 72, [[LANTERN, BOMBS]], 'INFERRED')
-d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[LANTERN, BOMBS]], 'INFERRED')
-d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 360, [[LANTERN, BOMBS]], 'the ledge chest; INFERRED')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'ENTRANCE', 56, 120, [[SOURCE_FLOW, LANTERN]], 'cave #1, dark, and the stone at its mouth must be gone (the gate rolled open, or its golden piece fused)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'EXIT', 79, 66, [[SOURCE_FLOW, LANTERN]], 'through cave #1')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 216, 472, [[SOURCE_FLOW, LANTERN]], 'tile (13,29): must go through cave #1')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 296, 500, [[SOURCE_FLOW, LANTERN]], 'the drop plateau, tile (18,31): through cave #1 (added)')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 358, 199, [[SOURCE_FLOW, LANTERN, GRIP, FUSION]], 'gold chest, tile (22,12)')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 248, 254, [[SOURCE_FLOW, LANTERN, GRIP]], 'wind crest, tile (15,15)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_1F', 184, 120, [[SOURCE_FLOW, LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_ROOM', 106, 90, [[SOURCE_FLOW, LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 88, [[SOURCE_FLOW, LANTERN, GRIP]], 'tile (12,5)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_2F', 56, 120, [[SOURCE_FLOW, LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 344, 56, [[SOURCE_FLOW, LANTERN, GRIP]], 'tile (21,3)')
+d('VF@NHF', 'VEIL_FALLS_TOP', '0', 430, 153, [[SOURCE_FLOW, LANTERN, GRIP]], 'tile (26,9)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_RUPEE_PATH', 152, 40, [[SOURCE_FLOW, LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 168, 216, [[SOURCE_FLOW, LANTERN, GRIP]], 'tile (10,13)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_HEART_PIECE', 120, 42, [[SOURCE_FLOW, LANTERN, GRIP, FLIPPERS, FUSION]], 'the user: cave #1, grip and flippers, and the fusion (confirmed, second pass): the KINSTONE_13 reveal')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 154, 611, [[SOURCE_FLOW, LANTERN, FLIPPERS]], 'heart piece, tile (9,38): the user prices it at the flippers; the lantern is the cave on the way (added)')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 232, 625, [[SOURCE_FLOW, LANTERN, FUSION, MITTS, FLIPPERS]], 'dig-cave entrance 2')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 227, 299, [[SOURCE_FLOW, LANTERN, FUSION, MITTS, FLIPPERS]], 'heart piece from entrance 2')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 443, 86, [[SOURCE_FLOW, LANTERN, FUSION, MITTS, FLIPPERS]], 'gold chest from entrance 2')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'SECRET_CHEST', 152, 72, [[SOURCE_FLOW, LANTERN, BOMBS]], 'INFERRED, see the VF block')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_STAIRCASE', 88, 72, [[SOURCE_FLOW, LANTERN, BOMBS]], 'INFERRED')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[SOURCE_FLOW, LANTERN, BOMBS, BRACELETS]], 'the bracelets for the blocks (the user); route INFERRED')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 360, [[SOURCE_FLOW, LANTERN, BOMBS, BRACELETS]], 'the ledge chest; the bracelets are the puzzle before it; route INFERRED')
 link('VF@NHF', 'VEIL_FALLS', 'MAIN', 8, 639, 'NHF@VF')
 link('VF@NHF', 'VEIL_FALLS_TOP', '0', 430, 153, 'VF')
 

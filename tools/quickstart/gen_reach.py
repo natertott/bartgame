@@ -89,7 +89,13 @@ TOKENS = [
     ('unsurveyed',      'QS_REACH_UNSURVEYED', None),
     # Derived: boulder 3 of Lon Lon Ranch in its hole, OR the Lon Lon Key.
     (W.LLR_NORTH,       'QS_REACH_LLR_NORTH',  None),
+    # Derived too (Oct 2026): a golden-kinstone gate the run rolled open,
+    # OR its fusion done - game.c reads the gate's own state
+    # (QuickStartGoldGatePassable) into the held mask.
+    (W.SOURCE_FLOW,     'QS_REACH_SOURCE_FLOW', None),
+    (W.STATUES,         'QS_REACH_STATUES',    None),
 ]
+DERIVED = {W.LLR_NORTH, W.SOURCE_FLOW, W.STATUES}
 BIT = {name: i for i, (name, _, _) in enumerate(TOKENS)}
 BOULDER_BASE = len(TOKENS)
 
@@ -425,12 +431,13 @@ def build():
     A('// are tested with GetInventoryValue; QS_REACH_FUSION reads the run\'s')
     A('// fusion count; the untestable group has NO run-time test, is never set')
     A('// in the held mask, and so permanently fails any term containing it;')
-    A('// QS_REACH_LLR_NORTH is derived (boulder 3 OR the Lon Lon key); and each')
-    A('// boulder bit reads the rock\'s own "settled in the hole" save flag.')
+    A('// QS_REACH_LLR_NORTH is derived (boulder 3 OR the Lon Lon key); the two')
+    A('// golden-kinstone gates are derived (rolled open this run OR fused); and')
+    A('// each boulder bit reads the rock\'s own "settled in the hole" save flag.')
     A('// That is deliberate: an unreachable step is an unwinnable run, so the')
     A('// table errs toward offering the chain placer less, never more.')
     for i, (tok, cname, item) in enumerate(TOKENS):
-        note = ('  // %s' % item) if item else ('  // derived' if tok == W.LLR_NORTH else '  // no run-time test')
+        note = ('  // %s' % item) if item else ('  // derived' if tok in DERIVED else '  // no run-time test')
         A('#define %-28s (1u << %2d)%s' % (cname, i, note))
     for b in BOULDERS:
         area, flag = W.BOULDER_FLAGS[b]

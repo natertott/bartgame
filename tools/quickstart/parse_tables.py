@@ -82,6 +82,21 @@ for _line in open(os.path.join(ROOT, 'build/USA/enum_include/item.inc')):
     _m = re.match(r'\.set (ITEM_\w+), (\d+)', _line.strip())
     if _m:
         ITEMS[_m.group(1)] = int(_m.group(2))
+# The golden kinstone pieces' pseudo ids (Oct 2026): QUICKSTART_ITEM_GOLD_*
+# in game.c sit above every real item (0x200 | piece), and the statue set
+# key QUICKSTART_ITEM_GOLD_STATUES at 0x300. Read from the defines so a
+# renumbering there is a renumbering here.
+def _pseudo_items():
+    out = {}
+    for _m in re.finditer(r'#define (QUICKSTART_ITEM_GOLD_\w+) QUICKSTART_ITEM_PIECE\((0x[0-9a-fA-F]+)\)', GAME):
+        out[_m.group(1)] = 0x200 | int(_m.group(2), 16)
+    _m = re.search(r'#define QUICKSTART_ITEM_GOLD_STATUES (0x[0-9a-fA-F]+)', GAME)
+    if _m:
+        out['QUICKSTART_ITEM_GOLD_STATUES'] = int(_m.group(1), 16)
+    return out
+
+
+ITEMS.update(_pseudo_items())
 
 
 def content_sites():

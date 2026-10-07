@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The golden kinstone gates: the Source of the Flow stone and the Castor statues roll sealed or open per run; the pieces are key items and win-chain keys | "The golden kinstone gates" |
 | Veil Falls integrated: pool row, 12 sites, 5 fusers, borders restored, vortex removed; the boulder survey's answers applied | "Veil Falls is the fourteenth region" |
 | 50,000-run simulation study, and a second pass that corrected three of its four headline findings | "50,000 simulated runs...", "The second pass..." |
 | Quest guard fix (31.7% of runs were dealt the side quest twice) | "The second pass..." |
@@ -72,6 +73,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Needs the user, not an agent
 
+- **Play a sealed golden gate.** Half the runs seal the Source of the
+  Flow stone and half the Castor statues (`GF_GOLD_GATE_SEALED_BIT`).
+  Nobody has found a piece in play, fused it at the stone through the
+  menu, or run the statues' rock cutscene; the probe writes the fused bit
+  and the passage flag instead. Say whether Ezlo's lines 212-213 read
+  right and whether the piece came in time.
 - **Walk Veil Falls' inferred rows.** `docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`
   section 8: the ledge chest's chain (cave #1's upper room, its bombable
   north wall, the secret chest, the dark staircase, the block puzzle, out

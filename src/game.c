@@ -425,6 +425,34 @@ static s32 QuickStartMemorySite(s32 role);
 static bool32 QuickStartSetupMemoryRoomContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase);
 static u32 QuickStartChainHash(u32 salt);
 void QuickStartMarkCatalogItem(u32);
+// The golden-kinstone gates (Oct 2026) - see QuickStartRollGoldGates, beside
+// the key-region table. Rolled at run start, read everywhere after.
+enum { QS_GOLD_GATE_FLOW, QS_GOLD_GATE_STATUES, QS_GOLD_GATE_COUNT };
+#define GF_GOLD_GATE_SEALED_BIT(g) (227 + (g)) // g = 0..1, QS_GOLD_GATE_FLOW / QS_GOLD_GATE_STATUES; sealed when set
+static void QuickStartRollGoldGates(void);
+static bool32 QuickStartGoldGateOpen(s32 gate);
+static bool32 QuickStartGoldGatePassable(s32 gate);
+static bool32 QuickStartHasItem(u16 item);
+static bool32 QuickStartGoldGateRowPassable(s32 poolIndex);
+// Golden kinstone pieces as items the economy can pay. A piece is not an
+// inventory item - it goes in the kinstone bag - so the tier table carries
+// each under a pseudo id above every real ITEM_*, and the places that would
+// read the inventory for one ask QuickStartHasItem instead; a reward spawner
+// puts it on the floor as a kinstone (QuickStartSpawnRewardEntity), a chest
+// stores it as ITEM_KINSTONE plus the piece (QuickStartFillChestSlot).
+// QUICKSTART_ITEM_GOLD_STATUES is the SET of three the statues want - the
+// key the chain deals; a draw for it pays the next piece missing
+// (QuickStartKeyPayoutItem). Piece id = 0x65 + shape - 1, the bag's own
+// numbering (AddKinstoneToBag takes 0x65..0x75).
+#define QUICKSTART_ITEM_PIECE(piece) (0x200 | (piece))
+#define QUICKSTART_ITEM_IS_PIECE(item) (((item) & 0xff00) == 0x200)
+#define QUICKSTART_PIECE_OF(item) ((item) & 0xff)
+#define QUICKSTART_ITEM_IS_PSEUDO(item) ((item) >= 0x200)
+#define QUICKSTART_ITEM_GOLD_LEFT QUICKSTART_ITEM_PIECE(0x6a)   // KINSTONE_CASTOR_WILDS_STATUE_LEFT, shape 6
+#define QUICKSTART_ITEM_GOLD_MIDDLE QUICKSTART_ITEM_PIECE(0x6b) // KINSTONE_CASTOR_WILDS_STATUE_MIDDLE, shape 7
+#define QUICKSTART_ITEM_GOLD_RIGHT QUICKSTART_ITEM_PIECE(0x6c)  // KINSTONE_CASTOR_WILDS_STATUE_RIGHT, shape 8
+#define QUICKSTART_ITEM_GOLD_FLOW QUICKSTART_ITEM_PIECE(0x6d)   // KINSTONE_SOURCE_FLOW, shape 9
+#define QUICKSTART_ITEM_GOLD_STATUES 0x300
 static bool32 QuickStartPositionAllowed(s16, s16);
 static bool32 QuickStartGfxBudgetForSpawn(void);
 // The feature testbed and the carry quest (docs/QUICKSTART_CARRY_AND_TESTBED.md).
@@ -1066,16 +1094,28 @@ static void GameTask_Transition(void) {
     // change a room this mode visits - 29 of the 91 that have a world event
     // at all, of which the 18 that open a gate or place a chest have fusers.)
     MemClear(&gSave.kinstones, sizeof(gSave.kinstones));
-    // The three sleeping statues guarding Castor Wilds' south-west passage
-    // into the Wind Ruins. Their fusions take MYSTERIOUS pieces (0x65-0x6d),
-    // which the enemy droptable cannot produce (it only mints 0x6E-0x75),
-    // so left unfused the Ruins would be sealed behind a currency the run
-    // cannot earn. Pre-fusing them per run opens the passage permanently -
-    // the same treatment Trilby's boulder crossing gets - and gates nothing
-    // else: each statue's world event is the statue itself stepping aside.
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_LEFT);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_MIDDLE);
-    WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_RIGHT);
+    // The two golden-kinstone gates (Oct 2026): the Source of the Flow
+    // stone at Veil Falls' cave #1 and the three sleeping statues guarding
+    // Castor Wilds' south-west passage into the Wind Ruins. Each is rolled
+    // open or sealed for the run here, from the run seed, after the wipe
+    // above and the flag sweep before it (QuickStartRollGoldGates).
+    //
+    // The statues' fusions take MYSTERIOUS pieces (0x65-0x6d), which the
+    // enemy droptable cannot produce (it only mints 0x6E-0x75), so they
+    // used to be pre-fused every run - the Ruins would otherwise have been
+    // sealed behind a currency the run cannot earn. Now that is the OPEN
+    // half of the roll; sealed, the statues sleep and their three pieces
+    // are key items the economy pays out (QUICKSTART_ITEM_GOLD_*), as the
+    // user asked: "sometimes the path would automatically be opened (as it
+    // currently is) and sometimes Link would have to find the three golden
+    // kinstones and fuse them". Each statue's world event is the statue
+    // itself stepping aside, so the pre-fuse gates nothing else.
+    QuickStartRollGoldGates();
+    if (QuickStartGoldGateOpen(QS_GOLD_GATE_STATUES)) {
+        WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_LEFT);
+        WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_MIDDLE);
+        WriteBit(&gSave.kinstones.fusedKinstones, KINSTONE_CASTOR_WILDS_STATUE_RIGHT);
+    }
     // The two Great Fairy honesty tests (Crenel, Minish Woods) are once per
     // RUN. Vanilla latches each behind a local flag of the fairies' own
     // area and heals on every visit after; the save keeps those flags
@@ -1088,8 +1128,12 @@ static void GameTask_Transition(void) {
     // stamped solid by the statue NPC whenever HIKYOU_00_SEKIZOU is unset
     // (castorWildsStatue.c), and vanilla only sets that flag at the end of
     // the rock cutscene the three fusions trigger - a cutscene the
-    // pre-fused bits skip. Set the flag the cutscene would have set.
-    SetLocalFlagByBank(GetFlagBankOffset(AREA_CASTOR_WILDS), HIKYOU_00_SEKIZOU);
+    // pre-fused bits skip. Set the flag the cutscene would have set - on
+    // the open half of the roll; sealed, the cutscene itself sets it once
+    // the player has fused the third statue.
+    if (QuickStartGoldGateOpen(QS_GOLD_GATE_STATUES)) {
+        SetLocalFlagByBank(GetFlagBankOffset(AREA_CASTOR_WILDS), HIKYOU_00_SEKIZOU);
+    }
     // The hub tower entrance's inner doorway. Vanilla stamps SPECIAL_TILE_114
     // over it whenever WARP_EVENT_END is unset
     // (sub_StateChange_WindTribeTower_Entrance, roomInit.c) - the story
@@ -3135,6 +3179,12 @@ const u8* const gCustomStrings2[] = {
     [209] = (const u8*)"Enemies hold a place at\nVeil Falls. Clear them\nout.",
     [210] = (const u8*)"A beast waits at Veil\nFalls. Put it down.",
     [211] = (const u8*)"A favour left undone at\nVeil Falls. Finish it.",
+    // 212-213: Ezlo's line for a chain step that asks for a golden kinstone
+    // (QuickStartKeyHintLine, Oct 2026): the stone at Veil Falls' cave, the
+    // three statues of Castor Wilds, and the regions sQuickStartKeyRegions
+    // pays the pieces in.
+    [212] = (const u8*)"The stone at Veil Falls\nwants a gold Kinstone.\nThe valley, north field,\nranch or Trilby has it.",
+    [213] = (const u8*)"Castor's three statues\nwant gold Kinstones. The\nwilds, the wood or\nTrilby hold them.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3155,8 +3205,9 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
 // (not fine, the arithmetic has moved).
 // 206 -> 212 for Veil Falls' region line and five pair lines (Oct 2026),
-// appended rather than inserted - see QuickStartRegionHintLine.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 212) ? 1 : -1];
+// appended rather than inserted - see QuickStartRegionHintLine. 212 -> 214
+// for the two golden-kinstone key hints (QuickStartKeyHintLine).
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 214) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3703,8 +3754,9 @@ static void QuickStartClearLonLonRanchAnimals(void) {
 // mode never runs, and with the fusion the three Big Gorons and the Mirror
 // Shield pedestal. Same rule as Eastern Hills: any NPC up there that is
 // not one of ours goes. The Main screen's own vanilla NPC - the Source of
-// the Flow stone that seals cave #1 - is already deleted at its init under
-// QUICKSTART (npc4E.c), which is why the cave is open in this build.
+// the Flow stone that seals cave #1 - is a gate the run rolls (Oct 2026,
+// QuickStartRollGoldGates): npc4E.c deletes it at its init when the gate rolled
+// open and keeps it when sealed, so this hook leaves the Main screen alone.
 static void QuickStartVeilFallsQuirkHook(void) {
     s32 hereRoom, i;
     if (gRoomControls.area != AREA_VEIL_FALLS_TOP) {
@@ -5288,18 +5340,37 @@ static void QuickStartRollElementRegionOnce(void) {
             carrier = QUICKSTART_WIN_QUEST;
         }
     }
-    for (;;) {
-        elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-        if (!(allowed & (1u << QuickStartRegionOfPoolIndex(elem)))) {
-            continue;
+    // A region behind a sealed golden gate (Oct 2026) is skipped as long as
+    // some other row satisfies the carrier - the element must not be the
+    // one thing the run can only reach by a fusion whose pieces nothing
+    // guarantees. Pre-counted like the two carrier checks above so the
+    // loop cannot spin on an empty mask.
+    {
+        bool32 openRow = FALSE;
+        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) && QuickStartGoldGateRowPassable(i) &&
+                (carrier != QUICKSTART_WIN_BOSS || QuickStartRegionAllowsBoss(&sQuickStartRegionPool[i])) &&
+                (carrier != QUICKSTART_WIN_WAVE || QuickStartRegionAllowsWave(&sQuickStartRegionPool[i]))) {
+                openRow = TRUE;
+                break;
+            }
         }
-        if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
-            continue;
+        for (;;) {
+            elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+            if (!(allowed & (1u << QuickStartRegionOfPoolIndex(elem)))) {
+                continue;
+            }
+            if (openRow && !QuickStartGoldGateRowPassable(elem)) {
+                continue;
+            }
+            if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
+                continue;
+            }
+            if (carrier == QUICKSTART_WIN_WAVE && !QuickStartRegionAllowsWave(&sQuickStartRegionPool[elem])) {
+                continue;
+            }
+            break;
         }
-        if (carrier == QUICKSTART_WIN_WAVE && !QuickStartRegionAllowsWave(&sQuickStartRegionPool[elem])) {
-            continue;
-        }
-        break;
     }
     QuickStartWritePoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT, elem);
     for (b = 0; b < 2; b++) {
@@ -6119,6 +6190,15 @@ static const QuickStartTierEntry sQuickStartTiers[] = {
     // as sealed - which is a far harder filter than its tier.
     { ITEM_QST_LONLON_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_QST_GRAVEYARD_KEY, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    // The golden kinstone pieces (Oct 2026): the Source of the Flow's one
+    // and the three Castor Wilds statues'. Drawn only while their gate is
+    // sealed and the piece not yet in hand (QuickStartHasItem), only in the
+    // regions sQuickStartKeyRegions allows, and paid as a kinstone on the
+    // floor. The chain's keyed pair deals them too (sQuickStartChainKeys).
+    { QUICKSTART_ITEM_GOLD_FLOW, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { QUICKSTART_ITEM_GOLD_LEFT, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { QUICKSTART_ITEM_GOLD_MIDDLE, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
+    { QUICKSTART_ITEM_GOLD_RIGHT, QS_CAT_KEY, QS_TIER_UNCOMMON, QS_REQ_NONE, 0 },
     { ITEM_MAGIC_BOOMERANG, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_BOOMERANG, 0 },
     { ITEM_MIRROR_SHIELD, QS_CAT_WEAPON, QS_TIER_RARE, QS_REQ_NONE, 0 },
     // The Light Arrow, per the user: "an upgrade to the bow in the vanilla
@@ -6324,7 +6404,13 @@ static Entity* QuickStartSpawnRewardEntity(u16 item, s16 localX, s16 localY) {
         }
         return NULL;
     }
-    itemEntity = CreateObject(GROUND_ITEM, item, 0);
+    if (QUICKSTART_ITEM_IS_PIECE(item)) {
+        // A golden piece is a kinstone on the floor - the enemy droptable's
+        // own form - and picking it up puts it in the bag.
+        itemEntity = CreateObject(GROUND_ITEM, ITEM_KINSTONE, QUICKSTART_PIECE_OF(item));
+    } else {
+        itemEntity = CreateObject(GROUND_ITEM, item, 0);
+    }
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + localX;
         itemEntity->y.HALF.HI = gRoomControls.origin_y + localY;
@@ -6604,27 +6690,27 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     { AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE,
       (1 << QS_REGION_VF), 0 },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST,
-      (1 << QS_REGION_VF), 0 },
+      (1 << QS_REGION_VF), QUICKSTART_ITEM_GOLD_FLOW },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
-      (1 << QS_REGION_WR), 0 },
+      (1 << QS_REGION_WR), QUICKSTART_ITEM_GOLD_STATUES },
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
-      (1 << QS_REGION_WR), 0 },
+      (1 << QS_REGION_WR), QUICKSTART_ITEM_GOLD_STATUES },
     { AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY,
       (1 << QS_REGION_WW), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST,
@@ -6753,14 +6839,147 @@ static u32 QuickStartCurrentRegionMask(void) {
     return (owner != NULL) ? owner->regions : 0;
 }
 
+// --- The golden-kinstone gates (Oct 2026) ----------------------------------
+//
+// The user: "on some runs, the door is automatically opened and the path
+// through is available. On other runs, the door is locked and the matching
+// golden kinstone is a receivable item from another quest, wave drop, boss,
+// ? room, etc." Two gates: the Source of the Flow stone at the mouth of Veil
+// Falls' cave #1 (one piece, KINSTONE_SOURCE_FLOW), and the three sleeping
+// statues at Castor Wilds' south-west passage into the Wind Ruins (three
+// pieces, one per statue). Each is rolled open or sealed at run start from
+// the run seed - half the runs each way - and that roll is what the rest of
+// the file reads:
+//   open    the old behaviour: the stone is deleted at its init (npc4E.c),
+//           the statues are pre-fused and their passage flag set. Nothing
+//           to find; the pieces count as held and never drop.
+//   sealed  vanilla: the stone stands and takes the fusion once the run
+//           holds the piece; the statues sleep until all three are fused,
+//           and their rock cutscene opens the passage. The pieces are
+//           QS_CAT_KEY items in the tier table, dealt by the chain's keyed
+//           pair like the two door keys, and never drop in the region they
+//           open (sQuickStartKeyRegions, sealedBy).
+// "Passable" is the gate's own state - rolled open, or the fusion done -
+// and is what the reach mask carries (QS_REACH_SOURCE_FLOW / _STATUES) and
+// what keeps a sealed region out of the drop and element draws
+// (QuickStartDropRowUsable). Only vanilla door mechanics: the stone and the
+// statues run their own scripts; this mode only decides whether they are
+// there to run.
+static void QuickStartRollGoldGates(void) {
+    s32 g;
+    for (g = 0; g < QS_GOLD_GATE_COUNT; g++) {
+        if (QuickStartChainHash(0x60u + (u32)g) & 1u) {
+            QsSetFlag(GF_GOLD_GATE_SEALED_BIT(g));
+        }
+    }
+}
+
+static bool32 QuickStartGoldGateOpen(s32 gate) {
+    return !QsCheckFlag(GF_GOLD_GATE_SEALED_BIT(gate));
+}
+
+static bool32 QuickStartGoldGatePassable(s32 gate) {
+    if (QuickStartGoldGateOpen(gate)) {
+        return TRUE;
+    }
+    if (gate == QS_GOLD_GATE_FLOW) {
+        return CheckKinstoneFused(KINSTONE_SOURCE_FLOW) != 0;
+    }
+    // The statues' passage tiles follow HIKYOU_00_SEKIZOU, which the rock
+    // cutscene sets once the third statue is fused (castorWildsStatue.c).
+    return CheckLocalFlagByBank(GetFlagBankOffset(AREA_CASTOR_WILDS), HIKYOU_00_SEKIZOU);
+}
+
+// For npc4E.c: does the stone stand at cave #1's mouth this run? A sealed
+// gate keeps it; the stone's own script removes it once the fusion is done.
+bool32 QuickStartSourceFlowStands(void) {
+    return !QuickStartGoldGateOpen(QS_GOLD_GATE_FLOW);
+}
+
+extern u32 GetAmountInKinstoneBag(KinstoneId kinstoneId);
+
+static bool32 QuickStartPieceInBag(u32 piece) {
+    return GetAmountInKinstoneBag(piece) != 0;
+}
+
+// The one ownership test for anything the tier table can name. A golden
+// piece counts as held when it is in the bag, when its fusion is done, or
+// when the gate it opens rolled open this run (nothing to want); the statue
+// set is held when all three pieces are. Everything else is the inventory.
+static bool32 QuickStartHasItem(u16 item) {
+    switch (item) {
+        case QUICKSTART_ITEM_GOLD_FLOW:
+            return QuickStartGoldGatePassable(QS_GOLD_GATE_FLOW) || QuickStartPieceInBag(0x6d);
+        case QUICKSTART_ITEM_GOLD_LEFT:
+            return QuickStartGoldGateOpen(QS_GOLD_GATE_STATUES) || CheckKinstoneFused(KINSTONE_CASTOR_WILDS_STATUE_LEFT) ||
+                   QuickStartPieceInBag(0x6a);
+        case QUICKSTART_ITEM_GOLD_MIDDLE:
+            return QuickStartGoldGateOpen(QS_GOLD_GATE_STATUES) || CheckKinstoneFused(KINSTONE_CASTOR_WILDS_STATUE_MIDDLE) ||
+                   QuickStartPieceInBag(0x6b);
+        case QUICKSTART_ITEM_GOLD_RIGHT:
+            return QuickStartGoldGateOpen(QS_GOLD_GATE_STATUES) || CheckKinstoneFused(KINSTONE_CASTOR_WILDS_STATUE_RIGHT) ||
+                   QuickStartPieceInBag(0x6c);
+        case QUICKSTART_ITEM_GOLD_STATUES:
+            return QuickStartHasItem(QUICKSTART_ITEM_GOLD_LEFT) && QuickStartHasItem(QUICKSTART_ITEM_GOLD_MIDDLE) &&
+                   QuickStartHasItem(QUICKSTART_ITEM_GOLD_RIGHT);
+        default:
+            break;
+    }
+    if (QUICKSTART_ITEM_IS_PSEUDO(item)) {
+        return FALSE;
+    }
+    return GetInventoryValue(item) != 0;
+}
+
+// The key a piece answers to in a room's sealedBy: the statue set for its
+// three pieces, the item itself for everything else.
+static u16 QuickStartKeySetOf(u16 item) {
+    if (item == QUICKSTART_ITEM_GOLD_LEFT || item == QUICKSTART_ITEM_GOLD_MIDDLE || item == QUICKSTART_ITEM_GOLD_RIGHT) {
+        return QUICKSTART_ITEM_GOLD_STATUES;
+    }
+    return item;
+}
+
+// What a draw for `key` pays out: the key itself, or for the statue set the
+// first of its three pieces the run does not hold yet.
+static u16 QuickStartKeyPayoutItem(u16 key) {
+    static const u16 pieces[3] = { QUICKSTART_ITEM_GOLD_LEFT, QUICKSTART_ITEM_GOLD_MIDDLE, QUICKSTART_ITEM_GOLD_RIGHT };
+    s32 i;
+    if (key != QUICKSTART_ITEM_GOLD_STATUES) {
+        return key;
+    }
+    for (i = 0; i < 3; i++) {
+        if (!QuickStartHasItem(pieces[i])) {
+            return pieces[i];
+        }
+    }
+    return pieces[0];
+}
+
 typedef struct {
     u16 item;
     u16 regions; // bitmask of QS_REGION_* (u16: ten rings outgrew a byte)
 } QuickStartKeyRegions;
 
+// The golden pieces (Oct 2026). The Source of the Flow's piece opens Veil
+// Falls' cave #1, so never the falls; it was King Gustaf's gift in the Royal
+// Crypt, so the valley carries it, with the falls' two neighbours and
+// Trilby. The statues' three open the Wind Ruins, so never the Ruins; the
+// wilds themselves (the statues' own field), the Western Wood and Trilby
+// carry them. The set key has the same row so the chain can ask where the
+// set may be paid.
+#define QUICKSTART_FLOW_PIECE_REGIONS \
+    ((1 << QS_REGION_NHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_RV) | (1 << QS_REGION_TRIL))
+#define QUICKSTART_STATUE_PIECE_REGIONS ((1 << QS_REGION_CW) | (1 << QS_REGION_WW) | (1 << QS_REGION_TRIL))
+
 static const QuickStartKeyRegions sQuickStartKeyRegions[] = {
     { ITEM_QST_LONLON_KEY, (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_EH) },
     { ITEM_QST_GRAVEYARD_KEY, (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_RV) },
+    { QUICKSTART_ITEM_GOLD_FLOW, QUICKSTART_FLOW_PIECE_REGIONS },
+    { QUICKSTART_ITEM_GOLD_LEFT, QUICKSTART_STATUE_PIECE_REGIONS },
+    { QUICKSTART_ITEM_GOLD_MIDDLE, QUICKSTART_STATUE_PIECE_REGIONS },
+    { QUICKSTART_ITEM_GOLD_RIGHT, QUICKSTART_STATUE_PIECE_REGIONS },
+    { QUICKSTART_ITEM_GOLD_STATUES, QUICKSTART_STATUE_PIECE_REGIONS },
 };
 
 // TRUE for anything that is not a gated key. For a key, TRUE only where
@@ -6784,7 +7003,7 @@ static bool32 QuickStartKeyRegionAllowed(u16 item) {
         return TRUE;
     }
     owner = QuickStartRoomOwnerOf(gRoomControls.area, gRoomControls.room);
-    if (owner != NULL && owner->sealedBy == item) {
+    if (owner != NULL && owner->sealedBy == QuickStartKeySetOf(item)) {
         return FALSE;
     }
     here = QuickStartCurrentRegionMask();
@@ -6795,7 +7014,7 @@ static bool32 QuickStartKeyRegionAllowed(u16 item) {
 }
 
 static bool32 QuickStartTierEntryUsable(const QuickStartTierEntry* e) {
-    if (!e->repeatable && GetInventoryValue(e->item) != 0) {
+    if (!e->repeatable && QuickStartHasItem(e->item)) {
         return FALSE;
     }
     // An upgrade SHADOWS its base item (the user: with the magic boomerang
@@ -6936,8 +7155,12 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     // chain step: the key is not left to the region-clear draw's luck.
     {
         u16 wanted = QuickStartChainWantedKey();
-        if (wanted != 0 && QuickStartKeyRegionAllowed(wanted)) {
-            return wanted;
+        if (wanted != 0) {
+            // The statue set pays one piece at a time (QuickStartKeyPayoutItem).
+            u16 pay = QuickStartKeyPayoutItem(wanted);
+            if (QuickStartKeyRegionAllowed(pay)) {
+                return pay;
+            }
         }
     }
     if (roll < 0) {
@@ -15411,6 +15634,20 @@ static bool32 QuickStartIsDigRoom(void) {
 // memory dump.
 #define QUICKSTART_CHEST_ENEMY 0xE7
 
+// A chest tile entry's prize: `_2` the item, `_3` its parameter, paid as
+// CreateItemEntity(_2, _3) when opened. A golden kinstone piece (Oct 2026,
+// QUICKSTART_ITEM_GOLD_*) is stored the way vanilla's own kinstone chests
+// store theirs: ITEM_KINSTONE with the piece as the parameter.
+static void QuickStartFillChestSlot(TileEntity* t, u16 item) {
+    if (QUICKSTART_ITEM_IS_PIECE(item)) {
+        t->_2 = ITEM_KINSTONE;
+        t->_3 = (u8)QUICKSTART_PIECE_OF(item);
+    } else {
+        t->_2 = (u8)item;
+        t->_3 = 0;
+    }
+}
+
 // Called from OpenSmallChest (playerItemUtils.c) instead of the item
 // payout. The chest's own tile position is where the enemy appears, so it
 // really does come out of the box.
@@ -15481,8 +15718,7 @@ static void QuickStartRestockSmallChests(void) {
             t->_2 = id;
             t->_3 = QUICKSTART_CHEST_ENEMY;
         } else {
-            t->_2 = (u8)QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP);
-            t->_3 = 0;
+            QuickStartFillChestSlot(t, QuickStartDrawItem((s32)Random() & 0x3f, QS_CAT_DROP));
         }
         t->_7 = QUICKSTART_CHEST_REDRAWN;
     }
@@ -18480,6 +18716,13 @@ static u32 QuickStartHeldReachMask(void) {
         GetInventoryValue(ITEM_QST_LONLON_KEY) != 0) {
         held |= QS_REACH_LLR_NORTH;
     }
+    // The golden-kinstone gates (Oct 2026): rolled open this run, or fused.
+    if (QuickStartGoldGatePassable(QS_GOLD_GATE_FLOW)) {
+        held |= QS_REACH_SOURCE_FLOW;
+    }
+    if (QuickStartGoldGatePassable(QS_GOLD_GATE_STATUES)) {
+        held |= QS_REACH_STATUES;
+    }
     return held;
 }
 
@@ -18719,7 +18962,9 @@ static u16 QuickStartChainPickItem(u32 salt) {
     s32 i, n = 0, want;
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
         const QuickStartTierEntry* row = &sQuickStartTiers[i];
-        if ((row->cat & QS_CAT_KEY) && GetInventoryValue(row->item) == 0) {
+        // The golden pieces are the keyed pair's business (sQuickStartChainKeys),
+        // not a plain "find X" step: a pseudo id has no inventory bit.
+        if ((row->cat & QS_CAT_KEY) && !QUICKSTART_ITEM_IS_PSEUDO(row->item) && GetInventoryValue(row->item) == 0) {
             n++;
         }
     }
@@ -18729,7 +18974,7 @@ static u16 QuickStartChainPickItem(u32 salt) {
     want = (s32)(QuickStartChainHash(salt) & 0x7fff) % n;
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
         const QuickStartTierEntry* row = &sQuickStartTiers[i];
-        if (!(row->cat & QS_CAT_KEY) || GetInventoryValue(row->item) != 0) {
+        if (!(row->cat & QS_CAT_KEY) || QUICKSTART_ITEM_IS_PSEUDO(row->item) || GetInventoryValue(row->item) != 0) {
             continue;
         }
         if (want-- == 0) {
@@ -18901,10 +19146,67 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
 // (sQuickStartKeyRegions) overlap what the run can reach, and while the
 // step is current QuickStartDrawItem pays that key out of the very next
 // reward drawn in one of those regions.
-static const u16 sQuickStartChainKeys[2] = { ITEM_QST_LONLON_KEY, ITEM_QST_GRAVEYARD_KEY };
+//
+// Four keys since Oct 2026: the two door keys and the two golden-kinstone
+// gates (QuickStartRollGoldGates). A gate that rolled open counts as held and is
+// skipped; a sealed one is dealt exactly like a door key, with the Ruins'
+// or the falls' sites behind it (sealedBy) as the far side of the lock.
+#define QUICKSTART_CHAIN_KEYS 4
+static const u16 sQuickStartChainKeys[QUICKSTART_CHAIN_KEYS] = { ITEM_QST_LONLON_KEY, ITEM_QST_GRAVEYARD_KEY,
+                                                                 QUICKSTART_ITEM_GOLD_FLOW,
+                                                                 QUICKSTART_ITEM_GOLD_STATUES };
 
+// chain_detail of a keyed ITEM step: 0xF0 + the key's index above. A u8
+// cannot hold the pieces' pseudo ids, and no real item sits that high; a
+// plain ITEM step (QuickStartChainPickItem) keeps the item id itself.
+#define QUICKSTART_CHAIN_KEY_DETAIL(k) (0xF0 + (k))
+
+static u16 QuickStartChainDetailItem(u8 detail) {
+    if (detail >= 0xF0 && detail < 0xF0 + QUICKSTART_CHAIN_KEYS) {
+        return sQuickStartChainKeys[detail - 0xF0];
+    }
+    return detail;
+}
+
+static bool32 QuickStartIsChainKey(u16 item) {
+    s32 k;
+    for (k = 0; k < QUICKSTART_CHAIN_KEYS; k++) {
+        if (sQuickStartChainKeys[k] == item) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// What holding the key adds to the reach mask. The Lon Lon Key is also the
+// north field's gate (QS_REACH_LLR_NORTH), so it moves nodes as well as
+// rooms; a golden gate's key is the gate's own passable bit.
 static u32 QuickStartKeyReachBit(u16 key) {
-    return (key == ITEM_QST_LONLON_KEY) ? QS_REACH_LONLON_KEY : QS_REACH_GRAVE_KEY;
+    switch (key) {
+        case ITEM_QST_LONLON_KEY:
+            return QS_REACH_LONLON_KEY | QS_REACH_LLR_NORTH;
+        case ITEM_QST_GRAVEYARD_KEY:
+            return QS_REACH_GRAVE_KEY;
+        case QUICKSTART_ITEM_GOLD_FLOW:
+            return QS_REACH_SOURCE_FLOW;
+        default:
+            return QS_REACH_STATUES;
+    }
+}
+
+// Ezlo's line for a key the chain wants: 195-196 the door keys, 212-213
+// the golden pieces (gCustomStrings2).
+static s32 QuickStartKeyHintLine(u16 key) {
+    switch (key) {
+        case ITEM_QST_LONLON_KEY:
+            return 195;
+        case ITEM_QST_GRAVEYARD_KEY:
+            return 196;
+        case QUICKSTART_ITEM_GOLD_FLOW:
+            return 212;
+        default:
+            return 213;
+    }
 }
 
 static u32 QuickStartKeyDropRegions(u16 key) {
@@ -18929,19 +19231,17 @@ static bool32 QuickStartChainSealedOk(u16 key, s32 step, const QuickStartReach* 
 // single step.
 static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, const QuickStartReach* r) {
     s32 k, i;
-    s32 first = (s32)((h >> 12) & 1);
-    for (k = 0; k < 2; k++) {
-        u16 key = sQuickStartChainKeys[(first + k) & 1];
-        // The reach once the key is held - its own flood, since the Lon
-        // Lon Key is also the north field's gate (QS_REACH_LLR_NORTH), so
-        // holding it moves nodes as well as rooms.
+    s32 first = (s32)((h >> 12) & (QUICKSTART_CHAIN_KEYS - 1));
+    for (k = 0; k < QUICKSTART_CHAIN_KEYS; k++) {
+        s32 which = (first + k) & (QUICKSTART_CHAIN_KEYS - 1);
+        u16 key = sQuickStartChainKeys[which];
+        // The reach once the key is held - its own flood (QuickStartKeyReachBit).
         QuickStartReach rKey;
         s32 n = 0, want;
-        if (GetInventoryValue(key) != 0 || (r->regions & QuickStartKeyDropRegions(key)) == 0) {
+        if (QuickStartHasItem(key) || (r->regions & QuickStartKeyDropRegions(key)) == 0) {
             continue;
         }
-        QuickStartReachCompute(&rKey, r->held | QuickStartKeyReachBit(key) |
-                                          ((key == ITEM_QST_LONLON_KEY) ? QS_REACH_LLR_NORTH : 0));
+        QuickStartReachCompute(&rKey, r->held | QuickStartKeyReachBit(key));
         for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
             if (QuickStartChainSealedOk(key, step + 1, &rKey, i)) {
                 n++;
@@ -18952,7 +19252,7 @@ static bool32 QuickStartChainRollKeyedPair(s32 step, u32 h, const QuickStartReac
         }
         gSave.chain_kind[step] = QS_CHAIN_ITEM;
         gSave.chain_where[step] = 0;
-        gSave.chain_detail[step] = (u8)key;
+        gSave.chain_detail[step] = (u8)QUICKSTART_CHAIN_KEY_DETAIL(which);
         gSave.chain_kind[step + 1] = QS_CHAIN_EVENT;
         gSave.chain_detail[step + 1] = 0;
         want = (s32)(h & 0x7fff) % n;
@@ -18974,8 +19274,8 @@ static u16 QuickStartChainWantedKey(void) {
     if (step < 0 || gSave.chain_kind[step] != QS_CHAIN_ITEM) {
         return 0;
     }
-    item = gSave.chain_detail[step];
-    if ((item == ITEM_QST_LONLON_KEY || item == ITEM_QST_GRAVEYARD_KEY) && GetInventoryValue(item) == 0) {
+    item = QuickStartChainDetailItem(gSave.chain_detail[step]);
+    if (QuickStartIsChainKey(item) && !QuickStartHasItem(item)) {
         return item;
     }
     return 0;
@@ -19036,7 +19336,7 @@ static bool32 QuickStartChainStepMet(s32 step) {
             // item is already held. Treat that as done rather than as a
             // wall; a run that rich has earned the step.
             return gSave.chain_detail[step] == 0 ||
-                   GetInventoryValue(gSave.chain_detail[step]) != 0;
+                   QuickStartHasItem(QuickStartChainDetailItem(gSave.chain_detail[step]));
         case QS_CHAIN_EVENT:
             return QsCheckSiteFlag(GF_CONTENT_SITE_DONE(where)) != 0;
         case QS_CHAIN_WAVE:
@@ -19240,7 +19540,7 @@ static void QuickStartSelectHintMonitor(void) {
         if (QuickStartChainWantedKey() != 0) {
             // A door key the chain wants: the line that names it and the
             // regions that pay it.
-            hint = (QuickStartChainWantedKey() == ITEM_QST_LONLON_KEY) ? 195 : 196;
+            hint = QuickStartKeyHintLine(QuickStartChainWantedKey());
         } else if (ring < 0) {
             // An ITEM step is not in a place. The kind bank's own line for
             // it already says the right thing.
@@ -19277,7 +19577,7 @@ static void QuickStartChainHintOnce(s32 step) {
     }
     if (QuickStartChainWantedKey() != 0) {
         // A door key: name it and the regions that pay it, compass or not.
-        hint = (QuickStartChainWantedKey() == ITEM_QST_LONLON_KEY) ? 195 : 196;
+        hint = QuickStartKeyHintLine(QuickStartChainWantedKey());
     } else if (GetInventoryValue(ITEM_COMPASS) != 0) {
         hint = QUICKSTART_CHAIN_HINT_KIND_BASE + gSave.chain_kind[step];
     } else {
@@ -21618,8 +21918,7 @@ static void QuickStartInnDealChest(s32 tier) {
     if (t == NULL) {
         return;
     }
-    t->_2 = (u8)QuickStartDrawAtTier((s32)Random() & 0x3f, QS_CAT_DROP, tier);
-    t->_3 = 0;
+    QuickStartFillChestSlot(t, QuickStartDrawAtTier((s32)Random() & 0x3f, QS_CAT_DROP, tier));
     t->_7 = QUICKSTART_CHEST_REDRAWN;
     ClearLocalFlag(t->localFlag);
     QuickStartInnChestSetArmed(tier, TRUE);
@@ -22185,10 +22484,34 @@ static bool32 QuickStartHasRegionKit(s32 poolIndex) {
     return TRUE;
 }
 
+// Does a pool row's region sit behind a golden-kinstone gate that is sealed
+// and unfused (Oct 2026)? The Ruins behind the sleeping statues, the falls'
+// plateau behind the stone: a drop into either would land the player in a
+// region whose only way out wants a piece that never drops there, and an
+// element there would want the same. Both draws skip such a row.
+static bool32 QuickStartGoldGateRowPassable(s32 poolIndex) {
+    u8 ring = QuickStartRegionOfPoolIndex(poolIndex);
+    if (ring == QS_REGION_VF) {
+        return QuickStartGoldGatePassable(QS_GOLD_GATE_FLOW);
+    }
+    if (ring == QS_REGION_WR) {
+        return QuickStartGoldGatePassable(QS_GOLD_GATE_STATUES);
+    }
+    return TRUE;
+}
+
+// A pool row the drop may land in: the kit rule and the gate rule.
+static bool32 QuickStartDropRowUsable(s32 poolIndex) {
+    if (QuickStartRegionNeedsSwampKit(poolIndex) && !QuickStartHasRegionKit(poolIndex)) {
+        return FALSE;
+    }
+    return QuickStartGoldGateRowPassable(poolIndex);
+}
+
 static s32 QuickStartDropRegionIndexUsable(void) {
     s32 index = QuickStartDropRegionIndex();
     s32 i, usable, pick;
-    if (!QuickStartRegionNeedsSwampKit(index) || QuickStartHasRegionKit(index)) {
+    if (QuickStartDropRowUsable(index)) {
         return index;
     }
     // Re-draw from the run seed over the rows that ARE usable rather than
@@ -22203,7 +22526,7 @@ static s32 QuickStartDropRegionIndexUsable(void) {
     // the same question asked of every row.
     usable = 0;
     for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-        if (!QuickStartRegionNeedsSwampKit(i) || QuickStartHasRegionKit(i)) {
+        if (QuickStartDropRowUsable(i)) {
             usable++;
         }
     }
@@ -22220,7 +22543,7 @@ static s32 QuickStartDropRegionIndexUsable(void) {
     }
     index = 0;
     for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-        if (QuickStartRegionNeedsSwampKit(i) && !QuickStartHasRegionKit(i)) {
+        if (!QuickStartDropRowUsable(i)) {
             continue;
         }
         if (pick == 0) {
@@ -24473,6 +24796,9 @@ static const s16 sQuickStartSacrificeSpots[QUICKSTART_SACRIFICE_SLOTS][2] = {
 // must stay fightable), the overworld quest keys, the Earth Element, and
 // the bottles (their contents make removal ambiguous).
 static bool32 QuickStartSacrificeEligible(u16 item) {
+    if (QUICKSTART_ITEM_IS_PSEUDO(item)) {
+        return FALSE; // a golden piece is in the bag, not the inventory, and is a key
+    }
     switch (item) {
         case ITEM_SMITH_SWORD:
         case ITEM_GREEN_SWORD:
@@ -25408,6 +25734,11 @@ static s32 QuickStartCollectChoiceCandidates(u8 catMask, u8 tierMask, u16* out, 
         if (QuickStartItemNeedsDirectGrant(e->item)) {
             continue;
         }
+        // Nor a golden kinstone piece: it is region-bound (the hub is in no
+        // region) and a sealed gate's key, dealt by the chain or the drops.
+        if (QUICKSTART_ITEM_IS_PSEUDO(e->item)) {
+            continue;
+        }
         for (j = 0; j < n; j++) {
             if (out[j] == e->item) {
                 break;
@@ -25761,6 +26092,12 @@ static void QuickStartGrantEverythingKit(void) {
     QuickStartGrantTestKit();
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
         const QuickStartTierEntry* e = &sQuickStartTiers[i];
+        if (QUICKSTART_ITEM_IS_PIECE(e->item)) {
+            // The golden pieces go in the bag (a sealed gate can then be
+            // fused in a scenario). The set key has no row here.
+            AddKinstoneToBag(QUICKSTART_PIECE_OF(e->item));
+            continue;
+        }
         if ((e->cat & (QS_CAT_KEY | QS_CAT_WEAPON | QS_CAT_SKILL | QS_CAT_STAT)) && !(e->cat & QS_CAT_CHARM) &&
             e->item != ITEM_BOMBS && e->item != ITEM_REMOTE_BOMBS && e->item != ITEM_BOOMERANG &&
             e->item != ITEM_RED_SWORD && e->item != ITEM_BOTTLE1) {

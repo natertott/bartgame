@@ -40,6 +40,14 @@ def _game_text_base(mapfile='build/USA/tmc.map'):
     raise KeyError('src/game.o .text base not in ' + mapfile)
 
 
+
+def _s32(v):
+    """A register value for mgba's binding, which takes int32_t: a u32 with
+    bit 31 set (the reach mask's last boulder bit since Oct 2026) has to be
+    handed over as its negative twin or the assignment overflows."""
+    v &= 0xFFFFFFFF
+    return v - 0x100000000 if v >= 0x80000000 else v
+
 def map_sym(name, mapfile='build/USA/tmc.map'):
     """Address of a GLOBAL symbol, read from the CURRENT map. Hardcoding
     one is the same trap as hardcoding game.o's text base: any rebuild
@@ -87,7 +95,7 @@ def call_args(core, addr, args, budget=500000):
     for i, v in enumerate(stack):
         native.busWrite32(native, sp + 4 * i, v & 0xFFFFFFFF)
     for i, v in enumerate(args[:4]):
-        cpu.gprs[i] = v & 0xFFFFFFFF
+        cpu.gprs[i] = _s32(v)
     cpu.gprs[4] = addr | 1
     cpu.gprs[13] = sp
     cpu.gprs[14] = TRAP | 1
@@ -95,7 +103,7 @@ def call_args(core, addr, args, budget=500000):
     for _ in range(budget):
         pc = cpu.gprs[15]
         if pc - 4 == TRAP or pc - 8 == TRAP:
-            return cpu.gprs[0]
+            return cpu.gprs[0] & 0xFFFFFFFF
         lib.ARMRun(cpu)
     raise RuntimeError('call did not return within %d instructions' % budget)
 
@@ -147,7 +155,7 @@ def call_keep(core, addr, args=(), budget=500000):
     for i, v in enumerate(stack):
         native.busWrite32(native, sp + 4 * i, v & 0xFFFFFFFF)
     for i, v in enumerate(list(args[:4])):
-        cpu.gprs[i] = v & 0xFFFFFFFF
+        cpu.gprs[i] = _s32(v)
     cpu.gprs[4] = addr | 1
     cpu.gprs[13] = sp
     cpu.gprs[14] = TRAP | 1
@@ -155,7 +163,7 @@ def call_keep(core, addr, args=(), budget=500000):
     for _ in range(budget):
         pc = cpu.gprs[15]
         if pc - 4 == TRAP or pc - 8 == TRAP:
-            out = cpu.gprs[0]
+            out = cpu.gprs[0] & 0xFFFFFFFF
             _restore(core, saved, saved_cpsr, ime)
             return out
         lib.ARMRun(cpu)
@@ -179,8 +187,8 @@ def call(core, addr, r0=0, r1=0, budget=500000):
         raise RuntimeError('CPU never reached game code')
     native.busWrite16(native, 0x04000208, 0)  # IME off
     cpsr = core.cpu.cpsr.packed
-    cpu.gprs[0] = r0
-    cpu.gprs[1] = r1
+    cpu.gprs[0] = _s32(r0)
+    cpu.gprs[1] = _s32(r1)
     cpu.gprs[3] = addr | 1
     cpu.gprs[13] = SCRATCH_SP
     cpu.gprs[14] = TRAP | 1
@@ -188,6 +196,6 @@ def call(core, addr, r0=0, r1=0, budget=500000):
     for _ in range(budget):
         pc = cpu.gprs[15]
         if pc - 4 == TRAP or pc - 8 == TRAP:
-            return cpu.gprs[0]
+            return cpu.gprs[0] & 0xFFFFFFFF
         lib.ARMRun(cpu)
     raise RuntimeError('call did not return within %d instructions' % budget)

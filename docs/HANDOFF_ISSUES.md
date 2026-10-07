@@ -174,6 +174,16 @@ so nobody re-invents them:
   frames (the Octorok logged 0 swings in 12000). `boss_stall.py` teleports
   beside the body when stuck for 40 frames; that measures the damage
   path, not pathfinding, and says so.
+- **mgba's register binding takes int32_t.** `callrom` used to assign
+  `v & 0xFFFFFFFF` straight into `cpu.gprs[i]`; the day the reach mask
+  grew a bit-31 token, `sim_validate` died with an OverflowError. Registers
+  go in through `_s32()` now and results come back masked unsigned.
+- **A probe that hardcodes a reach bit is wrong the day a token is
+  inserted.** `boulder_probe.py` had `1 << 25` for Trilby's boulder; the
+  golden-gate tokens moved every boulder up two. Read `sim.TOKEN_BITS`.
+- **`KinstoneSave` has `fuserOffers[128]` between `fuserProgress` and
+  `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
+  at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.
 
 ## 3. Language and toolchain traps (agbcc, C89)
 

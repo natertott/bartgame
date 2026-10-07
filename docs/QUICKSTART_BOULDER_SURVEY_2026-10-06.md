@@ -180,8 +180,14 @@ noted in brackets.
 10. **"Exit to Hyrule Town."** Lon Lon's (8,560) and Trilby's (472,560) are
     the same border, Hyrule Town having been stitched out of this build
     (docs/QUICKSTART_RETARGETS.md). [Linked to each other.]
-11. **"Boulder must be pushed in"** without a number, on the south list's
-    (712,750) row. [Boulder 3, as the E903 list says.]
+11. **"Boulder must be pushed in"** without a number. This is about ONE
+    row of YOUR OWN Lon Lon Ranch list (the one taken from the ranch's
+    south entrance): the exit at (712,750), the lower landing of the Lake
+    Hylia border, which you wrote up as "Boulder must be pushed in" and
+    nothing else - no boulder number. It is not about Trilby. The model
+    puts Lon Lon's boulder 3 there, because your list from the east
+    entrance names boulder 3 for the same exit. [Boulder 3 assumed; **say
+    which Lon Lon boulder you meant** if it was not 3.]
 12. **The Veil Falls entrance** is surveyed as a start, and this build has
     no way into Veil Falls. [Recorded; nothing links to it.]
 13. **Dig cave entrance 2's Flippers-or-cape.** The fusion lays land in
@@ -247,10 +253,21 @@ follows.
   the dig-cave water is what the fusion lays land over. All recorded as
   stated; none moved a row.
 - **"Trilby has only one boulder, and it should have been referenced as
-  boulder #1."** Item 11 was about Lon Lon's (712,750) row, which says
-  "Boulder must be pushed in" with no number; the model keeps boulder 3
-  there (the E903 list names it). If that row meant something else, say
-  which.
+  boulder #1."** Agreed on Trilby - it has one, numbered 1 everywhere in
+  the model. But item 11 was never about Trilby: it is about the row
+  "(712,750): Boulder must be pushed in" in your LON LON RANCH list from
+  the ranch's south entrance, where the boulder has no number. The model
+  keeps Lon Lon's boulder 3 there, because your list from the ranch's east
+  entrance names boulder 3 for that same exit. Item 11 is reworded above
+  to say so; the question that remains is only "was that Lon Lon's boulder
+  3?".
+- **Second pass, 2026-10-07 (the Veil Falls answers):** the Power
+  Bracelets are added to the block-puzzle room and to the ledge chest
+  ("this requirement applies to the final room right before the ledge
+  with the gold chest"); the bombs to leave the North Field's east pocket
+  are confirmed; the heart-piece nook's fusion is confirmed. All three are
+  in `world_reach.py` (the `VF` and `VF@NHF` blocks, the `NHF@VF`
+  entrance).
 
 ## 8. Veil Falls, walked 2026-10-06 and integrated
 
@@ -266,13 +283,16 @@ Lon Lon's new `LLR@POCKET`; the roadmap entry has the rest.
 4E type 11, standing at the cave mouth (56,509) - seals it until the
 player fuses `KINSTONE_SOURCE_FLOW` with the stone itself. The matching
 gold piece is the one King Gustaf's ghost gives in the Royal Crypt
-(`script_KingGustav.inc`, `GiveKinstone 0x6d`), which this build has no
-way to. The stone is deleted at its init under QUICKSTART (`npc4E.c`),
-and the door was MEASURED open on the delivered ROM: a player walked north
-from (56,560) is inside VEIL_FALLS_CAVES/ENTRANCE eighty frames later
-(`tools/quickstart/veilfalls_probe.py`, DOOR). If you saw a "special
-door" there, say which build; on this one there is nothing in the way.
-The cave is dark, and the lantern is what the rows charge for it.
+(`script_KingGustav.inc`, `GiveKinstone 0x6d`). **Since 2026-10-07 the
+stone is a gate the run rolls** (roadmap: "The golden kinstone gates"):
+on half the runs it is deleted at its init (`npc4E.c`) and the door is
+open - measured, a player walked north from (56,560) is inside
+VEIL_FALLS_CAVES/ENTRANCE eighty frames later; on the other half the stone
+stands, the cave stays shut (measured too), and the piece is a key item
+the economy pays out in the north field, the ranch, the valley or Trilby,
+never in the falls. Fuse it at the stone and the stone goes. The cave is
+dark, and the lantern is what the rows charge for it; every row past the
+corridor also carries the stone (`SOURCE_FLOW` in `world_reach.py`).
 
 **The gold chest on the ledge.** It is the one chest VEIL_FALLS/MAIN
 carries in its tile data, at (200,360), tile (12,22), on the ledge beside

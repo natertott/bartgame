@@ -1271,6 +1271,104 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The golden kinstone gates: the Source of the Flow and the Castor statues (Oct 2026)
+
+The user: "We should incorporate the golden kinstone fusion (from the
+Source of the Flow) as a mechanic in our game... on some runs, the door is
+automatically opened and the path through is available. On other runs,
+the door is locked and the matching golden kinstone is a receivable item
+from another quest, wave drop, boss, ? room, etc. We can incorporate it
+into the win chain as well. Let's go ahead and do the same thing for the
+fusions between Castor Wilds and the Wind Ruins... three golden
+kinstones... statues in the bottom-left corner of the map."
+
+**The roll.** Two gates, `QS_GOLD_GATE_FLOW` (the stone at the mouth of
+Veil Falls' cave #1, one piece, `KINSTONE_SOURCE_FLOW`) and
+`QS_GOLD_GATE_STATUES` (the three sleeping statues at Castor Wilds'
+south-west passage into the Wind Ruins, one piece each). Each is rolled
+sealed or open at run start from the run seed (`QuickStartRollGoldGates`,
+beside the kinstone wipe; `GF_GOLD_GATE_SEALED_BIT`, window offsets
+227-228, which the flag ledger had free) - half the runs each way (5903
+and 5988 of 12,000 simulated seeds). Open is exactly what shipped before:
+the stone is deleted at its init (`npc4E.c`), the statues are pre-fused
+and `HIKYOU_00_SEKIZOU` set. Sealed is vanilla: `npc4E.c` keeps the type
+11 stone and it runs its own script (the fusion prompt, its removal once
+fused); the statues sleep, their passage tiles are stamped solid by the
+statue NPC, and the rock cutscene opens them after the third fusion.
+Nothing in this mode drives a door - it only decides whether the vanilla
+gate is there.
+
+**The pieces as items.** A kinstone piece is not an inventory item, so the
+tier table carries each golden piece under a pseudo id
+(`QUICKSTART_ITEM_PIECE(p) = 0x200 | p`, `QUICKSTART_ITEM_GOLD_FLOW/LEFT/
+MIDDLE/RIGHT`; `QUICKSTART_ITEM_GOLD_STATUES = 0x300` is the SET the
+statues want) as `QS_CAT_KEY`, UNCOMMON. `QuickStartHasItem` is the one
+ownership test: in the bag, or fused, or the gate rolled open (so an open
+gate's pieces never drop). A reward spawner lays a piece as a kinstone on
+the floor (`CreateObject(GROUND_ITEM, ITEM_KINSTONE, piece)`, the enemy
+droptable's own form); a chest stores it as `ITEM_KINSTONE` plus the
+piece (`QuickStartFillChestSlot`, vanilla's kinstone-chest form). The
+pieces never drop in the region they open (`sQuickStartKeyRegions`: the
+flow piece in the north field, the ranch, the valley - Gustaf's crypt -
+and Trilby; the statue pieces in the wilds, the Western Wood and Trilby),
+and the nine cave sites of the falls' pocket 2 and the Ruins' two pocket
+sites are `sealedBy` their gate's key (`room_owner.py` SEALED). They are
+kept out of the hub offers, the sacrifice strew and the plain ITEM step.
+
+**The win chain.** `sQuickStartChainKeys` is four keys now: the two door
+keys and the two gates. The keyed pair deals a sealed gate exactly like a
+door key - an ITEM step for the key, then an EVENT at a site the key
+seals, priced with the gate's reach bit held - and `QuickStartDrawItem`
+pays the wanted key as the next reward in an allowed region, one statue
+piece at a time (`QuickStartKeyPayoutItem`). `chain_detail` of a keyed
+step is `0xF0 + key index` (a u8 cannot hold the pseudo ids). Ezlo's lines
+212-213 name the stone and the statues. Measured in the simulator over
+12,000 runs (rewards cohort): the Lon Lon key is dealt 4414 times, the
+graveyard key 226, the flow piece ONCE, the statue set never, and the
+pieces come out of region-clear draws 25 times. The flow pair wants the
+bombs and the lantern held at roll time (the falls' sites sit behind the
+North Field's bomb pocket and the dark cave); the statue pair wants a
+Castor boulder in its hole, because the user's own survey prices the
+statue passage at boulder 1 or 2, and the simulator never pushes a rock.
+In play both are live: the held mask reads the boulders and the kit as
+they happen.
+
+**The reach model.** Two derived tokens, `QS_REACH_SOURCE_FLOW` and
+`QS_REACH_STATUES` (bits 23-24; the boulders moved up to 25-31, the last
+of the u32). Held when the gate rolled open or its fusion is done
+(`QuickStartGoldGatePassable`: the fused bit for the stone, the passage
+flag for the statues). Every `VF@NHF` row past the corridor and the
+plateau's own exit carry `SOURCE_FLOW`; Castor Wilds' exit row (39,952)
+carries `STATUES` and is now the LINK that prices the Ruins (before, the
+Ruins were priced at the swamp kit alone, which missed the boulder the
+survey names). A drop and an element never land in a region whose gate is
+sealed and unfused (`QuickStartGoldGateRowPassable`; the element roll
+pre-counts so it cannot spin). Simulated: 402 of 12,000 drops land in the
+falls, 131 in the Ruins.
+
+**Measured** (`veilfalls_probe.py`, 17/17): both gates seal on some
+pinned seeds and open on others; open, no stone and the cave opens;
+sealed, one stone, the cave stays shut, the mask lacks the bit, the piece
+is wanted, a falls drop is re-drawn to row 6; with the fusion written the
+stone goes and the cave opens; the spawner lays piece 0x6d as a kinstone;
+the statue passage is walkable on the open roll and solid (0x0f) on the
+sealed one, and opens with the passage flag. `sim_validate` 402/402,
+`scenario_probe` 15/15, `memory_probe` 9/9, `boulder_probe` PASS, the
+static invariants and the flag ledger clean.
+
+**Not measured:** a fusion driven through the in-game menu at the stone
+or a statue (the probe writes the fused bit, as the fusion would), and
+the statues' rock cutscene end to end. Both are vanilla paths this mode
+does not touch. **Needs the user:** play a sealed run - find the piece,
+fuse it at the stone - and a sealed-statues run to the Ruins.
+
+Along the way: the Veil Falls corrections from the user's second pass
+(the Power Bracelets on the block-puzzle room and the ledge chest, the
+bomb pocket and the heart-piece nook's fusion confirmed) are in the
+survey; `callrom.py` hands registers to mgba as signed int32 and returns
+unsigned, since the held mask now uses bit 31; `boulder_probe.py` reads
+its bits from the generated header instead of hardcoding 25 and 22.
+
 ### Veil Falls is the fourteenth region (Oct 2026)
 
 The user walked Veil Falls from both of its borders (2026-10-06) and

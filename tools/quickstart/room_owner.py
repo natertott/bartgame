@@ -134,6 +134,25 @@ SEALED = {
     # ever added back.
     'ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST': 'ITEM_QST_LONLON_KEY',
     'ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST': 'ITEM_QST_LONLON_KEY',
+    # The golden-kinstone gates (Oct 2026, QuickStartRollGoldGates in game.c).
+    # Veil Falls' pocket 2 - everything past the Source of the Flow stone at
+    # cave #1's mouth - is sealed behind the stone's piece when the run
+    # rolls that gate sealed: the nine cave sites. (The Top screen is a ring
+    # room and has no row here; the Splitblade dojo is pocket 1, reached
+    # from Lon Lon, and stays free.) The Wind Ruins hang off Castor Wilds'
+    # statue passage, so their two pocket sites are sealed behind the
+    # statues' set of three.
+    'ROOM_VEIL_FALLS_CAVES_ENTRANCE': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_EXIT': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_1F': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_2F': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_VEIL_FALLS_CAVES_SECRET_CHEST': 'QUICKSTART_ITEM_GOLD_FLOW',
+    'ROOM_CASTOR_CAVES_WIND_RUINS': 'QUICKSTART_ITEM_GOLD_STATUES',
+    'ROOM_MINISH_CRACKS_RUINS_ENTRANCE': 'QUICKSTART_ITEM_GOLD_STATUES',
 }
 
 ENUM = {'CG': 'QS_REGION_CG', 'NHF': 'QS_REGION_NHF', 'SHF': 'QS_REGION_SHF', 'EH': 'QS_REGION_EH',

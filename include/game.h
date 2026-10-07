@@ -386,5 +386,8 @@ s32 QuickStartGetShopPrice(u32 item, s32 basePrice);
 // escalating price and retire a one-off slot. Nothing observable about the
 // shelf itself distinguishes a purchase from a room unload.
 void QuickStartNoteShopPurchase(u32 item);
+// Does the Source of the Flow stone stand at Veil Falls' cave this run?
+// (The golden-kinstone gate rolled sealed; npc4E.c keeps the NPC.)
+bool32 QuickStartSourceFlowStands(void);
 #endif
 #endif // GAME_H

@@ -8,8 +8,9 @@
 // are tested with GetInventoryValue; QS_REACH_FUSION reads the run's
 // fusion count; the untestable group has NO run-time test, is never set
 // in the held mask, and so permanently fails any term containing it;
-// QS_REACH_LLR_NORTH is derived (boulder 3 OR the Lon Lon key); and each
-// boulder bit reads the rock's own "settled in the hole" save flag.
+// QS_REACH_LLR_NORTH is derived (boulder 3 OR the Lon Lon key); the two
+// golden-kinstone gates are derived (rolled open this run OR fused); and
+// each boulder bit reads the rock's own "settled in the hole" save flag.
 // That is deliberate: an unreachable step is an unwinnable run, so the
 // table errs toward offering the chain placer less, never more.
 #define QS_REACH_SWORD               (1u <<  0)  // ITEM_SMITH_SWORD
@@ -35,13 +36,15 @@
 #define QS_REACH_SWITCHES4           (1u << 20)  // no run-time test
 #define QS_REACH_UNSURVEYED          (1u << 21)  // no run-time test
 #define QS_REACH_LLR_NORTH           (1u << 22)  // derived
-#define QS_REACH_BOULDER_LLR_1       (1u << 23)  // boulder:LLR:1: AREA_HYRULE_FIELD local flag 0x7b
-#define QS_REACH_BOULDER_LLR_2       (1u << 24)  // boulder:LLR:2: AREA_HYRULE_FIELD local flag 0x7c
-#define QS_REACH_BOULDER_TRIL_1      (1u << 25)  // boulder:TRIL:1: AREA_HYRULE_FIELD local flag 0x92
-#define QS_REACH_BOULDER_WW_N_1      (1u << 26)  // boulder:WW-N:1: AREA_HYRULE_FIELD local flag 0x93
-#define QS_REACH_BOULDER_CW_1        (1u << 27)  // boulder:CW:1: AREA_CASTOR_WILDS local flag 0x15
-#define QS_REACH_BOULDER_CW_2        (1u << 28)  // boulder:CW:2: AREA_CASTOR_WILDS local flag 0x16
-#define QS_REACH_BOULDER_CREN_2      (1u << 29)  // boulder:CREN:2: AREA_MT_CRENEL local flag 0x40
+#define QS_REACH_SOURCE_FLOW         (1u << 23)  // derived
+#define QS_REACH_STATUES             (1u << 24)  // derived
+#define QS_REACH_BOULDER_LLR_1       (1u << 25)  // boulder:LLR:1: AREA_HYRULE_FIELD local flag 0x7b
+#define QS_REACH_BOULDER_LLR_2       (1u << 26)  // boulder:LLR:2: AREA_HYRULE_FIELD local flag 0x7c
+#define QS_REACH_BOULDER_TRIL_1      (1u << 27)  // boulder:TRIL:1: AREA_HYRULE_FIELD local flag 0x92
+#define QS_REACH_BOULDER_WW_N_1      (1u << 28)  // boulder:WW-N:1: AREA_HYRULE_FIELD local flag 0x93
+#define QS_REACH_BOULDER_CW_1        (1u << 29)  // boulder:CW:1: AREA_CASTOR_WILDS local flag 0x15
+#define QS_REACH_BOULDER_CW_2        (1u << 30)  // boulder:CW:2: AREA_CASTOR_WILDS local flag 0x16
+#define QS_REACH_BOULDER_CREN_2      (1u << 31)  // boulder:CREN:2: AREA_MT_CRENEL local flag 0x40
 
 // The items behind the first block of bits, in bit order. game.c
 // walks this to build the held mask, so the two cannot drift: add a
@@ -65,7 +68,7 @@ typedef struct {
     u8 flag;
 } QuickStartReachBoulder;
 
-#define QS_REACH_BOULDER_BASE 23
+#define QS_REACH_BOULDER_BASE 25
 #define QS_REACH_LLR_NORTH_AREA AREA_HYRULE_FIELD  // boulder:LLR:3
 #define QS_REACH_LLR_NORTH_FLAG 0x7a
 #define QS_REACH_BOULDER_BITS 7
@@ -196,7 +199,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     {  6, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> TRIL@E: link: LLR row (8,560)
     {  6, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> NHF: link: LLR row (10,163)
     {  6, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LH: link: LLR row (712,445)
-    {  6, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR -> LH-SW: link: LLR row (712,750) | link: LLR row (712,903)
+    {  6, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x02000000u, ~0u, ~0u } }, // LLR -> LH-SW: link: LLR row (712,750) | link: LLR row (712,903)
     {  6, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> VF@LLR: link: LLR row (88,16)
     {  7,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> EH-N: link: LLR@E903 row (298,968)
     {  7, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> TRIL@E: link: LLR@E903 row (8,560)
@@ -208,7 +211,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     {  8, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> TRIL@E: link: LLR@E445 row (8,560)
     {  8, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> NHF: link: LLR@E445 row (10,163)
     {  8, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LH: link: LLR@E445 row (712,445)
-    {  8, 35, { 0x00000020u, 0x00000040u, 0x00000080u, 0x00800000u, ~0u, ~0u } }, // LLR@E445 -> LH-SW: link: LLR@E445 row (712,750) | link: LLR@E445 row (712,903)
+    {  8, 35, { 0x00000020u, 0x00000040u, 0x00000080u, 0x02000000u, ~0u, ~0u } }, // LLR@E445 -> LH-SW: link: LLR@E445 row (712,750) | link: LLR@E445 row (712,903)
     {  8, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> VF@LLR: link: LLR@E445 row (88,16)
     {  9,  3, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> EH-N: link: LLR@E750 row (298,968)
     {  9, 20, { 0x00000048u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> TRIL@E: link: LLR@E750 row (8,560)
@@ -220,19 +223,19 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 10, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> TRIL@E: link: LLR@W row (8,560)
     { 10, 14, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> NHF: link: LLR@W row (10,163)
     { 10, 32, { 0x00400008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LH: link: LLR@W row (712,445)
-    { 10, 35, { 0x00400028u, 0x00400048u, 0x00400088u, 0x00800008u, ~0u, ~0u } }, // LLR@W -> LH-SW: link: LLR@W row (712,750) | link: LLR@W row (712,903)
+    { 10, 35, { 0x00400028u, 0x00400048u, 0x00400088u, 0x02000008u, ~0u, ~0u } }, // LLR@W -> LH-SW: link: LLR@W row (712,750) | link: LLR@W row (712,903)
     { 10, 40, { 0x00000088u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> VF@LLR: link: LLR@W row (88,16)
     { 11,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> EH-N: link: LLR@NW row (298,968)
     { 11, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> TRIL@E: link: LLR@NW row (8,560)
     { 11, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> NHF: link: LLR@NW row (10,163)
     { 11, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LH: link: LLR@NW row (712,445)
-    { 11, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@NW -> LH-SW: link: LLR@NW row (712,750) | link: LLR@NW row (712,903)
+    { 11, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x02000000u, ~0u, ~0u } }, // LLR@NW -> LH-SW: link: LLR@NW row (712,750) | link: LLR@NW row (712,903)
     { 11, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> VF@LLR: link: LLR@NW row (88,16)
     { 12,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> EH-N: link: LLR@N row (298,968)
     { 12, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> TRIL@E: link: LLR@N row (8,560)
     { 12, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> NHF: link: LLR@N row (10,163)
     { 12, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LH: link: LLR@N row (712,445)
-    { 12, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@N -> LH-SW: link: LLR@N row (712,750) | link: LLR@N row (712,903)
+    { 12, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x02000000u, ~0u, ~0u } }, // LLR@N -> LH-SW: link: LLR@N row (712,750) | link: LLR@N row (712,903)
     { 12, 40, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> VF@LLR: link: LLR@N row (88,16)
     { 13, 41, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@POCKET -> VF@POCKET: link: LLR@POCKET row (176,16)
     { 14, 39, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> VF@NHF: link: NHF row (999,112)
@@ -248,7 +251,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 18, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> NHF: link: TRIL row (470,129)
     { 18, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> LLR@W: link: TRIL row (472,560)
     { 18, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> CREN-BASE: link: TRIL row (8,414)
-    { 18, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> WW-N: link: TRIL row (363,953)
+    { 18, 22, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> WW-N: link: TRIL row (363,953)
     { 19, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> NHF: link: TRIL@S row (470,129)
     { 19, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> LLR@W: link: TRIL@S row (472,560)
     { 19, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> CREN-BASE: link: TRIL@S row (8,414)
@@ -256,11 +259,11 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 20, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> NHF: link: TRIL@E row (470,129)
     { 20, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> LLR@W: link: TRIL@E row (472,560)
     { 20, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> CREN-BASE: link: TRIL@E row (8,414)
-    { 20, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> WW-N: link: TRIL@E row (363,953)
+    { 20, 22, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> WW-N: link: TRIL@E row (363,953)
     { 21, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> NHF: link: TRIL@N row (470,129)
     { 21, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> LLR@W: link: TRIL@N row (472,560)
     { 21, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> CREN-BASE: link: TRIL@N row (8,414)
-    { 21, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> WW-N: link: TRIL@N row (363,953)
+    { 21, 22, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> WW-N: link: TRIL@N row (363,953)
     { 22, 19, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> TRIL@S: link: WW-N row (343,0)
     { 22, 28, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> CW: link: WW-N row (6,97)
     { 22, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-C: link: WW-N row (284,636) | link: WW-N row (33,633) | same ring region (QS_REGION_WW)
@@ -273,11 +276,12 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 24, 28, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> CW: link: WW-N@S row (6,97)
     { 24, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-C: link: WW-N@S row (284,636) | link: WW-N@S row (33,633)
     { 24,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> SHF@NNW: link: WW-N@S row (468,431)
-    { 25, 19, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> TRIL@S: link: WW-N@E row (343,0)
-    { 25, 28, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> CW: link: WW-N@E row (6,97)
-    { 25, 26, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-C: link: WW-N@E row (284,636) | link: WW-N@E row (33,633)
+    { 25, 19, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> TRIL@S: link: WW-N@E row (343,0)
+    { 25, 28, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> CW: link: WW-N@E row (6,97)
+    { 25, 26, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-C: link: WW-N@E row (284,636) | link: WW-N@E row (33,633)
     { 25,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> SHF@NNW: link: WW-N@E row (468,431)
     { 26, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-N@S: link: WW-C row (277,0)
+    { 28, 29, { 0x21000040u, 0x21000400u, 0x41000040u, 0x41000400u, ~0u, ~0u } }, // CW -> WR: link: CW row (39,952)
     { 31, 36, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> LH-LADDER: link: MW row (600,767)
     { 32,  8, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LLR@E445: link: LH row (712,445)
     { 32, 34, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LH-CREST: link: LH row (168,440)
@@ -285,10 +289,10 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 35,  9, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-SW -> LLR@E750: link: LH-SW row (8,757)
     { 36,  8, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-LADDER -> LLR@E445: link: LH-LADDER row (8,445)
     { 37, 30, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> CREN: link: CREN-BASE row (856,274)
-    { 38, 15, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> NHF@VF: link: VF row (8,639)
+    { 38, 15, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> NHF@VF: link: VF row (8,639)
     { 38, 38, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> VF: link: VF row (430,153)
     { 39, 15, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@NHF -> NHF@VF: link: VF@NHF row (8,639)
-    { 39, 38, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@NHF -> VF: link: VF@NHF row (430,153) | walk from VF@NHF to the VF landing
+    { 39, 38, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@NHF -> VF: link: VF@NHF row (430,153) | walk from VF@NHF to the VF landing
     { 40, 12, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> LLR@N: link: VF@LLR row (88,1000)
     { 40, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> LLR@POCKET: link: VF@LLR row (176,1000)
     { 41, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@POCKET -> LLR@POCKET: link: VF@POCKET row (176,1000)
@@ -298,7 +302,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     {  1,  2, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> SHF@NNW: walk from SHF@NNE to the SHF@NNW landing
     {  2,  0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> SHF: walk from SHF@NNW to the SHF landing
     {  2,  1, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> SHF@NNE: walk from SHF@NNW to the SHF@NNE landing
-    {  6,  7, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LLR@E903: walk from LLR to the LLR@E903 landing
+    {  6,  7, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LLR@E903: walk from LLR to the LLR@E903 landing
     {  6,  8, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LLR@E445: walk from LLR to the LLR@E445 landing
     {  6,  9, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } }, // LLR -> LLR@E750: walk from LLR to the LLR@E750 landing
     {  6, 10, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LLR@W: walk from LLR to the LLR@W landing
@@ -311,45 +315,45 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     {  7, 11, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LLR@NW: walk from LLR@E903 to the LLR@NW landing
     {  7, 12, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LLR@N: walk from LLR@E903 to the LLR@N landing
     {  8,  6, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR: walk from LLR@E445 to the LLR landing
-    {  8,  7, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@E903: walk from LLR@E445 to the LLR@E903 landing
+    {  8,  7, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@E903: walk from LLR@E445 to the LLR@E903 landing
     {  8,  9, { 0x00000020u, 0x00000040u, 0x00000080u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@E750: walk from LLR@E445 to the LLR@E750 landing
     {  8, 10, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@W: walk from LLR@E445 to the LLR@W landing
     {  8, 11, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@NW: walk from LLR@E445 to the LLR@NW landing
     {  8, 12, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LLR@N: walk from LLR@E445 to the LLR@N landing
     {  9,  6, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR: walk from LLR@E750 to the LLR landing
-    {  9,  7, { 0x00800040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@E903: walk from LLR@E750 to the LLR@E903 landing
+    {  9,  7, { 0x02000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@E903: walk from LLR@E750 to the LLR@E903 landing
     {  9,  8, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@E445: walk from LLR@E750 to the LLR@E445 landing
     {  9, 10, { 0x00000048u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@W: walk from LLR@E750 to the LLR@W landing
     {  9, 11, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@NW: walk from LLR@E750 to the LLR@NW landing
     {  9, 12, { 0x000000c0u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LLR@N: walk from LLR@E750 to the LLR@N landing
     { 10,  6, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR: walk from LLR@W to the LLR landing
-    { 10,  7, { 0x00800008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@E903: walk from LLR@W to the LLR@E903 landing
+    { 10,  7, { 0x02000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@E903: walk from LLR@W to the LLR@E903 landing
     { 10,  8, { 0x00400008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@E445: walk from LLR@W to the LLR@E445 landing
     { 10,  9, { 0x00400028u, 0x00400048u, 0x00400088u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@E750: walk from LLR@W to the LLR@E750 landing
     { 10, 11, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@NW: walk from LLR@W to the LLR@NW landing
     { 10, 12, { 0x00000088u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LLR@N: walk from LLR@W to the LLR@N landing
     { 11,  6, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR: walk from LLR@NW to the LLR landing
-    { 11,  7, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@E903: walk from LLR@NW to the LLR@E903 landing
+    { 11,  7, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@E903: walk from LLR@NW to the LLR@E903 landing
     { 11,  8, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@E445: walk from LLR@NW to the LLR@E445 landing
     { 11,  9, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@E750: walk from LLR@NW to the LLR@E750 landing
     { 11, 10, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@W: walk from LLR@NW to the LLR@W landing
     { 11, 12, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LLR@N: walk from LLR@NW to the LLR@N landing
     { 12,  6, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR: walk from LLR@N to the LLR landing
-    { 12,  7, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@E903: walk from LLR@N to the LLR@E903 landing
+    { 12,  7, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@E903: walk from LLR@N to the LLR@E903 landing
     { 12,  8, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@E445: walk from LLR@N to the LLR@E445 landing
     { 12,  9, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@E750: walk from LLR@N to the LLR@E750 landing
     { 12, 10, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@W: walk from LLR@N to the LLR@W landing
     { 12, 11, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@NW: walk from LLR@N to the LLR@NW landing
     { 14, 15, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> NHF@VF: walk from NHF to the NHF@VF landing
     { 15, 14, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> NHF: walk from NHF@VF to the NHF landing
-    { 18, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@S: walk from TRIL to the TRIL@S landing
+    { 18, 19, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@S: walk from TRIL to the TRIL@S landing
     { 18, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@E: walk from TRIL to the TRIL@E landing
     { 19, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL: walk from TRIL@S to the TRIL landing
     { 19, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL@E: walk from TRIL@S to the TRIL@E landing
     { 20, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL: walk from TRIL@E to the TRIL landing
-    { 20, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL@S: walk from TRIL@E to the TRIL@S landing
+    { 20, 19, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL@S: walk from TRIL@E to the TRIL@S landing
     { 21, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL: walk from TRIL@N to the TRIL landing
-    { 21, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@S: walk from TRIL@N to the TRIL@S landing
+    { 21, 19, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@S: walk from TRIL@N to the TRIL@S landing
     { 21, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@E: walk from TRIL@N to the TRIL@E landing
     { 22, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@W: walk from WW-N to the WW-N@W landing
     { 22, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@S: walk from WW-N to the WW-N@S landing
@@ -360,10 +364,10 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 24, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N: walk from WW-N@S to the WW-N landing
     { 24, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@W: walk from WW-N@S to the WW-N@W landing
     { 24, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@E: walk from WW-N@S to the WW-N@E landing
-    { 25, 22, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N: walk from WW-N@E to the WW-N landing
-    { 25, 23, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@W: walk from WW-N@E to the WW-N@W landing
-    { 25, 24, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@S: walk from WW-N@E to the WW-N@S landing
-    { 38, 39, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> VF@NHF: walk from VF to the VF@NHF landing
+    { 25, 22, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N: walk from WW-N@E to the WW-N landing
+    { 25, 23, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@W: walk from WW-N@E to the WW-N@W landing
+    { 25, 24, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@S: walk from WW-N@E to the WW-N@S landing
+    { 38, 39, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> VF@NHF: walk from VF to the VF@NHF landing
     { 40, 41, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> VF@POCKET: walk from VF@LLR to the VF@POCKET landing
     {  3,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> EH-C: same ring region (QS_REGION_EH)
     {  3,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> EH-S: same ring region (QS_REGION_EH)
@@ -392,7 +396,6 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 28, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-N: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
     { 28, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-C: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
     { 28, 27, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-S: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
-    { 28, 29, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WR: ring adjacency QS_REGION_CW -> QS_REGION_WR (entry price)
     { 29, 28, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // WR -> CW: ring adjacency QS_REGION_WR -> QS_REGION_CW (entry price)
     { 30, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
     { 37, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
@@ -493,9 +496,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } },
-    {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  6, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  6, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  6, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  6, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  6, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  6, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -513,8 +516,8 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     {  7, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  7, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  7, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } },
-    {  7, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  7, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  7, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  7, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  7, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  7, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  7, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -532,9 +535,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000020u, 0x00000040u, 0x00000080u, ~0u, ~0u, ~0u } },
-    {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  8, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  8, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  8, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  8, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  8, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  8, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -551,9 +554,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000048u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x000000c0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  9, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    {  9, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  9, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    {  9, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  9, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x000000c0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     {  9, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x000000c0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -572,9 +575,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000088u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400028u, 0x00400048u, 0x00400088u, ~0u, ~0u, ~0u } },
-    { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 10, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 10, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 10, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 10, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 10, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00400088u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 10, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400088u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -592,9 +595,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } },
-    { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 11, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 11, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 11, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 11, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 11, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 11, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -612,9 +615,9 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } },
-    { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00800000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 12, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 12, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x01010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x02000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 12, AREA_GORON_CAVE, ROOM_GORON_CAVE_STAIRS, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 12, AREA_GORON_CAVE, ROOM_GORON_CAVE_MAIN, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00400080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -686,13 +689,13 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x08010000u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 18, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -734,13 +737,13 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x08010000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -758,12 +761,12 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x08010000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x08000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x08000000u, ~0u, ~0u, ~0u, ~0u } },
     { 21, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 21, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -808,15 +811,15 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x10010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x10010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 26, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -830,14 +833,14 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, 0, { 0x00000061u, 0x00000421u, 0x08000051u, 0x08000411u, 0x18000041u, 0x18000401u } },
-    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x08000040u, 0x08000400u, 0x10000040u, 0x10000400u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, 0, { 0x00000061u, 0x00000421u, 0x20000051u, 0x20000411u, 0x60000041u, 0x60000401u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x21000040u, 0x21000400u, 0x41000040u, 0x41000400u, ~0u, ~0u } },
     { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_DOJOS, ROOM_DOJOS_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_CASTOR_WILDS_DIG_CAVE, ROOM_CASTOR_WILDS_DIG_CAVE_0, 0, { 0x00000840u, 0x00000c00u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, 0, { 0x00000041u, 0x00000061u, 0x00000401u, 0x00000421u, 0x08000040u, 0x08000400u } },
+    { 28, AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, 0, { 0x00000041u, 0x00000061u, 0x00000401u, 0x00000421u, 0x20000040u, 0x20000400u } },
     { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
     { 28, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW, 0, { 0x00000060u, 0x00000420u, 0x00001040u, 0x00001400u, ~0u, ~0u } },
     { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NEXT_TO_BOW, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
@@ -880,7 +883,7 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 30, AREA_CRENEL_DIG_CAVE, ROOM_CRENEL_DIG_CAVE_0, 0, { 0x00000a08u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 30, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_RAIN, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, 0x20000208u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, 0x80000208u, ~0u, ~0u, ~0u, ~0u } },
     { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -985,7 +988,7 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00010200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -1004,32 +1007,32 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 38, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x0000010cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x0000010cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00010300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, { 0x00010320u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000120u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, 0, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 0, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00810300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, { 0x00810320u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00800120u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00810920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00810920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00810920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, 0, { 0x00800108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 0, { 0x00800108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x0080010cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x0080010cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 40, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 40, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 40, AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE, 0, { 0x00010020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
