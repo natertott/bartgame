@@ -70,6 +70,9 @@ RING = {  # room name -> the QS_REGION_* name it is
     'ROOM_MT_CRENEL_WALL_CLIMB': 'CREN',
     'ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE': 'CREN',
     'ROOM_MT_CRENEL_TOP': 'CREN',
+    # Veil Falls (Oct 2026): Main, and Top across its north border.
+    'ROOM_VEIL_FALLS_MAIN': 'VF',
+    'ROOM_VEIL_FALLS_TOP_0': 'VF',
 }
 # Two ? rooms are joined to their parent by a SCROLL SEAM, not by any kind
 # of transition: rooms inside one area share a pixel grid and the player
@@ -90,6 +93,12 @@ SEAMS = {
     # refusing every gated key for want of a row nobody could derive.
     'ROOM_DOJOS_GRAYBLADE': ('AREA_DOJOS', 'ROOM_DOJOS_TO_GRAYBLADE'),
     'ROOM_CASTOR_DARKNUT_MAIN': ('AREA_CASTOR_DARKNUT', 'ROOM_CASTOR_DARKNUT_HALL'),
+    # Veil Falls (Oct 2026): the Splitblade dojo above its ante room, and the
+    # 1F hallway's secret room, which is the room past its bombable wall -
+    # the two rectangles abut on the caves' pixel grid (gAreaRoomHeaders:
+    # 1F ends at x=656, the secret room starts there).
+    'ROOM_DOJOS_SPLITBLADE': ('AREA_DOJOS', 'ROOM_DOJOS_TO_SPLITBLADE'),
+    'ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM': ('AREA_VEIL_FALLS_CAVES', 'ROOM_VEIL_FALLS_CAVES_HALLWAY_1F'),
 }
 
 # Owning a region is necessary but not sufficient for a key drop. Some
@@ -130,7 +139,7 @@ SEALED = {
 ENUM = {'CG': 'QS_REGION_CG', 'NHF': 'QS_REGION_NHF', 'SHF': 'QS_REGION_SHF', 'EH': 'QS_REGION_EH',
         'LLR': 'QS_REGION_LLR', 'TRIL': 'QS_REGION_TRIL', 'WW': 'QS_REGION_WW', 'RV': 'QS_REGION_RV',
         'CW': 'QS_REGION_CW', 'WR': 'QS_REGION_WR', 'MW': 'QS_REGION_MW',
-        'LH': 'QS_REGION_LH', 'CREN': 'QS_REGION_CREN'}
+        'LH': 'QS_REGION_LH', 'CREN': 'QS_REGION_CREN', 'VF': 'QS_REGION_VF'}
 
 
 def doors_from(room_name):

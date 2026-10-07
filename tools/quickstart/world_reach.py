@@ -452,7 +452,7 @@ region('LLR', 'Lon Lon Ranch', ('HYRULE_FIELD', 'LON_LON_RANCH', 298, 968),
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 298, 968, FREE, 'exit south -> EASTERN_HILLS_NORTH; the start itself')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, [[BOMBS]], 'exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, FREE, 'exit north-west -> NORTH_HYRULE_FIELD')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, [[PACCI]], 'exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md)')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, [[PACCI]], 'exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, [[LLR_NORTH]], 'exit east -> LAKE_HYLIA, from the north field')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, [[LLR_NORTH, PACCI, MINISH], [LLR_NORTH, FLIPPERS], [LLR_NORTH, CAPE]],
   "exit east -> LAKE_HYLIA's south-west corner, over water from the north field")
@@ -462,8 +462,8 @@ d('LLR', 'GORON_CAVE', 'STAIRS', 120, 120, [[FUSION, BOULDER('LLR', 2)]],
 d('LLR', 'GORON_CAVE', 'MAIN', 120, 632, [[FUSION, BOULDER('LLR', 2)]],
   'the first chamber; the deeper three are the kinstone-gated miniboss sites')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 166, 54, None,
-  'POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, '
-  'and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens.')
+  'POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only '
+  '(the VF@POCKET entrance below prices it); from inside the ranch there is no way in.')
 d('LLR', 'MINISH_CRACKS', 'LON_LON_RANCH_NORTH', 120, 87, [[LLR_NORTH, PACCI, MINISH]])
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 427, 278, [[LLR_NORTH, PACCI, MINISH]], 'POCKET (tornado float)')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 313, 391, [[LLR_NORTH, BOOTS]], 'the Minish stump under a tree in the north field; the boots reveal it')
@@ -485,6 +485,7 @@ def _llr_links(k):
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, 'LH')
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, 'LH-SW')
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 903, 'LH-SW')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, 'VF@LLR')
 
 
 _llr_links('LLR')
@@ -536,13 +537,23 @@ copy_dests('LLR', 'LLR@NW', skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (10, 163))])
 d('LLR@NW', 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, FREE, 'exit north-west -> NORTH_HYRULE_FIELD; the start itself')
 _llr_links('LLR@NW')
 
-# The north landing, (88,16), from Veil Falls - which this build has no way
-# into. Recorded for the day it opens; nothing links to it.
-entrance('LLR@N', 'LLR', 'Lon Lon Ranch (from Veil Falls, BLOCKED)',
-         ('HYRULE_FIELD', 'LON_LON_RANCH', 88, 16), note='walked 2026-10-06; no crossing lands here in this build')
+# The north landing, (88,16), from Veil Falls' Lon Lon strip - open since
+# Oct 2026. Priced as from the south: the south list is the ranch from its
+# bottom gate, and the north gate opens onto the same south half.
+entrance('LLR@N', 'LLR', 'Lon Lon Ranch (from Veil Falls)',
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 88, 16), note='walked 2026-10-06; rows copied from the south entrance (inferred)')
 copy_dests('LLR', 'LLR@N', skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (88, 16))])
-d('LLR@N', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, FREE, 'exit north -> Veil Falls; the start itself, BLOCKED')
+d('LLR@N', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, FREE, 'exit north -> VEIL_FALLS (88,1000); the start itself')
 _llr_links('LLR@N')
+
+# The gold-chest pocket, (176,16), from Veil Falls' lower strip. A pocket:
+# the chest, and the way back north, and nothing else (the ranch's own
+# (166,54) row says no way in from inside).
+entrance('LLR@POCKET', 'LLR', "Lon Lon Ranch (the gold-chest pocket, from Veil Falls' lower strip)",
+         ('HYRULE_FIELD', 'LON_LON_RANCH', 176, 16), note='Oct 2026; the pocket Veil Falls (176,1000) lands in')
+d('LLR@POCKET', 'HYRULE_FIELD', 'LON_LON_RANCH', 166, 54, FREE, 'tile (10,3), the gold kinstone chest')
+d('LLR@POCKET', 'HYRULE_FIELD', 'LON_LON_RANCH', 176, 16, FREE, 'exit north -> VEIL_FALLS (176,1000); the start itself')
+link('LLR@POCKET', 'HYRULE_FIELD', 'LON_LON_RANCH', 176, 16, 'VF@POCKET')
 
 # --- North Hyrule Field ----------------------------------------------------
 # Every row carries the start's own bushes: a sword. Recorded once here
@@ -563,10 +574,32 @@ d('NHF', 'CAVES', 'BOOMERANG', 168, 216, [[SWITCHES4]], 'the central pocket')
 d('NHF', 'TREE_INTERIORS', 'NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN', None, None, [[FUSION]])
 d('NHF', 'CAVES', 'NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN', -376, -1432, [[FUSION]],
   'the same fusion as the tree above')
-d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, [[BOMBS]], 'exit')
-link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'LLR@NW')
+# The east edge, MEASURED (Oct 2026, scratchpad vf_borders.py): borders keep
+# the GLOBAL coordinate, so the north half of this edge - the bomb pocket at
+# (999,112) - is the Veil Falls crossing (it lands in the falls' North Field
+# corridor at (8,639)), and the start itself, (1013,638), is the Lon Lon
+# crossing (it lands at the ranch's (10,163)). The old link had the two the
+# other way round.
+d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, [[BOMBS]], 'exit east, the bomb pocket -> VEIL_FALLS (8,639)')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'VF@NHF')
 link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 9, 607, 'TRIL')
 link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'SHF')
+d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, FREE, 'exit east -> LON_LON_RANCH (10,163); the start itself')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, 'LLR@NW')
+
+# North Hyrule Field from Veil Falls: the falls' corridor lands in the bomb
+# pocket at (1000,111), and the field's own row prices that pocket at the
+# bombs from the start, so the pocket is priced at the bombs the other way
+# too. INFERRED from the field's row and the measured landing; UNWALKED.
+entrance('NHF@VF', 'NHF', 'North Hyrule Field (from Veil Falls, the east bomb pocket)',
+         ('HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1000, 111), room_req=[[SWORD]],
+         note='Oct 2026; measured landing, rows copied from the start with the bombs added (inferred)')
+copy_dests('NHF', 'NHF@VF', add=(BOMBS,), skip=[('HYRULE_FIELD', 'NORTH_HYRULE_FIELD', (999, 112))])
+d('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, FREE, 'exit east -> VEIL_FALLS (8,639); the start itself')
+link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'VF@NHF')
+link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, 'LLR@NW')
+link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 9, 607, 'TRIL')
+link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'SHF')
 d('NHF', 'MINISH_CRACKS', 'EAST_HYRULE_CASTLE', -936, 48, [[MINISH, BOOTS]])
 d('NHF', 'CAVES', 'TO_GRAVEYARD', -104, 216, [[BOMBS]])
 d('NHF', 'CAVES', 'HEART_PIECE_HALLWAY', -1000, -1000, [[BOMBS]])
@@ -1126,9 +1159,13 @@ d('MW', 'LAKE_HYLIA', 'MAIN', 0, 952, [[UNSURVEYED]],
 # region's Flippers price in QuickStartRegionNeedsSwampKit is about.
 region('LH', 'Lake Hylia', ('LAKE_HYLIA', 'MAIN', 40, 440),
        note='derived from the exit list + a collision flood, not walked')
-d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, FREE,
+# The three lake/ranch crossings, per the user (2026-10-06, second pass):
+# ranch (712,443)/(712,762)/(712,908) <-> lake (8,443)/(8,746)/(8,905). This
+# block's row used to say (712,328), a coordinate no crossing has; it is the
+# middle one, the north-field landing.
+d('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, FREE,
   'exit; the border the player arrives through, walkable both ways')
-link('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 328, 'LLR@E445')
+link('LH', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, 'LLR@E445')
 # The wind crest is the Ocarina's warp target; the pocket around it has no
 # walkable way in (LH-CREST), so this is the edge into it.
 d('LH', 'LAKE_HYLIA', 'MAIN', 168, 440, [[OCARINA]], 'the wind crest: the Ocarina warp is the way into its pocket')
@@ -1400,6 +1437,136 @@ d('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, [[GRIP]],
   'tile (53,17); the climb near the base entrance, which skips the bombs, '
   'the bean and the Minish layer entirely')
 link('CREN-BASE', 'MT_CRENEL', 'CENTER', 856, 274, 'CREN')
+
+
+# --- Veil Falls ------------------------------------------------------------
+#
+# Walked by the user 2026-10-06 from both of its borders. Two pockets that
+# no walk joins: pocket 1 is the Lon Lon strip at the falls' south-west
+# corner (the ranch's north gate lands there), pocket 2 is everything else,
+# entered from North Hyrule Field's east border through a corridor to cave
+# #1 at the foot of the big falls.
+#
+# CAVE #1 is the Source of the Flow's cave. In vanilla a stone face (NPC4E,
+# type 11) seals it until the player fuses KINSTONE_SOURCE_FLOW with it -
+# the gold piece King Gustaf's ghost hands over in the Royal Crypt
+# (script_KingGustav.inc, GiveKinstone 0x6d). This build deletes that NPC at
+# its init (npc4E.c, under QUICKSTART), and the door was measured OPEN:
+# walking north from (56,560) enters VEIL_FALLS_CAVES/ENTRANCE in 80
+# frames (scratchpad vf_door2.py). The user asked for it open; it is.
+# The cave is dark, and the user prices the dark at the Lantern.
+#
+# Beyond cave #1 the falls are a Grip Ring climb: the big waterfall (tiles
+# 17-27, rows 18-28, collision 0x2b over act tile 0x50) climbs from the
+# plateau to the top plateau - measured, a player with the ring climbs
+# from (344,470) to (344,214) - and the Top screen is reached the same way.
+# The water is the Flippers. The dig cave is the Mitts.
+#
+# The DROP lands on the plateau at the foot of the big falls, (296,500),
+# which the walk reaches "through cave #1". So the region key VF is that
+# plateau: its rows are the user's North Field rows with cave #1's cost
+# taken off everything that is not the cave itself (INFERRED from the
+# walk, not walked), the two borders carry the user's lists verbatim.
+
+region('VF', 'Veil Falls', ('VEIL_FALLS', 'MAIN', 296, 500),
+       note='the drop plateau at the foot of the big falls, tile (18,31); rows inferred from the North Field walk')
+d('VF', 'VEIL_FALLS_CAVES', 'ENTRANCE', 56, 120, [[LANTERN]], 'cave #1, dark')
+d('VF', 'VEIL_FALLS_CAVES', 'EXIT', 79, 66, [[LANTERN]], "cave #1's upper room, dark")
+d('VF', 'VEIL_FALLS', 'MAIN', 8, 639, [[LANTERN]], 'exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket, down through cave #1')
+d('VF', 'VEIL_FALLS', 'MAIN', 216, 472, FREE, 'tile (13,29), where cave #1 opens onto this plateau')
+d('VF', 'VEIL_FALLS', 'MAIN', 358, 199, [[GRIP, FUSION]], 'gold chest, tile (22,12), on the top plateau; KINSTONE_61 lays it')
+d('VF', 'VEIL_FALLS', 'MAIN', 248, 254, [[GRIP]], 'the wind crest, tile (15,15)')
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_1F', 184, 120, [[GRIP]])
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_ROOM', 106, 90, [[GRIP]], "behind the 1F hallway's bombable wall in vanilla (SUIGEN_DOUKUTU_01_BW00); the user prices it at the grip alone")
+d('VF', 'VEIL_FALLS', 'MAIN', 200, 88, [[GRIP]], 'tile (12,5)')
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_2F', 56, 120, [[GRIP]])
+d('VF', 'VEIL_FALLS', 'MAIN', 344, 56, [[GRIP]], 'tile (21,3)')
+d('VF', 'VEIL_FALLS_TOP', '0', 430, 153, [[GRIP]], 'exit north -> the ledge above the falls, tile (26,9)')
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_RUPEE_PATH', 152, 40, [[GRIP]])
+d('VF', 'VEIL_FALLS', 'MAIN', 168, 216, [[GRIP]], 'tile (10,13)')
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_HEART_PIECE', 120, 42, [[GRIP, FLIPPERS, FUSION]],
+  'the nook behind the small upper-left waterfall; the user: grip and flippers. KINSTONE_13 (world event type 9, marker '
+  'at the nook\'s door (56,40)) is what reveals it in vanilla, so the fusion is added here - RE-MEASURE whether the cave '
+  'opens without it')
+d('VF', 'VEIL_FALLS', 'MAIN', 154, 611, [[FLIPPERS]], 'heart piece, tile (9,38), in the pool below the plateau')
+d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 232, 625, [[FUSION, MITTS, FLIPPERS]], 'dig-cave entrance 2, tile (14,39); KINSTONE_1F lays the land in front')
+d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 227, 299, [[FUSION, MITTS, FLIPPERS]], 'heart piece, tile (14,18), from entrance 2')
+d('VF', 'VEIL_FALLS_DIG_CAVE', '0', 443, 86, [[FUSION, MITTS, FLIPPERS]], 'gold chest, tile (27,5), from entrance 2')
+# Not in the user's lists, and asked about: the gold chest on the ledge by
+# the falls, VEIL_FALLS/MAIN (200,360), tile (12,22). The data says it is the
+# block-puzzle cave's doorstep - that cave's south border lands on the ledge
+# at (216,344), tile (13,21), and the ledge's door at (13,19-20) leads back
+# in. Into the chain: cave #1's upper room has a bombable north wall
+# (SUIGEN_DOUKUTU_04_BW00, "wall to secret area blown open"), its room
+# rectangle abuts the SECRET_CHEST room's (same area, a scroll seam), and
+# from there a door to the dark SECRET_STAIRCASE and a door to the block
+# puzzle. Measured: the ledge is NOT reached by stepping off the waterfall
+# climb (the climb holds the player on the falls). Priced at the bombs and
+# the lantern; UNWALKED.
+d('VF', 'VEIL_FALLS_CAVES', 'SECRET_CHEST', 152, 72, [[LANTERN, BOMBS]], "through cave #1's bombable wall; a 50-shell chest. INFERRED")
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_STAIRCASE', 88, 72, [[LANTERN, BOMBS]], 'dark; INFERRED')
+d('VF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[LANTERN, BOMBS]], 'the block puzzle; INFERRED')
+d('VF', 'VEIL_FALLS', 'MAIN', 200, 360, [[LANTERN, BOMBS]], "the ledge chest, tile (12,22), out of the block puzzle's south door; INFERRED")
+# The Lon Lon side is the other pocket: nothing here walks to it.
+link('VF', 'VEIL_FALLS', 'MAIN', 8, 639, 'NHF@VF')
+link('VF', 'VEIL_FALLS_TOP', '0', 430, 153, 'VF')
+
+# Pocket 2 from its border: the user's North Field list, verbatim, with
+# "cave #1" as the Lantern (the user: "this cave is dark, so it requires
+# the lantern") and the drop plateau added as a destination.
+entrance('VF@NHF', 'VF', 'Veil Falls (from North Hyrule Field)', ('VEIL_FALLS', 'MAIN', 8, 639),
+         note='walked 2026-10-06; the corridor to cave #1')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 8, 639, FREE, 'exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket; the start itself')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'ENTRANCE', 56, 120, [[LANTERN]], 'cave #1, dark')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'EXIT', 79, 66, [[LANTERN]], 'through cave #1')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 216, 472, [[LANTERN]], 'tile (13,29): must go through cave #1')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 296, 500, [[LANTERN]], 'the drop plateau, tile (18,31): through cave #1 (added)')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 358, 199, [[LANTERN, GRIP, FUSION]], 'gold chest, tile (22,12)')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 248, 254, [[LANTERN, GRIP]], 'wind crest, tile (15,15)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_1F', 184, 120, [[LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_ROOM', 106, 90, [[LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 88, [[LANTERN, GRIP]], 'tile (12,5)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_2F', 56, 120, [[LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 344, 56, [[LANTERN, GRIP]], 'tile (21,3)')
+d('VF@NHF', 'VEIL_FALLS_TOP', '0', 430, 153, [[LANTERN, GRIP]], 'tile (26,9)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_RUPEE_PATH', 152, 40, [[LANTERN, GRIP]])
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 168, 216, [[LANTERN, GRIP]], 'tile (10,13)')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_HEART_PIECE', 120, 42, [[LANTERN, GRIP, FLIPPERS, FUSION]], 'the user: cave #1, grip and flippers; the fusion is the KINSTONE_13 reveal, added')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 154, 611, [[LANTERN, FLIPPERS]], 'heart piece, tile (9,38): the user prices it at the flippers; the lantern is the cave on the way (added)')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 232, 625, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'dig-cave entrance 2')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 227, 299, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'heart piece from entrance 2')
+d('VF@NHF', 'VEIL_FALLS_DIG_CAVE', '0', 443, 86, [[LANTERN, FUSION, MITTS, FLIPPERS]], 'gold chest from entrance 2')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'SECRET_CHEST', 152, 72, [[LANTERN, BOMBS]], 'INFERRED, see the VF block')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_SECRET_STAIRCASE', 88, 72, [[LANTERN, BOMBS]], 'INFERRED')
+d('VF@NHF', 'VEIL_FALLS_CAVES', 'HALLWAY_BLOCK_PUZZLE', 152, 280, [[LANTERN, BOMBS]], 'INFERRED')
+d('VF@NHF', 'VEIL_FALLS', 'MAIN', 200, 360, [[LANTERN, BOMBS]], 'the ledge chest; INFERRED')
+link('VF@NHF', 'VEIL_FALLS', 'MAIN', 8, 639, 'NHF@VF')
+link('VF@NHF', 'VEIL_FALLS_TOP', '0', 430, 153, 'VF')
+
+# Pocket 1: the Lon Lon strip. The user's list from the ranch's north gate,
+# verbatim. The exit at (176,1000) is a one-way ledge down onto the lower
+# strip (collision 0x17 at tiles (10,54)-(10,56)), which is the VF@POCKET
+# entrance below; nothing walks back up.
+entrance('VF@LLR', 'VF', 'Veil Falls (from Lon Lon Ranch, the Lon Lon strip)', ('VEIL_FALLS', 'MAIN', 88, 1000),
+         note='walked 2026-10-06; pocket 1, cut off from the rest of the falls')
+d('VF@LLR', 'VEIL_FALLS', 'MAIN', 88, 1000, FREE, 'exit south -> LON_LON_RANCH (88,16); the start itself')
+d('VF@LLR', 'VEIL_FALLS', 'MAIN', 176, 1000, FREE, "exit south -> LON_LON_RANCH's gold-chest pocket (176,16), down the ledge")
+d('VF@LLR', 'DOJOS', 'TO_SPLITBLADE', 120, 55, [[FUSION, FLIPPERS]], 'the Splitblade dojo\'s ante room; KINSTONE_1D opens the archway')
+d('VF@LLR', 'DOJOS', 'SPLITBLADE', 120, 167, [[FUSION, FLIPPERS]], 'the Splitblade dojo')
+d('VF@LLR', 'VEIL_FALLS', 'MAIN', 409, 953, FREE, 'heart piece, tile (25,59)')
+d('VF@LLR', 'VEIL_FALLS_DIG_CAVE', '0', 424, 583, [[FLIPPERS, MITTS]], 'dig-cave entrance 1, tile (26,36)')
+d('VF@LLR', 'VEIL_FALLS_DIG_CAVE', '0', 281, 534, [[FLIPPERS, MITTS]], 'gold chest, tile (17,33), from entrance 1')
+d('VF@LLR', 'VEIL_FALLS_DIG_CAVE', '0', 267, 534, [[FLIPPERS, MITTS]], 'gold chest, tile (16,33), from entrance 1')
+link('VF@LLR', 'VEIL_FALLS', 'MAIN', 88, 1000, 'LLR@N')
+link('VF@LLR', 'VEIL_FALLS', 'MAIN', 176, 1000, 'LLR@POCKET')
+
+# The lower strip, from the ranch's gold-chest pocket: the Lon Lon list
+# minus the way back up to (88,1000). INFERRED from the walk (the user's
+# list was taken from (88,1000) and the ledge is one-way).
+entrance('VF@POCKET', 'VF', "Veil Falls (the lower strip, from Lon Lon's gold-chest pocket)", ('VEIL_FALLS', 'MAIN', 176, 1000),
+         note='Oct 2026; below the one-way ledge. Rows copied from VF@LLR without the (88,1000) exit')
+copy_dests('VF@LLR', 'VF@POCKET', skip=[('VEIL_FALLS', 'MAIN', (88, 1000))])
+link('VF@POCKET', 'VEIL_FALLS', 'MAIN', 176, 1000, 'LLR@POCKET')
 
 # ------------------------------------------------------------------ checks --
 def _fmt(req):

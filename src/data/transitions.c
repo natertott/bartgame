@@ -433,10 +433,17 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
       1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
     // Lake Hylia's east border is RESTORED: the region is in the ring now,
     // and the containment change alone could not help while the row that
-    // carries the player across was still deleted. Veil Falls' two north
-    // borders stay blocked - that region has no pool row, no sites and no
-    // survey, so it is still somewhere a run has no business walking into.
+    // carries the player across was still deleted.
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
+      0x0, 0x0, 0x0 },
+    // Veil Falls' two north borders, RESTORED (Oct 2026) with the falls'
+    // own pool row, sites and walked survey. The west half keeps the
+    // player's x (the ranch's north gate at x=88 lands on the falls'
+    // Lon Lon strip; the gold-chest pocket at x=176 lands on the strip
+    // below the dig-cave shelf); the east half is vanilla's fixed landing.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
+      0x0, 0x0, 0x0 },
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1c8, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_EAST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
       0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0xfff, 0x3e8, TRANSITION_SHAPE_BORDER_NORTH_WEST, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x0,
@@ -596,9 +603,11 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
     // climbs back).
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x260, TRANSITION_SHAPE_BORDER_WEST_NORTH, AREA_ROYAL_VALLEY,
       ROOM_ROYAL_VALLEY_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
-    // Veil Falls (east) is still outside the ring and BLOCKED: no border
-    // row, no crossing - IsPosInBorderTransitionRegion fires only on a
-    // matching row, so walking that edge simply stops at it.
+    // Veil Falls (east), RESTORED (Oct 2026): the falls are a region, and
+    // this row lands the player in its North Field corridor at (8,639),
+    // the walked survey's VF@NHF start.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xfff, TRANSITION_SHAPE_BORDER_EAST_NORTH, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
+      0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x4, 0x0, 0x0, 0x0 },

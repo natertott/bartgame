@@ -89,7 +89,7 @@ typedef struct {
     u8 entrance; // 1 = an entrance of its region rather than the drop start
 } QuickStartReachNode;
 
-#define QS_REACH_NODES 36
+#define QS_REACH_NODES 42
 static const QuickStartReachNode sQuickStartReachNodes[QS_REACH_NODES] = {
     /*  0 SHF        */ { QS_REGION_SHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 0 },
     /*  1 SHF@NNE    */ { QS_REGION_SHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 1 },
@@ -104,51 +104,58 @@ static const QuickStartReachNode sQuickStartReachNodes[QS_REACH_NODES] = {
     /* 10 LLR@W      */ { QS_REGION_LLR, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1 },
     /* 11 LLR@NW     */ { QS_REGION_LLR, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1 },
     /* 12 LLR@N      */ { QS_REGION_LLR, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1 },
-    /* 13 NHF        */ { QS_REGION_NHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0 },
-    /* 14 CG         */ { QS_REGION_CG, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0 },
-    /* 15 RV         */ { QS_REGION_RV, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0 },
-    /* 16 TRIL       */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0 },
-    /* 17 TRIL@S     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
-    /* 18 TRIL@E     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
-    /* 19 TRIL@N     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
-    /* 20 WW-N       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0 },
-    /* 21 WW-N@W     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
-    /* 22 WW-N@S     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
-    /* 23 WW-N@E     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
-    /* 24 WW-C       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0 },
-    /* 25 WW-S       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 0 },
-    /* 26 CW         */ { QS_REGION_CW, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0 },
-    /* 27 WR         */ { QS_REGION_WR, AREA_RUINS, ROOM_RUINS_ENTRANCE, 0 },
-    /* 28 CREN       */ { QS_REGION_CREN, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0 },
-    /* 29 MW         */ { QS_REGION_MW, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0 },
-    /* 30 LH         */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
-    /* 31 MV         */ { QS_REGION_MW, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 0 },
-    /* 32 LH-CREST   */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
-    /* 33 LH-SW      */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
-    /* 34 LH-LADDER  */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
-    /* 35 CREN-BASE  */ { QS_REGION_CREN, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0 },
+    /* 13 LLR@POCKET */ { QS_REGION_LLR, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 1 },
+    /* 14 NHF        */ { QS_REGION_NHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0 },
+    /* 15 NHF@VF     */ { QS_REGION_NHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 1 },
+    /* 16 CG         */ { QS_REGION_CG, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0 },
+    /* 17 RV         */ { QS_REGION_RV, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0 },
+    /* 18 TRIL       */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0 },
+    /* 19 TRIL@S     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
+    /* 20 TRIL@E     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
+    /* 21 TRIL@N     */ { QS_REGION_TRIL, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 1 },
+    /* 22 WW-N       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0 },
+    /* 23 WW-N@W     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
+    /* 24 WW-N@S     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
+    /* 25 WW-N@E     */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 1 },
+    /* 26 WW-C       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0 },
+    /* 27 WW-S       */ { QS_REGION_WW, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 0 },
+    /* 28 CW         */ { QS_REGION_CW, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0 },
+    /* 29 WR         */ { QS_REGION_WR, AREA_RUINS, ROOM_RUINS_ENTRANCE, 0 },
+    /* 30 CREN       */ { QS_REGION_CREN, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0 },
+    /* 31 MW         */ { QS_REGION_MW, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0 },
+    /* 32 LH         */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
+    /* 33 MV         */ { QS_REGION_MW, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 0 },
+    /* 34 LH-CREST   */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
+    /* 35 LH-SW      */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
+    /* 36 LH-LADDER  */ { QS_REGION_LH, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0 },
+    /* 37 CREN-BASE  */ { QS_REGION_CREN, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0 },
+    /* 38 VF         */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0 },
+    /* 39 VF@NHF     */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
+    /* 40 VF@LLR     */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
+    /* 41 VF@POCKET  */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
 };
 
 // Which node each region pool row's landing is: the drop starts here.
 static const u8 sQuickStartReachPoolNode[] = {
-    14, // pool  0 -> CG
+    16, // pool  0 -> CG
      6, // pool  1 -> LLR
      0, // pool  2 -> SHF
-    13, // pool  3 -> NHF
-    16, // pool  4 -> TRIL
+    14, // pool  3 -> NHF
+    18, // pool  4 -> TRIL
      5, // pool  5 -> EH-S
      4, // pool  6 -> EH-C
      3, // pool  7 -> EH-N
-    25, // pool  8 -> WW-S
-    24, // pool  9 -> WW-C
-    20, // pool 10 -> WW-N
-    15, // pool 11 -> RV
-    26, // pool 12 -> CW
-    27, // pool 13 -> WR
-    27, // pool 14 -> WR
-    29, // pool 15 -> MW
-    30, // pool 16 -> LH
-    35, // pool 17 -> CREN-BASE
+    27, // pool  8 -> WW-S
+    26, // pool  9 -> WW-C
+    22, // pool 10 -> WW-N
+    17, // pool 11 -> RV
+    28, // pool 12 -> CW
+    29, // pool 13 -> WR
+    29, // pool 14 -> WR
+    31, // pool 15 -> MW
+    32, // pool 16 -> LH
+    37, // pool 17 -> CREN-BASE
+    38, // pool 18 -> VF
 };
 
 // The edges: from node to node, at the price of the exit row that lands
@@ -160,25 +167,25 @@ typedef struct {
 } QuickStartReachEdge;
 
 static const QuickStartReachEdge sQuickStartReachEdges[] = {
-    {  0, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> NHF: link: SHF row (504,16)
-    {  0, 23, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-N@E: link: SHF row (8,111)
+    {  0, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> NHF: link: SHF row (504,16)
+    {  0, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-N@E: link: SHF row (8,111)
     {  0,  3, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-N: link: SHF row (997,121)
-    {  0, 24, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-C: link: SHF row (8,400)
-    {  0, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-S: link: SHF row (8,584)
+    {  0, 26, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-C: link: SHF row (8,400)
+    {  0, 27, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-S: link: SHF row (8,584)
     {  0,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-C: link: SHF row (1000,352)
     {  0,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-S: link: SHF row (1000,584)
-    {  1, 13, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> NHF: link: SHF@NNE row (504,16)
-    {  1, 23, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-N@E: link: SHF@NNE row (8,111)
+    {  1, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> NHF: link: SHF@NNE row (504,16)
+    {  1, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-N@E: link: SHF@NNE row (8,111)
     {  1,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> EH-N: link: SHF@NNE row (997,121)
-    {  1, 24, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-C: link: SHF@NNE row (8,400)
-    {  1, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-S: link: SHF@NNE row (8,584)
+    {  1, 26, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-C: link: SHF@NNE row (8,400)
+    {  1, 27, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-S: link: SHF@NNE row (8,584)
     {  1,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> EH-C: link: SHF@NNE row (1000,352)
     {  1,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> EH-S: link: SHF@NNE row (1000,584)
-    {  2, 13, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> NHF: link: SHF@NNW row (504,16)
-    {  2, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-N@E: link: SHF@NNW row (8,111)
+    {  2, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> NHF: link: SHF@NNW row (504,16)
+    {  2, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-N@E: link: SHF@NNW row (8,111)
     {  2,  3, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> EH-N: link: SHF@NNW row (997,121)
-    {  2, 24, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-C: link: SHF@NNW row (8,400)
-    {  2, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-S: link: SHF@NNW row (8,584)
+    {  2, 26, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-C: link: SHF@NNW row (8,400)
+    {  2, 27, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> WW-S: link: SHF@NNW row (8,584)
     {  2,  4, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> EH-C: link: SHF@NNW row (1000,352)
     {  2,  5, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> EH-S: link: SHF@NNW row (1000,584)
     {  3,  1, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> SHF@NNE: link: EH-N row (0,428)
@@ -186,85 +193,105 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     {  4,  0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> SHF: link: EH-C row (0,120)
     {  5,  0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> SHF: link: EH-S row (0,100)
     {  6,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> EH-N: link: LLR row (298,968)
-    {  6, 18, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> TRIL@E: link: LLR row (8,560)
-    {  6, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> NHF: link: LLR row (10,163)
-    {  6, 30, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LH: link: LLR row (712,445)
-    {  6, 33, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR -> LH-SW: link: LLR row (712,750) | link: LLR row (712,903)
+    {  6, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> TRIL@E: link: LLR row (8,560)
+    {  6, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> NHF: link: LLR row (10,163)
+    {  6, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> LH: link: LLR row (712,445)
+    {  6, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR -> LH-SW: link: LLR row (712,750) | link: LLR row (712,903)
+    {  6, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR -> VF@LLR: link: LLR row (88,16)
     {  7,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> EH-N: link: LLR@E903 row (298,968)
-    {  7, 18, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> TRIL@E: link: LLR@E903 row (8,560)
-    {  7, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> NHF: link: LLR@E903 row (10,163)
-    {  7, 30, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LH: link: LLR@E903 row (712,445)
-    {  7, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LH-SW: link: LLR@E903 row (712,750) | link: LLR@E903 row (712,903)
+    {  7, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> TRIL@E: link: LLR@E903 row (8,560)
+    {  7, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> NHF: link: LLR@E903 row (10,163)
+    {  7, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LH: link: LLR@E903 row (712,445)
+    {  7, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> LH-SW: link: LLR@E903 row (712,750) | link: LLR@E903 row (712,903)
+    {  7, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E903 -> VF@LLR: link: LLR@E903 row (88,16)
     {  8,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> EH-N: link: LLR@E445 row (298,968)
-    {  8, 18, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> TRIL@E: link: LLR@E445 row (8,560)
-    {  8, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> NHF: link: LLR@E445 row (10,163)
-    {  8, 30, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LH: link: LLR@E445 row (712,445)
-    {  8, 33, { 0x00000020u, 0x00000040u, 0x00000080u, 0x00800000u, ~0u, ~0u } }, // LLR@E445 -> LH-SW: link: LLR@E445 row (712,750) | link: LLR@E445 row (712,903)
+    {  8, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> TRIL@E: link: LLR@E445 row (8,560)
+    {  8, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> NHF: link: LLR@E445 row (10,163)
+    {  8, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> LH: link: LLR@E445 row (712,445)
+    {  8, 35, { 0x00000020u, 0x00000040u, 0x00000080u, 0x00800000u, ~0u, ~0u } }, // LLR@E445 -> LH-SW: link: LLR@E445 row (712,750) | link: LLR@E445 row (712,903)
+    {  8, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E445 -> VF@LLR: link: LLR@E445 row (88,16)
     {  9,  3, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> EH-N: link: LLR@E750 row (298,968)
-    {  9, 18, { 0x00000048u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> TRIL@E: link: LLR@E750 row (8,560)
-    {  9, 13, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> NHF: link: LLR@E750 row (10,163)
-    {  9, 30, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LH: link: LLR@E750 row (712,445)
-    {  9, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LH-SW: link: LLR@E750 row (712,750) | link: LLR@E750 row (712,903)
+    {  9, 20, { 0x00000048u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> TRIL@E: link: LLR@E750 row (8,560)
+    {  9, 14, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> NHF: link: LLR@E750 row (10,163)
+    {  9, 32, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LH: link: LLR@E750 row (712,445)
+    {  9, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> LH-SW: link: LLR@E750 row (712,750) | link: LLR@E750 row (712,903)
+    {  9, 40, { 0x000000c0u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@E750 -> VF@LLR: link: LLR@E750 row (88,16)
     { 10,  3, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> EH-N: link: LLR@W row (298,968)
-    { 10, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> TRIL@E: link: LLR@W row (8,560)
-    { 10, 13, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> NHF: link: LLR@W row (10,163)
-    { 10, 30, { 0x00400008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LH: link: LLR@W row (712,445)
-    { 10, 33, { 0x00400028u, 0x00400048u, 0x00400088u, 0x00800008u, ~0u, ~0u } }, // LLR@W -> LH-SW: link: LLR@W row (712,750) | link: LLR@W row (712,903)
+    { 10, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> TRIL@E: link: LLR@W row (8,560)
+    { 10, 14, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> NHF: link: LLR@W row (10,163)
+    { 10, 32, { 0x00400008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> LH: link: LLR@W row (712,445)
+    { 10, 35, { 0x00400028u, 0x00400048u, 0x00400088u, 0x00800008u, ~0u, ~0u } }, // LLR@W -> LH-SW: link: LLR@W row (712,750) | link: LLR@W row (712,903)
+    { 10, 40, { 0x00000088u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@W -> VF@LLR: link: LLR@W row (88,16)
     { 11,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> EH-N: link: LLR@NW row (298,968)
-    { 11, 18, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> TRIL@E: link: LLR@NW row (8,560)
-    { 11, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> NHF: link: LLR@NW row (10,163)
-    { 11, 30, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LH: link: LLR@NW row (712,445)
-    { 11, 33, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@NW -> LH-SW: link: LLR@NW row (712,750) | link: LLR@NW row (712,903)
+    { 11, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> TRIL@E: link: LLR@NW row (8,560)
+    { 11, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> NHF: link: LLR@NW row (10,163)
+    { 11, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> LH: link: LLR@NW row (712,445)
+    { 11, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@NW -> LH-SW: link: LLR@NW row (712,750) | link: LLR@NW row (712,903)
+    { 11, 40, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@NW -> VF@LLR: link: LLR@NW row (88,16)
     { 12,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> EH-N: link: LLR@N row (298,968)
-    { 12, 18, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> TRIL@E: link: LLR@N row (8,560)
-    { 12, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> NHF: link: LLR@N row (10,163)
-    { 12, 30, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LH: link: LLR@N row (712,445)
-    { 12, 33, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@N -> LH-SW: link: LLR@N row (712,750) | link: LLR@N row (712,903)
-    { 13, 11, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> LLR@NW: link: NHF row (999,112)
-    { 13, 16, { 0x00000021u, 0x00000041u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> TRIL: link: NHF row (9,607)
-    { 13,  0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> SHF: link: NHF row (498,795)
-    { 13, 15, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> RV: link: NHF row (5,93)
-    { 15, 19, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // RV -> TRIL@N: link: RV row (118,1000)
-    { 16, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> NHF: link: TRIL row (470,129)
-    { 16, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> LLR@W: link: TRIL row (472,560)
-    { 16, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> CREN-BASE: link: TRIL row (8,414)
-    { 16, 20, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> WW-N: link: TRIL row (363,953)
-    { 17, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> NHF: link: TRIL@S row (470,129)
-    { 17, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> LLR@W: link: TRIL@S row (472,560)
-    { 17, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> CREN-BASE: link: TRIL@S row (8,414)
-    { 17, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> WW-N: link: TRIL@S row (363,953)
-    { 18, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> NHF: link: TRIL@E row (470,129)
-    { 18, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> LLR@W: link: TRIL@E row (472,560)
-    { 18, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> CREN-BASE: link: TRIL@E row (8,414)
-    { 18, 20, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> WW-N: link: TRIL@E row (363,953)
-    { 19, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> NHF: link: TRIL@N row (470,129)
-    { 19, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> LLR@W: link: TRIL@N row (472,560)
-    { 19, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> CREN-BASE: link: TRIL@N row (8,414)
-    { 19, 20, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> WW-N: link: TRIL@N row (363,953)
-    { 20, 17, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> TRIL@S: link: WW-N row (343,0)
-    { 20, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> CW: link: WW-N row (6,97)
-    { 20, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-C: link: WW-N row (284,636) | link: WW-N row (33,633) | same ring region (QS_REGION_WW)
-    { 20,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> SHF@NNW: link: WW-N row (468,431)
-    { 21, 17, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> TRIL@S: link: WW-N@W row (343,0)
-    { 21, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> CW: link: WW-N@W row (6,97)
-    { 21, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-C: link: WW-N@W row (284,636) | link: WW-N@W row (33,633)
-    { 21,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> SHF@NNW: link: WW-N@W row (468,431)
-    { 22, 17, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> TRIL@S: link: WW-N@S row (343,0)
-    { 22, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> CW: link: WW-N@S row (6,97)
-    { 22, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-C: link: WW-N@S row (284,636) | link: WW-N@S row (33,633)
-    { 22,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> SHF@NNW: link: WW-N@S row (468,431)
-    { 23, 17, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> TRIL@S: link: WW-N@E row (343,0)
-    { 23, 26, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> CW: link: WW-N@E row (6,97)
-    { 23, 24, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-C: link: WW-N@E row (284,636) | link: WW-N@E row (33,633)
-    { 23,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> SHF@NNW: link: WW-N@E row (468,431)
-    { 24, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-N@S: link: WW-C row (277,0)
-    { 29, 34, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> LH-LADDER: link: MW row (600,767)
-    { 30,  8, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LLR@E445: link: LH row (712,328)
-    { 30, 32, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LH-CREST: link: LH row (168,440)
-    { 33,  7, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-SW -> LLR@E903: link: LH-SW row (8,907)
-    { 33,  9, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-SW -> LLR@E750: link: LH-SW row (8,757)
-    { 34,  8, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-LADDER -> LLR@E445: link: LH-LADDER row (8,445)
-    { 35, 28, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> CREN: link: CREN-BASE row (856,274)
+    { 12, 20, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> TRIL@E: link: LLR@N row (8,560)
+    { 12, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> NHF: link: LLR@N row (10,163)
+    { 12, 32, { 0x00400000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LH: link: LLR@N row (712,445)
+    { 12, 35, { 0x00400020u, 0x00400040u, 0x00400080u, 0x00800000u, ~0u, ~0u } }, // LLR@N -> LH-SW: link: LLR@N row (712,750) | link: LLR@N row (712,903)
+    { 12, 40, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> VF@LLR: link: LLR@N row (88,16)
+    { 13, 41, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@POCKET -> VF@POCKET: link: LLR@POCKET row (176,16)
+    { 14, 39, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> VF@NHF: link: NHF row (999,112)
+    { 14, 18, { 0x00000021u, 0x00000041u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> TRIL: link: NHF row (9,607)
+    { 14,  0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> SHF: link: NHF row (498,795)
+    { 14, 11, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> LLR@NW: link: NHF row (1013,638)
+    { 15, 39, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> VF@NHF: link: NHF@VF row (999,112)
+    { 15, 11, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> LLR@NW: link: NHF@VF row (1013,638)
+    { 15, 18, { 0x00000029u, 0x00000049u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> TRIL: link: NHF@VF row (9,607)
+    { 15,  0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> SHF: link: NHF@VF row (498,795)
+    { 14, 17, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> RV: link: NHF row (5,93)
+    { 17, 21, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // RV -> TRIL@N: link: RV row (118,1000)
+    { 18, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> NHF: link: TRIL row (470,129)
+    { 18, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> LLR@W: link: TRIL row (472,560)
+    { 18, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> CREN-BASE: link: TRIL row (8,414)
+    { 18, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> WW-N: link: TRIL row (363,953)
+    { 19, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> NHF: link: TRIL@S row (470,129)
+    { 19, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> LLR@W: link: TRIL@S row (472,560)
+    { 19, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> CREN-BASE: link: TRIL@S row (8,414)
+    { 19, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> WW-N: link: TRIL@S row (363,953)
+    { 20, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> NHF: link: TRIL@E row (470,129)
+    { 20, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> LLR@W: link: TRIL@E row (472,560)
+    { 20, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> CREN-BASE: link: TRIL@E row (8,414)
+    { 20, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> WW-N: link: TRIL@E row (363,953)
+    { 21, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> NHF: link: TRIL@N row (470,129)
+    { 21, 10, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> LLR@W: link: TRIL@N row (472,560)
+    { 21, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> CREN-BASE: link: TRIL@N row (8,414)
+    { 21, 22, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> WW-N: link: TRIL@N row (363,953)
+    { 22, 19, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> TRIL@S: link: WW-N row (343,0)
+    { 22, 28, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> CW: link: WW-N row (6,97)
+    { 22, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-C: link: WW-N row (284,636) | link: WW-N row (33,633) | same ring region (QS_REGION_WW)
+    { 22,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> SHF@NNW: link: WW-N row (468,431)
+    { 23, 19, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> TRIL@S: link: WW-N@W row (343,0)
+    { 23, 28, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> CW: link: WW-N@W row (6,97)
+    { 23, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-C: link: WW-N@W row (284,636) | link: WW-N@W row (33,633)
+    { 23,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> SHF@NNW: link: WW-N@W row (468,431)
+    { 24, 19, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> TRIL@S: link: WW-N@S row (343,0)
+    { 24, 28, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> CW: link: WW-N@S row (6,97)
+    { 24, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-C: link: WW-N@S row (284,636) | link: WW-N@S row (33,633)
+    { 24,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> SHF@NNW: link: WW-N@S row (468,431)
+    { 25, 19, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> TRIL@S: link: WW-N@E row (343,0)
+    { 25, 28, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> CW: link: WW-N@E row (6,97)
+    { 25, 26, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-C: link: WW-N@E row (284,636) | link: WW-N@E row (33,633)
+    { 25,  2, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> SHF@NNW: link: WW-N@E row (468,431)
+    { 26, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-N@S: link: WW-C row (277,0)
+    { 31, 36, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> LH-LADDER: link: MW row (600,767)
+    { 32,  8, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LLR@E445: link: LH row (712,445)
+    { 32, 34, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH -> LH-CREST: link: LH row (168,440)
+    { 35,  7, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-SW -> LLR@E903: link: LH-SW row (8,907)
+    { 35,  9, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-SW -> LLR@E750: link: LH-SW row (8,757)
+    { 36,  8, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LH-LADDER -> LLR@E445: link: LH-LADDER row (8,445)
+    { 37, 30, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> CREN: link: CREN-BASE row (856,274)
+    { 38, 15, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> NHF@VF: link: VF row (8,639)
+    { 38, 38, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> VF: link: VF row (430,153)
+    { 39, 15, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@NHF -> NHF@VF: link: VF@NHF row (8,639)
+    { 39, 38, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@NHF -> VF: link: VF@NHF row (430,153) | walk from VF@NHF to the VF landing
+    { 40, 12, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> LLR@N: link: VF@LLR row (88,1000)
+    { 40, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> LLR@POCKET: link: VF@LLR row (176,1000)
+    { 41, 13, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@POCKET -> LLR@POCKET: link: VF@POCKET row (176,1000)
     {  0,  1, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> SHF@NNE: walk from SHF to the SHF@NNE landing
     {  0,  2, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> SHF@NNW: walk from SHF to the SHF@NNW landing
     {  1,  0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> SHF: walk from SHF@NNE to the SHF landing
@@ -313,63 +340,68 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 12,  9, { 0x00400020u, 0x00400040u, 0x00400080u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@E750: walk from LLR@N to the LLR@E750 landing
     { 12, 10, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@W: walk from LLR@N to the LLR@W landing
     { 12, 11, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // LLR@N -> LLR@NW: walk from LLR@N to the LLR@NW landing
-    { 16, 17, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@S: walk from TRIL to the TRIL@S landing
-    { 16, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@E: walk from TRIL to the TRIL@E landing
-    { 17, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL: walk from TRIL@S to the TRIL landing
-    { 17, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL@E: walk from TRIL@S to the TRIL@E landing
-    { 18, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL: walk from TRIL@E to the TRIL landing
-    { 18, 17, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL@S: walk from TRIL@E to the TRIL@S landing
-    { 19, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL: walk from TRIL@N to the TRIL landing
-    { 19, 17, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@S: walk from TRIL@N to the TRIL@S landing
-    { 19, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@E: walk from TRIL@N to the TRIL@E landing
-    { 20, 21, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@W: walk from WW-N to the WW-N@W landing
-    { 20, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@S: walk from WW-N to the WW-N@S landing
-    { 20, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@E: walk from WW-N to the WW-N@E landing
-    { 21, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N: walk from WW-N@W to the WW-N landing
-    { 21, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N@S: walk from WW-N@W to the WW-N@S landing
-    { 21, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N@E: walk from WW-N@W to the WW-N@E landing
-    { 22, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N: walk from WW-N@S to the WW-N landing
-    { 22, 21, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@W: walk from WW-N@S to the WW-N@W landing
-    { 22, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@E: walk from WW-N@S to the WW-N@E landing
-    { 23, 20, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N: walk from WW-N@E to the WW-N landing
-    { 23, 21, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@W: walk from WW-N@E to the WW-N@W landing
-    { 23, 22, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@S: walk from WW-N@E to the WW-N@S landing
+    { 14, 15, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> NHF@VF: walk from NHF to the NHF@VF landing
+    { 15, 14, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> NHF: walk from NHF@VF to the NHF landing
+    { 18, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@S: walk from TRIL to the TRIL@S landing
+    { 18, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL -> TRIL@E: walk from TRIL to the TRIL@E landing
+    { 19, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL: walk from TRIL@S to the TRIL landing
+    { 19, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@S -> TRIL@E: walk from TRIL@S to the TRIL@E landing
+    { 20, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL: walk from TRIL@E to the TRIL landing
+    { 20, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@E -> TRIL@S: walk from TRIL@E to the TRIL@S landing
+    { 21, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL: walk from TRIL@N to the TRIL landing
+    { 21, 19, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@S: walk from TRIL@N to the TRIL@S landing
+    { 21, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // TRIL@N -> TRIL@E: walk from TRIL@N to the TRIL@E landing
+    { 22, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@W: walk from WW-N to the WW-N@W landing
+    { 22, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@S: walk from WW-N to the WW-N@S landing
+    { 22, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-N@E: walk from WW-N to the WW-N@E landing
+    { 23, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N: walk from WW-N@W to the WW-N landing
+    { 23, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N@S: walk from WW-N@W to the WW-N@S landing
+    { 23, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@W -> WW-N@E: walk from WW-N@W to the WW-N@E landing
+    { 24, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N: walk from WW-N@S to the WW-N landing
+    { 24, 23, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@W: walk from WW-N@S to the WW-N@W landing
+    { 24, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@S -> WW-N@E: walk from WW-N@S to the WW-N@E landing
+    { 25, 22, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N: walk from WW-N@E to the WW-N landing
+    { 25, 23, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@W: walk from WW-N@E to the WW-N@W landing
+    { 25, 24, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N@E -> WW-N@S: walk from WW-N@E to the WW-N@S landing
+    { 38, 39, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF -> VF@NHF: walk from VF to the VF@NHF landing
+    { 40, 41, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // VF@LLR -> VF@POCKET: walk from VF@LLR to the VF@POCKET landing
     {  3,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> EH-C: same ring region (QS_REGION_EH)
     {  3,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> EH-S: same ring region (QS_REGION_EH)
     {  4,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> EH-N: same ring region (QS_REGION_EH)
     {  4,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> EH-S: same ring region (QS_REGION_EH)
     {  5,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> EH-N: same ring region (QS_REGION_EH)
     {  5,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> EH-C: same ring region (QS_REGION_EH)
-    { 20, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-S: same ring region (QS_REGION_WW)
-    { 24, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-N: same ring region (QS_REGION_WW)
-    { 24, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-S: same ring region (QS_REGION_WW)
-    { 25, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-S -> WW-N: same ring region (QS_REGION_WW)
-    { 25, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-S -> WW-C: same ring region (QS_REGION_WW)
-    { 28, 35, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN -> CREN-BASE: same ring region (QS_REGION_CREN)
-    { 29, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> MV: same ring region (QS_REGION_MW)
-    { 31, 29, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> MW: same ring region (QS_REGION_MW)
-    { 14, 13, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CG -> NHF: ring adjacency QS_REGION_CG -> QS_REGION_NHF (entry price)
-    { 13, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
-    {  3, 29, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    {  3, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    {  4, 29, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    {  4, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    {  5, 29, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    {  5, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
-    { 15, 13, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // RV -> NHF: ring adjacency QS_REGION_RV -> QS_REGION_NHF (entry price)
-    { 26, 20, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-N: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
-    { 26, 24, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-C: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
-    { 26, 25, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-S: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
-    { 26, 27, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WR: ring adjacency QS_REGION_CW -> QS_REGION_WR (entry price)
-    { 27, 26, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // WR -> CW: ring adjacency QS_REGION_WR -> QS_REGION_CW (entry price)
-    { 28, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
-    { 35, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
-    { 29,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-N: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
-    { 29,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-C: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
-    { 29,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-S: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
-    { 31,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-N: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
-    { 31,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-C: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
-    { 31,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-S: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 22, 27, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-N -> WW-S: same ring region (QS_REGION_WW)
+    { 26, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-N: same ring region (QS_REGION_WW)
+    { 26, 27, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-C -> WW-S: same ring region (QS_REGION_WW)
+    { 27, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-S -> WW-N: same ring region (QS_REGION_WW)
+    { 27, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // WW-S -> WW-C: same ring region (QS_REGION_WW)
+    { 30, 37, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN -> CREN-BASE: same ring region (QS_REGION_CREN)
+    { 31, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> MV: same ring region (QS_REGION_MW)
+    { 33, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> MW: same ring region (QS_REGION_MW)
+    { 16, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CG -> NHF: ring adjacency QS_REGION_CG -> QS_REGION_NHF (entry price)
+    { 14, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
+    { 15, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
+    {  3, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    {  3, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    {  4, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    {  4, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    {  5, 31, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    {  5, 33, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-S -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
+    { 17, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // RV -> NHF: ring adjacency QS_REGION_RV -> QS_REGION_NHF (entry price)
+    { 28, 22, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-N: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
+    { 28, 26, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-C: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
+    { 28, 27, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WW-S: ring adjacency QS_REGION_CW -> QS_REGION_WW (entry price)
+    { 28, 29, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // CW -> WR: ring adjacency QS_REGION_CW -> QS_REGION_WR (entry price)
+    { 29, 28, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } }, // WR -> CW: ring adjacency QS_REGION_WR -> QS_REGION_CW (entry price)
+    { 30, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
+    { 37, 18, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CREN-BASE -> TRIL: ring adjacency QS_REGION_CREN -> QS_REGION_TRIL (entry price)
+    { 31,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-N: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 31,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-C: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 31,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> EH-S: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 33,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-N: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 33,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-C: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 33,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-S: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
 };
 
 typedef struct {
@@ -595,92 +627,62 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 12, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST, 0, { 0x00004000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST, 0, { 0, 0x00004000u, ~0u, ~0u, ~0u, ~0u } },
     { 12, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000021u, 0x00000041u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00100001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE, 0, { 0x00000401u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE, 0, { 0x00010021u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_DOJOS, ROOM_DOJOS_GREATBLADE, 0, { 0x00010021u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 0, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 14, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_FOREST_MAZE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 15, AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 16, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 17, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 13, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000021u, 0x00000041u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00100001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE, 0, { 0x00000401u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_HEART_PIECE_HALLWAY, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_DOJOS, ROOM_DOJOS_TO_GREATBLADE, 0, { 0x00010021u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_DOJOS, ROOM_DOJOS_GREATBLADE, 0, { 0x00010021u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_CAVES, ROOM_CAVES_TO_GRAVEYARD, 0, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 14, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x0000000du, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000029u, 0x00000049u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_BOOMERANG, 0, { 0x00100009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_CAVES, ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN, 0, { 0x00010009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000009u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 15, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_0, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_CASTLE_GARDEN_MINISH_HOLES, ROOM_CASTLE_GARDEN_MINISH_HOLES_1, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_EAST, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_GARDEN_FOUNTAINS, ROOM_GARDEN_FOUNTAINS_WEST, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_DOJOS, ROOM_DOJOS_TO_GRIMBLADE, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_DOJOS, ROOM_DOJOS_GRIMBLADE, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 16, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, 0, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_GRAVEYARD, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_FOREST_MAZE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_DAMPE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY, ROOM_ROYAL_VALLEY_MAIN, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 17, AREA_ROYAL_VALLEY_GRAVES, ROOM_ROYAL_VALLEY_GRAVES_GINA, 0, { 0x00008000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 18, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -708,12 +710,12 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
-    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -728,26 +730,55 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 19, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
     { 19, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 19, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 20, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_RUPEE, 0, { 0x00010004u, 0x02010000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN, 0, { 0x0000000cu, 0x02000008u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000004u, 0x02000000u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_DIG_CAVES, ROOM_DIG_CAVES_TRILBY_HIGHLANDS, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 21, AREA_CAVES, ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN, 0, { 0x00010820u, 0x00010840u, ~0u, ~0u, ~0u, ~0u } },
+    { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
@@ -757,182 +788,263 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 22, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 25, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, 0, { 0x00000061u, 0x00000421u, 0x08000051u, 0x08000411u, 0x18000041u, 0x18000401u } },
-    { 26, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x08000040u, 0x08000400u, 0x10000040u, 0x10000400u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_DOJOS, ROOM_DOJOS_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_WILDS_DIG_CAVE, ROOM_CASTOR_WILDS_DIG_CAVE_0, 0, { 0x00000840u, 0x00000c00u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, 0, { 0x00000041u, 0x00000061u, 0x00000401u, 0x00000421u, 0x08000040u, 0x08000400u } },
-    { 26, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW, 0, { 0x00000060u, 0x00000420u, 0x00001040u, 0x00001400u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NEXT_TO_BOW, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_2, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 26, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS, 0, { 0x00000048u, 0x00000408u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_TEKTITE, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_RUINS, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_RUINS, ROOM_RUINS_BELOW_FORTRESS_ENTRANCE, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 27, AREA_RUINS, ROOM_RUINS_FORTRESS_ENTRANCE, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CAVE_OF_FLAMES, ROOM_CAVE_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_PILLAR_CAVE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BRIDGE_SWITCH, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000248u, 0x00000288u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000248u, 0x00000288u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_GRIP_RING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_DOJOS, ROOM_DOJOS_GRAYBLADE, 0, { 0x0000020cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_CRENEL, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HERMIT, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_DIG_CAVE, ROOM_CRENEL_DIG_CAVE_0, 0, { 0x00000a08u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_RAIN, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, 0x20000208u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 28, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_BUSINESS_SCRUB, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_CAVES, ROOM_CAVES_KINSTONE_BUSINESS_SCRUB, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_MINISH_WOODS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_FESTARI, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_DEEPWOOD_SHRINE_ENTRY, ROOM_DEEPWOOD_SHRINE_ENTRY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_MINISH_WOODS, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_BEANSTALKS, ROOM_BEANSTALKS_EASTERN_HILLS, 0, { 0x00210000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WITCH_HUT, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 29, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 30, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BARREL_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_FESTARI, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 23, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 24, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04000000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0x04010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 25, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_PERCY, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 26, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 27, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 27, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_SOUTH, 0, { 0x00000061u, 0x00000421u, 0x08000051u, 0x08000411u, 0x18000041u, 0x18000401u } },
+    { 28, AREA_CASTOR_WILDS, ROOM_CASTOR_WILDS_MAIN, 0, { 0x08000040u, 0x08000400u, 0x10000040u, 0x10000400u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_NORTH, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_HEART_PIECE, 0, { 0x00000060u, 0x00000420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_DOJOS, ROOM_DOJOS_TO_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_DOJOS, ROOM_DOJOS_SCARBLADE, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_WILDS_DIG_CAVE, ROOM_CASTOR_WILDS_DIG_CAVE_0, 0, { 0x00000840u, 0x00000c00u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_DOJOS, ROOM_DOJOS_SWIFTBLADE_I, 0, { 0x00000041u, 0x00000061u, 0x00000401u, 0x00000421u, 0x08000040u, 0x08000400u } },
+    { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_BOW, 0, { 0x00000060u, 0x00000420u, 0x00001040u, 0x00001400u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_NEXT_TO_BOW, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_SOUTHEAST_WATER_1, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_2, 0, { 0x00010060u, 0x00010420u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE, 0, { 0x00010040u, 0x00010400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_DARKNUT, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_HALL, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 28, AREA_CASTOR_DARKNUT, ROOM_CASTOR_DARKNUT_MAIN, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS, 0, { 0x00000048u, 0x00000408u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_TEKTITE, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_RUINS, 0, { 0x00000040u, 0x00000400u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_RUINS, ROOM_RUINS_BELOW_FORTRESS_ENTRANCE, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 29, AREA_RUINS, ROOM_RUINS_FORTRESS_ENTRANCE, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CAVE_OF_FLAMES, ROOM_CAVE_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MELARIS_MINE, ROOM_MELARIS_MINE_MAIN, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_MELARI, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_PILLAR_CAVE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BRIDGE_SWITCH, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000248u, 0x00000288u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000248u, 0x00000288u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_GRIP_RING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_TO_GRAYBLADE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_DOJOS, ROOM_DOJOS_GRAYBLADE, 0, { 0x0000020cu, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_CRENEL, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_WALL_CLIMB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HERMIT, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_DIG_CAVE, ROOM_CRENEL_DIG_CAVE_0, 0, { 0x00000a08u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_RAIN, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_TOP, 0, { 0x00000208u, 0x20000208u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 30, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000208u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_BUSINESS_SCRUB, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_CAVES, ROOM_CAVES_KINSTONE_BUSINESS_SCRUB, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, 0, { 0x00000800u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_MINISH_WOODS_SOUTH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0x00010000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 31, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_FESTARI, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 32, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 32, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_LIBRARI, 0, { 0x00012000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 32, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, 0, { 0x00012020u, 0x00012040u, ~0u, ~0u, ~0u, ~0u } },
-    { 33, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 33, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 33, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LAKE_HYLIA, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE, 0, { 0x00000020u, 0x00000040u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, 0, { 0x00000020u, 0x00000040u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_0, 0, { 0x00000820u, 0x00000840u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_BEANSTALK, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_BEANSTALK, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LAKE_HYLIA_EAST, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 34, AREA_TEMPLE_OF_DROPLETS, ROOM_TEMPLE_OF_DROPLETS_ENTRANCE, 0, { 0x00000420u, 0x00000440u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_MUSHROOM_KEESE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HELMASAUR_HALLWAY, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_BEAN_PESTO, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_BEAN, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
-    { 35, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_DEEPWOOD_SHRINE_ENTRY, ROOM_DEEPWOOD_SHRINE_ENTRY_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_GREAT_FAIRIES, ROOM_GREAT_FAIRIES_MINISH_WOODS, 0, { 0x00000080u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_BEANSTALKS, ROOM_BEANSTALKS_EASTERN_HILLS, 0, { 0x00210000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WITCH_HUT, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 31, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00200000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 32, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 32, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 32, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 32, AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 32, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { ~0u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_VILLAGE, ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_RED, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_GREEN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BLUE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_BARREL_MINISH, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_FESTARI, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_MINISH_VILLAGE, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 33, AREA_MINISH_WOODS, ROOM_MINISH_WOODS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 34, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA, 0, { 0x00002000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 34, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_LIBRARI, 0, { 0x00012000u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 34, AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI, 0, { 0x00012020u, 0x00012040u, ~0u, ~0u, ~0u, ~0u } },
+    { 35, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 35, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 35, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_MINISH_PATHS, ROOM_MINISH_PATHS_LAKE_HYLIA, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HOUSE_INTERIORS_4, ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN, 0, { 0x00000400u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HOUSE_INTERIORS_2, ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE, 0, { 0x00000020u, 0x00000040u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_DOJOS, ROOM_DOJOS_WAVEBLADE, 0, { 0x00000020u, 0x00000040u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_0, 0, { 0x00000820u, 0x00000840u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000040u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_BEANSTALK, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_BEANSTALK, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYLIA_DIG_CAVES, ROOM_HYLIA_DIG_CAVES_1, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, { 0x00000840u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_LAKE_HYLIA_EAST, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_LAKE_HYLIA, ROOM_LAKE_HYLIA_MAIN, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1, 0, { 0x00000420u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 36, AREA_TEMPLE_OF_DROPLETS, ROOM_TEMPLE_OF_DROPLETS_ENTRANCE, 0, { 0x00000420u, 0x00000440u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HINT_SCRUB, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_SPRING_WATER, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_MUSHROOM_KEESE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_HELMASAUR_HALLWAY, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, 0, { 0x00000008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MINISH_CAVES, ROOM_MINISH_CAVES_BEAN_PESTO, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_MINISH_PATHS, ROOM_CRENEL_MINISH_PATHS_BEAN, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00001008u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 37, AREA_MT_CRENEL, ROOM_MT_CRENEL_CENTER, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00010200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000200u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, { 0x00010220u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 38, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000100u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00010300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000300u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE, 0, { 0x00010320u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000120u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00010920u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 39, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0x00000108u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE, 0, { 0x00010020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, 0, { 0x00010020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 40, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE, 0, { 0x00010020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, 0, { 0x00010020u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 41, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
 };
 
 #endif // QUICKSTART_REACH_H

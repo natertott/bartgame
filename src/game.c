@@ -369,6 +369,10 @@ static bool32 QuickStartIsRanchHouseRoom(u8 area, u8 room);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartClearCastleGuards(void);
+static void QuickStartVeilFallsQuirkHook(void);
+// The Ezlo hint banks' only addressing (defined with the win chain, below;
+// the carry quest's giver line is asked for above it).
+static s32 QuickStartRegionHintLine(s32 ring);
 static void QuickStartShowRegionIntroHintOnce(void);
 static void QuickStartClearMelarisMineObstacles(void);
 static void QuickStartSpawnMelarisMineEnemiesOnce(void);
@@ -2238,7 +2242,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 105
+#define QUICKSTART_CONTENT_SITE_COUNT 117   // 105 + Veil Falls' twelve (Oct 2026)
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -3120,6 +3124,17 @@ const u8* const gCustomStrings2[] = {
     [203] = (const u8*)"Three eyes here too -\nbut these are asleep.\nSomewhere far off, their\ntwins blink in an order.",
     [204] = (const u8*)"Strike these three in\nthat same order. Get it\nwrong, and you will\nhave company.",
     [205] = (const u8*)"You remembered. Well\ndone - what fell was\nyours to take.",
+    // ====================== Veil Falls (Oct 2026) ========================
+    // The fourteenth region: its region line and its five pair lines, in
+    // QS_CHAIN_* order (ITEM, EVENT, WAVE, BOSS, QUEST). Addressed by
+    // QuickStartRegionHintLine / QuickStartPairHintLine, never by arithmetic
+    // off the region number.
+    [206] = (const u8*)"Veil Falls. Up where the\nwater comes from - the\nnext thing is there.",
+    [207] = (const u8*)"Veil Falls, and you lack\nsomething to get at what\nis waiting there.",
+    [208] = (const u8*)"A room by Veil Falls has\nsomething happening in\nit. Go and finish it.",
+    [209] = (const u8*)"Enemies hold a place at\nVeil Falls. Clear them\nout.",
+    [210] = (const u8*)"A beast waits at Veil\nFalls. Put it down.",
+    [211] = (const u8*)"A favour left undone at\nVeil Falls. Finish it.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3139,7 +3154,9 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // on the table's total shape - if it fires again, check whether the new
 // lines went in ABOVE 92 (fine, bump the number) or INTO the pair bank
 // (not fine, the arithmetic has moved).
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 206) ? 1 : -1];
+// 206 -> 212 for Veil Falls' region line and five pair lines (Oct 2026),
+// appended rather than inserted - see QuickStartRegionHintLine.
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 212) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3681,6 +3698,30 @@ static void QuickStartClearLonLonRanchAnimals(void) {
 // ZELDA is the entity id every QUICKSTART NPC borrows (fusers, hunt/scav
 // givers, signs, the merchant), same protection rule as
 // QuickStartClearHubRoom's sweep.
+// Veil Falls' Top screen ships the Biggoron scene - a hiding Big Goron
+// (vanilla's KINSTONE_E not being fused) whose script is a cutscene this
+// mode never runs, and with the fusion the three Big Gorons and the Mirror
+// Shield pedestal. Same rule as Eastern Hills: any NPC up there that is
+// not one of ours goes. The Main screen's own vanilla NPC - the Source of
+// the Flow stone that seals cave #1 - is already deleted at its init under
+// QUICKSTART (npc4E.c), which is why the cave is open in this build.
+static void QuickStartVeilFallsQuirkHook(void) {
+    s32 hereRoom, i;
+    if (gRoomControls.area != AREA_VEIL_FALLS_TOP) {
+        return;
+    }
+    hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, hereRoom)) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
 static void QuickStartClearEasternHillsNpcs(void) {
     s32 hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
     s32 i;
@@ -4113,8 +4154,16 @@ typedef char QuickStartFood2BlockFits[(GF_FOOD2_BIT(14) == 94 && GF_FOOD2_BIT(19
 #define QUICKSTART_EXT_SLOT_BASE 12
 #define QUICKSTART_EXT_REWARD_OFF 0
 #define QUICKSTART_EXT_WAVE_OFF 2
-#define QUICKSTART_EXT_ALIVE_OFF 10
-#define QUICKSTART_EXT_SLOT_BITS 16
+// Fourteen bits per extension slot since Veil Falls became the seventh
+// (Oct 2026): reward 2, wave 6, alive 6. The four scraps hold 105 bits and
+// seven sixteen-bit slots wanted 112. An extension slot's wave counter
+// therefore stops at 63 (QUICKSTART_EXT_WAVE_BITS); the twelve window
+// slots keep their eight bits. Nothing reads the counter past the
+// escalation curve's own ceiling, which is far below 63.
+#define QUICKSTART_EXT_ALIVE_OFF 8
+#define QUICKSTART_EXT_SLOT_BITS 14
+#define QUICKSTART_EXT_WAVE_BITS 6
+#define QUICKSTART_EXT_WAVE_MAX 63
 
 // Where a pool row past the twelfth keeps its state. Sixteen bits each
 // (reward 2, wave 8, alive 6), laid end to end across four runs of the
@@ -4134,8 +4183,8 @@ typedef char QuickStartFood2BlockFits[(GF_FOOD2_BIT(14) == 94 && GF_FOOD2_BIT(19
 // The four runs used now are the ones the content-site block gave back when
 // its thirteen-bits-a-site layout collapsed to one (see QsCheckSiteFlag) -
 // they were that block's borrowed extension space and nothing else has ever
-// been in them. 39 + 32 + 13 + 21 = 105 bits, so six extension slots fit
-// with room to spare; the compile-time check below is what says so.
+// been in them. 39 + 32 + 13 + 21 = 105 bits, so seven fourteen-bit
+// extension slots fit; the compile-time check below is what says so.
 static u32 QuickStartExtSlotFlag(s32 poolIndex, u32 off) {
     u32 lin = (u32)(poolIndex - QUICKSTART_EXT_SLOT_BASE) * QUICKSTART_EXT_SLOT_BITS + off;
     if (lin < 39) {
@@ -4621,6 +4670,29 @@ static const s16 sQuickStartMtCrenelEnemyOffsets[][2] = {
 // the last word.
 #define QUICKSTART_MTCRENEL_ROOM_SQUARES 400
 
+// VEIL FALLS (Oct 2026). The room is 30x63 tiles with 357 tiles of land in
+// seven pieces the player cannot walk between without a kit: the plateau
+// below the big falls (68 tiles, where the drop lands), the top plateau
+// above them (97, a Grip Ring climb), the dig-cave shelf (60, across the
+// water), the south-east strip and the Lon Lon-side strip (52 and 45, the
+// ranch border), the North Field corridor (12) and a nook by the upper
+// cave (10). Sampled over every piece with 3x3 clearance and 56px spacing
+// (scratchpad vf_spots.py, the spawn_spread sampler), so a player sees the
+// falls populated wherever they stand; the pieces they cannot reach are
+// scenery, as on Mount Crenel, and nothing counts this room to zero
+// (QuickStartRegionAllowsWave). The North Field corridor (12 tiles) has no
+// spot on purpose: the region spawner deals a wave onto the player's own
+// piece, and one spot in a one-tile-wide corridor is every body of the
+// wave stacked beside the door the player just came through.
+static const s16 sQuickStartVeilFallsEnemyOffsets[][2] = {
+    { 328, 232 }, { 280, 120 }, { 408, 184 }, { 248, 248 }, { 392, 248 }, { 280, 184 },
+    { 312, 504 }, { 216, 520 }, { 408, 488 }, { 408, 696 }, { 440, 776 }, { 232, 952 },
+    { 312, 952 }, { 168, 984 }, { 88, 888 },  { 88, 968 },  { 184, 88 },
+};
+// A third of the land, between Lake Hylia's shore (165) and the mountain's
+// 400: a ceiling of 16 (14 + 120/50) spread over seven pieces.
+#define QUICKSTART_VEILFALLS_ROOM_SQUARES 120
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -4833,6 +4905,20 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartMtCrenelEnemyOffsets, ARRAY_COUNT(sQuickStartMtCrenelEnemyOffsets),
       QUICKSTART_MTCRENEL_ROOM_SQUARES,
       872, 408, NULL },
+    // VEIL FALLS, the nineteenth row (Oct 2026). The drop lands on the
+    // plateau at the foot of the big falls, (296,500), tile (18,31): the
+    // piece cave #1 opens into, with the Grip Ring climb up the falls on
+    // its east side and the cave's door back down to North Hyrule Field.
+    // Neither of the room's two border landings would do - the North
+    // Field corridor is twelve tiles and the Lon Lon strip a dead end
+    // above a one-way ledge - and the walked survey prices the plateau
+    // as "through cave #1", which a drop is. Reward (392,496) is six tiles
+    // east on the same piece. The quirk hook sweeps the vanilla Gorons
+    // off the Top screen.
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 296, 500, 0, 0, 0, 0,
+      sQuickStartVeilFallsEnemyOffsets, ARRAY_COUNT(sQuickStartVeilFallsEnemyOffsets),
+      QUICKSTART_VEILFALLS_ROOM_SQUARES,
+      392, 496, QuickStartVeilFallsQuirkHook },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // The extension-slot bitfield (QuickStartExtSlotFlag) covers pool rows
@@ -5011,6 +5097,15 @@ enum {
     // walkable from either room's arrival - see sQuickStartRegionAdjacency.
     QS_REGION_MW,
     QS_REGION_LH,
+    // Veil Falls (Oct 2026): the falls above Lon Lon's north border and
+    // North Hyrule Field's east border, two rooms (Main and Top). A pool
+    // region: it drops the player, scatters fusers, hosts sites, and like
+    // Lake Hylia runs its waves as scenery only (two pockets no walk joins,
+    // see QuickStartRegionAllowsWave). LAST in the enum on purpose: the
+    // Ezlo hint bank is addressed by region number and its compass and pair
+    // banks follow the first thirteen regions arithmetically, so this one
+    // takes its lines from the end of the table (QuickStartRegionHintLine).
+    QS_REGION_VF,
     QS_REGION_COUNT
 };
 
@@ -5026,10 +5121,11 @@ enum {
 static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
     /* CG   */ (1 << QS_REGION_NHF),
     /* NHF  */ (1 << QS_REGION_CG) | (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL) |
-               (1 << QS_REGION_RV),
+               (1 << QS_REGION_RV) | (1 << QS_REGION_VF),
     /* SHF  */ (1 << QS_REGION_NHF) | (1 << QS_REGION_EH) | (1 << QS_REGION_WW),
     /* EH   */ (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_MW),
-    /* LLR  */ (1 << QS_REGION_EH) | (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_LH),
+    /* LLR  */ (1 << QS_REGION_EH) | (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_LH) |
+               (1 << QS_REGION_VF),
     /* TRIL */ (1 << QS_REGION_LLR) | (1 << QS_REGION_NHF) | (1 << QS_REGION_WW) | (1 << QS_REGION_RV) |
                (1 << QS_REGION_CREN),
     /* WW   */ (1 << QS_REGION_TRIL) | (1 << QS_REGION_SHF) | (1 << QS_REGION_CW),
@@ -5060,6 +5156,13 @@ static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
     // a kitless player can walk a circuit they cannot.
     /* MW   */ (1 << QS_REGION_EH),
     /* LH   */ (1 << QS_REGION_LLR),
+    // Veil Falls hangs off Lon Lon's north border (both of the falls' south
+    // exits land in the ranch) and North Hyrule Field's east border. The
+    // two landings are in different pockets of the same room - walked by
+    // the user, 2026-10-06 - so the region is two spurs that meet nowhere
+    // on foot; the reach graph (world_reach.py, VF / VF@NHF / VF@LLR)
+    // carries that, this mask only says the borders exist.
+    /* VF   */ (1 << QS_REGION_LLR) | (1 << QS_REGION_NHF),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -5072,7 +5175,7 @@ static u8 QuickStartRegionOfPoolIndex(s32 poolIndex) {
         QS_REGION_WW, QS_REGION_WW, QS_REGION_WW,
         QS_REGION_RV,
         QS_REGION_CW, QS_REGION_WR, QS_REGION_WR,
-        QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN,
+        QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF,
     };
     // The index is taken modulo the POOL's size but read out of byPool, so
     // the two must be the same length or a perfectly legal pool index reads
@@ -5277,10 +5380,15 @@ static bool32 QuickStartRegionWaveCleared(void) {
 // 16 = cost + margin. Below the gate, the wave loop deals a normal wave.
 #define QUICKSTART_BOSS_SPAWN_MIN_GFX 16
 
+// An extension slot (pool row 12+) stores six wave bits, a window slot eight.
+static s32 QuickStartRegionWaveBits(s32 poolIndex) {
+    return (poolIndex >= QUICKSTART_EXT_SLOT_BASE) ? QUICKSTART_EXT_WAVE_BITS : 8;
+}
+
 static u8 QuickStartRegionGetWaveCount(s32 poolIndex) {
     u8 value = 0;
     s32 b;
-    for (b = 0; b < 8; b++) {
+    for (b = 0; b < QuickStartRegionWaveBits(poolIndex); b++) {
         if (QuickStartSlotBitCheck(poolIndex, QUICKSTART_EXT_WAVE_OFF + b, GF_REGION_WAVE_BIT(poolIndex, b))) {
             value |= (1 << b);
         }
@@ -5290,7 +5398,10 @@ static u8 QuickStartRegionGetWaveCount(s32 poolIndex) {
 
 static void QuickStartRegionSetWaveCount(s32 poolIndex, u8 value) {
     s32 b;
-    for (b = 0; b < 8; b++) {
+    if (poolIndex >= QUICKSTART_EXT_SLOT_BASE && value > QUICKSTART_EXT_WAVE_MAX) {
+        value = QUICKSTART_EXT_WAVE_MAX;
+    }
+    for (b = 0; b < QuickStartRegionWaveBits(poolIndex); b++) {
         QuickStartSlotBitWrite(poolIndex, QUICKSTART_EXT_WAVE_OFF + b, GF_REGION_WAVE_BIT(poolIndex, b),
                                (value & (1 << b)) != 0);
     }
@@ -5402,6 +5513,13 @@ static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region) {
         return FALSE;
     }
     if (region->area == AREA_HYRULE_FIELD && region->room == ROOM_HYRULE_FIELD_LON_LON_RANCH) {
+        return FALSE;
+    }
+    // Veil Falls (Oct 2026): seven pieces of land, the drop's plateau joined
+    // to the rest only by a Grip Ring climb, water and a one-way ledge. The
+    // same bargain as the lake: waves spawn as scenery across every piece,
+    // nothing is paid for emptying the room.
+    if (region->area == AREA_VEIL_FALLS && region->room == ROOM_VEIL_FALLS_MAIN) {
         return FALSE;
     }
     return TRUE;
@@ -6389,8 +6507,6 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_LH), 0 },
     { AREA_MINISH_HOUSE_INTERIORS, ROOM_MINISH_HOUSE_INTERIORS_LIBRARI,
       (1 << QS_REGION_LH), 0 },
-    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
-      (1 << QS_REGION_LH), 0 },
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH,
       (1 << QS_REGION_LLR), 0 },
     { AREA_CAVES, ROOM_CAVES_LON_LON_RANCH_WALLET,
@@ -6483,6 +6599,28 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_TRIL), 0 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE,
       (1 << QS_REGION_TRIL), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_SPLITBLADE,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE,
+      (1 << QS_REGION_VF), 0 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST,
+      (1 << QS_REGION_VF), 0 },
     { AREA_CASTOR_CAVES, ROOM_CASTOR_CAVES_WIND_RUINS,
       (1 << QS_REGION_WR), 0 },
     { AREA_MINISH_CRACKS, ROOM_MINISH_CRACKS_RUINS_ENTRANCE,
@@ -6493,6 +6631,12 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_WW), 0 },
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE,
       (1 << QS_REGION_WW), 0 },
+    // Kept by hand: the Waveblade tree stopped being a site (it is the atrium
+    // the lake's door opens into, blessed in QuickStartIsPocketInteriorRoom)
+    // and room_owner.py --c only emits sites, but its owner row still says
+    // which region's keys may not land there.
+    { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
+      (1 << QS_REGION_LH), 0 },
 };
 
 // Which named region a room IS, for the twelve rooms that are regions.
@@ -6550,6 +6694,13 @@ static s32 QuickStartRegionOfRoom(u8 area, u8 room) {
     // and no containment once you were there.
     if (area == AREA_MT_CRENEL && room <= ROOM_MT_CRENEL_ENTRANCE) {
         return QS_REGION_CREN;
+    }
+    // Veil Falls: Main and, across its north border, Top (the ledge above
+    // the falls). Top is a border crossing rather than a door, so it has
+    // to be a region room or containment cancels the climb's last step.
+    if ((area == AREA_VEIL_FALLS && room == ROOM_VEIL_FALLS_MAIN) ||
+        (area == AREA_VEIL_FALLS_TOP && room == ROOM_VEIL_FALLS_TOP_0)) {
+        return QS_REGION_VF;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -9602,6 +9753,9 @@ static const QuickStartRegionDropSpots sQuickStartRegionDropSpots[] = {
     { 4, { { 40, 440 }, { 392, 88 }, { 248, 760 }, { 184, 216 } } },
     // MT_CRENEL_ENTRANCE - 52 tiles in the arrival component
     { 2, { { 1000, 424 }, { 840, 440 }, { 0, 0 }, { 0, 0 } } },
+    // VEIL_FALLS_MAIN - 68 tiles in the arrival component (the plateau at
+    // the foot of the big falls; sampled at 48px, scratchpad vf_spots.py)
+    { 4, { { 312, 504 }, { 216, 520 }, { 408, 488 }, { 360, 520 } } },
 };
 
 typedef char QuickStartDropSpotsMatchPool[(ARRAY_COUNT(sQuickStartRegionDropSpots) ==
@@ -10543,10 +10697,10 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorSmallRoomPool[] = {
     // (confirmed via a dedicated search: no Bombable/CrackedWall object
     // type exists, and the room's own collision/tilemap data is still raw
     // binary) - left completely untouched rather than guessed at.
-    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, 100, 100, 0, -24 },
-    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, 100, 100, 0, -24 },
+    // (The Veil Falls cave's exit room and its secret staircase sat here
+    // until Oct 2026; they are content sites of the falls now.)
 };
-#define QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE 6
+#define QUICKSTART_2DOOR_SMALL_ROOM_POOL_SIZE 4
 
 // Large pool: miniboss/wave content, EXCEPT the 3 rooms flagged below
 // (QuickStart2DoorWantsOverworldEnemies), which always get the same
@@ -10575,7 +10729,9 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // content spot 24px above it was in the same pool. (104,200) is tile
     // (6,12), the open corridor that runs between the pools, and the
     // content spot lands on (6,11), also open.
-    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, 104, 200, 0, -24 },
+    // (The Veil Falls water rupee path sat here until Oct 2026; it is a
+    // content site of the falls now, which is why the notes above it are
+    // kept: the room is the same room.)
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_INN_EAST_2F, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_LIBRARY_1F, 100, 100, 0, -24 },
     { AREA_HOUSE_INTERIORS_1, ROOM_HOUSE_INTERIORS_1_LIBRARY_2F, 100, 100, 0, -24 },
@@ -10622,7 +10778,7 @@ static const QuickStart2DoorRoomEntry sQuickStart2DoorLargeRoomPool[] = {
     // content spot 24px below it stays on it.
     { AREA_NULL_61, ROOM_NULL_61_0, 120, 168, 0, 24 },
 };
-#define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 12
+#define QUICKSTART_2DOOR_LARGE_ROOM_POOL_SIZE 11
 
 // Same flag-bank convention as GF_LADDER_*/GF_DIFFICULTY_BIT above - picks
 // up right after GF_CAVE_CONNECTOR_DONE (183), the highest bit previously
@@ -14596,7 +14752,7 @@ static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot) {
     // match what the win chain would say about the same place.
     if (QuickStartCarryState() == QUICKSTART_CARRY_RUNNING_UNHINTED && !(gMessage.state & MESSAGE_ACTIVE) &&
         gPlayerEntity.base.action == PLAYER_NORMAL && !QuickStartPlayerOnExitTrigger()) {
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartRegionOfPoolIndex(QuickStartCarryPropRow())), 0);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartRegionHintLine(QuickStartRegionOfPoolIndex(QuickStartCarryPropRow()))), 0);
         QuickStartCarrySetState(QUICKSTART_CARRY_RUNNING);
     }
     if (!QuickStartCarrySpot(region, &spotX, &spotY)) {
@@ -17456,6 +17612,40 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // cancelled the frame it fired and the dojo behind it would be
     // unreachable. Same standing as the Boomerang tree hollows.)
     { AREA_LAKE_WOODS_CAVE, ROOM_LAKE_WOODS_CAVE_MAIN, QUICKSTART_KINDS_SMALL, 552, 408 },
+    // --- Veil Falls (Oct 2026) ------------------------------------------
+    //
+    // The falls' twelve rooms with floor to stand on, from the user's walked
+    // survey of 2026-10-06 (tools/quickstart/world_reach.py, VF / VF@NHF /
+    // VF@LLR). Spots measured the Crenel way (scratchpad vf_rooms.py): warp
+    // in at the door's own arrival, flood the collision from where the
+    // player lands, take the 3x3-clear tile nearest that piece's centre
+    // and at least four tiles from the arrival; where no tile has 3x3
+    // clearance (the two ring-corridor caves, the dojo's ante room) the
+    // spot is the corridor's middle and the placer's snap does the rest.
+    //
+    // Three of these - the cave's exit room, the dark secret staircase and
+    // the water rupee path - left the 2-door connector pools to come here;
+    // a room cannot be both a connector drawn for North Hyrule Field's
+    // river cave and a site of the falls.
+    //
+    // Not here: the dig cave (a Mole Mitts warren, QuickStartIsDigRoom
+    // serves it) and the heart-piece nook behind the small waterfall (six
+    // tiles).
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_ENTRANCE, QUICKSTART_KINDS_ANY, 200, 72 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_EXIT, QUICKSTART_KINDS_SMALL, 88, 56 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_1F, QUICKSTART_KINDS_ANY, 104, 104 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_2F, QUICKSTART_KINDS_ANY, 88, 88 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM, QUICKSTART_KINDS_SMALL, 56, 72 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_SECRET_CHEST, QUICKSTART_KINDS_SMALL, 120, 72 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE, QUICKSTART_KINDS_SMALL, 120, 104 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE, QUICKSTART_KINDS_SMALL, 168, 264 },
+    { AREA_VEIL_FALLS_CAVES, ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH, QUICKSTART_KINDS_ANY, 104, 168 },
+    { AREA_DOJOS, ROOM_DOJOS_TO_SPLITBLADE, QUICKSTART_KINDS_SMALL, 120, 56 },
+    { AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, QUICKSTART_KINDS_ANY, 120, 104 },
+    // The ledge above the falls: a region room (QuickStartRegionOfRoom),
+    // but not the pool row's own, so the site loop runs here as it does in
+    // Mount Crenel's Center. 114 tiles east of the falls' crest.
+    { AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, QUICKSTART_KINDS_LARGE, 296, 72 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -17795,6 +17985,17 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
         return TRUE;
     }
     if (area == AREA_HYLIA_DIG_CAVES) {
+        return TRUE;
+    }
+    // Veil Falls (Oct 2026): its dig cave - one 30x63 map under the falls
+    // with two dig-in entrances, the Mole Mitts pockets the user walked -
+    // and the heart-piece nook behind the small upper-left waterfall, which
+    // is six tiles and no site. Every other room off the falls is a site
+    // and blessed by the scan below.
+    if (area == AREA_VEIL_FALLS_DIG_CAVE) {
+        return TRUE;
+    }
+    if (area == AREA_VEIL_FALLS_CAVES && room == ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE) {
         return TRUE;
     }
     if (area == AREA_LAKE_HYLIA && room == ROOM_LAKE_HYLIA_BEANSTALK) {
@@ -18902,13 +19103,36 @@ static void QuickStartChainBossWatcher(void) {
 // and their own legs.
 // Both banks live in gCustomStrings2 (TEXT_CUSTOM2) - the first table hit
 // its hard 256-entry ceiling exactly as these were written.
-#define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_REGION_*
-#define QUICKSTART_CHAIN_HINT_KIND_BASE QS_REGION_COUNT   // +QS_CHAIN_*
+#define QUICKSTART_CHAIN_HINT_REGION_BASE 0             // +QS_REGION_*, for the first thirteen
+// The thirteen regions that were in the enum when the banks were laid out.
+// The compass bank follows them at 13 and the pair bank at 26, so a region
+// added later (Veil Falls, Oct 2026) cannot take line 13: its region line
+// and its five pair lines are appended at the table's end instead, and the
+// two helpers below are the only way the banks are addressed.
+#define QUICKSTART_HINT_LAID_OUT_REGIONS 13
+#define QUICKSTART_CHAIN_HINT_KIND_BASE QUICKSTART_HINT_LAID_OUT_REGIONS   // +QS_CHAIN_*
 // The third bank, for the Select button: one line per (region, kind) pair,
 // so a single textbox can say both. See gCustomStrings2.
 #define QUICKSTART_CHAIN_HINT_PAIR_BASE 26              // +ring*5 +QS_CHAIN_*
 #define QUICKSTART_HINT_NO_STEP 91
 #define QUICKSTART_HINT_CHAIN_DONE 92
+// Veil Falls' lines: the region line at 206, the five pair lines at 207-211.
+#define QUICKSTART_HINT_VF_REGION_LINE 206
+#define QUICKSTART_HINT_VF_PAIR_BASE 207
+
+static s32 QuickStartRegionHintLine(s32 ring) {
+    if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
+        return QUICKSTART_HINT_VF_REGION_LINE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS);
+    }
+    return QUICKSTART_CHAIN_HINT_REGION_BASE + ring;
+}
+
+static s32 QuickStartPairHintLine(s32 ring, s32 kind) {
+    if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
+        return QUICKSTART_HINT_VF_PAIR_BASE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS) * QS_CHAIN_KIND_COUNT + kind;
+    }
+    return QUICKSTART_CHAIN_HINT_PAIR_BASE + ring * QS_CHAIN_KIND_COUNT + kind;
+}
 
 // Which named region a step points at - for the hint, and for the marker.
 static s32 QuickStartChainStepRegion(s32 step) {
@@ -19022,7 +19246,7 @@ static void QuickStartSelectHintMonitor(void) {
             // it already says the right thing.
             hint = QUICKSTART_CHAIN_HINT_KIND_BASE + QS_CHAIN_ITEM;
         } else {
-            hint = QUICKSTART_CHAIN_HINT_PAIR_BASE + ring * QS_CHAIN_KIND_COUNT + gSave.chain_kind[step];
+            hint = QuickStartPairHintLine(ring, gSave.chain_kind[step]);
         }
     }
     CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, hint), 0);
@@ -19064,7 +19288,7 @@ static void QuickStartChainHintOnce(s32 step) {
             // item will turn up in the economy wherever they are playing.
             hint = QUICKSTART_CHAIN_HINT_KIND_BASE + QS_CHAIN_ITEM;
         } else {
-            hint = QUICKSTART_CHAIN_HINT_REGION_BASE + ring;
+            hint = QuickStartRegionHintLine(ring);
         }
     }
     gSave.chain_hinted |= (u8)(1 << step);
@@ -20694,7 +20918,8 @@ static void QuickStartEnforceFieldRegionContainment(void) {
     if (!((gRoomControls.area == AREA_HYRULE_FIELD && gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) ||
           gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
           gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
-          gRoomControls.area == AREA_MT_CRENEL) ||
+          gRoomControls.area == AREA_MT_CRENEL || gRoomControls.area == AREA_VEIL_FALLS ||
+          gRoomControls.area == AREA_VEIL_FALLS_TOP) ||
         !QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
@@ -23082,6 +23307,23 @@ static const QuickStartFuser sQuickStartFusers[] = {
     // climb rather than on the arrival ledge, which matches what reach.h
     // already charges for the region (bombs plus the Grip Ring).
     { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE, KINSTONE_63 },
+    // Veil Falls (Oct 2026): all five of its fusions, decoded from the
+    // ROM's gKinstoneWorldEvents -> gWorldEvents chain. 1D opens the
+    // Splitblade dojo's archway by the Lon Lon strip (world event type 25,
+    // the user's "kinstone fusion event" for both dojo rooms); 61 lays the
+    // gold chest on the top plateau at (360,184) (type 2); 4A wakes the
+    // golden enemy up there (type 1, OUGONTEKI_F); 1F lays the land in
+    // front of dig-cave entrance 2 at (232,664) (type 4 - the user's "I
+    // believe this requires a kinstone fusion to spawn land"); 13 opens
+    // the heart-piece cave behind the small upper-left waterfall (type 9,
+    // marker at (56,40)). Not here: KINSTONE_E, the Biggoron fusion on the
+    // Top screen, whose event is the Mirror Shield cutscene; the vanilla
+    // Gorons are swept off that screen instead (the quirk hook).
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, KINSTONE_1D },
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, KINSTONE_61 },
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, KINSTONE_4A },
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, KINSTONE_1F },
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, KINSTONE_13 },
 };
 
 // --- F10: the COMPASS's pause-map feeds (called from pauseMenuScreen6.c) --
@@ -23189,9 +23431,16 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
       { { 56, 632 }, { 840, 72 }, { 312, 632 }, { 488, 56 }, { 56, 88 },
         { 312, 88 }, { 424, 456 }, { 664, 88 }, { 472, 632 } } },
+    // Trilby: the five spots in the south-west pocket - (392,888),
+    // (344,744), (280,888), (40,584), (136,584) - left when the boulder
+    // stopped being auto-filled (Oct 2026): the pocket is behind the rock
+    // or the bracelets now, and a fuser nobody can walk to offers nothing.
+    // The five replacements are sampled in the main field's own 332-tile
+    // piece (scratchpad tril_fusers.py), 56px apart, clear of the drop and
+    // the reward.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
-      { { 392, 888 }, { 24, 408 }, { 344, 744 }, { 248, 136 }, { 280, 888 },
-        { 40, 584 }, { 136, 584 }, { 360, 152 }, { 456, 552 } } },
+      { { 248, 344 }, { 24, 408 }, { 392, 72 }, { 248, 136 }, { 296, 504 },
+        { 360, 392 }, { 392, 488 }, { 360, 152 }, { 456, 552 } } },
     // The three expansion rooms that host fusers, generated the same way
     // (flood + farthest-point sample) with the region's enemy-offset grid,
     // its gates, its entrance and its reward spot all seeded as taken, so a
@@ -23246,6 +23495,14 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_MT_CRENEL, ROOM_MT_CRENEL_ENTRANCE,
       { { 792, 440 }, { 840, 440 }, { 856, 408 }, { 888, 376 }, { 888, 424 },
         { 920, 408 }, { 952, 376 }, { 952, 424 }, { 984, 392 } } },
+    // Veil Falls' drop plateau, the 68-tile piece at the foot of the big
+    // falls. Nine spots at 16px spacing (the sampler relaxed from 48, the
+    // same trade the Minish Woods shore makes); the drop's own tile
+    // (296,500) and the reward (392,496) are excluded. One of the nine is
+    // occupied per run.
+    { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN,
+      { { 312, 504 }, { 216, 520 }, { 408, 488 }, { 360, 520 }, { 264, 520 },
+        { 344, 488 }, { 392, 520 }, { 376, 488 }, { 328, 520 } } },
 };
 
 // Which named named region each row of sQuickStartFuserSpots sits in, in the
@@ -23255,7 +23512,7 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
 static const u8 sQuickStartFuserSpotRegions[] = {
     QS_REGION_CG, QS_REGION_LLR, QS_REGION_NHF, QS_REGION_SHF, QS_REGION_TRIL,
     QS_REGION_EH, QS_REGION_WW, QS_REGION_WW, QS_REGION_CW,
-    QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN,
+    QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF,
 };
 
 #define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))

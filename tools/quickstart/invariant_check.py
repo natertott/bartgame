@@ -657,10 +657,10 @@ QS_RING = {'CG': 0, 'NHF': 1, 'SHF': 2, 'EH': 3, 'LLR': 4, 'TRIL': 5,
            'WW': 6, 'RV': 7, 'CW': 8, 'WR': 9}
 RING_ADJ = {
     'CG': ['NHF'],
-    'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV'],
+    'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV', 'VF'],
     'SHF': ['NHF', 'EH', 'WW'],
     'EH': ['SHF', 'LLR', 'MW'],
-    'LLR': ['EH', 'NHF', 'TRIL', 'LH'],
+    'LLR': ['EH', 'NHF', 'TRIL', 'LH', 'VF'],
     'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
     'WW': ['TRIL', 'SHF', 'CW'],
     'RV': ['NHF', 'TRIL'],
@@ -672,13 +672,15 @@ RING_ADJ = {
     # reaches it. See sQuickStartRegionAdjacency in game.c.
     'MW': ['EH'],
     'LH': ['LLR'],
+    # Veil Falls: Lon Lon's north border and North Hyrule Field's east one.
+    'VF': ['LLR', 'NHF'],
 }
 for _a, _ns in RING_ADJ.items():
     for _b in _ns:
         assert _a in RING_ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
 # The ring each row of sQuickStartFuserSpots sits in, in table order.
 SPOT_REGIONS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
-                'MW', 'LH', 'CREN']
+                'MW', 'LH', 'CREN', 'VF']
 SPOTS_PER_REGION = 9
 # This list is a hand copy of sQuickStartFuserSpotRegions, and a hand copy that
 # silently falls behind the table it mirrors is how the fuser tier starts

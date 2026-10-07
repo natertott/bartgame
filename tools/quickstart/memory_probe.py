@@ -30,15 +30,23 @@ def check(name, ok, detail=''):
     res.append(ok); print('%s %-44s %s' % ('PASS' if ok else 'FAIL', name, detail), flush=True)
 def run(c, n):
     for _ in range(n): c.run_frame()
-def dismiss(c):
-    """Press A until the player is free (action 0). A fixed count is wrong
-    when the boot lands the player beside the sprite (the barrel house,
-    site 99): every other press TALKS to it, and six presses ends with its
-    textbox open and every object frozen behind it."""
-    for _ in range(12):
-        if c.memory.u8[PLAYER + 0x0c] not in (0x16, 0x7):   # message / talking
-            return
-        press(c, c.KEY_A, 3, 15)
+MSG = 0x02000050   # gMessage: state at +0 (4 typing, 7 waiting for A, 0 closed)
+def dismiss(c, limit=900):
+    """Close every textbox in turn. A fixed count of presses is wrong twice
+    over: when the boot lands the player beside the sprite (the barrel
+    house, site 99) a press while free TALKS to it, and on a region's first
+    arrival Ezlo stacks two or three hints. So: press only while a box is
+    up, never while free, and stop after thirty quiet frames."""
+    quiet = 0
+    for _ in range(limit):
+        if c.memory.u8[MSG] == 0 and c.memory.u8[PLAYER + 0x0c] not in (0x16, 0x7):   # free
+            c.run_frame()
+            quiet += 1
+            if quiet >= 30:
+                return
+            continue
+        press(c, c.KEY_A, 3, 17)
+        quiet = 0
 def room_flag(c, n):
     b = 256 + n
     return (c.memory.u8[ROOMVARS + 0x14 + (b >> 3)] >> (b & 7)) & 1

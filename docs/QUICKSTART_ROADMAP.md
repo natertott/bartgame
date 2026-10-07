@@ -1271,6 +1271,124 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Veil Falls is the fourteenth region (Oct 2026)
+
+The user walked Veil Falls from both of its borders (2026-10-06) and
+asked for it "100% integrated into our game the same way that the other
+regions are": a valid drop region, reachable from its neighbours, its
+rooms, quests and events eligible for the win chain, with spawn spots for
+pots, enemies and sprites and every kinstone event placed. The answers to
+the boulder survey's open questions went in at the same time
+(`docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`, sections 7 and 8).
+
+**The region.** `QS_REGION_VF`, last in the enum, adjacent to Lon Lon
+Ranch and North Hyrule Field; Main and Top are its rooms
+(`QuickStartRegionOfRoom`), both areas are policed by containment like
+the rest of the ring, and the three border rows that were compiled out -
+the ranch's two north halves and the North Field's east - are back in
+`transitions.c`. The pool row (the nineteenth) lands the drop at
+(296,500), the 68-tile plateau at the foot of the big falls: neither
+border landing would do (the North Field corridor is twelve tiles, the
+Lon Lon strip a dead end above a one-way ledge), and the walk prices the
+plateau as "through cave #1", which a drop is. Reward (392,496), four
+drop spots, nine fuser spots at 16px (the sampler relaxed from 48, as on
+the Minish Woods shore), eighteen enemy spots sampled over all seven
+pieces of land (scratchpad `vf_spots.py`, the spawn_spread sampler).
+Waves are scenery only - `QuickStartRegionAllowsWave` says no, as for
+Lake Hylia, because the pieces are joined by a Grip Ring climb, water
+and a one-way ledge - and the boss allowlist does not include it.
+
+**The nineteenth row needed flag space.** The extension slots for pool
+rows 12+ were sixteen bits each in 105 bits of borrowed scraps; seven
+would not fit. They are fourteen now (reward 2, wave 6, alive 6): an
+extension slot's wave counter stops at 63 (`QUICKSTART_EXT_WAVE_MAX`),
+which nothing reaches - the escalation curve tops out far below it.
+
+**Twelve sites** (105 -> 117): cave #1's two rooms, the 1F and 2F
+hallways, the 1F secret room, the secret chest, the dark secret
+staircase, the block puzzle, the water rupee path, the Splitblade dojo
+and its ante room, and the Top screen (a region room that is not the
+pool row's own, so the site loop runs there as in Mount Crenel's
+Center). Spots measured the Crenel way from each door's arrival
+(scratchpad `vf_rooms.py`). Three of them left the 2-door connector
+pools to come here (the small pool is 4 rows now, the large 11) - a room
+cannot be both a connector drawn for the river cave and a site of the
+falls - and `parse_tables.POOL_LISTS` lost the same three. The dig cave
+is served by `QuickStartIsDigRoom` and the six-tile heart-piece nook is
+no site; both are blessed as pocket interiors so their doors are not
+cancelled. The dojo and the 1F secret room are scroll seams
+(`room_owner.SEAMS`), and the owners table was regenerated.
+
+**Five fusers**, every fusion the ROM has in the falls
+(`gKinstoneWorldEvents -> gWorldEvents`): 1D opens the Splitblade dojo's
+archway, 61 lays the gold chest on the top plateau, 4A wakes the golden
+enemy there, 1F lays the land in front of dig-cave entrance 2, 13 reveals
+the heart-piece nook behind the small upper-left waterfall. KINSTONE_E,
+the Biggoron fusion on the Top screen, is deliberately not placed - its
+event is the Mirror Shield cutscene - and the quirk hook sweeps the
+vanilla Gorons off that screen.
+
+**Cave #1's door is open, and it already was.** Vanilla seals it with the
+Source of the Flow stone (NPC 4E type 11) until `KINSTONE_SOURCE_FLOW` is
+fused with the stone, using the gold piece King Gustaf's ghost gives in
+the Royal Crypt; the stone is deleted at init under QUICKSTART. Measured
+on the delivered ROM: a player walked north from (56,560) enters the
+cave in eighty frames (`veilfalls_probe.py`, DOOR).
+
+**The whirlwind is gone.** Veil Falls Top's vortex carried a player into
+the Cloud Tops - measured, `AREA_CLOUD_TOPS` on arrival - so `bigVortex.c`
+deletes it there under QUICKSTART.
+
+**The gold chest on the ledge** the user could not reach is the
+block-puzzle cave's doorstep (its south border lands on the ledge, the
+ledge's door leads back in), and the way into that cave is cave #1's
+upper room's bombable north wall, a scroll seam into the secret chest
+room, then two doors. Priced at the lantern and the bombs, marked
+INFERRED in the survey. Stepping off the waterfall climb onto the ledge
+was tried and does not work.
+
+**Ezlo's lines.** The hint banks are addressed arithmetically off the
+region number, with the compass bank at 13 and the pair bank at 26, so a
+fourteenth region could not take line 13. `QuickStartRegionHintLine` and
+`QuickStartPairHintLine` are the only way the banks are read now; Veil
+Falls' six lines are appended at 206-211 and the table assert moved to
+212.
+
+**The survey.** `VF` (the drop plateau; rows inferred from the North
+Field walk with cave #1's cost taken off everything past the cave),
+`VF@NHF` and `VF@LLR` (the user's two lists verbatim, "cave #1" as the
+lantern), `VF@POCKET` (the lower strip, from the ranch's gold-chest
+pocket) and `LLR@POCKET` (that pocket, which `VF@POCKET` lands in).
+41 nodes, 613 destination rows; `gen_reach --check` and
+`world_reach --check` clean. The tools that enumerate regions all know
+`VF`: `gen_reach`, `sim`, `scenario` (pool short name `VF`),
+`invariant_check`, `room_owner`, `traversal_audit`, `overworld_paths`
+(pooled now), `spawn_spread` (`VEILFALLS`), `chain_probe`.
+
+**North Hyrule Field's east edge was linked backwards**, found by walking
+the borders: its north half (the bomb pocket at (999,112)) is the Veil
+Falls crossing and its start (1013,638) the Lon Lon one - borders keep
+the global coordinate. The survey's two links are swapped back and
+`NHF@VF`, the field entered from the falls, lands in the bomb pocket
+with the bombs added to every row (inferred, unwalked).
+
+**Measured on the delivered ROM** (`tools/quickstart/veilfalls_probe.py`,
+7/7): cave #1's door takes the player from the corridor into the cave in
+80 frames; the Top screen has no vortex and the player stays on it; the
+big falls climb with the Grip Ring ((344,470) to (327,214)) and not
+without; the drop's piece is 68 tiles with the reward and all nine fuser
+spots on it; the twelve site spots are each on their door's piece with
+the event present; `QuickStartReachTestRoom` from the falls' pool row
+answers cave 0/1 without/with the lantern, the 2F hallway 1 only with
+the grip on top, the Splitblade dojo 0 always (pocket 1); all seven
+border crossings land in the room the links say. Also on this ROM:
+`sim_validate` 402/402, `memory_probe` 9/9, `scenario_probe` 15/15,
+`boulder_probe` PASS, `gen_reach --check` and `world_reach --check`
+clean. The probes' `dismiss()` presses A only while a textbox is up: a
+region's first arrival stacks two or three Ezlo hints, and a fixed count
+of blind presses left one open.
+
+
 ### The boulders are the player's again; reach is per entrance (Oct 2026)
 
 The user: "There are several 1-way boulders scattered throughout the game

@@ -15,7 +15,7 @@ Current head when this was written: **`7c659be`** (this batch is the commit on t
 
 **The run loop, end to end.** Hub with three selection rounds, shop, trophy
 case, inn rest, wandering hint NPCs; the sky drop with per-region landing
-spots and kit-aware re-rolls; a 13-region free-roam ring walked on foot; a
+spots and kit-aware re-rolls; a 14-region free-roam ring walked on foot; a
 five-step win chain; the Earth Element hunt; win and reset.
 
 **Combat.** Six enemy tiers covering 57 of the game's 102 enemy ids; ten
@@ -24,7 +24,7 @@ curve over 13 steps; an Elites tier that doubles as the miniboss pool; weapon
 gating for enemies a sword cannot kill; two bosses (ChuChu, Big Octorok) with
 a vetted per-region allowlist.
 
-**Content systems.** Three "? room" systems with nine event kinds; 105
+**Content systems.** Three "? room" systems with nine event kinds; 117
 content sites; quests; 14 charms/curses; the kinstone fusion economy with
 travelling fusers; the map and compass; the trophy case browsing all 70
 obtainable things.
@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Veil Falls integrated: pool row, 12 sites, 5 fusers, borders restored, vortex removed; the boulder survey's answers applied | "Veil Falls is the fourteenth region" |
 | 50,000-run simulation study, and a second pass that corrected three of its four headline findings | "50,000 simulated runs...", "The second pass..." |
 | Quest guard fix (31.7% of runs were dealt the side quest twice) | "The second pass..." |
 | Bombs became a `QS_CAT_KEY` item | "The second pass..." |
@@ -71,11 +72,16 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Needs the user, not an agent
 
-- **Answer the survey report.** `docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`
-  sections 3 and 4 list eight conflicts with the old survey and thirteen
-  slips or ambiguities in the new lists, each with the reading the model
-  took. The two that matter most: who can push Lon Lon's boulder 1, and
-  whether a Minish route skips boulder 2 into the Goron cave.
+- **Walk Veil Falls' inferred rows.** `docs/QUICKSTART_BOULDER_SURVEY_2026-10-06.md`
+  section 8: the ledge chest's chain (cave #1's upper room, its bombable
+  north wall, the secret chest, the dark staircase, the block puzzle, out
+  onto the ledge), the heart-piece nook's fusion, the drop plateau's own
+  prices, and the lower strip. Also: say which build showed cave #1 as
+  sealed - on the delivered ROM the door is open and measured so.
+- **Play a drop into Veil Falls.** The landing, fuser spots and sites are
+  measured; the climb was driven with the ring; nobody has played a run
+  there. Item 11 of section 4 (which row "Trilby has only one boulder"
+  answered) is still open.
 - **Walk the unsurveyed landings** (report section 5): Eastern Hills North
   from the Lon Lon border, South Field's four port-model seams, Trilby from
   Crenel, Lake Hylia's shore and the Wind Ruins with their own boulders
@@ -148,6 +154,20 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   a wave - the hit that drops it at your feet, the walk back for it - has
   not been watched.
 
+- **The GFX budget tier fails for Lon Lon Ranch and North Hyrule Field**
+  on the Veil Falls build: 1 and 0 free GFX slots at difficulty 4 against
+  the floor of 2. Every seeded roll moved when the pool grew to nineteen
+  rows, so this is one seed's population, not a Veil Falls change - but
+  `QuickStartEnforceGfxReserve` is supposed to hold the floor whatever the
+  roll, and here it did not. Nobody has looked at which sheets fill the
+  table on that seed.
+- **The spawn audit tags one tile in two Veil Falls rooms as solid.** The
+  Top screen's (14,4) is floor by every map (collision 0, act 0) and its
+  open top row is tagged RIM: the audit's known noise. The 1F hallway's
+  (11,4) is collision 0 but act 0x10, WATER - one body of each of three
+  waves was dealt into the hallway's pool. The gauntlet placer treats
+  water as open; whether a land enemy dealt there can act is unmeasured.
+
 ### Design decisions waiting on a call
 
 - **The `ITEM` chain step** fires now, as the first half of the keyed pair
@@ -204,6 +224,10 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   override already exist; the console is only a script that writes them.
 
 ### Known-stale tooling
+
+- **`boss_region.py` / `boss_arena.py` do not list Veil Falls** and need
+  not: the region hosts no boss (`QuickStartRegionAllowsBoss`). If that
+  changes, the plateau is 68 tiles and the Top screen 114.
 
 - **Collision floods are blind to ledges and one-way drops**, and the
   boulder probe's Lon Lon partition shows it: the E445 landing reaches

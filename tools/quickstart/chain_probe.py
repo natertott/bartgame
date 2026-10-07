@@ -36,7 +36,7 @@ ADJ = {  # mirrors sQuickStartRegionAdjacency in game.c
     'SHF': ['NHF', 'EH', 'WW'], 'EH': ['SHF', 'LLR', 'MW'],
     'LLR': ['EH', 'NHF', 'TRIL', 'LH'], 'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
     'WW': ['TRIL', 'SHF', 'CW'], 'RV': ['NHF', 'TRIL'],
-    'CW': ['WW', 'WR'], 'WR': ['CW'], 'CREN': ['TRIL'],
+    'CW': ['WW', 'WR'], 'WR': ['CW'], 'CREN': ['TRIL'], 'VF': ['LLR', 'NHF'],
     # Spurs, not a loop: the MW-LH border exists in the exit lists but
     # neither room's arrival component reaches it. See game.c's own
     # comment on sQuickStartRegionAdjacency.

@@ -181,7 +181,11 @@ REGIONS = {
     # E->S free, S->E impossible: exactly the user's survey, for reasons
     # the room can show you.
     'RV':   dict(name='Royal Valley',   ports=['E', 'S']),
-    'VF':   dict(name='Veil Falls',     ports=['S', 'WSW'], pooled=False),
+    # Veil Falls joined the pool in Oct 2026. Its two ports land in two
+    # pockets the user walked and found disconnected, so no S<->WSW
+    # crossing is recorded on purpose; the walked survey (world_reach.py,
+    # VF / VF@NHF / VF@LLR) is where the falls are priced.
+    'VF':   dict(name='Veil Falls',     ports=['S', 'WSW']),
     'LH':   dict(name='Lake Hylia',     ports=['W'],        pooled=False),
     'CREN': dict(name='Mt Crenel',      ports=['E'],        pooled=False),
     # Castor Wilds joined the pool (the western spur): in from Western

@@ -53,6 +53,7 @@ TARGETS = {
     'LAKEHYLIA': ('ROOM_LAKE_HYLIA_MAIN', 'sQuickStartLakeHyliaEnemyOffsets'),
     'CRENEL': ('ROOM_MT_CRENEL_ENTRANCE', 'sQuickStartMtCrenelEnemyOffsets'),
     'EHN': ('ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH', 'sQuickStartEasternHillsNorthEnemyOffsets'),
+    'VEILFALLS': ('ROOM_VEIL_FALLS_MAIN', 'sQuickStartVeilFallsEnemyOffsets'),
 }
 
 

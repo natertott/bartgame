@@ -11,6 +11,10 @@
 #include "physics.h"
 #include "player.h"
 #include "asm.h"
+#ifdef QUICKSTART
+#include "area.h"
+#include "room.h"
+#endif
 
 typedef struct {
     /*0x00*/ Entity base;
@@ -39,6 +43,17 @@ void BigVortex(BigVortexEntity* this) {
 
 void BigVortex_Init(BigVortexEntity* this) {
     u32 temp;
+#ifdef QUICKSTART
+    // Veil Falls Top's whirlwind carries the player up to the Cloud Tops,
+    // which this mode does not include - measured: a player walked into it
+    // lands in AREA_CLOUD_TOPS. The falls are a region now (Oct 2026), so
+    // the vortex is gone rather than a door containment has to cancel
+    // mid-flight.
+    if (gRoomControls.area == AREA_VEIL_FALLS_TOP) {
+        DeleteThisEntity();
+        return;
+    }
+#endif
     super->action = 1;
     super->z.HALF.HI = -0x10;
 

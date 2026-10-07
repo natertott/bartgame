@@ -21,7 +21,7 @@ feature. No rebuild - which is the whole point.
 
 Every writing command takes `--sav FILE` (default tmc-d3.sav), `--kit none|test|all`
 and `--diff N`. Regions may be named by pool row number, by a short name
-(CG LLR SHF NHF TRIL EH EHC EHN WW WWC WWN RV CW WR WRN MW LH CREN) or by
+(CG LLR SHF NHF TRIL EH EHC EHN WW WWC WWN RV CW WR WRN MW LH CREN VF) or by
 ROOM_* name. Sites by index or ROOM_* name (the first site in that room).
 
 The .sav is an EEPROM image: three 0x500-byte slots, each written twice, each
@@ -65,7 +65,7 @@ BOSSES = {'GREEN': 0, 'CHUCHU': 0, 'BLUE': 1, 'ELECTRIC': 1, 'OCTOROK': 2}
 KITS = {'none': 0, 'test': 1, 'all': 2}
 # Pool rows by position - the pool's own order (QuickStartRegionOfPoolIndex).
 SHORT = ['CG', 'LLR', 'SHF', 'NHF', 'TRIL', 'EH', 'EHC', 'EHN', 'WW', 'WWC', 'WWN',
-         'RV', 'CW', 'WR', 'WRN', 'MW', 'LH', 'CREN']
+         'RV', 'CW', 'WR', 'WRN', 'MW', 'LH', 'CREN', 'VF']
 FACES = ['ZELDA', 'POSTMAN', 'WHEATON', 'PITA', 'REM', 'ANJU', 'KID']
 
 

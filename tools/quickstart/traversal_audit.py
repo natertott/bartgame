@@ -171,6 +171,10 @@ REGION_ROOMS = [
                                       ('AREA_MT_CRENEL', 'ROOM_MT_CRENEL_WALL_CLIMB'),
                                       ('AREA_MT_CRENEL', 'ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE'),
                                       ('AREA_MT_CRENEL', 'ROOM_MT_CRENEL_TOP')]),
+    # Veil Falls (Oct 2026): the falls and the ledge above them, joined by
+    # the room's north border.
+    ('VF',   'Veil Falls',           [('AREA_VEIL_FALLS', 'ROOM_VEIL_FALLS_MAIN'),
+                                      ('AREA_VEIL_FALLS_TOP', 'ROOM_VEIL_FALLS_TOP_0')]),
 ]
 REGION_NAME = dict((k, n) for k, n, _ in REGION_ROOMS)
 ROOM_REGION = {}
@@ -183,7 +187,7 @@ for _k, _n, _rs in REGION_ROOMS:
 # crossing cannot be attributed to one of them; those are left out rather
 # than guessed at.
 OP_KEY = {'CG': 'CG', 'NHF': 'NHF', 'SHF': 'SHF', 'LLR': 'LLR', 'TRIL': 'TRIL',
-          'RV': 'RV', 'CW': 'CW', 'WR': 'WR', 'LH': 'LH', 'CREN': 'CREN'}
+          'RV': 'RV', 'CW': 'CW', 'WR': 'WR', 'LH': 'LH', 'CREN': 'CREN', 'VF': 'VF'}
 OP_NEIGHBOUR_PORT = {}      # (op_key, neighbour_op_key) -> port
 for (_a, _p), (_b, _bp) in OP.LINKS.items():
     OP_NEIGHBOUR_PORT.setdefault((_a, _b), _p)

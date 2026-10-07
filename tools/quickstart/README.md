@@ -125,3 +125,14 @@
   ledges - so read it beside the walked survey, not instead of it:
 
       python3 tools/quickstart/boulder_probe.py --rom tmc-d3.gba
+- `veilfalls_probe.py` - Veil Falls, the fourteenth region: cave #1's door
+  opens from the North Field corridor (the Source of the Flow stone is
+  deleted under QUICKSTART), the Top screen's whirlwind is gone, the big
+  falls climb with the Grip Ring and not without, the pool row's entrance,
+  reward and fuser spots share one walkable piece, every site spot is on
+  its door's arrival piece, and `QuickStartReachTestRoom` from the falls'
+  pool row prices the cave at the lantern, the top plateau at the grip and
+  the Lon Lon strip as never:
+
+      python3 tools/quickstart/veilfalls_probe.py --rom tmc-d3.gba
+

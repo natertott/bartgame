@@ -33,12 +33,12 @@ This is an inventory of what has been MEASURED about walking around this world, 
 | key | region | nodes | seams | doors | rooms | spots | no data |
 |:--|:--|--:|--:|--:|--:|--:|--:|
 | `CG` | Hyrule Castle Garden | 18 | 1 | 5 | 11 | 0 | 30% |
-| `NHF` | North Hyrule Field | 36 | 6 | 10 | 18 | 1 | 49% |
+| `NHF` | North Hyrule Field | 37 | 7 | 10 | 19 | 0 | 48% |
 | `SHF` | South Hyrule Field | 31 | 7 | 6 | 16 | 1 | 39% |
 | `EH-N` | Eastern Hills North | 14 | 4 | 1 | 7 | 1 | 56% |
 | `EH-C` | Eastern Hills Center | 10 | 3 | 1 | 5 | 0 | 60% |
 | `EH-S` | Eastern Hills South | 10 | 3 | 1 | 5 | 0 | 46% |
-| `LLR` | Lon Lon Ranch | 24 | 4 | 6 | 13 | 0 | 36% |
+| `LLR` | Lon Lon Ranch | 27 | 6 | 6 | 14 | 0 | 47% |
 | `TRIL` | Trilby Highlands | 30 | 5 | 7 | 15 | 2 | 49% |
 | `WW-N` | Western Wood North | 15 | 4 | 1 | 6 | 3 | 43% |
 | `WW-C` | Western Wood Center | 11 | 3 | 1 | 5 | 1 | 56% |
@@ -49,20 +49,21 @@ This is an inventory of what has been MEASURED about walking around this world, 
 | `MW` | Minish Woods | 40 | 4 | 10 | 20 | 5 | 31% |
 | `LH` | Lake Hylia | 23 | 4 | 7 | 11 | 0 | 87% |
 | `CREN` | Mount Crenel | 77 | 15 | 23 | 35 | 3 | 73% |
+| `VF` | Veil Falls | 32 | 4 | 9 | 15 | 3 | 38% |
 
 ## Region to region
 
 How many crossings lead from the row region into the column region, and what the survey charges for one of them. `·` is the diagonal; blank means the two regions do not touch.
 
 ```
-FROM \ TO     CG  NHF  SHF EH-N EH-C EH-S  LLR TRIL WW-N WW-C WW-S   RV   CW   WR   MW   LH CREN
+FROM \ TO     CG  NHF  SHF EH-N EH-C EH-S  LLR TRIL WW-N WW-C WW-S   RV   CW   WR   MW   LH CREN   VF
 CG             .   1x
-NHF           2x    .   1x                  1x   1x                  1x
+NHF           2x    .   1x                  1x   1x                  1x                            1x
 SHF                1x    .   1x   1x   1x             1x   1x   1x
 EH-N                    1x    .   1x        1x                                      1x
 EH-C                    1x   1x    .   1x
 EH-S                    1x        1x    .                                           1x
-LLR                1x        1x              .   1x                                      1x
+LLR                1x        1x              .   1x                                      1x        2x
 TRIL               1x                       1x    .   1x             1x                       1x
 WW-N                    1x                       1x    .   1x             1x
 WW-C                    1x                            1x    .   1x
@@ -73,6 +74,7 @@ WR                                                                        1x    
 MW                           1x        1x                                            .   2x
 LH                                          1x                                      2x    .
 CREN                                             1x                                            .
+VF                 1x                       1x                                                      .
 ```
 
 | from | to | crossings | cheapest priced crossing |
@@ -97,14 +99,16 @@ CREN                                             1x                             
 | `LLR` | `LH` | 1 | llr_north OR llr_north+minish_cap+pacci OR flippers+llr_north OR cape+llr_north OR boulder:LLR:1 |
 | `LLR` | `NHF` | 1 | free |
 | `LLR` | `TRIL` | 1 | bombs |
+| `LLR` | `VF` | 2 | ? |
 | `MW` | `EH-N` | 1 | free |
 | `MW` | `EH-S` | 1 | free |
 | `MW` | `LH` | 2 | ? |
 | `NHF` | `CG` | 2 | ? |
-| `NHF` | `LLR` | 1 | ? |
+| `NHF` | `LLR` | 1 | free |
 | `NHF` | `RV` | 1 | bombs+bracelets |
 | `NHF` | `SHF` | 1 | free |
 | `NHF` | `TRIL` | 1 | cape OR flippers |
+| `NHF` | `VF` | 1 | bombs |
 | `RV` | `NHF` | 1 | ? |
 | `RV` | `TRIL` | 1 | free |
 | `SHF` | `EH-C` | 1 | free |
@@ -119,6 +123,8 @@ CREN                                             1x                             
 | `TRIL` | `NHF` | 1 | free |
 | `TRIL` | `RV` | 1 | ? |
 | `TRIL` | `WW-N` | 1 | boulder:TRIL:1 OR bracelets |
+| `VF` | `LLR` | 1 | ? |
+| `VF` | `NHF` | 1 | lantern |
 | `WR` | `CW` | 1 | ? |
 | `WW-C` | `SHF` | 1 | ? |
 | `WW-C` | `WW-N` | 1 | free |
@@ -137,16 +143,14 @@ Rooms in DIFFERENT areas whose rectangles touch. The engine only scroll-walks be
 | region | room | edge | span | touches | that region |
 |:--|:--|:--|:--|:--|:--|
 | `CG` | `CASTLE_GARDEN/MAIN` | west | 0-528 | `ROYAL_VALLEY/MAIN` | RV |
-| `CG` | `CASTLE_GARDEN/MAIN` | east | 0-528 | `VEIL_FALLS/MAIN` | — |
+| `CG` | `CASTLE_GARDEN/MAIN` | east | 0-528 | `VEIL_FALLS/MAIN` | VF |
 | `NHF` | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | south | 0-1008 | `HYRULE_TOWN/MAIN` | — |
-| `NHF` | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | east | 0-480 | `VEIL_FALLS/MAIN` | — |
 | `SHF` | `HYRULE_FIELD/SOUTH_HYRULE_FIELD` | north | 0-1008 | `HYRULE_TOWN/MAIN` | — |
 | `EH-N` | `HYRULE_FIELD/EASTERN_HILLS_NORTH` | west | 0-320 | `HYRULE_TOWN/MAIN` | — |
 | `EH-C` | `HYRULE_FIELD/EASTERN_HILLS_CENTER` | east | 0-256 | `MINISH_WOODS/MAIN` | MW |
 | `LLR` | `HYRULE_FIELD/LON_LON_RANCH` | west | 320-960 | `HYRULE_TOWN/MAIN` | — |
 | `LLR` | `HYRULE_FIELD/LON_LON_RANCH` | north | 480-720 | `LAKE_HYLIA/BEANSTALK` | — |
 | `LLR` | `HYRULE_FIELD/LON_LON_RANCH` | south | 480-720 | `MINISH_WOODS/MAIN` | MW |
-| `LLR` | `HYRULE_FIELD/LON_LON_RANCH` | north | 0-480 | `VEIL_FALLS/MAIN` | — |
 | `TRIL` | `HYRULE_FIELD/TRILBY_HIGHLANDS` | west | 480-960 | `CASTOR_WILDS/MAIN` | CW |
 | `TRIL` | `HYRULE_FIELD/TRILBY_HIGHLANDS` | east | 320-960 | `HYRULE_TOWN/MAIN` | — |
 | `WW-N` | `HYRULE_FIELD/WESTERN_WOODS_NORTH` | east | 0-320 | `HYRULE_TOWN/MAIN` | — |
@@ -174,6 +178,14 @@ Rooms in DIFFERENT areas whose rectangles touch. The engine only scroll-walks be
 | `CREN` | `MT_CRENEL/CENTER` | east | 0-368 | `ROYAL_VALLEY/MAIN` | RV |
 | `CREN` | `MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE` | east | 0-608 | `ROYAL_VALLEY/MAIN` | RV |
 | `CREN` | `MT_CRENEL/TOP` | east | 192-224 | `ROYAL_VALLEY/MAIN` | RV |
+| `VF` | `VEIL_FALLS/MAIN` | west | 0-528 | `CASTLE_GARDEN/MAIN` | CG |
+| `VF` | `VEIL_FALLS/MAIN` | east | 0-816 | `CLOUD_TOPS/CLOUD_TOPS` | — |
+| `VF` | `VEIL_FALLS/MAIN` | east | 0-816 | `CLOUD_TOPS/CLOUD_MIDDLES` | — |
+| `VF` | `VEIL_FALLS/MAIN` | east | 0-816 | `CLOUD_TOPS/CLOUD_BOTTOMS` | — |
+| `VF` | `VEIL_FALLS/MAIN` | east | 816-1008 | `LAKE_HYLIA/BEANSTALK` | — |
+| `VF` | `VEIL_FALLS_TOP/0` | east | 0-192 | `CLOUD_TOPS/CLOUD_TOPS` | — |
+| `VF` | `VEIL_FALLS_TOP/0` | east | 0-192 | `CLOUD_TOPS/CLOUD_MIDDLES` | — |
+| `VF` | `VEIL_FALLS_TOP/0` | east | 0-192 | `CLOUD_TOPS/CLOUD_BOTTOMS` | — |
 
 ## Per-region node lists and matrices
 
@@ -289,103 +301,128 @@ Survey start: `HYRULE_FIELD/NORTH_HYRULE_FIELD` at (1013, 638). the start is beh
 | 25 | room | `HYRULE_FIELD/SOUTH_HYRULE_FIELD` | ? | — | LEAVES this region, into SHF |
 | 26 | seam | `border west (north half) -> ROYAL_VALLEY/MAIN` | bombs+bracelets | walked survey | exit, reachable ONLY through the TO_GRAVEYARD pocket above |
 | 27 | room | `ROYAL_VALLEY/MAIN` | ? | — | LEAVES this region, into RV |
-| 28 | seam | `scroll seam east 480-800 -> HYRULE_FIELD/LON_LON_RANCH` | ? | — | no transition row, the player walks off the edge (into LLR) |
-| 29 | room | `HYRULE_FIELD/LON_LON_RANCH` | ? | — | LEAVES this region, into LLR |
-| 30 | seam | `scroll seam west 480-800 -> HYRULE_FIELD/TRILBY_HIGHLANDS` | cape OR flippers | walked survey | no transition row, the player walks off the edge (into TRIL); exit |
-| 31 | room | `HYRULE_FIELD/TRILBY_HIGHLANDS` | ? | — | LEAVES this region, into TRIL |
-| 32 | room | `CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN` | fusion | walked survey | named by the survey; no row from this region room reaches it directly; the same fusion as the tree above |
-| 33 | spot | `HYRULE_FIELD/NORTH_HYRULE_FIELD (999,112)` | bombs | walked survey | exit |
-| 34 | room | `MINISH_CRACKS/EAST_HYRULE_CASTLE` | boots+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
-| 35 | room | `DOJOS/TO_GREATBLADE` | flippers+fusion | walked survey | named by the survey; no row from this region room reaches it directly |
-| 36 | room | `DOJOS/GREATBLADE` | flippers+fusion | walked survey | named by the survey; no row from this region room reaches it directly |
+| 28 | seam | `border east (north half) -> VEIL_FALLS/MAIN` | bombs | walked survey | exit east, the bomb pocket -> VEIL_FALLS (8,639) |
+| 29 | room | `VEIL_FALLS/MAIN` | ? | — | LEAVES this region, into VF |
+| 30 | seam | `scroll seam east 480-800 -> HYRULE_FIELD/LON_LON_RANCH` | free | walked survey | no transition row, the player walks off the edge (into LLR); exit east -> LON_LON_RANCH (10,163); the start itself |
+| 31 | room | `HYRULE_FIELD/LON_LON_RANCH` | ? | — | LEAVES this region, into LLR |
+| 32 | seam | `scroll seam west 480-800 -> HYRULE_FIELD/TRILBY_HIGHLANDS` | cape OR flippers | walked survey | no transition row, the player walks off the edge (into TRIL); exit |
+| 33 | room | `HYRULE_FIELD/TRILBY_HIGHLANDS` | ? | — | LEAVES this region, into TRIL |
+| 34 | room | `CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN` | fusion | walked survey | named by the survey; no row from this region room reaches it directly; the same fusion as the tree above |
+| 35 | room | `MINISH_CRACKS/EAST_HYRULE_CASTLE` | boots+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly |
+| 36 | room | `DOJOS/TO_GREATBLADE` | flippers+fusion | walked survey | named by the survey; no row from this region room reaches it directly |
+| 37 | room | `DOJOS/GREATBLADE` | flippers+fusion | walked survey | named by the survey; no row from this region room reaches it directly |
 
 **Evidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
- 1 . i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - i i i i i   HYRULE_FIELD/NORTH_HYRULE_FIELD
- 2 S . - - s S s S s S s S s S s S - S s S - - - S - S - - - S - S S S S S   START  HYRULE_FIELD/NORTH_HYRULE_FIELD
- 3 - - . D - - - - - - - - - - - - - - - - - - - P - P - P - P - - - - - -   door (504,56) -> CASTLE_GARDEN/MAIN
- 4 - - d . - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - -   CASTLE_GARDEN/MAIN
- 5 i i - - . D i i i i i i i i i i - i i i - - - i - i - - - i - i i i i i   door (432,296) -> TREE_INTERIORS/BOOMERANG_NOR
- 6 i i - - d . i i i i i i i i i i - i i i - - - i - i - - - i - i i i i i   TREE_INTERIORS/BOOMERANG_NORTHWEST
- 7 i i - - i i . D i i i i i i i i - i i i - - - i - i - - - i - i i i i i   door (576,296) -> TREE_INTERIORS/BOOMERANG_NOR
- 8 i i - - i i d . i i i i i i i i - i i i - - - i - i - - - i - i i i i i   TREE_INTERIORS/BOOMERANG_NORTHEAST
- 9 i i - - i i i i . D i i i i i i - i i i - - - i - i - - - i - i i i i i   door (432,392) -> TREE_INTERIORS/BOOMERANG_SOU
-10 i i - - i i i i d . i i i i i i - i i i - - - i - i - - - i - i i i i i   TREE_INTERIORS/BOOMERANG_SOUTHWEST
-11 i i - - i i i i i i . D i i i i - i i i - - - i - i - - - i - i i i i i   door (576,392) -> TREE_INTERIORS/BOOMERANG_SOU
-12 i i - - i i i i i i d . i i i i - i i i - - - i - i - - - i - i i i i i   TREE_INTERIORS/BOOMERANG_SOUTHEAST
-13 i i - - i i i i i i i i . D i i - i i i - - - i - i - - - i - i i i i i   door (752,312) -> TREE_INTERIORS/NORTH_HYRULE_
-14 i i - - i i i i i i i i d . i i - i i i - - - i - i - - - i - i i i i i   TREE_INTERIORS/NORTH_HYRULE_FIELD_FAIRY_FOUNTA
-15 i i - - i i i i i i i i i i . D - i i i - - - i - i - - - i - i i i i i   door (504,340) -> CAVES/BOOMERANG
-16 i i - - i i i i i i i i i i d . - i i i - - - i - i - - - i - i i i i i   CAVES/BOOMERANG
-17 - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - -   door (264,312) -> CAVES/TO_GRAVEYARD
-18 i i - - i i i i i i i i i i i i d . i i d d - i - i - - - i - i i i i i   CAVES/TO_GRAVEYARD
-19 i i - - i i i i i i i i i i i i - i . D - - - i - i - - - i - i i i i i   door (312,488) -> CAVES/HEART_PIECE_HALLWAY
-20 i i - - i i i i i i i i i i i i - i d . - - - i - i - - - i - i i i i i   CAVES/HEART_PIECE_HALLWAY
-21 - - - - - - - - - - - - - - - - - D - - . - - - - - - - - - - - - - - -   door (136,244) -> CAVES/TO_GRAVEYARD
-22 - - - - - - - - - - - - - - - - - D - - - . - - - - - - - - - - - - - -   door (280,244) -> CAVES/TO_GRAVEYARD
-23 - - - D - - - - - - - - - - - - - - - - - - . P - P - P - P - - - - - -   border north -> CASTLE_GARDEN/MAIN
-24 i i P - i i i i i i i i i i i i - i i i - - P . D P - P - P - i i i i i   border south -> HYRULE_FIELD/SOUTH_HYRULE_FIEL
-25 - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - -   HYRULE_FIELD/SOUTH_HYRULE_FIELD
-26 i i P - i i i i i i i i i i i i - i i i - - P P - . D P - P - i i i i i   border west (north half) -> ROYAL_VALLEY/MAIN
-27 - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - -   ROYAL_VALLEY/MAIN
-28 - - P - - - - - - - - - - - - - - - - - - - P P - P - . D P - - - - - -   scroll seam east 480-800 -> HYRULE_FIELD/LON_L
-29 - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - -   HYRULE_FIELD/LON_LON_RANCH
-30 i i P - i i i i i i i i i i i i - i i i - - P P - P - P - . D i i i i i   scroll seam west 480-800 -> HYRULE_FIELD/TRILB
-31 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
-32 i i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - . i i i i   CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN
-33 i i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - i . i i i   HYRULE_FIELD/NORTH_HYRULE_FIELD (999,112)
-34 i i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - i i . i i   MINISH_CRACKS/EAST_HYRULE_CASTLE
-35 i i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - i i i . i   DOJOS/TO_GREATBLADE
-36 i i - - i i i i i i i i i i i i - i i i - - - i - i - - - i - i i i i .   DOJOS/GREATBLADE
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . i - - i i i i i i i i i i i i - i i i - - - i - i - i - i - i - i i i i   HYRULE_FIELD/NORTH_HYRULE_FIELD
+ 2 S . - - s S s S s S s S s S s S - S s S - - - S - S - S - S - S - S S S S   START  HYRULE_FIELD/NORTH_HYRULE_FIELD
+ 3 - - . D - - - - - - - - - - - - - - - - - - - P - P - P - P - P - - - - -   door (504,56) -> CASTLE_GARDEN/MAIN
+ 4 - - d . - - - - - - - - - - - - - - - - - - d - - - - - - - - - - - - - -   CASTLE_GARDEN/MAIN
+ 5 i i - - . D i i i i i i i i i i - i i i - - - i - i - i - i - i - i i i i   door (432,296) -> TREE_INTERIORS/BOOMERANG_NOR
+ 6 i i - - d . i i i i i i i i i i - i i i - - - i - i - i - i - i - i i i i   TREE_INTERIORS/BOOMERANG_NORTHWEST
+ 7 i i - - i i . D i i i i i i i i - i i i - - - i - i - i - i - i - i i i i   door (576,296) -> TREE_INTERIORS/BOOMERANG_NOR
+ 8 i i - - i i d . i i i i i i i i - i i i - - - i - i - i - i - i - i i i i   TREE_INTERIORS/BOOMERANG_NORTHEAST
+ 9 i i - - i i i i . D i i i i i i - i i i - - - i - i - i - i - i - i i i i   door (432,392) -> TREE_INTERIORS/BOOMERANG_SOU
+10 i i - - i i i i d . i i i i i i - i i i - - - i - i - i - i - i - i i i i   TREE_INTERIORS/BOOMERANG_SOUTHWEST
+11 i i - - i i i i i i . D i i i i - i i i - - - i - i - i - i - i - i i i i   door (576,392) -> TREE_INTERIORS/BOOMERANG_SOU
+12 i i - - i i i i i i d . i i i i - i i i - - - i - i - i - i - i - i i i i   TREE_INTERIORS/BOOMERANG_SOUTHEAST
+13 i i - - i i i i i i i i . D i i - i i i - - - i - i - i - i - i - i i i i   door (752,312) -> TREE_INTERIORS/NORTH_HYRULE_
+14 i i - - i i i i i i i i d . i i - i i i - - - i - i - i - i - i - i i i i   TREE_INTERIORS/NORTH_HYRULE_FIELD_FAIRY_FOUNTA
+15 i i - - i i i i i i i i i i . D - i i i - - - i - i - i - i - i - i i i i   door (504,340) -> CAVES/BOOMERANG
+16 i i - - i i i i i i i i i i d . - i i i - - - i - i - i - i - i - i i i i   CAVES/BOOMERANG
+17 - - - - - - - - - - - - - - - - . D - - - - - - - - - - - - - - - - - - -   door (264,312) -> CAVES/TO_GRAVEYARD
+18 i i - - i i i i i i i i i i i i d . i i d d - i - i - i - i - i - i i i i   CAVES/TO_GRAVEYARD
+19 i i - - i i i i i i i i i i i i - i . D - - - i - i - i - i - i - i i i i   door (312,488) -> CAVES/HEART_PIECE_HALLWAY
+20 i i - - i i i i i i i i i i i i - i d . - - - i - i - i - i - i - i i i i   CAVES/HEART_PIECE_HALLWAY
+21 - - - - - - - - - - - - - - - - - D - - . - - - - - - - - - - - - - - - -   door (136,244) -> CAVES/TO_GRAVEYARD
+22 - - - - - - - - - - - - - - - - - D - - - . - - - - - - - - - - - - - - -   door (280,244) -> CAVES/TO_GRAVEYARD
+23 - - - D - - - - - - - - - - - - - - - - - - . P - P - P - P - P - - - - -   border north -> CASTLE_GARDEN/MAIN
+24 i i P - i i i i i i i i i i i i - i i i - - P . D P - P - P - P - i i i i   border south -> HYRULE_FIELD/SOUTH_HYRULE_FIEL
+25 - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - - -   HYRULE_FIELD/SOUTH_HYRULE_FIELD
+26 i i P - i i i i i i i i i i i i - i i i - - P P - . D P - P - P - i i i i   border west (north half) -> ROYAL_VALLEY/MAIN
+27 - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - -   ROYAL_VALLEY/MAIN
+28 i i P - i i i i i i i i i i i i - i i i - - P P - P - . D P - P - i i i i   border east (north half) -> VEIL_FALLS/MAIN
+29 - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - -   VEIL_FALLS/MAIN
+30 i i P - i i i i i i i i i i i i - i i i - - P P - P - P - . D P - i i i i   scroll seam east 480-800 -> HYRULE_FIELD/LON_L
+31 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - - - -   HYRULE_FIELD/LON_LON_RANCH
+32 i i P - i i i i i i i i i i i i - i i i - - P P - P - P - P - . D i i i i   scroll seam west 480-800 -> HYRULE_FIELD/TRILB
+33 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - d . - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
+34 i i - - i i i i i i i i i i i i - i i i - - - i - i - i - i - i - . i i i   CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN
+35 i i - - i i i i i i i i i i i i - i i i - - - i - i - i - i - i - i . i i   MINISH_CRACKS/EAST_HYRULE_CASTLE
+36 i i - - i i i i i i i i i i i i - i i i - - - i - i - i - i - i - i i . i   DOJOS/TO_GREATBLADE
+37 i i - - i i i i i i i i i i i i - i i i - - - i - i - i - i - i - i i i .   DOJOS/GREATBLADE
 ```
 
 **Confidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
- 1 . 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   HYRULE_FIELD/NORTH_HYRULE_FIELD
- 2 3 . 0 0 2 3 2 3 2 3 2 3 2 3 2 3 0 3 2 3 0 0 0 3 0 3 0 0 0 3 0 3 3 3 3 3   START  HYRULE_FIELD/NORTH_HYRULE_FIELD
- 3 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 2 0 2 0 0 0 0 0 0   door (504,56) -> CASTLE_GARDEN/MAIN
- 4 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0   CASTLE_GARDEN/MAIN
- 5 1 1 0 0 . 4 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (432,296) -> TREE_INTERIORS/BOOMERANG_NOR
- 6 1 1 0 0 3 . 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   TREE_INTERIORS/BOOMERANG_NORTHWEST
- 7 1 1 0 0 1 1 . 4 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (576,296) -> TREE_INTERIORS/BOOMERANG_NOR
- 8 1 1 0 0 1 1 3 . 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   TREE_INTERIORS/BOOMERANG_NORTHEAST
- 9 1 1 0 0 1 1 1 1 . 4 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (432,392) -> TREE_INTERIORS/BOOMERANG_SOU
-10 1 1 0 0 1 1 1 1 3 . 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   TREE_INTERIORS/BOOMERANG_SOUTHWEST
-11 1 1 0 0 1 1 1 1 1 1 . 4 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (576,392) -> TREE_INTERIORS/BOOMERANG_SOU
-12 1 1 0 0 1 1 1 1 1 1 3 . 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   TREE_INTERIORS/BOOMERANG_SOUTHEAST
-13 1 1 0 0 1 1 1 1 1 1 1 1 . 4 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (752,312) -> TREE_INTERIORS/NORTH_HYRULE_
-14 1 1 0 0 1 1 1 1 1 1 1 1 3 . 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   TREE_INTERIORS/NORTH_HYRULE_FIELD_FAIRY_FOUNTA
-15 1 1 0 0 1 1 1 1 1 1 1 1 1 1 . 4 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (504,340) -> CAVES/BOOMERANG
-16 1 1 0 0 1 1 1 1 1 1 1 1 1 1 3 . 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   CAVES/BOOMERANG
-17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (264,312) -> CAVES/TO_GRAVEYARD
-18 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 3 3 0 1 0 1 0 0 0 1 0 1 1 1 1 1   CAVES/TO_GRAVEYARD
-19 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 . 4 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   door (312,488) -> CAVES/HEART_PIECE_HALLWAY
-20 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 3 . 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 1   CAVES/HEART_PIECE_HALLWAY
-21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (136,244) -> CAVES/TO_GRAVEYARD
-22 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (280,244) -> CAVES/TO_GRAVEYARD
-23 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 2 0 2 0 2 0 2 0 0 0 0 0 0   border north -> CASTLE_GARDEN/MAIN
-24 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 . 4 2 0 2 0 2 0 1 1 1 1 1   border south -> HYRULE_FIELD/SOUTH_HYRULE_FIEL
-25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/SOUTH_HYRULE_FIELD
-26 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 . 4 2 0 2 0 1 1 1 1 1   border west (north half) -> ROYAL_VALLEY/MAIN
-27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0   ROYAL_VALLEY/MAIN
-28 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 2 0 2 0 . 4 2 0 0 0 0 0 0   scroll seam east 480-800 -> HYRULE_FIELD/LON_L
-29 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0   HYRULE_FIELD/LON_LON_RANCH
-30 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 2 0 2 0 . 4 1 1 1 1 1   scroll seam west 480-800 -> HYRULE_FIELD/TRILB
-31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
-32 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 . 1 1 1 1   CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN
-33 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 . 1 1 1   HYRULE_FIELD/NORTH_HYRULE_FIELD (999,112)
-34 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 . 1 1   MINISH_CRACKS/EAST_HYRULE_CASTLE
-35 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 . 1   DOJOS/TO_GREATBLADE
-36 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 0 0 1 0 1 1 1 1 .   DOJOS/GREATBLADE
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   HYRULE_FIELD/NORTH_HYRULE_FIELD
+ 2 3 . 0 0 2 3 2 3 2 3 2 3 2 3 2 3 0 3 2 3 0 0 0 3 0 3 0 3 0 3 0 3 0 3 3 3 3   START  HYRULE_FIELD/NORTH_HYRULE_FIELD
+ 3 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 2 0 2 0 2 0 0 0 0 0   door (504,56) -> CASTLE_GARDEN/MAIN
+ 4 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0   CASTLE_GARDEN/MAIN
+ 5 1 1 0 0 . 4 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (432,296) -> TREE_INTERIORS/BOOMERANG_NOR
+ 6 1 1 0 0 3 . 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   TREE_INTERIORS/BOOMERANG_NORTHWEST
+ 7 1 1 0 0 1 1 . 4 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (576,296) -> TREE_INTERIORS/BOOMERANG_NOR
+ 8 1 1 0 0 1 1 3 . 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   TREE_INTERIORS/BOOMERANG_NORTHEAST
+ 9 1 1 0 0 1 1 1 1 . 4 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (432,392) -> TREE_INTERIORS/BOOMERANG_SOU
+10 1 1 0 0 1 1 1 1 3 . 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   TREE_INTERIORS/BOOMERANG_SOUTHWEST
+11 1 1 0 0 1 1 1 1 1 1 . 4 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (576,392) -> TREE_INTERIORS/BOOMERANG_SOU
+12 1 1 0 0 1 1 1 1 1 1 3 . 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   TREE_INTERIORS/BOOMERANG_SOUTHEAST
+13 1 1 0 0 1 1 1 1 1 1 1 1 . 4 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (752,312) -> TREE_INTERIORS/NORTH_HYRULE_
+14 1 1 0 0 1 1 1 1 1 1 1 1 3 . 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   TREE_INTERIORS/NORTH_HYRULE_FIELD_FAIRY_FOUNTA
+15 1 1 0 0 1 1 1 1 1 1 1 1 1 1 . 4 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (504,340) -> CAVES/BOOMERANG
+16 1 1 0 0 1 1 1 1 1 1 1 1 1 1 3 . 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   CAVES/BOOMERANG
+17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (264,312) -> CAVES/TO_GRAVEYARD
+18 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 3 . 1 1 3 3 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   CAVES/TO_GRAVEYARD
+19 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 . 4 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   door (312,488) -> CAVES/HEART_PIECE_HALLWAY
+20 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 3 . 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 1   CAVES/HEART_PIECE_HALLWAY
+21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (136,244) -> CAVES/TO_GRAVEYARD
+22 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (280,244) -> CAVES/TO_GRAVEYARD
+23 0 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 2 0 2 0 2 0 2 0 2 0 0 0 0 0   border north -> CASTLE_GARDEN/MAIN
+24 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 . 4 2 0 2 0 2 0 2 0 1 1 1 1   border south -> HYRULE_FIELD/SOUTH_HYRULE_FIEL
+25 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/SOUTH_HYRULE_FIELD
+26 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 . 4 2 0 2 0 2 0 1 1 1 1   border west (north half) -> ROYAL_VALLEY/MAIN
+27 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0   ROYAL_VALLEY/MAIN
+28 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 2 0 . 4 2 0 2 0 1 1 1 1   border east (north half) -> VEIL_FALLS/MAIN
+29 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0   VEIL_FALLS/MAIN
+30 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 2 0 2 0 . 4 2 0 1 1 1 1   scroll seam east 480-800 -> HYRULE_FIELD/LON_L
+31 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0   HYRULE_FIELD/LON_LON_RANCH
+32 1 1 2 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 2 2 0 2 0 2 0 2 0 . 4 1 1 1 1   scroll seam west 480-800 -> HYRULE_FIELD/TRILB
+33 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
+34 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 . 1 1 1   CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN
+35 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 . 1 1   MINISH_CRACKS/EAST_HYRULE_CASTLE
+36 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 . 1   DOJOS/TO_GREATBLADE
+37 1 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 1 0 1 0 1 0 1 0 1 0 1 1 1 .   DOJOS/GREATBLADE
 ```
 
-36 nodes, 1260 ordered pairs, **620 with no data** (49%).
+37 nodes, 1332 ordered pairs, **642 with no data** (48%).
+
+**Entrance surveys** - the same region priced from where each border lands the player (2026-10-06).
+
+*North Hyrule Field (from Veil Falls, the east bomb pocket)* - `NHF@VF` landing `HYRULE_FIELD/NORTH_HYRULE_FIELD` at (1000, 111). Oct 2026; measured landing, rows copied from the start with the bombs added (inferred)
+
+| place | cost from this landing | notes |
+|:--|:--|:--|
+| `HYRULE_FIELD/NORTH_HYRULE_FIELD (9,607)` | bombs+cape OR bombs+flippers | exit |
+| `HYRULE_FIELD/NORTH_HYRULE_FIELD (498,795)` | bombs | exit |
+| `TREE_INTERIORS/BOOMERANG_SOUTHWEST (-1672,120)` | bombs+fusion |  |
+| `CAVES/BOOMERANG (72,248)` | bombs+fusion | POCKET, one of the four switches |
+| `TREE_INTERIORS/BOOMERANG_SOUTHEAST (-1928,120)` | bombs+fusion |  |
+| `CAVES/BOOMERANG (264,248)` | bombs+fusion | POCKET, one of the four switches |
+| `TREE_INTERIORS/BOOMERANG_NORTHEAST (-1416,120)` | bombs+fusion |  |
+| `CAVES/BOOMERANG (264,136)` | bombs+fusion | POCKET, one of the four switches |
+| `TREE_INTERIORS/BOOMERANG_NORTHWEST (-1160,120)` | bombs+fusion |  |
+| `CAVES/BOOMERANG (72,136)` | bombs+fusion | POCKET, one of the four switches |
+| `CAVES/BOOMERANG (168,216)` | bombs+boomerang_switches_4 | the central pocket |
+| `TREE_INTERIORS/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN ` | bombs+fusion |  |
+| `CAVES/NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN (-376,-1432)` | bombs+fusion | the same fusion as the tree above |
+| `HYRULE_FIELD/NORTH_HYRULE_FIELD (1013,638)` | bombs | exit east -> LON_LON_RANCH (10,163); the start itself |
+| `HYRULE_FIELD/NORTH_HYRULE_FIELD (999,112)` | free | exit east -> VEIL_FALLS (8,639); the start itself |
 
 ### South Hyrule Field  `SHF`
 
@@ -738,82 +775,91 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | 10 | room | `CAVES/LON_LON_RANCH_WALLET` | fusion+llr_north | walked survey | reached through HYRULE_FIELD/LON_LON_RANCH |
 | 11 | door | `door (136,852) -> GORON_CAVE/STAIRS` | boulder:LLR:2+fusion | implied: the only door to a priced room |  |
 | 12 | room | `GORON_CAVE/STAIRS` | boulder:LLR:2+fusion | walked survey | reached through HYRULE_FIELD/LON_LON_RANCH; the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
-| 13 | door | `door (184,340) -> CAVES/LON_LON_RANCH` | pacci | walked survey | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md); POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens.; 2 doors lead to CAVES/LON_LON_RANCH, so the survey's price for that room cannot be pinned on this one ⚠ |
+| 13 | door | `door (184,340) -> CAVES/LON_LON_RANCH` | pacci | walked survey | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026; POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in.; 2 doors lead to CAVES/LON_LON_RANCH, so the survey's price for that room cannot be pinned on this one ⚠ |
 | 14 | seam | `border west (south half) -> HYRULE_FIELD/TRILBY_HIGHLANDS` | bombs | walked survey | exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit |
 | 15 | room | `HYRULE_FIELD/TRILBY_HIGHLANDS` | ? | — | LEAVES this region, into TRIL |
 | 16 | seam | `border east -> LAKE_HYLIA/MAIN` | llr_north OR llr_north+minish_cap+pacci OR flippers+llr_north OR cape+llr_north OR boulder:LLR:1 | walked survey | exit east -> LAKE_HYLIA, from the north field; exit east -> LAKE_HYLIA's south-west corner, over water from the north field; exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | 17 | room | `LAKE_HYLIA/MAIN` | ? | — | LEAVES this region, into LH |
-| 18 | seam | `scroll seam south 0-480 -> HYRULE_FIELD/EASTERN_HILLS_NORTH` | free | walked survey | no transition row, the player walks off the edge (into EH-N); exit south -> EASTERN_HILLS_NORTH; the start itself |
-| 19 | room | `HYRULE_FIELD/EASTERN_HILLS_NORTH` | ? | — | LEAVES this region, into EH-N |
-| 20 | seam | `scroll seam west 0-320 -> HYRULE_FIELD/NORTH_HYRULE_FIELD` | free | walked survey | no transition row, the player walks off the edge (into NHF); exit north-west -> NORTH_HYRULE_FIELD |
-| 21 | room | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | ? | — | LEAVES this region, into NHF |
-| 22 | room | `GORON_CAVE/MAIN` | boulder:LLR:2+fusion | walked survey | named by the survey; no row from this region room reaches it directly; the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| 23 | room | `MINISH_CRACKS/LON_LON_RANCH_NORTH` | llr_north+minish_cap+pacci | walked survey | named by the survey; no row from this region room reaches it directly |
-| 24 | room | `MINISH_PATHS/LON_LON_RANCH` | boots+llr_north+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly; chest; heart piece |
+| 18 | seam | `border north (west half) -> VEIL_FALLS/MAIN` | ? | — |  |
+| 19 | room | `VEIL_FALLS/MAIN` | ? | — | LEAVES this region, into VF |
+| 20 | seam | `border north (east half) -> VEIL_FALLS/MAIN` | ? | — |  |
+| 21 | seam | `scroll seam south 0-480 -> HYRULE_FIELD/EASTERN_HILLS_NORTH` | free | walked survey | no transition row, the player walks off the edge (into EH-N); exit south -> EASTERN_HILLS_NORTH; the start itself |
+| 22 | room | `HYRULE_FIELD/EASTERN_HILLS_NORTH` | ? | — | LEAVES this region, into EH-N |
+| 23 | seam | `scroll seam west 0-320 -> HYRULE_FIELD/NORTH_HYRULE_FIELD` | free | walked survey | no transition row, the player walks off the edge (into NHF); exit north-west -> NORTH_HYRULE_FIELD |
+| 24 | room | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | ? | — | LEAVES this region, into NHF |
+| 25 | room | `GORON_CAVE/MAIN` | boulder:LLR:2+fusion | walked survey | named by the survey; no row from this region room reaches it directly; the first chamber; the deeper three are the kinstone-gated miniboss sites |
+| 26 | room | `MINISH_CRACKS/LON_LON_RANCH_NORTH` | llr_north+minish_cap+pacci | walked survey | named by the survey; no row from this region room reaches it directly |
+| 27 | room | `MINISH_PATHS/LON_LON_RANCH` | boots+llr_north+minish_cap | walked survey | named by the survey; no row from this region room reaches it directly; chest; heart piece |
 
 **Evidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
- 1 . i i i i i - i i i i i i i - i - i - i - i i i   HYRULE_FIELD/LON_LON_RANCH
- 2 S . s S s S - S s S s S S S - S - S - S - S S S   START  HYRULE_FIELD/LON_LON_RANCH
- 3 i i . D i i - i i i i i i i - i - i - i - i i i   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 4 i i d . i i - i i i i i i i - i - i - i - i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
- 5 i i i i . D - i i i i i i i - i - i - i - i i i   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 6 i i i i d . - i i i i i i i - i - i - i - i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
- 7 - - - - - - . D - - - - - - - - - - - - - - - -   door (232,436) -> CAVES/LON_LON_RANCH
- 8 i i i i i i d . i i i i d i - i - i - i - i i i   CAVES/LON_LON_RANCH
- 9 i i i i i i - i . D i i i i - i - i - i - i i i   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
-10 i i i i i i - i d . i i i i - i - i - i - i i i   CAVES/LON_LON_RANCH_WALLET
-11 i i i i i i - i i i . D i i - i - i - i - i i i   door (136,852) -> GORON_CAVE/STAIRS
-12 i i i i i i - i i i d . i i - i - i - i - i i i   GORON_CAVE/STAIRS
-13 i i i i i i - D i i i i . i - i - i - i - i i i   door (184,340) -> CAVES/LON_LON_RANCH
-14 i i i i i i - i i i i i i . D P - i - P - i i i   border west (south half) -> HYRULE_FIELD/TRILB
-15 - - - - - - - - - - - - - d . - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
-16 i i i i i i - i i i i i i P - . W i - P - i i i   border east -> LAKE_HYLIA/MAIN
-17 - - - - - - - - - - - - - - - d . - - - - - - -   LAKE_HYLIA/MAIN
-18 i i i i i i - i i i i i i i - i - . D i - i i i   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
-19 - - - - - - - - - - - - - - - - - d . - - - - -   HYRULE_FIELD/EASTERN_HILLS_NORTH
-20 i i i i i i - i i i i i i P - P - i - . D i i i   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
-21 - - - - - - - - - - - - - - - - - - - d . - - -   HYRULE_FIELD/NORTH_HYRULE_FIELD
-22 i i i i i i - i i i i i i i - i - i - i - . i i   GORON_CAVE/MAIN
-23 i i i i i i - i i i i i i i - i - i - i - i . i   MINISH_CRACKS/LON_LON_RANCH_NORTH
-24 i i i i i i - i i i i i i i - i - i - i - i i .   MINISH_PATHS/LON_LON_RANCH
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . i i i i i - i i i i i i i - i - - - - i - i - i i i   HYRULE_FIELD/LON_LON_RANCH
+ 2 S . s S s S - S s S s S S S - S - - - - S - S - S S S   START  HYRULE_FIELD/LON_LON_RANCH
+ 3 i i . D i i - i i i i i i i - i - - - - i - i - i i i   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 4 i i d . i i - i i i i i i i - i - - - - i - i - i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
+ 5 i i i i . D - i i i i i i i - i - - - - i - i - i i i   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 6 i i i i d . - i i i i i i i - i - - - - i - i - i i i   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
+ 7 - - - - - - . D - - - - - - - - - - - - - - - - - - -   door (232,436) -> CAVES/LON_LON_RANCH
+ 8 i i i i i i d . i i i i d i - i - - - - i - i - i i i   CAVES/LON_LON_RANCH
+ 9 i i i i i i - i . D i i i i - i - - - - i - i - i i i   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
+10 i i i i i i - i d . i i i i - i - - - - i - i - i i i   CAVES/LON_LON_RANCH_WALLET
+11 i i i i i i - i i i . D i i - i - - - - i - i - i i i   door (136,852) -> GORON_CAVE/STAIRS
+12 i i i i i i - i i i d . i i - i - - - - i - i - i i i   GORON_CAVE/STAIRS
+13 i i i i i i - D i i i i . i - i - - - - i - i - i i i   door (184,340) -> CAVES/LON_LON_RANCH
+14 i i i i i i - i i i i i i . D P - P - P i - P - i i i   border west (south half) -> HYRULE_FIELD/TRILB
+15 - - - - - - - - - - - - - d . - - - - - - - - - - - -   HYRULE_FIELD/TRILBY_HIGHLANDS
+16 i i i i i i - i i i i i i P - . W P - P i - P - i i i   border east -> LAKE_HYLIA/MAIN
+17 - - - - - - - - - - - - - - - d . - - - - - - - - - -   LAKE_HYLIA/MAIN
+18 - - - - - - - - - - - - - P - P - . D - - - P - - - -   border north (west half) -> VEIL_FALLS/MAIN
+19 - - - - - - - - - - - - - - - - - d . d - - - - - - -   VEIL_FALLS/MAIN
+20 - - - - - - - - - - - - - P - P - - D . - - P - - - -   border north (east half) -> VEIL_FALLS/MAIN
+21 i i i i i i - i i i i i i i - i - - - - . D i - i i i   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
+22 - - - - - - - - - - - - - - - - - - - - d . - - - - -   HYRULE_FIELD/EASTERN_HILLS_NORTH
+23 i i i i i i - i i i i i i P - P - P - P i - . D i i i   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
+24 - - - - - - - - - - - - - - - - - - - - - - d . - - -   HYRULE_FIELD/NORTH_HYRULE_FIELD
+25 i i i i i i - i i i i i i i - i - - - - i - i - . i i   GORON_CAVE/MAIN
+26 i i i i i i - i i i i i i i - i - - - - i - i - i . i   MINISH_CRACKS/LON_LON_RANCH_NORTH
+27 i i i i i i - i i i i i i i - i - - - - i - i - i i .   MINISH_PATHS/LON_LON_RANCH
 ```
 
 **Confidence matrix** — row = FROM, column = TO.
 
 ```
-                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
-   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
- 1 . 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1   HYRULE_FIELD/LON_LON_RANCH
- 2 3 . 2 3 2 3 0 3 2 3 2 3 3 3 0 3 0 3 0 3 0 3 3 3   START  HYRULE_FIELD/LON_LON_RANCH
- 3 1 1 . 4 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 4 1 1 3 . 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
- 5 1 1 1 1 . 4 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
- 6 1 1 1 1 3 . 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
- 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (232,436) -> CAVES/LON_LON_RANCH
- 8 1 1 1 1 1 1 3 . 1 1 1 1 3 1 0 1 0 1 0 1 0 1 1 1   CAVES/LON_LON_RANCH
- 9 1 1 1 1 1 1 0 1 . 4 1 1 1 1 0 1 0 1 0 1 0 1 1 1   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
-10 1 1 1 1 1 1 0 1 3 . 1 1 1 1 0 1 0 1 0 1 0 1 1 1   CAVES/LON_LON_RANCH_WALLET
-11 1 1 1 1 1 1 0 1 1 1 . 4 1 1 0 1 0 1 0 1 0 1 1 1   door (136,852) -> GORON_CAVE/STAIRS
-12 1 1 1 1 1 1 0 1 1 1 3 . 1 1 0 1 0 1 0 1 0 1 1 1   GORON_CAVE/STAIRS
-13 1 1 1 1 1 1 0 4 1 1 1 1 . 1 0 1 0 1 0 1 0 1 1 1   door (184,340) -> CAVES/LON_LON_RANCH
-14 1 1 1 1 1 1 0 1 1 1 1 1 1 . 4 2 0 1 0 2 0 1 1 1   border west (south half) -> HYRULE_FIELD/TRILB
-15 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
-16 1 1 1 1 1 1 0 1 1 1 1 1 1 2 0 . 4 1 0 2 0 1 1 1   border east -> LAKE_HYLIA/MAIN
-17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0   LAKE_HYLIA/MAIN
-18 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 . 4 1 0 1 1 1   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
-19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0   HYRULE_FIELD/EASTERN_HILLS_NORTH
-20 1 1 1 1 1 1 0 1 1 1 1 1 1 2 0 2 0 1 0 . 4 1 1 1   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
-21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0   HYRULE_FIELD/NORTH_HYRULE_FIELD
-22 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 . 1 1   GORON_CAVE/MAIN
-23 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 . 1   MINISH_CRACKS/LON_LON_RANCH_NORTH
-24 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0 1 0 1 1 .   MINISH_PATHS/LON_LON_RANCH
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+ 1 . 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   HYRULE_FIELD/LON_LON_RANCH
+ 2 3 . 2 3 2 3 0 3 2 3 2 3 3 3 0 3 0 0 0 0 3 0 3 0 3 3 3   START  HYRULE_FIELD/LON_LON_RANCH
+ 3 1 1 . 4 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   door (344,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 4 1 1 3 . 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_WEST
+ 5 1 1 1 1 . 4 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   door (392,632) -> HOUSE_INTERIORS_4/RANCH_HOUS
+ 6 1 1 1 1 3 . 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   HOUSE_INTERIORS_4/RANCH_HOUSE_EAST
+ 7 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   door (232,436) -> CAVES/LON_LON_RANCH
+ 8 1 1 1 1 1 1 3 . 1 1 1 1 3 1 0 1 0 0 0 0 1 0 1 0 1 1 1   CAVES/LON_LON_RANCH
+ 9 1 1 1 1 1 1 0 1 . 4 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   door (504,520) -> CAVES/LON_LON_RANCH_WALLET
+10 1 1 1 1 1 1 0 1 3 . 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   CAVES/LON_LON_RANCH_WALLET
+11 1 1 1 1 1 1 0 1 1 1 . 4 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   door (136,852) -> GORON_CAVE/STAIRS
+12 1 1 1 1 1 1 0 1 1 1 3 . 1 1 0 1 0 0 0 0 1 0 1 0 1 1 1   GORON_CAVE/STAIRS
+13 1 1 1 1 1 1 0 4 1 1 1 1 . 1 0 1 0 0 0 0 1 0 1 0 1 1 1   door (184,340) -> CAVES/LON_LON_RANCH
+14 1 1 1 1 1 1 0 1 1 1 1 1 1 . 4 2 0 2 0 2 1 0 2 0 1 1 1   border west (south half) -> HYRULE_FIELD/TRILB
+15 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/TRILBY_HIGHLANDS
+16 1 1 1 1 1 1 0 1 1 1 1 1 1 2 0 . 4 2 0 2 1 0 2 0 1 1 1   border east -> LAKE_HYLIA/MAIN
+17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0   LAKE_HYLIA/MAIN
+18 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 . 4 0 0 0 2 0 0 0 0   border north (west half) -> VEIL_FALLS/MAIN
+19 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 3 0 0 0 0 0 0 0   VEIL_FALLS/MAIN
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 2 0 0 4 . 0 0 2 0 0 0 0   border north (east half) -> VEIL_FALLS/MAIN
+21 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 . 4 1 0 1 1 1   scroll seam south 0-480 -> HYRULE_FIELD/EASTER
+22 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0   HYRULE_FIELD/EASTERN_HILLS_NORTH
+23 1 1 1 1 1 1 0 1 1 1 1 1 1 2 0 2 0 2 0 2 1 0 . 4 1 1 1   scroll seam west 0-320 -> HYRULE_FIELD/NORTH_H
+24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0   HYRULE_FIELD/NORTH_HYRULE_FIELD
+25 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 . 1 1   GORON_CAVE/MAIN
+26 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 . 1   MINISH_CRACKS/LON_LON_RANCH_NORTH
+27 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 0 0 0 1 0 1 0 1 1 .   MINISH_PATHS/LON_LON_RANCH
 ```
 
-24 nodes, 552 ordered pairs, **200 with no data** (36%).
+27 nodes, 702 ordered pairs, **334 with no data** (47%).
 
 **Entrance surveys** - the same region priced from where each border lands the player (2026-10-06).
 
@@ -824,12 +870,12 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HYRULE_FIELD/LON_LON_RANCH (298,968)` | free | exit south -> EASTERN_HILLS_NORTH; the start itself |
 | `HYRULE_FIELD/LON_LON_RANCH (8,560)` | bombs | exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit |
 | `HYRULE_FIELD/LON_LON_RANCH (10,163)` | free | exit north-west -> NORTH_HYRULE_FIELD |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md) |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026 |
 | `HYRULE_FIELD/LON_LON_RANCH (712,445)` | llr_north | exit east -> LAKE_HYLIA, from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,750)` | llr_north+minish_cap+pacci OR flippers+llr_north OR cape+llr_north | exit east -> LAKE_HYLIA's south-west corner, over water from the north field |
 | `GORON_CAVE/STAIRS (120,120)` | boulder:LLR:2+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | boulder:LLR:2+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | llr_north+minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | llr_north+minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | boots+llr_north | the Minish stump under a tree in the north field; the boots reveal it |
@@ -849,12 +895,12 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HYRULE_FIELD/LON_LON_RANCH (298,968)` | free | exit south -> EASTERN_HILLS_NORTH; the start itself |
 | `HYRULE_FIELD/LON_LON_RANCH (8,560)` | bombs | exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit |
 | `HYRULE_FIELD/LON_LON_RANCH (10,163)` | free | exit north-west -> NORTH_HYRULE_FIELD |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md) |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026 |
 | `HYRULE_FIELD/LON_LON_RANCH (712,750)` | minish_cap+pacci OR flippers OR cape | exit east -> LAKE_HYLIA's south-west corner, over water from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,903)` | boulder:LLR:1 | exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | `GORON_CAVE/STAIRS (120,120)` | boulder:LLR:2+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | boulder:LLR:2+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | boots | the Minish stump under a tree in the north field; the boots reveal it |
@@ -874,11 +920,11 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HYRULE_FIELD/LON_LON_RANCH (298,968)` | cape | exit south -> EASTERN_HILLS_NORTH; the start itself |
 | `HYRULE_FIELD/LON_LON_RANCH (8,560)` | bombs+cape | exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit |
 | `HYRULE_FIELD/LON_LON_RANCH (10,163)` | cape | exit north-west -> NORTH_HYRULE_FIELD |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | cape+pacci | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md) |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | cape+pacci | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026 |
 | `HYRULE_FIELD/LON_LON_RANCH (712,903)` | boulder:LLR:1+cape | exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | `GORON_CAVE/STAIRS (120,120)` | boulder:LLR:2+cape+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | boulder:LLR:2+cape+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | cape+minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | cape+minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | boots+cape | the Minish stump under a tree in the north field; the boots reveal it |
@@ -898,13 +944,13 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 |:--|:--|:--|
 | `HYRULE_FIELD/LON_LON_RANCH (298,968)` | bombs | exit south -> EASTERN_HILLS_NORTH; the start itself |
 | `HYRULE_FIELD/LON_LON_RANCH (10,163)` | bombs | exit north-west -> NORTH_HYRULE_FIELD |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | bombs+pacci | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md) |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | bombs+pacci | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026 |
 | `HYRULE_FIELD/LON_LON_RANCH (712,445)` | bombs+llr_north | exit east -> LAKE_HYLIA, from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,750)` | bombs+llr_north+minish_cap+pacci OR bombs+flippers+llr_north OR bombs+cape+llr_north | exit east -> LAKE_HYLIA's south-west corner, over water from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,903)` | bombs+boulder:LLR:1 | exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | `GORON_CAVE/STAIRS (120,120)` | bombs+boulder:LLR:2+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | bombs+boulder:LLR:2+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | bombs+llr_north+minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | bombs+llr_north+minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | bombs+boots+llr_north | the Minish stump under a tree in the north field; the boots reveal it |
@@ -923,13 +969,13 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 |:--|:--|:--|
 | `HYRULE_FIELD/LON_LON_RANCH (298,968)` | free | exit south -> EASTERN_HILLS_NORTH; the start itself |
 | `HYRULE_FIELD/LON_LON_RANCH (8,560)` | bombs | exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> Veil Falls, BLOCKED in this build (docs/QUICKSTART_RETARGETS.md) |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | pacci | exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026 |
 | `HYRULE_FIELD/LON_LON_RANCH (712,445)` | llr_north | exit east -> LAKE_HYLIA, from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,750)` | llr_north+minish_cap+pacci OR flippers+llr_north OR cape+llr_north | exit east -> LAKE_HYLIA's south-west corner, over water from the north field |
 | `HYRULE_FIELD/LON_LON_RANCH (712,903)` | boulder:LLR:1 | exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | `GORON_CAVE/STAIRS (120,120)` | boulder:LLR:2+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | boulder:LLR:2+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | llr_north+minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | llr_north+minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | boots+llr_north | the Minish stump under a tree in the north field; the boots reveal it |
@@ -942,7 +988,7 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HOUSE_INTERIORS_4/RANCH_HOUSE_WEST (245,90)` | minish_cap OR lonlon_key | carried over (not in the 2026-10-06 lists); the minish route needs the room to keep its vanilla content |
 | `HYRULE_FIELD/LON_LON_RANCH (10,163)` | free | exit north-west -> NORTH_HYRULE_FIELD; the start itself |
 
-*Lon Lon Ranch (from Veil Falls, BLOCKED)* - `LLR@N` landing `HYRULE_FIELD/LON_LON_RANCH` at (88, 16). walked 2026-10-06; no crossing lands here in this build
+*Lon Lon Ranch (from Veil Falls)* - `LLR@N` landing `HYRULE_FIELD/LON_LON_RANCH` at (88, 16). walked 2026-10-06; rows copied from the south entrance (inferred)
 
 | place | cost from this landing | notes |
 |:--|:--|:--|
@@ -954,7 +1000,7 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HYRULE_FIELD/LON_LON_RANCH (712,903)` | boulder:LLR:1 | exit east -> LAKE_HYLIA's south-west corner; the pocket behind boulder 1 |
 | `GORON_CAVE/STAIRS (120,120)` | boulder:LLR:2+fusion | the fusion opens the cave; NOT a ? room any more (the user, 2026-10-06) |
 | `GORON_CAVE/MAIN (120,632)` | boulder:LLR:2+fusion | the first chamber; the deeper three are the kinstone-gated miniboss sites |
-| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower pocket of Veil Falls only, and Veil Falls is BLOCKED in this build, so the cane buys nothing. Re-price at [[PACCI]] the day it opens. |
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | IMPOSSIBLE | POCKET at tile (10,3), a gold kinstone chest. Entered from the lower strip of Veil Falls only (the VF@POCKET entrance below prices it); from inside the ranch there is no way in. |
 | `MINISH_CRACKS/LON_LON_RANCH_NORTH (120,87)` | llr_north+minish_cap+pacci |  |
 | `HYRULE_FIELD/LON_LON_RANCH (427,278)` | llr_north+minish_cap+pacci | POCKET (tornado float) |
 | `HYRULE_FIELD/LON_LON_RANCH (313,391)` | boots+llr_north | the Minish stump under a tree in the north field; the boots reveal it |
@@ -965,7 +1011,14 @@ Survey start: `HYRULE_FIELD/LON_LON_RANCH` at (298, 968). the south entrance, fr
 | `HYRULE_FIELD/LON_LON_RANCH (184,279)` | bracelets+llr_north | POCKET out of the cave above - Tingle |
 | `HOUSE_INTERIORS_4/RANCH_HOUSE_EAST (120,120)` | lonlon_key |  |
 | `HOUSE_INTERIORS_4/RANCH_HOUSE_WEST (245,90)` | minish_cap OR lonlon_key | carried over (not in the 2026-10-06 lists); the minish route needs the room to keep its vanilla content |
-| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | free | exit north -> Veil Falls; the start itself, BLOCKED |
+| `HYRULE_FIELD/LON_LON_RANCH (88,16)` | free | exit north -> VEIL_FALLS (88,1000); the start itself |
+
+*Lon Lon Ranch (the gold-chest pocket, from Veil Falls' lower strip)* - `LLR@POCKET` landing `HYRULE_FIELD/LON_LON_RANCH` at (176, 16). Oct 2026; the pocket Veil Falls (176,1000) lands in
+
+| place | cost from this landing | notes |
+|:--|:--|:--|
+| `HYRULE_FIELD/LON_LON_RANCH (166,54)` | free | tile (10,3), the gold kinstone chest |
+| `HYRULE_FIELD/LON_LON_RANCH (176,16)` | free | exit north -> VEIL_FALLS (176,1000); the start itself |
 
 ### Trilby Highlands  `TRIL`
 
@@ -2220,3 +2273,178 @@ Survey start: `MT_CRENEL/CAVERN_OF_FLAMES_ENTRANCE` at (101, 271). surveyed down
 ```
 
 77 nodes, 5852 ordered pairs, **4313 with no data** (73%).
+
+### Veil Falls  `VF`
+
+Survey start: `VEIL_FALLS/MAIN` at (296, 500). the drop plateau at the foot of the big falls, tile (18,31); rows inferred from the North Field walk
+
+| # | kind | place | cost from start | evidence | notes |
+|--:|:--|:--|:--|:--|:--|
+| 1 | room | `VEIL_FALLS/MAIN` | free | the survey start stands in it | overworld room of this region |
+| 2 | room | `VEIL_FALLS_TOP/0` | ? | — | overworld room of this region |
+| 3 | start | `START  VEIL_FALLS/MAIN` | free | the survey start | the drop plateau at the foot of the big falls, tile (18,31); rows inferred from the North Field walk |
+| 4 | door | `MAIN | door (168,34) -> VEIL_FALLS_CAVES/HALLWAY_2F` | ? | — | 2 doors lead to VEIL_FALLS_CAVES/HALLWAY_2F, so the survey's price for that room cannot be pinned on this one |
+| 5 | room | `VEIL_FALLS_CAVES/HALLWAY_2F` | grip | walked survey | reached through VEIL_FALLS/MAIN |
+| 6 | door | `MAIN | door (344,34) -> VEIL_FALLS_CAVES/HALLWAY_2F` | grip | walked survey | tile (21,3); 2 doors lead to VEIL_FALLS_CAVES/HALLWAY_2F, so the survey's price for that room cannot be pinned on this one |
+| 7 | door | `MAIN | door (280,66) -> VEIL_FALLS_CAVES/HALLWAY_1F` | grip | walked survey | tile (12,5); 2 doors lead to VEIL_FALLS_CAVES/HALLWAY_1F, so the survey's price for that room cannot be pinned on this one |
+| 8 | room | `VEIL_FALLS_CAVES/HALLWAY_1F` | grip | walked survey | reached through VEIL_FALLS/MAIN |
+| 9 | door | `MAIN | door (56,482) -> VEIL_FALLS_CAVES/ENTRANCE` | lantern | implied: the only door to a priced room |  |
+| 10 | room | `VEIL_FALLS_CAVES/ENTRANCE` | lantern | walked survey | reached through VEIL_FALLS/MAIN; cave #1, dark |
+| 11 | door | `MAIN | door (216,450) -> VEIL_FALLS_CAVES/EXIT` | lantern | implied: the only door to a priced room | tile (13,29), where cave #1 opens onto this plateau; tile (10,13); the ledge chest, tile (12,22), out of the block puzzle's south door; INFERRED |
+| 12 | room | `VEIL_FALLS_CAVES/EXIT` | lantern | walked survey | reached through VEIL_FALLS/MAIN; cave #1's upper room, dark |
+| 13 | door | `MAIN | door (216,322) -> VEIL_FALLS_CAVES/HALLWAY_BLOCK_PUZZLE` | bombs+lantern | implied: the only door to a priced room |  |
+| 14 | room | `VEIL_FALLS_CAVES/HALLWAY_BLOCK_PUZZLE` | bombs+lantern | walked survey | reached through VEIL_FALLS/MAIN; the block puzzle; INFERRED |
+| 15 | door | `MAIN | door (168,194) -> VEIL_FALLS_CAVES/HALLWAY_RUPEE_PATH` | grip | implied: the only door to a priced room |  |
+| 16 | room | `VEIL_FALLS_CAVES/HALLWAY_RUPEE_PATH` | grip | walked survey | reached through VEIL_FALLS/MAIN |
+| 17 | door | `MAIN | door (56,40) -> VEIL_FALLS_CAVES/HALLWAY_HEART_PIECE` | flippers+fusion+grip | implied: the only door to a priced room |  |
+| 18 | room | `VEIL_FALLS_CAVES/HALLWAY_HEART_PIECE` | flippers+fusion+grip | walked survey | reached through VEIL_FALLS/MAIN; the nook behind the small upper-left waterfall; the user: grip and flippers. KINSTONE_13 (world event type 9, marker at the nook's door (56,40)) is what reveals it in vanilla, so the fusion is added here - RE-MEASURE whether the cave opens without it |
+| 19 | door | `MAIN | door (200,116) -> VEIL_FALLS_CAVES/HALLWAY_1F` | ? | — | 2 doors lead to VEIL_FALLS_CAVES/HALLWAY_1F, so the survey's price for that room cannot be pinned on this one |
+| 20 | seam | `MAIN | border south -> HYRULE_FIELD/LON_LON_RANCH` | ? | — |  |
+| 21 | room | `HYRULE_FIELD/LON_LON_RANCH` | ? | — | LEAVES this region, into LLR |
+| 22 | seam | `MAIN | border north -> VEIL_FALLS_TOP/0` | ? | — |  |
+| 23 | seam | `MAIN | border west -> HYRULE_FIELD/NORTH_HYRULE_FIELD` | lantern | walked survey | exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket, down through cave #1 |
+| 24 | room | `HYRULE_FIELD/NORTH_HYRULE_FIELD` | ? | — | LEAVES this region, into NHF |
+| 25 | seam | `0 | border south -> VEIL_FALLS/MAIN` | free | implied: the only door to a priced room | exit north -> the ledge above the falls, tile (26,9) |
+| 26 | spot | `VEIL_FALLS/MAIN (358,199)` | fusion+grip | walked survey | gold chest, tile (22,12), on the top plateau; KINSTONE_61 lays it |
+| 27 | spot | `VEIL_FALLS/MAIN (248,254)` | grip | walked survey | the wind crest, tile (15,15) |
+| 28 | room | `VEIL_FALLS_CAVES/HALLWAY_SECRET_ROOM` | grip | walked survey | named by the survey; no row from this region room reaches it directly; behind the 1F hallway's bombable wall in vanilla (SUIGEN_DOUKUTU_01_BW00); the user prices it at the grip alone |
+| 29 | spot | `VEIL_FALLS/MAIN (154,611)` | flippers | walked survey | heart piece, tile (9,38), in the pool below the plateau |
+| 30 | room | `VEIL_FALLS_DIG_CAVE/0` | flippers+fusion+mitts | walked survey | named by the survey; no row from this region room reaches it directly; dig-cave entrance 2, tile (14,39); KINSTONE_1F lays the land in front; heart piece, tile (14,18), from entrance 2; gold chest, tile (27,5), from entrance 2 |
+| 31 | room | `VEIL_FALLS_CAVES/SECRET_CHEST` | bombs+lantern | walked survey | named by the survey; no row from this region room reaches it directly; through cave #1's bombable wall; a 50-shell chest. INFERRED |
+| 32 | room | `VEIL_FALLS_CAVES/HALLWAY_SECRET_STAIRCASE` | bombs+lantern | walked survey | named by the survey; no row from this region room reaches it directly; dark; INFERRED |
+
+**Evidence matrix** — row = FROM, column = TO.
+
+```
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+ 1 . - i - i i i i i i i i i i i i i i - - - - i - d i i i i i i i   VEIL_FALLS/MAIN
+ 2 - . - - - - - - - - - - - - - - - - - - - d - - - - - - - - - -   VEIL_FALLS_TOP/0
+ 3 S - . - S S S S s S s S s S s S s S - - - - S - s S S S S S S S   START  VEIL_FALLS/MAIN
+ 4 - - - . D - - - - - - - - - - - - - - - - - - - - - - - - - - -   MAIN | door (168,34) -> VEIL_FALLS_CAVES/HALLW
+ 5 i - i d . d i i i i i i i i i i i i - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/HALLWAY_2F
+ 6 i - i - D . i i i i i i i i i i i i - - - - i - i i i i i i i i   MAIN | door (344,34) -> VEIL_FALLS_CAVES/HALLW
+ 7 i - i - i i . D i i i i i i i i i i - - - - i - i i i i i i i i   MAIN | door (280,66) -> VEIL_FALLS_CAVES/HALLW
+ 8 i - i - i i d . i i i i i i i i i i d - - - i - i i i i i i i i   VEIL_FALLS_CAVES/HALLWAY_1F
+ 9 i - i - i i i i . D i i i i i i i i - - - - i - i i i i i i i i   MAIN | door (56,482) -> VEIL_FALLS_CAVES/ENTRA
+10 i - i - i i i i d . i i i i i i i i - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/ENTRANCE
+11 i - i - i i i i i i . D i i i i i i - - - - i - i i i i i i i i   MAIN | door (216,450) -> VEIL_FALLS_CAVES/EXIT
+12 i - i - i i i i i i d . i i i i i i - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/EXIT
+13 i - i - i i i i i i i i . D i i i i - - - - i - i i i i i i i i   MAIN | door (216,322) -> VEIL_FALLS_CAVES/HALL
+14 i - i - i i i i i i i i d . i i i i - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/HALLWAY_BLOCK_PUZZLE
+15 i - i - i i i i i i i i i i . D i i - - - - i - i i i i i i i i   MAIN | door (168,194) -> VEIL_FALLS_CAVES/HALL
+16 i - i - i i i i i i i i i i d . i i - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/HALLWAY_RUPEE_PATH
+17 i - i - i i i i i i i i i i i i . D - - - - i - i i i i i i i i   MAIN | door (56,40) -> VEIL_FALLS_CAVES/HALLWA
+18 i - i - i i i i i i i i i i i i d . - - - - i - i i i i i i i i   VEIL_FALLS_CAVES/HALLWAY_HEART_PIECE
+19 - - - - - - - D - - - - - - - - - - . - - - - - - - - - - - - -   MAIN | door (200,116) -> VEIL_FALLS_CAVES/HALL
+20 - - - - - - - - - - - - - - - - - - - . D - - - - - - - - - - -   MAIN | border south -> HYRULE_FIELD/LON_LON_RA
+21 - - - - - - - - - - - - - - - - - - - d . - - - - - - - - - - -   HYRULE_FIELD/LON_LON_RANCH
+22 - D - - - - - - - - - - - - - - - - - - - . - - - - - - - - - -   MAIN | border north -> VEIL_FALLS_TOP/0
+23 i - i - i i i i i i i i i i i i i i - - - - . D i i i i i i i i   MAIN | border west -> HYRULE_FIELD/NORTH_HYRUL
+24 - - - - - - - - - - - - - - - - - - - - - - d . - - - - - - - -   HYRULE_FIELD/NORTH_HYRULE_FIELD
+25 D - i - i i i i i i i i i i i i i i - - - - i - . i i i i i i i   0 | border south -> VEIL_FALLS/MAIN
+26 i - i - i i i i i i i i i i i i i i - - - - i - i . i i i i i i   VEIL_FALLS/MAIN (358,199)
+27 i - i - i i i i i i i i i i i i i i - - - - i - i i . i i i i i   VEIL_FALLS/MAIN (248,254)
+28 i - i - i i i i i i i i i i i i i i - - - - i - i i i . i i i i   VEIL_FALLS_CAVES/HALLWAY_SECRET_ROOM
+29 i - i - i i i i i i i i i i i i i i - - - - i - i i i i . i i i   VEIL_FALLS/MAIN (154,611)
+30 i - i - i i i i i i i i i i i i i i - - - - i - i i i i i . i i   VEIL_FALLS_DIG_CAVE/0
+31 i - i - i i i i i i i i i i i i i i - - - - i - i i i i i i . i   VEIL_FALLS_CAVES/SECRET_CHEST
+32 i - i - i i i i i i i i i i i i i i - - - - i - i i i i i i i .   VEIL_FALLS_CAVES/HALLWAY_SECRET_STAIRCASE
+```
+
+**Confidence matrix** — row = FROM, column = TO.
+
+```
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3
+   1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+ 1 . 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 3 1 1 1 1 1 1 1   VEIL_FALLS/MAIN
+ 2 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0   VEIL_FALLS_TOP/0
+ 3 3 0 . 0 3 3 3 3 2 3 2 3 2 3 2 3 2 3 0 0 0 0 3 0 2 3 3 3 3 3 3 3   START  VEIL_FALLS/MAIN
+ 4 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0   MAIN | door (168,34) -> VEIL_FALLS_CAVES/HALLW
+ 5 1 0 1 3 . 3 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_2F
+ 6 1 0 1 0 4 . 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (344,34) -> VEIL_FALLS_CAVES/HALLW
+ 7 1 0 1 0 1 1 . 4 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (280,66) -> VEIL_FALLS_CAVES/HALLW
+ 8 1 0 1 0 1 1 3 . 1 1 1 1 1 1 1 1 1 1 3 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_1F
+ 9 1 0 1 0 1 1 1 1 . 4 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (56,482) -> VEIL_FALLS_CAVES/ENTRA
+10 1 0 1 0 1 1 1 1 3 . 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/ENTRANCE
+11 1 0 1 0 1 1 1 1 1 1 . 4 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (216,450) -> VEIL_FALLS_CAVES/EXIT
+12 1 0 1 0 1 1 1 1 1 1 3 . 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/EXIT
+13 1 0 1 0 1 1 1 1 1 1 1 1 . 4 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (216,322) -> VEIL_FALLS_CAVES/HALL
+14 1 0 1 0 1 1 1 1 1 1 1 1 3 . 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_BLOCK_PUZZLE
+15 1 0 1 0 1 1 1 1 1 1 1 1 1 1 . 4 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (168,194) -> VEIL_FALLS_CAVES/HALL
+16 1 0 1 0 1 1 1 1 1 1 1 1 1 1 3 . 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_RUPEE_PATH
+17 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 . 4 0 0 0 0 1 0 1 1 1 1 1 1 1 1   MAIN | door (56,40) -> VEIL_FALLS_CAVES/HALLWA
+18 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 3 . 0 0 0 0 1 0 1 1 1 1 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_HEART_PIECE
+19 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0 0 0 0   MAIN | door (200,116) -> VEIL_FALLS_CAVES/HALL
+20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 4 0 0 0 0 0 0 0 0 0 0 0   MAIN | border south -> HYRULE_FIELD/LON_LON_RA
+21 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0 0 0 0   HYRULE_FIELD/LON_LON_RANCH
+22 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 . 0 0 0 0 0 0 0 0 0 0   MAIN | border north -> VEIL_FALLS_TOP/0
+23 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 . 4 1 1 1 1 1 1 1 1   MAIN | border west -> HYRULE_FIELD/NORTH_HYRUL
+24 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 . 0 0 0 0 0 0 0 0   HYRULE_FIELD/NORTH_HYRULE_FIELD
+25 4 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 . 1 1 1 1 1 1 1   0 | border south -> VEIL_FALLS/MAIN
+26 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 . 1 1 1 1 1 1   VEIL_FALLS/MAIN (358,199)
+27 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 . 1 1 1 1 1   VEIL_FALLS/MAIN (248,254)
+28 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 . 1 1 1 1   VEIL_FALLS_CAVES/HALLWAY_SECRET_ROOM
+29 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 . 1 1 1   VEIL_FALLS/MAIN (154,611)
+30 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 . 1 1   VEIL_FALLS_DIG_CAVE/0
+31 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 . 1   VEIL_FALLS_CAVES/SECRET_CHEST
+32 1 0 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 0 1 1 1 1 1 1 1 .   VEIL_FALLS_CAVES/HALLWAY_SECRET_STAIRCASE
+```
+
+32 nodes, 992 ordered pairs, **382 with no data** (38%).
+
+**Entrance surveys** - the same region priced from where each border lands the player (2026-10-06).
+
+*Veil Falls (from North Hyrule Field)* - `VF@NHF` landing `VEIL_FALLS/MAIN` at (8, 639). walked 2026-10-06; the corridor to cave #1
+
+| place | cost from this landing | notes |
+|:--|:--|:--|
+| `VEIL_FALLS/MAIN (8,639)` | free | exit west -> NORTH_HYRULE_FIELD (1000,111), the bomb pocket; the start itself |
+| `VEIL_FALLS_CAVES/ENTRANCE (56,120)` | lantern | cave #1, dark |
+| `VEIL_FALLS_CAVES/EXIT (79,66)` | lantern | through cave #1 |
+| `VEIL_FALLS/MAIN (216,472)` | lantern | tile (13,29): must go through cave #1 |
+| `VEIL_FALLS/MAIN (296,500)` | lantern | the drop plateau, tile (18,31): through cave #1 (added) |
+| `VEIL_FALLS/MAIN (358,199)` | fusion+grip+lantern | gold chest, tile (22,12) |
+| `VEIL_FALLS/MAIN (248,254)` | grip+lantern | wind crest, tile (15,15) |
+| `VEIL_FALLS_CAVES/HALLWAY_1F (184,120)` | grip+lantern |  |
+| `VEIL_FALLS_CAVES/HALLWAY_SECRET_ROOM (106,90)` | grip+lantern |  |
+| `VEIL_FALLS/MAIN (200,88)` | grip+lantern | tile (12,5) |
+| `VEIL_FALLS_CAVES/HALLWAY_2F (56,120)` | grip+lantern |  |
+| `VEIL_FALLS/MAIN (344,56)` | grip+lantern | tile (21,3) |
+| `VEIL_FALLS_TOP/0 (430,153)` | grip+lantern | tile (26,9) |
+| `VEIL_FALLS_CAVES/HALLWAY_RUPEE_PATH (152,40)` | grip+lantern |  |
+| `VEIL_FALLS/MAIN (168,216)` | grip+lantern | tile (10,13) |
+| `VEIL_FALLS_CAVES/HALLWAY_HEART_PIECE (120,42)` | flippers+fusion+grip+lantern | the user: cave #1, grip and flippers; the fusion is the KINSTONE_13 reveal, added |
+| `VEIL_FALLS/MAIN (154,611)` | flippers+lantern | heart piece, tile (9,38): the user prices it at the flippers; the lantern is the cave on the way (added) |
+| `VEIL_FALLS_DIG_CAVE/0 (232,625)` | flippers+fusion+lantern+mitts | dig-cave entrance 2 |
+| `VEIL_FALLS_DIG_CAVE/0 (227,299)` | flippers+fusion+lantern+mitts | heart piece from entrance 2 |
+| `VEIL_FALLS_DIG_CAVE/0 (443,86)` | flippers+fusion+lantern+mitts | gold chest from entrance 2 |
+| `VEIL_FALLS_CAVES/SECRET_CHEST (152,72)` | bombs+lantern | INFERRED, see the VF block |
+| `VEIL_FALLS_CAVES/HALLWAY_SECRET_STAIRCASE (88,72)` | bombs+lantern | INFERRED |
+| `VEIL_FALLS_CAVES/HALLWAY_BLOCK_PUZZLE (152,280)` | bombs+lantern | INFERRED |
+| `VEIL_FALLS/MAIN (200,360)` | bombs+lantern | the ledge chest; INFERRED |
+
+*Veil Falls (from Lon Lon Ranch, the Lon Lon strip)* - `VF@LLR` landing `VEIL_FALLS/MAIN` at (88, 1000). walked 2026-10-06; pocket 1, cut off from the rest of the falls
+
+| place | cost from this landing | notes |
+|:--|:--|:--|
+| `VEIL_FALLS/MAIN (88,1000)` | free | exit south -> LON_LON_RANCH (88,16); the start itself |
+| `VEIL_FALLS/MAIN (176,1000)` | free | exit south -> LON_LON_RANCH's gold-chest pocket (176,16), down the ledge |
+| `DOJOS/TO_SPLITBLADE (120,55)` | flippers+fusion | the Splitblade dojo's ante room; KINSTONE_1D opens the archway |
+| `DOJOS/SPLITBLADE (120,167)` | flippers+fusion | the Splitblade dojo |
+| `VEIL_FALLS/MAIN (409,953)` | free | heart piece, tile (25,59) |
+| `VEIL_FALLS_DIG_CAVE/0 (424,583)` | flippers+mitts | dig-cave entrance 1, tile (26,36) |
+| `VEIL_FALLS_DIG_CAVE/0 (281,534)` | flippers+mitts | gold chest, tile (17,33), from entrance 1 |
+| `VEIL_FALLS_DIG_CAVE/0 (267,534)` | flippers+mitts | gold chest, tile (16,33), from entrance 1 |
+
+*Veil Falls (the lower strip, from Lon Lon's gold-chest pocket)* - `VF@POCKET` landing `VEIL_FALLS/MAIN` at (176, 1000). Oct 2026; below the one-way ledge. Rows copied from VF@LLR without the (88,1000) exit
+
+| place | cost from this landing | notes |
+|:--|:--|:--|
+| `VEIL_FALLS/MAIN (176,1000)` | free | exit south -> LON_LON_RANCH's gold-chest pocket (176,16), down the ledge |
+| `DOJOS/TO_SPLITBLADE (120,55)` | flippers+fusion | the Splitblade dojo's ante room; KINSTONE_1D opens the archway |
+| `DOJOS/SPLITBLADE (120,167)` | flippers+fusion | the Splitblade dojo |
+| `VEIL_FALLS/MAIN (409,953)` | free | heart piece, tile (25,59) |
+| `VEIL_FALLS_DIG_CAVE/0 (424,583)` | flippers+mitts | dig-cave entrance 1, tile (26,36) |
+| `VEIL_FALLS_DIG_CAVE/0 (281,534)` | flippers+mitts | gold chest, tile (17,33), from entrance 1 |
+| `VEIL_FALLS_DIG_CAVE/0 (267,534)` | flippers+mitts | gold chest, tile (16,33), from entrance 1 |

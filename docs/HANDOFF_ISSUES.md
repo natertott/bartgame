@@ -69,7 +69,27 @@ so nobody re-invents them:
   sat unconsumed for 40 frames). `memory_probe.py` now presses only while
   the player's action byte reads message (0x16) or talking (0x7), and the
   blink watch starts from the sequence's own first switch. Never dismiss
-  by count.
+  by count. The second form of the same trap, found on Veil Falls: a
+  region's first arrival stacks two or three Ezlo hints (the run intro,
+  the chain's region line, the element's), each of which only takes A once
+  it has finished typing, so twelve blind presses still leave one open.
+  Both probes now press A only while `gMessage.state` reads 7 (waiting)
+  and stop after thirty quiet frames.
+- **The hint banks are addressed by region number, and the number is
+  not free.** `gCustomStrings2` lays the region lines at 0-12, the
+  compass bank at 13 and the pair bank at 26 + ring*5; inserting a region
+  line at 13 shifts every literal index after it (and game.c has dozens).
+  A new region goes LAST in `QS_REGION_*` and takes its lines from the
+  table's end through `QuickStartRegionHintLine` / `QuickStartPairHintLine`.
+- **The extension slots for pool rows 12+ live in 105 bits of scraps.**
+  Fourteen bits per slot now; a twentieth pool row (eight slots, 112 bits)
+  does not fit without finding another run - `invariant_check.py`'s flag
+  audit says what is free.
+- **A site table row count is a define.** `sQuickStartRoomContentSites` is
+  declared `[QUICKSTART_CONTENT_SITE_COUNT]`; append rows AND bump the
+  count, or the build fails on the initializer.
+- **`traversal_audit.py` writes nothing without `--md --json`.** Run it
+  bare and the docs stay stale while the exit code says 0.
 - **`gen_reach.py --check` must be byte-stable across processes.** A set
   iterated for output order made it cry STALE every other run; iterate
   `RINGS` order.

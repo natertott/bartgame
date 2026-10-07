@@ -220,3 +220,117 @@ how much the win chain leans on them:
   landings; the south-east landing is a vestibule until boulder 1 is in.
 - Western Wood North's South Field seam is a dead end from the South Field
   side until the boulder is pushed from inside.
+
+## 7. The user's answers (second pass), and what moved
+
+Every item in sections 3 and 4 has an answer now; the model reads as
+follows.
+
+- **No Minish route skips boulder 2.** Confirmed; the row stands.
+- **The three lake crossings** are ranch (712,443) / (712,762) / (712,908)
+  to lake (8,443) / (8,746) / (8,905). The lake block's (712,328) row was
+  a coordinate no crossing has; it is the middle crossing and now reads
+  (712,445) with its link to the E445 landing.
+- **The Minish paths** are reached from the Pegasus Boots stump only; the
+  two open stumps are cut off from them. Confirmed; `MINISH_PORTAL`'s free
+  Minish token for the ranch prices being small, the paths' own rows carry
+  the boots.
+- **The ranch cave's lower door** needs boulder 3 or the key. Confirmed;
+  the collision flood's reading in section 3b is the flood being blind to
+  a ledge, and is withdrawn.
+- **Boulder 1** is pushed from the south-east lake entrance only; the cap
+  on boulder 2 is for the tornado hop onto the ledge above the Goron
+  cave; the lower lake landing is a ledge the Flippers cannot climb from
+  the south; the (712,903) exit from E445 and E750 is boulder 1; the
+  South Field tree is sword and fusion; every room in the South Field
+  house costs the sword; the near half of the two-ladder cave is free;
+  the dig-cave water is what the fusion lays land over. All recorded as
+  stated; none moved a row.
+- **"Trilby has only one boulder, and it should have been referenced as
+  boulder #1."** Item 11 was about Lon Lon's (712,750) row, which says
+  "Boulder must be pushed in" with no number; the model keeps boulder 3
+  there (the E903 list names it). If that row meant something else, say
+  which.
+
+## 8. Veil Falls, walked 2026-10-06 and integrated
+
+The falls are the fourteenth region: a pool row (the drop lands on the
+plateau at the foot of the big falls), twelve content sites, five fusers,
+eighteen enemy spots over every piece of land, waves as scenery only
+(like Lake Hylia: the pieces are joined by a Grip Ring climb, water and a
+one-way ledge, so nothing counts the room to zero), no boss. The survey
+is `world_reach.py`'s `VF`, `VF@NHF`, `VF@LLR` and `VF@POCKET` blocks and
+Lon Lon's new `LLR@POCKET`; the roadmap entry has the rest.
+
+**Cave #1's door.** In vanilla the Source of the Flow - a stone face, NPC
+4E type 11, standing at the cave mouth (56,509) - seals it until the
+player fuses `KINSTONE_SOURCE_FLOW` with the stone itself. The matching
+gold piece is the one King Gustaf's ghost gives in the Royal Crypt
+(`script_KingGustav.inc`, `GiveKinstone 0x6d`), which this build has no
+way to. The stone is deleted at its init under QUICKSTART (`npc4E.c`),
+and the door was MEASURED open on the delivered ROM: a player walked north
+from (56,560) is inside VEIL_FALLS_CAVES/ENTRANCE eighty frames later
+(`tools/quickstart/veilfalls_probe.py`, DOOR). If you saw a "special
+door" there, say which build; on this one there is nothing in the way.
+The cave is dark, and the lantern is what the rows charge for it.
+
+**The gold chest on the ledge.** It is the one chest VEIL_FALLS/MAIN
+carries in its tile data, at (200,360), tile (12,22), on the ledge beside
+the big falls at rows 21-24. Everything about the ledge is in the exit
+lists: the block-puzzle cave's south border lands on it at (216,344), and
+the ledge's own door at (13,19-20) leads back into that cave. So the
+ledge is the block-puzzle cave's doorstep. Into the cave from the other
+side: cave #1's upper room (EXIT) has a bombable north wall - flag
+`SUIGEN_DOUKUTU_04_BW00`, "wall to secret area blown open" - and its
+rectangle abuts the SECRET_CHEST room's on the caves' pixel grid (a
+scroll seam), from where a door leads to the dark SECRET_STAIRCASE and
+another to the BLOCK_PUZZLE; solve the blocks, walk out the south door,
+and the chest is on your left. Measured on the way: stepping off the
+waterfall climb onto the ledge does NOT work (the climb holds the player
+on the falls). The four rooms are priced at the lantern and the bombs
+and marked INFERRED; **walk them**: cave #1's upper room, bomb the north
+wall, through to the block puzzle and out onto the ledge.
+
+**The whirlwind on the Top screen** carried a player straight into the
+Cloud Tops (measured), which this mode does not include. It is removed
+(`bigVortex.c`); "Tornado up to the sky" is no longer a destination.
+
+**North Hyrule Field's east edge was linked backwards.** Walked on the
+delivered ROM (scratchpad `vf_borders.py`, six crossings): a border keeps
+the GLOBAL coordinate, so the north half of the field's east edge - the
+bomb pocket your field rows price at (999,112) - is the Veil Falls
+crossing, landing in the falls' corridor at (8,639); and the field's
+start itself, (1013,638), is the Lon Lon crossing, landing at the
+ranch's (10,163). The survey had the two links the other way round.
+Fixed, and the field gained an entrance `NHF@VF` for the player who comes
+DOWN from the falls: they land in the bomb pocket, so every row from
+there carries the bombs on top of the field's price. INFERRED from the
+field's own row for the pocket; **walk it**: from the falls' corridor
+into North Hyrule Field, and say what it takes to leave the pocket.
+All six border crossings - the ranch's two north halves both ways, the
+field's east both ways - were walked and land where the rows say.
+
+**Inferred rows to re-measure**, besides the ledge chain:
+
+- The drop plateau's own rows (`VF`) are your North Field rows with
+  "cave #1" taken off everything past the cave, because a drop lands past
+  it. From the plateau: the North Field exit and the cave's two rooms cost
+  the lantern, the top plateau and the upper caves the grip, the pool the
+  flippers.
+- The heart-piece nook behind the small upper-left waterfall carries a
+  FUSION on top of your "grip and flippers": `KINSTONE_13`'s world event
+  (type 9, the waterfall-cave reveal) has its marker at that nook's door
+  (56,40). **Does the nook open without it?**
+- The lower strip (`VF@POCKET`, where the ranch's gold-chest pocket lands
+  at (176,1000)) is your Lon Lon list without the way back up to
+  (88,1000): the ledge at tiles (10,54)-(10,56) is one-way down.
+- Lon Lon's north gate landing (`LLR@N`) is priced as from the south gate.
+
+**Kinstone events in the falls**, all five placed as fusers on the drop
+plateau: 1D (the Splitblade dojo's archway, your "kinstone fusion event"),
+61 (the gold chest on the top plateau), 4A (the golden enemy up there),
+1F (the land in front of dig-cave entrance 2), 13 (the heart-piece nook).
+KINSTONE_E, the Biggoron fusion on the Top screen, is left out: its event
+is the Mirror Shield cutscene, and the vanilla Gorons are swept off that
+screen instead.
+
