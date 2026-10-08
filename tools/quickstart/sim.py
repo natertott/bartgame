@@ -533,6 +533,53 @@ def regions_within_two(region):
     return two
 
 
+def carrier_preferred(seed):
+    """QuickStartWinCarrierPreferred: the seed's even three-way draw."""
+    return (avalanche(seed, 0xF7) & 0x7fff) % 3
+
+
+FINALE_FALLBACK = {WIN_WAVE: (WIN_WAVE, WIN_QUEST, WIN_BOSS),
+                   WIN_BOSS: (WIN_BOSS, WIN_WAVE, WIN_QUEST),
+                   WIN_QUEST: (WIN_QUEST, WIN_WAVE, WIN_BOSS)}
+
+
+def step_region(kind_name, where):
+    """QuickStartChainStepRegion: the region index a dealt step sits in."""
+    if kind_name in ('WAVE', 'BOSS', 'QUEST'):
+        return BY_POOL[where]
+    if kind_name == 'EVENT':
+        s = SITES[where]
+        regs = ROOM_REGION.get((s['area'], s['room']))
+        if regs:
+            return REGION_INDEX[sorted(regs)[0]]
+    return None
+
+
+def roll_finale(seed, drop, nodes, owned, quest_slot, quest_done, used_regions):
+    """QuickStartRollElementRegion (Oct 2026): carrier and element region
+    from the reach at the fourth trial's completion. Preferred carrier
+    first, then its fallbacks; four passes relaxing near / unused / not the
+    drop; the chain hash picks. Nothing qualifies -> the drop row, WAVE."""
+    near = regions_within_two(BY_POOL[drop])
+    def can(row, carrier):
+        if not reach_pool_ok(nodes, row) or not gate_row_passable(row, owned):
+            return False
+        if carrier == WIN_BOSS:
+            return (POOL[row]['area'], POOL[row]['room']) in BOSS_ROOMS
+        if carrier == WIN_QUEST:
+            return row == quest_slot and not quest_done
+        return wave_ok(row)
+    for k, carrier in enumerate(FINALE_FALLBACK[carrier_preferred(seed)]):
+        for pas in range(4):
+            cands = [i for i in range(POOL_SIZE) if can(i, carrier)
+                     and not (pas < 3 and i == drop)
+                     and not (pas < 2 and not (near >> BY_POOL[i]) & 1)
+                     and not (pas < 1 and (used_regions >> BY_POOL[i]) & 1)]
+            if cands:
+                return carrier, cands[(chain_hash(seed, 0xE1E + k) & 0x7fff) % len(cands)]
+    return WIN_WAVE, drop
+
+
 def roll_carrier_and_element(seed, drop, rng, owned=frozenset()):
     """QuickStartRollElementRegionOnce. The carrier is seed-derived; the
     element region is a Random() draw rejected until it lands within two
@@ -858,8 +905,13 @@ def simulate(seed, cohort, rng):
     # re-draw, which IS seed-derived and does depend on what round 1 gave.
     drop_pool = drop_index_usable(seed, rng.randrange(POOL_SIZE), owned)
     drop_region = BY_POOL[drop_pool]
-    carrier, element_pool = roll_carrier_and_element(seed, drop_pool, rng, owned)
-    quest_slot = element_pool if carrier == WIN_QUEST else rng.randrange(POOL_SIZE)
+    # The finale is NOT drawn here any more (Oct 2026, the redesign's P0.1):
+    # QuickStartRollElementRegion draws carrier and element region when the
+    # fourth trial completes, from the reach of that moment. The pre-steps
+    # only read the seed's carrier PREFERENCE (boss suppression).
+    carrier = carrier_preferred(seed)
+    element_pool = None
+    quest_slot = rng.randrange(POOL_SIZE)
 
     checkpoints, steps, rewards = [], [], []
     prior, sites_done = set(), set()
@@ -910,6 +962,14 @@ def simulate(seed, cohort, rng):
         regions = reachable_nodes(held, drop_pool)
         if step < 4:
             checkpoints.append(snapshot(regions, held, f'after requirement {step + 1}'))
+        if step == 3:
+            used = 0
+            for st in steps:
+                rg = step_region(st['kind'], st['where'])
+                if rg is not None:
+                    used |= 1 << rg
+            quest_done = any(st['kind'] == 'QUEST' for st in steps)
+            carrier, element_pool = roll_finale(seed, drop_pool, regions, owned, quest_slot, quest_done, used)
     return dict(seed=seed, cohort=cohort,
                 drop_pool=drop_pool, drop_region=REGION_NAMES[drop_region],
                 element_pool=element_pool,

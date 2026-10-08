@@ -520,6 +520,32 @@ def check_static():
     return out
 
 
+def emu_site_dispatch(rom):
+    """A content site whose room is a NAMED REGION ROOM never dispatches: the
+    room monitor runs the region loop there and never reaches the site
+    loop, so a chain EVENT step dealt on it can never be finished. Found
+    live twice (Mount Crenel Center, Veil Falls Top - 2.3% of 50,000
+    simulated runs dealt a step on one of them) after the handoff notes
+    had recorded the trap for Mount Crenel's Entrance. Asked of the ROM
+    itself, row by row; a row that is named AND not retired is a FAIL."""
+    from emu import boot
+    import callrom as C
+    out = []
+    c = boot(rom, seed=SEED)
+    named = C.game_sym('QuickStartIsNamedRegionRoom')
+    retired = C.game_sym('QuickStartSiteRetired')
+    bad = []
+    for i, (an, rn, a, r, _x, _y) in enumerate(P.content_sites()):
+        if C.call_keep(c, named, (a, r)) and not C.call_keep(c, retired, (i,)):
+            bad.append(f'{i} {rn}')
+    if bad:
+        out.append(('FAIL', 'content site(s) in a named region room, never dispatched, dealable as a chain step: '
+                            + ', '.join(bad) + ' - retire them in QuickStartSiteRetired'))
+    else:
+        out.append(('PASS', f'{len(P.content_sites())} content sites: none in a named region room (or retired)'))
+    return out
+
+
 def emu_regions(rom):
     from emu import boot, warp, here, room_dims, coll_at, poison_here
     out = []
@@ -1202,6 +1228,7 @@ def main():
     results = [('static', check_static()), ('flags', check_flags())]
     if '--static-only' not in args:
         if '--rooms' not in args:
+            results.append(('site dispatch', emu_site_dispatch(rom)))
             results.append(('regions', emu_regions(rom)))
             results.append(('pool entrances', emu_pool_entrances(rom)))
             results.append(('fusers', emu_fusers(rom)))

@@ -397,7 +397,9 @@ static void QuickStartEnforceLonLonContainment(void);
 static void QuickStartEnforceFieldRegionContainment(void);
 static void QuickStartClearLonLonRanchAnimals(void);
 static void QuickStartProcessLinks(void);
-static void QuickStartRollElementRegionOnce(void);
+static void QuickStartRollDropRegionOnce(void);
+static void QuickStartRollElementRegion(void);
+static s32 QuickStartWinCarrierPreferred(void);
 static s32 QuickStartCurrentRegionPoolIndex(void);
 static s32 QuickStartElementRegionIndex(void);
 static void QuickStartRegionMonitor(s32 position);
@@ -2022,7 +2024,7 @@ static void QuickStartShowRegionIntroHintOnce(void) {
 // --- F7 win-condition carriers -------------------------------------------
 //
 // The Earth Element's unlock rides one of three CARRIERS, rolled per run
-// alongside the element region itself (QuickStartRollElementRegionOnce):
+// alongside the element region itself (QuickStartRollDropRegionOnce):
 //
 //   WAVE  (0) - the classic: clear the element region's first wave.
 //   BOSS  (1) - the element region's wave loop deals a Chuchu Boss from
@@ -3200,6 +3202,25 @@ const u8* const gCustomStrings2[] = {
     // pays the pieces in.
     [212] = (const u8*)"The stone at Veil Falls\nwants a gold Kinstone.\nThe valley, north field,\nranch or Trilby has it.",
     [213] = (const u8*)"Castor's three statues\nwant gold Kinstones. The\nwilds, the wood or\nTrilby hold them.",
+    // 214-227: "the Element waits in <region>", QS_REGION_* order - said when
+    // the four trials are done and the finale is drawn
+    // (QuickStartRollElementRegion), and by the compass receipt. 228: the
+    // compass before that moment.
+    [214] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Castle Garden!",
+    [215] = (const u8*)"The four trials are done.\nThe Element waits in\nNorth Hyrule Field!",
+    [216] = (const u8*)"The four trials are done.\nThe Element waits in\nSouth Hyrule Field!",
+    [217] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Eastern Hills!",
+    [218] = (const u8*)"The four trials are done.\nThe Element waits in\nLon Lon Ranch!",
+    [219] = (const u8*)"The four trials are done.\nThe Element waits in\nTrilby Highlands!",
+    [220] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Western Wood!",
+    [221] = (const u8*)"The four trials are done.\nThe Element waits in\nRoyal Valley!",
+    [222] = (const u8*)"The four trials are done.\nThe Element waits in\nCastor Wilds!",
+    [223] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Wind Ruins!",
+    [224] = (const u8*)"The four trials are done.\nThe Element waits on\nMount Crenel!",
+    [225] = (const u8*)"The four trials are done.\nThe Element waits in\nMinish Woods!",
+    [226] = (const u8*)"The four trials are done.\nThe Element waits at\nLake Hylia!",
+    [227] = (const u8*)"The four trials are done.\nThe Element waits at\nVeil Falls!",
+    [228] = (const u8*)"The compass is quiet.\nIt will hum once the\nfour trials are done.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3221,8 +3242,9 @@ const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 // (not fine, the arithmetic has moved).
 // 206 -> 212 for Veil Falls' region line and five pair lines (Oct 2026),
 // appended rather than inserted - see QuickStartRegionHintLine. 212 -> 214
-// for the two golden-kinstone key hints (QuickStartKeyHintLine).
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 214) ? 1 : -1];
+// for the two golden-kinstone key hints (QuickStartKeyHintLine), 214 -> 229
+// for the fourteen "the Element waits in" lines and the quiet compass.
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 229) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3941,7 +3963,7 @@ static void QuickStartTrilbyQuirkHook(void) {
 // One data table (sQuickStartRegionPool below) plus one generic set of
 // dispatch functions. Every region in the pool is live every run: endless
 // escalating waves, a one-time reward on its first wave clear, quests. One
-// region, drawn per run (QuickStartRollElementRegionOnce), drops the Earth
+// region, drawn per run (QuickStartRollDropRegionOnce), drops the Earth
 // Element in place of its normal reward - "the Element is SOMEWHERE, go
 // find it" - and ends the run (QuickStartSpawnWinKeyOnce/
 // QuickStartCheckWinCondition above, both region-agnostic). Travel between
@@ -5117,6 +5139,12 @@ static void QuickStartWritePoolIdx(u32 base, u32 hi, s32 value) {
 
 // Which pool region hides the Earth Element this run.
 static s32 QuickStartElementRegionIndex(void) {
+    // -1 until the fourth trial is done and QuickStartRollElementRegion has
+    // drawn it; every "is this the element region" comparison then fails,
+    // which is the right answer for a region that does not exist yet.
+    if (!QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+        return -1;
+    }
     return QuickStartReadPoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT);
 }
 
@@ -5286,114 +5314,39 @@ static u32 QuickStartRegionsWithinTwo(u8 ring) {
 static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region);
 static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region);
 
-static void QuickStartRollElementRegionOnce(void) {
-    s32 drop, elem, b, carrier, i;
-    u32 allowed;
-    if (QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+static void QuickStartRollDropRegionOnce(void) {
+    s32 drop;
+    if (QsCheckFlag(GF_DROP_REGION_ROLLED)) {
         return;
     }
     // The testbed pre-rolls the drop to its landing region at run start
-    // (QuickStartScenarioRunStart) and a drop already rolled is kept; the
-    // Random() consume stays unconditional so the element draw below sees
-    // the same stream either way. Nothing else sets GF_DROP_REGION_ROLLED.
+    // (QuickStartScenarioRunStart) and a drop already rolled is kept.
+    //
+    // The ELEMENT is not rolled here any more (Oct 2026, the user: "The
+    // element drop should not be planned at the start of the run, it should
+    // be computed once the player completes the step prior to it"). It is
+    // drawn by QuickStartRollElementRegion the moment the fourth trial is
+    // done, from the reach the player holds at that moment - see it for the
+    // measurement that forced the change (10% of simulated runs ended with
+    // the Element in a region the run never reached).
     drop = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-    if (QsCheckFlag(GF_DROP_REGION_ROLLED)) {
-        drop = QuickStartReadPoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP);
-    } else {
-        QuickStartWritePoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP, drop);
-        QsSetFlag(GF_DROP_REGION_ROLLED);
-    }
-    allowed = QuickStartRegionsWithinTwo(QuickStartRegionOfPoolIndex(drop));
-    // F7: the win carrier, rolled before the element region because each
-    // carrier restricts where the element may land. An even three-way
-    // draw from the run seed through the avalanche mix - NOT Random():
-    // measured over 18 pinned sequential seeds, Random() % 3 here
-    // returned only {0, 2}, perfectly alternating with seed parity, and
-    // BOSS never landed once. Same lesson as the fountain's strew hash:
-    // near-identical seeds need real mixing. (Masked to 15 bits for the
-    // signed % - this libgcc has no __umodsi3.)
-    {
-        u32 h = (u32)gSave.run_seed + 0xF7u;
-        h = h * 0x9E3779B9u;
-        h ^= h >> 15;
-        h = h * 0x2C1B3C6Du;
-        h ^= h >> 12;
-        carrier = (s32)(h & 0x7fff) % 3;
-    }
-    // BOSS is only satisfiable if some room inside the distance-2 mask is
-    // on the boss allowlist - pre-checked HERE so the elem loop below can
-    // never spin on an empty intersection. Unsatisfiable falls back to
-    // the classic wave, which every room hosts by construction.
-    if (carrier == QUICKSTART_WIN_BOSS) {
-        bool32 bossable = FALSE;
-        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) &&
-                QuickStartRegionAllowsBoss(&sQuickStartRegionPool[i])) {
-                bossable = TRUE;
-                break;
-            }
-        }
-        if (!bossable) {
-            carrier = QUICKSTART_WIN_WAVE;
-        }
-    }
-    // ...and the same pre-check for WAVE, which used to be free: the
-    // comment above says a wave is something "every room hosts by
-    // construction", and since Mount Crenel that is no longer true. Without
-    // this the elem loop below would spin forever on a mask whose only
-    // member is the mountain.
-    if (carrier == QUICKSTART_WIN_WAVE) {
-        bool32 waveable = FALSE;
-        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) &&
-                QuickStartRegionAllowsWave(&sQuickStartRegionPool[i])) {
-                waveable = TRUE;
-                break;
-            }
-        }
-        if (!waveable) {
-            carrier = QUICKSTART_WIN_QUEST;
-        }
-    }
-    // A region behind a sealed golden gate (Oct 2026) is skipped as long as
-    // some other row satisfies the carrier - the element must not be the
-    // one thing the run can only reach by a fusion whose pieces nothing
-    // guarantees. Pre-counted like the two carrier checks above so the
-    // loop cannot spin on an empty mask.
-    {
-        bool32 openRow = FALSE;
-        for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
-            if ((allowed & (1u << QuickStartRegionOfPoolIndex(i))) && QuickStartGoldGateRowPassable(i) &&
-                (carrier != QUICKSTART_WIN_BOSS || QuickStartRegionAllowsBoss(&sQuickStartRegionPool[i])) &&
-                (carrier != QUICKSTART_WIN_WAVE || QuickStartRegionAllowsWave(&sQuickStartRegionPool[i]))) {
-                openRow = TRUE;
-                break;
-            }
-        }
-        for (;;) {
-            elem = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-            if (!(allowed & (1u << QuickStartRegionOfPoolIndex(elem)))) {
-                continue;
-            }
-            if (openRow && !QuickStartGoldGateRowPassable(elem)) {
-                continue;
-            }
-            if (carrier == QUICKSTART_WIN_BOSS && !QuickStartRegionAllowsBoss(&sQuickStartRegionPool[elem])) {
-                continue;
-            }
-            if (carrier == QUICKSTART_WIN_WAVE && !QuickStartRegionAllowsWave(&sQuickStartRegionPool[elem])) {
-                continue;
-            }
-            break;
-        }
-    }
-    QuickStartWritePoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT, elem);
-    for (b = 0; b < 2; b++) {
-        if (carrier & (1 << b)) {
-            QsSetFlag(GF_WIN_CARRIER_BIT(b));
-        }
-    }
-    QsSetFlag(GF_ELEMENT_REGION_ROLLED);
+    QuickStartWritePoolIdx(GF_DROP_REGION_BIT(0), GF_POOL_HI_DROP, drop);
+    QsSetFlag(GF_DROP_REGION_ROLLED);
+}
+
+// The carrier the run seed would like: an even three-way draw through the
+// avalanche mix (measured: Random() % 3 here returned only {0, 2} over 18
+// pinned seeds). It is a PREFERENCE now - QuickStartRollElementRegion keeps
+// it when the live reach can satisfy it and falls back when it cannot - and
+// the pre-steps read it to keep a required boss out of a run whose finale
+// wants one.
+static s32 QuickStartWinCarrierPreferred(void) {
+    u32 h = (u32)gSave.run_seed + 0xF7u;
+    h = h * 0x9E3779B9u;
+    h ^= h >> 15;
+    h = h * 0x2C1B3C6Du;
+    h ^= h >> 12;
+    return (s32)(h & 0x7fff) % 3;
 }
 
 // Moved up from next to QuickStartGetDifficulty/QuickStartIncrementDifficulty
@@ -7161,6 +7114,32 @@ static u16 QuickStartDrawAtTier(s32 pick, u8 catMask, s32 tier) {
 // it - rather than calling Random() at drop time - is what makes a prize
 // stable across leaving the room and coming back, which every "? room" here
 // depends on.
+// How many rewards have been drawn outside the wanted key's regions while
+// the chain waits on it: two bits of chain_hinted (bits 0-4 are the five
+// steps' hint latches, bit 7 the boss latch). Reset with the latch when the
+// step completes.
+#define QS_CHAIN_MISSED_SHIFT 5
+#define QS_CHAIN_MISSED_MASK (3 << QS_CHAIN_MISSED_SHIFT)
+#define QUICKSTART_CHAIN_KEY_PATIENCE 3
+
+static u32 QuickStartChainKeyMissed(void) {
+    return ((u32)gSave.chain_hinted & QS_CHAIN_MISSED_MASK) >> QS_CHAIN_MISSED_SHIFT;
+}
+
+static void QuickStartChainKeyNoteMiss(void) {
+    u32 n = QuickStartChainKeyMissed();
+    if (n < QUICKSTART_CHAIN_KEY_PATIENCE) {
+        gSave.chain_hinted = (u8)(((u32)gSave.chain_hinted & ~QS_CHAIN_MISSED_MASK) | ((n + 1) << QS_CHAIN_MISSED_SHIFT));
+    }
+}
+
+// Is the current room one the key itself seals (the ranch house for the
+// Lon Lon key, the falls' cave rooms for the stone's piece)?
+static bool32 QuickStartKeySealsHere(u16 item) {
+    const QuickStartRoomOwner* owner = QuickStartRoomOwnerOf(gRoomControls.area, gRoomControls.room);
+    return owner != NULL && owner->sealedBy == QuickStartKeySetOf(item);
+}
+
 static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
     s32 roll = seed;
     s32 tier;
@@ -7176,6 +7155,16 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
             if (QuickStartKeyRegionAllowed(pay)) {
                 return pay;
             }
+            // Not here, by the key's own region rule. But a key the player
+            // never goes to the right region for is a step that never ends
+            // (Oct 2026, the redesign's P0.4): after three rewards drawn
+            // elsewhere, the fourth pays the key wherever it is drawn -
+            // except inside the room the key itself seals, which is the one
+            // place the rule exists for.
+            if (QuickStartChainKeyMissed() >= QUICKSTART_CHAIN_KEY_PATIENCE && !QuickStartKeySealsHere(pay)) {
+                return pay;
+            }
+            QuickStartChainKeyNoteMiss();
         }
     }
     if (roll < 0) {
@@ -7572,12 +7561,13 @@ static void QuickStartRandomizeQuestOnce(void) {
     // forced first (idempotent - usually it has already happened) because
     // the override needs its result, and the two Random() consumes below
     // stay unconditional so the stream cannot depend on the carrier.
-    QuickStartRollElementRegionOnce();
+    // (The QUEST carrier used to force the quest's host onto the element
+    // region here. The element is drawn at the end of the chain now, so the
+    // relation runs the other way: when the live roll picks QUEST as the
+    // carrier it sets the element region to THIS host - see
+    // QuickStartRollElementRegion.)
     slot = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
     hide = (s32)Random() % QUICKSTART_QUEST_POTS;
-    if (QuickStartWinCarrier() == QUICKSTART_WIN_QUEST) {
-        slot = QuickStartElementRegionIndex();
-    }
     slot = QuickStartScenarioQuestHostOr(QS_SCN_QUEST_POT, slot);
     QuickStartWritePoolIdx(GF_REGION_QUEST_HOST_BIT(0), GF_POOL_HI_QUEST_HOST, slot);
     for (b = 0; b < 4; b++) {
@@ -19042,7 +19032,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartRea
             // without the coin 71% of non-BOSS-carrier runs still dealt a
             // boss step, which with the carrier's third put a required
             // boss in four runs of five; the coin halves that.
-            if (QuickStartWinCarrier() == QUICKSTART_WIN_BOSS || (QuickStartChainHash(0xB055u) & 1u) != 0) {
+            if (QuickStartWinCarrierPreferred() == QUICKSTART_WIN_BOSS || (QuickStartChainHash(0xB055u) & 1u) != 0) {
                 break;
             }
             for (i = 0; i < step; i++) {
@@ -19455,6 +19445,11 @@ static void QuickStartChainBossWatcher(void) {
 // Veil Falls' lines: the region line at 206, the five pair lines at 207-211.
 #define QUICKSTART_HINT_VF_REGION_LINE 206
 #define QUICKSTART_HINT_VF_PAIR_BASE 207
+// "The Element waits in <region>", one line per QS_REGION_* in enum order
+// (Oct 2026: said when the finale is drawn, and by the compass receipt);
+// and the compass's line for a run whose finale is not drawn yet.
+#define QUICKSTART_HINT_ELEMENT_BASE 214
+#define QUICKSTART_HINT_COMPASS_QUIET 228
 
 static s32 QuickStartRegionHintLine(s32 ring) {
     if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
@@ -19639,7 +19634,7 @@ static void QuickStartChainHintOnce(s32 step) {
 // faster than a room load.
 static void QuickStartChainMonitor(void) {
     s32 step;
-    if (!QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+    if (!QsCheckFlag(GF_DROP_REGION_ROLLED)) {
         return;  // the drop region is what reachability is measured from
     }
     // Nothing while the player is still in the hub. Two reasons, and both
@@ -19675,7 +19670,7 @@ static void QuickStartChainMonitor(void) {
     // against what the player holds at this moment, so nothing about
     // winnability changes - only the pace of the kit.
     gSave.chain_progress = (u8)(step + 1);
-    gSave.chain_hinted &= (u8)~QS_CHAIN_LATCH;  // the next step starts clean
+    gSave.chain_hinted &= (u8)~(QS_CHAIN_LATCH | QS_CHAIN_MISSED_MASK);  // the next step starts clean
     if (step + 1 < QUICKSTART_CHAIN_PRE_STEPS) {
         // A keyed pair dealt the next step already; roll only what is new.
         if (gSave.chain_rolled < step + 2) {
@@ -19683,7 +19678,134 @@ static void QuickStartChainMonitor(void) {
         }
     } else {
         gSave.chain_rolled = QUICKSTART_CHAIN_PRE_STEPS;
+        // The fourth trial is done: NOW the finale is drawn, from the reach
+        // the player actually holds (Oct 2026).
+        QuickStartRollElementRegion();
     }
+}
+
+// --- The finale, drawn from live reach ------------------------------------
+//
+// The user, after the third simulation pass: "implement the element draw as
+// reach from the current state. The element drop should not be planned at
+// the start of the run, it should be computed once the player completes the
+// step prior to it." Before this, the element region was drawn at the hub's
+// exit by MAP distance from the drop and never checked against reach, and
+// 10.1% of 50,000 simulated runs ended their chain with the element in a
+// region they could not enter (Royal Valley 4%, Lake Hylia 2.7%, the Ruins
+// 1%, Veil Falls 0.7%).
+//
+// The draw: flood the reach graph from the drop with the held mask of this
+// moment; take the seed's preferred carrier and, if no reachable row can
+// host it, fall back (BOSS -> WAVE -> QUEST -> WAVE); among the rows that
+// can host the carrier prefer those within two map hops of the drop and
+// not the drop's own row (the hunt stays a hunt), and not a region the four
+// trials already used (spread); pick with the chain hash. QUEST means the
+// pot quest IS the finale, so the element region becomes the quest's host.
+// If literally nothing qualifies - the drop row hosts no wave, the quest is
+// done, no boss arena in reach - the drop row carries a WAVE finale, which
+// every region allows except the four the roadmap lists; that case is one
+// the simulator will count.
+static bool32 QuickStartElementRowCanCarry(const QuickStartReach* r, s32 row, s32 carrier) {
+    if (!QuickStartReachPoolOk(r, row) || !QuickStartGoldGateRowPassable(row)) {
+        return FALSE;
+    }
+    switch (carrier) {
+        case QUICKSTART_WIN_BOSS:
+            return QuickStartRegionAllowsBoss(&sQuickStartRegionPool[row]);
+        case QUICKSTART_WIN_QUEST:
+            return row == QuickStartQuestSlot() && !QuickStartSideQuestDone();
+        default:
+            return QuickStartRegionAllowsWave(&sQuickStartRegionPool[row]);
+    }
+}
+
+static void QuickStartRollElementRegion(void) {
+    static const s8 kFallback[3][3] = {
+        /* WAVE  */ { QUICKSTART_WIN_WAVE, QUICKSTART_WIN_QUEST, QUICKSTART_WIN_BOSS },
+        /* BOSS  */ { QUICKSTART_WIN_BOSS, QUICKSTART_WIN_WAVE, QUICKSTART_WIN_QUEST },
+        /* QUEST */ { QUICKSTART_WIN_QUEST, QUICKSTART_WIN_WAVE, QUICKSTART_WIN_BOSS },
+    };
+    QuickStartReach reach;
+    s32 pref, k, carrier = QUICKSTART_WIN_WAVE, i, b, n, want, elem;
+    s32 drop = QuickStartDropRegionIndex();
+    u32 near = QuickStartRegionsWithinTwo(QuickStartRegionOfPoolIndex(drop));
+    u32 usedRegions = 0;
+    if (QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
+        return;
+    }
+    QuickStartReachCompute(&reach, QuickStartHeldReachMask());
+    for (i = 0; i < QUICKSTART_CHAIN_PRE_STEPS; i++) {
+        s32 ring = QuickStartChainStepRegion(i);
+        if (ring >= 0) {
+            usedRegions |= (1u << ring);
+        }
+    }
+    pref = QuickStartWinCarrierPreferred();
+    elem = -1;
+    for (k = 0; k < 3 && elem < 0; k++) {
+        s32 pass;
+        carrier = kFallback[pref][k];
+        // Four passes, each a relaxation of the one before: near and
+        // unused and not the drop; near and not the drop; not the drop;
+        // anything reachable that can carry.
+        for (pass = 0; pass < 4 && elem < 0; pass++) {
+            n = 0;
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                u8 ring = QuickStartRegionOfPoolIndex(i);
+                if (!QuickStartElementRowCanCarry(&reach, i, carrier)) {
+                    continue;
+                }
+                if (pass < 3 && i == drop) {
+                    continue;
+                }
+                if (pass < 2 && !(near & (1u << ring))) {
+                    continue;
+                }
+                if (pass < 1 && (usedRegions & (1u << ring))) {
+                    continue;
+                }
+                n++;
+            }
+            if (n == 0) {
+                continue;
+            }
+            want = (s32)(QuickStartChainHash(0xE1Eu + (u32)k) & 0x7fff) % n;
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                u8 ring = QuickStartRegionOfPoolIndex(i);
+                if (!QuickStartElementRowCanCarry(&reach, i, carrier)) {
+                    continue;
+                }
+                if (pass < 3 && i == drop) {
+                    continue;
+                }
+                if (pass < 2 && !(near & (1u << ring))) {
+                    continue;
+                }
+                if (pass < 1 && (usedRegions & (1u << ring))) {
+                    continue;
+                }
+                if (want-- == 0) {
+                    elem = i;
+                    break;
+                }
+            }
+        }
+    }
+    if (elem < 0) {
+        carrier = QUICKSTART_WIN_WAVE;
+        elem = drop;
+    }
+    QuickStartWritePoolIdx(GF_ELEMENT_REGION_BIT(0), GF_POOL_HI_ELEMENT, elem);
+    for (b = 0; b < 2; b++) {
+        if (carrier & (1 << b)) {
+            QsSetFlag(GF_WIN_CARRIER_BIT(b));
+        }
+    }
+    QsSetFlag(GF_ELEMENT_REGION_ROLLED);
+    // Say where, now that there is a where. The compass's own receipt says
+    // the same thing to a player who finds the compass later.
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_HINT_ELEMENT_BASE + QuickStartRegionOfPoolIndex(elem))), 0);
 }
 
 // One draw per save, same shape as QuickStartRandomizeSlotsOnce but for
@@ -22452,7 +22574,7 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // The hole drops the player into this run's drawn DROP region - the same
 // place every fall within a run (the draw is latched), somewhere new each
 // run. The Element is guaranteed within two map regions of it (see
-// QuickStartRollElementRegionOnce).
+// QuickStartRollDropRegionOnce).
 // Castor Wilds and the Wind Ruins are islands in a swamp. Crossing the
 // sludge needs the Pegasus Boots or Roc's Cape, so a player dropped in with
 // neither can neither explore the region nor leave it - the user's report
@@ -22460,7 +22582,7 @@ static void QuickStartSpawnHubHintsOnce(void) {
 // joins them: without the Flippers its arrival shore is a dead end.
 //
 // The check cannot live in the draw. The drop region is rolled on frame one
-// (QuickStartRollElementRegionOnce), well before the hub's gift round has
+// (QuickStartRollDropRegionOnce), well before the hub's gift round has
 // happened, so nothing about the player's kit is known yet. It lives here
 // instead, at the fall, which is the first moment it is.
 //
@@ -22606,7 +22728,7 @@ static void QuickStartProcessHubHoleLink(void) {
     // Explicit-and-idempotent, same reasoning the retired chain roll used:
     // the draw is rolled unconditionally elsewhere, but a run must never
     // begin with the drop/element regions undrawn.
-    QuickStartRollElementRegionOnce();
+    QuickStartRollDropRegionOnce();
     first = &sQuickStartRegionPool[QuickStartDropRegionIndexUsable()];
     gRoomTransition.player_status.area_next = first->area;
     gRoomTransition.player_status.room_next = first->room;
@@ -23203,11 +23325,11 @@ static void QuickStartRoomMonitor(void) {
     // flag read that returns immediately, and nine flag reads a frame is
     // not free - flag reads were 6% of the whole frame in the profile.
     // A draw landing up to eight frames into the run changes nothing; the
-    // pit's own fall calls QuickStartRollElementRegionOnce explicitly
+    // pit's own fall calls QuickStartRollDropRegionOnce explicitly
     // anyway, so the one draw with a hard deadline does not depend on this
     // cadence at all.
     if (QuickStartPhase(1)) {
-        QuickStartRollElementRegionOnce();
+        QuickStartRollDropRegionOnce();
         QuickStartRandomizeSlotsOnce();
         // (2-door pool draws retired - see the note above.)
         QuickStartRandomizeMelariEastOnce();
@@ -24379,11 +24501,14 @@ void QuickStartNoteFoodItem(u32 item) {
         if (GetInventoryValue(item) == 0) {
             if (item == ITEM_MAP) {
                 CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 51), 0);
+            } else if (QuickStartElementRegionIndex() >= 0) {
+                // One line per region in gCustomStrings2 (the first table's
+                // 52-58 only ever covered the first seven regions).
+                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_HINT_ELEMENT_BASE +
+                                                             QuickStartRegionOfPoolIndex(QuickStartElementRegionIndex()))),
+                               0);
             } else {
-                CreateEzloHint(
-                    TEXT_INDEX(TEXT_CUSTOM,
-                               (52 + QuickStartRegionOfPoolIndex(QuickStartElementRegionIndex()))),
-                    0);
+                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QUICKSTART_HINT_COMPASS_QUIET), 0);
             }
         }
         return;
