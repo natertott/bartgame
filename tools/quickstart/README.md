@@ -194,3 +194,7 @@
   globals. `SITE <site> <KIND>` or `REGION <row>`.
 - `town_survey.py` - Hyrule Town's plaza for the fifteenth region: the
   floor from each border arrival, the enemy spot spread, the most open tile.
+- `town_probe.py` - Hyrule Town as a region: landing, the cast swept, the
+  waves and the first clear's reward, pause, its own hint lines, every
+  door refused, the four gates walked both ways with containment live, and
+  a boss composed in the square. 18/18.

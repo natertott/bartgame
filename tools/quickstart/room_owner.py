@@ -73,6 +73,8 @@ RING = {  # room name -> the QS_REGION_* name it is
     # Veil Falls (Oct 2026): Main, and Top across its north border.
     'ROOM_VEIL_FALLS_MAIN': 'VF',
     'ROOM_VEIL_FALLS_TOP_0': 'VF',
+    # Hyrule Town (Oct 2026): the square only; every door is cancelled.
+    'ROOM_HYRULE_TOWN_MAIN': 'HT',
 }
 # Two ? rooms are joined to their parent by a SCROLL SEAM, not by any kind
 # of transition: rooms inside one area share a pixel grid and the player
@@ -158,7 +160,8 @@ SEALED = {
 ENUM = {'CG': 'QS_REGION_CG', 'NHF': 'QS_REGION_NHF', 'SHF': 'QS_REGION_SHF', 'EH': 'QS_REGION_EH',
         'LLR': 'QS_REGION_LLR', 'TRIL': 'QS_REGION_TRIL', 'WW': 'QS_REGION_WW', 'RV': 'QS_REGION_RV',
         'CW': 'QS_REGION_CW', 'WR': 'QS_REGION_WR', 'MW': 'QS_REGION_MW',
-        'LH': 'QS_REGION_LH', 'CREN': 'QS_REGION_CREN', 'VF': 'QS_REGION_VF'}
+        'LH': 'QS_REGION_LH', 'CREN': 'QS_REGION_CREN', 'VF': 'QS_REGION_VF',
+        'HT': 'QS_REGION_HT'}
 
 
 def doors_from(room_name):

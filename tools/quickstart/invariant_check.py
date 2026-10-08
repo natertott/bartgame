@@ -697,11 +697,11 @@ QS_RING = {'CG': 0, 'NHF': 1, 'SHF': 2, 'EH': 3, 'LLR': 4, 'TRIL': 5,
            'WW': 6, 'RV': 7, 'CW': 8, 'WR': 9}
 RING_ADJ = {
     'CG': ['NHF'],
-    'NHF': ['CG', 'SHF', 'LLR', 'TRIL', 'RV', 'VF'],
-    'SHF': ['NHF', 'EH', 'WW'],
+    'NHF': ['CG', 'LLR', 'TRIL', 'RV', 'VF', 'HT'],
+    'SHF': ['EH', 'WW', 'HT'],
     'EH': ['SHF', 'LLR', 'MW'],
-    'LLR': ['EH', 'NHF', 'TRIL', 'LH', 'VF'],
-    'TRIL': ['LLR', 'NHF', 'WW', 'RV', 'CREN'],
+    'LLR': ['EH', 'NHF', 'LH', 'VF', 'HT'],
+    'TRIL': ['NHF', 'WW', 'RV', 'CREN', 'HT'],
     'WW': ['TRIL', 'SHF', 'CW'],
     'RV': ['NHF', 'TRIL'],
     'CW': ['WW', 'WR'],
@@ -714,6 +714,9 @@ RING_ADJ = {
     'LH': ['LLR'],
     # Veil Falls: Lon Lon's north border and North Hyrule Field's east one.
     'VF': ['LLR', 'NHF'],
+    # Hyrule Town (Oct 2026): its four gates. NHF-SHF and LLR-TRIL are gone
+    # with the QUICKSTART town bridge they rode on.
+    'HT': ['NHF', 'SHF', 'LLR', 'TRIL'],
 }
 for _a, _ns in RING_ADJ.items():
     for _b in _ns:

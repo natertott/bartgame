@@ -1,10 +1,10 @@
 """The overworld region graph: every crossing, both ways, plus the walls.
 
 The core loop (Castle Garden, North Hyrule Field, Lon Lon Ranch, Eastern Hills,
-South Hyrule Field, Western Wood, Trilby Highlands) circles the missing
-Hyrule Town. Travel between region rooms is free and vanilla-shaped; the two
-"town bridge" borders (transitions.c) stitch the gap the town leaves, and
-every border out of that loop is compiled away under QUICKSTART.
+South Hyrule Field, Western Wood, Trilby Highlands) circles Hyrule Town, which
+is a region again (Oct 2026): the "town bridge" rows that stitched it out are
+gone and its four gates are crossings. Travel between region rooms is free and
+vanilla-shaped; borders out of the ring that are not regions stay blocked.
 
 This walks each crossing at a known-good coordinate (found by sweeping the
 seams once; see the CROSSINGS table) and each blocked edge, and reports
@@ -39,10 +39,13 @@ CG_AREA, CG_ROOM = 7, 0
 CROSSINGS = [
     ('CG -> NHF (border)',    (7, 0), 504, 500, 'KEY_DOWN',  (3, 6)),
     ('NHF -> CG (door)',      (3, 6), 504, 70,  'KEY_UP',    (7, 0)),
-    ('NHF -> SHF (bridge)',   (3, 6), 504, 760, 'KEY_DOWN',  (3, 1)),
-    ('SHF -> NHF (bridge)',   (3, 1), 504, 40,  'KEY_UP',    (3, 6)),
-    ('LLR -> TRIL (bridge)',  (3, 5), 40, 552,  'KEY_LEFT',  (3, 7)),
-    ('TRIL -> LLR (bridge)',  (3, 7), 440, 552, 'KEY_RIGHT', (3, 5)),
+    # The four town gates (Oct 2026): Hyrule Town is the fifteenth region
+    # and the QUICKSTART "town bridge" rows that stitched it out are gone.
+    # The town's own side of each gate is town_probe.py's GATES cases.
+    ('NHF -> town (gate)',    (3, 6), 504, 760, 'KEY_DOWN',  (2, 0)),
+    ('SHF -> town (gate)',    (3, 1), 504, 40,  'KEY_UP',    (2, 0)),
+    ('LLR -> town (gate)',    (3, 5), 40, 552,  'KEY_LEFT',  (2, 0)),
+    ('TRIL -> town (gate)',   (3, 7), 440, 572, 'KEY_RIGHT', (2, 0)),
     ('SHF -> EH-N (seam)',    (3, 1), 984, 120, 'KEY_RIGHT', (3, 4)),
     ('EH-N -> SHF (seam)',    (3, 4), 24, 424,  'KEY_LEFT',  (3, 1)),
     ('EH-N -> EH-C (seam)',   (3, 4), 216, 504, 'KEY_DOWN',  (3, 3)),
@@ -62,12 +65,14 @@ CROSSINGS = [
     ('WW-C -> WW-N (seam)',   (3, 9), 24, 40,   'KEY_UP',    (3, 8)),
     ('WW-C -> WW-S (seam)',   (3, 9), 264, 120, 'KEY_DOWN',  (3, 0)),
     ('WW-S -> WW-C (seam)',   (3, 0), 312, 40,  'KEY_UP',    (3, 9)),
+    # Lake Hylia's border off Lon Lon's east side has been a real crossing
+    # since the lake joined the ring; it stood in BLOCKED below, stale.
+    ('LLR -> LH (border)',    (3, 5), 680, 480, 'KEY_RIGHT', (11, 0)),
 ]
 
 # (label, from(area,room), local x, y, direction) - must NOT leave the room.
 BLOCKED = [
     ('LLR north (Veil Falls)',    (3, 5), 360, 40, 'KEY_UP'),
-    ('LLR east (Lake Hylia)',     (3, 5), 680, 480, 'KEY_RIGHT'),
     ('NHF east (Veil Falls)',     (3, 6), 968, 200, 'KEY_RIGHT'),
     ('NHF west (Royal Valley)',   (3, 6), 40, 300, 'KEY_LEFT'),
     ('TRIL west (Mt Crenel)',     (3, 7), 40, 700, 'KEY_LEFT'),

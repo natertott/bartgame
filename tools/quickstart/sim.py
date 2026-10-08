@@ -76,7 +76,7 @@ NEVER = U32
 # ---------------------------------------------------------------- tables --
 
 REGION_NAMES = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV',
-                'CW', 'WR', 'CREN', 'MW', 'LH', 'VF']
+                'CW', 'WR', 'CREN', 'MW', 'LH', 'VF', 'HT']
 REGION_INDEX = {name: i for i, name in enumerate(REGION_NAMES)}
 REGION_LONG = {
     'CG': 'Hyrule Castle Garden', 'NHF': 'North Hyrule Field',
@@ -84,7 +84,7 @@ REGION_LONG = {
     'LLR': 'Lon Lon Ranch', 'TRIL': 'Trilby Highlands',
     'WW': 'Western Wood', 'RV': 'Royal Valley', 'CW': 'Castor Wilds',
     'WR': 'Wind Ruins', 'CREN': 'Mount Crenel', 'MW': 'Minish Woods',
-    'LH': 'Lake Hylia', 'VF': 'Veil Falls',
+    'LH': 'Lake Hylia', 'VF': 'Veil Falls', 'HT': 'Hyrule Town',
 }
 RIDX = {n: i for i, n in enumerate(REGION_NAMES)}
 

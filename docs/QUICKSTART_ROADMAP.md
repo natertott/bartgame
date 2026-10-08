@@ -1271,6 +1271,49 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Hyrule Town is the fifteenth region (Oct 2026)
+
+The plan's P2 section 5: the town as a locked monster plaza. The town had
+been stitched out of the ring by four QUICKSTART "bridge" rows in
+`transitions.c` (North Field's south edge went straight to South Field,
+Lon Lon's west pocket straight to Trilby). Those rows are gone and the
+vanilla town borders are back, so the town now sits between the four
+fields it touches, and North/South Field and Lon Lon/Trilby are no longer
+adjacent to each other.
+
+What the town is now:
+
+| part | how |
+|---|---|
+| region | `QS_REGION_HT`, ring 14, pool row 19 of 20; entrance (520, 664), boss spot (504, 488) |
+| monsters | 34 hand-placed wave spots on open ground, 259 squares for the density table |
+| the cast | swept every frame the town is current (`QuickStartHyruleTownQuirkHook`), as Veil Falls' Gorons are |
+| doors | all 31 refused by containment; only the four gates leave the square |
+| ? rooms | none (no sites); the town carries waves, bosses, drops and the finale |
+| flags | the region's ext slot at window offsets 2-15, inside the run start's bank-12 wipe |
+| hints | its own lines, 241-247 (region, five pairs, the Element), addressed by `QuickStartRegionHintLine`, `QuickStartPairHintLine` and the new `QuickStartElementHintLine` |
+| reach | `world_reach.py`, `gen_reach.py`, `overworld_paths.py` and the simulator know the town; `reach.h` regenerated (43 nodes) |
+
+Trilby's fuser spot at (456, 552) stood on the town gate's approach and
+blocked it; it moved to (408, 584).
+
+**Measured.** `town_probe.py` (new) 18/18: lands in the square, reads as
+region 14, no vanilla NPC standing, waves dealt and replaced (13 first,
+108 killed), the first clear pays, pause works, the town's own hint
+lines, 31 of 31 doors refused, all eight gate walks with containment
+live, and the BOSS scenario composes a boss there. The regressions on
+the town ROM: finale 7/7, scenario 15/15, memory 9/9, Veil Falls 17/17,
+win 6/6, invariants clean, `reach.h` up to date, and the model and the
+ROM agree on all 402 reach questions. The simulator puts the town in
+98% of runs (182 rooms now, from 181) and the report is regenerated.
+
+`win_probe.py` read the score after landing in the Element's row; on
+seed 2 a forced QUEST carrier hands the Element over on the landing, so
+the win was the baseline and read as a FAIL. It reads the score first
+now. `region_crossings.py` swaps its four bridge cases for the four town
+gates and moves Lon Lon to Lake Hylia from the walls to the crossings
+(that border has been a real crossing since the lake joined the ring).
+
 ### The performance dips: one lookup, asked per site per frame (Oct 2026)
 
 The user named three slow places: the Boomerang cave, Trilby's push-stone

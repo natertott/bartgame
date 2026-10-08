@@ -32,6 +32,14 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **`region_crossings.py` is seed-sensitive at one seam.** On seed 1 the
+  Western Wood centre to south walk (start (264, 120), pressing down)
+  stays in the room on both attempts; seeds 2 and 3 cross it, and every
+  other crossing and wall passes on all three (Oct 2026, the Hyrule Town
+  ROM). The TRIL to WW-N case had the same shape and was a start sitting
+  on wall that crossed only by corner-sliding past the room's rolled
+  obstacles; measure this seam's open corridor the same way before
+  calling it a broken border. Run the walk on seed 2 meanwhile.
 - **A ROM call that never returns is a freeze, not a hang.** `callrom.call_keep`
   stops after 500,000 instructions and raises; the chain-end probe hit that
   on `QuickStartChainRollStep(1)` and it was real: the roll cost seconds of

@@ -186,6 +186,8 @@ REGIONS = {
     # crossing is recorded on purpose; the walked survey (world_reach.py,
     # VF / VF@NHF / VF@LLR) is where the falls are priced.
     'VF':   dict(name='Veil Falls',     ports=['S', 'WSW']),
+    # Hyrule Town (Oct 2026): the square, one component from all four gates.
+    'HT':   dict(name='Hyrule Town',    ports=['N', 'S', 'E', 'W']),
     'LH':   dict(name='Lake Hylia',     ports=['W'],        pooled=False),
     'CREN': dict(name='Mt Crenel',      ports=['E'],        pooled=False),
     # Castor Wilds joined the pool (the western spur): in from Western
@@ -274,6 +276,10 @@ t('NHF', 'WSW', 'ENE', [CAPE, BOMBS], [FLIPPERS, BOMBS])
 t('NHF', 'WSW', 'ESE', [CAPE], [FLIPPERS, BOMBS])
 
 # --- South Hyrule Field ----------------------------------------------------
+for _a in 'NSEW':
+    for _b in 'NSEW':
+        if _a != _b:
+            t('HT', _a, _b)   # one component (town_survey.py)
 t('SHF', 'N', 'E')
 t('SHF', 'N', 'W', [SWORD])
 t('SHF', 'E', 'W', [SWORD])
@@ -414,14 +420,16 @@ BORDER = 'WARP_TYPE_BORDER row in transitions.c'
 SEAM = 'scroll seam, from gAreaRoomHeaders room rectangles'
 
 link('CG', 'S', 'NHF', 'N', BORDER)
-link('NHF', 'S', 'SHF', 'N', BORDER + ' (the QUICKSTART town bridge)')
+link('NHF', 'S', 'HT', 'N', BORDER + ' (the town gate; the QUICKSTART bridge to SHF is retired)')
+link('SHF', 'N', 'HT', 'S', BORDER)
 link('NHF', 'ESE', 'LLR', 'WNW', SEAM)
 link('NHF', 'WSW', 'TRIL', 'ENE', SEAM)
 link('NHF', 'ENE', 'VF', 'WSW', BORDER)
 link('NHF', 'WNW', 'RV', 'E', BORDER)
 link('LLR', 'ESE', 'LH', 'W', BORDER)
 link('LLR', 'N', 'VF', 'S', BORDER)
-link('LLR', 'WSW', 'TRIL', 'ESE', BORDER + ' (QUICKSTART; vanilla is the town gate)')
+link('LLR', 'WSW', 'HT', 'E', BORDER + ' (the town gate again, Oct 2026)')
+link('TRIL', 'ESE', 'HT', 'W', BORDER)
 link('LLR', 'SWS', 'EH', 'N', SEAM)
 link('TRIL', 'N', 'RV', 'S', BORDER)
 link('TRIL', 'W', 'CREN', 'E', BORDER)

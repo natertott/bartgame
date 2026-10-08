@@ -371,6 +371,7 @@ static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
 static void QuickStartClearCastleGuards(void);
 static void QuickStartVeilFallsQuirkHook(void);
+static void QuickStartHyruleTownQuirkHook(void);
 // The Ezlo hint banks' only addressing (defined with the win chain, below;
 // the carry quest's giver line is asked for above it).
 static s32 QuickStartRegionHintLine(s32 ring);
@@ -3241,6 +3242,18 @@ const u8* const gCustomStrings2[] = {
     [238] = (const u8*)"The next trial needs the\nMole Mitts. The next\nprize you earn will be\nthem.",
     [239] = (const u8*)"The next trial needs the\nGust Jar. The next prize\nyou earn will be it.",
     [240] = (const u8*)"The next trial needs the\nOcarina. The next prize\nyou earn will be it.",
+    // 241-247: Hyrule Town (Oct 2026), the fifteenth region - its region
+    // line, its five (region, kind) pair lines in QS_CHAIN_* order, and its
+    // "the Element waits" line. Addressed by QuickStartRegionHintLine,
+    // QuickStartPairHintLine and QuickStartElementHintLine, never by
+    // arithmetic on the ring number.
+    [241] = (const u8*)"Hyrule Town. The square\nis overrun - the next\nthing is there.",
+    [242] = (const u8*)"Hyrule Town, and you lack\nsomething to get at what\nis waiting there.",
+    [243] = (const u8*)"Something is happening\nin Hyrule Town. Go and\nfinish it.",
+    [244] = (const u8*)"Monsters hold the town\nsquare. Clear them out.",
+    [245] = (const u8*)"A beast waits in the\ntown square. Put it\ndown.",
+    [246] = (const u8*)"A favour left undone in\nHyrule Town. Finish it.",
+    [247] = (const u8*)"The four trials are done.\nThe Element waits in\nHyrule Town!",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3391,7 +3404,7 @@ typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_
 // appended rather than inserted - see QuickStartRegionHintLine. 212 -> 214
 // for the two golden-kinstone key hints (QuickStartKeyHintLine), 214 -> 229
 // for the fourteen "the Element waits in" lines and the quiet compass.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 241) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 248) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -3941,6 +3954,27 @@ static void QuickStartClearLonLonRanchAnimals(void) {
 // the Flow stone that seals cave #1 - is a gate the run rolls (Oct 2026,
 // QuickStartRollGoldGates): npc4E.c deletes it at its init when the gate rolled
 // open and keeps it when sealed, so this hook leaves the Main screen alone.
+// Hyrule Town as a monster plaza (Oct 2026): the town's cast is swept on
+// every frame the region is current, the way Veil Falls' Gorons are -
+// nobody lives here this run. The houses are shut by containment (any
+// transition out of the town that is not a field border is cancelled),
+// so no door needs touching here.
+static void QuickStartHyruleTownQuirkHook(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_HYRULE_TOWN) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, -1)) {
+            DeleteEntity(ent);
+        }
+    }
+}
+
 static void QuickStartVeilFallsQuirkHook(void) {
     s32 hereRoom, i;
     if (gRoomControls.area != AREA_VEIL_FALLS_TOP) {
@@ -4432,7 +4466,13 @@ static u32 QuickStartExtSlotFlag(s32 poolIndex, u32 off) {
     if (lin < 84) {
         return 496 + (lin - 71); // the moved food block's old home
     }
-    return 213 + (lin - 84); // the retired 2-door third-kind spill, 213-228
+    if (lin < 98) {
+        return 213 + (lin - 84); // the retired 2-door third-kind spill, 213-226
+    }
+    // Window offsets 2-15 (Oct 2026, Hyrule Town's slot, the eighth): bank-12
+    // offsets 702-715, unclaimed and inside the run start's bank-12 wipe
+    // (bits 0-793), so the slot resets per run like the rest.
+    return 2 + (lin - 98);
 }
 
 static bool32 QuickStartSlotBitCheck(s32 poolIndex, u32 extOff, u32 windowBit) {
@@ -4929,6 +4969,20 @@ static const s16 sQuickStartVeilFallsEnemyOffsets[][2] = {
 // 400: a ceiling of 16 (14 + 120/50) spread over seven pieces.
 #define QUICKSTART_VEILFALLS_ROOM_SQUARES 120
 
+// Hyrule Town's plaza (Oct 2026): 34 spots, farthest-point sampled over the
+// single 2,331-tile component all four gates land in, with 3x3 clearance
+// and off water (tools/quickstart/town_survey.py --emit); 88% of its 2,060
+// land tiles are within 96px of one.
+static const s16 sQuickStartHyruleTownEnemyOffsets[][2] = {
+    { 24, 232 }, { 968, 888 }, { 728, 232 }, { 104, 920 }, { 520, 664 }, { 376, 328 },
+    { 120, 568 }, { 824, 552 }, { 504, 24 }, { 664, 920 }, { 392, 904 }, { 984, 248 },
+    { 600, 440 }, { 280, 712 }, { 808, 776 }, { 536, 216 }, { 56, 744 }, { 168, 392 },
+    { 408, 520 }, { 360, 120 }, { 952, 680 }, { 840, 360 }, { 680, 632 }, { 520, 824 },
+    { 632, 104 }, { 168, 232 }, { 664, 776 }, { 56, 456 }, { 504, 344 }, { 728, 424 },
+    { 792, 904 }, { 392, 776 }, { 856, 232 }, { 296, 232 },
+};
+#define QUICKSTART_HYRULETOWN_ROOM_SQUARES 259
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -5155,6 +5209,13 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartVeilFallsEnemyOffsets, ARRAY_COUNT(sQuickStartVeilFallsEnemyOffsets),
       QUICKSTART_VEILFALLS_ROOM_SQUARES,
       392, 496, QuickStartVeilFallsQuirkHook },
+    // Hyrule Town (Oct 2026): the drop lands a little south of the square's
+    // centre; the reward and the boss both use the centre, the most open
+    // tile in the room (7x7 all land, town_survey.py). No exit box.
+    { AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 520, 664, 0, 0, 0, 0,
+      sQuickStartHyruleTownEnemyOffsets, ARRAY_COUNT(sQuickStartHyruleTownEnemyOffsets),
+      QUICKSTART_HYRULETOWN_ROOM_SQUARES,
+      504, 488, QuickStartHyruleTownQuirkHook },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // The extension-slot bitfield (QuickStartExtSlotFlag) covers pool rows
@@ -5165,7 +5226,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
 typedef char QuickStartExtSlotsFit[(((int)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion)) -
                                      QUICKSTART_EXT_SLOT_BASE) *
                                             QUICKSTART_EXT_SLOT_BITS <=
-                                        100
+                                        112
                                         ? 1
                                         : -1)];
 // And the five-bit pool-index fields cap the pool at 32 rows.
@@ -5348,6 +5409,11 @@ enum {
     // banks follow the first thirteen regions arithmetically, so this one
     // takes its lines from the end of the table (QuickStartRegionHintLine).
     QS_REGION_VF,
+    // Hyrule Town (Oct 2026, the redesign's P2): the plaza between the four
+    // field rooms, no ? rooms, every door shut, monsters in the square.
+    // After Veil Falls for the same reason Veil Falls is last: the hint
+    // banks address a late region through helpers, not arithmetic.
+    QS_REGION_HT,
     QS_REGION_COUNT
 };
 
@@ -5362,14 +5428,18 @@ enum {
 // already works in u32 locals.
 static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
     /* CG   */ (1 << QS_REGION_NHF),
-    /* NHF  */ (1 << QS_REGION_CG) | (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL) |
-               (1 << QS_REGION_RV) | (1 << QS_REGION_VF),
-    /* SHF  */ (1 << QS_REGION_NHF) | (1 << QS_REGION_EH) | (1 << QS_REGION_WW),
+    // North and South Hyrule Field are NOT adjacent any more (Oct 2026):
+    // their only shared border was the town bridge, a QUICKSTART row that
+    // stitched the town out; the town is back and both gates open onto it.
+    // The same goes for Lon Lon Ranch and Trilby, below.
+    /* NHF  */ (1 << QS_REGION_CG) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL) |
+               (1 << QS_REGION_RV) | (1 << QS_REGION_VF) | (1 << QS_REGION_HT),
+    /* SHF  */ (1 << QS_REGION_EH) | (1 << QS_REGION_WW) | (1 << QS_REGION_HT),
     /* EH   */ (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_MW),
-    /* LLR  */ (1 << QS_REGION_EH) | (1 << QS_REGION_NHF) | (1 << QS_REGION_TRIL) | (1 << QS_REGION_LH) |
-               (1 << QS_REGION_VF),
-    /* TRIL */ (1 << QS_REGION_LLR) | (1 << QS_REGION_NHF) | (1 << QS_REGION_WW) | (1 << QS_REGION_RV) |
-               (1 << QS_REGION_CREN),
+    /* LLR  */ (1 << QS_REGION_EH) | (1 << QS_REGION_NHF) | (1 << QS_REGION_LH) |
+               (1 << QS_REGION_VF) | (1 << QS_REGION_HT),
+    /* TRIL */ (1 << QS_REGION_NHF) | (1 << QS_REGION_WW) | (1 << QS_REGION_RV) |
+               (1 << QS_REGION_CREN) | (1 << QS_REGION_HT),
     /* WW   */ (1 << QS_REGION_TRIL) | (1 << QS_REGION_SHF) | (1 << QS_REGION_CW),
     // Royal Valley touches North Hyrule Field (its WNW border) and Trilby
     // (the north seam). Both edges are real crossings the player walks.
@@ -5405,6 +5475,12 @@ static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
     // on foot; the reach graph (world_reach.py, VF / VF@NHF / VF@LLR)
     // carries that, this mask only says the borders exist.
     /* VF   */ (1 << QS_REGION_LLR) | (1 << QS_REGION_NHF),
+    // Hyrule Town's four gates: North Hyrule Field (north), South Hyrule
+    // Field (south), Lon Lon Ranch (east) and Trilby Highlands (west). The
+    // four border rows were stitched field-to-field while the town was cut
+    // out (the "town bridge"); they enter the town again. One component:
+    // town_survey.py floods 2,331 tiles from all four landings alike.
+    /* HT   */ (1 << QS_REGION_NHF) | (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -5417,7 +5493,7 @@ static u8 QuickStartRegionOfPoolIndex(s32 poolIndex) {
         QS_REGION_WW, QS_REGION_WW, QS_REGION_WW,
         QS_REGION_RV,
         QS_REGION_CW, QS_REGION_WR, QS_REGION_WR,
-        QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF,
+        QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF, QS_REGION_HT,
     };
     // The index is taken modulo the POOL's size but read out of byPool, so
     // the two must be the same length or a perfectly legal pool index reads
@@ -5759,6 +5835,11 @@ static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {
         return TRUE;
     }
     if (region->area == AREA_LAKE_HYLIA && region->room == ROOM_LAKE_HYLIA_MAIN) {
+        return TRUE;
+    }
+    // Hyrule Town's square (Oct 2026): the centre is a 7x7 all-land block,
+    // the most open arena of any region. Vetted by town_probe.py's BOSS case.
+    if (region->area == AREA_HYRULE_TOWN && region->room == ROOM_HYRULE_TOWN_MAIN) {
         return TRUE;
     }
     // Mount Crenel's Base is OUT, per the user (Oct 2026): "the boss is
@@ -6930,6 +7011,9 @@ static s32 QuickStartRegionOfRoom(u8 area, u8 room) {
     if ((area == AREA_VEIL_FALLS && room == ROOM_VEIL_FALLS_MAIN) ||
         (area == AREA_VEIL_FALLS_TOP && room == ROOM_VEIL_FALLS_TOP_0)) {
         return QS_REGION_VF;
+    }
+    if (area == AREA_HYRULE_TOWN && room == ROOM_HYRULE_TOWN_MAIN) {
+        return QS_REGION_HT;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -10169,6 +10253,8 @@ static const QuickStartRegionDropSpots sQuickStartRegionDropSpots[] = {
     // VEIL_FALLS_MAIN - 68 tiles in the arrival component (the plateau at
     // the foot of the big falls; sampled at 48px, scratchpad vf_spots.py)
     { 4, { { 312, 504 }, { 216, 520 }, { 408, 488 }, { 360, 520 } } },
+    // HYRULE_TOWN_MAIN - 2,331 tiles, all four gates in one component
+    { 4, { { 520, 664 }, { 408, 520 }, { 600, 440 }, { 376, 328 } } },
 };
 
 typedef char QuickStartDropSpotsMatchPool[(ARRAY_COUNT(sQuickStartRegionDropSpots) ==
@@ -19978,9 +20064,27 @@ static void QuickStartChainBossWatcher(void) {
 // (Oct 2026: said when the finale is drawn, and by the compass receipt);
 // and the compass's line for a run whose finale is not drawn yet.
 #define QUICKSTART_HINT_ELEMENT_BASE 214
+// Hyrule Town's lines (gCustomStrings2 241-247), defined ahead of every
+// helper that addresses them.
+#define QUICKSTART_HINT_HT_REGION_LINE 241
+#define QUICKSTART_HINT_HT_PAIR_BASE 242
+#define QUICKSTART_HINT_HT_ELEMENT_LINE 247
+
+// "The Element waits in <region>": 214+ring for the first fourteen, then
+// Hyrule Town's own line (247) - 214+14 is the compass's "quiet" line.
+static s32 QuickStartElementHintLine(s32 ring) {
+    if (ring == QS_REGION_HT) {
+        return QUICKSTART_HINT_HT_ELEMENT_LINE;
+    }
+    return QUICKSTART_HINT_ELEMENT_BASE + ring;
+}
 #define QUICKSTART_HINT_COMPASS_QUIET 228
 
+
 static s32 QuickStartRegionHintLine(s32 ring) {
+    if (ring == QS_REGION_HT) {
+        return QUICKSTART_HINT_HT_REGION_LINE;
+    }
     if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
         return QUICKSTART_HINT_VF_REGION_LINE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS);
     }
@@ -19988,6 +20092,9 @@ static s32 QuickStartRegionHintLine(s32 ring) {
 }
 
 static s32 QuickStartPairHintLine(s32 ring, s32 kind) {
+    if (ring == QS_REGION_HT) {
+        return QUICKSTART_HINT_HT_PAIR_BASE + kind;
+    }
     if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
         return QUICKSTART_HINT_VF_PAIR_BASE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS) * QS_CHAIN_KIND_COUNT + kind;
     }
@@ -20353,7 +20460,7 @@ static void QuickStartRollElementRegion(void) {
     QsSetFlag(GF_ELEMENT_REGION_ROLLED);
     // Say where, now that there is a where. The compass's own receipt says
     // the same thing to a player who finds the compass later.
-    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_HINT_ELEMENT_BASE + QuickStartRegionOfPoolIndex(elem))), 0);
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartElementHintLine(QuickStartRegionOfPoolIndex(elem))), 0);
 }
 
 // One draw per save, same shape as QuickStartRandomizeSlotsOnce but for
@@ -21945,7 +22052,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
           gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
           gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
           gRoomControls.area == AREA_MT_CRENEL || gRoomControls.area == AREA_VEIL_FALLS ||
-          gRoomControls.area == AREA_VEIL_FALLS_TOP) ||
+          gRoomControls.area == AREA_VEIL_FALLS_TOP || gRoomControls.area == AREA_HYRULE_TOWN) ||
         !QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
@@ -24490,7 +24597,10 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     // the reward.
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
       { { 248, 344 }, { 24, 408 }, { 392, 72 }, { 248, 136 }, { 296, 504 },
-        { 360, 392 }, { 392, 488 }, { 360, 152 }, { 456, 552 } } },
+        // The last spot was (456,552), on the east gate's line: with the town
+        // gate live again (Oct 2026) a fuser standing there blocked its north
+        // half (town_probe.py). Moved a tile and a half west, off the gate.
+        { 360, 392 }, { 392, 488 }, { 360, 152 }, { 408, 584 } } },
     // The three expansion rooms that host fusers, generated the same way
     // (flood + farthest-point sample) with the region's enemy-offset grid,
     // its gates, its entrance and its reward spot all seeded as taken, so a
@@ -25109,8 +25219,8 @@ void QuickStartNoteFoodItem(u32 item) {
             } else if (QuickStartElementRegionIndex() >= 0) {
                 // One line per region in gCustomStrings2 (the first table's
                 // 52-58 only ever covered the first seven regions).
-                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_HINT_ELEMENT_BASE +
-                                                             QuickStartRegionOfPoolIndex(QuickStartElementRegionIndex()))),
+                CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartElementHintLine(QuickStartRegionOfPoolIndex(
+                                                            QuickStartElementRegionIndex()))),
                                0);
             } else {
                 CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QUICKSTART_HINT_COMPASS_QUIET), 0);

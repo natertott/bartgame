@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Hyrule Town is the fifteenth region: the bridge rows gone, the four gates vanilla, the square a monster plaza with every door shut; `town_probe.py` 18/18 | "Hyrule Town is the fifteenth region" |
 | The performance dips: the memory-pair lookup cost 57% of every ? room frame (Boomerang cave 20 fps, Trilby's cave 30); cached, 60 everywhere in a 140-sample sweep; the fountain's ranking; Great Fairy rooms out of the memory pair | "The performance dips: one lookup, asked per site per frame" |
 | P0 and P1 of the redesign: the finale drawn from live reach when the fourth trial completes; the completion audit (708 cells, 612 PASS) and the five content defects it found fixed; sites 7 and 72 retired; room-naming hints; spread and drops by region; escalation pairs; the keyed step's patience; the chain-end and win probes, and the step-roll freeze they found; seashells as three seconds of invincibility | "P0 and P1 of the redesign: the chain can end, and says where" |
 | The redesign plan (`docs/QUICKSTART_REDESIGN_PLAN.md`); sites 81 and 116 retired (chain steps on them could never finish); the element lands unreachable in 10% of runs (P0.1, not yet fixed) | "The redesign plan, and two steps the chain could deal but never finish" |
@@ -235,7 +236,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 - **P2 and P3 of the redesign** (`docs/QUICKSTART_REDESIGN_PLAN.md` §11,
   sized there): the performance census in the Boomerang cave, Trilby's
-  push-stone cave and Lon Lon; Hyrule Town as a locked monster plaza;
+  push-stone cave and Lon Lon (shipped); Hyrule Town (shipped);
   blessing tiers with recoloured sprites; the six puzzle kinds with solver
   probes; the three quest ports; the hub (travel, inn, trophy sprites);
   the dungeon reach probe, per-run small keys, Deepwood and the Cave of

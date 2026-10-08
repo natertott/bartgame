@@ -109,7 +109,7 @@ RING = {
     'RV': 'QS_REGION_RV', 'TRIL': 'QS_REGION_TRIL', 'WW-N': 'QS_REGION_WW',
     'WW-C': 'QS_REGION_WW', 'WW-S': 'QS_REGION_WW', 'CW': 'QS_REGION_CW',
     'WR': 'QS_REGION_WR', 'CREN': 'QS_REGION_CREN',
-    'MW': 'QS_REGION_MW', 'LH': 'QS_REGION_LH', 'VF': 'QS_REGION_VF',
+    'MW': 'QS_REGION_MW', 'LH': 'QS_REGION_LH', 'VF': 'QS_REGION_VF', 'HT': 'QS_REGION_HT',
     # Sub-starts. Lake Hylia is not one place: the border shore, the
     # wind-crest pocket, the isolated south-west corner and the ladder
     # pocket are four disconnected components with four different entrances,
@@ -122,7 +122,7 @@ RING = {
 RINGS = ['QS_REGION_CG', 'QS_REGION_NHF', 'QS_REGION_SHF', 'QS_REGION_EH',
          'QS_REGION_LLR', 'QS_REGION_TRIL', 'QS_REGION_WW', 'QS_REGION_RV',
          'QS_REGION_CW', 'QS_REGION_WR', 'QS_REGION_CREN', 'QS_REGION_MW',
-         'QS_REGION_LH', 'QS_REGION_VF']
+         'QS_REGION_LH', 'QS_REGION_VF', 'QS_REGION_HT']
 
 # Keys that are joined to the rest of their region ONLY by an explicit link:
 # the three Lake Hylia pockets the walk found disconnected, and Mount

@@ -315,7 +315,8 @@ ENTRY = {
 # seam into Western Wood North at (8,111).
 region('SHF', 'South Hyrule Field', ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16),
        note='the north entrance, from North Hyrule Field; walked 2026-10-06')
-d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, FREE, 'exit north -> NORTH_HYRULE_FIELD; the start itself')
+d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, FREE, 'exit north -> HYRULE_TOWN; the start itself')
+link('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'HT')
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, [[SWORD]], 'exit NNW -> WESTERN_WOODS_NORTH (468,431), which is the dead-end side of its boulder')
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, [[SWORD]], 'exit NNE -> EASTERN_HILLS_NORTH')
 d('SHF', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[BOMBS]])
@@ -357,7 +358,8 @@ for _k in ('SHF',):
 # slip, priced at the sword, and flagged for re-measurement.
 entrance('SHF@NNE', 'SHF', 'South Hyrule Field (from Eastern Hills North)',
          ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121), note='walked 2026-10-06')
-d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> NORTH_HYRULE_FIELD')
+d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> HYRULE_TOWN')
+link('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'HT')
 d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, [[SWORD]], 'exit NNW -> WESTERN_WOODS_NORTH')
 d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, FREE, 'exit NNE -> EASTERN_HILLS_NORTH; the start itself')
 d('SHF@NNE', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[SWORD, BOMBS]])
@@ -381,7 +383,8 @@ d('SHF@NNE', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, FREE, 'exit east 4
 # as from the north entrance (sword and the fusion) and flagged.
 entrance('SHF@NNW', 'SHF', 'South Hyrule Field (from Western Wood North)',
          ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111), note='walked 2026-10-06')
-d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> NORTH_HYRULE_FIELD')
+d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, [[SWORD]], 'exit north -> HYRULE_TOWN')
+link('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'HT')
 d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, FREE, 'exit NNW -> WESTERN_WOODS_NORTH; the start itself (the list prices it at a sword)')
 d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, [[SWORD]], 'exit NNE -> EASTERN_HILLS_NORTH')
 d('SHF@NNW', 'CAVES', 'SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN', 120, 120, [[SWORD, BOMBS], [FLIPPERS, BOMBS]])
@@ -459,7 +462,7 @@ d('EH-S', 'HYRULE_FIELD', 'EASTERN_HILLS_SOUTH', 167, 8, [[BOMBS]],
 region('LLR', 'Lon Lon Ranch', ('HYRULE_FIELD', 'LON_LON_RANCH', 298, 968),
        note='the south entrance, from Eastern Hills North; walked 2026-10-06 with the boulders unfilled')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 298, 968, FREE, 'exit south -> EASTERN_HILLS_NORTH; the start itself')
-d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, [[BOMBS]], 'exit west -> TRILBY_HIGHLANDS (472,560), the pocket behind a bombable wall; the user calls it the Hyrule Town exit')
+d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, [[BOMBS]], 'exit west -> HYRULE_TOWN (1000,240), from the pocket behind a bombable wall')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, FREE, 'exit north-west -> NORTH_HYRULE_FIELD')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 88, 16, [[PACCI]], 'exit north -> VEIL_FALLS (88,1000), the Lon Lon strip of the falls; open since Oct 2026')
 d('LLR', 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, [[LLR_NORTH]], 'exit east -> LAKE_HYLIA, from the north field')
@@ -489,7 +492,7 @@ d('LLR', 'HOUSE_INTERIORS_4', 'RANCH_HOUSE_WEST', 245, 90, [[MINISH], [LONLON_KE
 
 def _llr_links(k):
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 298, 968, 'EH-N')
-    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, 'TRIL@E')
+    link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, 'HT')   # the town's east gate (Oct 2026: the bridge to Trilby is gone)
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 10, 163, 'NHF')
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 445, 'LH')
     link(k, 'HYRULE_FIELD', 'LON_LON_RANCH', 712, 750, 'LH-SW')
@@ -532,10 +535,10 @@ _llr_links('LLR@E750')
 # The west landing, (8,560), from Trilby Highlands (vanilla's Hyrule Town
 # border): a pocket behind a bombable wall. "The same as starting from the
 # Southern exit, except add 'and bombs' to every requirement."
-entrance('LLR@W', 'LLR', 'Lon Lon Ranch (from Trilby Highlands)',
+entrance('LLR@W', 'LLR', 'Lon Lon Ranch (from Hyrule Town, the west pocket)',
          ('HYRULE_FIELD', 'LON_LON_RANCH', 8, 560), note='walked 2026-10-06; behind a bombable wall')
 copy_dests('LLR', 'LLR@W', add=(BOMBS,), skip=[('HYRULE_FIELD', 'LON_LON_RANCH', (8, 560))])
-d('LLR@W', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, FREE, 'exit west -> TRILBY_HIGHLANDS; the start itself')
+d('LLR@W', 'HYRULE_FIELD', 'LON_LON_RANCH', 8, 560, FREE, 'exit west -> HYRULE_TOWN; the start itself')
 _llr_links('LLR@W')
 
 # The north-west landing, (10,163), from North Hyrule Field: the west
@@ -592,7 +595,7 @@ d('NHF', 'CAVES', 'NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN', -376, -1432, [[FUSION]],
 d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, [[BOMBS]], 'exit east, the bomb pocket -> VEIL_FALLS (8,639)')
 link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'VF@NHF')
 link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 9, 607, 'TRIL')
-link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'SHF')
+link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'HT')   # the town's north gate (Oct 2026)
 d('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, FREE, 'exit east -> LON_LON_RANCH (10,163); the start itself')
 link('NHF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, 'LLR@NW')
 
@@ -609,7 +612,7 @@ d('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, FREE, 'exit east -> 
 link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 999, 112, 'VF@NHF')
 link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 1013, 638, 'LLR@NW')
 link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 9, 607, 'TRIL')
-link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'SHF')
+link('NHF@VF', 'HYRULE_FIELD', 'NORTH_HYRULE_FIELD', 498, 795, 'HT')
 d('NHF', 'MINISH_CRACKS', 'EAST_HYRULE_CASTLE', -936, 48, [[MINISH, BOOTS]])
 d('NHF', 'CAVES', 'TO_GRAVEYARD', -104, 216, [[BOMBS]])
 d('NHF', 'CAVES', 'HEART_PIECE_HALLWAY', -1000, -1000, [[BOMBS]])
@@ -729,7 +732,7 @@ region('TRIL', 'Trilby Highlands', ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129
        note='the north-east entrance, from North Hyrule Field; walked 2026-10-06 with the boulder unfilled')
 _TB = BOULDER('TRIL', 1)
 d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129, FREE, 'exit east (north half) -> NORTH_HYRULE_FIELD; the start itself')
-d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, FREE, 'exit east (south half) -> LON_LON_RANCH (8,560); the user calls it the Hyrule Town exit')
+d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, FREE, 'exit east (south half) -> HYRULE_TOWN (8,240), the town gate (Oct 2026)')
 d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 8, 414, FREE, 'exit west -> MT_CRENEL/ENTRANCE, Mount Crenel Base')
 d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953, [[_TB], [BRACELETS]], 'exit south -> WESTERN_WOODS_NORTH; in the boulder pocket')
 d('TRIL', 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 32880, -1184, None, 'POCKET at the Royal Valley landing, only reachable from Royal Valley; the valley is inaccessible from here')
@@ -758,7 +761,7 @@ d('TRIL', 'CAVES', 'TRILBY_MITTS_FAIRY_FOUNTAIN', 184, 40, [[FUSION, MITTS, FLIP
 
 def _tril_links(k):
     link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 470, 129, 'NHF')
-    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, 'LLR@W')
+    link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560, 'HT')   # the town's west gate (Oct 2026)
     link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 8, 414, 'CREN-BASE')
     link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 363, 953, 'WW-N')
     link(k, 'HYRULE_FIELD', 'TRILBY_HIGHLANDS', 32880, -1184, 'RV')
@@ -776,7 +779,7 @@ _tril_links('TRIL@S')
 
 # The east landing (472,560), from Lon Lon Ranch's bombable pocket. Same
 # as the north-east.
-entrance('TRIL@E', 'TRIL', 'Trilby Highlands (from Lon Lon Ranch)',
+entrance('TRIL@E', 'TRIL', 'Trilby Highlands (from Hyrule Town)',
          ('HYRULE_FIELD', 'TRILBY_HIGHLANDS', 472, 560), note='walked 2026-10-06')
 copy_dests('TRIL', 'TRIL@E')
 _tril_links('TRIL@E')
@@ -926,6 +929,31 @@ d('WR', 'RUINS', 'BELOW_FORTRESS_ENTRANCE', 347, 39, None,
 d('WR', 'RUINS', 'FORTRESS_ENTRANCE', None, None, None,
   'vanilla blocks this pocket behind another kill-the-enemies event - same '
   're-appropriation candidate')
+
+
+# --- Hyrule Town -----------------------------------------------------------
+#
+# The fifteenth region (Oct 2026, the redesign's P2): the square, with every
+# door shut by containment, so the town is ONE room and its four gates. Not
+# walked by the user: measured instead (tools/quickstart/town_survey.py) -
+# the floor floods to a single 2,331-tile component from all four gates'
+# landings (vanilla's own coordinates) and from the drop, with no ledge,
+# water or wall between them, so every exit is free from the start. The
+# landings on the far side are the field nodes that already had those
+# coordinates: South Hyrule Field's north start (504,16), North Hyrule
+# Field's south gate (498,795), Lon Lon's west pocket (8,560, LLR@W) and
+# Trilby's east landing (472,560, TRIL@E).
+region('HT', 'Hyrule Town', ('HYRULE_TOWN', 'MAIN', 520, 664),
+       note='measured, not walked: one component from every gate (town_survey.py)')
+d('HT', 'HYRULE_TOWN', 'MAIN', 520, 664, FREE, 'the drop, a little south of the square; the start itself')
+d('HT', 'HYRULE_TOWN', 'MAIN', 504, 24, FREE, 'exit north -> NORTH_HYRULE_FIELD (504,792)')
+d('HT', 'HYRULE_TOWN', 'MAIN', 504, 952, FREE, 'exit south -> SOUTH_HYRULE_FIELD (504,16)')
+d('HT', 'HYRULE_TOWN', 'MAIN', 8, 240, FREE, 'exit west -> TRILBY_HIGHLANDS (472,560)')
+d('HT', 'HYRULE_TOWN', 'MAIN', 1000, 240, FREE, 'exit east -> LON_LON_RANCH (8,560), the west pocket')
+link('HT', 'HYRULE_TOWN', 'MAIN', 504, 24, 'NHF')
+link('HT', 'HYRULE_TOWN', 'MAIN', 504, 952, 'SHF')
+link('HT', 'HYRULE_TOWN', 'MAIN', 8, 240, 'TRIL@E')
+link('HT', 'HYRULE_TOWN', 'MAIN', 1000, 240, 'LLR@W')
 
 
 # --- Mt Crenel -------------------------------------------------------------

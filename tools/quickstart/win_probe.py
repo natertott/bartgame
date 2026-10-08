@@ -48,10 +48,13 @@ for sd in range(lo, hi):
     forced = []
     if carrier == 'QUEST':
         C.call_keep(c, E.sym['QuickStartQuestSetFlag'], (E.GF_QUEST_DONE,)); forced.append('quest')
-    landed = E.goto_row(c, elem)
+    # read the score BEFORE landing: a forced QUEST carrier can hand the
+    # Element over on the landing itself (seed 2 after Hyrule Town joined
+    # the ring), and a score read after that sees the win as the baseline
     xp0 = E.meta_xp(c)
-    got = False; killed = 0
-    for n in range(40 if carrier != 'BOSS' else 30):
+    landed = E.goto_row(c, elem)
+    got = E.meta_xp(c) > xp0; killed = 0
+    for n in range(0 if got else (40 if carrier != 'BOSS' else 30)):
         E.heal(c); killed += A.kill_all(c); E.settle(c, 90 if carrier != 'BOSS' else 700)
         # the win is a reset (gSave.meta_xp grows); see chain_end_probe
         if E.meta_xp(c) > xp0:

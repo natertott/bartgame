@@ -374,8 +374,11 @@ const Transition gExitList_HyruleField_SouthHyruleField[] = {
     // gExitList_HyruleField_NorthHyruleField. Walking out SHF's north gate
     // lands at NHF's south gate, at the arrival coordinates vanilla's town
     // north exit used (endX 0x1f8, endY 0x318).
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x318, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD,
-      1, TRANSITION_TYPE_NORMAL, 0x0, 0x0, 0x0, 0x0 },
+    // RETIRED (Oct 2026): Hyrule Town is the fifteenth region, so South
+    // Hyrule Field's north gate opens into the town again, at vanilla's own
+    // landing.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x3b8, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x0, 0x0, 0x0, 0x0 },
 #else
     { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x3b8, TRANSITION_SHAPE_BORDER_NORTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
       0x0, 0x0, 0x0, 0x0 },
@@ -429,8 +432,9 @@ const Transition gExitList_HyruleField_LonLonRanch[] = {
     // walking out the ranch's west side lands at Trilby's east edge, at the
     // arrival coordinates vanilla's own town west exit used (endX 0x1d8,
     // endY 0x230).
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1d8, 0x230, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS,
-      1, TRANSITION_TYPE_NORMAL, 0x6, 0x0, 0x0, 0x0 },
+    // RETIRED (Oct 2026): the ranch's west border enters Hyrule Town again.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x3e8, 0xf0, TRANSITION_SHAPE_BORDER_WEST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x6, 0x0, 0x0, 0x0 },
     // Lake Hylia's east border is RESTORED: the region is in the ring now,
     // and the containment change alone could not help while the row that
     // carries the player across was still deleted.
@@ -593,8 +597,10 @@ const Transition gExitList_HyruleField_NorthHyruleField[] = {
     // arrival coordinates vanilla's own town south exit used
     // (gExitList_HyruleTown_Main: endX 0x1f8, endY 0x10), so the far end is
     // a spot vanilla itself vouches for.
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x10, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD,
-      1, TRANSITION_TYPE_NORMAL, 0x4, 0x0, 0x0, 0x0 },
+    // RETIRED (Oct 2026): North Hyrule Field's south gate enters Hyrule
+    // Town again.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x1f8, 0x18, TRANSITION_SHAPE_BORDER_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL,
+      0x4, 0x0, 0x0, 0x0 },
     // ROYAL VALLEY, the eighth region - this is the way IN. Royal Valley's
     // own EAST_SOUTH row back to here was never blocked, so opening this
     // one makes the crossing two-way at the North Hyrule Field end; the
@@ -669,8 +675,9 @@ const Transition gExitList_HyruleField_TrilbyHighlands[] = {
     // gExitList_HyruleField_LonLonRanch. Walking out Trilby's east edge
     // lands at the ranch's west side, at the arrival coordinates vanilla's
     // town east exit used (endX 0x8, endY 0x230).
-    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0x230, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH,
-      1, TRANSITION_TYPE_NORMAL, 0x2, 0x0, 0x0, 0x0 },
+    // RETIRED (Oct 2026): Trilby's east border enters Hyrule Town again.
+    { WARP_TYPE_BORDER, 0x0, 0x0, 0x8, 0xf0, TRANSITION_SHAPE_BORDER_EAST_SOUTH, AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN, 1, TRANSITION_TYPE_NORMAL, 0x2,
+      0x0, 0x0, 0x0 },
     // ROYAL VALLEY, and it is open in BOTH directions on purpose (the user,
     // Aug 2026: "the player should be able to walk back and forth between
     // this seam"). Royal Valley's own SOUTH_WEST row into Trilby was never
