@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The redesign plan (`docs/QUICKSTART_REDESIGN_PLAN.md`); sites 81 and 116 retired (chain steps on them could never finish); the element lands unreachable in 10% of runs (P0.1, not yet fixed) | "The redesign plan, and two steps the chain could deal but never finish" |
 | The keyed pair asks about one key per roll, round-robin from the step, one roll in ten: ITEM steps in 9% of runs (was 40%), ranch-house visits 24% (was 49%) | "The keyed pair, round-robin and one in ten" |
 | The Crenel vine actually grows now (two local flags at run start); a user report, measured and fixed | "The Crenel vine was never grown" |
 | The third simulation pass: 50,000 runs, a simulator checkpoint bug fixed first, the report regenerated with a third-pass narrative | "The third simulation pass" |
@@ -179,6 +180,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   water as open; whether a land enemy dealt there can act is unmeasured.
 
 ### Design decisions waiting on a call
+
+- **The redesign plan's open decisions** (`docs/QUICKSTART_REDESIGN_PLAN.md`
+  §11): which six puzzle kinds first, dungeons as regions or as steps, the
+  hub's shape. P0 of that plan (the element draw from reach, the completion
+  audit probe, the keyed step's fallback payout) needs no decision and is
+  the next work.
 
 - **Drops are per pool row, not per region**: Eastern Hills and Western
   Wood take 20% of drops each. Draw a region first, then one of its rows,

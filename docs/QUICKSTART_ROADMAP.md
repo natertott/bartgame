@@ -1271,6 +1271,28 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The redesign plan, and two steps the chain could deal but never finish (Oct 2026)
+
+The user: "I have not been able to actually achieve a win condition in
+many playthroughs, so I think something is broken there." Scoping for the
+redesign is `docs/QUICKSTART_REDESIGN_PLAN.md`: the user's list against
+what exists, the measured causes, the proposed chain, and an order of
+work. Two measurements from that scoping stand on their own:
+
+- **Sites 81 (Mount Crenel Center) and 116 (Veil Falls Top) could be dealt
+  as chain EVENT steps and could never fire.** Both rooms are named region
+  rooms (`QuickStartIsNamedRegionRoom`), where the room monitor runs the
+  region loop and never the content-site dispatch - the trap the handoff
+  notes already recorded for site 82. Asked the ROM for every site row; those
+  two were the live ones. Dealt in 1,141 of 50,000 simulated runs (2.3%).
+  Retired in `QuickStartSiteRetired`; the simulator parses that function,
+  so it follows. The general fix - an invariant that fails a site row in a
+  region room - is P0.2 in the plan.
+- **The Earth Element lands in a region the run never reaches in 10% of
+  simulated runs** (Royal Valley 4%, Lake Hylia 2.7%, the Ruins 1%, Veil
+  Falls 0.7%, a tail from entrance pockets). The element region is drawn by
+  map distance from the drop, never by reach. P0.1 in the plan; one filter.
+
 ### The keyed pair, round-robin and one in ten (Oct 2026)
 
 The user, on the third simulation pass: "Round-robin the four chain keys

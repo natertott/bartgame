@@ -18398,6 +18398,16 @@ static bool32 QuickStartSiteRetired(s32 site) {
      * or chain step stored on this site could never fire. */
     if (e->area == AREA_MT_CRENEL && e->room == ROOM_MT_CRENEL_ENTRANCE)
         return TRUE;
+    /* The same trap, found by asking the ROM for every site (Oct 2026): Mt.
+     * Crenel's Center and Veil Falls' Top screen are region rooms too
+     * (QuickStartIsNamedRegionRoom), so their site rows never dispatched
+     * and a chain EVENT step dealt on either - 2.3% of 50,000 simulated
+     * runs - could never be finished. The user: "I have not been able to
+     * actually achieve a win condition in many playthroughs." */
+    if (e->area == AREA_MT_CRENEL && e->room == ROOM_MT_CRENEL_CENTER)
+        return TRUE;
+    if (e->area == AREA_VEIL_FALLS_TOP && e->room == ROOM_VEIL_FALLS_TOP_0)
+        return TRUE;
     return FALSE;
 }
 
