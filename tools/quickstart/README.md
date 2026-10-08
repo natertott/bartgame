@@ -185,3 +185,12 @@
 - `shell_probe.py` - seashells as three seconds of invincibility: the clock
   on the pickup and its countdown, `CalculateDamage` keeping the health
   while it runs, and the luck charm living on `ITEM_SHELLS30`. 3/3.
+- `perf_census.py` - the frame rate (gMain.ticks, the worst 30-frame
+  window) and a census of what is alive, in the three rooms the user named
+  with every kind forced at difficulty 3 and 5; `--all` sweeps every site
+  and every region row.
+- `pc_profile.py` - where the CPU goes: the program counter sampled every
+  N instructions over F frames, attributed to game.c statics and map
+  globals. `SITE <site> <KIND>` or `REGION <row>`.
+- `town_survey.py` - Hyrule Town's plaza for the fifteenth region: the
+  floor from each border arrival, the enemy spot spread, the most open tile.

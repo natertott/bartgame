@@ -140,10 +140,20 @@ typedef struct {
     /*0x05C*/ u32 items_bought;              /**< number of items bought in stockwells shop */
     /*0x060*/ u32 areaVisitFlags[8];         /**< Area visit flags. */
     /*0x080*/ char name[FILENAME_LENGTH];    /**< Save file name. */
+#ifdef QUICKSTART
+    /*0x086*/ u16 qs_memory_key;             /**< QUICKSTART: the run the memory-pair cache below belongs to
+                                              *   (a hash of run_seed and the scenario; game.c) */
+#else
     /*0x086*/ u8 filler86[2];                /**< unused filler */
+#endif
     /*0x088*/ PlayerRoomStatus saved_status; /**< Player room status. */
     /*0x0A8*/ Stats stats;                   /**< Player stats. */
+#ifdef QUICKSTART
+    /*0x0CC*/ u8 qs_memory_site[2];          /**< QUICKSTART: the memory pair's lesson and recital sites,
+                                              *   cached: 0 = not yet asked, 0xFF = none, else site + 1 */
+#else
     /*0x0CC*/ u8 fillerCC[2];                /**< unused filler */
+#endif
     /*0x0D0*/ u8 figurines[36];              /**< figurine bitset */
     /*0x0F2*/ u8 inventory[34];              /**< 2 bit per item @see Item */
     /*0x114*/ KinstoneSave kinstones;        /**< save data for kinstones @see KinstoneSave */

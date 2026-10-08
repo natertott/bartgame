@@ -134,7 +134,11 @@ ox, oy = r16(c, ROOM_CONTROLS + 6), r16(c, ROOM_CONTROLS + 8)
 px, py = ox + sites[R][4], oy + sites[R][5] + 16
 items = sorted([e for e in entities(c, KIND_OBJECT) if e[2] == 0], key=lambda e: abs(e[4] - px) + abs(e[5] - py))
 prize = [e for e in items if abs(e[4] - px) + abs(e[5] - py) <= 24]
-check('recital: the right order drops a prize', bool(prize) or c.memory.u8[PLAYER + 0x0c] == 8, 'prize %s (spot %s)' % (prize[:1], (px, py)))
+# A prize dealt under the player's feet is taken in the same frames (the
+# recital's sprite can stand a tile from where the probe parks): DONE set
+# already is the prize having dropped AND been taken.
+check('recital: the right order drops a prize', bool(prize) or c.memory.u8[PLAYER + 0x0c] == 8 or site_done(c, R),
+      'prize %s (spot %s) done %d' % (prize[:1], (px, py), site_done(c, R)))
 if prize:
     w16(c, PLAYER + 0x2e, prize[0][4]); w16(c, PLAYER + 0x32, prize[0][5] + 4); run(c, 120); dismiss(c)
 run(c, 60)

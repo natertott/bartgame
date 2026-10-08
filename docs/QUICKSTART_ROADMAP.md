@@ -1271,6 +1271,55 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The performance dips: one lookup, asked per site per frame (Oct 2026)
+
+The user named three slow places: the Boomerang cave, Trilby's push-stone
+cave and Lon Lon Ranch. The plan expected entity load (the Aug 2026
+lag rounds found it past ~45 live entities). The census says otherwise.
+
+**Measured** (`perf_census.py`: the true frame rate from `gMain.ticks`, the
+worst 30-frame window, and a census of everything alive, with every ? room
+kind forced through the testbed at difficulty 3 and 5):
+
+| room | before | entities | after |
+|---|---|---|---|
+| Boomerang cave, every site and kind | 18-20 fps | 14-22 | 60 |
+| Trilby's push-block cave | 30 fps | 5-10 | 60 |
+| Lon Lon Ranch (region row) | 60 fps | 41-45 | 60 |
+| Graveyard Great Fairy (the fountain) | 30 fps | 10 | 60 |
+
+Nineteen entities at 20 fps and forty-five at 60 is not an entity
+problem. `pc_profile.py` (the program counter sampled every 97
+instructions, attributed to functions) put **57% of every frame** in
+`QuickStartMemorySite`, `QuickStartMemorySiteEligible` and
+`QuickStartSiteRetired`. Each site's kind roll asks "is this site the
+memory pair's recital?", and the answer walks the 117-row site table four
+times - per site, per frame. Five sites in the Boomerang cave, two in
+Trilby's: 20 fps and 30. The answer is a pure function of the run seed
+and the scenario, so it is cached now, in two spare save bytes (0x86 the
+cache key, 0xCC the two sites).
+
+Two smaller costs went with it: `QuickStartTileBelongsToSite` scanned all
+117 rows per tile during a gauntlet (15% of a frame) and now scans only the
+owner's neighbours - a room's sites are contiguous in the table, and
+`invariant_check` asserts that; and the Fountain of Sacrifice ranked the
+whole item table eight times a frame, once per pedestal, and now ranks it
+once.
+
+**The sweep** (`perf_census.py --all`: every site and every region row,
+300 frames at difficulty 5): 140 samples, one under 55 fps (the fountain,
+fixed above), none after. Lon Lon was never slow standing at its entrance
+in the census; if the user's report was a fight there, the boss arena plus a
+full wave is the next thing to census.
+
+**A latent bug the probes found on the way.** The memory pair could be
+dealt to a Great Fairy room, where the site dispatch never runs (the
+fairies keep their vanilla content) - the lesson was never shown and a chain
+step on it could not finish. Retiring sites 7 and 72 shifted the draw onto
+Minish Woods' fairy and `memory_probe` caught it. Great Fairy rooms are out
+of the pair's draw. `memory_probe` 9/9 (one check now accepts a prize taken
+in the same frames it dropped).
+
 ### P0 and P1 of the redesign: the chain can end, and says where (Oct 2026)
 
 The user, on the plan (`docs/QUICKSTART_REDESIGN_PLAN.md`): "Yes, implement

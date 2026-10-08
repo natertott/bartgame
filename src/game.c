@@ -18230,23 +18230,34 @@ static bool32 QuickStartTileBelongsToSite(s32 tx, s32 ty, s32 ownerSite) {
     px = tx * 16 + 8 - sQuickStartRoomContentSites[ownerSite].contentX;
     py = ty * 16 + 8 - sQuickStartRoomContentSites[ownerSite].contentY;
     ownerDist = px * px + py * py;
-    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-        s32 dist;
-        if (i == ownerSite || sQuickStartRoomContentSites[i].area != gRoomControls.area ||
-            sQuickStartRoomContentSites[i].room != gRoomControls.room) {
-            continue;
+    // A room's sites are contiguous in the table (invariant_check asserts
+    // it), so only the owner's neighbours can share its floor. Scanning all
+    // 117 rows per tile was 15% of a gauntlet frame (perf_census, Oct 2026).
+    {
+        s32 lo = ownerSite, hi = ownerSite;
+        while (lo > 0 && sQuickStartRoomContentSites[lo - 1].area == gRoomControls.area &&
+               sQuickStartRoomContentSites[lo - 1].room == gRoomControls.room) {
+            lo--;
         }
-        px = tx * 16 + 8 - sQuickStartRoomContentSites[i].contentX;
-        py = ty * 16 + 8 - sQuickStartRoomContentSites[i].contentY;
-        dist = px * px + py * py;
-        if (dist < ownerDist) {
-            return FALSE;
+        while (hi + 1 < QUICKSTART_CONTENT_SITE_COUNT && sQuickStartRoomContentSites[hi + 1].area == gRoomControls.area &&
+               sQuickStartRoomContentSites[hi + 1].room == gRoomControls.room) {
+            hi++;
+        }
+        for (i = lo; i <= hi; i++) {
+            s32 dist;
+            if (i == ownerSite) {
+                continue;
+            }
+            px = tx * 16 + 8 - sQuickStartRoomContentSites[i].contentX;
+            py = ty * 16 + 8 - sQuickStartRoomContentSites[i].contentY;
+            dist = px * px + py * py;
+            if (dist < ownerDist) {
+                return FALSE;
+            }
         }
     }
     return TRUE;
 }
-
-
 
 // Whether a content site wants its FURNITURE gone as well as its payouts -
 // i.e. every OBJECT in the room, not just the reward-shaped ones
@@ -18726,11 +18737,54 @@ static bool32 QuickStartSiteRetired(s32 site) {
 // next to a frame, and it is asked a handful of times per visit.
 static bool32 QuickStartMemorySiteEligible(s32 site) {
     const QuickStartContentSite* e = &sQuickStartRoomContentSites[site];
+    // Not a Great Fairy room (Oct 2026): the site dispatch skips all three
+    // (the fairies keep their vanilla content), so a lesson dealt there was
+    // never shown - memory_probe found the pair landing on Minish Woods'
+    // fairy once the retired sites shifted the draw.
+    if (e->area == AREA_GREAT_FAIRIES) {
+        return FALSE;
+    }
     return e->gateKinstone == 0 && !QuickStartSiteRetired(site) &&
            (e->kinds == QUICKSTART_KINDS_SMALL || e->kinds == QUICKSTART_KINDS_LARGE || e->kinds == QUICKSTART_KINDS_ANY);
 }
 
+static s32 QuickStartMemorySiteCompute(s32 role);
+
+// The memory pair's two sites, CACHED per run (Oct 2026, the performance
+// census). The answer is a pure function of the run seed and the
+// scenario, but working it out walks the 117-row site table four times,
+// and it was asked once per site per frame by QuickStartContentSiteRoll:
+// the PC profile put QuickStartMemorySite, QuickStartMemorySiteEligible
+// and QuickStartSiteRetired at 57% of every frame in a ? room. That is
+// the Boomerang cave at 20 fps (five sites) and Trilby's cave at 30 (two)
+// - the user's "performance dips", which had nothing to do with how many
+// entities were alive (the census: 19 and 5, against Lon Lon's 45 at a
+// steady 60). The cache lives in two spare save bytes, keyed by a hash of
+// the seed and the scenario so a changed run can never read a stale pair.
+static u16 QuickStartMemoryCacheKey(void) {
+    u32 k = gSave.run_seed ^ ((u32)gSave.scenario_kind << 20) ^ ((u32)gSave.scenario_a << 12) ^
+            ((u32)gSave.scenario_b << 4) ^ (u32)gSave.scenario_c;
+    k ^= k >> 16;
+    return (u16)(k | 1u);
+}
+
 static s32 QuickStartMemorySite(s32 role) {
+    u16 key = QuickStartMemoryCacheKey();
+    s32 r;
+    if (gSave.qs_memory_key != key) {
+        gSave.qs_memory_key = key;
+        gSave.qs_memory_site[0] = 0;
+        gSave.qs_memory_site[1] = 0;
+    }
+    if (gSave.qs_memory_site[role & 1] != 0) {
+        return gSave.qs_memory_site[role & 1] == 0xFF ? -1 : (s32)gSave.qs_memory_site[role & 1] - 1;
+    }
+    r = QuickStartMemorySiteCompute(role);
+    gSave.qs_memory_site[role & 1] = (u8)(r < 0 ? 0xFF : r + 1);
+    return r;
+}
+
+static s32 QuickStartMemorySiteCompute(s32 role) {
     s32 i, n = 0, pick, lesson = -1;
     u8 lessonArea = 0xff, lessonRoom = 0xff;
     // The testbed's SITE scenario dealing this kind puts the named site in
@@ -25547,8 +25601,11 @@ static u8 QuickStartSacrificeTierOf(u16 item) {
 // a per-run hash and the eight best stand. Stable across visits within a
 // run, different across runs, and self-pruning - an item sacrificed (or
 // never owned) simply stops being eligible, and the slot goes bare.
-static u16 QuickStartSacrificeStrewItem(s32 slot) {
-    u16 best[QUICKSTART_SACRIFICE_SLOTS];
+// Fills `best` with the strewn items in pedestal order and returns how many.
+// ONE ranking per call (Oct 2026, the performance census): the room used to
+// ask for each pedestal separately, eight full rankings of the tier table a
+// frame, which held the fountain at 30 fps.
+static s32 QuickStartSacrificeStrewList(u16* best) {
     u32 bestScore[QUICKSTART_SACRIFICE_SLOTS];
     s32 count = 0, i, j;
     for (i = 0; i < QUICKSTART_TIER_COUNT; i++) {
@@ -25594,7 +25651,7 @@ static u16 QuickStartSacrificeStrewItem(s32 slot) {
             }
         }
     }
-    return (slot < count) ? best[slot] : ITEM_NONE;
+    return count;
 }
 
 // Losing the offering. SetInventoryValue is the truth every draw reads;
@@ -25729,8 +25786,11 @@ static void QuickStartSacrificeMonitor(void) {
     // its pedestal (which is also what restores one the player picked up
     // and put back down - ItemForSale deletes itself on a cancelled drop,
     // exactly as it does in the shop).
-    for (i = 0; i < QUICKSTART_SACRIFICE_SLOTS; i++) {
-        u16 item = QuickStartSacrificeStrewItem(i);
+    {
+        u16 strewn[QUICKSTART_SACRIFICE_SLOTS];
+        s32 count = QuickStartSacrificeStrewList(strewn);
+    for (i = 0; i < count; i++) {
+        u16 item = strewn[i];
         if (item == ITEM_NONE || QuickStartSacrificePropExists(item)) {
             continue;
         }
@@ -25738,6 +25798,7 @@ static void QuickStartSacrificeMonitor(void) {
             break;
         }
         QuickStartSpawnShopItem(item, sQuickStartSacrificeSpots[i][0], sQuickStartSacrificeSpots[i][1]);
+    }
     }
     // The sacrifice: an offering held overhead, carried onto the circle.
     {

@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The performance dips: the memory-pair lookup cost 57% of every ? room frame (Boomerang cave 20 fps, Trilby's cave 30); cached, 60 everywhere in a 140-sample sweep; the fountain's ranking; Great Fairy rooms out of the memory pair | "The performance dips: one lookup, asked per site per frame" |
 | P0 and P1 of the redesign: the finale drawn from live reach when the fourth trial completes; the completion audit (708 cells, 612 PASS) and the five content defects it found fixed; sites 7 and 72 retired; room-naming hints; spread and drops by region; escalation pairs; the keyed step's patience; the chain-end and win probes, and the step-roll freeze they found; seashells as three seconds of invincibility | "P0 and P1 of the redesign: the chain can end, and says where" |
 | The redesign plan (`docs/QUICKSTART_REDESIGN_PLAN.md`); sites 81 and 116 retired (chain steps on them could never finish); the element lands unreachable in 10% of runs (P0.1, not yet fixed) | "The redesign plan, and two steps the chain could deal but never finish" |
 | The keyed pair asks about one key per roll, round-robin from the step, one roll in ten: ITEM steps in 9% of runs (was 40%), ranch-house visits 24% (was 49%) | "The keyed pair, round-robin and one in ten" |

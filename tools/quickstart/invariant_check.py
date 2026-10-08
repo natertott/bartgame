@@ -462,6 +462,20 @@ def check_static():
     game = P.GAME
     import re
 
+    # Each room's content sites are CONTIGUOUS in sQuickStartRoomContentSites
+    # (Oct 2026): QuickStartTileBelongsToSite scans only the owner's
+    # neighbours in the table instead of all 117 rows per tile, which the
+    # performance census measured at 15% of a gauntlet frame. A room whose
+    # rows are split would silently stop sharing its floor between sites.
+    seen, split = {}, []
+    for i, x in enumerate(P.content_sites()):
+        k = (x[2], x[3])
+        if k in seen and seen[k] != i - 1:
+            split.append('%s rows %d and %d' % (x[1], seen[k], i))
+        seen[k] = i
+    out.append(('FAIL' if split else 'PASS',
+                'content sites contiguous per room' + (': ' + '; '.join(split) if split else '')))
+
     # The tier table, which replaced the flat reward pools. Two things worth
     # asserting, both of which have already gone wrong once:
     #
