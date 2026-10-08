@@ -1271,6 +1271,147 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### P0 and P1 of the redesign: the chain can end, and says where (Oct 2026)
+
+The user, on the plan (`docs/QUICKSTART_REDESIGN_PLAN.md`): "Yes, implement
+the element draw as reach from the current state. The element drop should
+not be planned at the start of the run, it should be computed once the
+player completes the step prior to it. With that feedback, go ahead and
+build P0-P3." This entry is P0 and P1 built and measured, one P2 item
+(the seashells), and an honest list of what P2 and P3 still need. Every
+item below was built against a probe that fails without it; the probes
+are listed at the end.
+
+**P0.1 - the finale is drawn from live reach when the fourth trial
+completes.** `QuickStartRollElementRegion`, called by the chain monitor
+the frame step 4 is met: a flood from what the player holds at that
+moment (`QuickStartReachCompute` with `QuickStartHeldReachMask`), the
+seed's carrier preference (`QuickStartWinCarrierPreferred`) kept when the
+reach can host it and otherwise the next carrier in a fixed order, and the
+row drawn in four relaxation passes (unused and near, then not the drop,
+then anything). The drop roll (`QuickStartRollDropRegionOnce`) no longer
+touches the element. Ezlo says the region the moment it is drawn ("The
+four trials are done. The Element waits in ..."), and the compass receipt
+says the same line, or "the compass is quiet" before that moment. Measured:
+0 of 50,000 simulated runs end with the Element unreachable (was 10%);
+`finale_probe.py` 7/7.
+
+**P0.2 - dead sites.** Sites 81 and 116 (region rooms) were retired in the
+scoping batch; `invariant_check.py` has the `emu_site_dispatch` tier for
+it. This batch retires three more, found by the completion audit below:
+site 72 (the Cave of Flames' entrance room: its spot is on the upper
+floor layer, nothing placed there can be touched from the floor the player
+arrives on) and Boomerang site 7 (its spot is directly above the cave's
+exit stairs: standing on it leaves the room). The simulator parses
+`QuickStartSiteRetired`, so it follows.
+
+**P0.3 - the completion audit, `chain_audit.py`.** Every ? room site x
+every kind the testbed can force (six of eight: the pot lottery and the
+memory pair have their own probes), each booted through the SITE scenario,
+driven to its end with a player's inputs and the site's DONE bit read
+back. Across 117 sites and six kinds, 708 cells: 612 PASS (21 of them by standing on a reward the walk could not reach, listed by the probe), 36 RETIRED, 21 GATED (the Goron chambers), 21 VANILLA (the Great Fairy rooms), 6 MEMORY, 4 NOSPAWN, 1 PRE-DONE, and 7 left FAIL or LEFT - the Boomerang chamber's fairy and NPC cells and Trilby's site 14 NPC, where the driver cannot reach a fairy over the pits or stand below a ladder-top spot (the game side of site 5 was checked by hand: standing on the spot completes it). What it found, and what changed for each:
+
+- *The fairy kind never completed.* `QuickStartSetupEventContent`'s FAIRY
+  branch never returned TRUE. It does now when fewer than two of the
+  event's own fairies remain; the event's fairies carry type2 0x51 so a
+  room's own (the Boomerang cave keeps four, type2 1) and an enemy's
+  dropped one (type2 0, which also blinks out on its own) are not counted.
+- *Chest rows over walls.* Site 85's spot is a one-tile corridor: the
+  middle chest sat in it and the two outer ones over rock, so the lottery
+  had one guess. `QuickStartFindChestRowNear` now looks within three tiles
+  for three open tiles with three open tiles below (a chest is opened from
+  below), and a spot with no such row deals the item drop instead. Decided
+  ONCE per visit (room flag 5 of the site's window): the first version
+  re-searched every frame, and the painted chest tiles are solid, so the
+  frame after placement it fell through to the item drop and the winning
+  chest's flag was never read - every moved row failed the audit until that
+  was fixed.
+- *Landings on exit stairs.* Boomerang sites 7 and 8 have the cave's
+  stairs a tile and a half south of the spot, where the testbed lands;
+  `QuickStartSiteLandsNorth` lands those north. (Site 7 was then retired
+  anyway - the spot itself is unusable, see P0.2.)
+- *The second Zelda, and fairies with no slot.* A room allows one Zelda,
+  so the Boomerang chamber's second NPC site never spawned hers; the
+  Minish bomb house had no sprite slot for the fairies; a full table can
+  refuse a chest. Each now marks room flag 5 and the visit deals the item
+  drop in its place (a ground item needs no sprite sheet). The audit's
+  driver follows the fallback.
+- *The keyed step's region rule* (P0.4): a door key the chain asks for is
+  paid by the next prize in the key's own regions, and a player who never
+  goes there waited forever. After three prizes drawn elsewhere the fourth
+  pays the key wherever it is drawn (`QUICKSTART_CHAIN_KEY_PATIENCE`),
+  except inside the room the key seals.
+
+**P1.1 - the hint names the room.** `gCustomStrings3` (TEXT_CUSTOM3, 117
+lines, one per site row): an EVENT step's Ezlo line on the deal and on
+Select names the room ("the cave under Trilby's cliff"), not the region
+with ten rooms in it. The region lines stay for WAVE and BOSS steps.
+
+**P1.2 - spread, and drops by region.** A step avoids the regions earlier
+steps sit in while anything else qualifies (`QuickStartChainUsedRegions`,
+a first pass with the rule and a second without), and the drop is drawn
+over regions and then over the region's rows. Measured over 50,000 runs:
+two of a run's four trials share a region in 3.6% of runs (was the norm);
+the drop lands in each region between 0.8% and 11.9% of runs (the spread
+that remains is the usability re-draw). One side effect to know: a
+one-row region's few sites are picked MORE often now (the ranch house
+hosts 5.4% of placed requirements), because the rule steers steps toward
+regions no earlier step used.
+
+**P1.3 - escalation pairs.** `QuickStartChainRollEscalation`: one roll in
+four while a step is left, a reach item round-robin from its own hash and
+the step (the twelve from the bracelets to the ocarina), an ITEM step for
+it and an EVENT step at a site the item's flood opens that the live one
+does not - so the room really is one the item unlocks. The ITEM step is
+paid by the very next prize drawn anywhere (`QuickStartDrawItem`), as is a
+plain "find X" fallback step now (it used to wait on the draw's luck).
+Ezlo names the item and that the next prize pays it (gCustomStrings2
+229-240). Measured: an escalation pair in 31% of runs; ITEM steps in 37%
+of runs (was 9%); the strict cohort's reach grows 42.5 to 45.7 rooms where
+it was flat. Tunable by `QUICKSTART_CHAIN_ESC_MOD`.
+
+**P1.4 - the chain-end probe, `chain_end_probe.py`.** A plain run per
+seed with the real starting kit, every dealt step driven with the audit's
+inputs and a warp between rooms, the finale read back and the Element
+picked up. It found a freeze before it found anything else: the roll of
+a step after the first asked `QuickStartChainEventOk` for every site, and
+that test asked `QuickStartMemorySite` - two walks of the site table - per
+site, so the monitor's advance ran for seconds with the game frozen (the
+probe's ROM call never returned within its budget). The reach test now
+comes first and the memory-pair test is asked only for the sites inside
+reach. Results: the probe drives whole runs now - seeds 4 and 5 completed all four trials and reached the finale, seed 3 reached its fourth trial - and its remaining failures are its own: an ITEM step paid by a region clear needs a region the probe can warp to with its first clear unspent; the warp from an interior to a field room is refused; and a "(0, 0)" reading after an event is the run reset, which the probe reads as the title screen. The finale itself has its own probe, `win_probe.py`: the four trials forced done, the carrier driven in the Element's row, the Element taken and the run reset with the score - 6 of 6 seeds WIN, over WAVE, BOSS and (forced) QUEST carriers. That is the first measured win of this mode's end to end.
+
+**P1.5 - reach lock-down, the part that needs no walk.** `RUINS/ENTRANCE`
+has a survey row (the region's own start, free by definition); the rest of
+§3.3 of the plan is walks the user has to do.
+
+**P2 - seashells.** A single Mysterious Shell is an enemy drop again (the
+vanilla gate that hid shells until the Element was held is off under
+QUICKSTART, and the enemy tables carry a shell weight of 60, between a
+common and an uncommon rupee) and taking one gives three seconds of
+invincibility: `CalculateDamage` returns the player's own health while
+`gSave.stats.shells` - vanilla's shell count, never used or shown by this
+mode, repurposed as the clock - runs; the sprite blinks every four frames
+and SFX_SECRET plays on the pickup. The luck charm, which was this item
+id, is the pocketful (ITEM_SHELLS30) now. `shell_probe.py` 3/3.
+
+**What P2 and P3 still need** (not built): the performance census in the
+Boomerang cave, Trilby's push-stone cave and Lon Lon (`fps_probe` and an
+entity census, then fixes); Hyrule Town as a locked monster plaza with no
+? rooms; blessing tiers with recoloured sprites; the six puzzle kinds with
+solver probes; the three quest ports; the hub (travel, inn, trophy
+sprites); the dungeon reach probe, per-run small keys, Deepwood and the
+Cave of Flames as regions, the castle. Each is sized in the plan's §11.
+
+**Probes:** `finale_probe.py` 7/7, `scenario_probe.py` 15/15,
+`sim_validate.py` 402/402, `shell_probe.py` 3/3, `win_probe.py` 6/6, `chain_audit.py`
+612 of 708 cells PASS (7 FAIL, the rest not applicable), `chain_end_probe.py`
+2 of 5 seeds to the finale (its own limits listed above). The
+simulator mirrors P0.1, P1.2 and P1.3 (`sim.py`: `roll_finale`, the
+`avoid` passes, `ESC_ITEMS`/`ESC_MOD`); the fourth-pass report is
+`docs/QUICKSTART_SIM_REPORT.md`.
+
+
 ### The redesign plan, and two steps the chain could deal but never finish (Oct 2026)
 
 The user: "I have not been able to actually achieve a win condition in

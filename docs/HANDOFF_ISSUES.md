@@ -32,6 +32,31 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **A ROM call that never returns is a freeze, not a hang.** `callrom.call_keep`
+  stops after 500,000 instructions and raises; the chain-end probe hit that
+  on `QuickStartChainRollStep(1)` and it was real: the roll cost seconds of
+  GBA time (the memory-pair test asked per site). Measure with a bigger
+  `budget=` before calling anything an infinite loop; `gSave.run_frames`
+  frozen across `run_frame` calls is the in-game symptom.
+- **`emu.warp` is a transition, and the containments cancel it** when the
+  current room is a region room and the target is not a region crossing
+  (Castle Garden to anywhere, measured). A plain run whose `scenario_d`
+  byte is 0x51 is exempt (`QuickStartProbeWarpsFree`); the chain-end and
+  win probes set it right after boot. A warp out of some interiors
+  straight to a field room is refused too; hop through a field room.
+- **The probe's player dies.** Three hearts, waves respawning around a
+  kill-everything cheat: the early chain-end runs ended on the title
+  screen (`here()` = (0, 0), action 0). Keep the health byte full and the
+  seashell clock running (`chain_end_probe.heal`).
+- **`pkill -f <pattern>` kills your own shell** when the pattern appears
+  in the command line that runs it (the whole Bash call is one command
+  line). Use a bracket in the pattern, `pkill -f "chain_end_prob[e]"`.
+- **Game symbols vanish while `make` runs.** `callrom.game_sym` reads
+  `build/USA/src/game.o`, which is rewritten mid-build; every ROM-calling
+  probe started during a build dies with a KeyError. Wait for the build.
+- **Static functions can be inlined away.** `QuickStartRegionGetWaveCount`
+  has no symbol at -O2; ask `QuickStartChainStepMet` instead.
+
 - **`invariant_check.py` takes ~30 minutes** and, if you pipe it through
   `tail`, you see nothing until it finishes and lose the detail. **Redirect
   to a file** (`> /tmp/.../inv.txt 2>&1`) and grep it afterwards.

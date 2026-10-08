@@ -233,6 +233,7 @@ extern u32 QuickStartFoodMask(void);
 // damage - and only the knockback/iframes shrug remains, so being immune
 // still LOOKS like something bounced off.
 extern u32 QuickStartFoodMask(void);
+extern bool32 QuickStartShellInvincible(void);
 #define QUICKSTART_FOOD_IMMUNE_FIRE (1 << 6)
 #define QUICKSTART_FOOD_IMMUNE_ICE (1 << 7)
 #define QUICKSTART_FOOD_IMMUNE_SHOCK (1 << 8)
@@ -254,6 +255,11 @@ s32 CalculateDamage(Entity* org, Entity* tgt) {
     if (org->kind == PLAYER) {
         damage = tgt->damage;
 #ifdef QUICKSTART
+        // A shell's three seconds (game.c QuickStartShellInvincible): the
+        // exchange keeps its knockback and iframes, the health stays.
+        if (QuickStartShellInvincible()) {
+            return org->health;
+        }
         if (charms & QUICKSTART_CHARM_NAYRU) {
             damage /= 4;
         }

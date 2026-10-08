@@ -909,6 +909,13 @@ d('CW', 'CASTOR_DARKNUT', 'MAIN', 134, 216, FREE)
 region('WR', 'Wind Ruins', ('RUINS', 'ENTRANCE', 32812, -2624),
        room_req=[[CAPE], [BOOTS]],
        note='only reachable through Castor Wilds, so it inherits the swamp price')
+# The region's own start room (Oct 2026, the redesign's P1.5): the pool
+# landing (game.c's region pool row for the Ruins) and the room the Castor
+# Wilds crossing arrives in. A start is free by definition - the player is
+# standing in it - but the room test (QuickStartReachTestRoom) prices a
+# room by its survey row, and this one had none, so a ? site or a wave in
+# the entrance room read "never". The row says what the start says.
+d('WR', 'RUINS', 'ENTRANCE', 216, 456, FREE, 'the region start itself')
 d('WR', 'CASTOR_CAVES', 'WIND_RUINS', -328, 8, [[BOMBS]])
 d('WR', 'MINISH_CRACKS', 'RUINS_ENTRANCE', -1640, 40, [[MINISH]])
 d('WR', 'MINISH_CRACKS', 'RUINS_TEKTITE', -904, -120, [[MINISH]])

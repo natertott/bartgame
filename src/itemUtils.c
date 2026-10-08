@@ -91,6 +91,7 @@ s32 GetItemPrice(u32 item) {
 // grant path shares - ground pickups, chests, scripts - so hooking here
 // covers all of them; it is a no-op for every non-food item id.
 extern void QuickStartNoteFoodItem(u32 item);
+extern void QuickStartShellTaken(void);
 // And the effect mask, for the three drop-rate charms in
 // CreateRandomItemDrop below.
 extern u32 QuickStartFoodMask(void);
@@ -107,6 +108,12 @@ u32 GiveItem(Item item, u32 param_2) {
 
 #ifdef QUICKSTART
     QuickStartNoteFoodItem(item);
+    if (item == ITEM_SHELLS) {
+        // A single shell: three seconds of invincibility (game.c,
+        // QuickStartShellTaken). The pocketful (ITEM_SHELLS30) is the luck
+        // charm and goes through the food note above instead.
+        QuickStartShellTaken();
+    }
 #endif
     uVar4 = GetInventoryValue(item);
     metaData = &gItemMetaData[item];
@@ -649,6 +656,10 @@ u32 CreateRandomItemDrop(Entity* arg0, u32 arg1) {
                 droptable.s.rupee1 += 300;
                 droptable.s.rupee5 += 250;
                 droptable.s.rupee20 += 100;
+                // A shell (three seconds of invincibility, game.c
+                // QuickStartShellTaken) sits between a common and an
+                // uncommon rupee - about one drop in fifteen.
+                droptable.s.mysteriousShells += 60;
                 if (droptable.s.hearts > 0) {
                     droptable.s.hearts = 2;
                 }
@@ -788,9 +799,13 @@ u32 CreateItemDrop(Entity* arg0, u32 itemId, u32 itemParameter) {
             }
             break;
         case ITEM_SHELLS: {
+#ifndef QUICKSTART
+            // QUICKSTART: a shell is the invincibility drop and is never
+            // hidden behind the Element (which is this mode's win token).
             if (!GetInventoryValue(ITEM_EARTH_ELEMENT)) {
                 return ITEM_NONE;
             }
+#endif
             if (itemParameter == 0) {
                 adjustedParam = 1;
             }

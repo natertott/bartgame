@@ -711,6 +711,8 @@ KIND_ITEM, KIND_EVENT, KIND_WAVE, KIND_BOSS, KIND_QUEST = 0, 1, 2, 3, 4
 KIND_NAME = {KIND_ITEM: 'ITEM', KIND_EVENT: 'EVENT', KIND_WAVE: 'WAVE',
              KIND_BOSS: 'BOSS', KIND_QUEST: 'QUEST'}
 KORDER = [KIND_EVENT, KIND_WAVE, KIND_BOSS, KIND_QUEST]
+ESC_MOD = 4                      # QUICKSTART_CHAIN_ESC_MOD
+ESC_ITEMS = REACH_ITEMS[2:14]    # QUICKSTART_CHAIN_ESC_FIRST/COUNT: bracelets .. ocarina
 
 
 def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None, drop_pool=0):
@@ -718,16 +720,30 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     def used(kind, where):
         return (kind, where) in prior
 
-    def candidates(kind):
+    # SPREAD (QuickStartChainUsedRegions, Oct 2026, the redesign's P1.2):
+    # the regions earlier steps sit in are avoided while anything else
+    # qualifies - a first pass with the rule, a second without it.
+    avoid = set()
+    for k, w in prior:
+        r = step_region(KIND_NAME[k], w)
+        if r is not None:
+            avoid.add(r)
+
+    def avoided(kind_name, where, use_avoid):
+        return use_avoid and step_region(kind_name, where) in avoid
+
+    def candidates(kind, use_avoid=False):
         if kind == KIND_EVENT:
             return [i for i, s in enumerate(SITES)
                     if i not in sites_done and s['gate'] == 0
                     and reach_room_ok(regions, held, s['area'], s['room'])
-                    and not used(KIND_EVENT, i)]
+                    and not used(KIND_EVENT, i)
+                    and not avoided('EVENT', i, use_avoid)]
         if kind == KIND_WAVE:
             return [i for i in range(POOL_SIZE)
                     if reach_pool_ok(regions, i) and wave_ok(i)
-                    and not used(KIND_WAVE, i)]
+                    and not used(KIND_WAVE, i)
+                    and not avoided('WAVE', i, use_avoid)]
         if kind == KIND_BOSS:
             # One required boss per run at most (QuickStartChainCountCandidates,
             # Oct 2026): no BOSS step when the win carrier is BOSS, and no
@@ -738,7 +754,8 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
             return [i for i in range(POOL_SIZE)
                     if reach_pool_ok(regions, i)
                     and (POOL[i]['area'], POOL[i]['room']) in BOSS_ROOMS
-                    and not used(KIND_BOSS, i)]
+                    and not used(KIND_BOSS, i)
+                    and not avoided('BOSS', i, use_avoid)]
         if kind == KIND_QUEST:
             # Guarded on the SLOT, matching the fix in game.c. Before that
             # fix the guard asked about 0 while the store wrote the slot,
@@ -781,16 +798,37 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
                 continue
             site = sealed[(h & 0x7fff) % len(sealed)]
             return [(KIND_ITEM, 0, key), (KIND_EVENT, site, None)]
+    # The escalation pair (QuickStartChainRollEscalation, Oct 2026, P1.3):
+    # one roll in ESC_MOD while a step is left, a reach item round-robin
+    # from its own hash and the step, and an EVENT at a site the item's
+    # flood opens that the live one does not. Paid by the next prize.
+    e = chain_hash(seed, 0xE5C + step)
+    if step + 1 < 4 and ((e >> 4) & 0x7fff) % ESC_MOD == 0:
+        item = ESC_ITEMS[(((e >> 20) & 0xff) + step) % len(ESC_ITEMS)]
+        if not has_item(item, owned):
+            held_item = held | ITEM_TO_BIT[item]
+            nodes_item = reachable_nodes(held_item, drop_pool)
+            opened = [i for i, s in enumerate(SITES)
+                      if i not in sites_done and s['gate'] == 0
+                      and reach_room_ok(nodes_item, held_item, s['area'], s['room'])
+                      and not reach_room_ok(regions, held, s['area'], s['room'])
+                      and not used(KIND_EVENT, i)]
+            if opened:
+                site = opened[(e & 0x7fff) % len(opened)]
+                return [(KIND_ITEM, 0, item), (KIND_EVENT, site, None)]
     rot = (h >> 8) & 3
-    for k in range(4):
-        kind = KORDER[(k + rot) & 3]
-        cands = candidates(kind)
-        if cands:
-            pick = cands[(h & 0x7fff) % len(cands)]
-            where = 0 if kind == KIND_QUEST else pick
-            if kind == KIND_QUEST:
-                where = quest_slot
-            return [(kind, where, None)]
+    for use_avoid in (True, False):
+        for k in range(4):
+            kind = KORDER[(k + rot) & 3]
+            if use_avoid and kind == KIND_QUEST:
+                continue   # a QUEST is wherever the quest is
+            cands = candidates(kind, use_avoid)
+            if cands:
+                pick = cands[(h & 0x7fff) % len(cands)]
+                where = 0 if kind == KIND_QUEST else pick
+                if kind == KIND_QUEST:
+                    where = quest_slot
+                return [(kind, where, None)]
     return [(KIND_ITEM, 0, chain_pick_item(seed, step * 7 + 3, owned))]
 
 
@@ -903,7 +941,14 @@ def simulate(seed, cohort, rng):
     # The drop is a Random() draw over the pool - the live stream, not the
     # seed - so it is modelled as uniform and then run through the kit
     # re-draw, which IS seed-derived and does depend on what round 1 gave.
-    drop_pool = drop_index_usable(seed, rng.randrange(POOL_SIZE), owned)
+    # A REGION first, then one of its rows (QuickStartRollDropRegionOnce,
+    # Oct 2026, P1.2): every region is one fourteenth, not every row.
+    while True:
+        ring = rng.randrange(len(REGION_NAMES))
+        rows = [i for i in range(POOL_SIZE) if BY_POOL[i] == ring]
+        if rows:
+            break
+    drop_pool = drop_index_usable(seed, rng.choice(rows), owned)
     drop_region = BY_POOL[drop_pool]
     # The finale is NOT drawn here any more (Oct 2026, the redesign's P0.1):
     # QuickStartRollElementRegion draws carrier and element region when the

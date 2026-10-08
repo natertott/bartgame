@@ -291,6 +291,11 @@ typedef enum {
     // two hint banks filled it exactly. 0xff was the only category id left,
     // and it costs one more branch in text.c to get another 256 lines.
     TEXT_CUSTOM2 = 0xff,
+    // A THIRD bank (Oct 2026): one line per content site naming its ROOM,
+    // for the chain hint that used to name only the region. 0xfd is free -
+    // the vanilla categories stop at 80 - and it is one more branch in
+    // text.c. Indexed by site, so the hint needs no lookup.
+    TEXT_CUSTOM3 = 0xfd,
 } TextCategory;
 
 #define TEXT_INDEX(category, index) ((category << 8) | index)
@@ -299,5 +304,7 @@ extern const u8* const gCustomStrings[];
 extern const u32 gCustomStringCount;
 extern const u8* const gCustomStrings2[];
 extern const u32 gCustomStringCount2;
+extern const u8* const gCustomStrings3[];
+extern const u32 gCustomStringCount3;
 
 #endif // MESSAGE_H

@@ -519,15 +519,36 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
     drop_share = collections.Counter(r['drop_region'] for r in runs)
     never_strict = int((freq['strict'] == 0).sum())
     never_both = sum(len(v) for v in out['causes'].values())
+    esc_runs = sum(1 for r in st_ if any(x['kind'] == 'ITEM' and x['detail'] in S.ESC_ITEMS
+                                         for x in r['steps'])) / len(st_) * 100
+    esc_items = collections.Counter(x['detail'] for r in st_ for x in r['steps']
+                                    if x['kind'] == 'ITEM' and x['detail'] in S.ESC_ITEMS)
+    def _same_region(r):
+        regs = [S.step_region(x['kind'], x['where']) for x in r['steps'][:4] if x['kind'] != 'ITEM']
+        regs = [g for g in regs if g is not None]
+        return len(regs) != len(set(regs))
+    same_region = sum(1 for r in st_ if _same_region(r)) / len(st_) * 100
+    drop_max = max(drop_share.values()) / len(runs) * 100
+    drop_min = min(drop_share.values()) / len(runs) * 100
     W('\n## Headline findings\n')
-    W('This is the THIRD pass (Oct 2026). Since the second: the reach model became '
-      'entrance-aware (a node per (region, entrance), boulders as live tokens the player pushes), '
-      'Veil Falls joined as the fourteenth region, and the two golden-kinstone gates were added. '
-      'The first two passes\' errors stay on the record below ("What the first pass got wrong"); '
-      'this pass adds one of its own, caught before publication: the checkpoint code handed the '
-      'room test a REGION mask where it wanted a NODE mask, so the first sweep of this data counted '
-      'about 10 rooms per run and 161 rooms never reached. Fixed in `sim.py`; these are the '
-      're-run numbers.\n')
+    W('This is the FOURTH pass (Oct 2026, the redesign\'s P1). Since the third: the finale is drawn '
+      'from live reach when the fourth trial completes (P0.1), the drop is drawn over regions and '
+      'then rows (P1.2), a step avoids the regions earlier steps used while anything else qualifies '
+      '(P1.2, the spread rule), and the chain can deal an ESCALATION pair - a reach item, then a ? '
+      'room that item opens (P1.3, `QuickStartChainRollEscalation`, one roll in '
+      f'{S.ESC_MOD} while a step is left). The third pass\'s findings 3 and 5 asked for the first '
+      'two of these; this pass measures what they did. The earlier passes\' errors stay on the '
+      'record below ("What the first pass got wrong").\n')
+    W(f'**0. What the redesign changed, measured.** The drop now lands in each region between '
+      f'{drop_min:.1f}% and {drop_max:.1f}% of runs (it was 5% to 12% by row count; the spread that '
+      'remains is the usability re-draw, which sends a lake or swamp drop the kit cannot survive to '
+      f'a row it can). Two of a run\'s four trials sit in the same region in {same_region:.1f}% of '
+      'runs (the rule only yields when nothing else qualifies, which is the one-key start\'s reach). '
+      f'An escalation pair is dealt in {esc_runs:.0f}% of runs - '
+      + ', '.join(f'{k.replace("ITEM_", "").lower()} {v:,}' for k, v in esc_items.most_common(6))
+      + ' over the strict cohort - and it is the only step kind that moves the strict cohort\'s '
+      'reach, which is what it was built for. The cost is in finding 2: an ITEM step now sits in a '
+      'third of runs, and finding 5 below says where the escalation sends them.\n')
     W(f'**1. The reachable world is smaller than the second pass said, and the reason is the '
       f'model, not the game.** A run holds ONE key item out of the hub (round 1 draws one `QS_CAT_KEY` '
       f'row) plus the sword and the ocarina. Against the entrance-aware table that opens a median '

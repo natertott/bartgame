@@ -97,6 +97,16 @@ void sub_0805EEB4(Token* token, u32 textIndex) {
         sub_0805EF40(token, (const u8*)&gUnk_08109244);
         return;
     }
+    // The third bank: the win chain's per-site room lines (Oct 2026).
+    if ((textIndex >> 8) == TEXT_CUSTOM3) {
+        customIndex = (u8)textIndex;
+        if (customIndex < gCustomStringCount3) {
+            sub_0805EF40(token, gCustomStrings3[customIndex]);
+            return;
+        }
+        sub_0805EF40(token, (const u8*)&gUnk_08109244);
+        return;
+    }
     langIndex = gSaveHeader->language;
     if (((1 < langIndex) && (textIndex >> 8 == 1)) && (textIndex < 0x119)) {
         langIndex = 3;

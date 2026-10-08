@@ -6,7 +6,7 @@ every batch entry there explains not just what changed but what was measured
 and what was got wrong on the way. Read the roadmap entry for any area you
 are about to touch; this file tells you which entry to look for.
 
-Current head when this was written: **`7c659be`** (this batch is the commit on top of it), branch
+Current head when this was written: **`4e07f00`** (this batch is the commit on top of it), branch
 `claude/gba-fan-game-start-ptuvhn`.
 
 ---
@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| P0 and P1 of the redesign: the finale drawn from live reach when the fourth trial completes; the completion audit (708 cells, 612 PASS) and the five content defects it found fixed; sites 7 and 72 retired; room-naming hints; spread and drops by region; escalation pairs; the keyed step's patience; the chain-end and win probes, and the step-roll freeze they found; seashells as three seconds of invincibility | "P0 and P1 of the redesign: the chain can end, and says where" |
 | The redesign plan (`docs/QUICKSTART_REDESIGN_PLAN.md`); sites 81 and 116 retired (chain steps on them could never finish); the element lands unreachable in 10% of runs (P0.1, not yet fixed) | "The redesign plan, and two steps the chain could deal but never finish" |
 | The keyed pair asks about one key per roll, round-robin from the step, one roll in ten: ITEM steps in 9% of runs (was 40%), ranch-house visits 24% (was 49%) | "The keyed pair, round-robin and one in ten" |
 | The Crenel vine actually grows now (two local flags at run start); a user report, measured and fixed | "The Crenel vine was never grown" |
@@ -230,6 +231,33 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   that Crenel waves pay nothing.
 
 ### Straightforward work, not started
+
+- **P2 and P3 of the redesign** (`docs/QUICKSTART_REDESIGN_PLAN.md` §11,
+  sized there): the performance census in the Boomerang cave, Trilby's
+  push-stone cave and Lon Lon; Hyrule Town as a locked monster plaza;
+  blessing tiers with recoloured sprites; the six puzzle kinds with solver
+  probes; the three quest ports; the hub (travel, inn, trophy sprites);
+  the dungeon reach probe, per-run small keys, Deepwood and the Cave of
+  Flames as regions, the castle. P0, P1 and the seashells are shipped.
+- **The chain-end probe's own limits** (`chain_end_probe.py`): an ITEM
+  step is paid by the first clear of a region the probe can warp to; the
+  warp from an interior straight to a field room is refused; and on seed 2
+  a prompt the probe answers with A quits the run to the title at its
+  second step (a screenshot showed the title; which prompt it was is the
+  next thing to find - `dismiss` already backs out of Ezlo's talk state
+  with B). Two of five seeds run to the finale; `win_probe.py` covers the
+  finale itself 6/6.
+- **The Boomerang chamber's fairy and NPC cells** (`chain_audit.py`: sites
+  4, 6, 8 FAIRY and 5, 6, 8 NPC, plus Trilby's site 14 NPC) still read FAIL
+  or LEFT. The game side is believed right (site 5's item-drop fallback
+  completes when the player stands on the spot, measured by hand); the
+  audit's driver cannot reach a fairy that wanders over the chamber's
+  pits or stand below a spot at a ladder's top. A driver that climbs the
+  ladders, or a walk by the user, settles it.
+- **The step roll costs about 10 frames** (`QuickStartChainEventOk` walks
+  the 629 reach rows per site). It no longer freezes the game for seconds
+  - the memory-pair test is asked only for reachable sites now - but a
+  per-site index into `sQuickStartReachDests` would make it free.
 
 - **`MINISH_CAVES/BEAN_PESTO`** should be filled with tough enemies rather
   than used as a general-purpose ? room. The user asked for this a while ago;

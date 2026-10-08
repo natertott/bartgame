@@ -152,3 +152,36 @@
 
       python3 tools/quickstart/veilfalls_probe.py --rom tmc-d3.gba
 
+
+- `finale_probe.py` - the finale is drawn from LIVE reach when the fourth
+  trial completes (Oct 2026, the redesign's P0.1), not at the hub's exit by
+  map distance: forces the four pre-steps on two seeds, lands in the drop
+  row, and reads back the element row, the carrier bits and that the row's
+  region is inside `QuickStartReachableRegions(held)` at that moment; the
+  compass marker before and after. 7/7.
+- `chain_audit.py` - the completion audit (P0.3): every ? room site x every
+  kind the testbed can force, driven to its end with a player's inputs (or
+  a probe's cheat: health 0 for a wave, a teleport INSIDE the room after the
+  walk failed, reported as such) and the site's DONE bit read back - the bit
+  a chain EVENT step waits on. Results per cell: PASS, FAIL, LEFT (the
+  landing walked out of the room), NOSPAWN, MEMORY, GATED, VANILLA,
+  UNDRIVEN. `--sites A:B` shards it, `--only 4:WAVES,85:CHEST_LOTTERY`
+  re-runs cells, `--regions` checks the wave counter per pool row. It found
+  the fairy kind that never completed, the chest rows over walls, the
+  moved chest row that forgot itself, the landings on exit stairs, the
+  second Zelda that never spawns, and the Cave of Flames entrance's layer.
+- `chain_end_probe.py` - the chain-end probe (P1.4): can a RUN be won? Boots
+  a plain run per seed with the real starting kit, drives every dealt step
+  with the audit's inputs and a warp for the travel between rooms, reads the
+  finale the ROM drew, drives the carrier and picks up the Element. A seed
+  ends WIN or FAIL at a named step; forced steps (the quests, the undriven
+  kinds) are listed per seed. `--seeds A:B`, `--verbose`. A win is a RESET
+  (the score lands in `gSave.meta_xp` and the next run starts), which is
+  how both this and `win_probe.py` read it.
+- `win_probe.py` - the finale alone: the four trials forced done, the
+  Element drawn, the carrier driven in the Element's row (waves, the boss,
+  or the quest flag), the Element taken, the run reset with the score.
+  6/6 seeds over WAVE, BOSS and QUEST carriers.
+- `shell_probe.py` - seashells as three seconds of invincibility: the clock
+  on the pickup and its countdown, `CalculateDamage` keeping the health
+  while it runs, and the luck charm living on `ITEM_SHELLS30`. 3/3.
