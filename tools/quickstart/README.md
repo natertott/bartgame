@@ -198,3 +198,8 @@
   waves and the first clear's reward, pause, its own hint lines, every
   door refused, the four gates walked both ways with containment live, and
   a boss composed in the square. 18/18.
+- `blessing_probe.py` - the pastry tiers: curses spawn as green blessings,
+  gold one in four, the tinted palette slots (and their release), each
+  tier's effect through `GiveItem`, the gold croissant's room-entry grace,
+  and a gold cake taken off the floor. Saves `blessing_tiers.png` to
+  `--out`. 13/13.

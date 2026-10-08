@@ -926,12 +926,20 @@ void sub_08080C80(MapDataDefinition* dataDefinition) {
     sub_0807C8B0(gMapTop.mapData, gRoomControls.width / 16, gRoomControls.height / 16);
 }
 
+#ifdef QUICKSTART
+extern void QuickStartTintItem(Entity*);
+#endif
 void sub_08080CB4(Entity* this) {
     Entity* effect;
     u32 tmp;
     u32 tmp2;
     u32 tmp3;
     u32 mask;
+
+#ifdef QUICKSTART
+    // A tiered pastry is drawn in its tier's colours (game.c).
+    QuickStartTintItem(this);
+#endif
 
     if (this->type != this->animIndex) {
         InitAnimationForceUpdate(this, this->type);

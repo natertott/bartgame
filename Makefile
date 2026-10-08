@@ -67,6 +67,7 @@ VARIANT_OBJS := \
 	build/USA/src/playerUtils.o build/USA/src/playerUtils.s build/USA/src/playerUtils.i \
 	build/USA/src/roomInit.o build/USA/src/roomInit.s build/USA/src/roomInit.i \
 	build/USA/src/script.o build/USA/src/script.s build/USA/src/script.i \
+	build/USA/src/scroll.o build/USA/src/scroll.s build/USA/src/scroll.i \
 	build/USA/src/subtask.o build/USA/src/subtask.s build/USA/src/subtask.i \
 	build/USA/src/subtask/subtaskFastTravel.o build/USA/src/subtask/subtaskFastTravel.s build/USA/src/subtask/subtaskFastTravel.i \
 	build/USA/src/subtask/subtaskWorldEvent.o build/USA/src/subtask/subtaskWorldEvent.s build/USA/src/subtask/subtaskWorldEvent.i \

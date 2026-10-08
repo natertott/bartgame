@@ -91,6 +91,7 @@ s32 GetItemPrice(u32 item) {
 // grant path shares - ground pickups, chests, scripts - so hooking here
 // covers all of them; it is a no-op for every non-food item id.
 extern void QuickStartNoteFoodItem(u32 item);
+extern void QuickStartNoteFoodItemTier(u32 item, u32 tier);
 extern void QuickStartShellTaken(void);
 // And the effect mask, for the three drop-rate charms in
 // CreateRandomItemDrop below.
@@ -107,7 +108,8 @@ u32 GiveItem(Item item, u32 param_2) {
     const ItemMetaData* metaData;
 
 #ifdef QUICKSTART
-    QuickStartNoteFoodItem(item);
+    // The parameter carries a pastry's tier (game.c, the blessing tiers).
+    QuickStartNoteFoodItemTier(item, param_2);
     if (item == ITEM_SHELLS) {
         // A single shell: three seconds of invincibility (game.c,
         // QuickStartShellTaken). The pocketful (ITEM_SHELLS30) is the luck

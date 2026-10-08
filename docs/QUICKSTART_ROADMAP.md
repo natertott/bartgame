@@ -1271,6 +1271,40 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Blessing tiers: one pastry, three colours (Oct 2026)
+
+The plan's P2 section 9, from the user's "green brioche curse, gold
+better". Each pastry is one sprite in three tiers:
+
+| tier | how it comes | what it does |
+|---|---|---|
+| brown | as before | the blessing it always was |
+| GREEN | every curse drop: the pie is a green brioche, dog food a green croissant, the mushroom a green cake | the curse it replaced (knockback taken, fast enemies, fast fire); the trophy case records the curse |
+| GOLD | a blessing pastry, one roll in four | the blessing and an extra: brioche a heart container and a full heal; croissant two seconds untouchable on every room entry (food charm 20, window offset 16); cake the rupee and heart drop charms |
+
+A curse is a gamble you can see coming if you look. The tier rides in
+the ground item's type2, which the pickup already passes to `GiveItem`,
+so the floor path and the held-up item both carry it
+(`QuickStartNoteFoodItemTier`). The reward spawner rolls it
+(`QuickStartPastryTier`). The colour is a recoloured copy of the item's
+own palette in a slot of its own, claimed from the engine's palette
+manager under an id no real palette uses (`0xF000 | tier << 8 | source`),
+shared by every pastry of that tier and freed with the last one
+(`QuickStartTintItem`, called for ground and held items from
+`sub_08080CB4`). Six new lines, 248-253, announce the tiers.
+
+**Measured.** `blessing_probe.py` (new) 13/13: the three curses spawn as
+green blessings; 49 of 200 brioches came up gold; the green and gold cakes
+draw from their own slots and read green (G sums 301 against R 73) and
+gold (R 338, G 253, B 39) beside the plain cake; a screenshot of the
+three side by side; a green brioche sets the pie's curse and not the
+brioche; a gold brioche gives a heart and a full heal; a gold croissant
+gives the fleet charm, and with it a room entry starts the shell clock at
+120 (0 without); a gold cake taken off the floor pays both drop charms;
+no tinted slot is still held once the pastries are gone. Shells 3/3 and
+scenario 15/15 on the same ROM. `scroll.c` now carries QUICKSTART code,
+so it joined `VARIANT_OBJS` (the invariant check caught it).
+
 ### Hyrule Town is the fifteenth region (Oct 2026)
 
 The plan's P2 section 5: the town as a locked monster plaza. The town had

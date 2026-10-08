@@ -24,6 +24,7 @@
 #include "beanstalkSubtask.h"
 #include "pauseMenu.h"
 #include "fade.h"
+#include "color.h"
 
 // text.c's TEXT_CUSTOM hook (sub_0805EEB4) reads gCustomStrings /
 // gCustomStringCount unconditionally, but the table itself only exists in
@@ -3254,6 +3255,15 @@ const u8* const gCustomStrings2[] = {
     [245] = (const u8*)"A beast waits in the\ntown square. Put it\ndown.",
     [246] = (const u8*)"A favour left undone in\nHyrule Town. Finish it.",
     [247] = (const u8*)"The four trials are done.\nThe Element waits in\nHyrule Town!",
+    // 248-253: the blessing tiers (Oct 2026). Gold first (brioche, croissant,
+    // cake), then green (the same order) - QUICKSTART_PASTRY_GOLD_TEXT and
+    // QUICKSTART_PASTRY_GREEN_TEXT.
+    [248] = (const u8*)"A GOLD brioche! A heart\nmore, every heart full,\nand foes go FLYING.",
+    [249] = (const u8*)"A GOLD croissant! Light\nfeet, and nothing can\ntouch you as you enter\na place.",
+    [250] = (const u8*)"A GOLD cake! You stand\nfirm, and foes leave\nrupees and hearts more\noften.",
+    [251] = (const u8*)"A GREEN brioche... It's\nspoiled. Every hit will\nthrow you further now.",
+    [252] = (const u8*)"A GREEN croissant... It's\nspoiled. Monsters move\nfaster now.",
+    [253] = (const u8*)"A GREEN cake... It's\nspoiled. Monsters shoot\nfaster now.",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3404,7 +3414,7 @@ typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_
 // appended rather than inserted - see QuickStartRegionHintLine. 212 -> 214
 // for the two golden-kinstone key hints (QuickStartKeyHintLine), 214 -> 229
 // for the fourteen "the Element waits in" lines and the quiet compass.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 248) ? 1 : -1];
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 254) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -4346,7 +4356,11 @@ static s32 QuickStartStealthState(void);
 #define GF_FOOD2_BIT(n) (94 + (n) - 14) // n = 14..19 -> 94-99
 
 // Which flag holds charm n. Two blocks, one question.
-#define GF_FOOD_FLAG(n) (((n) < 14) ? GF_FOOD_BIT(n) : GF_FOOD2_BIT(n))
+// Charm 20 (Oct 2026), the gold croissant's extra: window offset 16, in the
+// free run at the window's foot that the run start's bank-12 sweep (bits
+// 0-793) already wipes.
+#define GF_FOOD3_BIT(n) (16 + (n) - 20) // n = 20..20 -> 16
+#define GF_FOOD_FLAG(n) (((n) < 14) ? GF_FOOD_BIT(n) : ((n) < 20) ? GF_FOOD2_BIT(n) : GF_FOOD3_BIT(n))
 // The run-start sweep clears 101-106 by literal, because this macro is
 // declared below it. Break the build if the two ever disagree.
 typedef char QuickStartFood2BlockFits[(GF_FOOD2_BIT(14) == 94 && GF_FOOD2_BIT(19) == 99) ? 1 : -1];
@@ -4380,7 +4394,10 @@ typedef char QuickStartFood2BlockFits[(GF_FOOD2_BIT(14) == 94 && GF_FOOD2_BIT(19
 #define QUICKSTART_FOOD_SWORD_EDGE (1 << 17)   // QST_SWORD: +1 sword damage
 #define QUICKSTART_FOOD_CURSE_BLUNT (1 << 18)  // UNUSED_SWORD: -1 sword damage
 #define QUICKSTART_FOOD_BEAM_ANY (1 << 19)     // GREEN_SWORD: beam off full health
-#define QUICKSTART_FOOD_COUNT 20
+// The gold croissant's extra (Oct 2026, the blessing tiers): two seconds of
+// the seashell's invincibility on every room entry.
+#define QUICKSTART_FOOD_FLEET (1 << 20)
+#define QUICKSTART_FOOD_COUNT 21
 
 // Creeping Rot's numbers. A full heart is EIGHT health units in this
 // engine and a run starts with two hearts, so the obvious "one heart every
@@ -6618,6 +6635,34 @@ static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
 // form. Returns the entity when there is one, and NULL when the item was
 // granted outright - so a caller that only wants "did this pay out" should
 // test the bool32 sibling below instead.
+// The blessing tiers (see "Blessing tiers" by QuickStartNoteFoodItemTier).
+#define QS_PASTRY_GREEN 1
+#define QS_PASTRY_GOLD 2
+#define QUICKSTART_PASTRY_GOLD_TEXT 248   // gCustomStrings2, +0 brioche, +1 croissant, +2 cake
+#define QUICKSTART_PASTRY_GREEN_TEXT 251  // gCustomStrings2, the same order
+#define QUICKSTART_FLEET_ROOM_FLAG 110    // room flag: the fleet's grace was given this visit
+#define QUICKSTART_FLEET_FRAMES 120
+
+static const u16 sQuickStartPastryCurse[3] = { ITEM_PIE, ITEM_QST_DOGFOOD, ITEM_QST_MUSHROOM };
+
+// A pastry's tier, rolled where the reward is put on the floor: the three
+// curse items become their blessing's sprite in GREEN, and a blessing
+// pastry comes up GOLD one time in four.
+static u16 QuickStartPastryTier(u16 item, u32* tier) {
+    s32 k;
+    *tier = 0;
+    for (k = 0; k < 3; k++) {
+        if (item == sQuickStartPastryCurse[k]) {
+            *tier = QS_PASTRY_GREEN;
+            return (k == 0) ? ITEM_BRIOCHE : (k == 1) ? ITEM_CROISSANT : ITEM_CAKE;
+        }
+    }
+    if ((item == ITEM_BRIOCHE || item == ITEM_CROISSANT || item == ITEM_CAKE) && (Random() & 3) == 0) {
+        *tier = QS_PASTRY_GOLD;
+    }
+    return item;
+}
+
 static Entity* QuickStartSpawnRewardEntity(u16 item, s16 localX, s16 localY) {
     Entity* itemEntity;
     if (QuickStartItemNeedsDirectGrant(item)) {
@@ -6633,7 +6678,9 @@ static Entity* QuickStartSpawnRewardEntity(u16 item, s16 localX, s16 localY) {
         // own form - and picking it up puts it in the bag.
         itemEntity = CreateObject(GROUND_ITEM, ITEM_KINSTONE, QUICKSTART_PIECE_OF(item));
     } else {
-        itemEntity = CreateObject(GROUND_ITEM, item, 0);
+        u32 tier = 0;
+        item = QuickStartPastryTier(item, &tier);
+        itemEntity = CreateObject(GROUND_ITEM, item, tier);
     }
     if (itemEntity != NULL) {
         itemEntity->x.HALF.HI = gRoomControls.origin_x + localX;
@@ -23939,6 +23986,16 @@ static void QuickStartRoomMonitor(void) {
         gSave.run_frames++;
     }
     QuickStartShellTick();
+    // The gold croissant: two seconds untouchable on every room entry
+    // (room flags are wiped by the room load, so the flag is "given this
+    // visit").
+    if ((QuickStartFoodMask() & QUICKSTART_FOOD_FLEET) && !QsCheckRoomFlag(QUICKSTART_FLEET_ROOM_FLAG) &&
+        QuickStartRoomSettled()) {
+        QsSetRoomFlag(QUICKSTART_FLEET_ROOM_FLAG);
+        if (gSave.stats.shells < QUICKSTART_FLEET_FRAMES) {
+            gSave.stats.shells = QUICKSTART_FLEET_FRAMES;
+        }
+    }
     QuickStartDrawDifficultyHUD();
     // Every frame, before anything that could consume the press: newInput
     // is a one-frame edge.
@@ -24941,6 +24998,73 @@ void QuickStartNoteCharm(u32 bottleContent) {
 // this item id, is the pocketful (ITEM_SHELLS30) now.
 #define QUICKSTART_SHELL_FRAMES 180
 
+// The tier's look (Oct 2026): a recoloured copy of the item's own palette in
+// a slot of its own. The slot is claimed from the engine's palette manager
+// (FindFreeObjPalette, one of the ten object palettes it hands out) under an
+// objPaletteId no real palette uses - 0xF000 | tier << 8 | source slot - so a
+// second pastry of the same tier and sheet shares it, and the manager frees
+// it when the last one is gone (UnloadOBJPalette on the entity's deletion).
+// Called every frame for ground items from sub_08080CB4 (scroll.c); returns
+// at once for anything that is not a tiered pastry or is already tinted.
+extern u32 FindFreeObjPalette(u32);
+extern void CleanUpObjPalettes(void);
+extern void SetEntityObjPalette(Entity*, s32);
+
+static u16 QuickStartTintColour(u16 c, u32 tier) {
+    s32 r = c & 31, g = (c >> 5) & 31, b = (c >> 10) & 31;
+    s32 lum = (r * 2 + g * 5 + b) / 8;
+    if (tier == QS_PASTRY_GREEN) {
+        r = lum * 3 / 8;
+        g = lum + 6;
+        b = lum / 4;
+    } else {
+        r = lum + 9;
+        g = lum * 7 / 8 + 5;
+        b = lum / 5;
+    }
+    if (r > 31) r = 31;
+    if (g > 31) g = 31;
+    if (b > 31) b = 31;
+    return (u16)(r | (g << 5) | (b << 10));
+}
+
+void QuickStartTintItem(Entity* e) {
+    u32 tier = e->type2, src, id, i;
+    s32 slot;
+    if ((tier != QS_PASTRY_GREEN && tier != QS_PASTRY_GOLD) ||
+        (e->type != ITEM_BRIOCHE && e->type != ITEM_CROISSANT && e->type != ITEM_CAKE) || e->kind != OBJECT ||
+        (e->id != GROUND_ITEM && e->id != LINK_HOLDING_ITEM)) {
+        return;
+    }
+    src = e->palette.b.b0;
+    if ((gPaletteList[src].objPaletteId & 0xFF00) == (0xF000 | (tier << 8))) {
+        return;  // already ours (0xFFFF, the fixed slots' id, never matches)
+    }
+    id = 0xF000 | (tier << 8) | src;
+    slot = FindPalette(id);
+    if (slot < 0) {
+        slot = (s32)FindFreeObjPalette(1);
+        if (slot < 0) {
+            CleanUpObjPalettes();
+            slot = (s32)FindFreeObjPalette(1);
+        }
+        if (slot < 0) {
+            return;  // no slot this frame: the plain colours, and try again
+        }
+        gPaletteList[slot].objPaletteId = (u16)id;
+        gPaletteList[slot]._1 = 0;
+        gPaletteList[slot]._0_4 = 1;
+        gPaletteList[slot]._0_0 = 3;
+        for (i = 1; i < 16; i++) {
+            gPaletteBuffer[(16 + slot) * 16 + i] = QuickStartTintColour(gPaletteBuffer[(16 + src) * 16 + i], tier);
+        }
+        gPaletteBuffer[(16 + slot) * 16] = gPaletteBuffer[(16 + src) * 16];
+        USE_PALETTE(16 + slot);
+    }
+    UnloadOBJPalette(e);
+    SetEntityObjPalette(e, slot);
+}
+
 void QuickStartShellTaken(void) {
     gSave.stats.shells = QUICKSTART_SHELL_FRAMES;
     SoundReq(SFX_SECRET);
@@ -25177,7 +25301,43 @@ void QuickStartMarkCatalogItem(u32 item) {
     }
 }
 
+// --- Blessing tiers (Oct 2026, the redesign's P2 section 9) ---------------
+//
+// The user: "more blessings/curses with recoloured sprites (green brioche
+// curse, gold better)". The three pastries come in three tiers on ONE
+// sprite each: the brown original is the blessing it always was; a GREEN
+// one is its curse counterpart (the brioche's is the pie's knockback curse,
+// the croissant's the dog food's fast enemies, the cake's the mushroom's
+// fast fire); a GOLD one is the blessing and an extra - a heart container
+// and a full heal, two seconds untouchable on every room entry, or richer
+// drops. The tier rides in the ground item's parameter byte (type2), which
+// GiveItem already passes along; the reward spawner rolls it
+// (QuickStartPastryTier) and the sprite is drawn with a recoloured copy of
+// its palette (QuickStartTintItem). So a curse is a gamble you can see
+// coming if you look: a pie no longer exists as a sprite of its own.
+
+static void QuickStartPastryGold(s32 n) {
+    if (n == 0) {
+        // The gold brioche: a heart container and a full heal.
+        if (gSave.stats.maxHealth <= 152) {
+            gSave.stats.maxHealth += 8;
+        }
+        gSave.stats.health = gSave.stats.maxHealth;
+    } else if (n == 1) {
+        QsSetFlag(GF_FOOD_FLAG(20));
+    } else {
+        QsSetFlag(GF_FOOD_FLAG(9));   // rupee drops up
+        QsSetFlag(GF_FOOD_FLAG(11));  // heart drops up
+    }
+}
+
+void QuickStartNoteFoodItemTier(u32 item, u32 tier);
+
 void QuickStartNoteFoodItem(u32 item) {
+    QuickStartNoteFoodItemTier(item, 0);
+}
+
+void QuickStartNoteFoodItemTier(u32 item, u32 tier) {
     s32 n;
     // Creeping Rot's antidote, FIRST - before the charm switch below,
     // because that switch ends in `default: return` and a rupee is not a
@@ -25300,6 +25460,23 @@ void QuickStartNoteFoodItem(u32 item) {
             break;
         default:
             return;
+    }
+    if (n <= 2 && tier == QS_PASTRY_GOLD) {
+        QuickStartPastryGold(n);
+        QsSetFlag(GF_FOOD_FLAG(n));
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_PASTRY_GOLD_TEXT + n)), 0);
+        return;
+    }
+    if (n <= 2 && tier == QS_PASTRY_GREEN) {
+        s32 k = n;
+        // The trophy case records the curse it really was.
+        QuickStartMarkCatalogItem(sQuickStartPastryCurse[k]);
+        n += 3;
+        if (!QsCheckFlag(GF_FOOD_FLAG(n))) {
+            QsSetFlag(GF_FOOD_FLAG(n));
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_PASTRY_GREEN_TEXT + k)), 0);
+        }
+        return;
     }
     if (!QsCheckFlag(GF_FOOD_FLAG(n))) {
         QsSetFlag(GF_FOOD_FLAG(n));
