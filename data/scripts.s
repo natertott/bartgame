@@ -607,6 +607,8 @@
 	.include "data/scripts/quickstart/script_QuickStartScav.inc"
 	.include "data/scripts/quickstart/script_QuickStartStealth.inc"
 	.include "data/scripts/quickstart/script_QuickStartCarry.inc"
+	.include "data/scripts/quickstart/script_QuickStartCourierGiver.inc"
+	.include "data/scripts/quickstart/script_QuickStartCourierReceiver.inc"
 	.include "data/scripts/quickstart/script_QuickStartMemory.inc"
 	.include "data/scripts/quickstart/script_QuickStartHubHints.inc"
 	.include "data/scripts/quickstart/script_QuickStartInnkeeper.inc"

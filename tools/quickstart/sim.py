@@ -834,7 +834,9 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
 
 # The ? room kind distribution, in sixteenths, per kind class. Read off the
 # four QuickStartPick*Kind switches - these are what a site of each class
-# deals when the player first walks into it.
+# deals when the player first walks into it. (Not read by the model. Since
+# Oct 2026 one WAVES roll in four at a site alone in its room is dealt as
+# the switch PUZZLE instead; game.c, QuickStartSitePuzzleOk.)
 KIND_MIX = {
     'SMALL':    {'WAVES': 6, 'NPC': 3, 'POT_LOTTERY': 3, 'FAIRY': 1, 'WAVES_FALLBACK': 3},
     'LARGE':    None,

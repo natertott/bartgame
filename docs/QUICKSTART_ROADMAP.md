@@ -1271,6 +1271,200 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The dungeon reach map, probe-made (Oct 2026, P3 section 7)
+
+The plan's first P3 step: what a probe can see of every dungeon room before
+anyone walks it. `dungeon_reach.py` (new) lands in every room of the
+dungeons and the castle (at a real arrival point from transitions.c where
+one exists, else in the middle), floods the live collision, and splits the
+open floor into the parts a player can walk between with nothing in hand.
+For each part it records the room edges it reaches (dungeon rooms join by
+scrolling at their edges, not by transitions, which is why most have no
+arrival point at all), the transitions.c exits, and the small-key and boss
+doors it touches. Output: `docs/QUICKSTART_DUNGEON_REACH.md` and
+`docs/dungeon_reach.json`.
+
+| area | room ids | unnamed slots | landed | split into parts |
+|---|---|---|---|---|
+| Deepwood Shrine (+ boss, entry) | 35 | 14 | 19 | 18 |
+| Cave of Flames | 33 | 15 | 16 | 9 |
+| Fortress of Winds (+ top) | 41 | 16 | 25 | 19 |
+| Temple of Droplets | 64 | 24 | 40 | 30 |
+| Royal Crypt | 9 | 4 | 5 | 5 |
+| Palace of Winds | 52 | 1 | 50 | 39 |
+| Hyrule Castle | 8 | 5 | 3 | 3 |
+| Dark Hyrule Castle (+ outside) | 72 | 6 | 66 | 53 |
+
+Five named rooms did not hold a warp (Deepwood's boss and entry rooms, two
+Cave of Flames rooms, one Palace platform ride); everything else landed. A
+split room is where the user's walk starts: what joins its parts - a key
+door, a switch, a block, a clone puzzle - is the part a probe cannot see.
+The Cave of Flames is the most open (9 of 16 rooms split), which with
+Deepwood is what the plan's census said: the two dungeons the mode can pay
+end to end.
+
+**Not built: Deepwood and the Cave of Flames as regions, and the castle's
+entry.** Three things stand in the way, measured rather than guessed: the
+region machinery assumes one overworld field room as a pool row with
+border crossings (a dungeon room joins its neighbours by scrolling); a
+region needs seven hint lines and text bank two is full at 256 (the
+puzzles already moved to bank three); and every split room needs the walk
+above before the reach model can price it.
+
+### Switch puzzles: three new ? room kinds with a solver (Oct 2026, P2 section 6.1)
+
+The plan asked for puzzle kinds each with a SOLVED flag, a testbed
+scenario and a solver probe. Three are built, as one new site kind
+(`QS_EVENT_PUZZLE`, value 8, never stored: the site roll recomputes it) with
+the variant in the extra byte. All three stand on the LIGHTABLE_SWITCH
+fixture the blink memory pair proved, because it draws from fixed graphics
+in every room; blocks, torches and levers are tileset art and do not, which
+is why the plan's push-stone, torch and dig puzzles are not among them. No
+cage and no pots, the retired switch site's two failures.
+
+| kind | what the player does | a wrong move |
+|---|---|---|
+| ECHO | watch three switches light in an order once, then strike them in that order | a wave, and the order is shown again |
+| LIGHTS | lights-out on a row of three: a strike flips the struck switch and its neighbours; light all three | nothing (every pattern of three is solvable) |
+| RACE | a lit switch goes dark after a fuse; light all three at once | the fuse runs out |
+
+Each says what it wants once as it deals (three lines in text bank three,
+since bank two is full at 256). A solve drops the site's prize at the
+content spot; taking it is DONE, which is what the chain reads. A site is
+dealt a puzzle when it would have been a gauntlet, one roll in four by a
+hash of its own (the shared stream and every other site's roll are
+unchanged), and only where it stands alone in its room, ungated, and not
+in a room that cannot seat three switches (the Great Fairy rooms and the
+Minish bow path, measured). Twenty seeds deal 229 puzzles over 97 eligible
+sites, about eleven a run.
+
+**What the sweep found and fixed on the way** (`puzzle_probe.py --all`):
+the race's first fuse was a flat 150 frames, and a room whose switches
+stand 128 px apart needs a walk of over 170 - unsolvable on foot. The fuse
+is now 60 frames plus two per pixel of the widest gap. In cramped rooms
+the switches land closer than a spin attack's reach (35 px, measured), so
+a race there would be one swing: those deals play as lights-out instead
+(53 of the sweep's race deals). And in three Minish-scale rooms a wrong
+echo brings no wave, because the wave placer keeps clear of the player and
+three switches and finds no tile; the show still replays.
+
+**Measured.** `puzzle_probe.py --all` 940/940 over all 97 eligible sites
+(two skipped: the probe seed's memory pair stands there and outranks any
+roll). The solver watches the echo's show and writes the order down,
+searches the lights' strikes from what it sees, and races at walking pace
+using the walk the fuse is sized for; then it takes the prize. Two probe
+lessons: an entity off the screen is not updated, so a strike is forged
+only after walking the player to the switch; and a teleport keeps the old
+collision layer, so the solver takes the layer of what it teleports onto.
+
+### Gregal's ghost (Oct 2026, P2 section 6.2)
+
+The guide's second port, and it needed almost nothing new: Gregal lies
+sick in the tower's shop floor in vanilla, with the evil spirit over him,
+but only before `WARP_EVENT_END`, which this mode sets at run start. Under
+QUICKSTART `roomInit.c` loads his scene until he is cured this run
+(`SORA_ELDER_RECOVER`, a local flag, wiped each run), the hub sweep spares
+him on that floor, and the Gust Jar does the rest with vanilla's own
+objects. Two script changes: his cure waited on two sync flags from a
+tribesperson who only takes that script before `WARP_EVENT_END` (and whom
+the sweep removes), so the waits are skipped; and his thanks (100 shells,
+which here would be three seconds of invincibility) is ours: a line and a
+RARE draw at the feet. Percy's monster lady is not ported: Percy's house
+in the Western Wood is ? room site 42, whose content clears the house's
+vanilla cast (the disguised Moblin and the two torch managers), and her
+quest is keyed to the Pegasus Boots story (the DASHBOOTS flag and the
+boots in the bag); porting it means giving that site a kind of its own.
+
+`gregal_probe.py` (new) 6/6: Gregal and the spirit on the shop floor; the
+real jar catches the spirit (its hold count falls from 240 to 156 as it
+crosses the cone); with Link kept under it as it circles, it yields in 242
+frames; talking then pays a draw once; he is gone later in the run.
+
+### Hub travel and the trophy shelf (Oct 2026, P2 section 8)
+
+**Travel.** From the draft on Floor 3 to the hole in Cloud Tops was four
+transitions down the tower's staircase. Two warp pads make it two: one at
+the east end of the selection hall goes straight to the shop hall on
+Floor 1, and one in the shop goes straight out to the tower door in Cloud
+Tops, a few steps above the hole. The inn is the one stair between them.
+They are vanilla's WARP_POINT (spin, then a transition to the room and
+tile it carries), asleep and undrawn until the draft is over, so the draft
+cannot be skipped.
+
+**The shelf.** The trophy case's menu cannot show a picture (the figurine
+pose art does not fit items; figurineMenu.c says why), so the sprites
+stand in the room: once the draft is over, the selection floor's lower
+hall shows up to nine things the player has ever found, from the catalog's
+cross-run ledger, as display-only ground items (collision off every frame).
+Two things measured on the way: several charms reuse unused item ids that
+have no ground sprite (the unused sword drew as a grey smear), so those
+are dropped once their init has run; and nine items do not run out the
+object palettes (the grey was the missing sprite, not the palette).
+
+`hub_probe.py` (new) 7/7: a pad in each hall; the selection hall's pad
+does nothing while the draft runs; after it, the pad lands in the shop
+hall (56 frames) and the shop's pad at the tower door (114 frames); the
+shelf shows nine drawn items with collision off, and standing on one takes
+nothing. Screenshots of both pads and the shelf.
+
+**One more blessing-tier case** found while rerunning `blessing_probe.py`
+in a busy room: with every object palette slot taken (Castle Garden had
+slots 6-14 held by its cast and drops), a second tinted pastry got no slot
+and stayed in plain colours. A plain-looking GREEN pastry would hide its
+curse. The tint now recolours the pastry's own palette in place when the
+pastry is its only user, and when even that is impossible (a shared
+palette) a green pastry turns back into the curse's own item (the pie,
+the dog food or the mushroom). The probe forges a full palette table to
+prove the last case; it is 14/14.
+
+### Dungeon keys are per run (Oct 2026, P3)
+
+The run-start wipe cleared every area's local flags, which shuts the
+dungeon doors again, but small keys and the big key live in
+`gSave.dungeonKeys` and `gSave.dungeonItems`, per-dungeon inventory that
+no wipe touched. A key from the Cave of Flames' entrance site stayed in
+the bag for every later run. Both arrays are zeroed at run start now.
+`win_probe.py` plants a small key and a big key before the win and
+follows the reset back into the next run's hub: the bag is empty there,
+6/6 seeds. (Read at the win itself the bag is still full: the wipe runs
+on the way back in through the title, which is where the probe looks.)
+
+### The inn's blessing table (Oct 2026, P2 section 8)
+
+"Make the inn the place where the run's blessings are chosen": the first
+visit of each run lays a brioche, a croissant and a cake on the inn floor,
+one of them GOLD (the run seed picks which). Take one and the other two
+are cleared away. It is free; the beds stay the rupee sink. The table
+stands on the open floor south of the stair door: below the keeper is her
+counter, and the first placement there put the pastries where the player
+is respawned on contact (measured). `inn_probe.py` (new) 6/6: the table,
+one gold, a screenshot, the gold cake taken pays its blessing and its
+extras and clears the rest, no second table that run, a new run lays it
+again, and the dungeon key bag starts empty.
+
+### The courier: the first ported vanilla errand (Oct 2026, P2 section 6.2)
+
+A giver in one region hands over a parcel and a receiver in a neighbouring
+region takes it and pays a RARE draw. Three of vanilla's delivery errands
+are its skins, in text: the Smith's sword for Minister Potho, a library
+book, the Wake-Up Mushroom for Rem. It is the two-NPC, two-region shape no
+quest here had. The parcel is a flag, not an object (the carry quest's
+held prop does not survive an area change, and the vanilla quest items
+are charms and curses in this mode), and Ezlo names the receiver's region
+when it is taken, against the kit held at that moment. Both ends use the
+ZELDA face, the one every quest giver here uses. Delivering counts as the
+run's side quest for the chain's QUEST step and the QUEST carrier, like
+the carry quest. State lives in bank 12 raw 119-140, inside the run-start
+wipe; nine lines in text bank three.
+
+`courier_probe.py` (new) 6/6, by talking: a giver in Castle Garden and no
+receiver yet; one talk takes the parcel and puts the receiver in North
+Hyrule Field; a second talk changes nothing; the receiver stands in NHF;
+talking to it delivers, the kit changes and the side quest reads done; a
+second talk pays nothing more. The NPCs are told apart by the script they
+run, read through each NPC's script context. Gregal's ghost and Percy's
+monster lady are not ported yet (HANDOFF_STATUS).
+
 ### Blessing tiers: one pastry, three colours (Oct 2026)
 
 The plan's P2 section 9, from the user's "green brioche curse, gold

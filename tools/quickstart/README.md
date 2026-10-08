@@ -198,8 +198,28 @@
   waves and the first clear's reward, pause, its own hint lines, every
   door refused, the four gates walked both ways with containment live, and
   a boss composed in the square. 18/18.
+- `puzzle_probe.py` - the switch puzzles (ECHO, LIGHTS, RACE) solved by a
+  script that reads the room like a player: it watches the echo's show,
+  searches the lights' strikes, races at walking pace; then the prize and
+  DONE. `--all` sweeps every site the game deems eligible
+  (`QuickStartSitePuzzleOk`, less retired sites and the seed's memory pair).
+- `inn_probe.py` - the inn's blessing table: three pastries, one gold, take
+  one and the rest go, once a run; the dungeon key bag empty at the start.
+- `courier_probe.py` - the courier quest by talking: offer, hurry, the
+  receiver in the neighbouring region, delivery pays and closes the side
+  quest, nothing twice. NPCs are told apart by the script they run.
+- `gregal_probe.py` - Gregal's ghost: his scene on the shop floor, the real
+  Gust Jar's contact, the spirit tracked until it yields, the thanks and
+  its draw once, gone afterwards.
+- `dungeon_reach.py` - the dungeon reach map: every room of the dungeons
+  and the castle landed in and flooded into walkable parts, with the edges,
+  exits and key/boss doors each part touches. Writes
+  `docs/QUICKSTART_DUNGEON_REACH.md` and `docs/dungeon_reach.json`.
+- `hub_probe.py` - the hub's two warp pads (asleep during the draft, then
+  F3 to the shop and the shop to the tower door) and the trophy shelf.
 - `blessing_probe.py` - the pastry tiers: curses spawn as green blessings,
   gold one in four, the tinted palette slots (and their release), each
   tier's effect through `GiveItem`, the gold croissant's room-entry grace,
   and a gold cake taken off the floor. Saves `blessing_tiers.png` to
-  `--out`. 13/13.
+  `--out`, and forges a full palette table to prove an untintable green
+  pastry turns back into its curse. 14/14.

@@ -44,6 +44,13 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The dungeon reach map: 314 room ids, 224 landed and flooded into walkable parts with their edges, exits and key/boss doors; `docs/QUICKSTART_DUNGEON_REACH.md` | "The dungeon reach map, probe-made" |
+| Switch puzzles: ECHO, LIGHTS and RACE as a new ? room kind, one gauntlet in four at eligible sites; the sweep's fixes (race fuse sized to the walk, cramped races play as lights); `puzzle_probe.py --all` 940/940 over 97 sites | "Switch puzzles: three new ? room kinds with a solver" |
+| Gregal's ghost ported: his vanilla scene on the shop floor, the Gust Jar cures him, a RARE draw for thanks; `gregal_probe.py` 6/6 | "Gregal's ghost" |
+| Hub travel: two warp pads (draft floor to the shop, the shop to the tower door), asleep until the draft ends; a trophy shelf of up to nine found items as display-only sprites; `hub_probe.py` 7/7 | "Hub travel and the trophy shelf" |
+| The courier: the first ported vanilla errand (three skins), giver and receiver in neighbouring regions, counts as the side quest; `courier_probe.py` 6/6 by talking | "The courier: the first ported vanilla errand" |
+| The inn's blessing table: three pastries once a run, one gold, take one; `inn_probe.py` 6/6 | "The inn's blessing table" |
+| Dungeon keys and dungeon items wiped per run; `win_probe.py` checks the key bag across the reset, 6/6 | "Dungeon keys are per run" |
 | Blessing tiers: every curse drop is a GREEN pastry, one blessing in four is GOLD with an extra (a heart, two seconds of grace per room, richer drops); recoloured palettes from the engine's manager; `blessing_probe.py` 13/13 | "Blessing tiers: one pastry, three colours" |
 | Hyrule Town is the fifteenth region: the bridge rows gone, the four gates vanilla, the square a monster plaza with every door shut; `town_probe.py` 18/18 | "Hyrule Town is the fifteenth region" |
 | The performance dips: the memory-pair lookup cost 57% of every ? room frame (Boomerang cave 20 fps, Trilby's cave 30); cached, 60 everywhere in a 140-sample sweep; the fountain's ranking; Great Fairy rooms out of the memory pair | "The performance dips: one lookup, asked per site per frame" |
@@ -235,13 +242,18 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Straightforward work, not started
 
-- **P2 and P3 of the redesign** (`docs/QUICKSTART_REDESIGN_PLAN.md` §11,
-  sized there): the performance census in the Boomerang cave, Trilby's
-  push-stone cave and Lon Lon (shipped); Hyrule Town (shipped);
-  blessing tiers with recoloured sprites (shipped); the six puzzle kinds with solver
-  probes; the three quest ports; the hub (travel, inn, trophy sprites);
-  the dungeon reach probe, per-run small keys, Deepwood and the Cave of
-  Flames as regions, the castle. P0, P1 and the seashells are shipped.
+- **The rest of P2 and P3 of the redesign** (`docs/QUICKSTART_REDESIGN_PLAN.md`
+  §11). Shipped: the performance census, Hyrule Town, the seashells, the
+  blessing tiers, three switch-puzzle kinds (of the six the plan proposes),
+  the courier and Gregal's ghost (of three quest ports), the inn's
+  blessings, hub travel, the trophy shelf, per-run dungeon keys, and the
+  dungeon reach probe (`docs/QUICKSTART_DUNGEON_REACH.md`). Not started:
+  three more puzzle kinds (push-stone plates, torch order, dig - each needs
+  an object that draws in every tileset, which blocks and torches do not);
+  Percy's monster lady (her house is ? room site 42, which clears her and
+  the torches, and her quest is keyed to the Pegasus Boots story flag); Deepwood and the Cave of Flames as regions and the castle's entry
+  (the reach map's split rooms are where the user's walk starts, and the
+  region machinery assumes an overworld field room as the pool row).
 - **The chain-end probe's own limits** (`chain_end_probe.py`): an ITEM
   step is paid by the first clear of a region the probe can warp to; the
   warp from an interior straight to a field room is refused; and on seed 2

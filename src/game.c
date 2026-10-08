@@ -472,6 +472,10 @@ static s32 QuickStartScenarioRow(u8 byte);
 static s32 QuickStartScenarioQuestHostOr(u8 questKind, s32 fallback);
 static s32 QuickStartScenarioBossRoll(s32 roll);
 static s32 QuickStartCarryState(void);
+static bool32 QuickStartCourierWon(void);
+static u8 QuickStartHubGetPhase(void);
+static void QuickStartTrophyShelfMonitor(void);
+static s32 QuickStartCourierHost(void);
 static void QuickStartCarryPropMonitor(void);
 #define QS_SCN_NONE 0
 #define QS_SCN_SITE 1
@@ -486,6 +490,7 @@ static void QuickStartCarryPropMonitor(void);
 #define QS_SCN_QUEST_SCAV 2
 #define QS_SCN_QUEST_STEALTH 3
 #define QS_SCN_QUEST_CARRY 4
+#define QS_SCN_QUEST_COURIER 5
 static s32 QuickStartFreeGfxSlots(void);
 static s32 QuickStartReclaimableGfxSlots(void);
 static void QuickStartApplyFoodEffects(void);
@@ -768,6 +773,16 @@ static void GameTask_Transition(void) {
         // "which charms are owned" bits.
         gSave.stats.charm = 0;
         gSave.stats.charmTimer = 0;
+        // Dungeon keys and dungeon items (Oct 2026, the redesign's P3):
+        // per-dungeon inventory in the save, not flags, so the local-flag
+        // wipe above never touched them. A small key picked up in the Cave
+        // of Flames' entrance site stayed in the bag for every run after.
+        // The doors they open ARE local flags, so the wipe above already
+        // shuts those.
+        for (bit = 0; bit < 0x10; bit++) {
+            gSave.dungeonKeys[bit] = 0;
+            gSave.dungeonItems[bit] = 0;
+        }
         // Literal 32-42 rather than GF_QUEST_*/QUICKSTART_CHARM_BIT: like
         // every other number in this block, the defines live further down
         // the file than GameTask_Transition does.
@@ -3388,11 +3403,32 @@ const u8* const gCustomStrings3[] = {
     [114] = (const u8*)"The next trial is at\nthe ante-room of\nSplitblade's dojo." /* DOJOS_TO_SPLITBLADE */,
     [115] = (const u8*)"The next trial is at\nSplitblade's dojo at\nVeil Falls." /* DOJOS_SPLITBLADE */,
     [116] = (const u8*)"The next trial is at\nthe top of Veil Falls." /* VEIL_FALLS_TOP_0 */,
+    // After the room lines (bank two is full at 256): the switch puzzles'
+    // instructions (Oct 2026), QUICKSTART_PUZZLE_TEXT + variant, said once
+    // per visit as the puzzle deals.
+    [QUICKSTART_CONTENT_SITE_COUNT + 0] = (const u8*)"Watch the switches light\nup, then strike them in\nthe same order.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 1] = (const u8*)"Each switch flips its\nneighbours as well.\nLight all three!",
+    [QUICKSTART_CONTENT_SITE_COUNT + 2] = (const u8*)"A lit switch soon goes\ndark. Light all three\nat once!",
+    // The courier (Oct 2026, the redesign's P2 section 6.2): three of
+    // vanilla's deliveries as skins - QUICKSTART_COURIER_TEXT + 0..8. Per
+    // skin an offer (giver) and a thanks (receiver), then the shared lines.
+    [QUICKSTART_CONTENT_SITE_COUNT + 3] = (const u8*)"The Smith's new sword\nwas meant for the\nMinister. Would you\ntake it to him?",
+    [QUICKSTART_CONTENT_SITE_COUNT + 4] = (const u8*)"Potho's sword, at last!\nThe Minister thanks you.\nTake this for the road.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 5] = (const u8*)"This book belongs to\nthe library. Could you\nreturn it for me?",
+    [QUICKSTART_CONTENT_SITE_COUNT + 6] = (const u8*)"The lost book! The\nlibrary is in your debt.\nPlease, take this.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 7] = (const u8*)"Rem the shoemaker never\nwakes. This mushroom\nmight. Please take it\nto him!",
+    [QUICKSTART_CONTENT_SITE_COUNT + 8] = (const u8*)"A Wake-Up Mushroom?\nI feel lively already!\nHere, for your trouble.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 9] = (const u8*)"Please hurry. They will\nbe waiting.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 10] = (const u8*)"I am waiting for a\ndelivery. Have you seen\nthe courier?",
+    [QUICKSTART_CONTENT_SITE_COUNT + 11] = (const u8*)"Thank you again for\nthe delivery.",
+    // Gregal, cured (script_GregalSick under QUICKSTART): 129.
+    [QUICKSTART_CONTENT_SITE_COUNT + 12] = (const u8*)"The evil spirit is gone!\nI can breathe again.\nTake this, with an old\nman's thanks.",
 };
 const u32 gCustomStringCount3 = ARRAY_COUNT(gCustomStrings3);
 // Every site has its line, no more and no fewer: a site added without one
-// would print the engine's placeholder for its trial.
-typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT) ? 1 : -1];
+// would print the engine's placeholder for its trial. The three puzzle
+// lines follow them, then the courier's nine and Gregal's thanks.
+typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 13) ? 1 : -1];
 
 // The pair bank is addressed arithmetically, so its shape is load-bearing:
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
@@ -6640,7 +6676,7 @@ static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
 #define QS_PASTRY_GOLD 2
 #define QUICKSTART_PASTRY_GOLD_TEXT 248   // gCustomStrings2, +0 brioche, +1 croissant, +2 cake
 #define QUICKSTART_PASTRY_GREEN_TEXT 251  // gCustomStrings2, the same order
-#define QUICKSTART_FLEET_ROOM_FLAG 110    // room flag: the fleet's grace was given this visit
+#define QUICKSTART_FLEET_ROOM_FLAG 114    // room flag: the fleet's grace was given this visit (108-113 are the eyes fields)
 #define QUICKSTART_FLEET_FRAMES 120
 
 static const u16 sQuickStartPastryCurse[3] = { ITEM_PIE, ITEM_QST_DOGFOOD, ITEM_QST_MUSHROOM };
@@ -7831,7 +7867,8 @@ static void QuickStartWinBossWatcher(void) {
 // reading GF_QUEST_DONE alone, so finishing the carry does not close it.
 #define QUICKSTART_CARRY_WON_STATE 3
 static bool32 QuickStartSideQuestDone(void) {
-    return QuickStartQuestFlag(GF_QUEST_DONE) || QuickStartCarryState() == QUICKSTART_CARRY_WON_STATE;
+    return QuickStartQuestFlag(GF_QUEST_DONE) || QuickStartCarryState() == QUICKSTART_CARRY_WON_STATE ||
+           QuickStartCourierWon();
 }
 
 static bool32 QuickStartWinCarrierMet(void) {
@@ -7994,6 +8031,7 @@ static void QuickStartHuntMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartStealthMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot);
+static void QuickStartCourierMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartHandicapMonitor(void);
 
 static void QuickStartRegionMonitor(s32 poolIndex) {
@@ -8034,6 +8072,7 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     QuickStartScavMonitor(region, poolIndex);
     QuickStartStealthMonitor(region, poolIndex);
     QuickStartCarryMonitor(region, poolIndex);
+    QuickStartCourierMonitor(region, poolIndex);
     // A survive clock can only truthfully be live inside its own ? room.
     // Seeing the player here, in a region room, means they walked out on
     // the attempt - sweep the marker and the shared HUD clock, but never
@@ -10756,6 +10795,11 @@ enum {
     // site elsewhere where striking them in that order pays - see
     // QuickStartMemorySite and QuickStartSetupMemoryRoomContent.
     QS_EVENT_MEMORY,
+    // Value 8 (Oct 2026, the redesign's P2 section 6.1): a one-room switch
+    // puzzle, never stored in a 3-bit field (the site roll recomputes the
+    // kind; the 2-door pickers never deal it). Three variants in extra
+    // bits 0-1 - see QuickStartSetupPuzzleRoomContent.
+    QS_EVENT_PUZZLE,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -15433,6 +15477,236 @@ static void QuickStartCarryPropMonitor(void) {
     }
 }
 
+// =================== The courier (Oct 2026, P2 section 6.2) ===================
+//
+// The guide's first port: a vanilla delivery as a quest. A giver in one
+// region hands over a parcel (the Smith's sword for the Minister, a library
+// book, the Wake-Up Mushroom for Rem - three of vanilla's seven courier
+// errands, as text skins); a receiver in a NEIGHBOURING region takes it and
+// pays. It is the two-NPC, two-region shape no quest had before.
+//
+// The parcel is a flag, not an object: the carry quest's held prop does
+// not survive a change of area, and an ITEM_QST_* id would hand the player
+// whatever charm or curse the mode reused it for (GUIDE_FINDINGS 6.5). So
+// "carrying" is a state bit, and Ezlo names the receiver's region the
+// moment the parcel is taken. Both ends are ZELDA-kind NPCs - the face
+// every quest giver here uses, because it is the one CreateNPC face proven
+// to answer a script in every region.
+//
+// Delivery pays a RARE draw at the receiver's feet and counts as the run's
+// side quest (QuickStartSideQuestDone), like the carry quest.
+//
+// State: FLAG_BANK_12 raw 119-140, inside the run-start 0-793 wipe.
+#define GF_COURIER_ROLLED 119
+#define GF_COURIER_HOST_BIT(b) (120 + (b))  // b = 0..4, pool row of the giver
+#define GF_COURIER_SPOT_BIT(b) (125 + (b))  // b = 0..4, giver's spot seed
+#define GF_COURIER_DEST_BIT(b) (130 + (b))  // b = 0..4, pool row of the receiver
+#define GF_COURIER_STATE_BIT(b) (135 + (b)) // b = 0..1
+#define GF_COURIER_SKIN_BIT(b) (137 + (b))  // b = 0..1, which errand
+#define GF_COURIER_DEST_SET 139             // the receiver's row has been chosen
+#define QUICKSTART_COURIER_OFFERED 0
+#define QUICKSTART_COURIER_CARRYING_UNHINTED 1
+#define QUICKSTART_COURIER_CARRYING 2
+#define QUICKSTART_COURIER_DELIVERED 3
+#define QUICKSTART_COURIER_SKINS 3
+#define QUICKSTART_COURIER_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 3) // gCustomStrings3
+
+extern Script script_QuickStartCourierGiver;
+extern Script script_QuickStartCourierReceiver;
+
+static u32 QuickStartBank12Read(s32 base, s32 count) {
+    s32 b;
+    u32 v = 0;
+    for (b = 0; b < count; b++) {
+        if (CheckLocalFlagByBank(FLAG_BANK_12, base + b)) {
+            v |= 1u << b;
+        }
+    }
+    return v;
+}
+
+static void QuickStartBank12Write(s32 base, s32 count, u32 v) {
+    s32 b;
+    for (b = 0; b < count; b++) {
+        if (v & (1u << b)) {
+            SetLocalFlagByBank(FLAG_BANK_12, base + b);
+        } else {
+            ClearLocalFlagByBank(FLAG_BANK_12, base + b);
+        }
+    }
+}
+
+static s32 QuickStartCourierState(void) {
+    return (s32)QuickStartBank12Read(GF_COURIER_STATE_BIT(0), 2);
+}
+
+static void QuickStartCourierSetState(s32 state) {
+    QuickStartBank12Write(GF_COURIER_STATE_BIT(0), 2, (u32)state);
+}
+
+static bool32 QuickStartCourierWon(void) {
+    return QuickStartCourierState() == QUICKSTART_COURIER_DELIVERED;
+}
+
+static bool32 QuickStartCourierCarrying(void) {
+    s32 st = QuickStartCourierState();
+    return st == QUICKSTART_COURIER_CARRYING_UNHINTED || st == QUICKSTART_COURIER_CARRYING;
+}
+
+static s32 QuickStartCourierHost(void) {
+    return (s32)QuickStartBank12Read(GF_COURIER_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+}
+
+static s32 QuickStartCourierDest(void) {
+    return (s32)QuickStartBank12Read(GF_COURIER_DEST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+}
+
+static s32 QuickStartCourierSkin(void) {
+    return (s32)QuickStartBank12Read(GF_COURIER_SKIN_BIT(0), 2) % QUICKSTART_COURIER_SKINS;
+}
+
+// After the other four givers, avoiding their regions (five quest sprites
+// in twenty rows).
+static void QuickStartCourierRollOnce(void) {
+    s32 host, guard, hunt, scav, stealth, carry;
+    if (CheckLocalFlagByBank(FLAG_BANK_12, GF_COURIER_ROLLED)) {
+        return;
+    }
+    QuickStartCarryRollOnce();
+    hunt = QuickStartReadPoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST);
+    scav = QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST);
+    stealth = (s32)QuickStartGauntletReadBits(GF_STEALTH_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+    carry = QuickStartCarryHost();
+    host = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+    for (guard = 0; guard < QUICKSTART_REGION_POOL_SIZE; guard++) {
+        if (host != hunt && host != scav && host != stealth && host != carry) {
+            break;
+        }
+        host = (host + 1) % QUICKSTART_REGION_POOL_SIZE;
+    }
+    host = QuickStartScenarioQuestHostOr(QS_SCN_QUEST_COURIER, host);
+    QuickStartBank12Write(GF_COURIER_HOST_BIT(0), 5, (u32)host);
+    QuickStartBank12Write(GF_COURIER_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
+    QuickStartBank12Write(GF_COURIER_SKIN_BIT(0), 2, (u32)((s32)Random() % QUICKSTART_COURIER_SKINS));
+    QuickStartCourierSetState(QUICKSTART_COURIER_OFFERED);
+    SetLocalFlagByBank(FLAG_BANK_12, GF_COURIER_ROLLED);
+}
+
+// A walkable spot in a row's enemy table, from a seed: the giver's own
+// roll, the receiver's derived from it so the two never share a spot when
+// they share a table.
+static bool32 QuickStartCourierSpotIn(const QuickStartRegion* region, s32 seed, s16* outX, s16* outY) {
+    s32 i;
+    if (region->enemyOffsetCount <= 0) {
+        return FALSE;
+    }
+    for (i = 0; i < region->enemyOffsetCount; i++) {
+        s32 idx = (seed + i) % region->enemyOffsetCount;
+        s16 x = region->enemyOffsets[idx][0];
+        s16 y = region->enemyOffsets[idx][1];
+        if (QuickStartPositionAllowed(x, y)) {
+            *outX = x;
+            *outY = y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static s32 QuickStartCourierSeed(bool32 receiver) {
+    s32 seed = (s32)QuickStartBank12Read(GF_COURIER_SPOT_BIT(0), 5);
+    return receiver ? seed + 11 : seed;
+}
+
+// --- The script hooks (script_QuickStartCourierGiver / ...Receiver)
+void QuickStartCourierCanStart(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartCourierState() == QUICKSTART_COURIER_OFFERED;
+}
+
+void QuickStartCourierIsCarrying(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartCourierCarrying();
+}
+
+void QuickStartCourierIsDone(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartCourierWon();
+}
+
+// The giver's offer, by skin (a script Call passes no argument).
+void QuickStartCourierSayOffer(Entity* entity, ScriptExecutionContext* context) {
+    MessageNoOverlap(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_COURIER_TEXT + QuickStartCourierSkin() * 2)), entity);
+}
+
+void QuickStartCourierSayThanks(Entity* entity, ScriptExecutionContext* context) {
+    MessageNoOverlap(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_COURIER_TEXT + QuickStartCourierSkin() * 2 + 1)), entity);
+}
+
+// Taking the parcel: the receiver goes in a neighbouring region the player
+// can reach with what they hold now (the carry quest's prop rule).
+void QuickStartCourierBegin(Entity* entity, ScriptExecutionContext* context) {
+    if (QuickStartCourierState() != QUICKSTART_COURIER_OFFERED) {
+        return;
+    }
+    QuickStartBank12Write(GF_COURIER_DEST_BIT(0), 5, (u32)QuickStartCarryChoosePropRow(QuickStartCourierHost()));
+    SetLocalFlagByBank(FLAG_BANK_12, GF_COURIER_DEST_SET);
+    QuickStartCourierSetState(QUICKSTART_COURIER_CARRYING_UNHINTED);
+    SoundReq(SFX_SECRET);
+}
+
+// Handing it over: paid at the player's feet.
+void QuickStartCourierDeliver(Entity* entity, ScriptExecutionContext* context) {
+    s16 x, y;
+    if (!QuickStartCourierCarrying()) {
+        context->condition = FALSE;
+        return;
+    }
+    QuickStartCourierSetState(QUICKSTART_COURIER_DELIVERED);
+    QuickStartPlayerDropSpot(&x, &y);
+    QuickStartSpawnRewardEntity(QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE), x,
+                                y);
+    context->condition = TRUE;
+}
+
+static void QuickStartCourierStand(const QuickStartRegion* region, bool32 receiver) {
+    s16 spotX, spotY;
+    s32 worldX, worldY;
+    if (!QuickStartCourierSpotIn(region, QuickStartCourierSeed(receiver), &spotX, &spotY)) {
+        return;
+    }
+    worldX = gRoomControls.origin_x + spotX;
+    worldY = gRoomControls.origin_y + spotY;
+    if (QuickStartStealthNpcAt(worldX, worldY) == NULL && QuickStartGfxBudgetForSpawn()) {
+        Entity* npc = CreateNPC(ZELDA, 0, 0);
+        if (npc != NULL) {
+            npc->x.HALF.HI = worldX;
+            npc->y.HALF.HI = worldY;
+            npc->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcTalkable(npc, receiver ? &script_QuickStartCourierReceiver : &script_QuickStartCourierGiver);
+        }
+    }
+}
+
+// Called every frame from QuickStartRegionMonitor for the current row.
+static void QuickStartCourierMonitor(const QuickStartRegion* region, s32 slot) {
+    QuickStartCourierRollOnce();
+    if (slot == QuickStartCourierHost()) {
+        QuickStartCourierStand(region, FALSE);
+    }
+    // The receiver stands from the moment the parcel is taken, and stays
+    // after, so a player who comes back is thanked rather than met by an
+    // empty field.
+    if (CheckLocalFlagByBank(FLAG_BANK_12, GF_COURIER_DEST_SET) && slot == QuickStartCourierDest() &&
+        slot != QuickStartCourierHost()) {
+        QuickStartCourierStand(region, TRUE);
+    }
+    if (QuickStartCourierState() == QUICKSTART_COURIER_CARRYING_UNHINTED && !(gMessage.state & MESSAGE_ACTIVE) &&
+        gPlayerEntity.base.action == PLAYER_NORMAL && !QuickStartPlayerOnExitTrigger()) {
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartRegionHintLine(QuickStartRegionOfPoolIndex(QuickStartCourierDest()))), 0);
+        QuickStartCourierSetState(QUICKSTART_COURIER_CARRYING);
+    }
+}
+
 // The pot room.
 //
 // This replaced a fixed 3x3 grid of 9 pots centred on the site's own
@@ -16916,6 +17190,356 @@ static bool32 QuickStartSetupMemoryRoomContent(s32 extra, s16 contentX, s16 cont
     return FALSE;
 }
 
+// ==================== The switch puzzles (Oct 2026) ====================
+//
+// The redesign's P2 section 6.1: puzzle kinds with a SOLVED flag, a testbed
+// scenario and a solver probe each (puzzle_probe.py). All three are built
+// on the LIGHTABLE_SWITCH fixture the blink memory pair proved: it draws
+// from fixed gfx in every room (blocks, torches and levers are tileset art
+// and do not), a hit toggles its flag, and its sprite mirrors the flag, so
+// writing a flag is the display and reading one is the input. No cage and
+// no pots - the retired switch site's two failures.
+//
+//   ECHO    the order blinks once in this room, then the switches wait;
+//           strike them in that order. A wrong strike brings a wave and
+//           the order blinks again.
+//   LIGHTS  lights-out on a row of three: a strike flips the struck
+//           switch and its neighbours. Dealt from a random pattern; light
+//           all three. Every pattern of three is solvable (the flip matrix
+//           of a path of three is invertible over GF(2)).
+//   RACE    a lit switch goes dark again after a short while; light all
+//           three at once. Spread wider than a spin attack reaches.
+//
+// The switch flags are the room's (104-106, shared with the memory pair),
+// so a puzzle is only dealt at a site alone in its room
+// (QuickStartSitePuzzleOk). The variant's state is room flags in the
+// site's window plus one scratch half-word in each switch's unused
+// padding (QS_PUZZLE_CLOCK): the echo's show clock, the race's fuses.
+#define QS_PUZZLE_ECHO 0
+#define QS_PUZZLE_LIGHTS 1
+#define QS_PUZZLE_RACE 2
+#define QS_PUZZLE_VARIANTS 3
+#define QUICKSTART_PUZZLE_TEXT QUICKSTART_CONTENT_SITE_COUNT // gCustomStrings3, after the room lines
+#define QS_PUZZLE_SOLVED_FLAG 6 // flagBase + 6, as the memory recital's
+#define QS_PUZZLE_PAID_FLAG 3   // flagBase + 3
+#define QS_PUZZLE_SHORT_FLAG 7  // flagBase + 7: fewer than three switches fit
+#define QS_PUZZLE_INPUT_FLAG 2  // flagBase + 2: ECHO - the show is over, input open
+// flagBase + 2 again, for RACE only (which never opens an input phase): a
+// cramped deal plays as LIGHTS.
+#define QS_PUZZLE_AS_LIGHTS_FLAG 2
+#define QUICKSTART_PUZZLE_RACE_APART 40 // px: a spin attack reaches about this far
+// flagBase + 1, + 4, + 5: the switch bits as the puzzle last saw them
+// (LIGHTS and RACE tell a strike from their own writes by the difference).
+#define QS_PUZZLE_CLOCK(ent) (*(u16*)((u8*)(ent) + 0x78))
+#define QS_PUZZLE_ECHO_LEAD 60 // dark frames before the show
+#define QS_PUZZLE_ECHO_STEP 40 // one switch's turn in the show
+#define QS_PUZZLE_ECHO_LIT 30  // ... of which it is lit
+static const u8 sQuickStartPuzzleSeenBit[3] = { 1, 4, 5 };
+
+static Entity* QuickStartPuzzleSwitch(s32 k) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH && QS_SWITCH_FLAG2(ent) == QS_SWITCH_HIT_FLAG(k)) {
+            return ent;
+        }
+    }
+    return NULL;
+}
+
+static s32 QuickStartPuzzleLit(void) {
+    s32 k, lit = 0;
+    for (k = 0; k < 3; k++) {
+        if (QsCheckRoomFlag(104 + k)) {
+            lit |= 1 << k;
+        }
+    }
+    return lit;
+}
+
+static void QuickStartPuzzleWriteLit(s32 lit) {
+    s32 k;
+    for (k = 0; k < 3; k++) {
+        if (lit & (1 << k)) {
+            QsSetRoomFlag(104 + k);
+        } else {
+            QsClearRoomFlag(104 + k);
+        }
+    }
+}
+
+static s32 QuickStartPuzzleSeen(u32 flagBase) {
+    s32 k, seen = 0;
+    for (k = 0; k < 3; k++) {
+        if (QsCheckRoomFlag(flagBase + sQuickStartPuzzleSeenBit[k])) {
+            seen |= 1 << k;
+        }
+    }
+    return seen;
+}
+
+static void QuickStartPuzzleSetSeen(u32 flagBase, s32 seen) {
+    s32 k;
+    for (k = 0; k < 3; k++) {
+        if (seen & (1 << k)) {
+            QsSetRoomFlag(flagBase + sQuickStartPuzzleSeenBit[k]);
+        } else {
+            QsClearRoomFlag(flagBase + sQuickStartPuzzleSeenBit[k]);
+        }
+    }
+}
+
+// The order an ECHO site blinks, and the pattern a LIGHTS site deals: both
+// from the draw bits above the variant, so the site gives the same puzzle
+// on every visit.
+static const u8* QuickStartPuzzleOrder(s32 extra) {
+    return sQuickStartLeverRoles[((extra >> 2) & 0x3f) % 6];
+}
+
+static s32 QuickStartPuzzleStart(s32 extra) {
+    // 1..6: never all dark (a strike or two is still a puzzle from there,
+    // but a dark row reads as "nothing here"), never all lit.
+    return 1 + ((extra >> 2) & 0x3f) % 6;
+}
+
+// The race's fuse: how long a lit switch stays lit. It has to cover the
+// walk: a first version used a flat 150 frames and the puzzle sweep found a
+// room whose switches stand 128 px apart, a walk of over 170 frames from
+// the first to the last - unsolvable on foot. So: a second for the strikes,
+// plus two frames per pixel of the widest gap between two switches (Link
+// walks a little over one pixel a frame), less a little per difficulty.
+static s32 QuickStartPuzzleSpread(s32* nearest) {
+    s32 a, b, wide = 0;
+    *nearest = 0x7fff;
+    for (a = 0; a < 3; a++) {
+        Entity* ea = QuickStartPuzzleSwitch(a);
+        for (b = a + 1; b < 3; b++) {
+            Entity* eb = QuickStartPuzzleSwitch(b);
+            s32 dx, dy, d;
+            if (ea == NULL || eb == NULL) {
+                continue;
+            }
+            dx = ea->x.HALF.HI - eb->x.HALF.HI;
+            dy = ea->y.HALF.HI - eb->y.HALF.HI;
+            d = ((dx < 0) ? -dx : dx) + ((dy < 0) ? -dy : dy);
+            if (d > wide) {
+                wide = d;
+            }
+            if (d < *nearest) {
+                *nearest = d;
+            }
+        }
+    }
+    return wide;
+}
+
+static u16 QuickStartPuzzleFuse(void) {
+    s32 nearest;
+    s32 f = 60 + 2 * QuickStartPuzzleSpread(&nearest) - (s32)QuickStartEnemyDifficulty() * 4;
+    return (u16)((f < 90) ? 90 : (f > 480) ? 480 : f);
+}
+
+static bool32 QuickStartSetupPuzzleRoomContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
+    s32 variant = (extra & 3) % QS_PUZZLE_VARIANTS;
+    s32 ptx = contentX >> 4, pty = contentY >> 4;
+    s16 prizeX = contentX, prizeY = contentY;
+    s32 k, lit, seen;
+    if (!QsCheckRoomFlag(flagBase + 0)) {
+        // The deal: three switches in a row north of the content spot (the
+        // race's wider than a spin attack), the prize spot left free.
+        s32 ax = contentX, ay = contentY, dealt = 0, apart = (variant == QS_PUZZLE_RACE) ? 56 : 32;
+        QuickStartClampInboard(&ax, &ay);
+        for (k = 0; k < 3; k++) {
+            s16 lx, ly;
+            Entity* sw;
+            if (QuickStartGateSwitchSpot(ax + (k - 1) * apart, ay - 32, ptx, pty, &lx, &ly) &&
+                (sw = QuickStartSpawnPuzzleSwitch(lx, ly, (u32)k)) != NULL) {
+                QS_PUZZLE_CLOCK(sw) = (u16)gRoomTransition.frameCount;
+                dealt++;
+            }
+        }
+        QsClearRoomFlag(flagBase + QS_PUZZLE_INPUT_FLAG);
+        QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+        if (dealt < 3) {
+            // No room for the question: sweep the switches and pay, the
+            // way the memory recital does - a chain step here is never a
+            // wall.
+            s32 e;
+            for (e = 0; e < MAX_ENTITIES; e++) {
+                Entity* ent = &gEntities[e].base;
+                if (ent->kind == OBJECT && ent->id == LIGHTABLE_SWITCH && QuickStartEntityInCurrentRoom(ent)) {
+                    DeleteEntity(ent);
+                }
+            }
+            QsSetRoomFlag(flagBase + QS_PUZZLE_SHORT_FLAG);
+            QsSetRoomFlag(flagBase + QS_PUZZLE_SOLVED_FLAG);
+        } else {
+            s32 nearest;
+            if (variant == QS_PUZZLE_RACE) {
+                QuickStartPuzzleSpread(&nearest);
+                if (nearest < QUICKSTART_PUZZLE_RACE_APART) {
+                    // Too close for a race: one spin attack would light
+                    // them all. The room deals the lights instead.
+                    QsSetRoomFlag(flagBase + QS_PUZZLE_AS_LIGHTS_FLAG);
+                    variant = QS_PUZZLE_LIGHTS;
+                }
+            }
+            lit = (variant == QS_PUZZLE_LIGHTS) ? QuickStartPuzzleStart(extra) : 0;
+            QuickStartPuzzleWriteLit(lit);
+            QuickStartPuzzleSetSeen(flagBase, lit);
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_PUZZLE_TEXT + variant)), 0);
+        }
+        QsSetRoomFlag(flagBase + 0);
+    }
+    if (QsCheckRoomFlag(flagBase + QS_PUZZLE_SOLVED_FLAG)) {
+        // Paid when the prize has been taken - the memory recital's watch.
+        if (!QsCheckRoomFlag(flagBase + QS_PUZZLE_PAID_FLAG)) {
+            u16 rewardItem = QuickStartDrawItem((extra >> 2) & 0x3f, QS_CAT_DROP);
+            if (!QuickStartGroundItemAt(prizeX, prizeY) && QuickStartRewardDelivered(rewardItem, prizeX, prizeY)) {
+                QsSetRoomFlag(flagBase + QS_PUZZLE_PAID_FLAG);
+            }
+            return FALSE;
+        }
+        return !QuickStartGroundItemAt(prizeX, prizeY);
+    }
+    if (variant == QS_PUZZLE_RACE && QsCheckRoomFlag(flagBase + QS_PUZZLE_AS_LIGHTS_FLAG)) {
+        variant = QS_PUZZLE_LIGHTS;
+    }
+    lit = QuickStartPuzzleLit();
+    if (variant == QS_PUZZLE_ECHO) {
+        const u8* seq = QuickStartPuzzleOrder(extra);
+        if (!QsCheckRoomFlag(flagBase + QS_PUZZLE_INPUT_FLAG)) {
+            // The show: rewritten every frame, so a strike changes nothing.
+            Entity* clock = QuickStartPuzzleSwitch(0);
+            s32 t = (clock != NULL) ? (s32)(u16)((u16)gRoomTransition.frameCount - QS_PUZZLE_CLOCK(clock)) : 0;
+            s32 step = (t - QS_PUZZLE_ECHO_LEAD) / QS_PUZZLE_ECHO_STEP;
+            s32 show = 0;
+            if ((gMessage.state & MESSAGE_ACTIVE) && clock != NULL) {
+                // Not while a textbox covers the room (the deal's own
+                // instruction is one): the show waits for the player.
+                QS_PUZZLE_CLOCK(clock) = (u16)gRoomTransition.frameCount;
+                t = 0;
+                step = -1;
+            }
+            if (t >= QS_PUZZLE_ECHO_LEAD && step < 3 &&
+                (t - QS_PUZZLE_ECHO_LEAD) % QS_PUZZLE_ECHO_STEP < QS_PUZZLE_ECHO_LIT) {
+                show = 1 << seq[step];
+            }
+            QuickStartPuzzleWriteLit(show);
+            if (t >= QS_PUZZLE_ECHO_LEAD && step >= 3) {
+                QuickStartPuzzleWriteLit(0);
+                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+                QsSetRoomFlag(flagBase + QS_PUZZLE_INPUT_FLAG);
+            }
+            return FALSE;
+        }
+        {
+            // The answer: the memory recital's prefix logic.
+            s32 progress = QuickStartEyesReadField(QS_EYES_PROGRESS_BIT(0), 2);
+            s32 count = 0, newest = -1;
+            for (k = 0; k < 3; k++) {
+                if (lit & (1 << k)) {
+                    count++;
+                }
+            }
+            if (count == progress) {
+                return FALSE;
+            }
+            if (count < progress) {
+                for (k = 0; k < progress; k++) {
+                    QsSetRoomFlag(104 + seq[k]);
+                }
+                return FALSE;
+            }
+            for (k = 0; k < 3; k++) {
+                s32 j, inPrefix = 0;
+                if (!(lit & (1 << k))) {
+                    continue;
+                }
+                for (j = 0; j < progress; j++) {
+                    if (seq[j] == (u8)k) {
+                        inPrefix = 1;
+                    }
+                }
+                if (!inPrefix) {
+                    newest = k;
+                    break;
+                }
+            }
+            if (newest >= 0 && seq[progress] == (u8)newest) {
+                progress++;
+                QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, progress);
+                SoundReq(SFX_SECRET);
+                if (progress >= 3) {
+                    QsSetRoomFlag(flagBase + QS_PUZZLE_SOLVED_FLAG);
+                }
+                return FALSE;
+            }
+            // Wrong: company, and the show again.
+            QuickStartPuzzleWriteLit(0);
+            QuickStartEyesWriteField(QS_EYES_PROGRESS_BIT(0), 2, 0);
+            QsClearRoomFlag(flagBase + QS_PUZZLE_INPUT_FLAG);
+            {
+                Entity* clock = QuickStartPuzzleSwitch(0);
+                if (clock != NULL) {
+                    QS_PUZZLE_CLOCK(clock) = (u16)gRoomTransition.frameCount;
+                }
+            }
+            SoundReq(SFX_PLY_VO7);
+            QuickStartSpawnWave(contentX, contentY, 0, QuickStartEnemyDifficulty(), FALSE);
+        }
+        return FALSE;
+    }
+    seen = QuickStartPuzzleSeen(flagBase);
+    if (variant == QS_PUZZLE_LIGHTS) {
+        s32 diff = lit ^ seen;
+        if (diff == 1 || diff == 2 || diff == 4) {
+            // One strike: the struck switch flipped itself; flip its
+            // neighbours.
+            s32 struck = (diff == 1) ? 0 : (diff == 2) ? 1 : 2;
+            if (struck > 0) {
+                lit ^= 1 << (struck - 1);
+            }
+            if (struck < 2) {
+                lit ^= 1 << (struck + 1);
+            }
+            QuickStartPuzzleWriteLit(lit);
+        }
+        QuickStartPuzzleSetSeen(flagBase, lit);
+        if (lit == 7) {
+            SoundReq(SFX_SECRET);
+            QsSetRoomFlag(flagBase + QS_PUZZLE_SOLVED_FLAG);
+        }
+        return FALSE;
+    }
+    // RACE: every switch that came on since last frame lights its fuse;
+    // every burning fuse counts down; a spent one puts its switch out.
+    for (k = 0; k < 3; k++) {
+        Entity* sw = QuickStartPuzzleSwitch(k);
+        if (sw == NULL) {
+            continue;
+        }
+        if ((lit & (1 << k)) && !(seen & (1 << k))) {
+            QS_PUZZLE_CLOCK(sw) = QuickStartPuzzleFuse();
+        } else if (lit & (1 << k)) {
+            if (QS_PUZZLE_CLOCK(sw) <= 1) {
+                QS_PUZZLE_CLOCK(sw) = 0;
+                lit &= ~(1 << k);
+                QsClearRoomFlag(104 + k);
+                EnqueueSFX(SFX_110);
+            } else {
+                QS_PUZZLE_CLOCK(sw)--;
+            }
+        }
+    }
+    QuickStartPuzzleSetSeen(flagBase, lit);
+    if (lit == 7) {
+        SoundReq(SFX_SECRET);
+        QsSetRoomFlag(flagBase + QS_PUZZLE_SOLVED_FLAG);
+    }
+    return FALSE;
+}
+
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     // One correction for every kind: if the table's content spot is solid
     // or out of bounds, snap it to the nearest open tile before anything is
@@ -17027,6 +17651,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         }
     } else if (kind == QS_EVENT_MEMORY) {
         return QuickStartSetupMemoryRoomContent(extra, contentX, contentY, flagBase);
+    } else if (kind == QS_EVENT_PUZZLE) {
+        return QuickStartSetupPuzzleRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
@@ -18987,6 +19613,30 @@ void QuickStartMemoryLessonTaught(Entity* entity, ScriptExecutionContext* contex
     }
 }
 
+// A switch puzzle needs the room's switch flags to itself: no other site
+// in the room, and no fusion gate in front of it.
+static bool32 QuickStartSitePuzzleOk(s32 site) {
+    s32 i;
+    const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
+    if (entry->gateKinstone != 0) {
+        return FALSE;
+    }
+    // Rooms that cannot seat three switches clear of the fountain or the
+    // path (measured by puzzle_probe.py's sweep: no switch dealt at all):
+    // the three Great Fairy rooms, and the Minish path by the bow.
+    if (entry->area == AREA_GREAT_FAIRIES ||
+        (entry->area == AREA_MINISH_PATHS && entry->room == ROOM_MINISH_PATHS_BOW)) {
+        return FALSE;
+    }
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (i != site && sQuickStartRoomContentSites[i].area == entry->area &&
+            sQuickStartRoomContentSites[i].room == entry->room) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
     u8 kind, extra;
     u32 savedRand = gRand;
@@ -19058,6 +19708,13 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
             kind = QuickStartPickSmallKind();
             break;
     }
+    // The switch puzzles (Oct 2026): one gauntlet in four, at a site alone
+    // in its room, becomes a puzzle. Decided by a hash of its own so the
+    // shared stream - and every other site's roll - is unchanged.
+    if (kind == QS_EVENT_WAVES && QuickStartSitePuzzleOk(site) &&
+        ((QuickStartChainHash(0x9E2Fu + (u32)site) >> 7) & 3) == 0) {
+        kind = QS_EVENT_PUZZLE;
+    }
     if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
         // and the pick from it, and storing it (rather than calling Random()
@@ -19106,6 +19763,10 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         }
     } else if (kind == QS_EVENT_POT_LOTTERY) {
         extra = QuickStartPickPotRoomExtra();
+    } else if (kind == QS_EVENT_PUZZLE) {
+        // Bits 0-1 the variant, bits 2-7 a draw seed: the prize, the
+        // echo's order and the lights' starting pattern.
+        extra = (u8)(((s32)Random() % QS_PUZZLE_VARIANTS) | (((s32)Random() % QUICKSTART_DRAW_SEED_RANGE) << 2));
     } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         extra = QuickStartPickLotteryExtra();
     } else {
@@ -22668,6 +23329,12 @@ static void QuickStartClearHubRoom(void) {
         if (ent == gRoomControls.camera_target) {
             continue;
         }
+        // Gregal stays on the shop floor while he is sick (his ghost port,
+        // QuickStartGregalReward); everyone else who is not ours goes.
+        if (ent->kind == NPC && ent->id == GREGAL && gRoomControls.area == AREA_WIND_TRIBE_TOWER &&
+            gRoomControls.room == ROOM_WIND_TRIBE_TOWER_FLOOR_1) {
+            continue;
+        }
         if ((sweepEnemies && ent->kind == ENEMY) || (ent->kind == NPC && ent->id != ZELDA)) {
             DeleteEntity(ent);
             continue;
@@ -22834,6 +23501,142 @@ static void QuickStartInnChestMonitor(void) {
             SetLocalFlag(t->localFlag);
         }
     }
+}
+
+// --- The inn's blessing table (Oct 2026, the redesign's P2 section 8) ---
+//
+// "Make it the place where the run's blessings are chosen (one of three
+// baked goods)": once per run a table on the inn floor holds the three pastries,
+// a brioche, a croissant and a cake, one of them GOLD (the run seed says
+// which). Take one and the other two are cleared away. Free - the beds are
+// the rupee sink - so the inn is worth a visit every run. The pastries are
+// ordinary ground items and pay through GiveItem like any other (the tier
+// rides in type2); the table is told apart from a chest's prize by where it
+// stands and by the room flag that says it was laid this visit.
+#define GF_INN_BLESSING_TAKEN 118 // FLAG_BANK_12 raw, inside the run-start 0-793 wipe
+#define QUICKSTART_INN_TABLE_ROOM_FLAG 115 // room flag: the table was laid this visit
+// The row: the open floor south of the stair door, tiles (4..8, 17). Not
+// below the keeper - that is her counter, and a player sent there is
+// respawned (measured, inn_probe.py).
+#define QUICKSTART_INN_TABLE_X 72
+#define QUICKSTART_INN_TABLE_Y 280
+static const u16 sQuickStartInnPastries[3] = { ITEM_BRIOCHE, ITEM_CROISSANT, ITEM_CAKE };
+
+static s32 QuickStartInnTableCount(void) {
+    s32 i, k, n = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind != OBJECT || ent->id != GROUND_ITEM) {
+            continue;
+        }
+        for (k = 0; k < 3; k++) {
+            if (ent->type == sQuickStartInnPastries[k] && ent->y.HALF.HI == gRoomControls.origin_y + QUICKSTART_INN_TABLE_Y) {
+                n++;
+            }
+        }
+    }
+    return n;
+}
+
+static void QuickStartInnBlessingMonitor(void) {
+    s32 k;
+    if (!QuickStartIsInnRoom() || !QuickStartRoomSettled() ||
+        CheckLocalFlagByBank(FLAG_BANK_12, GF_INN_BLESSING_TAKEN)) {
+        return;
+    }
+    if (!QsCheckRoomFlag(QUICKSTART_INN_TABLE_ROOM_FLAG)) {
+        s32 gold = (s32)((QuickStartChainHash(0x1AA5u) >> 9) & 0x7fff) % 3;
+        for (k = 0; k < 3; k++) {
+            Entity* e = CreateObject(GROUND_ITEM, sQuickStartInnPastries[k], (k == gold) ? QS_PASTRY_GOLD : 0);
+            if (e != NULL) {
+                e->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_INN_TABLE_X + k * 32;
+                e->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_INN_TABLE_Y;
+                e->collisionLayer = 1;
+                e->flags |= ENT_PERSIST;
+                UpdateSpriteForCollisionLayer(e);
+                e->direction = IdleSouth;
+            }
+        }
+        QsSetRoomFlag(QUICKSTART_INN_TABLE_ROOM_FLAG);
+        return;
+    }
+    if (QuickStartInnTableCount() < 3) {
+        // One was taken: clear the table.
+        s32 i;
+        SetLocalFlagByBank(FLAG_BANK_12, GF_INN_BLESSING_TAKEN);
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* ent = &gEntities[i].base;
+            if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->y.HALF.HI == gRoomControls.origin_y + QUICKSTART_INN_TABLE_Y &&
+                (ent->type == ITEM_BRIOCHE || ent->type == ITEM_CROISSANT || ent->type == ITEM_CAKE)) {
+                DeleteEntity(ent);
+            }
+        }
+    }
+}
+
+// --- Hub travel: two warp pads (Oct 2026, the redesign's P2 section 8) ---
+//
+// "A warp pad per floor so the shop, inn and selection are one step
+// apart." The tower is a staircase: from the selection on Floor 3 to the
+// hole in Cloud Tops is four transitions (F3, F2, F1, the entrance, out),
+// each one a walk down a hall and a stair column. Two pads halve it: one
+// beside the selection hall goes straight to the shop's hall on Floor 1,
+// and one in the shop goes straight out to the tower door in Cloud Tops,
+// a few steps above the hole. The inn is the one stair between them.
+//
+// The pads are vanilla's WARP_POINT (warpPoint.c): stand on it and it spins
+// the player and transitions to the room and tile it carries (unk_7c,
+// unk_7d, unk_84 packed tile). It sleeps until its flag is set, which here
+// is a room flag the hub sets once the item selection is over - so the
+// draft cannot be skipped.
+#define QUICKSTART_HUB_PADS_FLAG 116 // room flag: the selection is done, pads live
+#define QUICKSTART_HUB_PADS_LAID_FLAG 117 // room flag: this visit's pad is laid
+typedef struct {
+    u8 room;
+    s16 x, y;
+    u8 toArea, toRoom;
+    u8 toTileX, toTileY;
+} QuickStartHubPad;
+static const QuickStartHubPad sQuickStartHubPads[] = {
+    // Floor 3, the selection hall's east end, clear of the item row (y 72),
+    // the sign (y 40) and the spawn (120, 120): to the shop hall's west end.
+    { ROOM_WIND_TRIBE_TOWER_FLOOR_3, 184, 104, AREA_WIND_TRIBE_TOWER, ROOM_WIND_TRIBE_TOWER_FLOOR_1, 2, 6 },
+    // Floor 1, the shop hall's east end: out to the tower door in Cloud
+    // Tops, (488, 360) - where the entrance's own south border lands.
+    { ROOM_WIND_TRIBE_TOWER_FLOOR_1, 200, 104, AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 30, 22 },
+};
+
+static void QuickStartHubPadsMonitor(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || !QuickStartRoomSettled()) {
+        return;
+    }
+    if (QuickStartHubGetPhase() >= 10) {
+        QsSetRoomFlag(QUICKSTART_HUB_PADS_FLAG);
+    }
+    if (QsCheckRoomFlag(QUICKSTART_HUB_PADS_LAID_FLAG)) {
+        return;
+    }
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartHubPads); i++) {
+        const QuickStartHubPad* pad = &sQuickStartHubPads[i];
+        Entity* e;
+        if (pad->room != gRoomControls.room) {
+            continue;
+        }
+        e = CreateObject(WARP_POINT, 0, 0);
+        if (e != NULL) {
+            u8* w = (u8*)e;
+            e->x.HALF.HI = gRoomControls.origin_x + pad->x;
+            e->y.HALF.HI = gRoomControls.origin_y + pad->y;
+            e->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(e);
+            w[0x7c] = pad->toArea;
+            w[0x7d] = pad->toRoom;
+            *(u16*)(w + 0x84) = (u16)(pad->toTileX | (pad->toTileY << 6));
+            *(u16*)(w + 0x86) = (u16)(0x8000 + QUICKSTART_ROOM_FLAG_ORIGIN + QUICKSTART_HUB_PADS_FLAG);
+        }
+    }
+    QsSetRoomFlag(QUICKSTART_HUB_PADS_LAID_FLAG);
 }
 
 static void QuickStartInnRest(s32 heal) {
@@ -24196,6 +24999,9 @@ static void QuickStartRoomMonitor(void) {
     }
     QuickStartSpawnInnkeeperOnce();
     QuickStartInnChestMonitor();
+    QuickStartInnBlessingMonitor();
+    QuickStartHubPadsMonitor();
+    QuickStartTrophyShelfMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();
@@ -25028,17 +25834,17 @@ static u16 QuickStartTintColour(u16 c, u32 tier) {
     return (u16)(r | (g << 5) | (b << 10));
 }
 
-void QuickStartTintItem(Entity* e) {
+bool32 QuickStartTintItem(Entity* e) {
     u32 tier = e->type2, src, id, i;
     s32 slot;
     if ((tier != QS_PASTRY_GREEN && tier != QS_PASTRY_GOLD) ||
         (e->type != ITEM_BRIOCHE && e->type != ITEM_CROISSANT && e->type != ITEM_CAKE) || e->kind != OBJECT ||
         (e->id != GROUND_ITEM && e->id != LINK_HOLDING_ITEM)) {
-        return;
+        return FALSE;
     }
     src = e->palette.b.b0;
     if ((gPaletteList[src].objPaletteId & 0xFF00) == (0xF000 | (tier << 8))) {
-        return;  // already ours (0xFFFF, the fixed slots' id, never matches)
+        return FALSE;  // already ours (0xFFFF, the fixed slots' id, never matches)
     }
     id = 0xF000 | (tier << 8) | src;
     slot = FindPalette(id);
@@ -25049,7 +25855,35 @@ void QuickStartTintItem(Entity* e) {
             slot = (s32)FindFreeObjPalette(1);
         }
         if (slot < 0) {
-            return;  // no slot this frame: the plain colours, and try again
+            // Every slot taken (a busy room: measured in Castle Garden,
+            // slots 6-14 all held by enemies and drops). A plain-looking
+            // GREEN pastry would hide its curse, so when the pastry is the
+            // only user of its own palette, recolour that palette in place.
+            if (src >= 6 && gPaletteList[src]._0_0 == 3 && gPaletteList[src]._1 == 1) {
+                for (i = 1; i < 16; i++) {
+                    gPaletteBuffer[(16 + src) * 16 + i] = QuickStartTintColour(gPaletteBuffer[(16 + src) * 16 + i], tier);
+                }
+                gPaletteList[src].objPaletteId = (u16)(0xF000 | (tier << 8) | src);
+                USE_PALETTE(16 + src);
+                return FALSE;
+            }
+            if (tier == QS_PASTRY_GREEN && e->id == GROUND_ITEM) {
+                // Shared palette and nothing free: a curse must never look
+                // like a blessing, so it goes back to being its own item -
+                // the pie, the dog food or the mushroom, sprite and all.
+                Entity* n = CreateObject(GROUND_ITEM, sQuickStartPastryCurse[(e->type == ITEM_BRIOCHE) ? 0 : (e->type == ITEM_CROISSANT) ? 1 : 2], 0);
+                if (n != NULL) {
+                    n->x.HALF.HI = e->x.HALF.HI;
+                    n->y.HALF.HI = e->y.HALF.HI;
+                    n->collisionLayer = e->collisionLayer;
+                    n->flags |= ENT_PERSIST;
+                    UpdateSpriteForCollisionLayer(n);
+                    n->direction = IdleSouth;
+                    DeleteEntity(e);
+                    return TRUE;  // the caller must not touch e again
+                }
+            }
+            return FALSE;  // otherwise the plain colours this frame, and try again
         }
         gPaletteList[slot].objPaletteId = (u16)id;
         gPaletteList[slot]._1 = 0;
@@ -25063,6 +25897,7 @@ void QuickStartTintItem(Entity* e) {
     }
     UnloadOBJPalette(e);
     SetEntityObjPalette(e, slot);
+    return FALSE;
 }
 
 void QuickStartShellTaken(void) {
@@ -25251,6 +26086,77 @@ typedef char QuickStartCatalogLedgerFits[(QUICKSTART_CATALOG_COUNT < 288) ? 1 : 
 
 s32 QuickStartCatalogCount(void) {
     return QUICKSTART_CATALOG_COUNT;
+}
+
+// --- The trophy shelf (Oct 2026, the redesign's P2 section 8) ---
+//
+// "A trophy case with sprites": the case's menu has no picture of its own
+// (figurineMenu.c explains why the figurine pose cannot be reused), so the
+// sprites stand in the room instead. Once the run's draft is over, the
+// selection floor's lower hall shows up to nine things the player has ever
+// found - the catalog's own ledger (gSave.figurines, kept across runs),
+// newest categories first: charms, skills, key items, weapons. Each is a
+// ground item made display-only: collision off every frame, so walking
+// through it takes nothing. The ordinary pickups (hearts, rupees, refills)
+// and the Element are left off - they are not trophies.
+bool32 QuickStartCatalogOwned(s32 index);
+#define QUICKSTART_TROPHY_MARK 0x60 // type2 of a shelf item (no tier, no piece)
+#define QUICKSTART_TROPHY_SLOTS 9
+#define QUICKSTART_TROPHY_CANDIDATES 14 // laid, then the sprite-less ones dropped (see below)
+#define QUICKSTART_TROPHY_X 40
+#define QUICKSTART_TROPHY_Y 264
+#define QUICKSTART_TROPHY_ROOM_FLAG 118 // room flag: the shelf was laid this visit
+
+static void QuickStartTrophyShelfMonitor(void) {
+    s32 i, n = 0;
+    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_FLOOR_3 ||
+        !QuickStartRoomSettled() || QuickStartHubGetPhase() < 10) {
+        return;
+    }
+    // Every frame: collision off; a shelf item whose id has no ground
+    // sprite (several charms reuse unused item ids - measured, the unused
+    // sword draws as a grey smear) is dropped once its init has run; the
+    // rest close ranks, nine at most.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type2 == QUICKSTART_TROPHY_MARK) {
+            COLLISION_OFF(ent);
+            ent->contactFlags = 0;
+            if (ent->action != 0 && ent->spriteIndex == 0) {
+                DeleteEntity(ent);
+                continue;
+            }
+            if (n >= QUICKSTART_TROPHY_SLOTS) {
+                DeleteEntity(ent);
+                continue;
+            }
+            ent->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_TROPHY_X + n * 20;
+            n++;
+        }
+    }
+    if (QsCheckRoomFlag(QUICKSTART_TROPHY_ROOM_FLAG)) {
+        return;
+    }
+    n = 0;
+    QsSetRoomFlag(QUICKSTART_TROPHY_ROOM_FLAG);
+    for (i = QUICKSTART_CATALOG_COUNT - 1; i >= 1 && n < QUICKSTART_TROPHY_CANDIDATES; i--) {
+        Entity* e;
+        if (sQuickStartCatalog[i].category == QS_CAT_REWARD || !QuickStartCatalogOwned(i + 1)) {
+            continue;
+        }
+        e = CreateObject(GROUND_ITEM, sQuickStartCatalog[i].item, QUICKSTART_TROPHY_MARK);
+        if (e == NULL) {
+            break;
+        }
+        e->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_TROPHY_X + n * 20;
+        e->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_TROPHY_Y;
+        e->collisionLayer = 1;
+        e->flags |= ENT_PERSIST;
+        COLLISION_OFF(e);
+        UpdateSpriteForCollisionLayer(e);
+        e->direction = IdleSouth;
+        n++;
+    }
 }
 
 // index is 1-based (menu convention). Out of range answers "locked",
@@ -26131,6 +27037,24 @@ void QuickStartFairyHonestyReward(Entity* this, ScriptExecutionContext* context)
     if (site >= 0) {
         QsSetSiteFlag(GF_CONTENT_SITE_DONE(site));
     }
+}
+
+// Gregal's ghost (Oct 2026, the redesign's P2 section 6.2, the guide's
+// second port). Gregal lies sick in the tower's shop floor with an evil
+// spirit over him; vanilla only loads that scene before WARP_EVENT_END,
+// which this mode sets at run start, so roomInit.c loads it under
+// QUICKSTART until he is cured (SORA_ELDER_RECOVER, a local flag, wiped
+// each run). The Gust Jar does the rest with vanilla's own objects: the
+// evil spirit (evilSpirit.c) yields to the jar, sets the flag and room flag
+// 0, and his script plays the cure. Only the thanks is ours: vanilla's 100
+// shells would be three seconds of invincibility here, so the script calls
+// this instead - a RARE draw at the player's feet, once a run (his
+// SORA_ELDER_TALK1ST latch is a local flag too).
+void QuickStartGregalReward(Entity* this, ScriptExecutionContext* context) {
+    s16 x, y;
+    QuickStartPlayerDropSpot(&x, &y);
+    QuickStartSpawnRewardEntity(QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE),
+                                x, y);
 }
 
 static void QuickStartMazeMonitor(void) {

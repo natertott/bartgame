@@ -1,0 +1,13457 @@
+[
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_13",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_16",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_18",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_19",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_1f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BARREL",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_INSIDE_BARREL"
+   },
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_INSIDE_BARREL"
+   },
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_INSIDE_BARREL"
+   },
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_INSIDE_BARREL"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BLUE_PORTAL"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BUTTON"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_LEVER"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_MAP"
+   }
+  ],
+  "arrival_points": [
+   [
+    24,
+    4095
+   ],
+   [
+    440,
+    4095
+   ],
+   [
+    4095,
+    56
+   ],
+   [
+    4095,
+    360
+   ]
+  ],
+  "landed": true,
+  "size": [
+   29,
+   25
+  ],
+  "open": 305,
+  "parts": [
+   {
+    "size": 73,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 35,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "E",
+    "exits": [
+     5
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 23,
+    "edges": "W",
+    "exits": [
+     7
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "NW",
+    "exits": [
+     4,
+     7
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "NE",
+    "exits": [
+     4,
+     5
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "SW",
+    "exits": [
+     6,
+     7
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "SE",
+    "exits": [
+     5,
+     6
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     440,
+     72
+    ],
+    "tile": [
+     27,
+     4
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     40
+    ],
+    "tile": [
+     14,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BLUE_PORTAL",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BARREL"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    200
+   ]
+  ],
+  "landed": true,
+  "size": [
+   25,
+   15
+  ],
+  "open": 207,
+  "parts": [
+   {
+    "size": 124,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 50,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     200
+    ],
+    "tile": [
+     14,
+     12
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     88
+    ],
+    "tile": [
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BOSS_DOOR",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_ENTRANCE"
+   },
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_ENTRANCE"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE_BOSS/DEEPWOOD_SHRINE_BOSS_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    72,
+    120
+   ],
+   [
+    168,
+    8
+   ],
+   [
+    264,
+    120
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   17
+  ],
+  "open": 182,
+  "parts": [
+   {
+    "size": 55,
+    "edges": "NSE",
+    "exits": [
+     2
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 54,
+    "edges": "NSW",
+    "exits": [
+     2
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      264,
+      120
+     ]
+    ]
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      72,
+      120
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BOSS_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   25,
+   15
+  ],
+  "open": 132,
+  "parts": [
+   {
+    "size": 51,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BUTTON",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BARREL"
+   }
+  ],
+  "arrival_points": [
+   [
+    40,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   25
+  ],
+  "open": 160,
+  "parts": [
+   {
+    "size": 37,
+    "edges": "SWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 33,
+    "edges": "NWE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "E",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     72
+    ],
+    "tile": [
+     14,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_COMPASS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_STAIRS_TO_B1"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   15
+  ],
+  "open": 124,
+  "parts": [
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      200,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 49,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_DOUBLE_STATUE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   10
+  ],
+  "open": 75,
+  "parts": [
+   {
+    "size": 44,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_ENTRANCE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BOSS_DOOR"
+   },
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BOSS_DOOR"
+   },
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE_ENTRY/DEEPWOOD_SHRINE_ENTRY_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    72,
+    120
+   ],
+   [
+    168,
+    216
+   ],
+   [
+    264,
+    120
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   17
+  ],
+  "open": 209,
+  "parts": [
+   {
+    "size": 87,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      72,
+      120
+     ],
+     [
+      168,
+      216
+     ],
+     [
+      264,
+      120
+     ]
+    ]
+   },
+   {
+    "size": 59,
+    "edges": "NSW",
+    "exits": [
+     2
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 59,
+    "edges": "NSE",
+    "exits": [
+     2
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_INSIDE_BARREL",
+  "exits": [],
+  "arrival_points": [
+   [
+    80,
+    56
+   ],
+   [
+    80,
+    112
+   ],
+   [
+    160,
+    56
+   ],
+   [
+    160,
+    112
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 88,
+  "parts": [
+   {
+    "size": 88,
+    "edges": "NS",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      80,
+      56
+     ],
+     [
+      80,
+      112
+     ],
+     [
+      160,
+      56
+     ],
+     [
+      160,
+      112
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LEVER",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BARREL"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   17
+  ],
+  "open": 150,
+  "parts": [
+   {
+    "size": 37,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 36,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 33,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 33,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LILY_PAD_EAST",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   18
+  ],
+  "open": 124,
+  "parts": [
+   {
+    "size": 78,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LILY_PAD_WEST",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   29,
+   25
+  ],
+  "open": 241,
+  "parts": [
+   {
+    "size": 199,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     40
+    ],
+    "tile": [
+     4,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MADDERPILLAR",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   15
+  ],
+  "open": 145,
+  "parts": [
+   {
+    "size": 80,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 56,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     88
+    ],
+    "tile": [
+     14,
+     5
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     88
+    ],
+    "tile": [
+     14,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MAP",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BARREL"
+   }
+  ],
+  "arrival_points": [
+   [
+    232,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   25
+  ],
+  "open": 187,
+  "parts": [
+   {
+    "size": 79,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "NE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 19,
+    "edges": "SWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MULLDOZER",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   12
+  ],
+  "open": 106,
+  "parts": [
+   {
+    "size": 58,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 36,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     152
+    ],
+    "tile": [
+     8,
+     9
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     72
+    ],
+    "tile": [
+     2,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_PILLARS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 76,
+  "parts": [
+   {
+    "size": 30,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     24
+    ],
+    "tile": [
+     8,
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_POT_BRIDGE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   15
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 41,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 35,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_STAIRS_TO_B1",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_COMPASS"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   15
+  ],
+  "open": 161,
+  "parts": [
+   {
+    "size": 81,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      200,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 74,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_TORCHES",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   21,
+   17
+  ],
+  "open": 235,
+  "parts": [
+   {
+    "size": 139,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 48,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 48,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     40
+    ],
+    "tile": [
+     10,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE_BOSS",
+  "room": "ROOM_DEEPWOOD_SHRINE_BOSS_MAIN",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_BOSS_DOOR"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    216
+   ]
+  ],
+  "landed": false,
+  "note": "did not land (got (0, 0))"
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE_ENTRY",
+  "room": "ROOM_DEEPWOOD_SHRINE_ENTRY_MAIN",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DEEPWOOD_SHRINE/DEEPWOOD_SHRINE_ENTRANCE"
+   },
+   {
+    "type": "BORDER",
+    "to": "MINISH_WOODS/MINISH_WOODS_MAIN"
+   },
+   {
+    "type": "BORDER",
+    "to": "MINISH_WOODS/MINISH_WOODS_MAIN"
+   },
+   {
+    "type": "BORDER",
+    "to": "MINISH_WOODS/MINISH_WOODS_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    100
+   ]
+  ],
+  "landed": false,
+  "note": "did not land (got (0, 255))"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_18",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_19",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_1f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_20",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_AFTER_CANE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_MINISH_SPIKES"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    72
+   ]
+  ],
+  "landed": false,
+  "note": "did not land (got (0, 255))"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BEFORE_GLEEROK",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_BOSS_DOOR"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    192
+   ]
+  ],
+  "landed": false,
+  "note": "did not land (got (73, 0))"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOB_OMB_WALL",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 195,
+  "parts": [
+   {
+    "size": 195,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSSKEY_PATH1",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   21,
+   15
+  ],
+  "open": 192,
+  "parts": [
+   {
+    "size": 117,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 27,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSSKEY_PATH2",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   21,
+   15
+  ],
+  "open": 228,
+  "parts": [
+   {
+    "size": 182,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSS_DOOR",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_BEFORE_GLEEROK"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   42,
+   30
+  ],
+  "open": 278,
+  "parts": [
+   {
+    "size": 31,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "NE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 23,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 22,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_CART_TO_SPINY_CHU",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   46,
+   13
+  ],
+  "open": 486,
+  "parts": [
+   {
+    "size": 486,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     40
+    ],
+    "tile": [
+     8,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_CART_WEST",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   43,
+   17
+  ],
+  "open": 729,
+  "parts": [
+   {
+    "size": 729,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     248
+    ],
+    "tile": [
+     11,
+     15
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     248
+    ],
+    "tile": [
+     11,
+     15
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_COMPASS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 195,
+  "parts": [
+   {
+    "size": 195,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     88
+    ],
+    "tile": [
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_ENTRANCE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "MT_CRENEL/MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    168
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      168
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_HELMASAUR_FIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   17
+  ],
+  "open": 255,
+  "parts": [
+   {
+    "size": 255,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MAIN_CART",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_NORTH_ENTRANCE"
+   }
+  ],
+  "arrival_points": [
+   [
+    504,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   55,
+   17
+  ],
+  "open": 783,
+  "parts": [
+   {
+    "size": 729,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 33,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      504,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 21,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     600,
+     56
+    ],
+    "tile": [
+     37,
+     3
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     680,
+     56
+    ],
+    "tile": [
+     42,
+     3
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MINISH_LAVA_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   23,
+   28
+  ],
+  "open": 368,
+  "parts": [
+   {
+    "size": 273,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 41,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     376
+    ],
+    "tile": [
+     4,
+     23
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MINISH_SPIKES",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_AFTER_CANE"
+   }
+  ],
+  "arrival_points": [
+   [
+    424,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   42,
+   30
+  ],
+  "open": 765,
+  "parts": [
+   {
+    "size": 528,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 78,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 77,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      424,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 35,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_NORTH_ENTRANCE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "CAVE_OF_FLAMES/CAVE_OF_FLAMES_MAIN_CART"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      40
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     88
+    ],
+    "tile": [
+     14,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_ROLLOBITE_LAVA_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   23,
+   28
+  ],
+  "open": 365,
+  "parts": [
+   {
+    "size": 278,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 54,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     40
+    ],
+    "tile": [
+     11,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_SPINY_CHU",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   23,
+   17
+  ],
+  "open": 305,
+  "parts": [
+   {
+    "size": 241,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 64,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     56,
+     120
+    ],
+    "tile": [
+     3,
+     7
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_TOMPAS_DOOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   42,
+   15
+  ],
+  "open": 475,
+  "parts": [
+   {
+    "size": 359,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 72,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_1e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_1f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_25",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_26",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_27",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_5",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_6",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_7",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_8",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_9",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_ARROW_EYE_BRIDGE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 179,
+  "parts": [
+   {
+    "size": 179,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_BEFORE_MAZAAL",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_WEST_KEY_LEVER"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    200
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 119,
+  "parts": [
+   {
+    "size": 59,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_BOSS_KEY",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_2F"
+   }
+  ],
+  "arrival_points": [
+   [
+    40,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 180,
+  "parts": [
+   {
+    "size": 166,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_CENTER_STAIRS_1F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_MAIN_2F"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_ENTRANCE_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    56
+   ],
+   [
+    120,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 87,
+  "parts": [
+   {
+    "size": 48,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      120,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 39,
+    "edges": "NSWE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_DARKNUT_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_DOUBLE_EYEGORE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 114,
+  "parts": [
+   {
+    "size": 72,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 36,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_EAST_KEY_LEVER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_3F"
+   },
+   {
+    "type": "AREA",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_3F"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    88
+   ],
+   [
+    408,
+    376
+   ],
+   [
+    504,
+    376
+   ]
+  ],
+  "landed": true,
+  "size": [
+   38,
+   27
+  ],
+  "open": 626,
+  "parts": [
+   {
+    "size": 361,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY",
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      200,
+      88
+     ]
+    ]
+   },
+   {
+    "size": 63,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 51,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 41,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     392,
+     184
+    ],
+    "tile": [
+     24,
+     11
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     392,
+     248
+    ],
+    "tile": [
+     24,
+     15
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     504,
+     248
+    ],
+    "tile": [
+     31,
+     15
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     504,
+     184
+    ],
+    "tile": [
+     31,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_EAST_STAIRS_1F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_EAST_STAIRS_2F"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_ENTRANCE_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    56
+   ],
+   [
+    104,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 95,
+  "parts": [
+   {
+    "size": 50,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 37,
+    "edges": "NSWE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_EAST_STAIRS_2F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_EAST_STAIRS_1F"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_2F"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    56
+   ],
+   [
+    136,
+    160
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 53,
+    "edges": "NSWE",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      56
+     ],
+     [
+      136,
+      160
+     ]
+    ]
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     168
+    ],
+    "tile": [
+     8,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_ENTRANCE_MOLE_MITTS",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_MOLE_MITTS"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    34
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 129,
+  "parts": [
+   {
+    "size": 99,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      34
+     ]
+    ]
+   },
+   {
+    "size": 23,
+    "edges": "S",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     152
+    ],
+    "tile": [
+     2,
+     9
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_HEART_PIECE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_ENTRANCE_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   16,
+   13
+  ],
+  "open": 94,
+  "parts": [
+   {
+    "size": 38,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 38,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_MAIN_2F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_CENTER_STAIRS_1F"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_2F"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    264
+   ],
+   [
+    136,
+    368
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 205,
+  "parts": [
+   {
+    "size": 97,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      264
+     ]
+    ]
+   },
+   {
+    "size": 50,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "SW",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "SE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     104,
+     24
+    ],
+    "tile": [
+     6,
+     1
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     24
+    ],
+    "tile": [
+     10,
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_MAZAAL",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS_TOP/FORTRESS_OF_WINDS_TOP_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    40
+   ],
+   [
+    184,
+    92
+   ]
+  ],
+  "landed": true,
+  "size": [
+   23,
+   13
+  ],
+  "open": 149,
+  "parts": [
+   {
+    "size": 149,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      184,
+      40
+     ],
+     [
+      184,
+      92
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     184
+    ],
+    "tile": [
+     11,
+     11
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     24
+    ],
+    "tile": [
+     11,
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_MINISH_HOLE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_SMALL_KEY"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    34
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 136,
+  "parts": [
+   {
+    "size": 95,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      120,
+      34
+     ]
+    ]
+   },
+   {
+    "size": 41,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_NORTH_SPLIT_PATH_PIT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 208,
+  "parts": [
+   {
+    "size": 159,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     104,
+     376
+    ],
+    "tile": [
+     6,
+     23
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     376
+    ],
+    "tile": [
+     10,
+     23
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_PILLAR_CLONE_BUTTONS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 440,
+  "parts": [
+   {
+    "size": 440,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     56,
+     376
+    ],
+    "tile": [
+     3,
+     23
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_PIT_PLATFORMS",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_3F"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    160
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   14
+  ],
+  "open": 50,
+  "parts": [
+   {
+    "size": 16,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     120,
+     40
+    ],
+    "tile": [
+     7,
+     2
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     248,
+     104
+    ],
+    "tile": [
+     15,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_ROTATING_SPIKE_TRAPS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     152,
+     168
+    ],
+    "tile": [
+     9,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_STALFOS",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_2F"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 138,
+  "parts": [
+   {
+    "size": 81,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 55,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      176
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     152
+    ],
+    "tile": [
+     14,
+     9
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     184
+    ],
+    "tile": [
+     8,
+     11
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     152,
+     24
+    ],
+    "tile": [
+     9,
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_WALLMASTER_MINISH_PORTAL",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_WEST_KEY_LEVER",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_BEFORE_MAZAAL"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_3F"
+   }
+  ],
+  "arrival_points": [
+   [
+    408,
+    160
+   ],
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   31,
+   14
+  ],
+  "open": 192,
+  "parts": [
+   {
+    "size": 48,
+    "edges": "NSW",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "SW",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 23,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 22,
+    "edges": "NSE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_WEST_STAIRS_1F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_WEST_STAIRS_2F"
+   },
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_ENTRANCE_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    56
+   ],
+   [
+    104,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 99,
+  "parts": [
+   {
+    "size": 51,
+    "edges": "NSWE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 48,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      56
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_WEST_STAIRS_2F",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_WEST_STAIRS_1F"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 111,
+  "parts": [
+   {
+    "size": 61,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 50,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_WIZZROBE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "OUTER_FORTRESS_OF_WINDS/OUTER_FORTRESS_OF_WINDS_ENTRANCE_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    176
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 107,
+  "parts": [
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      120,
+      176
+     ]
+    ]
+   },
+   {
+    "size": 39,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     120,
+     184
+    ],
+    "tile": [
+     7,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS",
+  "room": "ROOM_FORTRESS_OF_WINDS_f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_FORTRESS_OF_WINDS_TOP",
+  "room": "ROOM_FORTRESS_OF_WINDS_TOP_MAIN",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "FORTRESS_OF_WINDS/FORTRESS_OF_WINDS_MAZAAL"
+   }
+  ],
+  "arrival_points": [
+   [
+    160,
+    396
+   ]
+  ],
+  "landed": true,
+  "size": [
+   20,
+   30
+  ],
+  "open": 322,
+  "parts": [
+   {
+    "size": 231,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      160,
+      396
+     ]
+    ]
+   },
+   {
+    "size": 80,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_12",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_13",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_14",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_15",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_16",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_17",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_18",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_19",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_1f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_29",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_37",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_38",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_39",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3a",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_3f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_9_LANTERNS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   14
+  ],
+  "open": 201,
+  "parts": [
+   {
+    "size": 201,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     120
+    ],
+    "tile": [
+     2,
+     7
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_AFTER_TWIN_MADDERPILLARS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 151,
+  "parts": [
+   {
+    "size": 151,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     56,
+     104
+    ],
+    "tile": [
+     3,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BEFORE_TWIN_MADDERPILLARS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 195,
+  "parts": [
+   {
+    "size": 195,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BIG_OCTO",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ELEMENT"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   33,
+   16
+  ],
+  "open": 403,
+  "parts": [
+   {
+    "size": 403,
+    "edges": "NS",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLOCK_CLONE_BUTTON_PUZZLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   33,
+   13
+  ],
+  "open": 231,
+  "parts": [
+   {
+    "size": 123,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 94,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "S",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     120,
+     168
+    ],
+    "tile": [
+     7,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLOCK_CLONE_ICE_BRIDGE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_NORTHWEST_STAIRS"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 302,
+  "parts": [
+   {
+    "size": 202,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 55,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLOCK_CLONE_PUZZLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 109,
+  "parts": [
+   {
+    "size": 39,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 38,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLUE_CHU",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_TO_BLUE_CHU"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    8
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 103,
+  "parts": [
+   {
+    "size": 103,
+    "edges": "NS",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLUE_CHU_KEY",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BLUE_CHU_KEY_LEVER"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 108,
+  "parts": [
+   {
+    "size": 63,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      56
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BLUE_CHU_KEY_LEVER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_HOLE_TO_BLUE_CHU_KEY"
+   },
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BLUE_CHU_KEY"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    40
+   ],
+   [
+    200,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 115,
+  "parts": [
+   {
+    "size": 69,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 27,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      40
+     ],
+     [
+      200,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 12,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_BOSS_KEY",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_WEST_HOLE"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   34,
+   13
+  ],
+  "open": 310,
+  "parts": [
+   {
+    "size": 189,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 121,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      56
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_COMPASS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_TO_BLUE_CHU"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    104
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 79,
+  "parts": [
+   {
+    "size": 36,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 19,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      104
+     ]
+    ]
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     184
+    ],
+    "tile": [
+     10,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_DARK_MAZE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   39
+  ],
+  "open": 219,
+  "parts": [
+   {
+    "size": 80,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 54,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     24,
+     104
+    ],
+    "tile": [
+     1,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_DARK_SCISSOR_BEETLES",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 97,
+  "parts": [
+   {
+    "size": 77,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     56
+    ],
+    "tile": [
+     2,
+     3
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     120
+    ],
+    "tile": [
+     12,
+     7
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_EAST_HOLE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_NORTH_SMALL_KEY"
+   }
+  ],
+  "arrival_points": [
+   [
+    216,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 126,
+  "parts": [
+   {
+    "size": 84,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      216,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 21,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_ELEMENT",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_WATERFALL_NORTHEAST"
+   },
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ICE_CORNER"
+   },
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_HOLE_TO_BLUE_CHU_KEY"
+   },
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ENTRANCE"
+   },
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BIG_OCTO"
+   }
+  ],
+  "arrival_points": [
+   [
+    24,
+    4095
+   ],
+   [
+    520,
+    4095
+   ],
+   [
+    4095,
+    24
+   ],
+   [
+    4095,
+    376
+   ]
+  ],
+  "landed": true,
+  "size": [
+   33,
+   36
+  ],
+  "open": 890,
+  "parts": [
+   {
+    "size": 411,
+    "edges": "SWE",
+    "exits": [
+     0,
+     2,
+     4
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 200,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 128,
+    "edges": "NW",
+    "exits": [
+     0,
+     1,
+     3
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 128,
+    "edges": "NE",
+    "exits": [
+     1,
+     3
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_ENTRANCE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ELEMENT"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    376
+   ]
+  ],
+  "landed": true,
+  "size": [
+   33,
+   26
+  ],
+  "open": 452,
+  "parts": [
+   {
+    "size": 102,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 102,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 97,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 88,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 63,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_FLAMEBAR_BLOCK_PUZZLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   16,
+   13
+  ],
+  "open": 123,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 37,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     120,
+     40
+    ],
+    "tile": [
+     7,
+     2
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     120
+    ],
+    "tile": [
+     4,
+     7
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_HOLE_TO_BLUE_CHU_KEY",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ELEMENT"
+   },
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BLUE_CHU_KEY_LEVER"
+   }
+  ],
+  "arrival_points": [
+   [
+    8,
+    4095
+   ],
+   [
+    200,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 116,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      200,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 33,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_ICE_CORNER",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ELEMENT"
+   }
+  ],
+  "arrival_points": [
+   [
+    8,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 139,
+  "parts": [
+   {
+    "size": 86,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 37,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_ICE_MADDERPILLAR",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   14
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 70,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     40
+    ],
+    "tile": [
+     10,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_ICE_PIT_MAZE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   39
+  ],
+  "open": 274,
+  "parts": [
+   {
+    "size": 194,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_LILYPAD_B2_MIDDLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   33,
+   14
+  ],
+  "open": 23,
+  "parts": [
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_LILYPAD_B2_WEST",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_WEST_WATERFALL_SOUTHWEST"
+   }
+  ],
+  "arrival_points": [
+   [
+    56,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   27
+  ],
+  "open": 92,
+  "parts": [
+   {
+    "size": 44,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_LILYPAD_ICE_BLOCKS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   33,
+   39
+  ],
+  "open": 530,
+  "parts": [
+   {
+    "size": 187,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 140,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 74,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 36,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_MULLDOZERS_FIRE_BARS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 61,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 22,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_MULLDOZER_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 100,
+  "parts": [
+   {
+    "size": 51,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 49,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_NORTHWEST_STAIRS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BLOCK_CLONE_ICE_BRIDGE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 161,
+  "parts": [
+   {
+    "size": 133,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      40
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_NORTH_SMALL_KEY",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_EAST_HOLE"
+   }
+  ],
+  "arrival_points": [
+   [
+    216,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 114,
+  "parts": [
+   {
+    "size": 55,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      216,
+      56
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_NORTH_SPLIT_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 115,
+  "parts": [
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     104
+    ],
+    "tile": [
+     2,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_SCISSORS_MINIBOSS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_STAIRS_TO_SCISSORS_MINIBOSS"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      200,
+      40
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     24
+    ],
+    "tile": [
+     12,
+     1
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     88,
+     152
+    ],
+    "tile": [
+     5,
+     9
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_SPIKE_BAR_FLIPPER_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   40
+  ],
+  "open": 600,
+  "parts": [
+   {
+    "size": 600,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_STAIRS_TO_SCISSORS_MINIBOSS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_SCISSORS_MINIBOSS"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 91,
+  "parts": [
+   {
+    "size": 30,
+    "edges": "NE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      200,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      200,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 10,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_TO_BLUE_CHU",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_COMPASS"
+   },
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BLUE_CHU"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    104
+   ],
+   [
+    4095,
+    184
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 98,
+  "parts": [
+   {
+    "size": 44,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 32,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SW",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      104
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     168
+    ],
+    "tile": [
+     12,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_TWIN_MADDERPILLARS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 189,
+  "parts": [
+   {
+    "size": 189,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     216,
+     104
+    ],
+    "tile": [
+     13,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_WATERFALL_NORTHEAST",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_ELEMENT"
+   }
+  ],
+  "arrival_points": [
+   [
+    248,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 245,
+  "parts": [
+   {
+    "size": 112,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 92,
+    "edges": "NWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     24,
+     360
+    ],
+    "tile": [
+     1,
+     22
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_WATERFALL_NORTHWEST",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   26
+  ],
+  "open": 264,
+  "parts": [
+   {
+    "size": 238,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     184,
+     360
+    ],
+    "tile": [
+     11,
+     22
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_WEST_HOLE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_BOSS_KEY"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 117,
+  "parts": [
+   {
+    "size": 53,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 32,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 32,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_WEST_WATERFALL_SOUTHEAST",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 195,
+  "parts": [
+   {
+    "size": 195,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_TEMPLE_OF_DROPLETS",
+  "room": "ROOM_TEMPLE_OF_DROPLETS_WEST_WATERFALL_SOUTHWEST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "TEMPLE_OF_DROPLETS/TEMPLE_OF_DROPLETS_LILYPAD_B2_WEST"
+   }
+  ],
+  "arrival_points": [
+   [
+    56,
+    360
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 165,
+  "parts": [
+   {
+    "size": 112,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_0",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_3",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_5",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_6",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_ENTRANCE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "ROYAL_VALLEY/ROYAL_VALLEY_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    120
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   10
+  ],
+  "open": 80,
+  "parts": [
+   {
+    "size": 60,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      120
+     ]
+    ]
+   },
+   {
+    "size": 10,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_GIBDO",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "ROYAL_CRYPT/ROYAL_CRYPT_KEY_BLOCK"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    280
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   20
+  ],
+  "open": 304,
+  "parts": [
+   {
+    "size": 132,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 132,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      168,
+      280
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_KEY_BLOCK",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "ROYAL_CRYPT/ROYAL_CRYPT_GIBDO"
+   },
+   {
+    "type": "AREA",
+    "to": "ROYAL_CRYPT/ROYAL_CRYPT_MUSHROOM_PIT"
+   }
+  ],
+  "arrival_points": [
+   [
+    296,
+    72
+   ],
+   [
+    296,
+    344
+   ]
+  ],
+  "landed": true,
+  "size": [
+   37,
+   24
+  ],
+  "open": 502,
+  "parts": [
+   {
+    "size": 264,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      296,
+      344
+     ]
+    ]
+   },
+   {
+    "size": 78,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 78,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 52,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      296,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_MUSHROOM_PIT",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "ROYAL_CRYPT/ROYAL_CRYPT_KEY_BLOCK"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   22
+  ],
+  "open": 186,
+  "parts": [
+   {
+    "size": 53,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 41,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     56
+    ],
+    "tile": [
+     8,
+     3
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_WATER_ROPE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   14
+  ],
+  "open": 124,
+  "parts": [
+   {
+    "size": 100,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_33",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BALL_AND_CHAIN_SOLDIERS",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_HOLE_TO_DARKNUT"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    296
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 171,
+  "parts": [
+   {
+    "size": 114,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     88
+    ],
+    "tile": [
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BEFORE_BALL_AND_CHAIN_SOLDIERS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   14
+  ],
+  "open": 99,
+  "parts": [
+   {
+    "size": 67,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BLOCK_MAZE_TO_BOSS_DOOR",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_RED_WARP_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    456
+   ]
+  ],
+  "landed": true,
+  "size": [
+   45,
+   30
+  ],
+  "open": 330,
+  "parts": [
+   {
+    "size": 231,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 83,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BOMBAROSSA_PATH",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_TO_BOMBAROSSA_PATH"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    136
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 51,
+  "parts": [
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     56,
+     24
+    ],
+    "tile": [
+     3,
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BOMB_WALL_INSIDE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BOMB_WALL_OUTSIDE"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_RED_WARP_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    56,
+    72
+   ],
+   [
+    200,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 77,
+  "parts": [
+   {
+    "size": 59,
+    "edges": "N",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      56,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BOMB_WALL_OUTSIDE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_TO_BOMBAROSSA_PATH"
+   },
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BOMB_WALL_INSIDE"
+   }
+  ],
+  "arrival_points": [
+   [
+    24,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 120,
+  "parts": [
+   {
+    "size": 120,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BOSS_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 62,
+  "parts": [
+   {
+    "size": 62,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BRIDGE_AFTER_DARKNUT",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_DARK_COMPASS_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 8,
+  "parts": [
+   {
+    "size": 8,
+    "edges": "S",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      120,
+      40
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_BRIDGE_SWITCHES_CLONE_BLOCK",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   32,
+   20
+  ],
+  "open": 203,
+  "parts": [
+   {
+    "size": 76,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 50,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 19,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_CLOUD_JUMPS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   45,
+   20
+  ],
+  "open": 145,
+  "parts": [
+   {
+    "size": 37,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 27,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_CORNER_TO_MAP",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 63,
+  "parts": [
+   {
+    "size": 37,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_CRACKED_FLOOR_LAKITU",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   30
+  ],
+  "open": 98,
+  "parts": [
+   {
+    "size": 40,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 19,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_DARKNUT_MINIBOSS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   16
+  ],
+  "open": 75,
+  "parts": [
+   {
+    "size": 75,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_DARK_COMPASS_HALL",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BRIDGE_AFTER_DARKNUT"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_TO_PEAHAT_SWITCH"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    232
+   ],
+   [
+    360,
+    280
+   ]
+  ],
+  "landed": true,
+  "size": [
+   45,
+   20
+  ],
+  "open": 514,
+  "parts": [
+   {
+    "size": 193,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      184,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 191,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      360,
+      280
+     ]
+    ]
+   },
+   {
+    "size": 21,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_DOOR_TO_STALFOS_FIREBAR",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 72,
+  "parts": [
+   {
+    "size": 49,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_EAST_CHEST_FROM_GYORG_BOSS_DOOR",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 63,
+  "parts": [
+   {
+    "size": 63,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_ENTRANCE_ROOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   45,
+   11
+  ],
+  "open": 126,
+  "parts": [
+   {
+    "size": 126,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_FAN_AND_KEY_TO_BOSS_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   30
+  ],
+  "open": 132,
+  "parts": [
+   {
+    "size": 48,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 44,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     120,
+     40
+    ],
+    "tile": [
+     7,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_FAN_BRIDGE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   20
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 123,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_FIRE_BAR_GRATES",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   30
+  ],
+  "open": 115,
+  "parts": [
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 43,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_FLOORMASTER_LEVER",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 71,
+  "parts": [
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "SE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     120
+    ],
+    "tile": [
+     4,
+     7
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_FOUR_BUTTON_STALFOS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   30
+  ],
+  "open": 145,
+  "parts": [
+   {
+    "size": 62,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     88
+    ],
+    "tile": [
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_GIBDO_STAIRS",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_WHIRLWIND_BOMBAROSSA"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_KEY_ARROW_BUTTON"
+   }
+  ],
+  "arrival_points": [
+   [
+    56,
+    72
+   ],
+   [
+    4095,
+    136
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 79,
+  "parts": [
+   {
+    "size": 61,
+    "edges": "N",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      56,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     24,
+     104
+    ],
+    "tile": [
+     1,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_GRATES_TO_3F",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   45,
+   30
+  ],
+  "open": 202,
+  "parts": [
+   {
+    "size": 80,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 35,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 13,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_GRATE_PLATFORM_RIDE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   20
+  ],
+  "open": 68,
+  "parts": [
+   {
+    "size": 52,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "E",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     440,
+     72
+    ],
+    "tile": [
+     27,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_GYORG_BOSS_DOOR",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_GYORG_TORNADO"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   45,
+   10
+  ],
+  "open": 165,
+  "parts": [
+   {
+    "size": 44,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 42,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 26,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 22,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_GYORG_TORNADO",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_GYORG_BOSS_DOOR"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    456
+   ]
+  ],
+  "landed": true,
+  "size": [
+   45,
+   30
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 96,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "S",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "S",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_HEART_PIECE_BRIDGE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_RED_WARP_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    136
+   ]
+  ],
+  "landed": true,
+  "size": [
+   30,
+   10
+  ],
+  "open": 68,
+  "parts": [
+   {
+    "size": 30,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "NS",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_HOLE_TO_DARKNUT",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BALL_AND_CHAIN_SOLDIERS"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   13
+  ],
+  "open": 81,
+  "parts": [
+   {
+    "size": 49,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "NW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "NE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_HOLE_TO_KINSTONE_WIZZROBE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 74,
+  "parts": [
+   {
+    "size": 38,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 36,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_KEY_ARROW_BUTTON",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_PIT_CORNER_AFTER_KEY"
+   },
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_POT_PUSH"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_GIBDO_STAIRS"
+   }
+  ],
+  "arrival_points": [
+   [
+    56,
+    72
+   ],
+   [
+    216,
+    4095
+   ],
+   [
+    4095,
+    120
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 68,
+  "parts": [
+   {
+    "size": 27,
+    "edges": "NW",
+    "exits": [
+     2
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      56,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 22,
+    "edges": "N",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     216,
+     56
+    ],
+    "tile": [
+     13,
+     3
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_KINSTONE_WIZZROBE_FIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 72,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 23,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     104
+    ],
+    "tile": [
+     2,
+     6
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     104
+    ],
+    "tile": [
+     12,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_MAP",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 50,
+  "parts": [
+   {
+    "size": 50,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_MOBLIN_AND_WIZZROBE_FIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   30
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 67,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 44,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 32,
+    "edges": "NWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_PEAHAT_SWITCH",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_TO_PEAHAT_SWITCH"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 137,
+  "parts": [
+   {
+    "size": 116,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NW",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     216,
+     72
+    ],
+    "tile": [
+     13,
+     4
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     184
+    ],
+    "tile": [
+     2,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_PIT_CORNER_AFTER_KEY",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_KEY_ARROW_BUTTON"
+   }
+  ],
+  "arrival_points": [
+   [
+    16,
+    4095
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 11,
+  "parts": [
+   {
+    "size": 8,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     24,
+     216
+    ],
+    "tile": [
+     1,
+     13
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_PLATFORM_CLONE_RIDE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   20
+  ],
+  "open": 213,
+  "parts": [
+   {
+    "size": 119,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 47,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 27,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_PLATFORM_CROW_RIDE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   40
+  ],
+  "open": 52,
+  "parts": [
+   {
+    "size": 28,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_PLATFORM_RIDE_BOMBAROSSAS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "did not land (got (112, 255))"
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_POT_PUSH",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_KEY_ARROW_BUTTON"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   30,
+   20
+  ],
+  "open": 252,
+  "parts": [
+   {
+    "size": 102,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 67,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 54,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     24,
+     72
+    ],
+    "tile": [
+     1,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_RED_WARP_HALL",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_HEART_PIECE_BRIDGE"
+   },
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BLOCK_MAZE_TO_BOSS_DOOR"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_STAIRS_AFTER_FLOORMASTER"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BOMB_WALL_INSIDE"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    232
+   ],
+   [
+    536,
+    232
+   ],
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   45,
+   20
+  ],
+  "open": 426,
+  "parts": [
+   {
+    "size": 158,
+    "edges": "",
+    "exits": [
+     2
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      184,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 135,
+    "edges": "",
+    "exits": [
+     3
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      536,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "N",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NW",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     536,
+     24
+    ],
+    "tile": [
+     33,
+     1
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     536,
+     216
+    ],
+    "tile": [
+     33,
+     13
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     312,
+     72
+    ],
+    "tile": [
+     19,
+     4
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     408,
+     72
+    ],
+    "tile": [
+     25,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_ROC_CAPE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   30
+  ],
+  "open": 241,
+  "parts": [
+   {
+    "size": 93,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 80,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 56,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_SHORTCUT_DOOR_BUTTONS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 68,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "S",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     72
+    ],
+    "tile": [
+     2,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_SPIKE_BAR_SMALL_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 102,
+  "parts": [
+   {
+    "size": 61,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_SPINY_FIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   30,
+   30
+  ],
+  "open": 290,
+  "parts": [
+   {
+    "size": 113,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 68,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 59,
+    "edges": "S",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     312
+    ],
+    "tile": [
+     12,
+     19
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     264,
+     312
+    ],
+    "tile": [
+     16,
+     19
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_STAIRS_AFTER_FLOORMASTER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_RED_WARP_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 63,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      184,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 12,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_STALFOS_FIREBAR_HOLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 52,
+  "parts": [
+   {
+    "size": 52,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     216,
+     72
+    ],
+    "tile": [
+     13,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_TO_BOMBAROSSA_PATH",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BOMBAROSSA_PATH"
+   },
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_BOMB_WALL_OUTSIDE"
+   }
+  ],
+  "arrival_points": [
+   [
+    200,
+    4095
+   ],
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 68,
+  "parts": [
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "NE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_TO_FAN_BRIDGE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   15,
+   20
+  ],
+  "open": 103,
+  "parts": [
+   {
+    "size": 103,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_TO_PEAHAT_SWITCH",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_PEAHAT_SWITCH"
+   },
+   {
+    "type": "AREA",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_DARK_COMPASS_HALL"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    72
+   ],
+   [
+    4095,
+    136
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   10
+  ],
+  "open": 74,
+  "parts": [
+   {
+    "size": 56,
+    "edges": "N",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      184,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 12,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "SW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     216,
+     104
+    ],
+    "tile": [
+     13,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_PALACE_OF_WINDS",
+  "room": "ROOM_PALACE_OF_WINDS_WHIRLWIND_BOMBAROSSA",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "PALACE_OF_WINDS/PALACE_OF_WINDS_GIBDO_STAIRS"
+   }
+  ],
+  "arrival_points": [
+   [
+    4095,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   30,
+   20
+  ],
+  "open": 44,
+  "parts": [
+   {
+    "size": 20,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "W",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     72
+    ],
+    "tile": [
+     2,
+     4
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_0",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_3"
+   },
+   {
+    "type": "BORDER",
+    "to": "CASTLE_GARDEN/CASTLE_GARDEN_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    72,
+    232
+   ],
+   [
+    216,
+    520
+   ]
+  ],
+  "landed": true,
+  "size": [
+   27,
+   37
+  ],
+  "open": 515,
+  "parts": [
+   {
+    "size": 178,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 103,
+    "edges": "NW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 103,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      72,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SE",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     360,
+     216
+    ],
+    "tile": [
+     22,
+     13
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     216
+    ],
+    "tile": [
+     4,
+     13
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_1",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_3"
+   },
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_3"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    56
+   ],
+   [
+    408,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   31,
+   33
+  ],
+  "open": 669,
+  "parts": [
+   {
+    "size": 386,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      88,
+      56
+     ],
+     [
+      408,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 169,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 57,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 57,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     88,
+     40
+    ],
+    "tile": [
+     5,
+     2
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     408,
+     40
+    ],
+    "tile": [
+     25,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_2",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_3",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_1"
+   },
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_1"
+   },
+   {
+    "type": "AREA",
+    "to": "HYRULE_CASTLE/HYRULE_CASTLE_0"
+   },
+   {
+    "type": "AREA",
+    "to": "SANCTUARY_ENTRANCE/SANCTUARY_ENTRANCE_MAIN"
+   },
+   {
+    "type": "BORDER",
+    "to": "HYRULE_CASTLE_CELLAR/HYRULE_CASTLE_CELLAR_1"
+   }
+  ],
+  "arrival_points": [
+   [
+    82,
+    668
+   ],
+   [
+    104,
+    40
+   ],
+   [
+    136,
+    648
+   ],
+   [
+    280,
+    488
+   ],
+   [
+    456,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   35,
+   46
+  ],
+  "open": 1056,
+  "parts": [
+   {
+    "size": 568,
+    "edges": "",
+    "exits": [
+     0,
+     1,
+     2
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      82,
+      668
+     ],
+     [
+      104,
+      40
+     ],
+     [
+      136,
+      648
+     ],
+     [
+      280,
+      488
+     ],
+     [
+      456,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 320,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 140,
+    "edges": "SWE",
+    "exits": [
+     4
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 28,
+    "edges": "W",
+    "exits": [
+     4
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     72,
+     664
+    ],
+    "tile": [
+     4,
+     41
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_4",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_5",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_6",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_7",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_BEFORE_THRONE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_BEFORE_THRONE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    88
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 108,
+  "parts": [
+   {
+    "size": 57,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      88
+     ]
+    ]
+   },
+   {
+    "size": 51,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_BOTTOM_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 147,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 41,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_BOTTOM_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 153,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_COMPASS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_BELOW_COMPASS"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 114,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 29,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      184,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 7,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_ENTRANCE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_MAP"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_MAP"
+   },
+   {
+    "type": "AREA",
+    "to": "CASTLE_GARDEN/CASTLE_GARDEN_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    264,
+    232
+   ],
+   [
+    408,
+    496
+   ],
+   [
+    552,
+    232
+   ]
+  ],
+  "landed": true,
+  "size": [
+   51,
+   36
+  ],
+  "open": 1366,
+  "parts": [
+   {
+    "size": 536,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 536,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 178,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      408,
+      496
+     ]
+    ]
+   },
+   {
+    "size": 36,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      264,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      552,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     552,
+     216
+    ],
+    "tile": [
+     34,
+     13
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_BOTTOM",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 133,
+  "parts": [
+   {
+    "size": 85,
+    "edges": "WE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_BOTTOM_LEFT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 163,
+  "parts": [
+   {
+    "size": 93,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 70,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_BOTTOM_RIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 173,
+  "parts": [
+   {
+    "size": 104,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 69,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_LEFT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 224,
+  "parts": [
+   {
+    "size": 132,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 88,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_RIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 306,
+  "parts": [
+   {
+    "size": 285,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 21,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_TOP",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     88
+    ],
+    "tile": [
+     14,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_TOP_LEFT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_LOOP_TOP_RIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_THRONE_ROOM",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_BELOW_THRONE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    88
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 116,
+  "parts": [
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      88
+     ]
+    ]
+   },
+   {
+    "size": 40,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "SE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     136
+    ],
+    "tile": [
+     14,
+     8
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_TOP_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 153,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1F_TOP_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 141,
+  "parts": [
+   {
+    "size": 70,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 56,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 15,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_1b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BLUE_WARP",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 117,
+  "parts": [
+   {
+    "size": 69,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOSS_DOOR",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE_BRIDGE/DARK_HYRULE_CASTLE_BRIDGE_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 109,
+  "parts": [
+   {
+    "size": 69,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY",
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 10,
+    "edges": "NW",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NE",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "SE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     104
+    ],
+    "tile": [
+     2,
+     6
+    ]
+   },
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     104
+    ],
+    "tile": [
+     14,
+     6
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOSS_KEY",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   15
+  ],
+  "open": 106,
+  "parts": [
+   {
+    "size": 46,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 20,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_CORNER_PUZZLE",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 100,
+  "parts": [
+   {
+    "size": 64,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 18,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     200,
+     184
+    ],
+    "tile": [
+     12,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_DARKNUTS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 110,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_GHINI",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_SOUTH"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    160
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 69,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      136,
+      160
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     168
+    ],
+    "tile": [
+     8,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_BOTTOM_LEFT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_BOTTOM_LEFT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_SOUTHWEST"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ],
+   [
+    136,
+    176
+   ],
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 153,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 47,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ],
+     [
+      136,
+      176
+     ],
+     [
+      168,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_CORNER",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 288,
+  "parts": [
+   {
+    "size": 214,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 52,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 22,
+    "edges": "NE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     296
+    ],
+    "tile": [
+     14,
+     18
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_DARKNUT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 110,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_BOTTOM_RIGHT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_BOTTOM_RIGHT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_SOUTHEAST"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    280
+   ],
+   [
+    136,
+    376
+   ],
+   [
+    168,
+    280
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 341,
+  "parts": [
+   {
+    "size": 291,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 27,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      104,
+      280
+     ],
+     [
+      168,
+      280
+     ]
+    ]
+   },
+   {
+    "size": 15,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      376
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     104,
+     264
+    ],
+    "tile": [
+     6,
+     16
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_ENTRANCE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_SOUTH"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    368
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 239,
+  "parts": [
+   {
+    "size": 157,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      368
+     ]
+    ]
+   },
+   {
+    "size": 41,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 41,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_LEFT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 126,
+  "parts": [
+   {
+    "size": 34,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 34,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 19,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     40
+    ],
+    "tile": [
+     8,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_RIGHT",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_EAST"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_EAST"
+   }
+  ],
+  "arrival_points": [
+   [
+    222,
+    94
+   ],
+   [
+    222,
+    238
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 168,
+  "parts": [
+   {
+    "size": 69,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      222,
+      94
+     ]
+    ]
+   },
+   {
+    "size": 27,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 17,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      222,
+      238
+     ]
+    ]
+   },
+   {
+    "size": 14,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 7,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 6,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_SPARKS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 51,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "SWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_LEFT_CORNER",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 253,
+  "parts": [
+   {
+    "size": 179,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 50,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "SW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     40,
+     88
+    ],
+    "tile": [
+     2,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_LEFT_DARKNUT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 110,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_TOP_LEFT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_TOP_LEFT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_NORTHWEST"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ],
+   [
+    136,
+    168
+   ],
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 346,
+  "parts": [
+   {
+    "size": 306,
+    "edges": "NSWE",
+    "exits": [
+     2
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      104,
+      72
+     ],
+     [
+      136,
+      168
+     ],
+     [
+      168,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 9,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     184
+    ],
+    "tile": [
+     8,
+     11
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_RIGHT_CORNER_GHINI",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 69,
+  "parts": [
+   {
+    "size": 69,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     232,
+     88
+    ],
+    "tile": [
+     14,
+     5
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_RIGHT_CORNER_TORCHES",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 116,
+  "parts": [
+   {
+    "size": 68,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     136,
+     40
+    ],
+    "tile": [
+     8,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_RIGHT_DARKNUTS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 110,
+  "parts": [
+   {
+    "size": 65,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 11,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 10,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_2F_TOP_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_TOP_RIGHT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_TOP_RIGHT_TOWER"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_NORTHEAST"
+   }
+  ],
+  "arrival_points": [
+   [
+    104,
+    72
+   ],
+   [
+    136,
+    176
+   ],
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 131,
+  "parts": [
+   {
+    "size": 70,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      176
+     ],
+     [
+      168,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 15,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      104,
+      72
+     ]
+    ]
+   },
+   {
+    "size": 15,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_BOTTOM_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      168,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_BOTTOM_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      168,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_TRIPLE_DARKNUT"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_BRIDGE/DARK_HYRULE_CASTLE_BRIDGE_MAIN"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    376
+   ],
+   [
+    184,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   26
+  ],
+  "open": 247,
+  "parts": [
+   {
+    "size": 181,
+    "edges": "",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      168,
+      376
+     ]
+    ]
+   },
+   {
+    "size": 33,
+    "edges": "NSW",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 33,
+    "edges": "NSE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     392
+    ],
+    "tile": [
+     10,
+     24
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_TOP_LEFT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      168,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_TOP_RIGHT_TOWER",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 152,
+  "parts": [
+   {
+    "size": 106,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 46,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      168,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3F_TRIPLE_DARKNUT",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_ZELDA_STATUE_PLATFORM"
+   },
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_KEATON_HALL_TO_VAATI"
+   }
+  ],
+  "arrival_points": [
+   [
+    168,
+    56
+   ],
+   [
+    168,
+    232
+   ]
+  ],
+  "landed": true,
+  "size": [
+   21,
+   16
+  ],
+  "open": 208,
+  "parts": [
+   {
+    "size": 146,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": [
+     [
+      168,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 31,
+    "edges": "NSW",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 31,
+    "edges": "NSE",
+    "exits": [
+     1
+    ],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     168,
+     40
+    ],
+    "tile": [
+     10,
+     2
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3b",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3c",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3d",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3e",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_3f",
+  "exits": [],
+  "arrival_points": [],
+  "landed": false,
+  "note": "an unnamed room slot, skipped"
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_BEFORE_THRONE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_BEFORE_THRONE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    120
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      120
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_BELOW_COMPASS",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_COMPASS"
+   }
+  ],
+  "arrival_points": [
+   [
+    184,
+    72
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 135,
+  "parts": [
+   {
+    "size": 73,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 62,
+    "edges": "W",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      184,
+      72
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_BELOW_THRONE",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_THRONE_ROOM"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 125,
+  "parts": [
+   {
+    "size": 52,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 49,
+    "edges": "E",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      56
+     ]
+    ]
+   },
+   {
+    "size": 24,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_BOMB_WALL",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_CANNONS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 340,
+  "parts": [
+   {
+    "size": 340,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_ENTRANCE",
+  "exits": [
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE_OUTSIDE/DARK_HYRULE_CASTLE_OUTSIDE_GARDEN"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    24
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 130,
+  "parts": [
+   {
+    "size": 98,
+    "edges": "WE",
+    "exits": [],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      24
+     ]
+    ]
+   },
+   {
+    "size": 16,
+    "edges": "SW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 16,
+    "edges": "SE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_KEATONS",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_LEFT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 179,
+  "parts": [
+   {
+    "size": 149,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [
+     "KEY"
+    ],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": [
+   {
+    "kind": "KEY",
+    "at": [
+     88,
+     168
+    ],
+    "tile": [
+     5,
+     10
+    ]
+   }
+  ]
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_MAP",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_ENTRANCE"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_1F_ENTRANCE"
+   }
+  ],
+  "arrival_points": [
+   [
+    264,
+    232
+   ],
+   [
+    552,
+    232
+   ]
+  ],
+  "landed": true,
+  "size": [
+   51,
+   26
+  ],
+  "open": 1193,
+  "parts": [
+   {
+    "size": 1147,
+    "edges": "NSWE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      264,
+      232
+     ],
+     [
+      552,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 31,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_RIGHT",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 179,
+  "parts": [
+   {
+    "size": 149,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 30,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_TO_PRISON",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B2_TO_PRISON"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    56
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   13
+  ],
+  "open": 221,
+  "parts": [
+   {
+    "size": 221,
+    "edges": "NSWE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      56
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B1_TO_PRISON_FIREBAR",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 340,
+  "parts": [
+   {
+    "size": 340,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B2_DROPDOWN",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   17,
+   18
+  ],
+  "open": 227,
+  "parts": [
+   {
+    "size": 174,
+    "edges": "NSWE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 53,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B2_PRISON",
+  "exits": [],
+  "arrival_points": [],
+  "landed": true,
+  "size": [
+   34,
+   15
+  ],
+  "open": 288,
+  "parts": [
+   {
+    "size": 120,
+    "edges": "W",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 103,
+    "edges": "NSE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 24,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 14,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 12,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_B2_TO_PRISON",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_TO_PRISON"
+   }
+  ],
+  "arrival_points": [
+   [
+    88,
+    40
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   15
+  ],
+  "open": 127,
+  "parts": [
+   {
+    "size": 84,
+    "edges": "SE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      88,
+      40
+     ]
+    ]
+   },
+   {
+    "size": 28,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "NSW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_EAST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_RIGHT"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_RIGHT"
+   }
+  ],
+  "arrival_points": [
+   [
+    68,
+    94
+   ],
+   [
+    68,
+    238
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   20
+  ],
+  "open": 90,
+  "parts": [
+   {
+    "size": 45,
+    "edges": "N",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      68,
+      94
+     ]
+    ]
+   },
+   {
+    "size": 45,
+    "edges": "S",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      68,
+      238
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_GARDEN",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "SANCTUARY/SANCTUARY_HALL"
+   },
+   {
+    "type": "BORDER",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_B1_ENTRANCE"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    72
+   ],
+   [
+    136,
+    392
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   27
+  ],
+  "open": 220,
+  "parts": [
+   {
+    "size": 220,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      72
+     ],
+     [
+      136,
+      392
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_NORTHEAST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    216
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   39
+  ],
+  "open": 84,
+  "parts": [
+   {
+    "size": 34,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      216
+     ]
+    ]
+   },
+   {
+    "size": 25,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 25,
+    "edges": "S",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_NORTHWEST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_TOP_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    216
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 48,
+  "parts": [
+   {
+    "size": 48,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      216
+     ]
+    ]
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_SOUTH",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_ENTRANCE"
+   },
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_GHINI"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    216
+   ],
+   [
+    408,
+    216
+   ]
+  ],
+  "landed": true,
+  "size": [
+   51,
+   26
+  ],
+  "open": 837,
+  "parts": [
+   {
+    "size": 612,
+    "edges": "NWE",
+    "exits": [
+     0,
+     1
+    ],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 133,
+    "edges": "",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      408,
+      216
+     ]
+    ]
+   },
+   {
+    "size": 44,
+    "edges": "E",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 40,
+    "edges": "W",
+    "exits": [
+     1
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      216
+     ]
+    ]
+   },
+   {
+    "size": 8,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_SOUTHEAST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_RIGHT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    136,
+    648
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   52
+  ],
+  "open": 209,
+  "parts": [
+   {
+    "size": 93,
+    "edges": "NW",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 71,
+    "edges": "W",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      136,
+      648
+     ]
+    ]
+   },
+   {
+    "size": 30,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   },
+   {
+    "size": 15,
+    "edges": "N",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_SOUTHWEST",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_2F_BOTTOM_LEFT_TOWER"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    232
+   ]
+  ],
+  "landed": true,
+  "size": [
+   17,
+   26
+  ],
+  "open": 104,
+  "parts": [
+   {
+    "size": 89,
+    "edges": "E",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      120,
+      232
+     ]
+    ]
+   },
+   {
+    "size": 15,
+    "edges": "NE",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ },
+ {
+  "area": "AREA_DARK_HYRULE_CASTLE_OUTSIDE",
+  "room": "ROOM_DARK_HYRULE_CASTLE_OUTSIDE_ZELDA_STATUE_PLATFORM",
+  "exits": [
+   {
+    "type": "AREA",
+    "to": "DARK_HYRULE_CASTLE/DARK_HYRULE_CASTLE_3F_TRIPLE_DARKNUT"
+   }
+  ],
+  "arrival_points": [
+   [
+    120,
+    360
+   ]
+  ],
+  "landed": true,
+  "size": [
+   15,
+   25
+  ],
+  "open": 143,
+  "parts": [
+   {
+    "size": 126,
+    "edges": "WE",
+    "exits": [
+     0
+    ],
+    "doors": [],
+    "arrivals": [
+     [
+      120,
+      360
+     ]
+    ]
+   },
+   {
+    "size": 6,
+    "edges": "",
+    "exits": [],
+    "doors": [],
+    "arrivals": []
+   }
+  ],
+  "doors": []
+ }
+]

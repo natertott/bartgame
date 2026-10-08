@@ -13,6 +13,9 @@ blessing and an extra.
            copy reads green (G over R and B), the gold copy gold (R and G
            over B), and the brown original is left alone.
   SNAP     a screenshot of the three tiers side by side (the eye check).
+  FULL     with every palette slot taken, a green pastry whose palette is
+           shared cannot be tinted; it turns back into the curse's own item
+           (the mushroom), so a curse never passes for a blessing.
   CURSE    GiveItem(ITEM_BRIOCHE, 1) sets the pie's curse (food bit 3), not
            the brioche's blessing (bit 0).
   BRIOCHE  GiveItem(ITEM_BRIOCHE, 2): a heart container more, every heart
@@ -109,33 +112,52 @@ for _ in range(200):
     run(c, 1)   # a deleted entity's slot is freed at the frame's end
 check('GOLD: a brioche is gold about one time in four', n == 200 and 30 <= gold <= 70, '%d of %d' % (gold, n))
 
-# TINT: the three tiers on the floor side by side
-run(c, 10)
-p_plain = put(c, I['ITEM_CAKE'], -32, 40)
-while p_plain and c.memory.u8[p_plain + 11] != 0:   # a gold roll: try again
-    C.call_keep(c, delete, (p_plain,)); p_plain = put(c, I['ITEM_CAKE'], -32, 40)
-p_green = put(c, I['ITEM_QST_MUSHROOM'], 0, 40)
+# TINT: the three tiers side by side, in the hub's selection hall - a quiet
+# room, so the palette slots are not all taken by a region's cast (that case
+# is FULL below). Green and gold first: each claims a slot of its own.
+ct = S.boot(ROM, 0, seed=3, frames=300)
+run(ct, 30)
+p_green = put(ct, I['ITEM_QST_MUSHROOM'], 0, -24)
 p_gold = 0
 for _ in range(40):
-    p = put(c, I['ITEM_CAKE'], 32, 40)
-    if p and c.memory.u8[p + 11] == 2:
+    p = put(ct, I['ITEM_CAKE'], 32, -24)
+    if p and ct.memory.u8[p + 11] == 2:
         p_gold = p; break
     if p:
-        C.call_keep(c, delete, (p,))
-run(c, 60)
+        C.call_keep(ct, delete, (p,))
+    run(ct, 1)
+p_plain = put(ct, I['ITEM_CAKE'], -32, -24)
+while p_plain and ct.memory.u8[p_plain + 11] != 0:   # a gold roll: try again
+    C.call_keep(ct, delete, (p_plain,)); run(ct, 1); p_plain = put(ct, I['ITEM_CAKE'], -32, -24)
+run(ct, 60)
 ok = p_plain and p_green and p_gold
 if ok:
-    sp, sg, sd = slot_of(c, p_plain), slot_of(c, p_green), slot_of(c, p_gold)
-    ig, id_ = pal_id(c, sg), pal_id(c, sd)
-    gr, gg, gb = sums(c, sg); dr, dg, db = sums(c, sd)
-    check('TINT: the green cake has its own slot', sg != sp and ig == (0xF100 | sp), 'plain slot %d, green slot %d id %#x' % (sp, sg, ig))
-    check('TINT: the gold cake has its own slot', sd not in (sp, sg) and id_ == (0xF200 | sp), 'gold slot %d id %#x' % (sd, id_))
+    sp, sg, sd = slot_of(ct, p_plain), slot_of(ct, p_green), slot_of(ct, p_gold)
+    ig, id_ = pal_id(ct, sg), pal_id(ct, sd)
+    gr, gg, gb = sums(ct, sg); dr, dg, db = sums(ct, sd)
+    check('TINT: the green cake has its own slot', sg != sp and (ig & 0xFF00) == 0xF100, 'plain slot %d, green slot %d id %#x' % (sp, sg, ig))
+    check('TINT: the gold cake has its own slot', sd not in (sp, sg) and (id_ & 0xFF00) == 0xF200, 'gold slot %d id %#x' % (sd, id_))
     check('TINT: green reads green, gold reads gold', gg > gr and gg > gb and dr > db and dg > db,
-          'green rgb sums %s, gold %s, plain %s' % ((gr, gg, gb), (dr, dg, db), sums(c, sp)))
-    path = os.path.join(OUT, 'blessing_tiers.png'); snap(c, path)
+          'green rgb sums %s, gold %s, plain %s' % ((gr, gg, gb), (dr, dg, db), sums(ct, sp)))
+    path = os.path.join(OUT, 'blessing_tiers.png'); snap(ct, path)
     check('SNAP: the three tiers, saved', os.path.exists(path), path)
 else:
     check('TINT: three cakes on the floor', False, 'plain %#x green %#x gold %#x' % (p_plain, p_green, p_gold))
+# FULL: every free object palette slot taken (forged), a plain cake down
+# (its palette then shared): the green one cannot be tinted, so it must turn
+# back into the curse's own item rather than pass for a blessing.
+saved = [ct.memory.u8[PLIST + i] for i in range(64)]
+for k in range(6, 15):   # all of them, so no earlier green slot can be shared
+    ct.memory.u8[PLIST + k * 4] = 0x13; ct.memory.u8[PLIST + k * 4 + 1] = 1
+    ct.memory.u8[PLIST + k * 4 + 2] = 0x34; ct.memory.u8[PLIST + k * 4 + 3] = 0x12 + k
+pp = put(ct, I['ITEM_CAKE'], -32, 8)
+pg = put(ct, I['ITEM_QST_MUSHROOM'], -32, 8)
+run(ct, 10)
+types = [e[3] for e in entities(ct, KIND_OBJECT, 0) if e[5] - r16(ct, ROOM_CONTROLS + 8) == local_player(ct)[1] + 8]
+check('FULL: an untintable green turns back into its curse', I['ITEM_QST_MUSHROOM'] in types,
+      'item types at the spot %s' % types)
+for i in range(64):
+    ct.memory.u8[PLIST + i] = saved[i]
 
 # CURSE through GiveItem's parameter
 m0 = mask(c)
@@ -170,9 +192,13 @@ check('FLEET: two seconds on entering a room', 110 <= best <= 121, 'clock peaked
 
 # CAKE gold, taken off the floor
 A.kill_all(c); run(c, 30); A.dismiss(c)
+from emu import coll_at
+px0, py0 = local_player(c)
+dx, dy = next(((x, y) for x, y in ((0, 32), (32, 0), (-32, 0), (0, -32), (32, 32), (-32, 32), (32, -32), (-32, -32))
+               if coll_at(c, (px0 + x) >> 4, (py0 + y) >> 4) == 0), (0, 32))
 p = 0
 for _ in range(40):
-    p = put(c, I['ITEM_CAKE'], 0, 32)
+    p = put(c, I['ITEM_CAKE'], dx, dy)
     if p and c.memory.u8[p + 11] == 2:
         break
     if p:

@@ -927,7 +927,7 @@ void sub_08080C80(MapDataDefinition* dataDefinition) {
 }
 
 #ifdef QUICKSTART
-extern void QuickStartTintItem(Entity*);
+extern bool32 QuickStartTintItem(Entity*);
 #endif
 void sub_08080CB4(Entity* this) {
     Entity* effect;
@@ -937,8 +937,11 @@ void sub_08080CB4(Entity* this) {
     u32 mask;
 
 #ifdef QUICKSTART
-    // A tiered pastry is drawn in its tier's colours (game.c).
-    QuickStartTintItem(this);
+    // A tiered pastry is drawn in its tier's colours (game.c). TRUE means
+    // it was replaced (a curse that could not be tinted) and is gone.
+    if (QuickStartTintItem(this)) {
+        return;
+    }
 #endif
 
     if (this->type != this->animIndex) {

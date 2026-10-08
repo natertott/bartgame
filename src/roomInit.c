@@ -5575,6 +5575,16 @@ extern EntityData gUnk_080F62E4;
 extern EntityData gUnk_080F6324;
 
 void sub_StateChange_WindTribeTower_Floor2(void) {
+#ifdef QUICKSTART
+    // Gregal's ghost (game.c, QuickStartGregalReward): WARP_EVENT_END is set
+    // at every run start, which would keep the sick scene from ever loading.
+    // Sick until cured this run; once cured he is not on this floor (his
+    // healthy spot stands in the shop's rows).
+    if (!CheckLocalFlag(SORA_ELDER_RECOVER)) {
+        LoadRoomEntityList(&gUnk_080F62E4);
+    }
+    return;
+#endif
     if (!CheckGlobalFlag(WARP_EVENT_END)) {
         LoadRoomEntityList(&gUnk_080F62E4);
     } else {

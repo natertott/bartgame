@@ -107,6 +107,8 @@ FLAG_FAMILIES = [
     # below - a collision this ledger would have caught if the extension had
     # ever been declared with a real width.)
     ('GF_INN_CHEST_ARMED', 11, 0),  # the inn's per-tier chest arm bits
+    ('GF_INN_BLESSING_', 12, 0),  # the inn's blessing table (raw, inside the 0-793 run wipe)
+    ('GF_COURIER_', 12, 0),  # the courier quest (raw 119-139, inside the 0-793 run wipe)
     ('GF_WW_BRUSH_PAID_BIT', 11, 0),  # the Western Wood brush-fusion payouts
     ('GF_SEED_PINNED', 11, 0),
     ('GF_QUEST_', 11, 0),
