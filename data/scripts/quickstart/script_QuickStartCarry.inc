@@ -1,23 +1,17 @@
-@ Quickstart carry-quest giver ("fetch it back to me"). Same shape as the
-@ hunt, scavenger and stealth givers: the script shows the right line and
-@ hands control to C, because a script .inc cannot read the QUICKSTART flag
-@ window. The Call helpers answer through the condition register:
+@ The carry quest's giver, standing at A with the parcel pot beside them
+@ (game.c, "The carry quest, one room"). The Call helpers answer through the
+@ condition register:
 @
-@   QuickStartCarryTryDeliver - FIRST, before SetPlayerIdle puts the parcel
-@                               down: TRUE (and the quest is paid) when the
-@                               player walked up holding the parcel
-@   QuickStartCarryIsWon      - TRUE once the parcel has been delivered
-@   QuickStartCarryCanStart   - TRUE while the ask has not been made
-@   QuickStartCarryBegin      - picks the parcel's region against the kit the
-@                               player holds right now and flips the quest
-@                               RUNNING; Ezlo names the region on the next
-@                               quiet frame (QuickStartCarryMonitor)
+@   QuickStartCarryIsWon     - TRUE once the parcel has been delivered
+@   QuickStartCarryCanStart  - TRUE while the ask has not been made
+@   QuickStartCarryBegin     - flips the quest ACCEPTED; the parcel appears
+@                              on the next frame (QuickStartCarryMonitor)
+@
+@ Lines (gCustomStrings2): 197-198 the ask, 199 "still waiting", 201 done.
 SCRIPT_START script_QuickStartCarry
 script_QuickStartCarry_loop:
 	CheckEntityInteractType
 	JumpIfNot script_QuickStartCarry_loop
-	Call QuickStartCarryTryDeliver
-	JumpIf script_QuickStartCarry_delivered
 	SetPlayerIdle
 	Call DisablePauseMenuAndPutAwayItems
 	FacePlayer
@@ -33,13 +27,6 @@ script_QuickStartCarry_loop:
 	Jump script_QuickStartCarry_done
 script_QuickStartCarry_running:
 	MessageNoOverlap TEXT_CUSTOM2, 199
-	WaitUntilTextboxCloses
-	Jump script_QuickStartCarry_done
-script_QuickStartCarry_delivered:
-	SetPlayerIdle
-	Call DisablePauseMenuAndPutAwayItems
-	FacePlayer
-	MessageNoOverlap TEXT_CUSTOM2, 200
 	WaitUntilTextboxCloses
 	Jump script_QuickStartCarry_done
 script_QuickStartCarry_spent:

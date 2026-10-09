@@ -19,7 +19,7 @@ the carrier in the Element's region, picks the Element up and reports WIN.
     BOSS   warp to the row, wait for the boss the chain asked for, kill it.
     ITEM   the next prize pays it (QuickStartDrawItem): clear the first wave
            of a region not yet cleared and take the reward where it drops.
-    QUEST  the side quests have their own probes (carry_probe, the quest
+    QUEST  the side quests have their own probes (carry_room_probe, the quest
            scenarios); here the quest flag is set and the step reported
            FORCED.
 

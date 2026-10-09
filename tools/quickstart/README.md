@@ -217,6 +217,15 @@
   `docs/QUICKSTART_DUNGEON_REACH.md` and `docs/dungeon_reach.json`.
 - `hub_probe.py` - the hub's two warp pads (asleep during the draft, then
   F3 to the shop and the shop to the tower door).
+- `carry_pairs.py` - the single-room carry quest's pairs: floods each
+  candidate room's live collision into the carry grid, finds the arrival
+  pieces, picks long A-B pairs past two survey places, writes
+  `include/quickstart/carry_pairs.h` with each pair's piece bitmap.
+- `carry_room_probe.py` - plays every carry pair by key presses (accept,
+  lift, both waves, carry, deliver); `--throws` checks a swamp loss, a kept
+  throw and the dry-ground rule.
+- `carry_measure.py` - the engine facts behind the carry quest: room sizes
+  and hazards, lifting, walking and throwing a vanilla pot.
 - `trophy_probe.py` - the trophy case: each found row draws its item's
   sprite in the figurine pane (read from OAM), a locked row draws none, the
   Rusted Blade draws in its rust palette, and the charm rows carry their

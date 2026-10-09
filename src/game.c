@@ -475,7 +475,6 @@ static s32 QuickStartCarryState(void);
 static bool32 QuickStartCourierWon(void);
 static u8 QuickStartHubGetPhase(void);
 static s32 QuickStartCourierHost(void);
-static void QuickStartCarryPropMonitor(void);
 #define QS_SCN_NONE 0
 #define QS_SCN_SITE 1
 #define QS_SCN_BOSS 2
@@ -3194,13 +3193,14 @@ const u8* const gCustomStrings2[] = {
     // since that is the whole puzzle of an ITEM step.
     [195] = (const u8*)"Talon's ranch key is\nout there. The north\nfield, the hills, or\nTrilby will give it up.",
     [196] = (const u8*)"Dampe's graveyard key is\nout there. The north\nfield, Trilby, or the\nvalley will give it up.",
-    // 197-201: the carry quest's giver (script_QuickStartCarry). Ezlo names
-    // the parcel's region himself, from the region bank at 0-12 above.
-    [197] = (const u8*)"Something of mine was\nleft in the land next\ndoor. Fetch it back to\nme and I will pay well.",
-    [198] = (const u8*)"Lift it and carry it\nhere in your arms. Set\nit down and walk away,\nand it goes back home.",
-    [199] = (const u8*)"Not yet? It is still\nout there, next door.\nCarry it to me.",
-    [200] = (const u8*)"You carried it all the\nway here! Take this -\nit is yours, and gladly.",
-    [201] = (const u8*)"I have what I wanted.\nThank you again, and\ngood luck out there.",
+    // 197-201: the carry quest (Oct 2026, one room): the giver at A asks
+    // (197-198) and waits (199); the receiver at B thanks (200); both say
+    // 201 once it is done.
+    [197] = (const u8*)"Would you carry this pot\nto my friend across the\nway? It must not stay\nhere.",
+    [198] = (const u8*)"Lift it with R. Throw it\nif you must: if it is\nlost, it comes back to\nwhere you lifted it.",
+    [199] = (const u8*)"My friend is waiting\nacross the way. Mind\nthe monsters!",
+    [200] = (const u8*)"The pot, safe and sound!\nYou carried it all this\nway. Take this, please.",
+    [201] = (const u8*)"Thank you again, and\ngood luck out there.",
     // 202-205: the blink memory event's two sprites (script_QuickStartMemory).
     // The lesson's second line is the old [24] above, which already said it.
     [202] = (const u8*)"Three eyes, and a secret\nbetween them. Watch how\nthey blink, and keep the\norder in your head.",
@@ -3425,12 +3425,17 @@ const u8* const gCustomStrings3[] = {
     [QUICKSTART_CONTENT_SITE_COUNT + 11] = (const u8*)"Thank you again for\nthe delivery.",
     // Gregal, cured (script_GregalSick under QUICKSTART): 129.
     [QUICKSTART_CONTENT_SITE_COUNT + 12] = (const u8*)"The evil spirit is gone!\nI can breathe again.\nTake this, with an old\nman's thanks.",
+    // The carry quest (Oct 2026): the receiver before the pot comes (130),
+    // and Ezlo the first time it is lost in a run (131).
+    [QUICKSTART_CONTENT_SITE_COUNT + 13] = (const u8*)"My friend is sending me\na pot. Have you seen it?",
+    [QUICKSTART_CONTENT_SITE_COUNT + 14] = (const u8*)"The pot is gone... no,\nthere it is! Back where\nyou lifted it.",
 };
 const u32 gCustomStringCount3 = ARRAY_COUNT(gCustomStrings3);
 // Every site has its line, no more and no fewer: a site added without one
 // would print the engine's placeholder for its trial. The three puzzle
-// lines follow them, then the courier's nine and Gregal's thanks.
-typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 13) ? 1 : -1];
+// lines follow them, then the courier's nine, Gregal's thanks and the
+// carry quest's two.
+typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 15) ? 1 : -1];
 
 // The pair bank is addressed arithmetically, so its shape is load-bearing:
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
@@ -15083,70 +15088,74 @@ static void QuickStartStealthMonitor(const QuickStartRegion* region, s32 slot) {
     }
 }
 
-// ==================== The carry quest (Oct 2026) ============================
+// ==================== The carry quest, one room (Oct 2026) ==================
 //
-// The user: "a sprite in one part of the map could instruct the player to go
-// fetch an item from another map region and carry it back to them." The
-// parcel is a SHOP_ITEM prop - vanilla's own carry-an-object-overhead
-// system, the one the hub shop and the fairy's offering already use -
-// standing on the reward spot of a region NEXT DOOR to the giver's. Lifting
-// it is vanilla; what is ours is that it survives the walk:
+// The user, after the cross-room version kept failing at room seams: restrict
+// it to one room; complex rooms (North Hyrule Field, Minish Woods, Mount
+// Crenel's base, Castor Wilds - Veil Falls had no qualifying pair, see
+// carry_pairs.py); a long carry, corner to corner, past more than one survey
+// place; the player must be able to throw it; a lost parcel - water, a pit,
+// lava, the Castor murk, or dry ground the player cannot reach - comes back
+// to where it was last picked up; a giver at the start, a receiver at the
+// end; and enemies that chase, shoot, and get in the way of moving
+// (wisps, flying skulls, wizzrobes, beetles). docs/QUICKSTART_CARRY_SINGLE_ROOM.md.
 //
-//  * A loose prop is deleted at every room seam (RecycleEntities), and a
-//    held one loses its holder there (the transition's ResetActiveItems
-//    zeroes heldObject). Measured: a prop left on the floor is gone on the
-//    far side of a seam. So the seam is bridged by one save byte: the frame
-//    the room starts transitioning out with the parcel overhead,
-//    gSave.carry_item takes its id; the first settled frame of the next
-//    room spawns a fresh prop at Link's feet and lifts it again with
-//    ItemForSale_Action1's own lines.
-//  * A forced drop (a hit, a shrink, a fall, a scripted idle) goes through
-//    ItemForSale's drop path (sub_080819B4), which puts the prop back at
-//    its remembered pedestal (unk_80/unk_82) because gRoomVars.shopItemType
-//    is set for as long as it is held - exactly as in the shop, where
-//    vanilla sets it at the lift (playerUtils.c). The prop monitor keeps
-//    that pedestal UNDER THE PLAYER every frame it is held, so "put back"
-//    means "dropped at your feet", never "sent back across the map".
-//  * A parcel left behind in a room goes home: the next time the player
-//    stands in the parcel's region with no parcel anywhere, it is on its
-//    spot again. The giver says so in as many words.
+//  * The PARCEL is a vanilla pot (pot.c) marked by its type2. Lifted with R
+//    and thrown like any pot; it never breaks. Every way a pot's flight
+//    ends - a throw, a drop when Link is hit, a hazard tile - reaches
+//    pot.c's landing or BreakPot, and both hand a parcel to
+//    QuickStartParcelLanded instead.
+//  * A landing is GOOD when its tile can still carry to B: it lies in the
+//    pair's PIECE (carry_pairs.h, a bitmap per pair of the carry grid -
+//    open tiles, no hazard act tiles; bushes and ledges are walls). A bit,
+//    not a flood: a full-room flood costs millions of instructions, frames
+//    of stall on every landing.
+//    A good landing is the new rest spot; anything else is lost, and the
+//    parcel reappears at the rest spot, which the lift sets to where it was
+//    lifted from. The rest spot lives in gSave.carry_want/carry_item (tile
+//    + 1, 0 = the home spot beside the giver).
+//  * PAIRS are carry_pairs.h, generated from live collision. The room's pair
+//    is chosen once, the first time the player settles in it: the first
+//    pair (from a rolled start) whose piece holds the player's own tile - so
+//    wherever they came in, they can walk to A and carry to B without
+//    cutting a bush.
+//  * WAVES: on the first lift, then when the parcel is carried past the
+//    half-way mark. Each mixes a pursuer, a shooter and a mover-impairer.
 //
-// Delivery is a proximity test at the giver while the parcel is held (the
-// fountain's shape), plus a script hook for a player who talks instead.
-// The payout is the stealth partner's: a RARE draw at the feet. Finishing
-// it also counts as the run's side quest for the win chain's QUEST step and
-// the QUEST carrier (QuickStartSideQuestDone); the pot quest stays open
-// beside it, and whichever lands first closes the step.
-//
-// Bank-11 bits 156-173: the last free run of the per-run-cleared range,
-// used to the last bit.
+// Bank-11 bits 156-173.
+typedef struct {
+    u8 area;
+    u8 room;
+    u8 ax, ay; // the giver
+    u8 hx, hy; // the parcel's home: three tiles off, outside the giver's talk box
+    u8 bx, by; // the receiver
+    u8 length;
+    const u8* piece; // the carry grid's piece holding A and B: one bit per tile, 64 to a row
+} QuickStartCarryPair;
+#include "quickstart/carry_pairs.h"
+#define QUICKSTART_CARRY_PAIR_COUNT ((s32)ARRAY_COUNT(sQuickStartCarryPairs))
 #define GF_CARRY_ROLLED 156
-#define GF_CARRY_HOST_BIT(b) (157 + (b))  // b = 0..4, pool row of the giver's region
-#define GF_CARRY_SPOT_BIT(b) (162 + (b))  // b = 0..4, index into the region's offsets
-#define GF_CARRY_STATE_BIT(b) (167 + (b)) // b = 0..1
-#define GF_CARRY_PROP_BIT(b) (169 + (b))  // b = 0..4, pool row of the parcel's region
+#define GF_CARRY_HOST_BIT(b) (157 + (b))  // b = 0..4, pool row of the room
+#define GF_CARRY_PAIR_BIT(b) (162 + (b))  // b = 0..3, chosen pair + 1 (0 = not yet)
+#define GF_CARRY_STATE_BIT(b) (166 + (b)) // b = 0..1
+#define GF_CARRY_WAVE2 168
+#define GF_CARRY_LOST_SAID 169
+#define GF_CARRY_SEED_BIT(b) (170 + (b))  // b = 0..3, where the pair choice starts
 #define QUICKSTART_CARRY_OFFERED 0
-#define QUICKSTART_CARRY_RUNNING_UNHINTED 1 // accepted; Ezlo has not yet named the region
-#define QUICKSTART_CARRY_RUNNING 2
+#define QUICKSTART_CARRY_ACCEPTED 1 // the giver asked; the parcel stands at A
+#define QUICKSTART_CARRY_LIFTED 2   // lifted at least once: the first wave is out
 #define QUICKSTART_CARRY_WON QUICKSTART_CARRY_WON_STATE
-// Manhattan reach of the proximity delivery, in pixels. Wider than the
-// stealth partner's 20: the parcel is held overhead, and the giver is a
-// sprite the player walks INTO rather than a spot they stand on.
+#define QUICKSTART_CARRY_TRIED_FLAG 118 // room flag: the pair choice ran this visit
+#define QUICKSTART_PARCEL_TYPE2 0x50
+// Manhattan reach of delivery: carried (the receiver is walked INTO) and
+// lying on the floor (thrown to their feet).
 #define QUICKSTART_CARRY_REACH 32
+#define QUICKSTART_CARRY_REACH_FLOOR 24
+#define QUICKSTART_CARRY_RECEIVER_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 13)
+#define QUICKSTART_CARRY_LOST_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 14)
 
 extern Script script_QuickStartCarry;
-static u32 QuickStartHeldReachMask(void);
-static u32 QuickStartReachableRegions(u32 held);
-
-// The parcels: vanilla's own trading-sequence props, which exist as items
-// with sprites and nothing else in this mode - nothing grants them, nothing
-// reads them, so one can stand on a field without meaning anything but
-// "the thing to carry". NOT the Dog Food: ItemForSale_Action1 special-cases
-// type 0x36 (Stockwell's dog-food purchase) into a cutscene instead of a
-// lift.
-static const u8 sQuickStartParcels[] = {
-    ITEM_QST_BOOK2, ITEM_QST_MUSHROOM, ITEM_QST_CARLOV_MEDAL, ITEM_QST_BOOK1, ITEM_QST_TINGLE_TROPHY,
-};
+extern Script script_QuickStartCarryReceiver;
 
 static s32 QuickStartCarryState(void) {
     return (s32)QuickStartGauntletReadBits(GF_CARRY_STATE_BIT(0), 2);
@@ -15158,19 +15167,35 @@ static void QuickStartCarrySetState(s32 state) {
 
 static bool32 QuickStartCarryRunning(void) {
     s32 state = QuickStartCarryState();
-    return state == QUICKSTART_CARRY_RUNNING_UNHINTED || state == QUICKSTART_CARRY_RUNNING;
+    return state == QUICKSTART_CARRY_ACCEPTED || state == QUICKSTART_CARRY_LIFTED;
 }
 
 static s32 QuickStartCarryHost(void) {
     return (s32)QuickStartGauntletReadBits(GF_CARRY_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
 }
 
-static s32 QuickStartCarryPropRow(void) {
-    return (s32)QuickStartGauntletReadBits(GF_CARRY_PROP_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+static bool32 QuickStartCarryRowHasPairs(s32 row) {
+    const QuickStartRegion* region = &sQuickStartRegionPool[row];
+    s32 i;
+    for (i = 0; i < QUICKSTART_CARRY_PAIR_COUNT; i++) {
+        if (sQuickStartCarryPairs[i].area == region->area && sQuickStartCarryPairs[i].room == region->room) {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-// One draw per run, after the other three givers have their regions so
-// this one can avoid all of them - four quest sprites in eighteen rows.
+// The chosen pair, or NULL before the room has been settled in.
+static const QuickStartCarryPair* QuickStartCarryPairChosen(void) {
+    s32 n = (s32)QuickStartGauntletReadBits(GF_CARRY_PAIR_BIT(0), 4);
+    if (n < 1 || n > QUICKSTART_CARRY_PAIR_COUNT) {
+        return NULL;
+    }
+    return &sQuickStartCarryPairs[n - 1];
+}
+
+// One draw per run, after the other givers have their regions, from the
+// rows whose room has pairs.
 static void QuickStartCarryRollOnce(void) {
     s32 host, hunt, scav, stealth, guard;
     if (CheckLocalFlagByBank(FLAG_BANK_11, GF_CARRY_ROLLED)) {
@@ -15181,48 +15206,422 @@ static void QuickStartCarryRollOnce(void) {
     scav = QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST);
     stealth = (s32)QuickStartGauntletReadBits(GF_STEALTH_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
     host = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
-    for (guard = 0; guard < QUICKSTART_REGION_POOL_SIZE; guard++) {
-        if (host != hunt && host != scav && host != stealth) {
+    for (guard = 0; guard < 2 * QUICKSTART_REGION_POOL_SIZE; guard++) {
+        if (QuickStartCarryRowHasPairs(host) &&
+            (guard >= QUICKSTART_REGION_POOL_SIZE || (host != hunt && host != scav && host != stealth))) {
             break;
         }
         host = (host + 1) % QUICKSTART_REGION_POOL_SIZE;
     }
     host = QuickStartScenarioQuestHostOr(QS_SCN_QUEST_CARRY, host);
     QuickStartGauntletWriteBits(GF_CARRY_HOST_BIT(0), 5, (u32)host);
-    QuickStartGauntletWriteBits(GF_CARRY_SPOT_BIT(0), 5, (u32)((s32)Random() % 32));
-    gSave.carry_want = sQuickStartParcels[(s32)Random() % (s32)ARRAY_COUNT(sQuickStartParcels)];
+    QuickStartGauntletWriteBits(GF_CARRY_PAIR_BIT(0), 4, 0);
+    QuickStartGauntletWriteBits(GF_CARRY_SEED_BIT(0), 4, (u32)Random() & 15);
+    gSave.carry_want = 0;
+    gSave.carry_item = 0;
     QuickStartCarrySetState(QUICKSTART_CARRY_OFFERED);
     SetLocalFlagByBank(FLAG_BANK_11, GF_CARRY_ROLLED);
 }
 
-// Same walkable-spot walk as the other three givers', from this quest's own
-// roll.
-static bool32 QuickStartCarrySpot(const QuickStartRegion* region, s16* outX, s16* outY) {
-    s32 i, start;
-    if (region->enemyOffsetCount <= 0) {
+// Inside the pair's piece: carryable to B from here (carry_pairs.h).
+static bool32 QuickStartCarryInPiece(const QuickStartCarryPair* pair, s32 tx, s32 ty) {
+    if (tx < 0 || ty < 0 || tx >= 64 || ty >= 64) {
         return FALSE;
     }
-    start = (s32)QuickStartGauntletReadBits(GF_CARRY_SPOT_BIT(0), 5) % region->enemyOffsetCount;
-    for (i = 0; i < region->enemyOffsetCount; i++) {
-        s32 idx = (start + i) % region->enemyOffsetCount;
-        s16 x = region->enemyOffsets[idx][0];
-        s16 y = region->enemyOffsets[idx][1];
-        if (QuickStartPositionAllowed(x, y)) {
-            *outX = x;
-            *outY = y;
-            return TRUE;
-        }
-    }
-    return FALSE;
+    return QUICKSTART_REACH_GET(pair->piece, tx, ty) != 0;
 }
 
-// Where the parcel lies: a pool row whose region is ADJACENT to the giver's
+// The tile the parcel waits on near the giver. Not beside them: the
+// giver's talk box (QuickStartMakeNpcTalkable, 40x40) would answer R before
+// the pot did, and the player would hear the ask again instead of lifting
+// (measured).
+static void QuickStartCarryHome(const QuickStartCarryPair* pair, s32* tx, s32* ty) {
+    *tx = pair->hx;
+    *ty = pair->hy;
+}
+
+static void QuickStartCarryRestTile(const QuickStartCarryPair* pair, s32* tx, s32* ty) {
+    if (gSave.carry_want != 0 && gSave.carry_item != 0) {
+        *tx = gSave.carry_want - 1;
+        *ty = gSave.carry_item - 1;
+    } else {
+        QuickStartCarryHome(pair, tx, ty);
+    }
+}
+
+static void QuickStartCarrySetRest(s32 tx, s32 ty) {
+    gSave.carry_want = (u8)(tx + 1);
+    gSave.carry_item = (u8)(ty + 1);
+}
+
+// Choose the room's pair (once, on the first settled frame in the room):
+// the first, from the rolled start, whose piece holds the player's tile (or
+// a tile beside it: an arrival tile is often a doorway or an edge) - so
+// wherever the player came in, they can walk to A and carry to B. A
+// QUEST/CARRY scenario's scenario_c (pair + 1, counted within the room)
+// forces one.
+static void QuickStartCarryChoosePair(void) {
+    static const s8 kNear[5][2] = { { 0, 0 }, { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
+    s32 i, k, j, n = 0, start, forced = -1;
+    s32 px = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    s32 py = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    if (QuickStartCarryPairChosen() != NULL || QsCheckRoomFlag(QUICKSTART_CARRY_TRIED_FLAG)) {
+        return;
+    }
+    QsSetRoomFlag(QUICKSTART_CARRY_TRIED_FLAG);
+    for (i = 0; i < QUICKSTART_CARRY_PAIR_COUNT; i++) {
+        if (sQuickStartCarryPairs[i].area == gRoomControls.area && sQuickStartCarryPairs[i].room == gRoomControls.room) {
+            n++;
+        }
+    }
+    if (n == 0) {
+        return;
+    }
+    if (QuickStartScenarioQuestHost(QS_SCN_QUEST_CARRY) >= 0 && gSave.scenario_c != 0) {
+        forced = ((s32)gSave.scenario_c - 1) % n;
+    }
+    start = (s32)QuickStartGauntletReadBits(GF_CARRY_SEED_BIT(0), 4) % n;
+    for (k = 0; k < n; k++) {
+        s32 want = (forced >= 0) ? forced : (start + k) % n, seen = 0;
+        for (i = 0; i < QUICKSTART_CARRY_PAIR_COUNT; i++) {
+            const QuickStartCarryPair* p = &sQuickStartCarryPairs[i];
+            bool32 here = FALSE;
+            if (p->area != gRoomControls.area || p->room != gRoomControls.room || seen++ != want) {
+                continue;
+            }
+            for (j = 0; j < 5; j++) {
+                here = here || QuickStartCarryInPiece(p, px + kNear[j][0], py + kNear[j][1]);
+            }
+            if (forced >= 0 || here) {
+                QuickStartGauntletWriteBits(GF_CARRY_PAIR_BIT(0), 4, (u32)(i + 1));
+                return;
+            }
+            break;
+        }
+        if (forced >= 0) {
+            return;
+        }
+    }
+}
+
+bool32 QuickStartParcelIs(Entity* e) {
+    return e != NULL && e->kind == OBJECT && e->id == POT && e->type2 == QUICKSTART_PARCEL_TYPE2;
+}
+
+static Entity* QuickStartCarryParcelInRoom(void) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (QuickStartParcelIs(ent) && QuickStartEntityInCurrentRoom(ent)) {
+            return ent;
+        }
+    }
+    return NULL;
+}
+
+// carriedEntity is the held-object player item (playerItemHeldObject.c);
+// the thing in Link's hands is its child (playerUtils.c reads it the same
+// way).
+static Entity* QuickStartCarryHeldParcel(void) {
+    Entity* carried = gPlayerEntity.carriedEntity;
+    if (gPlayerState.heldObject != 0 && carried != NULL && QuickStartParcelIs(carried->child)) {
+        return carried->child;
+    }
+    return NULL;
+}
+
+static Entity* QuickStartCarrySpawnParcel(s32 tx, s32 ty) {
+    Entity* pot = CreateObject(POT, 0xFF, QUICKSTART_PARCEL_TYPE2);
+    if (pot != NULL) {
+        // On the tile's centre, like every placed pot: its solid tile and its
+        // lift hitbox only line up there (measured, carry_measure.py). Its
+        // init moves it down three pixels, as it does every pot.
+        pot->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+        pot->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+        pot->collisionLayer = 1;
+    }
+    return pot;
+}
+
+// The waves. Three roles in turn; the first mover-impairer of a wave is one
+// of the three the user named (a red or blue wisp, a flying skull).
+static const u8 sQuickStartCarryShooters[][2] = {
+    { OCTOROK, 0 }, { OCTOROK, 1 }, { BOW_MOBLIN, 0 }, { WIZZROBE_WIND, 0 },
+};
+static const u8 sQuickStartCarryImpairers[][2] = {
+    // the named three first
+    { WISP, 0 }, { WISP, 1 }, { FLYING_SKULL, 1 }, // type 1 rises and dives at Link (flyingSkull.c)
+    { BEETLE, 0 }, { WIZZROBE_ICE, 0 }, { WIZZROBE_FIRE, 0 },
+};
+
+static void QuickStartCarryWave(const QuickStartCarryPair* pair, s32 num, s32 den, s32 count) {
+    s32 ax = (pair->ax * 16 + 8) + ((pair->bx - pair->ax) * 16) * num / den;
+    s32 ay = (pair->ay * 16 + 8) + ((pair->by - pair->ay) * 16) * num / den;
+    u8 difficulty = QuickStartGetDifficulty();
+    s32 i, impairers = 0;
+    for (i = 0; i < count; i++) {
+        u8 id, form;
+        s32 pick;
+        switch (i % 3) {
+            case 0:
+                QuickStartPickPursuer(difficulty, &id, &form);
+                break;
+            case 1:
+                pick = (s32)(Random() & 0x7fff) % (s32)ARRAY_COUNT(sQuickStartCarryShooters);
+                id = sQuickStartCarryShooters[pick][0];
+                form = sQuickStartCarryShooters[pick][1];
+                break;
+            default:
+                pick = (s32)(Random() & 0x7fff) % (impairers == 0 ? 3 : (s32)ARRAY_COUNT(sQuickStartCarryImpairers));
+                id = sQuickStartCarryImpairers[pick][0];
+                form = sQuickStartCarryImpairers[pick][1];
+                impairers++;
+                break;
+        }
+        QuickStartSpawnEnemiesOnOpenTiles(id, form, ax, ay, 1, -1);
+    }
+}
+
+// pot.c, the moment a parcel is lifted (its carry begins).
+void QuickStartParcelLifted(Entity* pot) {
+    const QuickStartCarryPair* pair = QuickStartCarryPairChosen();
+    if (!QuickStartParcelIs(pot) || pair == NULL) {
+        return;
+    }
+    QuickStartCarrySetRest((pot->x.HALF.HI - gRoomControls.origin_x) >> 4, (pot->y.HALF.HI - 3 - gRoomControls.origin_y) >> 4);
+    if (QuickStartCarryState() == QUICKSTART_CARRY_ACCEPTED) {
+        QuickStartCarrySetState(QUICKSTART_CARRY_LIFTED);
+        QuickStartCarryWave(pair, 1, 3, 3 + (((s32)QuickStartGetDifficulty() * 11) >> 5)); // + difficulty / 3, no divide routine
+    }
+}
+
+// pot.c, wherever a pot's carry or flight ends (its landing, BreakPot).
+// FALSE for any pot but the parcel. For the parcel: a replacement now
+// stands at the landing (good) or at the rest spot (lost), and the caller
+// deletes this one.
+bool32 QuickStartParcelLanded(Entity* pot, u32 hazard) {
+    const QuickStartCarryPair* pair = QuickStartCarryPairChosen();
+    s32 tx, ty, rx, ry, i;
+    bool32 good = FALSE;
+    Entity* fresh;
+    if (!QuickStartParcelIs(pot)) {
+        return FALSE;
+    }
+    if (pair == NULL || QuickStartCarryState() == QUICKSTART_CARRY_WON) {
+        return TRUE; // nothing to keep it for: it simply goes
+    }
+    tx = (pot->x.HALF.HI - gRoomControls.origin_x) >> 4;
+    ty = (pot->y.HALF.HI - gRoomControls.origin_y) >> 4;
+    if (hazard == 0) {
+        if (QuickStartCarryInPiece(pair, tx, ty)) {
+            good = TRUE;
+        } else {
+            // Against a wall: a pot stopped by one comes down on the wall's
+            // part-solid edge tile. The open tile beside it is where it lies.
+            static const s8 kNeighbours[4][2] = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+            for (i = 0; i < 4 && !good; i++) {
+                if (QuickStartCarryInPiece(pair, tx + kNeighbours[i][0], ty + kNeighbours[i][1])) {
+                    tx += kNeighbours[i][0];
+                    ty += kNeighbours[i][1];
+                    good = TRUE;
+                }
+            }
+        }
+    }
+    if (good) {
+        // Never on Link himself: a pot dropped mid-lift comes down at his own
+        // feet (measured), and a parcel stood there would shut its solid
+        // tile around him. The good tile beside him he is facing, or any.
+        s32 px = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+        s32 py = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+        if (tx == px && ty == py) {
+            static const s8 kFacing[4][2] = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
+            s32 f = (gPlayerEntity.base.animationState >> 1) & 3;
+            good = FALSE;
+            for (i = 0; i < 4 && !good; i++) {
+                s32 k = (f + i) & 3;
+                if (QuickStartCarryInPiece(pair, px + kFacing[k][0], py + kFacing[k][1])) {
+                    tx = px + kFacing[k][0];
+                    ty = py + kFacing[k][1];
+                    good = TRUE;
+                }
+            }
+        }
+    }
+    if (good) {
+        QuickStartCarrySetRest(tx, ty);
+        QuickStartCarrySpawnParcel(tx, ty);
+        return TRUE;
+    }
+    // Lost. The vanilla effect for what it fell into, a puff for dry ground
+    // out of reach, and it is back where it was last picked up.
+    switch (hazard) {
+        case 1:
+            CreateFx(pot, FX_FALL_DOWN, 0);
+            break;
+        case 2:
+            CreateFx(pot, FX_WATER_SPLASH, 0);
+            break;
+        case 3:
+            CreateFx(pot, FX_LAVA_SPLASH, 0);
+            break;
+        case 4:
+            CreateFx(pot, FX_GREEN_SPLASH, 0);
+            break;
+        default:
+            CreateFx(pot, FX_DEATH, 0);
+            break;
+    }
+    QuickStartCarryRestTile(pair, &rx, &ry);
+    fresh = QuickStartCarrySpawnParcel(rx, ry);
+    if (fresh != NULL) {
+        CreateFx(fresh, FX_SPARKLE, 0);
+    }
+    SoundReq(SFX_SECRET);
+    if (!CheckLocalFlagByBank(FLAG_BANK_11, GF_CARRY_LOST_SAID)) {
+        SetLocalFlagByBank(FLAG_BANK_11, GF_CARRY_LOST_SAID);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, QUICKSTART_CARRY_LOST_TEXT), 0);
+    }
+    return TRUE;
+}
+
+// Hand it over. Deleting the pot is enough for the hold: the held-object
+// item sees its child gone and puts Link's arms down (playerItemHeldObject.c).
+static void QuickStartCarryDeliver(bool32 say) {
+    const QuickStartCarryPair* pair = QuickStartCarryPairChosen();
+    Entity* parcel = QuickStartCarryParcelInRoom();
+    s16 x, y;
+    if (parcel != NULL) {
+        DeleteEntity(parcel);
+    }
+    gSave.carry_want = 0;
+    gSave.carry_item = 0;
+    QuickStartCarrySetState(QUICKSTART_CARRY_WON);
+    x = (s16)(pair->bx * 16 + 8);
+    y = (s16)(pair->by * 16 + 24);
+    QuickStartSpawnRewardEntity(QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE), x,
+                                y);
+    if (say) {
+        MessageRequest(TEXT_INDEX(TEXT_CUSTOM2, 200));
+        MsgInit();
+    }
+}
+
+// --- The script hooks (data/scripts/quickstart/script_QuickStartCarry.inc,
+//     script_QuickStartCarryReceiver.inc)
+void QuickStartCarryIsWon(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartCarryState() == QUICKSTART_CARRY_WON;
+}
+
+// The receiver, first thing on a talk: a player who walks up holding the
+// parcel and presses R is delivering.
+void QuickStartCarryTryDeliver(Entity* entity, ScriptExecutionContext* context) {
+    bool32 ok = QuickStartCarryRunning() && QuickStartCarryHeldParcel() != NULL && QuickStartCarryPairChosen() != NULL;
+    if (ok) {
+        QuickStartCarryDeliver(FALSE);
+    }
+    context->condition = ok;
+}
+
+void QuickStartCarryCanStart(Entity* entity, ScriptExecutionContext* context) {
+    context->condition = QuickStartCarryState() == QUICKSTART_CARRY_OFFERED;
+}
+
+void QuickStartCarryBegin(Entity* entity, ScriptExecutionContext* context) {
+    if (QuickStartCarryState() != QUICKSTART_CARRY_OFFERED) {
+        return;
+    }
+    QuickStartCarrySetState(QUICKSTART_CARRY_ACCEPTED);
+    SoundReq(SFX_SECRET);
+}
+
+static void QuickStartCarryStand(s32 tx, s32 ty, Script* script) {
+    s32 worldX = gRoomControls.origin_x + tx * 16 + 8;
+    s32 worldY = gRoomControls.origin_y + ty * 16 + 8;
+    if (QuickStartStealthNpcAt(worldX, worldY) == NULL && QuickStartGfxBudgetForSpawn()) {
+        Entity* npc = CreateNPC(ZELDA, 0, 0);
+        if (npc != NULL) {
+            npc->x.HALF.HI = worldX;
+            npc->y.HALF.HI = worldY;
+            npc->collisionLayer = 1;
+            UpdateSpriteForCollisionLayer(npc);
+            npc->direction = IdleSouth;
+            QuickStartMakeNpcTalkable(npc, script);
+        }
+    }
+}
+
+// Called every frame from QuickStartRegionMonitor for the current row.
+static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot) {
+    const QuickStartCarryPair* pair;
+    Entity* parcel;
+    Entity* held;
+    s32 bx, by, dx, dy;
+    QuickStartCarryRollOnce();
+    if (slot != QuickStartCarryHost() || gRoomTransition.transitioningOut || !QuickStartRoomSettled()) {
+        return;
+    }
+    QuickStartCarryChoosePair();
+    pair = QuickStartCarryPairChosen();
+    if (pair == NULL || pair->area != gRoomControls.area || pair->room != gRoomControls.room) {
+        return;
+    }
+    // Both stand for the whole run, before, during and after.
+    QuickStartCarryStand(pair->ax, pair->ay, &script_QuickStartCarry);
+    QuickStartCarryStand(pair->bx, pair->by, &script_QuickStartCarryReceiver);
+    if (!QuickStartCarryRunning()) {
+        return;
+    }
+    held = QuickStartCarryHeldParcel();
+    parcel = (held != NULL) ? held : QuickStartCarryParcelInRoom();
+    if (parcel == NULL) {
+        // Accepted, or back in the room after leaving it: on its rest spot.
+        s32 rx, ry;
+        if (gPlayerState.heldObject == 0 && QuickStartGfxBudgetForSpawn()) {
+            QuickStartCarryRestTile(pair, &rx, &ry);
+            QuickStartCarrySpawnParcel(rx, ry);
+        }
+        return;
+    }
+    bx = gRoomControls.origin_x + pair->bx * 16 + 8;
+    by = gRoomControls.origin_y + pair->by * 16 + 8;
+    // Half-way: the second wave, toward B.
+    if (held != NULL && QuickStartCarryState() == QUICKSTART_CARRY_LIFTED &&
+        !CheckLocalFlagByBank(FLAG_BANK_11, GF_CARRY_WAVE2)) {
+        s32 total = (pair->bx > pair->ax ? pair->bx - pair->ax : pair->ax - pair->bx) +
+                    (pair->by > pair->ay ? pair->by - pair->ay : pair->ay - pair->by);
+        dx = gPlayerEntity.base.x.HALF.HI - bx;
+        dy = gPlayerEntity.base.y.HALF.HI - by;
+        if ((dx < 0 ? -dx : dx) + (dy < 0 ? -dy : dy) <= total * 8) {
+            SetLocalFlagByBank(FLAG_BANK_11, GF_CARRY_WAVE2);
+            QuickStartCarryWave(pair, 3, 4, 2 + ((s32)QuickStartGetDifficulty() >> 2));
+        }
+    }
+    // Delivery: carried up to the receiver, or lying at their feet.
+    dx = parcel->x.HALF.HI - bx;
+    dy = parcel->y.HALF.HI - by;
+    if (held != NULL) {
+        dx = gPlayerEntity.base.x.HALF.HI - bx;
+        dy = gPlayerEntity.base.y.HALF.HI - by;
+    }
+    dx = dx < 0 ? -dx : dx;
+    dy = dy < 0 ? -dy : dy;
+    if (held != NULL ? (dx + dy <= QUICKSTART_CARRY_REACH)
+                     : (parcel->action == 1 && dx + dy <= QUICKSTART_CARRY_REACH_FLOOR)) {
+        QuickStartCarryDeliver(TRUE);
+    }
+}
+
+static u32 QuickStartHeldReachMask(void);
+static u32 QuickStartReachableRegions(u32 held);
+
+// A pool row whose region is ADJACENT to `host`'s
 // (sQuickStartRegionAdjacency), preferring one the player can reach with
-// what they hold right now - decided at the moment the quest is accepted,
-// not at the roll, so the pick is made against the real kit rather than
-// the empty one a run starts with. Falls back to any adjacent row, and to
+// what they hold right now (the courier calls it when the parcel is taken,
+// so the pick is made against the real kit). Written for the old carry
+// quest; the courier's receiver uses it now. Falls back to any adjacent row, and to
 // the giver's own row only if the ring has somehow left it alone.
-static s32 QuickStartCarryChoosePropRow(s32 host) {
+static s32 QuickStartPickNeighbourRow(s32 host) {
     u32 adj = sQuickStartRegionAdjacency[QuickStartRegionOfPoolIndex(host)];
     u32 reach = QuickStartReachableRegions(QuickStartHeldReachMask());
     s32 i, n = 0, pick, pass;
@@ -15250,241 +15649,6 @@ static s32 QuickStartCarryChoosePropRow(s32 host) {
         }
     }
     return host;
-}
-
-// The parcel in Link's arms, or NULL. Identity is the item id: the shop and
-// the fairy's strew never stock a trading prop.
-static Entity* QuickStartCarryHeldParcel(void) {
-    Entity* carried = gPlayerEntity.carriedEntity;
-    if (gSave.carry_want != 0 && gPlayerState.heldObject != 0 && carried != NULL && carried->kind == OBJECT &&
-        carried->id == SHOP_ITEM && carried->type == gSave.carry_want) {
-        return carried;
-    }
-    return NULL;
-}
-
-static Entity* QuickStartCarryParcelInRoom(void) {
-    s32 i;
-    if (gSave.carry_want == 0) {
-        return NULL;
-    }
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == SHOP_ITEM && ent->type == gSave.carry_want) {
-            return ent;
-        }
-    }
-    return NULL;
-}
-
-// Hand it over. Puts the carry system down the way ItemForSale's own drop
-// does, takes the prop, pays, and closes the quest.
-static void QuickStartCarryDeliver(bool32 say) {
-    Entity* carried = QuickStartCarryHeldParcel();
-    s16 x, y;
-    if (carried != NULL) {
-        gPlayerState.heldObject = 0;
-        gPlayerEntity.carriedEntity = NULL;
-        gRoomVars.shopItemType = 0;
-        gRoomVars.shopItemType2 = 0;
-        gHUD.rActionInteractObject = R_ACTION_NONE;
-        gHUD.rActionPlayerState = R_ACTION_NONE;
-        DeleteEntity(carried);
-    }
-    gSave.carry_item = 0;
-    QuickStartCarrySetState(QUICKSTART_CARRY_WON);
-    QuickStartPlayerDropSpot(&x, &y);
-    QuickStartSpawnRewardEntity(QuickStartDrawAtTier(QuickStartDrawPick((s32)Random() & 0x3f), QS_CAT_DROP, QS_TIER_RARE), x,
-                                y);
-    if (say) {
-        MessageRequest(TEXT_INDEX(TEXT_CUSTOM2, 200));
-        MsgInit();
-    }
-}
-
-// --- The script hooks (data/scripts/quickstart/script_QuickStartCarry.inc)
-void QuickStartCarryIsWon(Entity* entity, ScriptExecutionContext* context) {
-    context->condition = QuickStartCarryState() == QUICKSTART_CARRY_WON;
-}
-
-// First thing the script does on a talk, BEFORE SetPlayerIdle puts the
-// parcel down: a player who walks up holding it and presses A is
-// delivering, whatever the proximity test made of their angle.
-void QuickStartCarryTryDeliver(Entity* entity, ScriptExecutionContext* context) {
-    bool32 ok = QuickStartCarryRunning() && QuickStartCarryHeldParcel() != NULL;
-    if (ok) {
-        QuickStartCarryDeliver(FALSE);
-    }
-    context->condition = ok;
-}
-
-void QuickStartCarryCanStart(Entity* entity, ScriptExecutionContext* context) {
-    context->condition = QuickStartCarryState() == QUICKSTART_CARRY_OFFERED;
-}
-
-void QuickStartCarryBegin(Entity* entity, ScriptExecutionContext* context) {
-    if (QuickStartCarryState() != QUICKSTART_CARRY_OFFERED) {
-        return;
-    }
-    QuickStartGauntletWriteBits(GF_CARRY_PROP_BIT(0), 5, (u32)QuickStartCarryChoosePropRow(QuickStartCarryHost()));
-    QuickStartCarrySetState(QUICKSTART_CARRY_RUNNING_UNHINTED);
-    SoundReq(SFX_SECRET);
-}
-
-// Called every frame from QuickStartRegionMonitor for the hosting row.
-static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot) {
-    s16 spotX, spotY;
-    s32 worldX, worldY;
-    QuickStartCarryRollOnce();
-    // Sidelined (Oct 2026): the parcel still does not survive a room seam
-    // in play, so no run offers this quest. Only a QUEST/CARRY scenario
-    // stands the giver up, which keeps the code testable while the
-    // single-room redesign is planned (docs/QUICKSTART_ROADMAP.md, "The
-    // carry quest is sidelined").
-    if (QuickStartScenarioQuestHost(QS_SCN_QUEST_CARRY) < 0) {
-        return;
-    }
-    if (slot != QuickStartCarryHost()) {
-        return;
-    }
-    // Ezlo names the parcel's region once, the moment the giver has
-    // finished asking - the region bank's own line for it, so the words
-    // match what the win chain would say about the same place.
-    if (QuickStartCarryState() == QUICKSTART_CARRY_RUNNING_UNHINTED && !(gMessage.state & MESSAGE_ACTIVE) &&
-        gPlayerEntity.base.action == PLAYER_NORMAL && !QuickStartPlayerOnExitTrigger()) {
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM2, QuickStartRegionHintLine(QuickStartRegionOfPoolIndex(QuickStartCarryPropRow()))), 0);
-        QuickStartCarrySetState(QUICKSTART_CARRY_RUNNING);
-    }
-    if (!QuickStartCarrySpot(region, &spotX, &spotY)) {
-        return;
-    }
-    worldX = gRoomControls.origin_x + spotX;
-    worldY = gRoomControls.origin_y + spotY;
-    // The giver stands here for the whole run - before, during and after -
-    // so the player can always come back and be told what is wanted.
-    if (QuickStartStealthNpcAt(worldX, worldY) == NULL && QuickStartGfxBudgetForSpawn()) {
-        Entity* npc = CreateNPC(ZELDA, 0, 0);
-        if (npc != NULL) {
-            npc->x.HALF.HI = worldX;
-            npc->y.HALF.HI = worldY;
-            npc->collisionLayer = 1;
-            UpdateSpriteForCollisionLayer(npc);
-            npc->direction = IdleSouth;
-            QuickStartMakeNpcTalkable(npc, &script_QuickStartCarry);
-        }
-    }
-    // Delivery by proximity, parcel in hand.
-    if (QuickStartCarryRunning() && QuickStartCarryHeldParcel() != NULL) {
-        s32 dx = gPlayerEntity.base.x.HALF.HI - worldX;
-        s32 dy = gPlayerEntity.base.y.HALF.HI - worldY;
-        if (dx < 0) {
-            dx = -dx;
-        }
-        if (dy < 0) {
-            dy = -dy;
-        }
-        if (dx + dy <= QUICKSTART_CARRY_REACH) {
-            QuickStartCarryDeliver(TRUE);
-        }
-    }
-}
-
-// Called every frame from QuickStartRoomMonitor, in every room.
-static void QuickStartCarryPropMonitor(void) {
-    Entity* parcel;
-    if (!QuickStartCarryRunning() || gSave.carry_want == 0) {
-        gSave.carry_item = 0;
-        return;
-    }
-    // 1. The seam. Before the settled gate, because these are the torn
-    //    frames: the transition has begun, the hold is still real for a
-    //    frame or two, and RecycleEntities has not run yet.
-    if (gRoomTransition.transitioningOut) {
-        if (QuickStartCarryHeldParcel() != NULL) {
-            gSave.carry_item = gSave.carry_want;
-        }
-        return;
-    }
-    if (!QuickStartRoomSettled()) {
-        return;
-    }
-    // 2. The far side: a fresh prop at the feet, lifted again. Not into the
-    //    hub (the shop would try to sell it) and not into a fairy's room
-    //    (the fountain would take it as an offering) - there the parcel
-    //    simply goes home. Waits for the player to be standing normally, so
-    //    the lift lands on the same state vanilla's own lift does.
-    if (gSave.carry_item != 0) {
-        if (gRoomControls.area == QUICKSTART_AREA || gRoomControls.area == AREA_GREAT_FAIRIES) {
-            gSave.carry_item = 0;
-            return;
-        }
-        if (gPlayerEntity.base.action != PLAYER_NORMAL || gPlayerState.heldObject != 0) {
-            return;
-        }
-        parcel = QuickStartCarryParcelInRoom();
-        if (parcel == NULL) {
-            if (QuickStartGfxBudgetForSpawn()) {
-                s16 lx, ly;
-                QuickStartPlayerDropSpot(&lx, &ly);
-                QuickStartSpawnShopItem(gSave.carry_want, lx, ly);
-            }
-            return;
-        }
-        // Two frames, not one: the prop's own init (action 0 -> 1) calls
-        // AddInteractableObject, which clears interactType - so a lift
-        // written on the spawn frame is wiped before ItemForSale_Action1
-        // ever reads it. Measured: inter 1 at spawn, 0 one frame later,
-        // hold never taken. Wait for the init, then lift.
-        if (parcel->action != 1) {
-            return;
-        }
-        // A vanilla lift, from the far side of the R press: this is what
-        // the interaction dispatch (playerUtils.c, the
-        // INTERACTION_LIFT_SHOP_ITEM case) writes - the player forced into
-        // the talk state with the lift queued, the prop told it was
-        // interacted with, the room told what is in hand - and the prop's
-        // own ItemForSale_Action1 does the lifting on its next update.
-        // Writing heldObject/carriedEntity by hand instead leaves the
-        // player's state machine unaware and the hold is gone in a frame.
-        gPlayerState.queued_action = PLAYER_08070E9C;
-        ForceSetPlayerState(PL_STATE_TALKEZLO);
-        parcel->interactType = INTERACTION_TALK;
-        gRoomVars.shopItemType = gSave.carry_want;
-        gRoomVars.shopItemType2 = 0;
-        gSave.carry_item = 0;
-        return;
-    }
-    parcel = QuickStartCarryParcelInRoom();
-    if (parcel != NULL) {
-        // 3. Held: the pedestal follows the player, so a forced drop lands
-        //    at the feet (see the block comment).
-        if (QuickStartCarryHeldParcel() == parcel) {
-            ItemForSaleEntity* prop = (ItemForSaleEntity*)parcel;
-            s16 lx, ly;
-            QuickStartPlayerDropSpot(&lx, &ly);
-            prop->unk_80 = (u16)lx;
-            prop->unk_82 = (u16)ly;
-            if (gRoomVars.shopItemType == 0) {
-                gRoomVars.shopItemType = gSave.carry_want;
-            }
-            // The seam rebuild's lift leaves the player in the queued
-            // interaction action (sub_08070E9C), which only returns to
-            // normal when a textbox it is waiting for closes - the shop's
-            // price line, in vanilla. There is no textbox here, so once
-            // the hold has taken, do what its own last step does.
-            if (gPlayerEntity.base.action == PLAYER_08070E9C && !(gMessage.state & MESSAGE_ACTIVE)) {
-                gPlayerEntity.base.updatePriority = gPlayerEntity.base.updatePriorityPrev;
-                ResetPlayerAnimationAndAction();
-            }
-        }
-        return;
-    }
-    // 4. Home: no parcel in the room and none in hand, standing in the
-    //    parcel's own region - it is back on its spot.
-    if (QuickStartCurrentRegionPoolIndex() == QuickStartCarryPropRow() && QuickStartGfxBudgetForSpawn()) {
-        const QuickStartRegion* home = &sQuickStartRegionPool[QuickStartCarryPropRow()];
-        QuickStartSpawnShopItem(gSave.carry_want, home->rewardX, home->rewardY);
-    }
 }
 
 // =================== The courier (Oct 2026, P2 section 6.2) ===================
@@ -15656,7 +15820,7 @@ void QuickStartCourierBegin(Entity* entity, ScriptExecutionContext* context) {
     if (QuickStartCourierState() != QUICKSTART_COURIER_OFFERED) {
         return;
     }
-    QuickStartBank12Write(GF_COURIER_DEST_BIT(0), 5, (u32)QuickStartCarryChoosePropRow(QuickStartCourierHost()));
+    QuickStartBank12Write(GF_COURIER_DEST_BIT(0), 5, (u32)QuickStartPickNeighbourRow(QuickStartCourierHost()));
     SetLocalFlagByBank(FLAG_BANK_12, GF_COURIER_DEST_SET);
     QuickStartCourierSetState(QUICKSTART_COURIER_CARRYING_UNHINTED);
     SoundReq(SFX_SECRET);
@@ -24828,7 +24992,6 @@ static void QuickStartRoomMonitor(void) {
     QuickStartHandicapMonitor();
     // The carry quest's parcel: stash it at a seam, rebuild it in the next
     // room, keep its drop point under the player, send it home when lost.
-    QuickStartCarryPropMonitor();
     QuickStartEnforceContainment();
     QuickStartEnforceLonLonContainment();
     QuickStartEnforceFieldRegionContainment();

@@ -107,8 +107,8 @@ typedef struct {
     /*0x03C*/ u8 scenario_d;
     /*0x03D*/ u8 scenario_kitdiff;           /**< bits 0-3: difficulty (0 = the build's own);
                                               *   bits 4-5: kit (0 normal, 1 test kit, 2 everything) */
-    /*0x03E*/ u8 carry_item;                 /**< the parcel in Link's hands across a room seam, or 0 */
-    /*0x03F*/ u8 carry_want;                 /**< the parcel the carry quest asks for, or 0 */
+    /*0x03E*/ u8 carry_item;                 /**< QUICKSTART carry quest: the parcel's rest tile y + 1, or 0 */
+    /*0x03F*/ u8 carry_want;                 /**< QUICKSTART carry quest: the parcel's rest tile x + 1, or 0 */
 #else
     /*0x022*/ u8 filler22[30];               /**< unused filler */
 #endif

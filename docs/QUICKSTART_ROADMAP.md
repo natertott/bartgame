@@ -1271,6 +1271,62 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The carry quest, one room: built (Oct 2026)
+
+The user answered the plan's four questions (a lost parcel comes back to
+where it was last picked up; unreachable dry ground counts as lost; the
+"flaming skulls" are the red and blue Wisps, and the Flying Skull too; a
+giver at the start and a receiver at the end), and it is built. Design
+and measurements: `docs/QUICKSTART_CARRY_SINGLE_ROOM.md` section 10.
+
+A giver stands at A, a receiver at B, both for the whole run, in one room
+of North Hyrule Field, Minish Woods, Mount Crenel's base or Castor Wilds
+(Veil Falls has no pair: its ledges cut it into pieces too short to carry
+across). Talking to the giver puts the parcel, a pot that never breaks,
+three tiles off. Lifting it starts the first wave; carrying it past
+half-way starts the second; walking up to the receiver with it, or
+throwing it to their feet, delivers: a RARE draw, and the run's side quest
+for the win chain. A parcel lost to water, a pit, lava, the Castor murk
+or dry ground outside the pair's piece reappears where it was lifted, and
+Ezlo says so once.
+
+`carry_pairs.py` (new) makes the pairs from live collision: per arrival
+piece of the carry grid (open, no hazard act tiles, bushes and ledges as
+walls), at least 24 tiles and 60% of the piece's longest walk apart, past
+two survey places, the parcel's home outside the giver's talk box, clear
+of the room's own NPCs. Seven pairs, 28 to 65 tiles of carry. Each pair
+carries its piece as a 512-byte bitmap, so the game's "is this landing
+good" is one bit: a full-room flood measured 1.3 million instructions,
+4.7 frames of stall on every landing.
+
+`carry_room_probe.py` (new) plays every pair with key presses: giver and
+receiver standing, accept, lift (first wave counted by role), carry along
+the piece to B (second wave), deliver: all seven pairs 5/5. A walk with
+the waves free to hit took 1 to 6 re-lifts per pair; the proving walk
+holds Link's invulnerability frames up so the path, not the fight, is
+what is tested. `--throws` 3/3: thrown into the swamp it comes back to
+the lift spot with Ezlo's line; thrown onto good ground it stays (3 tiles
+out); the dry-ground rule on the held parcel sends it back. No room
+offers a real throw onto unreachable dry ground (cliff faces stop a
+thrown pot, and no pit or channel by a carry piece has dry ground just
+beyond it), so that case is tested on the rule, not the throw.
+
+`carry_measure.py` (new) measured the engine facts the build rests on: a
+pot must stand on a tile centre or its lift hitbox and its solid tile do
+not line up; walking on into a pot shoves it a tile; R mid-lift drops it;
+`carriedEntity` is the held-object item and the pot is its child; deep
+water and pits are already solid in the collision map, the swamp is not
+(672 of Castor Wilds' 1927 open tiles).
+
+Bugs met on the way and fixed: the parcel spawned beside the giver could
+not be lifted (the giver's 40x40 talk box answered R first); a pot
+dropped mid-lift would have stood the parcel on Link's own tile, shutting
+its solid tile around him; a parcel broken where it rests would have
+stood its replacement on its own marker tile, which deletes a pot. The
+courier keeps the old quest's "neighbouring reachable region" picker,
+renamed `QuickStartPickNeighbourRow`. The old cross-room code and
+`carry_probe.py` are gone.
+
 ### The carry quest is sidelined; a single-room version is planned (Oct 2026)
 
 The user: the carry quest still does not work across room transitions;

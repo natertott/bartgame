@@ -29,7 +29,7 @@ blessing and an extra.
   FREE     once the tinted pastries are gone, their palette slots are given
            back (no slot leaks per pastry).
 
-    python3 tools/quickstart/blessing_probe.py [--rom tmc-d3.gba]
+    python3 tools/quickstart/blessing_probe.py [--rom tmc-d3.gba] [--seed N]
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +40,12 @@ import callrom as C
 import chain_audit as A
 ROM = sys.argv[sys.argv.index('--rom') + 1] if '--rom' in sys.argv else 'tmc-d3.gba'
 OUT = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv else '/tmp'
+# The REGION boot's population decides whether the harness's direct calls
+# survive 200 spawn-and-delete rounds in a full Castle Garden: on some seeds
+# a call never returns, or the emulator segfaults (measured on both the
+# trophy-case build and the carry build, docs/HANDOFF_ISSUES.md). A seed
+# that holds can be named.
+SEED = int(sys.argv[sys.argv.index('--seed') + 1]) if '--seed' in sys.argv else None
 SAVE = 0x02002a40
 HEALTH, MAXHEALTH = SAVE + 0xA8 + 2, SAVE + 0xA8 + 3
 SHELL_CLOCK = SAVE + 0xA8 + 0x1a
@@ -90,7 +96,7 @@ def sums(c, slot):
         x = rgb(c, slot, i); r += x[0]; g += x[1]; b += x[2]
     return r, g, b
 
-c = S.boot(ROM, S.KINDS['REGION'], 0, 0, kit=2, frames=400)
+c = S.boot(ROM, S.KINDS['REGION'], 0, 0, kit=2, seed=SEED, frames=400)
 A.kill_all(c); run(c, 30); A.dismiss(c)
 
 # GREEN: the curse items come out as their blessing's sprite, tier 1

@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The carry quest, one room: giver at A, unbreakable pot, receiver at B, lost parcels back at the lift spot, two mixed waves; 7 pairs in four rooms (none in Veil Falls); `carry_room_probe.py` all pairs 5/5, `--throws` 3/3 | "The carry quest, one room: built" |
 | The Rusted Blade drawn as the Smith's Sword in rust (floor, case), its pickup quiet; item-sheet frames force palette 4, so the tint is laid on the OAM entries | "The Rusted Blade has a look" |
 | The carry quest sidelined (scenario-only); the single-room redesign planned in `docs/QUICKSTART_CARRY_SINGLE_ROOM.md`, four questions open | "The carry quest is sidelined" |
 | The trophy case draws each found item's own sprite in the figurine pane; the ground shelf removed; rows 69-77 named the wrong item (fixed); `trophy_probe.py` 4/4 | "The trophy case shows each item's sprite" |
@@ -173,11 +174,13 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   fixed by a timeout that has not been watched in play - if a chuchu ever
   stands still for longer than two seconds without hopping, that is the
   thing to report, with the room.
-- **Answer the carry plan's four questions**
-  (`docs/QUICKSTART_CARRY_SINGLE_ROOM.md` section 9): where a lost parcel
-  comes back, whether unreachable dry ground counts as lost, which enemy
-  "flaming skulls" means, and one NPC or two. The cross-room quest is
-  sidelined meanwhile; `scenario.py quest CARRY CG` still stands it up.
+- **Play the carry quest.** `scenario.py quest CARRY NHF` (or MW, CREN,
+  CW) stands it up. Every pair is walked by the probe, but with Link
+  invulnerable; the feel of carrying through the two waves - wisps,
+  flying skulls, wizzrobes, beetles, a knock that drops the pot - has not
+  been watched. Say whether the waves are too many or too few, and
+  whether Veil Falls should get pairs (it needs ledge hops while carrying,
+  not measured).
 
 - **The GFX budget tier fails for Lon Lon Ranch and North Hyrule Field**
   on the Veil Falls build: 1 and 0 free GFX slots at difficulty 4 against

@@ -1,9 +1,8 @@
-# The carry quest, single-room version (plan, Oct 2026)
+# The carry quest, single-room version (Oct 2026)
 
-Status: **plan, not built.** The cross-room carry quest is sidelined: no run
-offers it. Only a QUEST/CARRY scenario stands its giver up, so the old code
-stays testable (`QuickStartCarryMonitor`, game.c). Nothing below is built
-yet.
+Status: **built** (section 10 says how it differs from this plan). The
+cross-room carry quest it replaces is gone. Sections 1 to 9 are the plan
+as written, with the user's answers in section 9.
 
 The user's brief:
 
@@ -188,14 +187,89 @@ already the busiest rooms in the performance census.
    parcel code.
 5. Enemy waves. Then play-test, then the other rooms.
 
-## 9. Questions for the user
+## 9. Questions for the user, answered
 
-1. When the parcel is lost (water, murk, a pit, an unreachable ledge), does
-   it come back to **where it was last picked up** (recommended), or all
-   the way back to **A**?
-2. Should a throw that lands it on unreachable dry ground count as lost too
-   (recommended), or should only true hazards count?
-3. "Flaming skulls": the Flying Skull (type 1, dives at Link), or another
-   enemy?
-4. Giver at A and receiver at B (recommended), or one person who sends you
-   off and waits at B?
+1. A lost parcel comes back to **where it was last picked up**.
+2. Unreachable dry ground **counts as lost**, with water, pits, lava and
+   the murk.
+3. "Flaming skulls" meant the **red and blue Wisps**; use the **Flying
+   Skull** too.
+4. A **giver at the start and a receiver at the end**.
+
+## 10. As built (Oct 2026)
+
+What changed between the plan and the ROM, and what was measured on the
+way (`carry_measure.py`, `carry_pairs.py`, `carry_room_probe.py`).
+
+**The parcel.** A vanilla pot, `CreateObject(POT, 0xFF, 0x50)`: type2 0x50
+marks it. `pot.c` hands it to game.c at the three places a pot's carry or
+flight ends: the lift (`sub_08082510`, which records where it was lifted
+from and, the first time, starts the quest's first wave), the landing
+(`sub_0808259C`) and `BreakPot`. Every way a flight ends reaches one of
+the last two: a throw, a drop when Link is hit, a hazard tile
+(`playerItemHeldObject.c` ends them all with the pot's sub-action 3).
+`QuickStartParcelLanded` stands a fresh parcel where it landed or back at
+the lift spot, and the old one is deleted.
+
+**Good ground is a bitmap, not a flood.** The plan had the landing check
+flood the room live from B. A full-room flood measured **1.3 million
+instructions** in North Hyrule Field, 4.7 frames of stall on every
+landing. Instead `carry_pairs.h` carries each pair's PIECE, one bit per
+tile: the carry grid's piece holding A and B (open tiles, no hazard act
+tiles, bushes and ledges as walls). A landing in it stays; outside it, or
+on a hazard, it is lost. A pot stopped by a wall comes down on the wall's
+part-solid edge tile, so the open tile beside it counts. And it never
+comes back on Link's own tile, which a pot dropped mid-lift would (its
+solid marker tile would shut around him).
+
+**Where pairs come from.** Not one big component per room: in these
+rooms the carry grid falls into many pieces (Veil Falls' biggest is 97
+tiles, Castor Wilds' 277 once the swamp is out). Pairs are made per
+ARRIVAL PIECE: the piece under a vanilla transition's landing, the pool
+row's entrance, or a survey place (its exits are the border crossings).
+The game picks, once per run on the first settled frame in the room, the
+first pair whose piece holds the player's tile. Wherever they came in,
+they can walk to A and carry to B without cutting a bush.
+
+| room | pairs | carry length (tiles) |
+|---|---|---|
+| North Hyrule Field | 1 | 65 |
+| Minish Woods | 1 | 32 |
+| Mount Crenel's base | 2 | 41-42 |
+| Castor Wilds | 3 | 28-35 |
+| Veil Falls | 0 | no piece has a 24-tile walk |
+
+Veil Falls has no pair. Its ledges cut it into pieces too short to carry
+across. Ledge hops while carrying would join them; that was not measured
+here.
+
+**The parcel's home is three tiles from the giver.** Beside the giver, R
+at the pot talked instead of lifting: the giver's talk box
+(`QuickStartMakeNpcTalkable`) is an oversized 40x40, and talk beats lift.
+So each pair names a home tile H, three tiles off, and the generator
+keeps A, H and B clear of the room's own NPCs.
+
+**Measured engine facts.** A pot must stand on a tile centre (x = 16n+8):
+its solid marker tile and its lift hitbox only line up there. Walking on
+into a pot shoves it a tile (16 px). R mid-lift (`heldObject` 3, not yet
+4) drops the pot at Link's feet. `gPlayerEntity.carriedEntity` is the
+held-object player item, and the pot is its `child`. Deep water and pits
+already count as solid in the collision map; the swamp does not (672 of
+Castor Wilds' 1927 open tiles), which is why the hazard act tiles are
+filtered out of the grid.
+
+**Dry ground out of reach.** No room offers a throw onto unreachable dry
+ground: a thrown pot is stopped by cliff faces, and no pit or channel
+beside a carry piece has dry ground just beyond it (searched in all four
+rooms). The rule is in and tested on the game's own code: the probe puts
+the held parcel on open ground outside the piece and calls
+`QuickStartParcelLanded`, which sends it back to the lift spot.
+
+**Enemies.** First wave on the first lift, at a third of the way from A
+to B: 3 + difficulty/3. Second wave when the carried parcel is half-way
+(Manhattan) to B, at three quarters of the way: 2 + difficulty/4. Roles
+in turn: a pursuer (`sQuickStartPursuers`), a shooter (Octorok red or
+blue, Bow Moblin, Wind Wizzrobe), a movement-impairer (Beetle, Ice or
+Fire Wizzrobe, red or blue Wisp, Flying Skull type 1). The first
+impairer of each wave is always a Wisp or a Flying Skull, the user's
+named three.

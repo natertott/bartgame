@@ -32,6 +32,28 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **`callrom.call_keep` is not safe in a crowded room.** `blessing_probe.py`
+  spawns and deletes a brioche 200 times in a REGION-scenario Castle Garden
+  full of wave enemies; on some boot seeds a call ends "CPU never reached
+  game code", and on one the emulator itself segfaulted mid-call. Measured
+  on the trophy-case build (seeds 0 and 3) and on the carry build (seeds
+  1-3, and the default boot, which segfaulted at round 41) - so it is the
+  harness and the population, not a game change. `--seed 4` holds on both.
+  A probe that "hangs" with no RESULT line may have crashed: run it with
+  `python3 -X faulthandler` and a `timeout -s ABRT`.
+- **A probe's START can leave the pause menu open, and then the room reads
+  (0, 0)** - which is Minish Woods' own id, so a "landed" check passes
+  while Link is still in the boot room. Check Link's position against the
+  warp target, not just `here()` (`carry_room_probe.settle`).
+- **Pots: spawn on tile centres, stop beside them.** A pot off its tile
+  centre cannot be lifted (its lift hitbox and solid tile disagree); walking
+  on into one shoves it a tile; R while `heldObject` is 3 (mid-lift) drops
+  it; holding Link's invulnerability frames up stops the lift itself.
+  `gPlayerEntity.carriedEntity` is the held-object item; the thing held is
+  its `child`.
+- **Talk boxes win over lifts.** A talkable NPC's box is 40x40
+  (`QuickStartMakeNpcTalkable`); anything liftable inside it answers R as a
+  talk.
 - **An item's entity palette may never reach the screen.** Sprite 322's
   item frames (swords, tools, most pickups) carry an absolute palette, 4;
   the draw routine drops the entity's palette for them. Setting

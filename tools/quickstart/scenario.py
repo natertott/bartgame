@@ -11,7 +11,7 @@ feature. No rebuild - which is the whole point.
     python3 tools/quickstart/scenario.py site  27 WAVES 5     # site 27 deals a 3-wave gauntlet, draw seed 5
     python3 tools/quickstart/scenario.py site  ROOM_CAVES_BOOMERANG MINIBOSS 2
     python3 tools/quickstart/scenario.py boss  TRILBY OCTOROK
-    python3 tools/quickstart/scenario.py quest CARRY LLR
+    python3 tools/quickstart/scenario.py quest CARRY NHF
     python3 tools/quickstart/scenario.py chain EVENT 27 0 --land NHF
     python3 tools/quickstart/scenario.py region NHF 3          # arrive with 3 waves already cleared
     python3 tools/quickstart/scenario.py fuser 1 REM

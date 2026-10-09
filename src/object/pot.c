@@ -56,6 +56,14 @@ void sub_080826FC(PotEntity* this);
 
 extern void RegisterCarryEntity(Entity*);
 extern void CheckOnLayerTransition(Entity*);
+#ifdef QUICKSTART
+// The carry quest's parcel (game.c): a pot that never breaks. Landed or
+// "broken", it hands itself to QuickStartParcelLanded, which stands a fresh
+// one where it landed or back where it was lifted from, and this one goes.
+extern bool32 QuickStartParcelLanded(Entity* pot, u32 hazard);
+extern void QuickStartParcelLifted(Entity* pot);
+extern bool32 QuickStartParcelIs(Entity* e);
+#endif
 
 void Pot(PotEntity* this) {
     static void (*const Pot_Actions[])(PotEntity*) = {
@@ -159,6 +167,9 @@ void Pot_Action2(PotEntity* this) {
 }
 
 void sub_08082510(PotEntity* this) {
+#ifdef QUICKSTART
+    QuickStartParcelLifted(super);
+#endif
     COLLISION_ON(super);
     super->hitbox = (Hitbox*)&gUnk_080FD340;
     super->collisionFlags = 7;
@@ -177,6 +188,11 @@ void sub_08082588(PotEntity* this) {
 }
 
 void sub_0808259C(PotEntity* this) {
+#ifdef QUICKSTART
+    if (QuickStartParcelLanded(super, GetTileHazardType(super))) {
+        DeleteThisEntity();
+    }
+#endif
     switch (GetTileHazardType(super)) {
         case 2:
             CreateFx(super, FX_WATER_SPLASH, 0);
@@ -305,8 +321,22 @@ void Pot_Action5(PotEntity* this) {
 }
 
 static void BreakPot(PotEntity* this, Entity* parent) {
-    u32 parameter = sub_0808288C(super, super->type, this->unk_7d, super->type2);
-    Entity* fxEntity = CreateFx(super, FX_POT_SHATTER, parameter);
+    u32 parameter;
+    Entity* fxEntity;
+#ifdef QUICKSTART
+    if (QuickStartParcelIs(super)) {
+        // Broken where it rests (a blast, a changed tile): its solid marker
+        // tile is still down, and the replacement stood on it would see the
+        // marker and delete itself (Pot_Init). Give the tile back first.
+        if (GetTileIndex(COORD_TO_TILE(super), super->collisionLayer) == SPECIAL_TILE_0) {
+            SetTile((u16)this->unk_70, COORD_TO_TILE(super), super->collisionLayer);
+        }
+        QuickStartParcelLanded(super, GetTileHazardType(super));
+        DeleteThisEntity();
+    }
+#endif
+    parameter = sub_0808288C(super, super->type, this->unk_7d, super->type2);
+    fxEntity = CreateFx(super, FX_POT_SHATTER, parameter);
     if (fxEntity) {
         fxEntity->parent = parent;
     }
