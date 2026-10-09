@@ -1271,6 +1271,48 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The trophy case shows each item's sprite (Oct 2026)
+
+The user: when the player browses the trophy case's list, the sprite of the
+item should appear with its description, where vanilla shows the
+figurine. The earlier answer, nine items standing on the floor of the
+selection hall ("the trophy shelf", below), misread that and is gone.
+
+**How.** The pane is drawn by hand in `figurineMenu.c`, the way vanilla
+draws the figurine: on a row change the item's graphics go to
+OBJ_VRAM0+0x4000 (the figurine art's own block, tile 0x200) and its palette
+to object palette 6, and DrawDirect puts the frame up every frame. What to
+draw comes from the item's GROUND_ITEM object definition, so the picture
+is the sprite the player picked up. Streamed items copy one frame's tiles
+from the sprite sheet; fixed ones (the pastries, the books, the medal)
+copy their whole block from the global graphics, decompressing where
+flagged; hearts, rupees and refills draw from the shared sprites the
+screen keeps loaded. A real GROUND_ITEM entity in the menu was tried first
+and failed: the pane stayed blank and the cursor row's text turned to
+garbage (the menu's graphics slots and the room's stashed entities, which
+stay in the entity array while the menu runs).
+
+**A second bug, found in the screenshots.** Rows 69 to 77 named the wrong
+item. The names and descriptions ran Humble Pie, Dog Food, Mushroom, then
+the orbs and the swords; the table runs orbs, swords, then the three food
+curses. A Humble Pie lit the row called "Duelist's Blade". The strings are
+reordered to match the table, not the other way round, so the found-flags
+already in saves stay on the right items.
+
+**And a third, not fixed: four charms drop invisible.** The three orbs and
+the Rusted Blade are unused item ids with no ground sprite (their object
+definition is empty). Spawned through the reward path they lie on the
+floor with sprite index 0 and draw nothing (measured: a heart piece beside
+them, the control, draws). Their trophy rows stay empty for the same
+reason. What they should look like is a design call: an element or a
+kinstone of the same colour would be mistaken for the real thing.
+
+`trophy_probe.py` (new) 4/4: the menu opens; a row not found shows
+nothing; all 72 found rows with art put a sprite in the pane, the four
+without art leave it empty; the charm rows carry their own names. Also
+fixed: three probes read the ledger at gSave+0xD0, as `save.h`'s comment
+says, but it sits at 0xCE (it ends where the inventory starts, 0xF2).
+
 ### The dungeon reach map, probe-made (Oct 2026, P3 section 7)
 
 The plan's first P3 step: what a probe can see of every dungeon room before
@@ -1380,7 +1422,7 @@ real jar catches the spirit (its hold count falls from 240 to 156 as it
 crosses the cone); with Link kept under it as it circles, it yields in 242
 frames; talking then pays a draw once; he is gone later in the run.
 
-### Hub travel and the trophy shelf (Oct 2026, P2 section 8)
+### Hub travel (Oct 2026, P2 section 8)
 
 **Travel.** From the draft on Floor 3 to the hole in Cloud Tops was four
 transitions down the tower's staircase. Two warp pads make it two: one at
@@ -1391,21 +1433,14 @@ They are vanilla's WARP_POINT (spin, then a transition to the room and
 tile it carries), asleep and undrawn until the draft is over, so the draft
 cannot be skipped.
 
-**The shelf.** The trophy case's menu cannot show a picture (the figurine
-pose art does not fit items; figurineMenu.c says why), so the sprites
-stand in the room: once the draft is over, the selection floor's lower
-hall shows up to nine things the player has ever found, from the catalog's
-cross-run ledger, as display-only ground items (collision off every frame).
-Two things measured on the way: several charms reuse unused item ids that
-have no ground sprite (the unused sword drew as a grey smear), so those
-are dropped once their init has run; and nine items do not run out the
-object palettes (the grey was the missing sprite, not the palette).
+A trophy shelf of nine found items on the selection hall's floor shipped
+with this and was removed the next session: it misread the request (see
+"The trophy case shows each item's sprite").
 
-`hub_probe.py` (new) 7/7: a pad in each hall; the selection hall's pad
+`hub_probe.py` (new) 5/5: a pad in each hall; the selection hall's pad
 does nothing while the draft runs; after it, the pad lands in the shop
-hall (56 frames) and the shop's pad at the tower door (114 frames); the
-shelf shows nine drawn items with collision off, and standing on one takes
-nothing. Screenshots of both pads and the shelf.
+hall (56 frames) and the shop's pad at the tower door (114 frames).
+Screenshots of both pads.
 
 **One more blessing-tier case** found while rerunning `blessing_probe.py`
 in a busy room: with every object palette slot taken (Castle Garden had

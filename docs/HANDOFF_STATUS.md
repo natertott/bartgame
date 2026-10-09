@@ -44,10 +44,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The trophy case draws each found item's own sprite in the figurine pane; the ground shelf removed; rows 69-77 named the wrong item (fixed); `trophy_probe.py` 4/4 | "The trophy case shows each item's sprite" |
 | The dungeon reach map: 314 room ids, 224 landed and flooded into walkable parts with their edges, exits and key/boss doors; `docs/QUICKSTART_DUNGEON_REACH.md` | "The dungeon reach map, probe-made" |
 | Switch puzzles: ECHO, LIGHTS and RACE as a new ? room kind, one gauntlet in four at eligible sites; the sweep's fixes (race fuse sized to the walk, cramped races play as lights); `puzzle_probe.py --all` 940/940 over 97 sites | "Switch puzzles: three new ? room kinds with a solver" |
 | Gregal's ghost ported: his vanilla scene on the shop floor, the Gust Jar cures him, a RARE draw for thanks; `gregal_probe.py` 6/6 | "Gregal's ghost" |
-| Hub travel: two warp pads (draft floor to the shop, the shop to the tower door), asleep until the draft ends; a trophy shelf of up to nine found items as display-only sprites; `hub_probe.py` 7/7 | "Hub travel and the trophy shelf" |
+| Hub travel: two warp pads (draft floor to the shop, the shop to the tower door), asleep until the draft ends; `hub_probe.py` 5/5 | "Hub travel" |
 | The courier: the first ported vanilla errand (three skins), giver and receiver in neighbouring regions, counts as the side quest; `courier_probe.py` 6/6 by talking | "The courier: the first ported vanilla errand" |
 | The inn's blessing table: three pastries once a run, one gold, take one; `inn_probe.py` 6/6 | "The inn's blessing table" |
 | Dungeon keys and dungeon items wiped per run; `win_probe.py` checks the key bag across the reset, 6/6 | "Dungeon keys are per run" |
@@ -246,7 +247,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   §11). Shipped: the performance census, Hyrule Town, the seashells, the
   blessing tiers, three switch-puzzle kinds (of the six the plan proposes),
   the courier and Gregal's ghost (of three quest ports), the inn's
-  blessings, hub travel, the trophy shelf, per-run dungeon keys, and the
+  blessings, hub travel, the trophy case's pictures, per-run dungeon keys, and the
   dungeon reach probe (`docs/QUICKSTART_DUNGEON_REACH.md`). Not started:
   three more puzzle kinds (push-stone plates, torch order, dig - each needs
   an object that draws in every tileset, which blocks and torches do not);

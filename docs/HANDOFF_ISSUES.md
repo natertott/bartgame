@@ -32,6 +32,15 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **`save.h`'s offset comments are wrong from `figurines` on.** It says
+  0x0D0; the 36-byte ledger ends at the inventory, 0x0F2, so it starts at
+  0x0CE. Three probes forged the ledger at 0xD0 (hub, ledger_cycle,
+  trophy): rows 1-15 read as not found, and the last two bytes landed in
+  the inventory. Trust the neighbour you can measure, not the comment.
+- **The figurine menu keeps the room's entities in the array.** Its fade-in
+  empties the entity lists but leaves the stashed room entities in
+  `gEntities[]`, so a scan of the array by kind and id inside the menu
+  finds hub objects that are not running. Walk the lists, or draw by hand.
 - **`region_crossings.py` is seed-sensitive at one seam.** On seed 1 the
   Western Wood centre to south walk (start (264, 120), pressing down)
   stays in the room on both attempts; seeds 2 and 3 cross it, and every
@@ -305,6 +314,9 @@ so nobody re-invents them:
 - **Royal Valley at 7% reachable, 0.2% of requirements** - honest pricing,
   but effectively dead content.
 - **The `ITEM` chain step is dead code in practice** - 0 of 500,000 rolls.
+- **Four charms drop invisible**: the Green, Blue and Red Orbs and the
+  Rusted Blade have no ground sprite, so a reward of one lies on the floor
+  undrawn (measured, sprite index 0). Needs a look chosen by the user.
 - Three pre-existing `invariant_check` WARNs, unchanged for many sessions:
   Castle Garden's entrance and reward sit on special tile 0x5f; North Hyrule
   Field's and Trilby's exit boxes are clipped by the room edge.

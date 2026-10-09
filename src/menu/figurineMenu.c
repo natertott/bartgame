@@ -48,6 +48,15 @@ extern bool32 QuickStartCatalogOwned(s32 index);
 extern u32 QuickStartCatalogNameText(s32 index);
 extern u32 QuickStartCatalogDescText(s32 index);
 extern u32 QuickStartCatalogItem(s32 index);
+#include "definitions.h"
+#include "structures.h"
+#include "sprite.h"
+#include "gfx.h"
+#include "item.h"
+extern const ObjectDefinition gObjectDefinitions[];
+extern u32 gFixedTypeGfxData[];
+extern void LoadObjPaletteAtIndex(u32 objPaletteId, u32 paletteIndex);
+static void QuickStartTrophyPicture(void);
 #define FIGURINE_MENU_MAX_ENTRIES QuickStartCatalogCount()
 #else
 #define FIGURINE_MENU_MAX_ENTRIES (!gSave.saw_staffroll ? 130 : 136)
@@ -390,18 +399,16 @@ void FigurineMenu_080A4978(void) {
             }
         }
     }
-#ifndef QUICKSTART
-    // The picture pane. Suppressed in QUICKSTART: it draws gFigurines[idx],
-    // a per-FIGURINE pose sprite plus a per-figurine art blob DMA'd to
-    // OBJ_VRAM0+0x4000, and this mode's catalog rows are items, not
-    // figurines - entry 5 would show whichever figurine happens to sit at
-    // index 5, which is worse than showing nothing. The two halves have to
-    // go together: keeping the DrawDirect without the matching load draws
-    // the pose against stale VRAM, i.e. garbage. Giving the pane the item's
-    // own inventory icon is the obvious follow-up (the pause menu draws
-    // those with DrawDirect + gSpriteAnimations_322), but that sheet is not
-    // among the ones this screen loads, and half the catalog - hearts,
-    // rupees, refills, skills - has no inventory icon at all.
+#ifdef QUICKSTART
+    // The picture pane shows the row's item (QuickStartTrophyPicture,
+    // below). Same condition as vanilla's pose.
+    if (gMenu.column_idx & 1) {
+        QuickStartTrophyPicture();
+    }
+#else
+    // The picture pane: gFigurines[idx]'s pose sprite plus its art blob,
+    // DMA'd to OBJ_VRAM0+0x4000. QUICKSTART draws the row's item there
+    // instead (above).
     if (gMenu.column_idx & 1) {
         if (FigurineMenu_isFigurineOwned(gFigurineMenu.figure_idx)) {
             gOamCmd.x = 0x2c;
@@ -425,6 +432,83 @@ void FigurineMenu_080A4978(void) {
     }
 #endif
 }
+
+#ifdef QUICKSTART
+// The trophy case's picture (Oct 2026). Vanilla draws the chosen figurine
+// in the pane left of the list; here the rows are items, so the pane shows
+// the item as the player saw it on the floor: the GROUND_ITEM object
+// definition's sprite, frame and palette for that item id.
+//
+// Drawn by hand, the way vanilla draws the figurine: graphics copied once
+// per row change into OBJ_VRAM0+0x4000 (the figurine art's own spot, tile
+// 0x200, which nothing else on this screen uses) and the frame put up with
+// DrawDirect every frame. A real GROUND_ITEM entity was tried first and
+// failed: the menu's gfx slots and the room's stashed entities got in its
+// way (blank pane, a garbled list row).
+//
+// The definition says where the tiles live. Streamed items (gfx_type 1,
+// most of them) keep each frame's tiles in the sprite's own sheet; fixed
+// ones (the pastries and a few others) are one block in the global gfx,
+// sometimes compressed; the commonest pickups (hearts, rupees, refills)
+// sit preloaded with the shared sprites, which this screen leaves in
+// place, and are drawn from there. The palette is one of the six shared object
+// palettes (0-5, always loaded) or a numbered one, loaded into slot 6 as
+// vanilla loads the figurine's.
+static void QuickStartTrophyPicture(void) {
+    const ObjectDefinition* def;
+    const SpritePtr* spr;
+    const SpriteFrame* frame;
+    u8* dest = (u8*)(OBJ_VRAM0 + 0x4000);
+    u32 item, spriteIndex, frameIndex, pal, slot, tile;
+    bool32 stream;
+
+    if (!QuickStartCatalogOwned(gFigurineMenu.figure_idx)) {
+        return;
+    }
+    item = QuickStartCatalogItem(gFigurineMenu.figure_idx);
+    if (item == ITEM_FAIRY) {
+        item = ITEM_BOTTLE_FAIRY; // a loose fairy is a FAIRY object, not a ground sprite
+    }
+    def = &gObjectDefinitions[GROUND_ITEM].data.definition[item];
+    if (def->bitfield.type == 0) {
+        // No ground sprite: the orbs and the Rusted Blade, unused ids
+        // reused as charms. They lie on the floor invisible too (a known
+        // defect); the pane stays empty rather than show the icon sheet's
+        // leftovers for those ids, which are not their art.
+        return;
+    }
+    stream = def->bitfield.gfx_type == 1;
+    spriteIndex = def->data.sprite.spriteIndex;
+    pal = def->data.sprite.paletteIndex;
+    // gfx_type 2: tiles preloaded with the common sprites (hearts, rupees,
+    // refills), which this screen keeps.
+    tile = (def->bitfield.gfx_type == 2) ? def->bitfield.gfx : 0x200;
+    spr = &gSpritePtrs[spriteIndex];
+    frameIndex = ((Frame* const*)spr->animations)[item]->index;
+    frame = &spr->frames[frameIndex];
+    slot = (pal <= 5) ? pal : 6;
+    if (gFigurineMenu.unk1d != gFigurineMenu.figure_idx) {
+        gFigurineMenu.unk1d = gFigurineMenu.figure_idx;
+        if (stream) {
+            DmaCopy32(3, (const u8*)spr->ptr + frame->firstTileIndex * 0x20, dest, frame->numTiles * 0x20);
+        } else if (tile == 0x200 && def->bitfield.gfx != 0) {
+            u32 data = gFixedTypeGfxData[def->bitfield.gfx];
+            if (data & 1) {
+                LZ77UnCompVram(&gGlobalGfxAndPalettes[data & 0xfffffc], dest);
+            } else {
+                DmaCopy32(3, &gGlobalGfxAndPalettes[data & 0xfffffc], dest, ((data & 0x7f000000) >> 0x18) * 0x200);
+            }
+        }
+        if (slot == 6) {
+            LoadObjPaletteAtIndex(pal, 6);
+        }
+    }
+    gOamCmd.x = 0x2c;
+    gOamCmd.y = 0x48;
+    gOamCmd._8 = (slot << 12) | 0x800 | tile; // priority 2, as the pose
+    DrawDirect(spriteIndex, frameIndex);
+}
+#endif
 
 void sub_080A4B44(void) {
     u32 uVar1;

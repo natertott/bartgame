@@ -216,7 +216,10 @@
   exits and key/boss doors each part touches. Writes
   `docs/QUICKSTART_DUNGEON_REACH.md` and `docs/dungeon_reach.json`.
 - `hub_probe.py` - the hub's two warp pads (asleep during the draft, then
-  F3 to the shop and the shop to the tower door) and the trophy shelf.
+  F3 to the shop and the shop to the tower door).
+- `trophy_probe.py` - the trophy case: each found row draws its item's
+  sprite in the figurine pane (read from OAM), a locked row draws none, and
+  the charm rows carry their own names. Screenshots of a few rows.
 - `blessing_probe.py` - the pastry tiers: curses spawn as green blessings,
   gold one in four, the tinted palette slots (and their release), each
   tier's effect through `GiveItem`, the gold croissant's room-entry grace,

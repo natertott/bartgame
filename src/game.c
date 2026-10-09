@@ -474,7 +474,6 @@ static s32 QuickStartScenarioBossRoll(s32 roll);
 static s32 QuickStartCarryState(void);
 static bool32 QuickStartCourierWon(void);
 static u8 QuickStartHubGetPhase(void);
-static void QuickStartTrophyShelfMonitor(void);
 static s32 QuickStartCourierHost(void);
 static void QuickStartCarryPropMonitor(void);
 #define QS_SCN_NONE 0
@@ -2844,18 +2843,21 @@ const u8* const gCustomStrings[] = {
     [126] = (const u8*)"Carlov's Medal",
     [127] = (const u8*)"Broken Sword",
     [128] = (const u8*)"Lucky Shells",
-    [129] = (const u8*)"Humble Pie",
-    [130] = (const u8*)"Dog Food",
-    [131] = (const u8*)"Strange Mushroom",
-    // Charms 14-19. The descriptions that used to start here moved to
-    // bank 2 wholesale - see QuickStartCatalogDescText - which is what
-    // made room for these six without shifting every index above 202.
-    [132] = (const u8*)"Green Orb",
-    [133] = (const u8*)"Blue Orb",
-    [134] = (const u8*)"Red Orb",
-    [135] = (const u8*)"Duelist's Blade",
-    [136] = (const u8*)"Rusted Blade",
-    [137] = (const u8*)"Whetstone",
+    // Charms 14-19, then the three food curses. The descriptions that used
+    // to start here moved to bank 2 wholesale - see QuickStartCatalogDescText
+    // - which is what made room for these six without shifting every index
+    // above 202. Order is sQuickStartCatalog's: until Oct 2026 the three
+    // curses sat before the orbs here but after the swords in the table,
+    // so rows 69-77 named (and described) the wrong item.
+    [129] = (const u8*)"Green Orb",
+    [130] = (const u8*)"Blue Orb",
+    [131] = (const u8*)"Red Orb",
+    [132] = (const u8*)"Duelist's Blade",
+    [133] = (const u8*)"Rusted Blade",
+    [134] = (const u8*)"Whetstone",
+    [135] = (const u8*)"Humble Pie",
+    [136] = (const u8*)"Dog Food",
+    [137] = (const u8*)"Strange Mushroom",
     // -- catalog DESCRIPTIONS, same order as the names above
     // -- everything that is not the catalog. These moved up by two when
     //    the Tempered Sword row was added; they are the only custom
@@ -3132,15 +3134,15 @@ const u8* const gCustomStrings2[] = {
     [164] = (const u8*)"Charm: slain foes drop\nhearts far more often.",
     [165] = (const u8*)"Charm: the shop caps\nevery price at 50 rupees\n- the heart piece aside.",
     [166] = (const u8*)"Charm: rare finds come\nup roughly twice as\noften.",
-    [167] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
-    [168] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
-    [169] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
-    [170] = (const u8*)"CURSE: a heart rots\naway every half minute.\nLoot holds it back.",
-    [171] = (const u8*)"CURSE: the whole world\nis seen through deep,\nmoving water.",
-    [172] = (const u8*)"CURSE: the light never\ncomes back up. Embers,\nand long shadows.",
-    [173] = (const u8*)"Your sword bites for\none more than it did.\nEvery swing, all run.",
-    [174] = (const u8*)"CURSE: a blunt edge.\nOne less from every\nswing you land.",
-    [175] = (const u8*)"The sword beam no\nlonger waits on full\nhealth. Throw it hurt.",
+    [167] = (const u8*)"CURSE: a heart rots\naway every half minute.\nLoot holds it back.",
+    [168] = (const u8*)"CURSE: the whole world\nis seen through deep,\nmoving water.",
+    [169] = (const u8*)"CURSE: the light never\ncomes back up. Embers,\nand long shadows.",
+    [170] = (const u8*)"Your sword bites for\none more than it did.\nEvery swing, all run.",
+    [171] = (const u8*)"CURSE: a blunt edge.\nOne less from every\nswing you land.",
+    [172] = (const u8*)"The sword beam no\nlonger waits on full\nhealth. Throw it hurt.",
+    [173] = (const u8*)"CURSE: blows knock YOU\ntwice as far. Humble\npie, indeed.",
+    [174] = (const u8*)"CURSE: every foe moves\nhalf again as fast for\nthe rest of the run.",
+    [175] = (const u8*)"CURSE: foes that shoot\nfire about half again as\noften.",
 
     // ===================== More for the hub's wanderers ==================
     //
@@ -25001,7 +25003,6 @@ static void QuickStartRoomMonitor(void) {
     QuickStartInnChestMonitor();
     QuickStartInnBlessingMonitor();
     QuickStartHubPadsMonitor();
-    QuickStartTrophyShelfMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();
@@ -26086,77 +26087,6 @@ typedef char QuickStartCatalogLedgerFits[(QUICKSTART_CATALOG_COUNT < 288) ? 1 : 
 
 s32 QuickStartCatalogCount(void) {
     return QUICKSTART_CATALOG_COUNT;
-}
-
-// --- The trophy shelf (Oct 2026, the redesign's P2 section 8) ---
-//
-// "A trophy case with sprites": the case's menu has no picture of its own
-// (figurineMenu.c explains why the figurine pose cannot be reused), so the
-// sprites stand in the room instead. Once the run's draft is over, the
-// selection floor's lower hall shows up to nine things the player has ever
-// found - the catalog's own ledger (gSave.figurines, kept across runs),
-// newest categories first: charms, skills, key items, weapons. Each is a
-// ground item made display-only: collision off every frame, so walking
-// through it takes nothing. The ordinary pickups (hearts, rupees, refills)
-// and the Element are left off - they are not trophies.
-bool32 QuickStartCatalogOwned(s32 index);
-#define QUICKSTART_TROPHY_MARK 0x60 // type2 of a shelf item (no tier, no piece)
-#define QUICKSTART_TROPHY_SLOTS 9
-#define QUICKSTART_TROPHY_CANDIDATES 14 // laid, then the sprite-less ones dropped (see below)
-#define QUICKSTART_TROPHY_X 40
-#define QUICKSTART_TROPHY_Y 264
-#define QUICKSTART_TROPHY_ROOM_FLAG 118 // room flag: the shelf was laid this visit
-
-static void QuickStartTrophyShelfMonitor(void) {
-    s32 i, n = 0;
-    if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || gRoomControls.room != ROOM_WIND_TRIBE_TOWER_FLOOR_3 ||
-        !QuickStartRoomSettled() || QuickStartHubGetPhase() < 10) {
-        return;
-    }
-    // Every frame: collision off; a shelf item whose id has no ground
-    // sprite (several charms reuse unused item ids - measured, the unused
-    // sword draws as a grey smear) is dropped once its init has run; the
-    // rest close ranks, nine at most.
-    for (i = 0; i < MAX_ENTITIES; i++) {
-        Entity* ent = &gEntities[i].base;
-        if (ent->kind == OBJECT && ent->id == GROUND_ITEM && ent->type2 == QUICKSTART_TROPHY_MARK) {
-            COLLISION_OFF(ent);
-            ent->contactFlags = 0;
-            if (ent->action != 0 && ent->spriteIndex == 0) {
-                DeleteEntity(ent);
-                continue;
-            }
-            if (n >= QUICKSTART_TROPHY_SLOTS) {
-                DeleteEntity(ent);
-                continue;
-            }
-            ent->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_TROPHY_X + n * 20;
-            n++;
-        }
-    }
-    if (QsCheckRoomFlag(QUICKSTART_TROPHY_ROOM_FLAG)) {
-        return;
-    }
-    n = 0;
-    QsSetRoomFlag(QUICKSTART_TROPHY_ROOM_FLAG);
-    for (i = QUICKSTART_CATALOG_COUNT - 1; i >= 1 && n < QUICKSTART_TROPHY_CANDIDATES; i--) {
-        Entity* e;
-        if (sQuickStartCatalog[i].category == QS_CAT_REWARD || !QuickStartCatalogOwned(i + 1)) {
-            continue;
-        }
-        e = CreateObject(GROUND_ITEM, sQuickStartCatalog[i].item, QUICKSTART_TROPHY_MARK);
-        if (e == NULL) {
-            break;
-        }
-        e->x.HALF.HI = gRoomControls.origin_x + QUICKSTART_TROPHY_X + n * 20;
-        e->y.HALF.HI = gRoomControls.origin_y + QUICKSTART_TROPHY_Y;
-        e->collisionLayer = 1;
-        e->flags |= ENT_PERSIST;
-        COLLISION_OFF(e);
-        UpdateSpriteForCollisionLayer(e);
-        e->direction = IdleSouth;
-        n++;
-    }
 }
 
 // index is 1-based (menu convention). Out of range answers "locked",

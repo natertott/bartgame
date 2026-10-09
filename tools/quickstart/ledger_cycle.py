@@ -23,7 +23,7 @@ from callrom import call
 
 ROM = '/home/user/bartgame/tmc.gba'
 GSAVE = 0x02002a40
-FIGURINES = GSAVE + 0xD0        # u8[36]
+FIGURINES = GSAVE + 0xCE        # u8[36] (save.h says 0xD0; inventory at 0xF2 puts it at 0xCE)
 WRITE_SAVE_FILE = 0x08086c7c    # tmc.map
 SAVE_HEADER = 0x02000000 + 4    # gSaveHeader->saveFileId (after the int signature)
 TEST_BYTE = FIGURINES + 7       # catalog rows 56..63
