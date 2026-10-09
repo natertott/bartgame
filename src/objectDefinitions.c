@@ -1315,7 +1315,14 @@ const ObjectDefinition gObjectDefinition_0[] = {
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
+#ifdef QUICKSTART
+    // ITEM_UNUSED_SWORD, the Rusted Blade curse: no ground sprite in vanilla,
+    // so it borrows the Smith's Sword's row (drawn as that sword, recoloured
+    // rust - game.c, QuickStartGroundLook and QuickStartTintItem).
+    { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
+#else
     { { 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0, 0 } },
+#endif
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },
     { { 1, 0, 0, 0, 1, 1, 0 }, { 0, 0, 0, 0, 322, 1, 0 } },

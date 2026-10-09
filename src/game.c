@@ -15336,6 +15336,14 @@ static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot) {
     s16 spotX, spotY;
     s32 worldX, worldY;
     QuickStartCarryRollOnce();
+    // Sidelined (Oct 2026): the parcel still does not survive a room seam
+    // in play, so no run offers this quest. Only a QUEST/CARRY scenario
+    // stands the giver up, which keeps the code testable while the
+    // single-room redesign is planned (docs/QUICKSTART_ROADMAP.md, "The
+    // carry quest is sidelined").
+    if (QuickStartScenarioQuestHost(QS_SCN_QUEST_CARRY) < 0) {
+        return;
+    }
     if (slot != QuickStartCarryHost()) {
         return;
     }
@@ -25817,10 +25825,32 @@ extern u32 FindFreeObjPalette(u32);
 extern void CleanUpObjPalettes(void);
 extern void SetEntityObjPalette(Entity*, s32);
 
+// The Rusted Blade (Oct 2026). ITEM_UNUSED_SWORD has no art of its own; it
+// borrows the Smith's Sword's ground row (objectDefinitions.c) and frame
+// (QuickStartGroundLook, read by sub_08080CB4 in scroll.c and by the trophy
+// case), and is drawn in rust through the tint below as its own "tier".
+#define QS_TINT_RUST 3
+#define QS_ITEM_SHEET_PALETTE 4 // the palette sprite 322's item frames force
+
+u32 QuickStartGroundLook(u32 item) {
+    return (item == ITEM_UNUSED_SWORD) ? ITEM_SMITH_SWORD : item;
+}
+
+// The tint an item is always drawn in, whatever its tier byte says: 0, or
+// QS_TINT_RUST for the Rusted Blade.
+u32 QuickStartItemTint(u32 item) {
+    return (item == ITEM_UNUSED_SWORD) ? QS_TINT_RUST : 0;
+}
+
 static u16 QuickStartTintColour(u16 c, u32 tier) {
     s32 r = c & 31, g = (c >> 5) & 31, b = (c >> 10) & 31;
     s32 lum = (r * 2 + g * 5 + b) / 8;
-    if (tier == QS_PASTRY_GREEN) {
+    if (tier == QS_TINT_RUST) {
+        // brownish red: the steel's light and dark kept, its hue gone to rust
+        r = lum * 3 / 4 + 4;
+        g = lum * 3 / 8;
+        b = lum / 4;
+    } else if (tier == QS_PASTRY_GREEN) {
         r = lum * 3 / 8;
         g = lum + 6;
         b = lum / 4;
@@ -25835,15 +25865,35 @@ static u16 QuickStartTintColour(u16 c, u32 tier) {
     return (u16)(r | (g << 5) | (b << 10));
 }
 
+// The trophy case's copy: palette `src` recoloured into `dst` (16 colours).
+void QuickStartTintPalette(u16* dst, const u16* src, u32 tier) {
+    s32 i;
+    dst[0] = src[0];
+    for (i = 1; i < 16; i++) {
+        dst[i] = QuickStartTintColour(src[i], tier);
+    }
+}
+
 bool32 QuickStartTintItem(Entity* e) {
     u32 tier = e->type2, src, id, i;
     s32 slot;
-    if ((tier != QS_PASTRY_GREEN && tier != QS_PASTRY_GOLD) ||
-        (e->type != ITEM_BRIOCHE && e->type != ITEM_CROISSANT && e->type != ITEM_CAKE) || e->kind != OBJECT ||
-        (e->id != GROUND_ITEM && e->id != LINK_HOLDING_ITEM)) {
+    if (e->kind != OBJECT || (e->id != GROUND_ITEM && e->id != LINK_HOLDING_ITEM)) {
         return FALSE;
     }
-    src = e->palette.b.b0;
+    if (QuickStartItemTint(e->type) != 0) {
+        tier = QuickStartItemTint(e->type);
+    } else if ((tier != QS_PASTRY_GREEN && tier != QS_PASTRY_GOLD) ||
+               (e->type != ITEM_BRIOCHE && e->type != ITEM_CROISSANT && e->type != ITEM_CAKE)) {
+        return FALSE;
+    }
+    // The Rusted Blade's frames force the item sheet's palette (4) whatever
+    // the entity says (the frame's absolute-palette bit, intr.s), so its
+    // tint is made from that palette and laid on by QuickStartPatchItemOam.
+    src = (tier == QS_TINT_RUST) ? QS_ITEM_SHEET_PALETTE : e->palette.b.b0;
+    if (tier == QS_TINT_RUST && e->palette.b.b0 >= 6 &&
+        (gPaletteList[e->palette.b.b0].objPaletteId & 0xFF00) == (0xF000 | (tier << 8))) {
+        return FALSE;
+    }
     if ((gPaletteList[src].objPaletteId & 0xFF00) == (0xF000 | (tier << 8))) {
         return FALSE;  // already ours (0xFFFF, the fixed slots' id, never matches)
     }
@@ -25899,6 +25949,33 @@ bool32 QuickStartTintItem(Entity* e) {
     UnloadOBJPalette(e);
     SetEntityObjPalette(e, slot);
     return FALSE;
+}
+
+// Called between DrawEntities and CopyOAM (GameMain_Update): the Rusted
+// Blade's sprite entries take its tinted palette. Its frames carry an
+// absolute palette, so the entity's own palette never reaches the screen;
+// the entries are found by the tiles they draw, which are the entity's own
+// graphics slot (sixteen tiles from spriteVramOffset).
+void QuickStartPatchItemOam(void) {
+    s32 i, k;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        u32 slot, base;
+        if (e->kind != OBJECT || (e->id != GROUND_ITEM && e->id != LINK_HOLDING_ITEM) || QuickStartItemTint(e->type) == 0) {
+            continue;
+        }
+        slot = e->palette.b.b0;
+        if (slot < 6) {
+            continue; // not tinted yet
+        }
+        base = e->spriteVramOffset;
+        for (k = 0; k < gOAMControls.updated && k < 0x80; k++) {
+            struct OamData* o = &gOAMControls.oam[k];
+            if (o->tileNum >= base && o->tileNum < base + 16) {
+                o->paletteNum = slot;
+            }
+        }
+    }
 }
 
 void QuickStartShellTaken(void) {
@@ -28610,6 +28687,9 @@ static void GameMain_Update(void) {
     DrawUIElements();
     UpdateCarriedObject();
     DrawEntities();
+#ifdef QUICKSTART
+    QuickStartPatchItemOam();
+#endif
     CheckRoomExit();
     UpdatePlayerMapCoords();
     CheckGameOver();

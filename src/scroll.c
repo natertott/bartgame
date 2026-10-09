@@ -928,6 +928,7 @@ void sub_08080C80(MapDataDefinition* dataDefinition) {
 
 #ifdef QUICKSTART
 extern bool32 QuickStartTintItem(Entity*);
+extern u32 QuickStartGroundLook(u32 item);
 #endif
 void sub_08080CB4(Entity* this) {
     Entity* effect;
@@ -935,6 +936,13 @@ void sub_08080CB4(Entity* this) {
     u32 tmp2;
     u32 tmp3;
     u32 mask;
+#ifdef QUICKSTART
+    // The frame an item is drawn with: its own, except an id with no art
+    // that borrows another's (the Rusted Blade, game.c).
+    u32 look = QuickStartGroundLook(this->type);
+#else
+#define look (this->type)
+#endif
 
 #ifdef QUICKSTART
     // A tiered pastry is drawn in its tier's colours (game.c). TRUE means
@@ -944,8 +952,8 @@ void sub_08080CB4(Entity* this) {
     }
 #endif
 
-    if (this->type != this->animIndex) {
-        InitAnimationForceUpdate(this, this->type);
+    if (look != this->animIndex) {
+        InitAnimationForceUpdate(this, look);
         if (this->type == 0x5c) {
             const KinstoneWorldEvent* ptr = &gKinstoneWorldEvents[this->type2];
             tmp = ptr->objPalette;
@@ -983,3 +991,6 @@ void sub_08080CB4(Entity* this) {
         }
     }
 }
+#ifndef QUICKSTART
+#undef look
+#endif

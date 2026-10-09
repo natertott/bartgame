@@ -1271,6 +1271,52 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The carry quest is sidelined; a single-room version is planned (Oct 2026)
+
+The user: the carry quest still does not work across room transitions;
+sideline it, or restrict it to one room. No run offers it any more.
+`QuickStartCarryMonitor` returns before standing the giver up unless a
+QUEST/CARRY scenario forces it, so `carry_probe.py` and the old code stay
+testable. The single-room design is in `docs/QUICKSTART_CARRY_SINGLE_ROOM.md`:
+an unbreakable vanilla pot as the parcel (so it can be thrown), the
+engine's own hazard check for landings (pit, deep water, lava and the
+swamp, which is the Castor Wilds murk), a per-room carry map computed
+offline for "reachable while carrying", pairs of A and B that cross at
+least two survey places and are proved by a probe that walks them, and
+enemy waves mixing pursuers, shooters and movement-impairers. Four
+questions for the user close it.
+
+### The Rusted Blade has a look: the Smith's Sword in rust (Oct 2026)
+
+The user: use an existing blade sprite, recoloured brownish red. The
+Rusted Blade (ITEM_UNUSED_SWORD) borrows the Smith's Sword's ground row in
+`objectDefinitions.c` (now in the variant list) and its frame
+(`QuickStartGroundLook`, read by `sub_08080CB4` in scroll.c). It is drawn
+in a rust copy of the item palette.
+
+**Measured on the way: item-sheet frames force palette 4.** The swords,
+tools and most items draw from sprite 322, whose frames carry an absolute
+palette. The draw routine (intr.s) clears the entity's palette bits for
+such frames and uses the frame's palette, 4. So giving the entity a
+tinted palette, which is how the green and gold pastries work (their
+sheet does not force a palette), changed nothing on screen: palette 13
+held the rust colours in RAM and the OAM entry still said 4. The fix
+re-points the blade's OAM entries after `DrawEntities` and before
+`CopyOAM` (`QuickStartPatchItemOam`, found by the tiles they draw). The
+trophy case does the same after its `DrawDirect`.
+
+The pickup no longer plays vanilla's item-get scene. Its text for this id
+was "The power of the Water Element has infused your blade!", over the
+untinted sword held high. It takes the charms' quiet path instead, and
+the curse line announces it (measured: the Blunt bit set, "CURSE: a blunt
+edge" shown). Screenshots: on the floor beside a Smith's Sword, and in the
+case. `trophy_probe.py` 5/5 (new RUST check: the pane's entries use the
+tinted palette 6); `blessing_probe.py` 14/14, `inn_probe.py` 6/6 and
+`hub_probe.py` 5/5 after the tint change.
+
+The three orbs still have no art; what they should look like is the
+user's call.
+
 ### The trophy case shows each item's sprite (Oct 2026)
 
 The user: when the player browses the trophy case's list, the sprite of the

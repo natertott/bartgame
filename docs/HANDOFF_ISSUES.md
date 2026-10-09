@@ -32,6 +32,12 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **An item's entity palette may never reach the screen.** Sprite 322's
+  item frames (swords, tools, most pickups) carry an absolute palette, 4;
+  the draw routine drops the entity's palette for them. Setting
+  `entity->palette` and seeing the right number in RAM proves nothing:
+  read the OAM entry. Recolour such a sprite by re-pointing its OAM
+  entries after `DrawEntities` (`QuickStartPatchItemOam`).
 - **`save.h`'s offset comments are wrong from `figurines` on.** It says
   0x0D0; the 36-byte ledger ends at the inventory, 0x0F2, so it starts at
   0x0CE. Three probes forged the ledger at 0xD0 (hub, ledger_cycle,
@@ -314,9 +320,10 @@ so nobody re-invents them:
 - **Royal Valley at 7% reachable, 0.2% of requirements** - honest pricing,
   but effectively dead content.
 - **The `ITEM` chain step is dead code in practice** - 0 of 500,000 rolls.
-- **Four charms drop invisible**: the Green, Blue and Red Orbs and the
-  Rusted Blade have no ground sprite, so a reward of one lies on the floor
-  undrawn (measured, sprite index 0). Needs a look chosen by the user.
+- **Three charms drop invisible**: the Green, Blue and Red Orbs have no
+  ground sprite, so a reward of one lies on the floor undrawn (measured,
+  sprite index 0). Needs a look chosen by the user. (The Rusted Blade has
+  one now: the Smith's Sword in rust.)
 - Three pre-existing `invariant_check` WARNs, unchanged for many sessions:
   Castle Garden's entrance and reward sit on special tile 0x5f; North Hyrule
   Field's and Trilby's exit boxes are clipped by the room edge.

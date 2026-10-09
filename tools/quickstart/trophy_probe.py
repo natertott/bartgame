@@ -6,8 +6,10 @@ item's own sprite in the pane where vanilla shows the figurine.
   PICTURE  every found row puts sprites in the pane left of the list; one
            drawn from the figurine art's tile block (OBJ tile 0x200 up) finds
            that block's VRAM filled. (Hearts, rupees and refills draw from
-           the shared sprites below it.) The four ids with no ground
-           sprite at all (three orbs, the Rusted Blade) stay empty.
+           the shared sprites below it.) The three orbs, with no ground
+           sprite at all, stay empty.
+  RUST     the Rusted Blade (borrowing the Smith's Sword) draws in its
+           tinted palette 6, not the item sheet's palette 4.
   LOCKED   a row not found yet shows no picture.
   NAMES    each charm row's name is its own item's (rows 69-77 used to be
            off by three: the names ran in a different order from the table).
@@ -107,10 +109,12 @@ for step in range(min(ROWS, count)):
         blank.append((idx, name))
     else:
         wrong.append((idx, name, pic))
+    if name == 'ITEM_UNUSED_SWORD':
+        check('RUST: the Rusted Blade draws tinted', pic and all(p[3] == 6 for p in pic), 'row %d picture %s' % (idx, pic))
     if name in ('ITEM_SMITH_SWORD', 'ITEM_CAKE', 'ITEM_HEART_PIECE', 'ITEM_RUPEE20', 'ITEM_BOMBS5', 'ITEM_PIE', 'ITEM_RED_POTION', 'ITEM_ORB_GREEN', 'ITEM_UNUSED_SWORD', 'ITEM_HEART'):
         snap(c, os.path.join(OUT, 'trophy_%s.png' % name[5:].lower()))
     press(c, c.KEY_DOWN, 3, 8)
-NO_ART = {'ITEM_ORB_GREEN', 'ITEM_ORB_BLUE', 'ITEM_ORB_RED', 'ITEM_UNUSED_SWORD'}   # no ground sprite at all
+NO_ART = {'ITEM_ORB_GREEN', 'ITEM_ORB_BLUE', 'ITEM_ORB_RED'}   # no ground sprite at all
 check('PICTURE: each found row shows its item', shown == count - 1 - len(NO_ART) and set(n for _, n in blank) == NO_ART and not wrong,
       '%d of %d found rows drawn; empty %s; drawn from an empty block %s' % (shown, count - 1, blank, wrong[:3]))
 check('NAMES: charm rows carry their own names', not misnamed, '%d checked, wrong %s' % (sum(1 for i in items.values() if INV.get(i) in OWN_NAME), misnamed[:4]))

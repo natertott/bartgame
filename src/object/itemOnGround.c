@@ -435,6 +435,11 @@ bool32 CheckShouldPlayItemGetCutscene(ItemOnGroundEntity* this) {
         // the plain path reaches reliably.
         case ITEM_MAP:
         case ITEM_COMPASS:
+        // The Rusted Blade curse (ITEM_UNUSED_SWORD). Its vanilla item-get
+        // text is the Water Element infusing the blade, and its pose holds
+        // the plain borrowed sword up untinted; the plain path announces
+        // the curse instead.
+        case ITEM_UNUSED_SWORD:
             return FALSE;
         default:
             break;

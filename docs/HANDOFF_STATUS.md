@@ -44,6 +44,8 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The Rusted Blade drawn as the Smith's Sword in rust (floor, case), its pickup quiet; item-sheet frames force palette 4, so the tint is laid on the OAM entries | "The Rusted Blade has a look" |
+| The carry quest sidelined (scenario-only); the single-room redesign planned in `docs/QUICKSTART_CARRY_SINGLE_ROOM.md`, four questions open | "The carry quest is sidelined" |
 | The trophy case draws each found item's own sprite in the figurine pane; the ground shelf removed; rows 69-77 named the wrong item (fixed); `trophy_probe.py` 4/4 | "The trophy case shows each item's sprite" |
 | The dungeon reach map: 314 room ids, 224 landed and flooded into walkable parts with their edges, exits and key/boss doors; `docs/QUICKSTART_DUNGEON_REACH.md` | "The dungeon reach map, probe-made" |
 | Switch puzzles: ECHO, LIGHTS and RACE as a new ? room kind, one gauntlet in four at eligible sites; the sweep's fixes (race fuse sized to the walk, cramped races play as lights); `puzzle_probe.py --all` 940/940 over 97 sites | "Switch puzzles: three new ? room kinds with a solver" |
@@ -171,11 +173,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   fixed by a timeout that has not been watched in play - if a chuchu ever
   stands still for longer than two seconds without hopping, that is the
   thing to report, with the room.
-- **Play the carry quest.** `scenario.py quest CARRY CG --kit test` puts
-  its giver in Castle Garden with the parcel in North Hyrule Field. Every
-  leg is measured (`carry_probe.py`, 9/9) but the feel of carrying through
-  a wave - the hit that drops it at your feet, the walk back for it - has
-  not been watched.
+- **Answer the carry plan's four questions**
+  (`docs/QUICKSTART_CARRY_SINGLE_ROOM.md` section 9): where a lost parcel
+  comes back, whether unreachable dry ground counts as lost, which enemy
+  "flaming skulls" means, and one NPC or two. The cross-room quest is
+  sidelined meanwhile; `scenario.py quest CARRY CG` still stands it up.
 
 - **The GFX budget tier fails for Lon Lon Ranch and North Hyrule Field**
   on the Veil Falls build: 1 and 0 free GFX slots at difficulty 4 against

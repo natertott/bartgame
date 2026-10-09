@@ -53,9 +53,13 @@ extern u32 QuickStartCatalogItem(s32 index);
 #include "sprite.h"
 #include "gfx.h"
 #include "item.h"
+#include "vram.h"
 extern const ObjectDefinition gObjectDefinitions[];
 extern u32 gFixedTypeGfxData[];
 extern void LoadObjPaletteAtIndex(u32 objPaletteId, u32 paletteIndex);
+extern u32 QuickStartGroundLook(u32 item);
+extern u32 QuickStartItemTint(u32 item);
+extern void QuickStartTintPalette(u16* dst, const u16* src, u32 tier);
 static void QuickStartTrophyPicture(void);
 #define FIGURINE_MENU_MAX_ENTRIES QuickStartCatalogCount()
 #else
@@ -459,7 +463,8 @@ static void QuickStartTrophyPicture(void) {
     const SpritePtr* spr;
     const SpriteFrame* frame;
     u8* dest = (u8*)(OBJ_VRAM0 + 0x4000);
-    u32 item, spriteIndex, frameIndex, pal, slot, tile;
+    u32 item, spriteIndex, frameIndex, pal, slot, tile, tint;
+    s32 first, k;
     bool32 stream;
 
     if (!QuickStartCatalogOwned(gFigurineMenu.figure_idx)) {
@@ -469,12 +474,14 @@ static void QuickStartTrophyPicture(void) {
     if (item == ITEM_FAIRY) {
         item = ITEM_BOTTLE_FAIRY; // a loose fairy is a FAIRY object, not a ground sprite
     }
+    tint = QuickStartItemTint(item);
+    item = QuickStartGroundLook(item); // the Rusted Blade borrows the Smith's Sword
     def = &gObjectDefinitions[GROUND_ITEM].data.definition[item];
     if (def->bitfield.type == 0) {
-        // No ground sprite: the orbs and the Rusted Blade, unused ids
-        // reused as charms. They lie on the floor invisible too (a known
-        // defect); the pane stays empty rather than show the icon sheet's
-        // leftovers for those ids, which are not their art.
+        // No ground sprite: the three orbs, unused ids reused as curses.
+        // They lie on the floor invisible too (a known defect); the pane
+        // stays empty rather than show the icon sheet's leftovers for
+        // those ids, which are not their art.
         return;
     }
     stream = def->bitfield.gfx_type == 1;
@@ -486,7 +493,7 @@ static void QuickStartTrophyPicture(void) {
     spr = &gSpritePtrs[spriteIndex];
     frameIndex = ((Frame* const*)spr->animations)[item]->index;
     frame = &spr->frames[frameIndex];
-    slot = (pal <= 5) ? pal : 6;
+    slot = (pal <= 5 && tint == 0) ? pal : 6;
     if (gFigurineMenu.unk1d != gFigurineMenu.figure_idx) {
         gFigurineMenu.unk1d = gFigurineMenu.figure_idx;
         if (stream) {
@@ -499,14 +506,26 @@ static void QuickStartTrophyPicture(void) {
                 DmaCopy32(3, &gGlobalGfxAndPalettes[data & 0xfffffc], dest, ((data & 0x7f000000) >> 0x18) * 0x200);
             }
         }
-        if (slot == 6) {
+        if (tint != 0) {
+            // Recoloured into slot 6, as the floor does it: from palette 4,
+            // which the item sheet's frames force whatever they are given
+            // (so the entries are re-pointed below, after DrawDirect).
+            QuickStartTintPalette(&gPaletteBuffer[(16 + 6) * 16], &gPaletteBuffer[(16 + 4) * 16], tint);
+            USE_PALETTE(16 + 6);
+        } else if (slot == 6) {
             LoadObjPaletteAtIndex(pal, 6);
         }
     }
     gOamCmd.x = 0x2c;
     gOamCmd.y = 0x48;
     gOamCmd._8 = (slot << 12) | 0x800 | tile; // priority 2, as the pose
+    first = gOAMControls.updated;
     DrawDirect(spriteIndex, frameIndex);
+    if (tint != 0) {
+        for (k = first; k < gOAMControls.updated && k < 0x80; k++) {
+            gOAMControls.oam[k].paletteNum = 6;
+        }
+    }
 }
 #endif
 

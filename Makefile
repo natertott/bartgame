@@ -53,6 +53,7 @@ VARIANT_OBJS := \
 	build/USA/src/npc/ministerPotho.o build/USA/src/npc/ministerPotho.s build/USA/src/npc/ministerPotho.i \
 	build/USA/src/npc/npc4E.o build/USA/src/npc/npc4E.s build/USA/src/npc/npc4E.i \
 	build/USA/src/npc/rem.o build/USA/src/npc/rem.s build/USA/src/npc/rem.i \
+	build/USA/src/objectDefinitions.o build/USA/src/objectDefinitions.s build/USA/src/objectDefinitions.i \
 	build/USA/src/object/bigVortex.o build/USA/src/object/bigVortex.s build/USA/src/object/bigVortex.i \
 	build/USA/src/object/bossDoor.o build/USA/src/object/bossDoor.s build/USA/src/object/bossDoor.i \
 	build/USA/src/object/cutsceneOrchestrator.o build/USA/src/object/cutsceneOrchestrator.s build/USA/src/object/cutsceneOrchestrator.i \
