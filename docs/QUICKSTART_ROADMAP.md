@@ -1271,6 +1271,75 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The simulation study: 1,000,000 runs (Oct 2026)
+
+The user asked for rooms visited and reachable, the win chains and how
+often each shape comes up, where each requirement must be met, where the
+player is sent, what items every run hands over, which ? room kinds are
+dealt, and which rooms off the overworld the build never uses. The answer
+is `docs/QUICKSTART_SIM_STUDY.md`, made by `sim_study.py` (new) from
+500,000 runs per cohort, and `room_census.py` (new).
+
+The simulator was wrong in four places, all fixed before the run:
+
+- **The Boomerang chamber was never dealt.** `QuickStartSiteRetired`
+  retires ONE of its five sites by its content spot; the model read only
+  the room and retired all five.
+- **? room prizes grow the reach.** `QS_CAT_DROP` has carried
+  `QS_CAT_KEY` since key items joined every drop pool; the model still said
+  a ? room could not pay a key item. The macro is parsed now.
+- **A phantom fifth step.** The model rolled five steps; the game rolls
+  four and then the finale (`QUICKSTART_CHAIN_PRE_STEPS`).
+- **The memory recital rule** (a step on the recital wants the lesson's
+  room in reach too) was missing from the EVENT test.
+
+? room kinds and prizes are no longer modelled as odds: the site roll is
+seeded from (run seed, site), so `sim.site_roll` replays it.
+`site_roll_validate.py` (new) asks the ROM for every site over 23 seeds:
+2,691 of 2,691 agree. `sim_validate.py`: 402 of 402.
+
+What it found, by impact:
+
+1. **A Veil Falls drop is an island.** 3.9% of runs drop there; 62% of
+   those never reach one room outside Veil Falls, median 6 rooms all run.
+   Their chains are mostly ITEM steps and the finale falls back to the drop
+   row. Leaving needs the Lamp and the Source of the Flow
+   (`QS_REACH_LANTERN + QS_REACH_SOURCE_FLOW` on every edge out of the
+   drop node). The drop re-draw (`QuickStartDropRegionIndexUsable`) has kit
+   rules for Castor Wilds, the Ruins and Lake Hylia, none for Veil Falls.
+   A Lamp rule there is the obvious fix; the user's call.
+2. **A QUEST step is almost never dealt: 0.16% of runs.** The spread
+   pass skips QUEST (`QuickStartChainRollStep`, pass 0), and EVENT nearly
+   always has a candidate in pass 0, so QUEST is reached only when nothing
+   else qualifies. Quests live on only as the finale (24.7% of runs).
+3. **Rooms the overworld leads to that no requirement can name.**
+   `room_census.py` walks doors, links, Minish holes and scroll seams out
+   of every region room and asks the ROM's containment at each policed
+   door: 254 rooms hang off a region, 148 are incorporated. Both rooms the
+   user suspected are real: the Trilby push-stone cave's east wall opens on
+   `CAVES_BOTTLE_BUSINESS_SCRUB` (the rooms share an edge; surveyed at
+   Bombs), and Mount Crenel's base has a door to
+   `CRENEL_CAVES_BOMB_BUSINESS_SCRUB` (surveyed free). Both are walkable,
+   priced and blessed by containment, and host no ? room site, so no run is
+   ever sent there. 41 more surveyed rooms are in the same state (all of Minish
+   Village, the Crenel caves, the Wilds' north cave, the dojo ante rooms).
+   `CRENEL_CAVES_RUPEE_FAIRY_FOUINTAIN` and Lon Lon's secret cave can be
+   entered and are not even surveyed.
+4. **Five ? room sites can never be dealt.** Four Crenel caves sites
+   (chuchu pot chest, fairy fountain, spiny chu puzzle, water heart piece)
+   and Deepwood's entrance have no survey row, so the chain cannot price
+   them. Goron Cave Main, the Witch Hut and the Eastern Hills beanstalk are
+   never reachable at all.
+5. **The Ruins' fortress pocket row.** Pool row 14
+   (`RUINS_BELOW_FORTRESS_ENTRANCE`) hangs off the Ruins entrance node, and
+   the survey prices the room itself "never". A WAVE step or the finale is
+   dealt there in 0.06% of runs.
+
+Everything else is in the report: chain shapes (265 ordered, the top
+three are four EVENTs and a BOSS, WAVE or QUEST finale), regions and rooms
+by requirement kind (every EVENT is indoors, every WAVE, BOSS, QUEST and
+finale is on a field screen), items by source, and ? room kinds.
+
 ### The carry quest, one room: built (Oct 2026)
 
 The user answered the plan's four questions (a lost parcel comes back to

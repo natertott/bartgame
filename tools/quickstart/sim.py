@@ -26,18 +26,19 @@ generated from the walked survey), sQuickStartRegionAdjacency, byPool,
 sQuickStartTiers and sQuickStartRoomContentSites, parsed out of the source
 rather than retyped.
 
-WHAT IS NOT, AND WHY. Two systems key off the live RNG stream
-(gRand, advanced by every frame of play) rather than off the run seed, so
-no seed-driven model can say what a particular run will get:
+WHAT IS NOT, AND WHY. Some draws key off the live RNG stream (gRand,
+advanced by every frame of play) rather than off the run seed, so no
+seed-driven model can replay them, only model their distribution:
 
-  * which KIND a ? room rolls (QuickStartPickSmallKind and friends call
-    Random() the first time the player enters the site)
-  * which enemies a wave is composed of (QuickStartSpawnEnemyGroupAt-
-    Difficulty rolls an archetype and casts it from the level roster)
+  * the drop region, the hub's three offers, the quest host
+  * a region clear's item (QuickStartSpawnRegionRewardItem)
+  * which enemies a wave is composed of, and whether a WAVES ? room is
+    the survive-the-clock variant (decided per visit)
 
-For those this reports the DISTRIBUTION - each site's kind class and the
-exact sixteenths that class deals - which is the honest form of the
-question "what can be encountered", and says so in the output.
+The ? room KIND and its PRIZE are no longer on that list: since
+QuickStartContentSiteRoll seeds the stream from (run seed, site) they are a
+pure function of the seed, and site_roll() below replays them exactly
+(site_roll_validate.py checks every site against the ROM).
 
 THE LOADOUT. A run's reach grows as it collects, so what the player is
 assumed to hold matters more than anything else here. Two cohorts are
@@ -239,18 +240,23 @@ def wave_ok(pool_index):
 
 
 def _sites():
-    """Content sites, with the kind class each one draws from."""
+    """Content sites, with the kind class each one draws from, the content
+    spot (QuickStartSiteRetired names one site by it) and the reward tier
+    (a MINIBOSS row may promise one)."""
     i = GAME.find('sQuickStartRoomContentSites[QUICKSTART_CONTENT_SITE_COUNT] = {')
     body = GAME[i:GAME.find('\n};', i)]
     out = []
     for m in re.finditer(
             r'\{ (AREA_\w+), (ROOM_\w+), (QUICKSTART_KINDS_\w+), ([0-9xa-fA-F]+),\s*\n?\s*'
-            r'([0-9xa-fA-F]+)(?:\s*,\s*(\w+))?', body):
+            r'([0-9xa-fA-F]+)(?:\s*,\s*(\w+))?(?:\s*,\s*\n?\s*(QS_SITE_REWARD_\w+))?', body):
         gate = m.group(6) or '0'
         gid = P.KINSTONES[gate] if gate.startswith('KINSTONE_') else 0
+        tier = {'QS_SITE_REWARD_COMMON': 1, 'QS_SITE_REWARD_UNCOMMON': 2,
+                'QS_SITE_REWARD_RARE': 3}.get(m.group(7) or '', 0)
         out.append(dict(areaName=m.group(1), roomName=m.group(2),
                         area=P.AREAS[m.group(1)], room=P.ROOMS[m.group(2)],
-                        kinds=m.group(3)[len('QUICKSTART_KINDS_'):], gate=gid))
+                        kinds=m.group(3)[len('QUICKSTART_KINDS_'):], gate=gid,
+                        cx=int(m.group(4), 0), cy=int(m.group(5), 0), tier=tier))
     return out
 
 
@@ -259,17 +265,35 @@ SITES = _sites()
 
 def _retired_sites():
     """QuickStartSiteRetired: rows that stay in the table but host nothing.
-    Parsed so the model cannot drift from the C."""
+    Parsed so the model cannot drift from the C. A condition may name the
+    content spot as well as the room (the Boomerang cave retires ONE of its
+    five sites); such a row retires that site only. Reading the room alone,
+    as this did until the Oct 2026 simulation study, retired all five and
+    kept the chamber out of every simulated chain."""
     i = GAME.find('static bool32 QuickStartSiteRetired(s32 site) {')
     if i < 0:
         return set()
     body = GAME[i:GAME.find('\n}\n', i)]
-    return {(P.AREAS[m.group(1)], P.ROOMS[m.group(2)])
-            for m in re.finditer(r'e->area == (AREA_\w+) && e->room == (ROOM_\w+)', body)}
+    out = set()
+    for m in re.finditer(r'e->area == (AREA_\w+) && e->room == (ROOM_\w+)'
+                         r'(?: && e->contentX == (\d+) && e->contentY == (\d+))?', body):
+        spot = (int(m.group(3)), int(m.group(4))) if m.group(3) else None
+        out.add((P.AREAS[m.group(1)], P.ROOMS[m.group(2)], spot))
+    return out
+
+
+RETIRED = _retired_sites()
+
+
+def site_retired(s):
+    return ((s['area'], s['room'], None) in RETIRED or
+            (s['area'], s['room'], (s['cx'], s['cy'])) in RETIRED)
 
 
 for _s in SITES:
-    if (_s['area'], _s['room']) in _retired_sites():
+    _s['retired'] = site_retired(_s)
+    _s['kinstone'] = _s['gate']   # the row's own fusion gate, before retirement marks it
+    if _s['retired']:
         _s['gate'] = -1   # never a candidate, like a kinstone-gated row
 
 
@@ -409,8 +433,16 @@ KIT_RULES = {'CW': ('ITEM_PEGASUS_BOOTS', 'ITEM_ROCS_CAPE'),
 # then QuickStartTierPick walks the usable entries of that (category, tier)
 # and reduces the pick by subtraction.
 
-QS_CAT_DROP = {'QS_CAT_REWARD', 'QS_CAT_WEAPON', 'QS_CAT_SKILL',
-               'QS_CAT_STAT', 'QS_CAT_CHARM'}
+# QS_CAT_DROP has carried QS_CAT_KEY since the "key items must also come
+# from ? rooms, quests and other drops" change, so a ? room prize CAN pay a
+# key item and grow the reach. The model said otherwise until the Oct 2026
+# simulation study; parsed now so it cannot drift again.
+def _cat_macro(name):
+    m = re.search(r'#define %s \(([^)]*)\)' % name, GAME)
+    return {t.strip() for t in m.group(1).split('|')}
+
+
+QS_CAT_DROP = _cat_macro('QS_CAT_DROP')
 QS_CAT_ALL = QS_CAT_DROP | {'QS_CAT_KEY'}
 TIER_ORDER = ['QS_TIER_COMMON', 'QS_TIER_UNCOMMON', 'QS_TIER_RARE']
 
@@ -552,6 +584,17 @@ def step_region(kind_name, where):
         regs = ROOM_REGION.get((s['area'], s['room']))
         if regs:
             return REGION_INDEX[sorted(regs)[0]]
+    return None
+
+
+def step_room(kind_name, where):
+    """'AREA/ROOM' of a dealt step, None for an ITEM step."""
+    if kind_name in ('WAVE', 'BOSS', 'QUEST'):
+        p = POOL[where]
+        return f"{p['areaName'][5:]}/{p['roomName'][5:]}"
+    if kind_name == 'EVENT':
+        st = SITES[where]
+        return f"{st['areaName'][5:]}/{st['roomName'][5:]}"
     return None
 
 
@@ -737,6 +780,7 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
             return [i for i, s in enumerate(SITES)
                     if i not in sites_done and s['gate'] == 0
                     and reach_room_ok(regions, held, s['area'], s['room'])
+                    and recital_ok(i, regions, held)
                     and not used(KIND_EVENT, i)
                     and not avoided('EVENT', i, use_avoid)]
         if kind == KIND_WAVE:
@@ -764,6 +808,15 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
                 return [quest_slot]
             return []
         return []
+
+    lesson, recital = memory_sites(seed)
+
+    def recital_ok(i, nodes, held_):
+        """QuickStartChainEventOk's last test: a step on the memory recital
+        wants the lesson's room inside reach too."""
+        if i != recital or lesson < 0:
+            return True
+        return reach_room_ok(nodes, held_, SITES[lesson]['area'], SITES[lesson]['room'])
 
     h = chain_hash(seed, step)
     # The keyed pair (QuickStartChainRollKeyedPair): an ITEM step for a door
@@ -793,6 +846,7 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
                       if SEALED.get((s['area'], s['room'])) == key
                       and i not in sites_done and s['gate'] == 0
                       and reach_room_ok(nodes_key, held_key, s['area'], s['room'])
+                      and recital_ok(i, nodes_key, held_key)
                       and not used(KIND_EVENT, i)]
             if not sealed:
                 continue
@@ -811,7 +865,9 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
             opened = [i for i, s in enumerate(SITES)
                       if i not in sites_done and s['gate'] == 0
                       and reach_room_ok(nodes_item, held_item, s['area'], s['room'])
-                      and not reach_room_ok(regions, held, s['area'], s['room'])
+                      and recital_ok(i, nodes_item, held_item)
+                      and not (reach_room_ok(regions, held, s['area'], s['room'])
+                               and recital_ok(i, regions, held))
                       and not used(KIND_EVENT, i)]
             if opened:
                 site = opened[(e & 0x7fff) % len(opened)]
@@ -832,11 +888,8 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     return [(KIND_ITEM, 0, chain_pick_item(seed, step * 7 + 3, owned))]
 
 
-# The ? room kind distribution, in sixteenths, per kind class. Read off the
-# four QuickStartPick*Kind switches - these are what a site of each class
-# deals when the player first walks into it. (Not read by the model. Since
-# Oct 2026 one WAVES roll in four at a site alone in its room is dealt as
-# the switch PUZZLE instead; game.c, QuickStartSitePuzzleOk.)
+# The ? room kind distribution, in sixteenths, per kind class. Kept for
+# sim_report.py's per-class table; the exact roll is site_roll() below.
 KIND_MIX = {
     'SMALL':    {'WAVES': 6, 'NPC': 3, 'POT_LOTTERY': 3, 'FAIRY': 1, 'WAVES_FALLBACK': 3},
     'LARGE':    None,
@@ -845,6 +898,210 @@ KIND_MIX = {
     'RARE':     None,
     'MINIBOSS': None,
 }
+
+# ------------------------------------------------------ the ? room roll --
+#
+# NO LONGER LIVE RNG. QuickStartContentSiteRoll seeds the shared stream from
+# (run seed, site index), rolls, and restores it, so a site's kind and its
+# prize are a pure function of the run seed - "it gives the SAME answer every
+# time it is asked". The model's header predates that change; this section
+# re-implements the roll line for line, which is what lets the study report
+# which ? room KINDS a run deals and which PRIZES they pay, not just the
+# per-class odds. QUICKSTART_UNLOCKS_ENABLED is 0, so every kind is unlocked.
+
+def _rand(state):
+    """Random(): gRand = ror(gRand * 3, 13); returns (state, gRand >> 1)."""
+    x = (state * 3) & U32
+    x = ((x >> 13) | (x << 19)) & U32
+    return x, x >> 1
+
+
+class _Stream:
+    def __init__(self, state):
+        self.state = state
+
+    def __call__(self):
+        self.state, v = _rand(self.state)
+        return v
+
+
+def _site_stream(seed, site):
+    h = (seed + site * 0x9E3779B9 + 0x51ED2701) & U32
+    h ^= h >> 15
+    h = (h * 0x2C1B3C6D) & U32
+    h ^= h >> 12
+    h = (h * 0x297A2D39) & U32
+    h ^= h >> 15
+    return _Stream(h | 1)
+
+
+EV_ITEM_DROP, EV_MINIBOSS, EV_NPC, EV_WAVES, EV_POT_LOTTERY, EV_CHEST_LOTTERY, EV_FAIRY, EV_MEMORY, EV_PUZZLE = range(9)
+EVENT_NAME = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY',
+              'FAIRY', 'MEMORY', 'PUZZLE']
+_SMALL16 = [EV_WAVES] * 6 + [EV_NPC] * 3 + [EV_POT_LOTTERY] * 3 + [EV_WAVES] * 3 + [EV_FAIRY]
+_ANY16 = ([EV_WAVES] * 4 + [EV_MINIBOSS] * 4 + [EV_POT_LOTTERY] + [EV_CHEST_LOTTERY] * 2 +
+          [EV_NPC] * 2 + [EV_POT_LOTTERY] + [EV_MINIBOSS] + [EV_FAIRY])
+_LARGE16 = [EV_MINIBOSS] * 6 + [EV_WAVES] * 9 + [EV_FAIRY]
+assert len(_SMALL16) == len(_ANY16) == len(_LARGE16) == 16
+ELITE_NAMES = ['DARK_NUT 0', 'DARK_NUT 1', 'DARK_NUT 2 (blue)', 'DARK_NUT 3 (red)',
+               'BALL_CHAIN_SOLDIER', 'MADDERPILLAR']
+LOTTERY_PRIZES = ['ITEM_RUPEE50', 'ITEM_HEART_PIECE', 'ITEM_RUPEE50', 'ITEM_HEART_PIECE',
+                  'ITEM_RUPEE50', 'ITEM_RUPEE100', 'ITEM_RUPEE100', 'ITEM_HEART_CONTAINER']
+
+
+def _memory_eligible(i):
+    s = SITES[i]
+    return (s['gate'] == 0 and not s['retired'] and s['areaName'] != 'AREA_GREAT_FAIRIES'
+            and s['kinds'] in ('SMALL', 'LARGE', 'ANY'))
+
+
+_MEMORY_CACHE = {}
+
+
+def memory_sites(seed):
+    """QuickStartMemorySiteCompute: (lesson, recital) site indices or -1."""
+    if seed in _MEMORY_CACHE:
+        return _MEMORY_CACHE[seed]
+    out = []
+    lesson_room = None
+    for role in (0, 1):
+        elig = [i for i in range(len(SITES)) if _memory_eligible(i) and
+                (lesson_room is None or (SITES[i]['area'], SITES[i]['room']) != lesson_room)]
+        if not elig:
+            out.append(-1)
+            continue
+        pick = elig[(chain_hash(seed, 0x3E73 + role * 77) & 0x7fff) % len(elig)]
+        out.append(pick)
+        if role == 0:
+            lesson_room = (SITES[pick]['area'], SITES[pick]['room'])
+    _MEMORY_CACHE[seed] = tuple(out)
+    if len(_MEMORY_CACHE) > 4096:
+        _MEMORY_CACHE.clear()
+    return tuple(out)
+
+
+def _puzzle_ok(i):
+    s = SITES[i]
+    if s['kinstone'] != 0 or s['areaName'] == 'AREA_GREAT_FAIRIES':
+        return False
+    if s['areaName'] == 'AREA_MINISH_PATHS' and s['roomName'] == 'ROOM_MINISH_PATHS_BOW':
+        return False
+    return not any(j != i and SITES[j]['area'] == s['area'] and SITES[j]['room'] == s['room']
+                   for j in range(len(SITES)))
+
+
+def site_roll(seed, i):
+    """QuickStartContentSiteRoll -> (kind, extra)."""
+    lesson, recital = memory_sites(seed)
+    if i == lesson:
+        return EV_MEMORY, 0
+    if i == recital:
+        return EV_MEMORY, 1 | ((((chain_hash(seed, 0x3E73 + 154) >> 3) & 0x7fff) % 64) << 1)
+    R = _site_stream(seed, i)
+    cls = SITES[i]['kinds']
+    if cls == 'ANY':
+        kind = _ANY16[R() % 16]
+    elif cls == 'LARGE':
+        kind = _LARGE16[R() % 16]
+    elif cls in ('ELITE', 'MINIBOSS'):
+        kind = EV_MINIBOSS
+    elif cls == 'RARE':
+        kind = EV_ITEM_DROP
+    else:
+        kind = _SMALL16[R() % 16]
+    if kind == EV_WAVES and _puzzle_ok(i) and ((chain_hash(seed, 0x9E2F + i) >> 7) & 3) == 0:
+        kind = EV_PUZZLE
+    extra = 0
+    if kind in (EV_ITEM_DROP, EV_WAVES):
+        extra = R() % 64
+        if kind == EV_WAVES and R() % 4 == 0:
+            extra |= 0x40
+        if cls == 'RARE':
+            extra = (R() % 64) | 0x80
+    elif kind == EV_NPC:
+        extra = R() % 2
+    elif kind == EV_MINIBOSS:
+        extra = R() % len(ELITE_NAMES)
+        if cls == 'ELITE':
+            extra |= 0x80
+        elif SITES[i]['tier']:
+            pass
+        elif R() % 4 == 0:
+            extra |= 0x40
+    elif kind == EV_POT_LOTTERY:
+        preset = R() % 3
+        prize = R() % 8
+        winner = R() % 8
+        extra = preset | (prize << 2) | (winner << 5)
+    elif kind == EV_PUZZLE:
+        variant = R() % 3
+        extra = variant | ((R() % 64) << 2)
+    elif kind == EV_CHEST_LOTTERY:
+        winner = R() % 3
+        extra = winner | ((R() % 8) << 2)
+    return kind, extra
+
+
+def event_label(seed, i):
+    """A finer label than the kind: the WAVES handicap, the NPC's mood, the
+    memory role, the miniboss. The survive-clock variant of WAVES is decided
+    per visit by the live stream and is not separable here."""
+    kind, extra = site_roll(seed, i)
+    name = EVENT_NAME[kind]
+    if kind == EV_WAVES:
+        return name + (' (stripped kit)' if extra & 0x40 else '')
+    if kind == EV_NPC:
+        return name + (' (evil)' if extra & 1 else ' (friendly)')
+    if kind == EV_MEMORY:
+        return name + (' recital' if extra & 1 else ' lesson')
+    if kind == EV_PUZZLE:
+        return name + ' variant %d' % (extra & 3)
+    return name
+
+
+def draw_at_tier(pick, cats, tier, owned, where_region):
+    """QuickStartDrawAtTier: this tier, then down, then up."""
+    for t in range(tier, -1, -1):
+        got = tier_pick(cats, TIER_ORDER[t], pick, owned, where_region)
+        if got:
+            return got
+    for t in range(tier + 1, 3):
+        got = tier_pick(cats, TIER_ORDER[t], pick, owned, where_region)
+        if got:
+            return got
+    return 'ITEM_HEART_PIECE'
+
+
+def draw_pick(seed6):
+    seed6 = abs(seed6)
+    return (seed6 % 10) * 7 + seed6 // 10
+
+
+def site_prize(seed, i, owned, where_region):
+    """What finishing site i pays, or None for a kind with no item (NPC,
+    fairy, the memory lesson). The chain's wanted-item override (a pending
+    ITEM step is paid by the next prize) is applied by the caller."""
+    kind, extra = site_roll(seed, i)
+    if kind == EV_WAVES:
+        return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
+    if kind == EV_PUZZLE:
+        return draw_item((extra >> 2) & 0x3f, QS_CAT_DROP, owned, where_region)
+    if kind == EV_ITEM_DROP:
+        if extra & 0x80:
+            return draw_at_tier(draw_pick(extra & 0x3f), QS_CAT_DROP, 2, owned, where_region)
+        return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
+    if kind == EV_MEMORY:
+        return draw_item((extra >> 1) & 0x3f, QS_CAT_DROP, owned, where_region) if extra & 1 else None
+    if kind == EV_MINIBOSS:
+        if not (extra & 0x80) and (extra & 0x40) and 'ITEM_RED_SWORD' not in owned:
+            return 'ITEM_RED_SWORD'
+        if SITES[i]['tier']:
+            return draw_at_tier(draw_pick(extra & 0x3f), QS_CAT_DROP, SITES[i]['tier'] - 1, owned, where_region)
+        return 'ITEM_HEART_CONTAINER' if extra & 0x80 else 'ITEM_HEART_PIECE'
+    if kind in (EV_POT_LOTTERY, EV_CHEST_LOTTERY):
+        return LOTTERY_PRIZES[(extra >> 2) & 7]
+    return None
+
 
 # ----------------------------------------------------------- one full run --
 
@@ -915,6 +1172,21 @@ def snapshot(nodes, held, label):
                 nregions=bin(regions).count('1'), per_region=per)
 
 
+def pool_room_ok(row, drop_pool, nodes, held):
+    """Can the player stand in pool row `row`'s room? Its node reached is
+    enough when the node IS that room (the region start: arriving there is
+    being there, whatever the room's other places cost). One row's node is
+    another room - the Wind Ruins' fortress pocket hangs off the Ruins
+    entrance node - and then only the room's own survey row answers."""
+    if row == drop_pool:
+        return True
+    p = POOL[row]
+    _ring, a, r, _e = NODES[POOL_NODE[row]]
+    if (a, r) == (p['area'], p['room']):
+        return reach_pool_ok(nodes, row)
+    return reach_room_ok(nodes, held, p['area'], p['room'])
+
+
 def simulate(seed, cohort, rng):
     """One run. `rng` picks which of the three offered items the player takes."""
     owned = set(BOOT_ITEMS)
@@ -967,11 +1239,24 @@ def simulate(seed, cohort, rng):
     regions = reachable_nodes(held, drop_pool)
     checkpoints.append(snapshot(regions, held, 'after selection'))
     dealt = []
-    for step in range(5):
+    # Four steps, then the finale. This looped five times until the Oct 2026
+    # study: a fifth step was rolled and counted that the game never deals
+    # (QUICKSTART_CHAIN_PRE_STEPS is 4; the step-4 completion draws the
+    # finale instead of rolling again).
+    for step in range(4):
         if not dealt:
             dealt = roll_step(seed, step, prior, regions, held, owned,
                               quest_slot, sites_done, carrier=carrier, drop_pool=drop_pool)
         kind, where, detail = dealt.pop(0)
+        event = prize = None
+        # Is the step's ROOM inside reach when it is dealt? An EVENT is
+        # placed by the room test, so it always is; a WAVE, BOSS or QUEST
+        # is placed by the pool row's NODE (QuickStartReachPoolOk), and a
+        # row whose room the survey prices higher than its node - the Wind
+        # Ruins' fortress pocket - can be dealt while its room is not.
+        room_ok = None
+        if kind in (KIND_WAVE, KIND_BOSS, KIND_QUEST):
+            room_ok = pool_room_ok(where, drop_pool, regions, held)
         if kind == KIND_ITEM:
             # A keyed ITEM step is paid by the next reward in the key's own
             # regions (QuickStartDrawItem's override); a fallback ITEM step
@@ -1001,10 +1286,27 @@ def simulate(seed, cohort, rng):
                 if got:
                     owned.add(got)
                     rewards.append(got)
+                    prize = got
                 # Clearing a region is also where a run's kinstone fusions
                 # happen; the fusion bit follows the first clear.
                 fused = True
-        steps.append(dict(step=step, kind=KIND_NAME[kind], where=where, detail=detail))
+            # An EVENT pays its site's prize, which is seed-derived (see
+            # site_roll) and drawn from QS_CAT_DROP - key items included -
+            # so in the rewards cohort it grows the reach exactly as a
+            # region clear does.
+            if kind == KIND_EVENT:
+                event = event_label(seed, where)
+                if cohort == 'rewards':
+                    got = site_prize(seed, where, owned, REGION_NAMES[step_region('EVENT', where)])
+                    if got:
+                        owned.add(got)
+                        rewards.append(got)
+                        prize = got
+        steps.append(dict(step=step, kind=KIND_NAME[kind], where=where, detail=detail,
+                          room=step_room(KIND_NAME[kind], where),
+                          region=(REGION_NAMES[step_region(KIND_NAME[kind], where)]
+                                  if step_region(KIND_NAME[kind], where) is not None else None),
+                          event=event, prize=prize, room_ok=room_ok))
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
         regions = reachable_nodes(held, drop_pool)
         if step < 4:
@@ -1017,8 +1319,12 @@ def simulate(seed, cohort, rng):
                     used |= 1 << rg
             quest_done = any(st['kind'] == 'QUEST' for st in steps)
             carrier, element_pool = roll_finale(seed, drop_pool, regions, owned, quest_slot, quest_done, used)
+            finale_room_ok = pool_room_ok(element_pool, drop_pool, regions, held)
     return dict(seed=seed, cohort=cohort,
                 drop_pool=drop_pool, drop_region=REGION_NAMES[drop_region],
+                drop_room=step_room('WAVE', drop_pool),
+                element_room=step_room('WAVE', element_pool),
+                finale_room_ok=finale_room_ok,
                 element_pool=element_pool,
                 element_region=REGION_NAMES[BY_POOL[element_pool]],
                 carrier=CARRIER_NAME[carrier],

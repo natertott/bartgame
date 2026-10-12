@@ -1,0 +1,4476 @@
+[
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_7",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_CRENEL_CLIMB",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_8",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_EASTERN_HILLS_CLIMB",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_9",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_CRENEL_CLIMB",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_CRENEL_CLIMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_8",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_EASTERN_HILLS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (936,16)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_EASTERN_HILLS_CLIMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_LAKE_HYLIA_CLIMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_8",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_RUINS_CLIMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH",
+   "MW",
+   "WR"
+  ],
+  "via": [
+   "ROOM_BEANSTALKS_8",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_BEANSTALKS",
+  "room": "ROOM_BEANSTALKS_WESTERN_WOODS_CLIMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "WW"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTLE_GARDEN_MINISH_HOLES",
+  "room": "ROOM_CASTLE_GARDEN_MINISH_HOLES_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTLE_GARDEN_MINISH_HOLES",
+  "room": "ROOM_CASTLE_GARDEN_MINISH_HOLES_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_CAVES",
+  "room": "ROOM_CASTOR_CAVES_DARKNUT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (424,418)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_CAVES",
+  "room": "ROOM_CASTOR_CAVES_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (968,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_CAVES",
+  "room": "ROOM_CASTOR_CAVES_NORTH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (584,50)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_CAVES",
+  "room": "ROOM_CASTOR_CAVES_SOUTH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (728,898)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_CAVES",
+  "room": "ROOM_CASTOR_CAVES_WIND_RUINS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "WR"
+  ],
+  "via": [
+   "ROOM_RUINS_ENTRANCE",
+   "door (200,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_STATUES"
+ },
+ {
+  "area": "AREA_CASTOR_DARKNUT",
+  "room": "ROOM_CASTOR_DARKNUT_HALL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_CAVES_DARKNUT",
+   "door (104,24)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CASTOR_DARKNUT",
+  "room": "ROOM_CASTOR_DARKNUT_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_DARKNUT_HALL",
+   "seam (stated)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_BOOMERANG",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (504,340)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x5"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_BOTTLE_BUSINESS_SCRUB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_CAVES_TRILBY_HIGHLANDS",
+   "seam east edge"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_HEART_PIECE_HALLWAY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (312,488)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_HILLS_KEESE_CHEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_EASTERN_HILLS_CENTER",
+   "door (168,152)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_HYRULE_TOWN_WATERFALL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (240,392)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_KINSTONE_BUSINESS_SCRUB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_TREE_INTERIORS_MINISH_WOODS_BUSINESS_SCRUB",
+   "door (120,72)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_LON_LON_RANCH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "door (232,436)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_LON_LON_RANCH_SECRET",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_CAVES_LON_LON_RANCH",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_LON_LON_RANCH_WALLET",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "door (504,520)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN",
+   "door (120,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_SOUTH_HYRULE_FIELD_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (280,168)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_SOUTH_HYRULE_FIELD_RUPEE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (88,280)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TO_GRAVEYARD",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (264,312)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (408,690)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TRILBY_HIGHLANDS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (152,644)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x2"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TRILBY_KEESE_CHEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (136,546)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_DIG_CAVES_TRILBY_HIGHLANDS",
+   "door (424,120)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVES",
+  "room": "ROOM_CAVES_TRILBY_RUPEE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (56,680)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_AFTER_CANE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_CART_TO_SPINY_CHU",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BEFORE_GLEEROK",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MINISH_SPIKES",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOB_OMB_WALL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_ENTRANCE",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSSKEY_PATH1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_BEFORE_GLEEROK",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSSKEY_PATH2",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_BOSSKEY_PATH1",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_BOSS_DOOR",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MINISH_SPIKES",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_CART_TO_SPINY_CHU",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MAIN_CART",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_CART_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MAIN_CART",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_COMPASS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_NORTH_ENTRANCE",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (104,114)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_HELMASAUR_FIGHT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_CART_WEST",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MAIN_CART",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_NORTH_ENTRANCE",
+   "door (136,24)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MINISH_LAVA_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MAIN_CART",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_MINISH_SPIKES",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_AFTER_CANE",
+   "door (136,56)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_NORTH_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_ENTRANCE",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_ROLLOBITE_LAVA_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_CART_WEST",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_SPINY_CHU",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_CART_TO_SPINY_CHU",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CAVE_OF_FLAMES",
+  "room": "ROOM_CAVE_OF_FLAMES_TOMPAS_DOOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_CAVE_OF_FLAMES_MINISH_SPIKES",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_BLOCK_PUSHING",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (296,24)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (184,408)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_BRIDGE_SWITCH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (568,184)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_CHUCHU_POT_CHEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CENTER",
+   "door (840,88)"
+  ],
+  "tags": [
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_EXIT_TO_MINES",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (392,248)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CENTER",
+   "door (168,72)"
+  ],
+  "tags": [
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_GRIP_RING",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (488,472)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_HELMASAUR_HALLWAY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (408,216)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_HERMIT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_WALL_CLIMB",
+   "door (168,88)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_HINT_SCRUB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (952,360)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_LADDER_TO_SPRING_WATER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (728,392)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_MUSHROOM_KEESE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (312,312)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_PILLAR_CAVE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (472,184)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_RUPEE_FAIRY_FOUINTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (664,40)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_SPINY_CHU_PUZZLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CENTER",
+   "door (760,40)"
+  ],
+  "tags": [
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_TO_GRAYBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "door (520,328)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_CAVES",
+  "room": "ROOM_CRENEL_CAVES_WATER_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CENTER",
+   "door (56,264)"
+  ],
+  "tags": [
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_MINISH_PATHS",
+  "room": "ROOM_CRENEL_MINISH_PATHS_BEAN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_MINISH_PATHS",
+  "room": "ROOM_CRENEL_MINISH_PATHS_MELARI",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_CRENEL_MINISH_PATHS",
+  "room": "ROOM_CRENEL_MINISH_PATHS_SPRING_WATER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_16",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BOSS_DOOR",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BARREL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_LEVER",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BLUE_PORTAL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BARREL",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BOSS_DOOR",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_ENTRANCE",
+   "door (72,104)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BOSS_KEY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_COMPASS",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_BUTTON",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BARREL",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_COMPASS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_STAIRS_TO_B1",
+   "door (200,40)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_DOUBLE_STATUE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_MAP",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (456,600)"
+  ],
+  "tags": [
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_INSIDE_BARREL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BARREL",
+   "door (184,136)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LEVER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_TORCHES",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LILY_PAD_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_COMPASS",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_LILY_PAD_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_COMPASS",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MADDERPILLAR",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BLUE_PORTAL",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MAP",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BARREL",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_MULLDOZER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BUTTON",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_PILLARS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BUTTON",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_POT_BRIDGE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_MAP",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_STAIRS_TO_B1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_BARREL",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE",
+  "room": "ROOM_DEEPWOOD_SHRINE_TORCHES",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_DEEPWOOD_SHRINE_ENTRANCE",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DEEPWOOD_SHRINE_ENTRY",
+  "room": "ROOM_DEEPWOOD_SHRINE_ENTRY_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DIG_CAVES",
+  "room": "ROOM_DIG_CAVES_TRILBY_HIGHLANDS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (136,148)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_GREATBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_DOJOS_TO_GREATBLADE",
+   "seam north edge"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_GRIMBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_DOJOS_TO_GRIMBLADE",
+   "seam (stated)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_SCARBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_DOJOS_TO_SCARBLADE",
+   "seam north edge"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_SPLITBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_DOJOS_TO_SPLITBLADE",
+   "seam (stated)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_SWIFTBLADE_I",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (56,724)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_TO_GREATBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_TO_GRIMBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "door (936,388)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_TO_SCARBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_TO_SPLITBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_DOJOS",
+  "room": "ROOM_DOJOS_WAVEBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_TREE_INTERIORS_WAVEBLADE",
+   "door (120,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GARDEN_FOUNTAINS",
+  "room": "ROOM_GARDEN_FOUNTAINS_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "door (776,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GARDEN_FOUNTAINS",
+  "room": "ROOM_GARDEN_FOUNTAINS_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "door (232,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GORON_CAVE",
+  "room": "ROOM_GORON_CAVE_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_GORON_CAVE_STAIRS",
+   "door (120,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x4"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GORON_CAVE",
+  "room": "ROOM_GORON_CAVE_STAIRS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "door (136,852)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GREAT_FAIRIES",
+  "room": "ROOM_GREAT_FAIRIES_CRENEL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_WALL_CLIMB",
+   "door (328,488)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GREAT_FAIRIES",
+  "room": "ROOM_GREAT_FAIRIES_GRAVEYARD",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (408,680)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_GREAT_FAIRIES",
+  "room": "ROOM_GREAT_FAIRIES_MINISH_WOODS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY",
+   "door (120,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_16",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_1_1f",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_1f",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_1_SCHOOL_WEST",
+   "seam south edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_1F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (904,600)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_EAST_2F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (936,536)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_EAST_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_1_INN_1F",
+   "door (248,24)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_MIDDLE_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_1_INN_1F",
+   "door (184,24)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_MINISH_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_WEST_2F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (872,440)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_INN_WEST_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_1_INN_1F",
+   "door (120,24)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_LIBRARY_1F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (360,168)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_LIBRARY_2F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (312,72)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_MAYOR",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (712,312)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_POST_OFFICE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (72,168)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_SCHOOL_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (808,104)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_1",
+  "room": "ROOM_HOUSE_INTERIORS_1_SCHOOL_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (712,152)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_CUCCO",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (952,856)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_DAMPE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (416,408)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "ITEM_QST_GRAVEYARD_KEY"
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_DR_LEFT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (56,584)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_EAST_ORACLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (696,864)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_JULIETTA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (840,760)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_BEDROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE",
+   "door (88,24)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (656,392)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_SMITH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HOUSE_INTERIORS_2_LINKS_HOUSE_ENTRANCE",
+   "seam (stated)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_PERCY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "WW"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_WESTERN_WOODS_CENTER",
+   "door (144,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_ROMIO",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (744,752)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (288,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_STRANGER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (152,360)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_2",
+  "room": "ROOM_HOUSE_INTERIORS_2_WEST_ORACLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (64,440)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_BAKERY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (632,496)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_BORLOV_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (664,600)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_CAFE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (408,744)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_CARLOV",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_TREE_INTERIORS_STAIRS_TO_CARLOV",
+   "door (120,72)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_FIGURINE_HOUSE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (376,656)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_REM_SHOE_SHOP",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (376,528)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_SIMON",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (376,592)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_3",
+  "room": "ROOM_HOUSE_INTERIORS_3_STOCKWELL_SHOP",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (600,744)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_CARPENTER",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (144,712)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_FARM_HOUSE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_EASTERN_HILLS_NORTH",
+   "door (64,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (672,888)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "door (392,632)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "ITEM_QST_LONLON_KEY"
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_RANCH_HOUSE_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "door (344,632)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "ITEM_QST_LONLON_KEY"
+ },
+ {
+  "area": "AREA_HOUSE_INTERIORS_4",
+  "room": "ROOM_HOUSE_INTERIORS_4_SWIFTBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (312,904)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "door (504,40)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_3",
+   "door (104,24)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_2",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_CELLAR_1",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_3",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_0",
+   "door (72,216)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_4",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_2",
+   "seam east edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE",
+  "room": "ROOM_HYRULE_CASTLE_CELLAR_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_0",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_CASTLE_CELLAR",
+  "room": "ROOM_HYRULE_CASTLE_CELLAR_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "door (104,116)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_DIG_CAVES",
+  "room": "ROOM_HYRULE_DIG_CAVES_TOWN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_UNDERGROUND_0",
+   "door (72,248)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_TOWN_MINISH_CAVES",
+  "room": "ROOM_HYRULE_TOWN_MINISH_CAVES_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_TOWN_UNDERGROUND",
+  "room": "ROOM_HYRULE_TOWN_UNDERGROUND_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (824,308)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_HYRULE_TOWN_UNDERGROUND",
+  "room": "ROOM_HYRULE_TOWN_UNDERGROUND_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_UNDERGROUND_0",
+   "door (312,568)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_LAKE_WOODS_CAVE",
+  "room": "ROOM_LAKE_WOODS_CAVE_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (328,884)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MELARIS_MINE",
+  "room": "ROOM_MELARIS_MINE_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_CAVERN_OF_FLAMES_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_2",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_MINISH_CAVES_SOUTHEAST_WATER_1",
+   "seam north edge"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_6",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1",
+   "seam west edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_BEAN_PESTO",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "door (456,24)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_LAKE_HYLIA_LIBRARI",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_LAKE_HYLIA_NORTH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (696,88)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_MINISH_WOODS_NORTH_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (952,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_MINISH_WOODS_SOUTHWEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (72,536)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_OUTSIDE_LINKS_HOUSE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (376,216)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_RUINS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "WR"
+  ],
+  "via": [
+   "ROOM_RUINS_LADDER_TO_TEKTITES",
+   "door (56,8)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CAVES",
+  "room": "ROOM_MINISH_CAVES_SOUTHEAST_WATER_1",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "door (952,760)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_CASTOR_WILDS_BOW",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_CASTOR_WILDS_MIDDLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_CASTOR_WILDS_NORTH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_CASTOR_WILDS_WEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_EAST_HYRULE_CASTLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_HYRULE_CASTLE_GARDEN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_CASTLE_GARDEN_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_LAKE_HYLIA_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_LON_LON_RANCH_NORTH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_MT_CRENEL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MT_CRENEL_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_CRACKS",
+  "room": "ROOM_MINISH_CRACKS_RUINS_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "WR"
+  ],
+  "via": [
+   "ROOM_RUINS_ENTRANCE",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_STATUES"
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_BARREL_MINISH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (888,648)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_BLUE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (424,520)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_FESTARI",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_GENTARI_EXIT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (56,112)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_GENTARI_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (120,136)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_GREEN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (360,472)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_EXIT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "EH"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_EASTERN_HILLS_SOUTH",
+   "door (56,40)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_HYRULE_FIELD_SOUTHWEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "WW"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_WESTERN_WOODS_SOUTH",
+   "door (184,40)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_HYRULE_TOWN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (56,424)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_LAKE_HYLIA_OCARINA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (200,408)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_LIBRARI",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (488,424)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_EAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MELARIS_MINE_MAIN",
+   "door (640,284)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHEAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MELARIS_MINE_MAIN",
+   "door (552,544)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_MELARI_MINES_SOUTHWEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CREN"
+  ],
+  "via": [
+   "ROOM_MELARIS_MINE_MAIN",
+   "door (168,544)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_MINISH_WOODS_BOMB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (312,792)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_NEXT_TO_KNUCKLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_POT_MINISH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (72,584)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_RED",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (296,552)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_SHOE_MINISH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "door (488,728)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_SIDE_AREA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA",
+   "door (312,104)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_HOUSE_INTERIORS",
+  "room": "ROOM_MINISH_HOUSE_INTERIORS_SOUTH_HYRULE_FIELD",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (72,456)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_PATHS",
+  "room": "ROOM_MINISH_PATHS_BOW",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "CW"
+  ],
+  "via": [
+   "ROOM_CASTOR_WILDS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_PATHS",
+  "room": "ROOM_MINISH_PATHS_LAKE_HYLIA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_PATHS",
+  "room": "ROOM_MINISH_PATHS_LON_LON_RANCH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LLR"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_LON_LON_RANCH",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_PATHS",
+  "room": "ROOM_MINISH_PATHS_MINISH_VILLAGE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_PATHS",
+  "room": "ROOM_MINISH_PATHS_SCHOOLYARD",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_RAFTERS",
+  "room": "ROOM_MINISH_RAFTERS_CAFE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_RAFTERS",
+  "room": "ROOM_MINISH_RAFTERS_STOCKWELL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "minish hole"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_VILLAGE",
+  "room": "ROOM_MINISH_VILLAGE_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "minish hole"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_MINISH_VILLAGE",
+  "room": "ROOM_MINISH_VILLAGE_SIDE_HOUSE_AREA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_VILLAGE_MAIN",
+   "seam east edge"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_0",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_CRYPT_WATER_ROPE",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (240,40)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_GIBDO",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_CRYPT_KEY_BLOCK",
+   "door (296,56)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_KEY_BLOCK",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_CRYPT_MUSHROOM_PIT",
+   "door (136,56)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_MUSHROOM_PIT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_CRYPT_ENTRANCE",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_CRYPT",
+  "room": "ROOM_ROYAL_CRYPT_WATER_ROPE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_CRYPT_GIBDO",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_VALLEY",
+  "room": "ROOM_ROYAL_VALLEY_FOREST_MAZE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (120,652)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_ROYAL_VALLEY_GRAVES",
+  "room": "ROOM_ROYAL_VALLEY_GRAVES_GINA",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (392,132)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "ITEM_QST_GRAVEYARD_KEY"
+ },
+ {
+  "area": "AREA_ROYAL_VALLEY_GRAVES",
+  "room": "ROOM_ROYAL_VALLEY_GRAVES_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "RV"
+  ],
+  "via": [
+   "ROOM_ROYAL_VALLEY_MAIN",
+   "door (88,132)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "ITEM_QST_GRAVEYARD_KEY"
+ },
+ {
+  "area": "AREA_SANCTUARY",
+  "room": "ROOM_SANCTUARY_HALL",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_SANCTUARY_ENTRANCE_MAIN",
+   "door (136,56)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_SANCTUARY",
+  "room": "ROOM_SANCTUARY_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_SANCTUARY_HALL",
+   "seam north edge"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_SANCTUARY",
+  "room": "ROOM_SANCTUARY_STAINED_GLASS",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_SANCTUARY_MAIN",
+   "door (232,40)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_SANCTUARY_ENTRANCE",
+  "room": "ROOM_SANCTUARY_ENTRANCE_MAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "CG"
+  ],
+  "via": [
+   "ROOM_HYRULE_CASTLE_3",
+   "door (280,456)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_BOOMERANG_NORTHEAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (576,296)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_BOOMERANG_NORTHWEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (432,296)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_BOOMERANG_SOUTHEAST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (576,392)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_BOOMERANG_SOUTHWEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (432,392)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_MINISH_WOODS_BUSINESS_SCRUB",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (528,456)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (112,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "NHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_NORTH_HYRULE_FIELD",
+   "door (752,312)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_PERCYS_TREEHOUSE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "TRIL"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_TRILBY_HIGHLANDS",
+   "door (64,904)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_SOUTH_HYRULE_FIELD_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "SHF"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD",
+   "door (928,552)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_STAIRS_TO_CARLOV",
+  "wired": true,
+  "vanilla": true,
+  "enterable": false,
+  "owners": [
+   "HT"
+  ],
+  "via": [
+   "ROOM_HYRULE_TOWN_MAIN",
+   "door (80,888)"
+  ],
+  "tags": [],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_WAVEBLADE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "LH"
+  ],
+  "via": [
+   "ROOM_LAKE_HYLIA_MAIN",
+   "door (256,696)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "WW"
+  ],
+  "via": [
+   "ROOM_HYRULE_FIELD_WESTERN_WOODS_NORTH",
+   "door (160,488)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_TREE_INTERIORS",
+  "room": "ROOM_TREE_INTERIORS_WITCH_HUT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "MW"
+  ],
+  "via": [
+   "ROOM_MINISH_WOODS_MAIN",
+   "door (704,72)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_ENTRANCE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (56,482)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_EXIT",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (216,450)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_1F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (280,66)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_2F",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (168,34)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (216,322)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_HEART_PIECE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (56,40)"
+  ],
+  "tags": [
+   "SURVEYED"
+  ],
+  "sealed": null
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_MAIN",
+   "door (168,194)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_CAVES_HALLWAY_1F",
+   "seam (stated)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE",
+   "door (152,56)"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ },
+ {
+  "area": "AREA_VEIL_FALLS_CAVES",
+  "room": "ROOM_VEIL_FALLS_CAVES_SECRET_CHEST",
+  "wired": true,
+  "vanilla": true,
+  "enterable": true,
+  "owners": [
+   "VF"
+  ],
+  "via": [
+   "ROOM_VEIL_FALLS_CAVES_EXIT",
+   "seam north edge"
+  ],
+  "tags": [
+   "SURVEYED",
+   "SITE x1"
+  ],
+  "sealed": "QUICKSTART_ITEM_GOLD_FLOW"
+ }
+]

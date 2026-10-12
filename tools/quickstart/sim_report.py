@@ -619,9 +619,9 @@ def _write_md(a, meta, runs, by_cohort, cohorts, out, ROOMS, ROOM_REGIONS,
       'requirements has cleared regions, and a region clear pays out. `strict` is kept because '
       'it is exactly what the placer would see if the player picked up nothing, which makes it '
       'the honest floor.\n')
-    W('\nEVENT and QUEST steps are deliberately NOT modelled as growth. A "? room" pays '
-      '`QS_CAT_DROP`, which excludes key items by construction, and a quest pays its own table; '
-      'neither can move the reach mask.\n')
+    W('\nAn EVENT step pays its ? room\'s seeded prize from `QS_CAT_DROP`, which has included '
+      'key items since they were added to every drop pool, so in `rewards` it grows the reach '
+      'too (sim.site_prize). A QUEST pays its own table and is not modelled as growth.\n')
 
     W('\n## Reachability\n')
     W('![growth](sim/01_growth.png)\n')

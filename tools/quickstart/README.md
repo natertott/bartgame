@@ -236,3 +236,14 @@
   and a gold cake taken off the floor. Saves `blessing_tiers.png` to
   `--out`, and forges a full palette table to prove an untintable green
   pastry turns back into its curse. 14/14.
+- `sim_study.py` - the simulation study: plays hundreds of thousands of
+  runs per cohort over four processes and writes
+  `docs/QUICKSTART_SIM_STUDY.md` and `docs/sim_study/`: rooms reachable and
+  visited, chain shapes, where each requirement sits, items by source, ?
+  room kinds, drop-region islands. `--census` adds `room_census.py`'s diff.
+- `site_roll_validate.py` - asks the ROM's `QuickStartContentSiteRoll` for
+  every site over a set of seeds and compares with `sim.site_roll`.
+- `room_census.py` - every room the region rooms lead to (doors, links,
+  Minish holes, scroll seams), with `--gate` asking the ROM's containment
+  at each policed door; diffs against the survey, the sites and the pool.
+  `--json` writes the rows `sim_study.py --census` reads.

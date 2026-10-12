@@ -32,6 +32,18 @@ so nobody re-invents them:
 
 ## 2. Harness mechanics that will waste your time
 
+- **The memory pair is cached under a 16-bit hash of the run seed**
+  (`gSave.qs_memory_key`), and seeds 0, 1 and 0xFFFFFFFF all hash to 1. A
+  probe that sets `run_seed` and asks for a site roll answers for the
+  PREVIOUS seed's memory pair unless it zeroes the key first
+  (`site_roll_validate.py` does).
+- **`pkill -f <pattern>` kills your own shell** when the pattern also
+  appears in the command that runs it (a `pkill` and an `until grep` in one
+  Bash call). Kill by a pattern only the target's command line carries.
+- **`survey_gate.policed()` predates Hyrule Town and Veil Falls**: it
+  calls a town door unpoliced and so "open". `room_census.py` uses the
+  three containment functions' own test (a region room, or a contained
+  area) instead.
 - **`callrom.call_keep` is not safe in a crowded room.** `blessing_probe.py`
   spawns and deletes a brioche 200 times in a REGION-scenario Castle Garden
   full of wave enemies; on some boot seeds a call ends "CPU never reached
