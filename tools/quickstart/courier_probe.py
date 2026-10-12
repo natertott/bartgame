@@ -25,6 +25,7 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from emu import here, entities, warp, press, KIND_NPC, KIND_OBJECT, SAVE_FLAGS, FLAG_BANK_12, ROOM_CONTROLS, PLAYER, GENT, STRIDE, r16, w16
 import scenario as S, callrom as C
+import parse_tables as P
 ROM = sys.argv[sys.argv.index('--rom') + 1] if '--rom' in sys.argv else 'tmc-d3.gba'
 SAVE = 0x02002a40
 MSG = 0x02000050
@@ -49,8 +50,13 @@ def b12(c, bit):
     return (c.memory.u8[SAVE_FLAGS + (b >> 3)] >> (b & 7)) & 1
 def bits(c, base, n):
     return sum(b12(c, base + i) << i for i in range(n))
-state = lambda c: bits(c, 135, 2)
-dest = lambda c: bits(c, 130, 5)
+import re as _re
+# The bits come from game.c, not from here: they moved once already (Oct
+# 2026, out of the content-site block's way).
+_STATE = int(_re.search(r'#define GF_COURIER_STATE_BIT\(b\) \((\d+) \+ \(b\)\)', P.GAME).group(1))
+_DEST = int(_re.search(r'#define GF_COURIER_DEST_BIT\(b\) \((\d+) \+ \(b\)\)', P.GAME).group(1))
+state = lambda c: bits(c, _STATE, 2)
+dest = lambda c: bits(c, _DEST, 5)
 
 GIVER = C.map_sym('script_QuickStartCourierGiver')
 RECV = C.map_sym('script_QuickStartCourierReceiver')

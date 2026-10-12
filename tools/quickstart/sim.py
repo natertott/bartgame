@@ -204,8 +204,13 @@ def _boss_rooms():
     i = GAME.find('static bool32 QuickStartRegionAllowsBoss(const QuickStartRegion* region) {')
     body = GAME[i:GAME.find('\n}\n', i)]
     rooms = set()
-    for m in re.finditer(r'region->area == (AREA_\w+) && region->room == (ROOM_\w+)', body):
-        rooms.add((P.AREAS[m.group(1)], P.ROOMS[m.group(2)]))
+    # Only the rows that answer TRUE: Mount Crenel's Base is named too, to
+    # say FALSE, and reading every named room counted it as an arena until
+    # chain_roll_validate.py caught the model dealing bosses there (Oct 2026).
+    body = re.sub(r'//[^\n]*', '', body)
+    for m in re.finditer(r'region->area == (AREA_\w+) && region->room == (ROOM_\w+)\)\s*\{\s*return (TRUE|FALSE);', body):
+        if m.group(3) == 'TRUE':
+            rooms.add((P.AREAS[m.group(1)], P.ROOMS[m.group(2)]))
     for m in re.finditer(r'room == (ROOM_HYRULE_FIELD_\w+)', body):
         rooms.add((P.AREAS['AREA_HYRULE_FIELD'], P.ROOMS[m.group(1)]))
     return rooms
@@ -580,11 +585,28 @@ def step_region(kind_name, where):
     if kind_name in ('WAVE', 'BOSS', 'QUEST'):
         return BY_POOL[where]
     if kind_name == 'EVENT':
-        s = SITES[where]
-        regs = ROOM_REGION.get((s['area'], s['room']))
-        if regs:
-            return REGION_INDEX[sorted(regs)[0]]
+        # The region of the FIRST survey row naming the room, as the C reads
+        # it (QuickStartSiteRing). It used ROOM_REGION's alphabetical first
+        # until Oct 2026, which disagreed for rooms two regions share.
+        r = site_ring(where)
+        return r if r >= 0 else None
     return None
+
+
+_SITE_RING = {}
+
+
+def site_ring(i):
+    """QuickStartSiteRing: the region of the first survey row naming the
+    site's room, -1 if none."""
+    if i not in _SITE_RING:
+        s = SITES[i]
+        _SITE_RING[i] = -1
+        for node, _a, _r, _t, an, rn in DESTS:
+            if (_a, _r) == (s['area'], s['room']):
+                _SITE_RING[i] = NODES[node][0]
+                break
+    return _SITE_RING[i]
 
 
 def step_room(kind_name, where):
@@ -619,7 +641,7 @@ def roll_finale(seed, drop, nodes, owned, quest_slot, quest_done, used_regions):
                      and not (pas < 2 and not (near >> BY_POOL[i]) & 1)
                      and not (pas < 1 and (used_regions >> BY_POOL[i]) & 1)]
             if cands:
-                return carrier, cands[(chain_hash(seed, 0xE1E + k) & 0x7fff) % len(cands)]
+                return carrier, weighted_pick(cands, lambda i: BY_POOL[i], chain_hash(seed, 0xE1E + k) & 0x7fff)
     return WIN_WAVE, drop
 
 
@@ -743,6 +765,61 @@ def chain_hash(seed, salt):
     return h
 
 
+# THE RARE-REGION BOOST (Oct 2026, the user after the simulation study: "we
+# need to artificially boost the less-common rooms like RV, WR, and Lake
+# Hylia ... not an even split, but much more than their current
+# frequency"). A candidate in a boosted region counts BOOST_W times when a
+# step, an escalation's site or the finale's row is picked, and an
+# escalation roll first looks for a reach item that opens a boosted site.
+# QuickStartRegionBoost in game.c; parsed so the two cannot drift.
+def _boost():
+    i = GAME.find('static s32 QuickStartRegionBoost(s32 ring) {')
+    if i < 0:
+        return {}
+    body = GAME[i:GAME.find('\n}\n', i)]
+    return {m.group(1): int(m.group(2))
+            for m in re.finditer(r'case QS_REGION_(\w+):\s*return (\d+);', body)}
+
+
+BOOST = _boost()   # region name -> weight; every other region weighs 1
+
+
+def _drop_weight():
+    """QuickStartRegionDropWeight: case labels falling through to one return."""
+    i = GAME.find('static s32 QuickStartRegionDropWeight(s32 ring) {')
+    if i < 0:
+        return {}
+    body = GAME[i:GAME.find('\n}\n', i)]
+    out, pending = {}, []
+    for m in re.finditer(r'case QS_REGION_(\w+):|return (\d+);', body):
+        if m.group(1):
+            pending.append(m.group(1))
+        elif pending:
+            for r in pending:
+                out[r] = int(m.group(2))
+            pending = []
+    return out
+
+
+DROP_WEIGHT = _drop_weight()
+
+
+def boost_weight(ring):
+    return BOOST.get(REGION_NAMES[ring], 1) if ring is not None and ring >= 0 else 1
+
+
+def weighted_pick(cands, ring_of, h):
+    """The C's weighted walk: want = h % total weight, subtract per candidate."""
+    total = sum(boost_weight(ring_of(c)) for c in cands)
+    want = h % total
+    for c in cands:
+        w = boost_weight(ring_of(c))
+        if want < w:
+            return c
+        want -= w
+    return cands[-1]
+
+
 def chain_pick_item(seed, salt, owned):
     pool = [i for i in KEY_ITEMS if i not in owned]
     if not pool:
@@ -858,19 +935,34 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     # flood opens that the live one does not. Paid by the next prize.
     e = chain_hash(seed, 0xE5C + step)
     if step + 1 < 4 and ((e >> 4) & 0x7fff) % ESC_MOD == 0:
-        item = ESC_ITEMS[(((e >> 20) & 0xff) + step) % len(ESC_ITEMS)]
-        if not has_item(item, owned):
+        which = (((e >> 20) & 0xff) + step) % len(ESC_ITEMS)
+
+        def opened_by(item, boosted_only):
             held_item = held | ITEM_TO_BIT[item]
             nodes_item = reachable_nodes(held_item, drop_pool)
-            opened = [i for i, s in enumerate(SITES)
-                      if i not in sites_done and s['gate'] == 0
-                      and reach_room_ok(nodes_item, held_item, s['area'], s['room'])
-                      and recital_ok(i, nodes_item, held_item)
-                      and not (reach_room_ok(regions, held, s['area'], s['room'])
-                               and recital_ok(i, regions, held))
-                      and not used(KIND_EVENT, i)]
+            return [i for i, s in enumerate(SITES)
+                    if i not in sites_done and s['gate'] == 0
+                    and (not boosted_only or boost_weight(site_ring(i)) > 1)
+                    and reach_room_ok(nodes_item, held_item, s['area'], s['room'])
+                    and recital_ok(i, nodes_item, held_item)
+                    and not (reach_room_ok(regions, held, s['area'], s['room'])
+                             and recital_ok(i, regions, held))
+                    and not used(KIND_EVENT, i)]
+        # The seek: the first reach item, round-robin from `which`, that
+        # opens a site in a boosted region. None does -> the plain roll.
+        item = None
+        if BOOST:
+            for k in range(len(ESC_ITEMS)):
+                cand = ESC_ITEMS[(which + k) % len(ESC_ITEMS)]
+                if not has_item(cand, owned) and opened_by(cand, True):
+                    item = cand
+                    break
+        if item is None:
+            item = ESC_ITEMS[which]
+        if not has_item(item, owned):
+            opened = opened_by(item, False)
             if opened:
-                site = opened[(e & 0x7fff) % len(opened)]
+                site = weighted_pick(opened, site_ring, e & 0x7fff)
                 return [(KIND_ITEM, 0, item), (KIND_EVENT, site, None)]
     rot = (h >> 8) & 3
     for use_avoid in (True, False):
@@ -880,7 +972,9 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
                 continue   # a QUEST is wherever the quest is
             cands = candidates(kind, use_avoid)
             if cands:
-                pick = cands[(h & 0x7fff) % len(cands)]
+                pick = (cands[0] if kind == KIND_QUEST else
+                        weighted_pick(cands, site_ring if kind == KIND_EVENT else (lambda i: BY_POOL[i]),
+                                      h & 0x7fff))
                 where = 0 if kind == KIND_QUEST else pick
                 if kind == KIND_QUEST:
                     where = quest_slot
@@ -1217,11 +1311,10 @@ def simulate(seed, cohort, rng):
     # re-draw, which IS seed-derived and does depend on what round 1 gave.
     # A REGION first, then one of its rows (QuickStartRollDropRegionOnce,
     # Oct 2026, P1.2): every region is one fourteenth, not every row.
-    while True:
-        ring = rng.randrange(len(REGION_NAMES))
-        rows = [i for i in range(POOL_SIZE) if BY_POOL[i] == ring]
-        if rows:
-            break
+    # Weighted by QuickStartRegionDropWeight (the rare-region boost).
+    rings = [r for r in range(len(REGION_NAMES)) if any(BY_POOL[i] == r for i in range(POOL_SIZE))]
+    ring = rng.choices(rings, weights=[DROP_WEIGHT.get(REGION_NAMES[r], 1) for r in rings])[0]
+    rows = [i for i in range(POOL_SIZE) if BY_POOL[i] == ring]
     drop_pool = drop_index_usable(seed, rng.choice(rows), owned)
     drop_region = BY_POOL[drop_pool]
     # The finale is NOT drawn here any more (Oct 2026, the redesign's P0.1):

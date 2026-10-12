@@ -101,6 +101,10 @@ SEAMS = {
     # 1F ends at x=656, the secret room starts there).
     'ROOM_DOJOS_SPLITBLADE': ('AREA_DOJOS', 'ROOM_DOJOS_TO_SPLITBLADE'),
     'ROOM_VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM': ('AREA_VEIL_FALLS_CAVES', 'ROOM_VEIL_FALLS_CAVES_HALLWAY_1F'),
+    # Trilby's push-stone cave: the right chamber's bombable east wall opens
+    # on the bottle business scrub, and the two rooms abut on the caves'
+    # grid (x 1536). A ? room since Oct 2026.
+    'ROOM_CAVES_BOTTLE_BUSINESS_SCRUB': ('AREA_CAVES', 'ROOM_CAVES_TRILBY_HIGHLANDS'),
 }
 
 # Owning a region is necessary but not sufficient for a key drop. Some

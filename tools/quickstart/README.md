@@ -247,3 +247,7 @@
   Minish holes, scroll seams), with `--gate` asking the ROM's containment
   at each policed door; diffs against the survey, the sites and the pool.
   `--json` writes the rows `sim_study.py --census` reads.
+- `chain_roll_validate.py` - asks the ROM's `QuickStartChainRollStep` to
+  deal steps for random seeds, drop rows, loadouts and step indices, and
+  compares each with `sim.roll_step`: the keyed pair, the escalation and its
+  rare-region seek, the spread rule and the rare-region weights.

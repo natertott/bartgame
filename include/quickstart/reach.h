@@ -172,15 +172,15 @@ typedef struct {
 } QuickStartReachEdge;
 
 static const QuickStartReachEdge sQuickStartReachEdges[] = {
-    {  0, 14, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> NHF: link: SHF row (504,16)
+    {  0, 30, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> HT: link: SHF row (504,16)
     {  0, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-N@E: link: SHF row (8,111)
     {  0,  3, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-N: link: SHF row (997,121)
     {  0, 26, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-C: link: SHF row (8,400)
     {  0, 27, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> WW-S: link: SHF row (8,584)
     {  0,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-C: link: SHF row (1000,352)
     {  0,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> EH-S: link: SHF row (1000,584)
-    {  1, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> NHF: link: SHF@NNE row (504,16)
-    {  2, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> NHF: link: SHF@NNW row (504,16)
+    {  1, 30, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> HT: link: SHF@NNE row (504,16)
+    {  2, 30, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> HT: link: SHF@NNW row (504,16)
     {  1, 25, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-N@E: link: SHF@NNE row (8,111)
     {  1,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> EH-N: link: SHF@NNE row (997,121)
     {  1, 26, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> WW-C: link: SHF@NNE row (8,400)
@@ -392,9 +392,6 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 16, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CG -> NHF: ring adjacency QS_REGION_CG -> QS_REGION_NHF (entry price)
     { 14, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
     { 15, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
-    {  0, 30, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF -> HT: ring adjacency QS_REGION_SHF -> QS_REGION_HT (entry price)
-    {  1, 30, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNE -> HT: ring adjacency QS_REGION_SHF -> QS_REGION_HT (entry price)
-    {  2, 30, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // SHF@NNW -> HT: ring adjacency QS_REGION_SHF -> QS_REGION_HT (entry price)
     {  3, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
     {  3, 34, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MV: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
     {  4, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-C -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)

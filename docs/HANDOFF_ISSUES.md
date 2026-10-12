@@ -37,6 +37,13 @@ so nobody re-invents them:
   probe that sets `run_seed` and asks for a site roll answers for the
   PREVIOUS seed's memory pair unless it zeroes the key first
   (`site_roll_validate.py` does).
+- **The chain reads the USABLE drop, not the rolled one.**
+  `QuickStartReachCompute` floods from `QuickStartDropRegionIndexUsable`,
+  which re-draws a drop the kit cannot survive. A harness that writes a
+  drop row and compares against the model must read that function back,
+  not `QuickStartDropRegionIndex` (`chain_roll_validate.py` does). And a
+  harness boot holds no Ocarina: read the inventory, never assume the boot
+  items.
 - **`pkill -f <pattern>` kills your own shell** when the pattern also
   appears in the command that runs it (a `pkill` and an `until grep` in one
   Bash call). Kill by a pattern only the target's command line carries.

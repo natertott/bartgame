@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Rare-region boost (Royal Valley and the Ruins weigh 8, Lake Hylia 3 in every chain pick; an escalation seek; twice the drop share): Lake Hylia 1.5% to 9.4% of requirements, Royal Valley 0.75% to 3.1%, the Ruins 0.06% to 0.22%. Both business scrubs are ? rooms (sites 117, 118). South Hyrule Field's stale bridge to North Hyrule Field removed from the reach survey. `chain_roll_validate.py` 800/800 | "Rare regions boosted, two scrub ? rooms, the town in the reach graph" |
 | The simulation study: 500,000 runs per cohort, `docs/QUICKSTART_SIM_STUDY.md`; four simulator bugs fixed (Boomerang chamber retired whole, ? prizes paying no key items, a phantom fifth step, the recital rule); ? room kinds and prizes replayed exactly (`site_roll_validate.py` 2,691/2,691); `room_census.py` diffs every room off the overworld against what the build uses | "The simulation study: 1,000,000 runs" |
 | The carry quest, one room: giver at A, unbreakable pot, receiver at B, lost parcels back at the lift spot, two mixed waves; 7 pairs in four rooms (none in Veil Falls); `carry_room_probe.py` all pairs 5/5, `--throws` 3/3 | "The carry quest, one room: built" |
 | The Rusted Blade drawn as the Smith's Sword in rust (floor, case), its pickup quiet; item-sheet frames force palette 4, so the tint is laid on the OAM entries | "The Rusted Blade has a look" |
@@ -199,17 +200,21 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Design decisions waiting on a call
 
-- **A Veil Falls drop is an island** (the simulation study): 3.9% of runs,
-  62% of them never leave, median 6 rooms. Leaving costs the Lamp and the
+- **A Veil Falls drop is an island** (the simulation study): 3.5% of runs,
+  54% of them never leave, median 6 rooms. Leaving costs the Lamp and the
   Source of the Flow. A Lamp kit rule in the drop re-draw, like the swamp
-  and Lake Hylia rules, would end it.
+  and Lake Hylia rules, would end it. **Deferred by the user (Oct 2026):
+  "do not implement the Lamp as a requirement for Veil Falls, but make
+  note of it for later."**
 - **A QUEST chain step is dealt in 0.16% of runs**: the spread pass skips
   QUEST and EVENT nearly always qualifies there. Intended, or should QUEST
   join pass 0?
-- **The two business scrubs the user named, and 41 more surveyed rooms,
-  host no ? room site**, so no run is ever sent there
-  (`docs/QUICKSTART_SIM_STUDY.md` section 6). Which of them should become
-  sites?
+- **41 surveyed rooms host no ? room site**, so no run is ever sent there
+  (`docs/QUICKSTART_SIM_STUDY.md` section 6; the two business scrubs the
+  user named are sites now). Which others should become sites?
+- **Royal Valley and the Wind Ruins are still rare after the boost**
+  (3.1% and 0.22% of requirements): reach holds them, not the pick. A
+  cheaper valley toll or a second way into the Ruins is the next lever.
 
 - **The redesign plan's open decisions** (`docs/QUICKSTART_REDESIGN_PLAN.md`
   §11): which six puzzle kinds first, dungeons as regions or as steps, the

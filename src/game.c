@@ -401,6 +401,7 @@ static void QuickStartEnforceFieldRegionContainment(void);
 static void QuickStartClearLonLonRanchAnimals(void);
 static void QuickStartProcessLinks(void);
 static void QuickStartRollDropRegionOnce(void);
+static s32 QuickStartRegionDropWeight(s32 ring);
 static void QuickStartShellTick(void);
 static void QuickStartRollElementRegion(void);
 static s32 QuickStartChainStepRegion(s32 step);
@@ -2321,7 +2322,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 117   // 105 + Veil Falls' twelve (Oct 2026)
+#define QUICKSTART_CONTENT_SITE_COUNT 119   // 105 + Veil Falls' twelve + the two business scrubs (Oct 2026)
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -3405,6 +3406,8 @@ const u8* const gCustomStrings3[] = {
     [114] = (const u8*)"The next trial is at\nthe ante-room of\nSplitblade's dojo." /* DOJOS_TO_SPLITBLADE */,
     [115] = (const u8*)"The next trial is at\nSplitblade's dojo at\nVeil Falls." /* DOJOS_SPLITBLADE */,
     [116] = (const u8*)"The next trial is at\nthe top of Veil Falls." /* VEIL_FALLS_TOP_0 */,
+    [117] = (const u8*)"The next trial is past\nthe bombable wall in\nTrilby's stone cave." /* CAVES_BOTTLE_BUSINESS_SCRUB */,
+    [118] = (const u8*)"The next trial is at\nthe scrub's cave at the\nfoot of Mount Crenel." /* CRENEL_CAVES_BOMB_BUSINESS_SCRUB */,
     // After the room lines (bank two is full at 256): the switch puzzles'
     // instructions (Oct 2026), QUICKSTART_PUZZLE_TEXT + variant, said once
     // per visit as the puzzle deals.
@@ -5618,17 +5621,35 @@ static void QuickStartRollDropRegionOnce(void) {
     // drawn over regions every region is one fourteenth, and the row within
     // it is the thirds' own variety. Random() loops until a region with a
     // row comes up (every region has one), then picks the row.
+    //
+    // Weighted since the rare-region boost (Oct 2026): a region counts
+    // QuickStartRegionDropWeight times. Starting in a rare region is what
+    // puts the chain there - the simulator measured a Royal Valley drop
+    // sending the player into the valley 0.73 times a run, against 0.04 for
+    // any other start. A region with no row weighs nothing.
     {
-        s32 ring, rows, pick, i;
-        for (;;) {
-            ring = (s32)Random() % QS_REGION_COUNT;
+        s32 ring, rows, pick, i, total = 0;
+        for (ring = 0; ring < QS_REGION_COUNT; ring++) {
+            for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
+                if (QuickStartRegionOfPoolIndex(i) == ring) {
+                    total += QuickStartRegionDropWeight(ring);
+                    break;
+                }
+            }
+        }
+        pick = (s32)Random() % total;
+        for (ring = 0; ring < QS_REGION_COUNT; ring++) {
             rows = 0;
             for (i = 0; i < QUICKSTART_REGION_POOL_SIZE; i++) {
                 if (QuickStartRegionOfPoolIndex(i) == ring) {
                     rows++;
                 }
             }
-            if (rows > 0) {
+            if (rows == 0) {
+                continue;
+            }
+            pick -= QuickStartRegionDropWeight(ring);
+            if (pick < 0) {
                 break;
             }
         }
@@ -6837,6 +6858,8 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
       (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BLOCK_PUSHING,
       (1 << QS_REGION_CREN), 0 },
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB,
+      (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_CHUCHU_POT_CHEST,
       (1 << QS_REGION_CREN), 0 },
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_EXIT_TO_MINES,
@@ -6988,6 +7011,8 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     { AREA_CAVES, ROOM_CAVES_TRILBY_FAIRY_FOUNTAIN,
       (1 << QS_REGION_TRIL), 0 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_HIGHLANDS,
+      (1 << QS_REGION_TRIL), 0 },
+    { AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB,
       (1 << QS_REGION_TRIL), 0 },
     { AREA_CAVES, ROOM_CAVES_TRILBY_KEESE_CHEST,
       (1 << QS_REGION_TRIL), 0 },
@@ -15670,14 +15695,18 @@ static s32 QuickStartPickNeighbourRow(s32 host) {
 // Delivery pays a RARE draw at the receiver's feet and counts as the run's
 // side quest (QuickStartSideQuestDone), like the carry quest.
 //
-// State: FLAG_BANK_12 raw 119-140, inside the run-start 0-793 wipe.
-#define GF_COURIER_ROLLED 119
-#define GF_COURIER_HOST_BIT(b) (120 + (b))  // b = 0..4, pool row of the giver
-#define GF_COURIER_SPOT_BIT(b) (125 + (b))  // b = 0..4, giver's spot seed
-#define GF_COURIER_DEST_BIT(b) (130 + (b))  // b = 0..4, pool row of the receiver
-#define GF_COURIER_STATE_BIT(b) (135 + (b)) // b = 0..1
-#define GF_COURIER_SKIN_BIT(b) (137 + (b))  // b = 0..1, which errand
-#define GF_COURIER_DEST_SET 139             // the receiver's row has been chosen
+// State: FLAG_BANK_12 raw 661-681, inside the run-start 0-793 wipe. It sat
+// at 119-139, directly after the content-site block, until the two
+// business-scrub sites (Oct 2026) grew the block into it; moved to the top
+// of the raw run so the site block has room to grow again
+// (QuickStartSiteBlockClearsRawFlags below the inn's define).
+#define GF_COURIER_ROLLED 661
+#define GF_COURIER_HOST_BIT(b) (662 + (b))  // b = 0..4, pool row of the giver
+#define GF_COURIER_SPOT_BIT(b) (667 + (b))  // b = 0..4, giver's spot seed
+#define GF_COURIER_DEST_BIT(b) (672 + (b))  // b = 0..4, pool row of the receiver
+#define GF_COURIER_STATE_BIT(b) (677 + (b)) // b = 0..1
+#define GF_COURIER_SKIN_BIT(b) (679 + (b))  // b = 0..1, which errand
+#define GF_COURIER_DEST_SET 681             // the receiver's row has been chosen
 #define QUICKSTART_COURIER_OFFERED 0
 #define QUICKSTART_COURIER_CARRYING_UNHINTED 1
 #define QUICKSTART_COURIER_CARRYING 2
@@ -19125,6 +19154,22 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // but not the pool row's own, so the site loop runs here as it does in
     // Mount Crenel's Center. 114 tiles east of the falls' crest.
     { AREA_VEIL_FALLS_TOP, ROOM_VEIL_FALLS_TOP_0, QUICKSTART_KINDS_LARGE, 296, 72 },
+    // --- The two business scrubs (Oct 2026) -------------------------------
+    // The simulation study found both walkable, surveyed and entered by the
+    // build, and hosting nothing, so no run was ever sent to them; the user
+    // asked for both as ? rooms. Appended, not filed by region, so no other
+    // site's index moves.
+    //
+    // Trilby's push-stone cave: its right chamber's east wall is bombable
+    // and opens onto this room - the two rectangles share an edge on the
+    // caves' grid (x 1536), so it is a scroll seam, not a door. Arrival
+    // (24,88) at the west wall; the floor is one 35-tile pocket, rows 3-7.
+    // (120,88), tile (7,5), has all eight neighbours open.
+    { AREA_CAVES, ROOM_CAVES_BOTTLE_BUSINESS_SCRUB, QUICKSTART_KINDS_SMALL, 120, 88 },
+    // Mount Crenel's base: the door at (184,408) lands at (120,120). The
+    // floor rises north in a funnel; (120,56), tile (7,3), is the clear 3x3
+    // four tiles up from the arrival.
+    { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB, QUICKSTART_KINDS_SMALL, 120, 56 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -20389,6 +20434,51 @@ static bool32 QuickStartChainAvoided(u32 avoid, s32 ring) {
     return ring >= 0 && (avoid & (1u << ring)) != 0;
 }
 
+// THE RARE-REGION BOOST (Oct 2026). The simulation study measured Royal
+// Valley, the Wind Ruins and Lake Hylia hosting 0.75%, 0.06% and 1.5% of all
+// requirements against about 7% for an average region, and the user: "we
+// need to artificially boost the less-common rooms like RV, WR, and Lake
+// Hylia. We aren't going for an even split ... but we need these to show up
+// much more than their current frequency." So a candidate in one of them
+// counts QUICKSTART_REGION_BOOST times wherever the chain picks among
+// candidates - a step's site or row, an escalation's site, the finale's row
+// - and an escalation roll looks first for a reach item that opens one of
+// their sites (QuickStartChainRollEscalation). Their scarcity is mostly
+// REACH (the valley's bombs and bracelets, the lake's flippers, the Ruins
+// behind the swamp), which a weight alone cannot touch; the escalation seek
+// is the half that hands over the way in. sim.py parses both.
+//
+// One weight per region, tuned in the simulator against "much more, not
+// even": the lake opens to one item (the Flippers) and needs little help;
+// the valley wants the bombs AND the bracelets and the Ruins sit behind the
+// swamp kit and the statues, so they take a heavier hand.
+// The drop's share (QuickStartRollDropRegionOnce): a boosted region is
+// twice as likely a start as any other. Lake Hylia and the Ruins still
+// re-draw a start the kit cannot survive (QuickStartDropRegionIndexUsable).
+static s32 QuickStartRegionDropWeight(s32 ring) {
+    switch (ring) {
+        case QS_REGION_RV:
+        case QS_REGION_WR:
+        case QS_REGION_LH:
+            return 2;
+        default:
+            return 1;
+    }
+}
+
+static s32 QuickStartRegionBoost(s32 ring) {
+    switch (ring) {
+        case QS_REGION_RV:
+            return 8;
+        case QS_REGION_WR:
+            return 8;
+        case QS_REGION_LH:
+            return 3;
+        default:
+            return 1;
+    }
+}
+
 static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartReach* r, u32 avoid) {
     s32 i, n = 0;
     switch (kind) {
@@ -20397,7 +20487,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartRea
                 if (QuickStartChainEventOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)i) &&
                     !QuickStartChainAvoided(avoid, QuickStartSiteRing(i))) {
-                    n++;
+                    n += QuickStartRegionBoost(QuickStartSiteRing(i));
                 }
             }
             break;
@@ -20406,7 +20496,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartRea
                 if (QuickStartChainWaveOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_WAVE, (u8)i) &&
                     !QuickStartChainAvoided(avoid, QuickStartRegionOfPoolIndex(i))) {
-                    n++;
+                    n += QuickStartRegionBoost(QuickStartRegionOfPoolIndex(i));
                 }
             }
             break;
@@ -20433,7 +20523,7 @@ static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartRea
                 if (QuickStartChainBossOk(r, i) &&
                     !QuickStartChainAlreadyUsed(step, QS_CHAIN_BOSS, (u8)i) &&
                     !QuickStartChainAvoided(avoid, QuickStartRegionOfPoolIndex(i))) {
-                    n++;
+                    n += QuickStartRegionBoost(QuickStartRegionOfPoolIndex(i));
                 }
             }
             break;
@@ -20473,7 +20563,8 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
                     QuickStartChainAvoided(avoid, QuickStartSiteRing(i))) {
                     continue;
                 }
-                if (want-- == 0) {
+                want -= QuickStartRegionBoost(QuickStartSiteRing(i));
+                if (want < 0) {
                     gSave.chain_where[step] = (u8)i;
                     return;
                 }
@@ -20486,7 +20577,8 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
                     QuickStartChainAvoided(avoid, QuickStartRegionOfPoolIndex(i))) {
                     continue;
                 }
-                if (want-- == 0) {
+                want -= QuickStartRegionBoost(QuickStartRegionOfPoolIndex(i));
+                if (want < 0) {
                     gSave.chain_where[step] = (u8)i;
                     // The TARGET count, not a delta: whatever that region
                     // has cleared so far plus one. Storing the target means
@@ -20509,7 +20601,8 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
                     QuickStartChainAvoided(avoid, QuickStartRegionOfPoolIndex(i))) {
                     continue;
                 }
-                if (want-- == 0) {
+                want -= QuickStartRegionBoost(QuickStartRegionOfPoolIndex(i));
+                if (want < 0) {
                     gSave.chain_where[step] = (u8)i;
                     return;
                 }
@@ -20731,6 +20824,34 @@ static bool32 QuickStartChainRollEscalation(s32 step, const QuickStartReach* r) 
     }
     which = ((s32)((e >> 20) & 0xff) + step) % QUICKSTART_CHAIN_ESC_COUNT;
     bit = QUICKSTART_CHAIN_ESC_FIRST + which;
+    // The seek (the rare-region boost, Oct 2026): the first reach item,
+    // round-robin from `which`, that opens a site in a boosted region. Only
+    // the boosted regions' sites are asked, so the twelve floods cost a
+    // handful of rows each, not the whole table. None opens one -> the
+    // plain roll on `which`, exactly as before.
+    {
+        s32 k;
+        u8 boosted[QUICKSTART_CONTENT_SITE_COUNT];
+        for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+            boosted[i] = (u8)(QuickStartRegionBoost(QuickStartSiteRing(i)) > 1);
+        }
+        for (k = 0; k < QUICKSTART_CHAIN_ESC_COUNT; k++) {
+            s32 b = QUICKSTART_CHAIN_ESC_FIRST + (which + k) % QUICKSTART_CHAIN_ESC_COUNT;
+            if (GetInventoryValue(sQuickStartReachItems[b]) != 0) {
+                continue;
+            }
+            QuickStartReachCompute(&rItem, r->held | (1u << b));
+            for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+                if (boosted[i] && QuickStartChainEscalationOk(step + 1, r, &rItem, i)) {
+                    break;
+                }
+            }
+            if (i < QUICKSTART_CONTENT_SITE_COUNT) {
+                bit = b;
+                break;
+            }
+        }
+    }
     item = sQuickStartReachItems[bit];
     if (GetInventoryValue(item) != 0) {
         return FALSE;
@@ -20738,7 +20859,7 @@ static bool32 QuickStartChainRollEscalation(s32 step, const QuickStartReach* r) 
     QuickStartReachCompute(&rItem, r->held | (1u << bit));
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
         if (QuickStartChainEscalationOk(step + 1, r, &rItem, i)) {
-            n++;
+            n += QuickStartRegionBoost(QuickStartSiteRing(i));
         }
     }
     if (n == 0) {
@@ -20751,9 +20872,12 @@ static bool32 QuickStartChainRollEscalation(s32 step, const QuickStartReach* r) 
     gSave.chain_detail[step + 1] = 0;
     want = (s32)(e & 0x7fff) % n;
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
-        if (QuickStartChainEscalationOk(step + 1, r, &rItem, i) && want-- == 0) {
-            gSave.chain_where[step + 1] = (u8)i;
-            break;
+        if (QuickStartChainEscalationOk(step + 1, r, &rItem, i)) {
+            want -= QuickStartRegionBoost(QuickStartSiteRing(i));
+            if (want < 0) {
+                gSave.chain_where[step + 1] = (u8)i;
+                break;
+            }
         }
     }
     return TRUE;
@@ -21302,7 +21426,7 @@ static void QuickStartRollElementRegion(void) {
                 if (pass < 1 && (usedRegions & (1u << ring))) {
                     continue;
                 }
-                n++;
+                n += QuickStartRegionBoost(ring);
             }
             if (n == 0) {
                 continue;
@@ -21322,7 +21446,8 @@ static void QuickStartRollElementRegion(void) {
                 if (pass < 1 && (usedRegions & (1u << ring))) {
                     continue;
                 }
-                if (want-- == 0) {
+                want -= QuickStartRegionBoost(ring);
+                if (want < 0) {
                     elem = i;
                     break;
                 }
@@ -23687,7 +23812,14 @@ static void QuickStartInnChestMonitor(void) {
 // ordinary ground items and pay through GiveItem like any other (the tier
 // rides in type2); the table is told apart from a chest's prize by where it
 // stands and by the room flag that says it was laid this visit.
-#define GF_INN_BLESSING_TAKEN 118 // FLAG_BANK_12 raw, inside the run-start 0-793 wipe
+#define GF_INN_BLESSING_TAKEN 660 // FLAG_BANK_12 raw, inside the run-start 0-793 wipe
+// The content-site block (raw QUICKSTART_SITE_FLAG_ORIGIN + site) must stop
+// below the inn's and the courier's raw bits. It did not, once: two new
+// sites landed on 118 and 119 and the invariant checker caught it.
+typedef char QuickStartSiteBlockClearsRawFlags[(QUICKSTART_SITE_FLAG_ORIGIN + QUICKSTART_CONTENT_SITE_COUNT <=
+                                                GF_INN_BLESSING_TAKEN)
+                                                   ? 1
+                                                   : -1];
 #define QUICKSTART_INN_TABLE_ROOM_FLAG 115 // room flag: the table was laid this visit
 // The row: the open floor south of the stair door, tiles (4..8, 17). Not
 // below the keeper - that is her counter, and a player sent there is

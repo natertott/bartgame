@@ -359,10 +359,11 @@
   ],
   "via": [
    "ROOM_CAVES_TRILBY_HIGHLANDS",
-   "seam east edge"
+   "seam (stated)"
   ],
   "tags": [
-   "SURVEYED"
+   "SURVEYED",
+   "SITE x1"
   ],
   "sealed": null
  },
@@ -986,7 +987,8 @@
    "door (184,408)"
   ],
   "tags": [
-   "SURVEYED"
+   "SURVEYED",
+   "SITE x1"
   ],
   "sealed": null
  },

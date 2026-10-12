@@ -40,8 +40,12 @@ def dismiss(c, limit=600):
             continue
         press(c, c.KEY_A, 3, 17); quiet = 0
 
+import re as _re
+_TAKEN = int(_re.search(r'#define GF_INN_BLESSING_TAKEN (\d+)', P.GAME).group(1))   # read from game.c: it moved once
+
+
 def taken(c):
-    b = FLAG_BANK_12 + 118
+    b = FLAG_BANK_12 + _TAKEN
     return (c.memory.u8[SAVE_FLAGS + (b >> 3)] >> (b & 7)) & 1
 
 def table(c):

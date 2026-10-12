@@ -1271,6 +1271,70 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Rare regions boosted, two scrub ? rooms, the town in the reach graph (Oct 2026)
+
+The user's follow-up to the simulation study, in four parts.
+
+**The study's first four findings were simulator bugs, not game bugs**
+(the Boomerang chamber, ? prizes paying key items, the fifth step, the
+recital rule). The game already behaved; the model was fixed in the study
+commit. One more turned up here: the model counted Mount Crenel's base
+as a boss arena (`QuickStartRegionAllowsBoss` names it to say FALSE), so
+the study's 12% of boss steps "in Crenel" were never real.
+`chain_roll_validate.py` (new) caught it: it asks the ROM's
+`QuickStartChainRollStep` to deal steps for random seeds, drop rows,
+loadouts and step indices and compares each with the model, 800 of 800.
+
+**Both business scrubs are ? rooms** (sites 117 and 118, appended so no
+other index moves): the Trilby push-stone cave's bottle scrub, reached
+through the bombable east wall of its right chamber (a scroll seam, now
+stated in `room_owner.SEAMS`), and Mount Crenel base's bomb scrub.
+SMALL class, spots measured on the live collision grid. `chain_audit.py
+--sites 117:119` 12/12; a full chain-end run (seed 7) finished its last
+step in the Crenel room. Visited in 0.9% and 9.8% of runs; the Trilby
+room sits behind the bombs and is reachable in 24%. Growing the site
+table ran it into the inn's and the courier's raw flags (bits 118-139);
+the invariant checker caught it, they moved to raw 660-681, and a
+build-time guard now stops the site block short of them.
+
+**The town is the only way between its four neighbours.** The reach
+survey already routed Lon Lon, Trilby and North Hyrule Field through
+Hyrule Town, but South Hyrule Field's north gate still linked straight
+to North Hyrule Field as well, the bridge the town replaced. Removed in
+`world_reach.py`; `reach.h` regenerated (the SHF entrances now link to
+the town). Reach is unchanged, because the town's gates are free:
+`sim_validate.py` 402/402.
+
+**The rare-region boost.** The user: "boost the less-common rooms like RV,
+WR, and Lake Hylia ... not an even split, but much more than their
+current frequency." Three levers, all in `game.c` and parsed by `sim.py`:
+
+- `QuickStartRegionBoost`: a candidate in Royal Valley or the Ruins counts
+  8 times, in Lake Hylia 3, wherever the chain picks (a step's site or
+  row, an escalation's site, the finale's row).
+- The escalation seek: an escalation roll first looks, round-robin, for a
+  reach item that opens a site in a boosted region.
+- `QuickStartRegionDropWeight`: the three are twice as likely a start.
+  This is the strongest lever: a Royal Valley drop sends the player into
+  the valley 0.73 times a run, any other start 0.04.
+
+Share of all requirements, 500,000 runs per cohort:
+
+| region | before | after |
+|---|---|---|
+| Lake Hylia | 1.5% | 9.4% |
+| Royal Valley | 0.75% | 3.1% |
+| Wind Ruins | 0.06% | 0.22% |
+
+Royal Valley and the Ruins are held down by reach, not by the pick: the
+valley costs the bombs AND the bracelets, and three of its four sites
+want the graveyard key; the Ruins sit behind the swamp kit and the
+statues, and both their sites are statue-sealed. A cheaper toll or a
+second way in would move them further.
+
+**Deferred, per the user:** a Lamp kit rule for a Veil Falls drop. Still
+an island in 54% of Veil Falls drops; see the study entry below.
+
 ### The simulation study: 1,000,000 runs (Oct 2026)
 
 The user asked for rooms visited and reachable, the win chains and how

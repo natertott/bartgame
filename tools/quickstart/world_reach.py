@@ -309,12 +309,18 @@ ENTRY = {
 # RE-WALKED 2026-10-06 from three of its entrances. The old block was one
 # start whose stamp was taken mid-transition; its rows are below, replaced
 # where the new walk priced the same place and carried over where it did
-# not (marked). The user's entrance names: "North" is the border from North
-# Hyrule Field (the QUICKSTART town bridge, landing (504,16)); "NNE" is the
+# not (marked). The user's entrance names: "North" is the border from Hyrule
+# Town (it was the QUICKSTART town bridge from North Hyrule Field, landing
+# (504,16), until the town became a region); "NNE" is the
 # scroll seam into Eastern Hills North at (997,121); "NNW" is the scroll
 # seam into Western Wood North at (8,111).
 region('SHF', 'South Hyrule Field', ('HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16),
-       note='the north entrance, from North Hyrule Field; walked 2026-10-06')
+       note='the north entrance, from Hyrule Town; walked 2026-10-06')
+# The north gate leads into the TOWN only (Oct 2026, the user: "A player can
+# leave LLR and walk through Hyrule Town and leave for NHF or SHF"). It used
+# to link straight to North Hyrule Field as well, the bridge the town
+# replaced; North Hyrule Field, Lon Lon and Trilby are reached through the
+# town's own four gates (the HT block below).
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, FREE, 'exit north -> HYRULE_TOWN; the start itself')
 link('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'HT')
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, [[SWORD]], 'exit NNW -> WESTERN_WOODS_NORTH (468,431), which is the dead-end side of its boulder')
@@ -343,7 +349,6 @@ d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, [[SWORD]], 'exit west 480
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, FREE, 'exit east 224-480 -> EASTERN_HILLS_CENTER; PORT MODEL, not walked')
 d('SHF', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, FREE, 'exit east 480-688 -> EASTERN_HILLS_SOUTH; PORT MODEL, not walked')
 for _k in ('SHF',):
-    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'NHF')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, 'WW-N@E')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, 'EH-N')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, 'WW-C')
@@ -402,7 +407,6 @@ d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 584, [[SWORD]], 'exit west
 d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 352, [[SWORD]], 'exit east 224-480 -> EASTERN_HILLS_CENTER; PORT MODEL')
 d('SHF@NNW', 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 1000, 584, [[SWORD]], 'exit east 480-688 -> EASTERN_HILLS_SOUTH; PORT MODEL')
 for _k in ('SHF@NNE', 'SHF@NNW'):
-    link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 504, 16, 'NHF')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 111, 'WW-N@E')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 997, 121, 'EH-N')
     link(_k, 'HYRULE_FIELD', 'SOUTH_HYRULE_FIELD', 8, 400, 'WW-C')
