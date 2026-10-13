@@ -1271,6 +1271,42 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Block puzzles: templates and mazes, ? rooms and a field quest (Oct 2026)
+
+The user's mechanics sheet, both variants, built and played in the ROM.
+Full write-up: `docs/QUICKSTART_BLOCK_PUZZLES.md`.
+
+**Template**: push the brown rocks into the shape the gray reference
+shows; a match turns them gold, locks them and pays a prize. **Maze**:
+push rocks clear of a walled grid to reach a chest (or, in a field, a
+door). The rocks are vanilla `PUSHABLE_ROCK`s, which already enforce the
+sheet's push rules (one tile, from the far side, no pulling, no chains).
+One hook in the push code adds three more: fixed rocks never move, blue
+rocks move only side to side and red ones only up and down, nothing leaves
+its board. A crystal switch beside every puzzle puts the rocks back.
+
+Every layout is generated and solved offline (`block_rooms.py` captures
+the floors, `block_puzzles.py` scrambles or searches backwards and proves
+the push count): 162 instances in 31 ? room sites and 11 region rows. In
+a run a site with instances deals the new kind `QS_EVENT_BLOCKS` one time
+in three (8.2% of all site rolls); the sim mirrors it and
+`site_roll_validate.py` agrees 1,785/1,785. The block quest puts one field
+instance in one row per run, pays a RARE draw and counts as the side
+quest.
+
+`block_probe.py --rules` plays every instance from the solver's push list
+on the delivered ROM: 162/162 solved and paid, every reset restores every
+rock, and fixed, axis and board-edge pushes are all refused. Five traps on
+the way: rocks on the mode's reward and fuser tiles (now reserved), walkable
+shallow water beside a maze, crumbling floor (act 0x08) under a solution,
+a same-frame respawn that came back empty in busy fields, and a testbed
+ordinal that overflowed. Invariant check 0 failures, chain rolls 300/300,
+sim 402/402, courier 6/6, inn 6/6.
+
+Not built: one-way rocks (down only, right only), M and XL templates (no
+floor fits one), and anything in nine field rows. Nobody has played one
+by hand.
+
 ### Rare regions boosted, two scrub ? rooms, the town in the reach graph (Oct 2026)
 
 The user's follow-up to the simulation study, in four parts.

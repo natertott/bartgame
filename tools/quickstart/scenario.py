@@ -12,6 +12,8 @@ feature. No rebuild - which is the whole point.
     python3 tools/quickstart/scenario.py site  ROOM_CAVES_BOOMERANG MINIBOSS 2
     python3 tools/quickstart/scenario.py boss  TRILBY OCTOROK
     python3 tools/quickstart/scenario.py quest CARRY NHF
+    python3 tools/quickstart/scenario.py quest BLOCKS SHF 2    # the block quest, SHF's second instance
+    python3 tools/quickstart/scenario.py site  27 BLOCKS 32    # a block puzzle, the site's second instance (extra bits 5-7)
     python3 tools/quickstart/scenario.py chain EVENT 27 0 --land NHF
     python3 tools/quickstart/scenario.py region NHF 3          # arrive with 3 waves already cleared
     python3 tools/quickstart/scenario.py fuser 1 REM
@@ -58,9 +60,9 @@ STATUS_FILE = 0x4D435A33  # 'MCZ3' as agbcc evaluates the multichar constant
 
 KINDS = {'NONE': 0, 'SITE': 1, 'BOSS': 2, 'QUEST': 3, 'CHAIN': 4, 'REGION': 5, 'FUSER': 6, 'ROOM': 7}
 KIND_NAMES = {v: k for k, v in KINDS.items()}
-EVENTS = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY', 'FAIRY', 'MEMORY', 'PUZZLE']
+EVENTS = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY', 'FAIRY', 'MEMORY', 'PUZZLE', 'BLOCKS']
 CHAIN = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
-QUESTS = ['POT', 'HUNT', 'SCAV', 'STEALTH', 'CARRY', 'COURIER']
+QUESTS = ['POT', 'HUNT', 'SCAV', 'STEALTH', 'CARRY', 'COURIER', 'BLOCKS']
 BOSSES = {'GREEN': 0, 'CHUCHU': 0, 'BLUE': 1, 'ELECTRIC': 1, 'OCTOROK': 2}
 KITS = {'none': 0, 'test': 1, 'all': 2}
 # Pool rows by position - the pool's own order (QuickStartRegionOfPoolIndex).
@@ -352,7 +354,10 @@ def main(argv):
         scn = pack(2, resolve_row(rest[0]), resolve_enum(rest[1], BOSSES, 'boss form') if len(rest) > 1 else 0,
                    0, 0, kit, diff)
     elif cmd == 'quest':
-        scn = pack(3, resolve_enum(rest[0], QUESTS, 'quest kind'), resolve_row(rest[1]), 0, 0, kit, diff)
+        # A third number is scenario_c: the carry's pair + 1, the block
+        # quest's instance + 1 (0 = the run's own pick).
+        scn = pack(3, resolve_enum(rest[0], QUESTS, 'quest kind'), resolve_row(rest[1]),
+                   int(rest[2], 0) if len(rest) > 2 else 0, 0, kit, diff)
     elif cmd == 'chain':
         k = resolve_enum(rest[0], CHAIN, 'chain kind')
         where = rest[1] if len(rest) > 1 else '0'

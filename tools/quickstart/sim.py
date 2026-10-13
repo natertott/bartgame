@@ -1029,9 +1029,28 @@ def _site_stream(seed, site):
     return _Stream(h | 1)
 
 
-EV_ITEM_DROP, EV_MINIBOSS, EV_NPC, EV_WAVES, EV_POT_LOTTERY, EV_CHEST_LOTTERY, EV_FAIRY, EV_MEMORY, EV_PUZZLE = range(9)
+EV_ITEM_DROP, EV_MINIBOSS, EV_NPC, EV_WAVES, EV_POT_LOTTERY, EV_CHEST_LOTTERY, EV_FAIRY, EV_MEMORY, EV_PUZZLE, EV_BLOCKS = range(10)
 EVENT_NAME = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY',
-              'FAIRY', 'MEMORY', 'PUZZLE']
+              'FAIRY', 'MEMORY', 'PUZZLE', 'BLOCKS']
+
+
+def _block_owners():
+    """include/quickstart/block_puzzles.h: per ? room site and per pool row,
+    how many block puzzle instances the generator built (the site and row
+    columns of sQuickStartBlockPuzzles)."""
+    sites, rows = collections.Counter(), collections.Counter()
+    path = os.path.join(ROOT, 'include', 'quickstart', 'block_puzzles.h')
+    if os.path.exists(path):
+        for m in re.finditer(r'\{ AREA_\w+, ROOM_\w+, (\d+), (\d+), (\d+), (\d+),', open(path).read()):
+            site, row = int(m.group(3)), int(m.group(4))
+            if site != 255:
+                sites[site] += 1
+            if row != 255:
+                rows[row] += 1
+    return sites, rows
+
+
+BLOCK_SITES, BLOCK_ROWS = _block_owners()
 _SMALL16 = [EV_WAVES] * 6 + [EV_NPC] * 3 + [EV_POT_LOTTERY] * 3 + [EV_WAVES] * 3 + [EV_FAIRY]
 _ANY16 = ([EV_WAVES] * 4 + [EV_MINIBOSS] * 4 + [EV_POT_LOTTERY] + [EV_CHEST_LOTTERY] * 2 +
           [EV_NPC] * 2 + [EV_POT_LOTTERY] + [EV_MINIBOSS] + [EV_FAIRY])
@@ -1105,6 +1124,9 @@ def site_roll(seed, i):
         kind = _SMALL16[R() % 16]
     if kind == EV_WAVES and _puzzle_ok(i) and ((chain_hash(seed, 0x9E2F + i) >> 7) & 3) == 0:
         kind = EV_PUZZLE
+    if BLOCK_SITES[i] and cls in ('ANY', 'LARGE', 'SMALL') and \
+            ((chain_hash(seed, 0xB10C + i) >> 5) & 0x7fff) % 3 == 0:
+        kind = EV_BLOCKS
     extra = 0
     if kind in (EV_ITEM_DROP, EV_WAVES):
         extra = R() % 64
@@ -1133,6 +1155,8 @@ def site_roll(seed, i):
     elif kind == EV_CHEST_LOTTERY:
         winner = R() % 3
         extra = winner | ((R() % 8) << 2)
+    elif kind == EV_BLOCKS:
+        extra = R() % 64
     return kind, extra
 
 
@@ -1180,6 +1204,8 @@ def site_prize(seed, i, owned, where_region):
         return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
     if kind == EV_PUZZLE:
         return draw_item((extra >> 2) & 0x3f, QS_CAT_DROP, owned, where_region)
+    if kind == EV_BLOCKS:
+        return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
     if kind == EV_ITEM_DROP:
         if extra & 0x80:
             return draw_at_tier(draw_pick(extra & 0x3f), QS_CAT_DROP, 2, owned, where_region)

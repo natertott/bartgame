@@ -462,6 +462,7 @@ static bool32 QuickStartGoldGateRowPassable(s32 poolIndex);
 #define QUICKSTART_ITEM_GOLD_FLOW QUICKSTART_ITEM_PIECE(0x6d)   // KINSTONE_SOURCE_FLOW, shape 9
 #define QUICKSTART_ITEM_GOLD_STATUES 0x300
 static bool32 QuickStartPositionAllowed(s16, s16);
+static bool32 QuickStartBlockRockAt(s32, s32);
 static bool32 QuickStartGfxBudgetForSpawn(void);
 // The feature testbed and the carry quest (docs/QUICKSTART_CARRY_AND_TESTBED.md).
 // Defined late in the file, beside the tables they read; used early.
@@ -474,6 +475,7 @@ static s32 QuickStartScenarioQuestHostOr(u8 questKind, s32 fallback);
 static s32 QuickStartScenarioBossRoll(s32 roll);
 static s32 QuickStartCarryState(void);
 static bool32 QuickStartCourierWon(void);
+static bool32 QuickStartBlockQuestWon(void);
 static u8 QuickStartHubGetPhase(void);
 static s32 QuickStartCourierHost(void);
 #define QS_SCN_NONE 0
@@ -490,6 +492,7 @@ static s32 QuickStartCourierHost(void);
 #define QS_SCN_QUEST_STEALTH 3
 #define QS_SCN_QUEST_CARRY 4
 #define QS_SCN_QUEST_COURIER 5
+#define QS_SCN_QUEST_BLOCKS 6
 static s32 QuickStartFreeGfxSlots(void);
 static s32 QuickStartReclaimableGfxSlots(void);
 static void QuickStartApplyFoodEffects(void);
@@ -3432,13 +3435,20 @@ const u8* const gCustomStrings3[] = {
     // and Ezlo the first time it is lost in a run (131).
     [QUICKSTART_CONTENT_SITE_COUNT + 13] = (const u8*)"My friend is sending me\na pot. Have you seen it?",
     [QUICKSTART_CONTENT_SITE_COUNT + 14] = (const u8*)"The pot is gone... no,\nthere it is! Back where\nyou lifted it.",
+    // The block puzzles (Oct 2026), QUICKSTART_BLOCK_TEXT + 0..3: Ezlo as
+    // a puzzle deals - a template, a maze to a chest, a maze to a door, and
+    // a template with colored rocks.
+    [QUICKSTART_CONTENT_SITE_COUNT + 15] = (const u8*)"Push the brown rocks\ninto the shape the gray\nones make. The switch\nputs them back.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 16] = (const u8*)"Rocks block the way to\nthat chest. Push them\nclear! The switch puts\nthem back.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 17] = (const u8*)"Rocks block that door.\nPush them clear! The\nswitch puts them back.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 18] = (const u8*)"Copy the gray shape.\nBlue rocks only slide\nsideways, red ones only\nup and down.",
 };
 const u32 gCustomStringCount3 = ARRAY_COUNT(gCustomStrings3);
 // Every site has its line, no more and no fewer: a site added without one
 // would print the engine's placeholder for its trial. The three puzzle
-// lines follow them, then the courier's nine, Gregal's thanks and the
-// carry quest's two.
-typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 15) ? 1 : -1];
+// lines follow them, then the courier's nine, Gregal's thanks, the carry
+// quest's two and the block puzzles' four.
+typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 19) ? 1 : -1];
 
 // The pair bank is addressed arithmetically, so its shape is load-bearing:
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
@@ -6702,6 +6712,11 @@ static bool32 QuickStartItemNeedsDirectGrant(u16 item) {
 // The blessing tiers (see "Blessing tiers" by QuickStartNoteFoodItemTier).
 #define QS_PASTRY_GREEN 1
 #define QS_PASTRY_GOLD 2
+// The block puzzles' rock colours (QuickStartBlockTint), after QS_TINT_RUST 3.
+#define QS_TINT_STONE 4
+#define QS_TINT_BLUE 5
+#define QS_TINT_RED 6
+#define QS_TINT_EARTH 7  // a plain mover: the rock's own palette differs by area (pink in Castle Garden)
 #define QUICKSTART_PASTRY_GOLD_TEXT 248   // gCustomStrings2, +0 brioche, +1 croissant, +2 cake
 #define QUICKSTART_PASTRY_GREEN_TEXT 251  // gCustomStrings2, the same order
 #define QUICKSTART_FLEET_ROOM_FLAG 114    // room flag: the fleet's grace was given this visit (108-113 are the eyes fields)
@@ -7900,7 +7915,7 @@ static void QuickStartWinBossWatcher(void) {
 #define QUICKSTART_CARRY_WON_STATE 3
 static bool32 QuickStartSideQuestDone(void) {
     return QuickStartQuestFlag(GF_QUEST_DONE) || QuickStartCarryState() == QUICKSTART_CARRY_WON_STATE ||
-           QuickStartCourierWon();
+           QuickStartCourierWon() || QuickStartBlockQuestWon();
 }
 
 static bool32 QuickStartWinCarrierMet(void) {
@@ -8064,6 +8079,7 @@ static void QuickStartScavMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartStealthMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartCarryMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartCourierMonitor(const QuickStartRegion* region, s32 slot);
+static void QuickStartBlockQuestMonitor(const QuickStartRegion* region, s32 slot);
 static void QuickStartHandicapMonitor(void);
 
 static void QuickStartRegionMonitor(s32 poolIndex) {
@@ -8104,6 +8120,9 @@ static void QuickStartRegionMonitor(s32 poolIndex) {
     QuickStartScavMonitor(region, poolIndex);
     QuickStartStealthMonitor(region, poolIndex);
     QuickStartCarryMonitor(region, poolIndex);
+    // The block quest before the courier: its rocks are down before the
+    // courier's NPC picks a spot (QuickStartPositionAllowed refuses a rock).
+    QuickStartBlockQuestMonitor(region, poolIndex);
     QuickStartCourierMonitor(region, poolIndex);
     // A survive clock can only truthfully be live inside its own ? room.
     // Seeing the player here, in a region room, means they walked out on
@@ -10457,6 +10476,9 @@ static bool32 QuickStartPositionAllowed(s16 localX, s16 localY) {
     if (QuickStartOnRegionDropSpot(localX, localY)) {
         return FALSE;
     }
+    if (QuickStartBlockRockAt(localX >> 4, localY >> 4)) {
+        return FALSE;  // a block puzzle's rock stands there
+    }
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartGatedZones); i++) {
         const QuickStartGatedZone* zone = &sQuickStartGatedZones[i];
         if (gRoomControls.area != zone->area || gRoomControls.room != zone->room) {
@@ -10832,6 +10854,10 @@ enum {
     // kind; the 2-door pickers never deal it). Three variants in extra
     // bits 0-1 - see QuickStartSetupPuzzleRoomContent.
     QS_EVENT_PUZZLE,
+    // Value 9 (Oct 2026): a block puzzle, a template or a maze generated
+    // for this site's room (QuickStartSetupBlocksContent). Like the
+    // switch puzzle, only the site roll deals it; extra is a draw seed.
+    QS_EVENT_BLOCKS,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -17743,6 +17769,600 @@ static bool32 QuickStartSetupPuzzleRoomContent(s32 extra, s16 contentX, s16 cont
     return FALSE;
 }
 
+// --- Block puzzles (Oct 2026, docs/QUICKSTART_BLOCK_PUZZLES.md) ------------
+//
+// The user's mechanics sheet, two kinds: a TEMPLATE (push the brown rocks
+// into the arrangement the gray reference shows; a match pays a prize) and
+// a MAZE (push rocks clear of a walled grid to reach a chest - or, in the
+// overworld, a door). Both are ? room kinds (QS_EVENT_BLOCKS) and the
+// overworld block quest (QuickStartBlockQuestMonitor).
+//
+// The rocks are vanilla PUSHABLE_ROCKs. They carry their own graphics (gfx
+// group 37), so unlike tileset push-blocks they draw in every room, and the
+// player's push code (beanstalkSubtask.c, SPECIAL_TILE_27) already enforces
+// the sheet's rules: a push moves a rock one tile, the player must stand on
+// the far side, nothing moves into a wall or another rock, and a rock can
+// never be pulled. Measured in tools/quickstart/block_probe.py. The game
+// adds three rules through QuickStartBlockPushAllowed: a FIXED rock never
+// moves, an axis-tinted rock moves only along its axis, and no rock leaves
+// its board.
+//
+// Every layout is generated and solved offline per room
+// (tools/quickstart/block_puzzles.py -> include/quickstart/block_puzzles.h).
+// The table is room tiles, room-local; a rock is marked as ours by its type
+// (QS_BLOCK_TYPE), its class in type2, and its instance in a spare word of
+// the rock's entity.
+typedef struct {
+    u8 area, room;
+    u8 kind;      // QS_BLOCK_TEMPLATE / QS_BLOCK_MAZE
+    u8 door;      // a maze guarding an overworld door, not a chest
+    u8 site;      // the ? room site that owns it, 0xFF if none
+    u8 row;       // the region pool row that owns it, 0xFF if none
+    u8 bx, by, bw, bh;  // the board: where movable rocks may stand
+    u8 px, py;    // template: the prize tile; maze: the chest (or door) tile
+    u8 tx, ty;    // maze: the tile in front of the chest or door
+    u8 sx, sy;    // the reset switch
+    u8 nMove, nFixed, nGoal;
+    const u8* cells;  // nMove (x, y, class), nFixed (x, y), nGoal (x, y)
+} QuickStartBlockPuzzle;
+
+#define QS_BLOCK_TEMPLATE 0
+#define QS_BLOCK_MAZE 1
+#include "quickstart/block_puzzles.h"
+#define QUICKSTART_BLOCK_COUNT ((s32)ARRAY_COUNT(sQuickStartBlockPuzzles))
+
+#define QS_BLOCK_TYPE 0xB7  // rock->type: one of ours
+#define QS_BLOCK_ANY 0
+#define QS_BLOCK_HORIZ 1
+#define QS_BLOCK_VERT 2
+#define QS_BLOCK_FIXED 3
+#define QS_BLOCK_LOCKED 4  // type2 bit: part of a matched template, never moves again
+#define QS_BLOCK_INDEX(e) (*(u16*)((u8*)(e) + 0x68))     // spare in PushableRockEntity
+#define QS_BLOCK_TILEINDEX(e) (*(u16*)((u8*)(e) + 0x70)) // PushableRockEntity.tileIndex
+#define QS_BLOCK_TILEPOS(e) (*(u16*)((u8*)(e) + 0x74))   // PushableRockEntity.tilePos
+#define QS_BLOCK_RESET_SWITCH 3                         // QS_SWITCH_HIT_FLAG(3): room flag 107
+#define QS_BLOCK_CHEST_FLAG 253                         // local flag: the maze chest was opened
+// Per-visit room flags, flagBase + k.
+#define QS_BLOCK_SPAWNED_FLAG 0
+#define QS_BLOCK_SOLVED_FLAG 1
+#define QS_BLOCK_PAID_FLAG 2
+#define QS_BLOCK_FREE_FLAG 3    // movers not spawned: the player came in from inside the maze
+#define QS_BLOCK_GROUND_FLAG 4  // maze prize lies on the floor: the room has no chest art
+#define QS_BLOCK_DEAL_FLAG 5    // the movers are owed: dealt (or put back) on a later frame
+// gCustomStrings3 lines, after the courier's and the carry's.
+#define QUICKSTART_BLOCK_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 15)
+
+static const s8 sQuickStartBlockDx[4] = { 0, 1, 0, -1 };
+static const s8 sQuickStartBlockDy[4] = { -1, 0, 1, 0 };
+
+static void QuickStartBlockTint(Entity* e, u32 tier);
+
+static bool32 QuickStartIsBlockRock(Entity* e) {
+    return e->kind == OBJECT && e->id == PUSHABLE_ROCK && e->type == QS_BLOCK_TYPE;
+}
+
+// One of ours standing on tile (tx, ty) of the current room - the wave
+// spawner keeps enemies off them (QuickStartPositionAllowed).
+static bool32 QuickStartBlockRockAt(s32 tx, s32 ty) {
+    s32 i;
+    u32 pos = TILE_POS(tx, ty);
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (QuickStartIsBlockRock(e) && QS_BLOCK_TILEPOS(e) == pos) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The player's push code asks this before a push on a rock tile starts
+// (beanstalkSubtask.c, SPECIAL_TILE_27). `dir` is animationState / 2: up,
+// right, down, left. A rock that is not ours - a vanilla boulder - is
+// always allowed.
+bool32 QuickStartBlockPushAllowed(u32 pos, u32 dir) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (QuickStartIsBlockRock(e) && QS_BLOCK_TILEPOS(e) == pos && (s32)QS_BLOCK_INDEX(e) < QUICKSTART_BLOCK_COUNT) {
+            const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[QS_BLOCK_INDEX(e)];
+            u32 cls = e->type2 & 3;
+            s32 tx = (s32)(pos & 0x3f) + sQuickStartBlockDx[dir & 3];
+            s32 ty = (s32)(pos >> 6) + sQuickStartBlockDy[dir & 3];
+            if (cls == QS_BLOCK_FIXED || (e->type2 & QS_BLOCK_LOCKED)) {
+                return FALSE;
+            }
+            if (cls == QS_BLOCK_HORIZ && (dir & 1) == 0) {
+                return FALSE;
+            }
+            if (cls == QS_BLOCK_VERT && (dir & 1) != 0) {
+                return FALSE;
+            }
+            if (tx < p->bx || ty < p->by || tx >= p->bx + p->bw || ty >= p->by + p->bh) {
+                return FALSE;
+            }
+            if (p->kind == QS_BLOCK_MAZE && ((tx == p->tx && ty == p->ty) || (tx == p->px && ty == p->py))) {
+                return FALSE;
+            }
+            return TRUE;
+        }
+    }
+    return TRUE;
+}
+
+static Entity* QuickStartBlockSpawn(s32 index, s32 tx, s32 ty, u32 cls) {
+    Entity* e = CreateObject(PUSHABLE_ROCK, QS_BLOCK_TYPE, cls);
+    if (e == NULL) {
+        return NULL;
+    }
+    e->x.HALF.HI = gRoomControls.origin_x + tx * 16 + 8;
+    e->y.HALF.HI = gRoomControls.origin_y + ty * 16 + 8;
+    e->collisionLayer = 1;
+    UpdateSpriteForCollisionLayer(e);
+    QS_BLOCK_INDEX(e) = (u16)index;
+    return e;
+}
+
+// Delete one of our rocks and give its tile back (an idle rock holds
+// SPECIAL_TILE_27 over the floor it stands on; a moving one has already
+// restored it).
+static void QuickStartBlockRemove(Entity* e) {
+    u32 pos = QS_BLOCK_TILEPOS(e);
+    if (e->action == 1 && GetTileTypeAtTilePos(pos, e->collisionLayer) == SPECIAL_TILE_27) {
+        SetTile(QS_BLOCK_TILEINDEX(e), pos, e->collisionLayer);
+    }
+    DeleteEntity(e);
+}
+
+// The movers, all or none. A deleted entity's slot frees only at the end
+// of the frame, so a reset that deleted the movers and spawned them in the
+// same frame came back short in a busy field (measured: Lon Lon, South
+// Hyrule Field, Western Woods, Minish Woods - every mover gone). So the
+// movers are owed (QS_BLOCK_DEAL_FLAG) and paid on a later frame, and a
+// payment that comes back short is taken back and tried again.
+static bool32 QuickStartBlockSpawnMovers(s32 index) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    s32 k, i;
+    for (k = 0; k < p->nMove; k++) {
+        if (QuickStartBlockSpawn(index, p->cells[k * 3], p->cells[k * 3 + 1], p->cells[k * 3 + 2]) == NULL) {
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* e = &gEntities[i].base;
+                if (QuickStartIsBlockRock(e) && QS_BLOCK_INDEX(e) == index && (e->type2 & 3) != QS_BLOCK_FIXED) {
+                    DeleteEntity(e);  // never initialised: no tile to give back
+                }
+            }
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
+// Every rock of this instance at rest (idle, its tile marked): the moment
+// a layout means something.
+static bool32 QuickStartBlocksSettled(s32 index) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (QuickStartIsBlockRock(e) && QS_BLOCK_INDEX(e) == index && (e->type2 & 3) != QS_BLOCK_FIXED) {
+            if (e->action != 1 || GetTileTypeAtTilePos(QS_BLOCK_TILEPOS(e), e->collisionLayer) != SPECIAL_TILE_27) {
+                return FALSE;
+            }
+        }
+    }
+    return TRUE;
+}
+
+// TEMPLATE: every movable rock on a goal cell (cells, not rocks: the sheet's
+// "compare occupied cells, not block letters").
+static bool32 QuickStartBlocksMatch(s32 index) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    const u8* goal = p->cells + p->nMove * 3 + p->nFixed * 2;
+    s32 i, k, on = 0, movers = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        u32 pos;
+        if (!QuickStartIsBlockRock(e) || QS_BLOCK_INDEX(e) != index || (e->type2 & 3) == QS_BLOCK_FIXED) {
+            continue;
+        }
+        movers++;
+        pos = QS_BLOCK_TILEPOS(e);
+        for (k = 0; k < p->nGoal; k++) {
+            if (TILE_POS(goal[k * 2], goal[k * 2 + 1]) == pos) {
+                on++;
+                break;
+            }
+        }
+    }
+    return movers == p->nMove && on == p->nMove;
+}
+
+// MAZE: can the target be walked to from outside the grid? A flood over the
+// grid's open tiles from every open ring tile but the door's own.
+static bool32 QuickStartBlocksMazeOpen(s32 index) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    u8 seen[64];
+    u8 queue[64];
+    s32 head = 0, tail = 0, x, y, w = p->bw, h = p->bh, i, d;
+    if (w * h > 64) {
+        return FALSE;
+    }
+    for (i = 0; i < w * h; i++) {
+        seen[i] = 0;
+    }
+    for (y = -1; y <= h; y++) {
+        for (x = -1; x <= w; x++) {
+            s32 rx = p->bx + x, ry = p->by + y;
+            if (x >= 0 && y >= 0 && x < w && y < h) {
+                continue;
+            }
+            if (p->door && rx == p->px && ry == p->py) {
+                continue;
+            }
+            if (!QuickStartTileIsOpen(rx, ry)) {
+                continue;
+            }
+            for (d = 0; d < 4; d++) {
+                s32 ix = x + sQuickStartBlockDx[d], iy = y + sQuickStartBlockDy[d];
+                if (ix >= 0 && iy >= 0 && ix < w && iy < h && !seen[iy * w + ix] &&
+                    QuickStartTileIsOpen(p->bx + ix, p->by + iy)) {
+                    seen[iy * w + ix] = 1;
+                    queue[tail++] = (u8)(iy * w + ix);
+                }
+            }
+        }
+    }
+    while (head < tail) {
+        s32 c = queue[head++];
+        x = c % w;
+        y = c / w;
+        if (p->bx + x == p->tx && p->by + y == p->ty) {
+            return TRUE;
+        }
+        for (d = 0; d < 4; d++) {
+            s32 ix = x + sQuickStartBlockDx[d], iy = y + sQuickStartBlockDy[d];
+            if (ix >= 0 && iy >= 0 && ix < w && iy < h && !seen[iy * w + ix] &&
+                QuickStartTileIsOpen(p->bx + ix, p->by + iy)) {
+                seen[iy * w + ix] = 1;
+                queue[tail++] = (u8)(iy * w + ix);
+            }
+        }
+    }
+    return FALSE;
+}
+
+// The maze's prize: a chest painted on the back cell, opened from the
+// target tile in front of it (the chest lottery's machinery, one chest).
+// A room whose tileset has no chest art gets the prize on the floor there.
+static void QuickStartBlocksChest(s32 index, u16 item, u32 flagBase) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    s32 lx = p->px * 16 + 8, ly = p->py * 16 + 8, j;
+    MapLayer* layer = GetLayerByIndex(LAYER_BOTTOM);
+    MapLayer* top = GetLayerByIndex(LAYER_TOP);
+    TileEntity* slot = NULL;
+    Entity* chest;
+    if ((layer == NULL || layer->tileIndices[TILE_TYPE_116] == 0xFFFF) &&
+        (top == NULL || top->tileIndices[TILE_TYPE_116] == 0xFFFF)) {
+        QsSetRoomFlag(flagBase + QS_BLOCK_GROUND_FLAG);
+        return;
+    }
+    for (j = 0; j < 8; j++) {
+        if (gSmallChests[j].tilePos == 0) {
+            slot = &gSmallChests[j];
+            break;
+        }
+    }
+    chest = CreateObject(SPECIAL_CHEST, QS_BLOCK_CHEST_FLAG, 0);
+    if (slot == NULL || chest == NULL) {
+        if (chest != NULL) {
+            DeleteEntity(chest);
+        }
+        QsSetRoomFlag(flagBase + QS_BLOCK_GROUND_FLAG);
+        return;
+    }
+    ClearLocalFlag(QS_BLOCK_CHEST_FLAG);
+    chest->x.HALF.HI = gRoomControls.origin_x + lx;
+    chest->y.HALF.HI = gRoomControls.origin_y + ly;
+    chest->collisionLayer = 1;
+    chest->flags |= ENT_PERSIST;
+    UpdateSpriteForCollisionLayer(chest);
+    QuickStartPaintChestTile(lx, ly);
+    slot->type = SMALL_CHEST;
+    slot->localFlag = (u8)QS_BLOCK_CHEST_FLAG;
+    QuickStartFillChestSlot(slot, item);
+    slot->tilePos = (u16)(TILE_POS(p->px, p->py));
+    slot->_6 = 1;
+    slot->_7 = QUICKSTART_CHEST_REDRAWN;  // ours: the restock leaves it alone
+}
+
+// The instance's rocks, the switch, the maze's chest - once a visit.
+static void QuickStartBlocksDeal(s32 index, u16 item, u32 flagBase, bool32 hint) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    s32 k, ptx, pty, anyLimited = 0;
+    const u8* fixed = p->cells + p->nMove * 3;
+    for (k = 0; k < p->nFixed; k++) {
+        QuickStartBlockSpawn(index, fixed[k * 2], fixed[k * 2 + 1], QS_BLOCK_FIXED);
+    }
+    // A player standing INSIDE the grid came in through the guarded door:
+    // the way out is open, so the movers are not dealt.
+    ptx = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    pty = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    if (p->kind == QS_BLOCK_MAZE && ptx >= p->bx && pty >= p->by && ptx < p->bx + p->bw && pty < p->by + p->bh) {
+        QsSetRoomFlag(flagBase + QS_BLOCK_FREE_FLAG);
+    } else {
+        QsSetRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG);
+    }
+    QuickStartSpawnPuzzleSwitch(p->sx * 16 + 8, p->sy * 16 + 8, QS_BLOCK_RESET_SWITCH);
+    if (p->kind == QS_BLOCK_MAZE && !p->door) {
+        QuickStartBlocksChest(index, item, flagBase);
+    }
+    for (k = 0; k < p->nMove; k++) {
+        if (p->cells[k * 3 + 2] != QS_BLOCK_ANY) {
+            anyLimited = 1;
+        }
+    }
+    if (!hint) {
+        return;
+    }
+    if (p->kind == QS_BLOCK_TEMPLATE) {
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_BLOCK_TEXT + (anyLimited ? 3 : 0))), 0);
+    } else {
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_BLOCK_TEXT + (p->door ? 2 : 1))), 0);
+    }
+}
+
+// Strike the switch: every movable rock back where it started. The
+// sheet's UNDO / RESET - and never a second prize, since the prize flags
+// are separate. The movers come back on a later frame (DEAL_FLAG).
+static void QuickStartBlocksReset(s32 index, u32 flagBase) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (QuickStartIsBlockRock(e) && QS_BLOCK_INDEX(e) == index && (e->type2 & 3) != QS_BLOCK_FIXED) {
+            QuickStartBlockRemove(e);
+        }
+    }
+    if (!QsCheckRoomFlag(flagBase + QS_BLOCK_FREE_FLAG)) {
+        QsSetRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG);
+    }
+    SoundReq(SFX_SECRET_BIG);
+}
+
+// The rocks' look: brown for a plain mover, gray for fixed, blue for side
+// to side only, red for up and down only, gold once a template is matched.
+static void QuickStartBlocksTintAll(s32 index) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        u32 cls;
+        if (!QuickStartIsBlockRock(e) || QS_BLOCK_INDEX(e) != index || !(e->flags & ENT_DID_INIT)) {
+            continue;
+        }
+        cls = e->type2 & 3;
+        if (e->type2 & QS_BLOCK_LOCKED) {
+            QuickStartBlockTint(e, QS_PASTRY_GOLD);
+        } else if (cls == QS_BLOCK_FIXED) {
+            QuickStartBlockTint(e, QS_TINT_STONE);
+        } else if (cls == QS_BLOCK_HORIZ) {
+            QuickStartBlockTint(e, QS_TINT_BLUE);
+        } else if (cls == QS_BLOCK_VERT) {
+            QuickStartBlockTint(e, QS_TINT_RED);
+        } else {
+            QuickStartBlockTint(e, QS_TINT_EARTH);
+        }
+    }
+}
+
+// The prize: a ? room pays its seeded drop draw, the overworld quest a
+// rare one.
+static u16 QuickStartBlocksPrize(s32 seed6, bool32 rare) {
+    return rare ? QuickStartDrawAtTier(QuickStartDrawPick(seed6 & 0x3f), QS_CAT_DROP, QS_TIER_RARE)
+                : QuickStartDrawItem(seed6 & 0x3f, QS_CAT_DROP);
+}
+
+// One instance, every frame of a visit. `hint`: Ezlo explains as it deals.
+// Returns TRUE once the puzzle is DONE - the prize taken, the chest opened,
+// the door reached.
+static bool32 QuickStartBlocksRun(s32 index, u32 flagBase, s32 seed6, bool32 rare, bool32 hint) {
+    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    s32 ptx, pty;
+    if (index < 0 || index >= QUICKSTART_BLOCK_COUNT) {
+        return TRUE;
+    }
+    if (!QsCheckRoomFlag(flagBase + QS_BLOCK_SPAWNED_FLAG)) {
+        QsSetRoomFlag(flagBase + QS_BLOCK_SPAWNED_FLAG);
+        QuickStartBlocksDeal(index, QuickStartBlocksPrize(seed6, rare), flagBase, hint);
+        return FALSE;
+    }
+    if (QsCheckRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG)) {
+        if (QuickStartBlockSpawnMovers(index)) {
+            QsClearRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG);
+        }
+        return FALSE;
+    }
+    QuickStartBlocksTintAll(index);
+    ptx = (gPlayerEntity.base.x.HALF.HI - gRoomControls.origin_x) >> 4;
+    pty = (gPlayerEntity.base.y.HALF.HI - gRoomControls.origin_y) >> 4;
+    if (!QsCheckRoomFlag(flagBase + QS_BLOCK_SOLVED_FLAG)) {
+        if (QsCheckRoomFlag(QS_SWITCH_HIT_FLAG(QS_BLOCK_RESET_SWITCH) - 0x8000 - QUICKSTART_ROOM_FLAG_ORIGIN)) {
+            QuickStartBlocksReset(index, flagBase);
+            QsClearRoomFlag(QS_SWITCH_HIT_FLAG(QS_BLOCK_RESET_SWITCH) - 0x8000 - QUICKSTART_ROOM_FLAG_ORIGIN);
+            return FALSE;
+        }
+        if ((gSave.run_frames & 7) != 0 || !QuickStartBlocksSettled(index)) {
+            return FALSE;
+        }
+        if (p->kind == QS_BLOCK_TEMPLATE ? QuickStartBlocksMatch(index) : QuickStartBlocksMazeOpen(index)) {
+            s32 i;
+            QsSetRoomFlag(flagBase + QS_BLOCK_SOLVED_FLAG);
+            SoundReq(SFX_SECRET);
+            // Solved rocks stay put: lock them, so a stray push cannot
+            // make the room look unsolved again.
+            for (i = 0; i < MAX_ENTITIES; i++) {
+                Entity* e = &gEntities[i].base;
+                if (QuickStartIsBlockRock(e) && QS_BLOCK_INDEX(e) == index && p->kind == QS_BLOCK_TEMPLATE &&
+                    (e->type2 & 3) != QS_BLOCK_FIXED) {
+                    e->type2 |= QS_BLOCK_LOCKED;
+                }
+            }
+        }
+        return FALSE;
+    }
+    if (p->kind == QS_BLOCK_TEMPLATE || QsCheckRoomFlag(flagBase + QS_BLOCK_GROUND_FLAG)) {
+        s16 lx = (s16)(p->px * 16 + 8), ly = (s16)(p->py * 16 + 8);
+        if (!QsCheckRoomFlag(flagBase + QS_BLOCK_PAID_FLAG)) {
+            if (QuickStartRewardDelivered(QuickStartBlocksPrize(seed6, rare), lx, ly)) {
+                QsSetRoomFlag(flagBase + QS_BLOCK_PAID_FLAG);
+            }
+            return FALSE;
+        }
+        return !QuickStartGroundItemAt(lx, ly);
+    }
+    if (p->door) {
+        return ptx == p->tx && pty == p->ty;
+    }
+    return CheckLocalFlag(QS_BLOCK_CHEST_FLAG) != 0;
+}
+
+// The instances a ? room site or a pool row owns; `nth` counts from zero
+// and wraps.
+static s32 QuickStartBlocksOwned(s32 site, s32 row, s32 nth) {
+    s32 i, n = 0, count = 0;
+    for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
+        if ((site >= 0 && sQuickStartBlockPuzzles[i].site == site) ||
+            (row >= 0 && sQuickStartBlockPuzzles[i].row == row)) {
+            count++;
+        }
+    }
+    if (count == 0) {
+        return -1;
+    }
+    while (nth >= count) {
+        nth -= count;
+    }
+    for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
+        if ((site >= 0 && sQuickStartBlockPuzzles[i].site == site) ||
+            (row >= 0 && sQuickStartBlockPuzzles[i].row == row)) {
+            if (n++ == nth) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+static s32 QuickStartBlocksCountForSite(s32 site) {
+    s32 i, count = 0;
+    for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
+        if (sQuickStartBlockPuzzles[i].site == site) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// A ? room site's instance: seeded from the run, or the testbed's pick
+// (scenario SITE on this site: extra bits 5-7 are the instance ordinal,
+// up to six per site; a run never reads them).
+static s32 QuickStartBlocksForSite(s32 site) {
+    s32 count = QuickStartBlocksCountForSite(site);
+    if (count == 0) {
+        return -1;
+    }
+    if (QuickStartScenario(QS_SCN_SITE) && site == (s32)gSave.scenario_a) {
+        return QuickStartBlocksOwned(site, -1, gSave.scenario_c >> 5);
+    }
+    return QuickStartBlocksOwned(site, -1, (s32)(QuickStartChainHash(0xB10Du + (u32)site) & 0x7fff) % count);
+}
+
+static bool32 QuickStartSetupBlocksContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
+    s32 site = QuickStartFindSiteAt(contentX, contentY);
+    s32 index = (site >= 0) ? QuickStartBlocksForSite(site) : -1;
+    if (index < 0) {
+        return TRUE;  // nothing fits here (the roll never deals it then): never a wall
+    }
+    return QuickStartBlocksRun(index, flagBase, extra, FALSE, TRUE);
+}
+
+// The overworld block quest. One region row a run hosts one of its
+// generated instances - a template in the open, or a maze in front of a
+// door or a chest - and the first solve pays a RARE draw and counts as
+// the run's side quest (QuickStartSideQuestDone), like the courier. Every
+// visit until then deals the puzzle afresh; Ezlo explains it once a run.
+//
+// State: FLAG_BANK_12 raw 682-694, inside the run-start 0-793 wipe, after
+// the courier. Room flags 120-124 for the visit (QS_BLOCK_*_FLAG).
+#define GF_BLOCKQ_ROLLED 682
+#define GF_BLOCKQ_HOST_BIT(b) (683 + (b))  // b = 0..4, pool row of the host
+#define GF_BLOCKQ_PICK_BIT(b) (688 + (b))  // b = 0..3, which of the row's instances
+#define GF_BLOCKQ_STATE_BIT(b) (692 + (b)) // b = 0..1
+#define GF_BLOCKQ_SAID 694                 // Ezlo has explained it this run
+#define QUICKSTART_BLOCKQ_OPEN 0
+#define QUICKSTART_BLOCKQ_WON 3
+#define QUICKSTART_BLOCKQ_ROOM_FLAGS 120
+
+static s32 QuickStartBlockQuestHost(void) {
+    return (s32)QuickStartBank12Read(GF_BLOCKQ_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+}
+
+static bool32 QuickStartBlockQuestWon(void) {
+    return QuickStartBank12Read(GF_BLOCKQ_STATE_BIT(0), 2) == QUICKSTART_BLOCKQ_WON;
+}
+
+// After the courier, avoiding the other givers' rows, from the rows the
+// generator built an instance for.
+static void QuickStartBlockQuestRollOnce(void) {
+    s32 host, guard, hunt, scav, stealth, carry, courier;
+    if (CheckLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_ROLLED)) {
+        return;
+    }
+    QuickStartCourierRollOnce();
+    hunt = QuickStartReadPoolIdx(GF_REGION_HUNT_HOST_BIT(0), GF_POOL_HI_HUNT_HOST);
+    scav = QuickStartReadPoolIdx(GF_SCAV_HOST_BIT(0), GF_POOL_HI_SCAV_HOST);
+    stealth = (s32)QuickStartGauntletReadBits(GF_STEALTH_HOST_BIT(0), 5) % QUICKSTART_REGION_POOL_SIZE;
+    carry = QuickStartCarryHost();
+    courier = QuickStartCourierHost();
+    host = (s32)Random() % QUICKSTART_REGION_POOL_SIZE;
+    for (guard = 0; guard < 2 * QUICKSTART_REGION_POOL_SIZE; guard++) {
+        if (QuickStartBlocksOwned(-1, host, 0) >= 0 &&
+            (guard >= QUICKSTART_REGION_POOL_SIZE ||
+             (host != hunt && host != scav && host != stealth && host != carry && host != courier))) {
+            break;
+        }
+        host = (host + 1) % QUICKSTART_REGION_POOL_SIZE;
+    }
+    host = QuickStartScenarioQuestHostOr(QS_SCN_QUEST_BLOCKS, host);
+    QuickStartBank12Write(GF_BLOCKQ_HOST_BIT(0), 5, (u32)host);
+    QuickStartBank12Write(GF_BLOCKQ_PICK_BIT(0), 4, Random() & 15);
+    QuickStartBank12Write(GF_BLOCKQ_STATE_BIT(0), 2, QUICKSTART_BLOCKQ_OPEN);
+    ClearLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_SAID);
+    SetLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_ROLLED);
+}
+
+// Called every frame from QuickStartRegionMonitor for the current row. A
+// QUEST/BLOCKS scenario's scenario_c (instance + 1, counted within the row)
+// forces the instance.
+static void QuickStartBlockQuestMonitor(const QuickStartRegion* region, s32 slot) {
+    s32 index, nth;
+    QuickStartBlockQuestRollOnce();
+    if (slot != QuickStartBlockQuestHost() || QuickStartBlockQuestWon()) {
+        return;
+    }
+    nth = (s32)QuickStartBank12Read(GF_BLOCKQ_PICK_BIT(0), 4);
+    if (QuickStartScenarioQuestHost(QS_SCN_QUEST_BLOCKS) >= 0 && gSave.scenario_c != 0) {
+        nth = (s32)gSave.scenario_c - 1;
+    }
+    index = QuickStartBlocksOwned(-1, slot, nth);
+    if (index < 0 || sQuickStartBlockPuzzles[index].area != region->area ||
+        sQuickStartBlockPuzzles[index].room != region->room) {
+        return;
+    }
+    if (QuickStartBlocksRun(index, QUICKSTART_BLOCKQ_ROOM_FLAGS,
+                            (s32)(QuickStartChainHash(0xB10Eu) & 0x3f), TRUE,
+                            !CheckLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_SAID))) {
+        QuickStartBank12Write(GF_BLOCKQ_STATE_BIT(0), 2, QUICKSTART_BLOCKQ_WON);
+    }
+    SetLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_SAID);
+}
+
 static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
     // One correction for every kind: if the table's content spot is solid
     // or out of bounds, snap it to the nearest open tile before anything is
@@ -17856,6 +18476,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         return QuickStartSetupMemoryRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_PUZZLE) {
         return QuickStartSetupPuzzleRoomContent(extra, contentX, contentY, flagBase);
+    } else if (kind == QS_EVENT_BLOCKS) {
+        return QuickStartSetupBlocksContent(extra, contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
@@ -19934,6 +20556,17 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         ((QuickStartChainHash(0x9E2Fu + (u32)site) >> 7) & 3) == 0) {
         kind = QS_EVENT_PUZZLE;
     }
+    // The block puzzles (Oct 2026): a site the generator built a layout
+    // for (only sites alone in their room, with the floor for one) rolls
+    // one in three times, whatever the pickers dealt - except a site whose
+    // kind is fixed (elite, rare, miniboss). Its own hash again.
+    if (QuickStartBlocksCountForSite(site) > 0 &&
+        (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_ANY ||
+         sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_LARGE ||
+         sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_SMALL) &&
+        (s32)((QuickStartChainHash(0xB10Cu + (u32)site) >> 5) & 0x7fff) % 3 == 0) {
+        kind = QS_EVENT_BLOCKS;
+    }
     if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
         // and the pick from it, and storing it (rather than calling Random()
@@ -19988,6 +20621,8 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         extra = (u8)(((s32)Random() % QS_PUZZLE_VARIANTS) | (((s32)Random() % QUICKSTART_DRAW_SEED_RANGE) << 2));
     } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         extra = QuickStartPickLotteryExtra();
+    } else if (kind == QS_EVENT_BLOCKS) {
+        extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);  // the prize's draw seed
     } else {
         extra = 0; // QS_EVENT_FAIRY takes no parameter.
     }
@@ -26149,6 +26784,22 @@ static u16 QuickStartTintColour(u16 c, u32 tier) {
         r = lum * 3 / 8;
         g = lum + 6;
         b = lum / 4;
+    } else if (tier == QS_TINT_STONE) {
+        r = lum * 7 / 8 + 2;
+        g = lum * 7 / 8 + 2;
+        b = lum * 7 / 8 + 4;
+    } else if (tier == QS_TINT_BLUE) {
+        r = lum / 3;
+        g = lum * 2 / 3 + 2;
+        b = lum + 10;
+    } else if (tier == QS_TINT_RED) {
+        r = lum + 10;
+        g = lum / 3;
+        b = lum / 4;
+    } else if (tier == QS_TINT_EARTH) {
+        r = lum * 7 / 8 + 7;
+        g = lum * 5 / 8 + 4;
+        b = lum * 3 / 8 + 1;
     } else {
         r = lum + 9;
         g = lum * 7 / 8 + 5;
@@ -26244,6 +26895,45 @@ bool32 QuickStartTintItem(Entity* e) {
     UnloadOBJPalette(e);
     SetEntityObjPalette(e, slot);
     return FALSE;
+}
+
+// A block puzzle rock drawn in `tier` (QuickStartBlocksTintAll): a palette
+// slot made from the rock's own fixed palette, shared by every rock of the
+// tier, the same id scheme as QuickStartTintItem. A rock that cannot get a
+// slot this frame keeps its colours and is asked again next frame.
+static void QuickStartBlockTint(Entity* e, u32 tier) {
+    u32 src = e->palette.b.b0, id, i;
+    s32 slot;
+    // Ours: 0xF<tier><src>. The fixed slots' id 0xFFFF never is.
+    if (gPaletteList[src].objPaletteId != 0xFFFF && (gPaletteList[src].objPaletteId & 0xF000) == 0xF000) {
+        if (((gPaletteList[src].objPaletteId >> 8) & 0xF) == tier) {
+            return;  // already this colour
+        }
+        src = gPaletteList[src].objPaletteId & 0xFF;  // the rock's own palette under the tint
+    }
+    id = 0xF000 | (tier << 8) | src;
+    slot = FindPalette(id);
+    if (slot < 0) {
+        slot = (s32)FindFreeObjPalette(1);
+        if (slot < 0) {
+            CleanUpObjPalettes();
+            slot = (s32)FindFreeObjPalette(1);
+        }
+        if (slot < 0) {
+            return;
+        }
+        gPaletteList[slot].objPaletteId = (u16)id;
+        gPaletteList[slot]._1 = 0;
+        gPaletteList[slot]._0_4 = 1;
+        gPaletteList[slot]._0_0 = 3;
+        for (i = 1; i < 16; i++) {
+            gPaletteBuffer[(16 + slot) * 16 + i] = QuickStartTintColour(gPaletteBuffer[(16 + src) * 16 + i], tier);
+        }
+        gPaletteBuffer[(16 + slot) * 16] = gPaletteBuffer[(16 + src) * 16];
+        USE_PALETTE(16 + slot);
+    }
+    UnloadOBJPalette(e);
+    SetEntityObjPalette(e, slot);
 }
 
 // Called between DrawEntities and CopyOAM (GameMain_Update): the Rusted

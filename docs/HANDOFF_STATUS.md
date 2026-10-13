@@ -24,8 +24,8 @@ curve over 13 steps; an Elites tier that doubles as the miniboss pool; weapon
 gating for enemies a sword cannot kill; two bosses (ChuChu, Big Octorok) with
 a vetted per-region allowlist.
 
-**Content systems.** Three "? room" systems with nine event kinds; 117
-content sites; quests; 14 charms/curses; the kinstone fusion economy with
+**Content systems.** Three "? room" systems with ten event kinds; 119
+content sites; block puzzles (162 generated instances); quests; 14 charms/curses; the kinstone fusion economy with
 travelling fusers; the map and compass; the trophy case browsing all 70
 obtainable things.
 
@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Block puzzles, both variants of the user's sheet: templates (copy the gray shape) and mazes (clear the way to a chest or a door). 162 generated, solved instances in 31 ? room sites and 11 field rows; a new ? room kind (`QS_EVENT_BLOCKS`, one in three at those sites) and a field block quest; colour-coded rocks, a reset switch, three new push rules through one hook. `block_probe.py --rules` 162/162 | "Block puzzles: templates and mazes, ? rooms and a field quest" |
 | Rare-region boost (Royal Valley and the Ruins weigh 8, Lake Hylia 3 in every chain pick; an escalation seek; twice the drop share): Lake Hylia 1.5% to 9.4% of requirements, Royal Valley 0.75% to 3.1%, the Ruins 0.06% to 0.22%. Both business scrubs are ? rooms (sites 117, 118). South Hyrule Field's stale bridge to North Hyrule Field removed from the reach survey. `chain_roll_validate.py` 800/800 | "Rare regions boosted, two scrub ? rooms, the town in the reach graph" |
 | The simulation study: 500,000 runs per cohort, `docs/QUICKSTART_SIM_STUDY.md`; four simulator bugs fixed (Boomerang chamber retired whole, ? prizes paying no key items, a phantom fifth step, the recital rule); ? room kinds and prizes replayed exactly (`site_roll_validate.py` 2,691/2,691); `room_census.py` diffs every room off the overworld against what the build uses | "The simulation study: 1,000,000 runs" |
 | The carry quest, one room: giver at A, unbreakable pot, receiver at B, lost parcels back at the lift spot, two mixed waves; 7 pairs in four rooms (none in Veil Falls); `carry_room_probe.py` all pairs 5/5, `--throws` 3/3 | "The carry quest, one room: built" |
@@ -93,6 +94,14 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 ## Outstanding
 
 ### Needs the user, not an agent
+
+- **Play a block puzzle by hand.** Every instance is solved in the ROM by
+  `block_probe.py`, but the probe sets the player down behind each rock
+  rather than walking. Say whether the colours read (brown, blue, red,
+  gray, gold), whether Ezlo's four lines are clear, and whether one in
+  three at the 31 sites is too often or too rare. One-way rocks (the
+  sheet's "down only" and "right only") are not built; say if they are
+  wanted.
 
 - **Play a sealed golden gate.** Half the runs seal the Source of the
   Flow stone and half the Castor statues (`GF_GOLD_GATE_SEALED_BIT`).

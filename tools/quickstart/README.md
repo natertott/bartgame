@@ -251,3 +251,16 @@
   deal steps for random seeds, drop rows, loadouts and step indices, and
   compares each with `sim.roll_step`: the keyed pair, the escalation and its
   rare-region seek, the spread rule and the rare-region weights.
+- `block_rooms.py` - captures the floor of every room a block puzzle may
+  use (the 100 lone ? room sites and the 20 pool rows) into
+  `build/block_rooms.json`: collision, act tiles, NPCs and the arrival.
+- `block_puzzles.py` - the block puzzles' generator and solver
+  (`docs/QUICKSTART_BLOCK_PUZZLES.md`): up to three templates and three
+  mazes per room, each scrambled or searched backwards and its minimum
+  push count proved by search, clear of every spot the mode already uses.
+  Writes `include/quickstart/block_puzzles.h` and
+  `build/block_solutions.json`. `--check` compares with the header.
+- `block_probe.py` - plays every block puzzle in the ROM from the
+  solver's push list: the dealt rocks, each push, the ROM's own SOLVED
+  flag, the prize and the site's DONE (or the quest's WON). `--rules` adds
+  the refusals (fixed, axis-bound, board edge) and the reset switch.

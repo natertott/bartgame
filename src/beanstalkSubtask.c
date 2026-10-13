@@ -23,6 +23,9 @@
 #include "ui.h"
 
 extern void sub_0807C898(void);
+#ifdef QUICKSTART
+extern bool32 QuickStartBlockPushAllowed(u32 pos, u32 dir);
+#endif
 extern void sub_0805BB74(s32);
 extern void LoadRoomGfx(void);
 extern void LoadRoomTileSet(void);
@@ -291,6 +294,13 @@ u32 UpdatePlayerCollision(void) {
             if (sub_0801A2B0(mapLayer, position, 0xb) == 0) {
                 return 0;
             }
+#ifdef QUICKSTART
+            // A block puzzle's rock may refuse this push: fixed, axis-bound,
+            // or at the edge of its board (game.c, QuickStartBlockPushAllowed).
+            if (!QuickStartBlockPushAllowed(position, gPlayerEntity.base.animationState >> 1)) {
+                return 0;
+            }
+#endif
             // Start moving the boulder.
             mapLayer->mapData[position] = SPECIAL_TILE_28 + (gPlayerEntity.base.animationState / 2);
             gPlayerState.pushedObject = 0xa0;

@@ -63,7 +63,23 @@ so nobody re-invents them:
 - **A probe's START can leave the pause menu open, and then the room reads
   (0, 0)** - which is Minish Woods' own id, so a "landed" check passes
   while Link is still in the boot room. Check Link's position against the
-  warp target, not just `here()` (`carry_room_probe.settle`).
+  warp target, not just `here()` (`carry_room_probe.settle`). It also
+  happens after a fast landing IN Minish Woods: the room size reads 0
+  under the menu (`block_probe.land` closes it).
+- **The test kit does not always put the sword on B.** A Minish Woods
+  boot had it on A, and B swung nothing at a switch. Read
+  `gSave.stats.equipped` (0x02002af4) and press that button
+  (`block_probe.sword_key`).
+- **Pushing a rock in a probe.** Set the player down behind it and hold
+  the direction, pinning only the coordinate ACROSS the push: pinning both
+  stops the push from ever building, pinning none lets a one-tile
+  corridor's corner slide walk the player off the line. A region's intro
+  line arrives seconds after landing and freezes the player; settle first
+  and retry a refused push (`block_probe.push`).
+- **`pgrep -f`/`ps | grep` on a script name matches your own shell** when
+  the command line also names the script (an `ls` or `sed` of it in the
+  same call). Match on the process's first word: `ps -eo args | awk
+  '$1=="python3" && $2 ~ /name/'`.
 - **Pots: spawn on tile centres, stop beside them.** A pot off its tile
   centre cannot be lifted (its lift hitbox and solid tile disagree); walking
   on into one shoves it a tile; R while `heldObject` is 3 (mid-lift) drops
@@ -318,7 +334,12 @@ so nobody re-invents them:
 
 ## 4. Hard engine limits
 
-- **72 entities game-wide.**
+- **72 entities game-wide.** And a deleted entity's slot is free only
+  after the frame ends: delete-then-create in one frame came back empty in
+  busy fields (the block puzzles' reset switch). Create on a later frame.
+- **Act tile 0x08 crumbles.** `TILE_ACT_PLAYER_WALK` is floor that turns
+  into a pit (0x0D) once walked on; four caves have it (Veil Falls'
+  entrance, three Minish caves). Not plain ground for anything placed.
 - **44 GFX sheet slots, and this is the real wall, not RAM.** Every live
   enemy holds its own slot (they arrive through `LoadSwapGFX`, not a shared
   sheet), so nineteen enemies of a *single kind* hold nineteen slots. Every
