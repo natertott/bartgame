@@ -151,15 +151,41 @@ Items in brackets are what the portal skips.
 | pocket | normally reached with | escape | inside | verdict |
 |---|---|---|---|---|
 | **Wind Ruins** (node WR) | [Boots or Cape, the statues gate, a Castor Wilds boulder] | **Boots or Cape** | Region rows 13 and 14: waves, a boss, quests, a region-clear draw. Its ? rooms need bombs or the Cape from inside. | **Best.** The user's own example. A trap with retryable content and a region clear to pay the item. |
-| **Veil Falls, the upper falls** (node VF) | [the Lantern and the Source of the Flow gate] | **Lantern**, plus the gold piece if this run sealed the gate | Region row 18. Caves need the Lantern or the Grip Ring. | **Very good.** A trap with a region row. Its escape is a single item only when the gate rolled open. |
+| **Veil Falls, the plateau at the foot of the big falls** (node VF) | [the Lantern and the Source of the Flow gate, through cave #1] | **Lantern**, plus the gold piece if this run sealed the gate | Region row 18, on the plateau. Everything above the big waterfall needs the **Grip Ring**: the wind crest, the top plateau, the cave hallways, the Top screen. | **Very good, landing on the plateau.** A trap with a region row. A landing above the falls would need the Grip Ring and the Lantern to leave, two items. |
 | **Castor Wilds, the far bank** (rooms) | [Boots or Cape across the swamp] | **Boots or Cape** | ? rooms: Darknut Hall (70) and its cave (69), and with fusions the Minish cracks (61-64). | **Good.** Land inside Darknut Hall. A trap with ? rooms but no region row. |
 | **Royal Valley, the graveyard** (rooms) | [the Graveyard Key gate] | **Graveyard Key** | ? rooms: the heart piece grave (55), Gina's grave (56); the crypt needs the Bracelets. | **Good, and spooky.** A trap if the gate stops the walk back down; needs a walk to confirm. The key-region rule must be lifted for it. |
 | **Lake Hylia, the ladder pocket** (node LH-LADDER) | [the Mole Mitts, digging from Minish Woods] | **Flippers** | ? rooms: the Mayor's cabin (88), free; Waveblade's dojo (103) with the Flippers or the Cape. | **Good.** A small trap with one free ? room. |
 | **Lake Hylia, the wind crest island** (node LH-CREST) | [Flippers and Mitts to the lake, then the crest] | **Ocarina only** | ? room: the Minish house (89). | **A novelty.** One room, and the only way out is the Ocarina. The natural one-way portal: no item to pay. |
-| **Mount Crenel, the summit** (node CREN) | [the Grip Ring] | free (walk down) | ? rooms in the caves, mostly behind bombs (the Grip Ring cave 75, the Hermit 77, Grayblade's dojo 79). | **Shortcut.** No trap; a portal straight into a summit cave is a fine one-way surprise. |
+| **Mount Crenel, the summit** (node CREN) | [the Grip Ring; bombs on the way] | **Grip Ring** (the survey's walk down; see below) | Nothing winnable with the boot kit: its ? rooms want bombs or the Grip Ring (the Grip Ring cave 75 wants bombs, the Hermit 77 the ring). No region row. | **A trap, but empty.** Worth it only by landing inside a cave: the Grip Ring cave, where the escape item is won where vanilla hides it. |
 | **Royal Valley** (node RV) | [Bracelets and bombs] | free | Region row 11; Dampe's house (53). | **Shortcut.** |
 | Splitblade's pocket (LLR@POCKET, VF@POCKET) | [the Cane of Pacci] | Ocarina only | The dojo (114, 115) needs the Flippers and a fusion. | Weak. Nothing to win inside with the boot kit. |
 | The rest (NHF@VF, VF@NHF, VF@LLR, LH-SW, TRIL@N, LLR@N, LLR@E...) | bombs, Pacci, Flippers and Mitts | free | Nothing of their own. | Not worth a portal. |
+
+**Correction (the user's question).** The first version of this table
+called the Veil Falls node "the upper falls" and the Crenel summit a free
+escape. Both were wrong, and the walked survey (`world_reach.py`) had it
+right all along:
+
+- **Veil Falls.** Node VF is the drop plateau at the FOOT of the big falls.
+  Everything above the waterfall is a Grip Ring climb (measured: with the
+  ring, from (344,470) to (344,214)), and the survey prices every place up
+  there at the ring: the wind crest, the top plateau, the 1F and 2F
+  hallways, the rupee path, the Top screen.
+- **Mount Crenel.** The survey was walked DOWNHILL from the summit, and it
+  prices the way back down to the Trilby exit at the Grip Ring. But the
+  reach graph gives the summit node free edges to the base and to
+  Trilby. They come from `gen_reach.py`'s defaults, not from the survey:
+  - rule 3 stitches a region's halves together free;
+  - rule 4 prices an unspelled ring adjacency at the neighbour's entry
+    price.
+
+  No `link()` ties the survey's own exit row to Trilby.
+  `portal_pockets.py` reads the graph, so it inherited the free edge. In
+  today's game this changes nothing: the summit is only ever reached with
+  the ring in hand, so a free way down is never used without it. A portal
+  would be the first thing to land there without the ring. The fix is one
+  `link()` row in the CREN block, so the summit's way down carries the
+  ring; it belongs to the portal batch.
 
 The graph's costs run one way, from a region's start. A portal lands
 somewhere else, so every landing's real escape has to be **walked**. The
@@ -312,10 +338,12 @@ Roughly the size of the block puzzle batch.
    moment the player walks in?
 5. **Where first.** Recommended for the first batch:
    - the Wind Ruins (one-way);
-   - Veil Falls (one-way, only when the gate rolled open);
+   - Veil Falls, landing on the plateau (one-way, only when the gate
+     rolled open);
    - Castor Wilds' far bank, landing in Darknut Hall (two-way);
    - the Lake Hylia ladder pocket (two-way).
 
    Then the Royal Valley graveyard once its walk is done, and the wind
-   crest island and the Crenel summit as one-way surprises. Keep, cut or
+   crest island and the Grip Ring cave on the Crenel summit as one-way
+   surprises. Keep, cut or
    reorder?

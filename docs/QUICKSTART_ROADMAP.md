@@ -1296,10 +1296,15 @@ Found:
   region-bound payout with its patience rule (the fourth prize pays it
   anywhere).
 - `portal_pockets.py` lists the reach graph's pockets. Best: the Wind Ruins
-  (escape: Boots or Cape; region rows to win it from), Veil Falls' upper
-  falls (Lantern), Castor Wilds' far bank (Boots or Cape; Darknut Hall),
+  (escape: Boots or Cape; region rows to win it from), Veil Falls' drop
+  plateau (Lantern; everything above the falls also wants the Grip Ring), Castor Wilds' far bank (Boots or Cape; Darknut Hall),
   the Lake Hylia ladder pocket (Flippers), the Royal Valley graveyard
   (Graveyard Key). The Wind Ruins take 0.22% of all chain sends today.
+- The reach graph gives Mount Crenel's summit a free way down, from
+  `gen_reach.py`'s defaults (halves stitched free, ring adjacencies at entry
+  price), while the walked survey prices the descent at the Grip Ring. It is
+  harmless today (the summit is only reached with the ring) and needs one
+  `link()` row before a portal lands there.
 
 ### Two ? room sites run their event one frame (Oct 2026)
 
