@@ -1,10 +1,12 @@
-"""Play every block puzzle in the ROM, one push at a time.
+"""Play the block puzzles in the ROM, one push at a time.
 
-block_puzzles.py solves each layout offline and writes the push list to
-build/block_solutions.json, in table order. This boots each instance
-through the testbed - scenario SITE (kind BLOCKS, the instance ordinal in
-extra bits 5-7) for a ? room, scenario QUEST BLOCKS (instance + 1 in
-scenario_c) for a pool row - and plays the list in the emulator:
+block_puzzles.py builds a pool per room - frames (where a puzzle sits) and
+up to 32 contents each - solves every content offline and writes the push
+lists to build/block_solutions.json, in table order. This boots a puzzle
+through the testbed - scenario SITE (kind BLOCKS, the frame in extra bits
+5-7, the content in 0-4) for a ? room, scenario QUEST BLOCKS (frame + 1 in
+scenario_c, content + 1 in scenario_d) for a pool row - and plays the list
+in the emulator:
 
   * the dealt rocks must match the table: every mover and every fixed rock
     on its tile, with its class;
@@ -18,16 +20,21 @@ scenario_c) for a pool row - and plays the list in the emulator:
     the player stands on the target. The ? room site's DONE bit (or the
     quest's WON state) must follow.
 
+It plays `--contents` per frame (the first and a seeded draw; 0 for all):
+`block_puzzles.py --verify` replays every content's solution offline, and
+this confirms in the ROM that the table decodes and plays the same way.
+
 With --rules it also checks, on every instance where each applies, that a
 fixed rock, an axis-bound rock pushed across its axis and a push off the
 board are all refused, and that striking the reset switch puts every rock
 back.
 
-    python3 tools/quickstart/block_probe.py [--rom tmc-d3.gba] [--only 0,5,9] [--rules] [--snap DIR]
+    python3 tools/quickstart/block_probe.py [--rom tmc-d3.gba] [--only FRAME,...] [--contents N] [--rules] [--snap DIR]
 """
 import argparse
 import collections
 import json
+import random
 import os
 import sys
 
@@ -159,14 +166,34 @@ def push_once(c, x, y, d):
     return moved
 
 
+def instance(frame, k):
+    """Content k of a frame, as one puzzle: every rock it deals and the
+    solver's pushes."""
+    c = frame['contents'][k]
+    bx, by = frame['board'][:2]
+    fixed = [tuple(x) for x in frame['fixed']]
+    if frame['kind'] == 0:
+        rx, ry = frame['ref']
+        fixed += [(rx + x - bx, ry + y - by) for x, y in c['goal']]
+    else:
+        fixed += [tuple(x) for x in c['walls']]
+    inst = dict(frame)
+    inst.update(move=c['move'], fixed=fixed, solution=c['solution'], pushes=c['pushes'], content=k)
+    return inst
+
+
 def boot_instance(rom, inst, ordinal):
+    """`ordinal`: the frame's place among its owner's frames. Content
+    inst['content']. A ? room site takes both in extra (frame in bits 5-7,
+    content in 0-4); the quest in scenario_c and scenario_d (each + 1)."""
     owner = inst['owner']
+    k = inst.get('content', 0)
     if owner.startswith('site:'):
         site = int(owner[5:])
-        c = S.boot(rom, S.KINDS['SITE'], site, S.EVENTS.index('BLOCKS'), (ordinal << 5) | 5, 0, kit=2, frames=300)
+        c = S.boot(rom, S.KINDS['SITE'], site, S.EVENTS.index('BLOCKS'), (ordinal << 5) | k, 0, kit=2, frames=300)
         return c, SITE_FLAG_BASE, ('site', site)
     row = int(owner[4:])
-    c = S.boot(rom, S.KINDS['QUEST'], S.QUESTS.index('BLOCKS'), row, ordinal + 1, 0, kit=2, frames=300)
+    c = S.boot(rom, S.KINDS['QUEST'], S.QUESTS.index('BLOCKS'), row, ordinal + 1, k + 1, kit=2, frames=300)
     return c, QUEST_FLAG_BASE, ('row', row)
 
 
@@ -212,7 +239,7 @@ def probe(rom, idx, inst, ordinal, snapdir, rules):
         extra = sorted(set(got) - set(want))
         return 'DEALT WRONG missing %s extra %s' % (miss[:6], extra[:6]), c
     if snapdir:
-        emu.snap(c, os.path.join(snapdir, 'block%03d_dealt.png' % idx))
+        emu.snap(c, os.path.join(snapdir, 'block%05d_dealt.png' % idx))
     notes = []
     if rules:
         notes += rule_checks(c, inst, base)
@@ -230,7 +257,7 @@ def probe(rom, idx, inst, ordinal, snapdir, rules):
     if not room_flag(c, base + SOLVED):
         return 'NOT SOLVED after %d pushes' % len(inst['solution']), c
     if snapdir:
-        emu.snap(c, os.path.join(snapdir, 'block%03d_solved.png' % idx))
+        emu.snap(c, os.path.join(snapdir, 'block%05d_solved.png' % idx))
     px, py = inst['prize']
     if inst['kind'] == 0 or room_flag(c, base + GROUND):
         for _ in range(60):
@@ -314,14 +341,21 @@ def rule_checks(c, inst, base):
     x, y, d = inst['solution'][0] if inst['solution'] else (0, 0, 0)
     if inst['solution'] and push(c, x, y, d):
         sx, sy = inst['switch']
-        for d2 in range(4):
-            ax, ay = sx - DX[d2], sy - DY[d2]
-            if emu.coll_at(c, ax, ay) == 0 and (ax, ay) not in rocks(c):
-                put_player(c, ax, ay)
-                c.set_keys(KEY[d2]); run(c, 4); c.clear_keys(KEY[d2])
-                press(c, sword_key(c), 3, 40)
+        # Up to three swings: in a field a wave can spoil one (South Hyrule
+        # Field missed once in a run and struck clean when tried alone).
+        for _ in range(3):
+            for d2 in range(4):
+                ax, ay = sx - DX[d2], sy - DY[d2]
+                if emu.coll_at(c, ax, ay) == 0 and (ax, ay) not in rocks(c):
+                    if c.memory.u8[MSG]:
+                        dismiss(c)
+                    put_player(c, ax, ay)
+                    c.set_keys(KEY[d2]); run(c, 4); c.clear_keys(KEY[d2])
+                    press(c, sword_key(c), 3, 40)
+                    break
+            run(c, 30)
+            if rocks(c) == start:
                 break
-        run(c, 30)
         if rocks(c) != start:
             return ['FAIL reset left rocks at %s' % sorted(set(rocks(c)) ^ set(start))]
         out.append('reset-ok')
@@ -335,31 +369,43 @@ def main():
     ap.add_argument('--rules', action='store_true')
     ap.add_argument('--snap')
     ap.add_argument('--solutions', default=SOLUTIONS)
+    ap.add_argument('--contents', type=int, default=2,
+                    help='contents played per frame: the first, then a seeded draw (0 = all)')
+    ap.add_argument('--seed', type=int, default=1)
     a = ap.parse_args()
-    insts = json.load(open(a.solutions))
+    frames = json.load(open(a.solutions))
     only = set(int(v) for v in a.only.split(',')) if a.only else None
     if a.snap:
         os.makedirs(a.snap, exist_ok=True)
+    rng = random.Random(a.seed)
     seen = {}
+    jobs = []
+    for fi, f in enumerate(frames):
+        ordinal = seen.get(f['owner'], 0)
+        seen[f['owner']] = ordinal + 1
+        n = len(f['contents'])
+        ks = list(range(n)) if a.contents == 0 else [0] + rng.sample(range(1, n), min(n - 1, a.contents - 1))
+        if only is None or fi in only:
+            jobs += [(fi, k, ordinal) for k in ks]
     ok = bad = 0
     ruled = collections.Counter()
-    for idx, inst in enumerate(insts):
-        ordinal = seen.get(inst['owner'], 0)
-        seen[inst['owner']] = ordinal + 1
-        if only is not None and idx not in only:
-            continue
+    for fi, k, ordinal in jobs:
+        inst = instance(frames[fi], k)
+        idx = fi * 100 + k
         verdict, c = probe(a.rom, idx, inst, ordinal, a.snap, a.rules)
         for note in ('fixed-refused', 'axis-refused', 'edge-refused', 'reset-ok'):
             ruled[note] += note in verdict
         good = verdict.startswith('ok')
         ok += good
         bad += not good
-        print('%3d %-8s %-44s %s%s  %s' % (idx, inst['owner'], inst['room'][5:], 'TM'[inst['kind']] if not inst['door'] else 'D',
-                                          inst['cls'], verdict))
+        print('%3d.%-2d %-8s %-44s %s%s  %s' % (fi, k, inst['owner'], inst['room'][5:],
+                                               'TM'[inst['kind']] if not inst['door'] else 'D', inst['cls'], verdict),
+              flush=True)
         if c is not None and not good and a.snap:
-            emu.snap(c, os.path.join(a.snap, 'block%03d_fail.png' % idx))
+            emu.snap(c, os.path.join(a.snap, 'block%05d_fail.png' % idx))
         del c
-    print('%d/%d instances solved in the ROM' % (ok, ok + bad))
+    print('%d/%d puzzles solved in the ROM (%d frames, %s per frame)'
+          % (ok, ok + bad, len({j[0] for j in jobs}), a.contents or 'every content'))
     if a.rules:
         print('rules held: ' + ', '.join('%s %d' % kv for kv in sorted(ruled.items())))
     return 1 if bad else 0

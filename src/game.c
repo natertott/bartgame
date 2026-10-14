@@ -17787,11 +17787,21 @@ static bool32 QuickStartSetupPuzzleRoomContent(s32 extra, s16 contentX, s16 cont
 // moves, an axis-tinted rock moves only along its axis, and no rock leaves
 // its board.
 //
-// Every layout is generated and solved offline per room
-// (tools/quickstart/block_puzzles.py -> include/quickstart/block_puzzles.h).
-// The table is room tiles, room-local; a rock is marked as ours by its type
-// (QS_BLOCK_TYPE), its class in type2, and its instance in a spare word of
-// the rock's entity.
+// Every puzzle is generated and solved offline
+// (tools/quickstart/block_puzzles.py -> include/quickstart/block_puzzles.h),
+// as a pool per room: a FRAME is where a puzzle sits (the board, the
+// reference, the posts or the maze's ring, the switch, the prize), and
+// each frame carries up to 32 CONTENTS - a goal shape and a scrambled
+// start, or a maze's inner walls and its rocks - every one proved
+// solvable. A run draws a frame and a content per site from its seed, so
+// the same room deals a different puzzle from one run to the next.
+//
+// A content is `stride` bytes: one per mover (x - bx in bits 0-2, y - by
+// in bits 3-5, its class in bits 6-7), then a template's goal cells the
+// same way (the reference shows them at the same offsets from rx, ry) or
+// a maze's inner walls as a 32-bit mask, bit (y - by) * bw + (x - bx).
+// A rock is marked as ours by its type (QS_BLOCK_TYPE), its class in
+// type2, and its frame in a spare word of the rock's entity.
 typedef struct {
     u8 area, room;
     u8 kind;      // QS_BLOCK_TEMPLATE / QS_BLOCK_MAZE
@@ -17802,14 +17812,16 @@ typedef struct {
     u8 px, py;    // template: the prize tile; maze: the chest (or door) tile
     u8 tx, ty;    // maze: the tile in front of the chest or door
     u8 sx, sy;    // the reset switch
-    u8 nMove, nFixed, nGoal;
-    const u8* cells;  // nMove (x, y, class), nFixed (x, y), nGoal (x, y)
-} QuickStartBlockPuzzle;
+    u8 rx, ry;    // template: the reference's corner
+    u8 nMove, nFixed, nContent, stride;
+    const u8* fixed;     // nFixed (x, y): the posts, or the maze's ring
+    const u8* contents;  // nContent records of `stride` bytes
+} QuickStartBlockFrame;
 
 #define QS_BLOCK_TEMPLATE 0
 #define QS_BLOCK_MAZE 1
 #include "quickstart/block_puzzles.h"
-#define QUICKSTART_BLOCK_COUNT ((s32)ARRAY_COUNT(sQuickStartBlockPuzzles))
+#define QUICKSTART_BLOCK_COUNT ((s32)ARRAY_COUNT(sQuickStartBlockFrames))
 
 #define QS_BLOCK_TYPE 0xB7  // rock->type: one of ours
 #define QS_BLOCK_ANY 0
@@ -17864,7 +17876,7 @@ bool32 QuickStartBlockPushAllowed(u32 pos, u32 dir) {
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* e = &gEntities[i].base;
         if (QuickStartIsBlockRock(e) && QS_BLOCK_TILEPOS(e) == pos && (s32)QS_BLOCK_INDEX(e) < QUICKSTART_BLOCK_COUNT) {
-            const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[QS_BLOCK_INDEX(e)];
+            const QuickStartBlockFrame* p = &sQuickStartBlockFrames[QS_BLOCK_INDEX(e)];
             u32 cls = e->type2 & 3;
             s32 tx = (s32)(pos & 0x3f) + sQuickStartBlockDx[dir & 3];
             s32 ty = (s32)(pos >> 6) + sQuickStartBlockDy[dir & 3];
@@ -17887,6 +17899,17 @@ bool32 QuickStartBlockPushAllowed(u32 pos, u32 dir) {
         }
     }
     return TRUE;
+}
+
+// Content `content` of frame `index`: its record, and one packed cell of it.
+static const u8* QuickStartBlockRecord(s32 index, s32 content) {
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
+    return p->contents + content * p->stride;
+}
+
+static void QuickStartBlockCell(u32 b, s32 ox, s32 oy, s32* tx, s32* ty) {
+    *tx = ox + (s32)(b & 7);
+    *ty = oy + (s32)((b >> 3) & 7);
 }
 
 static Entity* QuickStartBlockSpawn(s32 index, s32 tx, s32 ty, u32 cls) {
@@ -17919,11 +17942,13 @@ static void QuickStartBlockRemove(Entity* e) {
 // Hyrule Field, Western Woods, Minish Woods - every mover gone). So the
 // movers are owed (QS_BLOCK_DEAL_FLAG) and paid on a later frame, and a
 // payment that comes back short is taken back and tried again.
-static bool32 QuickStartBlockSpawnMovers(s32 index) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
-    s32 k, i;
+static bool32 QuickStartBlockSpawnMovers(s32 index, s32 content) {
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
+    const u8* rec = QuickStartBlockRecord(index, content);
+    s32 k, i, tx, ty;
     for (k = 0; k < p->nMove; k++) {
-        if (QuickStartBlockSpawn(index, p->cells[k * 3], p->cells[k * 3 + 1], p->cells[k * 3 + 2]) == NULL) {
+        QuickStartBlockCell(rec[k], p->bx, p->by, &tx, &ty);
+        if (QuickStartBlockSpawn(index, tx, ty, rec[k] >> 6) == NULL) {
             for (i = 0; i < MAX_ENTITIES; i++) {
                 Entity* e = &gEntities[i].base;
                 if (QuickStartIsBlockRock(e) && QS_BLOCK_INDEX(e) == index && (e->type2 & 3) != QS_BLOCK_FIXED) {
@@ -17953,10 +17978,10 @@ static bool32 QuickStartBlocksSettled(s32 index) {
 
 // TEMPLATE: every movable rock on a goal cell (cells, not rocks: the sheet's
 // "compare occupied cells, not block letters").
-static bool32 QuickStartBlocksMatch(s32 index) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
-    const u8* goal = p->cells + p->nMove * 3 + p->nFixed * 2;
-    s32 i, k, on = 0, movers = 0;
+static bool32 QuickStartBlocksMatch(s32 index, s32 content) {
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
+    const u8* goal = QuickStartBlockRecord(index, content) + p->nMove;
+    s32 i, k, on = 0, movers = 0, gx, gy;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* e = &gEntities[i].base;
         u32 pos;
@@ -17965,8 +17990,9 @@ static bool32 QuickStartBlocksMatch(s32 index) {
         }
         movers++;
         pos = QS_BLOCK_TILEPOS(e);
-        for (k = 0; k < p->nGoal; k++) {
-            if (TILE_POS(goal[k * 2], goal[k * 2 + 1]) == pos) {
+        for (k = 0; k < p->nMove; k++) {
+            QuickStartBlockCell(goal[k], p->bx, p->by, &gx, &gy);
+            if (TILE_POS(gx, gy) == pos) {
                 on++;
                 break;
             }
@@ -17978,7 +18004,7 @@ static bool32 QuickStartBlocksMatch(s32 index) {
 // MAZE: can the target be walked to from outside the grid? A flood over the
 // grid's open tiles from every open ring tile but the door's own.
 static bool32 QuickStartBlocksMazeOpen(s32 index) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
     u8 seen[64];
     u8 queue[64];
     s32 head = 0, tail = 0, x, y, w = p->bw, h = p->bh, i, d;
@@ -18033,7 +18059,7 @@ static bool32 QuickStartBlocksMazeOpen(s32 index) {
 // target tile in front of it (the chest lottery's machinery, one chest).
 // A room whose tileset has no chest art gets the prize on the floor there.
 static void QuickStartBlocksChest(s32 index, u16 item, u32 flagBase) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
     s32 lx = p->px * 16 + 8, ly = p->py * 16 + 8, j;
     MapLayer* layer = GetLayerByIndex(LAYER_BOTTOM);
     MapLayer* top = GetLayerByIndex(LAYER_TOP);
@@ -18074,12 +18100,31 @@ static void QuickStartBlocksChest(s32 index, u16 item, u32 flagBase) {
 }
 
 // The instance's rocks, the switch, the maze's chest - once a visit.
-static void QuickStartBlocksDeal(s32 index, u16 item, u32 flagBase, bool32 hint) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
-    s32 k, ptx, pty, anyLimited = 0;
-    const u8* fixed = p->cells + p->nMove * 3;
+static void QuickStartBlocksDeal(s32 index, s32 content, u16 item, u32 flagBase, bool32 hint) {
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
+    const u8* rec = QuickStartBlockRecord(index, content);
+    s32 k, ptx, pty, tx, ty, anyLimited = 0;
+    // The frame's own fixed rocks (the posts, or the maze's ring), then
+    // the content's: a template's reference shape, a maze's inner walls.
     for (k = 0; k < p->nFixed; k++) {
-        QuickStartBlockSpawn(index, fixed[k * 2], fixed[k * 2 + 1], QS_BLOCK_FIXED);
+        QuickStartBlockSpawn(index, p->fixed[k * 2], p->fixed[k * 2 + 1], QS_BLOCK_FIXED);
+    }
+    if (p->kind == QS_BLOCK_TEMPLATE) {
+        for (k = 0; k < p->nMove; k++) {
+            QuickStartBlockCell(rec[p->nMove + k], p->rx, p->ry, &tx, &ty);
+            QuickStartBlockSpawn(index, tx, ty, QS_BLOCK_FIXED);
+        }
+    } else {
+        u32 mask = rec[p->nMove] | ((u32)rec[p->nMove + 1] << 8) | ((u32)rec[p->nMove + 2] << 16) |
+                   ((u32)rec[p->nMove + 3] << 24);
+        for (ty = 0; ty < p->bh; ty++) {
+            for (tx = 0; tx < p->bw; tx++) {
+                if (mask & 1) {
+                    QuickStartBlockSpawn(index, p->bx + tx, p->by + ty, QS_BLOCK_FIXED);
+                }
+                mask >>= 1;
+            }
+        }
     }
     // A player standing INSIDE the grid came in through the guarded door:
     // the way out is open, so the movers are not dealt.
@@ -18095,7 +18140,7 @@ static void QuickStartBlocksDeal(s32 index, u16 item, u32 flagBase, bool32 hint)
         QuickStartBlocksChest(index, item, flagBase);
     }
     for (k = 0; k < p->nMove; k++) {
-        if (p->cells[k * 3 + 2] != QS_BLOCK_ANY) {
+        if ((rec[k] >> 6) != QS_BLOCK_ANY) {
             anyLimited = 1;
         }
     }
@@ -18161,19 +18206,19 @@ static u16 QuickStartBlocksPrize(s32 seed6, bool32 rare) {
 // One instance, every frame of a visit. `hint`: Ezlo explains as it deals.
 // Returns TRUE once the puzzle is DONE - the prize taken, the chest opened,
 // the door reached.
-static bool32 QuickStartBlocksRun(s32 index, u32 flagBase, s32 seed6, bool32 rare, bool32 hint) {
-    const QuickStartBlockPuzzle* p = &sQuickStartBlockPuzzles[index];
+static bool32 QuickStartBlocksRun(s32 index, s32 content, u32 flagBase, s32 seed6, bool32 rare, bool32 hint) {
+    const QuickStartBlockFrame* p = &sQuickStartBlockFrames[index];
     s32 ptx, pty;
-    if (index < 0 || index >= QUICKSTART_BLOCK_COUNT) {
+    if (index < 0 || index >= QUICKSTART_BLOCK_COUNT || content < 0 || content >= p->nContent) {
         return TRUE;
     }
     if (!QsCheckRoomFlag(flagBase + QS_BLOCK_SPAWNED_FLAG)) {
         QsSetRoomFlag(flagBase + QS_BLOCK_SPAWNED_FLAG);
-        QuickStartBlocksDeal(index, QuickStartBlocksPrize(seed6, rare), flagBase, hint);
+        QuickStartBlocksDeal(index, content, QuickStartBlocksPrize(seed6, rare), flagBase, hint);
         return FALSE;
     }
     if (QsCheckRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG)) {
-        if (QuickStartBlockSpawnMovers(index)) {
+        if (QuickStartBlockSpawnMovers(index, content)) {
             QsClearRoomFlag(flagBase + QS_BLOCK_DEAL_FLAG);
         }
         return FALSE;
@@ -18190,7 +18235,7 @@ static bool32 QuickStartBlocksRun(s32 index, u32 flagBase, s32 seed6, bool32 rar
         if ((gSave.run_frames & 7) != 0 || !QuickStartBlocksSettled(index)) {
             return FALSE;
         }
-        if (p->kind == QS_BLOCK_TEMPLATE ? QuickStartBlocksMatch(index) : QuickStartBlocksMazeOpen(index)) {
+        if (p->kind == QS_BLOCK_TEMPLATE ? QuickStartBlocksMatch(index, content) : QuickStartBlocksMazeOpen(index)) {
             s32 i;
             QsSetRoomFlag(flagBase + QS_BLOCK_SOLVED_FLAG);
             SoundReq(SFX_SECRET);
@@ -18227,8 +18272,8 @@ static bool32 QuickStartBlocksRun(s32 index, u32 flagBase, s32 seed6, bool32 rar
 static s32 QuickStartBlocksOwned(s32 site, s32 row, s32 nth) {
     s32 i, n = 0, count = 0;
     for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
-        if ((site >= 0 && sQuickStartBlockPuzzles[i].site == site) ||
-            (row >= 0 && sQuickStartBlockPuzzles[i].row == row)) {
+        if ((site >= 0 && sQuickStartBlockFrames[i].site == site) ||
+            (row >= 0 && sQuickStartBlockFrames[i].row == row)) {
             count++;
         }
     }
@@ -18239,8 +18284,8 @@ static s32 QuickStartBlocksOwned(s32 site, s32 row, s32 nth) {
         nth -= count;
     }
     for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
-        if ((site >= 0 && sQuickStartBlockPuzzles[i].site == site) ||
-            (row >= 0 && sQuickStartBlockPuzzles[i].row == row)) {
+        if ((site >= 0 && sQuickStartBlockFrames[i].site == site) ||
+            (row >= 0 && sQuickStartBlockFrames[i].row == row)) {
             if (n++ == nth) {
                 return i;
             }
@@ -18252,34 +18297,68 @@ static s32 QuickStartBlocksOwned(s32 site, s32 row, s32 nth) {
 static s32 QuickStartBlocksCountForSite(s32 site) {
     s32 i, count = 0;
     for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
-        if (sQuickStartBlockPuzzles[i].site == site) {
+        if (sQuickStartBlockFrames[i].site == site) {
             count++;
         }
     }
     return count;
 }
 
-// A ? room site's instance: seeded from the run, or the testbed's pick
-// (scenario SITE on this site: extra bits 5-7 are the instance ordinal,
-// up to six per site; a run never reads them).
-static s32 QuickStartBlocksForSite(s32 site) {
-    s32 count = QuickStartBlocksCountForSite(site);
+// One of every puzzle a site (or a pool row) holds, drawn from the run by
+// `salt`: the frame and its content together, uniform over all of them -
+// not frame first, which handed a two-content door maze the same share as
+// a 32-content template and made a room repeat its puzzle in one run of
+// seven. Returns the frame, the content in *content, or -1.
+static s32 QuickStartBlocksPick(s32 site, s32 row, u32 salt, s32* content) {
+    s32 i, total = 0, k;
+    for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
+        if ((site >= 0 && sQuickStartBlockFrames[i].site == site) ||
+            (row >= 0 && sQuickStartBlockFrames[i].row == row)) {
+            total += sQuickStartBlockFrames[i].nContent;
+        }
+    }
+    if (total == 0) {
+        return -1;
+    }
+    k = (s32)((QuickStartChainHash(salt) >> 3) & 0x7fff) % total;
+    for (i = 0; i < QUICKSTART_BLOCK_COUNT; i++) {
+        if ((site >= 0 && sQuickStartBlockFrames[i].site == site) ||
+            (row >= 0 && sQuickStartBlockFrames[i].row == row)) {
+            if (k < sQuickStartBlockFrames[i].nContent) {
+                *content = k;
+                return i;
+            }
+            k -= sQuickStartBlockFrames[i].nContent;
+        }
+    }
+    return -1;
+}
+
+// A ? room site's frame and content: drawn from the run over every puzzle
+// the site holds, so the room deals a different one each run, or the
+// testbed's pick (scenario SITE on this
+// site: extra bits 5-7 the frame, bits 0-4 the content; a run never reads
+// them, its extra is only the prize's seed).
+static s32 QuickStartBlocksForSite(s32 site, s32* content) {
+    s32 count = QuickStartBlocksCountForSite(site), index;
     if (count == 0) {
         return -1;
     }
     if (QuickStartScenario(QS_SCN_SITE) && site == (s32)gSave.scenario_a) {
-        return QuickStartBlocksOwned(site, -1, gSave.scenario_c >> 5);
+        index = QuickStartBlocksOwned(site, -1, gSave.scenario_c >> 5);
+        *content = (s32)(gSave.scenario_c & 31) % sQuickStartBlockFrames[index].nContent;
+        return index;
     }
-    return QuickStartBlocksOwned(site, -1, (s32)(QuickStartChainHash(0xB10Du + (u32)site) & 0x7fff) % count);
+    return QuickStartBlocksPick(site, -1, 0xB10Du + (u32)site, content);
 }
 
 static bool32 QuickStartSetupBlocksContent(s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
-    s32 site = QuickStartFindSiteAt(contentX, contentY);
-    s32 index = (site >= 0) ? QuickStartBlocksForSite(site) : -1;
+    s32 site = QuickStartFindSiteAt(contentX, contentY), content = 0;
+    s32 index = (site >= 0) ? QuickStartBlocksForSite(site, &content) : -1;
     if (index < 0) {
         return TRUE;  // nothing fits here (the roll never deals it then): never a wall
     }
-    return QuickStartBlocksRun(index, flagBase, extra, FALSE, TRUE);
+    return QuickStartBlocksRun(index, content, flagBase, extra, FALSE, TRUE);
 }
 
 // The overworld block quest. One region row a run hosts one of its
@@ -18338,24 +18417,28 @@ static void QuickStartBlockQuestRollOnce(void) {
 }
 
 // Called every frame from QuickStartRegionMonitor for the current row. A
-// QUEST/BLOCKS scenario's scenario_c (instance + 1, counted within the row)
-// forces the instance.
+// QUEST/BLOCKS scenario's scenario_c (frame + 1, counted within the row)
+// and scenario_d (content + 1) force the puzzle.
 static void QuickStartBlockQuestMonitor(const QuickStartRegion* region, s32 slot) {
-    s32 index, nth;
+    s32 index, nth, content;
     QuickStartBlockQuestRollOnce();
     if (slot != QuickStartBlockQuestHost() || QuickStartBlockQuestWon()) {
         return;
     }
-    nth = (s32)QuickStartBank12Read(GF_BLOCKQ_PICK_BIT(0), 4);
     if (QuickStartScenarioQuestHost(QS_SCN_QUEST_BLOCKS) >= 0 && gSave.scenario_c != 0) {
-        nth = (s32)gSave.scenario_c - 1;
+        index = QuickStartBlocksOwned(-1, slot, (s32)gSave.scenario_c - 1);
+        content = (index >= 0 && gSave.scenario_d != 0)
+                      ? (s32)(gSave.scenario_d - 1) % sQuickStartBlockFrames[index].nContent : 0;
+    } else {
+        // Over every puzzle the row holds; the quest's own roll salts it.
+        nth = (s32)QuickStartBank12Read(GF_BLOCKQ_PICK_BIT(0), 4);
+        index = QuickStartBlocksPick(-1, slot, 0xB110u + (u32)nth, &content);
     }
-    index = QuickStartBlocksOwned(-1, slot, nth);
-    if (index < 0 || sQuickStartBlockPuzzles[index].area != region->area ||
-        sQuickStartBlockPuzzles[index].room != region->room) {
+    if (index < 0 || sQuickStartBlockFrames[index].area != region->area ||
+        sQuickStartBlockFrames[index].room != region->room) {
         return;
     }
-    if (QuickStartBlocksRun(index, QUICKSTART_BLOCKQ_ROOM_FLAGS,
+    if (QuickStartBlocksRun(index, content, QUICKSTART_BLOCKQ_ROOM_FLAGS,
                             (s32)(QuickStartChainHash(0xB10Eu) & 0x3f), TRUE,
                             !CheckLocalFlagByBank(FLAG_BANK_12, GF_BLOCKQ_SAID))) {
         QuickStartBank12Write(GF_BLOCKQ_STATE_BIT(0), 2, QUICKSTART_BLOCKQ_WON);

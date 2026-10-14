@@ -33,6 +33,7 @@ import collections
 import json
 import os
 import random
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -74,9 +75,15 @@ MAZE_CLASSES = [
 ]
 MAX_ROCKS_SITE = 28      # entity budget in a ? room (nothing else lives there)
 MAX_ROCKS_ROW = 26       # ... and in a region room, which also holds waves
-PER_OWNER = 3            # instances per owner per kind
-SEARCH_CAP = 60000
-WHY = collections.Counter()   # why candidates were dropped, for tuning       # BFS states before a template's minimum is called "at least the scramble"
+FRAMES = 3               # template placements, and chest-maze placements, per room
+CONTENTS = 32            # contents per placement: what a run draws from (the testbed addresses 32)
+MIN_CONTENTS = 3         # fewer, and the placement is not worth its slot
+MIN_DOOR_CONTENTS = 2    # a door maze is the only one in front of its door
+CONTENT_TRIES = 6        # attempts per wanted content
+MAZE_TRIES = 25          # ... for a maze, where most carves come out too easy
+SEARCH_CAP = 60000       # BFS states before a template's minimum is called "at least the scramble"
+BIG_SEARCH_CAP = 6000    # ... for the L and XL boards
+WHY = collections.Counter()   # why candidates were dropped, for tuning (per process)
 
 
 # ------------------------------------------------------------------ floors --
@@ -443,76 +450,134 @@ def template_layouts(floor, side, rng, limit=40):
     return out
 
 
-def make_template(floor, cls, rng, max_rocks):
+def template_frames(floor, rng, max_rocks, site_owner):
+    """Up to FRAMES template placements, biggest class first, at distinct
+    spots, each with its pool of contents. A placement is everything that
+    depends on the room - the board, the reference beside it, the posts,
+    the switch, the prize tile, where the player comes in; a content is a
+    goal shape and a scrambled start inside it."""
+    out, used = [], []
+    for cls in reversed(TEMPLATE_CLASSES):
+        name, side, nrocks, nlimited, (lo, hi), minpush = cls
+        if site_owner and name == 'XL':
+            continue
+        if 2 * nrocks + 8 > max_rocks:
+            continue
+        for (rx, ry, bx, by) in template_layouts(floor, side, rng)[:60]:
+            if len(out) >= FRAMES:
+                break
+            if any(abs(bx - ux) < 2 and abs(by - uy) < 2 for ux, uy in used):
+                continue
+            r_in, r_ring, r_posts = frame_cells(rx, ry, side)
+            b_in, b_ring, b_posts = frame_cells(bx, by, side)
+            posts = r_posts | b_posts
+            foot = r_in | r_posts | b_in | b_ring
+            # The posts and the board here; each content checks its own
+            # reference cells (the whole reference square counted blocked
+            # cut the small rooms, the Grimblade dojo among them).
+            blocked = posts | b_in
+            if not keeps_connected(floor, blocked):
+                continue
+            spot = prize_spot(floor, foot, blocked, (bx + side // 2, by + side // 2))
+            sw = switch_spot(floor, foot, blocked, (bx - 1, by + side))
+            if spot is None or sw is None or sw == spot or not keeps_connected(floor, blocked | {sw}):
+                continue
+            # The player comes from the arrival: enter from the ring tile
+            # nearest it, so a ring segment walled off from the room is
+            # never assumed reachable.
+            dist = bfs_dist(floor.comp - blocked - {sw}, floor.start)
+            outside = [c for c in b_ring if c not in b_posts and c in dist]
+            if not outside:
+                continue
+            frame = dict(kind=KIND_TEMPLATE, cls=name, board=(bx, by, side, side), ref=(rx, ry),
+                         fixed=sorted(posts), prize=spot, switch=sw, target=None, door=0,
+                         entry=min(outside, key=lambda c: dist[c]))
+            # ... and the prize, the switch and the way in stay clear of the
+            # reference square whatever its shape.
+            if {spot, sw, frame['entry']} & r_in:
+                continue
+            contents = template_contents(floor, cls, rng, frame, foot)
+            if len(contents) >= MIN_CONTENTS:
+                frame['contents'] = contents
+                out.append(frame)
+                used.append((bx, by))
+        if len(out) >= FRAMES:
+            break
+    return out
+
+
+def first_solved(path, puz, start, gm):
+    """`path` up to the first push after which the rocks fill `gm`."""
+    occ = puz.mask(start)
+    for n, (x, y, d) in enumerate(path):
+        b = puz.bit((x, y))
+        occ = (occ & ~(1 << b)) | (1 << (b + puz.steps[d]))
+        if occ == gm:
+            return path[:n + 1]
+    return path
+
+
+def template_contents(floor, cls, rng, frame, foot):
+    """Up to CONTENTS distinct goals and starts for one template frame. A
+    start is made by pulls from the goal, so it is solvable by
+    construction; a search then proves the fewest pushes and drops the easy
+    ones. Where the search hits its cap (the large boards), the scramble
+    undone is the solution kept and its length an upper bound."""
     name, side, nrocks, nlimited, (lo, hi), minpush = cls
-    if 2 * nrocks + 8 > max_rocks:
-        return None
-    for (rx, ry, bx, by) in template_layouts(floor, side, rng)[:60]:
-        r_in, r_ring, r_posts = frame_cells(rx, ry, side)
-        b_in, b_ring, b_posts = frame_cells(bx, by, side)
-        foot = r_in | r_posts | b_in | b_ring
-        best = None
-        for attempt in range(10):
-            goal_rel = rng.sample([(i, j) for i in range(side) for j in range(side)], nrocks)
-            goal = [(bx + i, by + j) for i, j in goal_rel]
-            ref = [(rx + i, ry + j) for i, j in goal_rel]
-            fixed = set(ref) | r_posts | b_posts
-            # The reference cells and the posts block for good, the board
-            # cells may: none of that may cut the room.
-            if not keeps_connected(floor, fixed | b_in):
-                break
-            walk = window(floor, foot) - fixed
-            classes = [ANY] * nrocks
-            for k in rng.sample(range(nrocks), nlimited):
-                classes[k] = rng.choice((HORIZ, VERT))
-            puz = Puzzle(walk, b_in, classes)
-            outside = [c for c in b_ring if c not in b_posts and c in walk]
-            if not outside:
-                break
-            # The player comes from the arrival: enter the search from the
-            # ring tile nearest it, so a ring segment walled off from the
-            # room is never assumed reachable.
-            dist = bfs_dist(floor.comp - fixed - b_in, floor.start)
-            outside = [c for c in outside if c in dist]
-            if not outside:
-                break
-            near_entry = min(outside, key=lambda c: dist[c])
-            goalset = frozenset(goal)
-            for _ in range(4):
-                start, _p, pulls = scramble(puz, goal, near_entry, rng.randint(lo, hi), rng)
-                if sum(1 for st in start if st not in goalset) < max(2, (nrocks + 1) // 2):
-                    continue
-                entry = near_entry
-                gm = puz.mask(goal)
-                n, path = puz.solve(start, entry, lambda occ, region, gm=gm: occ == gm)
-                if path is None:
-                    # No minimum proved inside the cap: the scramble undone.
-                    path = [(c[0], c[1], d) for c, d in reversed(pulls)]
-                score = n if n is not None else hi
-                if best is None or score > best[0]:
-                    best = (score, n, path, start, classes, goal, fixed)
-            if best and best[0] >= minpush + 2:
-                break
-        if best is None or best[0] < minpush:
+    bx, by = frame['board'][:2]
+    rx, ry = frame['ref']
+    posts = set(map(tuple, frame['fixed']))
+    b_in = {(bx + i, by + j) for i in range(side) for j in range(side)}
+    entry = tuple(frame['entry'])
+    base = window(floor, foot) - posts - {tuple(frame['switch'])}
+    cells = [(i, j) for i in range(side) for j in range(side)]
+    out, seen = [], set()
+    for _ in range(CONTENTS * CONTENT_TRIES):
+        if len(out) >= CONTENTS:
+            break
+        goal_rel = rng.sample(cells, nrocks)
+        goal = [(bx + i, by + j) for i, j in goal_rel]
+        ref = {(rx + i, ry + j) for i, j in goal_rel}
+        classes = [ANY] * nrocks
+        for k in rng.sample(range(nrocks), nlimited):
+            classes[k] = rng.choice((HORIZ, VERT))
+        puz = Puzzle(base - ref, b_in, classes)
+        start, _p, pulls = scramble(puz, goal, entry, rng.randint(lo, hi), rng)
+        goalset = frozenset(goal)
+        if sum(1 for st in start if st not in goalset) < max(2, (nrocks + 1) // 2):
             continue
-        score, n, path, start, classes, goal, fixed = best
-        spot = prize_spot(floor, foot, fixed | b_in, (bx + side // 2, by + side // 2))
-        sw = switch_spot(floor, foot, fixed | b_in, (bx - 1, by + side))
-        if spot is None or sw is None or sw == spot:
+        if not keeps_connected(floor, posts | b_in | ref | {tuple(frame['switch'])}):
             continue
-        if not keeps_connected(floor, fixed | b_in | {sw}):
+        key = (tuple(sorted(goal)), tuple(sorted(zip(start, classes))))
+        if key in seen:
             continue
-        return dict(kind=KIND_TEMPLATE, cls=name, board=(bx, by, side, side), ref=(rx, ry),
-                    move=[(st[0], st[1], c) for st, c in zip(start, classes)],
-                    fixed=sorted(fixed), goal=sorted(goal), prize=spot, switch=sw,
-                    target=None, door=0, pushes=(n if n is not None else -1),
-                    bound=score, solution=path)
-    return None
+        seen.add(key)
+        gm = puz.mask(goal)
+        # The L and XL boards never prove inside 60,000 states (all six in
+        # the first build hit the cap): a smaller cap, the same outcome, a
+        # tenth of the time.
+        n, path = puz.solve(start, entry, lambda occ, region, gm=gm: occ == gm,
+                            cap=SEARCH_CAP if nrocks <= 5 else BIG_SEARCH_CAP)
+        if path is None:
+            # The scramble undone - cut where it first matches: a scramble
+            # can pull rocks out of the shape and back, and the game locks
+            # a template the moment it matches (a Minish-path template's
+            # 22-push solution matched at push 20, and push 21 was refused).
+            path = first_solved([(c[0], c[1], d) for c, d in reversed(pulls)], puz, start, gm)
+            if len(path) < minpush + 2:
+                continue
+        elif n < minpush:
+            continue
+        out.append(dict(move=[(s[0], s[1], c) for s, c in zip(start, classes)], goal=sorted(goal),
+                        pushes=(n if n is not None else -1), solution=path))
+    return out
 
 
 def prize_spot(floor, foot, blocked, near):
     best = None
-    for c in floor.comp - foot - blocked - floor.reserved:
+    # reachable with the puzzle in place, not just open floor
+    main = flood(floor.comp - foot - blocked, floor.start)
+    for c in main - floor.reserved:
         if not any((c[0] + dx, c[1] + dy) in foot for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
             continue
         d = abs(c[0] - near[0]) + abs(c[1] - near[1])
@@ -525,7 +590,11 @@ def switch_spot(floor, foot, blocked, near):
     """An open tile just outside the footprint, not a keypoint, that does
     not cut anything when the switch stands on it."""
     cands = []
-    for c in floor.comp - foot - blocked - floor.reserved:
+    # Reachable with the puzzle in place: a switch beside a maze's ring once
+    # stood in a pocket the ring itself sealed (Trilby's rupee cave), and
+    # nothing could strike it.
+    main = flood(floor.comp - foot - blocked, floor.start)
+    for c in main - floor.reserved:
         if c in floor.keys:
             continue
         if not any((c[0] + dx, c[1] + dy) in foot for dx, dy in DIRS):
@@ -539,158 +608,184 @@ def switch_spot(floor, foot, blocked, near):
 
 # ------------------------------------------------------------------- mazes --
 
-def make_maze(floor, cls, rng, max_rocks, door=None):
-    """A maze: interior w x h, a border ring (rock where the floor is open,
-    nothing where it is wall), one entrance gap, a chest at the back with
-    the target cell in front of it, fixed and movable rocks inside.
-
-    `door` (x, y): an overworld door the maze guards instead of a chest -
-    the door tile sits in the back border and the target is in front of it."""
+def maze_placements(floor, cls, door=None):
+    """Where a maze of this class fits: interior w x h on plain ground, its
+    ring either wall or rock-able floor (`passable`, not walkability:
+    shallow water, ice and swamp are walked through, and the ROM's flood,
+    QuickStartBlocksMazeOpen, counts every collision-free tile as open - a
+    Minish cave maze on a shallow-water edge was solved the moment it was
+    dealt). `door` (x, y): an overworld door in the back border instead of
+    a chest."""
     name, w, h, nmove, nfix, minpush = cls
-    placements = []
+    out = []
     for y0 in range(2, floor.th - h - 1):
         for x0 in range(2, floor.tw - w - 1):
             inner = {(x0 + i, y0 + j) for i in range(w) for j in range(h)}
             if not (inner <= floor.comp and inner <= floor.ground):
                 continue
             ring = {(x0 + i, y0 + j) for i in range(-1, w + 1) for j in range(-1, h + 1)} - inner
-            # a ring cell is either wall (nothing to place) or floor a rock
-            # can stand on. "Wall" is collision, not walkability: shallow
-            # water, ice and swamp are walked through, and the ROM's own
-            # flood (QuickStartBlocksMazeOpen) counts every collision-free
-            # tile as open. A Minish cave maze sat on a shallow-water edge
-            # and was solved the moment it was dealt.
             if any(c in floor.passable and c not in floor.ground and c != door for c in ring):
                 continue
+            if door is not None and not (y0 - 1 == door[1] and x0 <= door[0] < x0 + w):
+                continue
+            border = {c for c in ring if c in floor.comp}
             if door is not None:
-                # the door in the top border, its front tile the target
-                dx, dy = door
-                if not (y0 - 1 == dy and x0 <= dx < x0 + w):
-                    continue
-                target, chest = (dx, y0), None
-            else:
-                target = None
-                chest = None
-            rocks = {c for c in ring if c in floor.comp}
-            if door is not None:
-                rocks.discard(door)
-            placements.append((x0, y0, inner, ring, rocks, target, chest))
-    if not placements:
-        return None
-    placements.sort(key=lambda p: len(p[4]) + rng.random() * 2)
-    for (x0, y0, inner, ring, border, target, chest) in placements[:30]:
+                border.discard(door)
+            out.append((x0, y0, inner, ring, border))
+    return out
+
+
+def maze_frames(floor, cls, rng, max_rocks, door=None, limit=FRAMES):
+    """Up to `limit` maze placements of one class, each with its pool: the
+    grid, its ring walls, the way in, the chest (or door) and the switch
+    are the frame; the carved walls inside and the rocks are the content."""
+    name, w, h, nmove, nfix, minpush = cls
+    places = maze_placements(floor, cls, door)
+    places.sort(key=lambda p: len(p[4]) + rng.random() * 2)
+    out, used = [], []
+    for (x0, y0, inner, ring, border) in places[:40]:
+        if len(out) >= limit:
+            break
+        if any(abs(x0 - ux) < 2 and abs(y0 - uy) < 2 for ux, uy in used):
+            continue
         if door is None:
-            cxs = list(range(x0, x0 + w))
-            rng.shuffle(cxs)
-            for cx in cxs:
-                chest, target = (cx, y0), (cx, y0 + 1)
-                break
-        # entrance: a border cell on the bottom/left/right side whose outside
-        # neighbour is in the arrival component
+            cx = rng.randrange(x0, x0 + w)
+            chest, target = (cx, y0), (cx, y0 + 1)
+        else:
+            chest, target = None, (door[0], y0)
+        # the way in: a border cell on the bottom, left or right whose
+        # outside neighbour is in the arrival component
         gates = []
-        for c in border:
+        for c in sorted(border):
             for dx, dy in DIRS:
                 o = (c[0] + dx, c[1] + dy)
                 i = (c[0] - dx, c[1] - dy)
                 if o in floor.comp and o not in inner and o not in ring and i in inner and c[1] >= y0:
-                    gates.append(c)
+                    gates.append((c, i))
         if not gates:
             WHY['no gates'] += 1
             continue
-        best = None
-        for attempt in range(25):
-            gate = rng.choice(gates)
-            wall = set(border) - {gate}
-            if len(wall) + nmove > max_rocks:
+        gate, gate_in = rng.choice(gates)
+        wall = border - {gate}
+        if len(wall) + nmove > max_rocks:
+            continue
+        chests = {chest} if chest else set()
+        # the whole interior counted blocked: no carve can cut the room
+        if not keeps_connected(floor, wall | chests | inner):
+            WHY['cuts room'] += 1
+            continue
+        # The switch away from the way in: placed nearest the gate (as the
+        # first build did) it often stood on the very tile in front of it,
+        # and a player who walks - the probe sets the player down - could
+        # not get in.
+        gate_out = {(gate[0] + dx, gate[1] + dy) for dx, dy in DIRS} - inner - ring
+        sw = switch_spot(floor, inner | ring, wall | chests | inner | gate_out, (x0 + w, y0 - 1))
+        if sw is None:
+            continue
+        base = (window(floor, inner | ring, 3) | inner | {gate}) - wall - chests - {sw}
+        outside = [c for c in base if c not in inner and c not in ring]
+        if not outside:
+            continue
+        entry = min(outside, key=lambda c: abs(c[0] - gate[0]) + abs(c[1] - gate[1]))
+        # The switch must not stand in the way in.
+        if gate not in flood(base - inner, entry):
+            WHY['switch in the way'] += 1
+            continue
+        frame = dict(kind=KIND_MAZE, cls=name, board=(x0, y0, w, h), ref=None, fixed=sorted(wall),
+                     prize=chest if chest else door, switch=sw, target=target,
+                     door=1 if door else 0, entry=entry, gate=gate, gate_in=gate_in)
+        contents = maze_contents(floor, cls, rng, frame, inner, base, max_rocks)
+        if len(contents) >= (MIN_DOOR_CONTENTS if door else MIN_CONTENTS):
+            frame['contents'] = contents
+            out.append(frame)
+            used.append((x0, y0))
+    return out
+
+
+def maze_contents(floor, cls, rng, frame, inner, base, max_rocks):
+    """Up to CONTENTS distinct carves and rock starts for one maze frame.
+    Carve the open interior as a corridor grown from the way in, branching
+    into pockets (where rocks can be parked and walked round) until it
+    reaches the target and covers about `nfix` percent; everything not
+    carved is wall. Park the rocks off the way, then search backwards for
+    arrangements that seal the target, and prove each one's fewest pushes
+    forward. At most two starts per carve, for spread."""
+    name, w, h, nmove, nfix, minpush = cls
+    chest = tuple(frame['prize']) if not frame['door'] else None
+    target = tuple(frame['target'])
+    gate_in = tuple(frame['gate_in'])
+    entry = tuple(frame['entry'])
+    wall = set(map(tuple, frame['fixed']))
+    need = max(len(inner) * nfix // 100, 4)
+    out, seen = [], set()
+    for attempt in range(CONTENTS * MAZE_TRIES):
+        if len(out) >= CONTENTS:
+            break
+        carved = {gate_in}
+        grow_ok = False
+        for _ in range(len(inner) * 8):
+            c = rng.choice(sorted(carved))
+            nbrs = [(c[0] + dx, c[1] + dy) for dx, dy in DIRS]
+            nbrs = [nb for nb in nbrs if nb in inner and nb not in carved and nb != chest]
+            if not nbrs:
+                continue
+            nb = rng.choice(nbrs)
+            # no open 2x2 squares: a plaza gives every rock a way round
+            square = any(all((nb[0] + ax, nb[1] + ay) in carved | {nb} for ax in (0, sx) for ay in (0, sy))
+                         for sx in (-1, 1) for sy in (-1, 1))
+            if square and rng.random() < 0.8:
+                continue
+            carved.add(nb)
+            if target in carved and len(carved) >= need:
+                grow_ok = True
                 break
-            # Interior walls: a random handful that leave the open interior
-            # in one piece with the gate and the target in it.
-            gate_in = next(((gate[0] - dx, gate[1] - dy) for dx, dy in DIRS
-                            if (gate[0] - dx, gate[1] - dy) in inner), None)
-            if gate_in is None:
-                WHY['no gate_in'] += 1
-                continue
-            # Carve the open interior as a corridor grown from the way in,
-            # branching into a few pockets (where rocks can be parked and
-            # walked round), until it reaches the target and covers about
-            # `nfix` percent of the interior. Everything not carved is wall.
-            carved = {gate_in}
-            need = max(len(inner) * nfix // 100, 4)
-            grow_ok = False
-            for _ in range(len(inner) * 8):
-                c = rng.choice(sorted(carved))
-                nbrs = [(c[0] + dx, c[1] + dy) for dx, dy in DIRS]
-                nbrs = [nb for nb in nbrs if nb in inner and nb not in carved and nb != chest]
-                if not nbrs:
-                    continue
-                nb = rng.choice(nbrs)
-                # no open 2x2 squares: a plaza gives every rock a way round
-                square = any(all((nb[0] + ax, nb[1] + ay) in carved | {nb} for ax in (0, sx) for ay in (0, sy))
-                             for sx in (-1, 1) for sy in (-1, 1))
-                if square and rng.random() < 0.8:
-                    continue
-                carved.add(nb)
-                if target in carved and len(carved) >= need:
-                    grow_ok = True
-                    break
-            if not grow_ok:
-                WHY['carve'] += 1
-                continue
-            fixed_in = inner - carved - ({chest} if chest else set())
-            fixed = wall | fixed_in
-            if len(fixed) + nmove > max_rocks:
-                WHY['too many rocks'] += 1
-                continue
-            blocked = fixed | ({chest} if chest else set())
-            if not keeps_connected(floor, blocked | inner):
-                WHY['cuts room'] += 1
-                continue
-            walk = (window(floor, inner | ring, 3) | inner | {gate}) - blocked
-            board = inner - fixed_in - {target} - ({chest} if chest else set())
-            outside = [c for c in walk if c not in inner and c not in ring]
-            if not outside:
-                continue
-            entry = min(outside, key=lambda c: abs(c[0] - gate[0]) + abs(c[1] - gate[1]))
-            # Solved arrangement: rocks parked on interior cells off the way
-            # in, the target still reachable. Then pull them into the way.
-            for park_try in range(12):
-                classes = [rng.choice((ANY, ANY, HORIZ, VERT)) for _ in range(nmove)]
-                spots = sorted(board - {gate_in})
-                if len(spots) < nmove:
-                    break
-                parked = rng.sample(spots, nmove)
-                puz = Puzzle(walk, board, classes)
-                occ = puz.mask(parked)
-                tb = 1 << puz.bit(target)
-                if not puz.region(occ, puz.bit(entry)) & tb:
-                    WHY['parked blocks'] += 1
-                    continue
-                starts = reverse_search(puz, parked, entry, lambda occ, region, tb=tb: not (region & tb))
-                if not starts:
-                    WHY['never sealed'] += 1
-                    continue
-                found = None
-                for start in starts[:6]:
-                    n, path = puz.solve(start, entry, lambda occ, region, tb=tb: bool(region & tb), cap=SEARCH_CAP)
-                    if n is not None and (found is None or n > found[0]):
-                        found = (n, path, start)
-                if found is None or found[0] < minpush or (best is not None and found[0] <= best[0]):
-                    WHY['n=%s' % (found and found[0])] += 1
-                    continue
-                n, path, start = found
-                sw = switch_spot(floor, inner | ring, blocked, gate)
-                if sw is None:
-                    continue
-                best = (n, dict(kind=KIND_MAZE, cls=name, board=(x0, y0, w, h),
-                                move=[(m[0], m[1], c) for m, c in zip(start, classes)],
-                                fixed=sorted(fixed), goal=[], prize=chest if chest else door,
-                                switch=sw, target=target, door=1 if door else 0,
-                                pushes=n, bound=n, solution=path))
-            if best is not None and best[0] >= minpush + 3:
+        if not grow_ok:
+            WHY['carve'] += 1
+            continue
+        fixed_in = inner - carved - ({chest} if chest else set())
+        if len(wall) + len(fixed_in) + nmove > max_rocks:
+            WHY['too many rocks'] += 1
+            continue
+        walk = base - fixed_in
+        board = inner - fixed_in - {target} - ({chest} if chest else set())
+        spots = sorted(board - {gate_in})
+        if len(spots) < nmove:
+            continue
+        classes = [rng.choice((ANY, ANY, HORIZ, VERT)) for _ in range(nmove)]
+        puz = Puzzle(walk, board, classes)
+        tb = 1 << puz.bit(target)
+        # Solved arrangement: rocks parked off the way in, the target still
+        # reachable; then pull them into the way.
+        # Random parking, retried. (Greedy parking - a rock at a time where
+        # the target stays reachable - always succeeds but tucks the rocks
+        # into the pockets beside the corridor, one pull from sealing it:
+        # nearly every maze it made took one or two pushes.)
+        parked = None
+        for _ in range(12):
+            p = rng.sample(spots, nmove)
+            if puz.region(puz.mask(p), puz.bit(entry)) & tb:
+                parked = p
                 break
-        if best is not None:
-            return best[1]
-    return None
+        if parked is None:
+            WHY['parked blocks'] += 1
+            continue
+        starts = reverse_search(puz, parked, entry, lambda occ, region, tb=tb: not (region & tb))
+        took = 0
+        for start in starts[:8]:
+            if took >= 2 or len(out) >= CONTENTS:
+                break
+            key = (frozenset(fixed_in), tuple(sorted(zip(start, classes))))
+            if key in seen:
+                continue
+            seen.add(key)
+            n, path = puz.solve(start, entry, lambda occ, region, tb=tb: bool(region & tb), cap=SEARCH_CAP)
+            if n is None or n < minpush:
+                WHY['n=%s' % n] += 1
+                continue
+            out.append(dict(move=[(m[0], m[1], c) for m, c in zip(start, classes)],
+                            walls=sorted(fixed_in), pushes=n, solution=path))
+            took += 1
+    return out
 
 
 # ------------------------------------------------------------------ driver --
@@ -716,92 +811,259 @@ def doors_of(floor):
     return out
 
 
-def generate(seed):
-    rooms = json.load(open(ROOMS))
-    rng = random.Random(seed)
-    out = []
-    for key, r in owners(rooms):
-        floor = Floor(r)
-        site = r.get('site')
-        row = r.get('row')
-        cap = MAX_ROCKS_SITE if site is not None else MAX_ROCKS_ROW
-        made = []
-        for cls in reversed(TEMPLATE_CLASSES):
-            if site is not None and cls[0] in ('XL',):
-                continue
-            for k in range(PER_OWNER):
-                inst = make_template(floor, cls, rng, cap)
-                if inst:
-                    made.append(inst)
-            if sum(1 for m in made if m['kind'] == KIND_TEMPLATE) >= PER_OWNER:
-                break
-        mazes = 0
-        if row is not None:
-            for door in doors_of(floor):
-                for cls in reversed(MAZE_CLASSES):
-                    inst = make_maze(floor, cls, rng, cap, door=door)
-                    if inst:
-                        made.append(inst)
-                        mazes += 1
-                        break
-        for cls in reversed(MAZE_CLASSES):
-            for k in range(PER_OWNER):
-                if mazes >= PER_OWNER:
+def owner_job(job):
+    """One room's frames. Its own random stream, keyed by (seed, owner), so
+    the result does not depend on which process ran it or in what order."""
+    seed, key, r = job
+    rng = random.Random('%d:%s' % (seed, key))
+    floor = Floor(r)
+    site = r.get('site')
+    cap = MAX_ROCKS_SITE if site is not None else MAX_ROCKS_ROW
+    frames = template_frames(floor, rng, cap, site is not None)
+    if r.get('row') is not None:
+        for door in doors_of(floor):
+            for cls in reversed(MAZE_CLASSES):
+                got = maze_frames(floor, cls, rng, cap, door=door, limit=1)
+                if got:
+                    frames += got
                     break
-                inst = make_maze(floor, cls, rng, cap)
-                if inst:
-                    made.append(inst)
-                    mazes += 1
-        for m in made:
-            m.update(owner=key, area=r['area'], room=r['room'])
-        out += made
-        print('%-9s %-46s %s' % (key, r['room'][5:], ' '.join('%s%s%s' % ('T' if m['kind'] == 0 else ('D' if m['door'] else 'M'), m['cls'], m['pushes']) for m in made) or '-'))
+    chests = []
+    for cls in reversed(MAZE_CLASSES):
+        if len(chests) >= FRAMES:
+            break
+        chests += maze_frames(floor, cls, rng, cap, limit=FRAMES - len(chests))
+    frames += chests
+    for f in frames:
+        f.update(owner=key, area=r['area'], room=r['room'])
+    return key, r['room'], frames
+
+
+def tag(f):
+    return ('T' if f['kind'] == KIND_TEMPLATE else ('D' if f['door'] else 'M')) + f['cls']
+
+
+def generate(seed, procs=4):
+    import multiprocessing
+    rooms = json.load(open(ROOMS))
+    jobs = [(seed, key, r) for key, r in owners(rooms)]
+    out = []
+    with multiprocessing.Pool(procs) as pool:
+        for key, room, frames in pool.imap(owner_job, jobs):
+            out += frames
+            print('%-9s %-46s %s' % (key, room[5:], ' '.join('%s:%d' % (tag(f), len(f['contents'])) for f in frames) or '-'),
+                  flush=True)
     return out
 
 
-def emit(insts):
+# ------------------------------------------------------------ the table --
+#
+# A frame's fixed rocks (the posts, or a maze's ring) are (x, y) pairs. A
+# content is `stride` bytes: one per mover, x - bx in bits 0-2, y - by in
+# bits 3-5, the class in bits 6-7; then a template's goal cells the same
+# way (the reference shows them at the same offsets from rx, ry), or a
+# maze's interior walls as a 32-bit mask, bit (y - by) * bw + (x - bx).
+
+def pack(bx, by, x, y, c=0):
+    assert 0 <= x - bx < 8 and 0 <= y - by < 8
+    return (x - bx) | ((y - by) << 3) | (c << 6)
+
+
+def records(f):
+    bx, by, bw, bh = f['board']
+    out = []
+    for c in f['contents']:
+        rec = [pack(bx, by, x, y, k) for x, y, k in c['move']]
+        if f['kind'] == KIND_TEMPLATE:
+            rec += [pack(bx, by, x, y) for x, y in c['goal']]
+        else:
+            m = 0
+            for x, y in c['walls']:
+                m |= 1 << ((y - by) * bw + (x - bx))
+            rec += [m & 0xff, (m >> 8) & 0xff, (m >> 16) & 0xff, (m >> 24) & 0xff]
+        out.append(rec)
+    return out
+
+
+def emit(frames):
     lines = ['// GENERATED by tools/quickstart/block_puzzles.py - do not edit.',
              '// Block puzzles: docs/QUICKSTART_BLOCK_PUZZLES.md. Room tiles, room-local.',
              '#ifndef QUICKSTART_BLOCK_PUZZLES_H', '#define QUICKSTART_BLOCK_PUZZLES_H', '']
-    data, rows = [], []
-    for n, m in enumerate(insts):
-        cells = []
-        for x, y, c in m['move']:
-            cells += [x, y, c]
-        for x, y in m['fixed']:
-            cells += [x, y]
-        for x, y in m['goal']:
-            cells += [x, y]
-        data.append('static const u8 sQuickStartBlockCells%d[] = { %s };' % (n, ', '.join(str(v) for v in cells)))
-        own = m['owner']
+    rows = []
+    for n, f in enumerate(frames):
+        recs = records(f)
+        stride = len(recs[0])
+        assert all(len(r) == stride for r in recs) and len(recs) <= CONTENTS
+        lines.append('static const u8 sQuickStartBlockFixed%d[] = { %s };'
+                     % (n, ', '.join('%d, %d' % tuple(c) for c in f['fixed'])))
+        lines.append('static const u8 sQuickStartBlockContents%d[] = { %s };'
+                     % (n, ', '.join(str(v) for r in recs for v in r)))
+        own = f['owner']
         site = int(own.split(':')[1]) if own.startswith('site') else 0xFF
         row = int(own.split(':')[1]) if own.startswith('row') else 0xFF
-        bx, by, bw, bh = m['board']
-        tx, ty = m['target'] if m['target'] else (0xFF, 0xFF)
-        rows.append('    { %s, %s, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, sQuickStartBlockCells%d }, // %s %s%s %d'
-                    % (m['area'], m['room'], m['kind'], m['door'], site, row, bx, by, bw, bh,
-                       m['prize'][0], m['prize'][1], tx, ty, m['switch'][0], m['switch'][1],
-                       len(m['move']), len(m['fixed']), len(m['goal']), n,
-                       own, 'T' if m['kind'] == 0 else 'M', m['cls'], m['pushes']))
-    lines += data
-    lines += ['', 'static const QuickStartBlockPuzzle sQuickStartBlockPuzzles[] = {'] + rows + ['};', '',
+        bx, by, bw, bh = f['board']
+        tx, ty = f['target'] if f['target'] else (0xFF, 0xFF)
+        rx, ry = f['ref'] if f['ref'] else (0xFF, 0xFF)
+        pushes = [c['pushes'] for c in f['contents']]
+        rows.append('    { %s, %s, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '
+                    'sQuickStartBlockFixed%d, sQuickStartBlockContents%d }, // %s %s x%d, %d-%d pushes'
+                    % (f['area'], f['room'], f['kind'], f['door'], site, row, bx, by, bw, bh,
+                       f['prize'][0], f['prize'][1], tx, ty, f['switch'][0], f['switch'][1], rx, ry,
+                       len(f['contents'][0]['move']), len(f['fixed']), len(recs), stride, n, n,
+                       own, tag(f), len(recs), min(pushes), max(pushes)))
+    lines += ['', 'static const QuickStartBlockFrame sQuickStartBlockFrames[] = {'] + rows + ['};', '',
               '#endif', '']
     return '\n'.join(lines)
 
 
+# ---------------------------------------------------------- verification --
+
+def frame_space(floor, f, c):
+    """(walk, board, entry, done) for content c of frame f, exactly as the
+    generator built them: what the player may stand on, where a mover may
+    go, where the player comes in, and the solved test."""
+    bx, by, bw, bh = f['board']
+    sw = tuple(f['switch'])
+    fixed = set(map(tuple, f['fixed']))
+    if f['kind'] == KIND_TEMPLATE:
+        rx, ry = f['ref']
+        side = bw
+        r_in, _r_ring, r_posts = frame_cells(rx, ry, side)
+        b_in, b_ring, _b_posts = frame_cells(bx, by, side)
+        ref = {(rx + x - bx, ry + y - by) for x, y in c['goal']}
+        walk = window(floor, r_in | r_posts | b_in | b_ring) - fixed - {sw} - ref
+        goal = set(map(tuple, c['goal']))
+        return walk, b_in, tuple(f['entry']), lambda puz, occ, region: occ == puz.mask(goal)
+    inner = {(bx + i, by + j) for i in range(bw) for j in range(bh)}
+    ring = {(bx + i, by + j) for i in range(-1, bw + 1) for j in range(-1, bh + 1)} - inner
+    chests = {tuple(f['prize'])} if not f['door'] else set()
+    walls = set(map(tuple, c['walls']))
+    target = tuple(f['target'])
+    walk = (window(floor, inner | ring, 3) | inner | {tuple(f['gate'])}) - fixed - chests - {sw} - walls
+    board = inner - walls - {target} - chests
+    return walk, board, tuple(f['entry']), lambda puz, occ, region: bool((region >> puz.bit(target)) & 1)
+
+
+def replay(walk, board, classes, start, entry, path, done):
+    """Play `path` push by push under the game's rules (player can reach
+    the far side, the rock may move that way, the next tile is board and
+    free). None if every push is legal and the end is solved, else why."""
+    puz = Puzzle(walk, board, classes)
+    rocks = [puz.bit(s) for s in start]
+    occ = sum(1 << r for r in rocks)
+    region = puz.region(occ, puz.bit(entry))
+    if done(puz, occ, region):
+        return 'solved at the start'
+    for n, (x, y, d) in enumerate(path):
+        b = puz.bit((x, y))
+        if b not in rocks:
+            return 'push %d: no rock at (%d,%d)' % (n + 1, x, y)
+        i = rocks.index(b)
+        if d not in ALLOW[classes[i]]:
+            return 'push %d: rock (%d,%d) may not move dir %d' % (n + 1, x, y, d)
+        st = puz.steps[d]
+        if not (region >> (b - st)) & 1:
+            return 'push %d: far side of (%d,%d) out of reach' % (n + 1, x, y)
+        dest = b + st
+        if not (puz.board >> dest) & 1 or (occ >> dest) & 1:
+            return 'push %d: (%d,%d) cannot move dir %d' % (n + 1, x, y, d)
+        rocks[i] = dest
+        occ = (occ & ~(1 << b)) | (1 << dest)
+        region = puz.flood(1 << b, puz.walk & ~occ)
+        if n < len(path) - 1 and done(puz, occ, region):
+            # the game acts on the first solved state (a template locks)
+            return 'solved early, at push %d of %d' % (n + 1, len(path))
+    return None if done(puz, occ, region) else 'not solved after %d pushes' % len(path)
+
+
+def parse_header(text):
+    arrays = {(m.group(1), int(m.group(2))): [int(v) for v in m.group(3).split(',') if v.strip()]
+              for m in re.finditer(r'static const u8 sQuickStartBlock(Fixed|Contents)(\d+)\[\] = \{ ?(.*?) ?\};', text)}
+    frames = []
+    for m in re.finditer(r'\{ (AREA_\w+), (ROOM_\w+), ([\d, ]+), sQuickStartBlockFixed(\d+), sQuickStartBlockContents(\d+) \}', text):
+        v = [int(x) for x in m.group(3).split(',') if x.strip()]
+        keys = ('kind', 'door', 'site', 'row', 'bx', 'by', 'bw', 'bh', 'px', 'py', 'tx', 'ty', 'sx', 'sy',
+                'rx', 'ry', 'nMove', 'nFixed', 'nContent', 'stride')
+        f = dict(zip(keys, v), area=m.group(1), room=m.group(2))
+        f['fixed'] = arrays[('Fixed', int(m.group(4)))]
+        f['contents'] = arrays[('Contents', int(m.group(5)))]
+        frames.append(f)
+    return frames
+
+
+def decode(h, k):
+    """Content k of header frame h, the way game.c reads it."""
+    rec = h['contents'][k * h['stride']:(k + 1) * h['stride']]
+    n = h['nMove']
+    move = [(h['bx'] + (b & 7), h['by'] + ((b >> 3) & 7), b >> 6) for b in rec[:n]]
+    if h['kind'] == KIND_TEMPLATE:
+        return dict(move=move, goal=sorted((h['bx'] + (b & 7), h['by'] + ((b >> 3) & 7)) for b in rec[n:]))
+    m = rec[n] | (rec[n + 1] << 8) | (rec[n + 2] << 16) | (rec[n + 3] << 24)
+    return dict(move=move, walls=sorted((h['bx'] + i % h['bw'], h['by'] + i // h['bw'])
+                                        for i in range(h['bw'] * h['bh']) if (m >> i) & 1))
+
+
+def verify():
+    """The shipped table, decoded the way game.c decodes it, against the
+    solutions file; every content's solution replayed under the game's
+    rules on the room's captured floor; no rock, switch or prize on a
+    reserved tile; and the entity budget."""
+    rooms = json.load(open(ROOMS))
+    header = parse_header(open(OUT_H).read())
+    frames = json.load(open(OUT_SOL))
+    bad = []
+    if len(header) != len(frames):
+        print('header has %d frames, solutions %d' % (len(header), len(frames)))
+        return 1
+    total = 0
+    for n, (h, f) in enumerate(zip(header, frames)):
+        floor = Floor(rooms[f['owner']])
+        cap = MAX_ROCKS_SITE if f['owner'].startswith('site') else MAX_ROCKS_ROW
+        if h['nContent'] != len(f['contents']):
+            bad.append('frame %d: %d contents in the header, %d solved' % (n, h['nContent'], len(f['contents'])))
+            continue
+        for spot in [tuple(f['switch']), tuple(f['prize'])] + [tuple(c) for c in f['fixed']]:
+            if spot in floor.reserved and not (f['door'] and spot == tuple(f['prize'])):
+                bad.append('frame %d: (%d,%d) is a reserved tile' % (n, spot[0], spot[1]))
+        for k, c in enumerate(f['contents']):
+            total += 1
+            d = decode(h, k)
+            if d['move'] != [tuple(m) for m in c['move']] or \
+                    d.get('goal', d.get('walls')) != [tuple(g) for g in c.get('goal', c.get('walls'))]:
+                bad.append('frame %d content %d: decodes differently' % (n, k))
+                continue
+            rocks = len(f['fixed']) + len(c['move']) + len(c.get('goal', c.get('walls')))
+            if rocks > cap:
+                bad.append('frame %d content %d: %d rocks' % (n, k, rocks))
+            walk, board, entry, done = frame_space(floor, f, c)
+            why = replay(walk, board, [m[2] for m in c['move']], [tuple(m[:2]) for m in c['move']],
+                         entry, c['solution'], done)
+            if why:
+                bad.append('frame %d content %d: %s' % (n, k, why))
+    print('%d contents in %d frames: %d problems' % (total, len(frames), len(bad)))
+    for b in bad[:20]:
+        print('  ' + b)
+    return 1 if bad else 0
+
+
 def main():
+    if '--verify' in sys.argv:
+        return verify()
     seed = int(sys.argv[sys.argv.index('--seed') + 1]) if '--seed' in sys.argv else 0xB10C
-    insts = generate(seed)
-    text = emit(insts)
+    frames = generate(seed)
+    text = emit(frames)
     if '--check' in sys.argv:
         old = open(OUT_H).read() if os.path.exists(OUT_H) else ''
         print('up to date' if old == text else 'STALE')
         return 0 if old == text else 1
     open(OUT_H, 'w').write(text)
     with open(OUT_SOL, 'w') as f:
-        json.dump(insts, f)
-    kinds = collections.Counter(('T' if m['kind'] == 0 else ('D' if m['door'] else 'M')) + m['cls'] for m in insts)
-    print('%d instances %s -> %s' % (len(insts), dict(kinds), OUT_H))
+        json.dump(frames, f)
+    kinds = collections.Counter(tag(f) for f in frames)
+    contents = collections.Counter()
+    for f in frames:
+        contents[tag(f)] += len(f['contents'])
+    print('%d frames %s, %d contents %s -> %s' % (len(frames), dict(kinds), sum(contents.values()),
+                                                  dict(contents), OUT_H))
     return 0
 
 

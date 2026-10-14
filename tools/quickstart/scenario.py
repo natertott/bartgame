@@ -12,8 +12,8 @@ feature. No rebuild - which is the whole point.
     python3 tools/quickstart/scenario.py site  ROOM_CAVES_BOOMERANG MINIBOSS 2
     python3 tools/quickstart/scenario.py boss  TRILBY OCTOROK
     python3 tools/quickstart/scenario.py quest CARRY NHF
-    python3 tools/quickstart/scenario.py quest BLOCKS SHF 2    # the block quest, SHF's second instance
-    python3 tools/quickstart/scenario.py site  27 BLOCKS 32    # a block puzzle, the site's second instance (extra bits 5-7)
+    python3 tools/quickstart/scenario.py quest BLOCKS SHF 2 5  # the block quest, SHF's second frame, its fifth content
+    python3 tools/quickstart/scenario.py site  27 BLOCKS 36    # a block puzzle: frame 1 (extra bits 5-7), content 4 (bits 0-4)
     python3 tools/quickstart/scenario.py chain EVENT 27 0 --land NHF
     python3 tools/quickstart/scenario.py region NHF 3          # arrive with 3 waves already cleared
     python3 tools/quickstart/scenario.py fuser 1 REM
@@ -355,9 +355,10 @@ def main(argv):
                    0, 0, kit, diff)
     elif cmd == 'quest':
         # A third number is scenario_c: the carry's pair + 1, the block
-        # quest's instance + 1 (0 = the run's own pick).
+        # quest's frame + 1; a fourth is scenario_d, the block quest's
+        # content + 1 (0 = the run's own pick).
         scn = pack(3, resolve_enum(rest[0], QUESTS, 'quest kind'), resolve_row(rest[1]),
-                   int(rest[2], 0) if len(rest) > 2 else 0, 0, kit, diff)
+                   int(rest[2], 0) if len(rest) > 2 else 0, int(rest[3], 0) if len(rest) > 3 else 0, kit, diff)
     elif cmd == 'chain':
         k = resolve_enum(rest[0], CHAIN, 'chain kind')
         where = rest[1] if len(rest) > 1 else '0'

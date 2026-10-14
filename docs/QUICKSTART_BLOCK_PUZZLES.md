@@ -52,25 +52,55 @@ rock is recoloured from it, one palette slot per colour
 | Fixed (the reference, the frame posts, maze walls) | gray |
 | Part of a matched template | gold |
 
-## Offline: the floors, the layouts, the solutions
+## A pool per room: frames and contents
 
-Every layout is generated and solved before the build. Nothing is searched
-on the GBA.
+The user asked for variety: a room should not deal the same puzzle run
+after run. So every room holds a POOL, built offline:
+
+- a **frame** is where a puzzle sits - the board, the template's
+  reference and posts, a maze's ring walls and way in, the chest or door,
+  the switch, the prize tile. These depend on the room and are slow to
+  find.
+- each frame carries up to 32 **contents** - a template's goal shape and
+  scrambled start, or a maze's carved inner walls and its rocks. Every
+  one is solved offline.
+
+A run draws a frame and a content per site from its seed, so a room with
+three frames of 32 offers 96 puzzles. Content is 2 bytes per rock for a
+template and 1 per rock plus 4 for a maze, so the whole pool is a few tens
+of KB of the 2 MB the ROM has free.
+
+Generating on the GBA each run was the other road. It was not taken: a
+scramble on the GBA is solvable by construction but its difficulty is
+unknown, and the search that proves the fewest pushes takes seconds of
+desktop CPU per puzzle. The pool keeps the floor on difficulty and lets
+every puzzle be checked before it ships.
+
+## Offline: the floors, the pool, the proof
 
 1. `tools/quickstart/block_rooms.py` boots every candidate room once and
    captures its floor as the game sees it (collision, act tiles, NPCs,
    where the player arrives) into `build/block_rooms.json`. Candidates:
    every ? room site alone in its room, kinstone-ungated, not a Great
    Fairy (100), and every region pool row (20).
-2. `tools/quickstart/block_puzzles.py` builds up to three templates and
-   three mazes per room and writes `include/quickstart/block_puzzles.h`
-   and `build/block_solutions.json` (the push list for each).
+2. `tools/quickstart/block_puzzles.py` finds up to three template frames
+   and three chest-maze frames per room (plus a door maze per guarded
+   door in a field), fills each with up to 32 contents, and writes
+   `include/quickstart/block_puzzles.h` and `build/block_solutions.json`.
+   Each room has its own random stream, keyed by the seed and the room,
+   and the rooms run on four processes; about 25 minutes.
+3. `block_puzzles.py --verify` reads the header back, decodes every
+   content the way `game.c` does, and replays its solution push by push
+   under the game's rules on the room's captured floor: the player can
+   reach the far side, the rock may move that way, the next tile is board
+   and free, and the puzzle is solved at the last push and not before. It
+   also checks the rock budget and the reserved tiles.
 
 **Templates** are made backwards: the goal shape is laid on the board, the
 rocks are pulled away from it by legal reverse moves (a pull is a push
 undone; the player must be able to walk to where the pull ends), then a
-breadth-first search over pushes finds the true minimum. A layout is kept
-only when that minimum reaches the class's floor. Classes:
+breadth-first search over pushes finds the true minimum. A content is kept
+only when that minimum reaches the class's floor:
 
 | Class | Board | Rocks | Axis-bound | Min pushes |
 |---|---|---|---|---|
@@ -81,13 +111,14 @@ only when that minimum reaches the class's floor. Classes:
 | XL | 7x7 | 9 | 3 | 13 (overworld only) |
 
 The reference shape stands within about a screen of the board, framed by
-four gray corner posts. No M or XL template fits anywhere in this build
-(the generator tries the biggest class first and falls back).
+four gray corner posts. The L boards never prove inside the search cap,
+so their solution is the scramble undone, cut at its first match, and its
+length is an upper bound.
 
 **Mazes** carve a corridor through a grid with no open 2x2 square, wall the
-ring with fixed rocks, put the chest (or the door) at the back, and search
-backwards from rocks parked clear of the path to the states where the
-target is sealed. The deepest one under the class's rock cap is kept.
+ring with fixed rocks, put the chest (or the door) at the back, park the
+rocks off the corridor, and search backwards to the arrangements that seal
+the target. Each is proved forward; at most two per carve, for spread.
 
 | Class | Grid | Movers | Min pushes |
 |---|---|---|---|
@@ -95,7 +126,7 @@ target is sealed. The deepest one under the class's rock cap is kept.
 | S | 5x4 | 3 | 5 |
 | M | 6x5 | 4 | 6 |
 
-Constraints on every layout: rocks only on plain ground (no water, pits,
+Constraints on every frame and content: rocks only on plain ground (no water, pits,
 swamp, ice, lava), every door, room edge and the arrival kept reachable
 whatever the rocks do, and no rock, switch or prize on a tile the mode
 already uses: each pool row's entrance, reward, boss spot and landing
@@ -107,14 +138,16 @@ A ? room holds at most 28 rocks, a field 26.
 
 ## In the ROM
 
-- **? rooms.** A site with instances rolls BLOCKS one time in three, by a
+- **? rooms.** A site with a pool rolls BLOCKS one time in three, by a
   hash of its own (`0xB10C + site`), whatever the pickers dealt, unless
-  its kind is fixed (elite, rare, miniboss). Which instance: another hash
-  (`0xB10D + site`). Extra is the prize's draw seed. The sim mirrors all
-  of it (`sim.site_roll`, `site_roll_validate.py`).
-- **The block quest.** One region row per run with instances, avoiding
+  its kind is fixed (elite, rare, miniboss). The frame is another hash of
+  the run (`0xB10D + site`), the content a third (`0xB10F + site`). Extra
+  is the prize's draw seed. The sim mirrors the roll (`sim.site_roll`,
+  `site_roll_validate.py`).
+- **The block quest.** One region row per run with a pool, avoiding
   the other givers' rows (raw bank 12 bits 682-694). Every visit deals the
-  puzzle until it is solved; the first solve pays a RARE draw and counts
+  same puzzle until it is solved (its frame from the quest's roll, its
+  content from the run, `0xB110`); the first solve pays a RARE draw and counts
   as the run's side quest (`QuickStartSideQuestDone`). Ezlo explains it
   once a run.
 - **Door mazes.** A player arriving through the guarded door is already
@@ -126,31 +159,46 @@ A ? room holds at most 28 rocks, a field 26.
 
 ## What the generator built
 
-162 instances: 31 ? room sites (of 100 candidates) and 11 of the 20 region
-rows.
+1,528 puzzles in 112 frames, in 24 ? room sites and 10 of the 20 region
+rows. A room holds 3 to 135; the median is 38.
 
-| Kind and class | Instances | Pushes to solve |
+| Kind and class | Frames | Puzzles | Pushes to solve |
+|---|---|---|---|
+| Template XS | 16 | 212 | 5-7 |
+| Template S | 12 | 234 | 7-10 |
+| Template M | 1 | 22 | 9-12 |
+| Template L | 5 | 160 | up to 22, unproven |
+| Maze XS, chest | 53 | 767 | 3-4 |
+| Maze S, chest | 16 | 72 | 5-6 |
+| Maze M, chest | 2 | 7 | 6 |
+| Maze XS, door | 5 | 44 | 3 |
+| Maze S, door | 2 | 10 | 5-6 |
+
+| Field row | Frames | Puzzles |
 |---|---|---|
-| Template XS | 24 | 5-7 |
-| Template S | 15 | 7-9 |
-| Template L | 6 | 12-22 |
-| Maze XS, chest | 90 | 3-4 |
-| Maze S, chest | 16 | 5-6 |
-| Maze M, chest | 4 | 6-7 |
-| Maze XS, door | 6 | 3 |
-| Maze S, door | 1 | 5 |
+| North Hyrule Field | 12 | 135 |
+| Western Woods north | 7 | 128 |
+| Lon Lon Ranch | 6 | 96 |
+| South Hyrule Field | 6 | 66 |
+| Hyrule Town | 5 | 46 |
+| Royal Valley | 3 | 41 |
+| Wind Ruins north | 2 | 36 |
+| Western Woods | 1 | 32 |
+| Trilby Highlands | 2 | 14 |
+| Castle Garden | 1 | 8 |
 
-The large templates are in the two big Minish path rooms (sites 50 and
-80). Their minimum was not proved inside the search cap, so the count is
-the length of the scramble undone, an upper bound. In the fields the
-templates are XS and S and the mazes guard doors in North Hyrule Field
-and the Western Woods. Nine rows have nothing: the floor near the arrival
-is too broken up (Eastern Hills, the Western Woods' south and centre,
-Castor Wilds, the Ruins' entrance, Crenel, Veil Falls) or wet (Lake
-Hylia).
+The draw is uniform over every puzzle a room holds, not frame first. The
+chance that two runs deal the same puzzle in a room is about one over its
+count: median 2.8%, worst 33% (a site with three). Drawing the frame
+first made it 14% at the median, because a door maze with two contents got
+the same share as a template with 32.
 
-In a run a site with instances deals BLOCKS one time in three: 8.2% of all
-site rolls, about 10 of a run's 119 sites (`sim.site_roll`, 3,000 seeds).
+In a run a site with a pool deals BLOCKS one time in three: 6.3% of all
+site rolls, about 7.5 of a run's 119 sites (`sim.site_roll`, 2,000 seeds).
+
+Fewer rooms than the first build (31 sites, 11 rows). The difference is
+correctness: seven sites' only layouts had a switch the player could not
+reach (below), and Minish Woods' mazes lost theirs the same way.
 
 ## Traps found on the way
 
@@ -170,23 +218,54 @@ site rolls, about 10 of a run's 119 sites (`sim.site_roll`, 3,000 seeds).
   or none, retried until they fit (`QS_BLOCK_DEAL_FLAG`). The first deal
   goes the same way.
 - **Overflowing ordinal.** The testbed's instance number first rode in two
-  bits of extra; a site can own six instances.
+  bits of extra; a site can own six frames. Now the frame is bits 5-7 and
+  the content bits 0-4.
+- **A switch nobody could reach.** The first build put a maze's reset
+  switch on the open tile nearest its way in: often the very tile in
+  front of it, and once (Trilby's rupee cave) in a pocket the maze's own
+  ring walls sealed. The first probe never noticed - it sets the player
+  down rather than walking. The switch now goes to the far corner, never
+  in front of the way in, and the switch and the prize must both be
+  reachable with the puzzle in place.
+- **Solved too early.** A large template's solution is its scramble
+  undone, and a scramble can pull rocks out of the shape and back. The
+  game locks a template at its first match, so a solution that passed
+  through the shape halfway had its next push refused. Solutions are cut
+  at the first match, and `--verify` rejects any that solve before their
+  last push (it found 12 in the build before the fix).
+- **Greedy parking.** Parking a maze's rocks one at a time where the chest
+  stays reachable always succeeds, but it tucks them beside the corridor,
+  one pull from sealing it: nearly every maze took one or two pushes.
+  Random parking, retried, is back.
 
 ## Verifying
 
-`tools/quickstart/block_probe.py` boots every instance through the testbed
-(SITE kind BLOCKS with the ordinal in extra bits 5-7, or QUEST BLOCKS with
-`scenario_c` = ordinal + 1), checks the dealt rocks against the table,
-plays the solver's push list, and requires the ROM's own SOLVED flag, the
-prize and the DONE (or WON) state. The player is set down behind each rock
-rather than walked there; the solver proved the walk. `--rules` adds the
-refusals (fixed, axis, board edge) and the reset switch on every instance
-where each applies.
+`block_puzzles.py --verify` is the proof for the whole pool: every content
+decoded from the header as the game decodes it, every solution replayed
+under the game's rules on the captured floor, solved at its last push and
+not before. On the shipped pool: 1,528 of 1,528, 0 problems.
 
-Last run, on the delivered ROM: 162 of 162 solved, with the prize taken and
-DONE or WON set. Every reset put every rock back (162), fixed rocks
-refused 161 times, axis-bound rocks refused a cross-axis push 26 times,
-and pushes off the board were refused 153 times.
+`tools/quickstart/block_probe.py` plays puzzles in the ROM through the
+testbed (SITE kind BLOCKS, the frame in extra bits 5-7 and the content in
+bits 0-4; or QUEST BLOCKS, frame + 1 in `scenario_c` and content + 1 in
+`scenario_d`). It checks the dealt rocks against the table, plays the
+solver's pushes, and requires the ROM's own SOLVED flag, the prize and the
+DONE (or WON) state. `--contents N` plays the first content of every frame
+and N - 1 seeded draws; 0 plays them all (about 75 minutes). The player is
+set down behind each rock; the solver proved the walk. `--rules` adds the
+refusals (fixed, axis, board edge) and the reset switch.
+
+Last run, on the delivered ROM, two contents of every frame (224
+puzzles): 224 solved, with the prize taken and DONE or WON set; every
+reset put every rock back; fixed rocks refused 223 times, axis-bound
+rocks a cross-axis push 28 times, pushes off the board 212 times. The
+one reset that first failed (South Hyrule Field, a wave spoiling the
+swing) passed on a retry, and alone four times in four.
+
+`tools/quickstart/block_runpick.py` checks the run's own draw, nothing
+forced: for every site that can deal BLOCKS it finds a seed whose roll
+does, predicts the frame and content from the seed, boots that seed into
+the room and compares the rocks. 23 of 23 dealt as predicted.
 
 Harness traps the probe works round: an Ezlo line arriving a few seconds
 after landing freezes the player (settle first, retry a refused push); a
@@ -196,12 +275,13 @@ player off the line (pin the cross axis while pushing, never both); the
 boot's START can open the pause menu (close it); the test kit sometimes
 puts the sword on A.
 
-    python3 tools/quickstart/block_rooms.py          # once per floor change
-    python3 tools/quickstart/block_puzzles.py        # ~30 min; --check to verify the header
+    python3 tools/quickstart/block_rooms.py              # once per floor change
+    python3 tools/quickstart/block_puzzles.py            # ~25 min; --check to compare with the header
+    python3 tools/quickstart/block_puzzles.py --verify   # every content, decoded and replayed
     make quickstart-d3
-    python3 tools/quickstart/block_probe.py --rules
+    python3 tools/quickstart/block_probe.py --rules      # two contents per frame
 
 ## Testbed
 
-    python3 tools/quickstart/scenario.py site 27 BLOCKS 32    # site 27, its second instance (extra 32 = ordinal 1)
-    python3 tools/quickstart/scenario.py quest BLOCKS SHF 2    # the block quest in South Hyrule Field, its second instance
+    python3 tools/quickstart/scenario.py site 27 BLOCKS 36     # site 27: frame 1 (bits 5-7), content 4 (bits 0-4)
+    python3 tools/quickstart/scenario.py quest BLOCKS SHF 2 5  # the block quest in South Hyrule Field: frame 2, content 5

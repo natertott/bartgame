@@ -1271,6 +1271,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Block puzzles: a pool per room, a new puzzle each run (Oct 2026)
+
+The user: the puzzles should be generated each run, or drawn from a pool
+big enough that playthroughs differ. The first build had at most six fixed
+layouts per room. Now every room holds a pool, and a run draws from it by
+its seed. Write-up: `docs/QUICKSTART_BLOCK_PUZZLES.md`.
+
+A **frame** is where a puzzle sits (board, reference, maze walls, switch,
+prize); each carries up to 32 **contents** (a goal shape and start, or a
+maze's inner walls and rocks), each proved solvable offline with a floor
+on its push count. 1,528 puzzles in 112 frames, 24 ? room sites and 10
+field rows, median 38 per room. The draw is uniform over a room's whole
+pool: the chance two runs deal the same puzzle in a room is 2.8% at the
+median (frame-first drawing made it 14%). Generating on the GBA was
+weighed and passed over: its scrambles are solvable but their difficulty
+unknown.
+
+Checks: `block_puzzles.py --verify` decodes every content as the game
+does and replays its solution under the game's rules, 1,528/1,528;
+`block_probe.py --rules` plays two contents per frame in the ROM, 224/224;
+`block_runpick.py` lets 23 sites deal their own draw in ordinary runs,
+23/23 as predicted. Site rolls 1,785/1,785, invariant check 0 failures,
+chain rolls 300/300, sim 402/402, courier 6/6, inn 6/6.
+
+Three defects in the first build, found on the way: a maze's reset switch
+often stood on the tile in front of its way in, once in a pocket its own
+walls sealed (the first probe set the player down and never noticed); a
+large template's solution could match the shape halfway, where the game
+locks it; and Grimblade's dojo templates were refused for a reference
+square that cut the room. Coverage is 24 sites, down from 31: seven had
+only the unreachable-switch layouts.
+
 ### Block puzzles: templates and mazes, ? rooms and a field quest (Oct 2026)
 
 The user's mechanics sheet, both variants, built and played in the ROM.
