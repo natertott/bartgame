@@ -9,7 +9,7 @@ static const u8 sQuickStartLanternCells0[] = { 2, 7, 0, 4, 7, 0, 11, 6, 0 };
 static const u8 sQuickStartLanternCells1[] = { 2, 7, 0, 4, 6, 0, 9, 6, 0, 11, 6, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells2[] = { 9, 6, 0, 10, 7, 0, 11, 6, 0 };
 static const u8 sQuickStartLanternCells3[] = { 3, 6, 0, 4, 7, 0, 5, 6, 0, 10, 6, 0, 11, 7, 0 };
-static const u8 sQuickStartLanternCells4[] = { 3, 7, 2, 5, 6, 1, 9, 6, 1, 10, 7, 2, 11, 6, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells4[] = { 3, 6, 3, 4, 7, 1, 5, 6, 3, 9, 6, 1, 10, 7, 1, 11, 6, 1 };
 static const u8 sQuickStartLanternCells5[] = { 4, 3, 0, 4, 5, 3, 5, 4, 2, 7, 4, 2, 9, 6, 1, 10, 5, 1 };
 static const u8 sQuickStartLanternCells6[] = { 3, 5, 3, 4, 3, 0, 5, 6, 3, 6, 2, 0, 6, 4, 1, 8, 3, 4, 9, 6, 1, 10, 3, 1, 10, 5, 1, 11, 4, 1 };
 static const u8 sQuickStartLanternCells7[] = { 3, 4, 3, 4, 6, 2, 6, 2, 0, 8, 2, 0, 10, 3, 0, 11, 5, 1 };
@@ -22,9 +22,9 @@ static const u8 sQuickStartLanternCells13[] = { 6, 3, 0, 7, 2, 0, 7, 4, 0, 8, 3,
 static const u8 sQuickStartLanternCells14[] = { 2, 2, 0, 2, 7, 0, 12, 2, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells15[] = { 2, 2, 0, 2, 7, 0, 5, 2, 0, 12, 2, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells16[] = { 2, 5, 3, 2, 7, 3, 4, 5, 4, 9, 2, 3, 11, 7, 2, 12, 5, 1 };
-static const u8 sQuickStartLanternCells17[] = { 2, 2, 3, 3, 5, 3, 3, 7, 2, 5, 3, 4, 5, 6, 1, 8, 4, 2, 9, 2, 1, 9, 5, 0, 10, 3, 1, 11, 7, 2 };
-static const u8 sQuickStartLanternCells18[] = { 2, 4, 3, 3, 2, 0, 5, 2, 0, 11, 7, 2, 12, 2, 1, 12, 4, 1 };
-static const u8 sQuickStartLanternCells19[] = { 2, 5, 3, 2, 7, 3, 4, 2, 0, 4, 7, 2, 7, 2, 0, 10, 2, 0, 10, 7, 2, 12, 2, 1, 12, 4, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells17[] = { 2, 5, 3, 4, 3, 4, 5, 5, 3, 6, 4, 3, 8, 2, 3, 8, 4, 4, 10, 6, 1, 11, 2, 0, 11, 4, 1, 11, 7, 1 };
+static const u8 sQuickStartLanternCells18[] = { 2, 2, 3, 2, 4, 3, 3, 7, 2, 4, 2, 0, 7, 2, 0, 12, 4, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells19[] = { 2, 5, 3, 2, 7, 3, 4, 2, 0, 4, 7, 2, 6, 2, 0, 8, 2, 0, 10, 2, 0, 10, 7, 2, 12, 4, 1, 12, 7, 1 };
 static const u8 sQuickStartLanternCells20[] = { 3, 5, 3, 4, 3, 0, 5, 6, 3, 9, 5, 1, 10, 4, 0, 11, 5, 1 };
 static const u8 sQuickStartLanternCells21[] = { 3, 5, 3, 4, 3, 0, 4, 6, 2, 9, 5, 0, 10, 4, 0, 11, 5, 1 };
 static const u8 sQuickStartLanternCells22[] = { 5, 5, 0, 8, 2, 0, 9, 6, 0, 12, 4, 0 };
@@ -44,8 +44,8 @@ static const u8 sQuickStartLanternCells35[] = { 9, 3, 0, 10, 2, 0, 10, 4, 0, 11,
 static const u8 sQuickStartLanternCells36[] = { 2, 2, 0, 2, 7, 0, 12, 2, 0 };
 static const u8 sQuickStartLanternCells37[] = { 2, 2, 0, 2, 7, 0, 5, 2, 0, 12, 2, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells38[] = { 2, 6, 3, 3, 3, 0, 4, 2, 0, 5, 5, 3, 9, 4, 1, 10, 5, 2 };
-static const u8 sQuickStartLanternCells39[] = { 2, 3, 0, 4, 2, 0, 4, 7, 2, 5, 4, 3, 9, 2, 0, 9, 4, 4, 9, 6, 2, 11, 3, 0, 12, 2, 0, 12, 6, 1 };
-static const u8 sQuickStartLanternCells40[] = { 2, 3, 3, 4, 7, 3, 5, 2, 0, 9, 2, 0, 11, 7, 2, 12, 3, 1 };
+static const u8 sQuickStartLanternCells39[] = { 2, 3, 0, 3, 6, 2, 4, 2, 0, 4, 7, 2, 5, 4, 3, 9, 2, 0, 9, 4, 4, 11, 3, 0, 12, 2, 0, 12, 6, 1 };
+static const u8 sQuickStartLanternCells40[] = { 2, 2, 0, 2, 5, 3, 4, 7, 3, 5, 2, 0, 9, 2, 0, 11, 7, 2, 12, 2, 0 };
 static const u8 sQuickStartLanternCells41[] = { 2, 4, 3, 2, 6, 3, 4, 2, 3, 4, 7, 3, 6, 2, 0, 8, 2, 0, 10, 2, 0, 12, 3, 1, 12, 5, 1, 12, 7, 2 };
 static const u8 sQuickStartLanternCells42[] = { 2, 7, 0, 5, 6, 0, 9, 6, 0 };
 static const u8 sQuickStartLanternCells43[] = { 2, 7, 0, 5, 3, 0, 12, 2, 0 };
@@ -63,17 +63,17 @@ static const u8 sQuickStartLanternCells54[] = { 2, 4, 3, 2, 6, 2, 2, 9, 3, 3, 7,
 static const u8 sQuickStartLanternCells55[] = { 2, 6, 3, 3, 2, 3, 6, 2, 0, 9, 2, 0, 9, 9, 2, 11, 2, 1, 12, 3, 0, 12, 8, 1 };
 static const u8 sQuickStartLanternCells56[] = { 2, 4, 3, 2, 9, 3, 4, 2, 0, 4, 9, 2, 7, 2, 0, 8, 9, 2, 9, 2, 0, 10, 9, 2, 12, 5, 1, 12, 7, 1 };
 static const u8 sQuickStartLanternCells57[] = { 2, 4, 0, 3, 6, 2, 4, 7, 1, 5, 6, 3, 10, 5, 1, 12, 7, 1 };
-static const u8 sQuickStartLanternCells58[] = { 2, 4, 3, 2, 6, 2, 3, 3, 3, 4, 2, 0, 4, 5, 2, 5, 4, 2, 5, 6, 2, 10, 6, 1, 11, 3, 0, 11, 7, 1 };
-static const u8 sQuickStartLanternCells59[] = { 2, 4, 3, 2, 6, 3, 3, 3, 0, 3, 7, 2, 5, 4, 1, 11, 7, 2 };
-static const u8 sQuickStartLanternCells60[] = { 2, 4, 3, 2, 7, 3, 3, 3, 0, 4, 7, 2, 5, 4, 1, 7, 2, 1, 9, 5, 0, 11, 4, 0, 11, 6, 1, 12, 7, 1 };
-static const u8 sQuickStartLanternCells61[] = { 3, 2, 0, 4, 6, 4, 5, 3, 3, 9, 4, 1, 11, 5, 2, 12, 3, 0 };
-static const u8 sQuickStartLanternCells62[] = { 3, 3, 3, 3, 6, 2, 4, 2, 0, 4, 5, 2, 4, 7, 2, 5, 3, 3, 7, 3, 3, 9, 4, 1, 11, 5, 2, 12, 3, 1 };
-static const u8 sQuickStartLanternCells63[] = { 3, 4, 3, 4, 2, 0, 5, 3, 0, 7, 3, 0, 9, 3, 3, 11, 3, 0 };
-static const u8 sQuickStartLanternCells64[] = { 2, 7, 3, 3, 3, 3, 3, 5, 3, 4, 2, 0, 4, 7, 2, 5, 3, 0, 7, 3, 0, 9, 3, 3, 11, 5, 2, 12, 3, 1 };
+static const u8 sQuickStartLanternCells58[] = { 2, 6, 2, 3, 4, 4, 3, 7, 2, 4, 2, 3, 4, 6, 2, 5, 4, 1, 7, 2, 1, 9, 5, 0, 10, 7, 1, 11, 6, 1 };
+static const u8 sQuickStartLanternCells59[] = { 2, 3, 0, 2, 5, 3, 3, 7, 2, 7, 2, 1, 10, 7, 2, 11, 5, 1 };
+static const u8 sQuickStartLanternCells60[] = { 2, 4, 3, 2, 6, 3, 3, 3, 0, 5, 4, 1, 7, 2, 1, 9, 5, 0, 10, 7, 2, 11, 4, 0, 11, 6, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells61[] = { 3, 2, 0, 4, 6, 3, 5, 3, 0, 9, 4, 3, 11, 5, 2, 12, 3, 0 };
+static const u8 sQuickStartLanternCells62[] = { 3, 2, 0, 3, 6, 3, 5, 5, 0, 6, 3, 1, 7, 4, 0, 9, 3, 1, 10, 4, 1, 11, 3, 1, 11, 5, 2, 12, 4, 1 };
+static const u8 sQuickStartLanternCells63[] = { 3, 2, 0, 3, 4, 3, 7, 3, 0, 10, 3, 1, 12, 3, 1, 12, 5, 2 };
+static const u8 sQuickStartLanternCells64[] = { 2, 7, 3, 3, 3, 3, 3, 6, 3, 4, 2, 0, 4, 7, 2, 5, 3, 0, 8, 3, 0, 10, 3, 3, 11, 5, 2, 12, 3, 0 };
 static const u8 sQuickStartLanternCells65[] = { 2, 7, 3, 3, 2, 3, 6, 2, 0, 6, 6, 2, 10, 6, 1, 12, 5, 1 };
-static const u8 sQuickStartLanternCells66[] = { 2, 2, 0, 4, 2, 1, 4, 7, 3, 6, 7, 3, 7, 3, 1, 8, 7, 3, 9, 5, 0, 10, 2, 0, 10, 7, 2, 11, 5, 1 };
-static const u8 sQuickStartLanternCells67[] = { 3, 7, 3, 6, 6, 3, 7, 3, 1, 7, 7, 2, 8, 5, 0, 9, 7, 2 };
-static const u8 sQuickStartLanternCells68[] = { 2, 4, 2, 3, 2, 3, 4, 7, 3, 6, 6, 3, 7, 2, 1, 8, 7, 2, 9, 5, 0, 10, 3, 0, 10, 7, 1, 11, 5, 1 };
+static const u8 sQuickStartLanternCells66[] = { 3, 3, 3, 3, 7, 3, 5, 7, 3, 6, 2, 0, 7, 3, 0, 8, 7, 1, 9, 5, 1, 10, 2, 0, 10, 4, 0, 10, 7, 1 };
+static const u8 sQuickStartLanternCells67[] = { 2, 7, 3, 4, 2, 0, 7, 3, 1, 7, 7, 2, 8, 5, 0, 10, 6, 1 };
+static const u8 sQuickStartLanternCells68[] = { 2, 4, 2, 3, 7, 3, 4, 2, 0, 5, 7, 3, 6, 2, 0, 6, 6, 3, 8, 5, 0, 10, 2, 0, 10, 7, 2, 12, 5, 1 };
 static const u8 sQuickStartLanternCells69[] = { 6, 9, 0, 7, 7, 0, 8, 5, 0 };
 static const u8 sQuickStartLanternCells70[] = { 6, 5, 0, 6, 7, 0, 7, 9, 0, 8, 5, 0, 8, 7, 0 };
 static const u8 sQuickStartLanternCells71[] = { 6, 8, 0, 7, 7, 0, 7, 9, 0 };
@@ -82,9 +82,9 @@ static const u8 sQuickStartLanternCells73[] = { 6, 5, 0, 6, 8, 0, 8, 6, 0 };
 static const u8 sQuickStartLanternCells74[] = { 2, 7, 3, 4, 3, 0, 7, 3, 0, 8, 4, 0, 8, 7, 2, 9, 5, 1 };
 static const u8 sQuickStartLanternCells75[] = { 2, 7, 3, 4, 2, 0, 4, 7, 2, 7, 3, 0, 8, 7, 2, 9, 5, 1 };
 static const u8 sQuickStartLanternCells76[] = { 3, 5, 0, 4, 7, 2, 5, 3, 1, 11, 3, 1, 12, 4, 1, 12, 7, 1 };
-static const u8 sQuickStartLanternCells77[] = { 3, 5, 2, 3, 7, 3, 4, 3, 0, 5, 2, 0, 5, 5, 4, 5, 7, 2, 9, 3, 3, 10, 6, 3, 11, 4, 1, 11, 7, 1 };
-static const u8 sQuickStartLanternCells78[] = { 3, 3, 0, 3, 6, 3, 4, 7, 2, 5, 2, 0, 11, 7, 1, 12, 6, 1 };
-static const u8 sQuickStartLanternCells79[] = { 2, 3, 3, 3, 4, 3, 3, 7, 2, 4, 2, 0, 5, 7, 2, 6, 3, 1, 10, 3, 3, 10, 7, 3, 12, 4, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells77[] = { 2, 3, 3, 3, 4, 3, 4, 6, 2, 5, 3, 1, 5, 5, 3, 5, 7, 2, 9, 7, 3, 10, 4, 1, 10, 6, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells78[] = { 3, 4, 3, 3, 7, 2, 6, 3, 0, 9, 7, 3, 11, 6, 1, 12, 3, 1 };
+static const u8 sQuickStartLanternCells79[] = { 3, 4, 3, 3, 7, 2, 4, 2, 0, 5, 7, 2, 6, 3, 0, 9, 3, 3, 10, 6, 3, 11, 4, 1, 11, 7, 1, 12, 3, 1 };
 static const u8 sQuickStartLanternCells80[] = { 2, 7, 0, 3, 2, 0, 8, 2, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells81[] = { 2, 7, 0, 3, 2, 0, 5, 5, 0, 9, 3, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells82[] = { 6, 3, 0, 7, 2, 0, 9, 2, 0 };
@@ -113,10 +113,10 @@ static const u8 sQuickStartLanternCells104[] = { 7, 10, 0, 8, 11, 0, 9, 10, 0, 1
 static const u8 sQuickStartLanternCells105[] = { 4, 10, 0, 5, 9, 0, 5, 11, 0, 6, 10, 0, 7, 11, 0 };
 static const u8 sQuickStartLanternCells106[] = { 3, 3, 0, 3, 11, 0, 11, 3, 0 };
 static const u8 sQuickStartLanternCells107[] = { 3, 3, 0, 3, 11, 0, 7, 3, 0, 11, 3, 0, 11, 11, 0 };
-static const u8 sQuickStartLanternCells108[] = { 3, 4, 3, 3, 8, 3, 4, 11, 3, 5, 9, 2, 6, 7, 0, 10, 10, 4, 11, 3, 1, 11, 6, 1 };
-static const u8 sQuickStartLanternCells109[] = { 3, 4, 0, 3, 11, 2, 4, 7, 4, 5, 3, 1, 5, 11, 1, 6, 5, 0, 8, 11, 3, 9, 3, 0, 10, 7, 2, 11, 11, 1 };
-static const u8 sQuickStartLanternCells110[] = { 3, 4, 3, 3, 6, 3, 3, 11, 3, 4, 3, 0, 6, 11, 2, 9, 11, 2, 11, 3, 1, 11, 7, 1 };
-static const u8 sQuickStartLanternCells111[] = { 3, 5, 3, 3, 7, 3, 3, 10, 3, 4, 3, 0, 6, 3, 0, 6, 11, 2, 10, 3, 0, 10, 11, 2, 11, 5, 1, 11, 10, 1 };
+static const u8 sQuickStartLanternCells108[] = { 3, 4, 0, 3, 8, 0, 4, 11, 2, 5, 9, 1, 6, 7, 3, 10, 10, 2, 11, 3, 1, 11, 9, 2 };
+static const u8 sQuickStartLanternCells109[] = { 3, 4, 0, 3, 6, 3, 5, 3, 1, 6, 5, 1, 7, 3, 1, 9, 11, 2, 10, 5, 1, 10, 9, 0, 11, 4, 0, 11, 7, 1 };
+static const u8 sQuickStartLanternCells110[] = { 3, 5, 3, 4, 11, 2, 7, 11, 2, 8, 3, 0, 11, 3, 1, 11, 7, 1, 11, 10, 1 };
+static const u8 sQuickStartLanternCells111[] = { 3, 4, 3, 3, 8, 3, 3, 10, 3, 6, 3, 0, 7, 11, 2, 9, 3, 0, 9, 11, 2, 11, 4, 1, 11, 8, 1, 11, 10, 1 };
 static const u8 sQuickStartLanternCells112[] = { 2, 4, 3, 3, 6, 2, 4, 7, 3, 8, 4, 3, 10, 4, 0, 11, 3, 1 };
 static const u8 sQuickStartLanternCells113[] = { 3, 3, 3, 3, 5, 2, 4, 7, 3, 6, 7, 3, 8, 4, 3, 9, 2, 0 };
 static const u8 sQuickStartLanternCells114[] = { 3, 6, 0, 7, 3, 0, 9, 7, 0, 12, 2, 0 };
@@ -136,9 +136,9 @@ static const u8 sQuickStartLanternCells127[] = { 2, 3, 0, 3, 2, 0, 3, 4, 0, 4, 3
 static const u8 sQuickStartLanternCells128[] = { 2, 2, 0, 7, 2, 0, 12, 2, 0 };
 static const u8 sQuickStartLanternCells129[] = { 2, 2, 0, 2, 7, 0, 7, 2, 0, 12, 2, 0, 12, 7, 0 };
 static const u8 sQuickStartLanternCells130[] = { 3, 2, 0, 9, 5, 3, 10, 4, 2, 11, 2, 1, 11, 7, 2, 12, 3, 1, 12, 6, 2 };
-static const u8 sQuickStartLanternCells131[] = { 2, 3, 0, 2, 6, 3, 3, 4, 2, 4, 3, 1, 4, 6, 4, 9, 7, 2, 10, 5, 1, 11, 3, 0, 12, 2, 1, 12, 4, 0 };
-static const u8 sQuickStartLanternCells132[] = { 2, 4, 3, 2, 7, 3, 4, 2, 0, 9, 7, 2, 12, 2, 0, 12, 6, 1 };
-static const u8 sQuickStartLanternCells133[] = { 2, 3, 3, 2, 5, 3, 2, 7, 2, 4, 2, 0, 4, 4, 1, 8, 2, 3, 10, 2, 0, 10, 4, 3, 12, 3, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells131[] = { 2, 4, 2, 2, 7, 2, 3, 2, 3, 3, 5, 2, 4, 3, 0, 5, 7, 3, 8, 2, 3, 10, 4, 3, 11, 3, 0, 12, 5, 1 };
+static const u8 sQuickStartLanternCells132[] = { 2, 3, 3, 2, 6, 3, 4, 2, 0, 4, 4, 1, 7, 2, 1, 12, 3, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells133[] = { 2, 3, 3, 2, 6, 3, 3, 2, 0, 4, 7, 2, 5, 2, 3, 5, 5, 0, 9, 5, 0, 10, 4, 3, 10, 7, 2, 12, 6, 1 };
 static const u8 sQuickStartLanternCells134[] = { 5, 3, 0, 10, 7, 0, 11, 2, 0 };
 static const u8 sQuickStartLanternCells135[] = { 3, 2, 0, 3, 6, 0, 5, 4, 0, 9, 2, 0, 10, 7, 0 };
 static const u8 sQuickStartLanternCells136[] = { 3, 2, 0, 3, 4, 0, 4, 3, 0 };
@@ -149,346 +149,341 @@ static const u8 sQuickStartLanternCells140[] = { 3, 4, 3, 4, 5, 0, 9, 3, 1, 9, 7
 static const u8 sQuickStartLanternCells141[] = { 3, 3, 3, 3, 6, 2, 4, 4, 3, 4, 7, 2, 5, 5, 3, 6, 2, 1, 8, 2, 0, 9, 5, 1, 10, 7, 2, 11, 6, 2 };
 static const u8 sQuickStartLanternCells142[] = { 3, 4, 3, 4, 2, 0, 6, 2, 1, 9, 2, 0, 11, 2, 0, 11, 4, 1 };
 static const u8 sQuickStartLanternCells143[] = { 3, 3, 3, 3, 5, 3, 4, 2, 0, 5, 7, 2, 6, 2, 0, 8, 2, 0, 10, 2, 0, 10, 7, 1, 11, 3, 1, 11, 5, 1 };
-static const u8 sQuickStartLanternCells144[] = { 3, 3, 3, 8, 6, 4, 11, 3, 0, 11, 6, 2, 12, 4, 0, 12, 7, 2 };
-static const u8 sQuickStartLanternCells145[] = { 3, 4, 3, 7, 5, 0, 8, 7, 2, 11, 4, 0, 12, 3, 0, 12, 7, 2 };
-static const u8 sQuickStartLanternCells146[] = { 3, 4, 3, 4, 3, 3, 5, 5, 0, 7, 2, 0, 9, 2, 1, 9, 4, 1 };
-static const u8 sQuickStartLanternCells147[] = { 3, 4, 3, 5, 4, 4, 5, 7, 2, 7, 2, 0, 9, 2, 1, 9, 5, 1, 9, 7, 1, 10, 3, 1, 10, 6, 2, 11, 5, 1 };
-static const u8 sQuickStartLanternCells148[] = { 3, 4, 3, 4, 6, 3, 7, 2, 0, 9, 7, 2, 10, 6, 2, 11, 5, 1 };
-static const u8 sQuickStartLanternCells149[] = { 3, 4, 3, 4, 3, 0, 4, 6, 3, 5, 2, 3, 7, 2, 0, 9, 2, 1, 9, 7, 2, 10, 3, 0, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells150[] = { 2, 4, 3, 5, 4, 1, 6, 3, 3, 9, 6, 2, 9, 8, 2, 12, 8, 1 };
-static const u8 sQuickStartLanternCells151[] = { 2, 4, 3, 2, 7, 3, 3, 6, 3, 4, 3, 3, 4, 8, 1, 5, 4, 1, 6, 3, 3, 7, 4, 0, 9, 6, 2, 10, 7, 1 };
-static const u8 sQuickStartLanternCells152[] = { 2, 4, 3, 2, 8, 2, 5, 6, 1, 9, 8, 3, 10, 3, 1, 12, 3, 1 };
-static const u8 sQuickStartLanternCells153[] = { 2, 4, 3, 2, 6, 0, 2, 8, 3, 4, 8, 2, 5, 6, 1, 7, 4, 0, 9, 6, 1, 9, 8, 2, 11, 3, 1, 12, 8, 1 };
-static const u8 sQuickStartLanternCells154[] = { 7, 3, 0, 7, 7, 3, 9, 3, 1, 10, 4, 0, 10, 6, 1, 11, 5, 1 };
-static const u8 sQuickStartLanternCells155[] = { 3, 4, 3, 6, 7, 3, 7, 2, 0, 7, 6, 2, 9, 2, 1, 9, 5, 2, 9, 7, 2, 10, 3, 0, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells156[] = { 3, 4, 3, 6, 7, 3, 7, 2, 0, 9, 3, 0, 9, 5, 3, 11, 4, 1 };
-static const u8 sQuickStartLanternCells157[] = { 3, 4, 3, 7, 7, 2, 9, 2, 1, 9, 4, 0, 10, 3, 1, 10, 5, 2 };
-static const u8 sQuickStartLanternCells158[] = { 3, 4, 3, 7, 7, 2, 8, 2, 1, 9, 3, 1, 9, 7, 2, 11, 4, 1 };
-static const u8 sQuickStartLanternCells159[] = { 6, 7, 3, 7, 3, 1, 9, 5, 2, 10, 4, 0, 10, 6, 1, 11, 5, 1 };
-static const u8 sQuickStartLanternCells160[] = { 3, 4, 3, 7, 3, 1, 7, 7, 2, 9, 7, 1, 10, 6, 2, 11, 5, 1 };
-static const u8 sQuickStartLanternCells161[] = { 3, 4, 3, 6, 7, 3, 9, 3, 0, 9, 7, 2, 10, 6, 2, 11, 5, 1 };
-static const u8 sQuickStartLanternCells162[] = { 3, 4, 3, 7, 2, 0, 8, 7, 1, 9, 3, 1, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells163[] = { 5, 3, 0, 7, 7, 2, 8, 6, 1, 9, 5, 0, 9, 7, 1, 10, 6, 1 };
-static const u8 sQuickStartLanternCells164[] = { 3, 6, 3, 4, 7, 3, 5, 6, 3, 6, 5, 0, 9, 4, 4, 11, 6, 1 };
-static const u8 sQuickStartLanternCells165[] = { 4, 3, 3, 4, 7, 3, 5, 2, 0, 5, 6, 2, 6, 4, 3, 6, 7, 2, 7, 5, 2, 8, 3, 1, 10, 4, 1, 11, 6, 1 };
-static const u8 sQuickStartLanternCells166[] = { 4, 5, 3, 5, 2, 0, 5, 7, 2, 6, 3, 0, 9, 3, 0, 11, 6, 1 };
-static const u8 sQuickStartLanternCells167[] = { 3, 6, 3, 4, 3, 3, 4, 5, 0, 4, 7, 3, 5, 2, 0, 6, 7, 2, 7, 3, 0, 9, 3, 0, 10, 4, 1, 11, 6, 1 };
-static const u8 sQuickStartLanternCells168[] = { 6, 3, 3, 8, 2, 3, 10, 3, 1, 11, 4, 2, 12, 3, 1, 12, 5, 2 };
-static const u8 sQuickStartLanternCells169[] = { 2, 6, 2, 6, 3, 3, 10, 2, 1, 11, 4, 2, 12, 5, 2, 12, 7, 2 };
-static const u8 sQuickStartLanternCells170[] = { 2, 33, 2, 2, 43, 2, 4, 29, 0, 5, 10, 2, 7, 23, 1, 8, 43, 1, 10, 17, 2, 11, 15, 0 };
-static const u8 sQuickStartLanternCells171[] = { 3, 9, 3, 3, 46, 0, 5, 10, 0, 5, 39, 1, 7, 5, 3, 7, 28, 1, 10, 21, 3, 10, 38, 3, 10, 41, 0, 12, 7, 2, 12, 34, 2 };
-static const u8 sQuickStartLanternCells172[] = { 2, 11, 3, 2, 13, 3, 2, 40, 3, 8, 2, 0, 12, 31, 1, 12, 34, 1, 12, 42, 1 };
-static const u8 sQuickStartLanternCells173[] = { 2, 10, 3, 2, 14, 3, 2, 29, 3, 2, 31, 3, 2, 33, 3, 2, 38, 3, 2, 42, 3, 2, 46, 3, 6, 2, 0, 12, 15, 1, 12, 17, 1, 12, 35, 1, 12, 41, 1 };
-static const u8 sQuickStartLanternCells174[] = { 3, 3, 3, 6, 3, 1, 6, 6, 2, 7, 7, 2, 8, 2, 1, 9, 3, 3 };
-static const u8 sQuickStartLanternCells175[] = { 2, 4, 3, 3, 3, 0, 5, 3, 0, 6, 4, 1, 7, 5, 0, 8, 6, 2, 9, 3, 0, 10, 4, 1, 10, 7, 2, 12, 5, 1 };
-static const u8 sQuickStartLanternCells176[] = { 2, 5, 3, 4, 3, 0, 6, 2, 0, 8, 2, 0, 10, 3, 0, 12, 4, 1 };
-static const u8 sQuickStartLanternCells177[] = { 2, 5, 3, 4, 3, 0, 5, 2, 0, 7, 2, 1, 7, 7, 2, 9, 2, 0, 10, 3, 0, 10, 7, 1, 11, 6, 2, 12, 4, 1 };
-static const u8 sQuickStartLanternCells178[] = { 4, 3, 0, 5, 5, 4, 8, 2, 0, 8, 5, 2, 9, 4, 1, 11, 3, 1 };
-static const u8 sQuickStartLanternCells179[] = { 4, 2, 0, 5, 4, 0, 8, 6, 2, 9, 5, 1, 10, 3, 1, 12, 3, 1 };
-static const u8 sQuickStartLanternCells180[] = { 4, 2, 0, 4, 4, 3, 6, 6, 2, 7, 4, 0, 8, 2, 0, 8, 6, 2, 9, 3, 0, 9, 5, 1, 9, 7, 2, 11, 3, 1 };
-static const u8 sQuickStartLanternCells181[] = { 4, 4, 0, 9, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells182[] = { 2, 3, 0, 5, 2, 0, 5, 7, 0, 11, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells183[] = { 2, 6, 0, 3, 5, 0, 4, 6, 0 };
-static const u8 sQuickStartLanternCells184[] = { 4, 3, 0, 5, 2, 0, 9, 2, 0, 11, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells185[] = { 2, 3, 0, 5, 2, 0, 9, 2, 0 };
-static const u8 sQuickStartLanternCells186[] = { 2, 3, 0, 3, 7, 0, 5, 2, 0, 9, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells187[] = { 2, 5, 2, 3, 3, 3, 5, 5, 1, 6, 6, 3, 9, 3, 0, 11, 3, 0 };
-static const u8 sQuickStartLanternCells188[] = { 2, 3, 3, 3, 7, 2, 4, 3, 0, 4, 6, 1, 5, 2, 0, 5, 4, 0, 5, 7, 2, 8, 7, 1, 9, 2, 0, 11, 2, 0 };
-static const u8 sQuickStartLanternCells189[] = { 2, 5, 3, 3, 7, 2, 5, 4, 0, 6, 6, 3, 9, 3, 0, 11, 3, 0 };
-static const u8 sQuickStartLanternCells190[] = { 3, 8, 0, 6, 17, 0, 8, 11, 0, 11, 3, 0 };
-static const u8 sQuickStartLanternCells191[] = { 3, 2, 0, 3, 8, 0, 6, 17, 0, 8, 4, 0, 8, 11, 0 };
-static const u8 sQuickStartLanternCells192[] = { 8, 4, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells193[] = { 6, 2, 0, 6, 4, 0, 7, 3, 0, 7, 5, 0, 8, 4, 0 };
-static const u8 sQuickStartLanternCells194[] = { 3, 2, 0, 6, 17, 0, 11, 2, 0 };
-static const u8 sQuickStartLanternCells195[] = { 3, 2, 0, 8, 13, 0, 8, 17, 0, 11, 2, 0, 11, 8, 0 };
-static const u8 sQuickStartLanternCells196[] = { 3, 2, 0, 6, 5, 1, 6, 12, 2, 7, 11, 2, 8, 2, 0, 8, 4, 1, 8, 16, 1 };
-static const u8 sQuickStartLanternCells197[] = { 5, 2, 0, 6, 8, 1, 7, 4, 3, 7, 13, 0, 8, 9, 2, 8, 16, 1, 9, 4, 2, 9, 8, 2, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells198[] = { 6, 8, 2, 6, 14, 2, 6, 17, 3, 8, 12, 2, 9, 8, 2, 11, 7, 1 };
-static const u8 sQuickStartLanternCells199[] = { 3, 8, 3, 5, 2, 0, 6, 14, 2, 6, 17, 3, 8, 9, 2, 8, 12, 2, 8, 17, 2, 9, 2, 0, 11, 2, 0, 11, 5, 1 };
-static const u8 sQuickStartLanternCells200[] = { 2, 7, 0, 5, 7, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells201[] = { 5, 7, 0, 10, 7, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells202[] = { 2, 7, 0, 9, 7, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells203[] = { 5, 6, 0, 9, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells204[] = { 4, 3, 0, 5, 6, 0, 7, 3, 0, 9, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells205[] = { 8, 3, 0, 9, 2, 0, 10, 3, 0 };
-static const u8 sQuickStartLanternCells206[] = { 7, 3, 0, 9, 3, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells207[] = { 5, 2, 0, 9, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells208[] = { 4, 6, 0, 5, 2, 0, 7, 3, 0, 9, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells209[] = { 4, 3, 3, 5, 4, 2, 7, 3, 0, 9, 2, 0, 9, 4, 4, 10, 6, 1 };
-static const u8 sQuickStartLanternCells210[] = { 4, 3, 3, 4, 5, 2, 5, 2, 0, 5, 4, 3, 5, 6, 2, 7, 3, 3, 9, 2, 0, 9, 6, 2, 10, 3, 1, 10, 5, 1 };
-static const u8 sQuickStartLanternCells211[] = { 4, 3, 0, 4, 5, 3, 6, 3, 0, 9, 2, 0, 10, 4, 1, 10, 6, 1 };
-static const u8 sQuickStartLanternCells212[] = { 2, 5, 3, 4, 3, 0, 5, 7, 3, 7, 2, 1, 7, 4, 3, 10, 4, 0 };
-static const u8 sQuickStartLanternCells213[] = { 2, 5, 3, 3, 3, 0, 3, 6, 3, 4, 4, 1, 6, 2, 0, 6, 5, 1, 7, 3, 0, 9, 2, 1, 10, 4, 0, 11, 3, 1 };
-static const u8 sQuickStartLanternCells214[] = { 3, 6, 3, 4, 3, 0, 5, 2, 3, 5, 7, 2, 7, 2, 0, 12, 5, 1 };
-static const u8 sQuickStartLanternCells215[] = { 2, 4, 3, 3, 3, 3, 3, 6, 2, 5, 2, 0, 5, 7, 2, 7, 2, 0, 9, 2, 0, 11, 3, 1, 11, 6, 1, 12, 5, 1 };
-static const u8 sQuickStartLanternCells216[] = { 2, 5, 3, 7, 2, 1, 7, 6, 1, 8, 5, 1, 9, 2, 1, 10, 4, 3 };
-static const u8 sQuickStartLanternCells217[] = { 2, 4, 3, 3, 3, 0, 3, 5, 3, 5, 2, 0, 7, 2, 1, 8, 5, 2, 10, 7, 1, 11, 4, 0, 11, 6, 1, 12, 5, 1 };
-static const u8 sQuickStartLanternCells218[] = { 2, 5, 3, 3, 6, 2, 6, 2, 0, 8, 7, 2, 10, 7, 2, 11, 3, 0 };
-static const u8 sQuickStartLanternCells219[] = { 2, 5, 3, 3, 6, 2, 4, 3, 0, 5, 2, 3, 8, 7, 2, 9, 2, 1, 10, 3, 0, 10, 7, 1, 11, 6, 2, 12, 5, 1 };
-static const u8 sQuickStartLanternCells220[] = { 3, 4, 0, 3, 6, 3, 7, 3, 1, 9, 2, 0, 9, 4, 4, 11, 5, 2 };
-static const u8 sQuickStartLanternCells221[] = { 2, 5, 3, 3, 3, 3, 3, 6, 3, 6, 2, 0, 7, 5, 3, 8, 7, 3, 9, 2, 1, 10, 4, 4, 11, 6, 1, 12, 4, 1 };
-static const u8 sQuickStartLanternCells222[] = { 3, 6, 2, 4, 3, 0, 6, 2, 0, 9, 2, 1, 10, 7, 2, 11, 6, 2 };
-static const u8 sQuickStartLanternCells223[] = { 2, 5, 3, 3, 6, 3, 4, 3, 0, 5, 2, 0, 7, 2, 3, 9, 2, 0, 9, 7, 2, 10, 3, 0, 11, 6, 2, 12, 4, 1 };
-static const u8 sQuickStartLanternCells224[] = { 2, 4, 3, 5, 2, 3, 7, 5, 0, 9, 2, 0, 9, 4, 4, 9, 7, 2 };
-static const u8 sQuickStartLanternCells225[] = { 2, 4, 3, 3, 6, 3, 4, 3, 0, 6, 2, 0, 7, 3, 1, 8, 6, 2, 9, 3, 0, 9, 5, 3, 10, 6, 2, 12, 5, 1 };
-static const u8 sQuickStartLanternCells226[] = { 2, 5, 3, 7, 2, 1, 9, 2, 0, 9, 7, 2, 10, 3, 0, 12, 5, 1 };
-static const u8 sQuickStartLanternCells227[] = { 2, 4, 3, 3, 6, 2, 4, 3, 0, 5, 2, 3, 7, 2, 3, 8, 7, 2, 9, 2, 0, 11, 3, 0, 11, 6, 1, 12, 4, 1 };
-static const u8 sQuickStartLanternCells228[] = { 4, 7, 3, 5, 4, 3, 6, 3, 3, 7, 7, 3, 8, 2, 0, 8, 4, 1 };
-static const u8 sQuickStartLanternCells229[] = { 4, 4, 3, 5, 7, 3, 6, 3, 3, 8, 4, 2, 9, 2, 0, 12, 5, 1 };
-static const u8 sQuickStartLanternCells230[] = { 2, 8, 3, 4, 5, 0, 4, 7, 4, 6, 4, 4, 7, 8, 2, 8, 3, 3, 8, 9, 2, 10, 4, 1, 12, 5, 1 };
-static const u8 sQuickStartLanternCells231[] = { 2, 4, 3, 2, 8, 2, 3, 5, 3, 4, 6, 1, 5, 9, 3, 7, 8, 4, 8, 4, 1, 9, 2, 3, 11, 3, 0, 11, 5, 0 };
-static const u8 sQuickStartLanternCells232[] = { 2, 7, 3, 2, 9, 3, 3, 2, 0, 4, 9, 2, 6, 9, 2, 7, 2, 0, 8, 9, 2, 11, 2, 0, 12, 3, 1 };
-static const u8 sQuickStartLanternCells233[] = { 2, 3, 0, 2, 5, 3, 2, 7, 3, 4, 2, 0, 5, 9, 2, 6, 2, 0, 8, 9, 2, 9, 2, 0, 11, 2, 1, 12, 4, 1 };
-static const u8 sQuickStartLanternCells234[] = { 3, 4, 2, 4, 2, 3, 8, 2, 1, 10, 2, 1, 11, 4, 2, 12, 3, 1 };
-static const u8 sQuickStartLanternCells235[] = { 2, 3, 3, 2, 6, 2, 3, 4, 2, 9, 3, 1, 11, 4, 2, 12, 6, 2 };
-static const u8 sQuickStartLanternCells236[] = { 3, 18, 0, 6, 23, 0, 11, 18, 0 };
-static const u8 sQuickStartLanternCells237[] = { 3, 18, 0, 3, 22, 0, 6, 22, 0, 9, 19, 0, 11, 24, 0 };
-static const u8 sQuickStartLanternCells238[] = { 7, 19, 0, 8, 18, 0, 8, 20, 0 };
-static const u8 sQuickStartLanternCells239[] = { 5, 20, 0, 7, 18, 0, 7, 20, 0, 8, 19, 0, 8, 21, 0 };
-static const u8 sQuickStartLanternCells240[] = { 3, 18, 0, 7, 18, 0, 11, 18, 0 };
-static const u8 sQuickStartLanternCells241[] = { 3, 18, 0, 5, 20, 0, 7, 18, 0, 11, 18, 0, 11, 24, 0 };
-static const u8 sQuickStartLanternCells242[] = { 3, 18, 0, 3, 20, 0, 4, 21, 0, 8, 19, 4, 9, 22, 3, 11, 24, 2 };
-static const u8 sQuickStartLanternCells243[] = { 3, 18, 0, 3, 22, 2, 6, 22, 1, 7, 20, 3, 7, 23, 1, 8, 21, 2, 9, 18, 1, 10, 20, 0, 10, 22, 0, 11, 24, 2 };
-static const u8 sQuickStartLanternCells244[] = { 3, 18, 0, 5, 20, 0, 7, 19, 3, 7, 23, 1, 8, 21, 2, 11, 18, 0 };
-static const u8 sQuickStartLanternCells245[] = { 3, 19, 0, 3, 22, 3, 7, 18, 3, 7, 23, 1, 8, 21, 3, 9, 19, 1, 9, 22, 2, 11, 18, 0, 11, 21, 1, 11, 24, 2 };
-static const u8 sQuickStartLanternCells246[] = { 4, 6, 0, 5, 2, 0, 9, 5, 0 };
-static const u8 sQuickStartLanternCells247[] = { 4, 6, 0, 5, 2, 0, 8, 2, 0, 9, 7, 0, 10, 3, 0 };
-static const u8 sQuickStartLanternCells248[] = { 9, 4, 0, 9, 6, 0, 10, 5, 0 };
-static const u8 sQuickStartLanternCells249[] = { 4, 4, 0, 5, 3, 0, 6, 4, 0, 7, 3, 0, 9, 4, 0 };
-static const u8 sQuickStartLanternCells250[] = { 4, 3, 0, 10, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells251[] = { 4, 3, 0, 4, 6, 0, 7, 2, 0, 10, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells252[] = { 5, 4, 4, 7, 2, 1, 8, 6, 3, 9, 5, 2, 9, 7, 1, 10, 4, 2 };
-static const u8 sQuickStartLanternCells253[] = { 4, 3, 0, 4, 5, 3, 5, 2, 3, 6, 4, 2, 8, 2, 1, 8, 6, 3, 9, 5, 0, 9, 7, 1, 10, 3, 0, 10, 6, 2 };
-static const u8 sQuickStartLanternCells254[] = { 4, 3, 3, 4, 5, 3, 6, 4, 1, 7, 3, 3, 8, 6, 3, 9, 3, 0 };
-static const u8 sQuickStartLanternCells255[] = { 4, 3, 3, 4, 6, 3, 5, 2, 3, 6, 4, 1, 7, 3, 1, 8, 6, 1, 9, 4, 0, 9, 7, 1, 10, 2, 0, 10, 6, 2 };
-static const u8 sQuickStartLanternCells256[] = { 2, 10, 0, 10, 4, 0, 14, 10, 0 };
-static const u8 sQuickStartLanternCells257[] = { 2, 10, 0, 4, 2, 0, 6, 7, 0, 8, 4, 0, 11, 8, 0, 12, 3, 0, 14, 10, 0 };
-static const u8 sQuickStartLanternCells258[] = { 2, 6, 0, 2, 8, 0, 3, 7, 0 };
-static const u8 sQuickStartLanternCells259[] = { 2, 7, 0, 3, 8, 0, 4, 7, 0, 4, 9, 0, 5, 8, 0 };
-static const u8 sQuickStartLanternCells260[] = { 2, 2, 0, 2, 10, 0, 14, 2, 0, 14, 10, 0 };
-static const u8 sQuickStartLanternCells261[] = { 2, 2, 0, 2, 5, 0, 2, 10, 0, 7, 2, 0, 14, 2, 0, 14, 5, 0, 14, 10, 0 };
-static const u8 sQuickStartLanternCells262[] = { 4, 4, 4, 4, 8, 4, 6, 5, 3, 9, 4, 2, 11, 10, 3, 14, 6, 0 };
-static const u8 sQuickStartLanternCells263[] = { 3, 7, 4, 4, 10, 2, 5, 7, 3, 6, 2, 3, 7, 10, 1, 9, 10, 3, 10, 2, 1, 10, 5, 2, 11, 6, 1, 11, 9, 1, 12, 3, 3, 12, 10, 3, 13, 4, 2, 13, 6, 1 };
-static const u8 sQuickStartLanternCells264[] = { 2, 10, 2, 4, 2, 0, 4, 10, 2, 7, 2, 0, 9, 2, 0, 10, 10, 2, 13, 10, 2, 14, 6, 1 };
-static const u8 sQuickStartLanternCells265[] = { 2, 3, 3, 2, 6, 3, 2, 9, 3, 5, 10, 2, 6, 2, 0, 7, 10, 2, 8, 2, 0, 13, 2, 0, 14, 4, 1, 14, 9, 1 };
-static const u8 sQuickStartLanternCells266[] = { 3, 3, 0, 4, 9, 0, 9, 2, 0, 10, 9, 0 };
-static const u8 sQuickStartLanternCells267[] = { 2, 4, 0, 4, 9, 0, 9, 2, 0, 10, 9, 0, 12, 5, 0 };
-static const u8 sQuickStartLanternCells268[] = { 3, 3, 0, 4, 2, 0, 5, 3, 0, 7, 3, 0 };
-static const u8 sQuickStartLanternCells269[] = { 9, 5, 0, 9, 7, 0, 9, 9, 0, 10, 8, 0, 11, 7, 0 };
-static const u8 sQuickStartLanternCells270[] = { 2, 4, 0, 10, 2, 0, 12, 4, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells271[] = { 2, 5, 0, 10, 2, 0, 10, 9, 0, 12, 4, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells272[] = { 2, 5, 3, 3, 7, 3, 4, 4, 2, 6, 3, 0, 9, 2, 0, 9, 5, 3, 9, 8, 4 };
-static const u8 sQuickStartLanternCells273[] = { 2, 5, 3, 3, 7, 2, 4, 6, 3, 5, 3, 3, 7, 4, 0, 9, 3, 0, 9, 7, 3, 9, 9, 2, 10, 6, 0, 11, 4, 1 };
-static const u8 sQuickStartLanternCells274[] = { 3, 8, 2, 4, 3, 3, 5, 2, 0, 8, 9, 2, 10, 2, 0, 10, 7, 1, 11, 4, 0, 12, 6, 1 };
-static const u8 sQuickStartLanternCells275[] = { 2, 5, 3, 2, 7, 3, 3, 8, 2, 6, 3, 0, 8, 9, 2, 9, 2, 0, 10, 3, 1, 10, 8, 1, 11, 4, 0, 12, 5, 1 };
-static const u8 sQuickStartLanternCells276[] = { 7, 4, 0, 8, 9, 0, 12, 5, 0 };
-static const u8 sQuickStartLanternCells277[] = { 7, 7, 0, 8, 9, 0, 9, 4, 0, 12, 5, 0, 12, 9, 0 };
-static const u8 sQuickStartLanternCells278[] = { 7, 4, 0, 8, 5, 0, 9, 4, 0 };
-static const u8 sQuickStartLanternCells279[] = { 8, 7, 0, 10, 4, 0, 12, 5, 0, 12, 7, 0, 12, 9, 0 };
-static const u8 sQuickStartLanternCells280[] = { 7, 4, 0, 12, 4, 0, 12, 9, 0 };
-static const u8 sQuickStartLanternCells281[] = { 7, 4, 0, 7, 7, 0, 8, 9, 0, 12, 4, 0, 12, 9, 0 };
-static const u8 sQuickStartLanternCells282[] = { 7, 5, 0, 7, 7, 3, 8, 6, 0, 8, 9, 2, 12, 6, 1, 12, 9, 1 };
-static const u8 sQuickStartLanternCells283[] = { 7, 5, 3, 7, 7, 3, 9, 4, 0, 12, 4, 1, 12, 7, 1, 12, 9, 1 };
-static const u8 sQuickStartLanternCells284[] = { 32, 12, 0, 32, 18, 0, 37, 13, 0 };
-static const u8 sQuickStartLanternCells285[] = { 32, 12, 0, 32, 18, 0, 36, 15, 0, 37, 12, 0, 37, 17, 0 };
-static const u8 sQuickStartLanternCells286[] = { 36, 13, 0, 36, 15, 0, 37, 14, 0 };
-static const u8 sQuickStartLanternCells287[] = { 32, 13, 0, 32, 15, 0, 33, 12, 0, 34, 13, 0, 36, 12, 0 };
-static const u8 sQuickStartLanternCells288[] = { 32, 12, 0, 32, 18, 0, 37, 12, 0 };
-static const u8 sQuickStartLanternCells289[] = { 32, 12, 0, 32, 15, 0, 32, 18, 0, 37, 12, 0, 37, 17, 0 };
-static const u8 sQuickStartLanternCells290[] = { 32, 12, 3, 32, 14, 3, 32, 18, 2, 33, 13, 3, 35, 13, 3, 37, 15, 0 };
-static const u8 sQuickStartLanternCells291[] = { 32, 12, 3, 32, 14, 3, 32, 16, 2, 32, 18, 2, 34, 13, 0, 36, 13, 0, 36, 16, 2, 37, 12, 0, 37, 14, 1, 37, 17, 1 };
-static const u8 sQuickStartLanternCells292[] = { 32, 14, 3, 32, 16, 3, 34, 12, 0, 36, 12, 0, 37, 14, 1, 37, 16, 1 };
-static const u8 sQuickStartLanternCells293[] = { 3, 5, 0, 8, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells294[] = { 3, 5, 0, 5, 2, 0, 8, 4, 0, 9, 2, 0, 9, 7, 0 };
-static const u8 sQuickStartLanternCells295[] = { 9, 5, 0, 9, 7, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells296[] = { 3, 4, 0, 4, 3, 0, 4, 5, 0, 5, 2, 0, 8, 4, 0 };
-static const u8 sQuickStartLanternCells297[] = { 5, 2, 0, 9, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells298[] = { 3, 4, 0, 5, 2, 0, 8, 4, 0, 9, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells299[] = { 3, 4, 3, 4, 5, 2, 5, 2, 0, 8, 4, 0, 9, 5, 0, 10, 6, 1 };
-static const u8 sQuickStartLanternCells300[] = { 3, 5, 3, 4, 3, 3, 5, 2, 0, 8, 2, 1, 8, 4, 1, 9, 7, 2 };
-static const u8 sQuickStartLanternCells301[] = { 2, 2, 0, 5, 14, 0, 11, 8, 0 };
-static const u8 sQuickStartLanternCells302[] = { 2, 2, 0, 3, 8, 0, 5, 14, 0, 7, 4, 0, 9, 12, 0, 10, 7, 0, 12, 2, 0 };
-static const u8 sQuickStartLanternCells303[] = { 9, 4, 0, 9, 6, 0, 11, 6, 0 };
-static const u8 sQuickStartLanternCells304[] = { 4, 9, 0, 5, 6, 0, 5, 10, 0, 5, 12, 0, 5, 14, 0, 6, 11, 0, 6, 13, 0 };
-static const u8 sQuickStartLanternCells305[] = { 2, 4, 0, 5, 14, 0, 9, 14, 0, 12, 2, 0 };
-static const u8 sQuickStartLanternCells306[] = { 2, 2, 0, 2, 6, 0, 5, 14, 0, 9, 14, 0, 12, 2, 0, 12, 9, 0 };
-static const u8 sQuickStartLanternCells307[] = { 2, 7, 0, 3, 6, 0, 4, 3, 4, 6, 13, 2, 7, 2, 0, 8, 13, 2, 11, 3, 0, 12, 4, 2 };
-static const u8 sQuickStartLanternCells308[] = { 3, 6, 0, 4, 8, 3, 5, 12, 2, 5, 14, 3, 6, 13, 3, 8, 3, 3, 9, 2, 0, 9, 12, 1, 9, 14, 1, 10, 6, 1, 11, 2, 1, 11, 7, 0 };
-static const u8 sQuickStartLanternCells309[] = { 2, 3, 3, 2, 7, 3, 4, 2, 0, 5, 6, 0, 5, 11, 3, 12, 9, 2 };
-static const u8 sQuickStartLanternCells310[] = { 3, 4, 2, 4, 2, 0, 4, 6, 0, 5, 4, 2, 5, 12, 3, 5, 14, 3, 7, 14, 2, 9, 4, 2, 9, 12, 2, 10, 6, 0, 12, 2, 0, 12, 4, 1 };
-static const u8 sQuickStartLanternCells311[] = { 3, 7, 0, 8, 2, 0, 11, 7, 0 };
-static const u8 sQuickStartLanternCells312[] = { 7, 2, 0, 8, 3, 0, 9, 7, 0 };
-static const u8 sQuickStartLanternCells313[] = { 3, 7, 0, 6, 2, 0, 11, 7, 0 };
-static const u8 sQuickStartLanternCells314[] = { 4, 2, 0, 9, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells315[] = { 4, 2, 0, 4, 7, 0, 8, 4, 0, 9, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells316[] = { 6, 2, 0, 8, 2, 0, 8, 4, 0 };
-static const u8 sQuickStartLanternCells317[] = { 4, 2, 0, 4, 4, 0, 6, 2, 0, 8, 2, 0, 10, 2, 0 };
-static const u8 sQuickStartLanternCells318[] = { 4, 7, 0, 10, 7, 0, 11, 3, 0 };
-static const u8 sQuickStartLanternCells319[] = { 4, 2, 0, 4, 7, 0, 9, 2, 0, 10, 7, 0, 11, 3, 0 };
-static const u8 sQuickStartLanternCells320[] = { 4, 4, 3, 7, 2, 0, 8, 7, 1, 9, 3, 3, 10, 4, 2, 10, 7, 1 };
-static const u8 sQuickStartLanternCells321[] = { 4, 2, 3, 4, 4, 3, 7, 2, 3, 8, 4, 2, 8, 7, 1, 9, 3, 1, 10, 2, 0, 10, 5, 2, 10, 7, 1, 11, 3, 1 };
-static const u8 sQuickStartLanternCells322[] = { 4, 2, 3, 6, 2, 0, 9, 4, 2, 10, 5, 2, 10, 7, 1, 11, 3, 1 };
-static const u8 sQuickStartLanternCells323[] = { 2, 5, 0, 4, 4, 1, 4, 9, 3, 10, 4, 4, 10, 6, 1, 12, 4, 0 };
-static const u8 sQuickStartLanternCells324[] = { 2, 5, 0, 4, 7, 0, 5, 4, 3, 5, 6, 3, 8, 3, 0, 9, 5, 0, 10, 3, 3, 11, 4, 0, 11, 7, 2, 12, 8, 2 };
-static const u8 sQuickStartLanternCells325[] = { 2, 8, 3, 3, 2, 0, 8, 2, 0, 10, 9, 2, 11, 2, 0, 12, 4, 1 };
-static const u8 sQuickStartLanternCells326[] = { 2, 3, 3, 2, 6, 3, 2, 9, 3, 4, 9, 2, 5, 2, 0, 7, 2, 0, 10, 2, 0, 11, 9, 2, 12, 4, 1, 12, 6, 1 };
-static const u8 sQuickStartLanternCells327[] = { 2, 19, 3, 3, 7, 0, 3, 26, 3, 3, 41, 3, 4, 10, 0, 6, 19, 0, 6, 41, 1, 9, 33, 0, 11, 22, 1 };
-static const u8 sQuickStartLanternCells328[] = { 2, 14, 3, 2, 23, 2, 5, 26, 2, 6, 12, 0, 6, 15, 3, 7, 45, 4, 8, 9, 3, 8, 36, 0, 9, 38, 0, 10, 27, 0, 10, 35, 3, 11, 13, 0, 12, 18, 2, 12, 43, 2 };
-static const u8 sQuickStartLanternCells329[] = { 2, 17, 3, 9, 7, 0, 12, 9, 1, 12, 14, 1, 12, 24, 1, 12, 39, 1 };
-static const u8 sQuickStartLanternCells330[] = { 2, 11, 3, 2, 16, 3, 2, 23, 3, 2, 31, 3, 2, 34, 3, 3, 7, 3, 8, 7, 0, 12, 21, 1, 12, 39, 1, 12, 41, 1 };
-static const u8 sQuickStartLanternCells331[] = { 4, 5, 3, 5, 2, 3, 6, 3, 1, 8, 3, 4, 10, 3, 1, 10, 5, 1 };
-static const u8 sQuickStartLanternCells332[] = { 4, 5, 3, 5, 3, 3, 5, 7, 2, 6, 2, 3, 6, 6, 3, 7, 3, 0, 9, 2, 1, 10, 3, 0, 10, 6, 2, 11, 4, 1 };
-static const u8 sQuickStartLanternCells333[] = { 4, 3, 3, 4, 6, 3, 5, 2, 3, 8, 2, 0, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells334[] = { 4, 3, 3, 4, 5, 3, 5, 2, 3, 5, 7, 3, 6, 3, 3, 6, 5, 0, 7, 2, 0, 9, 2, 0, 10, 6, 1, 11, 4, 1 };
-static const u8 sQuickStartLanternCells335[] = { 3, 11, 0, 8, 9, 0, 12, 5, 0, 16, 12, 0 };
-static const u8 sQuickStartLanternCells336[] = { 4, 12, 0, 10, 6, 0, 11, 13, 0, 15, 7, 0, 17, 11, 0 };
-static const u8 sQuickStartLanternCells337[] = { 7, 13, 0, 8, 12, 0, 9, 13, 0 };
-static const u8 sQuickStartLanternCells338[] = { 15, 9, 0, 15, 11, 0, 16, 8, 0, 16, 10, 0, 17, 11, 0 };
-static const u8 sQuickStartLanternCells339[] = { 3, 11, 0, 6, 7, 0, 14, 7, 0, 17, 7, 0 };
-static const u8 sQuickStartLanternCells340[] = { 3, 7, 0, 6, 7, 0, 14, 7, 0, 17, 7, 0, 17, 11, 0 };
-static const u8 sQuickStartLanternCells341[] = { 3, 11, 3, 4, 9, 2, 9, 6, 3, 11, 4, 0, 12, 7, 1, 12, 10, 2, 14, 7, 1 };
-static const u8 sQuickStartLanternCells342[] = { 3, 8, 3, 4, 10, 3, 5, 12, 2, 7, 10, 3, 7, 13, 3, 9, 13, 2, 12, 8, 1, 13, 7, 1, 16, 10, 0, 17, 11, 1 };
-static const u8 sQuickStartLanternCells343[] = { 5, 8, 1, 7, 13, 3, 8, 8, 3, 12, 8, 1, 15, 7, 0, 15, 12, 2 };
-static const u8 sQuickStartLanternCells344[] = { 3, 7, 3, 5, 9, 2, 8, 9, 3, 11, 4, 0, 12, 6, 1, 14, 7, 3, 14, 10, 1, 16, 9, 0, 17, 7, 1, 17, 11, 1 };
-static const u8 sQuickStartLanternCells345[] = { 2, 8, 0, 6, 11, 0, 6, 17, 0 };
-static const u8 sQuickStartLanternCells346[] = { 2, 8, 0, 3, 12, 0, 4, 15, 0, 6, 11, 0, 8, 17, 0 };
-static const u8 sQuickStartLanternCells347[] = { 4, 16, 0, 5, 15, 0, 6, 16, 0 };
-static const u8 sQuickStartLanternCells348[] = { 2, 8, 0, 4, 14, 0, 8, 17, 0 };
-static const u8 sQuickStartLanternCells349[] = { 2, 8, 0, 2, 11, 3, 4, 14, 0, 5, 12, 3, 5, 17, 2, 8, 17, 1 };
-static const u8 sQuickStartLanternCells350[] = { 2, 6, 0, 3, 7, 2, 7, 2, 0, 10, 2, 0, 10, 5, 0, 11, 4, 1, 12, 6, 2 };
-static const u8 sQuickStartLanternCells351[] = { 3, 6, 4, 6, 3, 3, 6, 5, 1, 7, 2, 0, 9, 2, 3, 10, 4, 3, 10, 6, 3, 11, 3, 0, 12, 4, 0, 12, 7, 2 };
-static const u8 sQuickStartLanternCells352[] = { 2, 6, 3, 3, 5, 0, 5, 5, 3, 6, 4, 3, 8, 2, 0, 10, 2, 0, 12, 3, 0 };
-static const u8 sQuickStartLanternCells353[] = { 4, 6, 2, 5, 7, 2, 6, 3, 3, 9, 4, 1, 10, 3, 1, 12, 7, 2 };
-static const u8 sQuickStartLanternCells354[] = { 3, 7, 3, 4, 3, 3, 5, 7, 2, 7, 3, 1, 9, 3, 1, 9, 7, 3, 10, 4, 1, 11, 6, 1, 12, 5, 0, 12, 7, 1 };
-static const u8 sQuickStartLanternCells355[] = { 3, 5, 0, 4, 3, 0, 6, 3, 0, 10, 4, 1, 11, 7, 2, 12, 5, 0 };
-static const u8 sQuickStartLanternCells356[] = { 2, 6, 3, 3, 5, 0, 4, 3, 3, 4, 7, 2, 7, 3, 0, 9, 4, 1, 10, 3, 1, 10, 7, 3, 11, 5, 0, 12, 6, 1 };
-static const u8 sQuickStartLanternCells357[] = { 2, 9, 3, 4, 5, 0, 4, 7, 3, 8, 7, 1, 9, 8, 1, 12, 8, 1 };
-static const u8 sQuickStartLanternCells358[] = { 2, 6, 3, 3, 9, 3, 4, 7, 3, 5, 5, 0, 8, 7, 1, 10, 8, 1 };
-static const u8 sQuickStartLanternCells359[] = { 20, 18, 0, 23, 11, 0, 27, 4, 0, 27, 22, 0 };
-static const u8 sQuickStartLanternCells360[] = { 25, 22, 0, 26, 21, 0, 27, 22, 0 };
-static const u8 sQuickStartLanternCells361[] = { 24, 22, 0, 25, 9, 0, 27, 4, 0 };
-static const u8 sQuickStartLanternCells362[] = { 4, 14, 0, 6, 18, 0, 12, 19, 0 };
-static const u8 sQuickStartLanternCells363[] = { 3, 18, 0, 4, 14, 0, 6, 19, 0, 9, 17, 0, 12, 15, 0 };
-static const u8 sQuickStartLanternCells364[] = { 8, 17, 0, 8, 19, 0, 9, 16, 0 };
-static const u8 sQuickStartLanternCells365[] = { 9, 17, 0, 10, 18, 0, 11, 17, 0, 12, 16, 0, 12, 18, 0 };
-static const u8 sQuickStartLanternCells366[] = { 5, 14, 0, 12, 15, 0, 12, 19, 0 };
-static const u8 sQuickStartLanternCells367[] = { 4, 19, 0, 5, 14, 0, 9, 19, 0, 12, 15, 0, 12, 19, 0 };
-static const u8 sQuickStartLanternCells368[] = { 5, 16, 3, 5, 18, 3, 8, 19, 1, 9, 15, 3, 11, 19, 1, 12, 17, 1 };
-static const u8 sQuickStartLanternCells369[] = { 3, 18, 2, 4, 17, 3, 4, 19, 3, 5, 14, 1, 5, 18, 2, 7, 18, 4, 9, 16, 0, 9, 18, 3, 10, 19, 1, 11, 17, 0 };
-static const u8 sQuickStartLanternCells370[] = { 4, 19, 2, 5, 14, 0, 7, 19, 2, 9, 19, 2, 12, 16, 1, 12, 18, 1 };
-static const u8 sQuickStartLanternCells371[] = { 3, 18, 2, 4, 19, 2, 5, 14, 1, 7, 15, 0, 7, 19, 2, 9, 19, 2, 10, 15, 0, 11, 19, 2, 12, 16, 1, 12, 18, 1 };
-static const u8 sQuickStartLanternCells372[] = { 3, 8, 0, 8, 3, 0, 12, 8, 0 };
-static const u8 sQuickStartLanternCells373[] = { 3, 8, 0, 4, 4, 0, 8, 3, 0, 11, 5, 0, 12, 8, 0 };
-static const u8 sQuickStartLanternCells374[] = { 4, 4, 0, 4, 7, 0, 5, 3, 0 };
-static const u8 sQuickStartLanternCells375[] = { 2, 4, 0, 4, 9, 0, 5, 5, 0 };
-static const u8 sQuickStartLanternCells376[] = { 2, 4, 0, 2, 9, 0, 3, 6, 0, 4, 8, 0, 5, 5, 0 };
-static const u8 sQuickStartLanternCells377[] = { 2, 6, 0, 2, 8, 0, 3, 7, 0 };
-static const u8 sQuickStartLanternCells378[] = { 2, 5, 0, 2, 7, 0, 3, 4, 0, 3, 6, 0, 3, 8, 0 };
-static const u8 sQuickStartLanternCells379[] = { 2, 4, 0, 2, 7, 0, 4, 9, 0 };
-static const u8 sQuickStartLanternCells380[] = { 2, 5, 3, 2, 9, 2, 3, 4, 3, 3, 7, 0, 4, 8, 1, 5, 5, 1 };
-static const u8 sQuickStartLanternCells381[] = { 2, 5, 3, 2, 8, 3, 3, 4, 0, 4, 6, 1, 4, 9, 2, 5, 5, 1 };
-static const u8 sQuickStartLanternCells382[] = { 6, 17, 0, 8, 10, 0, 8, 15, 0 };
-static const u8 sQuickStartLanternCells383[] = { 6, 15, 0, 6, 17, 0, 7, 16, 0, 8, 10, 0, 8, 14, 0 };
-static const u8 sQuickStartLanternCells384[] = { 7, 14, 0, 8, 15, 0, 8, 17, 0 };
-static const u8 sQuickStartLanternCells385[] = { 7, 14, 0, 8, 11, 0, 8, 13, 0, 8, 15, 0, 8, 17, 0 };
-static const u8 sQuickStartLanternCells386[] = { 6, 17, 0, 8, 10, 0, 8, 16, 0 };
-static const u8 sQuickStartLanternCells387[] = { 6, 16, 2, 7, 14, 0, 7, 17, 2, 8, 11, 1, 8, 13, 1, 8, 15, 1 };
-static const u8 sQuickStartLanternCells388[] = { 6, 18, 2, 7, 11, 2, 7, 13, 0, 8, 7, 0, 8, 16, 3, 10, 17, 1 };
-static const u8 sQuickStartLanternCells389[] = { 3, 17, 3, 4, 15, 1, 6, 16, 2, 7, 13, 0, 7, 20, 2, 8, 7, 0, 8, 16, 2, 8, 19, 1, 9, 12, 1, 10, 16, 1 };
-static const u8 sQuickStartLanternCells390[] = { 2, 16, 2, 4, 14, 0, 5, 12, 0, 7, 19, 2, 8, 14, 1, 9, 13, 1, 9, 17, 1 };
-static const u8 sQuickStartLanternCells391[] = { 2, 14, 0, 3, 17, 3, 5, 14, 2, 7, 20, 2, 8, 8, 1, 8, 10, 1, 8, 15, 1, 8, 19, 2, 9, 12, 1, 9, 16, 1 };
-static const u8 sQuickStartLanternCells392[] = { 5, 2, 3, 7, 2, 3, 7, 7, 2, 9, 5, 0, 10, 3, 0, 11, 5, 1 };
-static const u8 sQuickStartLanternCells393[] = { 2, 3, 0, 3, 2, 3, 4, 7, 1, 5, 3, 4, 6, 8, 4, 8, 2, 0, 9, 7, 3, 12, 9, 1 };
-static const u8 sQuickStartLanternCells394[] = { 2, 5, 0, 2, 7, 3, 4, 5, 1, 5, 7, 1, 6, 6, 2, 7, 3, 4, 8, 6, 2, 9, 5, 2, 9, 8, 2, 10, 9, 1 };
-static const u8 sQuickStartLanternCells395[] = { 2, 3, 0, 2, 6, 3, 2, 8, 3, 6, 2, 0, 6, 9, 2, 8, 9, 2, 11, 9, 2, 12, 6, 1, 12, 8, 1 };
-static const u8 sQuickStartLanternCells396[] = { 2, 3, 0, 2, 5, 3, 3, 2, 0, 4, 9, 2, 5, 2, 0, 6, 9, 2, 7, 2, 0, 8, 9, 2, 11, 9, 2, 12, 7, 1 };
-static const u8 sQuickStartLanternCells397[] = { 7, 7, 0, 15, 6, 0, 20, 2, 0 };
-static const u8 sQuickStartLanternCells398[] = { 2, 7, 0, 6, 2, 0, 10, 7, 0, 15, 3, 0, 21, 4, 0 };
-static const u8 sQuickStartLanternCells399[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 3, 0 };
-static const u8 sQuickStartLanternCells400[] = { 8, 7, 0, 9, 4, 0, 9, 6, 0, 10, 5, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells401[] = { 2, 4, 0, 2, 7, 0, 20, 2, 0 };
-static const u8 sQuickStartLanternCells402[] = { 2, 4, 0, 2, 7, 0, 5, 2, 0, 10, 7, 0, 20, 2, 0, 21, 4, 0 };
-static const u8 sQuickStartLanternCells403[] = { 5, 3, 1, 6, 6, 3, 8, 3, 3, 9, 4, 0, 15, 7, 2, 17, 7, 1, 18, 3, 1, 18, 6, 2 };
-static const u8 sQuickStartLanternCells404[] = { 5, 5, 2, 6, 2, 3, 7, 6, 3, 9, 2, 1, 9, 5, 3, 10, 7, 3, 14, 2, 3, 15, 4, 0, 18, 7, 2, 19, 4, 0 };
-static const u8 sQuickStartLanternCells405[] = { 3, 7, 3, 4, 6, 1, 6, 2, 0, 6, 4, 1, 6, 7, 2, 14, 2, 1, 20, 5, 1 };
-static const u8 sQuickStartLanternCells406[] = { 2, 4, 0, 4, 4, 1, 5, 7, 2, 6, 2, 0, 6, 5, 2, 8, 3, 1, 8, 6, 1, 9, 4, 3, 16, 2, 0, 19, 6, 1, 21, 4, 1 };
-static const u8 sQuickStartLanternCells407[] = { 4, 7, 0, 7, 2, 0, 8, 6, 0 };
-static const u8 sQuickStartLanternCells408[] = { 4, 7, 0, 7, 3, 0, 7, 7, 0, 9, 2, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells409[] = { 8, 3, 0, 9, 2, 0, 10, 3, 0 };
-static const u8 sQuickStartLanternCells410[] = { 4, 7, 0, 6, 7, 0, 7, 6, 0, 8, 7, 0, 9, 6, 0 };
-static const u8 sQuickStartLanternCells411[] = { 4, 7, 0, 9, 2, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells412[] = { 4, 7, 0, 7, 3, 0, 9, 2, 0, 10, 4, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells413[] = { 4, 7, 2, 8, 3, 1, 8, 6, 3, 9, 5, 0, 10, 4, 0, 10, 7, 2 };
-static const u8 sQuickStartLanternCells414[] = { 4, 7, 2, 7, 2, 1, 8, 3, 1, 8, 7, 1, 10, 5, 2, 10, 7, 1 };
-static const u8 sQuickStartLanternCells415[] = { 2, 2, 0, 2, 15, 0, 5, 9, 0, 13, 3, 0 };
-static const u8 sQuickStartLanternCells416[] = { 2, 2, 0, 2, 17, 0, 5, 9, 0, 5, 15, 0, 10, 4, 0, 13, 7, 0 };
-static const u8 sQuickStartLanternCells417[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 5, 0 };
-static const u8 sQuickStartLanternCells418[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 3, 0, 4, 5, 0, 4, 8, 0, 5, 4, 0 };
-static const u8 sQuickStartLanternCells419[] = { 2, 2, 0, 2, 17, 0, 5, 17, 0, 13, 3, 0 };
-static const u8 sQuickStartLanternCells420[] = { 2, 2, 0, 2, 14, 0, 2, 17, 0, 5, 17, 0, 10, 2, 0, 13, 3, 0, 13, 7, 0 };
-static const u8 sQuickStartLanternCells421[] = { 2, 14, 3, 2, 16, 2, 4, 17, 2, 5, 9, 2, 6, 3, 4, 8, 3, 1, 11, 3, 1 };
-static const u8 sQuickStartLanternCells422[] = { 2, 4, 0, 2, 9, 3, 2, 11, 0, 2, 14, 0, 4, 12, 1, 5, 13, 1, 6, 3, 0, 8, 6, 1, 9, 3, 4, 12, 7, 1, 13, 6, 2 };
-static const u8 sQuickStartLanternCells423[] = { 2, 7, 3, 2, 13, 3, 5, 2, 0, 5, 14, 1, 5, 16, 1, 9, 2, 0, 11, 3, 0, 13, 7, 2 };
-static const u8 sQuickStartLanternCells424[] = { 2, 2, 0, 2, 6, 3, 2, 8, 3, 2, 13, 3, 2, 15, 2, 4, 2, 0, 5, 12, 1, 5, 15, 0, 10, 7, 2, 13, 5, 1 };
-static const u8 sQuickStartLanternCells425[] = { 2, 4, 0, 8, 7, 0, 16, 6, 0 };
-static const u8 sQuickStartLanternCells426[] = { 2, 4, 0, 7, 3, 0, 10, 7, 0, 12, 4, 0, 18, 4, 0 };
-static const u8 sQuickStartLanternCells427[] = { 2, 4, 0, 2, 6, 0, 3, 3, 0, 3, 5, 0 };
-static const u8 sQuickStartLanternCells428[] = { 6, 3, 0, 7, 4, 0, 8, 3, 0, 8, 5, 0, 10, 3, 0 };
-static const u8 sQuickStartLanternCells429[] = { 4, 3, 0, 7, 4, 3, 8, 7, 2, 14, 3, 1, 14, 7, 3, 16, 6, 3, 17, 7, 1 };
-static const u8 sQuickStartLanternCells430[] = { 2, 4, 3, 2, 6, 2, 3, 5, 2, 8, 3, 1, 9, 5, 2, 14, 3, 1, 14, 6, 3, 15, 4, 1, 16, 6, 3, 18, 4, 1 };
-static const u8 sQuickStartLanternCells431[] = { 2, 5, 3, 3, 3, 0, 12, 4, 1, 13, 6, 3, 16, 7, 3, 17, 4, 1 };
-static const u8 sQuickStartLanternCells432[] = { 2, 7, 3, 3, 3, 0, 7, 3, 1, 10, 7, 3, 12, 6, 1, 14, 3, 1, 15, 6, 1, 17, 6, 1, 18, 4, 1, 18, 7, 1 };
-static const u8 sQuickStartLanternCells433[] = { 6, 4, 0, 8, 3, 0, 9, 6, 0 };
-static const u8 sQuickStartLanternCells434[] = { 5, 4, 0, 6, 6, 0, 7, 5, 0, 8, 3, 0, 9, 5, 0 };
-static const u8 sQuickStartLanternCells435[] = { 5, 4, 0, 6, 3, 0, 6, 5, 0 };
-static const u8 sQuickStartLanternCells436[] = { 5, 5, 0, 6, 4, 0, 6, 6, 0, 7, 5, 0, 8, 6, 0 };
-static const u8 sQuickStartLanternCells437[] = { 5, 3, 0, 8, 3, 0, 9, 6, 0 };
-static const u8 sQuickStartLanternCells438[] = { 5, 5, 4, 6, 3, 0, 7, 5, 2, 8, 4, 1, 8, 6, 2, 9, 5, 1 };
-static const u8 sQuickStartLanternCells439[] = { 4, 4, 0, 9, 4, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells440[] = { 4, 7, 0, 5, 5, 0, 9, 5, 0, 10, 4, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells441[] = { 4, 5, 0, 4, 7, 0, 9, 5, 0 };
-static const u8 sQuickStartLanternCells442[] = { 4, 5, 0, 4, 7, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
-static const u8 sQuickStartLanternCells443[] = { 4, 4, 0, 10, 4, 0, 10, 7, 0 };
-static const u8 sQuickStartLanternCells444[] = { 4, 5, 0, 4, 7, 3, 9, 5, 0, 9, 7, 1, 10, 4, 1, 10, 6, 2 };
-static const u8 sQuickStartLanternCells445[] = { 4, 4, 3, 5, 6, 4, 6, 4, 3, 9, 5, 1, 10, 4, 0, 10, 7, 1 };
-static const u8 sQuickStartLanternCells446[] = { 4, 5, 3, 4, 7, 2, 6, 4, 0, 8, 4, 0, 10, 4, 0, 10, 6, 1 };
-static const u8 sQuickStartLanternCells447[] = { 4, 17, 0, 8, 16, 0, 9, 14, 0 };
-static const u8 sQuickStartLanternCells448[] = { 8, 15, 0, 9, 14, 0, 11, 14, 0 };
-static const u8 sQuickStartLanternCells449[] = { 5, 17, 0, 8, 14, 0, 11, 14, 0 };
-static const u8 sQuickStartLanternCells450[] = { 4, 11, 0, 8, 2, 0, 12, 17, 0 };
-static const u8 sQuickStartLanternCells451[] = { 4, 11, 0, 8, 2, 0, 9, 13, 0, 11, 17, 0, 12, 6, 0 };
-static const u8 sQuickStartLanternCells452[] = { 10, 16, 0, 11, 15, 0, 12, 16, 0 };
-static const u8 sQuickStartLanternCells453[] = { 10, 15, 0, 11, 14, 0, 12, 13, 0, 12, 15, 0, 12, 17, 0 };
-static const u8 sQuickStartLanternCells454[] = { 8, 2, 0, 8, 17, 0, 12, 2, 0, 12, 6, 0 };
-static const u8 sQuickStartLanternCells455[] = { 4, 7, 0, 8, 2, 0, 8, 17, 0, 12, 2, 0, 12, 6, 0 };
-static const u8 sQuickStartLanternCells456[] = { 8, 13, 3, 9, 16, 3, 10, 3, 4, 10, 5, 3, 10, 17, 3, 11, 12, 1, 12, 6, 1, 12, 14, 1 };
-static const u8 sQuickStartLanternCells457[] = { 4, 10, 0, 5, 8, 4, 9, 5, 3, 9, 13, 3, 9, 15, 0, 10, 17, 3, 11, 3, 1, 12, 6, 2, 12, 13, 1, 12, 16, 1 };
-static const u8 sQuickStartLanternCells458[] = { 4, 8, 3, 5, 7, 0, 7, 8, 1, 9, 12, 0, 9, 16, 3, 11, 6, 2, 12, 5, 1, 12, 12, 0, 12, 16, 1 };
-static const u8 sQuickStartLanternCells459[] = { 4, 8, 3, 4, 10, 3, 5, 7, 0, 8, 17, 3, 9, 5, 3, 11, 2, 0, 12, 3, 1, 12, 5, 1, 12, 12, 1, 12, 14, 1 };
-static const u8 sQuickStartLanternCells460[] = { 2, 7, 2, 3, 4, 2, 4, 3, 1, 9, 2, 1, 12, 3, 0, 12, 6, 2 };
-static const u8 sQuickStartLanternCells461[] = { 2, 3, 3, 2, 5, 2, 3, 2, 0, 11, 2, 1, 12, 3, 0, 12, 7, 2 };
-static const u8 sQuickStartLanternCells462[] = { 3, 7, 3, 4, 4, 3, 5, 5, 3, 6, 3, 0, 8, 2, 3, 9, 5, 3, 9, 7, 4 };
-static const u8 sQuickStartLanternCells463[] = { 2, 3, 0, 4, 3, 0, 4, 5, 0, 4, 9, 2, 5, 4, 2, 9, 4, 4, 11, 4, 1, 11, 9, 1, 12, 3, 1, 12, 6, 1 };
-static const u8 sQuickStartLanternCells464[] = { 2, 5, 3, 3, 9, 2, 5, 9, 2, 7, 2, 0, 9, 9, 2, 11, 9, 2, 12, 3, 1, 12, 6, 1 };
-static const u8 sQuickStartLanternCells465[] = { 2, 3, 3, 2, 5, 3, 2, 9, 3, 3, 2, 0, 4, 9, 2, 5, 2, 0, 7, 2, 0, 12, 4, 1, 12, 6, 1, 12, 8, 1 };
-static const u8 sQuickStartLanternCells466[] = { 2, 4, 0, 6, 3, 0, 9, 5, 0 };
-static const u8 sQuickStartLanternCells467[] = { 2, 3, 0, 3, 5, 0, 4, 7, 0, 5, 4, 0, 10, 4, 0 };
-static const u8 sQuickStartLanternCells468[] = { 2, 4, 0, 3, 5, 0, 4, 4, 0 };
-static const u8 sQuickStartLanternCells469[] = { 5, 3, 0, 7, 3, 0, 9, 3, 0, 9, 5, 0, 10, 4, 0 };
-static const u8 sQuickStartLanternCells470[] = { 2, 3, 0, 2, 6, 0, 10, 4, 0 };
-static const u8 sQuickStartLanternCells471[] = { 2, 3, 0, 2, 6, 0, 4, 7, 0, 5, 3, 0, 10, 4, 0 };
-static const u8 sQuickStartLanternCells472[] = { 3, 6, 2, 4, 4, 1, 4, 7, 2, 5, 3, 1, 5, 5, 3, 9, 4, 1 };
-static const u8 sQuickStartLanternCells473[] = { 2, 3, 0, 2, 5, 3, 3, 6, 3, 4, 3, 0, 4, 7, 2, 5, 4, 0, 5, 6, 3, 6, 3, 1, 8, 3, 1, 9, 4, 1 };
-static const u8 sQuickStartLanternCells474[] = { 2, 3, 0, 2, 5, 3, 3, 6, 2, 4, 7, 2, 8, 3, 0, 9, 5, 2 };
-static const u8 sQuickStartLanternCells475[] = { 3, 4, 0, 9, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells476[] = { 3, 4, 0, 5, 2, 0, 6, 7, 0, 9, 2, 0, 12, 7, 0 };
-static const u8 sQuickStartLanternCells477[] = { 4, 4, 0, 5, 3, 0, 5, 6, 0 };
-static const u8 sQuickStartLanternCells478[] = { 4, 3, 0, 4, 5, 0, 5, 2, 0, 5, 4, 0, 9, 2, 0 };
-static const u8 sQuickStartLanternCells479[] = { 5, 7, 0, 10, 3, 0, 12, 5, 0 };
-static const u8 sQuickStartLanternCells480[] = { 4, 4, 3, 5, 3, 3, 5, 7, 2, 9, 4, 2, 10, 3, 1, 12, 5, 0 };
-static const u8 sQuickStartLanternCells481[] = { 3, 4, 3, 4, 3, 3, 4, 5, 3, 5, 2, 0, 5, 7, 2, 9, 4, 2, 9, 7, 1, 10, 3, 1, 11, 7, 1, 12, 5, 0 };
-static const u8 sQuickStartLanternCells482[] = { 4, 4, 3, 5, 2, 3, 5, 6, 3, 10, 3, 1, 11, 7, 1, 12, 5, 0 };
-static const u8 sQuickStartLanternCells483[] = { 3, 4, 3, 4, 5, 3, 5, 2, 3, 5, 6, 3, 9, 2, 0, 9, 4, 1, 9, 7, 1, 10, 3, 1, 12, 5, 0, 12, 7, 1 };
+static const u8 sQuickStartLanternCells144[] = { 7, 7, 2, 8, 6, 1, 9, 7, 1, 11, 6, 1, 12, 4, 0, 12, 7, 2 };
+static const u8 sQuickStartLanternCells145[] = { 3, 4, 3, 7, 7, 1, 8, 5, 0, 9, 7, 1, 10, 5, 1, 11, 4, 0, 11, 6, 1, 12, 3, 0, 12, 5, 1, 12, 7, 2 };
+static const u8 sQuickStartLanternCells146[] = { 7, 7, 2, 8, 5, 0, 10, 5, 3, 11, 4, 0, 12, 3, 0, 12, 6, 1 };
+static const u8 sQuickStartLanternCells147[] = { 3, 4, 3, 4, 3, 3, 5, 5, 0, 7, 2, 0, 9, 2, 1, 9, 4, 1 };
+static const u8 sQuickStartLanternCells148[] = { 3, 4, 3, 5, 4, 4, 5, 7, 2, 7, 2, 0, 9, 2, 1, 9, 5, 1, 9, 7, 1, 10, 3, 1, 10, 6, 2, 11, 4, 1 };
+static const u8 sQuickStartLanternCells149[] = { 3, 4, 3, 4, 6, 3, 7, 2, 0, 9, 7, 2, 10, 6, 2, 11, 5, 1 };
+static const u8 sQuickStartLanternCells150[] = { 3, 4, 3, 4, 3, 0, 4, 6, 3, 5, 2, 3, 7, 2, 0, 9, 2, 1, 9, 7, 2, 10, 3, 0, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells151[] = { 2, 4, 3, 5, 4, 1, 6, 3, 3, 9, 6, 2, 9, 8, 2, 12, 8, 1 };
+static const u8 sQuickStartLanternCells152[] = { 2, 4, 3, 2, 7, 3, 3, 6, 3, 4, 3, 3, 4, 8, 1, 5, 4, 1, 6, 3, 3, 7, 4, 0, 9, 6, 2, 10, 7, 1 };
+static const u8 sQuickStartLanternCells153[] = { 2, 4, 3, 2, 8, 2, 5, 6, 1, 9, 8, 3, 10, 3, 1, 12, 3, 1 };
+static const u8 sQuickStartLanternCells154[] = { 2, 4, 3, 2, 6, 0, 2, 8, 3, 4, 8, 2, 5, 6, 1, 7, 4, 0, 9, 6, 1, 9, 8, 2, 11, 3, 1, 12, 8, 1 };
+static const u8 sQuickStartLanternCells155[] = { 3, 4, 3, 7, 2, 3, 7, 7, 3, 9, 2, 0, 9, 6, 1, 11, 5, 1 };
+static const u8 sQuickStartLanternCells156[] = { 3, 4, 3, 6, 7, 3, 7, 2, 1, 7, 6, 1, 9, 2, 0, 9, 5, 2, 9, 7, 2, 10, 3, 1, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells157[] = { 6, 7, 3, 7, 2, 1, 7, 6, 3, 9, 2, 0, 9, 5, 3, 11, 4, 1 };
+static const u8 sQuickStartLanternCells158[] = { 7, 7, 1, 8, 6, 1, 9, 5, 3, 10, 3, 1, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells159[] = { 3, 4, 3, 7, 7, 1, 9, 3, 1, 9, 7, 2, 10, 6, 2, 11, 5, 1 };
+static const u8 sQuickStartLanternCells160[] = { 6, 7, 3, 7, 3, 3, 9, 5, 2, 10, 4, 0, 10, 6, 1, 11, 5, 1 };
+static const u8 sQuickStartLanternCells161[] = { 6, 7, 3, 7, 3, 3, 9, 2, 1, 9, 5, 3, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells162[] = { 3, 4, 3, 6, 7, 3, 9, 3, 0, 9, 7, 2, 10, 6, 2, 11, 5, 1 };
+static const u8 sQuickStartLanternCells163[] = { 3, 4, 3, 7, 2, 3, 8, 7, 1, 9, 2, 0, 10, 6, 2, 11, 5, 1 };
+static const u8 sQuickStartLanternCells164[] = { 3, 4, 3, 6, 7, 3, 7, 2, 3, 7, 6, 3, 9, 2, 0, 9, 5, 3, 9, 7, 1, 10, 3, 0, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells165[] = { 3, 6, 3, 4, 7, 3, 5, 6, 3, 6, 5, 0, 9, 4, 4, 11, 6, 1 };
+static const u8 sQuickStartLanternCells166[] = { 4, 3, 3, 4, 7, 3, 5, 2, 0, 5, 6, 2, 6, 4, 3, 6, 7, 2, 7, 5, 2, 8, 3, 1, 10, 4, 1, 11, 6, 1 };
+static const u8 sQuickStartLanternCells167[] = { 4, 5, 3, 5, 2, 0, 5, 7, 2, 6, 3, 0, 9, 3, 0, 11, 6, 1 };
+static const u8 sQuickStartLanternCells168[] = { 3, 6, 3, 4, 3, 3, 4, 5, 0, 4, 7, 3, 5, 2, 0, 6, 7, 2, 7, 3, 0, 9, 3, 0, 10, 4, 1, 11, 6, 1 };
+static const u8 sQuickStartLanternCells169[] = { 6, 3, 3, 8, 2, 3, 10, 3, 1, 11, 4, 2, 12, 3, 1, 12, 5, 2 };
+static const u8 sQuickStartLanternCells170[] = { 2, 6, 2, 6, 3, 3, 10, 2, 1, 11, 4, 2, 12, 5, 2, 12, 7, 2 };
+static const u8 sQuickStartLanternCells171[] = { 2, 33, 2, 2, 43, 2, 4, 29, 0, 5, 10, 2, 7, 23, 1, 8, 43, 1, 10, 17, 2, 11, 15, 0 };
+static const u8 sQuickStartLanternCells172[] = { 3, 9, 3, 3, 46, 0, 5, 10, 0, 5, 39, 1, 7, 5, 3, 7, 28, 1, 10, 21, 3, 10, 38, 3, 10, 41, 0, 12, 7, 2, 12, 34, 2 };
+static const u8 sQuickStartLanternCells173[] = { 2, 11, 3, 2, 13, 3, 2, 40, 3, 8, 2, 0, 12, 31, 1, 12, 34, 1, 12, 42, 1 };
+static const u8 sQuickStartLanternCells174[] = { 2, 10, 3, 2, 14, 3, 2, 29, 3, 2, 31, 3, 2, 33, 3, 2, 38, 3, 2, 42, 3, 2, 46, 3, 6, 2, 0, 12, 15, 1, 12, 17, 1, 12, 35, 1, 12, 41, 1 };
+static const u8 sQuickStartLanternCells175[] = { 3, 3, 3, 6, 3, 1, 6, 6, 2, 7, 7, 2, 8, 2, 1, 9, 3, 3 };
+static const u8 sQuickStartLanternCells176[] = { 2, 4, 3, 3, 3, 0, 5, 3, 0, 6, 4, 1, 7, 5, 0, 8, 6, 2, 9, 3, 0, 10, 4, 1, 10, 7, 2, 12, 5, 1 };
+static const u8 sQuickStartLanternCells177[] = { 2, 5, 3, 4, 3, 0, 6, 2, 0, 8, 2, 0, 10, 3, 0, 12, 4, 1 };
+static const u8 sQuickStartLanternCells178[] = { 2, 5, 3, 4, 3, 0, 5, 2, 0, 7, 2, 1, 7, 7, 2, 9, 2, 0, 10, 3, 0, 10, 7, 1, 11, 6, 2, 12, 4, 1 };
+static const u8 sQuickStartLanternCells179[] = { 4, 2, 0, 5, 5, 4, 7, 6, 3, 8, 4, 0, 9, 3, 0, 11, 3, 1 };
+static const u8 sQuickStartLanternCells180[] = { 4, 4, 3, 6, 4, 0, 9, 3, 0, 9, 5, 1, 9, 7, 2, 11, 3, 1 };
+static const u8 sQuickStartLanternCells181[] = { 4, 2, 0, 4, 4, 3, 6, 6, 2, 7, 4, 0, 8, 2, 0, 8, 6, 2, 9, 3, 0, 9, 5, 1, 9, 7, 2, 11, 3, 1 };
+static const u8 sQuickStartLanternCells182[] = { 4, 4, 0, 9, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells183[] = { 2, 3, 0, 5, 2, 0, 5, 7, 0, 11, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells184[] = { 2, 6, 0, 3, 5, 0, 4, 6, 0 };
+static const u8 sQuickStartLanternCells185[] = { 4, 3, 0, 5, 2, 0, 9, 2, 0, 11, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells186[] = { 2, 3, 0, 5, 2, 0, 9, 2, 0 };
+static const u8 sQuickStartLanternCells187[] = { 2, 3, 0, 3, 7, 0, 5, 2, 0, 9, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells188[] = { 2, 5, 2, 3, 3, 3, 5, 5, 1, 6, 6, 3, 9, 3, 0, 11, 3, 0 };
+static const u8 sQuickStartLanternCells189[] = { 2, 3, 3, 3, 7, 2, 4, 3, 0, 4, 6, 1, 5, 2, 0, 5, 4, 0, 5, 7, 2, 8, 7, 1, 9, 2, 0, 11, 2, 0 };
+static const u8 sQuickStartLanternCells190[] = { 2, 5, 3, 3, 7, 2, 5, 4, 0, 6, 6, 3, 9, 3, 0, 11, 3, 0 };
+static const u8 sQuickStartLanternCells191[] = { 3, 8, 0, 6, 17, 0, 8, 11, 0, 11, 3, 0 };
+static const u8 sQuickStartLanternCells192[] = { 3, 2, 0, 3, 8, 0, 6, 17, 0, 8, 4, 0, 8, 11, 0 };
+static const u8 sQuickStartLanternCells193[] = { 8, 4, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells194[] = { 6, 2, 0, 6, 4, 0, 7, 3, 0, 7, 5, 0, 8, 4, 0 };
+static const u8 sQuickStartLanternCells195[] = { 3, 2, 0, 6, 17, 0, 11, 2, 0 };
+static const u8 sQuickStartLanternCells196[] = { 3, 2, 0, 8, 13, 0, 8, 17, 0, 11, 2, 0, 11, 8, 0 };
+static const u8 sQuickStartLanternCells197[] = { 3, 2, 0, 6, 5, 1, 6, 12, 2, 7, 11, 2, 8, 2, 0, 8, 4, 1, 8, 16, 1 };
+static const u8 sQuickStartLanternCells198[] = { 5, 2, 0, 6, 8, 1, 7, 4, 3, 7, 13, 0, 8, 9, 2, 8, 16, 1, 9, 4, 2, 9, 8, 2, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells199[] = { 6, 8, 2, 6, 14, 2, 6, 17, 3, 8, 12, 2, 9, 8, 2, 11, 7, 1 };
+static const u8 sQuickStartLanternCells200[] = { 3, 8, 3, 5, 2, 0, 6, 14, 2, 6, 17, 3, 8, 9, 2, 8, 12, 2, 8, 17, 2, 9, 2, 0, 11, 2, 0, 11, 5, 1 };
+static const u8 sQuickStartLanternCells201[] = { 2, 7, 0, 5, 7, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells202[] = { 5, 7, 0, 10, 7, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells203[] = { 2, 7, 0, 9, 7, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells204[] = { 5, 6, 0, 9, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells205[] = { 4, 3, 0, 5, 6, 0, 7, 3, 0, 9, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells206[] = { 8, 3, 0, 9, 2, 0, 10, 3, 0 };
+static const u8 sQuickStartLanternCells207[] = { 7, 3, 0, 9, 3, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells208[] = { 5, 2, 0, 9, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells209[] = { 4, 6, 0, 5, 2, 0, 7, 3, 0, 9, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells210[] = { 4, 3, 3, 5, 4, 2, 7, 3, 0, 9, 2, 0, 9, 4, 4, 10, 6, 1 };
+static const u8 sQuickStartLanternCells211[] = { 4, 3, 3, 4, 5, 2, 5, 2, 0, 5, 4, 3, 5, 6, 2, 7, 3, 3, 9, 2, 0, 9, 6, 2, 10, 3, 1, 10, 5, 1 };
+static const u8 sQuickStartLanternCells212[] = { 4, 3, 0, 4, 5, 3, 6, 3, 0, 9, 2, 0, 10, 4, 1, 10, 6, 1 };
+static const u8 sQuickStartLanternCells213[] = { 2, 5, 3, 4, 3, 0, 5, 7, 3, 7, 2, 1, 7, 4, 3, 10, 4, 0 };
+static const u8 sQuickStartLanternCells214[] = { 2, 5, 3, 3, 3, 0, 3, 6, 3, 4, 4, 1, 6, 2, 0, 6, 5, 1, 7, 3, 0, 9, 2, 1, 10, 4, 0, 11, 3, 1 };
+static const u8 sQuickStartLanternCells215[] = { 3, 6, 3, 4, 3, 0, 5, 2, 3, 5, 7, 2, 7, 2, 0, 12, 5, 1 };
+static const u8 sQuickStartLanternCells216[] = { 2, 4, 3, 3, 3, 3, 3, 6, 2, 5, 2, 0, 5, 7, 2, 7, 2, 0, 9, 2, 0, 11, 3, 1, 11, 6, 1, 12, 5, 1 };
+static const u8 sQuickStartLanternCells217[] = { 2, 5, 3, 7, 2, 1, 7, 6, 1, 8, 5, 1, 9, 2, 1, 10, 4, 3 };
+static const u8 sQuickStartLanternCells218[] = { 3, 5, 2, 4, 3, 0, 7, 3, 1, 7, 6, 1, 8, 7, 2, 9, 3, 0, 9, 5, 1, 10, 6, 1, 11, 3, 0, 12, 4, 1 };
+static const u8 sQuickStartLanternCells219[] = { 2, 4, 3, 4, 3, 0, 5, 2, 0, 7, 2, 1, 10, 7, 1, 12, 5, 1 };
+static const u8 sQuickStartLanternCells220[] = { 2, 5, 3, 3, 3, 3, 3, 6, 2, 6, 2, 0, 8, 2, 0, 8, 7, 2, 10, 3, 0, 10, 7, 1, 11, 6, 2, 12, 4, 1 };
+static const u8 sQuickStartLanternCells221[] = { 3, 4, 0, 3, 6, 3, 7, 3, 1, 9, 2, 0, 9, 4, 4, 11, 5, 2 };
+static const u8 sQuickStartLanternCells222[] = { 2, 5, 3, 3, 3, 3, 3, 6, 3, 6, 2, 0, 7, 5, 3, 8, 7, 3, 9, 2, 1, 10, 4, 4, 11, 6, 1, 12, 4, 1 };
+static const u8 sQuickStartLanternCells223[] = { 3, 6, 2, 4, 3, 0, 6, 2, 0, 9, 2, 1, 10, 7, 2, 11, 6, 2 };
+static const u8 sQuickStartLanternCells224[] = { 2, 5, 3, 3, 6, 3, 4, 3, 0, 5, 2, 0, 7, 2, 3, 9, 2, 0, 9, 7, 2, 10, 3, 0, 11, 6, 2, 12, 4, 1 };
+static const u8 sQuickStartLanternCells225[] = { 2, 4, 3, 5, 2, 3, 7, 5, 0, 9, 2, 0, 9, 4, 4, 9, 7, 2 };
+static const u8 sQuickStartLanternCells226[] = { 2, 4, 3, 3, 6, 3, 4, 3, 0, 6, 2, 0, 7, 3, 1, 8, 6, 2, 9, 3, 0, 9, 5, 3, 10, 6, 2, 12, 5, 1 };
+static const u8 sQuickStartLanternCells227[] = { 2, 5, 3, 7, 2, 1, 9, 2, 0, 9, 7, 2, 10, 3, 0, 12, 5, 1 };
+static const u8 sQuickStartLanternCells228[] = { 2, 4, 3, 3, 6, 2, 4, 3, 0, 5, 2, 3, 7, 2, 3, 8, 7, 2, 9, 2, 0, 11, 3, 0, 11, 6, 1, 12, 4, 1 };
+static const u8 sQuickStartLanternCells229[] = { 2, 8, 3, 4, 5, 0, 4, 7, 4, 6, 4, 4, 7, 8, 2, 8, 3, 3, 8, 9, 2, 10, 4, 1, 12, 5, 1 };
+static const u8 sQuickStartLanternCells230[] = { 2, 4, 0, 2, 8, 3, 3, 5, 0, 4, 6, 2, 5, 9, 3, 7, 8, 3, 8, 4, 4, 9, 2, 0, 11, 3, 0, 11, 5, 4 };
+static const u8 sQuickStartLanternCells231[] = { 2, 7, 3, 2, 9, 3, 4, 9, 2, 11, 2, 1, 12, 3, 0, 12, 5, 1 };
+static const u8 sQuickStartLanternCells232[] = { 2, 5, 3, 2, 7, 3, 3, 9, 2, 4, 2, 0, 5, 9, 2, 6, 2, 0, 7, 9, 2, 8, 2, 0, 10, 2, 0, 12, 3, 0 };
+static const u8 sQuickStartLanternCells233[] = { 3, 4, 2, 4, 2, 3, 8, 2, 1, 10, 2, 1, 11, 4, 2, 12, 3, 1 };
+static const u8 sQuickStartLanternCells234[] = { 2, 3, 3, 2, 6, 2, 3, 4, 2, 9, 3, 1, 11, 4, 2, 12, 6, 2 };
+static const u8 sQuickStartLanternCells235[] = { 3, 18, 0, 6, 23, 0, 11, 18, 0 };
+static const u8 sQuickStartLanternCells236[] = { 3, 18, 0, 3, 22, 0, 6, 22, 0, 9, 19, 0, 11, 24, 0 };
+static const u8 sQuickStartLanternCells237[] = { 7, 19, 0, 8, 18, 0, 8, 20, 0 };
+static const u8 sQuickStartLanternCells238[] = { 5, 20, 0, 7, 18, 0, 7, 20, 0, 8, 19, 0, 8, 21, 0 };
+static const u8 sQuickStartLanternCells239[] = { 3, 18, 0, 7, 18, 0, 11, 18, 0 };
+static const u8 sQuickStartLanternCells240[] = { 3, 18, 0, 5, 20, 0, 7, 18, 0, 11, 18, 0, 11, 24, 0 };
+static const u8 sQuickStartLanternCells241[] = { 3, 18, 0, 3, 20, 0, 4, 21, 0, 8, 19, 4, 9, 22, 3, 11, 24, 2 };
+static const u8 sQuickStartLanternCells242[] = { 3, 18, 0, 3, 22, 2, 6, 22, 1, 7, 20, 3, 7, 23, 1, 8, 21, 2, 9, 18, 1, 10, 20, 0, 10, 22, 0, 11, 24, 2 };
+static const u8 sQuickStartLanternCells243[] = { 3, 18, 0, 5, 20, 0, 7, 19, 3, 7, 23, 1, 8, 21, 2, 11, 18, 0 };
+static const u8 sQuickStartLanternCells244[] = { 3, 19, 0, 3, 22, 3, 7, 18, 3, 7, 23, 1, 8, 21, 3, 9, 19, 1, 9, 22, 2, 11, 18, 0, 11, 21, 1, 11, 24, 2 };
+static const u8 sQuickStartLanternCells245[] = { 4, 6, 0, 5, 2, 0, 9, 5, 0 };
+static const u8 sQuickStartLanternCells246[] = { 4, 6, 0, 5, 2, 0, 8, 2, 0, 9, 7, 0, 10, 3, 0 };
+static const u8 sQuickStartLanternCells247[] = { 9, 4, 0, 9, 6, 0, 10, 5, 0 };
+static const u8 sQuickStartLanternCells248[] = { 4, 4, 0, 5, 3, 0, 6, 4, 0, 7, 3, 0, 9, 4, 0 };
+static const u8 sQuickStartLanternCells249[] = { 4, 3, 0, 10, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells250[] = { 4, 3, 0, 4, 6, 0, 7, 2, 0, 10, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells251[] = { 5, 4, 4, 7, 2, 1, 8, 6, 3, 9, 5, 2, 9, 7, 1, 10, 4, 2 };
+static const u8 sQuickStartLanternCells252[] = { 4, 3, 0, 4, 5, 3, 5, 2, 3, 6, 4, 2, 8, 2, 1, 8, 6, 3, 9, 5, 0, 9, 7, 1, 10, 3, 0, 10, 6, 2 };
+static const u8 sQuickStartLanternCells253[] = { 4, 3, 3, 4, 5, 3, 6, 4, 1, 7, 3, 3, 8, 6, 3, 9, 3, 0 };
+static const u8 sQuickStartLanternCells254[] = { 4, 3, 3, 4, 6, 3, 5, 2, 3, 6, 4, 1, 7, 3, 1, 8, 6, 1, 9, 4, 0, 9, 7, 1, 10, 2, 0, 10, 6, 2 };
+static const u8 sQuickStartLanternCells255[] = { 2, 10, 0, 10, 4, 0, 14, 10, 0 };
+static const u8 sQuickStartLanternCells256[] = { 2, 10, 0, 4, 2, 0, 6, 7, 0, 8, 4, 0, 11, 8, 0, 12, 3, 0, 14, 10, 0 };
+static const u8 sQuickStartLanternCells257[] = { 2, 6, 0, 2, 8, 0, 3, 7, 0 };
+static const u8 sQuickStartLanternCells258[] = { 2, 7, 0, 3, 8, 0, 4, 7, 0, 4, 9, 0, 5, 8, 0 };
+static const u8 sQuickStartLanternCells259[] = { 2, 2, 0, 2, 10, 0, 14, 2, 0, 14, 10, 0 };
+static const u8 sQuickStartLanternCells260[] = { 2, 2, 0, 2, 5, 0, 2, 10, 0, 7, 2, 0, 14, 2, 0, 14, 5, 0, 14, 10, 0 };
+static const u8 sQuickStartLanternCells261[] = { 4, 4, 4, 4, 8, 4, 6, 5, 3, 9, 4, 2, 11, 10, 3, 14, 6, 0 };
+static const u8 sQuickStartLanternCells262[] = { 3, 7, 4, 4, 10, 2, 5, 7, 3, 6, 2, 3, 7, 10, 1, 9, 10, 3, 10, 2, 1, 10, 5, 2, 11, 6, 1, 11, 9, 1, 12, 3, 3, 12, 10, 3, 13, 4, 2, 13, 6, 1 };
+static const u8 sQuickStartLanternCells263[] = { 2, 10, 2, 4, 2, 0, 4, 10, 2, 7, 2, 0, 9, 2, 0, 10, 10, 2, 13, 10, 2, 14, 6, 1 };
+static const u8 sQuickStartLanternCells264[] = { 2, 3, 3, 2, 6, 3, 2, 9, 3, 5, 10, 2, 6, 2, 0, 7, 10, 2, 8, 2, 0, 13, 2, 0, 14, 4, 1, 14, 9, 1 };
+static const u8 sQuickStartLanternCells265[] = { 3, 3, 0, 4, 9, 0, 9, 2, 0, 10, 9, 0 };
+static const u8 sQuickStartLanternCells266[] = { 2, 4, 0, 4, 9, 0, 9, 2, 0, 10, 9, 0, 12, 5, 0 };
+static const u8 sQuickStartLanternCells267[] = { 3, 3, 0, 4, 2, 0, 5, 3, 0, 7, 3, 0 };
+static const u8 sQuickStartLanternCells268[] = { 9, 5, 0, 9, 7, 0, 9, 9, 0, 10, 8, 0, 11, 7, 0 };
+static const u8 sQuickStartLanternCells269[] = { 2, 4, 0, 10, 2, 0, 12, 4, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells270[] = { 2, 5, 0, 10, 2, 0, 10, 9, 0, 12, 4, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells271[] = { 2, 5, 3, 3, 7, 3, 4, 4, 2, 6, 3, 0, 9, 2, 0, 9, 5, 2, 9, 8, 1 };
+static const u8 sQuickStartLanternCells272[] = { 2, 5, 3, 3, 6, 3, 3, 8, 2, 4, 3, 3, 4, 7, 1, 7, 4, 3, 8, 5, 3, 9, 8, 1, 10, 4, 3, 11, 7, 2 };
+static const u8 sQuickStartLanternCells273[] = { 2, 7, 3, 4, 9, 3, 6, 3, 0, 8, 3, 0, 8, 9, 2, 10, 2, 0, 10, 8, 1, 12, 7, 1 };
+static const u8 sQuickStartLanternCells274[] = { 2, 5, 3, 2, 7, 3, 5, 2, 0, 6, 3, 0, 8, 3, 0, 9, 9, 2, 10, 3, 1, 10, 8, 1, 11, 4, 0, 12, 7, 2 };
+static const u8 sQuickStartLanternCells275[] = { 7, 4, 0, 8, 9, 0, 12, 5, 0 };
+static const u8 sQuickStartLanternCells276[] = { 7, 7, 0, 8, 9, 0, 9, 4, 0, 12, 5, 0, 12, 9, 0 };
+static const u8 sQuickStartLanternCells277[] = { 7, 4, 0, 8, 5, 0, 9, 4, 0 };
+static const u8 sQuickStartLanternCells278[] = { 8, 7, 0, 10, 4, 0, 12, 5, 0, 12, 7, 0, 12, 9, 0 };
+static const u8 sQuickStartLanternCells279[] = { 7, 4, 0, 12, 4, 0, 12, 9, 0 };
+static const u8 sQuickStartLanternCells280[] = { 7, 4, 0, 7, 7, 0, 8, 9, 0, 12, 4, 0, 12, 9, 0 };
+static const u8 sQuickStartLanternCells281[] = { 7, 5, 0, 7, 7, 3, 8, 6, 0, 8, 9, 2, 12, 6, 1, 12, 9, 1 };
+static const u8 sQuickStartLanternCells282[] = { 7, 5, 3, 7, 7, 3, 9, 4, 0, 12, 4, 1, 12, 7, 1, 12, 9, 1 };
+static const u8 sQuickStartLanternCells283[] = { 32, 12, 0, 32, 18, 0, 37, 13, 0 };
+static const u8 sQuickStartLanternCells284[] = { 32, 12, 0, 32, 18, 0, 36, 15, 0, 37, 12, 0, 37, 17, 0 };
+static const u8 sQuickStartLanternCells285[] = { 36, 13, 0, 36, 15, 0, 37, 14, 0 };
+static const u8 sQuickStartLanternCells286[] = { 32, 13, 0, 32, 15, 0, 33, 12, 0, 34, 13, 0, 36, 12, 0 };
+static const u8 sQuickStartLanternCells287[] = { 32, 12, 0, 32, 18, 0, 37, 12, 0 };
+static const u8 sQuickStartLanternCells288[] = { 32, 12, 0, 32, 15, 0, 32, 18, 0, 37, 12, 0, 37, 17, 0 };
+static const u8 sQuickStartLanternCells289[] = { 32, 12, 3, 32, 14, 3, 32, 18, 2, 33, 13, 3, 35, 13, 3, 37, 15, 0 };
+static const u8 sQuickStartLanternCells290[] = { 32, 12, 3, 32, 14, 3, 32, 16, 2, 32, 18, 2, 34, 13, 0, 36, 13, 0, 36, 16, 2, 37, 12, 0, 37, 14, 1, 37, 17, 1 };
+static const u8 sQuickStartLanternCells291[] = { 32, 14, 3, 32, 16, 3, 34, 12, 0, 36, 12, 0, 37, 14, 1, 37, 16, 1 };
+static const u8 sQuickStartLanternCells292[] = { 3, 5, 0, 8, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells293[] = { 3, 5, 0, 5, 2, 0, 8, 4, 0, 9, 2, 0, 9, 7, 0 };
+static const u8 sQuickStartLanternCells294[] = { 9, 5, 0, 9, 7, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells295[] = { 3, 4, 0, 4, 3, 0, 4, 5, 0, 5, 2, 0, 8, 4, 0 };
+static const u8 sQuickStartLanternCells296[] = { 5, 2, 0, 9, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells297[] = { 3, 4, 0, 5, 2, 0, 8, 4, 0, 9, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells298[] = { 3, 4, 3, 4, 5, 2, 5, 2, 0, 8, 4, 0, 9, 5, 0, 10, 6, 1 };
+static const u8 sQuickStartLanternCells299[] = { 3, 5, 3, 4, 3, 3, 5, 2, 0, 8, 2, 1, 8, 4, 1, 9, 7, 2 };
+static const u8 sQuickStartLanternCells300[] = { 2, 2, 0, 5, 14, 0, 11, 8, 0 };
+static const u8 sQuickStartLanternCells301[] = { 2, 2, 0, 3, 8, 0, 5, 14, 0, 7, 4, 0, 9, 12, 0, 10, 7, 0, 12, 2, 0 };
+static const u8 sQuickStartLanternCells302[] = { 9, 4, 0, 9, 6, 0, 11, 6, 0 };
+static const u8 sQuickStartLanternCells303[] = { 4, 9, 0, 5, 6, 0, 5, 10, 0, 5, 12, 0, 5, 14, 0, 6, 11, 0, 6, 13, 0 };
+static const u8 sQuickStartLanternCells304[] = { 2, 4, 0, 5, 14, 0, 9, 14, 0, 12, 2, 0 };
+static const u8 sQuickStartLanternCells305[] = { 2, 2, 0, 2, 6, 0, 5, 14, 0, 9, 14, 0, 12, 2, 0, 12, 9, 0 };
+static const u8 sQuickStartLanternCells306[] = { 2, 7, 3, 3, 6, 3, 4, 3, 1, 6, 13, 3, 7, 2, 0, 8, 13, 2, 11, 3, 0, 12, 4, 2 };
+static const u8 sQuickStartLanternCells307[] = { 3, 6, 0, 4, 8, 1, 5, 12, 2, 5, 14, 3, 6, 13, 3, 8, 3, 1, 9, 2, 1, 9, 12, 1, 9, 14, 1, 10, 6, 1, 11, 2, 0, 11, 7, 2 };
+static const u8 sQuickStartLanternCells308[] = { 2, 3, 3, 2, 8, 3, 3, 6, 0, 4, 4, 2, 5, 2, 1, 5, 11, 3, 7, 2, 0, 10, 9, 2 };
+static const u8 sQuickStartLanternCells309[] = { 3, 4, 2, 4, 2, 0, 4, 6, 0, 5, 4, 3, 5, 12, 3, 5, 14, 3, 7, 14, 2, 9, 4, 1, 9, 12, 2, 10, 6, 0, 12, 2, 0, 12, 4, 1 };
+static const u8 sQuickStartLanternCells310[] = { 3, 7, 0, 8, 2, 0, 11, 7, 0 };
+static const u8 sQuickStartLanternCells311[] = { 7, 2, 0, 8, 3, 0, 9, 7, 0 };
+static const u8 sQuickStartLanternCells312[] = { 3, 7, 0, 6, 2, 0, 11, 7, 0 };
+static const u8 sQuickStartLanternCells313[] = { 4, 2, 0, 9, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells314[] = { 4, 2, 0, 4, 7, 0, 8, 4, 0, 9, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells315[] = { 6, 2, 0, 8, 2, 0, 8, 4, 0 };
+static const u8 sQuickStartLanternCells316[] = { 4, 2, 0, 4, 4, 0, 6, 2, 0, 8, 2, 0, 10, 2, 0 };
+static const u8 sQuickStartLanternCells317[] = { 4, 7, 0, 10, 7, 0, 11, 3, 0 };
+static const u8 sQuickStartLanternCells318[] = { 4, 2, 0, 4, 7, 0, 9, 2, 0, 10, 7, 0, 11, 3, 0 };
+static const u8 sQuickStartLanternCells319[] = { 4, 2, 3, 8, 3, 1, 9, 4, 2, 10, 3, 1, 10, 5, 2, 10, 7, 1 };
+static const u8 sQuickStartLanternCells320[] = { 4, 2, 3, 4, 4, 3, 6, 2, 0, 8, 2, 1, 8, 7, 1, 9, 3, 1, 10, 2, 1, 10, 5, 2, 10, 7, 1, 11, 3, 1 };
+static const u8 sQuickStartLanternCells321[] = { 4, 2, 3, 4, 4, 3, 6, 2, 0, 9, 2, 0, 9, 7, 1, 11, 3, 1 };
+static const u8 sQuickStartLanternCells322[] = { 2, 5, 0, 3, 6, 2, 4, 4, 1, 4, 9, 3, 10, 4, 4, 12, 4, 0 };
+static const u8 sQuickStartLanternCells323[] = { 2, 5, 0, 4, 7, 0, 5, 4, 3, 5, 6, 3, 8, 3, 0, 9, 5, 0, 10, 3, 3, 11, 4, 0, 11, 7, 2, 12, 8, 2 };
+static const u8 sQuickStartLanternCells324[] = { 2, 8, 3, 3, 2, 0, 8, 2, 0, 10, 9, 2, 11, 2, 0, 12, 4, 1 };
+static const u8 sQuickStartLanternCells325[] = { 2, 3, 3, 2, 6, 3, 2, 9, 3, 4, 9, 2, 5, 2, 0, 7, 2, 0, 10, 2, 0, 11, 9, 2, 12, 4, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells326[] = { 2, 19, 3, 3, 7, 0, 3, 26, 3, 3, 41, 3, 4, 10, 0, 6, 19, 0, 6, 41, 1, 9, 33, 0, 11, 22, 1 };
+static const u8 sQuickStartLanternCells327[] = { 2, 14, 3, 2, 23, 2, 5, 26, 2, 6, 12, 0, 6, 15, 3, 7, 45, 4, 8, 9, 3, 8, 36, 0, 9, 38, 0, 10, 27, 0, 10, 35, 3, 11, 13, 0, 12, 18, 2, 12, 43, 2 };
+static const u8 sQuickStartLanternCells328[] = { 2, 17, 3, 9, 7, 0, 12, 9, 1, 12, 14, 1, 12, 24, 1, 12, 39, 1 };
+static const u8 sQuickStartLanternCells329[] = { 2, 11, 3, 2, 16, 3, 2, 23, 3, 2, 31, 3, 2, 34, 3, 3, 7, 3, 8, 7, 0, 12, 21, 1, 12, 39, 1, 12, 41, 1 };
+static const u8 sQuickStartLanternCells330[] = { 4, 5, 3, 5, 2, 3, 6, 3, 1, 8, 3, 4, 10, 3, 1, 10, 5, 1 };
+static const u8 sQuickStartLanternCells331[] = { 4, 5, 3, 5, 3, 3, 5, 7, 2, 6, 2, 3, 6, 6, 3, 7, 3, 0, 9, 2, 1, 10, 3, 0, 10, 6, 2, 11, 4, 1 };
+static const u8 sQuickStartLanternCells332[] = { 4, 3, 3, 4, 6, 3, 5, 2, 3, 8, 2, 0, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells333[] = { 4, 3, 3, 4, 5, 3, 5, 2, 3, 5, 7, 3, 6, 3, 3, 6, 5, 0, 7, 2, 0, 9, 2, 0, 10, 6, 1, 11, 4, 1 };
+static const u8 sQuickStartLanternCells334[] = { 3, 11, 0, 8, 9, 0, 12, 5, 0, 16, 12, 0 };
+static const u8 sQuickStartLanternCells335[] = { 4, 12, 0, 10, 6, 0, 11, 13, 0, 15, 7, 0, 17, 11, 0 };
+static const u8 sQuickStartLanternCells336[] = { 7, 13, 0, 8, 12, 0, 9, 13, 0 };
+static const u8 sQuickStartLanternCells337[] = { 15, 9, 0, 15, 11, 0, 16, 8, 0, 16, 10, 0, 17, 11, 0 };
+static const u8 sQuickStartLanternCells338[] = { 3, 11, 0, 6, 7, 0, 14, 7, 0, 17, 7, 0 };
+static const u8 sQuickStartLanternCells339[] = { 3, 7, 0, 6, 7, 0, 14, 7, 0, 17, 7, 0, 17, 11, 0 };
+static const u8 sQuickStartLanternCells340[] = { 3, 11, 3, 4, 9, 2, 9, 6, 3, 11, 4, 0, 12, 7, 1, 12, 10, 2, 14, 7, 1 };
+static const u8 sQuickStartLanternCells341[] = { 3, 8, 3, 4, 10, 3, 5, 12, 2, 7, 10, 3, 7, 13, 3, 9, 13, 2, 12, 8, 1, 13, 7, 1, 16, 10, 0, 17, 11, 1 };
+static const u8 sQuickStartLanternCells342[] = { 5, 8, 1, 7, 13, 3, 8, 8, 3, 12, 8, 1, 15, 7, 0, 15, 12, 2 };
+static const u8 sQuickStartLanternCells343[] = { 3, 7, 3, 5, 9, 2, 8, 9, 3, 11, 4, 0, 12, 6, 1, 14, 7, 3, 14, 10, 1, 16, 9, 0, 17, 7, 1, 17, 11, 1 };
+static const u8 sQuickStartLanternCells344[] = { 2, 8, 0, 6, 11, 0, 6, 17, 0 };
+static const u8 sQuickStartLanternCells345[] = { 2, 8, 0, 3, 12, 0, 4, 15, 0, 6, 11, 0, 8, 17, 0 };
+static const u8 sQuickStartLanternCells346[] = { 4, 16, 0, 5, 15, 0, 6, 16, 0 };
+static const u8 sQuickStartLanternCells347[] = { 2, 8, 0, 4, 14, 0, 8, 17, 0 };
+static const u8 sQuickStartLanternCells348[] = { 2, 8, 0, 2, 11, 3, 4, 14, 0, 5, 12, 3, 5, 17, 2, 8, 17, 1 };
+static const u8 sQuickStartLanternCells349[] = { 2, 6, 0, 3, 7, 2, 7, 2, 0, 10, 2, 0, 10, 5, 0, 11, 4, 1, 12, 6, 2 };
+static const u8 sQuickStartLanternCells350[] = { 3, 6, 4, 6, 3, 3, 6, 5, 1, 7, 2, 0, 9, 2, 3, 10, 4, 3, 10, 6, 3, 11, 3, 0, 12, 4, 0, 12, 7, 2 };
+static const u8 sQuickStartLanternCells351[] = { 2, 6, 3, 3, 5, 0, 5, 5, 3, 6, 4, 3, 8, 2, 0, 10, 2, 0, 12, 3, 0 };
+static const u8 sQuickStartLanternCells352[] = { 4, 6, 2, 5, 7, 2, 6, 3, 3, 9, 4, 1, 10, 3, 1, 12, 7, 2 };
+static const u8 sQuickStartLanternCells353[] = { 3, 7, 3, 4, 3, 3, 5, 7, 2, 7, 3, 1, 9, 3, 1, 9, 7, 3, 10, 4, 1, 11, 6, 1, 12, 5, 0, 12, 7, 1 };
+static const u8 sQuickStartLanternCells354[] = { 3, 5, 0, 4, 3, 0, 6, 3, 0, 10, 4, 1, 11, 7, 2, 12, 5, 0 };
+static const u8 sQuickStartLanternCells355[] = { 2, 6, 3, 3, 5, 0, 4, 3, 3, 4, 7, 2, 7, 3, 0, 9, 4, 1, 10, 3, 1, 10, 7, 3, 11, 5, 0, 12, 6, 1 };
+static const u8 sQuickStartLanternCells356[] = { 2, 9, 3, 4, 5, 0, 4, 7, 3, 8, 7, 1, 9, 8, 1, 12, 8, 1 };
+static const u8 sQuickStartLanternCells357[] = { 2, 6, 3, 3, 9, 3, 4, 7, 3, 5, 5, 0, 8, 7, 1, 10, 8, 1 };
+static const u8 sQuickStartLanternCells358[] = { 20, 18, 0, 23, 11, 0, 27, 4, 0, 27, 22, 0 };
+static const u8 sQuickStartLanternCells359[] = { 25, 22, 0, 26, 21, 0, 27, 22, 0 };
+static const u8 sQuickStartLanternCells360[] = { 24, 22, 0, 25, 9, 0, 27, 4, 0 };
+static const u8 sQuickStartLanternCells361[] = { 4, 14, 0, 6, 18, 0, 12, 19, 0 };
+static const u8 sQuickStartLanternCells362[] = { 3, 18, 0, 4, 14, 0, 6, 19, 0, 9, 17, 0, 12, 15, 0 };
+static const u8 sQuickStartLanternCells363[] = { 8, 17, 0, 8, 19, 0, 9, 16, 0 };
+static const u8 sQuickStartLanternCells364[] = { 9, 17, 0, 10, 18, 0, 11, 17, 0, 12, 16, 0, 12, 18, 0 };
+static const u8 sQuickStartLanternCells365[] = { 5, 14, 0, 12, 15, 0, 12, 19, 0 };
+static const u8 sQuickStartLanternCells366[] = { 4, 19, 0, 5, 14, 0, 9, 19, 0, 12, 15, 0, 12, 19, 0 };
+static const u8 sQuickStartLanternCells367[] = { 5, 16, 3, 5, 18, 3, 8, 19, 1, 9, 15, 3, 11, 19, 1, 12, 17, 1 };
+static const u8 sQuickStartLanternCells368[] = { 4, 19, 2, 5, 14, 1, 5, 17, 1, 7, 15, 1, 7, 17, 0, 7, 19, 1, 8, 18, 2, 9, 15, 1, 10, 16, 1, 11, 18, 2 };
+static const u8 sQuickStartLanternCells369[] = { 4, 19, 2, 7, 15, 0, 8, 19, 2, 9, 15, 0, 11, 19, 2, 12, 17, 1 };
+static const u8 sQuickStartLanternCells370[] = { 3, 18, 2, 4, 14, 1, 4, 19, 2, 5, 15, 3, 7, 19, 2, 9, 15, 0, 9, 19, 2, 12, 15, 0, 12, 17, 1, 12, 19, 2 };
+static const u8 sQuickStartLanternCells371[] = { 3, 8, 0, 8, 3, 0, 12, 8, 0 };
+static const u8 sQuickStartLanternCells372[] = { 3, 8, 0, 4, 4, 0, 8, 3, 0, 11, 5, 0, 12, 8, 0 };
+static const u8 sQuickStartLanternCells373[] = { 4, 4, 0, 4, 7, 0, 5, 3, 0 };
+static const u8 sQuickStartLanternCells374[] = { 2, 4, 0, 4, 9, 0, 5, 5, 0 };
+static const u8 sQuickStartLanternCells375[] = { 2, 4, 0, 2, 9, 0, 3, 6, 0, 4, 8, 0, 5, 5, 0 };
+static const u8 sQuickStartLanternCells376[] = { 2, 6, 0, 2, 8, 0, 3, 7, 0 };
+static const u8 sQuickStartLanternCells377[] = { 2, 5, 0, 2, 7, 0, 3, 4, 0, 3, 6, 0, 3, 8, 0 };
+static const u8 sQuickStartLanternCells378[] = { 2, 4, 0, 2, 7, 0, 4, 9, 0 };
+static const u8 sQuickStartLanternCells379[] = { 2, 9, 2, 3, 5, 4, 3, 8, 2, 4, 7, 2, 4, 9, 2, 5, 4, 3 };
+static const u8 sQuickStartLanternCells380[] = { 2, 5, 3, 2, 7, 3, 2, 9, 2, 4, 6, 1, 4, 8, 1, 5, 4, 1 };
+static const u8 sQuickStartLanternCells381[] = { 6, 17, 0, 8, 10, 0, 8, 15, 0 };
+static const u8 sQuickStartLanternCells382[] = { 6, 15, 0, 6, 17, 0, 7, 16, 0, 8, 10, 0, 8, 14, 0 };
+static const u8 sQuickStartLanternCells383[] = { 7, 14, 0, 8, 15, 0, 8, 17, 0 };
+static const u8 sQuickStartLanternCells384[] = { 7, 14, 0, 8, 11, 0, 8, 13, 0, 8, 15, 0, 8, 17, 0 };
+static const u8 sQuickStartLanternCells385[] = { 6, 17, 0, 8, 10, 0, 8, 16, 0 };
+static const u8 sQuickStartLanternCells386[] = { 6, 16, 2, 7, 14, 0, 7, 17, 2, 8, 11, 1, 8, 13, 1, 8, 15, 1 };
+static const u8 sQuickStartLanternCells387[] = { 5, 2, 3, 7, 2, 3, 7, 7, 2, 9, 5, 0, 10, 3, 0, 11, 5, 1 };
+static const u8 sQuickStartLanternCells388[] = { 2, 3, 3, 3, 2, 3, 4, 7, 1, 5, 3, 4, 6, 8, 2, 7, 9, 1, 8, 2, 3, 9, 7, 2 };
+static const u8 sQuickStartLanternCells389[] = { 2, 7, 2, 3, 5, 3, 4, 8, 2, 6, 6, 4, 8, 6, 1, 8, 9, 3, 9, 3, 0, 9, 7, 2, 10, 8, 3, 12, 6, 1 };
+static const u8 sQuickStartLanternCells390[] = { 2, 3, 0, 2, 6, 3, 2, 8, 3, 5, 2, 0, 7, 2, 0, 7, 9, 2, 12, 6, 1 };
+static const u8 sQuickStartLanternCells391[] = { 2, 3, 0, 2, 5, 3, 3, 2, 0, 4, 9, 2, 5, 2, 0, 6, 9, 2, 7, 2, 0, 8, 9, 2, 11, 9, 2, 12, 7, 1 };
+static const u8 sQuickStartLanternCells392[] = { 7, 7, 0, 15, 6, 0, 20, 2, 0 };
+static const u8 sQuickStartLanternCells393[] = { 2, 7, 0, 6, 2, 0, 10, 7, 0, 15, 3, 0, 21, 4, 0 };
+static const u8 sQuickStartLanternCells394[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 3, 0 };
+static const u8 sQuickStartLanternCells395[] = { 8, 7, 0, 9, 4, 0, 9, 6, 0, 10, 5, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells396[] = { 2, 4, 0, 2, 7, 0, 20, 2, 0 };
+static const u8 sQuickStartLanternCells397[] = { 2, 4, 0, 2, 7, 0, 5, 2, 0, 10, 7, 0, 20, 2, 0, 21, 4, 0 };
+static const u8 sQuickStartLanternCells398[] = { 5, 3, 1, 6, 6, 3, 8, 3, 3, 9, 4, 0, 15, 7, 2, 17, 7, 1, 18, 3, 1, 18, 6, 2 };
+static const u8 sQuickStartLanternCells399[] = { 5, 5, 2, 6, 2, 3, 7, 6, 3, 9, 2, 1, 9, 5, 3, 10, 7, 3, 14, 2, 3, 15, 4, 0, 18, 7, 2, 19, 4, 0 };
+static const u8 sQuickStartLanternCells400[] = { 3, 7, 3, 4, 6, 1, 6, 2, 0, 6, 4, 1, 6, 7, 2, 14, 2, 1, 20, 5, 1 };
+static const u8 sQuickStartLanternCells401[] = { 2, 4, 0, 4, 4, 1, 5, 7, 2, 6, 2, 0, 6, 5, 2, 8, 3, 1, 8, 6, 1, 9, 4, 3, 16, 2, 0, 19, 6, 1, 21, 4, 1 };
+static const u8 sQuickStartLanternCells402[] = { 4, 7, 0, 7, 2, 0, 8, 6, 0 };
+static const u8 sQuickStartLanternCells403[] = { 4, 7, 0, 7, 3, 0, 7, 7, 0, 9, 2, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells404[] = { 8, 3, 0, 9, 2, 0, 10, 3, 0 };
+static const u8 sQuickStartLanternCells405[] = { 4, 7, 0, 6, 7, 0, 7, 6, 0, 8, 7, 0, 9, 6, 0 };
+static const u8 sQuickStartLanternCells406[] = { 4, 7, 0, 9, 2, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells407[] = { 4, 7, 0, 7, 3, 0, 9, 2, 0, 10, 4, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells408[] = { 4, 7, 2, 8, 3, 1, 8, 6, 3, 9, 5, 0, 10, 4, 0, 10, 7, 2 };
+static const u8 sQuickStartLanternCells409[] = { 4, 7, 2, 7, 2, 1, 8, 3, 1, 8, 7, 1, 10, 5, 2, 10, 7, 1 };
+static const u8 sQuickStartLanternCells410[] = { 2, 2, 0, 2, 15, 0, 5, 9, 0, 13, 3, 0 };
+static const u8 sQuickStartLanternCells411[] = { 2, 2, 0, 2, 17, 0, 5, 9, 0, 5, 15, 0, 10, 4, 0, 13, 7, 0 };
+static const u8 sQuickStartLanternCells412[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 5, 0 };
+static const u8 sQuickStartLanternCells413[] = { 2, 5, 0, 3, 4, 0, 3, 6, 0, 4, 3, 0, 4, 5, 0, 4, 8, 0, 5, 4, 0 };
+static const u8 sQuickStartLanternCells414[] = { 2, 2, 0, 2, 17, 0, 5, 17, 0, 13, 3, 0 };
+static const u8 sQuickStartLanternCells415[] = { 2, 2, 0, 2, 14, 0, 2, 17, 0, 5, 17, 0, 10, 2, 0, 13, 3, 0, 13, 7, 0 };
+static const u8 sQuickStartLanternCells416[] = { 2, 14, 3, 2, 16, 2, 4, 17, 2, 5, 9, 2, 6, 3, 4, 8, 3, 1, 11, 3, 1 };
+static const u8 sQuickStartLanternCells417[] = { 2, 4, 0, 2, 9, 3, 2, 11, 0, 2, 14, 0, 4, 12, 1, 5, 13, 1, 6, 3, 0, 8, 6, 1, 9, 3, 4, 12, 7, 1, 13, 6, 2 };
+static const u8 sQuickStartLanternCells418[] = { 2, 7, 3, 2, 13, 3, 5, 2, 0, 5, 14, 1, 5, 16, 1, 9, 2, 0, 11, 3, 0, 13, 7, 2 };
+static const u8 sQuickStartLanternCells419[] = { 2, 2, 0, 2, 6, 3, 2, 8, 3, 2, 13, 3, 2, 15, 2, 4, 2, 0, 5, 12, 1, 5, 15, 0, 10, 7, 2, 13, 5, 1 };
+static const u8 sQuickStartLanternCells420[] = { 2, 4, 0, 8, 7, 0, 16, 6, 0 };
+static const u8 sQuickStartLanternCells421[] = { 2, 4, 0, 7, 3, 0, 10, 7, 0, 12, 4, 0, 18, 4, 0 };
+static const u8 sQuickStartLanternCells422[] = { 2, 4, 0, 2, 6, 0, 3, 3, 0, 3, 5, 0 };
+static const u8 sQuickStartLanternCells423[] = { 6, 3, 0, 7, 4, 0, 8, 3, 0, 8, 5, 0, 10, 3, 0 };
+static const u8 sQuickStartLanternCells424[] = { 4, 3, 0, 7, 4, 3, 8, 7, 2, 14, 3, 1, 14, 7, 3, 16, 6, 3, 17, 7, 1 };
+static const u8 sQuickStartLanternCells425[] = { 2, 4, 3, 2, 6, 2, 3, 5, 2, 8, 3, 1, 9, 5, 2, 14, 3, 1, 14, 6, 3, 15, 4, 1, 16, 6, 3, 18, 4, 1 };
+static const u8 sQuickStartLanternCells426[] = { 2, 5, 3, 3, 3, 0, 12, 4, 1, 13, 6, 3, 16, 7, 3, 17, 4, 1 };
+static const u8 sQuickStartLanternCells427[] = { 2, 7, 3, 3, 3, 0, 7, 3, 1, 10, 7, 3, 12, 6, 1, 14, 3, 1, 15, 6, 1, 17, 6, 1, 18, 4, 1, 18, 7, 1 };
+static const u8 sQuickStartLanternCells428[] = { 6, 4, 0, 8, 3, 0, 9, 6, 0 };
+static const u8 sQuickStartLanternCells429[] = { 5, 4, 0, 6, 6, 0, 7, 5, 0, 8, 3, 0, 9, 5, 0 };
+static const u8 sQuickStartLanternCells430[] = { 5, 4, 0, 6, 3, 0, 6, 5, 0 };
+static const u8 sQuickStartLanternCells431[] = { 5, 5, 0, 6, 4, 0, 6, 6, 0, 7, 5, 0, 8, 6, 0 };
+static const u8 sQuickStartLanternCells432[] = { 5, 3, 0, 8, 3, 0, 9, 6, 0 };
+static const u8 sQuickStartLanternCells433[] = { 6, 3, 1, 7, 4, 1, 7, 6, 2, 8, 3, 0, 9, 4, 1, 9, 6, 1 };
+static const u8 sQuickStartLanternCells434[] = { 4, 4, 0, 9, 4, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells435[] = { 4, 7, 0, 5, 5, 0, 9, 5, 0, 10, 4, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells436[] = { 4, 5, 0, 4, 7, 0, 9, 5, 0 };
+static const u8 sQuickStartLanternCells437[] = { 4, 5, 0, 4, 7, 0, 9, 5, 0, 10, 4, 0, 10, 6, 0 };
+static const u8 sQuickStartLanternCells438[] = { 4, 4, 0, 10, 4, 0, 10, 7, 0 };
+static const u8 sQuickStartLanternCells439[] = { 4, 5, 0, 4, 7, 3, 9, 5, 0, 9, 7, 1, 10, 4, 1, 10, 6, 2 };
+static const u8 sQuickStartLanternCells440[] = { 4, 5, 3, 4, 7, 2, 5, 6, 3, 6, 4, 3, 9, 5, 0, 10, 7, 2 };
+static const u8 sQuickStartLanternCells441[] = { 4, 5, 3, 4, 7, 2, 6, 4, 0, 8, 4, 0, 10, 4, 0, 10, 6, 1 };
+static const u8 sQuickStartLanternCells442[] = { 4, 17, 0, 8, 16, 0, 9, 14, 0 };
+static const u8 sQuickStartLanternCells443[] = { 8, 15, 0, 9, 14, 0, 11, 14, 0 };
+static const u8 sQuickStartLanternCells444[] = { 5, 17, 0, 8, 14, 0, 11, 14, 0 };
+static const u8 sQuickStartLanternCells445[] = { 4, 11, 0, 8, 2, 0, 12, 17, 0 };
+static const u8 sQuickStartLanternCells446[] = { 4, 11, 0, 8, 2, 0, 9, 13, 0, 11, 17, 0, 12, 6, 0 };
+static const u8 sQuickStartLanternCells447[] = { 10, 16, 0, 11, 15, 0, 12, 16, 0 };
+static const u8 sQuickStartLanternCells448[] = { 10, 15, 0, 11, 14, 0, 12, 13, 0, 12, 15, 0, 12, 17, 0 };
+static const u8 sQuickStartLanternCells449[] = { 8, 2, 0, 8, 17, 0, 12, 2, 0, 12, 6, 0 };
+static const u8 sQuickStartLanternCells450[] = { 4, 7, 0, 8, 2, 0, 8, 17, 0, 12, 2, 0, 12, 6, 0 };
+static const u8 sQuickStartLanternCells451[] = { 8, 13, 3, 9, 16, 3, 10, 3, 4, 10, 14, 2, 10, 17, 3, 11, 12, 1, 12, 6, 1, 12, 14, 1 };
+static const u8 sQuickStartLanternCells452[] = { 4, 10, 0, 5, 8, 4, 9, 5, 3, 9, 13, 3, 9, 15, 0, 10, 17, 3, 11, 3, 1, 12, 6, 2, 12, 13, 1, 12, 16, 1 };
+static const u8 sQuickStartLanternCells453[] = { 4, 8, 3, 5, 7, 0, 7, 8, 1, 9, 12, 0, 9, 16, 3, 11, 6, 2, 12, 5, 1, 12, 12, 0, 12, 16, 1 };
+static const u8 sQuickStartLanternCells454[] = { 4, 8, 3, 4, 10, 3, 5, 7, 0, 8, 17, 3, 9, 5, 3, 11, 2, 0, 12, 3, 1, 12, 5, 1, 12, 12, 1, 12, 14, 1 };
+static const u8 sQuickStartLanternCells455[] = { 2, 7, 2, 3, 4, 2, 4, 3, 1, 9, 2, 1, 12, 3, 0, 12, 6, 2 };
+static const u8 sQuickStartLanternCells456[] = { 2, 3, 3, 2, 5, 2, 3, 2, 0, 11, 2, 1, 12, 3, 0, 12, 7, 2 };
+static const u8 sQuickStartLanternCells457[] = { 3, 7, 3, 4, 4, 3, 5, 5, 3, 6, 3, 0, 8, 2, 3, 9, 5, 3, 9, 7, 4 };
+static const u8 sQuickStartLanternCells458[] = { 2, 3, 0, 4, 3, 0, 4, 5, 0, 4, 9, 2, 5, 4, 2, 9, 4, 4, 11, 4, 1, 11, 9, 1, 12, 3, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells459[] = { 2, 5, 3, 3, 9, 2, 5, 9, 2, 7, 2, 0, 9, 9, 2, 11, 9, 2, 12, 3, 1, 12, 6, 1 };
+static const u8 sQuickStartLanternCells460[] = { 2, 3, 3, 2, 5, 3, 2, 9, 3, 3, 2, 0, 4, 9, 2, 5, 2, 0, 7, 2, 0, 12, 4, 1, 12, 6, 1, 12, 8, 1 };
+static const u8 sQuickStartLanternCells461[] = { 2, 4, 0, 6, 3, 0, 9, 5, 0 };
+static const u8 sQuickStartLanternCells462[] = { 2, 3, 0, 3, 5, 0, 4, 7, 0, 5, 4, 0, 10, 4, 0 };
+static const u8 sQuickStartLanternCells463[] = { 2, 4, 0, 3, 5, 0, 4, 4, 0 };
+static const u8 sQuickStartLanternCells464[] = { 5, 3, 0, 7, 3, 0, 9, 3, 0, 9, 5, 0, 10, 4, 0 };
+static const u8 sQuickStartLanternCells465[] = { 2, 3, 0, 2, 6, 0, 10, 4, 0 };
+static const u8 sQuickStartLanternCells466[] = { 2, 3, 0, 2, 6, 0, 4, 7, 0, 5, 3, 0, 10, 4, 0 };
+static const u8 sQuickStartLanternCells467[] = { 3, 6, 2, 4, 4, 1, 4, 7, 2, 5, 3, 1, 5, 5, 3, 9, 4, 1 };
+static const u8 sQuickStartLanternCells468[] = { 2, 4, 3, 2, 6, 2, 3, 5, 2, 4, 3, 0, 4, 7, 3, 5, 4, 3, 5, 6, 2, 6, 3, 1, 9, 3, 1, 9, 5, 1 };
+static const u8 sQuickStartLanternCells469[] = { 2, 4, 3, 2, 6, 2, 4, 7, 2, 5, 3, 0, 9, 3, 1, 10, 4, 1 };
+static const u8 sQuickStartLanternCells470[] = { 3, 4, 0, 9, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells471[] = { 3, 4, 0, 5, 2, 0, 6, 7, 0, 9, 2, 0, 12, 7, 0 };
+static const u8 sQuickStartLanternCells472[] = { 4, 4, 0, 5, 3, 0, 5, 6, 0 };
+static const u8 sQuickStartLanternCells473[] = { 4, 3, 0, 4, 5, 0, 5, 2, 0, 5, 4, 0, 9, 2, 0 };
+static const u8 sQuickStartLanternCells474[] = { 5, 7, 0, 10, 3, 0, 12, 5, 0 };
+static const u8 sQuickStartLanternCells475[] = { 4, 4, 3, 5, 3, 3, 5, 7, 2, 9, 4, 2, 10, 3, 1, 12, 5, 0 };
+static const u8 sQuickStartLanternCells476[] = { 3, 4, 3, 4, 3, 3, 4, 5, 3, 5, 2, 0, 5, 7, 2, 9, 4, 2, 9, 7, 1, 10, 3, 1, 11, 7, 1, 12, 5, 0 };
+static const u8 sQuickStartLanternCells477[] = { 4, 4, 3, 5, 2, 3, 5, 6, 3, 10, 3, 1, 11, 7, 1, 12, 5, 0 };
+static const u8 sQuickStartLanternCells478[] = { 3, 4, 3, 4, 5, 3, 5, 2, 3, 5, 6, 3, 9, 2, 0, 9, 4, 1, 9, 7, 1, 10, 3, 1, 12, 5, 0, 12, 7, 1 };
 
 static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 0, 0, 0, 3, sQuickStartLanternCells0 }, // CAVES_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN spread
@@ -509,7 +504,7 @@ static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 3, 0, 2, 5, sQuickStartLanternCells15 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE hidden
     { 3, 1, 0, 6, sQuickStartLanternCells16 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE scatter
     { 3, 1, 0, 10, sQuickStartLanternCells17 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE scatter
-    { 3, 1, 1, 6, sQuickStartLanternCells18 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE walls
+    { 3, 1, 1, 7, sQuickStartLanternCells18 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE walls
     { 3, 1, 1, 10, sQuickStartLanternCells19 }, // CAVES_SOUTH_HYRULE_FIELD_RUPEE walls
     { 9, 1, 0, 6, sQuickStartLanternCells20 }, // TREE_INTERIORS_PERCYS_TREEHOUSE scatter
     { 9, 1, 1, 6, sQuickStartLanternCells21 }, // TREE_INTERIORS_PERCYS_TREEHOUSE walls
@@ -531,7 +526,7 @@ static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 11, 0, 2, 5, sQuickStartLanternCells37 }, // CAVES_TRILBY_RUPEE hidden
     { 11, 1, 0, 6, sQuickStartLanternCells38 }, // CAVES_TRILBY_RUPEE scatter
     { 11, 1, 0, 10, sQuickStartLanternCells39 }, // CAVES_TRILBY_RUPEE scatter
-    { 11, 1, 1, 6, sQuickStartLanternCells40 }, // CAVES_TRILBY_RUPEE walls
+    { 11, 1, 1, 7, sQuickStartLanternCells40 }, // CAVES_TRILBY_RUPEE walls
     { 11, 1, 1, 10, sQuickStartLanternCells41 }, // CAVES_TRILBY_RUPEE walls
     { 12, 0, 0, 3, sQuickStartLanternCells42 }, // CAVES_TRILBY_FAIRY_FOUNTAIN spread
     { 15, 0, 0, 3, sQuickStartLanternCells43 }, // CAVES_LON_LON_RANCH_WALLET spread
@@ -601,7 +596,7 @@ static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 33, 0, 2, 5, sQuickStartLanternCells107 }, // CASTLE_GARDEN_MINISH_HOLES_1 hidden
     { 33, 1, 0, 8, sQuickStartLanternCells108 }, // CASTLE_GARDEN_MINISH_HOLES_1 scatter
     { 33, 1, 0, 10, sQuickStartLanternCells109 }, // CASTLE_GARDEN_MINISH_HOLES_1 scatter
-    { 33, 1, 1, 8, sQuickStartLanternCells110 }, // CASTLE_GARDEN_MINISH_HOLES_1 walls
+    { 33, 1, 1, 7, sQuickStartLanternCells110 }, // CASTLE_GARDEN_MINISH_HOLES_1 walls
     { 33, 1, 1, 10, sQuickStartLanternCells111 }, // CASTLE_GARDEN_MINISH_HOLES_1 walls
     { 34, 1, 0, 6, sQuickStartLanternCells112 }, // MINISH_CRACKS_HYRULE_CASTLE_GARDEN scatter
     { 34, 1, 1, 6, sQuickStartLanternCells113 }, // MINISH_CRACKS_HYRULE_CASTLE_GARDEN walls
@@ -623,7 +618,7 @@ static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 36, 0, 2, 5, sQuickStartLanternCells129 }, // GARDEN_FOUNTAINS_WEST hidden
     { 36, 1, 0, 7, sQuickStartLanternCells130 }, // GARDEN_FOUNTAINS_WEST scatter
     { 36, 1, 0, 10, sQuickStartLanternCells131 }, // GARDEN_FOUNTAINS_WEST scatter
-    { 36, 1, 1, 6, sQuickStartLanternCells132 }, // GARDEN_FOUNTAINS_WEST walls
+    { 36, 1, 1, 7, sQuickStartLanternCells132 }, // GARDEN_FOUNTAINS_WEST walls
     { 36, 1, 1, 10, sQuickStartLanternCells133 }, // GARDEN_FOUNTAINS_WEST walls
     { 39, 0, 0, 3, sQuickStartLanternCells134 }, // CAVES_HILLS_KEESE_CHEST spread
     { 39, 0, 0, 5, sQuickStartLanternCells135 }, // CAVES_HILLS_KEESE_CHEST spread
@@ -636,345 +631,340 @@ static const QuickStartLanternLayout sQuickStartLanternLayouts[] = {
     { 39, 1, 1, 6, sQuickStartLanternCells142 }, // CAVES_HILLS_KEESE_CHEST walls
     { 39, 1, 1, 10, sQuickStartLanternCells143 }, // CAVES_HILLS_KEESE_CHEST walls
     { 40, 1, 0, 6, sQuickStartLanternCells144 }, // HOUSE_INTERIORS_4_FARM_HOUSE scatter
-    { 40, 1, 1, 6, sQuickStartLanternCells145 }, // HOUSE_INTERIORS_4_FARM_HOUSE walls
-    { 41, 1, 0, 6, sQuickStartLanternCells146 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE scatter
-    { 41, 1, 0, 10, sQuickStartLanternCells147 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE scatter
-    { 41, 1, 1, 6, sQuickStartLanternCells148 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE walls
-    { 41, 1, 1, 10, sQuickStartLanternCells149 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE walls
-    { 42, 1, 0, 6, sQuickStartLanternCells150 }, // HOUSE_INTERIORS_2_PERCY scatter
-    { 42, 1, 0, 10, sQuickStartLanternCells151 }, // HOUSE_INTERIORS_2_PERCY scatter
-    { 42, 1, 1, 6, sQuickStartLanternCells152 }, // HOUSE_INTERIORS_2_PERCY walls
-    { 42, 1, 1, 10, sQuickStartLanternCells153 }, // HOUSE_INTERIORS_2_PERCY walls
-    { 43, 1, 0, 6, sQuickStartLanternCells154 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST scatter
-    { 43, 1, 0, 10, sQuickStartLanternCells155 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST scatter
-    { 43, 1, 1, 6, sQuickStartLanternCells156 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST walls
-    { 44, 1, 0, 6, sQuickStartLanternCells157 }, // TREE_INTERIORS_BOOMERANG_NORTHEAST scatter
-    { 44, 1, 1, 6, sQuickStartLanternCells158 }, // TREE_INTERIORS_BOOMERANG_NORTHEAST walls
-    { 45, 1, 0, 6, sQuickStartLanternCells159 }, // TREE_INTERIORS_BOOMERANG_SOUTHWEST scatter
-    { 45, 1, 1, 6, sQuickStartLanternCells160 }, // TREE_INTERIORS_BOOMERANG_SOUTHWEST walls
-    { 46, 1, 0, 6, sQuickStartLanternCells161 }, // TREE_INTERIORS_BOOMERANG_SOUTHEAST scatter
-    { 46, 1, 1, 6, sQuickStartLanternCells162 }, // TREE_INTERIORS_BOOMERANG_SOUTHEAST walls
-    { 47, 1, 0, 6, sQuickStartLanternCells163 }, // TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN scatter
-    { 48, 1, 0, 6, sQuickStartLanternCells164 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE scatter
-    { 48, 1, 0, 10, sQuickStartLanternCells165 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE scatter
-    { 48, 1, 1, 6, sQuickStartLanternCells166 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE walls
-    { 48, 1, 1, 10, sQuickStartLanternCells167 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE walls
-    { 49, 1, 0, 6, sQuickStartLanternCells168 }, // DOJOS_TO_GREATBLADE scatter
-    { 49, 1, 1, 6, sQuickStartLanternCells169 }, // DOJOS_TO_GREATBLADE walls
-    { 50, 1, 0, 8, sQuickStartLanternCells170 }, // MINISH_PATHS_LON_LON_RANCH scatter
-    { 50, 1, 0, 11, sQuickStartLanternCells171 }, // MINISH_PATHS_LON_LON_RANCH scatter
-    { 50, 1, 1, 7, sQuickStartLanternCells172 }, // MINISH_PATHS_LON_LON_RANCH walls
-    { 50, 1, 1, 13, sQuickStartLanternCells173 }, // MINISH_PATHS_LON_LON_RANCH walls
-    { 51, 1, 0, 6, sQuickStartLanternCells174 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH scatter
-    { 51, 1, 0, 10, sQuickStartLanternCells175 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH scatter
-    { 51, 1, 1, 6, sQuickStartLanternCells176 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH walls
-    { 51, 1, 1, 10, sQuickStartLanternCells177 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH walls
-    { 53, 1, 0, 6, sQuickStartLanternCells178 }, // HOUSE_INTERIORS_2_DAMPE scatter
-    { 53, 1, 1, 6, sQuickStartLanternCells179 }, // HOUSE_INTERIORS_2_DAMPE walls
-    { 53, 1, 1, 10, sQuickStartLanternCells180 }, // HOUSE_INTERIORS_2_DAMPE walls
-    { 55, 0, 0, 3, sQuickStartLanternCells181 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE spread
-    { 55, 0, 0, 5, sQuickStartLanternCells182 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE spread
-    { 55, 0, 1, 3, sQuickStartLanternCells183 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE cluster
-    { 55, 0, 1, 5, sQuickStartLanternCells184 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE cluster
-    { 55, 0, 2, 3, sQuickStartLanternCells185 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE hidden
-    { 55, 0, 2, 5, sQuickStartLanternCells186 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE hidden
-    { 55, 1, 0, 6, sQuickStartLanternCells187 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE scatter
-    { 55, 1, 0, 10, sQuickStartLanternCells188 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE scatter
-    { 55, 1, 1, 6, sQuickStartLanternCells189 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE walls
-    { 56, 0, 0, 4, sQuickStartLanternCells190 }, // ROYAL_VALLEY_GRAVES_GINA spread
-    { 56, 0, 0, 5, sQuickStartLanternCells191 }, // ROYAL_VALLEY_GRAVES_GINA spread
-    { 56, 0, 1, 4, sQuickStartLanternCells192 }, // ROYAL_VALLEY_GRAVES_GINA cluster
-    { 56, 0, 1, 5, sQuickStartLanternCells193 }, // ROYAL_VALLEY_GRAVES_GINA cluster
-    { 56, 0, 2, 3, sQuickStartLanternCells194 }, // ROYAL_VALLEY_GRAVES_GINA hidden
-    { 56, 0, 2, 5, sQuickStartLanternCells195 }, // ROYAL_VALLEY_GRAVES_GINA hidden
-    { 56, 1, 0, 7, sQuickStartLanternCells196 }, // ROYAL_VALLEY_GRAVES_GINA scatter
-    { 56, 1, 0, 10, sQuickStartLanternCells197 }, // ROYAL_VALLEY_GRAVES_GINA scatter
-    { 56, 1, 1, 6, sQuickStartLanternCells198 }, // ROYAL_VALLEY_GRAVES_GINA walls
-    { 56, 1, 1, 10, sQuickStartLanternCells199 }, // ROYAL_VALLEY_GRAVES_GINA walls
-    { 57, 0, 0, 3, sQuickStartLanternCells200 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN spread
-    { 57, 0, 1, 3, sQuickStartLanternCells201 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN cluster
-    { 57, 0, 2, 3, sQuickStartLanternCells202 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN hidden
-    { 59, 0, 0, 3, sQuickStartLanternCells203 }, // CASTOR_CAVES_WIND_RUINS spread
-    { 59, 0, 0, 5, sQuickStartLanternCells204 }, // CASTOR_CAVES_WIND_RUINS spread
-    { 59, 0, 1, 3, sQuickStartLanternCells205 }, // CASTOR_CAVES_WIND_RUINS cluster
-    { 59, 0, 1, 5, sQuickStartLanternCells206 }, // CASTOR_CAVES_WIND_RUINS cluster
-    { 59, 0, 2, 3, sQuickStartLanternCells207 }, // CASTOR_CAVES_WIND_RUINS hidden
-    { 59, 0, 2, 5, sQuickStartLanternCells208 }, // CASTOR_CAVES_WIND_RUINS hidden
-    { 59, 1, 0, 6, sQuickStartLanternCells209 }, // CASTOR_CAVES_WIND_RUINS scatter
-    { 59, 1, 0, 10, sQuickStartLanternCells210 }, // CASTOR_CAVES_WIND_RUINS scatter
-    { 59, 1, 1, 6, sQuickStartLanternCells211 }, // CASTOR_CAVES_WIND_RUINS walls
-    { 61, 1, 0, 6, sQuickStartLanternCells212 }, // MINISH_CRACKS_CASTOR_WILDS_BOW scatter
-    { 61, 1, 0, 10, sQuickStartLanternCells213 }, // MINISH_CRACKS_CASTOR_WILDS_BOW scatter
-    { 61, 1, 1, 6, sQuickStartLanternCells214 }, // MINISH_CRACKS_CASTOR_WILDS_BOW walls
-    { 61, 1, 1, 10, sQuickStartLanternCells215 }, // MINISH_CRACKS_CASTOR_WILDS_BOW walls
-    { 62, 1, 0, 6, sQuickStartLanternCells216 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH scatter
-    { 62, 1, 0, 10, sQuickStartLanternCells217 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH scatter
-    { 62, 1, 1, 6, sQuickStartLanternCells218 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH walls
-    { 62, 1, 1, 10, sQuickStartLanternCells219 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH walls
-    { 63, 1, 0, 6, sQuickStartLanternCells220 }, // MINISH_CRACKS_CASTOR_WILDS_WEST scatter
-    { 63, 1, 0, 10, sQuickStartLanternCells221 }, // MINISH_CRACKS_CASTOR_WILDS_WEST scatter
-    { 63, 1, 1, 6, sQuickStartLanternCells222 }, // MINISH_CRACKS_CASTOR_WILDS_WEST walls
-    { 63, 1, 1, 10, sQuickStartLanternCells223 }, // MINISH_CRACKS_CASTOR_WILDS_WEST walls
-    { 64, 1, 0, 6, sQuickStartLanternCells224 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE scatter
-    { 64, 1, 0, 10, sQuickStartLanternCells225 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE scatter
-    { 64, 1, 1, 6, sQuickStartLanternCells226 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE walls
-    { 64, 1, 1, 10, sQuickStartLanternCells227 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE walls
-    { 65, 1, 0, 6, sQuickStartLanternCells228 }, // MINISH_CRACKS_RUINS_ENTRANCE scatter
-    { 65, 1, 1, 6, sQuickStartLanternCells229 }, // MINISH_CRACKS_RUINS_ENTRANCE walls
-    { 66, 1, 0, 9, sQuickStartLanternCells230 }, // DOJOS_SWIFTBLADE_I scatter
-    { 66, 1, 0, 10, sQuickStartLanternCells231 }, // DOJOS_SWIFTBLADE_I scatter
-    { 66, 1, 1, 9, sQuickStartLanternCells232 }, // DOJOS_SWIFTBLADE_I walls
-    { 66, 1, 1, 10, sQuickStartLanternCells233 }, // DOJOS_SWIFTBLADE_I walls
-    { 67, 1, 0, 6, sQuickStartLanternCells234 }, // DOJOS_TO_SCARBLADE scatter
-    { 67, 1, 1, 6, sQuickStartLanternCells235 }, // DOJOS_TO_SCARBLADE walls
-    { 68, 0, 0, 3, sQuickStartLanternCells236 }, // MINISH_CAVES_SOUTHEAST_WATER_1 spread
-    { 68, 0, 0, 5, sQuickStartLanternCells237 }, // MINISH_CAVES_SOUTHEAST_WATER_1 spread
-    { 68, 0, 1, 3, sQuickStartLanternCells238 }, // MINISH_CAVES_SOUTHEAST_WATER_1 cluster
-    { 68, 0, 1, 5, sQuickStartLanternCells239 }, // MINISH_CAVES_SOUTHEAST_WATER_1 cluster
-    { 68, 0, 2, 3, sQuickStartLanternCells240 }, // MINISH_CAVES_SOUTHEAST_WATER_1 hidden
-    { 68, 0, 2, 5, sQuickStartLanternCells241 }, // MINISH_CAVES_SOUTHEAST_WATER_1 hidden
-    { 68, 1, 0, 6, sQuickStartLanternCells242 }, // MINISH_CAVES_SOUTHEAST_WATER_1 scatter
-    { 68, 1, 0, 10, sQuickStartLanternCells243 }, // MINISH_CAVES_SOUTHEAST_WATER_1 scatter
-    { 68, 1, 1, 6, sQuickStartLanternCells244 }, // MINISH_CAVES_SOUTHEAST_WATER_1 walls
-    { 68, 1, 1, 10, sQuickStartLanternCells245 }, // MINISH_CAVES_SOUTHEAST_WATER_1 walls
-    { 69, 0, 0, 3, sQuickStartLanternCells246 }, // CASTOR_CAVES_DARKNUT spread
-    { 69, 0, 0, 5, sQuickStartLanternCells247 }, // CASTOR_CAVES_DARKNUT spread
-    { 69, 0, 1, 3, sQuickStartLanternCells248 }, // CASTOR_CAVES_DARKNUT cluster
-    { 69, 0, 1, 5, sQuickStartLanternCells249 }, // CASTOR_CAVES_DARKNUT cluster
-    { 69, 0, 2, 3, sQuickStartLanternCells250 }, // CASTOR_CAVES_DARKNUT hidden
-    { 69, 0, 2, 5, sQuickStartLanternCells251 }, // CASTOR_CAVES_DARKNUT hidden
-    { 69, 1, 0, 6, sQuickStartLanternCells252 }, // CASTOR_CAVES_DARKNUT scatter
-    { 69, 1, 0, 10, sQuickStartLanternCells253 }, // CASTOR_CAVES_DARKNUT scatter
-    { 69, 1, 1, 6, sQuickStartLanternCells254 }, // CASTOR_CAVES_DARKNUT walls
-    { 69, 1, 1, 10, sQuickStartLanternCells255 }, // CASTOR_CAVES_DARKNUT walls
-    { 70, 0, 0, 3, sQuickStartLanternCells256 }, // CASTOR_DARKNUT_MAIN spread
-    { 70, 0, 0, 7, sQuickStartLanternCells257 }, // CASTOR_DARKNUT_MAIN spread
-    { 70, 0, 1, 3, sQuickStartLanternCells258 }, // CASTOR_DARKNUT_MAIN cluster
-    { 70, 0, 1, 5, sQuickStartLanternCells259 }, // CASTOR_DARKNUT_MAIN cluster
-    { 70, 0, 2, 4, sQuickStartLanternCells260 }, // CASTOR_DARKNUT_MAIN hidden
-    { 70, 0, 2, 7, sQuickStartLanternCells261 }, // CASTOR_DARKNUT_MAIN hidden
-    { 70, 1, 0, 6, sQuickStartLanternCells262 }, // CASTOR_DARKNUT_MAIN scatter
-    { 70, 1, 0, 14, sQuickStartLanternCells263 }, // CASTOR_DARKNUT_MAIN scatter
-    { 70, 1, 1, 8, sQuickStartLanternCells264 }, // CASTOR_DARKNUT_MAIN walls
-    { 70, 1, 1, 10, sQuickStartLanternCells265 }, // CASTOR_DARKNUT_MAIN walls
-    { 71, 0, 0, 4, sQuickStartLanternCells266 }, // CASTOR_CAVES_SOUTH spread
-    { 71, 0, 0, 5, sQuickStartLanternCells267 }, // CASTOR_CAVES_SOUTH spread
-    { 71, 0, 1, 4, sQuickStartLanternCells268 }, // CASTOR_CAVES_SOUTH cluster
-    { 71, 0, 1, 5, sQuickStartLanternCells269 }, // CASTOR_CAVES_SOUTH cluster
-    { 71, 0, 2, 4, sQuickStartLanternCells270 }, // CASTOR_CAVES_SOUTH hidden
-    { 71, 0, 2, 5, sQuickStartLanternCells271 }, // CASTOR_CAVES_SOUTH hidden
-    { 71, 1, 0, 7, sQuickStartLanternCells272 }, // CASTOR_CAVES_SOUTH scatter
-    { 71, 1, 0, 10, sQuickStartLanternCells273 }, // CASTOR_CAVES_SOUTH scatter
-    { 71, 1, 1, 8, sQuickStartLanternCells274 }, // CASTOR_CAVES_SOUTH walls
-    { 71, 1, 1, 10, sQuickStartLanternCells275 }, // CASTOR_CAVES_SOUTH walls
-    { 73, 0, 0, 3, sQuickStartLanternCells276 }, // CRENEL_CAVES_EXIT_TO_MINES spread
-    { 73, 0, 0, 5, sQuickStartLanternCells277 }, // CRENEL_CAVES_EXIT_TO_MINES spread
-    { 73, 0, 1, 3, sQuickStartLanternCells278 }, // CRENEL_CAVES_EXIT_TO_MINES cluster
-    { 73, 0, 1, 5, sQuickStartLanternCells279 }, // CRENEL_CAVES_EXIT_TO_MINES cluster
-    { 73, 0, 2, 3, sQuickStartLanternCells280 }, // CRENEL_CAVES_EXIT_TO_MINES hidden
-    { 73, 0, 2, 5, sQuickStartLanternCells281 }, // CRENEL_CAVES_EXIT_TO_MINES hidden
-    { 73, 1, 0, 6, sQuickStartLanternCells282 }, // CRENEL_CAVES_EXIT_TO_MINES scatter
-    { 73, 1, 1, 6, sQuickStartLanternCells283 }, // CRENEL_CAVES_EXIT_TO_MINES walls
-    { 74, 0, 0, 3, sQuickStartLanternCells284 }, // CRENEL_CAVES_BLOCK_PUSHING spread
-    { 74, 0, 0, 5, sQuickStartLanternCells285 }, // CRENEL_CAVES_BLOCK_PUSHING spread
-    { 74, 0, 1, 3, sQuickStartLanternCells286 }, // CRENEL_CAVES_BLOCK_PUSHING cluster
-    { 74, 0, 1, 5, sQuickStartLanternCells287 }, // CRENEL_CAVES_BLOCK_PUSHING cluster
-    { 74, 0, 2, 3, sQuickStartLanternCells288 }, // CRENEL_CAVES_BLOCK_PUSHING hidden
-    { 74, 0, 2, 5, sQuickStartLanternCells289 }, // CRENEL_CAVES_BLOCK_PUSHING hidden
-    { 74, 1, 0, 6, sQuickStartLanternCells290 }, // CRENEL_CAVES_BLOCK_PUSHING scatter
-    { 74, 1, 0, 10, sQuickStartLanternCells291 }, // CRENEL_CAVES_BLOCK_PUSHING scatter
-    { 74, 1, 1, 6, sQuickStartLanternCells292 }, // CRENEL_CAVES_BLOCK_PUSHING walls
-    { 75, 0, 0, 3, sQuickStartLanternCells293 }, // CRENEL_CAVES_GRIP_RING spread
-    { 75, 0, 0, 5, sQuickStartLanternCells294 }, // CRENEL_CAVES_GRIP_RING spread
-    { 75, 0, 1, 3, sQuickStartLanternCells295 }, // CRENEL_CAVES_GRIP_RING cluster
-    { 75, 0, 1, 5, sQuickStartLanternCells296 }, // CRENEL_CAVES_GRIP_RING cluster
-    { 75, 0, 2, 3, sQuickStartLanternCells297 }, // CRENEL_CAVES_GRIP_RING hidden
-    { 75, 0, 2, 5, sQuickStartLanternCells298 }, // CRENEL_CAVES_GRIP_RING hidden
-    { 75, 1, 0, 6, sQuickStartLanternCells299 }, // CRENEL_CAVES_GRIP_RING scatter
-    { 75, 1, 1, 6, sQuickStartLanternCells300 }, // CRENEL_CAVES_GRIP_RING walls
-    { 76, 0, 0, 3, sQuickStartLanternCells301 }, // CRENEL_CAVES_TO_GRAYBLADE spread
-    { 76, 0, 0, 7, sQuickStartLanternCells302 }, // CRENEL_CAVES_TO_GRAYBLADE spread
-    { 76, 0, 1, 3, sQuickStartLanternCells303 }, // CRENEL_CAVES_TO_GRAYBLADE cluster
-    { 76, 0, 1, 7, sQuickStartLanternCells304 }, // CRENEL_CAVES_TO_GRAYBLADE cluster
-    { 76, 0, 2, 4, sQuickStartLanternCells305 }, // CRENEL_CAVES_TO_GRAYBLADE hidden
-    { 76, 0, 2, 6, sQuickStartLanternCells306 }, // CRENEL_CAVES_TO_GRAYBLADE hidden
-    { 76, 1, 0, 8, sQuickStartLanternCells307 }, // CRENEL_CAVES_TO_GRAYBLADE scatter
-    { 76, 1, 0, 12, sQuickStartLanternCells308 }, // CRENEL_CAVES_TO_GRAYBLADE scatter
-    { 76, 1, 1, 6, sQuickStartLanternCells309 }, // CRENEL_CAVES_TO_GRAYBLADE walls
-    { 76, 1, 1, 12, sQuickStartLanternCells310 }, // CRENEL_CAVES_TO_GRAYBLADE walls
-    { 77, 0, 0, 3, sQuickStartLanternCells311 }, // CRENEL_CAVES_HERMIT spread
-    { 77, 0, 1, 3, sQuickStartLanternCells312 }, // CRENEL_CAVES_HERMIT cluster
-    { 77, 0, 2, 3, sQuickStartLanternCells313 }, // CRENEL_CAVES_HERMIT hidden
-    { 78, 0, 0, 3, sQuickStartLanternCells314 }, // CRENEL_CAVES_HINT_SCRUB spread
-    { 78, 0, 0, 5, sQuickStartLanternCells315 }, // CRENEL_CAVES_HINT_SCRUB spread
-    { 78, 0, 1, 3, sQuickStartLanternCells316 }, // CRENEL_CAVES_HINT_SCRUB cluster
-    { 78, 0, 1, 5, sQuickStartLanternCells317 }, // CRENEL_CAVES_HINT_SCRUB cluster
-    { 78, 0, 2, 3, sQuickStartLanternCells318 }, // CRENEL_CAVES_HINT_SCRUB hidden
-    { 78, 0, 2, 5, sQuickStartLanternCells319 }, // CRENEL_CAVES_HINT_SCRUB hidden
-    { 78, 1, 0, 6, sQuickStartLanternCells320 }, // CRENEL_CAVES_HINT_SCRUB scatter
-    { 78, 1, 0, 10, sQuickStartLanternCells321 }, // CRENEL_CAVES_HINT_SCRUB scatter
-    { 78, 1, 1, 6, sQuickStartLanternCells322 }, // CRENEL_CAVES_HINT_SCRUB walls
-    { 79, 1, 0, 6, sQuickStartLanternCells323 }, // DOJOS_GRAYBLADE scatter
-    { 79, 1, 0, 10, sQuickStartLanternCells324 }, // DOJOS_GRAYBLADE scatter
-    { 79, 1, 1, 6, sQuickStartLanternCells325 }, // DOJOS_GRAYBLADE walls
-    { 79, 1, 1, 10, sQuickStartLanternCells326 }, // DOJOS_GRAYBLADE walls
-    { 80, 1, 0, 9, sQuickStartLanternCells327 }, // CRENEL_MINISH_PATHS_SPRING_WATER scatter
-    { 80, 1, 0, 14, sQuickStartLanternCells328 }, // CRENEL_MINISH_PATHS_SPRING_WATER scatter
-    { 80, 1, 1, 6, sQuickStartLanternCells329 }, // CRENEL_MINISH_PATHS_SPRING_WATER walls
-    { 80, 1, 1, 10, sQuickStartLanternCells330 }, // CRENEL_MINISH_PATHS_SPRING_WATER walls
-    { 83, 1, 0, 6, sQuickStartLanternCells331 }, // TREE_INTERIORS_WITCH_HUT scatter
-    { 83, 1, 0, 10, sQuickStartLanternCells332 }, // TREE_INTERIORS_WITCH_HUT scatter
-    { 83, 1, 1, 6, sQuickStartLanternCells333 }, // TREE_INTERIORS_WITCH_HUT walls
-    { 83, 1, 1, 10, sQuickStartLanternCells334 }, // TREE_INTERIORS_WITCH_HUT walls
-    { 84, 0, 0, 4, sQuickStartLanternCells335 }, // DEEPWOOD_SHRINE_ENTRANCE spread
-    { 84, 0, 0, 5, sQuickStartLanternCells336 }, // DEEPWOOD_SHRINE_ENTRANCE spread
-    { 84, 0, 1, 3, sQuickStartLanternCells337 }, // DEEPWOOD_SHRINE_ENTRANCE cluster
-    { 84, 0, 1, 5, sQuickStartLanternCells338 }, // DEEPWOOD_SHRINE_ENTRANCE cluster
-    { 84, 0, 2, 4, sQuickStartLanternCells339 }, // DEEPWOOD_SHRINE_ENTRANCE hidden
-    { 84, 0, 2, 5, sQuickStartLanternCells340 }, // DEEPWOOD_SHRINE_ENTRANCE hidden
-    { 84, 1, 0, 7, sQuickStartLanternCells341 }, // DEEPWOOD_SHRINE_ENTRANCE scatter
-    { 84, 1, 0, 10, sQuickStartLanternCells342 }, // DEEPWOOD_SHRINE_ENTRANCE scatter
-    { 84, 1, 1, 6, sQuickStartLanternCells343 }, // DEEPWOOD_SHRINE_ENTRANCE walls
-    { 84, 1, 1, 10, sQuickStartLanternCells344 }, // DEEPWOOD_SHRINE_ENTRANCE walls
-    { 85, 0, 0, 3, sQuickStartLanternCells345 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST spread
-    { 85, 0, 0, 5, sQuickStartLanternCells346 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST spread
-    { 85, 0, 1, 3, sQuickStartLanternCells347 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST cluster
-    { 85, 0, 2, 3, sQuickStartLanternCells348 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST hidden
-    { 85, 1, 1, 6, sQuickStartLanternCells349 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST walls
-    { 86, 1, 0, 7, sQuickStartLanternCells350 }, // BEANSTALKS_EASTERN_HILLS scatter
-    { 86, 1, 0, 10, sQuickStartLanternCells351 }, // BEANSTALKS_EASTERN_HILLS scatter
-    { 86, 1, 1, 7, sQuickStartLanternCells352 }, // BEANSTALKS_EASTERN_HILLS walls
-    { 87, 1, 0, 6, sQuickStartLanternCells353 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE scatter
-    { 87, 1, 0, 10, sQuickStartLanternCells354 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE scatter
-    { 87, 1, 1, 6, sQuickStartLanternCells355 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE walls
-    { 87, 1, 1, 10, sQuickStartLanternCells356 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE walls
-    { 88, 1, 0, 6, sQuickStartLanternCells357 }, // HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN scatter
-    { 88, 1, 1, 6, sQuickStartLanternCells358 }, // HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN walls
-    { 91, 0, 0, 4, sQuickStartLanternCells359 }, // MINISH_CAVES_LAKE_HYLIA_NORTH spread
-    { 91, 0, 1, 3, sQuickStartLanternCells360 }, // MINISH_CAVES_LAKE_HYLIA_NORTH cluster
-    { 91, 0, 2, 3, sQuickStartLanternCells361 }, // MINISH_CAVES_LAKE_HYLIA_NORTH hidden
-    { 93, 0, 0, 3, sQuickStartLanternCells362 }, // CRENEL_CAVES_MUSHKEESE spread
-    { 93, 0, 0, 5, sQuickStartLanternCells363 }, // CRENEL_CAVES_MUSHKEESE spread
-    { 93, 0, 1, 3, sQuickStartLanternCells364 }, // CRENEL_CAVES_MUSHKEESE cluster
-    { 93, 0, 1, 5, sQuickStartLanternCells365 }, // CRENEL_CAVES_MUSHKEESE cluster
-    { 93, 0, 2, 3, sQuickStartLanternCells366 }, // CRENEL_CAVES_MUSHKEESE hidden
-    { 93, 0, 2, 5, sQuickStartLanternCells367 }, // CRENEL_CAVES_MUSHKEESE hidden
-    { 93, 1, 0, 6, sQuickStartLanternCells368 }, // CRENEL_CAVES_MUSHKEESE scatter
-    { 93, 1, 0, 10, sQuickStartLanternCells369 }, // CRENEL_CAVES_MUSHKEESE scatter
-    { 93, 1, 1, 6, sQuickStartLanternCells370 }, // CRENEL_CAVES_MUSHKEESE walls
-    { 93, 1, 1, 10, sQuickStartLanternCells371 }, // CRENEL_CAVES_MUSHKEESE walls
-    { 94, 0, 0, 3, sQuickStartLanternCells372 }, // CRENEL_CAVES_CHUCHU_POT_CHEST spread
-    { 94, 0, 0, 5, sQuickStartLanternCells373 }, // CRENEL_CAVES_CHUCHU_POT_CHEST spread
-    { 94, 0, 1, 3, sQuickStartLanternCells374 }, // CRENEL_CAVES_CHUCHU_POT_CHEST cluster
-    { 95, 0, 0, 3, sQuickStartLanternCells375 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE spread
-    { 95, 0, 0, 5, sQuickStartLanternCells376 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE spread
-    { 95, 0, 1, 3, sQuickStartLanternCells377 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE cluster
-    { 95, 0, 1, 5, sQuickStartLanternCells378 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE cluster
-    { 95, 0, 2, 3, sQuickStartLanternCells379 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE hidden
-    { 95, 1, 0, 6, sQuickStartLanternCells380 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE scatter
-    { 95, 1, 1, 6, sQuickStartLanternCells381 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE walls
-    { 96, 0, 0, 3, sQuickStartLanternCells382 }, // CRENEL_CAVES_WATER_HEART_PIECE spread
-    { 96, 0, 0, 5, sQuickStartLanternCells383 }, // CRENEL_CAVES_WATER_HEART_PIECE spread
-    { 96, 0, 1, 3, sQuickStartLanternCells384 }, // CRENEL_CAVES_WATER_HEART_PIECE cluster
-    { 96, 0, 1, 5, sQuickStartLanternCells385 }, // CRENEL_CAVES_WATER_HEART_PIECE cluster
-    { 96, 0, 2, 3, sQuickStartLanternCells386 }, // CRENEL_CAVES_WATER_HEART_PIECE hidden
-    { 96, 1, 0, 6, sQuickStartLanternCells387 }, // CRENEL_CAVES_WATER_HEART_PIECE scatter
-    { 99, 1, 0, 6, sQuickStartLanternCells388 }, // MINISH_HOUSE_INTERIORS_BARREL_MINISH scatter
-    { 99, 1, 0, 10, sQuickStartLanternCells389 }, // MINISH_HOUSE_INTERIORS_BARREL_MINISH scatter
-    { 99, 1, 1, 7, sQuickStartLanternCells390 }, // MINISH_HOUSE_INTERIORS_BARREL_MINISH walls
-    { 99, 1, 1, 10, sQuickStartLanternCells391 }, // MINISH_HOUSE_INTERIORS_BARREL_MINISH walls
-    { 101, 1, 1, 6, sQuickStartLanternCells392 }, // TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY walls
-    { 103, 1, 0, 8, sQuickStartLanternCells393 }, // DOJOS_WAVEBLADE scatter
-    { 103, 1, 0, 10, sQuickStartLanternCells394 }, // DOJOS_WAVEBLADE scatter
-    { 103, 1, 1, 9, sQuickStartLanternCells395 }, // DOJOS_WAVEBLADE walls
-    { 103, 1, 1, 10, sQuickStartLanternCells396 }, // DOJOS_WAVEBLADE walls
-    { 105, 0, 0, 3, sQuickStartLanternCells397 }, // VEIL_FALLS_CAVES_ENTRANCE spread
-    { 105, 0, 0, 5, sQuickStartLanternCells398 }, // VEIL_FALLS_CAVES_ENTRANCE spread
-    { 105, 0, 1, 4, sQuickStartLanternCells399 }, // VEIL_FALLS_CAVES_ENTRANCE cluster
-    { 105, 0, 1, 5, sQuickStartLanternCells400 }, // VEIL_FALLS_CAVES_ENTRANCE cluster
-    { 105, 0, 2, 3, sQuickStartLanternCells401 }, // VEIL_FALLS_CAVES_ENTRANCE hidden
-    { 105, 0, 2, 6, sQuickStartLanternCells402 }, // VEIL_FALLS_CAVES_ENTRANCE hidden
-    { 105, 1, 0, 8, sQuickStartLanternCells403 }, // VEIL_FALLS_CAVES_ENTRANCE scatter
-    { 105, 1, 0, 10, sQuickStartLanternCells404 }, // VEIL_FALLS_CAVES_ENTRANCE scatter
-    { 105, 1, 1, 7, sQuickStartLanternCells405 }, // VEIL_FALLS_CAVES_ENTRANCE walls
-    { 105, 1, 1, 11, sQuickStartLanternCells406 }, // VEIL_FALLS_CAVES_ENTRANCE walls
-    { 106, 0, 0, 3, sQuickStartLanternCells407 }, // VEIL_FALLS_CAVES_EXIT spread
-    { 106, 0, 0, 5, sQuickStartLanternCells408 }, // VEIL_FALLS_CAVES_EXIT spread
-    { 106, 0, 1, 3, sQuickStartLanternCells409 }, // VEIL_FALLS_CAVES_EXIT cluster
-    { 106, 0, 1, 5, sQuickStartLanternCells410 }, // VEIL_FALLS_CAVES_EXIT cluster
-    { 106, 0, 2, 3, sQuickStartLanternCells411 }, // VEIL_FALLS_CAVES_EXIT hidden
-    { 106, 0, 2, 5, sQuickStartLanternCells412 }, // VEIL_FALLS_CAVES_EXIT hidden
-    { 106, 1, 0, 6, sQuickStartLanternCells413 }, // VEIL_FALLS_CAVES_EXIT scatter
-    { 106, 1, 1, 6, sQuickStartLanternCells414 }, // VEIL_FALLS_CAVES_EXIT walls
-    { 107, 0, 0, 4, sQuickStartLanternCells415 }, // VEIL_FALLS_CAVES_HALLWAY_1F spread
-    { 107, 0, 0, 6, sQuickStartLanternCells416 }, // VEIL_FALLS_CAVES_HALLWAY_1F spread
-    { 107, 0, 1, 4, sQuickStartLanternCells417 }, // VEIL_FALLS_CAVES_HALLWAY_1F cluster
-    { 107, 0, 1, 7, sQuickStartLanternCells418 }, // VEIL_FALLS_CAVES_HALLWAY_1F cluster
-    { 107, 0, 2, 4, sQuickStartLanternCells419 }, // VEIL_FALLS_CAVES_HALLWAY_1F hidden
-    { 107, 0, 2, 7, sQuickStartLanternCells420 }, // VEIL_FALLS_CAVES_HALLWAY_1F hidden
-    { 107, 1, 0, 7, sQuickStartLanternCells421 }, // VEIL_FALLS_CAVES_HALLWAY_1F scatter
-    { 107, 1, 0, 11, sQuickStartLanternCells422 }, // VEIL_FALLS_CAVES_HALLWAY_1F scatter
-    { 107, 1, 1, 8, sQuickStartLanternCells423 }, // VEIL_FALLS_CAVES_HALLWAY_1F walls
-    { 107, 1, 1, 10, sQuickStartLanternCells424 }, // VEIL_FALLS_CAVES_HALLWAY_1F walls
-    { 108, 0, 0, 3, sQuickStartLanternCells425 }, // VEIL_FALLS_CAVES_HALLWAY_2F spread
-    { 108, 0, 0, 5, sQuickStartLanternCells426 }, // VEIL_FALLS_CAVES_HALLWAY_2F spread
-    { 108, 0, 1, 4, sQuickStartLanternCells427 }, // VEIL_FALLS_CAVES_HALLWAY_2F cluster
-    { 108, 0, 1, 5, sQuickStartLanternCells428 }, // VEIL_FALLS_CAVES_HALLWAY_2F cluster
-    { 108, 1, 0, 7, sQuickStartLanternCells429 }, // VEIL_FALLS_CAVES_HALLWAY_2F scatter
-    { 108, 1, 0, 10, sQuickStartLanternCells430 }, // VEIL_FALLS_CAVES_HALLWAY_2F scatter
-    { 108, 1, 1, 6, sQuickStartLanternCells431 }, // VEIL_FALLS_CAVES_HALLWAY_2F walls
-    { 108, 1, 1, 10, sQuickStartLanternCells432 }, // VEIL_FALLS_CAVES_HALLWAY_2F walls
-    { 109, 0, 0, 3, sQuickStartLanternCells433 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM spread
-    { 109, 0, 0, 5, sQuickStartLanternCells434 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM spread
-    { 109, 0, 1, 3, sQuickStartLanternCells435 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM cluster
-    { 109, 0, 1, 5, sQuickStartLanternCells436 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM cluster
-    { 109, 0, 2, 3, sQuickStartLanternCells437 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM hidden
-    { 109, 1, 0, 6, sQuickStartLanternCells438 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM scatter
-    { 110, 0, 0, 3, sQuickStartLanternCells439 }, // VEIL_FALLS_CAVES_SECRET_CHEST spread
-    { 110, 0, 0, 5, sQuickStartLanternCells440 }, // VEIL_FALLS_CAVES_SECRET_CHEST spread
-    { 110, 0, 1, 3, sQuickStartLanternCells441 }, // VEIL_FALLS_CAVES_SECRET_CHEST cluster
-    { 110, 0, 1, 5, sQuickStartLanternCells442 }, // VEIL_FALLS_CAVES_SECRET_CHEST cluster
-    { 110, 0, 2, 3, sQuickStartLanternCells443 }, // VEIL_FALLS_CAVES_SECRET_CHEST hidden
-    { 110, 1, 0, 6, sQuickStartLanternCells444 }, // VEIL_FALLS_CAVES_SECRET_CHEST scatter
-    { 111, 1, 0, 6, sQuickStartLanternCells445 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE scatter
-    { 111, 1, 1, 6, sQuickStartLanternCells446 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE walls
-    { 112, 0, 0, 3, sQuickStartLanternCells447 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE spread
-    { 112, 0, 1, 3, sQuickStartLanternCells448 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE cluster
-    { 112, 0, 2, 3, sQuickStartLanternCells449 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE hidden
-    { 113, 0, 0, 3, sQuickStartLanternCells450 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH spread
-    { 113, 0, 0, 5, sQuickStartLanternCells451 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH spread
-    { 113, 0, 1, 3, sQuickStartLanternCells452 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH cluster
-    { 113, 0, 1, 5, sQuickStartLanternCells453 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH cluster
-    { 113, 0, 2, 4, sQuickStartLanternCells454 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH hidden
-    { 113, 0, 2, 5, sQuickStartLanternCells455 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH hidden
-    { 113, 1, 0, 8, sQuickStartLanternCells456 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH scatter
-    { 113, 1, 0, 10, sQuickStartLanternCells457 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH scatter
-    { 113, 1, 1, 9, sQuickStartLanternCells458 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH walls
-    { 113, 1, 1, 10, sQuickStartLanternCells459 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH walls
-    { 114, 1, 0, 6, sQuickStartLanternCells460 }, // DOJOS_TO_SPLITBLADE scatter
-    { 114, 1, 1, 6, sQuickStartLanternCells461 }, // DOJOS_TO_SPLITBLADE walls
-    { 115, 1, 0, 7, sQuickStartLanternCells462 }, // DOJOS_SPLITBLADE scatter
-    { 115, 1, 0, 10, sQuickStartLanternCells463 }, // DOJOS_SPLITBLADE scatter
-    { 115, 1, 1, 8, sQuickStartLanternCells464 }, // DOJOS_SPLITBLADE walls
-    { 115, 1, 1, 10, sQuickStartLanternCells465 }, // DOJOS_SPLITBLADE walls
-    { 117, 0, 0, 3, sQuickStartLanternCells466 }, // CAVES_BOTTLE_BUSINESS_SCRUB spread
-    { 117, 0, 0, 5, sQuickStartLanternCells467 }, // CAVES_BOTTLE_BUSINESS_SCRUB spread
-    { 117, 0, 1, 3, sQuickStartLanternCells468 }, // CAVES_BOTTLE_BUSINESS_SCRUB cluster
-    { 117, 0, 1, 5, sQuickStartLanternCells469 }, // CAVES_BOTTLE_BUSINESS_SCRUB cluster
-    { 117, 0, 2, 3, sQuickStartLanternCells470 }, // CAVES_BOTTLE_BUSINESS_SCRUB hidden
-    { 117, 0, 2, 5, sQuickStartLanternCells471 }, // CAVES_BOTTLE_BUSINESS_SCRUB hidden
-    { 117, 1, 0, 6, sQuickStartLanternCells472 }, // CAVES_BOTTLE_BUSINESS_SCRUB scatter
-    { 117, 1, 0, 10, sQuickStartLanternCells473 }, // CAVES_BOTTLE_BUSINESS_SCRUB scatter
-    { 117, 1, 1, 6, sQuickStartLanternCells474 }, // CAVES_BOTTLE_BUSINESS_SCRUB walls
-    { 118, 0, 0, 3, sQuickStartLanternCells475 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB spread
-    { 118, 0, 0, 5, sQuickStartLanternCells476 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB spread
-    { 118, 0, 1, 3, sQuickStartLanternCells477 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB cluster
-    { 118, 0, 1, 5, sQuickStartLanternCells478 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB cluster
-    { 118, 0, 2, 3, sQuickStartLanternCells479 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB hidden
-    { 118, 1, 0, 6, sQuickStartLanternCells480 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB scatter
-    { 118, 1, 0, 10, sQuickStartLanternCells481 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB scatter
-    { 118, 1, 1, 6, sQuickStartLanternCells482 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB walls
-    { 118, 1, 1, 10, sQuickStartLanternCells483 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB walls
+    { 40, 1, 0, 10, sQuickStartLanternCells145 }, // HOUSE_INTERIORS_4_FARM_HOUSE scatter
+    { 40, 1, 1, 6, sQuickStartLanternCells146 }, // HOUSE_INTERIORS_4_FARM_HOUSE walls
+    { 41, 1, 0, 6, sQuickStartLanternCells147 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE scatter
+    { 41, 1, 0, 10, sQuickStartLanternCells148 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE scatter
+    { 41, 1, 1, 6, sQuickStartLanternCells149 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE walls
+    { 41, 1, 1, 10, sQuickStartLanternCells150 }, // TREE_INTERIORS_WESTERN_WOODS_HEART_PIECE walls
+    { 42, 1, 0, 6, sQuickStartLanternCells151 }, // HOUSE_INTERIORS_2_PERCY scatter
+    { 42, 1, 0, 10, sQuickStartLanternCells152 }, // HOUSE_INTERIORS_2_PERCY scatter
+    { 42, 1, 1, 6, sQuickStartLanternCells153 }, // HOUSE_INTERIORS_2_PERCY walls
+    { 42, 1, 1, 10, sQuickStartLanternCells154 }, // HOUSE_INTERIORS_2_PERCY walls
+    { 43, 1, 0, 6, sQuickStartLanternCells155 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST scatter
+    { 43, 1, 0, 10, sQuickStartLanternCells156 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST scatter
+    { 43, 1, 1, 6, sQuickStartLanternCells157 }, // TREE_INTERIORS_BOOMERANG_NORTHWEST walls
+    { 44, 1, 0, 6, sQuickStartLanternCells158 }, // TREE_INTERIORS_BOOMERANG_NORTHEAST scatter
+    { 44, 1, 1, 6, sQuickStartLanternCells159 }, // TREE_INTERIORS_BOOMERANG_NORTHEAST walls
+    { 45, 1, 0, 6, sQuickStartLanternCells160 }, // TREE_INTERIORS_BOOMERANG_SOUTHWEST scatter
+    { 45, 1, 1, 6, sQuickStartLanternCells161 }, // TREE_INTERIORS_BOOMERANG_SOUTHWEST walls
+    { 46, 1, 0, 6, sQuickStartLanternCells162 }, // TREE_INTERIORS_BOOMERANG_SOUTHEAST scatter
+    { 46, 1, 1, 6, sQuickStartLanternCells163 }, // TREE_INTERIORS_BOOMERANG_SOUTHEAST walls
+    { 46, 1, 1, 10, sQuickStartLanternCells164 }, // TREE_INTERIORS_BOOMERANG_SOUTHEAST walls
+    { 48, 1, 0, 6, sQuickStartLanternCells165 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE scatter
+    { 48, 1, 0, 10, sQuickStartLanternCells166 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE scatter
+    { 48, 1, 1, 6, sQuickStartLanternCells167 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE walls
+    { 48, 1, 1, 10, sQuickStartLanternCells168 }, // MINISH_CRACKS_EAST_HYRULE_CASTLE walls
+    { 49, 1, 0, 6, sQuickStartLanternCells169 }, // DOJOS_TO_GREATBLADE scatter
+    { 49, 1, 1, 6, sQuickStartLanternCells170 }, // DOJOS_TO_GREATBLADE walls
+    { 50, 1, 0, 8, sQuickStartLanternCells171 }, // MINISH_PATHS_LON_LON_RANCH scatter
+    { 50, 1, 0, 11, sQuickStartLanternCells172 }, // MINISH_PATHS_LON_LON_RANCH scatter
+    { 50, 1, 1, 7, sQuickStartLanternCells173 }, // MINISH_PATHS_LON_LON_RANCH walls
+    { 50, 1, 1, 13, sQuickStartLanternCells174 }, // MINISH_PATHS_LON_LON_RANCH walls
+    { 51, 1, 0, 6, sQuickStartLanternCells175 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH scatter
+    { 51, 1, 0, 10, sQuickStartLanternCells176 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH scatter
+    { 51, 1, 1, 6, sQuickStartLanternCells177 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH walls
+    { 51, 1, 1, 10, sQuickStartLanternCells178 }, // MINISH_CRACKS_LON_LON_RANCH_NORTH walls
+    { 53, 1, 0, 6, sQuickStartLanternCells179 }, // HOUSE_INTERIORS_2_DAMPE scatter
+    { 53, 1, 1, 6, sQuickStartLanternCells180 }, // HOUSE_INTERIORS_2_DAMPE walls
+    { 53, 1, 1, 10, sQuickStartLanternCells181 }, // HOUSE_INTERIORS_2_DAMPE walls
+    { 55, 0, 0, 3, sQuickStartLanternCells182 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE spread
+    { 55, 0, 0, 5, sQuickStartLanternCells183 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE spread
+    { 55, 0, 1, 3, sQuickStartLanternCells184 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE cluster
+    { 55, 0, 1, 5, sQuickStartLanternCells185 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE cluster
+    { 55, 0, 2, 3, sQuickStartLanternCells186 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE hidden
+    { 55, 0, 2, 5, sQuickStartLanternCells187 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE hidden
+    { 55, 1, 0, 6, sQuickStartLanternCells188 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE scatter
+    { 55, 1, 0, 10, sQuickStartLanternCells189 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE scatter
+    { 55, 1, 1, 6, sQuickStartLanternCells190 }, // ROYAL_VALLEY_GRAVES_HEART_PIECE walls
+    { 56, 0, 0, 4, sQuickStartLanternCells191 }, // ROYAL_VALLEY_GRAVES_GINA spread
+    { 56, 0, 0, 5, sQuickStartLanternCells192 }, // ROYAL_VALLEY_GRAVES_GINA spread
+    { 56, 0, 1, 4, sQuickStartLanternCells193 }, // ROYAL_VALLEY_GRAVES_GINA cluster
+    { 56, 0, 1, 5, sQuickStartLanternCells194 }, // ROYAL_VALLEY_GRAVES_GINA cluster
+    { 56, 0, 2, 3, sQuickStartLanternCells195 }, // ROYAL_VALLEY_GRAVES_GINA hidden
+    { 56, 0, 2, 5, sQuickStartLanternCells196 }, // ROYAL_VALLEY_GRAVES_GINA hidden
+    { 56, 1, 0, 7, sQuickStartLanternCells197 }, // ROYAL_VALLEY_GRAVES_GINA scatter
+    { 56, 1, 0, 10, sQuickStartLanternCells198 }, // ROYAL_VALLEY_GRAVES_GINA scatter
+    { 56, 1, 1, 6, sQuickStartLanternCells199 }, // ROYAL_VALLEY_GRAVES_GINA walls
+    { 56, 1, 1, 10, sQuickStartLanternCells200 }, // ROYAL_VALLEY_GRAVES_GINA walls
+    { 57, 0, 0, 3, sQuickStartLanternCells201 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN spread
+    { 57, 0, 1, 3, sQuickStartLanternCells202 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN cluster
+    { 57, 0, 2, 3, sQuickStartLanternCells203 }, // CAVES_TRILBY_MITTS_FAIRY_FOUNTAIN hidden
+    { 59, 0, 0, 3, sQuickStartLanternCells204 }, // CASTOR_CAVES_WIND_RUINS spread
+    { 59, 0, 0, 5, sQuickStartLanternCells205 }, // CASTOR_CAVES_WIND_RUINS spread
+    { 59, 0, 1, 3, sQuickStartLanternCells206 }, // CASTOR_CAVES_WIND_RUINS cluster
+    { 59, 0, 1, 5, sQuickStartLanternCells207 }, // CASTOR_CAVES_WIND_RUINS cluster
+    { 59, 0, 2, 3, sQuickStartLanternCells208 }, // CASTOR_CAVES_WIND_RUINS hidden
+    { 59, 0, 2, 5, sQuickStartLanternCells209 }, // CASTOR_CAVES_WIND_RUINS hidden
+    { 59, 1, 0, 6, sQuickStartLanternCells210 }, // CASTOR_CAVES_WIND_RUINS scatter
+    { 59, 1, 0, 10, sQuickStartLanternCells211 }, // CASTOR_CAVES_WIND_RUINS scatter
+    { 59, 1, 1, 6, sQuickStartLanternCells212 }, // CASTOR_CAVES_WIND_RUINS walls
+    { 61, 1, 0, 6, sQuickStartLanternCells213 }, // MINISH_CRACKS_CASTOR_WILDS_BOW scatter
+    { 61, 1, 0, 10, sQuickStartLanternCells214 }, // MINISH_CRACKS_CASTOR_WILDS_BOW scatter
+    { 61, 1, 1, 6, sQuickStartLanternCells215 }, // MINISH_CRACKS_CASTOR_WILDS_BOW walls
+    { 61, 1, 1, 10, sQuickStartLanternCells216 }, // MINISH_CRACKS_CASTOR_WILDS_BOW walls
+    { 62, 1, 0, 6, sQuickStartLanternCells217 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH scatter
+    { 62, 1, 0, 10, sQuickStartLanternCells218 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH scatter
+    { 62, 1, 1, 6, sQuickStartLanternCells219 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH walls
+    { 62, 1, 1, 10, sQuickStartLanternCells220 }, // MINISH_CRACKS_CASTOR_WILDS_NORTH walls
+    { 63, 1, 0, 6, sQuickStartLanternCells221 }, // MINISH_CRACKS_CASTOR_WILDS_WEST scatter
+    { 63, 1, 0, 10, sQuickStartLanternCells222 }, // MINISH_CRACKS_CASTOR_WILDS_WEST scatter
+    { 63, 1, 1, 6, sQuickStartLanternCells223 }, // MINISH_CRACKS_CASTOR_WILDS_WEST walls
+    { 63, 1, 1, 10, sQuickStartLanternCells224 }, // MINISH_CRACKS_CASTOR_WILDS_WEST walls
+    { 64, 1, 0, 6, sQuickStartLanternCells225 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE scatter
+    { 64, 1, 0, 10, sQuickStartLanternCells226 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE scatter
+    { 64, 1, 1, 6, sQuickStartLanternCells227 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE walls
+    { 64, 1, 1, 10, sQuickStartLanternCells228 }, // MINISH_CRACKS_CASTOR_WILDS_MIDDLE walls
+    { 66, 1, 0, 9, sQuickStartLanternCells229 }, // DOJOS_SWIFTBLADE_I scatter
+    { 66, 1, 0, 10, sQuickStartLanternCells230 }, // DOJOS_SWIFTBLADE_I scatter
+    { 66, 1, 1, 6, sQuickStartLanternCells231 }, // DOJOS_SWIFTBLADE_I walls
+    { 66, 1, 1, 10, sQuickStartLanternCells232 }, // DOJOS_SWIFTBLADE_I walls
+    { 67, 1, 0, 6, sQuickStartLanternCells233 }, // DOJOS_TO_SCARBLADE scatter
+    { 67, 1, 1, 6, sQuickStartLanternCells234 }, // DOJOS_TO_SCARBLADE walls
+    { 68, 0, 0, 3, sQuickStartLanternCells235 }, // MINISH_CAVES_SOUTHEAST_WATER_1 spread
+    { 68, 0, 0, 5, sQuickStartLanternCells236 }, // MINISH_CAVES_SOUTHEAST_WATER_1 spread
+    { 68, 0, 1, 3, sQuickStartLanternCells237 }, // MINISH_CAVES_SOUTHEAST_WATER_1 cluster
+    { 68, 0, 1, 5, sQuickStartLanternCells238 }, // MINISH_CAVES_SOUTHEAST_WATER_1 cluster
+    { 68, 0, 2, 3, sQuickStartLanternCells239 }, // MINISH_CAVES_SOUTHEAST_WATER_1 hidden
+    { 68, 0, 2, 5, sQuickStartLanternCells240 }, // MINISH_CAVES_SOUTHEAST_WATER_1 hidden
+    { 68, 1, 0, 6, sQuickStartLanternCells241 }, // MINISH_CAVES_SOUTHEAST_WATER_1 scatter
+    { 68, 1, 0, 10, sQuickStartLanternCells242 }, // MINISH_CAVES_SOUTHEAST_WATER_1 scatter
+    { 68, 1, 1, 6, sQuickStartLanternCells243 }, // MINISH_CAVES_SOUTHEAST_WATER_1 walls
+    { 68, 1, 1, 10, sQuickStartLanternCells244 }, // MINISH_CAVES_SOUTHEAST_WATER_1 walls
+    { 69, 0, 0, 3, sQuickStartLanternCells245 }, // CASTOR_CAVES_DARKNUT spread
+    { 69, 0, 0, 5, sQuickStartLanternCells246 }, // CASTOR_CAVES_DARKNUT spread
+    { 69, 0, 1, 3, sQuickStartLanternCells247 }, // CASTOR_CAVES_DARKNUT cluster
+    { 69, 0, 1, 5, sQuickStartLanternCells248 }, // CASTOR_CAVES_DARKNUT cluster
+    { 69, 0, 2, 3, sQuickStartLanternCells249 }, // CASTOR_CAVES_DARKNUT hidden
+    { 69, 0, 2, 5, sQuickStartLanternCells250 }, // CASTOR_CAVES_DARKNUT hidden
+    { 69, 1, 0, 6, sQuickStartLanternCells251 }, // CASTOR_CAVES_DARKNUT scatter
+    { 69, 1, 0, 10, sQuickStartLanternCells252 }, // CASTOR_CAVES_DARKNUT scatter
+    { 69, 1, 1, 6, sQuickStartLanternCells253 }, // CASTOR_CAVES_DARKNUT walls
+    { 69, 1, 1, 10, sQuickStartLanternCells254 }, // CASTOR_CAVES_DARKNUT walls
+    { 70, 0, 0, 3, sQuickStartLanternCells255 }, // CASTOR_DARKNUT_MAIN spread
+    { 70, 0, 0, 7, sQuickStartLanternCells256 }, // CASTOR_DARKNUT_MAIN spread
+    { 70, 0, 1, 3, sQuickStartLanternCells257 }, // CASTOR_DARKNUT_MAIN cluster
+    { 70, 0, 1, 5, sQuickStartLanternCells258 }, // CASTOR_DARKNUT_MAIN cluster
+    { 70, 0, 2, 4, sQuickStartLanternCells259 }, // CASTOR_DARKNUT_MAIN hidden
+    { 70, 0, 2, 7, sQuickStartLanternCells260 }, // CASTOR_DARKNUT_MAIN hidden
+    { 70, 1, 0, 6, sQuickStartLanternCells261 }, // CASTOR_DARKNUT_MAIN scatter
+    { 70, 1, 0, 14, sQuickStartLanternCells262 }, // CASTOR_DARKNUT_MAIN scatter
+    { 70, 1, 1, 8, sQuickStartLanternCells263 }, // CASTOR_DARKNUT_MAIN walls
+    { 70, 1, 1, 10, sQuickStartLanternCells264 }, // CASTOR_DARKNUT_MAIN walls
+    { 71, 0, 0, 4, sQuickStartLanternCells265 }, // CASTOR_CAVES_SOUTH spread
+    { 71, 0, 0, 5, sQuickStartLanternCells266 }, // CASTOR_CAVES_SOUTH spread
+    { 71, 0, 1, 4, sQuickStartLanternCells267 }, // CASTOR_CAVES_SOUTH cluster
+    { 71, 0, 1, 5, sQuickStartLanternCells268 }, // CASTOR_CAVES_SOUTH cluster
+    { 71, 0, 2, 4, sQuickStartLanternCells269 }, // CASTOR_CAVES_SOUTH hidden
+    { 71, 0, 2, 5, sQuickStartLanternCells270 }, // CASTOR_CAVES_SOUTH hidden
+    { 71, 1, 0, 7, sQuickStartLanternCells271 }, // CASTOR_CAVES_SOUTH scatter
+    { 71, 1, 0, 10, sQuickStartLanternCells272 }, // CASTOR_CAVES_SOUTH scatter
+    { 71, 1, 1, 8, sQuickStartLanternCells273 }, // CASTOR_CAVES_SOUTH walls
+    { 71, 1, 1, 10, sQuickStartLanternCells274 }, // CASTOR_CAVES_SOUTH walls
+    { 73, 0, 0, 3, sQuickStartLanternCells275 }, // CRENEL_CAVES_EXIT_TO_MINES spread
+    { 73, 0, 0, 5, sQuickStartLanternCells276 }, // CRENEL_CAVES_EXIT_TO_MINES spread
+    { 73, 0, 1, 3, sQuickStartLanternCells277 }, // CRENEL_CAVES_EXIT_TO_MINES cluster
+    { 73, 0, 1, 5, sQuickStartLanternCells278 }, // CRENEL_CAVES_EXIT_TO_MINES cluster
+    { 73, 0, 2, 3, sQuickStartLanternCells279 }, // CRENEL_CAVES_EXIT_TO_MINES hidden
+    { 73, 0, 2, 5, sQuickStartLanternCells280 }, // CRENEL_CAVES_EXIT_TO_MINES hidden
+    { 73, 1, 0, 6, sQuickStartLanternCells281 }, // CRENEL_CAVES_EXIT_TO_MINES scatter
+    { 73, 1, 1, 6, sQuickStartLanternCells282 }, // CRENEL_CAVES_EXIT_TO_MINES walls
+    { 74, 0, 0, 3, sQuickStartLanternCells283 }, // CRENEL_CAVES_BLOCK_PUSHING spread
+    { 74, 0, 0, 5, sQuickStartLanternCells284 }, // CRENEL_CAVES_BLOCK_PUSHING spread
+    { 74, 0, 1, 3, sQuickStartLanternCells285 }, // CRENEL_CAVES_BLOCK_PUSHING cluster
+    { 74, 0, 1, 5, sQuickStartLanternCells286 }, // CRENEL_CAVES_BLOCK_PUSHING cluster
+    { 74, 0, 2, 3, sQuickStartLanternCells287 }, // CRENEL_CAVES_BLOCK_PUSHING hidden
+    { 74, 0, 2, 5, sQuickStartLanternCells288 }, // CRENEL_CAVES_BLOCK_PUSHING hidden
+    { 74, 1, 0, 6, sQuickStartLanternCells289 }, // CRENEL_CAVES_BLOCK_PUSHING scatter
+    { 74, 1, 0, 10, sQuickStartLanternCells290 }, // CRENEL_CAVES_BLOCK_PUSHING scatter
+    { 74, 1, 1, 6, sQuickStartLanternCells291 }, // CRENEL_CAVES_BLOCK_PUSHING walls
+    { 75, 0, 0, 3, sQuickStartLanternCells292 }, // CRENEL_CAVES_GRIP_RING spread
+    { 75, 0, 0, 5, sQuickStartLanternCells293 }, // CRENEL_CAVES_GRIP_RING spread
+    { 75, 0, 1, 3, sQuickStartLanternCells294 }, // CRENEL_CAVES_GRIP_RING cluster
+    { 75, 0, 1, 5, sQuickStartLanternCells295 }, // CRENEL_CAVES_GRIP_RING cluster
+    { 75, 0, 2, 3, sQuickStartLanternCells296 }, // CRENEL_CAVES_GRIP_RING hidden
+    { 75, 0, 2, 5, sQuickStartLanternCells297 }, // CRENEL_CAVES_GRIP_RING hidden
+    { 75, 1, 0, 6, sQuickStartLanternCells298 }, // CRENEL_CAVES_GRIP_RING scatter
+    { 75, 1, 1, 6, sQuickStartLanternCells299 }, // CRENEL_CAVES_GRIP_RING walls
+    { 76, 0, 0, 3, sQuickStartLanternCells300 }, // CRENEL_CAVES_TO_GRAYBLADE spread
+    { 76, 0, 0, 7, sQuickStartLanternCells301 }, // CRENEL_CAVES_TO_GRAYBLADE spread
+    { 76, 0, 1, 3, sQuickStartLanternCells302 }, // CRENEL_CAVES_TO_GRAYBLADE cluster
+    { 76, 0, 1, 7, sQuickStartLanternCells303 }, // CRENEL_CAVES_TO_GRAYBLADE cluster
+    { 76, 0, 2, 4, sQuickStartLanternCells304 }, // CRENEL_CAVES_TO_GRAYBLADE hidden
+    { 76, 0, 2, 6, sQuickStartLanternCells305 }, // CRENEL_CAVES_TO_GRAYBLADE hidden
+    { 76, 1, 0, 8, sQuickStartLanternCells306 }, // CRENEL_CAVES_TO_GRAYBLADE scatter
+    { 76, 1, 0, 12, sQuickStartLanternCells307 }, // CRENEL_CAVES_TO_GRAYBLADE scatter
+    { 76, 1, 1, 8, sQuickStartLanternCells308 }, // CRENEL_CAVES_TO_GRAYBLADE walls
+    { 76, 1, 1, 12, sQuickStartLanternCells309 }, // CRENEL_CAVES_TO_GRAYBLADE walls
+    { 77, 0, 0, 3, sQuickStartLanternCells310 }, // CRENEL_CAVES_HERMIT spread
+    { 77, 0, 1, 3, sQuickStartLanternCells311 }, // CRENEL_CAVES_HERMIT cluster
+    { 77, 0, 2, 3, sQuickStartLanternCells312 }, // CRENEL_CAVES_HERMIT hidden
+    { 78, 0, 0, 3, sQuickStartLanternCells313 }, // CRENEL_CAVES_HINT_SCRUB spread
+    { 78, 0, 0, 5, sQuickStartLanternCells314 }, // CRENEL_CAVES_HINT_SCRUB spread
+    { 78, 0, 1, 3, sQuickStartLanternCells315 }, // CRENEL_CAVES_HINT_SCRUB cluster
+    { 78, 0, 1, 5, sQuickStartLanternCells316 }, // CRENEL_CAVES_HINT_SCRUB cluster
+    { 78, 0, 2, 3, sQuickStartLanternCells317 }, // CRENEL_CAVES_HINT_SCRUB hidden
+    { 78, 0, 2, 5, sQuickStartLanternCells318 }, // CRENEL_CAVES_HINT_SCRUB hidden
+    { 78, 1, 0, 6, sQuickStartLanternCells319 }, // CRENEL_CAVES_HINT_SCRUB scatter
+    { 78, 1, 0, 10, sQuickStartLanternCells320 }, // CRENEL_CAVES_HINT_SCRUB scatter
+    { 78, 1, 1, 6, sQuickStartLanternCells321 }, // CRENEL_CAVES_HINT_SCRUB walls
+    { 79, 1, 0, 6, sQuickStartLanternCells322 }, // DOJOS_GRAYBLADE scatter
+    { 79, 1, 0, 10, sQuickStartLanternCells323 }, // DOJOS_GRAYBLADE scatter
+    { 79, 1, 1, 6, sQuickStartLanternCells324 }, // DOJOS_GRAYBLADE walls
+    { 79, 1, 1, 10, sQuickStartLanternCells325 }, // DOJOS_GRAYBLADE walls
+    { 80, 1, 0, 9, sQuickStartLanternCells326 }, // CRENEL_MINISH_PATHS_SPRING_WATER scatter
+    { 80, 1, 0, 14, sQuickStartLanternCells327 }, // CRENEL_MINISH_PATHS_SPRING_WATER scatter
+    { 80, 1, 1, 6, sQuickStartLanternCells328 }, // CRENEL_MINISH_PATHS_SPRING_WATER walls
+    { 80, 1, 1, 10, sQuickStartLanternCells329 }, // CRENEL_MINISH_PATHS_SPRING_WATER walls
+    { 83, 1, 0, 6, sQuickStartLanternCells330 }, // TREE_INTERIORS_WITCH_HUT scatter
+    { 83, 1, 0, 10, sQuickStartLanternCells331 }, // TREE_INTERIORS_WITCH_HUT scatter
+    { 83, 1, 1, 6, sQuickStartLanternCells332 }, // TREE_INTERIORS_WITCH_HUT walls
+    { 83, 1, 1, 10, sQuickStartLanternCells333 }, // TREE_INTERIORS_WITCH_HUT walls
+    { 84, 0, 0, 4, sQuickStartLanternCells334 }, // DEEPWOOD_SHRINE_ENTRANCE spread
+    { 84, 0, 0, 5, sQuickStartLanternCells335 }, // DEEPWOOD_SHRINE_ENTRANCE spread
+    { 84, 0, 1, 3, sQuickStartLanternCells336 }, // DEEPWOOD_SHRINE_ENTRANCE cluster
+    { 84, 0, 1, 5, sQuickStartLanternCells337 }, // DEEPWOOD_SHRINE_ENTRANCE cluster
+    { 84, 0, 2, 4, sQuickStartLanternCells338 }, // DEEPWOOD_SHRINE_ENTRANCE hidden
+    { 84, 0, 2, 5, sQuickStartLanternCells339 }, // DEEPWOOD_SHRINE_ENTRANCE hidden
+    { 84, 1, 0, 7, sQuickStartLanternCells340 }, // DEEPWOOD_SHRINE_ENTRANCE scatter
+    { 84, 1, 0, 10, sQuickStartLanternCells341 }, // DEEPWOOD_SHRINE_ENTRANCE scatter
+    { 84, 1, 1, 6, sQuickStartLanternCells342 }, // DEEPWOOD_SHRINE_ENTRANCE walls
+    { 84, 1, 1, 10, sQuickStartLanternCells343 }, // DEEPWOOD_SHRINE_ENTRANCE walls
+    { 85, 0, 0, 3, sQuickStartLanternCells344 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST spread
+    { 85, 0, 0, 5, sQuickStartLanternCells345 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST spread
+    { 85, 0, 1, 3, sQuickStartLanternCells346 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST cluster
+    { 85, 0, 2, 3, sQuickStartLanternCells347 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST hidden
+    { 85, 1, 1, 6, sQuickStartLanternCells348 }, // MINISH_CAVES_MINISH_WOODS_SOUTHWEST walls
+    { 86, 1, 0, 7, sQuickStartLanternCells349 }, // BEANSTALKS_EASTERN_HILLS scatter
+    { 86, 1, 0, 10, sQuickStartLanternCells350 }, // BEANSTALKS_EASTERN_HILLS scatter
+    { 86, 1, 1, 7, sQuickStartLanternCells351 }, // BEANSTALKS_EASTERN_HILLS walls
+    { 87, 1, 0, 6, sQuickStartLanternCells352 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE scatter
+    { 87, 1, 0, 10, sQuickStartLanternCells353 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE scatter
+    { 87, 1, 1, 6, sQuickStartLanternCells354 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE walls
+    { 87, 1, 1, 10, sQuickStartLanternCells355 }, // HOUSE_INTERIORS_2_STOCKWELL_LAKE_HOUSE walls
+    { 88, 1, 0, 6, sQuickStartLanternCells356 }, // HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN scatter
+    { 88, 1, 1, 6, sQuickStartLanternCells357 }, // HOUSE_INTERIORS_4_MAYOR_LAKE_CABIN walls
+    { 91, 0, 0, 4, sQuickStartLanternCells358 }, // MINISH_CAVES_LAKE_HYLIA_NORTH spread
+    { 91, 0, 1, 3, sQuickStartLanternCells359 }, // MINISH_CAVES_LAKE_HYLIA_NORTH cluster
+    { 91, 0, 2, 3, sQuickStartLanternCells360 }, // MINISH_CAVES_LAKE_HYLIA_NORTH hidden
+    { 93, 0, 0, 3, sQuickStartLanternCells361 }, // CRENEL_CAVES_MUSHKEESE spread
+    { 93, 0, 0, 5, sQuickStartLanternCells362 }, // CRENEL_CAVES_MUSHKEESE spread
+    { 93, 0, 1, 3, sQuickStartLanternCells363 }, // CRENEL_CAVES_MUSHKEESE cluster
+    { 93, 0, 1, 5, sQuickStartLanternCells364 }, // CRENEL_CAVES_MUSHKEESE cluster
+    { 93, 0, 2, 3, sQuickStartLanternCells365 }, // CRENEL_CAVES_MUSHKEESE hidden
+    { 93, 0, 2, 5, sQuickStartLanternCells366 }, // CRENEL_CAVES_MUSHKEESE hidden
+    { 93, 1, 0, 6, sQuickStartLanternCells367 }, // CRENEL_CAVES_MUSHKEESE scatter
+    { 93, 1, 0, 10, sQuickStartLanternCells368 }, // CRENEL_CAVES_MUSHKEESE scatter
+    { 93, 1, 1, 6, sQuickStartLanternCells369 }, // CRENEL_CAVES_MUSHKEESE walls
+    { 93, 1, 1, 10, sQuickStartLanternCells370 }, // CRENEL_CAVES_MUSHKEESE walls
+    { 94, 0, 0, 3, sQuickStartLanternCells371 }, // CRENEL_CAVES_CHUCHU_POT_CHEST spread
+    { 94, 0, 0, 5, sQuickStartLanternCells372 }, // CRENEL_CAVES_CHUCHU_POT_CHEST spread
+    { 94, 0, 1, 3, sQuickStartLanternCells373 }, // CRENEL_CAVES_CHUCHU_POT_CHEST cluster
+    { 95, 0, 0, 3, sQuickStartLanternCells374 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE spread
+    { 95, 0, 0, 5, sQuickStartLanternCells375 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE spread
+    { 95, 0, 1, 3, sQuickStartLanternCells376 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE cluster
+    { 95, 0, 1, 5, sQuickStartLanternCells377 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE cluster
+    { 95, 0, 2, 3, sQuickStartLanternCells378 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE hidden
+    { 95, 1, 0, 6, sQuickStartLanternCells379 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE scatter
+    { 95, 1, 1, 6, sQuickStartLanternCells380 }, // CRENEL_CAVES_SPINY_CHU_PUZZLE walls
+    { 96, 0, 0, 3, sQuickStartLanternCells381 }, // CRENEL_CAVES_WATER_HEART_PIECE spread
+    { 96, 0, 0, 5, sQuickStartLanternCells382 }, // CRENEL_CAVES_WATER_HEART_PIECE spread
+    { 96, 0, 1, 3, sQuickStartLanternCells383 }, // CRENEL_CAVES_WATER_HEART_PIECE cluster
+    { 96, 0, 1, 5, sQuickStartLanternCells384 }, // CRENEL_CAVES_WATER_HEART_PIECE cluster
+    { 96, 0, 2, 3, sQuickStartLanternCells385 }, // CRENEL_CAVES_WATER_HEART_PIECE hidden
+    { 96, 1, 0, 6, sQuickStartLanternCells386 }, // CRENEL_CAVES_WATER_HEART_PIECE scatter
+    { 101, 1, 1, 6, sQuickStartLanternCells387 }, // TREE_INTERIORS_MINISH_WOODS_GREAT_FAIRY walls
+    { 103, 1, 0, 8, sQuickStartLanternCells388 }, // DOJOS_WAVEBLADE scatter
+    { 103, 1, 0, 10, sQuickStartLanternCells389 }, // DOJOS_WAVEBLADE scatter
+    { 103, 1, 1, 7, sQuickStartLanternCells390 }, // DOJOS_WAVEBLADE walls
+    { 103, 1, 1, 10, sQuickStartLanternCells391 }, // DOJOS_WAVEBLADE walls
+    { 105, 0, 0, 3, sQuickStartLanternCells392 }, // VEIL_FALLS_CAVES_ENTRANCE spread
+    { 105, 0, 0, 5, sQuickStartLanternCells393 }, // VEIL_FALLS_CAVES_ENTRANCE spread
+    { 105, 0, 1, 4, sQuickStartLanternCells394 }, // VEIL_FALLS_CAVES_ENTRANCE cluster
+    { 105, 0, 1, 5, sQuickStartLanternCells395 }, // VEIL_FALLS_CAVES_ENTRANCE cluster
+    { 105, 0, 2, 3, sQuickStartLanternCells396 }, // VEIL_FALLS_CAVES_ENTRANCE hidden
+    { 105, 0, 2, 6, sQuickStartLanternCells397 }, // VEIL_FALLS_CAVES_ENTRANCE hidden
+    { 105, 1, 0, 8, sQuickStartLanternCells398 }, // VEIL_FALLS_CAVES_ENTRANCE scatter
+    { 105, 1, 0, 10, sQuickStartLanternCells399 }, // VEIL_FALLS_CAVES_ENTRANCE scatter
+    { 105, 1, 1, 7, sQuickStartLanternCells400 }, // VEIL_FALLS_CAVES_ENTRANCE walls
+    { 105, 1, 1, 11, sQuickStartLanternCells401 }, // VEIL_FALLS_CAVES_ENTRANCE walls
+    { 106, 0, 0, 3, sQuickStartLanternCells402 }, // VEIL_FALLS_CAVES_EXIT spread
+    { 106, 0, 0, 5, sQuickStartLanternCells403 }, // VEIL_FALLS_CAVES_EXIT spread
+    { 106, 0, 1, 3, sQuickStartLanternCells404 }, // VEIL_FALLS_CAVES_EXIT cluster
+    { 106, 0, 1, 5, sQuickStartLanternCells405 }, // VEIL_FALLS_CAVES_EXIT cluster
+    { 106, 0, 2, 3, sQuickStartLanternCells406 }, // VEIL_FALLS_CAVES_EXIT hidden
+    { 106, 0, 2, 5, sQuickStartLanternCells407 }, // VEIL_FALLS_CAVES_EXIT hidden
+    { 106, 1, 0, 6, sQuickStartLanternCells408 }, // VEIL_FALLS_CAVES_EXIT scatter
+    { 106, 1, 1, 6, sQuickStartLanternCells409 }, // VEIL_FALLS_CAVES_EXIT walls
+    { 107, 0, 0, 4, sQuickStartLanternCells410 }, // VEIL_FALLS_CAVES_HALLWAY_1F spread
+    { 107, 0, 0, 6, sQuickStartLanternCells411 }, // VEIL_FALLS_CAVES_HALLWAY_1F spread
+    { 107, 0, 1, 4, sQuickStartLanternCells412 }, // VEIL_FALLS_CAVES_HALLWAY_1F cluster
+    { 107, 0, 1, 7, sQuickStartLanternCells413 }, // VEIL_FALLS_CAVES_HALLWAY_1F cluster
+    { 107, 0, 2, 4, sQuickStartLanternCells414 }, // VEIL_FALLS_CAVES_HALLWAY_1F hidden
+    { 107, 0, 2, 7, sQuickStartLanternCells415 }, // VEIL_FALLS_CAVES_HALLWAY_1F hidden
+    { 107, 1, 0, 7, sQuickStartLanternCells416 }, // VEIL_FALLS_CAVES_HALLWAY_1F scatter
+    { 107, 1, 0, 11, sQuickStartLanternCells417 }, // VEIL_FALLS_CAVES_HALLWAY_1F scatter
+    { 107, 1, 1, 8, sQuickStartLanternCells418 }, // VEIL_FALLS_CAVES_HALLWAY_1F walls
+    { 107, 1, 1, 10, sQuickStartLanternCells419 }, // VEIL_FALLS_CAVES_HALLWAY_1F walls
+    { 108, 0, 0, 3, sQuickStartLanternCells420 }, // VEIL_FALLS_CAVES_HALLWAY_2F spread
+    { 108, 0, 0, 5, sQuickStartLanternCells421 }, // VEIL_FALLS_CAVES_HALLWAY_2F spread
+    { 108, 0, 1, 4, sQuickStartLanternCells422 }, // VEIL_FALLS_CAVES_HALLWAY_2F cluster
+    { 108, 0, 1, 5, sQuickStartLanternCells423 }, // VEIL_FALLS_CAVES_HALLWAY_2F cluster
+    { 108, 1, 0, 7, sQuickStartLanternCells424 }, // VEIL_FALLS_CAVES_HALLWAY_2F scatter
+    { 108, 1, 0, 10, sQuickStartLanternCells425 }, // VEIL_FALLS_CAVES_HALLWAY_2F scatter
+    { 108, 1, 1, 6, sQuickStartLanternCells426 }, // VEIL_FALLS_CAVES_HALLWAY_2F walls
+    { 108, 1, 1, 10, sQuickStartLanternCells427 }, // VEIL_FALLS_CAVES_HALLWAY_2F walls
+    { 109, 0, 0, 3, sQuickStartLanternCells428 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM spread
+    { 109, 0, 0, 5, sQuickStartLanternCells429 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM spread
+    { 109, 0, 1, 3, sQuickStartLanternCells430 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM cluster
+    { 109, 0, 1, 5, sQuickStartLanternCells431 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM cluster
+    { 109, 0, 2, 3, sQuickStartLanternCells432 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM hidden
+    { 109, 1, 0, 6, sQuickStartLanternCells433 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_ROOM scatter
+    { 110, 0, 0, 3, sQuickStartLanternCells434 }, // VEIL_FALLS_CAVES_SECRET_CHEST spread
+    { 110, 0, 0, 5, sQuickStartLanternCells435 }, // VEIL_FALLS_CAVES_SECRET_CHEST spread
+    { 110, 0, 1, 3, sQuickStartLanternCells436 }, // VEIL_FALLS_CAVES_SECRET_CHEST cluster
+    { 110, 0, 1, 5, sQuickStartLanternCells437 }, // VEIL_FALLS_CAVES_SECRET_CHEST cluster
+    { 110, 0, 2, 3, sQuickStartLanternCells438 }, // VEIL_FALLS_CAVES_SECRET_CHEST hidden
+    { 110, 1, 0, 6, sQuickStartLanternCells439 }, // VEIL_FALLS_CAVES_SECRET_CHEST scatter
+    { 111, 1, 0, 6, sQuickStartLanternCells440 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE scatter
+    { 111, 1, 1, 6, sQuickStartLanternCells441 }, // VEIL_FALLS_CAVES_HALLWAY_SECRET_STAIRCASE walls
+    { 112, 0, 0, 3, sQuickStartLanternCells442 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE spread
+    { 112, 0, 1, 3, sQuickStartLanternCells443 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE cluster
+    { 112, 0, 2, 3, sQuickStartLanternCells444 }, // VEIL_FALLS_CAVES_HALLWAY_BLOCK_PUZZLE hidden
+    { 113, 0, 0, 3, sQuickStartLanternCells445 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH spread
+    { 113, 0, 0, 5, sQuickStartLanternCells446 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH spread
+    { 113, 0, 1, 3, sQuickStartLanternCells447 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH cluster
+    { 113, 0, 1, 5, sQuickStartLanternCells448 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH cluster
+    { 113, 0, 2, 4, sQuickStartLanternCells449 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH hidden
+    { 113, 0, 2, 5, sQuickStartLanternCells450 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH hidden
+    { 113, 1, 0, 8, sQuickStartLanternCells451 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH scatter
+    { 113, 1, 0, 10, sQuickStartLanternCells452 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH scatter
+    { 113, 1, 1, 9, sQuickStartLanternCells453 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH walls
+    { 113, 1, 1, 10, sQuickStartLanternCells454 }, // VEIL_FALLS_CAVES_HALLWAY_RUPEE_PATH walls
+    { 114, 1, 0, 6, sQuickStartLanternCells455 }, // DOJOS_TO_SPLITBLADE scatter
+    { 114, 1, 1, 6, sQuickStartLanternCells456 }, // DOJOS_TO_SPLITBLADE walls
+    { 115, 1, 0, 7, sQuickStartLanternCells457 }, // DOJOS_SPLITBLADE scatter
+    { 115, 1, 0, 10, sQuickStartLanternCells458 }, // DOJOS_SPLITBLADE scatter
+    { 115, 1, 1, 8, sQuickStartLanternCells459 }, // DOJOS_SPLITBLADE walls
+    { 115, 1, 1, 10, sQuickStartLanternCells460 }, // DOJOS_SPLITBLADE walls
+    { 117, 0, 0, 3, sQuickStartLanternCells461 }, // CAVES_BOTTLE_BUSINESS_SCRUB spread
+    { 117, 0, 0, 5, sQuickStartLanternCells462 }, // CAVES_BOTTLE_BUSINESS_SCRUB spread
+    { 117, 0, 1, 3, sQuickStartLanternCells463 }, // CAVES_BOTTLE_BUSINESS_SCRUB cluster
+    { 117, 0, 1, 5, sQuickStartLanternCells464 }, // CAVES_BOTTLE_BUSINESS_SCRUB cluster
+    { 117, 0, 2, 3, sQuickStartLanternCells465 }, // CAVES_BOTTLE_BUSINESS_SCRUB hidden
+    { 117, 0, 2, 5, sQuickStartLanternCells466 }, // CAVES_BOTTLE_BUSINESS_SCRUB hidden
+    { 117, 1, 0, 6, sQuickStartLanternCells467 }, // CAVES_BOTTLE_BUSINESS_SCRUB scatter
+    { 117, 1, 0, 10, sQuickStartLanternCells468 }, // CAVES_BOTTLE_BUSINESS_SCRUB scatter
+    { 117, 1, 1, 6, sQuickStartLanternCells469 }, // CAVES_BOTTLE_BUSINESS_SCRUB walls
+    { 118, 0, 0, 3, sQuickStartLanternCells470 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB spread
+    { 118, 0, 0, 5, sQuickStartLanternCells471 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB spread
+    { 118, 0, 1, 3, sQuickStartLanternCells472 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB cluster
+    { 118, 0, 1, 5, sQuickStartLanternCells473 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB cluster
+    { 118, 0, 2, 3, sQuickStartLanternCells474 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB hidden
+    { 118, 1, 0, 6, sQuickStartLanternCells475 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB scatter
+    { 118, 1, 0, 10, sQuickStartLanternCells476 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB scatter
+    { 118, 1, 1, 6, sQuickStartLanternCells477 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB walls
+    { 118, 1, 1, 10, sQuickStartLanternCells478 }, // CRENEL_CAVES_BOMB_BUSINESS_SCRUB walls
 };
 
 #endif

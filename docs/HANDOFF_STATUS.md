@@ -44,7 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
-| Lantern and Gust Jar ? rooms investigated, not built: torches are tiles 117/118 lit by the swung Lantern, vanilla already has timed torches, 72 of 119 sites can draw one; webs and the town's dust cloud draw anywhere and the jar clears both; design, plan and five questions in `docs/QUICKSTART_LANTERN_GUST_EVENTS.md` | "Lantern and Gust Jar ? rooms: investigated" |
+| Torch and cleanup ? rooms built: light every torch with the Lantern (dark rooms, timed torches), or clear webs and dust with the Gust Jar (the Lantern burns webs); endless hazard waves through the win; one roll in six each; half the chain's EVENT steps at a site with a layout force one. 479 proven layouts, every one played to DONE in the ROM. Also fixed: tile edits from the ? room code never drew in rooms that do not scroll (chests too) | "Lantern and Gust Jar ? rooms: built" |
 | Hyrule Town: the wave ceiling from 19 to 28 (the town was sized in the wrong unit), and a fuser spot row so the four fields' fusions travel into the square; town puzzles re-verified 1,528/1,528 | "Hyrule Town: more enemies, fusers in the square" |
 | South Hyrule Field's frozen deaths and fuser colours traced to the entity table (71/72) and the palette table (all nine held). Fixed with an entity reserve, projectiles in the wave budget, a palette reserve that counts pending kinds, a floor drop cap and a death-path eviction; peak 56-60 entities of 72 (was up to 71), no palette-full frame, no lost death. The slowdown is cast-dependent (16 staged Ropes: 34 fps; Keese: 52), measured, not fixed yet. `shf_probe.py` (new) | "South Hyrule Field: frozen deaths, fuser colours, slowdown" |
 | Sword variants as one table: the Rusted Blade's HUD and menu icon (was a lantern), menu name and swing tint fixed; adding a variant is one row. `sword_variant_probe.py` 3/3 | "Sword variants: one table, every draw" |
@@ -100,10 +100,10 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 ### Needs the user, not an agent
 
-- **Answer the five questions** at the end of
-  `docs/QUICKSTART_LANTERN_GUST_EVENTS.md` (item gating, webs and the
-  lantern, which Crenel debris hurts, the sites with no torch art, how the
-  endless waves feel) before the torch and cleanup rooms are built.
+- **Play a torch room and a cleanup room.** Say how the darkness, the
+  burn-out timer and the hazard waves feel, and whether one roll in six is
+  right. The scenario testbed lands in either: `scenario.py` kind SITE,
+  event TORCHES or CLEANUP.
 
 - **Play South Hyrule Field and fuse there.** Say whether enemies still
   freeze on death, whether a fuser's colours look wrong during or after a
@@ -292,6 +292,15 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   that Crenel waves pay nothing.
 
 ### Straightforward work, not started
+
+- **Fix the two ? room sites that run their event one frame** (47, the
+  North Hyrule Field fairy fountain tree; 65, the Wind Ruins Minish crack):
+  roadmap entry "Two ? room sites run their event one frame". Then drop
+  them from `lantern_rooms.py`'s `BROKEN_SITES` and regenerate.
+
+- **Torch art for the 60 sites that cannot draw one** (houses, tree
+  hollows, dojos, Great Fairy rooms, Minish houses), left out for now at the
+  user's word. An object stand-in for a torch would open them.
 
 - **A per-kind CPU price for the wave budget.** Stage 16 of each roster
   kind the way the South Hyrule Field roadmap entry does, record game

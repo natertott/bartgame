@@ -247,9 +247,27 @@
   `--every` frames (`--all`: every enemy at once); `--no-collect` leaves
   the drops on the floor. `--row` picks the region (2 = South Hyrule Field,
   19 = Hyrule Town).
-- `lantern_gust_survey.py` - every ? room site's tileset: can it draw a
+- `lantern_gust_survey.py` - every ? room site's tileset: does it list a
   torch (tile types 117 unlit, 118 lit, on either layer) and Mount
-  Crenel's dust tiles. 72 of 119 can draw a torch.
+  Crenel's dust tiles. 72 of 119 list one. `--draw` paints a torch and
+  compares the screen: 59 draw it (the Minish houses list it and draw
+  nothing). `--json build/lantern_sites.json` feeds `lantern_rooms.py`.
+- `lantern_rooms.py` - generates the torch and cleanup ? room layouts per
+  site into `include/quickstart/lantern_rooms.h`, each proven (no torch or
+  web walls the room off, every torch has a lighting tile, the webs clear
+  in an order from the side the jar takes them, every cloud can be
+  approached from below). `--verify` re-proves the shipped table; `--check`
+  says whether it is stale.
+- `lantern_probe.py` - plays every layout in the ROM: dealt and on screen,
+  every torch lit with the Lantern or every web and cloud cleared with the
+  jar (`--lantern`: webs burnt), won, waves still standing after the win,
+  prize taken, site DONE. `--kind`, `--sites A-B`, `--max N`, `--diff`,
+  `--snap DIR`.
+- `hazard_probe.py` - what each roster enemy does to the player: status
+  flags (captured, burning, frozen, held), the slowest walking speed, hits
+  and their types. Three of each round a player in the quiet dojo;
+  `--swing` makes the player strike. Built the torch and cleanup rooms'
+  hazard list.
 - `lantern_gust_spike.py` - the engine primitives the lantern and gust-jar
   rooms would be built from, played in a cave site: a torch tile set and
   lit by the swung Lantern, put out again, the room darkened dim and black,

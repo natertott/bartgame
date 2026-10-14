@@ -66,6 +66,19 @@ MAX_CLOUDS = 2                             # each cloud zMallocs its own heap
 TORCH_COUNTS = ((3, 4), (5, 8))            # a small and a large layout per style
 DEBRIS_COUNTS = ((6, 9), (10, 16))
 TRIES = 60
+# Sites whose ? room never gets past its first frame, whatever it deals:
+# measured by lantern_probe.py at the North Hyrule Field fairy fountain
+# tree (47) and the Minish crack by the Wind Ruins (65). The site's event
+# runs once, what it deals is gone the next frame, and the dispatcher never
+# reaches the event again; the plain wave room spawns no enemies there
+# either. A known defect, not this kind's; no layout is built there until
+# it is fixed.
+BROKEN_SITES = {47, 65}
+# No cleanup room where the jar cannot be worked: in the barrel Minish
+# house (99) the player stood on a web's stand tile goes into
+# PLAYER_CLIMB (the room's act tiles read plain floor there) and the jar
+# does nothing (lantern_probe.py).
+NO_CLEANUP_SITES = {99}
 KEEP_CLEAR = 2                             # tiles from the arrival kept empty
 
 
@@ -90,6 +103,15 @@ def candidates(floor):
     return sorted(out)
 
 
+def standable(floor, t):
+    """Plain floor the player can stand on and use an item from. Open but
+    not ground is a ladder or the like: measured in a Minish house, a web's
+    stand tile on the ladder put the player in PLAYER_CLIMB, where the jar
+    does nothing."""
+    x, y = t
+    return t in floor.open and floor.r['act'][y][x] in GROUND
+
+
 def spot_tile(floor):
     return (floor.r['spot'][0] // 16, floor.r['spot'][1] // 16)
 
@@ -105,7 +127,8 @@ def torch_ok(floor, torches):
     if not keeps_connected(floor, blocked, extra_keys=spot_keys(floor)):
         return False
     main = flood(floor.comp - blocked, floor.start)
-    return all(any((t[0] + dx, t[1] + dy) in main for dx, dy in DIRS) for t in torches)
+    return all(any((t[0] + dx, t[1] + dy) in main and standable(floor, (t[0] + dx, t[1] + dy)) for dx, dy in DIRS)
+               for t in torches)
 
 
 def pick_spread(cands, n, rng, dist_ok):
@@ -193,7 +216,9 @@ def clear_order(floor, webs):
     order = []
     while left:
         reach = flood(floor.comp - set(left), floor.start)
-        ready = [w for w, d in sorted(left.items()) if stand_of(w, d) in reach and pull_of(w, d) in reach]
+        ready = [w for w, d in sorted(left.items())
+                 if stand_of(w, d) in reach and pull_of(w, d) in reach
+                 and standable(floor, stand_of(w, d)) and standable(floor, pull_of(w, d))]
         if not ready:
             return None
         for w in ready:
@@ -209,15 +234,24 @@ def web_types(floor, t, rng, wall_first):
     out = []
     for d in range(4):
         s = stand_of(t, d)
-        if s not in floor.open or pull_of(t, d) not in floor.open:
+        if not standable(floor, s) or not standable(floor, pull_of(t, d)):
             continue
         behind = (t[0] + DIRS[d][0], t[1] + DIRS[d][1])
         out.append((0 if (wall_first and behind not in floor.open) else 1, rng.random(), d))
     return [d for _, _, d in sorted(out)]
 
 
+def cloud_approach(c):
+    """The tiles a dust cloud is gusted from: the jar takes it with the
+    player 23 to 36 px straight below its centre (measured; at 16 px or
+    44 px it never came), so the probe stands at 28 px, in the second
+    tile down, and walks there through the first."""
+    return [(c[0], c[1] + 1), (c[0], c[1] + 2)]
+
+
 def debris_layouts(floor, rng):
     cands = candidates(floor)
+    reach_all = flood(floor.comp, floor.start)
     room = len(floor.comp)
     out = []
     for style in (SCATTER, WALLS):
@@ -236,14 +270,18 @@ def debris_layouts(floor, rng):
                     for c in pool:
                         if len(clouds) >= min(MAX_CLOUDS, rng.randint(0, MAX_CLOUDS)):
                             break
-                        # a cloud spreads over its neighbours: open ground all round
-                        if walled(floor, c) == 0 and all(abs(c[0] - g[0]) + abs(c[1] - g[1]) >= 4 for g in clouds):
+                        # a cloud spreads over its neighbours: open ground all
+                        # round, and the two tiles below it walkable from the
+                        # door (the jar takes it from 23 to 36 px below)
+                        if walled(floor, c) == 0 and all(abs(c[0] - g[0]) + abs(c[1] - g[1]) >= 4 for g in clouds) \
+                                and all(a in reach_all and standable(floor, a) for a in cloud_approach(c)):
                             clouds.append(c)
                 webs = {}
                 for c in pool:
                     if len(webs) + len(clouds) >= n:
                         break
-                    if c in clouds or any(abs(c[0] - g[0]) <= 1 and abs(c[1] - g[1]) <= 1 for g in clouds):
+                    if c in clouds or any(abs(c[0] - g[0]) <= 1 and abs(c[1] - g[1]) <= 1 for g in clouds) \
+                            or any(c in cloud_approach(g) for g in clouds):
                         continue
                     if any(abs(c[0] - w[0]) + abs(c[1] - w[1]) < 2 for w in webs):
                         continue
@@ -276,12 +314,15 @@ def generate(seed):
     layouts = []
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         site = int(key.split(':')[1])
+        if site in BROKEN_SITES:
+            continue
         floor = Floor(rooms[key])
         rng = random.Random('%d:%s' % (seed, key))
         got = []
         if site in torch_sites:
             got += torch_layouts(floor, rng)
-        got += debris_layouts(floor, rng)
+        if site not in NO_CLEANUP_SITES:
+            got += debris_layouts(floor, rng)
         for g in got:
             g['site'] = site
             g['room'] = rooms[key]['room']
@@ -350,6 +391,11 @@ def verify():
                 bad.append('layout %d: the webs wall the room' % n)
             if clear_order(floor, webs) is None:
                 bad.append('layout %d: no clearing order' % n)
+            reach_all = flood(floor.comp, floor.start)
+            for c, w in zip(cells, h['what']):
+                if w == CLOUD and any(a not in reach_all or a in webs or not standable(floor, a)
+                                      for a in cloud_approach(c)):
+                    bad.append('layout %d: cloud (%d,%d) cannot be approached from below' % (n, c[0], c[1]))
     kinds = collections.Counter(('torches', 'cleanup')[h['kind']] for h in header)
     sites = {k: len({h['site'] for h in header if h['kind'] == i}) for i, k in enumerate(('torches', 'cleanup'))}
     print('%d layouts %s over sites %s: %d problems' % (len(header), dict(kinds), sites, len(bad)))

@@ -370,6 +370,19 @@ so nobody re-invents them:
   persist: a palette rule that refused every kind made each frame pay a
   full deal and took Hyrule Town to 15 fps with nothing on screen.
   `QuickStartSpawnEnemyGroupAtDifficulty` now refuses up front.
+- **A tile edit made from `QuickStartUpdate` never reaches the screen by
+  itself in a room that does not scroll.** The update runs after the
+  frame's `UpdateScrollVram`, and `WaitForNextFrame` uploads the stale BG
+  buffers and clears `gUpdateVisibleTiles`. Raise the flag and call
+  `UpdateScrollVram()` at once, as `QuickStartPaintTorch` and
+  `QuickStartPaintChestTile` now do.
+- **A tileset can list a tile type and draw nothing for it.** The Minish
+  houses list the torch (117) and their character data there is blank. Test
+  the screen, not `tileIndices` (`lantern_gust_survey.py --draw`).
+- **The Gust Jar needs room to work.** A web comes away only as the player
+  is pulled back from it; pressed right against it, or with a wall or
+  another web behind, the jar latches and lets go. A dust cloud comes only
+  from 23 to 36 px straight below it.
 - **The kinstone menu loads its art over OBJ tiles 0x40-0x2CF** (GFX slots
   up to 24). Harmless: `RestoreGameTask` re-uploads every loaded slot on
   exit. Measured while chasing the fuser report; ruled out.
@@ -416,6 +429,11 @@ so nobody re-invents them:
   face in palette 0) fits the report, and the palette table no longer
   fills. A look at a fusion in South Hyrule Field confirms it.
 
+- **Two ? room sites run their event one frame and stop**, whatever they
+  deal: the North Hyrule Field fairy fountain tree (47) and the Wind Ruins
+  Minish crack (65). The wave room spawns no enemies there either. The
+  torch and cleanup rooms skip both. Roadmap entry "Two ? room sites run
+  their event one frame".
 - **Trilby boss reaching the southwest** - fixed in code, never witnessed.
 - **8 rooms / 18 content sites never reachable** in any simulated run.
 - **Royal Valley at 7% reachable, 0.2% of requirements** - honest pricing,

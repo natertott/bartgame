@@ -43,6 +43,7 @@ import scenario as S
 import parse_tables as P
 from block_probe import room_flag, bank12, origin, frame, run, dismiss, settle, MSG
 from block_puzzles import Floor, flood, DIRS, ROOMS
+from lantern_rooms import standable
 
 LAYOUTS = os.path.join(P.ROOT, 'build', 'lantern_layouts.json')
 SITE_FLAG_BASE = 64
@@ -92,7 +93,7 @@ def stand_tiles(floor, t, blocked):
     main = flood(floor.comp - blocked, floor.start)
     for d, (dx, dy) in enumerate(DIRS):
         s = (t[0] - dx, t[1] - dy)
-        if s in main:
+        if s in main and standable(floor, s):
             yield s, d
 
 
@@ -145,6 +146,13 @@ def solve_cleanup(c, floor, lay, lantern):
             if c.memory.u8[MSG]:
                 dismiss(c)
             put(c, s[0], s[1], d)
+            # A few pixels back from the stand tile's centre: pressed right
+            # up against a web the jar latches it and lets go (measured at
+            # the Crenel mushroom cave: 16 px from the web failed, 22 px
+            # tore it off).
+            emu.w16(c, PLAYER + 0x2e, r16(c, PLAYER + 0x2e) - 6 * DIRS[d][0])
+            emu.w16(c, PLAYER + 0x32, r16(c, PLAYER + 0x32) - 6 * DIRS[d][1])
+            run(c, 1)
             if lantern:
                 press(c, c.KEY_B, 3, 40)
                 continue
@@ -164,7 +172,9 @@ def solve_cleanup(c, floor, lay, lantern):
         for _ in range(3):
             if t not in debris(c)[1]:
                 break
-            put(c, t[0], t[1] + 2, 0)
+            put(c, t[0], t[1], 0)   # then 28 px below its centre: the jar's reach
+            emu.w16(c, PLAYER + 0x32, origin(c)[1] + t[1] * 16 + 8 + 28)
+            run(c, 2)
             c.set_keys(c.KEY_B)
             for _ in range(300):
                 c.memory.u8[PLAYER + 0x14] = 0
@@ -211,19 +221,27 @@ def probe(rom, lay, nth, diff, lantern, snapdir, tag):
         bad = [t for t in lay['cells'] if tile_type(c, *t)[0] != 0x75]
         if bad:
             return 'DEALT WRONG: no torch at %s' % bad[:4], c
-        idx = tile_type(c, *lay['cells'][0])[1]
-        buf = {r16(c, BG1BUF + a) & 0xffff for a in range(0, 0x900, 2)}
-        sub0 = r16(c, MAP[1] + 0x7004 + 2 * idx * 4) & 0xffff
-        if sub0 not in buf:
-            return 'DEALT UNSEEN: the torch is not in the BG buffer', c
+        # The BG buffer holds the screen's window only: test a torch the
+        # camera is looking at (a scrolling room may have none in view).
+        ox, oy = origin(c)
+        camx, camy = r16(c, emu.ROOM_CONTROLS + 0x0a) - ox, r16(c, emu.ROOM_CONTROLS + 0x0c) - oy
+        seen = [t for t in lay['cells'] if camx <= t[0] * 16 and t[0] * 16 + 16 <= camx + 240
+                and camy <= t[1] * 16 and t[1] * 16 + 16 <= camy + 160]
+        if seen:
+            idx = tile_type(c, *seen[0])[1]
+            buf = {r16(c, BG1BUF + a) & 0xffff for a in range(0, 0x900, 2)}
+            sub0 = r16(c, MAP[1] + 0x7004 + 2 * idx * 4) & 0xffff
+            if sub0 not in buf:
+                return 'DEALT UNSEEN: the torch is not in the BG buffer', c
         notes.append('light %#x' % r16(c, LIGHT))
         why = solve_torches(c, floor, lay)
     else:
         webs, clouds = debris(c)
         want_w = {tuple(t) for t, w in zip(lay['cells'], lay['what']) if w != CLOUD}
         want_c = {tuple(t) for t, w in zip(lay['cells'], lay['what']) if w == CLOUD}
-        if webs != want_w or clouds != want_c:
-            return 'DEALT WRONG webs %s clouds %s' % (sorted(webs ^ want_w)[:4], sorted(clouds ^ want_c)[:4]), c
+        # The room's own vanilla webs (the Deepwood Shrine's) may stand too.
+        if not want_w <= webs or clouds != want_c:
+            return 'DEALT WRONG missing webs %s clouds %s' % (sorted(want_w - webs)[:4], sorted(clouds ^ want_c)[:4]), c
         why = solve_cleanup(c, floor, lay, lantern)
     seen_enemies = len(ours(c))
     if why:

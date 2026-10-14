@@ -18994,7 +18994,11 @@ static s32 QuickStartCleanupLeft(void) {
         if (!QuickStartEntityInCurrentRoom(e)) {
             continue;
         }
-        if ((e->kind == PROJECTILE && e->id == SPIDER_WEB) || (e->kind == ENEMY && e->id == DUST && e->type == 0)) {
+        // Our webs only (flag word QS_LANTERN_NO_FLAG): the Deepwood
+        // Shrine's entrance hangs webs of its own, and the room is clean
+        // when what it dealt is gone.
+        if ((e->kind == PROJECTILE && e->id == SPIDER_WEB && *(u16*)((u8*)e + 0x86) == QS_LANTERN_NO_FLAG) ||
+            (e->kind == ENEMY && e->id == DUST && e->type == 0)) {
             n++;
         }
     }

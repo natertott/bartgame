@@ -1271,27 +1271,77 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
-### Lantern and Gust Jar ? rooms: investigated (Oct 2026)
+### Two ? room sites run their event one frame (Oct 2026)
+
+Found by `lantern_probe.py` at the North Hyrule Field fairy fountain tree
+(site 47, `TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN`) and the
+Minish crack by the Wind Ruins (site 65, `MINISH_CRACKS_RUINS_ENTRANCE`).
+The site's event runs on the first frame of a visit: its deal flag is
+set, and what it dealt is gone the next frame. After that the dispatcher
+never reaches the event again. Calling `QuickStartSetupEventContent`
+directly from the harness works (it dealt six webs that stayed), and
+`QuickStartSetupContentSite(47)` called directly does nothing, so the
+early exit is inside the dispatcher or before it. Not the new kinds'
+fault: the plain wave room spawns no enemies at either site. The tree's
+containment comment says its event "moved down the staircase into the
+cave", yet its site row is still in `sQuickStartRoomContentSites`; that is
+the first lead. The torch and cleanup generator builds nothing at either
+site (`BROKEN_SITES`) until it is fixed.
+
+### Lantern and Gust Jar ? rooms: built (Oct 2026)
 
 The user asked for two ? room events to give the Lantern and the Gust Jar
-work: light every torch (dark rooms, timed torches, enemies, placement
-variants) and clean a room of debris with the jar, both under endless
-waves. Research only, written up in `docs/QUICKSTART_LANTERN_GUST_EVENTS.md`
-with the design, the plan and five open questions.
+work, both under endless waves. Built: **light every torch** with the
+Lantern (`QS_EVENT_TORCHES`), and **clean the room** of spider webs and
+dust clouds with the Gust Jar (`QS_EVENT_CLEANUP`). Full record:
+`docs/QUICKSTART_LANTERN_GUST_EVENTS.md`.
 
-Measured (`lantern_gust_spike.py` 12/12, `lantern_gust_survey.py`):
+The user's answers, as built:
 
-- A torch is a tile: 117 unlit, 118 lit (`tiles.h` labels them one off).
-  The swung Lantern lights it on its own. Vanilla's timed torch,
-  `LIGHT_LEVEL_SET_MANAGER` type 3, already does burn-out-and-puff.
-- 72 of 119 sites can draw a torch; houses, trees and dojos cannot.
-- Darkness is one dial (0x100, 0x80, 0x00), and each lit torch can add a
-  share of light.
-- Spider webs (own sprite, four orientations, one-sided blocking) and Hyrule
-  Town's dust cloud (an enemy, once the town flag is cleared) both draw in a
-  cave and the jar clears both. Mount Crenel's dust is tied to its tileset;
-  none of the dust hurts on touch.
-- The survive room's spawner already gives endless pressure.
+- Dealt whatever the player holds, "as a reason to go find it". Half the
+  win chain's EVENT steps at a site with a layout force one of the two
+  there (`chain_detail` 0x80 + the kind).
+- The Lantern burns webs, so it can finish a cleanup room. Without the
+  Gust Jar no dust cloud is dealt.
+- The Mount Crenel debris is `REMOVABLE_DUST`; standing in it did no
+  damage. Not used (three outdoor sites only).
+- Torch rooms only where a torch draws. The rest are left out, with a note.
+- Waves refill below three live enemies, through the win, until the prize
+  is taken.
+
+What it is:
+
+| part | detail |
+|---|---|
+| Roll | one in six each, at sites with a layout; 16.2% of ? room rolls over 300 simulated seeds (torches 6.2%, cleanup 10.0%) |
+| Layouts | `lantern_rooms.py`: 479, proven offline. Torches at 45 sites (spread, cluster, hidden), cleanup at 76 (scatter, walls) |
+| Darkness | 0x100 to pitch black, darker with difficulty, never past vanilla's dim without a Lantern; each lit torch gives back its share |
+| Timed torches | vanilla's `LIGHT_LEVEL_SET_MANAGER` type 3: burn out and puff unless all are lit at once |
+| Waves | half hazards, half pursuers; an elite now and then from enemy difficulty 5 |
+| Hazards | measured by `hazard_probe.py`: Beetle (slows), blue ChuChu (shocks a sword), Ghini and Like Like (hold), Fire Wizzrobe (burns), Ice Wizzrobe (freezes) |
+| Fallback | a room that could not take its layout deals the item drop |
+
+Found on the way:
+
+- **Tile edits made by the ? room code never reached the screen in a room
+  that does not scroll.** The code runs after the frame's
+  `UpdateScrollVram`, and the next frame uploads the stale buffers. The
+  torch painter and the chest painter now call `UpdateScrollVram` at once.
+- **A tileset can list a tile and draw nothing.** The Minish houses list the
+  torch. `lantern_gust_survey.py --draw` checks the screen: 59 of 119 sites
+  draw one.
+- **The jar needs room to pull.** A web comes away only as the player is
+  pulled back, so its stand tile and the tile behind must be plain floor,
+  and the player must not be pressed against it. A dust cloud comes only
+  with the player 23 to 36 px below its centre.
+
+Measured: `lantern_rooms.py --verify` 479 layouts, 0 problems.
+`lantern_probe.py` played every layout in the ROM to DONE (dealt, seen,
+lit or cleared, won, waves standing after the win, prize taken): RESULT_LINE.
+At difficulty 12 a black room rose from light 0x0 to 0xff as its torches
+were lit. A CHAIN scenario with detail 0x8a dealt torches at its site, 0x8b
+webs, 0 the site's own roll. `site_roll_validate.py` 833/833.
+`lantern_gust_spike.py` 12/12.
 
 ### Hyrule Town: more enemies, fusers in the square (Oct 2026)
 
