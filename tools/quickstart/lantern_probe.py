@@ -155,11 +155,11 @@ def solve_cleanup(c, floor, lay, lantern):
                 if c.memory.u8[EQUIPPED + 1] == P.ITEMS['ITEM_LANTERN_ON']:
                     press(c, c.KEY_B, 3, 12)
                 put(c, s[0], s[1], d)
-                # A step into the stand tile, towards the web: from its
-                # centre the burst fell short of a web below the player
-                # (measured: 0 px stayed, 4 px and 8 px burnt it).
-                emu.w16(c, PLAYER + 0x2e, r16(c, PLAYER + 0x2e) + 4 * DIRS[d][0])
-                emu.w16(c, PLAYER + 0x32, r16(c, PLAYER + 0x32) + 4 * DIRS[d][1])
+                # Half a step into the stand tile, towards the web: from its
+                # centre the burst fell short (measured: a web below the
+                # player burnt from 4 px on, one above only from 8 px).
+                emu.w16(c, PLAYER + 0x2e, r16(c, PLAYER + 0x2e) + 8 * DIRS[d][0])
+                emu.w16(c, PLAYER + 0x32, r16(c, PLAYER + 0x32) + 8 * DIRS[d][1])
                 c.memory.u8[PLAYER + 0x14] = d * 2
                 press(c, c.KEY_B, 3, 4)
                 for _ in range(130):
