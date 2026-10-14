@@ -141,6 +141,8 @@ The proofs:
 |---|---|---|
 | `lantern_rooms.py --verify` | every shipped layout re-proven | 466 layouts, 0 problems |
 | `lantern_probe.py` | every layout played in the ROM: dealt, seen, solved, won, waves after the win, prize taken, site DONE | 466/466 |
+| `lantern_probe.py --lantern --max 1` | one cloudless cleanup layout per site, every web burnt with the Lantern alone | 56/56 |
+| `block_probe.py --contents 1` | the chest painter's refresh change: block puzzles still solve | 6/6 |
 | `lantern_gust_survey.py --draw` | which sites draw a torch | 59 of 119 |
 | `hazard_probe.py` | what each roster enemy does to the player | table above |
 | `lantern_gust_spike.py` | the engine primitives | 12/12 |

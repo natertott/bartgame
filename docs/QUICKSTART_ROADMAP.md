@@ -1340,7 +1340,9 @@ Measured: `lantern_rooms.py --verify` 466 layouts, 0 problems.
 lit or cleared, won, waves standing after the win, prize taken): 466/466.
 The 234 torch layouts passed on the full sweep before the last cleanup
 change, which left them byte for byte the same; the 232 cleanup layouts
-passed on the final build.
+passed on the final build. With the Lantern alone (no Gust Jar, so no
+clouds), one cleanup layout per site: 56/56. `block_probe.py` 6/6 after
+the chest painter's refresh change.
 At difficulty 12 a black room rose from light 0x0 to 0xff as its torches
 were lit. A CHAIN scenario with detail 0x8a dealt torches at its site, 0x8b
 webs, 0 the site's own roll. `site_roll_validate.py` 833/833.
