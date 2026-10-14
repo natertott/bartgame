@@ -1271,6 +1271,28 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Lantern and Gust Jar ? rooms: investigated (Oct 2026)
+
+The user asked for two ? room events to give the Lantern and the Gust Jar
+work: light every torch (dark rooms, timed torches, enemies, placement
+variants) and clean a room of debris with the jar, both under endless
+waves. Research only, written up in `docs/QUICKSTART_LANTERN_GUST_EVENTS.md`
+with the design, the plan and five open questions.
+
+Measured (`lantern_gust_spike.py` 12/12, `lantern_gust_survey.py`):
+
+- A torch is a tile: 117 unlit, 118 lit (`tiles.h` labels them one off).
+  The swung Lantern lights it on its own. Vanilla's timed torch,
+  `LIGHT_LEVEL_SET_MANAGER` type 3, already does burn-out-and-puff.
+- 72 of 119 sites can draw a torch; houses, trees and dojos cannot.
+- Darkness is one dial (0x100, 0x80, 0x00), and each lit torch can add a
+  share of light.
+- Spider webs (own sprite, four orientations, one-sided blocking) and Hyrule
+  Town's dust cloud (an enemy, once the town flag is cleared) both draw in a
+  cave and the jar clears both. Mount Crenel's dust is tied to its tileset;
+  none of the dust hurts on touch.
+- The survive room's spawner already gives endless pressure.
+
 ### Hyrule Town: more enemies, fusers in the square (Oct 2026)
 
 The user: "Hyrule Town is too empty. Can we add significantly more enemies

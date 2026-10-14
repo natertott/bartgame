@@ -247,6 +247,14 @@
   `--every` frames (`--all`: every enemy at once); `--no-collect` leaves
   the drops on the floor. `--row` picks the region (2 = South Hyrule Field,
   19 = Hyrule Town).
+- `lantern_gust_survey.py` - every ? room site's tileset: can it draw a
+  torch (tile types 117 unlit, 118 lit, on either layer) and Mount
+  Crenel's dust tiles. 72 of 119 can draw a torch.
+- `lantern_gust_spike.py` - the engine primitives the lantern and gust-jar
+  rooms would be built from, played in a cave site: a torch tile set and
+  lit by the swung Lantern, put out again, the room darkened dim and black,
+  a torch's light share, a spider web pulled by the jar and burnt by the
+  lantern, Hyrule Town's dust cloud pulled by the jar. 12/12.
 - `sim_study.py` - the simulation study: plays hundreds of thousands of
   runs per cohort over four processes and writes
   `docs/QUICKSTART_SIM_STUDY.md` and `docs/sim_study/`: rooms reachable and

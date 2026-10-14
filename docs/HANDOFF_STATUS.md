@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Lantern and Gust Jar ? rooms investigated, not built: torches are tiles 117/118 lit by the swung Lantern, vanilla already has timed torches, 72 of 119 sites can draw one; webs and the town's dust cloud draw anywhere and the jar clears both; design, plan and five questions in `docs/QUICKSTART_LANTERN_GUST_EVENTS.md` | "Lantern and Gust Jar ? rooms: investigated" |
 | Hyrule Town: the wave ceiling from 19 to 28 (the town was sized in the wrong unit), and a fuser spot row so the four fields' fusions travel into the square; town puzzles re-verified 1,528/1,528 | "Hyrule Town: more enemies, fusers in the square" |
 | South Hyrule Field's frozen deaths and fuser colours traced to the entity table (71/72) and the palette table (all nine held). Fixed with an entity reserve, projectiles in the wave budget, a palette reserve that counts pending kinds, a floor drop cap and a death-path eviction; peak 56-60 entities of 72 (was up to 71), no palette-full frame, no lost death. The slowdown is cast-dependent (16 staged Ropes: 34 fps; Keese: 52), measured, not fixed yet. `shf_probe.py` (new) | "South Hyrule Field: frozen deaths, fuser colours, slowdown" |
 | Sword variants as one table: the Rusted Blade's HUD and menu icon (was a lantern), menu name and swing tint fixed; adding a variant is one row. `sword_variant_probe.py` 3/3 | "Sword variants: one table, every draw" |
@@ -98,6 +99,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 ## Outstanding
 
 ### Needs the user, not an agent
+
+- **Answer the five questions** at the end of
+  `docs/QUICKSTART_LANTERN_GUST_EVENTS.md` (item gating, webs and the
+  lantern, which Crenel debris hurts, the sites with no torch art, how the
+  endless waves feel) before the torch and cleanup rooms are built.
 
 - **Play South Hyrule Field and fuse there.** Say whether enemies still
   freeze on death, whether a fuser's colours look wrong during or after a
