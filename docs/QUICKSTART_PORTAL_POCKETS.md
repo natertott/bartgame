@@ -324,6 +324,16 @@ Roughly the size of the block puzzle batch.
 | 3. Chain | The portal pair roll beside the escalation pair; the portal edge in `QuickStartReachCompute`; the pocket-bound payout in `QuickStartDrawItem` with the patience fallback; the chain hint and the compass marker for both steps. | `chain_roll_validate.py`, a chain-end probe forcing the pair |
 | 4. Simulator and docs | Portal edges and the pair in `sim.py`; the study re-run to show the pockets' share rising; roadmap, handoff. | `site_roll_validate.py`, `sim_study.py` |
 
+## The user's answers so far
+
+1. The Ocarina stays the way home from any pocket.
+2. The failure order is right: everything retries, the Ocarina, portal A
+   stays lit, and the patience rule moves the item after three prizes won
+   elsewhere.
+3. At most one portal pair per run, in one run in three.
+4. Portal A lights when its room's event is cleared.
+5. Waiting on the Veil Falls and Crenel correction above.
+
 ## Open questions for the user
 
 1. **The Ocarina.** It means no overworld pocket is ever a true trap: the
