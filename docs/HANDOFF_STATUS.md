@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Portal ? rooms researched, not built: the hub's warp points can send the player anywhere; the Ocarina already makes every overworld pocket escapable; pockets, edge cases, scope and five questions in `docs/QUICKSTART_PORTAL_POCKETS.md` | "Portal ? rooms into unreachable pockets: researched" |
 | Torch and cleanup ? rooms built: light every torch with the Lantern (dark rooms, timed torches), or clear webs and dust with the Gust Jar (the Lantern burns webs); endless hazard waves through the win; one roll in six each; half the chain's EVENT steps at a site with a layout force one. 466 proven layouts, every one played to DONE in the ROM. Also fixed: tile edits from the ? room code never drew in rooms that do not scroll (chests too) | "Lantern and Gust Jar ? rooms: built" |
 | Hyrule Town: the wave ceiling from 19 to 28 (the town was sized in the wrong unit), and a fuser spot row so the four fields' fusions travel into the square; town puzzles re-verified 1,528/1,528 | "Hyrule Town: more enemies, fusers in the square" |
 | South Hyrule Field's frozen deaths and fuser colours traced to the entity table (71/72) and the palette table (all nine held). Fixed with an entity reserve, projectiles in the wave budget, a palette reserve that counts pending kinds, a floor drop cap and a death-path eviction; peak 56-60 entities of 72 (was up to 71), no palette-full frame, no lost death. The slowdown is cast-dependent (16 staged Ropes: 34 fps; Keese: 52), measured, not fixed yet. `shf_probe.py` (new) | "South Hyrule Field: frozen deaths, fuser colours, slowdown" |
@@ -99,6 +100,11 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 ## Outstanding
 
 ### Needs the user, not an agent
+
+- **Answer the five questions** at the end of
+  `docs/QUICKSTART_PORTAL_POCKETS.md` (the Ocarina as the safety valve,
+  the failure order, how often, how portal A lights, which pockets first)
+  before the portal pairs are built.
 
 - **Play a torch room and a cleanup room.** Say how the darkness, the
   burn-out timer and the hazard waves feel, and whether one roll in six is

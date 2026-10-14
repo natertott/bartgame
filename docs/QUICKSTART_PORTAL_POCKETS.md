@@ -1,0 +1,321 @@
+# Portal ? rooms into unreachable pockets: research
+
+Research only (Oct 2026). Nothing is built. The plan and the open questions
+are at the end.
+
+## The request
+
+Two ? rooms linked by portals. Portal A stands somewhere the player can
+already reach. Portal B stands inside a pocket of the world the player
+cannot reach yet: the Wind Ruins without the Boots or the Cape, a pocket of
+Castor Wilds, the top of Mount Crenel or Veil Falls, the upper part of Royal
+Valley. The item that gets the player out of the pocket is won inside it: a
+wave clear, a boss, a ? room, a quest.
+
+Two variants:
+
+- **Two-way**: a portal at both ends. The player can go back the way they
+  came.
+- **One-way**: no portal at B. The player is held in the pocket until they
+  win their way out.
+
+The user's cautions: use it to add variety, never truly trap the player,
+and never let it replace items as the main way reach grows. The open
+question: what happens when the player fails to win the escape item?
+
+## What already exists
+
+### The portals are vanilla warp points
+
+The hub's two pads (`QuickStartHubPadsMonitor`, game.c) are vanilla
+`WARP_POINT` objects (`warpPoint.c`):
+
+| fact | where |
+|---|---|
+| A warp point carries a destination: area (`+0x7c`), room (`+0x7d`), packed tile (`+0x84`). Standing on it spins the player for 96 frames and then fires an ordinary room transition there. | `WarpPoint_Action5` |
+| It sleeps, drawn but inert, until its flag (`+0x86`) is set, then flashes on. The hub uses a room flag that the item selection sets, so the draft cannot be skipped. | `WarpPoint_Action1`, `QUICKSTART_HUB_PADS_FLAG` |
+| Type 2 fades through white instead of the default transition. | `WarpPoint_Action5` |
+| Nothing new is needed to send the player anywhere. Room and tile are data. | |
+
+What a portal does need is a pass through **containment**. Every region
+room and every ? room area cancels transitions to places the run has not
+blessed (`QuickStartEnforceContainment`, `...FieldRegionContainment`,
+`...LonLonContainment`). A portal transition needs one exception in each,
+the way the ladder links have `QuickStartIsCurrentLadderTarget`.
+
+### The Ocarina is already a universal way out
+
+The Ocarina of Wind is in the boot kit, and in this mode it always flies
+the player to the hub's crest in Cloud Tops: "Play the Ocarina anywhere to
+ride the wind home to this crest. Always." From the hub, the hole drops the
+player into the run's drop region, which is rolled once per run.
+
+The bird only comes in an area that allows warping (`CreateBird`:
+`AreaAllowsWarp`). Every overworld area does: Hyrule Field, Castor Wilds,
+the Wind Ruins, Mount Crenel, Royal Valley, Veil Falls, Lake Hylia, Minish
+Woods, Hyrule Town, Castle Garden and Cloud Tops. Caves, houses and dojos
+do not.
+
+Measured (a scratch probe, the shipped ROM): the Ocarina played at the
+Wind Ruins' region entrance flew the player to Cloud Tops; played inside
+the Castor Wilds Darknut cave, it did nothing.
+
+So **no overworld pocket can truly trap the player**. A one-way portal into
+the Wind Ruins is one-way only until the player plays the Ocarina, which
+costs them their place but never the run. The rule this gives the design:
+**a portal may only land where an item-free walk reaches an overworld
+room.** Then the Ocarina is always one walk away.
+
+The stripped-kit wave room can take the Ocarina away for one fight
+(`sQuickStartHandicapItems`), but it gives the kit back when the fight
+ends.
+
+### Death puts the player back where they arrived
+
+The game-over Continue respawns the player at the last entrance they came
+through (`UpdatePlayerRoomStatus`, `gSave.saved_status`). For a portal, that
+is the landing spot. Dying in a pocket is a retry, not an exit and not a
+loss.
+
+### What can be lost for good, and what cannot
+
+| content | after a failure |
+|---|---|
+| Region waves, the survive room, the gauntlet | Restart on re-entry until finished (roadmap: "Wave/survive rooms must restart on re-entry"). |
+| ? room events (blocks, torches, cleanup, puzzles, minibosses) | Re-dealt every visit until DONE. |
+| Region boss | Waits in its region until killed. |
+| The three timed quests (hunt, scavenger, stealth) | **Fail for good.** Out of time, the giver "is done with this run" (`QUICKSTART_*_FAILED`). |
+
+So the only content that can fail outright is the timed quests. A pocket's
+escape item must never depend on one.
+
+### The prize override that places a wanted item already exists
+
+`QuickStartDrawItem` is where every prize is drawn: ? rooms, region clears,
+quests, fairies. It already has two overrides for the win chain:
+
+- **Keyed item**: a door key the chain wants is paid by the next prize drawn
+  in the regions allowed to carry it (`sQuickStartKeyRegions`). If the
+  player keeps winning prizes elsewhere, the fourth prize pays it anywhere
+  (`QUICKSTART_CHAIN_KEY_PATIENCE` = 3, "a step that never ends" is the
+  thing it exists to stop).
+- **Escalation item**: a reach item the next step needs is paid by the very
+  next prize, anywhere.
+
+A region clear draws from `QS_CAT_ALL`, the one draw that includes key and
+reach items. So a pocket with a region row can pay its escape item from a
+wave clear, and one without can pay it from a ? room prize.
+
+A portal's escape item is a third flavour of the same override: **paid by
+the next prize won inside the pocket**, with the same patience rule as the
+safety net.
+
+### The reach graph already treats a portal as an edge
+
+The run's reach is a flood over 43 nodes (regions and their entrances)
+from the drop's node, along edges priced in items
+(`include/quickstart/reach.h`, mirrored in `sim.py`). A portal is one more
+edge: from portal A's node (at A's room cost) to B's node, free. A two-way
+portal adds the reverse edge. The chain places every step inside this
+flood, so a pocket becomes placeable the moment its portal is live, with no
+other change.
+
+### How rarely the pockets are visited today
+
+From `docs/QUICKSTART_SIM_STUDY.md` (share of all chain steps, every kind):
+
+| region | share of chain sends |
+|---|---|
+| Castor Wilds | 3.4% |
+| Royal Valley | 3.1% |
+| Veil Falls | 1.2% |
+| Wind Ruins | 0.22% |
+
+Two Wind Ruins rooms (`RUINS_BELOW_FORTRESS_ENTRANCE`, `RUINS_FORTRESS_ENTRANCE`)
+are reachable in no simulated run at all.
+
+## The pockets
+
+`tools/quickstart/portal_pockets.py` reads the reach graph and lists every
+node the mainland cannot walk to with the boot kit:
+- **entry**: what it costs to walk there;
+- **escape**: what it costs to walk back out;
+- **inside**: what the boot kit reaches inside it.
+
+A **trap** needs an item to leave. A **shortcut** needs one only to get in.
+Below the node level, single rooms can be pockets too: a ? room across
+Castor Wilds' swamp costs the Boots or the Cape from the region's start.
+
+Items in brackets are what the portal skips.
+
+| pocket | normally reached with | escape | inside | verdict |
+|---|---|---|---|---|
+| **Wind Ruins** (node WR) | [Boots or Cape, the statues gate, a Castor Wilds boulder] | **Boots or Cape** | Region rows 13 and 14: waves, a boss, quests, a region-clear draw. Its ? rooms need bombs or the Cape from inside. | **Best.** The user's own example. A trap with retryable content and a region clear to pay the item. |
+| **Veil Falls, the upper falls** (node VF) | [the Lantern and the Source of the Flow gate] | **Lantern**, plus the gold piece if this run sealed the gate | Region row 18. Caves need the Lantern or the Grip Ring. | **Very good.** A trap with a region row. Its escape is a single item only when the gate rolled open. |
+| **Castor Wilds, the far bank** (rooms) | [Boots or Cape across the swamp] | **Boots or Cape** | ? rooms: Darknut Hall (70) and its cave (69), and with fusions the Minish cracks (61-64). | **Good.** Land inside Darknut Hall. A trap with ? rooms but no region row. |
+| **Royal Valley, the graveyard** (rooms) | [the Graveyard Key gate] | **Graveyard Key** | ? rooms: the heart piece grave (55), Gina's grave (56); the crypt needs the Bracelets. | **Good, and spooky.** A trap if the gate stops the walk back down; needs a walk to confirm. The key-region rule must be lifted for it. |
+| **Lake Hylia, the ladder pocket** (node LH-LADDER) | [the Mole Mitts, digging from Minish Woods] | **Flippers** | ? rooms: the Mayor's cabin (88), free; Waveblade's dojo (103) with the Flippers or the Cape. | **Good.** A small trap with one free ? room. |
+| **Lake Hylia, the wind crest island** (node LH-CREST) | [Flippers and Mitts to the lake, then the crest] | **Ocarina only** | ? room: the Minish house (89). | **A novelty.** One room, and the only way out is the Ocarina. The natural one-way portal: no item to pay. |
+| **Mount Crenel, the summit** (node CREN) | [the Grip Ring] | free (walk down) | ? rooms in the caves, mostly behind bombs (the Grip Ring cave 75, the Hermit 77, Grayblade's dojo 79). | **Shortcut.** No trap; a portal straight into a summit cave is a fine one-way surprise. |
+| **Royal Valley** (node RV) | [Bracelets and bombs] | free | Region row 11; Dampe's house (53). | **Shortcut.** |
+| Splitblade's pocket (LLR@POCKET, VF@POCKET) | [the Cane of Pacci] | Ocarina only | The dojo (114, 115) needs the Flippers and a fusion. | Weak. Nothing to win inside with the boot kit. |
+| The rest (NHF@VF, VF@NHF, VF@LLR, LH-SW, TRIL@N, LLR@N, LLR@E...) | bombs, Pacci, Flippers and Mitts | free | Nothing of their own. | Not worth a portal. |
+
+The graph's costs run one way, from a region's start. A portal lands
+somewhere else, so every landing's real escape has to be **walked**. The
+Royal Valley graveyard is the clearest case: whether the gate stops the
+walk back down is not in the data.
+
+## Proposed design
+
+### A portal pair is a win-chain pair
+
+The chain already has two pairs (the keyed pair, the escalation pair). This
+adds a third:
+
+1. **Step k, EVENT at portal A**: a ? room inside the player's reach, with
+   a sleeping portal in it. Clearing the room's event lights the portal,
+   the warp point's own flag mechanism. The room may also pay its usual
+   prize. Ezlo: the portal leads somewhere the player cannot walk to yet.
+2. **Step k+1, ITEM, paid in the pocket**: the escape item, wanted the way
+   an escalation item is, but paid only by a prize won inside the pocket.
+   That covers a wave or boss clear for a pocket with a region row, and a
+   ? room for one without.
+
+After that the run goes on, and the escape item has grown its reach the
+normal way. That's what keeps items the main driver: the portal only
+moves where an item is won, never replaces it.
+
+### One-way and two-way
+
+- **Two-way**: a lit warp point at the landing, back to portal A. For
+  pockets whose content is ? rooms only (Castor Wilds' far bank, the Lake
+  Hylia ladder pocket), where a player who is not ready should be able to
+  step back.
+- **One-way**: no portal at the landing. For pockets with a region row (the
+  Wind Ruins, Veil Falls), where the content always retries. The Ocarina
+  is the way home, and portal A stays lit, so the player can come back.
+
+In both cases portal A stays lit for the rest of the run.
+
+### Keeping it a spice, not a crutch
+
+- At most one portal pair per run, rolled like the escalation pair (one
+  chance per step, about one run in three or four overall).
+- Only into a pocket outside the run's current reach, whose escape item the
+  player does not hold and the economy can pay.
+- Never into the run's own drop region (a Wind Ruins drop makes the ruins
+  home).
+- Landing spots chosen and walked by hand: a fixed, proven table, like the
+  block puzzles' layouts.
+
+## The failure question
+
+The case: the player is in the pocket, is meant to win the escape item,
+and doesn't.
+
+Measured above, the failure the user is worried about mostly cannot happen.
+Everything a pocket offers retries:
+- waves restart on re-entry;
+- ? rooms re-deal every visit;
+- death respawns the player at the landing.
+
+The only content that can be lost for good is the timed quests. So
+"failing" in a pocket means **not being strong enough yet**, not a door
+closing.
+
+The user's options, weighed:
+
+| option | verdict |
+|---|---|
+| Place the item somewhere else to win | **Yes, as the safety net only.** The keyed pair's patience rule already does this: after three prizes won outside the pocket, the next prize anywhere pays the item. A player who leaves and plays on still gets it; a player who stays gets it sooner. |
+| Give it to them automatically | **No.** It rewards failure, as the user said. |
+| Change the win condition | **No.** It touches the chain's finale and everything it hangs on, to solve a problem the patience rule already solves. |
+| Make failure impossible | **Mostly true already**, and the design keeps it so: the escape item never rides on a timed quest, and nothing in a pocket is spent by losing. |
+
+**Recommended, in order:**
+1. Pocket content always retries; timed quests never pay the escape item.
+2. The Ocarina is always a way home, from every landing: proven by a walk
+   per landing.
+3. Portal A stays lit, so the pocket can be re-entered.
+4. The patience rule moves the item after three prizes won elsewhere.
+
+That is fun on the good path (win your way out), forgiving on the bad one,
+and it never hands the item over for losing.
+
+## Edge cases
+
+1. **The landing is a cave, a house or a dojo.** The Ocarina does nothing
+   there. Rule: every landing has an item-free walk to an overworld room,
+   proven by a probe.
+2. **The escape item is two items.** Veil Falls wants the Lantern and the
+   Source of the Flow piece when the gate is sealed. Deal that pocket only
+   when one item escapes it this run, or pay both in turn, as the golden
+   statue set pays piece by piece.
+3. **The player already owns the escape item** by the time they reach the
+   portal. The pair becomes a shortcut; the ITEM step resolves at once,
+   like an owned keyed item.
+4. **The player gets the escape item elsewhere first** (the patience rule,
+   or a shop). The ITEM step is met; nothing else changes.
+5. **A Boots-or-Cape escape.** Wanted is whichever the player lacks. If
+   they own one, the pocket is not a trap and should not be dealt as one.
+6. **The pocket's own content needs the escape item** (the Wind Ruins'
+   cave needs the Cape). Pay from what the boot kit reaches inside: the
+   region rows. Pockets with nothing reachable inside are not dealt
+   (Splitblade's pocket).
+7. **Containment.** Each policing function needs the portal's own
+   transition as an exception, and only while the portal is lit.
+8. **The drop region is the pocket.** Then it is not a pocket; never dealt.
+9. **The key-region rule.** Door keys are kept out of the regions they open
+   ("the key must not drop inside the region where it's needed"). A
+   graveyard portal needs that rule lifted for its own key, inside its own
+   pocket.
+10. **Timed quests.** A hunt or stealth giver can stand in a pocket's
+    region row. Their prize must not count as the pocket's payout; if it
+    did, failing the quest would cost nothing anyway, but the rule keeps it
+    simple.
+11. **Two-way loops.** Walking back through A and out again must not re-deal
+    A's event or double-pay. A's DONE latch and the portal's lit flag are
+    separate.
+12. **Arriving mid-region.** The landing is a fresh region entry: the
+    intro hint, the wave loop, the GFX and entity reserves all start as on
+    a border crossing. Landing tiles are clear of hazards and of the wave
+    spawner's keep-clear ring.
+13. **Save and continue.** Continue respawns at the landing (death above).
+    The portal's lit state must live in the run's save, not in room flags.
+14. **The simulator** has to add the portal edge to its flood and mirror the
+    pair roll, or `chain_roll_validate.py` stops agreeing with the ROM.
+15. **The broken sites** (47, 65) are never a portal's A or B.
+
+## Implementation scope
+
+Roughly the size of the block puzzle batch.
+
+| phase | work | proof |
+|---|---|---|
+| 1. Landings | A table of landing spots (pocket, room, tile, one-way or two-way, escape item, payout source). For each, a walk: from the landing, with the boot kit, what is reached; the Ocarina works; the escape item is needed and enough. | `portal_pockets.py` (here), a new `portal_walk.py` probe |
+| 2. Portal room | A ? room kind (or a force on any kind) whose clear lights a warp point to the landing; the return pad for two-way; the containment exception; Ezlo's lines. | Probe: clear A, ride the portal, arrive, ride back |
+| 3. Chain | The portal pair roll beside the escalation pair; the portal edge in `QuickStartReachCompute`; the pocket-bound payout in `QuickStartDrawItem` with the patience fallback; the chain hint and the compass marker for both steps. | `chain_roll_validate.py`, a chain-end probe forcing the pair |
+| 4. Simulator and docs | Portal edges and the pair in `sim.py`; the study re-run to show the pockets' share rising; roadmap, handoff. | `site_roll_validate.py`, `sim_study.py` |
+
+## Open questions for the user
+
+1. **The Ocarina.** It means no overworld pocket is ever a true trap: the
+   Ocarina always flies home. Keep it as the safety valve (recommended), or
+   silence it inside a one-way pocket until the escape item is won?
+2. **Failure.** Is the recommended order right: everything retries, the
+   Ocarina, portal A stays lit, and the patience rule moves the item after
+   three prizes won elsewhere?
+3. **Frequency.** At most one portal pair per run, in about one run in three
+   or four. More, or less?
+4. **Portal A.** Lit by clearing the room's event (recommended), or open the
+   moment the player walks in?
+5. **Where first.** Recommended for the first batch:
+   - the Wind Ruins (one-way);
+   - Veil Falls (one-way, only when the gate rolled open);
+   - Castor Wilds' far bank, landing in Darknut Hall (two-way);
+   - the Lake Hylia ladder pocket (two-way).
+
+   Then the Royal Valley graveyard once its walk is done, and the wind
+   crest island and the Crenel summit as one-way surprises. Keep, cut or
+   reorder?

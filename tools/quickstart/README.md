@@ -263,6 +263,11 @@
   jar (`--lantern`: webs burnt), won, waves still standing after the win,
   prize taken, site DONE. `--kind`, `--sites A-B`, `--max N`, `--diff`,
   `--snap DIR`.
+- `portal_pockets.py` - the reach graph's pockets, for the portal ? room
+  research: every node the mainland cannot walk to with the boot kit, what
+  walking in costs, what walking back out costs (TRAP when it needs an
+  item, "ocarina only" when no item does), and the region rows and ? room
+  sites reachable inside. `--json OUT`.
 - `hazard_probe.py` - what each roster enemy does to the player: status
   flags (captured, burning, frozen, held), the slowest walking speed, hits
   and their types. Three of each round a player in the quiet dojo;

@@ -1271,6 +1271,36 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Portal ? rooms into unreachable pockets: researched (Oct 2026)
+
+The user asked for portal pairs: a ? room the player can reach sends them
+into a pocket they cannot walk to (the Wind Ruins, Castor Wilds' far bank,
+the top of Veil Falls or Mount Crenel, upper Royal Valley), and the item
+that gets them out is won inside it. Two-way and one-way variants; never a
+true trap; never a crutch in place of items. Research only, written up in
+`docs/QUICKSTART_PORTAL_POCKETS.md` with the design, the edge cases, the
+scope and five questions.
+
+Found:
+
+- The hub's pads are vanilla `WARP_POINT`s: any room and tile is data, and
+  they sleep until a flag lights them. A portal needs an exception in each
+  containment function, nothing else.
+- **The Ocarina is a universal way out.** It is in the boot kit and always
+  flies home, from any overworld area (measured from the Wind Ruins; it
+  does nothing in a cave). So no overworld pocket is ever a true trap, and
+  the one rule is that every landing walks to an overworld room.
+- Everything a pocket offers retries (waves, ? rooms; death respawns at the
+  landing). Only the three timed quests fail for good.
+- The prize override a portal needs already exists: the keyed pair's
+  region-bound payout with its patience rule (the fourth prize pays it
+  anywhere).
+- `portal_pockets.py` lists the reach graph's pockets. Best: the Wind Ruins
+  (escape: Boots or Cape; region rows to win it from), Veil Falls' upper
+  falls (Lantern), Castor Wilds' far bank (Boots or Cape; Darknut Hall),
+  the Lake Hylia ladder pocket (Flippers), the Royal Valley graveyard
+  (Graveyard Key). The Wind Ruins take 0.22% of all chain sends today.
+
 ### Two ? room sites run their event one frame (Oct 2026)
 
 Found by `lantern_probe.py` at the North Hyrule Field fairy fountain tree
