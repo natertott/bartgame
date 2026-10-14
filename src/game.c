@@ -14,6 +14,7 @@
 #include "fileselect.h"
 #include "main.h"
 #include "manager/diggingCaveEntranceManager.h"
+#include "manager/lightLevelSetManager.h"
 #include "message.h"
 #include "player.h"
 #include "room.h"
@@ -3443,13 +3444,18 @@ const u8* const gCustomStrings3[] = {
     [QUICKSTART_CONTENT_SITE_COUNT + 16] = (const u8*)"Rocks block the way to\nthat chest. Push them\nclear! The switch puts\nthem back.",
     [QUICKSTART_CONTENT_SITE_COUNT + 17] = (const u8*)"Rocks block that door.\nPush them clear! The\nswitch puts them back.",
     [QUICKSTART_CONTENT_SITE_COUNT + 18] = (const u8*)"Copy the gray shape.\nBlue rocks only slide\nsideways, red ones only\nup and down.",
+    // The torch and cleanup rooms (Oct 2026), QUICKSTART_LANTERN_TEXT + 0..2:
+    // torches, torches that burn out, and the cleanup.
+    [QUICKSTART_CONTENT_SITE_COUNT + 19] = (const u8*)"Light every torch with\nthe Lantern, and the\nprize is yours!",
+    [QUICKSTART_CONTENT_SITE_COUNT + 20] = (const u8*)"These torches burn out!\nLight them all before\nthe first one goes dark.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 21] = (const u8*)"What a mess! Clear the\nwebs and dust with the\nGust Jar. Fire burns\nwebs too!",
 };
 const u32 gCustomStringCount3 = ARRAY_COUNT(gCustomStrings3);
 // Every site has its line, no more and no fewer: a site added without one
 // would print the engine's placeholder for its trial. The three puzzle
 // lines follow them, then the courier's nine, Gregal's thanks, the carry
-// quest's two and the block puzzles' four.
-typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 19) ? 1 : -1];
+// quest's two, the block puzzles' four and the torch and cleanup rooms' three.
+typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 22) ? 1 : -1];
 
 // The pair bank is addressed arithmetically, so its shape is load-bearing:
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
@@ -11034,6 +11040,12 @@ enum {
     // for this site's room (QuickStartSetupBlocksContent). Like the
     // switch puzzle, only the site roll deals it; extra is a draw seed.
     QS_EVENT_BLOCKS,
+    // Values 10 and 11 (Oct 2026): light every torch with the Lantern, and
+    // clear the webs and dust with the Gust Jar (QuickStartSetupLanternContent).
+    // Only the site roll deals them, at sites the generator built a layout
+    // for; extra is the prize's draw seed.
+    QS_EVENT_TORCHES,
+    QS_EVENT_CLEANUP,
 };
 
 // B1: which kinds this save has earned (see sQuickStartUnlockRules). Lives
@@ -12320,6 +12332,11 @@ static bool32 QuickStartEnemyIsOurs(Entity* ent) {
     if (QuickStartIsBossId(ent->id) && ent->health == 0) {
         return FALSE;
     }
+    // The cleanup room's dust clouds are ENEMY entities that neither fight
+    // nor die to a sword: debris, not a body to count, cap or trim.
+    if (ent->id == DUST) {
+        return FALSE;
+    }
     return (ent->flags & ENT_PERSIST) || QuickStartEntityInCurrentRoom(ent);
 }
 
@@ -13445,22 +13462,96 @@ static void QuickStartPickPursuer(u8 difficulty, u8* outId, u8* outForm) {
     }
 }
 
+// The torch and cleanup rooms' endless waves (Oct 2026). The user asked
+// for enemies that slow the player, put a status on them (fire, ice,
+// electricity) or come after them. What each roster enemy actually does
+// to a player was measured, not read off the roster's colour themes
+// (tools/quickstart/hazard_probe.py: three of each round a player in the
+// quiet dojo for 600 frames, standing and swinging):
+//   BEETLE         clings on; the player walks at speed_modifier -240
+//   CHUCHU 2       the blue one: its charge hurts the sword that strikes
+//                  it (untyped hits only while swinging)
+//   GHINI          grabs and holds (CAPTURED)
+//   LIKE_LIKE      swallows (CAPTURED)
+//   WIZZROBE_FIRE  sets the player alight (BURNING)
+//   WIZZROBE_ICE   freezes the player solid (FROZEN, PLAYER_FROZEN)
+// The third column is the lowest enemy difficulty each is dealt at. Left
+// out: ENEMY_50 and the Moldworm also capture, but one placement is a
+// dozen or more entities; Spark shocks but hugs the walls and dies only
+// to the boomerang. The pursuit half is sQuickStartPursuers.
+static const u8 sQuickStartHazards[][3] = {
+    { BEETLE, 0, 0 },
+    { CHUCHU, 2, 1 },
+    { GHINI, 0, 2 },
+    { LIKE_LIKE, 0, 3 },
+    { WIZZROBE_FIRE, 0, 4 },
+    { WIZZROBE_ICE, 0, 5 },
+};
+#define QUICKSTART_HAZARD_COUNT ((s32)ARRAY_COUNT(sQuickStartHazards))
+#define QS_WAVE_ANY 0
+#define QS_WAVE_PURSUERS 1
+#define QS_WAVE_HAZARDS 2
+
+static bool32 QuickStartIsHazard(u8 id, u8 form, u8 difficulty) {
+    s32 i;
+    for (i = 0; i < QUICKSTART_HAZARD_COUNT; i++) {
+        if (sQuickStartHazards[i][0] == id && sQuickStartHazards[i][1] == form &&
+            sQuickStartHazards[i][2] <= difficulty) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// Half the draws a pursuer, half a hazard. A hazard is the ordinary
+// difficulty-scaled pick re-rolled against the list, as the pursuers are,
+// then a flat draw over the entries the difficulty allows (the Beetle is
+// always one).
+static void QuickStartPickHazard(u8 difficulty, u8* outId, u8* outForm) {
+    s32 tries, n = 0, pick;
+    if (Random() & 1) {
+        QuickStartPickPursuer(difficulty, outId, outForm);
+        return;
+    }
+    for (tries = 0; tries < 8; tries++) {
+        QuickStartPickEnemy(difficulty, outId, outForm);
+        if (QuickStartIsHazard(*outId, *outForm, difficulty)) {
+            return;
+        }
+    }
+    for (tries = 0; tries < QUICKSTART_HAZARD_COUNT; tries++) {
+        if (sQuickStartHazards[tries][2] <= difficulty) {
+            n++;
+        }
+    }
+    pick = (s32)(Random() & 0x7fff) % n;
+    for (tries = 0; tries < QUICKSTART_HAZARD_COUNT; tries++) {
+        if (sQuickStartHazards[tries][2] <= difficulty && pick-- == 0) {
+            *outId = sQuickStartHazards[tries][0];
+            *outForm = sQuickStartHazards[tries][1];
+            return;
+        }
+    }
+}
+
 // One roster draw with the wave room's guards: no Crow (four redraws, then
-// a Beetle), no Acro Bandit past its cap.
-static void QuickStartPickWaveEnemy(u8 difficulty, bool32 pursuersOnly, u8* outId, u8* outForm) {
+// a Beetle), no Acro Bandit past its cap. `mode` is QS_WAVE_*.
+static void QuickStartPickWaveDraw(u8 difficulty, u32 mode, u8* id, u8* form) {
+    if (mode == QS_WAVE_HAZARDS) {
+        QuickStartPickHazard(difficulty, id, form);
+    } else if (mode == QS_WAVE_PURSUERS) {
+        QuickStartPickPursuer(difficulty, id, form);
+    } else {
+        QuickStartPickEnemy(difficulty, id, form);
+    }
+}
+
+static void QuickStartPickWaveEnemy(u8 difficulty, u32 mode, u8* outId, u8* outForm) {
     s32 i;
     u8 id, form;
-    if (pursuersOnly) {
-        QuickStartPickPursuer(difficulty, &id, &form);
-    } else {
-        QuickStartPickEnemy(difficulty, &id, &form);
-    }
+    QuickStartPickWaveDraw(difficulty, mode, &id, &form);
     for (i = 0; i < 4 && id == CROW; i++) {
-        if (pursuersOnly) {
-            QuickStartPickPursuer(difficulty, &id, &form);
-        } else {
-            QuickStartPickEnemy(difficulty, &id, &form);
-        }
+        QuickStartPickWaveDraw(difficulty, mode, &id, &form);
     }
     if (id == CROW) {
         id = BEETLE;
@@ -13474,7 +13565,7 @@ static void QuickStartPickWaveEnemy(u8 difficulty, bool32 pursuersOnly, u8* outI
     *outForm = form;
 }
 
-static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, bool32 pursuersOnly) {
+static void QuickStartSpawnWave(s32 contentX, s32 contentY, u8 wave, u8 difficulty, u32 pursuersOnly) {
     u8 id, form;
     s32 i, count, kinds, k, placed = 0;
     s32 tiles, row;
@@ -16635,7 +16726,11 @@ static void QuickStartPaintChestTile(s32 localX, s32 localY) {
     // both corrected. button.c is the model: every visible tile edit in
     // this engine calls SetTileType AND SetTile.
     SetTile(layer->tileIndices[TILE_TYPE_116], pos, which);
+    // Copy now as well: see QuickStartPaintTorch. Without it a chest painted
+    // in a room that does not scroll only showed once something else asked
+    // for a refresh.
     gUpdateVisibleTiles = 1;
+    UpdateScrollVram();
 }
 
 // A chest row fits at tile (tx, ty) when the three chest tiles and the
@@ -18638,6 +18733,363 @@ static bool32 QuickStartSetupBlocksContent(s32 extra, s16 contentX, s16 contentY
     return QuickStartBlocksRun(index, content, flagBase, extra, FALSE, TRUE);
 }
 
+// --- The torch and cleanup ? rooms (Oct 2026) ------------------------------
+//
+// Two kinds asked for to give the Lantern and the Gust Jar real work
+// (docs/QUICKSTART_LANTERN_GUST_EVENTS.md):
+//
+//   TORCHES  unlit torches stand round the room; light them all with the
+//            Lantern and the prize drops. The room may be dark, from
+//            vanilla's dim to pitch black, and each lit torch gives back its
+//            share of the light; the torches may burn out on a timer, so
+//            the last must be lit before the first goes dark.
+//   CLEANUP  spider webs and dust clouds fill the room; clear them all with
+//            the Gust Jar (or burn the webs with the Lantern - the user:
+//            "the lantern can also solve the gust jar rooms").
+//
+// Both deal anyway, owned item or not: a room the player cannot finish yet
+// is a reason to go and find the item (the user's call). Without the Gust
+// Jar no dust cloud is dealt (the Lantern cannot clear one), and without
+// the Lantern the room is never darker than vanilla's dim.
+//
+// Both keep endless pressure: hazard waves (sQuickStartHazards and the
+// pursuers), refilled whenever fewer than three of ours are alive, as the
+// survive room does, through the win and until the prize is taken. Above
+// enemy difficulty 5 one refill in eight brings an elite (a Darknut or a
+// Ball and Chain soldier) when none is standing.
+//
+// The layouts are generated and proven offline per site
+// (tools/quickstart/lantern_rooms.py --verify): torches and webs are
+// solid, so every one keeps the room's doors, the prize spot and each
+// torch's lighting tile joined to the arrival, and the webs have a
+// clearing order from the side the jar takes them. Torches only stand at
+// sites whose tileset carries torch art (72 of 119; houses, tree hollows,
+// dojos and Great Fairy rooms cannot draw one and are left out for now).
+//
+// The torches are vanilla's: TILE_TYPE_117 painted on the floor, the
+// Lantern turns it to 118, and a LIGHT_LEVEL_SET_MANAGER per torch does
+// the rest - type 2 (permanent) or type 3 (timed: it burns field_0x36
+// seconds, then puffs out and takes its light back, unless the room's
+// "all lit" latch is set, which is this site's flag 7).
+typedef struct {
+    u8 site;
+    u8 kind;   // QS_LANTERN_TORCHES / QS_LANTERN_CLEANUP
+    u8 style;  // torches: spread, cluster, hidden; cleanup: scatter, walls
+    u8 count;
+    const u8* cells;  // count * (x, y, what): what is a web's type 0-3, or 4 a dust cloud
+} QuickStartLanternLayout;
+#include "quickstart/lantern_rooms.h"
+#define QUICKSTART_LANTERN_COUNT ((s32)ARRAY_COUNT(sQuickStartLanternLayouts))
+#define QS_LANTERN_TORCHES 0
+#define QS_LANTERN_CLEANUP 1
+#define QS_LANTERN_CLOUD 4
+#define QS_LANTERN_DEALT_FLAG 0  // flagBase + 0: the room is dealt this visit
+#define QS_LANTERN_WON_FLAG 1    // every torch lit, or every piece cleared
+#define QS_LANTERN_PAID_FLAG 2   // the prize is on the floor
+#define QS_LANTERN_CHECKED_FLAG 4  // the frame after the deal: did anything land?
+#define QS_LANTERN_FALLBACK_FLAG 5 // nothing could be dealt: the item drop instead (as NPC and FAIRY)
+#define QS_LANTERN_LATCH_FLAG 7  // all lit at once: the timed torches stay lit
+#define QS_LANTERN_NO_FLAG 0xC000  // a flag word CheckFlags reads as clear and SetFlag ignores
+#define QUICKSTART_LANTERN_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 19)  // gCustomStrings3: 3 lines
+#define QUICKSTART_LANTERN_REFILL_BELOW 3
+
+static s32 QuickStartLanternCountForSite(s32 site, u8 kind) {
+    s32 i, n = 0;
+    for (i = 0; i < QUICKSTART_LANTERN_COUNT; i++) {
+        if (sQuickStartLanternLayouts[i].site == site && sQuickStartLanternLayouts[i].kind == kind) {
+            n++;
+        }
+    }
+    return n;
+}
+
+// The run's layout for a site: over the site's layouts of the kind, from
+// the run seed. Below enemy difficulty 4 only the smaller layouts are
+// drawn (fewer torches, less debris) when the site has any. The testbed
+// forces one: scenario SITE on this site with scenario_c = the layout's
+// index among the site's layouts of the kind, plus one.
+static s32 QuickStartLanternPick(s32 site, u8 kind) {
+    s32 i, n = 0, small = 0, k, cap = 0;
+    u8 limit = (kind == QS_LANTERN_TORCHES) ? 4 : 9;
+    for (i = 0; i < QUICKSTART_LANTERN_COUNT; i++) {
+        if (sQuickStartLanternLayouts[i].site == site && sQuickStartLanternLayouts[i].kind == kind) {
+            n++;
+            if (sQuickStartLanternLayouts[i].count <= limit) {
+                small++;
+            }
+        }
+    }
+    if (n == 0) {
+        return -1;
+    }
+    if (QuickStartScenario(QS_SCN_SITE) && site == (s32)gSave.scenario_a && gSave.scenario_c != 0) {
+        k = (s32)(gSave.scenario_c - 1) % n;
+    } else {
+        if (QuickStartEnemyDifficulty() < 4 && small > 0) {
+            cap = limit;
+            n = small;
+        }
+        k = (s32)((QuickStartChainHash(0x7013u + (u32)site * 2 + kind) >> 3) & 0x7fff) % n;
+    }
+    for (i = 0; i < QUICKSTART_LANTERN_COUNT; i++) {
+        const QuickStartLanternLayout* p = &sQuickStartLanternLayouts[i];
+        if (p->site == site && p->kind == kind && (cap == 0 || p->count <= cap) && k-- == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// The torch room's variant, from the run seed: how dark, whether the
+// torches burn out, and for how long. Darker and more often timed as the
+// difficulty climbs.
+static const u16 sQuickStartTorchLight[] = { 0x100, 0xC0, 0x80, 0x40, 0x00 };
+
+static u32 QuickStartTorchDark(s32 site) {
+    s32 d = (s32)((QuickStartChainHash(0x70C4u + (u32)site) >> 4) & 3) + QuickStartEnemyDifficulty() / 4;
+    if (d > 4) {
+        d = 4;
+    }
+    if (d > 2 && !GetInventoryValue(ITEM_LANTERN_OFF) && !GetInventoryValue(ITEM_LANTERN_ON)) {
+        d = 2;  // no blacker than vanilla's dim without a Lantern to see by
+    }
+    return sQuickStartTorchLight[d];
+}
+
+static s32 QuickStartTorchSeconds(s32 site, s32 count) {
+    s32 secs, d = QuickStartEnemyDifficulty();
+    // One in four timed, two in four from difficulty 6, three from 12.
+    // Thresholds, not d / 6: agbcc divides a promoted u8 unsigned, and
+    // this libgcc has no __udivsi3.
+    if ((s32)((QuickStartChainHash(0x70C5u + (u32)site) >> 8) & 3) >= (d >= 12 ? 3 : d >= 6 ? 2 : 1)) {
+        return 0;  // permanent torches
+    }
+    secs = 10 + 2 * count - (s32)QuickStartEnemyDifficulty() / 2;
+    return secs < 8 ? 8 : secs;
+}
+
+// The layer the torches go on: the player's, as QuickStartPaintChestTile
+// learned the hard way, falling back to the other.
+static u32 QuickStartTorchLayer(void) {
+    u32 which = gPlayerEntity.base.collisionLayer == LAYER_TOP ? LAYER_TOP : LAYER_BOTTOM;
+    MapLayer* layer = GetLayerByIndex(which);
+    if (layer == NULL || layer->tileIndices[TILE_TYPE_117] == 0xFFFF) {
+        which = (which == LAYER_TOP) ? LAYER_BOTTOM : LAYER_TOP;
+    }
+    return which;
+}
+
+// A torch on the bottom layer is hidden wherever the room draws its floor
+// on the top one: the grass caves do (measured: the torch's tile index was
+// in the map data and nothing showed). Vanilla's torch rooms leave the top
+// layer empty over a torch (Lon Lon Ranch's secret cave: top index 0), so
+// the top tile over ours is cleared to match.
+static void QuickStartPaintTorch(u32 pos, u32 which) {
+    MapLayer* layer = GetLayerByIndex(which);
+    if (layer == NULL || layer->tileIndices[TILE_TYPE_117] == 0xFFFF) {
+        return;
+    }
+    SetTileType(TILE_TYPE_117, pos, which);
+    SetTile(layer->tileIndices[TILE_TYPE_117], pos, which);
+    if (which == LAYER_BOTTOM && GetLayerByIndex(LAYER_TOP) != NULL) {
+        SetTile(0, pos, LAYER_TOP);
+    }
+    // And refresh now. This runs from QuickStartUpdate, AFTER the frame's
+    // UpdateScrollVram has copied the tile maps into the BG buffers, and
+    // WaitForNextFrame then uploads those stale buffers and clears the
+    // flag: an edit made here never reached the screen in a room that
+    // does not scroll (measured: the torch's subtiles were in
+    // gMapDataBottomSpecial and absent from gBG1Buffer). Scroll2Sub0 is
+    // the model: raise the flag and copy at once.
+    gUpdateVisibleTiles = 1;
+    UpdateScrollVram();
+}
+
+static void QuickStartTorchesDeal(s32 site, const QuickStartLanternLayout* p, u32 flagBase) {
+    u32 which = QuickStartTorchLayer();
+    u32 light = QuickStartTorchDark(site);
+    s32 secs = QuickStartTorchSeconds(site, p->count), k;
+    u8 share = (u8)((s32)(0x100 - light) / (s32)p->count);
+    if (light < 0x100) {
+        sub_0805BB00(light, 1);
+    }
+    for (k = 0; k < p->count; k++) {
+        s32 x = p->cells[k * 3], y = p->cells[k * 3 + 1];
+        LightLevelSetManager* mgr;
+        QuickStartPaintTorch(TILE_POS(x, y), which);
+        mgr = (LightLevelSetManager*)GetEmptyManager();
+        if (mgr == NULL) {
+            continue;
+        }
+        mgr->base.kind = MANAGER;
+        mgr->base.id = LIGHT_LEVEL_SET_MANAGER;
+        mgr->base.type = secs ? 3 : 2;
+        mgr->base.type2 = (u8)which;
+        mgr->base.timer = share;
+        mgr->field_0x36 = (u8)secs;
+        mgr->field_0x38 = (u16)(x * 16 + 8);
+        mgr->field_0x3a = (u16)(y * 16 + 8);
+        mgr->field_0x3c = (u16)(0x8000 + QUICKSTART_ROOM_FLAG_ORIGIN + flagBase + QS_LANTERN_LATCH_FLAG);
+        mgr->field_0x3e = QS_LANTERN_NO_FLAG;
+        AppendEntityToList((Entity*)mgr, 6);
+    }
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_LANTERN_TEXT + (secs ? 1 : 0))), 0);
+}
+
+// How many torches read lit. A timed torch that burns out is put back by
+// RestorePrevTileEntity, which restores the room's own floor here (the
+// torch was never in the map data): repaint it unlit.
+static s32 QuickStartTorchesLit(const QuickStartLanternLayout* p) {
+    u32 which = QuickStartTorchLayer();
+    s32 k, lit = 0;
+    for (k = 0; k < p->count; k++) {
+        u32 pos = TILE_POS(p->cells[k * 3], p->cells[k * 3 + 1]);
+        u32 t = GetTileTypeAtTilePos(pos, which);
+        if (t == TILE_TYPE_118) {
+            lit++;
+        } else if (t != TILE_TYPE_117) {
+            QuickStartPaintTorch(pos, which);
+        }
+    }
+    return lit;
+}
+
+static void QuickStartCleanupDeal(const QuickStartLanternLayout* p) {
+    s32 k;
+    bool32 jar = GetInventoryValue(ITEM_GUST_JAR) != 0;
+    for (k = 0; k < p->count; k++) {
+        s32 x = p->cells[k * 3], y = p->cells[k * 3 + 1], what = p->cells[k * 3 + 2];
+        Entity* e;
+        if (what == QS_LANTERN_CLOUD) {
+            if (!jar) {
+                continue;
+            }
+            // Hyrule Town's carpet dust: it deletes itself while the town's
+            // MACHI_MACHIHOKORI is set, and sets it when the last of a cloud
+            // is pulled away.
+            ClearGlobalFlag(MACHI_MACHIHOKORI);
+            e = CreateEnemy(DUST, 0);
+        } else {
+            e = CreateProjectile(SPIDER_WEB);
+            if (e != NULL) {
+                e->type = (u8)what;
+                *(u16*)((u8*)e + 0x86) = QS_LANTERN_NO_FLAG;  // SpiderWebEntity.flag
+            }
+        }
+        if (e == NULL) {
+            continue;
+        }
+        e->x.HALF.HI = gRoomControls.origin_x + x * 16 + 8;
+        e->y.HALF.HI = gRoomControls.origin_y + y * 16 + 8;
+        e->collisionLayer = gPlayerEntity.base.collisionLayer ? gPlayerEntity.base.collisionLayer : 1;
+        UpdateSpriteForCollisionLayer(e);
+    }
+    CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_LANTERN_TEXT + 2)), 0);
+}
+
+static s32 QuickStartCleanupLeft(void) {
+    s32 i, n = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (!QuickStartEntityInCurrentRoom(e)) {
+            continue;
+        }
+        if ((e->kind == PROJECTILE && e->id == SPIDER_WEB) || (e->kind == ENEMY && e->id == DUST && e->type == 0)) {
+            n++;
+        }
+    }
+    return n;
+}
+
+// The endless waves, and now and then an elite.
+static void QuickStartLanternWaves(s16 contentX, s16 contentY) {
+    u8 difficulty = QuickStartEnemyDifficulty();
+    s32 i;
+    QuickStartLeashStrayEnemies(contentX, contentY);
+    if (QuickStartCountSiteEnemies(contentX, contentY) >= QUICKSTART_LANTERN_REFILL_BELOW) {
+        return;
+    }
+    if (difficulty >= 5 && (Random() & 7) == 0) {
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* e = &gEntities[i].base;
+            if (QuickStartEnemyIsOurs(e) && (e->id == DARK_NUT || e->id == BALL_CHAIN_SOLIDER)) {
+                break;
+            }
+        }
+        if (i == MAX_ENTITIES) {
+            u8 r = (u8)((s32)(Random() & 0x7fff) % 5);
+            QuickStartSpawnEnemiesOnOpenTilesEx(r < 4 ? DARK_NUT : BALL_CHAIN_SOLIDER, r < 4 ? r : 0, contentX,
+                                                contentY, 1, QuickStartFindSiteAt(contentX, contentY), TRUE);
+        }
+    }
+    QuickStartSpawnWave(contentX, contentY, 0, difficulty, QS_WAVE_HAZARDS);
+}
+
+// One room, every frame of a visit. TRUE once the prize is taken.
+static bool32 QuickStartSetupLanternContent(u8 kind, s32 extra, s16 contentX, s16 contentY, u32 flagBase) {
+    s32 site = QuickStartFindSiteAt(contentX, contentY);
+    s32 index = (site >= 0) ? QuickStartLanternPick(site, kind) : -1;
+    const QuickStartLanternLayout* p;
+    if (index < 0) {
+        return TRUE;  // nothing fits here (the roll never deals it then): never a wall
+    }
+    p = &sQuickStartLanternLayouts[index];
+    if (!QsCheckRoomFlag(flagBase + QS_LANTERN_DEALT_FLAG)) {
+        QsSetRoomFlag(flagBase + QS_LANTERN_DEALT_FLAG);
+        if (kind == QS_LANTERN_TORCHES) {
+            QuickStartTorchesDeal(site, p, flagBase);
+        } else {
+            QuickStartCleanupDeal(p);
+        }
+        SoundReq(SFX_SECRET);
+        return FALSE;
+    }
+    // The frame after the deal: a room that could not take it - no torch
+    // tile came out, or not one web or cloud was created (measured: in the
+    // Minish crack at the Wind Ruins nothing spawns at all, not even the
+    // wave room's enemies) - deals the item drop instead, so a step of the
+    // win chain can never stand on a room that cannot be finished. The
+    // window is handed over clean: the item drop reads flags 0 and 3.
+    if (!QsCheckRoomFlag(flagBase + QS_LANTERN_CHECKED_FLAG)) {
+        QsSetRoomFlag(flagBase + QS_LANTERN_CHECKED_FLAG);
+        if (kind == QS_LANTERN_TORCHES
+                ? GetTileTypeAtTilePos(TILE_POS(p->cells[0], p->cells[1]), QuickStartTorchLayer()) != TILE_TYPE_117
+                : QuickStartCleanupLeft() == 0) {
+            QsClearRoomFlag(flagBase + QS_LANTERN_DEALT_FLAG);
+            QsSetRoomFlag(flagBase + QS_LANTERN_FALLBACK_FLAG);
+            return FALSE;
+        }
+    }
+    QuickStartLanternWaves(contentX, contentY);
+    if (!QsCheckRoomFlag(flagBase + QS_LANTERN_WON_FLAG)) {
+        if (kind == QS_LANTERN_TORCHES) {
+            if (QuickStartTorchesLit(p) < p->count) {
+                return FALSE;
+            }
+            QsSetRoomFlag(flagBase + QS_LANTERN_LATCH_FLAG);
+        } else if (QuickStartCleanupLeft() > 0) {
+            return FALSE;
+        }
+        QsSetRoomFlag(flagBase + QS_LANTERN_WON_FLAG);
+        SoundReq(SFX_SECRET);
+        return FALSE;
+    }
+    if (!QsCheckRoomFlag(flagBase + QS_LANTERN_PAID_FLAG)) {
+        if (QuickStartRewardDelivered(QuickStartDrawItem(extra & 0x3f, QS_CAT_DROP), contentX, contentY)) {
+            QsSetRoomFlag(flagBase + QS_LANTERN_PAID_FLAG);
+        }
+        return FALSE;
+    }
+    if (QuickStartGroundItemAt(contentX, contentY)) {
+        return FALSE;
+    }
+    if (QuickStartPlayerNearSpot(contentX, contentY)) {
+        return TRUE;
+    }
+    QsClearRoomFlag(flagBase + QS_LANTERN_PAID_FLAG);  // removed, not taken: put it back
+    return FALSE;
+}
+
 // The overworld block quest. One region row a run hosts one of its
 // generated instances - a template in the open, or a maze in front of a
 // door or a chest - and the first solve pays a RARE draw and counts as
@@ -18756,7 +19208,8 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
     // Measured by the completion audit: the Boomerang chamber's second
     // NPC site and the Minish bomb house's fairies never appeared, and a
     // chain step dealt there could never be finished.
-    if ((kind == QS_EVENT_NPC || kind == QS_EVENT_FAIRY) && QsCheckRoomFlag(flagBase + 5)) {
+    if ((kind == QS_EVENT_NPC || kind == QS_EVENT_FAIRY || kind == QS_EVENT_TORCHES || kind == QS_EVENT_CLEANUP) &&
+        QsCheckRoomFlag(flagBase + 5)) {
         kind = QS_EVENT_ITEM_DROP;
     }
     if (kind == QS_EVENT_CHEST_LOTTERY) {
@@ -18838,6 +19291,9 @@ static bool32 QuickStartSetupEventContent(u8 kind, s32 extra, s16 contentX, s16 
         return QuickStartSetupPuzzleRoomContent(extra, contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_BLOCKS) {
         return QuickStartSetupBlocksContent(extra, contentX, contentY, flagBase);
+    } else if (kind == QS_EVENT_TORCHES || kind == QS_EVENT_CLEANUP) {
+        return QuickStartSetupLanternContent(kind == QS_EVENT_TORCHES ? QS_LANTERN_TORCHES : QS_LANTERN_CLEANUP, extra,
+                                             contentX, contentY, flagBase);
     } else if (kind == QS_EVENT_MINIBOSS) {
         if (QsCheckRoomFlag(flagBase + 2)) {
             // Reward already dropped this visit - just watching for pickup
@@ -20838,6 +21294,8 @@ static bool32 QuickStartSitePuzzleOk(s32 site) {
     return TRUE;
 }
 
+static s32 QuickStartChainForcedKind(s32 site);
+
 static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
     u8 kind, extra;
     u32 savedRand = gRand;
@@ -20927,6 +21385,29 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         (s32)((QuickStartChainHash(0xB10Cu + (u32)site) >> 5) & 0x7fff) % 3 == 0) {
         kind = QS_EVENT_BLOCKS;
     }
+    // The torch and cleanup rooms (Oct 2026): one in five each, by hashes
+    // of their own, at a site the generator built layouts for, over the
+    // same open kinds. Torches first: a site may hold both.
+    if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_ANY ||
+        sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_LARGE ||
+        sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_SMALL) {
+        if (QuickStartLanternCountForSite(site, QS_LANTERN_TORCHES) > 0 &&
+            (s32)((QuickStartChainHash(0x70C3u + (u32)site) >> 5) & 0x7fff) % 5 == 0) {
+            kind = QS_EVENT_TORCHES;
+        } else if (QuickStartLanternCountForSite(site, QS_LANTERN_CLEANUP) > 0 &&
+                   (s32)((QuickStartChainHash(0xC1EAu + (u32)site) >> 5) & 0x7fff) % 5 == 0) {
+            kind = QS_EVENT_CLEANUP;
+        }
+    }
+    // A win-chain EVENT step on this site may force one of the two
+    // (QuickStartChainEventForce): the step's detail, not a hash, so the
+    // site deals it for exactly as long as the step stands.
+    {
+        s32 forced = QuickStartChainForcedKind(site);
+        if (forced == QS_EVENT_TORCHES || forced == QS_EVENT_CLEANUP) {
+            kind = (u8)forced;
+        }
+    }
     if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
         // and the pick from it, and storing it (rather than calling Random()
@@ -20981,7 +21462,7 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         extra = (u8)(((s32)Random() % QS_PUZZLE_VARIANTS) | (((s32)Random() % QUICKSTART_DRAW_SEED_RANGE) << 2));
     } else if (kind == QS_EVENT_CHEST_LOTTERY) {
         extra = QuickStartPickLotteryExtra();
-    } else if (kind == QS_EVENT_BLOCKS) {
+    } else if (kind == QS_EVENT_BLOCKS || kind == QS_EVENT_TORCHES || kind == QS_EVENT_CLEANUP) {
         extra = (u8)((s32)Random() % QUICKSTART_DRAW_SEED_RANGE);  // the prize's draw seed
     } else {
         extra = 0; // QS_EVENT_FAIRY takes no parameter.
@@ -21474,6 +21955,43 @@ static s32 QuickStartRegionBoost(s32 ring) {
     }
 }
 
+// An EVENT step's detail (Oct 2026): 0 deals the site's own roll; with
+// bit 7 set, the low bits are the ? room kind the site deals instead - a
+// torch or cleanup room, so the chain sometimes asks for the Lantern or
+// the Gust Jar (the user: "forcing the player to clear one of these
+// puzzles to receive a reward that advances the chain"). Half the EVENT
+// steps whose site has a layout for either are forced, only at the open
+// kinds (a fixed elite or rare site keeps its fight or its drop).
+#define QS_CHAIN_EVENT_FORCED 0x80
+
+static u8 QuickStartChainEventForce(s32 step, s32 site) {
+    u32 h = QuickStartChainHash(0x7016u + (u32)step * 31u + (u32)site);
+    bool32 torches = QuickStartLanternCountForSite(site, QS_LANTERN_TORCHES) > 0;
+    bool32 cleanup = QuickStartLanternCountForSite(site, QS_LANTERN_CLEANUP) > 0;
+    u8 kinds = sQuickStartRoomContentSites[site].kinds;
+    if ((!torches && !cleanup) || (h & 1) != 0 ||
+        (kinds != QUICKSTART_KINDS_ANY && kinds != QUICKSTART_KINDS_LARGE && kinds != QUICKSTART_KINDS_SMALL) ||
+        site == QuickStartMemorySite(0) || site == QuickStartMemorySite(1)) {
+        return 0;
+    }
+    if (torches && (!cleanup || (h & 2) != 0)) {
+        return QS_CHAIN_EVENT_FORCED | QS_EVENT_TORCHES;
+    }
+    return QS_CHAIN_EVENT_FORCED | QS_EVENT_CLEANUP;
+}
+
+// The kind a live EVENT step forces on this site, or -1.
+static s32 QuickStartChainForcedKind(s32 site) {
+    s32 step;
+    for (step = 0; step < QUICKSTART_CHAIN_STEPS; step++) {
+        if (gSave.chain_kind[step] == QS_CHAIN_EVENT && gSave.chain_where[step] == site &&
+            (gSave.chain_detail[step] & QS_CHAIN_EVENT_FORCED) != 0) {
+            return gSave.chain_detail[step] & 0x7f;
+        }
+    }
+    return -1;
+}
+
 static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartReach* r, u32 avoid) {
     s32 i, n = 0;
     switch (kind) {
@@ -21561,6 +22079,7 @@ static void QuickStartChainStore(u8 kind, s32 step, s32 want, const QuickStartRe
                 want -= QuickStartRegionBoost(QuickStartSiteRing(i));
                 if (want < 0) {
                     gSave.chain_where[step] = (u8)i;
+                    gSave.chain_detail[step] = QuickStartChainEventForce(step, i);
                     return;
                 }
             }

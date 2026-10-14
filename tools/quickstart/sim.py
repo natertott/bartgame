@@ -978,6 +978,8 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
                 where = 0 if kind == KIND_QUEST else pick
                 if kind == KIND_QUEST:
                     where = quest_slot
+                if kind == KIND_EVENT:
+                    return [(kind, where, chain_event_force(seed, step, where))]
                 return [(kind, where, None)]
     return [(KIND_ITEM, 0, chain_pick_item(seed, step * 7 + 3, owned))]
 
@@ -1029,9 +1031,10 @@ def _site_stream(seed, site):
     return _Stream(h | 1)
 
 
-EV_ITEM_DROP, EV_MINIBOSS, EV_NPC, EV_WAVES, EV_POT_LOTTERY, EV_CHEST_LOTTERY, EV_FAIRY, EV_MEMORY, EV_PUZZLE, EV_BLOCKS = range(10)
+(EV_ITEM_DROP, EV_MINIBOSS, EV_NPC, EV_WAVES, EV_POT_LOTTERY, EV_CHEST_LOTTERY, EV_FAIRY, EV_MEMORY, EV_PUZZLE,
+ EV_BLOCKS, EV_TORCHES, EV_CLEANUP) = range(12)
 EVENT_NAME = ['ITEM_DROP', 'MINIBOSS', 'NPC', 'WAVES', 'POT_LOTTERY', 'CHEST_LOTTERY',
-              'FAIRY', 'MEMORY', 'PUZZLE', 'BLOCKS']
+              'FAIRY', 'MEMORY', 'PUZZLE', 'BLOCKS', 'TORCHES', 'CLEANUP']
 
 
 def _block_owners():
@@ -1051,6 +1054,34 @@ def _block_owners():
 
 
 BLOCK_SITES, BLOCK_ROWS = _block_owners()
+
+
+def _lantern_owners():
+    """include/quickstart/lantern_rooms.h: per ? room site, how many torch
+    and cleanup layouts the generator built (sQuickStartLanternLayouts)."""
+    torches, cleanup = collections.Counter(), collections.Counter()
+    path = os.path.join(ROOT, 'include', 'quickstart', 'lantern_rooms.h')
+    if os.path.exists(path):
+        for m in re.finditer(r'\{ (\d+), (\d+), \d+, \d+, sQuickStartLanternCells', open(path).read()):
+            (torches if m.group(2) == '0' else cleanup)[int(m.group(1))] += 1
+    return torches, cleanup
+
+
+TORCH_SITES, CLEANUP_SITES = _lantern_owners()
+CHAIN_EVENT_FORCED = 0x80
+
+
+def chain_event_force(seed, step, site):
+    """QuickStartChainEventForce: an EVENT step's detail - 0, or 0x80 | the
+    ? room kind (TORCHES / CLEANUP) the site deals while the step stands."""
+    h = chain_hash(seed, 0x7016 + step * 31 + site)
+    t, c = TORCH_SITES[site] > 0, CLEANUP_SITES[site] > 0
+    if (not t and not c) or (h & 1) or SITES[site]['kinds'] not in ('ANY', 'LARGE', 'SMALL') \
+            or site in memory_sites(seed):
+        return 0
+    if t and (not c or (h & 2)):
+        return CHAIN_EVENT_FORCED | EV_TORCHES
+    return CHAIN_EVENT_FORCED | EV_CLEANUP
 _SMALL16 = [EV_WAVES] * 6 + [EV_NPC] * 3 + [EV_POT_LOTTERY] * 3 + [EV_WAVES] * 3 + [EV_FAIRY]
 _ANY16 = ([EV_WAVES] * 4 + [EV_MINIBOSS] * 4 + [EV_POT_LOTTERY] + [EV_CHEST_LOTTERY] * 2 +
           [EV_NPC] * 2 + [EV_POT_LOTTERY] + [EV_MINIBOSS] + [EV_FAIRY])
@@ -1103,8 +1134,9 @@ def _puzzle_ok(i):
                    for j in range(len(SITES)))
 
 
-def site_roll(seed, i):
-    """QuickStartContentSiteRoll -> (kind, extra)."""
+def site_roll(seed, i, forced=0):
+    """QuickStartContentSiteRoll -> (kind, extra). `forced`: the detail of a
+    win-chain EVENT step standing on this site (chain_event_force)."""
     lesson, recital = memory_sites(seed)
     if i == lesson:
         return EV_MEMORY, 0
@@ -1127,6 +1159,13 @@ def site_roll(seed, i):
     if BLOCK_SITES[i] and cls in ('ANY', 'LARGE', 'SMALL') and \
             ((chain_hash(seed, 0xB10C + i) >> 5) & 0x7fff) % 3 == 0:
         kind = EV_BLOCKS
+    if cls in ('ANY', 'LARGE', 'SMALL'):
+        if TORCH_SITES[i] and ((chain_hash(seed, 0x70C3 + i) >> 5) & 0x7fff) % 5 == 0:
+            kind = EV_TORCHES
+        elif CLEANUP_SITES[i] and ((chain_hash(seed, 0xC1EA + i) >> 5) & 0x7fff) % 5 == 0:
+            kind = EV_CLEANUP
+    if forced & CHAIN_EVENT_FORCED and (forced & 0x7f) in (EV_TORCHES, EV_CLEANUP):
+        kind = forced & 0x7f
     extra = 0
     if kind in (EV_ITEM_DROP, EV_WAVES):
         extra = R() % 64
@@ -1155,16 +1194,16 @@ def site_roll(seed, i):
     elif kind == EV_CHEST_LOTTERY:
         winner = R() % 3
         extra = winner | ((R() % 8) << 2)
-    elif kind == EV_BLOCKS:
+    elif kind in (EV_BLOCKS, EV_TORCHES, EV_CLEANUP):
         extra = R() % 64
     return kind, extra
 
 
-def event_label(seed, i):
+def event_label(seed, i, forced=0):
     """A finer label than the kind: the WAVES handicap, the NPC's mood, the
     memory role, the miniboss. The survive-clock variant of WAVES is decided
     per visit by the live stream and is not separable here."""
-    kind, extra = site_roll(seed, i)
+    kind, extra = site_roll(seed, i, forced)
     name = EVENT_NAME[kind]
     if kind == EV_WAVES:
         return name + (' (stripped kit)' if extra & 0x40 else '')
@@ -1195,16 +1234,16 @@ def draw_pick(seed6):
     return (seed6 % 10) * 7 + seed6 // 10
 
 
-def site_prize(seed, i, owned, where_region):
+def site_prize(seed, i, owned, where_region, forced=0):
     """What finishing site i pays, or None for a kind with no item (NPC,
     fairy, the memory lesson). The chain's wanted-item override (a pending
     ITEM step is paid by the next prize) is applied by the caller."""
-    kind, extra = site_roll(seed, i)
+    kind, extra = site_roll(seed, i, forced)
     if kind == EV_WAVES:
         return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
     if kind == EV_PUZZLE:
         return draw_item((extra >> 2) & 0x3f, QS_CAT_DROP, owned, where_region)
-    if kind == EV_BLOCKS:
+    if kind in (EV_BLOCKS, EV_TORCHES, EV_CLEANUP):
         return draw_item(extra & 0x3f, QS_CAT_DROP, owned, where_region)
     if kind == EV_ITEM_DROP:
         if extra & 0x80:
@@ -1414,9 +1453,9 @@ def simulate(seed, cohort, rng):
             # so in the rewards cohort it grows the reach exactly as a
             # region clear does.
             if kind == KIND_EVENT:
-                event = event_label(seed, where)
+                event = event_label(seed, where, detail or 0)
                 if cohort == 'rewards':
-                    got = site_prize(seed, where, owned, REGION_NAMES[step_region('EVENT', where)])
+                    got = site_prize(seed, where, owned, REGION_NAMES[step_region('EVENT', where)], detail or 0)
                     if got:
                         owned.add(got)
                         rewards.append(got)
