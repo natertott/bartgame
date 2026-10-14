@@ -41,6 +41,9 @@ extern u32 sub_08000E44(u32);
 extern const u16 gUnk_080C8F2C[];
 extern u32 gUnk_085C4620[];
 extern Frame* gSpriteAnimations_322[];
+#ifdef QUICKSTART
+extern u32 QuickStartGroundLook(u32 item);
+#endif
 extern u16 gUnk_080C8F54[];
 extern u32 gUnk_080C8F7C[];
 
@@ -869,7 +872,13 @@ void ItemUIElement(UIElement* element) {
 
     if (element->unk_8 != itemId) {
         element->unk_8 = itemId;
+#ifdef QUICKSTART
+        // A sword variant draws its base sword's icon (item 5's own frame
+        // is a lantern); the tint is laid on by QuickStartPatchItemOam.
+        sub_0801CAB8(element, gSpriteAnimations_322[QuickStartGroundLook(itemId)]);
+#else
         sub_0801CAB8(element, gSpriteAnimations_322[itemId]);
+#endif
     }
 
     if (element->type ^ 3) {

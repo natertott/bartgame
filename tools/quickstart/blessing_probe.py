@@ -227,7 +227,10 @@ check('CAKE: a gold cake off the floor pays its extra', p and not (m4 & 4) and (
 for e in entities(c, KIND_OBJECT, 0):
     C.call_keep(c, delete, (GENT + e[0] * STRIDE,))
 run(c, 30)
-held = [(s, hex(pal_id(c, s)), pal_state(c, s)) for s in range(6, 16) if (pal_id(c, s) & 0xF000) == 0xF000 and pal_id(c, s) != 0xFFFF and pal_state(c, s) == 3]
+# Pastry tiers only (1 green, 2 gold): a region's block quest re-deals its
+# rocks after the purge above, in their own tints (4 and up), and rightly.
+held = [(s, hex(pal_id(c, s)), pal_state(c, s)) for s in range(6, 16) if (pal_id(c, s) & 0xF000) == 0xF000 and pal_id(c, s) != 0xFFFF
+        and ((pal_id(c, s) >> 8) & 0xF) in (1, 2) and pal_state(c, s) == 3]
 check('FREE: no tinted slot still held', not held, 'held %s' % held)
 
 print('RESULT %s %d/%d' % ('PASS' if all(res) else 'FAIL', sum(res), len(res)))

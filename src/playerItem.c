@@ -35,6 +35,10 @@ typedef struct {
     u16 gfx;
 } PlayerItemDefinition;
 extern const PlayerItemDefinition gPlayerItemDefinitions[];
+#ifdef QUICKSTART
+extern u32 QuickStartGroundLook(u32 item);
+extern void QuickStartTintPlayerItem(Entity* e);
+#endif
 extern const PlayerItemDefinition* gAdditionalPlayerItemDefinitions[3];
 
 PlayerItemFunc* const gPlayerItemFunctions[] = {
@@ -90,7 +94,13 @@ void ItemInit(Entity* this) {
     if (definition->bitfield == 0xff) {
         u32 tmp = definition->firstItemIndex;
         definition = gAdditionalPlayerItemDefinitions[definition->index];
+#ifdef QUICKSTART
+        // A sword variant swings its base sword's form (shape and plain
+        // palette); QuickStartTintPlayerItem recolours it below.
+        definition = &definition[QuickStartGroundLook(((GenericEntity*)this)->field_0x68.HALF.LO) - tmp];
+#else
         definition = &definition[((GenericEntity*)this)->field_0x68.HALF.LO - tmp];
+#endif
     }
     tmp3 = definition->bitfield;
     tmp2 = tmp3 & 0xf;
@@ -114,4 +124,7 @@ void ItemInit(Entity* this) {
     this->spriteOrientation.flipY = gPlayerEntity.base.spriteOrientation.flipY;
     this->health = 1;
     this->flags |= ENT_DID_INIT;
+#ifdef QUICKSTART
+    QuickStartTintPlayerItem(this);
+#endif
 }

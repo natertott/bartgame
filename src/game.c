@@ -21,6 +21,7 @@
 #include "screen.h"
 #include "sound.h"
 #include "ui.h"
+#include "playeritem.h"
 #include "beanstalkSubtask.h"
 #include "pauseMenu.h"
 #include "fade.h"
@@ -26845,14 +26846,56 @@ extern void SetEntityObjPalette(Entity*, s32);
 #define QS_TINT_RUST 3
 #define QS_ITEM_SHEET_PALETTE 4 // the palette sprite 322's item frames force
 
+// SWORD VARIANTS (Oct 2026). A variant is an item id that plays as a sword
+// (item.c and itemDefinitions.c route it to ItemSword) but has no art of
+// its own: it borrows a base sword's look everywhere a sword is drawn and
+// is recoloured to its tint. One row here is the whole of it; every draw
+// asks these two functions:
+//
+//   on the floor, held up at an item-get   QuickStartGroundLook (scroll.c),
+//                                          QuickStartTintItem
+//   the HUD's A/B/L buttons                QuickStartGroundLook (ui.c),
+//                                          QuickStartPatchItemOam
+//   the pause menu's grid and slots        QuickStartGroundLook (pauseMenu.c)
+//   the trophy case                        QuickStartGroundLook, QuickStartItemTint
+//   the swing (PlayerItemSword, the dash)  ItemInit's form (playerItem.c),
+//                                          QuickStartTintPlayerItem
+//
+// The Rusted Blade first shipped with only the floor and the case: the HUD
+// read item 5's own icon frame (a lantern) and the swing used the White
+// Sword's shape in its plain colours. A new variant needs a free sword item
+// id, a row here and a tint tier in QuickStartTintColour.
+typedef struct {
+    u8 item;  // the variant's own item id
+    u8 base;  // the sword whose art it borrows
+    u8 tint;  // QuickStartTintColour tier
+} QuickStartSwordVariant;
+
+static const QuickStartSwordVariant sQuickStartSwordVariants[] = {
+    { ITEM_UNUSED_SWORD, ITEM_SMITH_SWORD, QS_TINT_RUST },  // the Rusted Blade curse
+};
+
+static const QuickStartSwordVariant* QuickStartSwordVariantOf(u32 item) {
+    u32 i;
+    for (i = 0; i < ARRAY_COUNT(sQuickStartSwordVariants); i++) {
+        if (sQuickStartSwordVariants[i].item == item) {
+            return &sQuickStartSwordVariants[i];
+        }
+    }
+    return NULL;
+}
+
+// The item whose art draws `item`: a variant's base sword, else itself.
 u32 QuickStartGroundLook(u32 item) {
-    return (item == ITEM_UNUSED_SWORD) ? ITEM_SMITH_SWORD : item;
+    const QuickStartSwordVariant* v = QuickStartSwordVariantOf(item);
+    return (v != NULL) ? v->base : item;
 }
 
 // The tint an item is always drawn in, whatever its tier byte says: 0, or
-// QS_TINT_RUST for the Rusted Blade.
+// its variant's tier.
 u32 QuickStartItemTint(u32 item) {
-    return (item == ITEM_UNUSED_SWORD) ? QS_TINT_RUST : 0;
+    const QuickStartSwordVariant* v = QuickStartSwordVariantOf(item);
+    return (v != NULL) ? v->tint : 0;
 }
 
 static u16 QuickStartTintColour(u16 c, u32 tier) {
@@ -26984,39 +27027,72 @@ bool32 QuickStartTintItem(Entity* e) {
 // slot made from the rock's own fixed palette, shared by every rock of the
 // tier, the same id scheme as QuickStartTintItem. A rock that cannot get a
 // slot this frame keeps its colours and is asked again next frame.
-static void QuickStartBlockTint(Entity* e, u32 tier) {
-    u32 src = e->palette.b.b0, id, i;
+// An OBJ palette slot holding palette `src` recoloured to `tier`, made on
+// first use and shared by everything drawn in that tint (id 0xF<tier><src>,
+// the same scheme as QuickStartTintItem). -1 when no slot is free this
+// frame; the caller keeps its plain colours and asks again next frame.
+static s32 QuickStartTintSlot(u32 src, u32 tier) {
+    u32 id = 0xF000 | (tier << 8) | (src & 0xFF), i;
+    s32 slot = FindPalette(id);
+    if (slot >= 0) {
+        return slot;
+    }
+    slot = (s32)FindFreeObjPalette(1);
+    if (slot < 0) {
+        CleanUpObjPalettes();
+        slot = (s32)FindFreeObjPalette(1);
+    }
+    if (slot < 0) {
+        return -1;
+    }
+    gPaletteList[slot].objPaletteId = (u16)id;
+    gPaletteList[slot]._1 = 0;
+    gPaletteList[slot]._0_4 = 1;
+    gPaletteList[slot]._0_0 = 3;
+    for (i = 1; i < 16; i++) {
+        gPaletteBuffer[(16 + slot) * 16 + i] = QuickStartTintColour(gPaletteBuffer[(16 + src) * 16 + i], tier);
+    }
+    gPaletteBuffer[(16 + slot) * 16] = gPaletteBuffer[(16 + src) * 16];
+    USE_PALETTE(16 + slot);
+    return slot;
+}
+
+// Entity `e` drawn in `tier`: its own palette (or the one under an earlier
+// tint) recoloured into a shared slot.
+static void QuickStartTintEntity(Entity* e, u32 tier) {
+    u32 src = e->palette.b.b0;
     s32 slot;
     // Ours: 0xF<tier><src>. The fixed slots' id 0xFFFF never is.
     if (gPaletteList[src].objPaletteId != 0xFFFF && (gPaletteList[src].objPaletteId & 0xF000) == 0xF000) {
         if (((gPaletteList[src].objPaletteId >> 8) & 0xF) == tier) {
             return;  // already this colour
         }
-        src = gPaletteList[src].objPaletteId & 0xFF;  // the rock's own palette under the tint
+        src = gPaletteList[src].objPaletteId & 0xFF;  // the entity's own palette under the tint
     }
-    id = 0xF000 | (tier << 8) | src;
-    slot = FindPalette(id);
+    slot = QuickStartTintSlot(src, tier);
     if (slot < 0) {
-        slot = (s32)FindFreeObjPalette(1);
-        if (slot < 0) {
-            CleanUpObjPalettes();
-            slot = (s32)FindFreeObjPalette(1);
-        }
-        if (slot < 0) {
-            return;
-        }
-        gPaletteList[slot].objPaletteId = (u16)id;
-        gPaletteList[slot]._1 = 0;
-        gPaletteList[slot]._0_4 = 1;
-        gPaletteList[slot]._0_0 = 3;
-        for (i = 1; i < 16; i++) {
-            gPaletteBuffer[(16 + slot) * 16 + i] = QuickStartTintColour(gPaletteBuffer[(16 + src) * 16 + i], tier);
-        }
-        gPaletteBuffer[(16 + slot) * 16] = gPaletteBuffer[(16 + src) * 16];
-        USE_PALETTE(16 + slot);
+        return;
     }
     UnloadOBJPalette(e);
     SetEntityObjPalette(e, slot);
+}
+
+static void QuickStartBlockTint(Entity* e, u32 tier) {
+    QuickStartTintEntity(e, tier);
+}
+
+// A sword swing's blade in its variant's tint (ItemInit, playerItem.c).
+// The swing reads its form - shape and plain palette - by the sword's
+// item id, which ItemInit already maps through QuickStartGroundLook.
+void QuickStartTintPlayerItem(Entity* e) {
+    u32 tier;
+    if (e->id != PLAYER_ITEM_SWORD && e->id != PLAYER_ITEM_DASH_SWORD) {
+        return;
+    }
+    tier = QuickStartItemTint(((GenericEntity*)e)->field_0x68.HALF.LO);
+    if (tier != 0) {
+        QuickStartTintEntity(e, tier);
+    }
 }
 
 // Called between DrawEntities and CopyOAM (GameMain_Update): the Rusted
@@ -27024,8 +27100,58 @@ static void QuickStartBlockTint(Entity* e, u32 tier) {
 // absolute palette, so the entity's own palette never reaches the screen;
 // the entries are found by the tiles they draw, which are the entity's own
 // graphics slot (sixteen tiles from spriteVramOffset).
+// OAM entries drawn from tiles [base, base + count) take palette `slot`.
+static void QuickStartRepaintOam(u32 base, u32 count, u32 slot) {
+    s32 k;
+    for (k = 0; k < gOAMControls.updated && k < 0x80; k++) {
+        struct OamData* o = &gOAMControls.oam[k];
+        if (o->tileNum >= base && o->tileNum < base + count) {
+            o->paletteNum = slot;
+        }
+    }
+}
+
+// The HUD's item buttons (the field's, and the pause menu's own at its
+// top): a sword variant's icon - its base sword's frame, ui.c - in the
+// variant's tint. The icon's frame forces the item sheet's palette like
+// the floor's does, so its entries, found by the tiles the button owns,
+// take the tinted slot.
+static void QuickStartPatchHudOam(void) {
+    s32 i, slot;
+    for (i = 0; i < MAX_UI_ELEMENTS; i++) {
+        UIElement* el = &gHUD.elements[i];
+        u32 tier;
+        if (!el->used || (el->type != UI_ELEMENT_ITEM_A && el->type != UI_ELEMENT_ITEM_B)) {
+            continue;
+        }
+        tier = QuickStartItemTint(el->unk_8);
+        if (tier != 0 && (slot = QuickStartTintSlot(QS_ITEM_SHEET_PALETTE, tier)) >= 0) {
+            QuickStartRepaintOam(el->unk_1a, 16, (u32)slot);
+        }
+    }
+}
+
+// The pause menu. Its top buttons are HUD elements, patched just before
+// its CopyOAM (Subtask_PauseMenu).
+void QuickStartPatchMenuHudOam(void) {
+    QuickStartPatchHudOam();
+}
+
+// The item screen's grid, at the end of PauseMenu_ItemMenu_Draw: slot `i`
+// draws from tiles 0x360 + 8 * i.
+void QuickStartPatchMenuGridOam(const u8* items, u32 count) {
+    u32 i, tier;
+    s32 slot;
+    for (i = 0; i < count; i++) {
+        tier = QuickStartItemTint(items[i]);
+        if (tier != 0 && (slot = QuickStartTintSlot(QS_ITEM_SHEET_PALETTE, tier)) >= 0) {
+            QuickStartRepaintOam(0x360 + 8 * i, 8, (u32)slot);
+        }
+    }
+}
+
 void QuickStartPatchItemOam(void) {
-    s32 i, k;
+    s32 i;
     for (i = 0; i < MAX_ENTITIES; i++) {
         Entity* e = &gEntities[i].base;
         u32 slot, base;
@@ -27037,13 +27163,9 @@ void QuickStartPatchItemOam(void) {
             continue; // not tinted yet
         }
         base = e->spriteVramOffset;
-        for (k = 0; k < gOAMControls.updated && k < 0x80; k++) {
-            struct OamData* o = &gOAMControls.oam[k];
-            if (o->tileNum >= base && o->tileNum < base + 16) {
-                o->paletteNum = slot;
-            }
-        }
+        QuickStartRepaintOam(base, 16, slot);
     }
+    QuickStartPatchHudOam();
 }
 
 void QuickStartShellTaken(void) {
@@ -27253,6 +27375,22 @@ u32 QuickStartCatalogNameText(s32 index) {
 
 u32 QuickStartCatalogDescText(s32 index) {
     return TEXT_INDEX(TEXT_CUSTOM2, (QUICKSTART_CATALOG_DESC_BASE + index - 1));
+}
+
+// The pause menu's name line for `item` (TEXT_ITEMS + item, pauseMenu.c).
+// A sword variant has no name of its own there (item 5's reads "..."), so
+// it takes its trophy-case name, which needs no unlock: holding it is
+// having found it.
+u32 QuickStartItemMenuText(u32 item) {
+    s32 i;
+    if (QuickStartSwordVariantOf(item) != NULL) {
+        for (i = 0; i < QUICKSTART_CATALOG_COUNT; i++) {
+            if (sQuickStartCatalog[i].item == item) {
+                return TEXT_INDEX(TEXT_CUSTOM, (QUICKSTART_CATALOG_NAME_BASE + i));
+            }
+        }
+    }
+    return TEXT_INDEX(TEXT_ITEMS, 0) + item;
 }
 
 // The item id behind an entry, for the menu's picture pane.

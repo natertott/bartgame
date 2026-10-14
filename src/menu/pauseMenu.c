@@ -30,6 +30,11 @@ bool32 sub_080A51F4(void);
 void sub_080A5F48(u32, u32);
 void sub_080A57F4(void);
 
+#ifdef QUICKSTART
+extern void QuickStartPatchMenuHudOam(void);
+extern u32 QuickStartItemMenuText(u32 item);
+#endif
+
 void Subtask_PauseMenu(void) {
     static Subtask* const pauseMenu_Variants[] = {
         PauseMenu_Variant0, PauseMenu_Variant1, PauseMenu_Variant2,
@@ -48,6 +53,9 @@ void Subtask_PauseMenu(void) {
         if (gPauseMenuOptions.unk11 != 4) {
             gUnk_08128A38[gPauseMenuOptions.screen].func();
         }
+#ifdef QUICKSTART
+        QuickStartPatchMenuHudOam();  // a sword variant's A/B icon in its tint
+#endif
         CopyOAM();
         {
             u32 t = gPauseMenuOptions.unk16;
@@ -448,13 +456,25 @@ void PauseMenu_ItemMenu_Update(void) {
             default:
                 break;
         }
+#ifdef QUICKSTART
+        sub_080A6F6C(QuickStartItemMenuText(item));  // a sword variant's own name
+#else
         sub_080A6F6C(TEXT_INDEX(TEXT_ITEMS, 0) + item);
+#endif
     }
 }
 
 u32 GetMenuSlotForItem(u32 item);
 
 extern Frame* gSpriteAnimations_322[];
+#ifdef QUICKSTART
+extern u32 QuickStartGroundLook(u32 item);  // a sword variant draws its base sword
+#define QS_ICON(item) QuickStartGroundLook(item)
+extern void QuickStartPatchMenuHudOam(void);
+extern void QuickStartPatchMenuGridOam(const u8* items, u32 count);
+#else
+#define QS_ICON(item) (item)
+#endif
 
 #ifdef EU
 #define sub_080A5384_draw_constant0 0x1fa
@@ -507,7 +527,7 @@ void PauseMenu_ItemMenu_Draw(void) {
                     break;
             }
             gOamCmd._8 = 0x800 | color << 0xc | ((i * 8) + 0x360);
-            DrawDirect(sub_080A5384_draw_constant1, gSpriteAnimations_322[item]->index);
+            DrawDirect(sub_080A5384_draw_constant1, gSpriteAnimations_322[QS_ICON(item)]->index);
         }
     }
     gOamCmd._8 = 0x800;
@@ -556,6 +576,9 @@ void PauseMenu_ItemMenu_Draw(void) {
         gOamCmd.y = entry->y;
         DrawDirect(sub_080A5384_draw_constant0, 3);
     }
+#ifdef QUICKSTART
+    QuickStartPatchMenuGridOam(gPauseMenu.items, MENU_SLOT_COUNT);  // a sword variant in its tint
+#endif
 }
 
 u32 GetMenuSlotForItem(u32 item) {
@@ -1265,7 +1288,7 @@ void sub_080A5F48(Item item, u32 offset) {
     }
 
     dest = OBJ_VRAM0 + (offset * 0x20);
-    index = gSpriteAnimations_322[item]->index;
+    index = gSpriteAnimations_322[QS_ICON(item)]->index;
     temp2 = &gMoreSpritePtrs[1][index * 2];
     DmaCopy32(3, &gMoreSpritePtrs[2][temp2[1] * 0x10], dest, 0x40 * 4);
 
