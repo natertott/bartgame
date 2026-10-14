@@ -201,12 +201,14 @@ def stand_of(w, d):
 
 
 def pull_of(w, d):
-    """The tile behind the stand tile. The jar only latches the web; the
-    player tears it off by being pulled back (SpiderWeb_SubAction0 walks
-    them away a few pixels a frame), so this tile must be free too -
-    measured: a web whose stand tile backed onto a wall or another web was
-    grabbed, held and never came away."""
-    return (w[0] - 2 * DIRS[d][0], w[1] - 2 * DIRS[d][1])
+    """The two tiles behind the stand tile. The jar only latches the web;
+    the player tears it off by being pulled back (SpiderWeb_SubAction0
+    walks them away a few pixels a frame), so these must be free too.
+    Measured: a web whose stand tile backed onto a wall or another web was
+    grabbed, held and never came away, and with one free tile it came away
+    or not depending on where in the stand tile the player stood (the
+    Veil Falls rupee hall). Two make it forgiving."""
+    return [(w[0] - k * DIRS[d][0], w[1] - k * DIRS[d][1]) for k in (2, 3)]
 
 
 def clear_order(floor, webs):
@@ -217,8 +219,8 @@ def clear_order(floor, webs):
     while left:
         reach = flood(floor.comp - set(left), floor.start)
         ready = [w for w, d in sorted(left.items())
-                 if stand_of(w, d) in reach and pull_of(w, d) in reach
-                 and standable(floor, stand_of(w, d)) and standable(floor, pull_of(w, d))]
+                 if stand_of(w, d) in reach and standable(floor, stand_of(w, d))
+                 and all(p in reach and standable(floor, p) for p in pull_of(w, d))]
         if not ready:
             return None
         for w in ready:
@@ -234,7 +236,7 @@ def web_types(floor, t, rng, wall_first):
     out = []
     for d in range(4):
         s = stand_of(t, d)
-        if not standable(floor, s) or not standable(floor, pull_of(t, d)):
+        if not standable(floor, s) or not all(standable(floor, p) for p in pull_of(t, d)):
             continue
         behind = (t[0] + DIRS[d][0], t[1] + DIRS[d][1])
         out.append((0 if (wall_first and behind not in floor.open) else 1, rng.random(), d))

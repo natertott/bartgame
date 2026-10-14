@@ -1314,7 +1314,7 @@ What it is:
 | part | detail |
 |---|---|
 | Roll | one in six each, at sites with a layout; 16.2% of ? room rolls over 300 simulated seeds (torches 6.2%, cleanup 10.0%) |
-| Layouts | `lantern_rooms.py`: 479, proven offline. Torches at 45 sites (spread, cluster, hidden), cleanup at 76 (scatter, walls) |
+| Layouts | `lantern_rooms.py`: 466, proven offline. Torches at 45 sites (spread, cluster, hidden), cleanup at 75 (scatter, walls) |
 | Darkness | 0x100 to pitch black, darker with difficulty, never past vanilla's dim without a Lantern; each lit torch gives back its share |
 | Timed torches | vanilla's `LIGHT_LEVEL_SET_MANAGER` type 3: burn out and puff unless all are lit at once |
 | Waves | half hazards, half pursuers; an elite now and then from enemy difficulty 5 |
@@ -1331,11 +1331,11 @@ Found on the way:
   torch. `lantern_gust_survey.py --draw` checks the screen: 59 of 119 sites
   draw one.
 - **The jar needs room to pull.** A web comes away only as the player is
-  pulled back, so its stand tile and the tile behind must be plain floor,
-  and the player must not be pressed against it. A dust cloud comes only
+  pulled back, so its stand tile and the two tiles behind must be plain
+  floor, and the player must not be pressed against it. A dust cloud comes only
   with the player 23 to 36 px below its centre.
 
-Measured: `lantern_rooms.py --verify` 479 layouts, 0 problems.
+Measured: `lantern_rooms.py --verify` 466 layouts, 0 problems.
 `lantern_probe.py` played every layout in the ROM to DONE (dealt, seen,
 lit or cleared, won, waves standing after the win, prize taken): RESULT_LINE.
 At difficulty 12 a black room rose from light 0x0 to 0xff as its torches

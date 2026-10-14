@@ -36,7 +36,7 @@ Two ? room kinds, asked for to give the Lantern and the Gust Jar real work
 
 | fact | evidence |
 |---|---|
-| `SPIDER_WEB` (projectile 0x15) draws anywhere. The jar latches it only from the side it faces (`animationState >> 1 == type`), and the web comes away only as the player is pulled back. **A web whose stand tile backs onto a wall or another web is grabbed and never comes off.** The Lantern burns a web from any side. | probe traces |
+| `SPIDER_WEB` (projectile 0x15) draws anywhere. The jar latches it only from the side it faces (`animationState >> 1 == type`), and the web comes away only as the player is pulled back. **A web whose stand tile backs onto a wall or another web is grabbed and never comes off;** with one free tile behind it is hit and miss, so the generator wants two. The Lantern burns a web from any side. | probe traces |
 | The web's stand tile must be plain floor. On a ladder the player is in `PLAYER_CLIMB` and the jar does nothing (a Minish house). | probe trace |
 | The `DUST` cloud (enemy 0x53, type 0, Hyrule Town's carpet dust) is cleared in 107 frames, **but only with the player 23 to 36 px straight below its centre**. At 16 px or 44 px it never came. It deletes itself while the town flag `MACHI_MACHIHOKORI` is set, so the room clears that flag before each cloud. It neither blocks nor hurts. | probe: distance sweep |
 | A dust cloud is an ENEMY entity. `QuickStartEnemyIsOurs` now never counts `DUST`, so waves, caps and the GFX trim leave it alone. | game.c |
@@ -73,7 +73,7 @@ table.
 | kind | sites | layouts | styles |
 |---|---|---|---|
 | Torches | 45 | 234 | spread, cluster, hidden (against the room's own walls and furniture, far from the door) |
-| Cleanup | 76 | 245 | scatter (webs and up to two clouds), walls (webs hung on the walls, facing in) |
+| Cleanup | 75 | 232 | scatter (webs and up to two clouds), walls (webs hung on the walls, facing in) |
 
 The proofs:
 
@@ -81,9 +81,10 @@ The proofs:
   to the doors, the prize spot and the edges, and seals no pocket bigger
   than four tiles.
 - Every torch has a plain-floor neighbour joined to the arrival.
-- The webs clear in some order: each web's stand tile and the tile behind
-  it are plain floor (ground act tiles, so no ladder) reachable once the
-  webs before it are gone.
+- The webs clear in some order: each web's stand tile and the two tiles
+  behind it are plain floor (ground act tiles, so no ladder) reachable
+  once the webs before it are gone. With only one free tile behind, the
+  web came away or not depending on where in the tile the player stood.
 - Every cloud has open ground all round and the two plain-floor tiles
   below it reachable.
 - Nothing stands on a reserved tile or within two tiles of the arrival.
@@ -124,7 +125,7 @@ The proofs:
   hollows, dojos, Great Fairy rooms, the Minish houses, the dark Veil Falls
   stair. The rest have no captured floor (they share their room with other
   sites, like the Boomerang cave) or no layout fits.
-- **Cleanup at 43 sites.** The same shared-room rule, rooms too small for
+- **Cleanup at 44 sites.** The same shared-room rule, rooms too small for
   six pieces, and the barrel Minish house (site 99), where the player on a
   web's stand tile goes into `PLAYER_CLIMB` and the jar does nothing.
 - **Two broken sites: the North Hyrule Field fairy fountain tree (47) and
@@ -137,7 +138,7 @@ The proofs:
 
 | tool | what | result |
 |---|---|---|
-| `lantern_rooms.py --verify` | every shipped layout re-proven | 479 layouts, 0 problems |
+| `lantern_rooms.py --verify` | every shipped layout re-proven | 466 layouts, 0 problems |
 | `lantern_probe.py` | every layout played in the ROM: dealt, seen, solved, won, waves after the win, prize taken, site DONE | see the roadmap entry |
 | `lantern_gust_survey.py --draw` | which sites draw a torch | 59 of 119 |
 | `hazard_probe.py` | what each roster enemy does to the player | table above |
