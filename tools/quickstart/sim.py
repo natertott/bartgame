@@ -1160,9 +1160,9 @@ def site_roll(seed, i, forced=0):
             ((chain_hash(seed, 0xB10C + i) >> 5) & 0x7fff) % 3 == 0:
         kind = EV_BLOCKS
     if cls in ('ANY', 'LARGE', 'SMALL'):
-        if TORCH_SITES[i] and ((chain_hash(seed, 0x70C3 + i) >> 5) & 0x7fff) % 5 == 0:
+        if TORCH_SITES[i] and ((chain_hash(seed, 0x70C3 + i) >> 5) & 0x7fff) % 6 == 0:
             kind = EV_TORCHES
-        elif CLEANUP_SITES[i] and ((chain_hash(seed, 0xC1EA + i) >> 5) & 0x7fff) % 5 == 0:
+        elif CLEANUP_SITES[i] and ((chain_hash(seed, 0xC1EA + i) >> 5) & 0x7fff) % 6 == 0:
             kind = EV_CLEANUP
     if forced & CHAIN_EVENT_FORCED and (forced & 0x7f) in (EV_TORCHES, EV_CLEANUP):
         kind = forced & 0x7f

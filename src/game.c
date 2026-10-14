@@ -21385,17 +21385,19 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
         (s32)((QuickStartChainHash(0xB10Cu + (u32)site) >> 5) & 0x7fff) % 3 == 0) {
         kind = QS_EVENT_BLOCKS;
     }
-    // The torch and cleanup rooms (Oct 2026): one in five each, by hashes
+    // The torch and cleanup rooms (Oct 2026): one in six each, by hashes
     // of their own, at a site the generator built layouts for, over the
-    // same open kinds. Torches first: a site may hold both.
+    // same open kinds. Torches first: a site may hold both. One in five
+    // gave the pair a fifth of all rolls; the user asked for one in six
+    // (about a sixth, simulated over 300 seeds).
     if (sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_ANY ||
         sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_LARGE ||
         sQuickStartRoomContentSites[site].kinds == QUICKSTART_KINDS_SMALL) {
         if (QuickStartLanternCountForSite(site, QS_LANTERN_TORCHES) > 0 &&
-            (s32)((QuickStartChainHash(0x70C3u + (u32)site) >> 5) & 0x7fff) % 5 == 0) {
+            (s32)((QuickStartChainHash(0x70C3u + (u32)site) >> 5) & 0x7fff) % 6 == 0) {
             kind = QS_EVENT_TORCHES;
         } else if (QuickStartLanternCountForSite(site, QS_LANTERN_CLEANUP) > 0 &&
-                   (s32)((QuickStartChainHash(0xC1EAu + (u32)site) >> 5) & 0x7fff) % 5 == 0) {
+                   (s32)((QuickStartChainHash(0xC1EAu + (u32)site) >> 5) & 0x7fff) % 6 == 0) {
             kind = QS_EVENT_CLEANUP;
         }
     }
