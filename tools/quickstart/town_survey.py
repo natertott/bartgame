@@ -56,7 +56,7 @@ def main():
         for i in range(0, len(spots), 6):
             print('    ' + ' '.join('{ %d, %d },' % p for p in spots[i:i + 6]))
         print('};')
-        print('#define QUICKSTART_HYRULETOWN_ROOM_SQUARES %d' % (len(union) // 9))
+        print('// %d 32x32 squares (tiles / 4); the shipped define is raised past it' % (len(union) // 4))
 
 if __name__ == '__main__':
     main()

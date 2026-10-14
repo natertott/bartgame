@@ -44,6 +44,9 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Hyrule Town: the wave ceiling from 19 to 28 (the town was sized in the wrong unit), and a fuser spot row so the four fields' fusions travel into the square; town puzzles re-verified 1,528/1,528 | "Hyrule Town: more enemies, fusers in the square" |
+| South Hyrule Field's frozen deaths and fuser colours traced to the entity table (71/72) and the palette table (all nine held). Fixed with an entity reserve, projectiles in the wave budget, a palette reserve that counts pending kinds, a floor drop cap and a death-path eviction; peak 56-60 entities of 72 (was up to 71), no palette-full frame, no lost death. The slowdown is cast-dependent (16 staged Ropes: 34 fps; Keese: 52), measured, not fixed yet. `shf_probe.py` (new) | "South Hyrule Field: frozen deaths, fuser colours, slowdown" |
+| Sword variants as one table: the Rusted Blade's HUD and menu icon (was a lantern), menu name and swing tint fixed; adding a variant is one row. `sword_variant_probe.py` 3/3 | "Sword variants: one table, every draw" |
 | Block puzzles from a pool: 1,528 proven puzzles in 112 frames (24 ? room sites, 10 field rows), drawn per run uniformly over a room's pool, so a room repeats its puzzle in 2.8% of run pairs at the median. `--verify` 1,528/1,528, ROM probe 224/224, run draw 23/23. Fixed: unreachable maze switches, templates that matched early | "Block puzzles: a pool per room, a new puzzle each run" |
 | Block puzzles, both variants of the user's sheet: templates (copy the gray shape) and mazes (clear the way to a chest or a door). 162 generated, solved instances in 31 ? room sites and 11 field rows; a new ? room kind (`QS_EVENT_BLOCKS`, one in three at those sites) and a field block quest; colour-coded rocks, a reset switch, three new push rules through one hook. `block_probe.py --rules` 162/162 | "Block puzzles: templates and mazes, ? rooms and a field quest" |
 | Rare-region boost (Royal Valley and the Ruins weigh 8, Lake Hylia 3 in every chain pick; an escalation seek; twice the drop share): Lake Hylia 1.5% to 9.4% of requirements, Royal Valley 0.75% to 3.1%, the Ruins 0.06% to 0.22%. Both business scrubs are ? rooms (sites 117, 118). South Hyrule Field's stale bridge to North Hyrule Field removed from the reach survey. `chain_roll_validate.py` 800/800 | "Rare regions boosted, two scrub ? rooms, the town in the reach graph" |
@@ -95,6 +98,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 ## Outstanding
 
 ### Needs the user, not an agent
+
+- **Play South Hyrule Field and fuse there.** Say whether enemies still
+  freeze on death, whether a fuser's colours look wrong during or after a
+  fusion, and if the field still slows, which enemies were on screen.
+  Also say whether Hyrule Town now reads busy enough, or whether its
+  houses should open as ? rooms (the roadmap entry has the plan).
 
 - **Play a block puzzle by hand.** Every puzzle's solution is replayed
   offline and a sample is solved in the ROM by `block_probe.py`, but the
@@ -277,6 +286,12 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   that Crenel waves pay nothing.
 
 ### Straightforward work, not started
+
+- **A per-kind CPU price for the wave budget.** Stage 16 of each roster
+  kind the way the South Hyrule Field roadmap entry does, record game
+  frames per 300, and charge the deal by it as `QuickStartKindEntityCost`
+  charges entities. Pin down why the full test kit and a block quest make
+  the same Ropes cost more first.
 
 - **The rest of P2 and P3 of the redesign** (`docs/QUICKSTART_REDESIGN_PLAN.md`
   §11). Shipped: the performance census, Hyrule Town, the seashells, the

@@ -351,6 +351,28 @@ so nobody re-invents them:
   `tools/quickstart/gfx_floor.py` measures one room in a minute.
 - Slots in status 3 (`GFX_SLOT_FOLLOWER`) look free and are not - they are
   the tails of multi-slot sheets.
+- **The entity table runs out before the GFX table in a busy field.** A
+  death borrows a slot for its DEATH_FX; with none free the enemy freezes
+  for 255 frames and drops nothing. Projectiles (Pesto's dirt ball, Spear
+  Moblin's spear) and floor drops (600 frames each) hold slots the
+  live-enemy count never saw. `QUICKSTART_ENTITY_RESERVE` (16) and the floor
+  drop cap hold it now; `shf_probe.py` measures it. To free a slot *this*
+  frame, set `ENT_DELETED` on a linked entity: `GetEmptyEntity`'s last pass
+  evicts it on the spot. `DeleteEntity` does not free it until frame end.
+- **Nine dynamic OBJ palettes (6-14), and a failed load is silent.**
+  `LoadObjPalette` falls back to slot 0, the player's palette, so a sprite
+  draws in the wrong colours with no error. An entity created this frame
+  has not loaded its palette yet, so the free count reads high during a
+  burst (`QuickStartFreeObjPalettes` counts those kinds as pending).
+- **An empty wave deal is retried every frame.** `QuickStartSpawnRegionWave`
+  returning FALSE means "try next frame", by design (arrival waits for the
+  GFX table). So any new refusal inside the deal must be cheap or must not
+  persist: a palette rule that refused every kind made each frame pay a
+  full deal and took Hyrule Town to 15 fps with nothing on screen.
+  `QuickStartSpawnEnemyGroupAtDifficulty` now refuses up front.
+- **The kinstone menu loads its art over OBJ tiles 0x40-0x2CF** (GFX slots
+  up to 24). Harmless: `RestoreGameTask` re-uploads every loaded slot on
+  exit. Measured while chasing the fuser report; ruled out.
 
 ## 5. World-model traps
 
@@ -376,6 +398,23 @@ so nobody re-invents them:
   Minish model wrong in opposite directions before this landed.
 
 ## 6. Live gameplay issues, unresolved
+
+- **Slowdown by cast, measured but not explained.** 16 Ropes staged in
+  Lake Hylia (full test kit, block quest up) run 170 game frames per 300
+  (34 fps); Peahats 198, Keese 260; the same Ropes in a plain boot run 294.
+  Disabling the block rocks' updates changes nothing; the kit matters.
+  The roadmap's South Hyrule Field entry has the table and the next step
+  (a per-kind CPU price). Seed changes shift wave draws, so a probe that
+  quietly assumes 60 fps can break when a heavy kind is drawn: the
+  blessing probe now pins the wave latch for that reason.
+- **`scenario_probe.py`'s carry check is stale.** It hosts the carry quest
+  in Lon Lon Ranch, but since the one-room rebuild no carry pair lives
+  there (they are in North Field, Castor Wilds, Minish Woods and Mount
+  Crenel), so "carry giver spawned" fails on every build.
+- **The fuser glitch was not seen directly.** No probe drove a whole fusion
+  in a loaded field. The mechanism fixed (a full palette table drawing a
+  face in palette 0) fits the report, and the palette table no longer
+  fills. A look at a fusion in South Hyrule Field confirms it.
 
 - **Trilby boss reaching the southwest** - fixed in code, never witnessed.
 - **8 rooms / 18 content sites never reachable** in any simulated run.

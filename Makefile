@@ -33,6 +33,7 @@ VARIANT_OBJS := \
 	build/USA/data/scripts.o \
 	build/USA/src/beanstalkSubtask.o build/USA/src/beanstalkSubtask.s build/USA/src/beanstalkSubtask.i \
 	build/USA/src/playerItem.o build/USA/src/playerItem.s build/USA/src/playerItem.i \
+	build/USA/src/enemyUtils.o build/USA/src/enemyUtils.s build/USA/src/enemyUtils.i \
 	build/USA/src/menu/pauseMenu.o build/USA/src/menu/pauseMenu.s build/USA/src/menu/pauseMenu.i \
 	build/USA/src/collision.o build/USA/src/collision.s build/USA/src/collision.i \
 	build/USA/src/data/transitions.o build/USA/src/data/transitions.s build/USA/src/data/transitions.i \

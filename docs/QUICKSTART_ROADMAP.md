@@ -1271,6 +1271,120 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Hyrule Town: more enemies, fusers in the square (Oct 2026)
+
+The user: "Hyrule Town is too empty. Can we add significantly more enemies
+to this area? We need more content inside Hyrule Town in general."
+
+**Enemies.** The town was sized at 259 squares, a ceiling of 19 live
+enemies. `town_survey.py` had divided its 2,331 tiles by 9; every other
+region counts 32x32 squares (tiles / 4), which is 582. The define is now
+700, which takes the hardware ceiling of 28 (`QUICKSTART_MAX_LIVE_ENEMIES`),
+North Field's own. The town has no cast to pay for, and the entity, GFX and
+palette reserves (the entry below) bound what the square cannot afford.
+
+**Fusers.** The town owned no fusion, so nobody stood in it. It now has a
+row in `sQuickStartFuserSpots` (nine of its own surveyed wave spots, clear
+of the gates, the drop, the boss tile and the block-puzzle boards), so the
+four neighbouring fields' fusions travel into the square
+(`QuickStartFuserPlacements`). `block_puzzles.py --verify` re-checks every
+town puzzle against the new reserved tiles: 0 problems.
+
+**Measured** (`shf_probe.py --row 19`, difficulty 3, four seeds): peak
+live enemies 27, 21, 11 and 27, up from 19 and 16 before; the 11 is a
+seed whose block maze puts 26 rocks in the square, and the entity reserve
+holds the wave back for them. Worst frame rate 50-54 fps, no lost death,
+no full palette table. `town_probe.py` 18/18 (its gate walks now clear
+enemies standing in the lane first). **Next for the town**, not
+done here: the 31 house doors are refused by containment, so the houses
+are the obvious place for ? rooms. That needs room ownership, containment
+exceptions, site rows and hint lines, the reach model and the simulator,
+the same scope as Veil Falls' content. It is the next step if the square
+still reads empty.
+
+### South Hyrule Field: frozen deaths, fuser colours, slowdown (Oct 2026)
+
+The user's report: killed enemies freeze, drop nothing and vanish seconds
+later; kinstone fuser sprites glitch; the field slows down depending on
+which enemies spawned. Asked: GFX budget, RAM, or something else?
+
+**It is the entity table and the palette table, not GFX and not RAM.**
+`shf_probe.py` (new) watches every table frame by frame. Findings, with the
+full numbers in `docs/QUICKSTART_BUDGET.md` section 6:
+
+- A death needs a DEATH_FX entity (`EnemyCreateDeathFX`). At 71 of 72 the
+  engine refuses it, and the enemy stands on its 255-frame timer with no
+  drop. That is the frozen sprite exactly. The table reached 71 with 27
+  enemies, 12 Pesto carrying 12 dirt balls and 19-22 uncollected drops.
+  The live-enemy ceiling never counted projectiles.
+- Nine dynamic OBJ palettes. A failed load silently draws in palette 0,
+  the player's. One seed held all nine on 747 of 3,000 frames: the wave
+  took three at entry, then a fuser face and a tingle placed on the same
+  frame both read two free and took the last two.
+- No fuser ever drew from a stale GFX slot in any run. The fusion menu's
+  art overwrites OBJ tiles 0x40-0x2CF, but the menu's exit re-uploads
+  every loaded slot.
+
+**Fixes:** enemy spawns stop 16 slots short of the table
+(`QUICKSTART_ENTITY_RESERVE`, at each kind's true cost); projectiles count
+in the wave budget; Pesto and Spear Moblin cost 2; a new enemy kind needs a
+palette to spare, counting kinds spawned but not yet initialised; fuser
+faces and tingles wait for a spare palette; past eight timed drops the
+oldest blinks out (rewards and kinstones never); a death that still finds
+the table full evicts the oldest drop or a projectile, or vanishes in 10
+frames instead of 255.
+
+**Found on the way, and fixed:** a wave deal that places nothing is retried
+the very next frame, and the deal is expensive. While a reserve held, that
+retry ran every frame: Hyrule Town with a block quest up fell to one game
+frame in four (15 fps) with no enemy on screen. The deal now refuses up
+front, before any work, when no enemy could be created at all. A room with
+no enemy alive always gets its first kind if any palette is free. A
+placement refused for a palette goes to a kind already standing in the
+room, so the wave keeps its head count. The town went from 14 fps back to
+54, and that seed's wave from 11 enemies back to 21.
+
+**Result**, four seeds at difficulty 3: peak entities 71/56/64/64 became
+57/56/60/59; palette-full frames 747/116/0/0 became 0; no death lost.
+In the synthetic every-enemy-at-once case, lost deaths fell from 27% to
+1 in 744 (0.1%), and that one vanishes in 10 frames instead of 255.
+
+**Open: the slowdown is real and depends on the cast, not yet explained.**
+The field probe never fell below 50 fps in ordinary play. But staging one
+kind at a time (16 of it, raw through the measurement mailbox, in the
+Lake Hylia REGION scenario with the full test kit and its block quest up)
+gives game frames per 300 video frames:
+
+| staged kind | game frames / 300 |
+|---|---|
+| none (the wave only) | 300 |
+| Keese | 260 |
+| Tektite | 256 |
+| Peahat | 198 |
+| Rope | 170 |
+
+The same 16 Ropes in a plain Lake Hylia boot run 294; with the empty kit
+or the test kit, 252-256 (and no block quest rolled). Taking the block
+rocks' updates away did not help (157). So it is neither the rock count
+nor the enemy count alone: some kinds cost far more than others in some
+states, and the 28-enemy ceiling prices them all the same. Next: a
+per-kind CPU price measured this way over the whole roster, charged like
+`QuickStartKindEntityCost`, and the kit's part pinned down.
+
+### Sword variants: one table, every draw (Oct 2026)
+
+The Rusted Blade showed as a lantern on the HUD and in the menu, and its
+swing kept the plain blade's colour. The user asked for a fix that scales
+to more variants. A variant is now one row of `sQuickStartSwordVariants`
+(its item id, the sword whose art it borrows, its tint). Every place a
+sword is drawn asks `QuickStartGroundLook` and `QuickStartItemTint`: the
+floor and item-get, the HUD buttons (`ui.c`), the pause menu's grid, slots
+and name line (`pauseMenu.c`), the swing's form and palette
+(`playerItem.c`), and the trophy case. Item-sheet icons force palette 4, so
+their OAM entries are patched into a shared tinted slot. Adding a variant
+takes a free sword item id, a row, and a tint tier.
+`sword_variant_probe.py` checks HUD, swing and menu per row: 3/3.
+
 ### Block puzzles: a pool per room, a new puzzle each run (Oct 2026)
 
 The user: the puzzles should be generated each run, or drawn from a pool

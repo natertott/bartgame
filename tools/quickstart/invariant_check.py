@@ -726,7 +726,7 @@ for _a, _ns in RING_ADJ.items():
         assert _a in RING_ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
 # The ring each row of sQuickStartFuserSpots sits in, in table order.
 SPOT_REGIONS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
-                'MW', 'LH', 'CREN', 'VF']
+                'MW', 'LH', 'CREN', 'VF', 'HT']
 SPOTS_PER_REGION = 9
 # This list is a hand copy of sQuickStartFuserSpotRegions, and a hand copy that
 # silently falls behind the table it mirrors is how the fuser tier starts

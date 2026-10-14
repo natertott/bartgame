@@ -61,9 +61,15 @@ delete = C.map_sym('DeleteEntity')
 PLIST = 0x02001a00   # gPaletteList (linker.ld)
 PBUF = 0x020176a0    # gPaletteBuffer (linker.ld)
 
+WAVE_LATCH = 0x02034384   # QS room flag 0, "a wave is out" (cpu_probe.py)
+
 def run(c, n):
+    # The latch pinned: once the opening wave is killed the region deals no
+    # more, so a heavy cast (16 Ropes beside a block quest lagged the game to
+    # two frames in three) cannot swamp what is being measured here.
     for _ in range(n):
         c.memory.u8[PLAYER + 0x45] = c.memory.u8[MAXHEALTH]
+        c.memory.u8[WAVE_LATCH] = c.memory.u8[WAVE_LATCH] | 1
         c.run_frame()
 
 def local_player(c):
@@ -108,15 +114,21 @@ for curse, want in (('ITEM_PIE', 'ITEM_BRIOCHE'), ('ITEM_QST_DOGFOOD', 'ITEM_CRO
         C.call_keep(c, delete, (p,))
 check('GREEN: each curse is its blessing, in green', all(g for _, g in got), str(got))
 
-# GOLD: one in four
+# GOLD: one in four. In the hub's quiet hall, not the region: a deleted
+# entity is freed at the end of a GAME frame, and a region whose wave lags
+# the game (16 Ropes beside a block quest ran two game frames in three)
+# piled one undeleted pastry per video frame until the table was full.
+cq = S.boot(ROM, 0, seed=3, frames=300)
+run(cq, 30)
 n = gold = 0
 for _ in range(200):
-    p = put(c, I['ITEM_BRIOCHE'], 0, 40)
+    p = put(cq, I['ITEM_BRIOCHE'], 0, 40)
     if p:
-        n += 1; gold += c.memory.u8[p + 11] == 2
-        C.call_keep(c, delete, (p,))
-    run(c, 1)   # a deleted entity's slot is freed at the frame's end
+        n += 1; gold += cq.memory.u8[p + 11] == 2
+        C.call_keep(cq, delete, (p,))
+    run(cq, 1)   # a deleted entity's slot is freed at the frame's end
 check('GOLD: a brioche is gold about one time in four', n == 200 and 30 <= gold <= 70, '%d of %d' % (gold, n))
+del cq
 
 # TINT: the three tiers side by side, in the hub's selection hall - a quiet
 # room, so the palette slots are not all taken by a region's cast (that case

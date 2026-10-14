@@ -236,6 +236,17 @@
   and a gold cake taken off the floor. Saves `blessing_tiers.png` to
   `--out`, and forges a full palette table to prove an untintable green
   pastry turns back into its curse. 14/14.
+- `sword_variant_probe.py` - every row of `sQuickStartSwordVariants`: the
+  HUD button's icon in the variant's tint, the swing's blade entity in its
+  tinted palette, and the pause menu's button and grid entries. 3/3 per row.
+- `shf_probe.py` - a field under load, frame by frame: the entity table
+  (gEntCount of 72), GFX slots, OBJ palettes (and frames with all nine
+  dynamic ones held), OAM, the true frame rate, deaths that never got their
+  DEATH_FX (the frozen-enemy symptom), NPCs drawn in palette 0 (a failed
+  load) and sprites drawn from a stale GFX slot. Kills one enemy every
+  `--every` frames (`--all`: every enemy at once); `--no-collect` leaves
+  the drops on the floor. `--row` picks the region (2 = South Hyrule Field,
+  19 = Hyrule Town).
 - `sim_study.py` - the simulation study: plays hundreds of thousands of
   runs per cohort over four processes and writes
   `docs/QUICKSTART_SIM_STUDY.md` and `docs/sim_study/`: rooms reachable and

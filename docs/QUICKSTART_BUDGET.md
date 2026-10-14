@@ -214,6 +214,68 @@ have M").
   push CPU over budget - price any future one (see the F9 note about
   other gang kinds) with this tool before it reaches the tier table.
 
+### 6. The entity and palette tables (Oct 2026, South Hyrule Field)
+
+  The user's report: enemies that freeze when killed, drop nothing and
+  vanish seconds later; kinstone fuser sprites drawing wrong; slowdown that
+  depends on the cast. `shf_probe.py` (difficulty 3, one kill every 40
+  frames, drops left on the floor, 3,000 frames, four seeds) found the two
+  tables this doc had not been watching:
+
+  - **Entities.** A death is two entities for a moment: the enemy waits
+    while its DEATH_FX plays and makes the drop. `GetEmptyEntity` refuses
+    at 71, and a NULL DEATH_FX leaves the enemy on its 255-frame timer
+    with no drop - the frozen sprite exactly. Peaks of 71/72 were 27
+    enemies, 12 Pesto carrying 12 dirt balls (a projectile is not an
+    enemy, so the live-enemy ceiling never counted them) and 19-22
+    uncollected drops, each alive 600 frames.
+  - **Palettes.** Nine dynamic OBJ palettes (slots 6-14). A failed load
+    falls back to palette 0, the player's, silently. One seed held all
+    nine on 747 of 3,000 frames: the wave took three at room entry, then
+    the room's fuser face and a tingle, placed on the same frame about a
+    second later, each read two free and took the last two.
+
+  The rules that hold them now (game.c, next to the GFX reserve):
+
+    QUICKSTART_ENTITY_RESERVE 16    enemy spawns stop 16 short of 71,
+                                    charged at the kind's true cost
+    projectiles in the wave budget  carried spears and dirt balls count
+    PESTO, SPEAR_MOBLIN cost 2      their carried projectile
+    QUICKSTART_PALETTE_RESERVE 2    a NEW enemy kind needs 3 free palettes
+                                    (1 if no enemy is alive); pending (not
+                                    yet Init) kinds count; a refused body
+                                    goes to a kind already in the room
+    up-front refusal                a deal that cannot create any enemy
+                                    returns before its reach checks: its
+                                    callers retry every frame, and an
+                                    expensive refusal each frame took
+                                    Hyrule Town to 15 fps
+    fuser face / tingle             placed only if a palette is left over
+    QUICKSTART_FLOOR_DROP_CAP 8     past 8 timed drops the oldest blinks out
+    QuickStartFreeEntityForDeath    a death that finds the table full
+                                    evicts the oldest timed drop or a
+                                    projectile; else it vanishes in 10 frames
+
+  Measured, same seeds:
+
+    seed     entities    palettes full    deaths lost    worst fps
+             before/after  before/after   before/after   before/after
+    0x5F0    71 / 57      747 / 0          1 / 0          52 / 52
+    0x24DF   56 / 56      116 / 0          0 / 0          56 / 54
+    0x43CE   64 / 60        0 / 0          0 / 0          56 / 54
+    0x62BD   64 / 59        0 / 0          0 / 0          56 / 50
+
+  With every enemy killed at once every 40 frames (`--all`, a synthetic
+  worst case far past a spin attack), 1 death in 744 (0.1%) still finds no slot,
+  down from 27%, and they vanish in 10 frames instead of standing for 255.
+  The frame rate never fell below 50 fps in ordinary play on any seed,
+  before or after; the only deep dips measured (18-20 fps) are the
+  27-at-once synthetic case, a burst of deaths and effects. But section 5's
+  "normal content never lags" does not hold for every cast: 16 Ropes
+  staged in Lake Hylia (full test kit, block quest up) run 170 game frames
+  in 300, Peahats 198, Keese 260. The roadmap's South Hyrule Field entry
+  has the table; a per-kind CPU price is the next measurement.
+
 ## Caveats
 
 - The lag ratio is cycle-accurate and trustworthy. The ms/f column in

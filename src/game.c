@@ -5055,7 +5055,15 @@ static const s16 sQuickStartHyruleTownEnemyOffsets[][2] = {
     { 632, 104 }, { 168, 232 }, { 664, 776 }, { 56, 456 }, { 504, 344 }, { 728, 424 },
     { 792, 904 }, { 392, 776 }, { 856, 232 }, { 296, 232 },
 };
-#define QUICKSTART_HYRULETOWN_ROOM_SQUARES 259
+// The plaza's size for the density table and the ceiling. The survey's
+// 2,331 tiles are 582 of the 32x32 squares every other region counts in;
+// the first cut printed 259 (tiles / 9), pricing the town at a ceiling of
+// 19 - the "too empty" the user reported (Oct 2026: "Can we add
+// significantly more enemies to this area?"). 700 takes the hardware
+// ceiling, 28 (QUICKSTART_MAX_LIVE_ENEMIES), the North Field's own: the
+// town has no cast of its own to pay for, and the entity, GFX and palette
+// reserves bound whatever the square cannot afford.
+#define QUICKSTART_HYRULETOWN_ROOM_SQUARES 700
 
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
@@ -9721,6 +9729,12 @@ static const QuickStartKindCost sQuickStartKindCosts[] = {
     { ENEMY_50, 4 },
     { BOMB_PEAHAT, 2 },
     { RUPEE_LIKE, 2 },
+    // A blue Pesto spawns carrying a dirt ball (pesto.c Init), a red one
+    // makes one to throw: a projectile the live-enemy count never sees.
+    { PESTO, 2 },
+    // Carries its spear as a projectile entity (spearMoblin.c): 13
+    // Moblins were 26 entities in South Hyrule Field (shf_probe.py).
+    { SPEAR_MOBLIN, 2 },
 };
 
 static s32 QuickStartKindEntityCost(u8 id) {
@@ -9942,6 +9956,129 @@ static bool32 QuickStartGfxBudgetForNewKind(void) {
 // Is there room to put ANY further entity on screen?
 static bool32 QuickStartGfxBudgetForSpawn(void) {
     return QuickStartReclaimableGfxSlots() > QUICKSTART_GFX_HARD_FLOOR;
+}
+
+// --- The entity table and the palette table (Oct 2026) --------------------
+//
+// The user's South Hyrule Field report: enemies that freeze when killed,
+// drop nothing and vanish seconds later; kinstone fusion sprites that draw
+// wrong; slowdown that depends on the cast. One cause under all three:
+// the field fills the OTHER two tables the GFX reserve never looked at.
+//
+// ENTITIES. A death is two entities for a moment: the enemy stays while
+// its DEATH_FX (enemyUtils.c EnemyCreateDeathFX) plays the death and makes
+// the drop. GetEmptyEntity refuses once gEntCount reaches 71, and a NULL
+// DEATH_FX leaves the enemy standing on its 255-frame timer with no drop:
+// the frozen sprite, exactly. Measured (shf_probe.py, SHF difficulty 3):
+// 71 of 72 with 27 enemies, 12 Pesto carrying 12 dirt balls (a projectile
+// is not an enemy, so the live-enemy ceiling never saw them), and 19
+// uncollected drops, each alive 600 frames. A kinstone fusion's world
+// event builds its result through LoadRoomEntity, which needs the same
+// slots. So enemy spawns stop short of a reserve that deaths, drops,
+// projectiles and fusion results are left to share.
+//
+// PALETTES. Nine dynamic OBJ palettes (gPaletteList 6-14). A failed load
+// does not fail loudly: SetEntityObjPalette falls back to palette 0, the
+// player's, and the sprite draws in the wrong colours. Measured: all nine
+// held on 747 of 3000 frames of one SHF seed. Enemies of a kind already in
+// the room share its palette, so only a NEW kind is refused when the
+// table is down to its reserve.
+#define QUICKSTART_ENTITY_RESERVE 16
+#define QUICKSTART_PALETTE_RESERVE 2
+
+static s32 QuickStartFreeEntitySlots(void) {
+    return (MAX_ENTITIES - 1) - (s32)gEntCount;
+}
+
+// Free or reclaimable (state 0 or 1, FindFreeObjPalette's own test)
+// dynamic OBJ palettes, less one for each enemy or NPC kind created but
+// not yet through its Init: a burst spawn creates the whole wave before any
+// of it loads a palette, so the table reads emptier than it is (the same
+// trap the GFX reserve's comment describes). Measured: a fuser face and a
+// tingle placed on the same frame both read two free and took the last two.
+static s32 QuickStartFreeObjPalettes(void) {
+    s32 i, k, n = 0, pending = 0;
+    u16 seen[8];
+    for (i = 6; i < (s32)ARRAY_COUNT(gPaletteList); i++) {
+        if (gPaletteList[i]._0_0 <= 1) {
+            n++;
+        }
+    }
+    for (i = 0; i < MAX_ENTITIES && pending < (s32)ARRAY_COUNT(seen); i++) {
+        Entity* e = &gEntities[i].base;
+        u16 key = (u16)((e->kind << 8) | e->id);
+        if ((e->kind != ENEMY && e->kind != NPC) || (e->flags & ENT_DID_INIT)) {
+            continue;
+        }
+        for (k = 0; k < pending && seen[k] != key; k++) {
+        }
+        if (k == pending) {
+            seen[pending++] = key;
+        }
+    }
+    return n - pending;
+}
+
+static bool32 QuickStartKindLive(u8 id) {
+    s32 i;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == ENEMY && gEntities[i].base.id == id) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static s32 QuickStartKindEntityCost(u8 id);
+static s32 QuickStartLiveEnemyCount(void);
+
+static s32 QuickStartCountProjectiles(void) {
+    s32 i, n = 0;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == PROJECTILE) {
+            n++;
+        }
+    }
+    return n;
+}
+
+// May an NPC face `id` be placed now? Yes if one already stands here (the
+// palette is paid) or if placing it still leaves a palette over. Only the
+// retrying placers ask (fusers, tingles); quest NPCs are never refused.
+static bool32 QuickStartNpcPaletteOk(u8 id) {
+    s32 i;
+    if (QuickStartFreeObjPalettes() >= 2) {
+        return TRUE;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (gEntities[i].base.kind == NPC && gEntities[i].base.id == id) {
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// May an enemy of `id` be created now? The GFX floor, the entity reserve
+// (charged at the kind's true cost), and a palette for a kind not yet here.
+static bool32 QuickStartEnemyBudgetFor(u8 id) {
+    if (!QuickStartGfxBudgetForSpawn()) {
+        return FALSE;
+    }
+    if (QuickStartFreeEntitySlots() - QuickStartKindEntityCost(id) < QUICKSTART_ENTITY_RESERVE) {
+        return FALSE;
+    }
+    // A new kind needs a palette to spare; but a room with no enemy alive
+    // always gets its first kind if any palette is free at all, or a room
+    // whose own objects hold the table (Hyrule Town with a block quest up:
+    // a bell, a door, furniture, a switch, two rock tints) is a room whose
+    // wave can never be dealt.
+    if (!QuickStartKindLive(id)) {
+        s32 free = QuickStartFreeObjPalettes();
+        if (free < 1 || (free <= QUICKSTART_PALETTE_RESERVE && QuickStartLiveEnemyCount() > 0)) {
+            return FALSE;
+        }
+    }
+    return TRUE;
 }
 
 // The frame-rate ceiling on how many enemies a wave may put in a room.
@@ -10550,6 +10687,14 @@ static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 of
     const QuickStartArchetype* shape;
     s32 shareTotal = 0;
 
+    // Refuse up front, before the reach checks and the draw below, when no
+    // enemy at all could be created. A deal that places nothing is retried
+    // the next frame by its callers (QuickStartSpawnRegionWave), so an
+    // expensive refusal every frame is a frame-rate collapse: measured in
+    // Hyrule Town at one game frame in four while a reserve held.
+    if (!QuickStartGfxBudgetForSpawn() || QuickStartFreeEntitySlots() - 1 < QUICKSTART_ENTITY_RESERVE) {
+        return 0;
+    }
     if (offsetCount > 72) {
         offsetCount = 72;
     }
@@ -10607,7 +10752,10 @@ static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 of
     {
         bool32 unusedHasBoss;
         s32 roomCeiling = (maxEnemies < QUICKSTART_MAX_LIVE_ENEMIES) ? maxEnemies : QUICKSTART_MAX_LIVE_ENEMIES;
-        entityBudget = roomCeiling - QuickStartCountRegionEnemies(&unusedHasBoss);
+        // Projectiles count against it too: a carried spear or dirt ball is
+        // a whole entity the frame updates, and the room's entity table
+        // holds it as surely as the enemy (QUICKSTART_ENTITY_RESERVE).
+        entityBudget = roomCeiling - QuickStartCountRegionEnemies(&unusedHasBoss) - QuickStartCountProjectiles();
         if (entityBudget < 0) {
             entityBudget = 0;
         }
@@ -10794,6 +10942,33 @@ static s32 QuickStartSpawnEnemyGroupAtDifficulty(const s16 (*offsets)[2], s32 of
             }
             if (alt < 0) {
                 break;
+            }
+            chosen = alt;
+            id = kindIds[chosen];
+            form = kindForms[chosen];
+        }
+        // The entity and palette reserves (QuickStartEnemyBudgetFor). Out of
+        // entities is the end of the deal. A kind refused only for want of a
+        // palette hands its body to a kind already standing here (one whose
+        // palette is paid), the live-cap redirect's rule: the wave keeps its
+        // head count and only its composition narrows. Measured without the
+        // redirect: Hyrule Town with a block quest up dealt 11, not 27.
+        if (!QuickStartEnemyBudgetFor(id)) {
+            s32 alt = -1;
+            if (QuickStartFreeEntitySlots() - QuickStartKindEntityCost(id) < QUICKSTART_ENTITY_RESERVE) {
+                break;
+            }
+            for (tmp = 0; tmp < kindCount; tmp++) {
+                s32 k = (r + tmp) % kindCount;
+                if (kindIds[k] != id && QuickStartKindLive(kindIds[k]) && QuickStartEnemyBudgetFor(kindIds[k]) &&
+                    QuickStartKindEntityCost(kindIds[k]) <= entityBudget &&
+                    !QuickStartKindAtLiveCap(kindIds[k], difficulty)) {
+                    alt = k;
+                    break;
+                }
+            }
+            if (alt < 0) {
+                continue;
             }
             chosen = alt;
             id = kindIds[chosen];
@@ -12230,6 +12405,107 @@ static void QuickStartMeasureMailbox(void) {
     box[0] = 0;
 }
 
+// FLOOR DROPS (Oct 2026). Enemy drops live 600 frames (itemOnGround.c
+// sub_080814A4), and with this mode's drop rates a busy field leaves them
+// faster than that: 19-22 uncollected on the floor in South Hyrule Field,
+// each an entity slot the next death's DEATH_FX needed (see
+// QUICKSTART_ENTITY_RESERVE). Past the cap the oldest timed drop starts its
+// own vanilla blink-out, 90 frames, so it goes the way a drop always goes,
+// only sooner. Plain consumables only (never a kinstone, a currency here,
+// nor a heart piece), never a reward (ENT_PERSIST:
+// QuickStartSpawnRewardEntity), never anything not already counting down
+// (actions 2 with modes 0/1/3/6/10, the ones sub_080814C0 runs).
+#define QUICKSTART_FLOOR_DROP_CAP 8
+#define QUICKSTART_DROP_BLINK 90
+
+static bool32 QuickStartIsTimedDrop(Entity* e) {
+    ItemOnGroundEntity* item = (ItemOnGroundEntity*)e;
+    if (e->kind != OBJECT || e->id != GROUND_ITEM || (e->flags & ENT_PERSIST)) {
+        return FALSE;
+    }
+    // Plain consumables only: rupees, hearts, bombs, arrows, shells. A
+    // heart piece or anything else that happens to be on a timer is left
+    // to it.
+    if (!((e->type >= ITEM_RUPEE1 && e->type <= ITEM_RUPEE200) || e->type == ITEM_BOMBS5 ||
+          e->type == ITEM_ARROWS5 || e->type == ITEM_HEART || e->type == ITEM_SHELLS30 ||
+          (e->type >= ITEM_BOMBS10 && e->type <= ITEM_ARROWS30))) {
+        return FALSE;
+    }
+    if (e->action != 2 || item->unk_6c == 0) {
+        return FALSE;
+    }
+    switch (item->unk_69) {
+        case 0:
+        case 1:
+        case 3:
+        case 6:
+        case 10:
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static void QuickStartCapFloorDrops(void) {
+    s32 i, n = 0, oldest = -1;
+    u32 least = 0xFFFF;
+    if ((gRoomTransition.frameCount & 15) != 0) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        ItemOnGroundEntity* item = (ItemOnGroundEntity*)e;
+        if (!QuickStartIsTimedDrop(e)) {
+            continue;
+        }
+        if (item->unk_6c <= QUICKSTART_DROP_BLINK) {
+            continue;  // already on its way out
+        }
+        n++;
+        if (item->unk_6c < least) {
+            least = item->unk_6c;
+            oldest = i;
+        }
+    }
+    if (n > QUICKSTART_FLOOR_DROP_CAP && oldest >= 0) {
+        ((ItemOnGroundEntity*)&gEntities[oldest].base)->unk_6c = QUICKSTART_DROP_BLINK;
+    }
+}
+
+// A death that found the entity table full (EnemyCreateDeathFX,
+// enemyUtils.c): free one slot for its DEATH_FX. The oldest timed floor
+// drop goes first (it was leaving anyway, QuickStartIsTimedDrop), then an
+// enemy projectile in flight. The slot has to be free on this very call,
+// and a DeleteEntity'd slot is not (gEntCount drops at the frame's end):
+// the victim is queued for deletion instead (ENT_DELETED), which is what
+// GetEmptyEntity's last pass evicts on the spot when the table is full.
+// The reserves above make this rare; a spin attack through a crowd is
+// where it still happens (shf_probe.py --all: 3% of deaths without it).
+bool32 QuickStartFreeEntityForDeath(void) {
+    s32 i, victim = -1;
+    u32 least = 0xFFFF;
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* e = &gEntities[i].base;
+        if (QuickStartIsTimedDrop(e) && ((ItemOnGroundEntity*)e)->unk_6c < least) {
+            least = ((ItemOnGroundEntity*)e)->unk_6c;
+            victim = i;
+        }
+    }
+    if (victim < 0) {
+        for (i = 0; i < MAX_ENTITIES; i++) {
+            Entity* e = &gEntities[i].base;
+            if (e->kind == PROJECTILE && !(e->flags & ENT_DELETED)) {
+                victim = i;
+                break;
+            }
+        }
+    }
+    if (victim < 0) {
+        return FALSE;
+    }
+    gEntities[victim].base.flags |= ENT_DELETED;
+    return TRUE;
+}
+
 static void QuickStartEnforceGfxReserve(void) {
     s32 reaped;
     // Only act on one frame in 64. A deleted entity does not release its
@@ -12986,7 +13262,7 @@ static s32 QuickStartSpawnEnemiesOnOpenTilesEx(u8 id, u8 form, s32 anchorX, s32 
                     // Same GFX reserve every other spawner honours - a
                     // miniboss pack or a quest group must not be what
                     // fills the last slots.
-                    if (!QuickStartGfxBudgetForSpawn()) {
+                    if (!QuickStartEnemyBudgetFor(id)) {
                         return placed;
                     }
                     // The gang cap (QuickStartAcroBanditCapReached). This
@@ -25949,6 +26225,7 @@ static void QuickStartRoomMonitor(void) {
     // vanilla's behalf. It is cheap - it never appeared in the profile at
     // all - so it goes back to every frame.
     QuickStartEnforceGfxReserve();
+    QuickStartCapFloorDrops();
     // Global invariant too: a camera following a deleted entity follows
     // garbage (see the function's comment for the measured NHF case).
     // Same call: cheap, and a camera following freed memory for even a few
@@ -26549,6 +26826,18 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN,
       { { 312, 504 }, { 216, 520 }, { 408, 488 }, { 360, 520 }, { 264, 520 },
         { 344, 488 }, { 392, 520 }, { 376, 488 }, { 328, 520 } } },
+    // Hyrule Town (Oct 2026, the user: "Hyrule Town is too empty"). The town
+    // owns no fusion of its own; this row lets the four fields' fusions
+    // travel in (QuickStartFuserPlacements), so the square has fusers to
+    // talk to. Nine of the plaza's own wave spots (town_survey.py: open
+    // ground, 3x3 clear, the one component all four gates land in), at
+    // least 96px from each other, from the four gate approaches, the drop
+    // (520,664) and the boss and reward tile (504,488), and off the town's
+    // block-puzzle boards (the east of the square, block_puzzles.h), and on
+    // collision 0 (the square's paving reads 0x5f, 0x29 and 0x53 in places).
+    { AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN,
+      { { 600, 440 }, { 632, 104 }, { 120, 568 }, { 280, 712 }, { 664, 920 },
+        { 168, 392 }, { 56, 456 }, { 728, 424 }, { 360, 120 } } },
 };
 
 // Which named named region each row of sQuickStartFuserSpots sits in, in the
@@ -26558,7 +26847,7 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
 static const u8 sQuickStartFuserSpotRegions[] = {
     QS_REGION_CG, QS_REGION_LLR, QS_REGION_NHF, QS_REGION_SHF, QS_REGION_TRIL,
     QS_REGION_EH, QS_REGION_WW, QS_REGION_WW, QS_REGION_CW,
-    QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF,
+    QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF, QS_REGION_HT,
 };
 
 #define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))
@@ -28648,6 +28937,17 @@ static void QuickStartSpawnRegionFusers(void) {
         return;
     }
     castId = (hereRoom >= 0) ? QuickStartFuserCastId(hereRoom) : (u8)ZELDA;
+    // The face's PALETTE, the same way (QUICKSTART_PALETTE_RESERVE). The
+    // wave dealt at room entry leaves the reserve, and this placement, about
+    // a second later, was what took it: three faces in South Hyrule Field
+    // held the last three of the nine dynamic palettes (measured), and a
+    // face placed into a full table draws in the player's palette 0. So a
+    // face not yet in the room waits until it can be paid and still leave
+    // one palette over; a wave kind dying out frees one. The retry is the
+    // GFX gate's own: no flag is latched.
+    if (hereRoom >= 0 && !QuickStartNpcPaletteOk(castId)) {
+        return;
+    }
     if (hereRoom >= 0) {
         // SHARED OFFERS (Oct 2026, from the vanilla guide). Vanilla's "shared
         // fusions" are a pool any of ~45 fusers can pay out once; the
@@ -28780,7 +29080,7 @@ static void QuickStartSpawnRegionFusers(void) {
                 break;
             }
         }
-        if (alreadyThere || !QuickStartGfxBudgetForSpawn()) {
+        if (alreadyThere || !QuickStartGfxBudgetForSpawn() || !QuickStartNpcPaletteOk(TINGLE_SIBLINGS)) {
             continue;
         }
         {

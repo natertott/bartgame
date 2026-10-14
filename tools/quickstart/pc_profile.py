@@ -23,6 +23,8 @@ def symbols():
             syms.append((int(p[0], 16) + base, 'game:' + p[2]))
     for line in open('build/USA/tmc.map'):
         p = line.split()
+        if len(p) == 4 and p[0].startswith('0x0300') and p[1].startswith('ram_') and p[2] == '=':
+            syms.append((int(p[0], 16), 'iwram:' + p[1]))
         if len(p) == 2 and p[0].startswith('0x08') and not p[1].startswith('.'):
             try:
                 syms.append((int(p[0], 16), p[1]))
@@ -44,7 +46,7 @@ def profile(c, frames=FRAMES, every=EVERY):
             if n % every == 0:
                 pc = cpu.gprs[15] & 0xFFFFFFFF
                 i = bisect.bisect_right(addrs, pc) - 1
-                name = syms[i][1] if i >= 0 and pc >= 0x08000000 else ('IWRAM/BIOS %#x' % (pc & 0xFFFF0000))
+                name = syms[i][1] if i >= 0 and (pc >= 0x08000000 or syms[i][1].startswith('iwram:')) else ('IWRAM/BIOS %#x' % (pc & (0xFFFFFF00 if os.environ.get('PC_FINE') else 0xFFFF0000)))
                 hits[name] += 1; total += 1
     return hits, total
 

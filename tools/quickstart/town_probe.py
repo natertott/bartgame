@@ -64,9 +64,19 @@ def go(c, area, room, x, y):
     c.memory.u8[SAVE + 0x3C] = 0
     run(c, 280); dismiss(c); heal(c)
     return here(c) == (area, room)
+def clear_lane(c):
+    # The gate walk tests the gate and containment, not a fight: a field's
+    # live wave can stand in the lane (two Octoroks at SHF's north gate
+    # knocked the walker back 40px, Oct 2026), so anything within 64px of
+    # the player is put down first.
+    px, py = r16(c, PLAYER + 0x2e), r16(c, PLAYER + 0x32)
+    for e in entities(c, KIND_ENEMY):
+        b = GENT + e[0] * STRIDE
+        if abs(r16(c, b + 0x2e) - px) < 64 and abs(r16(c, b + 0x32) - py) < 64:
+            c.memory.u8[b + 0x45] = 0
 def walk(c, key, want, frames=200):
     for _ in range(frames // 8):
-        heal(c); press(c, key, 8, 0)
+        heal(c); clear_lane(c); press(c, key, 8, 0)
         if here(c)[:2] == want:
             run(c, 60); dismiss(c)
             return True

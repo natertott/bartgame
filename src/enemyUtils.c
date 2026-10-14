@@ -13,6 +13,10 @@
 #include "vram.h"
 #include "color.h"
 
+#ifdef QUICKSTART
+extern bool32 QuickStartFreeEntityForDeath(void);
+#endif
+
 extern void ReplaceMonitoredEntity(Entity*, Entity*);
 
 extern EnemyDefinition gEnemyDefinitions[];
@@ -220,6 +224,17 @@ void EnemyCreateDeathFX(Enemy* parent, u32 parentId, u32 fixedItem) {
             parent->base.timer = 255;
             SetEntityPriority(&(parent->base), 3);
             deathFx2 = (DeathFxObject*)CreateObject(DEATH_FX, parent->base.id, 0);
+#ifdef QUICKSTART
+            // A full entity table used to leave the enemy frozen on its
+            // 255-frame timer with no drop (QuickStartFreeEntityForDeath,
+            // game.c). Make room and try again; failing that, go quickly.
+            if (deathFx2 == NULL && QuickStartFreeEntityForDeath()) {
+                deathFx2 = (DeathFxObject*)CreateObject(DEATH_FX, parent->base.id, 0);
+            }
+            if (deathFx2 == NULL) {
+                parent->base.timer = 10;
+            }
+#endif
             if (deathFx2 != NULL) {
                 deathFx2->unk6c = tmp;
                 deathFx2->parentId = parentId;
