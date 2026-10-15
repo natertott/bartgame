@@ -369,6 +369,11 @@ static bool32 QuickStartItemGetCutsceneRunning(void);
 static bool32 QuickStartPlayerCanBeHandedItem(void);
 static u16 QuickStartChainWantedKey(void);
 static u16 QuickStartChainWantedEscalation(void);
+// The portal pair (Oct 2026), defined with the win chain far below.
+static u16 QuickStartChainWantedPortal(void);
+static bool32 QuickStartPortalPocketHere(void);
+static bool32 QuickStartPortalForcesWaves(s32 site);
+static bool32 QuickStartPortalARoomHere(void);
 static bool32 QuickStartIsRanchHouseRoom(u8 area, u8 room);
 static void QuickStartUpdateItemChoice(void);
 static void QuickStartUpdate(void);
@@ -3449,13 +3454,21 @@ const u8* const gCustomStrings3[] = {
     [QUICKSTART_CONTENT_SITE_COUNT + 19] = (const u8*)"Light every torch with\nthe Lantern, and the\nprize is yours!",
     [QUICKSTART_CONTENT_SITE_COUNT + 20] = (const u8*)"These torches burn out!\nLight them all before\nthe first one goes dark.",
     [QUICKSTART_CONTENT_SITE_COUNT + 21] = (const u8*)"What a mess! Clear the\nwebs and dust with the\nGust Jar. Fire burns\nwebs too!",
+    // The portal pair (Oct 2026), QUICKSTART_PORTAL_TEXT + 0..3: portal A's
+    // fight, then the escape item's line per pocket (portals.h order), said
+    // as the portal wakes and on Select.
+    [QUICKSTART_CONTENT_SITE_COUNT + 22] = (const u8*)"A portal sleeps in this\nroom. Beat the monsters\nto wake it!",
+    [QUICKSTART_CONTENT_SITE_COUNT + 23] = (const u8*)"The portal woke! It goes\nto the Wind Ruins. Win\na prize there to get\nout, or play the Ocarina.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 24] = (const u8*)"The portal woke! It goes\nacross the Castor swamp.\nWin the prize in the\nDarknut hall to cross.",
+    [QUICKSTART_CONTENT_SITE_COUNT + 25] = (const u8*)"The portal woke! It goes\nto a cabin by Lake Hylia.\nWin its prize, and you\ncan swim home.",
 };
 const u32 gCustomStringCount3 = ARRAY_COUNT(gCustomStrings3);
 // Every site has its line, no more and no fewer: a site added without one
 // would print the engine's placeholder for its trial. The three puzzle
 // lines follow them, then the courier's nine, Gregal's thanks, the carry
-// quest's two, the block puzzles' four and the torch and cleanup rooms' three.
-typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 22) ? 1 : -1];
+// quest's two, the block puzzles' four, the torch and cleanup rooms' three
+// and the portal pair's four.
+typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_CONTENT_SITE_COUNT + 26) ? 1 : -1];
 
 // The pair bank is addressed arithmetically, so its shape is load-bearing:
 // 26 rows of five starting at 26 ends at 90, and the two no-step lines are
@@ -7567,6 +7580,20 @@ static u16 QuickStartDrawItem(s32 seed, u8 catMask) {
             // place the rule exists for.
             if (QuickStartChainKeyMissed() >= QUICKSTART_CHAIN_KEY_PATIENCE && !QuickStartKeySealsHere(pay)) {
                 return pay;
+            }
+            QuickStartChainKeyNoteMiss();
+        }
+    }
+    // A portal pair's escape item (Oct 2026): paid by the next prize won
+    // inside the pocket the portal leads to, whatever kind of prize it is.
+    // A player who leaves and plays on gets it anyway: after three prizes
+    // won elsewhere the fourth pays it wherever it is drawn (the keyed
+    // key's patience rule, and its counter: one ITEM step stands at a time).
+    {
+        u16 wanted = QuickStartChainWantedPortal();
+        if (wanted != 0) {
+            if (QuickStartPortalPocketHere() || QuickStartChainKeyMissed() >= QUICKSTART_CHAIN_KEY_PATIENCE) {
+                return wanted;
             }
             QuickStartChainKeyNoteMiss();
         }
@@ -13951,7 +13978,10 @@ static bool32 QuickStartSetupWaveRoomContent(s32 extra, s32 contentX, s32 conten
     }
     if (!QsCheckRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG)) {
         QsSetRoomFlag(flagBase + QUICKSTART_WAVE_ROOM_HINT_SHOWN_FLAG);
-        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM, 9), 0);
+        // Portal A says what the fight is for (QUICKSTART_PORTAL_TEXT).
+        CreateEzloHint(QuickStartPortalARoomHere() ? TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_CONTENT_SITE_COUNT + 22))
+                                                   : TEXT_INDEX(TEXT_CUSTOM, 9),
+                       0);
     }
     difficulty = QuickStartEnemyDifficulty();
     // The seam record outranks the room flags, because the room flags are
@@ -21414,6 +21444,13 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
             kind = (u8)forced;
         }
     }
+    // A portal pair's two rooms fight (Oct 2026): portal A until it is
+    // cleared, which is what wakes the portal, and the landing room while
+    // the escape item is still to be won there - a fight's prize goes
+    // through QuickStartDrawItem, where a miniboss's fixed reward would not.
+    if (QuickStartPortalForcesWaves(site)) {
+        kind = QS_EVENT_WAVES;
+    }
     if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
         // and the pick from it, and storing it (rather than calling Random()
@@ -21654,13 +21691,41 @@ typedef struct {
     u32 held;
     u32 regions;
     u8 node[QS_REACH_NODES];
+    // A lit portal's landing room (QuickStartPortalSeedReach), 0xFF none:
+    // reachable whatever the survey prices it at.
+    u8 portalArea;
+    u8 portalRoom;
 } QuickStartReach;
+
+static void QuickStartReachFlood(QuickStartReach* r) {
+    s32 i;
+    bool32 changed;
+    do {
+        changed = FALSE;
+        for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachEdges); i++) {
+            const QuickStartReachEdge* e = &sQuickStartReachEdges[i];
+            if (r->node[e->from] != 0 && r->node[e->to] == 0 && QuickStartReachTermsMet(e->req, r->held)) {
+                r->node[e->to] = 1;
+                changed = TRUE;
+            }
+        }
+    } while (changed);
+    r->regions = 0;
+    for (i = 0; i < QS_REACH_NODES; i++) {
+        if (r->node[i] != 0) {
+            r->regions |= (1u << sQuickStartReachNodes[i].region);
+        }
+    }
+}
+
+static void QuickStartPortalSeedReach(QuickStartReach* r);
 
 static void QuickStartReachComputeFrom(QuickStartReach* r, s32 pool, u32 held) {
     s32 i;
-    bool32 changed;
     r->held = held;
     r->regions = 0;
+    r->portalArea = 0xFF;
+    r->portalRoom = 0xFF;
     for (i = 0; i < QS_REACH_NODES; i++) {
         r->node[i] = 0;
     }
@@ -21671,21 +21736,7 @@ static void QuickStartReachComputeFrom(QuickStartReach* r, s32 pool, u32 held) {
     // Bracelets, so a kitless run dropped in the valley would otherwise
     // have nowhere at all to put step 0.
     r->node[sQuickStartReachPoolNode[pool % QUICKSTART_REGION_POOL_SIZE]] = 1;
-    do {
-        changed = FALSE;
-        for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachEdges); i++) {
-            const QuickStartReachEdge* e = &sQuickStartReachEdges[i];
-            if (r->node[e->from] != 0 && r->node[e->to] == 0 && QuickStartReachTermsMet(e->req, held)) {
-                r->node[e->to] = 1;
-                changed = TRUE;
-            }
-        }
-    } while (changed);
-    for (i = 0; i < QS_REACH_NODES; i++) {
-        if (r->node[i] != 0) {
-            r->regions |= (1u << sQuickStartReachNodes[i].region);
-        }
-    }
+    QuickStartReachFlood(r);
 }
 
 static void QuickStartReachCompute(QuickStartReach* r, u32 held) {
@@ -21698,6 +21749,10 @@ static void QuickStartReachCompute(QuickStartReach* r, u32 held) {
     // first step inside the Wind Ruins - correctly, for a drop that was
     // never going to happen.
     QuickStartReachComputeFrom(r, QuickStartDropRegionIndexUsable(), held);
+    // A lit portal is one more edge, free, from portal A's room to its
+    // pocket (Oct 2026). Here and not in ComputeFrom, so the harness's
+    // windows below keep asking the survey alone.
+    QuickStartPortalSeedReach(r);
 }
 
 // Which named regions the player could walk to from where this run dropped
@@ -21722,6 +21777,9 @@ u32 QuickStartReachTestRegions(u32 pool, u32 held);
 // enough.
 static bool32 QuickStartReachRoomOk(const QuickStartReach* r, u8 area, u8 room) {
     s32 i;
+    if (area == r->portalArea && room == r->portalRoom) {
+        return TRUE;
+    }
     for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartReachDests); i++) {
         const QuickStartReachDest* dest = &sQuickStartReachDests[i];
         if (dest->area != area || dest->room != room) {
@@ -21996,6 +22054,332 @@ static s32 QuickStartChainForcedKind(s32 site) {
         }
     }
     return -1;
+}
+
+// --- Portal pairs (Oct 2026) ----------------------------------------------
+//
+// docs/QUICKSTART_PORTAL_POCKETS.md. Two ? rooms linked by a portal: A
+// stands where the player can already walk, and its warp point wakes when
+// A's fight is won; it lands in a POCKET the mainland cannot walk to with
+// what the player holds (the Wind Ruins, Castor Wilds' far bank, the Lake
+// Hylia ladder pocket). The pocket's escape item is won inside it.
+//
+// A third chain pair, beside the keyed pair and the escalation pair:
+//   step k     EVENT at A, chain_detail QS_CHAIN_PORTAL | pocket;
+//   step k+1   ITEM, chain_where QS_CHAIN_PORTAL | pocket, the escape
+//              item in chain_detail. Paid by the next prize won inside the
+//              pocket (QuickStartDrawItem), or anywhere after three prizes
+//              won elsewhere; met by holding ANY of the pocket's escape
+//              items (the Boots or the Cape both cross the swamp).
+//
+// The user's rules: at most one pair per run, in one run in three; A lights
+// when its event is cleared; the Ocarina stays the way home (every landing
+// walks item-free to an overworld room, portal_probe.py); portal A stays lit
+// for the rest of the run, and a lit portal is one more edge in the reach
+// flood (QuickStartPortalSeedReach). Two-way pockets (? rooms only) get a
+// return pad on the landing tile; the Wind Ruins, whose fights always
+// retry, are one-way.
+typedef struct {
+    u8 landArea, landRoom, landX, landY;
+    u8 twoWay;
+    u8 node;         // reach node seeded while lit, QS_PORTAL_NO_NODE none
+    u8 esc1, esc2;   // the escape items, ITEM_NONE for no second
+    u8 landSite;     // the site the player lands in, QS_PORTAL_NO_SITE none
+    u8 inArea1, inRoom1, inArea2, inRoom2;  // the pocket, for the payout
+} QuickStartPortalPocket;
+typedef struct {
+    u8 site, x, y;
+} QuickStartPortalTile;
+#include "quickstart/portals.h"
+
+// chain_detail of the EVENT half and chain_where of the ITEM half: this bit
+// and the pocket. An EVENT force (QS_CHAIN_EVENT_FORCED) is bit 7; a plain
+// ITEM step's chain_where is 0.
+#define QS_CHAIN_PORTAL 0x40
+#define QS_CHAIN_PORTAL_POCKET(v) ((v) & 0x0F)
+
+// The pocket a chain byte names, clamped (no __umodsi3 in this libgcc).
+static const QuickStartPortalPocket* QuickStartPortalPocketAt(u8 v) {
+    s32 p = QS_CHAIN_PORTAL_POCKET(v);
+    return &sQuickStartPortalPockets[p < QS_PORTAL_POCKETS ? p : 0];
+}
+#define QUICKSTART_CHAIN_PORTAL_MOD 3   // one run in three
+#define QUICKSTART_PORTAL_LIT_FLAG 125  // room flags: the portal is lit,
+#define QUICKSTART_PORTAL_LAID_FLAG 126 // and this visit's pad is laid
+// gCustomStrings3: A's fight line, then one line per pocket for the ITEM step.
+#define QUICKSTART_PORTAL_TEXT (QUICKSTART_CONTENT_SITE_COUNT + 22)
+
+static bool32 QuickStartPortalTileOf(s32 site, u8* x, u8* y) {
+    s32 i;
+    for (i = 0; i < (s32)ARRAY_COUNT(sQuickStartPortalTiles); i++) {
+        if (sQuickStartPortalTiles[i].site == site) {
+            *x = sQuickStartPortalTiles[i].x;
+            *y = sQuickStartPortalTiles[i].y;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+// The EVENT half of the dealt pair, or -1.
+static s32 QuickStartPortalStep(void) {
+    s32 step;
+    for (step = 0; step < QUICKSTART_CHAIN_PRE_STEPS && step < (s32)gSave.chain_rolled; step++) {
+        if (gSave.chain_kind[step] == QS_CHAIN_EVENT && (gSave.chain_detail[step] & 0xC0) == QS_CHAIN_PORTAL) {
+            return step;
+        }
+    }
+    return -1;
+}
+
+static const QuickStartPortalPocket* QuickStartPortalPocketOf(s32 step) {
+    return QuickStartPortalPocketAt(gSave.chain_detail[step]);
+}
+
+static bool32 QuickStartPortalHoldsEscape(const QuickStartPortalPocket* k) {
+    return QuickStartHasItem(k->esc1) || (k->esc2 != ITEM_NONE && QuickStartHasItem(k->esc2));
+}
+
+// Portal A's room is cleared: the portal is lit, for the rest of the run.
+static bool32 QuickStartPortalLit(s32 step) {
+    return step >= 0 && QsCheckSiteFlag(GF_CONTENT_SITE_DONE(gSave.chain_where[step]));
+}
+
+static void QuickStartPortalSeedReach(QuickStartReach* r) {
+    s32 step = QuickStartPortalStep();
+    const QuickStartPortalPocket* k;
+    if (!QuickStartPortalLit(step)) {
+        return;
+    }
+    k = QuickStartPortalPocketOf(step);
+    r->portalArea = k->landArea;
+    r->portalRoom = k->landRoom;
+    if (k->node != QS_PORTAL_NO_NODE && r->node[k->node] == 0) {
+        r->node[k->node] = 1;
+        QuickStartReachFlood(r);
+    }
+}
+
+// The escape item the current step waits on, or 0.
+static u16 QuickStartChainWantedPortal(void) {
+    s32 step = QuickStartChainCurrentStep();
+    if (step < 0 || gSave.chain_kind[step] != QS_CHAIN_ITEM || !(gSave.chain_where[step] & QS_CHAIN_PORTAL)) {
+        return 0;
+    }
+    if (QuickStartPortalHoldsEscape(QuickStartPortalPocketAt(gSave.chain_where[step]))) {
+        return 0;
+    }
+    return gSave.chain_detail[step];
+}
+
+// Is the player inside the pocket the current portal ITEM step pays in?
+static bool32 QuickStartPortalPocketHere(void) {
+    s32 step = QuickStartChainCurrentStep();
+    const QuickStartPortalPocket* k;
+    if (step < 0 || !(gSave.chain_where[step] & QS_CHAIN_PORTAL)) {
+        return FALSE;
+    }
+    k = QuickStartPortalPocketAt(gSave.chain_where[step]);
+    return (gRoomControls.area == k->inArea1 &&
+            (k->inRoom1 == QS_PORTAL_ANY_ROOM || gRoomControls.room == k->inRoom1)) ||
+           (gRoomControls.area == k->inArea2 &&
+            (k->inRoom2 == QS_PORTAL_ANY_ROOM || gRoomControls.room == k->inRoom2));
+}
+
+static bool32 QuickStartPortalForcesWaves(s32 site) {
+    s32 step = QuickStartPortalStep();
+    const QuickStartPortalPocket* k;
+    if (step < 0) {
+        return FALSE;
+    }
+    if (site == gSave.chain_where[step]) {
+        return TRUE;
+    }
+    k = QuickStartPortalPocketOf(step);
+    return site == k->landSite && !QuickStartPortalHoldsEscape(k);
+}
+
+static bool32 QuickStartPortalARoomHere(void) {
+    s32 step = QuickStartPortalStep();
+    const QuickStartContentSite* a;
+    if (step < 0) {
+        return FALSE;
+    }
+    a = &sQuickStartRoomContentSites[gSave.chain_where[step]];
+    return gRoomControls.area == a->area && gRoomControls.room == a->room;
+}
+
+// Is this transition a lit portal's own? Containment lets it through.
+static bool32 QuickStartIsPortalTransition(void) {
+    s32 step = QuickStartPortalStep();
+    const QuickStartPortalPocket* k;
+    const QuickStartContentSite* a;
+    u8 nextArea = gRoomTransition.player_status.area_next;
+    u8 nextRoom = gRoomTransition.player_status.room_next;
+    if (!QuickStartPortalLit(step)) {
+        return FALSE;
+    }
+    k = QuickStartPortalPocketOf(step);
+    a = &sQuickStartRoomContentSites[gSave.chain_where[step]];
+    if (gRoomControls.area == a->area && gRoomControls.room == a->room && nextArea == k->landArea &&
+        nextRoom == k->landRoom) {
+        return TRUE;
+    }
+    return k->twoWay && gRoomControls.area == k->landArea && gRoomControls.room == k->landRoom &&
+           nextArea == a->area && nextRoom == a->room;
+}
+
+static void QuickStartPortalLayPad(u8 x, u8 y, u8 toArea, u8 toRoom, u8 toX, u8 toY) {
+    Entity* e;
+    u8* w;
+    s32 i;
+    // One pad per tile: a room whose flags were reset under a live entity
+    // (measured in the Heart Piece hallway cave: two pads on one tile)
+    // must not lay a second.
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        e = &gEntities[i].base;
+        if (e->kind == OBJECT && e->id == WARP_POINT && e->x.HALF.HI == gRoomControls.origin_x + x * 16 + 8 &&
+            e->y.HALF.HI == gRoomControls.origin_y + y * 16 + 8) {
+            return;
+        }
+    }
+    e = CreateObject(WARP_POINT, 0, 0);
+    if (e == NULL) {
+        return;
+    }
+    w = (u8*)e;
+    e->x.HALF.HI = gRoomControls.origin_x + x * 16 + 8;
+    e->y.HALF.HI = gRoomControls.origin_y + y * 16 + 8;
+    e->collisionLayer = 1;
+    UpdateSpriteForCollisionLayer(e);
+    w[0x7c] = toArea;
+    w[0x7d] = toRoom;
+    *(u16*)(w + 0x84) = (u16)(toX | (toY << 6));
+    *(u16*)(w + 0x86) = (u16)(0x8000 + QUICKSTART_ROOM_FLAG_ORIGIN + QUICKSTART_PORTAL_LIT_FLAG);
+}
+
+// The pads. Portal A stands in A's room from the moment the pair is dealt,
+// asleep (drawn, inert) until A is cleared; the return pad stands on a
+// two-way pocket's landing tile once A is lit. Laid once per visit, after
+// the room settles, so a player arriving on a pad is standing on it when
+// it is created - the warp point's own arrival spin, and it will not fire
+// again until they step off (WarpPoint_Init).
+static void QuickStartPortalMonitor(void) {
+    s32 step = QuickStartPortalStep();
+    const QuickStartPortalPocket* k;
+    const QuickStartContentSite* a;
+    u8 ax, ay;
+    bool32 lit;
+    if (step < 0 || !QuickStartRoomSettled()) {
+        return;
+    }
+    k = QuickStartPortalPocketOf(step);
+    a = &sQuickStartRoomContentSites[gSave.chain_where[step]];
+    if (!QuickStartPortalTileOf(gSave.chain_where[step], &ax, &ay)) {
+        return;
+    }
+    lit = QuickStartPortalLit(step);
+    if (gRoomControls.area == a->area && gRoomControls.room == a->room) {
+        if (lit) {
+            QsSetRoomFlag(QUICKSTART_PORTAL_LIT_FLAG);
+        }
+        if (!QsCheckRoomFlag(QUICKSTART_PORTAL_LAID_FLAG)) {
+            QsSetRoomFlag(QUICKSTART_PORTAL_LAID_FLAG);
+            QuickStartPortalLayPad(ax, ay, k->landArea, k->landRoom, k->landX, k->landY);
+        }
+    } else if (k->twoWay && lit && gRoomControls.area == k->landArea && gRoomControls.room == k->landRoom) {
+        QsSetRoomFlag(QUICKSTART_PORTAL_LIT_FLAG);
+        if (!QsCheckRoomFlag(QUICKSTART_PORTAL_LAID_FLAG)) {
+            QsSetRoomFlag(QUICKSTART_PORTAL_LAID_FLAG);
+            QuickStartPortalLayPad(k->landX, k->landY, a->area, a->room, ax, ay);
+        }
+    }
+}
+
+// --- Rolling the pair ---
+
+// A pocket the pair may lead to now: the player holds none of its escape
+// items, cannot walk there, and its landing room still has its fight.
+static bool32 QuickStartPortalPocketOk(s32 p, const QuickStartReach* r, s32 lesson, s32 recital) {
+    const QuickStartPortalPocket* k = &sQuickStartPortalPockets[p];
+    if (QuickStartPortalHoldsEscape(k)) {
+        return FALSE;
+    }
+    if (k->node != QS_PORTAL_NO_NODE ? r->node[k->node] != 0 : QuickStartReachRoomOk(r, k->landArea, k->landRoom)) {
+        return FALSE;
+    }
+    if (k->landSite != QS_PORTAL_NO_SITE &&
+        (QsCheckSiteFlag(GF_CONTENT_SITE_DONE(k->landSite)) || QuickStartSiteRetired(k->landSite) ||
+         k->landSite == lesson || k->landSite == recital)) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+// Portal A: a site with a portal tile, at an open kind (it is dealt a fight
+// whatever it would have rolled), a legal EVENT step, not a memory room.
+static bool32 QuickStartPortalSiteOk(s32 step, const QuickStartReach* r, s32 site, s32 p, s32 lesson,
+                                     s32 recital) {
+    u8 x, y;
+    u8 kinds = sQuickStartRoomContentSites[site].kinds;
+    return (kinds == QUICKSTART_KINDS_ANY || kinds == QUICKSTART_KINDS_LARGE || kinds == QUICKSTART_KINDS_SMALL) &&
+           site != sQuickStartPortalPockets[p].landSite && site != lesson && site != recital &&
+           QuickStartPortalTileOf(site, &x, &y) && QuickStartChainEventOk(r, site) &&
+           !QuickStartChainAlreadyUsed(step, QS_CHAIN_EVENT, (u8)site);
+}
+
+// One run in three is a portal run (a coin off the run seed), and its pair
+// is tried from a step the seed also picks (0-2) until one deals. The
+// pocket is round-robin from the step's hash; A is drawn among the sites.
+// Mirrored by sim.py (roll_portal).
+static bool32 QuickStartChainRollPortal(s32 step, const QuickStartReach* r) {
+    u32 run = QuickStartChainHash(0x9047u);
+    u32 h = QuickStartChainHash(0x9048u + (u32)step);
+    s32 i, k, p = -1, n = 0, want, lesson, recital;
+    if (step + 1 >= QUICKSTART_CHAIN_PRE_STEPS || (s32)((run >> 6) & 0x7fff) % QUICKSTART_CHAIN_PORTAL_MOD != 0 ||
+        step < (s32)((run >> 21) & 0x7fff) % (QUICKSTART_CHAIN_PRE_STEPS - 1)) {
+        return FALSE;
+    }
+    for (i = 0; i < step; i++) {
+        if (gSave.chain_kind[i] == QS_CHAIN_EVENT && (gSave.chain_detail[i] & 0xC0) == QS_CHAIN_PORTAL) {
+            return FALSE;
+        }
+    }
+    lesson = QuickStartMemorySite(0);
+    recital = QuickStartMemorySite(1);
+    for (k = 0; k < QS_PORTAL_POCKETS; k++) {
+        s32 q = ((s32)((h >> 4) & 0xff) + k) % (s32)QS_PORTAL_POCKETS;
+        if (QuickStartPortalPocketOk(q, r, lesson, recital)) {
+            p = q;
+            break;
+        }
+    }
+    if (p < 0) {
+        return FALSE;
+    }
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartPortalSiteOk(step, r, i, p, lesson, recital)) {
+            n++;
+        }
+    }
+    if (n == 0) {
+        return FALSE;
+    }
+    want = (s32)(h & 0x7fff) % n;
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (QuickStartPortalSiteOk(step, r, i, p, lesson, recital) && want-- == 0) {
+            break;
+        }
+    }
+    gSave.chain_kind[step] = QS_CHAIN_EVENT;
+    gSave.chain_where[step] = (u8)i;
+    gSave.chain_detail[step] = (u8)(QS_CHAIN_PORTAL | p);
+    gSave.chain_kind[step + 1] = QS_CHAIN_ITEM;
+    gSave.chain_where[step + 1] = (u8)(QS_CHAIN_PORTAL | p);
+    gSave.chain_detail[step + 1] =
+        (sQuickStartPortalPockets[p].esc2 != ITEM_NONE && ((h >> 16) & 1)) ? sQuickStartPortalPockets[p].esc2
+                                                                           : sQuickStartPortalPockets[p].esc1;
+    return TRUE;
 }
 
 static s32 QuickStartChainCountCandidates(u8 kind, s32 step, const QuickStartReach* r, u32 avoid) {
@@ -22410,6 +22794,11 @@ static u16 QuickStartChainWantedEscalation(void) {
     if (step < 0 || gSave.chain_kind[step] != QS_CHAIN_ITEM) {
         return 0;
     }
+    // A portal pair's escape item is paid inside its pocket, not by the
+    // next prize anywhere (QuickStartChainWantedPortal).
+    if (gSave.chain_where[step] & QS_CHAIN_PORTAL) {
+        return 0;
+    }
     item = QuickStartChainDetailItem(gSave.chain_detail[step]);
     if (item != 0 && !QuickStartIsChainKey(item) && !QuickStartHasItem(item)) {
         return item;
@@ -22442,9 +22831,23 @@ static s32 QuickStartChainRollStep(s32 step) {
         gSave.chain_kind[0] = gSave.scenario_a;
         gSave.chain_where[0] = gSave.scenario_b;
         gSave.chain_detail[0] = gSave.scenario_c;
+        // A portal A pre-dealt brings its ITEM half (portal_probe.py).
+        if (gSave.scenario_a == QS_CHAIN_EVENT && (gSave.scenario_c & 0xC0) == QS_CHAIN_PORTAL) {
+            const QuickStartPortalPocket* k =
+                QuickStartPortalPocketAt(gSave.scenario_c);
+            gSave.chain_kind[1] = QS_CHAIN_ITEM;
+            gSave.chain_where[1] = (u8)(QS_CHAIN_PORTAL | QS_CHAIN_PORTAL_POCKET(gSave.scenario_c));
+            gSave.chain_detail[1] = k->esc1;
+            return 2;
+        }
         return 1;
     }
     QuickStartReachCompute(&reach, QuickStartHeldReachMask());
+    // The portal pair first (Oct 2026): a portal run deals it at the first
+    // step from its own that has a pocket and an A for it.
+    if (QuickStartChainRollPortal(step, &reach)) {
+        return 2;
+    }
     // One roll in ten, when there is a step left for the far side of the
     // lock. It was one in six, and with the old "first eligible key wins"
     // loop that put a pair in 40% of runs; with one key per roll
@@ -22502,6 +22905,10 @@ static bool32 QuickStartChainStepMet(s32 step) {
             // detail 0 means the pick found nothing to want - every key
             // item is already held. Treat that as done rather than as a
             // wall; a run that rich has earned the step.
+            // A portal pair's: any of the pocket's escape items.
+            if (where & QS_CHAIN_PORTAL) {
+                return QuickStartPortalHoldsEscape(QuickStartPortalPocketAt(where));
+            }
             return gSave.chain_detail[step] == 0 ||
                    QuickStartHasItem(QuickStartChainDetailItem(gSave.chain_detail[step]));
         case QS_CHAIN_EVENT:
@@ -22669,6 +23076,16 @@ static bool32 QuickStartChainStepRoom(s32 step, u8* area, u8* room) {
             *room = region->room;
             return TRUE;
         }
+        case QS_CHAIN_ITEM:
+            // A portal pair's escape item: where it is won.
+            if (gSave.chain_where[step] & QS_CHAIN_PORTAL) {
+                const QuickStartPortalPocket* k =
+                    QuickStartPortalPocketAt(gSave.chain_where[step]);
+                *area = k->landArea;
+                *room = k->landRoom;
+                return TRUE;
+            }
+            break;
         default:
             break;
     }
@@ -22730,7 +23147,13 @@ static void QuickStartSelectHintMonitor(void) {
         hint = QUICKSTART_HINT_NO_STEP;
     } else {
         ring = QuickStartChainStepRegion(step);
-        if (QuickStartChainWantedKey() != 0) {
+        if (QuickStartChainWantedPortal() != 0) {
+            // A portal pair's escape item: where the portal goes.
+            CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_PORTAL_TEXT + 1 +
+                                                        QS_CHAIN_PORTAL_POCKET(gSave.chain_where[step]))),
+                           0);
+            return;
+        } else if (QuickStartChainWantedKey() != 0) {
             // A door key the chain wants: the line that names it and the
             // regions that pay it.
             hint = QuickStartKeyHintLine(QuickStartChainWantedKey());
@@ -22773,6 +23196,14 @@ static void QuickStartChainHintOnce(s32 step) {
         return;
     }
     if (!QuickStartRoomSettled() || !QuickStartPlayerCanBeHandedItem()) {
+        return;
+    }
+    if (QuickStartChainWantedPortal() != 0) {
+        // A portal pair's escape item, said as the portal wakes.
+        gSave.chain_hinted |= (u8)(1 << step);
+        CreateEzloHint(TEXT_INDEX(TEXT_CUSTOM3, (QUICKSTART_PORTAL_TEXT + 1 +
+                                                    QS_CHAIN_PORTAL_POCKET(gSave.chain_where[step]))),
+                       0);
         return;
     }
     if (QuickStartChainWantedKey() != 0) {
@@ -24396,6 +24827,10 @@ static void QuickStartEnforceContainment(void) {
     if (!gRoomTransition.transitioningOut) {
         return;
     }
+    // A lit portal's own warp (QuickStartIsPortalTransition).
+    if (QuickStartIsPortalTransition()) {
+        return;
+    }
     if (QuickStartTransitionStaysInSameRoom()) {
         return;
     }
@@ -24464,7 +24899,7 @@ static void QuickStartEnforceLonLonContainment(void) {
     if (!gRoomTransition.transitioningOut) {
         return;
     }
-    if (QuickStartTransitionStaysInSameRoom()) {
+    if (QuickStartTransitionStaysInSameRoom() || QuickStartIsPortalTransition()) {
         return;
     }
     if (gRoomControls.area != AREA_HYRULE_FIELD || gRoomControls.room != ROOM_HYRULE_FIELD_LON_LON_RANCH) {
@@ -24555,6 +24990,10 @@ static void QuickStartEnforceFieldRegionContainment(void) {
         return;
     }
     if (!gRoomTransition.transitioningOut) {
+        return;
+    }
+    // A lit portal's own warp (QuickStartIsPortalTransition).
+    if (QuickStartIsPortalTransition()) {
         return;
     }
     if (QuickStartTransitionStaysInSameRoom()) {
@@ -26827,6 +27266,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartInnChestMonitor();
     QuickStartInnBlessingMonitor();
     QuickStartHubPadsMonitor();
+    QuickStartPortalMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();

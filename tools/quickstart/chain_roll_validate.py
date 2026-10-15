@@ -2,7 +2,7 @@
 
 sim_validate.py checks the reach flood and site_roll_validate.py the ?
 room roll. This checks the layer on top: QuickStartChainRollStep itself -
-the keyed pair, the escalation pair and its rare-region seek, the spread
+the portal pair, the keyed pair, the escalation pair and its rare-region seek, the spread
 rule, the kind rotation and the rare-region weights. Everything it reads is
 save state, so one boot serves every case:
 
@@ -106,9 +106,14 @@ def main():
         # An ITEM step compares by item (the ROM stores a key as 0xF0 + its
         # index and a plain item as its id; the model stores the name);
         # every other step by kind and site or row.
-        r = [(k, item_of(d) if d else None) if k == sim.KIND_ITEM else (k, w) for k, w, d in rom]
-        m = [(k, d) if k == sim.KIND_ITEM else (k, w) for k, w, d in model]
-        tag = '+'.join(sim.KIND_NAME[k] for k, _ in r)
+        # A portal pair's halves carry the pocket too: the EVENT's detail,
+        # the ITEM's where (QS_CHAIN_PORTAL | pocket).
+        def portal(v):
+            return v if v is not None and (v & 0xC0) == sim.CHAIN_PORTAL else None
+        r = [(k, item_of(d) if d else None, portal(w)) if k == sim.KIND_ITEM else (k, w, portal(d))
+             for k, w, d in rom]
+        m = [(k, d, portal(w)) if k == sim.KIND_ITEM else (k, w, portal(d)) for k, w, d in model]
+        tag = '+'.join(sim.KIND_NAME[k] + ('(portal)' if pv is not None else '') for k, _, pv in r)
         kinds[tag] = kinds.get(tag, 0) + 1
         if r == m:
             agree += 1

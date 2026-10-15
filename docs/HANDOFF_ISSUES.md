@@ -302,6 +302,17 @@ so nobody re-invents them:
   the vine top; it was Ezlo's region line. Use the state-aware dismiss
   (`memory_probe.py`, `veilfalls_probe.py`, `crenel_vine_probe.py`) after
   every room change, including scroll seams.
+- **The captured floors hold no objects.** `build/block_rooms.json` has
+  the collision map, and a pot or a statue is an entity, not a tile: the
+  Heart Piece hallway reads as open floor and is full of pots. Anything
+  placed on a captured floor that the player must stand on needs the
+  room's objects measured (`portal_probe.py --census`).
+- **A lit warp point spawns a second WARP_POINT entity** (its effect), at
+  the same spot. An entity scan for pads sees two.
+- **Writing an enemy's health to 0 does not release a held player.** A
+  Like Like killed that way while it holds the player leaves them CAPTURED
+  (`gPlayerState.flags` 0x10) and uncollidable for good: no pickup, no
+  walking. `chain_audit.drive` does this; `portal_probe.release` undoes it.
 - **`KinstoneSave` has `fuserOffers[128]` between `fuserProgress` and
   `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
   at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.

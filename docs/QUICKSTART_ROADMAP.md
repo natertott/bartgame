@@ -1271,7 +1271,46 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
-### Portal ? rooms into unreachable pockets: researched (Oct 2026)
+### Portal ? rooms: built for three pockets (Oct 2026)
+
+The user approved the batch ("That batch order works, go ahead and build
+it"). A third win-chain pair: an EVENT at portal A, a ? room the player can
+reach, then an ITEM step for the pocket's escape item, paid by the next
+prize won inside the pocket. Full write-up: "What was built" in
+`docs/QUICKSTART_PORTAL_POCKETS.md`.
+
+- **Pockets.** The Wind Ruins (one-way, lands at the region entrance,
+  escape Boots or Cape), Castor Wilds' far bank (two-way, lands in Darknut
+  Hall, Boots or Cape), the Lake Hylia ladder pocket (two-way, lands in the
+  Mayor's cabin, Flippers). Table in `include/quickstart/portals.h`, from
+  `portal_rooms.py`, which also places each site's portal tile.
+- **Rules, as the user set them.** One run in three, at most one pair; A
+  deals a fight and its portal wakes when the fight is won; A stays lit for
+  the run; the Ocarina is the way home from every landing; after three
+  prizes won outside the pocket the fourth pays the item anywhere.
+- **Runtime.** Vanilla warp points (`QuickStartPortalMonitor`), a
+  containment exception for a lit portal's own warp, the landing ? room's
+  fight forced while the item is owed (a miniboss's fixed reward would
+  bypass the draw), the pocket seeded into the reach flood once lit, Ezlo
+  lines for A and for each pocket, the compass on the landing room.
+- **Veil Falls is not built.** Nothing on the plateau pays a prize with
+  the boot kit: its region row pays no clear and its ? rooms want the
+  Lantern or the Grip Ring. It needs a payout of its own first.
+- **Found on the way.** The captured floors (`block_rooms.json`) hold no
+  objects, so a portal tile can sit under a pot (the Heart Piece hallway is
+  full of them); `portal_probe.py --census` measures each room's objects
+  and Minish size in the ROM, and the generator steers clear. A warp point
+  spawns a second WARP_POINT entity as it lights (its effect), which reads
+  as a duplicate pad in an entity scan. `chain_audit.drive`'s health-0 kill
+  leaves a player held by a Like Like CAPTURED for good (a probe artifact;
+  `portal_probe.release`).
+- **Measured.** `portal_probe.py` 3/3 pockets end to end plus the patience
+  rule; `--sweep` SWEEP; `chain_roll_validate.py` 500/500 with 89 pairs
+  dealt; `site_roll_validate.py` SRV. Simulated over 2,000 runs: a pair in
+  28.9% of runs; chain steps in the Wind Ruins 0.21% to 0.79%, finales
+  there 0.05% to 0.45%.
+
+### Portal ? rooms into unreachable pockets: researched (Oct 2026, built since: above)
 
 The user asked for portal pairs: a ? room the player can reach sends them
 into a pocket they cannot walk to (the Wind Ruins, Castor Wilds' far bank,

@@ -706,10 +706,7 @@ def terms_met(terms, held):
     return False
 
 
-def reachable_nodes(held, drop_pool):
-    """QuickStartReachComputeFrom: the drop's node unconditionally, then a
-    flood along every edge whose price is paid. Returns a node bitmask."""
-    nodes = 1 << POOL_NODE[drop_pool % POOL_SIZE]
+def _flood(nodes, held):
     changed = True
     while changed:
         changed = False
@@ -717,6 +714,20 @@ def reachable_nodes(held, drop_pool):
             if (nodes >> frm) & 1 and not (nodes >> to) & 1 and terms_met(terms, held):
                 nodes |= 1 << to
                 changed = True
+    return nodes
+
+
+def reachable_nodes(held, drop_pool, portal=None):
+    """QuickStartReachComputeFrom: the drop's node unconditionally, then a
+    flood along every edge whose price is paid. Returns a node bitmask.
+    `portal`: a lit portal's pocket (QuickStartPortalSeedReach) - its node
+    seeded, its landing room marked by bit PORTAL_BIT + pocket."""
+    nodes = _flood(1 << POOL_NODE[drop_pool % POOL_SIZE], held)
+    if portal is not None:
+        nodes |= 1 << (PORTAL_BIT + portal)
+        node = PORTALS[portal]['node']
+        if node is not None and not (nodes >> node) & 1:
+            nodes = _flood(nodes | (1 << node), held)
     return nodes
 
 
@@ -744,12 +755,79 @@ for _d in DESTS:
 
 
 def reach_room_ok(nodes, held, area, room):
+    if nodes >> PORTAL_BIT:
+        for p, k in enumerate(PORTALS):
+            if (nodes >> (PORTAL_BIT + p)) & 1 and (area, room) == k['land']:
+                return True
     for node, terms in DESTS_BY_ROOM.get((area, room), ()):
         if not (nodes >> node) & 1:
             continue
         if terms_met(terms, held):
             return True
     return False
+
+
+# The portal pair (Oct 2026, include/quickstart/portals.h, portal_rooms.py).
+import portal_rooms as _PR
+PORTALS, PORTAL_TILES = _PR.parse_header()
+for _k in PORTALS:
+    _k['land'] = (P.AREAS[_k['land_area']], P.ROOMS[_k['land_room']])
+PORTAL_BIT = 64          # reach_room_ok: bit 64 + pocket = that landing room
+PORTAL_MOD = 3           # QUICKSTART_CHAIN_PORTAL_MOD: one run in three
+CHAIN_PORTAL = 0x40      # QS_CHAIN_PORTAL
+
+
+def portal_holds_escape(k, owned):
+    return any(has_item(it, owned) for it in k['escape'])
+
+
+def roll_portal(seed, step, prior, nodes, held, owned, sites_done, portal_dealt):
+    """QuickStartChainRollPortal -> the pair, or None."""
+    run = chain_hash(seed, 0x9047)
+    h = chain_hash(seed, 0x9048 + step)
+    if step + 1 >= 4 or ((run >> 6) & 0x7fff) % PORTAL_MOD != 0 or step < ((run >> 21) & 0x7fff) % 3:
+        return None
+    if portal_dealt:
+        return None
+    lesson, recital = memory_sites(seed)
+
+    def pocket_ok(p):
+        k = PORTALS[p]
+        if portal_holds_escape(k, owned):
+            return False
+        if k['node'] is not None:
+            if (nodes >> k['node']) & 1:
+                return False
+        elif reach_room_ok(nodes, held, *k['land']):
+            return False
+        ls = k['land_site']
+        return ls is None or not (ls in sites_done or site_retired(SITES[ls]) or ls in (lesson, recital))
+
+    pocket = None
+    for j in range(len(PORTALS)):
+        q = (((h >> 4) & 0xff) + j) % len(PORTALS)
+        if pocket_ok(q):
+            pocket = q
+            break
+    if pocket is None:
+        return None
+
+    def recital_ok(i):
+        if i != recital or lesson < 0:
+            return True
+        return reach_room_ok(nodes, held, SITES[lesson]['area'], SITES[lesson]['room'])
+
+    k = PORTALS[pocket]
+    cands = [i for i, s in enumerate(SITES)
+             if s['kinds'] in ('ANY', 'LARGE', 'SMALL') and i != k['land_site'] and i not in (lesson, recital)
+             and i in PORTAL_TILES and i not in sites_done and s['gate'] == 0
+             and reach_room_ok(nodes, held, s['area'], s['room']) and recital_ok(i)
+             and (KIND_EVENT, i) not in prior]
+    if not cands:
+        return None
+    site = cands[(h & 0x7fff) % len(cands)]
+    item = k['escape'][1] if len(k['escape']) > 1 and (h >> 16) & 1 else k['escape'][0]
+    return [(KIND_EVENT, site, CHAIN_PORTAL | pocket), (KIND_ITEM, CHAIN_PORTAL | pocket, item)]
 
 
 def reach_pool_ok(nodes, pool_index):
@@ -835,8 +913,10 @@ ESC_MOD = 4                      # QUICKSTART_CHAIN_ESC_MOD
 ESC_ITEMS = REACH_ITEMS[2:14]    # QUICKSTART_CHAIN_ESC_FIRST/COUNT: bracelets .. ocarina
 
 
-def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None, drop_pool=0):
-    """QuickStartChainRollStep. `prior` is the (kind, where) of earlier steps."""
+def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, carrier=None, drop_pool=0,
+              portal_dealt=False):
+    """QuickStartChainRollStep. `prior` is the (kind, where) of earlier steps;
+    `portal_dealt`, whether one of them is a portal pair's."""
     def used(kind, where):
         return (kind, where) in prior
 
@@ -896,6 +976,10 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
         return reach_room_ok(nodes, held_, SITES[lesson]['area'], SITES[lesson]['room'])
 
     h = chain_hash(seed, step)
+    # The portal pair first (QuickStartChainRollPortal, Oct 2026).
+    pair = roll_portal(seed, step, prior, regions, held, owned, sites_done, portal_dealt)
+    if pair:
+        return pair
     # The keyed pair (QuickStartChainRollKeyedPair): an ITEM step for a door
     # key, then an EVENT at a site that key seals, priced with the key held.
     # One roll in six while a step is left for the far side of the lock.
@@ -1166,6 +1250,9 @@ def site_roll(seed, i, forced=0):
             kind = EV_CLEANUP
     if forced & CHAIN_EVENT_FORCED and (forced & 0x7f) in (EV_TORCHES, EV_CLEANUP):
         kind = forced & 0x7f
+    # Portal A fights (QuickStartPortalForcesWaves).
+    if (forced & 0xC0) == 0x40:
+        kind = EV_WAVES
     extra = 0
     if kind in (EV_ITEM_DROP, EV_WAVES):
         extra = R() % 64
@@ -1397,6 +1484,7 @@ def simulate(seed, cohort, rng):
     regions = reachable_nodes(held, drop_pool)
     checkpoints.append(snapshot(regions, held, 'after selection'))
     dealt = []
+    portal = portal_lit = None   # the portal pair's pocket; lit once A is done
     # Four steps, then the finale. This looped five times until the Oct 2026
     # study: a fifth step was rolled and counted that the game never deals
     # (QUICKSTART_CHAIN_PRE_STEPS is 4; the step-4 completion draws the
@@ -1404,8 +1492,11 @@ def simulate(seed, cohort, rng):
     for step in range(4):
         if not dealt:
             dealt = roll_step(seed, step, prior, regions, held, owned,
-                              quest_slot, sites_done, carrier=carrier, drop_pool=drop_pool)
+                              quest_slot, sites_done, carrier=carrier, drop_pool=drop_pool,
+                              portal_dealt=portal is not None)
         kind, where, detail = dealt.pop(0)
+        if kind == KIND_EVENT and detail is not None and (detail & 0xC0) == CHAIN_PORTAL:
+            portal = detail & 0x0F
         event = prize = None
         # Is the step's ROOM inside reach when it is dealt? An EVENT is
         # placed by the room test, so it always is; a WAVE, BOSS or QUEST
@@ -1426,6 +1517,8 @@ def simulate(seed, cohort, rng):
             prior.add((kind, where))
             if kind == KIND_EVENT:
                 sites_done.add(where)
+                if portal is not None and (detail or 0) & 0xC0 == CHAIN_PORTAL:
+                    portal_lit = portal
             # A WAVE or a BOSS step is a region clear, and a region clear
             # pays QuickStartSpawnRegionRewardItem's draw over QS_CAT_ALL -
             # the one draw in the mode that can hand over a key item. An
@@ -1461,12 +1554,14 @@ def simulate(seed, cohort, rng):
                         rewards.append(got)
                         prize = got
         steps.append(dict(step=step, kind=KIND_NAME[kind], where=where, detail=detail,
+                          portal=(detail & 0x0F) if kind == KIND_EVENT and detail is not None
+                          and (detail & 0xC0) == CHAIN_PORTAL else None,
                           room=step_room(KIND_NAME[kind], where),
                           region=(REGION_NAMES[step_region(KIND_NAME[kind], where)]
                                   if step_region(KIND_NAME[kind], where) is not None else None),
                           event=event, prize=prize, room_ok=room_ok))
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
-        regions = reachable_nodes(held, drop_pool)
+        regions = reachable_nodes(held, drop_pool, portal_lit)
         if step < 4:
             checkpoints.append(snapshot(regions, held, f'after requirement {step + 1}'))
         if step == 3:

@@ -268,6 +268,15 @@
   walking in costs, what walking back out costs (TRAP when it needs an
   item, "ocarina only" when no item does), and the region rows and ? room
   sites reachable inside. `--json OUT`.
+- `portal_rooms.py` - generates `include/quickstart/portals.h`: the portal
+  pockets (landing, one-way or two-way, escape items, what counts as
+  inside) and, per ? room site, the tile its portal stands on (captured
+  floor, clear of the room's objects from `build/portal_census.json`, no
+  Minish rooms). `--check` compares.
+- `portal_probe.py` - plays the portal pairs in the ROM: each pocket end to
+  end (dealt, asleep, A's fight, lit, ride, paid inside, back, walk out and
+  the Ocarina home), the patience rule, `--sweep` every portal A site,
+  `--census` the rooms' objects and Minish size for the generator.
 - `hazard_probe.py` - what each roster enemy does to the player: status
   flags (captured, burning, frozen, held), the slowest walking speed, hits
   and their types. Three of each round a player in the quiet dojo;
