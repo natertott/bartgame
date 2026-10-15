@@ -13,7 +13,7 @@ the research it rests on follows, as it was written.
 |---|---|---|
 | The way home | Keep the Ocarina. | Every landing walks item-free to an overworld room, and the Ocarina flies home from there (measured per pocket). |
 | Failure | Everything retries, the Ocarina, portal A stays lit, the patience rule moves the item after three prizes won elsewhere. | All four, in that order. |
-| Frequency | At most one pair per run, one run in three. | A run coin of one in three; the pair is tried from a step the seed picks until one deals. Simulated: a pair in 28.9% of runs. |
+| Frequency | At most one pair per run, one run in three. | A run coin of one in three; the pair is tried from a step the seed picks until one deals. Simulated: a pair in 29.1% of runs. |
 | Portal A | Lit by clearing the room's event. | A deals a fight; the portal wakes when the fight is won and its prize taken (the site's DONE bit). |
 | Where | The batch order: Wind Ruins, Veil Falls, Castor Wilds, Lake Hylia. | Wind Ruins one-way, Castor Wilds two-way, Lake Hylia two-way. Veil Falls left out (below). |
 
@@ -86,20 +86,20 @@ the plateau.
 |---|---|
 | `portal_probe.py`, each pocket: dealt, asleep, A's fight, lit, ride, paid inside, back (two-way), walk out and the Ocarina home | 3/3 |
 | `portal_probe.py`, patience: three prizes outside the pocket are not the item, the fourth is | pass |
-| `portal_probe.py --sweep`: every portal A site dealt, asleep, fought, lit and ridden | SWEEP |
+| `portal_probe.py --sweep`: every portal A site dealt, asleep, fought, lit and ridden | 50/50 (52 tiles, less the two landing rooms; site 107 left out, below) |
 | `chain_roll_validate.py`: the simulator deals the ROM's chain step, the pair included | 500/500 (89 pairs) |
-| `site_roll_validate.py` | SRV |
+| `site_roll_validate.py` | 1,785/1,785 |
 
 Simulated, 2,000 runs with rewards, against the same runs without the
 pair:
 
 | | control | with the pair |
 |---|---|---|
-| runs with a pair | 0% | 28.9% (Wind Ruins 11.4%, Lake Hylia 9.8%, Castor Wilds 7.8%) |
-| chain steps in the Wind Ruins | 0.21% | 0.79% |
-| chain steps in Castor Wilds | 2.69% | 3.23% |
+| runs with a pair | 0% | 29.1% (Wind Ruins 11.4%, Lake Hylia 10.1%, Castor Wilds 7.7%) |
+| chain steps in the Wind Ruins | 0.21% | 0.84% |
+| chain steps in Castor Wilds | 2.69% | 3.24% |
 | finales in the Wind Ruins | 0.05% | 0.45% |
-| chain steps at Lake Hylia | 10.25% | 8.99% |
+| chain steps at Lake Hylia | 10.25% | 8.95% |
 
 The pocket's own ITEM step is not counted in a region, so the first row is
 the main effect: more than one run in four now sends the player into a

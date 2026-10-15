@@ -1305,9 +1305,9 @@ prize won inside the pocket. Full write-up: "What was built" in
   leaves a player held by a Like Like CAPTURED for good (a probe artifact;
   `portal_probe.release`).
 - **Measured.** `portal_probe.py` 3/3 pockets end to end plus the patience
-  rule; `--sweep` SWEEP; `chain_roll_validate.py` 500/500 with 89 pairs
-  dealt; `site_roll_validate.py` SRV. Simulated over 2,000 runs: a pair in
-  28.9% of runs; chain steps in the Wind Ruins 0.21% to 0.79%, finales
+  rule; `--sweep` 50/50 portal A sites; `chain_roll_validate.py` 500/500 with 89 pairs
+  dealt; `site_roll_validate.py` 1,785/1,785. Simulated over 2,000 runs: a pair in
+  29.1% of runs; chain steps in the Wind Ruins 0.21% to 0.84%, finales
   there 0.05% to 0.45%.
 
 ### Portal ? rooms into unreachable pockets: researched (Oct 2026, built since: above)
@@ -1344,6 +1344,15 @@ Found:
   price), while the walked survey prices the descent at the Grip Ring. It is
   harmless today (the summit is only reached with the ring) and needs one
   `link()` row before a portal lands there.
+
+### The Veil Falls cave's 1F hallway wave room spawns nobody (Oct 2026)
+
+Found by `portal_probe.py --sweep`. At site 107
+(`VEIL_FALLS_CAVES_HALLWAY_1F`) a forced wave room deals no enemy at all,
+on any of eight settles, and its prize drops at once (`chain_audit.drive`:
+"killed 0, reward taken"). So the room pays a WAVES prize for nothing. The
+portal generator leaves it out as a portal A (`NO_FIGHT_SITES`) until the
+spawner is looked at there.
 
 ### Two ? room sites run their event one frame (Oct 2026)
 

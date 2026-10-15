@@ -43,6 +43,10 @@ CENSUS = os.path.join(P.ROOT, 'build', 'portal_census.json')
 # Sites whose ? room never gets past its first frame (lantern_rooms.py
 # BROKEN_SITES): never a portal's either end.
 BROKEN_SITES = {47, 65}
+# Portal A deals a fight, and these rooms' wave room spawns nobody: the
+# prize drops with no fight at all (portal_probe.py --sweep, the Veil Falls
+# cave's 1F hallway). A known defect of the site, logged in the roadmap.
+NO_FIGHT_SITES = {107}
 OPEN_KINDS = {'ANY', 'LARGE', 'SMALL'}
 KEEP_CLEAR = 3                 # tiles (Manhattan) from the arrival
 
@@ -82,6 +86,9 @@ def portal_tile(floor, objects=()):
     """The tile a portal stands on, or None."""
     from block_puzzles import flood
     sx, sy = floor.start
+    # Something stands on the arrival tile in a few rooms as the census
+    # lands (the player's own effects): never an obstacle.
+    objects = [o for o in objects if tuple(o) != floor.start]
     near_obj = {(x + dx, y + dy) for (x, y) in objects for dx in (-1, 0, 1) for dy in (-1, 0, 1)}
     walk = flood(floor.comp - set(map(tuple, objects)), floor.start)
     spot = (floor.r['spot'][0] // 16, floor.r['spot'][1] // 16)
@@ -111,7 +118,7 @@ def tiles():
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         site = int(key.split(':')[1])
         r = rooms[key]
-        if site in BROKEN_SITES or (r['kinds'] not in OPEN_KINDS and site not in land_sites):
+        if site in BROKEN_SITES or site in NO_FIGHT_SITES or (r['kinds'] not in OPEN_KINDS and site not in land_sites):
             continue
         seen = census.get(site)
         # Minish-sized rooms by area: the testbed lands a full-size player
