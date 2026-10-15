@@ -21330,6 +21330,71 @@ static bool32 QuickStartSitePuzzleOk(s32 site) {
 
 static s32 QuickStartChainForcedKind(s32 site);
 
+// The kind a win-chain step forces on a site, FIXED FOR THE VISIT (Oct
+// 2026). A step can be dealt while the player stands in the very room it
+// forces - a portal pair's A, a torch step's site - and the force used to
+// apply from that frame on, switching the room's kind under a running
+// event. Measured at the Veil Falls cave's 1F hallway: dealt a cleanup room
+// with its waves on the first frames, then switched to a wave room that
+// found the cleanup's "dealt" flag set, took it for a survive clock already
+// running with zero seconds left, cleared the enemies and dropped its prize
+// - a fight that never happened. So the dispatcher's first ask in a visit
+// latches the answer in room flags (127: latched, 128-129: the force), and
+// the visit keeps it; the next visit reads the live chain again. Asked for
+// a site whose room the player is not in (a harness, a validator), it is
+// the live answer and nothing is latched.
+#define QS_SITE_FORCE_NONE 0
+#define QS_SITE_FORCE_WAVES 1
+#define QS_SITE_FORCE_TORCHES 2
+#define QS_SITE_FORCE_CLEANUP 3
+#define QUICKSTART_SITE_FORCE_LATCHED_FLAG 127
+#define QUICKSTART_SITE_FORCE_BIT(b) (128 + (b))  // b = 0..1
+
+static s32 QuickStartSiteForceLive(s32 site) {
+    s32 forced;
+    if (QuickStartPortalForcesWaves(site)) {
+        return QS_SITE_FORCE_WAVES;
+    }
+    forced = QuickStartChainForcedKind(site);
+    if (forced == QS_EVENT_TORCHES) {
+        return QS_SITE_FORCE_TORCHES;
+    }
+    if (forced == QS_EVENT_CLEANUP) {
+        return QS_SITE_FORCE_CLEANUP;
+    }
+    return QS_SITE_FORCE_NONE;
+}
+
+static s32 QuickStartSiteForce(s32 site) {
+    const QuickStartContentSite* entry = &sQuickStartRoomContentSites[site];
+    s32 force, i;
+    if (gRoomControls.area != entry->area || gRoomControls.room != entry->room) {
+        return QuickStartSiteForceLive(site);
+    }
+    // The flags are the ROOM's: a room with two sites keeps the live
+    // answer (nothing forces such a site - every layout and portal tile is
+    // for a site alone in its room).
+    for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
+        if (i != site && sQuickStartRoomContentSites[i].area == entry->area &&
+            sQuickStartRoomContentSites[i].room == entry->room) {
+            return QuickStartSiteForceLive(site);
+        }
+    }
+    if (QsCheckRoomFlag(QUICKSTART_SITE_FORCE_LATCHED_FLAG)) {
+        return (QsCheckRoomFlag(QUICKSTART_SITE_FORCE_BIT(0)) ? 1 : 0) |
+               (QsCheckRoomFlag(QUICKSTART_SITE_FORCE_BIT(1)) ? 2 : 0);
+    }
+    force = QuickStartSiteForceLive(site);
+    QsSetRoomFlag(QUICKSTART_SITE_FORCE_LATCHED_FLAG);
+    if (force & 1) {
+        QsSetRoomFlag(QUICKSTART_SITE_FORCE_BIT(0));
+    }
+    if (force & 2) {
+        QsSetRoomFlag(QUICKSTART_SITE_FORCE_BIT(1));
+    }
+    return force;
+}
+
 static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
     u8 kind, extra;
     u32 savedRand = gRand;
@@ -21435,21 +21500,24 @@ static void QuickStartContentSiteRoll(s32 site, u8* outKind, u8* outExtra) {
             kind = QS_EVENT_CLEANUP;
         }
     }
-    // A win-chain EVENT step on this site may force one of the two
-    // (QuickStartChainEventForce): the step's detail, not a hash, so the
-    // site deals it for exactly as long as the step stands.
-    {
-        s32 forced = QuickStartChainForcedKind(site);
-        if (forced == QS_EVENT_TORCHES || forced == QS_EVENT_CLEANUP) {
-            kind = (u8)forced;
-        }
-    }
-    // A portal pair's two rooms fight (Oct 2026): portal A until it is
-    // cleared, which is what wakes the portal, and the landing room while
-    // the escape item is still to be won there - a fight's prize goes
-    // through QuickStartDrawItem, where a miniboss's fixed reward would not.
-    if (QuickStartPortalForcesWaves(site)) {
-        kind = QS_EVENT_WAVES;
+    // A win-chain step may force the site's kind: a torch or cleanup EVENT
+    // step (QuickStartChainEventForce), or a portal pair's two rooms, which
+    // fight (portal A until it is cleared, which is what wakes the portal,
+    // and the landing room while the escape item is still to be won there -
+    // a fight's prize goes through QuickStartDrawItem, where a miniboss's
+    // fixed reward would not). Fixed for the visit (QuickStartSiteForce).
+    switch (QuickStartSiteForce(site)) {
+        case QS_SITE_FORCE_WAVES:
+            kind = QS_EVENT_WAVES;
+            break;
+        case QS_SITE_FORCE_TORCHES:
+            kind = QS_EVENT_TORCHES;
+            break;
+        case QS_SITE_FORCE_CLEANUP:
+            kind = QS_EVENT_CLEANUP;
+            break;
+        default:
+            break;
     }
     if (kind == QS_EVENT_ITEM_DROP || kind == QS_EVENT_WAVES) {
         // A draw seed, not an index: QuickStartDrawItem derives both the tier
@@ -23706,6 +23774,13 @@ static void QuickStart2DoorClearRoomObstacles(u8 area, u8 room) {
             // variant wherever a clearObjects room carries one.
             if (entity->kind == OBJECT &&
                 (entity->id == MINISH_SIZED_ENTRANCE || entity->id == MINISH_SIZED_ARCHWAY)) {
+                continue;
+            }
+            // A portal pair's pad (QuickStartPortalMonitor) is laid once per
+            // visit and can be laid before this sweep runs: measured in
+            // Grimblade's dojo and the ranch house's east room, the pad lived
+            // four frames. It is ours, not the room's decor.
+            if (entity->kind == OBJECT && entity->id == WARP_POINT) {
                 continue;
             }
             DeleteEntity(entity);
@@ -30756,6 +30831,15 @@ static void QuickStartScenarioRunStart(void) {
     gRoomTransition.player_status.start_pos_x = x;
     gRoomTransition.player_status.start_pos_y = y;
     gRoomTransition.player_status.layer = 1;
+    // A CHAIN scenario's step is dealt now, before its room loads. Left to
+    // the chain monitor it came a few frames after the room had already
+    // dealt its own roll, and a forced kind then arrived mid-visit (see
+    // QuickStartSiteForce) - the portal probe's "wave room that spawns
+    // nobody" at the Veil Falls cave's 1F hallway.
+    if (QuickStartScenario(QS_SCN_CHAIN) && gSave.chain_rolled == 0) {
+        gSave.chain_rolled = (u8)QuickStartChainRollStep(0);
+        gSave.chain_hinted = 0;
+    }
 }
 
 

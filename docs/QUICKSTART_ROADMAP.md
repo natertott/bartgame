@@ -1271,6 +1271,55 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### A forced ? room kind no longer switches mid-visit (Oct 2026)
+
+The user asked to fix "the Veil Falls hallway wave room that spawns
+nothing". Traced frame by frame, the room was not the fault. A win-chain
+step can force a site's kind:
+
+- a portal pair's A and its landing room fight;
+- a torch or cleanup EVENT step deals its kind.
+
+The step can be dealt while the player stands in that very room. The force
+applied from that frame on, so the room's kind switched under a running
+event. At the hallway the room had dealt its own roll, a cleanup room: its
+"dealt" flag and its hazard waves were up. Eight frames later the wave room
+took over, read that flag as a survive clock already running with zero
+seconds left, deleted the enemies and paid its prize. No fight happened.
+
+In real play this happens whenever such a step is dealt in the room it
+forces: a WAVE, BOSS, QUEST or ITEM step finished in a ? room still
+running, or any step paid there.
+
+Fixed in two places:
+
+- **`QuickStartSiteForce` fixes the force for a visit.** The dispatcher's
+  first ask in a visit latches it in room flags 127-129, and the next
+  visit reads the live chain again. A site sharing its room keeps the live
+  answer, since nothing forces such a site.
+- **The testbed deals a CHAIN scenario's step at run start**, before its
+  room loads, so the probes measure the forced room from its first frame.
+
+Two more things the same ordering had hidden, both fixed:
+
+- **The portal census measured the wrong room.** It caught each room
+  after its own roll, so a pot lottery's pots (the Heart Piece hallway,
+  the Trilby keese cave) read as vanilla objects and kept portals out.
+  Re-measured as portal A, a fight from the first frame: the table has 61
+  portal tiles (was 52).
+- **The furniture sweep deleted the pad.** Grimblade's dojo, the ranch
+  house's east room and the Veil Falls cave exit clear every object once
+  per visit (`QuickStart2DoorClearRoomObstacles`), and portal A's pad was
+  laid four frames before that sweep ran. Warp points are now exempt, as
+  the sweep already exempts Minish doors.
+
+| check | before (delivered ROM) | after |
+|---|---|---|
+| a portal pair written into the chain while the player stands in a room with another kind, 11 rooms | 11 switched to a wave room mid-visit, 4 paid their prize at once with no enemy | 0 switched, 0 paid |
+| `site_force_probe.py` (new): the visit keeps its kind, the next visit takes the force | (n/a) | 12/12 |
+| the hallway, as portal A | dealt a cleanup room, then paid a wave prize for nothing | a three-wave fight from the first frame, 7 enemies |
+| `portal_probe.py --sweep` | 50/50, site 107 left out | 59/59, site 107 back |
+
 ### Wind Ruins: the tektite statue no longer traps an Armos-room drop (Oct 2026)
 
 The user's report: a one-way passage in the Wind Ruins, a statue that lifts
@@ -1332,8 +1381,9 @@ prize won inside the pocket. Full write-up: "What was built" in
   the boot kit: its region row pays no clear and its ? rooms want the
   Lantern or the Grip Ring. It needs a payout of its own first.
 - **Found on the way.** The captured floors (`block_rooms.json`) hold no
-  objects, so a portal tile can sit under a pot (the Heart Piece hallway is
-  full of them); `portal_probe.py --census` measures each room's objects
+  objects, so a portal tile can sit under a pot (the first census mistook a
+  pot lottery in the Heart Piece hallway for vanilla pots; corrected in "A
+  forced ? room kind no longer switches mid-visit"); `portal_probe.py --census` measures each room's objects
   and Minish size in the ROM, and the generator steers clear. A warp point
   spawns a second WARP_POINT entity as it lights (its effect), which reads
   as a duplicate pad in an entity scan. `chain_audit.drive`'s health-0 kill
@@ -1380,14 +1430,15 @@ Found:
   harmless today (the summit is only reached with the ring) and needs one
   `link()` row before a portal lands there.
 
-### The Veil Falls cave's 1F hallway wave room spawns nobody (Oct 2026)
+### The Veil Falls cave's 1F hallway "spawns nobody": closed, it was not the room (Oct 2026)
 
-Found by `portal_probe.py --sweep`. At site 107
-(`VEIL_FALLS_CAVES_HALLWAY_1F`) a forced wave room deals no enemy at all,
-on any of eight settles, and its prize drops at once (`chain_audit.drive`:
-"killed 0, reward taken"). So the room pays a WAVES prize for nothing. The
-portal generator leaves it out as a portal A (`NO_FIGHT_SITES`) until the
-spawner is looked at there.
+The entry above this batch logged site 107 (`VEIL_FALLS_CAVES_HALLWAY_1F`)
+as a wave room that spawns nobody. That was wrong. The room's wave room
+spawns a full wave (7 enemies, with the boot kit, the test kit or every
+item). The real fault is in the next entry up: a forced kind arriving
+mid-visit. The portal sweep's testbed dealt its chain a few frames after
+the room had dealt its own roll, a cleanup room. Site 107 is a portal A
+again.
 
 ### Two ? room sites run their event one frame (Oct 2026)
 

@@ -303,10 +303,13 @@ so nobody re-invents them:
   (`memory_probe.py`, `veilfalls_probe.py`, `crenel_vine_probe.py`) after
   every room change, including scroll seams.
 - **The captured floors hold no objects.** `build/block_rooms.json` has
-  the collision map, and a pot or a statue is an entity, not a tile: the
-  Heart Piece hallway reads as open floor and is full of pots. Anything
-  placed on a captured floor that the player must stand on needs the
-  room's objects measured (`portal_probe.py --census`).
+  the collision map, and a pot or a statue is an entity, not a tile.
+  Anything placed on a captured floor that the player must stand on needs
+  the room's objects measured (`portal_probe.py --census`), and measured
+  in the state the room will have then. The first census caught each room
+  after its own ? roll: the Heart Piece hallway's "pots" were a pot
+  lottery, not vanilla, and kept a portal out of a room that, as portal A,
+  is always a fight.
 - **A lit warp point spawns a second WARP_POINT entity** (its effect), at
   the same spot. An entity scan for pads sees two.
 - **Writing an enemy's health to 0 does not release a held player.** A
@@ -317,6 +320,12 @@ so nobody re-invents them:
   `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
   at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.
 
+- **A step dealt after the room loads is a mid-visit change.** The CHAIN
+  testbed used to deal its step a few frames into the visit, after the
+  room had dealt its own roll, and that is what logged the Veil Falls
+  hallway as "a wave room that spawns nobody". It deals at run start now.
+  When a probe writes chain bytes by hand inside a ? room, the room keeps
+  this visit's kind (`QuickStartSiteForce`); go out and back in.
 - **The REGION testbed does not record the run's drop row.** It lands the
   player in the row's room but `QuickStartDropRegionIndex` still reads 0,
   and a real drop into Castor Wilds or the Ruins also needs the swamp kit

@@ -281,6 +281,9 @@
   in the Armos room walks out to the Ruins Entrance (the statue removed for
   it), a control with the drop recorded as the Entrance stops at the
   statue, and an Entrance drop keeps the vanilla fight.
+- `site_force_probe.py` - a step that forces a ? room's kind (a portal
+  pair) dealt while the player stands in that room: the room keeps this
+  visit's kind and pays nothing early; out and back in, the force applies.
 - `hazard_probe.py` - what each roster enemy does to the player: status
   flags (captured, burning, frozen, held), the slowest walking speed, hits
   and their types. Three of each round a player in the quiet dojo;

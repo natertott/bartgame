@@ -15,11 +15,11 @@ the pocket. This writes the two tables the ROM and the simulator share:
            prize spot's ring, as near the middle of the floor as it gets
 
 The captured floor does not hold the room's own objects, and a pot or a
-statue is as solid as a wall: a portal under the Heart Piece hallway's
-pots could not be stood on (portal_probe.py --sweep). So the tiles also
-read build/portal_census.json (portal_probe.py --census, measured in the
-ROM): no portal on or beside an object, joined to the arrival around
-them. And none in a room the player enters Minish-sized (every MINISH
+statue is as solid as a wall: a portal under a pot could not be stood on
+(portal_probe.py --sweep). So the tiles also read build/portal_census.json
+(portal_probe.py --census, measured in the ROM with the room dealt as
+portal A, a fight): no portal on or beside an object, joined to the
+arrival around them. And none in a room the player enters Minish-sized (every MINISH
 area and the beanstalks): the testbed lands a full-size player there, and
 two Minish houses failed the sweep (the pad was never reached, or never
 dealt).
@@ -43,10 +43,6 @@ CENSUS = os.path.join(P.ROOT, 'build', 'portal_census.json')
 # Sites whose ? room never gets past its first frame (lantern_rooms.py
 # BROKEN_SITES): never a portal's either end.
 BROKEN_SITES = {47, 65}
-# Portal A deals a fight, and these rooms' wave room spawns nobody: the
-# prize drops with no fight at all (portal_probe.py --sweep, the Veil Falls
-# cave's 1F hallway). A known defect of the site, logged in the roadmap.
-NO_FIGHT_SITES = {107}
 OPEN_KINDS = {'ANY', 'LARGE', 'SMALL'}
 KEEP_CLEAR = 3                 # tiles (Manhattan) from the arrival
 
@@ -118,7 +114,7 @@ def tiles():
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         site = int(key.split(':')[1])
         r = rooms[key]
-        if site in BROKEN_SITES or site in NO_FIGHT_SITES or (r['kinds'] not in OPEN_KINDS and site not in land_sites):
+        if site in BROKEN_SITES or (r['kinds'] not in OPEN_KINDS and site not in land_sites):
             continue
         seen = census.get(site)
         # Minish-sized rooms by area: the testbed lands a full-size player

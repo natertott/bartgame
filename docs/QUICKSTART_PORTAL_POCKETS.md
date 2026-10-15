@@ -86,12 +86,14 @@ the plateau.
 |---|---|
 | `portal_probe.py`, each pocket: dealt, asleep, A's fight, lit, ride, paid inside, back (two-way), walk out and the Ocarina home | 3/3 |
 | `portal_probe.py`, patience: three prizes outside the pocket are not the item, the fourth is | pass |
-| `portal_probe.py --sweep`: every portal A site dealt, asleep, fought, lit and ridden | 50/50 (52 tiles, less the two landing rooms; site 107 left out, below) |
+| `portal_probe.py --sweep`: every portal A site dealt, asleep, fought, lit and ridden | 59/59 (61 tiles, less the two landing rooms) |
 | `chain_roll_validate.py`: the simulator deals the ROM's chain step, the pair included | 500/500 (89 pairs) |
+| `site_force_probe.py`: a pair dealt while the player stands in A's room keeps the visit's kind; the next visit fights | 20/20 |
 | `site_roll_validate.py` | 1,785/1,785 |
 
 Simulated, 2,000 runs with rewards, against the same runs without the
-pair:
+pair (measured with the 52-tile table; the 61-tile one adds portal A
+sites, not pockets):
 
 | | control | with the pair |
 |---|---|---|
