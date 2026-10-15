@@ -277,6 +277,10 @@
   end (dealt, asleep, A's fight, lit, ride, paid inside, back, walk out and
   the Ocarina home), the patience rule, `--sweep` every portal A site,
   `--census` the rooms' objects and Minish size for the generator.
+- `ruins_statue_probe.py` - the Wind Ruins' tektite statue: a run dropped
+  in the Armos room walks out to the Ruins Entrance (the statue removed for
+  it), a control with the drop recorded as the Entrance stops at the
+  statue, and an Entrance drop keeps the vanilla fight.
 - `hazard_probe.py` - what each roster enemy does to the player: status
   flags (captured, burning, frozen, held), the slowest walking speed, hits
   and their types. Three of each round a player in the quiet dojo;

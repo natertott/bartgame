@@ -317,6 +317,31 @@ so nobody re-invents them:
   `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
   at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.
 
+- **The REGION testbed does not record the run's drop row.** It lands the
+  player in the row's room but `QuickStartDropRegionIndex` still reads 0,
+  and a real drop into Castor Wilds or the Ruins also needs the swamp kit
+  and the statues gate open (`QuickStartDropRowUsable`). A probe of
+  drop-dependent behaviour writes the row (`QuickStartWritePoolIdx(467,
+  211, row)`) and grants both (`ruins_statue_probe.usable`).
+- **A fresh container has no toolchain, no emulator binding and no ROM.**
+  What rebuilt it (Oct 2026):
+  - `apt-get install gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev`;
+  - pret's agbcc (`build.sh`, `install.sh <repo>`);
+  - `cp basegame.gba baserom.gba` and `make tools`;
+  - `python3 -m pip install pycparser cffi cached-property` for the
+    interpreter `python3` resolves to (`/usr/local/bin`, 3.11 here, not the
+    system 3.13 that `pip` serves);
+  - mgba 0.10.3 with `-DBUILD_PYTHON=ON`, every frontend off, `USE_FFMPEG`,
+    `USE_LIBZIP`, `USE_MINIZIP` and `USE_SQLITE3` off, and a `.pth` file
+    pointing at `build/python/lib.*`.
+
+  With ffmpeg off, the e-Reader scan code is compiled out but its
+  declarations stay in `include/mgba/gba/interface.h` and
+  `internal/gba/cart/ereader.h`, so the binding fails to import
+  (`EReaderScanLoadImageA`, then `EReaderScanScanBlock`, then
+  `EReaderBlockList*`). Wrap those declarations in `#ifdef USE_FFMPEG`.
+  The rebuilt ROM matched the last delivered md5 byte for byte.
+
 ## 3. Language and toolchain traps (agbcc, C89)
 
 - **A zero-extended byte is "known non-negative" to agbcc, and a signed

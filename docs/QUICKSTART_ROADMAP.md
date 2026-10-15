@@ -1271,6 +1271,41 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Wind Ruins: the tektite statue no longer traps an Armos-room drop (Oct 2026)
+
+The user's report: a one-way passage in the Wind Ruins, a statue that lifts
+only when the room's enemies die, and runs dropped on its far side cannot
+reach them. Measured (`ruins_statue_probe.py`, new):
+
+- Vanilla's way through the Ruins is one-way. From the Entrance it runs
+  through the ladder room and up into the Triple Tektites room. Killing its
+  three tektites (`LOST_02_00`) lifts the statue over the ladder up to the
+  Beanstalk room. From there it goes on to the Fortress Entrance and the
+  Armos room (`RUINS_BELOW_FORTRESS_ENTRANCE`, the region's second pool row).
+- A run dropped in the Armos room starts on the far side. Walking back, it
+  climbs down the Beanstalk ladder onto the statue with the tektites below
+  it: stuck on the ladder (the control run below).
+- The Armos room's own two kill-to-open gates (`LOST_05_00`, `LOST_05_01`)
+  were never the problem: the region sweep deletes their enemies and the
+  fights end on their own (the flags read set after landing).
+
+Fixed as the user asked, by the drop: `QuickStartRuinsStatueMonitor` sets
+`LOST_02_00` whenever the player is in the Ruins and the run's drop (the
+usable one, where it really lands) is the Armos room, so the statue is
+never there. A run that comes in from the Entrance, or through the Wind
+Ruins portal (which lands at the Entrance), keeps the vanilla fight.
+
+| run | result |
+|---|---|
+| FIX: dropped in the Armos room | flag set at the drop; walked out to the Ruins Entrance |
+| CONTROL: same landing, drop recorded as the Entrance | stuck on the ladder above the statue |
+| ENTRANCE: dropped at the Entrance | flag clear, four tektites in their room |
+
+The walk is room by room on the live collision grid. Twice the player is
+stood further on inside a room, past vanilla ground the walker cannot read:
+the Fortress Entrance's grass and the Beanstalk room's ledges. The statue
+is in neither room.
+
 ### Portal ? rooms: built for three pockets (Oct 2026)
 
 The user approved the batch ("That batch order works, go ahead and build

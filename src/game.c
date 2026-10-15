@@ -25871,6 +25871,29 @@ static const QuickStartHubPad sQuickStartHubPads[] = {
     { ROOM_WIND_TRIBE_TOWER_FLOOR_1, 200, 104, AREA_CLOUD_TOPS, ROOM_CLOUD_TOPS_CLOUD_TOPS, 30, 22 },
 };
 
+// --- The Wind Ruins' tektite statue (Oct 2026) ----------------------------
+//
+// Vanilla's way through the Ruins is one-way: the Entrance, the ladder room,
+// up into the Triple Tektites room, where killing the three tektites
+// (LOST_02_00) lifts the statue over the ladder up to the Beanstalk room,
+// and on to the Fortress Entrance and the Armos room. A run dropped in the
+// Armos room (the region's second pool row) starts on the far side: walking
+// back, it meets the statue from above with the tektites below it, and
+// cannot leave the Ruins on foot. The user: "remove this statue barrier
+// when the player is dropped on the other side of it." So such a run has the
+// fight's flag set from the moment it is in the Ruins, and the statue is
+// never there; a run that comes in from the Entrance keeps the fight.
+static void QuickStartRuinsStatueMonitor(void) {
+    if (gRoomControls.area != AREA_RUINS || !QsCheckFlag(GF_DROP_REGION_ROLLED) ||
+        CheckLocalFlagByBank(FLAG_BANK_1, LOST_02_00)) {
+        return;
+    }
+    if (sQuickStartRegionPool[QuickStartDropRegionIndexUsable()].area == AREA_RUINS &&
+        sQuickStartRegionPool[QuickStartDropRegionIndexUsable()].room == ROOM_RUINS_BELOW_FORTRESS_ENTRANCE) {
+        SetLocalFlagByBank(FLAG_BANK_1, LOST_02_00);
+    }
+}
+
 static void QuickStartHubPadsMonitor(void) {
     s32 i;
     if (gRoomControls.area != AREA_WIND_TRIBE_TOWER || !QuickStartRoomSettled()) {
@@ -27267,6 +27290,7 @@ static void QuickStartRoomMonitor(void) {
     QuickStartInnBlessingMonitor();
     QuickStartHubPadsMonitor();
     QuickStartPortalMonitor();
+    QuickStartRuinsStatueMonitor();
     QuickStartProcessHubHoleLink();
     QuickStartRoofMonitor();
     QuickStartSpawnHubHintsOnce();
