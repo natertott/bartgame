@@ -129,11 +129,12 @@ The proofs:
 - **Cleanup at 44 sites.** The same shared-room rule, rooms too small for
   six pieces, and the barrel Minish house (site 99), where the player on a
   web's stand tile goes into `PLAYER_CLIMB` and the jar does nothing.
-- **Two broken sites: the North Hyrule Field fairy fountain tree (47) and
-  the Minish crack by the Wind Ruins (65).** Their ? room runs one frame
-  and stops, whatever it deals: the plain wave room spawns no enemies there
-  either. A known defect logged in the roadmap; no layout is built there
-  until it is fixed (`BROKEN_SITES`).
+- **The fairy fountain tree (47) and the Minish crack by the Wind Ruins
+  (65)** were left out as "broken" until Oct 2026. They were not: the
+  testbed's one run seed made them its memory pair, which every probe met
+  instead of the kind it asked for (roadmap: "Sites 47 and 65 were never
+  broken"). Lifted, they still get no layout, for the ordinary reasons: no
+  floor torch in either tileset, and floors too small for six pieces.
 
 ## Testing
 

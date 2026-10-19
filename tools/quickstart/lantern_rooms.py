@@ -66,14 +66,6 @@ MAX_CLOUDS = 2                             # each cloud zMallocs its own heap
 TORCH_COUNTS = ((3, 4), (5, 8))            # a small and a large layout per style
 DEBRIS_COUNTS = ((6, 9), (10, 16))
 TRIES = 60
-# Sites whose ? room never gets past its first frame, whatever it deals:
-# measured by lantern_probe.py at the North Hyrule Field fairy fountain
-# tree (47) and the Minish crack by the Wind Ruins (65). The site's event
-# runs once, what it deals is gone the next frame, and the dispatcher never
-# reaches the event again; the plain wave room spawns no enemies there
-# either. A known defect, not this kind's; no layout is built there until
-# it is fixed.
-BROKEN_SITES = {47, 65}
 # No cleanup room where the jar cannot be worked: in the barrel Minish
 # house (99) the player stood on a web's stand tile goes into
 # PLAYER_CLIMB (the room's act tiles read plain floor there) and the jar
@@ -316,8 +308,6 @@ def generate(seed):
     layouts = []
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         site = int(key.split(':')[1])
-        if site in BROKEN_SITES:
-            continue
         floor = Floor(rooms[key])
         rng = random.Random('%d:%s' % (seed, key))
         got = []

@@ -416,7 +416,9 @@ and it never hands the item over for losing.
     The portal's lit state must live in the run's save, not in room flags.
 14. **The simulator** has to add the portal edge to its flood and mirror the
     pair roll, or `chain_roll_validate.py` stops agreeing with the ROM.
-15. **The broken sites** (47, 65) are never a portal's A or B.
+15. **The "broken sites"** (47, 65) turned out to be the testbed's memory
+    pair, not broken; 47 is a portal A since Oct 2026, and 65, a Minish
+    crack, is skipped with every Minish room.
 
 ## Implementation scope
 

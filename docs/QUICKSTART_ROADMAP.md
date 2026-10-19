@@ -1271,6 +1271,45 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Sites 47 and 65 were never broken: the testbed's memory pair (Oct 2026)
+
+The user asked to fix the two "broken sites": the North Hyrule Field fairy
+fountain tree (47) and the Minish crack by the Wind Ruins (65). Traced, the
+sites are fine. The testbed is not:
+
+- **Every testbed boot runs on one run seed**, `0x2ccfce0f`, whatever the
+  scenario (measured over SITE, CHAIN and REGION boots).
+- **That seed's blink-memory pair is exactly sites 47 and 65**, the lesson
+  and the recital.
+- **`QuickStartContentSiteRoll` deals the memory roles before it reads a
+  scenario's kind.** Every probe that asked either room for a wave room, a
+  torch room or a cleanup room got the memory event. Its first-frame deal
+  and then its waiting looked like "runs one frame and stops", and of
+  course no wave spawned.
+- **In a real run the pair is drawn from the run seed** over the eligible
+  sites: 2,609 different pairs over 3,000 simulated seeds, the commonest
+  four times. 47 and 65 deal whatever they roll.
+
+Fixed in the testbed: `QuickStartMemorySiteCompute` keeps the site a SITE or
+CHAIN scenario tests out of the pair. A plain run's pair is unchanged.
+Then the exclusions were lifted:
+
+| table | before | after |
+|---|---|---|
+| portal tiles | 47 and 65 left out as broken | 47 added (62 tiles); 65 is a Minish crack, which portals skip anyway |
+| torch and cleanup layouts | 47 and 65 left out as broken | still none, now for the ordinary reasons: neither tileset draws a floor torch, and the floors (23 and 29 reachable tiles) are too small for a six-piece cleanup room |
+
+| check | result |
+|---|---|
+| `chain_audit.py`, sites 47 and 65, every kind it drives (waves, miniboss, NPC, item drop, chest lottery, fairy) | 6/6 at each |
+| `portal_probe.py`, site 47 as portal A: dealt, asleep, fought, lit, ridden | pass |
+| `memory_probe.py` (its pair moves when a scenario names one of its rooms) | 9/9 |
+| `site_force_probe.py` / `chain_roll_validate.py` / `site_roll_validate.py` / `portal_probe.py` pockets | 20/20, 500/500, 1,785/1,785, 3/3 plus patience |
+
+The torch survey and the floor capture were re-run in this container: the
+lantern generator reproduced the committed table byte for byte before the
+exclusion was lifted.
+
 ### A forced ? room kind no longer switches mid-visit (Oct 2026)
 
 The user asked to fix "the Veil Falls hallway wave room that spawns
@@ -1440,7 +1479,7 @@ mid-visit. The portal sweep's testbed dealt its chain a few frames after
 the room had dealt its own roll, a cleanup room. Site 107 is a portal A
 again.
 
-### Two ? room sites run their event one frame (Oct 2026)
+### Two ? room sites run their event one frame (Oct 2026; closed: the testbed, not the sites, see above)
 
 Found by `lantern_probe.py` at the North Hyrule Field fairy fountain tree
 (site 47, `TREE_INTERIORS_NORTH_HYRULE_FIELD_FAIRY_FOUNTAIN`) and the

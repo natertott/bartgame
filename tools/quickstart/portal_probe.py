@@ -27,7 +27,8 @@ lands in portal A's room. Then, as a player would:
   --census  every candidate site, landed as portal A: the tiles its own
             objects stand on (pots, statues, NPCs: solid, and absent from
             the captured floor) and whether the player is Minish there.
-            Writes build/portal_census.json, which portal_rooms.py reads.
+            Writes build/portal_census.json, which portal_rooms.py reads;
+            --only 47,65 re-measures those sites and merges them in.
   --sweep   every portal A site in the table, into the Wind Ruins: DEALT,
             ASLEEP, FIGHT, LIT and RIDE (the pad stands on open floor the
             player reaches, lights, and carries them)
@@ -286,11 +287,16 @@ PL_MINISH = 0x80
 CENSUS = os.path.join(P.ROOT, 'build', 'portal_census.json')
 
 
-def census(rom, diff):
+def census(rom, diff, only=None):
+    """`only`: re-measure these sites and merge them into the file."""
     rooms = json.load(open(ROOMS))
     out = {}
+    if only is not None:
+        out = {int(k): v for k, v in json.load(open(CENSUS)).items()}
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         st = int(key.split(':')[1])
+        if only is not None and st not in only:
+            continue
         if sim.SITES[st]['kinds'] not in ('ANY', 'LARGE', 'SMALL') and st not in {k['land_site'] for k in sim.PORTALS}:
             continue
         c = S.boot(rom, S.KINDS['CHAIN'], a=1, b=st, c=0x40, kit=0, diff=diff, frames=300)
@@ -302,7 +308,7 @@ def census(rom, diff):
         out[st] = dict(room=sim.SITES[st]['roomName'], here=list(here(c)), objects=objs, minish=minish)
         print('site %3d %-44s minish %d objects %d' % (st, sim.SITES[st]['roomName'][5:], minish, len(objs)), flush=True)
         del c
-    json.dump(out, open(CENSUS, 'w'), indent=1)
+    json.dump({k: out[k] for k in sorted(out)}, open(CENSUS, 'w'), indent=1)
     print('-> %s' % os.path.relpath(CENSUS, P.ROOT))
     return 0
 
@@ -331,13 +337,14 @@ def main():
     ap.add_argument('--diff', type=int, default=3)
     ap.add_argument('--sweep', action='store_true')
     ap.add_argument('--census', action='store_true')
+    ap.add_argument('--only', help='with --census: these sites, merged into the file')
     a = ap.parse_args()
     # Portal A for the probe: a plain open-kind site on the mainland with a
     # portal tile (the North Hyrule Field fairy cave), or --site.
     site = a.site if a.site is not None else 0
     bad = 0
     if a.census:
-        return census(a.rom, a.diff)
+        return census(a.rom, a.diff, [int(x) for x in a.only.split(',')] if a.only else None)
     if a.sweep:
         lands = {k['land_site'] for k in sim.PORTALS}
         for st in sorted(sim.PORTAL_TILES):

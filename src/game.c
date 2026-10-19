@@ -21236,7 +21236,7 @@ static s32 QuickStartMemorySite(s32 role) {
 
 static s32 QuickStartMemorySiteCompute(s32 role) {
     s32 i, n = 0, pick, lesson = -1;
-    u8 lessonArea = 0xff, lessonRoom = 0xff;
+    u8 lessonArea = 0xff, lessonRoom = 0xff, testedArea = 0xff, testedRoom = 0xff;
     // The testbed's SITE scenario dealing this kind puts the named site in
     // the named role, so the sprite in that room answers for the room it
     // is actually in.
@@ -21251,9 +21251,28 @@ static s32 QuickStartMemorySiteCompute(s32 role) {
             lessonRoom = sQuickStartRoomContentSites[lesson].room;
         }
     }
+    // The site a SITE or CHAIN scenario is testing is never in the pair
+    // (Oct 2026). The testbed boots on one run seed (0x2ccfce0f), whose pair
+    // is sites 47 and 65, and the memory roles are dealt before a scenario's
+    // own kind: every probe of those two rooms met the memory event instead
+    // of the kind it asked for, which is what logged them as "broken sites".
+    // A plain run has no scenario, so its pair is exactly as before.
+    {
+        s32 tested = -1;
+        if (QuickStartScenario(QS_SCN_SITE)) {
+            tested = gSave.scenario_a;
+        } else if (QuickStartScenario(QS_SCN_CHAIN) && gSave.scenario_a == QS_CHAIN_EVENT) {
+            tested = gSave.scenario_b;
+        }
+        if (tested >= 0 && tested < QUICKSTART_CONTENT_SITE_COUNT) {
+            testedArea = sQuickStartRoomContentSites[tested].area;
+            testedRoom = sQuickStartRoomContentSites[tested].room;
+        }
+    }
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
         if (QuickStartMemorySiteEligible(i) &&
-            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom)) {
+            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom) &&
+            !(sQuickStartRoomContentSites[i].area == testedArea && sQuickStartRoomContentSites[i].room == testedRoom)) {
             n++;
         }
     }
@@ -21263,7 +21282,8 @@ static s32 QuickStartMemorySiteCompute(s32 role) {
     pick = (s32)(QuickStartChainHash(0x3E73u + (u32)role * 77u) & 0x7fff) % n;
     for (i = 0; i < QUICKSTART_CONTENT_SITE_COUNT; i++) {
         if (QuickStartMemorySiteEligible(i) &&
-            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom)) {
+            !(sQuickStartRoomContentSites[i].area == lessonArea && sQuickStartRoomContentSites[i].room == lessonRoom) &&
+            !(sQuickStartRoomContentSites[i].area == testedArea && sQuickStartRoomContentSites[i].room == testedRoom)) {
             if (pick-- == 0) {
                 return i;
             }

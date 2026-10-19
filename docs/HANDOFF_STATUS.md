@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Sites 47 and 65 were never broken: the testbed boots on one run seed whose memory pair they are, and the memory roles beat a scenario's kind. The tested site is now kept out of the pair; 47 is a portal A. `chain_audit.py` 6/6 at each | "Sites 47 and 65 were never broken" |
 | A forced ? room kind (portal fight, torch or cleanup step) no longer switches mid-visit; the "Veil Falls hallway spawns nothing" defect was this, not the room. Latched per visit in room flags 127-129; the CHAIN testbed deals its step at run start. Before: 11/11 rooms switched, 4 paid a prize with no fight; after: 0. `site_force_probe.py` 12/12 | "A forced ? room kind no longer switches mid-visit" |
 | Wind Ruins: a run dropped in the Armos room (row 14) is past the tektite statue, the one-way gate whose fight is on the other side; the statue is now removed for such a run (`LOST_02_00` set at the drop). `ruins_statue_probe.py` 3/3 with a control that reproduces the trap | "Wind Ruins: the tektite statue no longer traps an Armos-room drop" |
 | Portal ? rooms built for three pockets: a ? room's fight wakes a warp point into the Wind Ruins (one-way), Castor Wilds' far bank or the Lake Hylia ladder pocket (two-way); the escape item is paid by the next prize won inside; one run in three, the Ocarina home, patience after three prizes elsewhere. Veil Falls held back (no payout on the plateau). `portal_probe.py` 3/3 pockets, `chain_roll_validate.py` 500/500 | "Portal ? rooms: built for three pockets" |
@@ -301,11 +302,6 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   that Crenel waves pay nothing.
 
 ### Straightforward work, not started
-
-- **Fix the two ? room sites that run their event one frame** (47, the
-  North Hyrule Field fairy fountain tree; 65, the Wind Ruins Minish crack):
-  roadmap entry "Two ? room sites run their event one frame". Then drop
-  them from `lantern_rooms.py`'s `BROKEN_SITES` and regenerate.
 
 - **Torch art for the 60 sites that cannot draw one** (houses, tree
   hollows, dojos, Great Fairy rooms, Minish houses), left out for now at the

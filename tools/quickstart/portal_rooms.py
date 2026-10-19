@@ -40,9 +40,6 @@ from block_puzzles import Floor, ROOMS, DIRS
 OUT_H = os.path.join(P.ROOT, 'include', 'quickstart', 'portals.h')
 CENSUS = os.path.join(P.ROOT, 'build', 'portal_census.json')
 
-# Sites whose ? room never gets past its first frame (lantern_rooms.py
-# BROKEN_SITES): never a portal's either end.
-BROKEN_SITES = {47, 65}
 OPEN_KINDS = {'ANY', 'LARGE', 'SMALL'}
 KEEP_CLEAR = 3                 # tiles (Manhattan) from the arrival
 
@@ -114,7 +111,7 @@ def tiles():
     for key in sorted((k for k in rooms if k.startswith('site:')), key=lambda k: int(k.split(':')[1])):
         site = int(key.split(':')[1])
         r = rooms[key]
-        if site in BROKEN_SITES or (r['kinds'] not in OPEN_KINDS and site not in land_sites):
+        if (r['kinds'] not in OPEN_KINDS and site not in land_sites):
             continue
         seen = census.get(site)
         # Minish-sized rooms by area: the testbed lands a full-size player

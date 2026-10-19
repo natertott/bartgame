@@ -320,6 +320,15 @@ so nobody re-invents them:
   `fusedKinstones`.** The fused bitfield is at +0x12D, not +0xAD; a write
   at the wrong offset is silent and `CheckKinstoneFused` keeps saying no.
 
+- **The testbed always boots on run seed 0x2ccfce0f**, whatever the
+  scenario, and that seed's blink-memory pair is sites 47 and 65. The
+  memory roles are dealt before a scenario's own kind, so for months every
+  probe of those two rooms met the memory event: "two broken sites" in the
+  roadmap and the handoff, left out of the torch, cleanup and portal
+  tables. The site a SITE or CHAIN scenario tests is now kept out of the
+  pair. Any seed-fixed draw (the memory pair, a drop spot, a quest host)
+  is the same in every testbed boot; ask what it is before reading a
+  failure as a room's.
 - **A step dealt after the room loads is a mid-visit change.** The CHAIN
   testbed used to deal its step a few frames into the visit, after the
   room had dealt its own roll, and that is what logged the Veil Falls
@@ -474,11 +483,6 @@ so nobody re-invents them:
   face in palette 0) fits the report, and the palette table no longer
   fills. A look at a fusion in South Hyrule Field confirms it.
 
-- **Two ? room sites run their event one frame and stop**, whatever they
-  deal: the North Hyrule Field fairy fountain tree (47) and the Wind Ruins
-  Minish crack (65). The wave room spawns no enemies there either. The
-  torch and cleanup rooms skip both. Roadmap entry "Two ? room sites run
-  their event one frame".
 - **Trilby boss reaching the southwest** - fixed in code, never witnessed.
 - **8 rooms / 18 content sites never reachable** in any simulated run.
 - **Royal Valley at 7% reachable, 0.2% of requirements** - honest pricing,
