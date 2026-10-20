@@ -9,6 +9,11 @@
   ONCE     leaving and coming back the same run: no table.
   RUN      a new run lays it again (the latch is in the run-start wipe).
   KEYS     (P3) the dungeon key bag is empty at a run's start.
+  REST     a paid rest (QuickStartInnRestSmall, called as the keeper's
+           script calls it) fades to white, heals, and fades back in: the
+           fade is over within 150 frames and not held on white, and the
+           player walks afterwards. Before the fix it held on white for
+           good (the user's report).
 
     python3 tools/quickstart/inn_probe.py [--rom tmc-d3.gba] [--out DIR]
 """
@@ -93,5 +98,25 @@ c = S.boot(ROM, 0, seed=8, frames=300)
 c.memory.u8[SAVE + 0x3C] = 0x51
 to_inn(c)
 check('RUN: a new run lays it again', len(table(c)) == 3, 'table %s' % [(x[0], x[1]) for x in table(c)])
+# REST: the rest, then the screen must come back.
+c = S.boot(ROM, 0, seed=9, frames=300)
+c.memory.u8[SAVE + 0x3C] = 0x51
+to_inn(c)
+for _ in range(120):
+    c.run_frame()
+FADE = 0x03000fd0              # gFadeControl: active +0, type +8
+c.memory.u8[SAVE + 0xAA] = 4   # stats.health: hurt, so the heal shows
+C.call_keep(c, C.game_sym('QuickStartInnRestSmall'), (0, 0))
+white = False
+for f in range(150):
+    c.run_frame()
+    white = white or (c.memory.u8[FADE] == 0 and r16(c, FADE + 8) & 1)
+held = r16(c, FADE + 8) & 1    # FADE_IN_OUT still set: held on white
+x0 = r16(c, PLAYER + 0x2e)
+press(c, c.KEY_LEFT, 20, 5)
+check('REST: white, healed, back in, and the player walks',
+      white and not held and not c.memory.u8[FADE] and c.memory.u8[SAVE + 0xAA] > 4 and r16(c, PLAYER + 0x2e) != x0,
+      'reached white %d, held %d, active %d, health %d, moved %d px' % (white, held, c.memory.u8[FADE],
+      c.memory.u8[SAVE + 0xAA], r16(c, PLAYER + 0x2e) - x0))
 print('RESULT %s %d/%d' % ('PASS' if all(res) else 'FAIL', sum(res), len(res)))
 sys.exit(0 if all(res) else 1)

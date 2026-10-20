@@ -1271,6 +1271,43 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### A death demotes the difficulty one step, floor 1 (Oct 2026)
+
+The user: "if the player dies, they are demoted a level of difficulty, with
+a floor at difficulty 1", the win's promotion in reverse.
+
+- **The demotion.** `QuickStartOnPlayerDeath`, called once per death from
+  the game-over task's first state (`GameOver_Init`, gameOverTask.c), steps
+  the counter down one unless it is at 1. A bottled fairy's revive is not a
+  death and never gets there.
+- **The build's starting difficulty is now a start, not a floor.**
+  `QUICKSTART_START_DIFFICULTY` was read through on every call as a floor,
+  which would have held the d3 build at 3 however often the player died.
+  The first run on a save now writes it once (`QuickStartSeedDifficulty`,
+  latched by `GF_DIFFICULTY_SEEDED`, flag 704, which no run-start clear
+  touches). It only ever raises, so a save already past 3 keeps its level.
+
+| check (`difficulty_probe.py`, new) | result |
+|---|---|
+| SEED: a new save on the d3 build starts at 3 | pass |
+| DEATH: three deaths (fairy bottles emptied) read 3, 2, 1, 1 | pass |
+| FLOOR: a death at 1 stays at 1 | pass |
+| CONTINUE: back in the game at the demoted value | pass |
+| KEPT: a save at 5 keeps 5 on its first seeded run | pass |
+
+### The inn's rest no longer freezes on white (Oct 2026)
+
+The user: paying for the inn "fades to white and then freezes on white,
+with no way for the player to exit". `QuickStartInnRest` borrowed the win
+path's fade, `SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 8)`.
+`FADE_IN_OUT` is only the fade out: it ends on white and holds there until
+someone fades back in. The win path gets that fade-in from the room reload
+that follows it; the inn reloads nothing. Measured: still white with the
+fade idle 240 frames after the rest. The rest now raises room flag 119,
+and `QuickStartInnFadeMonitor` fades back in from white once the fade out
+is done. `inn_probe.py` gains REST (white reached, healed, back in, the
+player walks): 7/7.
+
 ### Sites 47 and 65 were never broken: the testbed's memory pair (Oct 2026)
 
 The user asked to fix the two "broken sites": the North Hyrule Field fairy

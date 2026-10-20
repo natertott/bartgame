@@ -284,6 +284,9 @@
 - `site_force_probe.py` - a step that forces a ? room's kind (a portal
   pair) dealt while the player stands in that room: the room keeps this
   visit's kind and pays nothing early; out and back in, the force applies.
+- `difficulty_probe.py` - the difficulty counter: a new save starts at the
+  build's difficulty, each death steps it down to a floor of 1, Continue
+  keeps the demoted value, and the seed never lowers a save.
 - `hazard_probe.py` - what each roster enemy does to the player: status
   flags (captured, burning, frozen, held), the slowest walking speed, hits
   and their types. Three of each round a player in the quiet dojo;

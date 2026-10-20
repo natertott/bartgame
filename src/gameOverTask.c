@@ -41,9 +41,17 @@ void switch_state(u32 idx) {
     gMain.state = idx;
     SetMenuType(0);
 }
+#ifdef QUICKSTART
+void QuickStartOnPlayerDeath(void);
+#endif
+
 void GameOver_Init(void) {
     if (gFadeControl.active)
         return;
+#ifdef QUICKSTART
+    // A death demotes the run's difficulty one step, floor 1 (game.c).
+    QuickStartOnPlayerDeath();
+#endif
     sub_08052010();
     gGenericMenu.unk10.a[0] = 80;
     gMenu.transitionTimer = 60;

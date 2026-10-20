@@ -514,6 +514,7 @@ static void QuickStartPotRoomGenerate(s32, s32, s32, s32, s32, s32);
 static u8 QuickStartGetDifficulty(void);
 static u8 QuickStartEnemyDifficulty(void);
 static void QuickStartIncrementDifficulty(void);
+static void QuickStartSeedDifficulty(void);
 static void QuickStartDrawDifficultyHUD(void);
 static void QuickStart2DoorRandomizeOnce(void);
 static void QuickStart2DoorSetupRoomContent(void);
@@ -1518,6 +1519,9 @@ static void GameTask_Transition(void) {
     // block on purpose - after every per-run clear above, so what it writes
     // is what the run starts with. A normal run (scenario_kind 0) returns
     // at once.
+    // A save's first run starts at the build's difficulty (see
+    // QuickStartSeedDifficulty); before the testbed, whose own pin wins.
+    QuickStartSeedDifficulty();
     QuickStartScenarioRunStart();
 #elif defined(MAPEXPLORE)
     // Every dungeon-clear/boss-die flag plus the full Elemental Sanctuary
@@ -8984,49 +8988,78 @@ u8 QuickStartDifficultyForDrops(void) {
     return QuickStartGetDifficulty();
 }
 
-// A build-time FLOOR on the run's difficulty, for playtesting the middle of
-// the curve without having to win up to it:
+// A build-time STARTING difficulty, for playtesting the middle of the curve
+// without having to win up to it:
 //
 //     make quickstart QUICKSTART_START_DIFFICULTY=3
 //
-// starts every run at 3 and still climbs from there on a win (the increment
-// reads through this same getter, so the first win writes 4). 0 - the
-// default, and what the shipping builds use - leaves a brand-new save at
-// the bottom of the curve.
-//
-// A floor rather than a fixed value on purpose: the difficulty counter is
-// the one genuinely persistent meta-progression number in the mode, and a
-// build that pinned it would silently discard a save's real progress the
-// moment it went past the pin.
+// starts a save at 3; a win climbs from there and a death steps down (to 1
+// at the lowest). 0 - the default, and what the shipping builds use -
+// leaves a brand-new save at the bottom of the curve. It used to be a
+// floor, read through on every call; with deaths demoting, a floor would
+// have held a d3 build at 3 for good, so it seeds the save once instead
+// (QuickStartSeedDifficulty) and never overrides what the save holds.
 #ifndef QUICKSTART_START_DIFFICULTY
 #define QUICKSTART_START_DIFFICULTY 0
 #endif
 
+// The build's starting difficulty is where a save STARTS, not a floor (Oct
+// 2026): with deaths now stepping the counter down, a floor would have kept
+// a QUICKSTART_START_DIFFICULTY=3 build from ever reading below 3. The first
+// run on a save writes it once (QuickStartSeedDifficulty), raised to it if
+// the save already holds less - which keeps what an older build showed -
+// and latches GF_DIFFICULTY_SEEDED, which no run-start clear touches.
+#define GF_DIFFICULTY_SEEDED 704
+#define QUICKSTART_MIN_DEATH_DIFFICULTY 1   // a death never steps below this
+
 static u8 QuickStartGetDifficulty(void) {
-    u8 difficulty = (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
-                    (QsCheckFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
-    // #if, not a plain if: at the default of 0 the comparison is always
-    // false for a u8, and agbcc's -Werror rejects it.
-#if QUICKSTART_START_DIFFICULTY > 0
-    if (difficulty < QUICKSTART_START_DIFFICULTY) {
-        difficulty = QUICKSTART_START_DIFFICULTY;
-    }
-#endif
-    return difficulty;
+    return (QsCheckFlag(GF_DIFFICULTY_BIT(0)) ? 1 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(1)) ? 2 : 0) |
+           (QsCheckFlag(GF_DIFFICULTY_BIT(2)) ? 4 : 0) | (QsCheckFlag(GF_DIFFICULTY_BIT(3)) ? 8 : 0);
 }
 
-static void QuickStartIncrementDifficulty(void) {
-    u8 next = QuickStartGetDifficulty();
+static void QuickStartWriteDifficulty(u8 value) {
     s32 b;
-    if (next < QUICKSTART_MAX_DIFFICULTY) {
-        next++;
-    }
     for (b = 0; b < 4; b++) {
-        if (next & (1 << b)) {
+        if (value & (1 << b)) {
             QsSetFlag(GF_DIFFICULTY_BIT(b));
         } else {
             QsClearFlag(GF_DIFFICULTY_BIT(b));
         }
+    }
+}
+
+static void QuickStartSeedDifficulty(void) {
+    if (QsCheckFlag(GF_DIFFICULTY_SEEDED)) {
+        return;
+    }
+    // #if, not a plain if: at the default of 0 the comparison is always
+    // false for a u8, and agbcc's -Werror rejects it.
+#if QUICKSTART_START_DIFFICULTY > 0
+    if (QuickStartGetDifficulty() < QUICKSTART_START_DIFFICULTY) {
+        QuickStartWriteDifficulty(QUICKSTART_START_DIFFICULTY);
+    }
+#endif
+    QsSetFlag(GF_DIFFICULTY_SEEDED);
+}
+
+static void QuickStartIncrementDifficulty(void) {
+    u8 next = QuickStartGetDifficulty();
+    if (next < QUICKSTART_MAX_DIFFICULTY) {
+        next++;
+    }
+    QuickStartWriteDifficulty(next);
+}
+
+// A death steps the counter down one (Oct 2026), the win's promotion in
+// reverse: "if the player dies, they are demoted a level of difficulty, with
+// a floor at difficulty 1". Called once per death, from the game-over task
+// (GameOver_Init) - a bottled fairy's revive is not a death and never gets
+// there. The write is in gSave.flags, which the game-over's Continue and
+// its save both keep.
+void QuickStartOnPlayerDeath(void) {
+    u8 next = QuickStartGetDifficulty();
+    if (next > QUICKSTART_MIN_DEATH_DIFFICULTY) {
+        QuickStartWriteDifficulty((u8)(next - 1));
     }
 }
 
@@ -26022,11 +26055,29 @@ static void QuickStartHubPadsMonitor(void) {
     QsSetRoomFlag(QUICKSTART_HUB_PADS_LAID_FLAG);
 }
 
+// The rest's fade back in (Oct 2026). FADE_IN_OUT is only the fade OUT:
+// it ends on white and holds there until someone fades back in. The win
+// path borrowed here gets its fade-in from the room reload that follows;
+// the inn reloads nothing, so the screen stayed white for good (the user:
+// "fades to white and then freezes on white, with no way for the player to
+// exit"). The rest raises this room flag, and the monitor fades back in
+// from white once the fade out is done.
+#define QUICKSTART_INN_FADE_FLAG 119
+
 static void QuickStartInnRest(s32 heal) {
     ModHealth(heal);
-    // The sleep read: the same proven fade the win/reset path uses.
+    // The sleep read: fade to white here, back in from white in
+    // QuickStartInnFadeMonitor.
     SetFade(FADE_IN_OUT | FADE_BLACK_WHITE | FADE_INSTANT, 8);
+    QsSetRoomFlag(QUICKSTART_INN_FADE_FLAG);
     SoundReq(SFX_SECRET);
+}
+
+static void QuickStartInnFadeMonitor(void) {
+    if (QsCheckRoomFlag(QUICKSTART_INN_FADE_FLAG) && !gFadeControl.active) {
+        QsClearRoomFlag(QUICKSTART_INN_FADE_FLAG);
+        SetFade(FADE_BLACK_WHITE | FADE_INSTANT, 8);
+    }
 }
 
 void QuickStartInnRestSmall(Entity* entity, ScriptExecutionContext* context) {
@@ -27382,6 +27433,7 @@ static void QuickStartRoomMonitor(void) {
     }
     QuickStartSpawnInnkeeperOnce();
     QuickStartInnChestMonitor();
+    QuickStartInnFadeMonitor();
     QuickStartInnBlessingMonitor();
     QuickStartHubPadsMonitor();
     QuickStartPortalMonitor();
