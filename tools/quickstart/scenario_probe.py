@@ -18,6 +18,7 @@ from emu import here, entities, KIND_ENEMY, KIND_NPC, SAVE_FLAGS
 import scenario as S
 import parse_tables as P
 import callrom as C
+from chain_audit import dismiss
 
 SAVE = 0x02002a40
 FLAG_BANK_11 = 0x9C0
@@ -53,7 +54,7 @@ def run(rom):
 
     # REGION: North Hyrule Field with three waves banked; kit + difficulty too.
     c = S.boot(rom, S.KINDS['REGION'], 3, 3, kit=1, diff=7)
-    nhf = rows[3]
+    nhf, llr = rows[3], rows[1]
     check('REGION lands in NHF', here(c) == (nhf['area'], nhf['room']), str(here(c)))
     wc = C.call_keep(c, C.game_sym('QuickStartRegionGetWaveCount'), (3,))
     check('REGION banks 3 waves', wc == 3, 'wave count %d' % wc)
@@ -69,11 +70,18 @@ def run(rom):
     check('BOSS lands in Trilby', here(c) == (tril['area'], tril['room']), str(here(c)))
     check('BOSS deals the Big Octorok', ENEMY['OCTOROK_BOSS'] in ids, 'enemy ids %s' % sorted(set(ids)))
 
-    # QUEST CARRY hosted in Lon Lon Ranch: the roll takes the row, the giver stands.
-    c = S.boot(rom, S.KINDS['QUEST'], 4, 1, frames=600)
-    llr = rows[1]
-    check('QUEST lands in LLR', here(c) == (llr['area'], llr['room']), str(here(c)))
-    check('QUEST carry host forced to row 1', bank11(c, 156) == 1 and bits(c, 157, 5) == 1,
+    # QUEST CARRY hosted in North Hyrule Field, its first pair forced: the roll
+    # takes the row, the giver stands. (It was Lon Lon Ranch until the carry
+    # quest was rebuilt for one room, which left the ranch no pair - Oct 2026,
+    # include/quickstart/carry_pairs.h - and the giver never stood.)
+    c = S.boot(rom, S.KINDS['QUEST'], 4, 3, 1, frames=600)
+    for _ in range(3):
+        dismiss(c)
+        for _ in range(60):
+            c.run_frame()
+    nhf, llr = rows[3], rows[1]
+    check('QUEST lands in NHF', here(c) == (nhf['area'], nhf['room']), str(here(c)))
+    check('QUEST carry host forced to row 3', bank11(c, 156) == 1 and bits(c, 157, 5) == 3,
           'rolled %d host %d' % (bank11(c, 156), bits(c, 157, 5)))
     zeldas = [e for e in entities(c, KIND_NPC) if e[2] == 0x28]
     check('QUEST carry giver spawned', len(zeldas) >= 1, '%d Zelda NPCs' % len(zeldas))

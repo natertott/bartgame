@@ -91,14 +91,14 @@ WHY = collections.Counter()   # why candidates were dropped, for tuning (per pro
 # ------------------------------------------------------------------ floors --
 
 class Floor:
-    def __init__(self, r):
+    def __init__(self, r, landings=False):
         self.r = r
         self.tw, self.th = r['tw'], r['th']
         # WALK: where the player can stand (no hazard underfoot); GROUND:
         # plain floor, where a rock may stand or be pushed.
         self.open = {(x, y) for y in range(self.th) for x in range(self.tw)
                      if r['coll'][y][x] == 0 and r['act'][y][x] not in HAZARD}
-        self.reserved = reserved_tiles(r['area'], r['room'])
+        self.reserved = reserved_tiles(r['area'], r['room'], landings)
         # PASSABLE: no collision at all - a superset of WALK (it keeps
         # shallow water, swamp, ice, even pits), what a maze ring must seal.
         self.passable = {(x, y) for y in range(self.th) for x in range(self.tw) if r['coll'][y][x] == 0}
@@ -139,7 +139,7 @@ class Floor:
 _RESERVED = {}
 
 
-def reserved_tiles(area, room):
+def reserved_tiles(area, room, landings=False):
     """Tiles of this room the mode already uses, which no rock, switch or
     prize may take: every pool row's reward, entrance, boss spot and landing
     spots, every fuser scatter spot, every ? room site's content spot. The
@@ -150,8 +150,8 @@ def reserved_tiles(area, room):
     Found the hard way: a Lake Hylia maze put a rock on the region's reward
     tile and another on a fuser spot (invariant_check)."""
     key = (area, room)
-    if key in _RESERVED:
-        return _RESERVED[key]
+    if (key, landings) in _RESERVED:
+        return _RESERVED[(key, landings)]
     import drop_spots
     out = set()
 
@@ -182,12 +182,14 @@ def reserved_tiles(area, room):
     # the ring hall's west door landing read as solved the moment it was
     # dealt (block_probe.py's reset check; the ROM's maze flood started from
     # the player stood inside it). The pool row's own entrance was the only
-    # landing this knew about.
+    # landing this knew about. Only when asked (`landings`): the generator
+    # asks; portal_rooms.py, which shares Floor, does not - its tiles were
+    # placed and swept in the ROM without this, and stay as measured.
     for rows in X.BY_ROOM.values():
         for r in rows:
-            if (r[6], r[7]) == key:
+            if landings and (r[6], r[7]) == key:
                 mark(r[3], r[4], 1)
-    _RESERVED[key] = out
+    _RESERVED[(key, landings)] = out
     return out
 
 
@@ -828,7 +830,7 @@ def owner_job(job):
     the result does not depend on which process ran it or in what order."""
     seed, key, r = job
     rng = random.Random('%d:%s' % (seed, key))
-    floor = Floor(r)
+    floor = Floor(r, landings=True)
     site = r.get('site')
     cap = MAX_ROCKS_SITE if site is not None else MAX_ROCKS_ROW
     frames = template_frames(floor, rng, cap, site is not None)
@@ -1031,7 +1033,7 @@ def verify(sol=OUT_SOL, appended=False):
         return 1
     total = 0
     for n, (h, f) in enumerate(zip(header, frames)):
-        floor = Floor(rooms[f['owner']])
+        floor = Floor(rooms[f['owner']], landings=appended)
         cap = MAX_ROCKS_SITE if f['owner'].startswith('site') else MAX_ROCKS_ROW
         if h['nContent'] != len(f['contents']):
             bad.append('frame %d: %d contents in the header, %d solved' % (n, h['nContent'], len(f['contents'])))

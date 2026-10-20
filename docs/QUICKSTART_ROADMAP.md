@@ -1352,10 +1352,21 @@ rule and the zero drop weight.
 | `castle_probe.py` (new): rows, waves dealt and replaced, nothing paid, swept, 17 crossings walked with containment live, the cellar ladder, the sanctuary door refused, the three sites, every quest kind in every wave room | 39/39 |
 | `chain_audit.py --sites 119:122`: every kind the three ? rooms deal, finished | 18/18 |
 | `block_puzzles.py --verify-append`: 15 frames, 103 contents replayed solved | 0 problems |
-| `block_probe.py --rules` on the castle's frames, 3 contents each | 45/45, every rule held (was 35/36 before the landing reserve) |
+| `block_probe.py --rules` on the castle's frames, every content | 103/103, every rule held (was 35/36 on 3 a frame before the landing reserve) |
 | `invariant_check.py --regions`: fuser tier, castle and town | 5 castle fusers and 3 town fusers standing; 0 failures |
+| `lantern_probe.py --kind cleanup --sites 119-121`: the 12 Gust Jar layouts the castle's ? rooms gained (`lantern_rooms.py`, additive) | 12/12 to DONE |
+| `site_roll_validate.py`, all 122 sites | 1830/1830 |
 | `chain_roll_validate.py --cases 500` | 500/500 |
 | `sim_validate.py` | 402/402 |
+| regressions: `town_probe` 18/18, `well_probe` 7/7, `finale_probe` 7/7, `win_probe` 4/4, `memory_probe` 9/9, `inn_probe` 7/7, `difficulty_probe` 5/5, `veilfalls_probe` 17/17, `scenario_probe` 15/15, invariants (static) clean, `reach.h` and `portals.h` up to date | pass |
+
+The landing reserve is opt-in (`Floor(r, landings=True)`, the block
+generator only): `portal_rooms.py` shares `Floor`, and with the reserve its
+Boomerang tree tiles moved off the ones the ROM sweep measured.
+`scenario_probe.py` hosted the carry quest in Lon Lon Ranch, which has had no
+carry pair since the quest was rebuilt for one room, so its giver never
+stood (14/15 before this, on any build since). It hosts it in North Hyrule
+Field now, pair forced.
 
 ### Hyrule Town's well: the fall no longer freezes, the underground joins the town (Oct 2026)
 
