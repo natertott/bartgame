@@ -92,7 +92,7 @@ typedef struct {
     u8 entrance; // 1 = an entrance of its region rather than the drop start
 } QuickStartReachNode;
 
-#define QS_REACH_NODES 43
+#define QS_REACH_NODES 44
 static const QuickStartReachNode sQuickStartReachNodes[QS_REACH_NODES] = {
     /*  0 SHF        */ { QS_REGION_SHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 0 },
     /*  1 SHF@NNE    */ { QS_REGION_SHF, AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_SOUTH_HYRULE_FIELD, 1 },
@@ -137,6 +137,7 @@ static const QuickStartReachNode sQuickStartReachNodes[QS_REACH_NODES] = {
     /* 40 VF@NHF     */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
     /* 41 VF@LLR     */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
     /* 42 VF@POCKET  */ { QS_REGION_VF, AREA_VEIL_FALLS, ROOM_VEIL_FALLS_MAIN, 1 },
+    /* 43 HC         */ { QS_REGION_HC, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 0 },
 };
 
 // Which node each region pool row's landing is: the drop starts here.
@@ -161,6 +162,9 @@ static const u8 sQuickStartReachPoolNode[] = {
     38, // pool 17 -> CREN-BASE
     39, // pool 18 -> VF
     30, // pool 19 -> HT
+    43, // pool 20 -> HC
+    43, // pool 21 -> HC
+    43, // pool 22 -> HC
 };
 
 // The edges: from node to node, at the price of the exit row that lands
@@ -390,6 +394,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 32, 34, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MW -> MV: same ring region (QS_REGION_MW)
     { 34, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> MW: same ring region (QS_REGION_MW)
     { 16, 14, { 0x00000001u, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CG -> NHF: ring adjacency QS_REGION_CG -> QS_REGION_NHF (entry price)
+    { 16, 43, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // CG -> HC: ring adjacency QS_REGION_CG -> QS_REGION_HC (entry price)
     { 14, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
     { 15, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // NHF@VF -> CG: ring adjacency QS_REGION_NHF -> QS_REGION_CG (entry price)
     {  3, 32, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // EH-N -> MW: ring adjacency QS_REGION_EH -> QS_REGION_MW (entry price)
@@ -411,6 +416,7 @@ static const QuickStartReachEdge sQuickStartReachEdges[] = {
     { 34,  3, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-N: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
     { 34,  4, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-C: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
     { 34,  5, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // MV -> EH-S: ring adjacency QS_REGION_MW -> QS_REGION_EH (entry price)
+    { 43, 16, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } }, // HC -> CG: ring adjacency QS_REGION_HC -> QS_REGION_CG (entry price)
 };
 
 typedef struct {
@@ -1060,6 +1066,14 @@ static const QuickStartReachDest sQuickStartReachDests[] = {
     { 42, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 42, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
     { 42, AREA_VEIL_FALLS_DIG_CAVE, ROOM_VEIL_FALLS_DIG_CAVE_0, 0, { 0x00000820u, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_2, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_1, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
+    { 43, AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, 0, { 0, ~0u, ~0u, ~0u, ~0u, ~0u } },
 };
 
 #endif // QUICKSTART_REACH_H

@@ -190,6 +190,19 @@ so nobody re-invents them:
   Fourteen bits per slot now; a twentieth pool row (eight slots, 112 bits)
   does not fit without finding another run - `invariant_check.py`'s flag
   audit says what is free.
+- **`QuickStartIsOurNpc(ent, -1)` spares only Zelda faces.** A region
+  sweep has to pass the room's fuser index
+  (`QuickStartFuserSpotRoomIndex`), or every fuser wearing another face of
+  the cast is deleted the frame it stands up. Hyrule Town's sweep had this
+  for its whole life; the castle's fusers showed it (Oct 2026).
+- **`block_puzzles.py` cannot regenerate the shipped header.** The floors
+  it was built from are not in this checkout (build/ is not kept), and a
+  fresh `block_rooms.py` capture of an untouched room no longer gives the
+  same frames, so a full run reshuffles every room's puzzles. Add rooms
+  with `--append OWNERS` (then `--verify-append`, and `block_probe.py
+  --solutions build/block_solutions_append.json`).
+- **Bank 2 of the custom strings is full (256 lines).** New lines go in
+  bank 3 or need a helper that returns a full text id.
 - **A site table row count is a define.** `sQuickStartRoomContentSites` is
   declared `[QUICKSTART_CONTENT_SITE_COUNT]`; append rows AND bump the
   count, or the build fails on the initializer.

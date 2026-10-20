@@ -72,7 +72,7 @@ POCKETS = [
 NODE_NAMES = ['SHF', 'SHF@NNE', 'SHF@NNW', 'EH-N', 'EH-C', 'EH-S', 'LLR', 'LLR@E903', 'LLR@E445', 'LLR@E750',
               'LLR@W', 'LLR@NW', 'LLR@N', 'LLR@POCKET', 'NHF', 'NHF@VF', 'CG', 'RV', 'TRIL', 'TRIL@S', 'TRIL@E',
               'TRIL@N', 'WW-N', 'WW-N@W', 'WW-N@S', 'WW-N@E', 'WW-C', 'WW-S', 'CW', 'WR', 'HT', 'CREN', 'MW', 'LH',
-              'MV', 'LH-CREST', 'LH-SW', 'LH-LADDER', 'CREN-BASE', 'VF', 'VF@NHF', 'VF@LLR', 'VF@POCKET']
+              'MV', 'LH-CREST', 'LH-SW', 'LH-LADDER', 'CREN-BASE', 'VF', 'VF@NHF', 'VF@LLR', 'VF@POCKET', 'HC']
 
 
 def portal_tile(floor, objects=()):

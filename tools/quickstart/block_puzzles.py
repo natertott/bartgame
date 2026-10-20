@@ -28,6 +28,8 @@ include/quickstart/block_puzzles.h and build/block_solutions.json (each
 instance's push list, for the probe).
 
     python3 tools/quickstart/block_puzzles.py [--check] [--seed N]
+    python3 tools/quickstart/block_puzzles.py --append row:20,site:119   # new owners only
+    python3 tools/quickstart/block_puzzles.py --verify-append            # ...and their check
 """
 import collections
 import json
@@ -175,6 +177,16 @@ def reserved_tiles(area, room):
     for an, rn, _a, _r, cx, cy, _gate in P.content_sites_full():
         if (an, rn) == key:
             mark(cx, cy, 0)
+    # Where the room's doors and borders land the player, and the ring round
+    # each (Oct 2026). Found in Hyrule Castle's lower hall: a maze built over
+    # the ring hall's west door landing read as solved the moment it was
+    # dealt (block_probe.py's reset check; the ROM's maze flood started from
+    # the player stood inside it). The pool row's own entrance was the only
+    # landing this knew about.
+    for rows in X.BY_ROOM.values():
+        for r in rows:
+            if (r[6], r[7]) == key:
+                mark(r[3], r[4], 1)
     _RESERVED[key] = out
     return out
 
@@ -1002,14 +1014,17 @@ def decode(h, k):
                                         for i in range(h['bw'] * h['bh']) if (m >> i) & 1))
 
 
-def verify():
+def verify(sol=OUT_SOL, appended=False):
     """The shipped table, decoded the way game.c decodes it, against the
     solutions file; every content's solution replayed under the game's
     rules on the room's captured floor; no rock, switch or prize on a
-    reserved tile; and the entity budget."""
+    reserved tile; and the entity budget. `appended`: only the header's
+    last frames, against an --append run's own solutions file."""
     rooms = json.load(open(ROOMS))
     header = parse_header(open(OUT_H).read())
-    frames = json.load(open(OUT_SOL))
+    frames = json.load(open(sol))
+    if appended:
+        header = header[len(header) - len(frames):]
     bad = []
     if len(header) != len(frames):
         print('header has %d frames, solutions %d' % (len(header), len(frames)))
@@ -1045,9 +1060,53 @@ def verify():
     return 1 if bad else 0
 
 
+def append(keys, seed):
+    """Generate frames for `keys` (owners not in the shipped header) only, and
+    append them after its last frame, leaving every shipped frame byte for
+    byte. Hyrule Castle (Oct 2026) went in this way: the captures the shipped
+    header was built from are not in this checkout (build/ is not kept), and a
+    fresh capture of an untouched room no longer reproduces it exactly, so a
+    full regeneration would have reshuffled every room's puzzles for nothing.
+    The new frames' solutions go to build/block_solutions_append.json."""
+    rooms = json.load(open(ROOMS))
+    old = open(OUT_H).read()
+    shipped = {m.group(1) for m in re.finditer(r'// ((?:site|row):\d+) ', old)}
+    clash = sorted(set(keys) & shipped)
+    if clash:
+        raise SystemExit('already in the header: %s' % clash)
+    base = max(int(n) for n in re.findall(r'sQuickStartBlockFixed(\d+)\[\]', old)) + 1
+    frames = []
+    for key in keys:
+        _k, room, got = owner_job((seed, key, rooms[key]))
+        frames += got
+        print('%-9s %-46s %s' % (key, room[5:], ' '.join('%s:%d' % (tag(f), len(f['contents'])) for f in got) or '-'))
+    if not frames:
+        print('no frames for %s' % keys)
+        return 0
+    body = emit(frames)
+    arrays = [l for l in body.split('\n') if l.startswith('static const u8 ')]
+    rows = [l for l in body.split('\n') if l.startswith('    { AREA_')]
+    renum = lambda l: re.sub(r'(sQuickStartBlock(?:Fixed|Contents))(\d+)', lambda m: '%s%d' % (m.group(1), int(m.group(2)) + base), l)
+    arrays, rows = [renum(l) for l in arrays], [renum(l) for l in rows]
+    head, tail = old.split('\nstatic const QuickStartBlockFrame sQuickStartBlockFrames[] = {\n')
+    table, rest = tail.split('\n};\n', 1)
+    text = head + '\n' + '\n'.join(arrays) + '\n\nstatic const QuickStartBlockFrame sQuickStartBlockFrames[] = {\n' + \
+        table + '\n' + '\n'.join(rows) + '\n};\n' + rest
+    open(OUT_H, 'w').write(text)
+    with open(os.path.join(os.path.dirname(OUT_SOL), 'block_solutions_append.json'), 'w') as f:
+        json.dump(frames, f)
+    print('%d frames appended at %d -> %s' % (len(frames), base, OUT_H))
+    return 0
+
+
 def main():
     if '--verify' in sys.argv:
         return verify()
+    if '--verify-append' in sys.argv:
+        return verify(os.path.join(os.path.dirname(OUT_SOL), 'block_solutions_append.json'), appended=True)
+    if '--append' in sys.argv:
+        return append(sys.argv[sys.argv.index('--append') + 1].split(','),
+                      int(sys.argv[sys.argv.index('--seed') + 1]) if '--seed' in sys.argv else 0xB10C)
     seed = int(sys.argv[sys.argv.index('--seed') + 1]) if '--seed' in sys.argv else 0xB10C
     frames = generate(seed)
     text = emit(frames)

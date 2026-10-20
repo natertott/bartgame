@@ -699,7 +699,7 @@ def emu_pool_entrances(rom):
 QS_RING = {'CG': 0, 'NHF': 1, 'SHF': 2, 'EH': 3, 'LLR': 4, 'TRIL': 5,
            'WW': 6, 'RV': 7, 'CW': 8, 'WR': 9}
 RING_ADJ = {
-    'CG': ['NHF'],
+    'CG': ['NHF', 'HC'],
     'NHF': ['CG', 'LLR', 'TRIL', 'RV', 'VF', 'HT'],
     'SHF': ['EH', 'WW', 'HT'],
     'EH': ['SHF', 'LLR', 'MW'],
@@ -720,13 +720,18 @@ RING_ADJ = {
     # Hyrule Town (Oct 2026): its four gates. NHF-SHF and LLR-TRIL are gone
     # with the QUICKSTART town bridge they rode on.
     'HT': ['NHF', 'SHF', 'LLR', 'TRIL'],
+    # Hyrule Castle (Oct 2026): the garden's north gate and its cellar.
+    'HC': ['CG'],
 }
+# ...and North Hyrule Field's fusions travel into the castle too, two steps
+# (QuickStartFuserPlacements' castle rule).
+FUSER_EXTRA = {('NHF', 'HC')}
 for _a, _ns in RING_ADJ.items():
     for _b in _ns:
         assert _a in RING_ADJ[_b], 'region adjacency is not symmetric: %s -> %s' % (_a, _b)
 # The ring each row of sQuickStartFuserSpots sits in, in table order.
 SPOT_REGIONS = ['CG', 'LLR', 'NHF', 'SHF', 'TRIL', 'EH', 'WW', 'WW', 'CW',
-                'MW', 'LH', 'CREN', 'VF', 'HT']
+                'MW', 'LH', 'CREN', 'VF', 'HT', 'HC', 'HC', 'HC']
 SPOTS_PER_REGION = 9
 # This list is a hand copy of sQuickStartFuserSpotRegions, and a hand copy that
 # silently falls behind the table it mirrors is how the fuser tier starts
@@ -769,7 +774,8 @@ def fuser_placements(run_seed):
         for r in range(len(spot_rooms)):
             if r == home or SPOT_REGIONS[r] == 'CW':
                 continue
-            if SPOT_REGIONS[r] in RING_ADJ[SPOT_REGIONS[home]]:
+            if SPOT_REGIONS[r] in RING_ADJ[SPOT_REGIONS[home]] or \
+                    (SPOT_REGIONS[home], SPOT_REGIONS[r]) in FUSER_EXTRA:
                 cands.append(r)
         h = _avalanche((run_seed + 0xF0 + f['kinstone']) & 0xFFFFFFFF)
         host = cands[(h & 0x7fff) % len(cands)]

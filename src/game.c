@@ -4062,7 +4062,12 @@ static void QuickStartClearLonLonRanchAnimals(void) {
 // nobody lives here this run. The houses are shut by containment (any
 // transition out of the town that is not a field border is cancelled),
 // so no door needs touching here.
+// The room's fuser index matters (Oct 2026): with -1, only a Zelda counted as
+// ours, so a fuser wearing any other face of the cast was swept the frame it
+// stood up - the castle's fusers never appeared, and the town's only on runs
+// whose drawn face was Zelda (invariant_check's fuser tier).
 static void QuickStartHyruleTownQuirkHook(void) {
+    s32 hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
     s32 i;
     if (gRoomControls.area != AREA_HYRULE_TOWN) {
         return;
@@ -4072,7 +4077,7 @@ static void QuickStartHyruleTownQuirkHook(void) {
         if (ent == gRoomControls.camera_target) {
             continue;
         }
-        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, -1)) {
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, hereRoom)) {
             DeleteEntity(ent);
         }
     }
@@ -4093,6 +4098,7 @@ static void QuickStartHyruleTownQuirkHook(void) {
 #define QUICKSTART_LOCKED_DOOR_TILE_INDEX 0x74 // LockedDoorEntity.unk_74
 #define QUICKSTART_LOCKED_DOOR_TILE_POS 0x76   // LockedDoorEntity.unk_76
 static void QuickStartHyruleCastleQuirkHook(void) {
+    s32 hereRoom = QuickStartFuserSpotRoomIndex(gRoomControls.area, gRoomControls.room);
     s32 i;
     if (gRoomControls.area != AREA_HYRULE_CASTLE) {
         return;
@@ -4102,7 +4108,7 @@ static void QuickStartHyruleCastleQuirkHook(void) {
         if (ent == gRoomControls.camera_target) {
             continue;
         }
-        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, -1)) {
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, hereRoom)) {
             DeleteEntity(ent);
         } else if (ent->kind == OBJECT && ent->id == LOCKED_DOOR && ent->type == 0 && ent->action == 6) {
             u8* raw = (u8*)ent;
@@ -28074,7 +28080,7 @@ u32 QuickStartChainMapMarker(u16* x, u16* y) {
 // array from ARRAY_COUNT of a table declared later in the file, so the
 // ceiling is stated here and a compile-time assert in
 // QuickStartFuserPlacements holds the real table under it.
-#define QUICKSTART_FUSER_SPOT_ROOMS_MAX 16
+#define QUICKSTART_FUSER_SPOT_ROOMS_MAX 20
 // Same idea for the fusion table itself. QuickStartSpawnRegionFusers held
 // its placement buffers at a literal 34, which was the row count on the day
 // it was written; the table is bigger now, and a placement pass writing
@@ -28188,6 +28194,23 @@ static const QuickStartFuserSpots sQuickStartFuserSpots[] = {
     { AREA_HYRULE_TOWN, ROOM_HYRULE_TOWN_MAIN,
       { { 600, 440 }, { 632, 104 }, { 120, 568 }, { 280, 712 }, { 664, 920 },
         { 168, 392 }, { 56, 456 }, { 728, 424 }, { 360, 120 } } },
+    // Hyrule Castle (Oct 2026, the user: "scatter some kinstone fusers
+    // throughout Hyrule castle"). The castle owns no fusion; these rows let
+    // the garden's two travel in (the garden is its neighbour) and North
+    // Hyrule Field's six (the field the garden opens off, by the rule in
+    // QuickStartFuserPlacements). Nine of each wave room's spots
+    // (castle_survey.py: 3x3 clear, one component), at least 40px from every
+    // door trigger, seam and landing, off the castle's block puzzle boards
+    // and their two-tile ring, and off every reserved tile.
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0,
+      { { 376, 280 }, { 216, 376 }, { 136, 472 }, { 296, 472 }, { 200, 104 },
+        { 120, 280 }, { 136, 360 }, { 296, 360 }, { 216, 456 } } },
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1,
+      { { 424, 456 }, { 88, 248 }, { 408, 264 }, { 184, 424 }, { 312, 424 },
+        { 72, 344 }, { 408, 360 }, { 408, 168 }, { 360, 72 } } },
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3,
+      { { 56, 56 }, { 504, 200 }, { 72, 408 }, { 504, 472 }, { 232, 504 },
+        { 72, 232 }, { 472, 328 }, { 392, 520 }, { 168, 88 } } },
 };
 
 // Which named named region each row of sQuickStartFuserSpots sits in, in the
@@ -28198,6 +28221,7 @@ static const u8 sQuickStartFuserSpotRegions[] = {
     QS_REGION_CG, QS_REGION_LLR, QS_REGION_NHF, QS_REGION_SHF, QS_REGION_TRIL,
     QS_REGION_EH, QS_REGION_WW, QS_REGION_WW, QS_REGION_CW,
     QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF, QS_REGION_HT,
+    QS_REGION_HC, QS_REGION_HC, QS_REGION_HC,
 };
 
 #define QUICKSTART_FUSER_SPOT_ROOMS ((s32)ARRAY_COUNT(sQuickStartFuserSpots))
@@ -28303,6 +28327,12 @@ static void QuickStartFuserPlacements(u8* outRoom, u8* outSpot) {
             }
             if (sQuickStartRegionAdjacency[sQuickStartFuserSpotRegions[home]] &
                 (1u << sQuickStartFuserSpotRegions[r])) {
+                cands[n++] = r;
+            } else if (sQuickStartFuserSpotRegions[r] == QS_REGION_HC &&
+                       sQuickStartFuserSpotRegions[home] == QS_REGION_NHF) {
+                // The castle owns no fusion and its one neighbour, the
+                // garden, two: North Hyrule Field's travel in as well, two
+                // map steps (Oct 2026), or the castle would see one a run.
                 cands[n++] = r;
             }
         }

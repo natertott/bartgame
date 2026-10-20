@@ -228,6 +228,37 @@ static const u8 sQuickStartBlockContents110[] = { 11, 66, 0, 3, 0, 0, 75, 18, 2,
 static const u8 sQuickStartBlockFixed111[] = { 5, 3, 5, 4, 5, 5, 6, 5, 7, 5, 8, 5, 9, 5, 10, 2, 10, 3, 10, 4, 10, 5 };
 static const u8 sQuickStartBlockContents111[] = { 0, 9, 0, 12, 0, 0, 9, 64, 0, 9, 0, 0, 64, 9, 16, 0, 0, 0, 64, 137, 0, 12, 0, 0, 9, 0, 16, 12, 0, 0, 9, 64, 0, 12, 0, 0, 9, 64, 16, 12, 0, 0, 64, 9, 0, 13, 0, 0, 9, 0, 16, 8, 0, 0, 137, 64, 0, 9, 0, 0 };
 
+static const u8 sQuickStartBlockFixed112[] = { 12, 16, 13, 16, 15, 13, 15, 14, 15, 15 };
+static const u8 sQuickStartBlockContents112[] = { 18, 19, 81, 0, 0, 0, 19, 82, 81, 0, 0, 0, 19, 18, 65, 0, 0, 0, 147, 82, 81, 0, 0, 0 };
+static const u8 sQuickStartBlockFixed113[] = { 3, 24, 3, 29, 4, 24, 4, 29, 5, 24, 5, 29, 6, 24, 6, 29, 7, 29, 8, 25, 8, 26, 8, 27, 8, 29 };
+static const u8 sQuickStartBlockContents113[] = { 28, 146, 17, 25, 131, 0, 0, 28, 18, 131, 33, 141, 0, 0, 11, 28, 146, 9, 172, 0, 0 };
+static const u8 sQuickStartBlockFixed114[] = { 14, 3, 14, 4, 14, 5, 14, 6, 14, 7, 15, 3, 16, 3, 17, 3, 18, 3, 19, 3, 20, 3, 20, 4, 20, 5, 20, 6 };
+static const u8 sQuickStartBlockContents114[] = { 28, 18, 3, 33, 141, 0, 0, 75, 18, 92, 41, 140, 0, 0, 19, 18, 28, 156, 128, 1, 0, 81, 146, 28, 28, 67, 0, 0 };
+static const u8 sQuickStartBlockFixed115[] = { 8, 3, 8, 4, 8, 5, 8, 6, 8, 7, 9, 7, 10, 7, 11, 7, 12, 7, 13, 7, 14, 3, 14, 4, 14, 6, 14, 7 };
+static const u8 sQuickStartBlockContents115[] = { 75, 20, 82, 20, 128, 11, 0, 27, 20, 11, 9, 140, 1, 0, 20, 11, 82, 57, 128, 2, 0, 27, 18, 20, 173, 128, 0, 0 };
+static const u8 sQuickStartBlockFixed116[] = { 14, 38, 14, 39, 14, 40, 14, 42, 15, 38, 16, 38, 17, 38, 18, 38, 19, 38, 20, 38, 20, 39, 20, 40, 20, 41, 20, 42 };
+static const u8 sQuickStartBlockContents116[] = { 16, 9, 18, 20, 128, 4, 0, 24, 20, 16, 199, 0, 1, 0, 16, 82, 73, 22, 2, 12, 0 };
+static const u8 sQuickStartBlockFixed117[] = { 16, 2, 16, 3, 16, 4, 16, 6, 17, 6, 18, 6, 19, 6, 20, 6, 21, 6, 22, 2, 22, 3, 22, 4, 22, 5, 22, 6 };
+static const u8 sQuickStartBlockContents117[] = { 18, 88, 16, 51, 40, 0, 0, 88, 65, 146, 81, 98, 0, 0, 146, 88, 16, 80, 104, 8, 0 };
+static const u8 sQuickStartBlockFixed118[] = { 14, 2, 14, 3, 14, 4, 14, 5, 14, 6, 15, 6, 16, 6, 17, 6, 18, 6, 19, 6, 20, 2, 20, 3, 20, 4, 20, 6 };
+static const u8 sQuickStartBlockContents118[] = { 28, 18, 20, 26, 41, 0, 0, 82, 19, 28, 150, 2, 1, 0, 17, 18, 28, 28, 162, 0, 0 };
+static const u8 sQuickStartBlockFixed119[] = { 2, 6, 3, 6, 4, 6, 6, 3, 6, 4, 6, 5, 6, 6 };
+static const u8 sQuickStartBlockContents119[] = { 18, 9, 128, 0, 0, 0, 82, 9, 140, 0, 0, 0, 19, 82, 70, 0, 0, 0, 18, 137, 140, 0, 0, 0, 9, 18, 72, 0, 0, 0, 18, 19, 64, 0, 0, 0, 9, 18, 76, 0, 0, 0, 147, 137, 0, 5, 0, 0, 18, 137, 76, 0, 0, 0 };
+static const u8 sQuickStartBlockFixed120[] = { 2, 7, 3, 7, 4, 7, 4, 11, 5, 7, 6, 7, 6, 9, 6, 10 };
+static const u8 sQuickStartBlockContents120[] = { 138, 67, 128, 10, 0, 0, 3, 10, 0, 3, 0, 0, 10, 67, 0, 9, 0, 0, 138, 67, 0, 3, 0, 0, 138, 3, 0, 3, 0, 0, 138, 3, 128, 10, 0, 0, 10, 3, 0, 9, 0, 0, 3, 10, 0, 11, 0, 0, 10, 3, 128, 1, 0, 0, 67, 82, 64, 0, 0, 0 };
+static const u8 sQuickStartBlockFixed121[] = { 5, 6, 5, 12, 5, 14, 5, 20, 11, 6, 11, 12, 11, 14, 11, 20 };
+static const u8 sQuickStartBlockContents121[] = { 17, 32, 36, 136, 4, 0, 16, 17, 10, 19, 156, 8, 18, 0, 35, 32, 34, 19, 28, 36, 144, 12, 18, 3, 36, 8, 16, 25, 34, 20, 0, 99, 8, 18, 4, 8, 16, 11, 28, 36, 17, 154, 32, 12, 28, 2, 18, 34, 3, 36, 26, 1, 17, 148, 3, 0, 33, 18, 35, 12, 2, 16, 28, 147, 27, 25, 26, 27, 12, 28, 10, 20, 2, 154, 0, 26, 34, 3, 11, 19, 137, 20, 24, 3, 27, 32, 9, 25, 34, 36, 1, 4, 96, 0, 28, 0, 2, 26, 34, 36, 0, 34, 27, 66, 24, 24, 32, 25, 18, 4, 0, 34, 25, 67, 18, 16, 26, 4, 12, 28, 76, 35, 9, 4, 32, 8, 10, 3, 27, 36, 34, 25, 81, 9, 10, 16, 17, 18, 3, 20, 2, 88, 25, 28, 12, 26, 3, 27, 4, 20, 10, 27, 81, 12, 8, 26, 11, 19, 35, 4, 16, 28, 25, 130, 4, 32, 9, 18, 26, 12, 3, 0, 18, 27, 153, 1, 33, 18, 34, 36, 99, 33, 28, 8, 25, 32, 1, 3, 27, 36 };
+static const u8 sQuickStartBlockFixed122[] = { 5, 8, 5, 12, 5, 14, 5, 18, 9, 8, 9, 12, 9, 14, 9, 18 };
+static const u8 sQuickStartBlockContents122[] = { 2, 8, 18, 8, 16, 17, 0, 2, 18, 16, 9, 10, 18, 9, 2, 16, 17, 18, 9, 0, 2, 0, 16, 17, 17, 18, 10, 0, 1, 17, 0, 9, 8, 0, 2, 18, 10, 8, 0, 1, 2, 18, 0, 17, 1, 9, 10, 18, 18, 16, 10, 0, 8, 9, 9, 18, 16, 0, 17, 2, 2, 1, 17, 8, 16, 9, 10, 18, 16, 0, 1, 2 };
+static const u8 sQuickStartBlockFixed123[] = { 6, 14, 6, 18, 7, 8, 7, 12, 10, 14, 10, 18, 11, 8, 11, 12 };
+static const u8 sQuickStartBlockContents123[] = { 1, 0, 16, 16, 17, 18, 10, 18, 1, 16, 9, 17, 10, 8, 16, 0, 8, 1, 8, 0, 17, 1, 2, 18, 0, 9, 1, 16, 10, 18, 18, 16, 9, 9, 2, 10, 10, 18, 0, 16, 2, 18, 0, 17, 16, 9, 17, 10, 16, 18, 2, 0, 9, 17, 18, 2, 0, 16, 9, 10, 1, 0, 2, 8, 16, 9, 0, 9, 2, 8, 16, 18, 1, 17, 0, 0, 8, 2, 2, 18, 17, 0, 16, 1, 10, 8, 9, 0, 16, 17, 10, 18, 1, 8, 16, 2, 18, 8, 9, 0, 16, 2 };
+static const u8 sQuickStartBlockFixed124[] = { 6, 15, 6, 16, 6, 17, 6, 18, 6, 19, 6, 20, 7, 15, 7, 20, 8, 15, 8, 20, 9, 15, 9, 20, 10, 15, 10, 20, 11, 15, 11, 20, 12, 15, 12, 18 };
+static const u8 sQuickStartBlockContents124[] = { 92, 139, 18, 41, 44, 0, 0, 92, 75, 18, 49, 44, 0, 0, 92, 76, 18, 49, 44, 0, 0 };
+static const u8 sQuickStartBlockFixed125[] = { 4, 18, 4, 19, 4, 22, 5, 17, 5, 22, 6, 17, 6, 22, 7, 17, 7, 22, 8, 17, 8, 22, 9, 17, 9, 22, 10, 17, 10, 18, 10, 20, 10, 21, 10, 22 };
+static const u8 sQuickStartBlockContents125[] = { 17, 147, 27, 136, 4, 0, 0, 19, 155, 25, 136, 4, 0, 0, 17, 12, 131, 16, 32, 15, 0, 19, 12, 18, 20, 0, 11, 0 };
+static const u8 sQuickStartBlockFixed126[] = { 2, 7, 5, 7, 6, 5, 6, 6, 6, 7 };
+static const u8 sQuickStartBlockContents126[] = { 10, 67, 0, 3, 0, 0, 67, 138, 128, 9, 0, 0, 10, 3, 0, 3, 0, 0, 67, 138, 0, 3, 0, 0, 10, 3, 0, 11, 0, 0 };
+
 static const QuickStartBlockFrame sQuickStartBlockFrames[] = {
     { AREA_CASTLE_GARDEN, ROOM_CASTLE_GARDEN_MAIN, 1, 0, 255, 0, 29, 19, 4, 3, 30, 19, 30, 20, 33, 23, 255, 255, 2, 12, 8, 6, sQuickStartBlockFixed0, sQuickStartBlockContents0 }, // row:0 MXS x8, 3-3 pushes
     { AREA_HYRULE_FIELD, ROOM_HYRULE_FIELD_LON_LON_RANCH, 0, 0, 255, 1, 6, 32, 4, 4, 11, 34, 255, 255, 4, 34, 7, 39, 4, 8, 22, 8, sQuickStartBlockFixed1, sQuickStartBlockContents1 }, // row:1 TS x22, 7-9 pushes
@@ -341,6 +372,21 @@ static const QuickStartBlockFrame sQuickStartBlockFrames[] = {
     { AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, 1, 0, 115, 255, 2, 7, 4, 3, 3, 7, 3, 8, 6, 5, 255, 255, 2, 7, 5, 6, sQuickStartBlockFixed109, sQuickStartBlockContents109 }, // site:115 MXS x5, 3-3 pushes
     { AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, 1, 0, 115, 255, 3, 2, 4, 3, 3, 2, 3, 3, 8, 2, 255, 255, 2, 10, 9, 6, sQuickStartBlockFixed110, sQuickStartBlockContents110 }, // site:115 MXS x9, 3-3 pushes
     { AREA_DOJOS, ROOM_DOJOS_SPLITBLADE, 1, 0, 115, 255, 6, 2, 4, 3, 9, 2, 9, 3, 11, 2, 255, 255, 2, 11, 10, 6, sQuickStartBlockFixed111, sQuickStartBlockContents111 }, // site:115 MXS x10, 3-3 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 1, 0, 255, 20, 11, 13, 4, 3, 12, 13, 12, 14, 13, 17, 255, 255, 2, 5, 4, 6, sQuickStartBlockFixed112, sQuickStartBlockContents112 }, // row:20 MXS x4, 3-3 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1, 1, 0, 255, 21, 3, 25, 5, 4, 4, 25, 4, 26, 9, 25, 255, 255, 3, 13, 3, 7, sQuickStartBlockFixed113, sQuickStartBlockContents113 }, // row:21 MS x3, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1, 1, 0, 255, 21, 15, 4, 5, 4, 16, 4, 16, 5, 21, 3, 255, 255, 3, 14, 4, 7, sQuickStartBlockFixed114, sQuickStartBlockContents114 }, // row:21 MS x4, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1, 1, 0, 255, 21, 9, 3, 5, 4, 10, 3, 10, 4, 15, 3, 255, 255, 3, 14, 4, 7, sQuickStartBlockFixed115, sQuickStartBlockContents115 }, // row:21 MS x4, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3, 1, 0, 255, 22, 15, 39, 5, 4, 18, 39, 18, 40, 20, 37, 255, 255, 3, 14, 3, 7, sQuickStartBlockFixed116, sQuickStartBlockContents116 }, // row:22 MS x3, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3, 1, 0, 255, 22, 17, 2, 5, 4, 20, 2, 20, 3, 23, 2, 255, 255, 3, 14, 3, 7, sQuickStartBlockFixed117, sQuickStartBlockContents117 }, // row:22 MS x3, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3, 1, 0, 255, 22, 15, 2, 5, 4, 15, 2, 15, 3, 21, 2, 255, 255, 3, 14, 3, 7, sQuickStartBlockFixed118, sQuickStartBlockContents118 }, // row:22 MS x3, 5-5 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_2, 1, 0, 119, 255, 2, 3, 4, 3, 2, 3, 2, 4, 6, 7, 255, 255, 2, 7, 9, 6, sQuickStartBlockFixed119, sQuickStartBlockContents119 }, // site:119 MXS x9, 3-3 pushes
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_2, 1, 0, 119, 255, 2, 8, 4, 3, 2, 8, 2, 9, 7, 7, 255, 255, 2, 8, 10, 6, sQuickStartBlockFixed120, sQuickStartBlockContents120 }, // site:119 MXS x10, 3-3 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 0, 0, 120, 255, 6, 7, 5, 5, 4, 9, 255, 255, 4, 12, 6, 15, 5, 8, 19, 10, sQuickStartBlockFixed121, sQuickStartBlockContents121 }, // site:120 TM x19, 9-11 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 0, 0, 120, 255, 6, 9, 3, 3, 7, 7, 255, 255, 4, 12, 6, 15, 3, 8, 12, 6, sQuickStartBlockFixed122, sQuickStartBlockContents122 }, // site:120 TXS x12, 5-6 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 0, 0, 120, 255, 8, 9, 3, 3, 9, 7, 255, 255, 6, 12, 7, 15, 3, 8, 17, 6, sQuickStartBlockFixed123, sQuickStartBlockContents123 }, // site:120 TXS x17, 5-6 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 1, 0, 120, 255, 7, 16, 5, 4, 8, 16, 8, 17, 12, 14, 255, 255, 3, 18, 3, 7, sQuickStartBlockFixed124, sQuickStartBlockContents124 }, // site:120 MS x3, 5-5 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 1, 0, 120, 255, 5, 18, 5, 4, 5, 18, 5, 19, 10, 16, 255, 255, 3, 18, 4, 7, sQuickStartBlockFixed125, sQuickStartBlockContents125 }, // site:120 MS x4, 5-5 pushes
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, 1, 0, 120, 255, 2, 4, 4, 3, 2, 4, 2, 5, 7, 6, 255, 255, 2, 5, 5, 6, sQuickStartBlockFixed126, sQuickStartBlockContents126 }, // site:120 MXS x5, 3-3 pushes
 };
 
 #endif

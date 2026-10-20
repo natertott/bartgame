@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Hyrule Castle is the sixteenth region: three wave rooms with no clear rewards, no boss, never the drop; the throne room, the sanctuary courtyard and the cellar tunnel as ? rooms 119-121; the halls' flag doors opened, the hedge ladder reopened, the sanctuary door refused; fusers from the garden and North Hyrule Field; every quest kind hosts; 15 boulder-puzzle boards appended. Also fixed: fusers wearing a non-Zelda face were swept in the town and the castle. `castle_probe.py` 39/39 | "Hyrule Castle is the sixteenth region" |
 | Hyrule Town's well no longer freezes: the fall was cancelled mid-air by containment. The well room and the main underground room are Hyrule Town region rooms; ladders, passage and the chimney roof loop all cross, other doors stay shut. `well_probe.py` 7/7 (control 1/7) | "Hyrule Town's well" |
 | A death demotes the difficulty one step, floor 1; the build value is now a starting difficulty, seeded once per save. `difficulty_probe.py` 5/5 | "A death demotes the difficulty one step, floor 1" |
 | The inn's rest no longer freezes on white: the fade back in after the rest. `inn_probe.py` 7/7 | "The inn's rest no longer freezes on white" |
@@ -326,7 +327,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   three more puzzle kinds (push-stone plates, torch order, dig - each needs
   an object that draws in every tileset, which blocks and torches do not);
   Percy's monster lady (her house is ? room site 42, which clears her and
-  the torches, and her quest is keyed to the Pegasus Boots story flag); Deepwood and the Cave of Flames as regions and the castle's entry
+  the torches, and her quest is keyed to the Pegasus Boots story flag); Deepwood and the Cave of Flames as regions (the castle is built, Oct 2026)
   (the reach map's split rooms are where the user's walk starts, and the
   region machinery assumes an overworld field room as the pool row).
 - **The chain-end probe's own limits** (`chain_end_probe.py`): an ITEM

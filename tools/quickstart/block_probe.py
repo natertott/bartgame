@@ -341,12 +341,17 @@ def rule_checks(c, inst, base):
     x, y, d = inst['solution'][0] if inst['solution'] else (0, 0, 0)
     if inst['solution'] and push(c, x, y, d):
         sx, sy = inst['switch']
-        # Up to three swings: in a field a wave can spoil one (South Hyrule
+        # Up to four swings: in a field a wave can spoil one (South Hyrule
         # Field missed once in a run and struck clean when tried alone).
-        for _ in range(3):
-            for d2 in range(4):
+        # Each swing from the next open side round (Oct 2026): a castle maze's
+        # switch was missed three times from its first side after the first
+        # push and struck clean from another.
+        for attempt in range(4):
+            for d2 in [(attempt + i) % 4 for i in range(4)]:
                 ax, ay = sx - DX[d2], sy - DY[d2]
-                if emu.coll_at(c, ax, ay) == 0 and (ax, ay) not in rocks(c):
+                # never on a rock's home tile: standing there, the reset has
+                # nowhere to put that rock back
+                if emu.coll_at(c, ax, ay) == 0 and (ax, ay) not in rocks(c) and (ax, ay) not in start:
                     if c.memory.u8[MSG]:
                         dismiss(c)
                     put_player(c, ax, ay)

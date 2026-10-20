@@ -178,9 +178,21 @@
   kinds) are listed per seed. `--seeds A:B`, `--verbose`. A win is a RESET
   (the score lands in `gSave.meta_xp` and the next run starts), which is
   how both this and `win_probe.py` read it.
+- `castle_probe.py` - Hyrule Castle as a region: its three pool rows deal
+  and replace waves and pay nothing for a clear, the guards are swept,
+  every crossing is walked with containment live (the gate, the seams, the
+  flag doors, the courtyard, the cellar and its ladder), the sanctuary door
+  is refused, the three ? rooms, and every quest kind in every wave room.
+  39/39.
+- `castle_survey.py` - each castle wave room's floor from every arrival,
+  one component or not, and a spread of enemy spots (`--emit`).
+- `room_shot.py` - one picture of a whole room, stitched from screenshots,
+  with tile numbers on the edges.
 - `well_probe.py` - Hyrule Town's well and the underground: the fall lands
   in the well room, its ladder and passage, the main room's ladder to the
   chimney roof and back, a door out of the region cancelled. 7/7.
+- `block_puzzles.py --append OWNERS` - boards for new rooms only, the shipped
+  frames untouched (`--verify-append` replays them).
 - `win_probe.py` - the finale alone: the trials forced done, the
   Element drawn, the carrier driven in the Element's row (waves, the boss,
   or the quest flag), the Element taken, the run reset with the score.

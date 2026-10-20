@@ -77,7 +77,7 @@ NEVER = U32
 # ---------------------------------------------------------------- tables --
 
 REGION_NAMES = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV',
-                'CW', 'WR', 'CREN', 'MW', 'LH', 'VF', 'HT']
+                'CW', 'WR', 'CREN', 'MW', 'LH', 'VF', 'HT', 'HC']
 REGION_INDEX = {name: i for i, name in enumerate(REGION_NAMES)}
 REGION_LONG = {
     'CG': 'Hyrule Castle Garden', 'NHF': 'North Hyrule Field',
@@ -86,6 +86,7 @@ REGION_LONG = {
     'WW': 'Western Wood', 'RV': 'Royal Valley', 'CW': 'Castor Wilds',
     'WR': 'Wind Ruins', 'CREN': 'Mount Crenel', 'MW': 'Minish Woods',
     'LH': 'Lake Hylia', 'VF': 'Veil Falls', 'HT': 'Hyrule Town',
+    'HC': 'Hyrule Castle',
 }
 RIDX = {n: i for i, n in enumerate(REGION_NAMES)}
 
@@ -233,6 +234,9 @@ def _no_wave_rooms():
     out = set()
     for m in re.finditer(r'region->area == (AREA_\w+) && region->room == (ROOM_\w+)', body):
         out.add((P.AREAS[m.group(1)], P.ROOMS[m.group(2)]))
+    # A whole area, room unnamed (Hyrule Castle, Oct 2026): every pool row in it.
+    for m in re.finditer(r'region->area == (AREA_\w+)\)', body):
+        out |= {(r['area'], r['room']) for r in P.region_pool() if r['areaName'] == m.group(1)}
     return out
 
 
@@ -545,6 +549,10 @@ def gate_row_passable(pool_index, owned):
 
 
 def pool_usable(pool_index, owned):
+    # QuickStartDropRowUsable: a region that weighs nothing is never a start,
+    # not even by the re-draw (Hyrule Castle).
+    if DROP_WEIGHT.get(REGION_NAMES[BY_POOL[pool_index]], 1) == 0:
+        return False
     rule = KIT_RULES.get(REGION_NAMES[BY_POOL[pool_index]])
     if not (rule is None or any(i in owned for i in rule)):
         return False

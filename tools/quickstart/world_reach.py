@@ -1626,6 +1626,34 @@ entrance('VF@POCKET', 'VF', "Veil Falls (the lower strip, from Lon Lon's gold-ch
 copy_dests('VF@LLR', 'VF@POCKET', skip=[('VEIL_FALLS', 'MAIN', (88, 1000))])
 link('VF@POCKET', 'VEIL_FALLS', 'MAIN', 176, 1000, 'LLR@POCKET')
 
+# --- Hyrule Castle ---------------------------------------------------------
+#
+# The sixteenth region (Oct 2026): "the castle to be incorporated the same as
+# the overworld regions". Appended LAST so no node index before it moves
+# (reach.h numbers nodes in this file's order, and portal_rooms.NODE_NAMES
+# copies the order). Not walked by the user: measured and driven instead.
+# castle_survey.py floods each wave room to one component from every arrival
+# it has, and castle_probe.py walks every crossing with containment live:
+# the garden's north gate into the entrance hall, the seams up through the
+# ring hall to the throne room, the halls' doors down into the lower hall
+# (flag doors the quirk hook opens), the lower hall's north door into the
+# sanctuary courtyard and its west border into the cellar's button room,
+# whose seam leads on into the tunnel. All free from the gate. The cellar's
+# own door into the lower hall wants its button pressed (vanilla, free), and
+# its ladder up into the garden lands in the hedge alcove's bushes, which is
+# the garden's SWORD row above.
+region('HC', 'Hyrule Castle', ('HYRULE_CASTLE', '0', 216, 520),
+       note="measured, not walked: one component per room, every crossing driven (castle_probe.py)")
+d('HC', 'HYRULE_CASTLE', '0', 216, 520, FREE, 'the entrance hall, from the garden gate; the start itself')
+d('HC', 'HYRULE_CASTLE', '0', 216, 568, FREE, 'exit south -> CASTLE_GARDEN (504,56), the gate')
+d('HC', 'HYRULE_CASTLE', '1', 248, 487, FREE, 'the ring hall, up the entrance hall seam')
+d('HC', 'HYRULE_CASTLE', '2', 136, 311, FREE, "the throne room, up the ring hall seam; content site")
+d('HC', 'HYRULE_CASTLE', '3', 136, 648, FREE, "the lower hall, down the entrance hall's west door")
+d('HC', 'SANCTUARY_ENTRANCE', 'MAIN', 136, 384, FREE, "the sanctuary courtyard, the lower hall's north door; content site")
+d('HC', 'HYRULE_CASTLE_CELLAR', '1', 210, 92, FREE, "the cellar's button room, the lower hall's west border")
+d('HC', 'HYRULE_CASTLE_CELLAR', '0', 230, 88, FREE, 'the cellar tunnel, through the button room seam; content site')
+
+
 # ------------------------------------------------------------------ checks --
 def _fmt(req):
     if req is None:

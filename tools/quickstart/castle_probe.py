@@ -7,7 +7,8 @@ and a few ? rooms?
            lower hall), each in the castle's region (QS_REGION_HC, 15) by QuickStartRegionOfRoom.
   WAVES    per row, the REGION scenario deals enemies, killed ones are
            replaced, and the clear pays nothing: the reward state stays 0.
-  SWEPT    no vanilla NPC stands in a wave room (the guards).
+  SWEPT    no vanilla NPC stands in a wave room (the guards); the fusers
+           that travel in are ours, scripted, and stay.
   WALKS    every crossing, walked with containment live (no probe bypass):
            the garden's north gate into the entrance hall and back, the
            seams entrance hall - ring hall - throne room, the entrance
@@ -19,7 +20,11 @@ and a few ? rooms?
   REFUSED  the courtyard's north door into the Elemental Sanctuary is
            cancelled: the player stays in the courtyard.
   SITES    the three ? rooms are sites 119-121 (chain_audit.py --sites
-           119:122 drives their kinds).
+           119:122 drives their kinds), and the throne room's cast is swept.
+  QUESTS   every region quest the testbed can host stands up in each wave
+           room: the pot quest's pots, the ZELDA-sprite givers (hunt,
+           scavenger hunt, stealth, courier), the block quest's rocks
+           (block_puzzles.py --append built the castle's boards).
 
     python3 tools/quickstart/castle_probe.py [--rom tmc-d3.gba]
 """
@@ -42,6 +47,7 @@ CG = (P.AREAS['AREA_CASTLE_GARDEN'], P.ROOMS['ROOM_CASTLE_GARDEN_MAIN'])
 SAN = (P.AREAS['AREA_SANCTUARY_ENTRANCE'], P.ROOMS['ROOM_SANCTUARY_ENTRANCE_MAIN'])
 CEL = P.AREAS['AREA_HYRULE_CASTLE_CELLAR']
 QS_REGION_HC = 15
+ENT_SCRIPTED = 0x2
 res = []
 
 
@@ -105,7 +111,10 @@ def main():
         ring = C.call_keep(c, C.game_sym('QuickStartRegionOfRoom'), (pool[row]['area'], pool[row]['room']))
         check('ROWS: %s is the castle region (15)' % name, here(c) == (pool[row]['area'], pool[row]['room']) and ring == QS_REGION_HC,
               'here %s region %d' % (here(c), ring))
-        npcs = [e for e in entities(c, KIND_NPC) if e[2] != 0x28]
+        # ours: a Zelda, or anything scripted (the fusers wear the cast's
+        # faces; QuickStartIsOurNpc's test)
+        npcs = [e for e in entities(c, KIND_NPC)
+                if e[2] != 0x28 and not c.memory.u8[GENT + e[0] * STRIDE + 0x10] & ENT_SCRIPTED]
         n0 = len(entities(c, KIND_ENEMY))
         killed = replaced = 0
         for _ in range(8):
@@ -170,6 +179,23 @@ def main():
     npcs = [e for e in entities(c, KIND_NPC) if e[2] != 0x28]
     check('SITES: the throne room is swept of its cast', here(c) == (HC, 2) and not npcs,
           'here %s npcs %s' % (here(c), [(e[2], e[3]) for e in npcs][:6]))
+    POT, ROCK, ROCK_TYPE, ZELDA = 5, 46, 0xB7, 0x28
+    for qi, q in enumerate(S.QUESTS):
+        if q == 'CARRY':
+            continue   # its pairs are surveyed rooms; the castle has none
+        seen = []
+        for row in rows:
+            c = S.boot(ROM, S.KINDS['QUEST'], qi, row, kit=2, frames=400)
+            settle(c, 4)
+            if q == 'POT':
+                n = len(entities(c, 6, POT))
+            elif q == 'BLOCKS':
+                n = len([e for e in entities(c, 6, ROCK) if e[3] == ROCK_TYPE])
+            else:
+                n = len([e for e in entities(c, KIND_NPC) if e[2] == ZELDA])
+            seen.append(n if here(c) == (pool[row]['area'], pool[row]['room']) else -1)
+        check('QUESTS: %s stands up in all three wave rooms' % q, all(n > 0 for n in seen),
+              '%s per room %s' % ({'POT': 'pots', 'BLOCKS': 'rocks'}.get(q, 'givers'), seen))
     print('RESULT %s %d/%d' % ('PASS' if all(res) else 'FAIL', sum(res), len(res)))
     return 0 if all(res) else 1
 

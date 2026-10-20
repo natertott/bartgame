@@ -1271,6 +1271,92 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Hyrule Castle is the sixteenth region (Oct 2026)
+
+The user: "integrate ... Hyrule Castle (the normal one, NOT dark hyrule
+castle) ... the same as the overworld regions, with enemy waves scattered
+throughout the rooms. For now, we will not be doing ANY wave clear rewards
+... identify a few rooms that would work as ? rooms ... scatter some
+kinstone fusers throughout Hyrule castle, and find some spots to spawn
+things like pot quests, Zelda quest sprites, and boulder puzzles if we can
+fit them."
+
+The castle has five real rooms (rooms 5-7 of `AREA_HYRULE_CASTLE` are
+empty). `room_shot.py` (new) stitches a whole room into one picture;
+`castle_survey.py` (new) floods each wave room from every arrival it has.
+
+| room | what it is | in the game |
+|---|---|---|
+| 0 | the entrance hall, two side chambers, the garden's north gate below | pool row 20, waves |
+| 1 | the ring hall round the inner courtyard (the courtyard itself is walled off) | pool row 21, waves |
+| 3 | the lower hall: the cellar's west border, doors up to rooms 0 and 1, the sanctuary door | pool row 22, waves |
+| 2 | the King's throne room: King Daltus, Minister Potho, the smith, six guards | ? room, site 119 |
+| 4 | Zelda's bedroom | left out: walled off from the throne room, nothing walks in |
+| sanctuary entrance | the courtyard garden behind the castle | ? room, site 120 |
+| cellar 0 | the tunnel under the garden's north-west hedge | ? room, site 121 |
+
+**The region.** `QS_REGION_HC`, last in the enum, adjacent to the garden
+only. Each wave room is one floor component from every arrival (333, 404
+and 592 tiles), spots by farthest-point spread, 100% of the floor within
+96px of one. The three rows are waves as scenery
+(`QuickStartRegionAllowsWave`): no clear reward, no WAVE step, no WAVE
+carrier. There is no boss: `QuickStartRegionAllowsBoss` names no castle room.
+The castle is never the drop (`QuickStartRegionDropWeight` 0, and the
+re-draw skips it), so every other region's drop odds are unchanged. Its
+per-row state takes window offsets 17-58. Its hint lines are bank 2's last
+two (254 region, 255 Element). That bank is full now.
+
+**What had to change to walk it:**
+
+- The halls' doors down into the lower hall are `LOCKED_DOOR` objects
+  waiting on flag 0, which nothing sets, so the lower hall was one-way. The
+  castle's quirk hook opens them: the saved floor tile goes back and the
+  door is deleted. The same hook sweeps the guards.
+- The garden's hedge ladder into the cellar was blocked on the user's
+  earlier call ("block that entrance for now"). It is reopened, and both
+  cellar rooms are blessed pocket rooms. The cellar's door into the lower
+  hall is vanilla's button puzzle (global flag 69).
+- The courtyard's own door into the Elemental Sanctuary is refused:
+  `AREA_SANCTUARY_ENTRANCE` is a contained area now.
+
+**Fusers.** Three spot rows, nine spots each, kept clear of doors, puzzle
+boards and reserved tiles. The castle owns no fusion, so the garden's two
+travel in, and so do North Hyrule Field's six by a castle rule in
+`QuickStartFuserPlacements`. The invariant mirror has the same rule. The
+first run showed none standing: the castle's sweep called
+`QuickStartIsOurNpc(ent, -1)`, which spares only Zelda faces, so a fuser
+wearing another face of the cast was deleted the frame it stood up. Hyrule
+Town's sweep had the same latent bug. Both now pass the room's fuser index.
+
+**Quests.** The pot quest and the ZELDA-sprite quests (hunt, scavenger
+hunt, stealth, courier) draw their host from every pool row and their spots
+from its wave table, so the castle hosts them with no extra rows. Boulder
+puzzles need generated boards. `block_puzzles.py --append` (new) builds them
+for new owners only and leaves the shipped 112 frames untouched. The
+captures the shipped header was built from are not in this checkout, and a
+fresh capture no longer reproduces it, so a full regeneration would have
+reshuffled every room's puzzles.
+
+The first castle build put a maze over the ring hall door's landing in the
+lower hall. The ROM read it as solved the moment it was dealt (found by the
+reset rule in `block_probe.py`, 35/36). The generator now reserves every
+door and border landing into a room, plus the ring round it.
+
+**Reach and the simulator.** The castle is node 43 in `world_reach.py`,
+appended so no node moves. `reach.h` was regenerated: 44 nodes, castle to
+garden and back free through the gate. `sim.py` parses the area-wide no-wave
+rule and the zero drop weight.
+
+| check | result |
+|---|---|
+| `castle_probe.py` (new): rows, waves dealt and replaced, nothing paid, swept, 17 crossings walked with containment live, the cellar ladder, the sanctuary door refused, the three sites, every quest kind in every wave room | 39/39 |
+| `chain_audit.py --sites 119:122`: every kind the three ? rooms deal, finished | 18/18 |
+| `block_puzzles.py --verify-append`: 15 frames, 103 contents replayed solved | 0 problems |
+| `block_probe.py --rules` on the castle's frames, 3 contents each | 45/45, every rule held (was 35/36 before the landing reserve) |
+| `invariant_check.py --regions`: fuser tier, castle and town | 5 castle fusers and 3 town fusers standing; 0 failures |
+| `chain_roll_validate.py --cases 500` | 500/500 |
+| `sim_validate.py` | 402/402 |
+
 ### Hyrule Town's well: the fall no longer freezes, the underground joins the town (Oct 2026)
 
 The user: "The player can currently fall into the well in Hyrule Town, but

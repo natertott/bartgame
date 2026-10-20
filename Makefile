@@ -42,6 +42,7 @@ VARIANT_OBJS := \
 	build/USA/src/enemy/octorokBoss.o build/USA/src/enemy/octorokBoss.s build/USA/src/enemy/octorokBoss.i \
 	build/USA/src/game.o build/USA/src/game.s build/USA/src/game.i \
 	build/USA/src/gameUtils.o build/USA/src/gameUtils.s build/USA/src/gameUtils.i \
+	build/USA/src/gameOverTask.o build/USA/src/gameOverTask.s build/USA/src/gameOverTask.i \
 	build/USA/src/gba/m4a.o build/USA/src/gba/m4a.s build/USA/src/gba/m4a.i \
 	build/USA/src/interrupts.o build/USA/src/interrupts.s build/USA/src/interrupts.i \
 	build/USA/src/itemMetaData.o build/USA/src/itemMetaData.s build/USA/src/itemMetaData.i \
