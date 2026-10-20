@@ -129,12 +129,13 @@ el = C.call_keep(c, C.game_sym('QuickStartElementHintLine'), (QS_REGION_HT,)) if
 check('HINT: the town speaks its own lines', rl == 241 and el == 247, 'region line %d, element line %d' % (rl, el))
 
 # DOORS
+CHIMNEY = (0x338, 0x134)   # the door down into the underground (the 31st)
 src = open(os.path.join(P.ROOT, 'src/data/transitions.c')).read()
 body = src[src.index('const Transition gExitList_HyruleTown_0[] = {'):]
 body = body[:body.index('TransitionListEnd')]
 doors = [(int(x, 16), int(y, 16), dst) for x, y, dst in
          re.findall(r'WARP_TYPE_AREA, (0x[0-9a-fA-F]+), (0x[0-9a-fA-F]+), [^\n]*?(AREA_\w+)', body)
-         if dst != 'AREA_HYRULE_TOWN_UNDERGROUND']
+         if (int(x, 16), int(y, 16)) != CHIMNEY]
 refused = 0; leaked = []
 if here(c) != (AT, RT):
     go(c, AT, RT, 520, 664)
