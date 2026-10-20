@@ -178,6 +178,9 @@
   kinds) are listed per seed. `--seeds A:B`, `--verbose`. A win is a RESET
   (the score lands in `gSave.meta_xp` and the next run starts), which is
   how both this and `win_probe.py` read it.
+- `well_probe.py` - Hyrule Town's well and the underground: the fall lands
+  in the well room, its ladder and passage, the main room's ladder to the
+  chimney roof and back, a door out of the region cancelled. 7/7.
 - `win_probe.py` - the finale alone: the trials forced done, the
   Element drawn, the carrier driven in the Element's row (waves, the boss,
   or the quest flag), the Element taken, the run reset with the score.

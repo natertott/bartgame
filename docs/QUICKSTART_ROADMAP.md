@@ -1271,6 +1271,43 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Hyrule Town's well: the fall no longer freezes, the underground joins the town (Oct 2026)
+
+The user: "The player can currently fall into the well in Hyrule Town, but
+the game freezes from there... Let's go ahead and incorporate that room into
+our game." The well is a hole, not a door: a hole manager in the square
+(gHoleTransitions row 60, a 3x3 box at tiles (47, 39)) drops the player into
+`ROOM_HYRULE_TOWN_UNDERGROUND_1`, the well room. Its rim is solid, so the way
+in is a jump. Neither underground room was in a region, so the field
+containment cancelled the fall's transition after `PlayerFall` had already
+hidden the player, who then stayed undrawn in `PLAYER_FALL` for good.
+
+Both underground rooms are now Hyrule Town region rooms
+(`QuickStartRegionOfRoom`, `room_owner.py` RING, `traversal_audit.py`), and
+the underground is policed like the other region areas. What that opens:
+
+- the well room's ladder, back up beside the well;
+- the well room's east passage into the main underground room;
+- the main room's ladder, which comes out by a chimney on a walled house
+  roof in the square's north-east. Its only exit is down the same chimney,
+  so it is a loop, not a trap.
+
+The main room's two other doors (the school's cellar, the town dig cave)
+are cancelled like every other door out of a region. No pool row names the
+underground, so it deals no waves. Its one tile chest is restocked from the
+economy like every vanilla chest.
+
+| check (`well_probe.py`, new) | before | after |
+|---|---|---|
+| FALL: into the well room, visible and walking | fail: undrawn in PLAYER_FALL | pass |
+| LADDER: the well room back to the square | fail | pass |
+| PASSAGE: the well room into the main room | fail | pass |
+| HATCH and CHIMNEY: up to the roof and back down | fail | pass |
+| SHUT: a door out of the region is cancelled | fail | pass |
+
+`town_probe.py` now leaves the chimney out of DOORS (it crosses into the
+underground): 30 of 30 other doors refused.
+
 ### The win chain is four steps: three trials, then the Element (Oct 2026)
 
 The user: "reduce the win chain length to 4, with the reward for the fourth

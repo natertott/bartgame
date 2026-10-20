@@ -73,8 +73,12 @@ RING = {  # room name -> the QS_REGION_* name it is
     # Veil Falls (Oct 2026): Main, and Top across its north border.
     'ROOM_VEIL_FALLS_MAIN': 'VF',
     'ROOM_VEIL_FALLS_TOP_0': 'VF',
-    # Hyrule Town (Oct 2026): the square only; every door is cancelled.
+    # Hyrule Town (Oct 2026): the square, and the underground the well
+    # drops into (the well room and the main passage, whose ladder climbs
+    # back to the square). The underground's other doors are cancelled.
     'ROOM_HYRULE_TOWN_MAIN': 'HT',
+    'ROOM_HYRULE_TOWN_UNDERGROUND_0': 'HT',
+    'ROOM_HYRULE_TOWN_UNDERGROUND_1': 'HT',
 }
 # Two ? rooms are joined to their parent by a SCROLL SEAM, not by any kind
 # of transition: rooms inside one area share a pixel grid and the player

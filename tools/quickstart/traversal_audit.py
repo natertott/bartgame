@@ -175,7 +175,10 @@ REGION_ROOMS = [
     # the room's north border.
     ('VF',   'Veil Falls',           [('AREA_VEIL_FALLS', 'ROOM_VEIL_FALLS_MAIN'),
                                       ('AREA_VEIL_FALLS_TOP', 'ROOM_VEIL_FALLS_TOP_0')]),
-    ('HT',   'Hyrule Town',          [('AREA_HYRULE_TOWN', 'ROOM_HYRULE_TOWN_MAIN')]),
+    # Hyrule Town: the square and the underground the well drops into.
+    ('HT',   'Hyrule Town',          [('AREA_HYRULE_TOWN', 'ROOM_HYRULE_TOWN_MAIN'),
+                                      ('AREA_HYRULE_TOWN_UNDERGROUND', 'ROOM_HYRULE_TOWN_UNDERGROUND_0'),
+                                      ('AREA_HYRULE_TOWN_UNDERGROUND', 'ROOM_HYRULE_TOWN_UNDERGROUND_1')]),
 ]
 REGION_NAME = dict((k, n) for k, n, _ in REGION_ROOMS)
 ROOM_REGION = {}

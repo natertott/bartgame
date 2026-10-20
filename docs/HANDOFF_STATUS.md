@@ -44,6 +44,9 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| Hyrule Town's well no longer freezes: the fall was cancelled mid-air by containment. The well room and the main underground room are Hyrule Town region rooms; ladders, passage and the chimney roof loop all cross, other doors stay shut. `well_probe.py` 7/7 (control 1/7) | "Hyrule Town's well" |
+| A death demotes the difficulty one step, floor 1; the build value is now a starting difficulty, seeded once per save. `difficulty_probe.py` 5/5 | "A death demotes the difficulty one step, floor 1" |
+| The inn's rest no longer freezes on white: the fade back in after the rest. `inn_probe.py` 7/7 | "The inn's rest no longer freezes on white" |
 | The win chain is four steps: three trials, then the carrier that pays the Earth Element. `chain_roll_validate.py` 500/500, `finale_probe.py` 7/7, `win_probe.py` 3/3, `chain_end_probe.py` 5/8 (the rest its ITEM-drive limit) | "The win chain is four steps" |
 | Sites 47 and 65 were never broken: the testbed boots on one run seed whose memory pair they are, and the memory roles beat a scenario's kind. The tested site is now kept out of the pair; 47 is a portal A. `chain_audit.py` 6/6 at each | "Sites 47 and 65 were never broken" |
 | A forced ? room kind (portal fight, torch or cleanup step) no longer switches mid-visit; the "Veil Falls hallway spawns nothing" defect was this, not the room. Latched per visit in room flags 127-129; the CHAIN testbed deals its step at run start. Before: 11/11 rooms switched, 4 paid a prize with no fight; after: 0. `site_force_probe.py` 12/12 | "A forced ? room kind no longer switches mid-visit" |

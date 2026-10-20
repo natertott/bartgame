@@ -12,7 +12,9 @@ square full of monsters?
            Hyrule Field, Lon Lon Ranch's west pocket and Trilby's east
            landing all open onto the town, and the town's four edges lead
            back to them. With containment live (no probe bypass).
-  DOORS    every one of the town's 31 door transitions is refused: standing
+  DOORS    every one of the town's 30 door transitions out of the region
+           is refused (the 31st, the chimney into the underground, is a
+           crossing since the well joined the town: well_probe.py): standing
            on its trigger and pushing in leaves the player in the square.
   PAUSE    the pause menu opens and closes in the square (a boot-spawn into
            town once froze it on a dungeon-index underflow; a real
@@ -131,7 +133,8 @@ src = open(os.path.join(P.ROOT, 'src/data/transitions.c')).read()
 body = src[src.index('const Transition gExitList_HyruleTown_0[] = {'):]
 body = body[:body.index('TransitionListEnd')]
 doors = [(int(x, 16), int(y, 16), dst) for x, y, dst in
-         re.findall(r'WARP_TYPE_AREA, (0x[0-9a-fA-F]+), (0x[0-9a-fA-F]+), [^\n]*?(AREA_\w+)', body)]
+         re.findall(r'WARP_TYPE_AREA, (0x[0-9a-fA-F]+), (0x[0-9a-fA-F]+), [^\n]*?(AREA_\w+)', body)
+         if dst != 'AREA_HYRULE_TOWN_UNDERGROUND']
 refused = 0; leaked = []
 if here(c) != (AT, RT):
     go(c, AT, RT, 520, 664)

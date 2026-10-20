@@ -7181,6 +7181,20 @@ static s32 QuickStartRegionOfRoom(u8 area, u8 room) {
     if (area == AREA_HYRULE_TOWN && room == ROOM_HYRULE_TOWN_MAIN) {
         return QS_REGION_HT;
     }
+    // The town's underground (Oct 2026): the well room and the main passage.
+    // The well is a hole (holeManager.c, gHoleTransitions row 60) that drops
+    // the player into the well room. With neither room in a region, the
+    // fall's transition was cancelled while the player was already falling:
+    // they were left invisible in PLAYER_FALL for good, which is the user's
+    // freeze. As HT rooms the fall, the well's ladder, the passage between
+    // the two and the passage's ladder up to the square's north-east hatch
+    // are all crossings. Their two other doors (the school's cellar, the
+    // town dig cave) are cancelled like every other door out of a region.
+    // No pool row names them, so they deal no waves.
+    if (area == AREA_HYRULE_TOWN_UNDERGROUND &&
+        (room == ROOM_HYRULE_TOWN_UNDERGROUND_0 || room == ROOM_HYRULE_TOWN_UNDERGROUND_1)) {
+        return QS_REGION_HT;
+    }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
     }
@@ -25150,7 +25164,8 @@ static void QuickStartEnforceFieldRegionContainment(void) {
           gRoomControls.area == AREA_CASTOR_WILDS || gRoomControls.area == AREA_RUINS ||
           gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
           gRoomControls.area == AREA_MT_CRENEL || gRoomControls.area == AREA_VEIL_FALLS ||
-          gRoomControls.area == AREA_VEIL_FALLS_TOP || gRoomControls.area == AREA_HYRULE_TOWN) ||
+          gRoomControls.area == AREA_VEIL_FALLS_TOP || gRoomControls.area == AREA_HYRULE_TOWN ||
+          gRoomControls.area == AREA_HYRULE_TOWN_UNDERGROUND) ||
         !QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
