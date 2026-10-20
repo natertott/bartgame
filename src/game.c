@@ -380,6 +380,7 @@ static void QuickStartUpdate(void);
 static void QuickStartClearCastleGuards(void);
 static void QuickStartVeilFallsQuirkHook(void);
 static void QuickStartHyruleTownQuirkHook(void);
+static void QuickStartHyruleCastleQuirkHook(void);
 // The Ezlo hint banks' only addressing (defined with the win chain, below;
 // the carry quest's giver line is asked for above it).
 static s32 QuickStartRegionHintLine(s32 ring);
@@ -2340,7 +2341,7 @@ static void QuickStartShowRegionFinalHintOnce(void) {
 // The block is cleared per run explicitly - see the site-block clear in
 // GameTask_Transition, and its comment on why the bank-wide wipe there does
 // not reach the top of this block on its own.
-#define QUICKSTART_CONTENT_SITE_COUNT 119   // 105 + Veil Falls' twelve + the two business scrubs (Oct 2026)
+#define QUICKSTART_CONTENT_SITE_COUNT 122   // 105 + Veil Falls' twelve + the two business scrubs + Hyrule Castle's three (Oct 2026)
 #define QUICKSTART_CONTENT_SITE_BITS 1
 #define GF_CONTENT_SITE_DONE(i) (i)
 // Build breaks here if the site table outgrows the space between raw 0 and
@@ -3300,6 +3301,10 @@ const u8* const gCustomStrings2[] = {
     [251] = (const u8*)"A GREEN brioche... It's\nspoiled. Every hit will\nthrow you further now.",
     [252] = (const u8*)"A GREEN croissant... It's\nspoiled. Monsters move\nfaster now.",
     [253] = (const u8*)"A GREEN cake... It's\nspoiled. Monsters shoot\nfaster now.",
+    // 254-255: Hyrule Castle (Oct 2026) - its region line (which stands for
+    // its pair lines too, QuickStartPairHintLine) and its Element line.
+    [254] = (const u8*)"Hyrule Castle. Something\nwaits for you inside\nits halls.",
+    [255] = (const u8*)"The three trials are done.\nThe Element waits in\nHyrule Castle!",
 };
 const u32 gCustomStringCount2 = ARRAY_COUNT(gCustomStrings2);
 
@@ -3426,6 +3431,9 @@ const u8* const gCustomStrings3[] = {
     [116] = (const u8*)"The next trial is at\nthe top of Veil Falls." /* VEIL_FALLS_TOP_0 */,
     [117] = (const u8*)"The next trial is past\nthe bombable wall in\nTrilby's stone cave." /* CAVES_BOTTLE_BUSINESS_SCRUB */,
     [118] = (const u8*)"The next trial is at\nthe scrub's cave at the\nfoot of Mount Crenel." /* CRENEL_CAVES_BOMB_BUSINESS_SCRUB */,
+    [119] = (const u8*)"The next trial is in\nthe King's throne room,\nHyrule Castle." /* HYRULE_CASTLE_2 */,
+    [120] = (const u8*)"The next trial is in\nthe courtyard behind\nHyrule Castle." /* SANCTUARY_ENTRANCE_MAIN */,
+    [121] = (const u8*)"The next trial is in\nthe tunnel under the\ncastle garden's hedge." /* HYRULE_CASTLE_CELLAR_0 */,
     // After the room lines (bank two is full at 256): the switch puzzles'
     // instructions (Oct 2026), QUICKSTART_PUZZLE_TEXT + variant, said once
     // per visit as the puzzle deals.
@@ -3498,7 +3506,8 @@ typedef char QuickStartRoomLinesFit[(ARRAY_COUNT(gCustomStrings3) == QUICKSTART_
 // appended rather than inserted - see QuickStartRegionHintLine. 212 -> 214
 // for the two golden-kinstone key hints (QuickStartKeyHintLine), 214 -> 229
 // for the fourteen "the Element waits in" lines and the quiet compass.
-typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 254) ? 1 : -1];
+// 254 -> 256 for Hyrule Castle's two lines (Oct 2026): the bank is full now.
+typedef char QuickStartHintPairBankFit[(ARRAY_COUNT(gCustomStrings2) == 256) ? 1 : -1];
 
 // text.c resolves both banks with customIndex = (u8)textIndex, so 256 is a
 // hard ceiling per bank rather than a budget - entry 257 would be
@@ -4069,6 +4078,41 @@ static void QuickStartHyruleTownQuirkHook(void) {
     }
 }
 
+// Hyrule Castle's wave rooms (Oct 2026). Two jobs, every frame the room is
+// current:
+//  - the cast goes, as in the town: the guards stand in the halls'
+//    doorways and would talk over every fight;
+//  - the halls' flag doors open. The entrance hall's west door and the ring
+//    hall's two north doors lead down to the lower hall, and each is a
+//    LOCKED_DOOR of type 0 waiting on flag 0, which nothing sets (vanilla
+//    opens them in its story). Closed, the lower hall is one-way: its doors
+//    up work, the halls' doors down never do. Opening is the door's own
+//    last step (LockedDoor_Action1): its saved floor tile back at its tile
+//    position, then the object goes. The key-locked door on the entrance
+//    hall's east side (type 8) leads nowhere and is left alone.
+#define QUICKSTART_LOCKED_DOOR_TILE_INDEX 0x74 // LockedDoorEntity.unk_74
+#define QUICKSTART_LOCKED_DOOR_TILE_POS 0x76   // LockedDoorEntity.unk_76
+static void QuickStartHyruleCastleQuirkHook(void) {
+    s32 i;
+    if (gRoomControls.area != AREA_HYRULE_CASTLE) {
+        return;
+    }
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        Entity* ent = &gEntities[i].base;
+        if (ent == gRoomControls.camera_target) {
+            continue;
+        }
+        if (ent->kind == NPC && !QuickStartIsOurNpc(ent, -1)) {
+            DeleteEntity(ent);
+        } else if (ent->kind == OBJECT && ent->id == LOCKED_DOOR && ent->type == 0 && ent->action == 6) {
+            u8* raw = (u8*)ent;
+            SetTile(*(u16*)(raw + QUICKSTART_LOCKED_DOOR_TILE_INDEX), *(u16*)(raw + QUICKSTART_LOCKED_DOOR_TILE_POS),
+                    ent->collisionLayer);
+            DeleteEntity(ent);
+        }
+    }
+}
+
 static void QuickStartVeilFallsQuirkHook(void) {
     s32 hereRoom, i;
     if (gRoomControls.area != AREA_VEIL_FALLS_TOP) {
@@ -4573,7 +4617,13 @@ static u32 QuickStartExtSlotFlag(s32 poolIndex, u32 off) {
     // Window offsets 2-15 (Oct 2026, Hyrule Town's slot, the eighth): bank-12
     // offsets 702-715, unclaimed and inside the run start's bank-12 wipe
     // (bits 0-793), so the slot resets per run like the rest.
-    return 2 + (lin - 98);
+    if (lin < 112) {
+        return 2 + (lin - 98);
+    }
+    // Window offsets 17-58 (Oct 2026, Hyrule Castle's three slots): bank-12
+    // offsets 717-758, unclaimed and inside the same wipe (the invariant
+    // checker's flag audit listed 717-793 free).
+    return 17 + (lin - 112);
 }
 
 static bool32 QuickStartSlotBitCheck(s32 poolIndex, u32 extOff, u32 windowBit) {
@@ -5092,6 +5142,37 @@ static const s16 sQuickStartHyruleTownEnemyOffsets[][2] = {
 // reserves bound whatever the square cannot afford.
 #define QUICKSTART_HYRULETOWN_ROOM_SQUARES 700
 
+// HYRULE CASTLE (Oct 2026, the user: "the castle to be incorporated the same
+// as the overworld regions, with enemy waves scattered throughout the rooms.
+// For now, we will not be doing ANY wave clear rewards"). Three wave rooms:
+// the entrance hall the garden's north gate opens on (room 0), the ring hall
+// around the inner courtyard above it (room 1), and the lower hall the
+// garden's cellar tunnel and the two halls' doors lead to (room 3). Each is
+// one component from every arrival it has (tools/quickstart/castle_survey.py,
+// with the flag doors shut; the quirk hook opens them in the game), and the
+// spots are that tool's farthest-point spread with 3x3 clearance, 100% of the
+// floor within 96px of one. Squares are tiles / 4, the town's unit.
+static const s16 sQuickStartCastleHallEnemyOffsets[][2] = {
+    { 56, 248 }, { 216, 568 }, { 376, 280 }, { 216, 24 }, { 216, 376 }, { 216, 200 },
+    { 136, 472 }, { 296, 472 }, { 136, 360 }, { 200, 104 }, { 296, 360 }, { 216, 280 },
+    { 216, 456 }, { 120, 280 }, { 312, 248 },
+};
+#define QUICKSTART_CASTLE_HALL_ROOM_SQUARES 83
+static const s16 sQuickStartCastleRingEnemyOffsets[][2] = {
+    { 72, 72 }, { 424, 456 }, { 72, 440 }, { 424, 88 }, { 248, 24 }, { 248, 504 },
+    { 88, 248 }, { 408, 264 }, { 184, 104 }, { 184, 424 }, { 312, 104 }, { 312, 424 },
+    { 72, 344 }, { 408, 360 }, { 72, 168 }, { 408, 168 }, { 248, 88 }, { 248, 424 },
+    { 120, 104 }, { 136, 456 }, { 360, 72 }, { 360, 456 },
+};
+#define QUICKSTART_CASTLE_RING_ROOM_SQUARES 101
+static const s16 sQuickStartCastleLowerEnemyOffsets[][2] = {
+    { 56, 56 }, { 328, 664 }, { 504, 200 }, { 72, 408 }, { 504, 472 }, { 296, 72 },
+    { 104, 664 }, { 232, 504 }, { 72, 232 }, { 456, 56 }, { 472, 328 }, { 392, 520 },
+    { 168, 88 }, { 56, 520 }, { 216, 664 }, { 280, 584 }, { 88, 136 }, { 56, 312 },
+    { 136, 504 }, { 312, 504 }, { 376, 56 }, { 504, 120 }, { 472, 408 }, { 232, 56 },
+};
+#define QUICKSTART_CASTLE_LOWER_ROOM_SQUARES 148
+
 static const QuickStartRegion sQuickStartRegionPool[] = {
     // Castle Garden - entrance/exit reused from the old static
     // sQuickStartLinks rows (Melari's Mine Door B's destination, and the
@@ -5325,6 +5406,25 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
       sQuickStartHyruleTownEnemyOffsets, ARRAY_COUNT(sQuickStartHyruleTownEnemyOffsets),
       QUICKSTART_HYRULETOWN_ROOM_SQUARES,
       504, 488, QuickStartHyruleTownQuirkHook },
+    // Hyrule Castle (Oct 2026): three rows, all of them waves as scenery
+    // (QuickStartRegionAllowsWave: no clear reward, no WAVE step or carrier),
+    // no boss (QuickStartRegionAllowsBoss names no castle room) and never the
+    // drop (QuickStartRegionDropWeight). Entrances are vanilla's own landings:
+    // the garden gate's, the entrance hall's seam into the ring hall, and the
+    // entrance hall door's into the lower hall. Reward and boss spots are each
+    // room's most open tile (castle_survey.py), kept for the fields' sake.
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_0, 216, 520, 0, 0, 0, 0,
+      sQuickStartCastleHallEnemyOffsets, ARRAY_COUNT(sQuickStartCastleHallEnemyOffsets),
+      QUICKSTART_CASTLE_HALL_ROOM_SQUARES,
+      184, 440, QuickStartHyruleCastleQuirkHook },
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_1, 248, 487, 0, 0, 0, 0,
+      sQuickStartCastleRingEnemyOffsets, ARRAY_COUNT(sQuickStartCastleRingEnemyOffsets),
+      QUICKSTART_CASTLE_RING_ROOM_SQUARES,
+      392, 424, QuickStartHyruleCastleQuirkHook },
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_3, 136, 648, 0, 0, 0, 0,
+      sQuickStartCastleLowerEnemyOffsets, ARRAY_COUNT(sQuickStartCastleLowerEnemyOffsets),
+      QUICKSTART_CASTLE_LOWER_ROOM_SQUARES,
+      280, 536, QuickStartHyruleCastleQuirkHook },
 };
 #define QUICKSTART_REGION_POOL_SIZE (s32)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion))
 // The extension-slot bitfield (QuickStartExtSlotFlag) covers pool rows
@@ -5335,7 +5435,7 @@ static const QuickStartRegion sQuickStartRegionPool[] = {
 typedef char QuickStartExtSlotsFit[(((int)(sizeof(sQuickStartRegionPool) / sizeof(QuickStartRegion)) -
                                      QUICKSTART_EXT_SLOT_BASE) *
                                             QUICKSTART_EXT_SLOT_BITS <=
-                                        112
+                                        154
                                         ? 1
                                         : -1)];
 // And the five-bit pool-index fields cap the pool at 32 rows.
@@ -5523,6 +5623,10 @@ enum {
     // After Veil Falls for the same reason Veil Falls is last: the hint
     // banks address a late region through helpers, not arithmetic.
     QS_REGION_HT,
+    // Hyrule Castle (Oct 2026): the entrance hall, the ring hall and the lower
+    // hall as wave rooms (no clear rewards), the throne room and Zelda's room
+    // as ? rooms. Last for the hint banks' reason, like the two above it.
+    QS_REGION_HC,
     QS_REGION_COUNT
 };
 
@@ -5536,7 +5640,7 @@ enum {
 // u16, not u8: ten rings no longer fit an 8-bit mask. Every consumer
 // already works in u32 locals.
 static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
-    /* CG   */ (1 << QS_REGION_NHF),
+    /* CG   */ (1 << QS_REGION_NHF) | (1 << QS_REGION_HC),
     // North and South Hyrule Field are NOT adjacent any more (Oct 2026):
     // their only shared border was the town bridge, a QUICKSTART row that
     // stitched the town out; the town is back and both gates open onto it.
@@ -5590,6 +5694,10 @@ static const u16 sQuickStartRegionAdjacency[QS_REGION_COUNT] = {
     // out (the "town bridge"); they enter the town again. One component:
     // town_survey.py floods 2,331 tiles from all four landings alike.
     /* HT   */ (1 << QS_REGION_NHF) | (1 << QS_REGION_SHF) | (1 << QS_REGION_LLR) | (1 << QS_REGION_TRIL),
+    // Hyrule Castle hangs off the garden alone: the north gate into the
+    // entrance hall, and the cellar tunnel under the garden's north-west
+    // hedge into the lower hall.
+    /* HC   */ (1 << QS_REGION_CG),
 };
 
 // Which named region a pool row belongs to. By position: the pool's row
@@ -5603,6 +5711,7 @@ static u8 QuickStartRegionOfPoolIndex(s32 poolIndex) {
         QS_REGION_RV,
         QS_REGION_CW, QS_REGION_WR, QS_REGION_WR,
         QS_REGION_MW, QS_REGION_LH, QS_REGION_CREN, QS_REGION_VF, QS_REGION_HT,
+        QS_REGION_HC, QS_REGION_HC, QS_REGION_HC,
     };
     // The index is taken modulo the POOL's size but read out of byPool, so
     // the two must be the same length or a perfectly legal pool index reads
@@ -5937,6 +6046,12 @@ static bool32 QuickStartRegionAllowsWave(const QuickStartRegion* region) {
     // same bargain as the lake: waves spawn as scenery across every piece,
     // nothing is paid for emptying the room.
     if (region->area == AREA_VEIL_FALLS && region->room == ROOM_VEIL_FALLS_MAIN) {
+        return FALSE;
+    }
+    // Hyrule Castle (Oct 2026), per the user: "For now, we will not be doing
+    // ANY wave clear rewards for Hyrule Castle." Its three rows run their
+    // waves as scenery.
+    if (region->area == AREA_HYRULE_CASTLE) {
         return FALSE;
     }
     return TRUE;
@@ -7113,6 +7228,15 @@ static const QuickStartRoomOwner sQuickStartRoomOwners[] = {
     // which region's keys may not land there.
     { AREA_TREE_INTERIORS, ROOM_TREE_INTERIORS_WAVEBLADE,
       (1 << QS_REGION_LH), 0 },
+    // Hyrule Castle's three ? rooms (Oct 2026). The cellar tunnel opens off
+    // the garden as well, but its far end is the castle's lower hall, so it is
+    // the castle's like the other two.
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_2,
+      (1 << QS_REGION_HC), 0 },
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN,
+      (1 << QS_REGION_HC), 0 },
+    { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0,
+      (1 << QS_REGION_HC), 0 },
 };
 
 // Which named region a room IS, for the twelve rooms that are regions.
@@ -7194,6 +7318,13 @@ static s32 QuickStartRegionOfRoom(u8 area, u8 room) {
     if (area == AREA_HYRULE_TOWN_UNDERGROUND &&
         (room == ROOM_HYRULE_TOWN_UNDERGROUND_0 || room == ROOM_HYRULE_TOWN_UNDERGROUND_1)) {
         return QS_REGION_HT;
+    }
+    // Hyrule Castle's three wave rooms. The throne room (2) and Zelda's room
+    // (4) are ? rooms, so they are pockets, not region rooms: a site in a
+    // region room is never dispatched.
+    if (area == AREA_HYRULE_CASTLE &&
+        (room == ROOM_HYRULE_CASTLE_0 || room == ROOM_HYRULE_CASTLE_1 || room == ROOM_HYRULE_CASTLE_3)) {
+        return QS_REGION_HC;
     }
     if (area != AREA_HYRULE_FIELD) {
         return -1;
@@ -10614,6 +10745,11 @@ static const QuickStartRegionDropSpots sQuickStartRegionDropSpots[] = {
     { 4, { { 312, 504 }, { 216, 520 }, { 408, 488 }, { 360, 520 } } },
     // HYRULE_TOWN_MAIN - 2,331 tiles, all four gates in one component
     { 4, { { 520, 664 }, { 408, 520 }, { 600, 440 }, { 376, 328 } } },
+    // HYRULE_CASTLE_0, _1, _3 - never a drop (QuickStartRegionDropWeight);
+    // each row's entrance, so the table keeps the pool's shape
+    { 1, { { 216, 520 }, { 0, 0 }, { 0, 0 }, { 0, 0 } } },
+    { 1, { { 248, 487 }, { 0, 0 }, { 0, 0 }, { 0, 0 } } },
+    { 1, { { 136, 648 }, { 0, 0 }, { 0, 0 }, { 0, 0 } } },
 };
 
 typedef char QuickStartDropSpotsMatchPool[(ARRAY_COUNT(sQuickStartRegionDropSpots) ==
@@ -20693,6 +20829,29 @@ static const QuickStartContentSite sQuickStartRoomContentSites[QUICKSTART_CONTEN
     // floor rises north in a funnel; (120,56), tile (7,3), is the clear 3x3
     // four tiles up from the arrival.
     { AREA_CRENEL_CAVES, ROOM_CRENEL_CAVES_BOMB_BUSINESS_SCRUB, QUICKSTART_KINDS_SMALL, 120, 56 },
+    // --- Hyrule Castle's three (Oct 2026) ---------------------------------
+    // The user: "identify a few rooms that would work as ? rooms, such as any
+    // side rooms containing characters, or maybe the King's chamber, or the
+    // internal courtyard". Appended, so no other site's index moves. Each is
+    // ANY: 74, 100 and 93 tiles with 3x3 clearance in the arrival component,
+    // and each spot is one of them (scratchpad site_floor.py on the live
+    // collision grid). Zelda's room is not here: it is walled off from the
+    // throne room (the only room it touches), so nothing walks into it. The
+    // entrance hall's two side chambers are part of a wave room, where a
+    // site would never dispatch.
+    //
+    // The throne room, the King's chamber: King Daltus, Minister Potho, the
+    // smith and six guards in vanilla, swept like every site's cast. Joined
+    // to the ring hall by a seam; the floor in front of the throne.
+    { AREA_HYRULE_CASTLE, ROOM_HYRULE_CASTLE_2, QUICKSTART_KINDS_ANY, 136, 136 },
+    // The sanctuary courtyard: the garden behind the castle, out of the lower
+    // hall's north door. Its own north door, into the Elemental Sanctuary, is
+    // refused (QuickStartAreaContained); the plaza at the middle of the path.
+    { AREA_SANCTUARY_ENTRANCE, ROOM_SANCTUARY_ENTRANCE_MAIN, QUICKSTART_KINDS_ANY, 136, 200 },
+    // The cellar tunnel under the garden's north-west hedge: the ladder lands
+    // at its south end, its north end runs on into the button room and the
+    // lower hall. Mid-tunnel.
+    { AREA_HYRULE_CASTLE_CELLAR, ROOM_HYRULE_CASTLE_CELLAR_0, QUICKSTART_KINDS_ANY, 120, 200 },
 };
 // What this site's kill pays, if its row overrides the default. Same
 // wrapping reason as QuickStartSiteContentSpot below: the miniboss reward
@@ -20887,6 +21046,14 @@ static bool32 QuickStartIsPocketInteriorRoom(u8 area, u8 room) {
     // the two are joined by a scroll seam, so both have to be blessed or
     // the ladder itself gets cancelled.
     if (area == AREA_DOJOS && (room == ROOM_DOJOS_TO_GRIMBLADE || room == ROOM_DOJOS_GRIMBLADE)) {
+        return TRUE;
+    }
+    // The castle cellar (Oct 2026): the tunnel the garden's hedge ladder lands
+    // in (a ? room, blessed by the table scan as well) and the button room its
+    // north end runs into, whose east door opens on the lower hall once the
+    // button is down (vanilla's own puzzle, global flag 69). Both blessed, or
+    // the lower hall's west border back into the button room is cancelled.
+    if (area == AREA_HYRULE_CASTLE_CELLAR) {
         return TRUE;
     }
     // The shop. Reached by redirecting one real overworld door per run
@@ -22136,6 +22303,10 @@ static bool32 QuickStartChainAvoided(u32 avoid, s32 ring) {
 // re-draw a start the kit cannot survive (QuickStartDropRegionIndexUsable).
 static s32 QuickStartRegionDropWeight(s32 ring) {
     switch (ring) {
+        // Never a start (Oct 2026): a castle with no clear rewards and one
+        // way out, through the garden, is a slow first room for a run.
+        case QS_REGION_HC:
+            return 0;
         case QS_REGION_RV:
         case QS_REGION_WR:
         case QS_REGION_LH:
@@ -23141,12 +23312,21 @@ static void QuickStartChainBossWatcher(void) {
 #define QUICKSTART_HINT_HT_REGION_LINE 241
 #define QUICKSTART_HINT_HT_PAIR_BASE 242
 #define QUICKSTART_HINT_HT_ELEMENT_LINE 247
+// Hyrule Castle's two (gCustomStrings2 254-255, the bank's last two lines):
+// its region line, which also stands for its five pair lines - an EVENT step
+// names its room from the third bank, and WAVE and BOSS steps never land in
+// the castle, so one line covers what is left - and its Element line.
+#define QUICKSTART_HINT_HC_REGION_LINE 254
+#define QUICKSTART_HINT_HC_ELEMENT_LINE 255
 
 // "The Element waits in <region>": 214+ring for the first fourteen, then
 // Hyrule Town's own line (247) - 214+14 is the compass's "quiet" line.
 static s32 QuickStartElementHintLine(s32 ring) {
     if (ring == QS_REGION_HT) {
         return QUICKSTART_HINT_HT_ELEMENT_LINE;
+    }
+    if (ring == QS_REGION_HC) {
+        return QUICKSTART_HINT_HC_ELEMENT_LINE;
     }
     return QUICKSTART_HINT_ELEMENT_BASE + ring;
 }
@@ -23157,6 +23337,9 @@ static s32 QuickStartRegionHintLine(s32 ring) {
     if (ring == QS_REGION_HT) {
         return QUICKSTART_HINT_HT_REGION_LINE;
     }
+    if (ring == QS_REGION_HC) {
+        return QUICKSTART_HINT_HC_REGION_LINE;
+    }
     if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
         return QUICKSTART_HINT_VF_REGION_LINE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS);
     }
@@ -23166,6 +23349,9 @@ static s32 QuickStartRegionHintLine(s32 ring) {
 static s32 QuickStartPairHintLine(s32 ring, s32 kind) {
     if (ring == QS_REGION_HT) {
         return QUICKSTART_HINT_HT_PAIR_BASE + kind;
+    }
+    if (ring == QS_REGION_HC) {
+        return QUICKSTART_HINT_HC_REGION_LINE;
     }
     if (ring >= QUICKSTART_HINT_LAID_OUT_REGIONS) {
         return QUICKSTART_HINT_VF_PAIR_BASE + (ring - QUICKSTART_HINT_LAID_OUT_REGIONS) * QS_CHAIN_KIND_COUNT + kind;
@@ -24746,8 +24932,13 @@ static void QuickStartSetupCaveRoomContent(void) {
 // when the mine was the hub; that retarget is long gone and the border is
 // on its own vanilla destination, with no row for it in the retarget report
 // (docs/QUICKSTART_RETARGETS.md).
+// AREA_SANCTUARY_ENTRANCE (Oct 2026): the castle's sanctuary courtyard is a ?
+// room whose north door opens on the Elemental Sanctuary. Contained, its
+// south border back to the lower hall passes (a pocket's way home) and the
+// sanctuary door is refused.
 static bool32 QuickStartAreaContained(u8 area) {
-    return area == AREA_CASTLE_GARDEN || area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS;
+    return area == AREA_CASTLE_GARDEN || area == AREA_MINISH_HOUSE_INTERIORS || area == AREA_TREE_INTERIORS ||
+           area == AREA_SANCTUARY_ENTRANCE;
 }
 
 // Which ladder slot the current room is standing in for, or -1 if it isn't
@@ -24852,7 +25043,7 @@ static void QuickStartProcessDoorRedirects(void) {
     if (!gRoomTransition.transitioningOut) {
         return;
     }
-    // Castle Garden's northwest ladder - BLOCKED, per the user: "for the
+    // Castle Garden's northwest ladder - it was BLOCKED here, per the user: "for the
     // one ladder in Hyrule Castle Garden that was not working (the one that
     // led to the castle dungeon) we can go ahead and block that entrance
     // for now."
@@ -24868,11 +25059,12 @@ static void QuickStartProcessDoorRedirects(void) {
     // other transition it does not want (see QuickStartCancelUncontained
     // above) - the player simply stays put, exactly as if the ladder led
     // nowhere.
-    if (gRoomTransition.player_status.area_next == AREA_HYRULE_CASTLE_CELLAR &&
-        gRoomTransition.player_status.room_next == ROOM_HYRULE_CASTLE_CELLAR_0) {
-        gRoomTransition.transitioningOut = 0;
-        return;
-    }
+    //
+    // REOPENED (Oct 2026): the castle is a region now ("The next thing we
+    // need to integrate into our game is Hyrule Castle"), and this ladder is
+    // its back door - the cellar tunnel (a ? room) and the button room lead
+    // into the lower hall. The block that stood here is gone; the cellar is
+    // blessed in QuickStartIsPocketInteriorRoom.
 }
 
 
@@ -25165,7 +25357,7 @@ static void QuickStartEnforceFieldRegionContainment(void) {
           gRoomControls.area == AREA_MINISH_WOODS || gRoomControls.area == AREA_LAKE_HYLIA ||
           gRoomControls.area == AREA_MT_CRENEL || gRoomControls.area == AREA_VEIL_FALLS ||
           gRoomControls.area == AREA_VEIL_FALLS_TOP || gRoomControls.area == AREA_HYRULE_TOWN ||
-          gRoomControls.area == AREA_HYRULE_TOWN_UNDERGROUND) ||
+          gRoomControls.area == AREA_HYRULE_TOWN_UNDERGROUND || gRoomControls.area == AREA_HYRULE_CASTLE) ||
         !QuickStartIsNamedRegionRoom(gRoomControls.area, gRoomControls.room)) {
         return;
     }
@@ -26638,6 +26830,9 @@ static bool32 QuickStartGoldGateRowPassable(s32 poolIndex) {
 
 // A pool row the drop may land in: the kit rule and the gate rule.
 static bool32 QuickStartDropRowUsable(s32 poolIndex) {
+    if (QuickStartRegionDropWeight(QuickStartRegionOfPoolIndex(poolIndex)) == 0) {
+        return FALSE;   // the castle: never a start, re-drawn or not
+    }
     if (QuickStartRegionNeedsSwampKit(poolIndex) && !QuickStartHasRegionKit(poolIndex)) {
         return FALSE;
     }
