@@ -1271,6 +1271,25 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The win chain is four steps: three trials, then the Element (Oct 2026)
+
+The user: "reduce the win chain length to 4, with the reward for the fourth
+event being the earth element, resulting in a win." `QUICKSTART_CHAIN_STEPS`
+is 4 and `QUICKSTART_CHAIN_PRE_STEPS` 3. The fourth step is the carrier,
+as the fifth was: finishing it drops the Earth Element and taking it wins.
+Everything that counted steps already read the two constants. The portal
+pair's start step is now `% (PRE_STEPS - 1)`, so it still fits before the
+carrier. The finale texts and the compass say "three trials". `sim.py`
+reads `PRE_STEPS` from game.c, and so do the probes that force the trials
+(`finale_probe`, `win_probe`, `chain_probe`, `chain_end_probe`).
+
+| check | result |
+|---|---|
+| `chain_roll_validate.py --cases 500`, ROM against sim | 500/500 agree |
+| `finale_probe.py`, the finale drawn after the third trial | 7/7 |
+| `win_probe.py --seeds 1:4`, the Element taken, run reset | 3/3 WIN |
+| `chain_end_probe.py --seeds 1:9`, whole runs driven | 5/8 WIN; 3 stuck at an ITEM step, the probe's known limit |
+
 ### A death demotes the difficulty one step, floor 1 (Oct 2026)
 
 The user: "if the player dies, they are demoted a level of difficulty, with

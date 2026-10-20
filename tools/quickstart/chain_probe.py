@@ -28,6 +28,7 @@ INV, FLAGS = SAVE + 0xF2, SAVE + 0x25C
 # were really just the drop region read from the wrong bits.
 QS_BIT0 = 3388                       # QUICKSTART window offset 0
 BANK12_BIT0 = QS_BIT0 - 700          # FLAG_BANK_12 offset 0
+PRE_STEPS = int(__import__('re').search(r'#define QUICKSTART_CHAIN_PRE_STEPS (\d+)', P.GAME).group(1))
 BANK11_BIT0 = BANK12_BIT0 + (0x9C0 - 0xA80)
 KINDS = ['ITEM', 'EVENT', 'WAVE', 'BOSS', 'QUEST']
 RINGS = ['CG', 'NHF', 'SHF', 'EH', 'LLR', 'TRIL', 'WW', 'RV', 'CW', 'WR']
@@ -212,7 +213,7 @@ def run(rom, seed):
     drop, regions = reachable_regions(c, held_tokens(c))
     print('  drop pool %d [%s], sphere 0 = %s'
           % (drop, POOL_RING[drop], ','.join(sorted(regions))))
-    for n in range(4):
+    for n in range(PRE_STEPS):
         for _ in range(300):
             c.run_frame()
             if c.memory.u8[CHAIN_ROLLED] > n:
@@ -234,7 +235,7 @@ def run(rom, seed):
         if c.memory.u8[CHAIN_PROGRESS] <= n:
             print('           %s, but the step did NOT advance' % note)
             return bad + 1
-    print('  all four pre-steps done (progress=%d)' % c.memory.u8[CHAIN_PROGRESS])
+    print('  all %d pre-steps done (progress=%d)' % (PRE_STEPS, c.memory.u8[CHAIN_PROGRESS]))
     return bad
 
 

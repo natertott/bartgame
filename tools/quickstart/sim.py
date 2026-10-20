@@ -328,6 +328,7 @@ STATUE_PIECES = ('QUICKSTART_ITEM_GOLD_LEFT', 'QUICKSTART_ITEM_GOLD_MIDDLE', 'QU
 # An OPEN gate is carried in `owned` as a sentinel, since every function
 # here already takes the owned set and the C's QuickStartHasItem counts an
 # open gate's pieces as held.
+PRE_STEPS = int(re.search(r'#define QUICKSTART_CHAIN_PRE_STEPS (\d+)', GAME).group(1))  # 3: the trials before the finale
 PAIR_MOD = 10  # QUICKSTART_CHAIN_PAIR_MOD: the keyed pair is rolled one step in this many
 GATE_OPEN = {'QUICKSTART_ITEM_GOLD_FLOW': 'GATE_FLOW_OPEN',
              'QUICKSTART_ITEM_GOLD_STATUES': 'GATE_STATUES_OPEN'}
@@ -785,7 +786,7 @@ def roll_portal(seed, step, prior, nodes, held, owned, sites_done, portal_dealt)
     """QuickStartChainRollPortal -> the pair, or None."""
     run = chain_hash(seed, 0x9047)
     h = chain_hash(seed, 0x9048 + step)
-    if step + 1 >= 4 or ((run >> 6) & 0x7fff) % PORTAL_MOD != 0 or step < ((run >> 21) & 0x7fff) % 3:
+    if step + 1 >= PRE_STEPS or ((run >> 6) & 0x7fff) % PORTAL_MOD != 0 or step < ((run >> 21) & 0x7fff) % (PRE_STEPS - 1):
         return None
     if portal_dealt:
         return None
@@ -987,7 +988,7 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     # (the user, after the third pass: "Round-robin the four chain keys and
     # lower the pair roll"). The old loop tried every key and let the first
     # eligible one win, which was the Lon Lon key in 95% of pairs.
-    if step + 1 < 4 and ((h >> 10) & 0x7fff) % PAIR_MOD == 0:
+    if step + 1 < PRE_STEPS and ((h >> 10) & 0x7fff) % PAIR_MOD == 0:
         first = (h >> 12) & 3
         for k in range(1):
             key = CHAIN_KEYS[(first + step) & 3]
@@ -1018,7 +1019,7 @@ def roll_step(seed, step, prior, regions, held, owned, quest_slot, sites_done, c
     # from its own hash and the step, and an EVENT at a site the item's
     # flood opens that the live one does not. Paid by the next prize.
     e = chain_hash(seed, 0xE5C + step)
-    if step + 1 < 4 and ((e >> 4) & 0x7fff) % ESC_MOD == 0:
+    if step + 1 < PRE_STEPS and ((e >> 4) & 0x7fff) % ESC_MOD == 0:
         which = (((e >> 20) & 0xff) + step) % len(ESC_ITEMS)
 
         def opened_by(item, boosted_only):
@@ -1485,11 +1486,10 @@ def simulate(seed, cohort, rng):
     checkpoints.append(snapshot(regions, held, 'after selection'))
     dealt = []
     portal = portal_lit = None   # the portal pair's pocket; lit once A is done
-    # Four steps, then the finale. This looped five times until the Oct 2026
-    # study: a fifth step was rolled and counted that the game never deals
-    # (QUICKSTART_CHAIN_PRE_STEPS is 4; the step-4 completion draws the
+    # PRE_STEPS trials, then the finale (QUICKSTART_CHAIN_PRE_STEPS: three
+    # since Oct 2026, four before; the last trial's completion draws the
     # finale instead of rolling again).
-    for step in range(4):
+    for step in range(PRE_STEPS):
         if not dealt:
             dealt = roll_step(seed, step, prior, regions, held, owned,
                               quest_slot, sites_done, carrier=carrier, drop_pool=drop_pool,
@@ -1562,9 +1562,9 @@ def simulate(seed, cohort, rng):
                           event=event, prize=prize, room_ok=room_ok))
         held = held_mask(owned) | (TOKEN_BITS['QS_REACH_FUSION'] if fused else 0)
         regions = reachable_nodes(held, drop_pool, portal_lit)
-        if step < 4:
+        if step < PRE_STEPS:
             checkpoints.append(snapshot(regions, held, f'after requirement {step + 1}'))
-        if step == 3:
+        if step == PRE_STEPS - 1:
             used = 0
             for st in steps:
                 rg = step_region(st['kind'], st['where'])

@@ -2098,11 +2098,11 @@ static s32 QuickStartWinCarrier(void) {
     return value;
 }
 
-// --- The five-step win chain ---------------------------------------------
+// --- The four-step win chain ---------------------------------------------
 //
 // The Earth Element is no longer one condition away. A run is a CHAIN of
-// five steps; the fifth is the carrier above, and finishing it drops the
-// Element. The four before it are rolled one at a time, and that is the
+// four steps; the fourth is the carrier above, and finishing it drops the
+// Element. The three before it are rolled one at a time, and that is the
 // whole design: step n+1 does not exist until step n is done, so its roll
 // can be made against the loadout the player is actually holding at that
 // moment rather than the one they started with.
@@ -2124,8 +2124,12 @@ static s32 QuickStartWinCarrier(void) {
 // WHERE IT LIVES. gSave.chain_* (save.h) - not the flag banks, which are
 // full. chain_rolled counts steps dealt, chain_progress steps finished,
 // and step n is "current" when n == chain_progress < chain_rolled.
-#define QUICKSTART_CHAIN_STEPS 5
-#define QUICKSTART_CHAIN_PRE_STEPS 4   // the four before the carrier
+// Four since Oct 2026 (the user: "reduce the win chain length to 4, with the
+// reward for the fourth event being the earth element"): three trials, then
+// the carrier, whose finish pays the Element and wins the run. It was five,
+// four trials and the carrier.
+#define QUICKSTART_CHAIN_STEPS 4
+#define QUICKSTART_CHAIN_PRE_STEPS 3   // the three before the carrier
 #define QS_CHAIN_ITEM 0   // hold item `detail` - from anywhere: a drop, a
                           // ? room, a quest reward, the shop counter
 #define QS_CHAIN_EVENT 1  // finish the ? room event at content site `where`
@@ -2150,8 +2154,8 @@ static s32 QuickStartChainProgress(void) {
     return gSave.chain_progress;
 }
 
-// Are the four pre-steps all behind us? This is what the carrier - the
-// fifth step - now waits on before it will free the Element.
+// Are the three pre-steps all behind us? This is what the carrier - the
+// fourth step - now waits on before it will free the Element.
 static bool32 QuickStartChainPreStepsDone(void) {
     return QuickStartChainProgress() >= QUICKSTART_CHAIN_PRE_STEPS;
 }
@@ -2477,7 +2481,7 @@ static void QuickStartSpawnWinKeyOnce(s16 rewardX, s16 rewardY) {
     // THE CHAIN IS THE GATE, and this is the second place that says so.
     //
     // The caller already asks QuickStartWinCarrierMet, which refuses until
-    // the four pre-steps are done. But the caller asks it as
+    // the pre-steps are done. But the caller asks it as
     // `WinCarrierMet() || QsCheckRoomFlag(43)`, and that second clause is a
     // way past the first: room flag 43 means "an Element was created this
     // round", and it exists so the despawn-timer refresh keeps running
@@ -3240,24 +3244,24 @@ const u8* const gCustomStrings2[] = {
     [212] = (const u8*)"The stone at Veil Falls\nwants a gold Kinstone.\nThe valley, north field,\nranch or Trilby has it.",
     [213] = (const u8*)"Castor's three statues\nwant gold Kinstones. The\nwilds, the wood or\nTrilby hold them.",
     // 214-227: "the Element waits in <region>", QS_REGION_* order - said when
-    // the four trials are done and the finale is drawn
+    // the three trials are done and the finale is drawn
     // (QuickStartRollElementRegion), and by the compass receipt. 228: the
     // compass before that moment.
-    [214] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Castle Garden!",
-    [215] = (const u8*)"The four trials are done.\nThe Element waits in\nNorth Hyrule Field!",
-    [216] = (const u8*)"The four trials are done.\nThe Element waits in\nSouth Hyrule Field!",
-    [217] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Eastern Hills!",
-    [218] = (const u8*)"The four trials are done.\nThe Element waits in\nLon Lon Ranch!",
-    [219] = (const u8*)"The four trials are done.\nThe Element waits in\nTrilby Highlands!",
-    [220] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Western Wood!",
-    [221] = (const u8*)"The four trials are done.\nThe Element waits in\nRoyal Valley!",
-    [222] = (const u8*)"The four trials are done.\nThe Element waits in\nCastor Wilds!",
-    [223] = (const u8*)"The four trials are done.\nThe Element waits in\nthe Wind Ruins!",
-    [224] = (const u8*)"The four trials are done.\nThe Element waits on\nMount Crenel!",
-    [225] = (const u8*)"The four trials are done.\nThe Element waits in\nMinish Woods!",
-    [226] = (const u8*)"The four trials are done.\nThe Element waits at\nLake Hylia!",
-    [227] = (const u8*)"The four trials are done.\nThe Element waits at\nVeil Falls!",
-    [228] = (const u8*)"The compass is quiet.\nIt will hum once the\nfour trials are done.",
+    [214] = (const u8*)"The three trials are done.\nThe Element waits in\nthe Castle Garden!",
+    [215] = (const u8*)"The three trials are done.\nThe Element waits in\nNorth Hyrule Field!",
+    [216] = (const u8*)"The three trials are done.\nThe Element waits in\nSouth Hyrule Field!",
+    [217] = (const u8*)"The three trials are done.\nThe Element waits in\nthe Eastern Hills!",
+    [218] = (const u8*)"The three trials are done.\nThe Element waits in\nLon Lon Ranch!",
+    [219] = (const u8*)"The three trials are done.\nThe Element waits in\nTrilby Highlands!",
+    [220] = (const u8*)"The three trials are done.\nThe Element waits in\nthe Western Wood!",
+    [221] = (const u8*)"The three trials are done.\nThe Element waits in\nRoyal Valley!",
+    [222] = (const u8*)"The three trials are done.\nThe Element waits in\nCastor Wilds!",
+    [223] = (const u8*)"The three trials are done.\nThe Element waits in\nthe Wind Ruins!",
+    [224] = (const u8*)"The three trials are done.\nThe Element waits on\nMount Crenel!",
+    [225] = (const u8*)"The three trials are done.\nThe Element waits in\nMinish Woods!",
+    [226] = (const u8*)"The three trials are done.\nThe Element waits at\nLake Hylia!",
+    [227] = (const u8*)"The three trials are done.\nThe Element waits at\nVeil Falls!",
+    [228] = (const u8*)"The compass is quiet.\nIt will hum once the\nthree trials are done.",
     // 229-240: an escalation ITEM step (QuickStartChainRollEscalation, Oct
     // 2026, the redesign's P1.3), one line per item in sQuickStartReachItems
     // order from the bracelets (QUICKSTART_CHAIN_ESC_HINT_BASE). The next
@@ -3286,7 +3290,7 @@ const u8* const gCustomStrings2[] = {
     [244] = (const u8*)"Monsters hold the town\nsquare. Clear them out.",
     [245] = (const u8*)"A beast waits in the\ntown square. Put it\ndown.",
     [246] = (const u8*)"A favour left undone in\nHyrule Town. Finish it.",
-    [247] = (const u8*)"The four trials are done.\nThe Element waits in\nHyrule Town!",
+    [247] = (const u8*)"The three trials are done.\nThe Element waits in\nHyrule Town!",
     // 248-253: the blessing tiers (Oct 2026). Gold first (brioche, croissant,
     // cake), then green (the same order) - QUICKSTART_PASTRY_GOLD_TEXT and
     // QUICKSTART_PASTRY_GREEN_TEXT.
@@ -5452,7 +5456,7 @@ static void QuickStartWritePoolIdx(u32 base, u32 hi, s32 value) {
 
 // Which pool region hides the Earth Element this run.
 static s32 QuickStartElementRegionIndex(void) {
-    // -1 until the fourth trial is done and QuickStartRollElementRegion has
+    // -1 until the last trial is done and QuickStartRollElementRegion has
     // drawn it; every "is this the element region" comparison then fails,
     // which is the right answer for a region that does not exist yet.
     if (!QsCheckFlag(GF_ELEMENT_REGION_ROLLED)) {
@@ -5653,7 +5657,7 @@ static void QuickStartRollDropRegionOnce(void) {
     // The ELEMENT is not rolled here any more (Oct 2026, the user: "The
     // element drop should not be planned at the start of the run, it should
     // be computed once the player completes the step prior to it"). It is
-    // drawn by QuickStartRollElementRegion the moment the fourth trial is
+    // drawn by QuickStartRollElementRegion the moment the last trial is
     // done, from the reach the player holds at that moment - see it for the
     // measurement that forced the change (10% of simulated runs ended with
     // the Element in a region the run never reached).
@@ -23385,7 +23389,7 @@ static void QuickStartChainMonitor(void) {
     }
     step = QuickStartChainCurrentStep();
     if (step < 0) {
-        return;  // the four pre-steps are done; the carrier has the floor
+        return;  // the pre-steps are done; the carrier has the floor
     }
     QuickStartChainHintOnce(step);
     if (!QuickStartChainStepMet(step)) {
@@ -23411,7 +23415,7 @@ static void QuickStartChainMonitor(void) {
         }
     } else {
         gSave.chain_rolled = QUICKSTART_CHAIN_PRE_STEPS;
-        // The fourth trial is done: NOW the finale is drawn, from the reach
+        // The last trial is done: NOW the finale is drawn, from the reach
         // the player actually holds (Oct 2026).
         QuickStartRollElementRegion();
     }
@@ -27825,7 +27829,7 @@ u32 QuickStartElementMapMarker(u16* x, u16* y) {
 // one thing standing between them and the next link.
 //
 // Returns FALSE for an ITEM step - "be holding the Cane of Pacci" is not
-// somewhere on the map - and once the four pre-steps are done, at which
+// somewhere on the map - and once the pre-steps are done, at which
 // point the Element marker is the one that matters again.
 u32 QuickStartChainMapMarker(u16* x, u16* y) {
     RoomHeader* hdr;

@@ -1,8 +1,8 @@
-"""The finale, end to end (Oct 2026, P1.4's other half): with the four
+"""The finale, end to end (Oct 2026, P1.4's other half): with the
 trials forced done the Element is drawn, the carrier is driven in the
 Element's region and the Element is picked up - the win.
 
-Per seed: force the four pre-steps (finale_probe's way), land in the drop
+Per seed: force the pre-steps (finale_probe's way), land in the drop
 row so the chain monitor draws the finale, read the carrier, warp to the
 Element row and drive the carrier - WAVE: clear waves until the Element
 appears at the row's reward spot; BOSS: kill the boss the row deals (each
@@ -36,12 +36,12 @@ for sd in range(lo, hi):
     c.memory.u8[SAVE + 0x3C] = 0x51
     drop = C.call_keep(c, E.sym['QuickStartDropRegionIndex'], ())
     E.VIA[0] = (pool[drop]['area'], pool[drop]['room'], pool[drop]['entrance'][0], pool[drop]['entrance'][1])
-    for i in range(4):
+    for i in range(E.sim_pre_steps()):
         c.memory.u8[SAVE + E.CHAIN_KIND + i] = 0
         c.memory.u8[SAVE + E.CHAIN_WHERE + i] = 0
         c.memory.u8[SAVE + E.CHAIN_DETAIL + i] = 0
-    c.memory.u8[SAVE + E.PROGRESS] = 3
-    c.memory.u8[SAVE + E.ROLLED] = 4
+    c.memory.u8[SAVE + E.PROGRESS] = E.sim_pre_steps() - 1
+    c.memory.u8[SAVE + E.ROLLED] = E.sim_pre_steps()
     c.memory.u8[SAVE + E.HINTED] = 0x0f
     E.goto_row(c, drop); E.settle(c, 180)
     elem = E.s32(C.call_keep(c, E.sym['QuickStartElementRegionIndex'], ()))

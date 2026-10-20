@@ -415,7 +415,7 @@ def report(res, census, md_path, chart_dir, chart_files, runs):
     W('')
     W('| step | ' + ' | '.join(S.KIND_NAME[k] for k in (0, 1, 2, 3, 4)) + ' |')
     W('|---|' + '---|' * 5)
-    for p in range(4):
+    for p in range(S.PRE_STEPS):
         W(f'| {p + 1} | ' + ' | '.join(fmt(rw['kinds_at'][(p, S.KIND_NAME[k])], rw['n']) for k in (0, 1, 2, 3, 4)) + ' |')
     W('')
     W('| finale carrier | strict | rewards |')

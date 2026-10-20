@@ -1,10 +1,10 @@
-"""The finale is drawn when the fourth trial completes, from live reach
+"""The finale is drawn when the last trial completes, from live reach
 (Oct 2026, the redesign's P0.1), not at the hub's exit by map distance.
 
   BEFORE   on a fresh run the element region index is -1 and the element
            flag is clear; the chain monitor still runs (it gates on the
            DROP roll now).
-  AFTER    with the four pre-steps forced complete (the fourth made an
+  AFTER    with the pre-steps forced complete (the last made an
            ITEM step with no item to want), one settled frame later the
            element flag is set, the carrier bits are set, and the element
            row's REGION is inside QuickStartReachableRegions(held) - the
@@ -26,6 +26,7 @@ ROM = sys.argv[sys.argv.index('--rom') + 1] if '--rom' in sys.argv else 'tmc-d3.
 SAVE = 0x02002a40
 CHAIN_KIND, CHAIN_WHERE, CHAIN_DETAIL, PROGRESS, ROLLED, HINTED = 0x26, 0x2B, 0x30, 0x35, 0x36, 0x37
 QS_CHAIN_ITEM = 0
+PRE = int(__import__('re').search(r'#define QUICKSTART_CHAIN_PRE_STEPS (\d+)', P.GAME).group(1))
 res = []
 def check(name, ok, detail=''):
     res.append(ok); print('%s %-50s %s' % ('PASS' if ok else 'FAIL', name, detail), flush=True)
@@ -38,13 +39,13 @@ for sd in (3, 11):
     check('BEFORE: seed %d, no element yet, the drop is rolled' % sd, s32(elem) == -1 and 0 <= drop < len(P.region_pool()),
           'element %d drop %d' % (s32(elem), drop))
     marker_before = C.call_keep(c, C.map_sym('QuickStartElementMapMarker'), (0x02000000, 0x02000004))
-    # force the four pre-steps: three done, the fourth an ITEM step wanting nothing
-    for i in range(4):
+    # force the pre-steps: all but the last done, the last an ITEM step wanting nothing
+    for i in range(PRE):
         c.memory.u8[SAVE + CHAIN_KIND + i] = QS_CHAIN_ITEM
         c.memory.u8[SAVE + CHAIN_WHERE + i] = 0
         c.memory.u8[SAVE + CHAIN_DETAIL + i] = 0
-    c.memory.u8[SAVE + PROGRESS] = 3
-    c.memory.u8[SAVE + ROLLED] = 4
+    c.memory.u8[SAVE + PROGRESS] = PRE - 1
+    c.memory.u8[SAVE + ROLLED] = PRE
     c.memory.u8[SAVE + HINTED] = 0x0f
     # the monitor runs in a region room, not the hub: land in the drop row
     row = P.region_pool()[drop]

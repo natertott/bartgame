@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The win chain is four steps: three trials, then the carrier that pays the Earth Element. `chain_roll_validate.py` 500/500, `finale_probe.py` 7/7, `win_probe.py` 3/3, `chain_end_probe.py` 5/8 (the rest its ITEM-drive limit) | "The win chain is four steps" |
 | Sites 47 and 65 were never broken: the testbed boots on one run seed whose memory pair they are, and the memory roles beat a scenario's kind. The tested site is now kept out of the pair; 47 is a portal A. `chain_audit.py` 6/6 at each | "Sites 47 and 65 were never broken" |
 | A forced ? room kind (portal fight, torch or cleanup step) no longer switches mid-visit; the "Veil Falls hallway spawns nothing" defect was this, not the room. Latched per visit in room flags 127-129; the CHAIN testbed deals its step at run start. Before: 11/11 rooms switched, 4 paid a prize with no fight; after: 0. `site_force_probe.py` 12/12 | "A forced ? room kind no longer switches mid-visit" |
 | Wind Ruins: a run dropped in the Armos room (row 14) is past the tektite statue, the one-way gate whose fight is on the other side; the statue is now removed for such a run (`LOST_02_00` set at the drop). `ruins_statue_probe.py` 3/3 with a control that reproduces the trap | "Wind Ruins: the tektite statue no longer traps an Armos-room drop" |
@@ -331,7 +332,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
   a prompt the probe answers with A quits the run to the title at its
   second step (a screenshot showed the title; which prompt it was is the
   next thing to find - `dismiss` already backs out of Ezlo's talk state
-  with B). Two of five seeds run to the finale; `win_probe.py` covers the
+  with B). Five of eight seeds run to the finale (Oct 2026, chain of four); `win_probe.py` covers the
   finale itself 6/6.
 - **The Boomerang chamber's fairy and NPC cells** (`chain_audit.py`: sites
   4, 6, 8 FAIRY and 5, 6, 8 NPC, plus Trilby's site 14 NPC) still read FAIL

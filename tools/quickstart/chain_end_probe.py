@@ -6,7 +6,7 @@ every step the way a player would - with the completion audit's inputs
 (chain_audit.py: kills by health 0, walks onto rewards, R on chests and
 NPCs, a chase for fairies) and a WARP for the travel between rooms, which
 the reach model (sim_validate.py, 402/402) and not this probe vouches for.
-When the fourth trial completes it reads the finale the ROM drew, drives
+When the last trial completes it reads the finale the ROM drew, drives
 the carrier in the Element's region, picks the Element up and reports WIN.
 
     EVENT  warp a tile and a half below the site's spot (the testbed's own
@@ -36,6 +36,12 @@ import scenario as S
 import parse_tables as P
 import callrom as C
 import chain_audit as A
+import re as _re
+
+
+def sim_pre_steps():
+    """QUICKSTART_CHAIN_PRE_STEPS: the trials before the finale (3 since Oct 2026)."""
+    return int(_re.search(r'#define QUICKSTART_CHAIN_PRE_STEPS (\d+)', P.GAME).group(1))
 
 args = sys.argv[1:]
 ROM = args[args.index('--rom') + 1] if '--rom' in args else 'tmc-d3.gba'
@@ -233,7 +239,7 @@ def run_seed(sd):
     settle(c, 120)
     if rolled(c) == 0:
         return 'FAIL', 'no step rolled in the drop row %d' % drop, log, forced
-    for i in range(4):
+    for i in range(sim_pre_steps()):
         if progress(c) > i:
             continue
         kind, where, detail = step(c, i)
