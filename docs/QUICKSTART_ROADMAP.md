@@ -1271,6 +1271,34 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### Handoff for the new game: `docs/newgame/` (Oct 2026)
+
+The user is starting a new game on this engine: the same mechanics, its
+own sprites and map, a hub plus nine procedurally generated areas, tuned
+for the most enemies the GBA can run. They asked for handoff documents
+covering everything the next agent needs. Twelve documents are in
+`docs/newgame/`. Start with `00_README.md`.
+
+No ROM code changed. The documents were written from the source and the
+existing records. Three claims were checked against the source before
+they went in:
+
+- **Ledges are act tiles by direction** (`sub_08079550`,
+  `gUnk_0811C1E8`): north 43/65/78/76, east 44/66/76/77, south 42/64/79/77,
+  west 45/67/78/79. The decomp names some of their surfaces conveyors,
+  and that name is unverified.
+- **The Mole Mitts dig wall faces with act 0x56** (collision 0x0f-0x16).
+  Soft earth is act 0x0d.
+- **Fixed GFX sheets are shared by reference count. Swap sheets cost one
+  slot per instance** (`src/vram.c`). That is the main lever for big
+  enemy counts.
+
+The generator plugs into one place: `LoadRoomGfx`'s `LoadMapData(map)`
+call. Every other piece of room state the game uses at play time is
+already in RAM (`mapData`, collision, act tiles,
+`gArea.roomResInfos[].exits` and `.properties`). About 31 KB of EWRAM is
+free above `gEndOfEwram` (0x02038560).
+
 ### Hyrule Castle is the sixteenth region (Oct 2026)
 
 The user: "integrate ... Hyrule Castle (the normal one, NOT dark hyrule

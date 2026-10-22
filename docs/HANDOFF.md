@@ -8,6 +8,7 @@ Written Sep 2026 at commit `61bf9d3` for the agent taking over this work.
 | **`HANDOFF_GAME.md`** | What the game is, how it plays, the long-term vision. |
 | **`HANDOFF_STATUS.md`** | What is built, what is outstanding, which roadmap entry to read. |
 | **`HANDOFF_ISSUES.md`** | Known bugs, recurring traps, and which probes are lying to you. |
+| **`newgame/00_README.md`** | The handoff set for the NEW game: same engine and mechanics, new art, a hub plus nine generated areas. Twelve documents. |
 
 The authoritative record is `docs/QUICKSTART_ROADMAP.md` (~4,700 lines). It
 is written as narrative batch entries that explain what was measured and what

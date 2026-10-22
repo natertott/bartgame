@@ -1,5 +1,9 @@
 # QUICKSTART tooling
 
+The new game built on this engine has its own handoff set in
+`docs/newgame/`. `10_TOOLING_AND_TESTING.md` there says which of these
+tools to carry over and what to build for generated areas.
+
 - `emu.py` - minimal mgba harness (boot/warp/memory peek+poke/Qs flag set).
 - `parse_tables.py` - parses the placement-bearing tables out of src/game.c
   and src/data/transitions.c so checks always run against the real source.
