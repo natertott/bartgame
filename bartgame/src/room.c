@@ -10,9 +10,18 @@ u8 gAnimTiles; /* off while the title owns the charblock */
 #define SB_OVERLAY 24
 #define SB_GROUND 28
 
+/* the area's tileset: loaded whole into charblocks 0 and 1 when the
+   area changes, so each area has the full 1024 subtiles to itself */
+static const Tileset* sTs = &tilesets[TS_SEWER];
+
+void tiles_load(int set) {
+    sTs = &tilesets[set];
+    dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
+}
+
 void tiles_init(void) {
     int i;
-    dma3_copy32(tileset_tiles, CHARBLOCK(0), TILESET_TILE_COUNT * 32);
+    tiles_load(TS_SEWER);
     for (i = 0; i < PAL_BG_COUNT; i++)
         pal_set_bg(i, &pal_bg[i * 16]);
     for (i = 0; i < PAL_OBJ_COUNT; i++)
@@ -37,8 +46,8 @@ void tiles_animate(void) {
     int i;
     if (!gAnimTiles)
         return;
-    for (i = 0; i < TILE_ANIM_COUNT; i++) {
-        const TileAnim* ta = &tile_anims[i];
+    for (i = 0; i < sTs->anim_count; i++) {
+        const TileAnim* ta = &sTs->anims[i];
         if (ta->frames == 0)
             continue;
         if ((gFrame % ta->speed) != 0)
@@ -126,7 +135,7 @@ static void map_write(int sb_base, int mx, int my, u16 mt) {
         m[0] = m[1] = m[32] = m[33] = 0;
         return;
     }
-    const u16* e = &metatile_map[mt * 4];
+    const u16* e = &sTs->map[mt * 4];
     m[0] = e[0];
     m[1] = e[1];
     m[32] = e[2];

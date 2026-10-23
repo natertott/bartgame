@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: a tileset per area (forest 692, sewer 162, mystery 146 of 1,024 each), loaded when the area changes; knights at five sword hits | "BARTGAME: a tileset per area" |
 | BARTGAME: the mystery rooms: behind mouths in the forest's walls, caves, tree hollows and thickets in three sizes holding ten event kinds drawn from size pools (pots, chest, stranger, spring, waves, survive, captain, plates, censers, boulders) with chests paying by size; the sword swing in three poses; the shield drawn in front. `tools/myst_probe.py` 28/28 | "BARTGAME: the mystery rooms" |
 | BARTGAME: the transitions: shore, verge and trail-edge tile families (15 each, by the sides' mask) chosen by the generator, so grass meets water through sand and reeds, meets the canopy through shadow, leaf litter and ferns, and trails have ragged grass edges; the canopy shows trunks at the water's edge | "BARTGAME: the transitions" |
 | BARTGAME: sword on B and a wooden Bark Shield on L from the start; held, the shield turns bites, swings, seeds and blasts from the front, with a guard stance and the shield drawn before the Bloom; going under the moment the feet cross into water (flail, petals, rings) or a hole (shrinking away). `tools/guard_probe.py` 11/11 | "BARTGAME: the shield, the water's edge, going under" |

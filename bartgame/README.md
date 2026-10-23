@@ -197,6 +197,17 @@ tools/
   perf_probe.py     monsters against the frame
 ```
 
+## The tile budget
+
+A background map entry has ten bits for its tile, so the ground and
+overlay layers can address 1,024 subtiles of 8x8 between them. The
+build therefore makes three tilesets, one per area, each deduplicated
+on its own (flips reused): the forest, the sewer and the mystery rooms.
+A metatile keeps one global id; each set carries its own map entries
+for it, blank where the set does not hold it. `tiles_load` copies the
+area's set into the charblocks when the area changes. The build prints
+each set's count.
+
 ## How it is built for speed
 
 - Thumb code in ROM, hot data in IWRAM, the room's maps in EWRAM. No

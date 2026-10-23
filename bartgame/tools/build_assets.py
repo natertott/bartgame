@@ -157,61 +157,87 @@ for i, t in enumerate(TYPES):
     h.append('#define TT_%s %d' % (t, i))
 h.append('')
 
-ts = Tileset()
-ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
-mt_entries = []
-mt_type = []
-mt_coll = []
+# Three tilesets, one per area, each its own charblock pair of at most
+# 1024 subtiles, loaded when the area changes: the forest (everything
+# not of the sewer or the mystery rooms), the sewer (its own tiles and
+# whatever the hub's room uses), the mystery rooms (their three styles,
+# the overlay things, and what an event may put down). A metatile keeps
+# one global id; each set carries its own map entries for it, blank
+# where the set does not hold it.
 mt_names = {}
-anims = []  # (base tile index, frame count, frames bytes)
 for i, mt in enumerate(tiles.METATILES):
-    name = mt['name']
-    assert name not in mt_names, 'duplicate metatile ' + name
-    mt_names[name] = i
-    pal = bg_slots[mt['pal']]
-    frames = mt.get('frames') or [mt['art']]
-    pix = parse_art(frames[0], 16, 16)
-    entries = []
-    animated = len(frames) > 1
-    base = None
-    for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
-        n, hf, vf = ts.add(pix, x0, y0, dedup=not animated)
-        if base is None:
-            base = n
-        entries.append(n | (hf << 10) | (vf << 11) | (pal << 12))
-    mt_entries += entries
-    mt_type.append(TYPES.index(mt['type']))
-    mt_coll.append(mt.get('coll', tiles.default_coll(mt['type'])))
-    h.append('#define MT_%s %d' % (cname(name), i))
-    if animated:
-        data = b''
-        for fr in frames:
-            fp = parse_art(fr, 16, 16)
-            for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
-                data += tile_bytes(fp, x0, y0)
-        anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
+    assert mt['name'] not in mt_names, 'duplicate metatile ' + mt['name']
+    mt_names[mt['name']] = i
+hub_used = set()
+for r in rooms.ROOMS:
+    for layer in ('ground', 'overlay'):
+        if r.get(layer):
+            hub_used |= set(rooms.expand(r[layer], r['w'], r['h'], mt_names))
+MYST_EXTRA = {'torch', 'torch_lit', 'boulder', 'chest', 'chest_open', 'sparkle', 'black', 'moss0', 'moss1', 'moss2'}
+SETS = [
+    ('forest', lambda n, i: not n.startswith(('sw_', 'cave_', 'hollow_', 'thicket_', 'myst_'))),
+    ('sewer', lambda n, i: n.startswith('sw_') or i in hub_used),
+    ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_')) or n in MYST_EXTRA),
+]
+TYPES_IDX = {t: i for i, t in enumerate(TYPES)}
+mt_type = [TYPES_IDX[mt['type']] for mt in tiles.METATILES]
+mt_coll = [mt.get('coll', tiles.default_coll(mt['type'])) for mt in tiles.METATILES]
+for i, mt in enumerate(tiles.METATILES):
+    h.append('#define MT_%s %d' % (cname(mt['name']), i))
 h.append('#define METATILE_COUNT %d' % len(tiles.METATILES))
-h.append('#define TILESET_TILE_COUNT %d' % len(ts.tiles))
-c.append(c_array_u16('tileset_tiles', bytes_to_u16(b''.join(ts.tiles))))
-h.append('extern const u16 tileset_tiles[];')
-c.append(c_array_u16('metatile_map', mt_entries, 8))
-h.append('extern const u16 metatile_map[];')
 c.append(c_array_u8('metatile_type', mt_type))
 h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
 h.append('extern const u8 metatile_coll[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
-for k, (base, nfr, data, speed) in enumerate(anims):
-    c.append(c_array_u16('tile_anim_data_%d' % k, bytes_to_u16(data)))
-c.append('const TileAnim tile_anims[%d] = {' % max(1, len(anims)))
-for k, (base, nfr, data, speed) in enumerate(anims):
-    c.append('    { %d, %d, %d, tile_anim_data_%d },' % (base, nfr, speed, k))
-if not anims:
-    c.append('    { 0, 0, 0, NULL },')
+h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; } Tileset;')
+set_rows = []
+for si, (sname, pred) in enumerate(SETS):
+    ts = Tileset()
+    ts.add([[0] * 8 for _ in range(8)], 0, 0)  # tile 0 blank
+    entries = []
+    anims = []
+    held = 0
+    for i, mt in enumerate(tiles.METATILES):
+        if not pred(mt['name'], i):
+            entries += [0, 0, 0, 0]
+            continue
+        held += 1
+        pal = bg_slots[mt['pal']]
+        frames = mt.get('frames') or [mt['art']]
+        pix = parse_art(frames[0], 16, 16)
+        animated = len(frames) > 1
+        base = None
+        for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
+            n, hf, vf = ts.add(pix, x0, y0, dedup=not animated)
+            if base is None:
+                base = n
+            entries.append(n | (hf << 10) | (vf << 11) | (pal << 12))
+        if animated:
+            data = b''
+            for fr in frames:
+                fp = parse_art(fr, 16, 16)
+                for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
+                    data += tile_bytes(fp, x0, y0)
+            anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
+    c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
+    c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
+    for k, (base, nfr, data, speed) in enumerate(anims):
+        c.append(c_array_u16('tile_anim_%s_%d' % (sname, k), bytes_to_u16(data)))
+    c.append('static const TileAnim tile_anims_%s[%d] = {' % (sname, max(1, len(anims))))
+    for k, (base, nfr, data, speed) in enumerate(anims):
+        c.append('    { %d, %d, %d, tile_anim_%s_%d },' % (base, nfr, speed, sname, k))
+    if not anims:
+        c.append('    { 0, 0, 0, NULL },')
+    c.append('};')
+    h.append('#define TS_%s %d' % (sname.upper(), si))
+    set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d },' % (sname, len(ts.tiles), sname, sname, len(anims)))
+    print('tileset %s: %d tiles, %d metatiles held, %d animated' % (sname, len(ts.tiles), held, len(anims)))
+c.append('const Tileset tilesets[%d] = {' % len(SETS))
+c += set_rows
 c.append('};')
-h.append('extern const TileAnim tile_anims[];')
-h.append('#define TILE_ANIM_COUNT %d\n' % len(anims))
-print('tileset: %d tiles, %d metatiles, %d animated' % (len(ts.tiles), len(tiles.METATILES), len(anims)))
+h.append('extern const Tileset tilesets[];')
+h.append('#define TILESET_COUNT %d\n' % len(SETS))
 
 # ------------------------------------------------------------- sprites --
 SHAPES = {(8, 8): (0, 0), (16, 16): (0, 1), (32, 32): (0, 2), (64, 64): (0, 3),

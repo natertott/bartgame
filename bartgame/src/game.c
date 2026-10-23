@@ -109,6 +109,7 @@ static void load_sewer(int at_drain) {
     const RoomDef* def = &room_defs[ROOM_SEWER_MAIN];
     int i, sx = 8 * 16 + 8, sy = 11 * 16 + 14, facing = FACE_S;
     gGame.area = AREA_SEWER;
+    tiles_load(TS_SEWER);
     room_load_def(def);
     actors_clear();
     sprites_reset();
@@ -144,6 +145,7 @@ static void load_forest(int cell, int from_side) {
     gGame.area = AREA_FOREST;
     gGame.cell = cell;
     gWorld.cells[cell].flags |= CF_VISITED;
+    tiles_load(TS_FOREST);
     roomgen_build(cell);
     actors_clear();
     sprites_reset();
@@ -172,6 +174,7 @@ static void load_myst(int cell) {
     int px, py;
     gGame.area = AREA_MYST;
     gGame.cell = cell;
+    tiles_load(TS_MYST);
     myst_build(cell);
     actors_clear();
     sprites_reset();

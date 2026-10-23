@@ -1271,6 +1271,24 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: a tileset per area (Oct 2026)
+
+The one global tileset stood at 961 of the 1,024 subtiles a background
+can address (ten bits of tile index, both layers on one character
+base). Now `build_assets.py` makes three: forest (every metatile not
+of the sewer or the mystery rooms), sewer (`sw_*` and whatever the
+hub's room uses) and myst (the three styles, the overlay things, and
+what an event may put down: torches, the boulder, chests, the sparkle,
+plain moss for `ground_under`). A metatile keeps its global id; each
+set has `metatile_map_<set>` with its own entries, zero where the set
+lacks it, and its own animation table; `tilesets[]` describes them.
+`tiles_load(set)` copies the set into charblocks 0 and 1 and points
+`map_write` and `tiles_animate` at it; the sewer, forest and mystery
+loaders call it before they build. Counts: forest 692, sewer 162,
+myst 146. Every probe as before: mystery 28/28, critical 18/18,
+quests 12/12, guard 11/11, hands 14/14.
+
+
 ### BARTGAME: knights at five hits (Oct 2026)
 
 The user: knights should die after five hits of the regular sword. The
