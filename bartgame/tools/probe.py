@@ -159,3 +159,13 @@ if __name__ == '__main__':
     run(c, 60)
     snap(c, out)
     print('player at', player_pos(c), '->', out)
+
+
+def enter_forest(c):
+    """from the hub's spawn, right to the grate bridge, up the hall, left
+    along the upper floor and up into the drain hole"""
+    hold(c, 'RIGHT', 22)
+    hold(c, 'UP', 118)
+    hold(c, 'LEFT', 62)
+    hold(c, 'UP', 90)
+    run(c, 40)

@@ -20,18 +20,28 @@ static u8 sReach[FOREST_W * FOREST_H];
 #define H FOREST_H
 
 /* The floor: mostly plain grass, so the sprites read; the blight, the
-   flowers and the bones are accents. */
+   flowers, the tall grass and the bones are accents. */
 static u16 moss_pick(void) {
     int r = rng_range(&sR, 40);
-    if (r < 31)
+    if (r < 30)
         return MT_MOSS0 + rng_range(&sR, 3);
-    if (r < 34)
+    if (r < 33)
         return MT_MOSS_BLIGHT;
-    if (r < 36)
+    if (r < 35)
         return MT_MOSS_BLIGHT2;
-    if (r < 39)
+    if (r < 38)
         return MT_MOSS_FLOWERS;
+    if (r < 39)
+        return MT_TALL_GRASS;
     return MT_BONES;
+}
+
+/* The deep rooms: grass stained violet, the arena purple to the walls. */
+static u16 blight_pick(bool8 arena) {
+    int r = rng_range(&sR, 20);
+    if (arena)
+        return r < 15 ? MT_BLIGHT_FLOOR : r < 18 ? MT_BLIGHT_VEIN : MT_BLIGHT_GROUND0;
+    return r < 17 ? MT_BLIGHT_GROUND0 + (r & 1) : MT_BLIGHT_GROUND2;
 }
 
 static int inside(int x, int y) {
@@ -202,6 +212,20 @@ static void carve_to_center(int x, int y) {
     }
 }
 
+/* a short run of fence, kept out of the door lanes */
+static void place_fence(int x, int y, int len) {
+    int i;
+    for (i = 0; i < len; i++)
+        if (inside(x + i, y) && !near_door(x + i, y) && x + i < W - 1)
+            room_set(x + i, y, MT_FENCE);
+}
+
+static void scatter(u16 tile, int n) {
+    int i;
+    for (i = 0; i < n; i++)
+        room_set(2 + rng_range(&sR, W - 4), 3 + rng_range(&sR, H - 5), tile);
+}
+
 static void features_glade(void) {
     int i, n = 2 + rng_range(&sR, 3);
     for (i = 0; i < n; i++) {
@@ -209,8 +233,14 @@ static void features_glade(void) {
         if (!near_door(x, y))
             room_set(x, y, (rng_next(&sR) & 1) ? MT_ROCK : MT_STUMP);
     }
-    for (i = 0; i < 6; i++)
-        room_set(2 + rng_range(&sR, W - 4), 3 + rng_range(&sR, H - 5), MT_MOSS_FLOWERS);
+    scatter(MT_MOSS_FLOWERS, 6);
+    scatter(MT_TALL_GRASS, 5);
+    if (rng_next(&sR) & 1) {
+        int x = 3 + rng_range(&sR, W - 6), y = 3 + rng_range(&sR, H - 6);
+        if (!near_door(x, y))
+            room_set(x, y, MT_LANTERN_POST);
+    }
+    place_fence(3 + rng_range(&sR, W - 10), 3 + rng_range(&sR, H - 7), 3 + rng_range(&sR, 3));
 }
 
 static void features_grove(void) {
@@ -225,6 +255,12 @@ static void features_grove(void) {
         if (!near_door(x, y))
             room_set(x, y, MT_THORN);
     }
+    for (i = 0; i < 2; i++) {
+        int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
+        if (!near_door(x, y))
+            room_set(x, y, MT_LOG);
+    }
+    scatter(MT_TALL_GRASS, 4);
 }
 
 static void features_ruins(void) {
@@ -241,10 +277,9 @@ static void features_ruins(void) {
     for (i = 0; i < 4; i++) {
         int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
         if (!near_door(x, y))
-            room_set(x, y, MT_PILLAR);
+            room_set(x, y, (i == 0 && rng_range(&sR, 3) == 0) ? MT_STATUE : (i == 1) ? MT_LANTERN_POST : MT_PILLAR);
     }
-    for (i = 0; i < 10; i++)
-        room_set(2 + rng_range(&sR, W - 4), 3 + rng_range(&sR, H - 5), MT_MOSSY_STONE);
+    scatter(MT_MOSSY_STONE, 10);
 }
 
 static void features_pond(void) {
@@ -255,8 +290,14 @@ static void features_pond(void) {
         for (x = cx - rx; x <= cx + rx; x++) {
             int dx = (x - cx) * ry, dy = (y - cy) * rx;
             if (dx * dx + dy * dy <= rx * rx * ry * ry && inside(x, y) && !near_door(x, y))
-                room_set(x, y, MT_WATER);
+                room_set(x, y, (rng_range(&sR, 4) == 0) ? MT_WATER_LILY : MT_WATER);
         }
+    /* a plank bridge across the wider ponds */
+    if (rx >= 3 && ry >= 1) {
+        for (x = cx - rx; x <= cx + rx; x++)
+            if (room_get(x, cy) == MT_WATER || room_get(x, cy) == MT_WATER_LILY)
+                room_set(x, cy, MT_BRIDGE);
+    }
     int i;
     for (i = 0; i < 3; i++) {
         int px = 2 + rng_range(&sR, W - 4), py = 3 + rng_range(&sR, H - 5);
@@ -279,6 +320,7 @@ static void features_thicket(void) {
         if (!near_door(x, y + 2) && !near_door(x + 1, y + 2))
             place_tree(x, y);
     }
+    place_fence(3 + rng_range(&sR, W - 10), 3 + rng_range(&sR, H - 7), 3);
 }
 
 static void features_boneyard(void) {
@@ -293,7 +335,7 @@ static void features_boneyard(void) {
     for (i = 0; i < 3; i++) {
         int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
         if (!near_door(x, y))
-            room_set(x, y, MT_ROCK);
+            room_set(x, y, (i == 0) ? MT_ROCK : MT_DEAD_TREE);
     }
     /* a chasm with a ledge above it: one-way drop */
     {
@@ -306,24 +348,32 @@ static void features_boneyard(void) {
 }
 
 static void features_arena(void) {
-    room_set(3, 4, MT_PILLAR);
-    room_set(W - 4, 4, MT_PILLAR);
-    room_set(3, H - 4, MT_PILLAR);
-    room_set(W - 4, H - 4, MT_PILLAR);
-    int i;
-    for (i = 0; i < 14; i++)
-        room_set(2 + rng_range(&sR, W - 4), 3 + rng_range(&sR, H - 5), MT_MOSSY_STONE);
-    for (i = 0; i < 6; i++)
-        room_set(3 + rng_range(&sR, W - 6), 4 + rng_range(&sR, H - 7), MT_MOSS_BLIGHT2);
+    room_set(3, 4, MT_BLIGHT_CRYSTAL);
+    room_set(W - 4, 4, MT_BLIGHT_CRYSTAL);
+    room_set(3, H - 4, MT_DEAD_TREE);
+    room_set(W - 4, H - 4, MT_DEAD_TREE);
+    scatter(MT_BLIGHT_VEIN, 10);
     place_rect(W / 2 - 2, 2, W / 2 + 1, 2, MT_BLIGHT_POOL);
 }
 
+/* the deep rooms grow crystals and dead trees over their archetype */
+static void features_blight(void) {
+    int i, n = 3 + rng_range(&sR, 3);
+    for (i = 0; i < n; i++) {
+        int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
+        u16 t = room_get(x, y);
+        if (!near_door(x, y) && t != MT_WATER && t != MT_WATER_LILY && t != MT_BRIDGE)
+            room_set(x, y, (rng_range(&sR, 3) == 0) ? MT_DEAD_TREE : MT_BLIGHT_CRYSTAL);
+    }
+}
+
 static void features_entry(void) {
-    int i;
-    for (i = 0; i < 6; i++)
-        room_set(2 + rng_range(&sR, W - 4), 3 + rng_range(&sR, H - 5), MT_MOSS_FLOWERS);
+    scatter(MT_MOSS_FLOWERS, 6);
+    scatter(MT_TALL_GRASS, 3);
     room_set(4, 5, MT_STUMP);
     room_set(W - 5, 5, MT_ROCK);
+    room_set(W / 2 - 4, H - 3, MT_LANTERN_POST);
+    room_set(W / 2 + 3, H - 3, MT_LANTERN_POST);
     room_set_overlay(6, 9, MT_SPARKLE);
     room_set_overlay(W - 7, 10, MT_SPARKLE);
 }
@@ -334,19 +384,31 @@ void roomgen_build(int cell) {
     rng_seed(&sR, hash32(gWorld.seed, cell * 7919 + 13));
     memset(&gSpots, 0, sizeof(gSpots));
 
+    bool8 blighted = (c->stage >= 3) || (c->arch == ARCH_ARENA);
     room_clear(W, H, MT_MOSS0);
     for (y = 0; y < H; y++)
         for (x = 0; x < W; x++)
-            room_set(x, y, moss_pick());
-    /* the canopy border */
-    for (x = 0; x < W; x++) {
-        room_set(x, 0, (rng_next(&sR) & 1) ? MT_CANOPY : MT_CANOPY2);
-        room_set(x, 1, MT_CANOPY_S);
-        room_set(x, H - 1, MT_CANOPY_N);
-    }
-    for (y = 0; y < H; y++) {
-        room_set(0, y, (rng_next(&sR) & 1) ? MT_CANOPY : MT_CANOPY2);
-        room_set(W - 1, y, (rng_next(&sR) & 1) ? MT_CANOPY : MT_CANOPY2);
+            room_set(x, y, blighted ? blight_pick(c->arch == ARCH_ARENA) : moss_pick());
+    /* the canopy border, sick in the deep rooms, lanterns hung along the top */
+    {
+        u16 ca = blighted ? MT_CANOPY_BLIGHT : MT_CANOPY, cb = blighted ? MT_CANOPY_BLIGHT : MT_CANOPY2;
+        for (x = 0; x < W; x++) {
+            room_set(x, 0, (rng_next(&sR) & 1) ? ca : cb);
+            room_set(x, 1, MT_CANOPY_S);
+            room_set(x, H - 1, MT_CANOPY_N);
+        }
+        for (y = 0; y < H; y++) {
+            room_set(0, y, (rng_next(&sR) & 1) ? ca : cb);
+            room_set(W - 1, y, (rng_next(&sR) & 1) ? ca : cb);
+        }
+        if (!blighted) {
+            int n = 1 + rng_range(&sR, 3), i;
+            for (i = 0; i < n; i++) {
+                int lx = 2 + rng_range(&sR, W - 4);
+                if (lx < W / 2 - 3 || lx > W / 2 + 2)
+                    room_set(lx, 0, MT_CANOPY_LANTERN);
+            }
+        }
     }
     /* door openings and their gates */
     for (s = 0; s < 4; s++) {
@@ -408,6 +470,8 @@ void roomgen_build(int cell) {
         case ARCH_ARENA: features_arena(); break;
         default: features_entry(); break;
     }
+    if (blighted && c->arch != ARCH_ARENA)
+        features_blight();
     /* keep the door approaches open: two tiles in from each opening */
     for (s = 0; s < 4; s++) {
         int x0, y0, x1, y1;
@@ -510,7 +574,7 @@ void roomgen_build(int cell) {
         case ROLE_SHRINE:
             if (find_spot(&gSpots.shrine, 200, TRUE)) {
                 gSpots.has_shrine = 1;
-                room_set(gSpots.shrine.x, gSpots.shrine.y, MT_PILLAR);
+                room_set(gSpots.shrine.x, gSpots.shrine.y, MT_STATUE);
                 room_set(gSpots.shrine.x, gSpots.shrine.y + 1, (c->flags & CF_SHRINE_USED) ? MT_MOSSY_STONE : MT_MOSS_FLOWERS);
                 room_set_overlay(gSpots.shrine.x, gSpots.shrine.y + 1, MT_SPARKLE);
             }

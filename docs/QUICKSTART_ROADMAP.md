@@ -1271,6 +1271,45 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the concept boards become the game (Oct 2026)
+
+The user uploaded four boards: a UI design board, a forest scene, the
+sewer hub, and a sprite and tile sheet ("The Bloom", "The Billious
+Peddler", "The Pale Gatekeeper"), and asked for every sprite and piece
+of artwork upgraded to match them.
+
+**Art.** Eleven palettes rebuilt around the boards' colors: teal water
+that glows, amber lanterns, warm grey stone, violet blight with magenta
+cracks, gold frames. Ninety-nine metatiles: lush grass, tall grass,
+blue and pink flowers, tan paths, canopy walls with hanging lanterns,
+fences, logs, a plank bridge, lily pads, stone cliffs, a hare statue
+for the shrines, a stone arch for the way down; a blight set for the
+deep rooms (stained grass, glowing cracks, crystals, dead trees, a sick
+canopy); a sewer of flagstones with moss, wet bricks, a waterfall, a
+two-tile round drain, pipes, ladders, candles, lanterns, banners,
+barrels, crates, skulls, the Peddler's red awning and the Gatekeeper's
+rune rug, all standing on flagstones drawn in the props palette. The
+hub room was laid out again after the board. The hero is a chibi
+flower-child built by the painter (eight petals round a lit face),
+with 22 frames; the five NPCs were redrawn; seven 32x32 portraits.
+
+**Interface.** The HUD has gold item slots between L and R with the
+chosen item lit, the sword on A, a purse and keys, and a mini-map
+sprite the CPU draws into OBJ VRAM. Dialogue boxes show the speaker's
+name in gold (palette 14 is the HUD palette with gold ink) and a
+portrait sprite over the frame. The shop is a list with icons, prices
+and a description. Start opens a pause screen with the map, a legend,
+the items with icons, the quests and the counters.
+
+**What went wrong.** Random mixing of green-based and purple-based
+floor tiles made a checkerboard: the deep rooms now use one base per
+room. Prop tiles on a flat grey square looked pasted on: the props
+palette got the floor's two stone tones. The shop's descriptions ran
+past the frame and wrote glyphs into column 29, visible beside later
+boxes: prints clip at the frame now and the copy is shorter. The
+probes' walk into the wood was hard-wired to the old hub and drowned
+in the new channel: one shared `enter_forest` in `tools/probe.py`.
+
 ### BARTGAME: the art redrawn (Oct 2026)
 
 The user: "massively improve the quality of the art work ... very

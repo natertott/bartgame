@@ -29,7 +29,7 @@ def main():
     for n, typ, name in ((16, 0, 'beetles'), (32, 0, 'beetles'), (48, 0, 'beetles'), (64, 0, 'beetles'), (24, 4, 'knights'), (40, 2, 'spitters')):
         c = P.boot()
         P.run(c, 20)
-        P.hold(c, 'UP', 150); P.hold(c, 'RIGHT', 14); P.hold(c, 'UP', 60); P.run(c, 40)
+        P.enter_forest(c)
         # the room's middle, away from the stairs the swarm would knock the hero onto
         A = P.sym('gActors')
         P.w16(c, A + 8, 0); P.w16(c, A + 10, 192); P.w16(c, A + 12, 0); P.w16(c, A + 14, 128)

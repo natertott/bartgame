@@ -1,7 +1,7 @@
-"""8x8 BG tiles for the HUD and the text box frame, palette 'hud':
-1 cream ink, 2 ink shadow, 3 heart red, 4 heart bright, 5 heart dark,
-6 gold dark, 7 gold mid, 8 gold bright, 9 grey, A frame dark, B pale
-blue, C violet, D light violet, E box fill, F slate."""
+"""8x8 BG tiles for the HUD, the item slots, the text box frame and the
+map, palette 'hud': 1 cream ink, 2 ink shadow, 3 heart red, 4 heart
+bright, 5 heart dark, 6 gold dark, 7 gold mid, 8 gold bright, 9 grey,
+A frame fill, B blue, C blue dark, D violet, E box fill, F slate."""
 from tiles import A
 
 TILES = {}
@@ -70,6 +70,107 @@ t('bomb', '''
     2ccdddd2
     .2cccc2.
     ..2222..
+''')
+# the item slots: a gold frame round a dark well, dim or lit
+t('slot_tl', '''
+    .6666666
+    66aaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+''')
+t('slot_tr', '''
+    6666666.
+    aaaaaa66
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+''')
+t('slot_bl', '''
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    6aaaaaaa
+    66aaaaaa
+    .6666666
+''')
+t('slot_br', '''
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaaa6
+    aaaaaa66
+    6666666.
+''')
+t('slot_lit_tl', '''
+    .8888888
+    88777777
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+''')
+t('slot_lit_tr', '''
+    8888888.
+    77777788
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+''')
+t('slot_lit_bl', '''
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    87aaaaaa
+    88777777
+    .8888888
+''')
+t('slot_lit_br', '''
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    aaaaaa78
+    77777788
+    8888888.
+''')
+t('btn_l', '''
+    .666666.
+    6aaaaaa6
+    6a1aaaa6
+    6a1aaaa6
+    6a1aaaa6
+    6a111aa6
+    6aaaaaa6
+    .666666.
+''')
+t('btn_r', '''
+    .666666.
+    6aaaaaa6
+    6a111aa6
+    6a1a1aa6
+    6a111aa6
+    6a1a1aa6
+    6aaaaaa6
+    .666666.
 ''')
 t('box_tl', '''
     ........
@@ -194,10 +295,10 @@ t('map_cell', '''
 t('map_here', '''
     99999999
     9ffffff9
-    9ff88ff9
-    9f8888f9
-    9f8888f9
-    9ff88ff9
+    9ff33ff9
+    9f3443f9
+    9f3333f9
+    9ff33ff9
     9ffffff9
     99999999
 ''')
@@ -214,10 +315,20 @@ t('map_unknown', '''
 t('map_goal', '''
     99999999
     9ffffff9
-    9f3ff3f9
-    9f3443f9
-    9ff33ff9
-    9fff3ff9
+    9f7ff7f9
+    9f7887f9
+    9ff77ff9
+    9fff7ff9
     9ffffff9
     99999999
+''')
+t('rule', '''
+    ........
+    ........
+    ........
+    66666666
+    77777777
+    ........
+    ........
+    ........
 ''')

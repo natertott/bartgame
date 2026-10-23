@@ -1,117 +1,155 @@
 """BARTGAME palettes. 16 colors each; index 0 is transparent for sprites
 and the backdrop color for BG palette 0.
 
-The look: Excalibur's emerald wood and chrome, Zelda's clean saturated
-ramps. Every material has a dark outline hue (never pure black), three
-or four body tones and one gleam. Shadows lean blue, lights lean gold.
-All values are multiples of 8 so they survive the GBA's 5-bit channels.
+The look, from the concept boards: grime and glamour. Deep saturated
+greens, teal water that glows, amber lantern light, warm grey-brown
+stone, violet blight with magenta cracks, gold frames. Every material
+has a dark hue outline, three or four body tones and a gleam. Values
+are multiples of 8 so they survive the GBA's 5-bit channels.
 """
 
+GRASS_MID = '#44a046'
+
 BG_PALETTES = [
-    # 0 forest ground: grass, soil, blight, rot, a pale gleam
+    # 0 forest ground: grass, paths, flowers, a blight stain, a gold mote
     ('forest', ['#000000',
-                '#102018',   # 1 outline, deep shadow
-                '#205838',   # 2 grass deep
-                '#307840',   # 3 grass dark
-                '#48a050',   # 4 grass mid
-                '#70c060',   # 5 grass light
-                '#a0e078',   # 6 grass bright
-                '#503020',   # 7 soil dark
-                '#805838',   # 8 soil mid
-                '#b08858',   # 9 soil light
-                '#381050',   # A blight deep
-                '#702898',   # B blight mid
-                '#b858e0',   # C blight bright
-                '#788820',   # D rot dark
-                '#c8e048',   # E rot bright
-                '#fff0b0']), # F pale gold gleam
-    # 1 wood: canopy walls, trees, thorns, stumps
+                '#0c1a14',   # 1 outline, deep shadow
+                '#1a5a3a',   # 2 grass deep
+                '#2a7a3c',   # 3 grass dark
+                GRASS_MID,   # 4 grass mid
+                '#6cc050',   # 5 grass light
+                '#a8e060',   # 6 grass bright
+                '#6a4a28',   # 7 path dark
+                '#a07a40',   # 8 path mid
+                '#d0aa64',   # 9 path light
+                '#58a8ff',   # A flower blue
+                '#ff80c0',   # B flower pink
+                '#fff8e0',   # C cream, white petals, bone
+                '#7030b0',   # D blight violet
+                '#d060f0',   # E blight magenta
+                '#ffe070']), # F gold mote
+    # 1 wood: canopy, trees, stumps, thorns, fences, logs, bridges, lanterns
     ('wood', ['#000000',
-              '#081810',     # 1 outline
-              '#103828',     # 2 leaf deepest
-              '#185840',     # 3 leaf dark
-              '#288050',     # 4 leaf mid
-              '#48a860',     # 5 leaf light
-              '#80d078',     # 6 leaf bright
-              '#301808',     # 7 bark dark
-              '#583420',     # 8 bark mid
-              '#886040',     # 9 bark light
-              '#b89060',     # A bark highlight
-              '#602880',     # B thorn violet
-              '#d070d0',     # C thorn pink
-              '#48a050',     # D grass showing through (forest 4)
-              '#200830',     # E blight black-violet
-              '#f8e078']),   # F gold mote
-    # 2 stone: rocks, ruins, pillars, water, chests, doors, torches, bones, gold
+              '#081410',     # 1 outline
+              '#0c3024',     # 2 leaf deepest
+              '#145838',     # 3 leaf dark
+              '#1e8048',     # 4 leaf mid
+              '#3aa858',     # 5 leaf light
+              '#78d070',     # 6 leaf bright
+              '#3a2210',     # 7 bark dark
+              '#6a4020',     # 8 bark mid
+              '#a06838',     # 9 bark light
+              '#d09858',     # A bark highlight
+              '#c06020',     # B lantern amber dark
+              '#ffb040',     # C lantern amber
+              '#fff0a0',     # D lantern bright
+              GRASS_MID,     # E grass showing through
+              '#d060f0']),   # F thorn magenta
+    # 2 stone: rocks, cliffs, ruins, water, gates, chests, torches, statues
     ('stone', ['#000000',
                '#101820',    # 1 outline
-               '#283048',    # 2 stone deep
-               '#485068',    # 3 stone dark
-               '#707c90',    # 4 stone mid
-               '#a0acb8',    # 5 stone light
-               '#d8e0e8',    # 6 stone bright, bone
-               '#184878',    # 7 water deep
-               '#2878b8',    # 8 water mid
-               '#58b0e0',    # 9 water light
-               '#c0f0ff',    # A water foam
-               '#885818',    # B gold dark, wood shadow
-               '#e0b030',    # C gold mid
-               '#fff0a0',    # D gold bright, flame
-               '#50a050',    # E moss on stone
+               '#2c3040',    # 2 stone deep
+               '#4c5060',    # 3 stone dark
+               '#787c88',    # 4 stone mid
+               '#aab0b8',    # 5 stone light
+               '#e0e4e8',    # 6 stone bright
+               '#103a7a',    # 7 water deep
+               '#1c64c0',    # 8 water mid
+               '#40a8e8',    # 9 water light
+               '#c8f4ff',    # A water foam
+               '#8a5c18',    # B gold dark, wood shadow
+               '#e8b838',    # C gold mid
+               '#fff4b0',    # D gold bright, flame
+               GRASS_MID,    # E moss, grass showing through
                '#a06838']),  # F wood
-    # 3 sewer: wet stone, slime, black water, rust, torchlight
+    # 3 blight: the deep rooms, purple ground, crystals, dead trees
+    ('blight', ['#000000',
+                '#100818',   # 1 outline
+                '#24103c',   # 2 blight deepest
+                '#3c1860',   # 3 blight deep
+                '#6428a0',   # 4 blight mid
+                '#9848d8',   # 5 blight light
+                '#d868f8',   # 6 magenta glow
+                '#f8b0ff',   # 7 pink bright
+                '#1c1018',   # 8 dead bark dark
+                '#3a2830',   # 9 dead bark
+                '#5c4048',   # A dead bark light
+                '#c090ff',   # B crystal light
+                '#2a7a3c',   # C grass dark
+                GRASS_MID,   # D grass mid
+                '#ffe070',   # E gold mote
+                '#ffffff']), # F white
+    # 4 sewer: wet stone, moss, teal water, rust, candlelight
     ('sewer', ['#000000',
-               '#080c14',    # 1 outline
-               '#182030',    # 2 stone deepest
-               '#283448',    # 3 stone dark
-               '#405068',    # 4 stone mid
-               '#607890',    # 5 stone light
-               '#90a8b8',    # 6 stone bright
-               '#287828',    # 7 slime dark
-               '#48b040',    # 8 slime mid
-               '#90e860',    # 9 slime bright
-               '#081018',    # A water black
-               '#102838',    # B water dark
-               '#2a5a70',    # C water glint
-               '#8a4820',    # D rust
-               '#f0a030',    # E flame
-               '#fff0a0']),  # F flame bright, gold
-    # 4 HUD and text
+               '#0a0c12',    # 1 outline
+               '#1c2028',    # 2 stone deepest
+               '#343842',    # 3 stone dark
+               '#555a64',    # 4 stone mid
+               '#808690',    # 5 stone light
+               '#b0b6bc',    # 6 stone bright
+               '#2a6a30',    # 7 moss dark
+               '#58a848',    # 8 moss light
+               '#0c3a3c',    # 9 water deep teal
+               '#188878',    # A water teal
+               '#30c8b0',    # B water light teal
+               '#b8f8f0',    # C water foam
+               '#a05828',    # D rust, copper
+               '#ffb040',    # E candle amber
+               '#fff0a0']),  # F candle bright, gold
+    # 5 sewer props: barrels, crates, bone, banners, awnings, the rug; 5 and F
+    #   are the floor's stone tones so props sit on flagstones
+    ('props', ['#000000',
+               '#0a0c12',    # 1 outline
+               '#3a2410',    # 2 wood dark
+               '#6a4420',    # 3 wood mid
+               '#a07040',    # 4 wood light
+               '#555a64',    # 5 stone mid (the floor it stands on)
+               '#e8e0c8',    # 6 bone
+               '#a09880',    # 7 bone shadow
+               '#146860',    # 8 banner teal dark
+               '#28a898',    # 9 banner teal
+               '#80201c',    # A red dark
+               '#c83830',    # B red
+               '#e8b838',    # C gold
+               '#4c1c78',    # D rug violet dark
+               '#8838c8',    # E rug violet
+               '#808690']),  # F stone light (the floor's lit edges)
+    # 6 HUD and text
     ('hud', ['#000000',
              '#f8f0d8',      # 1 ink cream
-             '#302018',      # 2 ink shadow
-             '#e03040',      # 3 heart red
-             '#ff7080',      # 4 heart bright
-             '#801828',      # 5 heart dark
-             '#886018',      # 6 gold dark
+             '#2a1c10',      # 2 ink shadow
+             '#e82838',      # 3 heart red
+             '#ff7878',      # 4 heart bright
+             '#801020',      # 5 heart dark
+             '#8a5c18',      # 6 gold dark
              '#e8b838',      # 7 gold mid
-             '#fff0a8',      # 8 gold bright
+             '#fff4b0',      # 8 gold bright
              '#8890a0',      # 9 grey
-             '#201828',      # A frame dark
-             '#a0c8ff',      # B pale blue
-             '#603890',      # C violet
-             '#b080e0',      # D light violet
-             '#100c18',      # E box fill
-             '#404858']),    # F slate
+             '#161020',      # A frame fill
+             '#38a0ff',      # B blue
+             '#1848a0',      # C blue dark
+             '#9040d8',      # D violet
+             '#0c0a14',      # E box fill
+             '#3a3a48']),    # F slate, empty
 ]
 
 OBJ_PALETTES = [
-    # 0 hero: stalk greens, petal reds, a pale face, chrome and gold
+    # 0 hero: petals, a cream face, hood greens, leather, steel, gold
     ('hero', ['#000000',
-              '#0c1a10',     # 1 outline
-              '#1e5a30',     # 2 stalk deep
-              '#2e8040',     # 3 stalk dark
-              '#48b050',     # 4 stalk mid
-              '#80d868',     # 5 leaf light
-              '#8a1020',     # 6 petal deep
-              '#e03040',     # 7 petal red
-              '#ff7868',     # 8 petal bright
-              '#ffc0a8',     # 9 petal glow
-              '#c0a870',     # A face shadow
-              '#f0e0b0',     # B face
-              '#405068',     # C steel dark
-              '#a8c0d8',     # D steel light
-              '#f0f8ff',     # E steel gleam
+              '#1a0c10',     # 1 outline
+              '#b02818',     # 2 petal deep
+              '#f04828',     # 3 petal red
+              '#ff8030',     # 4 petal orange
+              '#ffb048',     # 5 petal light tip
+              '#fff8e8',     # 6 face cream
+              '#e8c8a0',     # 7 face shadow
+              '#1c4a28',     # 8 tunic deep
+              '#2e8040',     # 9 tunic green
+              '#58b858',     # A tunic light
+              '#5a3418',     # B leather dark
+              '#9a6030',     # C leather light
+              '#b8c8d8',     # D steel
+              '#f8fcff',     # E steel gleam
               '#f8d050']),   # F gold
     # 1 effects and pickups: sparks, hearts, gilt, keys, seeds
     ('fx', ['#000000',
@@ -129,7 +167,7 @@ OBJ_PALETTES = [
             '#383848',       # C grey dark
             '#7a7a90',       # D grey
             '#c0c0d0',       # E grey light
-            '#c8e048']),     # F chartreuse
+            '#58c8ff']),     # F blue glow
     # 2 bugs: beetle, bat, slime (violet chitin, chartreuse eyes, teal jelly)
     ('bugs', ['#000000',
               '#100818',     # 1 outline
@@ -181,21 +219,55 @@ OBJ_PALETTES = [
               '#906018',     # D gold dark
               '#f8d050',     # E gold
               '#ff4040']),   # F eye glow
-    # 5 folk: the five NPCs (violet, crimson and green cloth, skin, silver)
+    # 5 folk: the Peddler's purple hide and red hood, the Gatekeeper's hat
     ('folk', ['#000000',
-              '#101018',     # 1 outline
-              '#302050',     # 2 violet deep
-              '#6040a0',     # 3 violet
-              '#a080e0',     # 4 violet light
-              '#701020',     # 5 crimson dark
-              '#d03040',     # 6 crimson
-              '#206030',     # 7 green dark
-              '#48a050',     # 8 green
-              '#503018',     # 9 brown dark
-              '#906038',     # A brown
-              '#b08060',     # B skin shadow
-              '#f0c8a0',     # C skin
-              '#c0d0e0',     # D silver
-              '#fffff0',     # E white
-              '#f8d050']),   # F gold
+              '#100c14',     # 1 outline
+              '#5a3878',     # 2 purple hide dark
+              '#8a60b0',     # 3 purple hide
+              '#c8a888',     # 4 pale skin shadow
+              '#f0dcc0',     # 5 pale skin
+              '#801c1c',     # 6 red dark
+              '#d03030',     # 7 red
+              '#3c1c68',     # 8 violet dark
+              '#6c38b0',     # 9 violet
+              '#a068e0',     # A violet light
+              '#f0c040',     # B gold
+              '#906018',     # C gold dark
+              '#f0f0f8',     # D white, silver
+              '#7a4a24',     # E brown
+              '#48a050']),   # F green
+    # 6 portraits: faces for the dialogue box
+    ('portrait', ['#000000',
+                  '#100c14', # 1 outline
+                  '#b02818', # 2 petal deep
+                  '#f04828', # 3 petal red
+                  '#ff8030', # 4 petal orange
+                  '#fff8e8', # 5 face cream
+                  '#e8c8a0', # 6 face shadow
+                  '#2e8040', # 7 green
+                  '#8a60b0', # 8 purple hide
+                  '#5a3878', # 9 purple hide dark
+                  '#d03030', # A red
+                  '#801c1c', # B red dark
+                  '#6c38b0', # C violet
+                  '#b0a0d0', # D lavender, steel
+                  '#f0c040', # E gold
+                  '#ffffff']), # F white
+    # 7 ui sprites: the mini-map
+    ('ui', ['#000000',
+            '#161020',       # 1 dark
+            '#e8d8a8',       # 2 parchment
+            '#b8a070',       # 3 parchment dark
+            '#8a5c18',       # 4 gold dark
+            '#e8b838',       # 5 gold
+            '#fff4b0',       # 6 gold bright
+            '#2a6a30',       # 7 green dark
+            '#58a048',       # 8 green
+            '#f03030',       # 9 red dot
+            '#ffffff',       # A white
+            '#38a0ff',       # B blue
+            '#8890a0',       # C grey
+            '#3a3a48',       # D slate
+            '#ff80c0',       # E pink
+            '#ffe070']),     # F gold mote
 ]

@@ -190,7 +190,7 @@ def main():
     print('gates', [(w['gate_cell'][i], w['gate_side'][i], GATE[w['cells'][w['gate_cell'][i]]['gate'][w['gate_side'][i]]]) for i in range(3)])
     print('keys', w['key_cell'])
     # into the forest
-    P.hold(c, 'UP', 150); P.hold(c, 'RIGHT', 14); P.hold(c, 'UP', 60); P.run(c, 40)
+    P.enter_forest(c)
     check('ENTRY: the drain leads to the entry cell', cell(c) == w['entry'], 'cell %d' % cell(c))
 
     def go_to(target):

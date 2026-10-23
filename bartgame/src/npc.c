@@ -125,8 +125,17 @@ static void reward_drop(Actor* a, int kind) {
     pickup_spawn(kind, px, py);
 }
 
+/* who speaks: a name in gold and a portrait beside the words */
+static const char* const sNames[NPC_COUNT] = {
+    "The Pale Gatekeeper", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener"
+};
+static const u8 sPortraits[NPC_COUNT] = {
+    F_PORTRAIT_GATEKEEPER, F_PORTRAIT_PEDDLER, F_PORTRAIT_HERMIT, F_PORTRAIT_NUN, F_PORTRAIT_GARDENER
+};
+
 static void start_text(const char* s) {
-    textbox_open(s);
+    int who = sTalking ? sTalking->type : NPC_SAGE;
+    textbox_open_named(sNames[who], sPortraits[who], s);
     sDlgState = 1;
 }
 
@@ -134,17 +143,20 @@ static void talk_sage(void) {
     Cell* goal = &gWorld.cells[gWorld.goal];
     (void)goal;
     if (!(gPl.items & ITEM_BOMBS))
-        start_text("You grew in the muck, stalk-child, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. Three doors it keeps: one cracked, one webbed, one a chasm.|What opens them lies in chests before them. Cut what you can with the sword. R rolls. Go up the drain.");
+        start_text("Ahh... you bloomed. In the muck, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. Three doors it keeps: one cracked, one webbed, one a chasm.|What opens them lies in chests before them. Cut what you can. R rolls. Go up the drain, little bloom.");
     else if (!(gPl.items & ITEM_CLOAK))
         start_text("The blight keeps its keys close to its locks. Look for chests in the dead ends. The wood is a maze, but every maze is a tree.");
     else
         start_text("You carry the seed, the flame and the petal. The Heart waits in the deepest glade. Cut it out.");
 }
 
-static const char* const sShopOpts[2] = { "A heart potion, 10 gilt", "Five blightseeds, 15 gilt" };
+static const ShopItem sShop[2] = {
+    { "Healing Petal", "A preserved bloom. It", "restores two hearts.", 10, F_ITEMS_HEART },
+    { "Blightseeds x5", "Five seeds that burst and", "open cracked walls.", 15, F_ITEMS_BOMBS },
+};
 
 static void talk_merchant(void) {
-    textbox_open_menu("Gilt for the living. What will you buy?", sShopOpts, 2);
+    shop_open("The Billious Peddler", sShop, 2);
     sDlgState = 2;
 }
 
@@ -154,9 +166,9 @@ static void finish_shop(int choice) {
             gPl.gilt -= 10;
             player_heal(16);
             sfx_play(SFX_HEART);
-            start_text("Drink. The wood does not care if you bleed, but I do, a little.");
+            start_text("Hmph. Chew it, don't savour it. Nothing comes for free in the sewers, little petal.");
         } else {
-            start_text("Ten gilt. You have less. Come back with pockets.");
+            start_text("Ten gilt. You have less. Look with your eyes, not your hands.");
         }
     } else if (choice == 1) {
         if (!(gPl.items & ITEM_BOMBS)) {
@@ -169,7 +181,7 @@ static void finish_shop(int choice) {
             sfx_play(SFX_PICKUP);
             start_text("Five seeds. Keep them from the damp.");
         } else {
-            start_text("Fifteen gilt. The dead pay better than you.");
+            start_text("Fifteen gilt. The dead pay better than you. Everything here is mine, and it stays mine.");
         }
     } else {
         sDlgState = 0;
@@ -267,12 +279,15 @@ bool8 npc_dialogue_active(void) {
 }
 
 void npc_dialogue_update(void) {
-    textbox_update();
+    if (sDlgState != 2)
+        textbox_update();
     if (sDlgState == 2) {
-        int r = textbox_menu_result();
+        int r;
+        shop_update();
+        r = shop_result();
         if (r == -2)
             return;
-        textbox_close();
+        shop_close();
         finish_shop(r);
         return;
     }

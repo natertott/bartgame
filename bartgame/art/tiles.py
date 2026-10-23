@@ -5,13 +5,18 @@ and pebble marks placed where they read well; the canopy walls are leaf
 masses built from overlapping lit blobs that wrap at the tile edge so
 they tile without a seam; landmarks are drawn.
 
-Palette 'forest': 1 outline, 2-6 grass deep..bright, 7-9 soil, A-C blight
-                  violet, D-E rot, F pale gleam.
-Palette 'wood':   1 outline, 2-6 leaf deepest..bright, 7-A bark, B-C thorn,
-                  D mist, E blight black, F gold.
-Palette 'stone':  1 outline, 2-6 stone, 7-A water, B-D gold, E moss, F wood.
-Palette 'sewer':  1 outline, 2-6 wet stone, 7-9 slime, A-C black water,
-                  D rust, E-F flame.
+Palette 'forest': 1 outline, 2-6 grass deep..bright, 7-9 path, A blue,
+                  B pink, C cream, D blight violet, E magenta, F gold.
+Palette 'wood':   1 outline, 2-6 leaf deepest..bright, 7-A bark, B-D
+                  lantern amber, E grass, F thorn magenta.
+Palette 'stone':  1 outline, 2-6 stone, 7-A water deep..foam, B-D gold,
+                  E moss, F wood.
+Palette 'blight': 1 outline, 2-7 blight deepest..pink, 8-A dead bark,
+                  B crystal light, C-D grass, E gold, F white.
+Palette 'sewer':  1 outline, 2-6 wet stone, 7-8 moss, 9-C teal water
+                  deep..foam, D rust, E-F candle.
+Palette 'props':  1 outline, 2-4 wood, 5 stone mid, 6-7 bone, 8-9 teal
+                  cloth, A-B red cloth, C gold, D-E rug violet, F amber.
 """
 import random
 
@@ -67,8 +72,7 @@ def marks(base, placements, w=16, h=16):
 
 
 # ============================================================== forest ===
-# Grass: a mid green with tufts, lit from the upper left. The marks are
-# tiny so the ground stays calm under the sprites.
+# Grass: a mid green with tufts, lit from the upper left.
 TUFT = {
     'a': A('''
         .5.
@@ -112,58 +116,83 @@ mt('moss2', 'forest', 'FLOOR', marks(GRASS, [
     (TUFT['d'], 7, 10), (TUFT['f'], 13, 12), (TUFT['b'], 4, 14), (TUFT['e'], 10, 14),
     (TUFT['c'], 0, 1), (TUFT['f'], 15, 2)]))
 
-# Blight: a violet stain creeping over the grass, with a bright rim and
-# a black-violet heart; the second variant grows rot mushrooms.
+# Blight: a violet stain with a magenta glow; the second variant grows
+# blue glowing mushrooms.
 BLIGHT_PATCH = A('''
-    ...aa....
-    .aabbaa..
-    aabbcbbaa
-    abbcbcbba
-    aabbbbbaa
-    .aabbaa..
-    ...aa....
+    ...dd....
+    .ddeedd..
+    ddeeeeedd
+    deeeeeedd
+    ddeeeeed.
+    .ddeedd..
+    ...dd....
 ''')
 BLIGHT_SMALL = A('''
-    .aa.
-    abba
-    abca
-    .aa.
+    .dd.
+    deed
+    deed
+    .dd.
 ''')
 VEIN = A('''
-    a...
-    .a..
-    .a..
-    ..a.
-    ..aa
+    d...
+    .d..
+    .d..
+    ..d.
+    ..dd
 ''')
 MUSHROOM = A('''
-    .ee.
-    eeee
-    dddd
-    .dd.
+    .aa.
+    acaa
+    .11.
+    .11.
 ''')
 mt('moss_blight', 'forest', 'FLOOR', marks(GRASS, [
     (BLIGHT_PATCH, 1, 1), (BLIGHT_SMALL, 10, 9), (VEIN, 9, 2), (TUFT['e'], 13, 5),
     (TUFT['b'], 2, 11), (TUFT['a'], 6, 11), (TUFT['c'], 14, 14)]))
 mt('moss_blight2', 'forest', 'FLOOR', marks(GRASS, [
-    (BLIGHT_PATCH, 7, 7), (MUSHROOM, 2, 3), (MUSHROOM, 11, 1), (VEIN, 3, 8),
-    (TUFT['a'], 1, 12), (TUFT['e'], 6, 1), (TUFT['c'], 14, 12)]))
+    (BLIGHT_SMALL, 8, 8), (MUSHROOM, 2, 3), (MUSHROOM, 11, 1), (VEIN, 3, 8),
+    (TUFT['a'], 1, 12), (TUFT['e'], 6, 1), (TUFT['c'], 14, 12), (MUSHROOM, 12, 11)]))
 
-# Flowers: pale gold and violet blooms, white hearts.
-FLOWER_GOLD = A('''
-    .f.
-    f9f
-    .f.
+# Flowers: blue, pink and cream blooms with pale hearts.
+FLOWER_BLUE = A('''
+    .a.
+    aca
+    .a.
 ''')
-FLOWER_VIOLET = A('''
+FLOWER_PINK = A('''
+    .b.
+    bcb
+    .b.
+''')
+FLOWER_CREAM = A('''
     .c.
-    caf
+    cfc
     .c.
 ''')
 mt('moss_flowers', 'forest', 'FLOOR', marks(GRASS, [
-    (FLOWER_GOLD, 2, 2), (FLOWER_VIOLET, 11, 4), (FLOWER_GOLD, 7, 9), (FLOWER_VIOLET, 1, 11),
+    (FLOWER_BLUE, 2, 2), (FLOWER_PINK, 11, 4), (FLOWER_CREAM, 7, 9), (FLOWER_BLUE, 1, 11),
     (TUFT['a'], 6, 2), (TUFT['b'], 13, 10), (TUFT['e'], 4, 7), (TUFT['c'], 12, 13),
-    (FLOWER_GOLD, 13, 0)]))
+    (FLOWER_PINK, 13, 0)]))
+
+# Tall grass: bright blades in a clump.
+mt('tall_grass', 'forest', 'FLOOR', compose(marks(GRASS, [(TUFT['b'], 13, 1), (TUFT['e'], 1, 14)]), A('''
+    ................
+    ......6.........
+    ...6..5..6......
+    ...5.65..5.6....
+    .6.5.55.65.5....
+    .5.55.5.5..5.6..
+    .5.5.55.5.65.5..
+    .55.5.5.55.5.5..
+    .5.5.5.5.5.5.5..
+    .35.5.5.5.5.53..
+    .3.35.35.5.3.3..
+    .3.3.3.3.33.3...
+    ..3.3.3.3.3.3...
+    ...3.2.3.3.2....
+    .....2...2......
+    ................
+''')))
 
 # Soil: a warm trodden path with pebbles and a few dark footmarks.
 PEBBLE = A('''
@@ -205,42 +234,42 @@ mt('path_edge_n', 'forest', 'FLOOR', compose(marks(SOIL, [
     ................
 ''')))
 
-# A pool of blight: violet liquid with a dark rim; the glints drift.
-_pool = marks(0xb, [(A('aa'), 3, 3), (A('a'), 11, 9), (A('aa'), 6, 12), (A('a'), 13, 2)])
+# A pool of blight: violet with a dark rim; magenta glints drift.
+_pool = marks(0xd, [(A('11'), 3, 3), (A('1'), 11, 9), (A('11'), 6, 12), (A('1'), 13, 2)])
 _pool = compose(_pool, A('''
-    aaaaaaaaaaaaaaaa
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    a..............a
-    aaaaaaaaaaaaaaaa
+    1111111111111111
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1..............1
+    1111111111111111
 '''))
 _glint1 = A('''
     ................
     ................
-    ....c...........
-    ...cfc.......c..
-    ....c.......cfc.
-    .............c..
+    ....e...........
+    ...efe.......e..
+    ....e.......efe.
+    .............e..
     ................
     ................
-    ........c.......
-    .......cfc......
-    ........c.......
+    ........e.......
+    .......efe......
+    ........e.......
     ................
-    ..c.............
-    .cfc............
-    ..c.............
+    ..e.............
+    .efe............
+    ..e.............
     ................
 ''')
 _glint2 = A('''
@@ -248,26 +277,23 @@ _glint2 = A('''
     ................
     ................
     ................
-    ....c...........
-    ...cfc.......c..
-    ....c.......cfc.
-    .............c..
+    ....e...........
+    ...efe.......e..
+    ....e.......efe.
+    .............e..
     ................
     ................
     ................
-    ........c.......
-    .......cfc......
-    ..c.....c.......
-    .cfc............
-    ..c.............
+    ........e.......
+    .......efe......
+    ..e.....e.......
+    .efe............
+    ..e.............
 ''')
 mt('blight_pool', 'forest', 'HURT', frames=[compose(_pool, _glint1), compose(_pool, _glint2)], anim_speed=16)
 
 
 # ---------------------------------------------------------- the canopy --
-# Leaf masses: overlapping round blobs, each with a deep shadow ring, a
-# mid body, a lit crescent and a bright tip. Drawn top to bottom so the
-# lower blobs overlap the upper, wrapping at the edge so the tile seams.
 def blob(c, cx, cy, r, tones=(2, 4, 5, 6), wrap=True):
     deep, mid, light, bright = tones
 
@@ -317,8 +343,75 @@ TIPS_B = [(LEAF_TIP2, 4, 1), (LEAF_TIP, 11, 7), (LEAF_TIP2, 2, 8), (LEAF_TIP, 14
 mt('canopy', 'wood', 'SOLID', leaf_mass(CANOPY_A, TIPS_A))
 mt('canopy2', 'wood', 'SOLID', leaf_mass(CANOPY_B, TIPS_B))
 
-# The wall's face, under the top canopy: a hanging leaf fringe, trunks in
-# shadow, and the ground shadow the wall throws on the grass.
+# A lantern hung in the canopy: amber light on the leaves around it.
+_lant_base = leaf_mass(CANOPY_B, TIPS_B)
+_lantern = A('''
+    ................
+    .......1........
+    .......1........
+    ......111.......
+    .....1bcb1......
+    .....1cdc1......
+    .....1cdc1......
+    .....1bcb1......
+    ......1b1.......
+    .......1........
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_glow1 = A('''
+    ................
+    ................
+    ................
+    ................
+    ....c.....c.....
+    ................
+    ...c.......c....
+    ................
+    ....c.....c.....
+    ......c.c.......
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_glow2 = A('''
+    ................
+    ................
+    ................
+    ....c.....c.....
+    ................
+    ...c.......c....
+    ................
+    ................
+    ...c.......c....
+    ................
+    .....c...c......
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+mt('canopy_lantern', 'wood', 'SOLID', frames=[compose(compose(_lant_base, _glow1), _lantern),
+                                                compose(compose(_lant_base, _glow2), _lantern)], anim_speed=10)
+
+# A darker, sicker canopy for the deep rooms, magenta at the tips.
+BLIGHT_TIP = A('''
+    f.
+    .2
+''')
+mt('canopy_blight', 'wood', 'SOLID', leaf_mass(CANOPY_A, [(BLIGHT_TIP, 5, 4), (BLIGHT_TIP, 13, 3), (BLIGHT_TIP, 0, 7),
+                                                           (BLIGHT_TIP, 10, 9), (BLIGHT_TIP, 6, 14)], tones=(1, 2, 3, 4)))
+
+# The wall's face, under the top canopy: a hanging leaf fringe, thick
+# dark trunks, and the shadow the wall throws on the ground.
 _face = A('''
     2222222222222222
     3233322332233322
@@ -340,12 +433,12 @@ _face = A('''
 mt('canopy_s', 'wood', 'SOLID', _face)
 
 # The top edge of the lower wall: the lit crown of the leaf mass with
-# grass showing between the scallops (leaf light reads as grass).
+# grass showing between the scallops.
 _crown = leaf_mass([(2, 6, 3.4), (8, 5, 3.8), (14, 6, 3.4), (5, 11, 3.6), (11, 12, 3.6), (0, 14, 2.6)],
-                   [(LEAF_TIP, 4, 8), (LEAF_TIP2, 12, 9), (LEAF_TIP, 9, 13)], base=0xd)
+                   [(LEAF_TIP, 4, 8), (LEAF_TIP2, 12, 9), (LEAF_TIP, 9, 13)], base=0xe)
 _crown = compose(_crown, A('''
-    dddddddddddddddd
-    dddddddddddddddd
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
     ................
     ................
     ................
@@ -361,37 +454,30 @@ _crown = compose(_crown, A('''
     ................
     ................
 '''))
-# a dark outline where the mass meets the grass
 _crown_g = Canvas.from_rows(_crown)
 for y in range(16):
     for x in range(16):
-        if _crown_g.get(x, y) == 0xd and y < 9:
-            # grass pixel: outline below it if a leaf pixel follows
+        if _crown_g.get(x, y) == 0xe and y < 9:
             if _crown_g.get(x, y + 1) in (2, 4, 6):
                 _crown_g.set(x, y + 1, 1)
 mt('canopy_n', 'wood', 'SOLID', _crown_g.rows())
 
 
 # A free-standing tree: a 32-wide crown over a trunk, 2x3 metatiles.
-# The top four are overlay tiles (the hero walks behind them); the
-# trunk pair is ground, solid in its upper half.
 def tree_art():
     c = Canvas(32, 48)
     crown = [(16, 10, 9.5), (8, 9, 6.5), (24, 9, 6.5), (6, 16, 6.0), (26, 16, 6.0),
              (12, 21, 6.2), (20, 21, 6.2), (16, 25, 5.0)]
     for cx, cy, r in sorted(crown, key=lambda p: p[1]):
         blob(c, cx, cy, r, (2, 4, 5, 6), wrap=False)
-    # trunk
     c.rect(13, 28, 18, 44, 8)
     c.vline(13, 28, 44, 7)
     c.vline(14, 30, 44, 9)
     c.vline(18, 28, 44, 7)
     c.vline(17, 30, 44, 8)
-    # roots
     c.hline(11, 13, 44, 8); c.hline(18, 20, 44, 8)
     c.hline(10, 12, 45, 7); c.hline(19, 21, 45, 7)
     c.rect(13, 45, 18, 45, 7)
-    # shadow on the ground around the trunk (leaf deep over grass-light)
     c.outline(1)
     return c.rows()
 
@@ -407,94 +493,150 @@ mt('tree_top_nw', 'wood', 'FLOOR', slice16(_tree, 0, 0))
 mt('tree_top_ne', 'wood', 'FLOOR', slice16(_tree, 1, 0))
 mt('tree_mid_w', 'wood', 'FLOOR', slice16(_tree, 0, 1))
 mt('tree_mid_e', 'wood', 'FLOOR', slice16(_tree, 1, 1))
-# the trunk tiles stand on grass, so they take the forest palette, whose
-# soil browns serve as bark
 _grass_w = marks(GRASS, [(TUFT['a'], 1, 2), (TUFT['e'], 3, 9), (TUFT['c'], 1, 13), (TUFT['b'], 9, 14)])
 _grass_e = marks(GRASS, [(TUFT['b'], 11, 3), (TUFT['a'], 12, 8), (TUFT['e'], 7, 14), (TUFT['c'], 14, 13)])
 mt('tree_trunk_w', 'forest', 'SOLID', compose(_grass_w, slice16(_tree, 0, 2)), coll=3)
 mt('tree_trunk_e', 'forest', 'SOLID', compose(_grass_e, slice16(_tree, 1, 2)), coll=3)
 
-# ------------------------------------------------------------- stones --
-# A boulder on moss: blue-grey, lit from the upper left, a gleam on the
-# crown, dark under its belly.
-mt('rock', 'stone', 'SOLID', L({'o': 1, 'm': 0xe}, '''
-    mmmmmmmmmmmmmmmm
-    mmmmm1111111mmmm
-    mmm1155566511mmm
-    mm155665554441mm
-    m15666555544431m
-    m1566555544433m1
-    m1555554444333m1
-    m1455544444333m1
-    m1444444433332m1
-    m1344443333322m1
-    m1333333332221m1
-    mm1333322222111m
-    mm11322222111mmm
-    mmm111111111mmmm
-    mmmmm1111mmmmmmm
-    mmmmmmmmmmmmmmmm
-'''))
-
-# A broken pillar: a pale fluted column, moss at its foot.
-mt('pillar', 'stone', 'SOLID', L({'m': 0xe}, '''
-    eeeeeeeeeeeeeeee
-    eee1111111111eee
-    ee155566665531ee
-    ee143444444431ee
-    eee1545645441eee
-    eee1545645431eee
-    eee1545645431eee
-    eee1545645431eee
-    eee1e45645431eee
-    eee1545e45431eee
-    eee1545645431eee
-    ee155556655431ee
-    e15555666554421e
-    e14444444443321e
-    ee111111111111ee
-    eeeeeeeeeeeeeeee
-'''))
-
-# A ruined wall: tumbled blocks, mortar lines, moss in the cracks.
-mt('ruin_wall', 'stone', 'SOLID', A('''
-    eeee11111111eeee
-    e111455555541eee
-    1556444444431e1e
-    1444444444431151
-    1333444444331441
-    1111111111111331
-    1455541455554411
-    1444431444444431
-    1444431e44444431
-    1333321444333331
-    1111111111111111
-    1455554414555441
-    1444444314444431
-    1444444e14e44431
-    1333333311333321
-    1111111111111111
-'''))
-
-# Thorns: a bramble of dark vines on the grass, blight-violet barbs.
-mt('thorn', 'forest', 'THORN', compose(marks(GRASS, [(TUFT['b'], 0, 14), (TUFT['c'], 14, 0)]), A('''
+# A lantern on a post, lit: amber light on the grass.
+_post = L({'g': 0xe}, '''
+    gggggg1111gggggg
+    ggggg1bccb1ggggg
+    ggggg1cddc1ggggg
+    ggggg1cddc1ggggg
+    ggggg1bccb1ggggg
+    gggggg1991ggggg1
+    ggggggg17gggg1g1
+    ggggggg18ggggg1g
+    ggggggg18gggggg1
+    ggggggg18gggggg1
+    ggggggg18gggggg1
+    ggggggg18ggggggg
+    gggggg1981ggggg1
+    ggggg198881ggggg
+    ggggg111111ggggg
+    gggggggggggggggg
+''')
+_post = [r.replace('1', 'e', 0) for r in _post]
+_postglow1 = A('''
     ................
-    ..1.......1.....
-    .121..c..121.c..
-    .12111c1112111c.
-    ..1221c22211221.
-    ...122221121b1..
-    .c..1222221221..
-    .1c..1222221....
-    .121..12222c1...
-    ..121.1221221...
-    ..b1211211.121..
-    ...1221.11..121.
-    ..11221..c...1..
-    ..1.1221.1c.....
-    ....1.121.1.....
-    ......1.........
-''')))
+    ................
+    ....c......c....
+    ................
+    ...c........c...
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_postglow2 = A('''
+    ................
+    ...c........c...
+    ................
+    ..c..........c..
+    ................
+    ....c......c....
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+mt('lantern_post', 'wood', 'SOLID', frames=[compose(_post, _postglow1), compose(_post, _postglow2)], coll=3, anim_speed=10)
+
+# A wooden fence: two rails on posts, on grass.
+mt('fence', 'wood', 'SOLID', L({'g': 0xe}, '''
+    gggggggggggggggg
+    gggggggggggggggg
+    g1991gggggg1991g
+    g1a81gggggg1a81g
+    g1a8111111111a81
+    g1a8aaaaaaaaaa81
+    g1a8888888888881
+    g1a8111111111a81
+    g1a81gggggg1a81g
+    g1a8111111111a81
+    g1a8aaaaaaaaaa81
+    g1a8888888888881
+    g1a8111111111a81
+    g1781gggggg1781g
+    g1111gggggg1111g
+    gggggggggggggggg
+'''))
+
+# A fallen log, rings at the cut end.
+mt('log', 'wood', 'SOLID', L({'g': 0xe}, '''
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+    g11111111111111g
+    1aaaaaaaaaaa9a91
+    1a99999999999891
+    1998889988898891
+    1988888888888781
+    1987777877778871
+    1877777777777771
+    .1777777777777 1
+    g11111111111111g
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+'''))
+METATILES[-1]['art'] = [r.replace(' ', '7').replace('.', 'e') for r in METATILES[-1]['art']]
+
+# A plank bridge over water, railings at the sides.
+mt('bridge', 'wood', 'FLOOR', A('''
+    1111111111111111
+    9aaaaaaaaaaaaaa9
+    1888888888888881
+    1999999999999991
+    1aaaaaaaaaaaaaa1
+    1888888888888881
+    1111111111111111
+    1999999999999991
+    1aaaaaaaaaaaaaa1
+    1888888888888881
+    1111111111111111
+    1999999999999991
+    1aaaaaaaaaaaaaa1
+    1888888888888881
+    9aaaaaaaaaaaaaa9
+    1111111111111111
+'''))
+
+# Thorns: a bramble of dark vines, magenta barbs, on the grass.
+mt('thorn', 'wood', 'THORN', L({'g': 0xe}, '''
+    gggggggggggggggg
+    gg1ggggggg1ggggg
+    g181ggfgg181gfgg
+    g18111f111811fg.
+    gg1771f77711771g
+    ggg17777711718gg
+    gfgg17777717771g
+    g1fgg1777771gggg
+    g181gg17777f1ggg
+    gg181g1771771ggg
+    ggf1711711g171gg
+    ggg1771g11gg171g
+    gg11771ggfggg1gg
+    gg1g1771g1fggggg
+    gggg1g171g1ggggg
+    gggggg1ggggggggg
+'''))
+METATILES[-1]['art'] = [r.replace('.', 'e') for r in METATILES[-1]['art']]
 
 # A stump: rings on the cut top, bark down the sides, on the grass.
 mt('stump', 'forest', 'SOLID', compose(marks(GRASS, [(TUFT['a'], 0, 12), (TUFT['c'], 14, 1)]), A('''
@@ -516,7 +658,86 @@ mt('stump', 'forest', 'SOLID', compose(marks(GRASS, [(TUFT['a'], 0, 12), (TUFT['
     ................
 ''')))
 
-# Water: deep blue with lit wave bands and foam crests; two frames.
+# ------------------------------------------------------------- stones --
+mt('rock', 'stone', 'SOLID', L({'m': 0xe}, '''
+    mmmmmmmmmmmmmmmm
+    mmmmm1111111mmmm
+    mmm1155566511mmm
+    mm155665554441mm
+    m15666555544431m
+    m1566555544433m1
+    m1555554444333m1
+    m1455544444333m1
+    m1444444433332m1
+    m1344443333322m1
+    m1333333332221m1
+    mm1333322222111m
+    mm11322222111mmm
+    mmm111111111mmmm
+    mmmmm1111mmmmmmm
+    mmmmmmmmmmmmmmmm
+'''))
+
+mt('pillar', 'stone', 'SOLID', L({'m': 0xe}, '''
+    eeeeeeeeeeeeeeee
+    eee1111111111eee
+    ee155566665531ee
+    ee143444444431ee
+    eee1545645441eee
+    eee1545645431eee
+    eee1545645431eee
+    eee1545645431eee
+    eee1e45645431eee
+    eee1545e45431eee
+    eee1545645431eee
+    ee155556655431ee
+    e15555666554421e
+    e14444444443321e
+    ee111111111111ee
+    eeeeeeeeeeeeeeee
+'''))
+
+mt('ruin_wall', 'stone', 'SOLID', A('''
+    eeee11111111eeee
+    e111455555541eee
+    1556444444431e1e
+    1444444444431151
+    1333444444331441
+    1111111111111331
+    1455541455554411
+    1444431444444431
+    1444431e44444431
+    1333321444333331
+    1111111111111111
+    1455554414555441
+    1444444314444431
+    1444444e14e44431
+    1333333311333321
+    1111111111111111
+'''))
+
+# A stone statue: a seated hare with a glowing gem, the shrine's keeper.
+mt('statue', 'stone', 'SOLID', L({'m': 0xe}, '''
+    mmmmm1mm1mmmmmmm
+    mmmm151151mmmmmm
+    mmmm154154mmmmmm
+    mmmm1545541mmmmm
+    mmmm15555541mmmm
+    mmm1544144431mmm
+    mmm15444444431mm
+    mmm1544449a431mm
+    mmm154444a44431m
+    mmm1544444444431
+    mmmm1544444443 1
+    mmmm15444444331m
+    mmmm1443333321mm
+    mmm1555555554 1m
+    mmm1444444443 1m
+    mmmm1111111111mm
+'''), coll=3)
+METATILES[-1]['art'] = [r.replace(' ', '3') for r in METATILES[-1]['art']]
+
+# Water: deep blue with lit wave bands and foam sparkles; two frames.
 _w1 = A('''
     8888898888889888
     7888899888889988
@@ -555,14 +776,36 @@ _w2 = A('''
 ''')
 mt('water', 'stone', 'WATER', frames=[_w1, _w2], anim_speed=20)
 
-# Pits: a dark hole with a lip of soil on the near edge.
-mt('pit', 'forest', 'PIT', A('''
-    4444444444444444
-    4544444454444444
-    3333333333333333
+# A lily pad on the water, a pale gold bud on it.
+_lily = A('''
+    ................
+    ................
+    ................
+    ....11111.......
+    ...1eeeeee1.....
+    ..1eeeeeee e1...
+    ..1ee1ddeeee1...
+    ..1ee1cdeeee1...
+    ..1eeee1eee1....
+    ...1eeeeee1.....
+    ....111111......
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_lily = [r.replace(' ', 'e') for r in _lily]
+mt('water_lily', 'stone', 'WATER', frames=[compose(_w1, _lily), compose(_w2, _lily)], anim_speed=20)
+
+# Pits: a dark hole with a stone lip on the near edge.
+mt('pit', 'stone', 'PIT', A('''
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
     1111111111111111
-    7777717777717777
-    7177777177777717
+    4544454444544454
+    3333333333333333
+    2222122222122222
     1111111111111111
     0000000000000000
     0000000000000000
@@ -574,48 +817,47 @@ mt('pit', 'forest', 'PIT', A('''
     0000000000000000
     0000000000000000
 '''))
-mt('pit_inner', 'forest', 'PIT', flat(0))
+mt('pit_inner', 'stone', 'PIT', flat(0))
 
-# Ledges: a step of raised ground ending in a cliff of soil.
-mt('ledge_s', 'forest', 'LEDGE_S', A('''
-    4444444444444444
-    4544444445444444
-    4344444443444444
-    4444454444445444
-    4444434444443444
+# Ledges: grass ends in a cliff of stone blocks.
+mt('ledge_s', 'stone', 'LEDGE_S', A('''
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
     6666666666666666
     1111111111111111
-    9999999999999999
-    8988898888988988
-    8888888888888888
-    7888788887888878
-    7877778877777877
-    7777777777777777
-    1711117111171117
+    5555515555551555
+    4444414444441444
+    4444414444441444
+    1111111111111111
+    4451444444144444
+    4451444444144444
+    3331333333133333
     1111111111111111
     2222222222222222
-'''))
-mt('ledge_n', 'forest', 'LEDGE_N', A('''
     1111111111111111
-    1711117111171117
-    7777777777777777
-    7877778877777877
-    7888788887888878
-    8888888888888888
-    8988898888988988
-    9999999999999999
+'''))
+mt('ledge_n', 'stone', 'LEDGE_N', A('''
+    1111111111111111
+    2222222222222222
+    1111111111111111
+    3331333333133333
+    4451444444144444
+    4451444444144444
+    1111111111111111
+    4444414444441444
+    5555515555551555
     1111111111111111
     6666666666666666
-    4444434444443444
-    4444454444445444
-    4344444443444444
-    4544444445444444
-    4444444444444444
-    4444444444444444
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
 '''))
 
 # ---------------------------------------------------------------- gates --
-# A cracked stone slab in the wall: the bombs' door.
 mt('crack', 'stone', 'CRACK', A('''
     1111111111111111
     1555555555555551
@@ -634,8 +876,6 @@ mt('crack', 'stone', 'CRACK', A('''
     1333333133333331
     1111111111111111
 '''))
-
-# A pale web across a dark way: the lamp's door.
 mt('web', 'stone', 'WEB', A('''
     2122222222222212
     1612222222222161
@@ -654,8 +894,6 @@ mt('web', 'stone', 'WEB', A('''
     2122222222222212
     2222222222222222
 '''))
-
-# A locked door: iron-banded oak, a gold lock, a stone frame.
 mt('door_locked', 'stone', 'DOOR', A('''
     1111111111111111
     1455555555555541
@@ -693,7 +931,6 @@ mt('door_open', 'stone', 'DOOR_OPEN', A('''
     1111111111111111
 '''))
 
-# A censer on a stone pedestal; lit, it carries a gold flame.
 _censer = L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mmmmmmmmmmmmmmmm
@@ -731,8 +968,6 @@ _flame2 = A('''
 mt('torch', 'stone', 'TORCH', _censer, coll=3)
 mt('torch_lit', 'stone', 'TORCH_LIT', frames=[compose(_censer, _flame1), compose(_censer, _flame2)], coll=3, anim_speed=6)
 
-# Chests: oak with gold bands and a gold lock; open, the lid stands up
-# and the inside glows.
 mt('chest', 'stone', 'CHEST', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mmmmmmmmmmmmmmmm
@@ -770,28 +1005,26 @@ mt('chest_open', 'stone', 'CHEST_OPEN', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
 '''))
 
-# Bones in the grass.
 mt('bones', 'forest', 'FLOOR', marks(GRASS, [
     (A('''
-        ff...ff
-        .fffff.
-        ff...ff
+        cc...cc
+        .ccccc.
+        cc...cc
     '''), 1, 2),
     (A('''
-        f9.
-        .f9
-        ..f9
-        ...f9
+        c9.
+        .c9
+        ..c9
+        ...c9
     '''), 9, 3),
     (A('''
-        .ff.
-        f99f
-        f11f
-        .ff.
+        .cc.
+        c99c
+        c11c
+        .cc.
     '''), 10, 9),
     (TUFT['a'], 6, 7), (TUFT['e'], 13, 14), (TUFT['c'], 0, 14), (TUFT['b'], 3, 11)]))
 
-# Gold motes twinkling on the ground (an overlay).
 _sp = [A('''
     ................
     ................
@@ -844,9 +1077,9 @@ _sp = [A('''
     ...d............
     ................
 ''')]
+_sp = [[r.replace('f', 'd') for r in fr] for fr in _sp]
 mt('sparkle', 'stone', 'FLOOR', frames=_sp, anim_speed=14)
 
-# The relic's altar: a round stone dais on moss.
 mt('relic', 'stone', 'FLOOR', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mmmmm111111mmmmm
@@ -865,8 +1098,6 @@ mt('relic', 'stone', 'FLOOR', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mmmmmmmmmmmmmmmm
 '''))
-
-# A flat paving stone, moss in its chips.
 mt('mossy_stone', 'stone', 'FLOOR', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mm11111111111mmm
@@ -885,35 +1116,199 @@ mt('mossy_stone', 'stone', 'FLOOR', L({'m': 0xe}, '''
     mmmmmmmmmmmmmmmm
     mmmmmmmmmmmmmmmm
 '''))
-
 mt('black', 'forest', 'SOLID', flat(1))
 
-# Steps down into the dark.
+# A stone arch with steps going down into the dark.
 mt('stairs_down', 'stone', 'STAIRS', A('''
     1111111111111111
-    1666666666666661
-    1555555555555551
-    1111111111111111
-    1555555555555551
-    1444444444444441
-    1111111111111111
-    1444444444444441
-    1333333333333331
-    1111111111111111
-    1333333333333331
-    1222222222222221
-    1111111111111111
-    1222222222222221
-    1111111111111111
+    1455555555555541
+    1544444444444451
+    1541111111111451
+    1541555555551451
+    1541444444441451
+    1541111111111451
+    1541444444441451
+    1541333333331451
+    1541111111111451
+    1541333333331451
+    1541222222221451
+    1541111111111451
+    1541222222221451
+    1441111111111441
     1111111111111111
 '''))
 
+# ============================================================== blight ===
+# The deep rooms: purple ground split by glowing cracks, crystal
+# clusters, dead trees that still glow at the root.
+BL_CRACK = A('''
+    2....
+    .2...
+    .2...
+    ..2..
+    ..22.
+''')
+BL_GLOW = A('''
+    .6.
+    676
+    .6.
+''')
+BL_PATCH = A('''
+    .44.
+    4554
+    4554
+    .44.
+''')
+BL = 3
+STAIN = A('''
+    ...333....
+    .33344333.
+    3344455433
+    3344555443
+    .334444433
+    ..3333333.
+''')
+STAIN2 = A('''
+    ..333..
+    .34443.
+    3345543
+    .34443.
+    ..333..
+''')
+GTUFT = A('''
+    .d
+    c.
+''')
+# the deep rooms' grass, stained and cracked
+mt('blight_ground0', 'blight', 'FLOOR', marks(0xd, [
+    (STAIN, 1, 1), (GTUFT, 12, 2), (GTUFT, 4, 11), (GTUFT, 11, 9), (A('2'), 8, 13), (A('6'), 4, 3)]))
+mt('blight_ground1', 'blight', 'FLOOR', marks(0xd, [
+    (STAIN2, 8, 8), (GTUFT, 13, 5), (GTUFT, 1, 13), (GTUFT, 3, 3), (A('2'), 12, 1), (A('6'), 10, 10)]))
+# stained grass split by a glowing crack
+_bg2 = marks(0xd, [(STAIN, 6, 7), (STAIN2, 1, 1), (GTUFT, 13, 3), (GTUFT, 2, 13), (A('2'), 11, 13)])
+_gv1 = A('''
+    ................
+    ...........2....
+    ..........26....
+    ..........6.....
+    .........76.....
+    .........6......
+    ........26......
+    ........6.......
+    .......26.......
+    .......6........
+    ......67........
+    ......6.........
+    .....2..........
+    ................
+    ................
+    ................
+''')
+_gv2 = A('''
+    ................
+    ...........2....
+    ..........27....
+    ..........7.....
+    .........67.....
+    .........7......
+    ........27......
+    ........6.......
+    .......26.......
+    .......7........
+    ......76........
+    ......7.........
+    .....2..........
+    ................
+    ................
+    ................
+''')
+mt('blight_ground2', 'blight', 'FLOOR', frames=[compose(_bg2, _gv1), compose(_bg2, _gv2)], anim_speed=12)
+# the arena's floor: purple through and through
+mt('blight_floor', 'blight', 'FLOOR', marks(BL, [
+    (BL_CRACK, 2, 1), (BL_PATCH, 9, 3), (A('2'), 13, 8), (BL_CRACK, 11, 9), (BL_PATCH, 2, 10),
+    (A('5'), 6, 7), (A('2'), 7, 14), (A('5'), 14, 14)]))
+_bv = marks(BL, [(BL_PATCH, 1, 1), (A('2'), 12, 3), (BL_PATCH, 10, 11), (A('5'), 4, 13)])
+_vein1 = A('''
+    ................
+    ................
+    .........6......
+    ........676.....
+    .......6.6......
+    ......6.........
+    ......6.........
+    .....6..........
+    ....676.........
+    .....6..........
+    ..............6.
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_vein2 = A('''
+    ................
+    ................
+    .........7......
+    ........767.....
+    .......7.6......
+    ......6.........
+    ......7.........
+    .....6..........
+    ....767.........
+    .....7..........
+    ..............7.
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+mt('blight_vein', 'blight', 'FLOOR', frames=[compose(_bv, _vein1), compose(_bv, _vein2)], anim_speed=12)
+
+mt('blight_crystal', 'blight', 'SOLID', L({'g': 3}, '''
+    gggggggg1ggggggg
+    ggggggg1b1gggggg
+    ggg1ggg1b71ggggg
+    gg1b1g1bb71ggggg
+    gg1b51g1b71g1ggg
+    g1bb51g1b71g1b1g
+    g1b551g1b71g1b51
+    g15541g1b71g1551
+    g1b55411b7111541
+    g15544155b71b541
+    g1544415b75155 1
+    g1444415575144 1
+    gg1441154451441g
+    gg1111115411111g
+    gggg2g2111g2gggg
+    gggggggggggggggg
+'''))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
+
+mt('dead_tree', 'blight', 'SOLID', L({'g': 3}, '''
+    gg1ggggggggg1ggg
+    g1a1ggg1ggg1a1gg
+    g1a1gg1a1g1a91gg
+    gg1a11a91g1a1ggg
+    ggg1aa91gg1a1ggg
+    gggg1a91gg191ggg
+    ggggg1a91g191ggg
+    gggggg1a9191gggg
+    ggggggg1a91ggggg
+    ggggggg1a81ggggg
+    gggggg1a981ggggg
+    gggggg1a981ggggg
+    ggggg1aa9881gggg
+    gg6g1a999888 16g
+    g6g1111111111g6g
+    ggg6ggg6gg6ggggg
+'''), coll=3)
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
 
 # =============================================================== sewer ===
-# Flagstones: big slabs with dark mortar, a light edge on top and left,
-# wet shine in a few places.
-def flagstones(seed, slabs):
-    """slabs: list of (x0, y0, x1, y1, tone) rectangles; mortar between."""
+def flagstones(seed, slabs, moss=()):
+    """slabs: (x0, y0, x1, y1, tone); mortar between; moss: (x, y) spots."""
     c = Canvas(16, 16, 2)
     for x0, y0, x1, y1, tone in slabs:
         c.rect(x0, y0, x1, y1, tone)
@@ -926,20 +1321,22 @@ def flagstones(seed, slabs):
         x, y = rnd.randrange(16), rnd.randrange(16)
         if c.get(x, y) == 4:
             c.set(x, y, 3)
+    for (x, y) in moss:
+        c.set(x, y, 7); c.set(x + 1, y, 8); c.set(x, y + 1, 8)
     return c.rows()
 
 
-mt('sw_floor0', 'sewer', 'FLOOR', flagstones(1, [(0, 0, 7, 6, 4), (9, 0, 15, 8, 4), (0, 8, 5, 15, 4), (7, 10, 15, 15, 4)]))
-mt('sw_floor1', 'sewer', 'FLOOR', flagstones(2, [(0, 0, 9, 4, 4), (11, 0, 15, 6, 3), (0, 6, 6, 12, 4), (8, 6, 15, 12, 4), (0, 14, 15, 15, 3)]))
-mt('sw_floor2', 'sewer', 'FLOOR', flagstones(3, [(0, 0, 5, 9, 3), (7, 0, 15, 5, 4), (7, 7, 12, 15, 4), (14, 7, 15, 15, 4), (0, 11, 5, 15, 4)]))
-mt('sw_floor_slime', 'sewer', 'SLOW', compose(
-    flagstones(1, [(0, 0, 7, 6, 4), (9, 0, 15, 8, 4), (0, 8, 5, 15, 4), (7, 10, 15, 15, 4)]), A('''
+SLABS0 = [(0, 0, 7, 6, 4), (9, 0, 15, 8, 4), (0, 8, 5, 15, 4), (7, 10, 15, 15, 4)]
+mt('sw_floor0', 'sewer', 'FLOOR', flagstones(1, SLABS0, [(8, 7)]))
+mt('sw_floor1', 'sewer', 'FLOOR', flagstones(2, [(0, 0, 9, 4, 4), (11, 0, 15, 6, 3), (0, 6, 6, 12, 4), (8, 6, 15, 12, 4), (0, 14, 15, 15, 3)], [(7, 13)]))
+mt('sw_floor2', 'sewer', 'FLOOR', flagstones(3, [(0, 0, 5, 9, 3), (7, 0, 15, 5, 4), (7, 7, 12, 15, 4), (14, 7, 15, 15, 4), (0, 11, 5, 15, 4)], [(6, 10), (13, 6)]))
+mt('sw_floor_slime', 'sewer', 'SLOW', compose(flagstones(1, SLABS0), A('''
     ................
     .....1777.......
     ...177888771....
-    ..17888998871...
-    .178889999887...
-    .1788899988871..
+    ..17888888871...
+    .178888878887...
+    .1788888888871..
     .17888888888871.
     ..178888888871..
     ...1778888771...
@@ -952,7 +1349,7 @@ mt('sw_floor_slime', 'sewer', 'SLOW', compose(
     ................
 ''')))
 
-# The wall face: wet bricks in running bond, a mossy drip or two.
+# The wall face: wet bricks, moss drips, glints of water.
 _bricks = A('''
     1111111111111111
     1444442144444421
@@ -1009,48 +1406,106 @@ mt('sw_wall_slime', 'sewer', 'SOLID', compose(_bricks, A('''
     ................
 ''')))
 
-# Black water: a slow glint moves across it.
+# Teal water: a glow in it, ripples and foam that drift.
 _sw1 = A('''
-    aaaaaaaaaaaaaaaa
-    abbbaaaaaaabbbaa
-    aacbbaaaaaaacbaa
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaabbbaaaaaaa
-    aaaaaaacbbaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    abbbaaaaaaaabbba
-    aacbaaaaaaaaacba
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaabbbbaaaaaa
-    aaaaaaaacbaaaaaa
-    aaaaaaaaaaaaaaaa
+    9999999999999999
+    9aaa99999999aaa9
+    99bba9999999ba99
+    9999999999999999
+    9999999999999999
+    999999aaa9999999
+    9999999cba999999
+    9999999999999999
+    9999999999999999
+    9aaa9999999aaaa9
+    99ba999999999ba9
+    9999999999999999
+    9999999999999999
+    999999aaaa999999
+    99999999cb999999
+    9999999999999999
 ''')
 _sw2 = A('''
-    aaaaaaaaaaaaaaaa
-    aaabbbaaaaaaabbb
-    aaaacbbaaaaaaacb
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaaaabbbaaaaa
-    aaaaaaaaacbbaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaabbbaaaaaaaabb
-    aaaacbaaaaaaaaac
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
-    aaaaaaaabbbbaaaa
-    aaaaaaaaaacbaaaa
-    aaaaaaaaaaaaaaaa
+    9999999999999999
+    999aaa9999999aaa
+    9999bba9999999ba
+    9999999999999999
+    9999999999999999
+    99999999aaa99999
+    999999999cba9999
+    9999999999999999
+    9999999999999999
+    999aaa99999999aa
+    9999ba9999999999
+    9999999999999999
+    9999999999999999
+    99999999aaaa9999
+    9999999999cb9999
+    9999999999999999
 ''')
 mt('sw_water', 'sewer', 'WATER', frames=[_sw1, _sw2], anim_speed=20)
+_swlily = A('''
+    ................
+    ................
+    ....11111.......
+    ...1888888 1....
+    ..18888888 81...
+    ..188178888 1...
+    ..18817888881...
+    ..188888188 1...
+    ...18888881.....
+    ....111111......
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+''')
+_swlily = [r.replace(' ', '8') for r in _swlily]
+mt('sw_lilypad', 'sewer', 'WATER', frames=[compose(_sw1, _swlily), compose(_sw2, _swlily)], anim_speed=20)
 
-# The channel's edge: floor, then a stone lip, then the drop to the water.
-mt('sw_water_edge_n', 'sewer', 'FLOOR', compose(
-    flagstones(4, [(0, 0, 6, 7, 4), (8, 0, 15, 7, 4)]), A('''
+# A waterfall pouring down the wall into the channel.
+_wf1 = A('''
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ab9ba9b9ab9ba9b
+    9ac9ba9b9ab9ca9b
+    9bcbbcbbbbcbbcbb
+    bccbbcbcbccbbccb
+    cbbccbbcbcbbcbcc
+''')
+_wf2 = A('''
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ab9ba9b9ab9ba9
+    b9ac9ba9b9ab9ca9
+    bbcbbcbbbcbbbcbb
+    cbbcbccbbccbcbbc
+    bccbcbbcbcbccbcb
+''')
+mt('sw_waterfall', 'sewer', 'SOLID', frames=[_wf1, _wf2], anim_speed=4)
+
+# The channel's banks.
+mt('sw_water_edge_n', 'sewer', 'FLOOR', compose(flagstones(4, [(0, 0, 6, 7, 4), (8, 0, 15, 7, 4)]), A('''
     ................
     ................
     ................
@@ -1065,31 +1520,88 @@ mt('sw_water_edge_n', 'sewer', 'FLOOR', compose(
     3333333333333333
     2222222222222222
     1111111111111111
-    aaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaa
+    9999999999999999
+    9999999999999999
+''')))
+mt('sw_water_edge_s', 'sewer', 'FLOOR', compose(flagstones(6, [(0, 12, 6, 15, 4), (8, 12, 15, 15, 4)]), A('''
+    9999999999999999
+    9aaa99999999aaa9
+    99ba9999999999a9
+    9999999999999999
+    9999999999999999
+    9999999aaa999999
+    99999999ba999999
+    9999999999999999
+    1111111111111111
+    3333333333333333
+    5555555555555555
+    4444444444444444
+    ................
+    ................
+    ................
+    ................
 ''')))
 
 # An iron grate over the channel: bars both ways, black water beneath.
 mt('sw_grate', 'sewer', 'FLOOR', A('''
     5444444444444445
     4511511511511514
-    41aa1aa1aa1aa114
-    41aa1aa1aa1aa114
+    4199199199199114
+    4199199199199114
     4511511511511514
-    41aa1aa1aa1aa114
-    41aa1aa1aa1aa114
+    4199199199199114
+    4199199199199114
     4511511511511514
-    41aa1aa1aa1aa114
-    41aa1aa1aa1aa114
+    4199199199199114
+    4199199199199114
     4511511511511514
-    41aa1aa1aa1aa114
-    41aa1aa1aa1aa114
+    4199199199199114
+    4199199199199114
     4511511511511514
     4111111111111114
     3333333333333333
 '''))
 
-# A rusted pipe mouth in the wall, dripping.
+
+# The great drain: a round grate two tiles across.
+def drain():
+    c = Canvas(32, 32, 4)
+    base = flagstones(7, [(0, 0, 15, 15, 4)])
+    for ty in range(2):
+        for tx in range(2):
+            c.blit(base, tx * 16, ty * 16)
+    # the stone ring
+    for y in range(32):
+        for x in range(32):
+            dx, dy = x + 0.5 - 16, y + 0.5 - 16
+            d = (dx * dx + dy * dy) ** 0.5
+            if d <= 14.5:
+                c.set(x, y, 9)   # water below
+            if 11.5 < d <= 14.5:
+                c.set(x, y, 5 if dx + dy < 0 else 3)
+            if 13.5 < d <= 14.5 or 11.5 < d <= 12.5:
+                c.set(x, y, 1)
+    # the bars
+    for i in range(-10, 11, 4):
+        for t in range(-12, 13):
+            if (i * i + t * t) ** 0.5 <= 11.5:
+                c.set(16 + i, 16 + t, 2)
+                c.set(16 + t, 16 + i, 2)
+    for y in range(4, 28):
+        for x in range(4, 28):
+            dx, dy = x + 0.5 - 16, y + 0.5 - 16
+            if (dx * dx + dy * dy) ** 0.5 <= 11.5 and c.get(x, y) == 9 and (x + y) % 5 == 0:
+                c.set(x, y, 0xa)
+    return c.rows()
+
+
+_drain = drain()
+mt('sw_drain_nw', 'sewer', 'FLOOR', slice16(_drain, 0, 0))
+mt('sw_drain_ne', 'sewer', 'FLOOR', slice16(_drain, 1, 0))
+mt('sw_drain_sw', 'sewer', 'FLOOR', slice16(_drain, 0, 1))
+mt('sw_drain_se', 'sewer', 'FLOOR', slice16(_drain, 1, 1))
+
+# Pipes: a rusted mouth in the wall, and a copper run along it.
 mt('sw_pipe', 'sewer', 'SOLID', compose(_bricks, A('''
     ................
     ................
@@ -1097,8 +1609,8 @@ mt('sw_pipe', 'sewer', 'SOLID', compose(_bricks, A('''
     .1dddddddddddd1.
     .1d5ddddddddd51.
     .1dd11111111dd1.
-    .1d1aaaaaaaa1d1.
-    .1d1aaaaaaaa1d1.
+    .1d19999999a1d1.
+    .1d19999999a1d1.
     .1d1aaaaaaaa1d1.
     .1dd11111111dd1.
     .1dddddddddddd1.
@@ -1108,8 +1620,26 @@ mt('sw_pipe', 'sewer', 'SOLID', compose(_bricks, A('''
     .......b........
     ................
 ''')))
+mt('sw_pipe_h', 'sewer', 'SOLID', compose(_bricks, A('''
+    ................
+    ................
+    ................
+    ................
+    1111111111111111
+    5555555555555555
+    dddddddddd1ddddd
+    dddddddd1d5d1ddd
+    dddddddd1555 1dd
+    dddddddd1d5d1ddd
+    dddddddddd1ddddd
+    1111111111111111
+    ................
+    ................
+    ................
+    ................
+''')))
+METATILES[-1]['art'] = [r.replace(' ', '5') for r in METATILES[-1]['art']]
 
-# A ladder up into the dark.
 mt('sw_ladder', 'sewer', 'EXIT', compose(_bricks, A('''
     ................
     ...1dd1..1dd1...
@@ -1128,26 +1658,44 @@ mt('sw_ladder', 'sewer', 'EXIT', compose(_bricks, A('''
     ...1dd1..1dd1...
     ...1111..1111...
 ''')))
-
-# The drain hole: a round dark mouth in the wall, a stone ring.
+# a ladder down into the water, from the floor
+mt('sw_ladder_down', 'sewer', 'FLOOR', compose(_sw1, A('''
+    5444444444444445
+    4111111111111114
+    41dd1......1dd14
+    41dd1dddddd1dd14
+    41dd1111111ddd14
+    41dd1......1dd14
+    41dd1dddddd1dd14
+    41dd1111111ddd14
+    41dd1......1dd14
+    41dd1dddddd1dd14
+    41dd1111111ddd14
+    .1dd1......1dd1.
+    .1dd1dddddd1dd1.
+    .1dd1111111ddd1.
+    .1dd1......1dd1.
+    .1111......1111.
+''')))
 mt('sw_hole', 'sewer', 'EXIT', compose(_bricks, A('''
     ................
     ....11111111....
     ..115666655511..
     .1566111111551.
     .156111111115541
-    .15111aaaa111541
-    .1511aaaaaaa1541
-    .1511aaaaaaa1541
-    .1511aaaaaaa1541
-    .1511aaaaaaa1541
-    .15111aaaaa11441
+    .15111999911 541
+    .1511999999915 1
+    .15119999999154
+    .1511999999915 1
+    .15119999999154
+    .15111999991 441
     .145111111114431
     .14441111144431.
     ..11444444431...
     ....11111111....
     ................
 ''')))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
 
 # A wall sconce burning.
 _sconce = compose(_bricks, A('''
@@ -1188,49 +1736,147 @@ _sf2 = A('''
 ''')
 mt('sw_torch_lit', 'sewer', 'TORCH_LIT', frames=[compose(_sconce, _sf1), compose(_sconce, _sf2)], coll=3, anim_speed=6)
 
-# An archway: the dark under the vault, the keystone above.
+# A cluster of candles on the floor, three flames.
+_cand = compose(flagstones(1, SLABS0), A('''
+    ................
+    ................
+    ................
+    ................
+    ................
+    ......1.........
+    ....1161..1.....
+    ...16661.161....
+    ...16651166 1...
+    ..1166511665 1..
+    ..16661166651...
+    ..1665116651....
+    ..1665 16651....
+    ..11111111111...
+    ..1222222222 1..
+    ...111111111....
+'''))
+_cand = [r.replace(' ', '6') for r in _cand]
+_cf1 = A('''
+    ................
+    ................
+    ......e.........
+    .....efe...e....
+    ....1efe1.efe...
+    ....1ee1.1efe1..
+''')
+_cf2 = A('''
+    ................
+    ......e.........
+    .....efe...e....
+    .....efe..efe...
+    ....1ee1.1efe1..
+    .....11..1ee1...
+''')
+mt('sw_candles', 'sewer', 'SOLID', frames=[compose(_cand, _cf1), compose(_cand, _cf2)], anim_speed=7)
+
+# A hanging lantern on the wall, chained.
+_lan = compose(_bricks, A('''
+    .......1........
+    .......1........
+    .......1........
+    ......111.......
+    .....1ddd1......
+    ....1deeed1.....
+    ....1deffd1.....
+    ....1deffd1.....
+    ....1deeed1.....
+    ....1ddddd1.....
+    .....1ddd1......
+    ......111.......
+    ................
+    ................
+    ................
+    ................
+'''))
+_lg1 = A('''
+    ................
+    ................
+    ................
+    ................
+    ...e.......e....
+    ................
+    ..e.........e...
+    ................
+    ...e.......e....
+''')
+_lg2 = A('''
+    ................
+    ................
+    ................
+    ...e.......e....
+    ................
+    ..e.........e...
+    ................
+    ..e.........e...
+    ................
+''')
+mt('sw_lantern', 'sewer', 'SOLID', frames=[compose(_lan, _lg1), compose(_lan, _lg2)], anim_speed=10)
+
+# Banners on the wall: teal and rust, a gold sigil on each.
+mt('sw_banner_teal', 'sewer', 'SOLID', compose(_bricks, A('''
+    ................
+    ..111111111111..
+    ..1aaaaaaaaaa1..
+    ..1a9aaaaaa9a1..
+    ..1aa9aaaa9aa1..
+    ..1aaa9ee9aaa1..
+    ..1aaaefffaaa1..
+    ..1aa9effeaaa1..
+    ..1aaa9ee9aaa1..
+    ..1aa9aaaa9aa1..
+    ..1a9aaaaaa9a1..
+    ..1aaaaaaaaaa1..
+    ..19aaaaaaaa91..
+    ..19a9aaaa9a91..
+    ...11911911 1...
+    ................
+''')))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
+mt('sw_banner_red', 'sewer', 'SOLID', compose(_bricks, A('''
+    ................
+    ..111111111111..
+    ..1dddddddddd1..
+    ..1d1dddddd1d1..
+    ..1dd1dddd1dd1..
+    ..1ddd1ee1ddd1..
+    ..1dddefffddd1..
+    ..1ddd1effddd1..
+    ..1ddd1ee1ddd1..
+    ..1dd1dddd1dd1..
+    ..1d1dddddd1d1..
+    ..1dddddddddd1..
+    ..11dddddddd11..
+    ..11d1dddd1d11..
+    ...11111111 1...
+    ................
+''')))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
+
 mt('sw_arch', 'sewer', 'SOLID', A('''
-    2222222222222222
-    2555553255555532
-    2544443254444432
-    2544443254444432
-    2333332233333322
-    5532555553255555
-    4432544443254444
-    4432544443254444
-    3322333332233333
-    2555553255555532
-    2544111111114432
-    2541aaaaaaaa1432
-    233aaaaaaaaaa322
-    55aaaaaaaaaaaa55
-    44aaaaaaaaaaaa44
-    33aaaaaaaaaaaa33
+    1111111111111111
+    1444442144444421
+    1433332143333321
+    1433332143333321
+    1222221122222211
+    4421444443214444
+    3321433333213333
+    3321433333213333
+    2211222222112222
+    1444442144444421
+    1433111111114321
+    1431999999991321
+    1119999999999111
+    4499999999999944
+    3399999999999933
+    2299999999999922
 '''), coll=12)
 
-# The merchant's counter: a plank top on a stone base, gold coin on it.
-mt('sw_counter', 'sewer', 'SOLID', A('''
-    ................
-    ................
-    1111111111111111
-    1dddddddddddddd1
-    1d5ddddddddddd51
-    1dddddddddddddd1
-    1111111111111111
-    1dddddddddddddd1
-    1d1111111111111d
-    1d14444444444d1d
-    1d14555555554d1d
-    1d14333333334d1d
-    1d14444444444d1d
-    1d11111111111d1d
-    1dddddddddddddd1
-    1111111111111111
-'''))
-
-# Rubble: fallen blocks on the floor.
-mt('sw_rubble', 'sewer', 'SOLID', compose(
-    flagstones(5, [(0, 0, 7, 6, 4), (9, 0, 15, 8, 4), (0, 8, 5, 15, 4), (7, 10, 15, 15, 4)]), A('''
+mt('sw_rubble', 'sewer', 'SOLID', compose(flagstones(5, SLABS0), A('''
     ................
     ......11111.....
     .....1566651....
@@ -1247,4 +1893,167 @@ mt('sw_rubble', 'sewer', 'SOLID', compose(
     ..1333333314431.
     ..1111111111111.
     ................
+''')))
+
+# ------------------------------------------------------------- props --
+# Props stand on flagstones drawn in the props palette: body 5, lit
+# edges F, mortar 1.
+def prop_floor(seed, slabs):
+    c = Canvas(16, 16, 1)
+    for x0, y0, x1, y1 in slabs:
+        c.rect(x0, y0, x1, y1, 5)
+        c.hline(x0, x1, y0, 0xf)
+        c.vline(x0, y0, y1, 0xf)
+    return c.rows()
+
+
+PFLOOR = prop_floor(1, [(0, 0, 7, 6), (9, 0, 15, 8), (0, 8, 5, 15), (7, 10, 15, 15)])
+
+
+def on_floor(rows):
+    return compose(PFLOOR, [r.replace('g', '.') for r in rows])
+
+
+# The merchant's counter: planks on a stone base, gold coins on it.
+mt('sw_counter', 'props', 'SOLID', on_floor(A('''
+    gggggggggggggggg
+    gggggggggggggggg
+    1111111111111111
+    1444444444444441
+    143333c33333c341
+    1433333333333341
+    1222222222222221
+    1444444444444441
+    1431111111111341
+    1431555555551341
+    1431566666651341
+    1431533333351341
+    1431555555551341
+    1431111111111341
+    1222222222222221
+    1111111111111111
+''')))
+
+# The peddler's stall: a red striped awning, gold fringe, two halves.
+_awn = A('''
+    gggggggggggggggg
+    ggggggg111111111
+    gggggg1bbaabbaab
+    ggggg1bbaabbaabb
+    gggg1bbaabbaabba
+    ggg1bbaabbaabbaa
+    gg1bbaabbaabbaab
+    g1bbaabbaabbaabb
+    g1cccccccccccccc
+    g1c1c1c1c1c1c1c1
+    g1cgcgcgcgcgcgcg
+    g1gggggggggggggg
+    g1gggggggggggggg
+    g1gggggggggggggg
+    g1gggggggggggggg
+    g1gggggggggggggg
+''')
+mt('sw_awning_l', 'props', 'SOLID', on_floor(_awn))
+mt('sw_awning_r', 'props', 'SOLID', on_floor(hflip(_awn)))
+
+# The gatekeeper's rug: a violet circle with gold runes, two tiles across.
+def rug():
+    c = Canvas(32, 32, 5)
+    for ty in range(2):
+        for tx in range(2):
+            c.blit(PFLOOR, tx * 16, ty * 16)
+    for y in range(32):
+        for x in range(32):
+            dx, dy = x + 0.5 - 16, y + 0.5 - 16
+            d = (dx * dx + dy * dy) ** 0.5
+            if d <= 15:
+                c.set(x, y, 0xe if d > 12.5 else 0xd)
+            if 14 < d <= 15 or 11.5 < d <= 12.5:
+                c.set(x, y, 1)
+            if 13 < d <= 13.8 and (x + y) % 2 == 0:
+                c.set(x, y, 0xc)
+    runes = [(16, 8), (16, 24), (8, 16), (24, 16), (11, 11), (21, 11), (11, 21), (21, 21)]
+    for (rx, ry) in runes:
+        c.set(rx, ry, 0xc); c.set(rx - 1, ry, 0xc); c.set(rx + 1, ry, 0xc); c.set(rx, ry - 1, 0xc); c.set(rx, ry + 1, 0xc)
+    c.set(16, 16, 0xf); c.set(15, 16, 0xc); c.set(17, 16, 0xc); c.set(16, 15, 0xc); c.set(16, 17, 0xc)
+    return c.rows()
+
+
+_rug = rug()
+mt('sw_rug_nw', 'props', 'FLOOR', slice16(_rug, 0, 0))
+mt('sw_rug_ne', 'props', 'FLOOR', slice16(_rug, 1, 0))
+mt('sw_rug_sw', 'props', 'FLOOR', slice16(_rug, 0, 1))
+mt('sw_rug_se', 'props', 'FLOOR', slice16(_rug, 1, 1))
+
+mt('sw_barrel', 'props', 'SOLID', on_floor(L({'g': 'g'}, '''
+    gggggggggggggggg
+    ggggg111111ggggg
+    ggg1143333411ggg
+    gg11555555521gg
+    gg14433333421gg
+    gg14444433421gg
+    gg14444433421gg
+    gg15555555521gg
+    gg14444433421gg
+    gg14444433421gg
+    gg14433333421gg
+    gg15555555521gg
+    gg14433333421gg
+    ggg1143333411ggg
+    ggggg111111ggggg
+    gggggggggggggggg
+''')))
+mt('sw_crate', 'props', 'SOLID', on_floor(L({'g': 'g'}, '''
+    gggggggggggggggg
+    gg111111111111gg
+    gg144444444441gg
+    gg143333333331gg
+    gg143122222331gg
+    gg143122222331gg
+    gg141333333131gg
+    gg141222222231gg
+    gg143122222331gg
+    gg143122222331gg
+    gg141333333131gg
+    gg141222222231gg
+    gg143333333331gg
+    gg122222222221gg
+    gg111111111111gg
+    gggggggggggggggg
+''')))
+mt('sw_skull', 'props', 'FLOOR', on_floor(L({'g': 'g'}, '''
+    gggggggggggggggg
+    gggggggggggggggg
+    gggg1111111ggggg
+    ggg166666661gggg
+    gg16666666661ggg
+    gg16617661761ggg
+    gg16611661161ggg
+    gg176666666661gg
+    gg17661666617ggg
+    ggg1771111771ggg
+    gggg1766771gggg6
+    ggggg11111ggg166
+    gggggggggggg1667
+    gggg11gggggg1771
+    ggg1661gggg1771g
+    gggg11gggggg11gg
+''')))
+mt('sw_gold', 'props', 'FLOOR', on_floor(L({'g': 'g'}, '''
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggggggggggggg
+    ggggggg11ggggggg
+    gggggg1fc1gg11gg
+    ggg11g1cc1g1fc1g
+    gg1fc11111g1cc1g
+    gg1cc1fc1gg1111g
+    gg11111cc1ggg11g
+    gg1fcc1111gg1fc1
+    gg1cccc1fcc11cc1
+    gg11111ccccc1111
+    ggggg111111111gg
+    gggggggggggggggg
 ''')))

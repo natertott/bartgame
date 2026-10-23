@@ -1,188 +1,190 @@
 """The five NPCs, 16x32, feet on the bottom row. Palette 'folk': 1 outline,
-2-4 violet deep..light, 5-6 crimson dark..bright, 7-8 green dark..bright,
-9-A brown dark..light, B skin shadow, C skin, D silver, E white, F gold.
+2-3 purple hide dark..light, 4-5 pale skin shadow..light, 6-7 red
+dark..bright, 8-A violet dark..light, B gold, C gold dark, D white,
+E brown, F green.
 """
 from px import L
 
 NPC = {
-    # The Sage of the Drain: a silver skullcap, a river of white beard, a
-    # violet robe hemmed in gold, a staff with a gold orb.
-    'sage': L({' ': 3}, '''
-        .............1..
-        ............1f1.
-        .....1111...1a1.
-        ....1deed1..1a1.
-        ...1dddddd1.1a1.
-        ...1dcccccd11a1.
-        ...1cc1cc1c11a1.
-        ....1cccccc11a1.
-        ....1ceeeec11a1.
-        ...1eeeeeeee1a1.
-        ..1eeeeeeeeee1a1
-        ..1eeeeeeeeee1a1
-        ..1eeedeeedee1a1
-        ..13eeeeeeee31a1
-        .14 3eeeeee3 41a
-        .14  3eeee3  41a
-        .14   eeee   41a
-        .14 3 1ee1 3 41a
-        .13   3  3   31a
-        .13          31a
-        .13          31a
-        .13    fff   31a
-        ..1 3  fff  3 1a
-        ..1          1a.
-        ..1  3    3  1a.
-        ..13        31a.
-        ..1ffffffffff1a.
-        ..13        31a.
-        ..13        31a.
-        ..1222222222  1.
+    # The Pale Gatekeeper: a tall violet hat with a gold band, a long
+    # pale face and nose, white hair, a violet robe hemmed in gold, a
+    # staff crowned with a violet-glowing orb.
+    'sage': L({' ': 9}, '''
+        .......1.....1a1
+        ......181....1a1
+        ......181....1e1
+        .....1 81....1e1
+        .....1 81....1e1
+        ....1  881...1e1
+        ....1  881...1e1
+        ...1   8881..1e1
+        ...1bbbbbb1..1e1
+        .11        11 e1
+        1            1e1
+        .1111dd1dd1111e1
+        ....1d5551d1.1e1
+        ...1d1555551.1e1
+        ...1d1515151.1e1
+        ...1d1555541.1e1
+        ...1d15 5541.1e1
+        ....1d1554 1.1e1
+        .....1 44 1..1e1
+        ....1      1.1e1
+        ...1 8    8 1 e1
+        ...1 8    8 11e1
+        ...1 b    b 15e1
+        ...1 8    8 15e1
+        ..1   8  8   1e1
+        ..1          1e1
+        ..1bbbbbbbbbb1e1
+        ..1          1e1
+        ..18        81e1
+        ..18888888888 e1
         ..1111111111111.
         ................
     '''),
-    # The Merchant: a peaked crimson hood over a face in shadow, gold
-    # eyes, a cloak clasped in gold, a purse of gilt.
-    'merchant': L({' ': 6}, '''
-        .......11.......
-        ......1 51......
-        ......1  51.....
-        .....1   51.....
-        .....1    51....
-        ....1      51...
-        ....1  11  51...
-        ...1  1bb1  51..
-        ...1 1bbbb1 51..
-        ...1 1fb1f1 51..
-        ...1 1bbbb1 51..
-        ...1  1bb1  51..
-        ..1   1cc1   51.
-        ..1    f1    51.
-        ..1          51.
-        .1 5        551.
-        .1  5      55 1.
-        .1   5    55  1.
-        .1 c 5    55c 1.
-        .11c15    551c1.
-        .1ff11    5 11..
-        .1ff1     5  1..
-        ..11      55 1..
-        ...1 5    55 1..
-        ...1 5    55 1..
-        ...1 5    55 1..
-        ...1555555555 1.
-        ...1 9a1 1a9  1.
-        ...19aa1 1aa9 1.
-        ...1991..1991.1.
-        ...1111..1111...
-        ................
+    # The Billious Peddler: hunched under a red hood, purple hide, a
+    # hooked nose, gold eyes, a gold medallion, his pack behind him.
+    'merchant': L({' ': 7}, '''
+        ......11........
+        .....1  1.......
+        .....1  1.......
+        ....1    1......
+        ....1    1.11...
+        ...1      1ee1..
+        ...1  11  1eee1.
+        ..1  1331 1eee1.
+        ..1 13bb31 1ee1.
+        ..1 1b1b3 1 1e1.
+        ..1 133331 11e1.
+        ..1 12133 1  e1.
+        ..1  1 21 1  e1.
+        .1    11    1e1.
+        .1          1e1.
+        .1  6    6  1e1.
+        .1 6      6 1e1.
+        .1 6  bb  6 1e1.
+        .1 61 bb 16 1e1.
+        .1 6  bb  6 111.
+        .1 6      6 1...
+        .1 6      6 1...
+        .1 6      6 1...
+        .13 6    6 31...
+        .13        31...
+        .13 6    6 31...
+        .13        31...
+        .1 6666666  1...
+        .1  ee11ee  1...
+        .1  ee1 ee  1...
+        .1  11. 11  1...
+        .1111...1111....
     '''),
-    # The Hermit Knight: bald, a grey beard, dented plate gone dull, a
-    # crimson sash, a rusted sword hung at his hip.
-    'hermit': L({' ': 'd'}, '''
+    # The Hermit Knight: bald, a white beard, plate gone to rust, a
+    # crimson sash, a rusted sword at his hip.
+    'hermit': L({' ': 'e'}, '''
         ................
         .....111111.....
-        ....1cccccc1....
-        ...1ccccccccc1..
-        ...1cc1cc1cc1...
-        ...1cccccccc1...
-        ...1cbccccbc1...
-        ....1cddddc1....
-        ....1dedded1....
-        ...1deddddde1...
+        ....15555551....
+        ...1555555555 1.
+        ...1551551551...
+        ...15555555 1...
+        ...1545555451...
+        ....15dddd51....
+        ....1d1dd1d1....
+        ...1dddddddd1...
         ...1dddddddd1...
         ....1ddd1dd1....
         ..11 1dd11 11...
-        .1  1 e  1  1...
+        .1  1 b  1  1...
         .1   1  1    1..
-        1 e   1 1  1 11.
-        1    2 e 2   1a1
-        1 2 1     1 2191
-        .11 1 2 2 1 1191
-        ....1  e  1.1a91
-        ....1     1.1a91
-        ....1 6 6 1.1a91
-        ....1 6 6 1.1a91
-        ....12   21..1f1
-        ....1 2 2 1..1f1
-        ....1 1 1 1..1f1
+        1 c   1 1  1 11.
+        1    8 c 8   1c1
+        1 8 1     1 8161
+        .11 1 8 8 1 1161
+        ....1  c  1.1c61
+        ....1     1.1c61
+        ....1 7 7 1.1c61
+        ....1 7 7 1.1c61
+        ....18   81..1b1
+        ....1 8 8 1..1b1
+        ....1 1 1 1..1b1
         ....1 1 1 1...1.
         ....1 1 1 1.....
         ....1 1 1 1.....
-        ...19 11 91.....
-        ...1999 9991....
+        ...1c 11 c1.....
+        ...1ccc ccc1....
         ...1111.1111....
     '''),
     # The Weeping Nun: a white wimple, a dark habit, folded hands, a gold
     # cross, a tear on her cheek.
-    'nun': L({' ': 2}, '''
+    'nun': L({' ': 8}, '''
         ................
         ................
         ......1111......
-        ....11eeee11....
-        ...1eeeeeeee1...
-        ...1ee1ccc1ee1..
-        ...1e1ccccc1e1..
-        ...1e1c1c1c1e1..
-        ...1e1cccbc1e1..
-        ...1e1cccdc1e1..
-        ...1e11ccc11e1..
-        ...1eee111eee1..
-        ...1eeeee eee1..
-        ..1 eee   eee 1.
-        ..1  e     e  1.
-        .1    e e e    1
-        .1    1eee1    1
-        .1    1e e1    1
-        .1   3 1e1  3  1
-        .1   3  f   3  1
-        .1   3 fff  3  1
-        .1  3   f    3 1
-        .1  3        3 1
-        .1  3        3 1
-        .1  3  3  3  3 1
-        .1 3   3  3   31
-        .1 3   3  3   31
-        .1 3   3  3   31
-        .1    3    3   1
+        ....11dddd11....
+        ...1dddddddd1...
+        ...1dd15551dd1..
+        ...1d1555551d1..
+        ...1d1515151d1..
+        ...1d15554 1d1..
+        ...1d1555d51d1..
+        ...1d11555 1d1..
+        ...1ddd111ddd1..
+        ...1ddddd ddd1..
+        ..1 ddd   ddd 1.
+        ..1  d     d  1.
+        .1    d d d    1
+        .1    1ddd1    1
+        .1    1d d1    1
+        .1   9 1d1  9  1
+        .1   9  b   9  1
+        .1   9 bbb  9  1
+        .1  9   b    9 1
+        .1  9        9 1
+        .1  9        9 1
+        .1  9  9  9  9 1
+        .1 9   9  9   91
+        .1 9   9  9   91
+        .1 9   9  9   91
+        .1    9    9   1
         .1             1
         .11111111111111.
         ................
     '''),
     # The Blind Gardener: a green hood, a blindfold, a grey beard, a
     # brown apron, a rake in his hand and a flower in his belt.
-    'gardener': L({' ': 8}, '''
+    'gardener': L({' ': 'f'}, '''
         ...............1
-        ......1111....1a
-        .....1  771...1a
-        ....1    771..1a
-        ....1      1..1a
-        ...1  1111  1.1a
-        ...1 1cccc1 1.1a
-        ...1 1eeee1 1.1a
-        ...1 1cccc1 1.1a
-        ...1 1cbbc1 1.1a
-        ...1 1dddd1 1.1a
-        ....1ddddd1..1a1
-        ....1ddddd1..1a1
-        ...1 1ddd1  1a1.
-        ..1   1d1   1a1.
-        ..1 7     7 1a1.
-        .1  1aaaaa1  1a1
-        .1  1a9a9a1  1a1
-        .1 c1aaaaa1c 1a1
-        .11c1a6fa91c11a1
-        .1cc1aaaaa1cc1a1
-        ..111a9aaa1111a1
-        ....1aaaaa1...1a
-        ....1aaaaa1..1a1
-        ....1a9aa91..1a1
-        ....1aaaaa1..1a1
-        ....1 7 7 1..1a1
-        ....1 7 7 1...1.
-        ....1 7 7 1.....
-        ...19 11 91.....
-        ...1999 9991....
+        ......1111....1e
+        .....1  ee1...1e
+        ....1    ee1..1e
+        ....1      1..1e
+        ...1  1111  1.1e
+        ...1 155551 1.1e
+        ...1 1dddd1 1.1e
+        ...1 155551 1.1e
+        ...1 154451 1.1e
+        ...1 1dddd1 1.1e
+        ....1ddddd1..1e1
+        ....1ddddd1..1e1
+        ...1 1ddd1  1e1.
+        ..1   1d1   1e1.
+        ..1 e     e 1e1.
+        .1  1eeeee1  1e1
+        .1  1ecece1  1e1
+        .1 51eeeee15 1e1
+        .11515e7be1511e1
+        .1551eeeee155 e1
+        ..111ecee11111e1
+        ....1eeeee1...1e
+        ....1eeeee1..1e1
+        ....1ecee c1.1e1
+        ....1eeeee1..1e1
+        ....1 e e 1..1e1
+        ....1 e e 1...1.
+        ....1 e e 1.....
+        ...1c 11 c1.....
+        ...1ccc ccc1....
         ...1111.1111....
     '''),
 }

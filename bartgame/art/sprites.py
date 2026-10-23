@@ -7,6 +7,7 @@ from hero import FRAMES as HERO, SWORD
 from monsters import BEETLE, BAT, SLIME, SPITTER, KNIGHT, KSWORD, BOSS
 from items import ITEMS, FX, PROJ
 from folk import NPC
+from portraits import PORTRAITS
 
 SHEETS = []
 
@@ -30,3 +31,4 @@ sheet('fx', 'fx', 16, 16, FX)
 sheet('proj', 'fx', 8, 8, PROJ)
 sheet('npc', 'folk', 16, 32, NPC)
 sheet('boss', 'blight', 32, 32, BOSS)
+sheet('portrait', 'portrait', 32, 32, PORTRAITS)

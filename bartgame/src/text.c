@@ -1,15 +1,23 @@
-/* BARTGAME: BG0 text, the message box, the HUD. BG0 is 32x32 tiles at
-   screenblock 23, charblock 2, palette 15. Tiles 0..94 are the font
-   (ASCII 32..126), then the HUD tiles. */
+/* BARTGAME: BG0 text, the message box with portraits, the shop, the HUD
+   and the mini-map. BG0 is 32x32 tiles at screenblock 23, charblock 2,
+   palette 15 (palette 14 is the same with gold ink). Tiles 0..94 are the
+   font (ASCII 32..126), then the HUD tiles. */
 #include "gba.h"
 #include "video.h"
 #include "text.h"
 #include "player.h"
 #include "sound.h"
+#include "actor.h"
+#include "objects.h"
+#include "world.h"
+#include "game.h"
 #include "assets.h"
 
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL15 (15 << 12)
+#define PAL14 (14 << 12)
+#define SWORD_TILE 8     /* player.c streams the sword sheet here */
+#define MINIMAP_TILE 16  /* 16 OBJ tiles the CPU draws the map into */
 
 static u16 sBg0[32 * 32] ALIGN4;
 static u8 sBg0Dirty;
@@ -32,13 +40,26 @@ void bg0_put(int tx, int ty, u16 tile) {
     sBg0Dirty = 1;
 }
 
-void bg0_print(int tx, int ty, const char* s) {
+static void bg0_print_pal(int tx, int ty, const char* s, u16 pal) {
     while (*s) {
         char ch = *s++;
-        if (ch >= 32 && ch < 127)
-            bg0_put(tx, ty, ch == ' ' ? 0 : (ch - 32));
+        if (tx >= 0 && tx < 29 && ty >= 0 && ty < 32) {
+            if (ch > 32 && ch < 127)
+                sBg0[ty * 32 + tx] = (ch - 32) | pal;
+            else if (ch == ' ')
+                sBg0[ty * 32 + tx] = 0;
+        }
         tx++;
     }
+    sBg0Dirty = 1;
+}
+
+void bg0_print(int tx, int ty, const char* s) {
+    bg0_print_pal(tx, ty, s, PAL15);
+}
+
+void bg0_print_gold(int tx, int ty, const char* s) {
+    bg0_print_pal(tx, ty, s, PAL14);
 }
 
 void bg0_print_num(int tx, int ty, int n, int width) {
@@ -96,7 +117,6 @@ void text_flush(void) {
 #define TB_Y 14
 #define TB_W 28
 #define TB_H 6
-#define TB_COLS 25
 #define TB_ROWS 3
 
 static const char* sTbText;
@@ -105,21 +125,46 @@ u8 gTbActive; /* probes read it */
 static u8 sTbCol, sTbRow, sTbWait, sTbDone;
 static const char* const* sMenuOpts;
 static s8 sMenuCount, sMenuCursor, sMenuResult;
+static s8 sTbPortrait = -1;
+static u16 sTbPortraitTile;
+
+static int tb_text_x(void) {
+    return TB_X + (sTbPortrait >= 0 ? 6 : 2);
+}
+
+static int tb_text_y(void) {
+    return TB_Y + (sTbPortrait >= 0 ? 2 : 1);
+}
+
+static int tb_cols(void) {
+    return sTbPortrait >= 0 ? 21 : 25;
+}
 
 static void tb_clear_lines(void) {
-    bg0_fill(TB_X + 2, TB_Y + 1, TB_COLS, TB_ROWS, HT_BOX_FILL);
+    bg0_fill(tb_text_x(), tb_text_y(), tb_cols(), TB_ROWS, HT_BOX_FILL);
     sTbCol = 0;
     sTbRow = 0;
 }
 
-void textbox_open(const char* s) {
+/* A speaker's name in gold over the text, their portrait at the left. */
+void textbox_open_named(const char* name, int portrait, const char* s) {
+    sTbPortrait = portrait;
+    if (portrait >= 0)
+        sTbPortraitTile = sprite_load_sheet(SHEET_PORTRAIT);
     sTbText = s;
     sTbPos = s;
     gTbActive = 1;
     sTbDone = 0;
     sTbWait = 0;
+    sMenuCount = 0;
     bg0_frame(TB_X, TB_Y, TB_W, TB_H);
+    if (name)
+        bg0_print_gold(tb_text_x(), TB_Y + 1, name);
     tb_clear_lines();
+}
+
+void textbox_open(const char* s) {
+    textbox_open_named(NULL, -1, s);
 }
 
 bool8 textbox_active(void) {
@@ -129,7 +174,14 @@ bool8 textbox_active(void) {
 void textbox_close(void) {
     gTbActive = 0;
     sMenuCount = 0;
+    sTbPortrait = -1;
     bg0_fill(TB_X, TB_Y, TB_W, TB_H, 0);
+}
+
+void textbox_draw(void) {
+    if (!gTbActive || sTbPortrait < 0)
+        return;
+    draw_sprite(TB_X * 8 + 8, TB_Y * 8 + 8, SHEET_PORTRAIT, sTbPortraitTile, sTbPortrait, 0, 0, PAL_OBJ_PORTRAIT);
 }
 
 /* A prompt on the first line, then up to two options with a cursor. */
@@ -148,8 +200,8 @@ int textbox_menu_result(void) {
 static void menu_draw(void) {
     int i;
     for (i = 0; i < sMenuCount; i++) {
-        bg0_put(TB_X + 2, TB_Y + 2 + i, (i == sMenuCursor) ? HT_CURSOR : HT_BOX_FILL);
-        bg0_print(TB_X + 4, TB_Y + 2 + i, sMenuOpts[i]);
+        bg0_put(tb_text_x(), tb_text_y() + 1 + i, (i == sMenuCursor) ? HT_CURSOR : HT_BOX_FILL);
+        bg0_print(tb_text_x() + 2, tb_text_y() + 1 + i, sMenuOpts[i]);
     }
 }
 
@@ -202,6 +254,7 @@ void textbox_update(void) {
         return;
     }
     int per = (gKeysHeld & KEY_B) ? 40 : 2;
+    int cols = tb_cols();
     for (i = 0; i < per; i++) {
         char ch = *sTbPos;
         if (ch == 0 || ch == '|') {
@@ -218,7 +271,7 @@ void textbox_update(void) {
             sTbPos++;
         } else {
             /* wrap whole words */
-            if (sTbCol > 0 && ch != ' ' && sTbCol + word_len(sTbPos) > TB_COLS) {
+            if (sTbCol > 0 && ch != ' ' && sTbCol + word_len(sTbPos) > cols) {
                 sTbCol = 0;
                 sTbRow++;
             }
@@ -226,7 +279,7 @@ void textbox_update(void) {
                 sTbDone = 1;
                 return;
             }
-            bg0_put(TB_X + 2 + sTbCol, TB_Y + 1 + sTbRow, ch == ' ' ? HT_BOX_FILL : (ch - 32));
+            bg0_put(tb_text_x() + sTbCol, tb_text_y() + sTbRow, ch == ' ' ? HT_BOX_FILL : (ch - 32));
             sTbCol++;
             sTbPos++;
             if ((i & 3) == 0 && ch != ' ')
@@ -239,15 +292,113 @@ void textbox_update(void) {
     }
 }
 
+/* --------------------------------------------------------------- shop -- */
+#define SH_X 1
+#define SH_Y 7
+#define SH_W 28
+#define SH_H 13
+
+static const ShopItem* sShopItems;
+static u8 sShopCount, sShopCursor, sShopActive;
+static s8 sShopResult;
+static u16 sShopIconTile;
+
+static void shop_refresh(void) {
+    int i;
+    for (i = 0; i < sShopCount; i++)
+        bg0_put(SH_X + 3, SH_Y + 3 + i * 2, (i == sShopCursor) ? HT_CURSOR : HT_BOX_FILL);
+    bg0_fill(SH_X + 2, SH_Y + 8, SH_W - 4, 2, HT_BOX_FILL);
+    bg0_print(SH_X + 2, SH_Y + 8, sShopItems[sShopCursor].desc1);
+    bg0_print(SH_X + 2, SH_Y + 9, sShopItems[sShopCursor].desc2);
+}
+
+void shop_open(const char* title, const ShopItem* items, int n) {
+    int i;
+    sShopItems = items;
+    sShopCount = n > 2 ? 2 : n;
+    sShopCursor = 0;
+    sShopResult = -2;
+    sShopActive = 1;
+    sShopIconTile = items_sheet_tile();
+    bg0_frame(SH_X, SH_Y, SH_W, SH_H);
+    bg0_print_gold(SH_X + 2, SH_Y + 1, title);
+    for (i = 0; i < 26; i++)
+        bg0_put(SH_X + 1 + i, SH_Y + 2, HT_RULE);
+    for (i = 0; i < sShopCount; i++) {
+        int row = SH_Y + 3 + i * 2;
+        bg0_print(SH_X + 7, row, items[i].name);
+        bg0_put(SH_X + 21, row, HT_GILT);
+        bg0_print_num(SH_X + 22, row, items[i].price, 3);
+    }
+    for (i = 0; i < 26; i++)
+        bg0_put(SH_X + 1 + i, SH_Y + 7, HT_RULE);
+    bg0_print(SH_X + 2, SH_Y + SH_H - 2, "A: buy  B: leave");
+    bg0_put(SH_X + 20, SH_Y + SH_H - 2, HT_GILT);
+    bg0_print_num(SH_X + 21, SH_Y + SH_H - 2, gPl.gilt, 4);
+    shop_refresh();
+}
+
+void shop_update(void) {
+    if (!sShopActive)
+        return;
+    if ((gKeysDown & KEY_UP) && sShopCursor > 0) {
+        sShopCursor--;
+        sfx_play(SFX_MENU);
+        shop_refresh();
+    }
+    if ((gKeysDown & KEY_DOWN) && sShopCursor + 1 < sShopCount) {
+        sShopCursor++;
+        sfx_play(SFX_MENU);
+        shop_refresh();
+    }
+    if (gKeysDown & KEY_A)
+        sShopResult = sShopCursor;
+    if (gKeysDown & KEY_B)
+        sShopResult = -1;
+}
+
+void shop_draw(void) {
+    int i;
+    if (!sShopActive)
+        return;
+    for (i = 0; i < sShopCount; i++)
+        draw_sprite((SH_X + 4) * 8 + 2, (SH_Y + 3 + i * 2) * 8 - 4, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_FX);
+}
+
+void shop_close(void) {
+    sShopActive = 0;
+    bg0_fill(SH_X, SH_Y, SH_W, SH_H, 0);
+}
+
+int shop_result(void) {
+    return sShopResult;
+}
+
+bool8 shop_active(void) {
+    return sShopActive;
+}
+
 /* ---------------------------------------------------------------- HUD -- */
 void hud_clear(void) {
     bg0_fill(0, 0, 32, 3, 0);
+}
+
+static void slot(int tx, int lit) {
+    bg0_put(tx, 0, lit ? HT_SLOT_LIT_TL : HT_SLOT_TL);
+    bg0_put(tx + 1, 0, lit ? HT_SLOT_LIT_TR : HT_SLOT_TR);
+    bg0_put(tx, 1, lit ? HT_SLOT_LIT_BL : HT_SLOT_BL);
+    bg0_put(tx + 1, 1, lit ? HT_SLOT_LIT_BR : HT_SLOT_BR);
+}
+
+static void slot_icon(int tx, int frame) {
+    draw_sprite(tx * 8, 0, SHEET_ITEMS, items_sheet_tile(), frame, 0, 0, PAL_OBJ_FX);
 }
 
 void hud_draw(void) {
     int i;
     int hearts = (gPl.hp_max + 7) / 8;
     int hp = gPl.hp;
+    /* hearts along the top, the purse and the keys under them */
     for (i = 0; i < hearts && i < 10; i++) {
         u16 t;
         if (hp >= 8)
@@ -257,23 +408,97 @@ void hud_draw(void) {
         else
             t = HT_HEART_EMPTY;
         hp -= 8;
-        bg0_put(1 + i, 1, t);
+        bg0_put(1 + i, 0, t);
     }
-    /* gilt, keys, bombs on the right */
-    bg0_put(21, 1, HT_GILT);
-    bg0_print_num(22, 1, gPl.gilt, 3);
-    bg0_put(26, 1, HT_KEY);
-    bg0_print_num(27, 1, gPl.keys, 1);
-    if (gPl.items & ITEM_BOMBS) {
-        bg0_put(13, 1, HT_BOMB);
-        bg0_print_num(14, 1, gPl.bombs, 2);
+    bg0_put(1, 1, HT_GILT);
+    bg0_print_num(2, 1, gPl.gilt, 3);
+    bg0_put(6, 1, HT_KEY);
+    bg0_print_num(7, 1, gPl.keys, 1);
+    /* the item slots: the sword on A, the chosen item lit */
+    bg0_put(12, 0, HT_BTN_L);
+    slot(13, 1);
+    slot(15, gPl.bitem == BITEM_BOMBS);
+    slot(17, gPl.bitem == BITEM_LAMP);
+    slot(19, gPl.bitem == BITEM_CLOAK);
+    bg0_put(21, 0, HT_BTN_R);
+    if (gPl.items & ITEM_BOMBS)
+        bg0_print_num(15, 2, gPl.bombs, 2);
+    else
+        bg0_print(15, 2, "  ");
+    draw_sprite(13 * 8, 0, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, 0, PAL_OBJ_HERO);
+    if (gPl.items & ITEM_BOMBS)
+        slot_icon(15, F_ITEMS_BOMBS);
+    if (gPl.items & ITEM_LAMP)
+        slot_icon(17, F_ITEMS_LAMP);
+    if (gPl.items & ITEM_CLOAK)
+        slot_icon(19, F_ITEMS_CLOAK);
+    /* the mini-map at the top right */
+    {
+        OamEntry* o = oam_alloc();
+        if (o) {
+            o->attr0 = ATTR0_Y(0) | ATTR0_SQUARE;
+            o->attr1 = ATTR1_X(206) | ATTR1_SIZE(2);
+            o->attr2 = ATTR2_TILE(MINIMAP_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UI);
+        }
     }
-    /* the B item */
-    bg0_put(17, 1, HT_ITEM_BOX);
-    switch (gPl.bitem) {
-        case BITEM_BOMBS: bg0_put(17, 1, HT_BOMB); break;
-        case BITEM_LAMP: bg0_put(17, 1, HT_LAMP); break;
-        case BITEM_CLOAK: bg0_put(17, 1, HT_CLOAK); break;
-        default: break;
+}
+
+/* ----------------------------------------------------------- mini-map -- */
+/* A 32x32 sprite drawn by the CPU: a parchment in a gold frame, the five
+   by five cells of the wood, green where seen, gold at the Heart, a red
+   dot where the hero stands (blue at the entry while he is below). */
+static u16 sMapTiles[16 * 16];
+
+void minimap_render(void) {
+    static u8 buf[32 * 32];
+    int x, y, i;
+    for (y = 0; y < 32; y++) {
+        for (x = 0; x < 32; x++) {
+            u8 col = 2;
+            int edge = (x == 0 || y == 0 || x == 31 || y == 31);
+            int inner = (x == 1 || y == 1 || x == 30 || y == 30);
+            if (edge)
+                col = 4;
+            else if (inner)
+                col = 5;
+            else if (x == 2 || y == 2 || x == 29 || y == 29)
+                col = 3;
+            if ((x < 2 && y < 2) || (x > 29 && y < 2) || (x < 2 && y > 29) || (x > 29 && y > 29))
+                col = 0;
+            buf[y * 32 + x] = col;
+        }
     }
+    for (i = 0; i < CELLS; i++) {
+        Cell* c = &gWorld.cells[i];
+        int cx = 4 + (i % MAZE_W) * 5, cy = 4 + (i / MAZE_W) * 5;
+        u8 col = 3;
+        if (c->flags & CF_VISITED)
+            col = (i == gWorld.goal) ? 5 : 8;
+        for (y = 0; y < 4; y++)
+            for (x = 0; x < 4; x++)
+                buf[(cy + y) * 32 + cx + x] = col;
+        if (col == 8) {
+            buf[cy * 32 + cx] = 7;
+            buf[(cy + 3) * 32 + cx + 3] = 7;
+        }
+        if ((gGame.area == AREA_FOREST && i == gGame.cell) || (gGame.area != AREA_FOREST && i == gWorld.entry)) {
+            u8 dot = (gGame.area == AREA_FOREST) ? 9 : 0xb;
+            buf[(cy + 1) * 32 + cx + 1] = dot;
+            buf[(cy + 1) * 32 + cx + 2] = dot;
+            buf[(cy + 2) * 32 + cx + 1] = dot;
+            buf[(cy + 2) * 32 + cx + 2] = dot;
+            buf[(cy + 1) * 32 + cx + 1] = 0xa;
+        }
+    }
+    /* pack to 4bpp tiles, 4x4 tiles in row order */
+    for (i = 0; i < 16; i++) {
+        int tx = (i % 4) * 8, ty = (i / 4) * 8;
+        for (y = 0; y < 8; y++) {
+            for (x = 0; x < 8; x += 4) {
+                const u8* p = &buf[(ty + y) * 32 + tx + x];
+                sMapTiles[i * 16 + y * 2 + x / 4] = p[0] | (p[1] << 4) | (p[2] << 8) | (p[3] << 12);
+            }
+        }
+    }
+    dma3_copy32(sMapTiles, OBJ_TILE(MINIMAP_TILE), sizeof(sMapTiles));
 }

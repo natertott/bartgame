@@ -17,6 +17,7 @@ void drop_roll(int px, int py, u32 roll);
 void objects_update(void);
 void objects_draw(void);
 void objects_room_reset(void);
+u16 items_sheet_tile(void);
 void bomb_place(int px, int py);
 int bombs_live(void);
 

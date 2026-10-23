@@ -15,6 +15,7 @@
 #include "items.h"
 #include "boss.h"
 #include "npc.h"
+extern u16 items_sheet_tile(void);
 #include "react.h"
 #include "game.h"
 
@@ -119,6 +120,7 @@ static void load_sewer(int at_drain) {
     player_init(sx, sy, facing);
     camera_update(sx, sy - 16, TRUE);
     dark_off();
+    minimap_render();
 }
 
 static void load_forest(int cell, int from_side) {
@@ -135,6 +137,7 @@ static void load_forest(int cell, int from_side) {
     camera_update(px, py - 16, TRUE);
     spawn_cell_objects();
     dark_off();
+    minimap_render();
     {
         Cell* c = &gWorld.cells[cell];
         if (c->role == ROLE_NPC_TORCH && !(c->flags & CF_QUEST_DONE))
@@ -343,12 +346,34 @@ static void update_title(void) {
         start_run(gSeedOverride ? gSeedOverride : (sTitleSeed >> 4));
 }
 
-/* -------------------------------------------------------------- map -- */
+/* ------------------------------------------------------------ pause -- */
+/* Start: the map of the wood with its legend, what the hero carries,
+   and how the three quests stand. */
+static const char* quest_status(int role) {
+    int i;
+    for (i = 0; i < CELLS; i++) {
+        Cell* c = &gWorld.cells[i];
+        if (c->role != role)
+            continue;
+        if (c->flags & CF_QUEST_DONE)
+            return "done";
+        if (c->flags & CF_QUEST_ACTIVE)
+            return "open";
+        if (c->flags & CF_VISITED)
+            return "found";
+        return "unknown";
+    }
+    return "none";
+}
+
+static u8 sPauseIcons[6];
+static u8 sPauseIconCount;
+
 static void map_open(void) {
-    int x, y;
+    int x, y, row;
     bg0_fill(0, 3, 32, 17, 0);
-    bg0_frame(9, 4, 13, 10);
-    bg0_print(11, 5, "THE WOOD");
+    bg0_frame(1, 3, 28, 17);
+    bg0_print_gold(3, 4, "THE WOOD");
     for (y = 0; y < MAZE_H; y++) {
         for (x = 0; x < MAZE_W; x++) {
             int i = y * MAZE_W + x;
@@ -360,16 +385,64 @@ static void map_open(void) {
                 t = HT_MAP_GOAL;
             if (gGame.area == AREA_FOREST && i == gGame.cell)
                 t = HT_MAP_HERE;
-            bg0_put(13 + x, 7 + y, t);
+            bg0_put(3 + x, 6 + y, t);
         }
     }
-    bg0_print(10, 13, "B: close");
+    bg0_put(9, 6, HT_MAP_HERE);
+    bg0_print(10, 6, "you");
+    bg0_put(9, 7, HT_MAP_GOAL);
+    bg0_print(10, 7, "Heart");
+    bg0_put(9, 8, HT_MAP_CELL);
+    bg0_print(10, 8, "seen");
+    bg0_print_gold(17, 4, "ITEMS");
+    row = 6;
+    sPauseIconCount = 0;
+    if (gPl.items & ITEM_BOMBS) {
+        bg0_print(17, row, "Blightseeds");
+        bg0_print_num(25, row + 1, gPl.bombs, 2);
+        sPauseIcons[sPauseIconCount++] = F_ITEMS_BOMBS;
+        row += 2;
+    }
+    if (gPl.items & ITEM_LAMP) {
+        bg0_print(17, row, "Grail Lamp");
+        sPauseIcons[sPauseIconCount++] = F_ITEMS_LAMP;
+        row += 2;
+    }
+    if (gPl.items & ITEM_CLOAK) {
+        bg0_print(17, row, "Petal Cloak");
+        sPauseIcons[sPauseIconCount++] = F_ITEMS_CLOAK;
+        row += 2;
+    }
+    if (gPl.items & ITEM_RELIC) {
+        bg0_print(17, row, "the Relic");
+        sPauseIcons[sPauseIconCount++] = F_ITEMS_RELIC;
+        row += 2;
+    }
+    if (sPauseIconCount == 0)
+        bg0_print(17, 6, "only a sword");
+    bg0_print_gold(3, 12, "QUESTS");
+    bg0_print(3, 13, "Hermit's hunt");
+    bg0_print(21, 13, quest_status(ROLE_NPC_HUNT));
+    bg0_print(3, 14, "Nun's relic");
+    bg0_print(21, 14, quest_status(ROLE_NPC_FETCH));
+    bg0_print(3, 15, "Gardener's fire");
+    bg0_print(21, 15, quest_status(ROLE_NPC_TORCH));
+    bg0_print(3, 17, "gilt");
+    bg0_print_num(7, 17, gPl.gilt, 3);
+    bg0_print(12, 17, "keys");
+    bg0_print_num(16, 17, gPl.keys, 2);
+    bg0_print(20, 17, "slain");
+    bg0_print_num(25, 17, gGame.kills, 3);
+    bg0_print(3, 18, "B: close");
     gGame.state = GS_MAP;
     sfx_play(SFX_MENU);
 }
 
 static void update_map(void) {
+    int i;
     draw_world();
+    for (i = 0; i < sPauseIconCount; i++)
+        draw_sprite(15 * 8, (6 + i * 2) * 8 - 4, SHEET_ITEMS, items_sheet_tile(), sPauseIcons[i], 0, 0, PAL_OBJ_FX);
     if (gKeysDown & (KEY_B | KEY_START)) {
         bg0_fill(0, 3, 32, 17, 0);
         gGame.state = GS_PLAY;
@@ -430,6 +503,8 @@ static void draw_world(void) {
     npcs_draw();
     objects_draw();
     hud_draw();
+    textbox_draw();
+    shop_draw();
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */
@@ -513,7 +588,7 @@ static void update_transition(void) {
         gGame.state = GS_PLAY;
         if (sDiedFlag) {
             sDiedFlag = 0;
-            textbox_open("The muck takes you back. It always does. The wood keeps what you opened.");
+            textbox_open_named("The Bloom", F_PORTRAIT_HERO_SURPRISED, "The muck takes me back. It always does. The wood keeps what I opened...");
         }
     }
 }

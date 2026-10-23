@@ -19,6 +19,16 @@ void tiles_init(void) {
         pal_set_obj(i, &pal_obj[i * 16]);
     /* text uses palette 15 entries: 1 ink, 2 shadow */
     pal_set_bg(15, &pal_bg[PAL_BG_HUD * 16]);
+    {
+        /* the same palette with gold ink, for names and headings */
+        u16 gold[16];
+        int k;
+        for (k = 0; k < 16; k++)
+            gold[k] = pal_bg[PAL_BG_HUD * 16 + k];
+        gold[1] = pal_bg[PAL_BG_HUD * 16 + 8];
+        gold[2] = pal_bg[PAL_BG_HUD * 16 + 6];
+        pal_set_bg(14, gold);
+    }
 }
 
 /* Animated metatiles: copy the current frame's four subtiles over the

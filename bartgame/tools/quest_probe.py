@@ -146,7 +146,7 @@ def main():
     print('seed', hex(seed), 'roles', {k: v for k, v in roles.items() if v != '-'})
     grant_all(c)
     open_all_gates(c)
-    P.hold(c, 'UP', 150); P.hold(c, 'RIGHT', 14); P.hold(c, 'UP', 60); P.run(c, 40)
+    P.enter_forest(c)
     pl = P.sym('gPl')
 
     def cells_with(role):

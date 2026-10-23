@@ -6,12 +6,17 @@ Objects: (kind, x_tile, y_tile, arg) bytes, read by the game at load.
 """
 
 LEGEND = {
-    '..': 'sw_floor0', ',,': 'sw_floor1', ';;': 'sw_floor2',
-    'WW': 'sw_wall', 'TT': 'sw_wall_top', 'WS': 'sw_wall_slime',
-    '~~': 'sw_water', 'WE': 'sw_water_edge_n',
-    'GG': 'sw_grate', 'PP': 'sw_pipe', 'LL': 'sw_ladder', 'HH': 'sw_hole',
-    'tt': 'sw_torch_lit', 'AA': 'sw_arch', 'CC': 'sw_counter', 'RR': 'sw_rubble',
-    'SS': 'sw_floor_slime', 'ST': 'stairs_down',
+    '..': 'sw_floor0', ',,': 'sw_floor1', ';;': 'sw_floor2', 'SS': 'sw_floor_slime',
+    'TT': 'sw_wall_top', 'WW': 'sw_wall', 'WS': 'sw_wall_slime',
+    'PP': 'sw_pipe', 'PH': 'sw_pipe_h', 'LN': 'sw_lantern', 'BT': 'sw_banner_teal', 'BR': 'sw_banner_red',
+    'tt': 'sw_torch_lit', 'HH': 'sw_hole', 'WF': 'sw_waterfall', 'LL': 'sw_ladder',
+    '~~': 'sw_water', 'LP': 'sw_lilypad', 'WE': 'sw_water_edge_n', 'ES': 'sw_water_edge_s',
+    'GG': 'sw_grate', 'LD': 'sw_ladder_down',
+    'D1': 'sw_drain_nw', 'D2': 'sw_drain_ne', 'D3': 'sw_drain_sw', 'D4': 'sw_drain_se',
+    'R1': 'sw_rug_nw', 'R2': 'sw_rug_ne', 'R3': 'sw_rug_sw', 'R4': 'sw_rug_se',
+    'CC': 'sw_counter', 'A1': 'sw_awning_l', 'A2': 'sw_awning_r',
+    'BB': 'sw_barrel', 'CR': 'sw_crate', 'SK': 'sw_skull', 'GD': 'sw_gold', 'CN': 'sw_candles',
+    'RR': 'sw_rubble', 'AA': 'sw_arch', 'ST': 'stairs_down',
     '  ': None,
 }
 
@@ -29,6 +34,8 @@ def room(name, ground, overlay=None, objects=()):
     rows = [r for r in ground.strip('\n').splitlines()]
     w = len(rows[0]) // 2
     h = len(rows)
+    for i, r in enumerate(rows):
+        assert len(r) == w * 2, 'room %s row %d has %d chars, want %d' % (name, i, len(r), w * 2)
     ROOMS.append({'name': name, 'w': w, 'h': h, 'ground': rows,
                   'overlay': [r for r in overlay.strip('\n').splitlines()] if overlay else None,
                   'objects': list(objects)})
@@ -46,32 +53,34 @@ def expand(rows, w, h, mt_names):
     return out
 
 
-# The sewer's main chamber: a vaulted hall, a channel of black water down
-# the middle with a grate bridge, torches, the drain hole to the forest at
-# the top, the sage by the stairs, the shopkeeper's counter on the right.
+# The Drain: a vaulted hall. A waterfall pours from the top wall into a
+# basin; the drain hole up to the wood is beside it. The Peddler's stall
+# stands under a red awning on the left, the Gatekeeper's rug glows on
+# the right. A channel crosses the hall with a grate bridge, the great
+# round drain lies below it, and ladders go down into the pools in the
+# lower corners.
 room('sewer_main', '''
-TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-WWWWWWWWWWWWWWttWWHHWWttWWWWWW
-WWWWWWWSWWWWWW..WW..WW..WWWWWW
-WW..,,..;;..,,..;;..,,..;;..WW
-WW,,..;;..,,..;;..,,..;;..,,WW
-WW..;;..,,..;;..,,..;;..,,..WW
-WW;;..,,..;;..,,..;;..,,..;;WW
-WW..,,..;;..,,..;;..,,..;;..WW
-WWWEWEWEWEWEWEWEGGWEWEWEWEWEWW
-WW~~~~~~~~~~~~~~GG~~~~~~~~~~WW
-WW~~~~~~~~~~~~~~GG~~~~~~~~~~WW
-WW..,,..;;..,,..;;..,,..;;..WW
-WW,,..;;..,,..;;..,,..;;..,,WW
-WW..;;..,,..SS..,,..;;CCCCCCWW
-WWRR..,,..;;SSSS..,,..;;..,,WW
-WW..,,..;;..SS..;;..,,..;;..WW
-WW,,..;;..,,..;;..,,..;;..,,WW
-WWWWWWttWWWWWWWWWWWWWWttWWWWWW
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+WWWWPPWWWWLNWWBTWWHHWWWWWFWFWFWWWWBRWWLNWWWWPHPHPHWWttWWWWWW
+WWWWWWWSWWWWWWWWWW..WWWWWFWFWFWWWWWWWWWWWWWWWWWWWWWSWWWWWWWW
+..,,A1A2A1A2..;;..,,..;;~~~~~~..,,..;;..,,..;;..,,BB..;;..,,
+,,CRCCCCCCCC..,,GD..,,..ESESES..;;..,,BB..R1R2..CN..,,..;;..
+;;SK........,,..;;..,,..;;..,,..,,..;;..,,R3R4..,,..;;..,,..
+..,,..;;..,,CN..,,..;;..,,..;;..;;..,,..;;..,,..CR..,,..;;..
+,,..;;..,,..;;..,,RR..,,..;;..,,..;;..,,..;;..,,..;;..,,..,,
+WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
+~~~~LP~~~~~~~~~~~~LP~~~~~~~~GGGG~~~~~~~~LP~~~~~~~~~~~~~~LP~~
+~~~~~~~~~~LP~~~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~~~LP~~~~~~~~~~~~
+ESESESESESESESESESESESESESESGGGGESESESESESESESESESESESESESES
+..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,
+,,..;;..,,GD..;;..CN..;;D1D2..,,..;;..,,..;;..,,..;;RR..,,..
+WELDWEWE..,,..;;..,,..;;D3D4..;;..,,..;;..,,..;;WEWEWELDWE..
+~~~~~~~~,,..;;..,,..;;..,,..;;..,,..;;..,,SK..,,~~~~~~~~~~..
+~~~~~~~~..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,~~~~~~~~~~,,
+WWWWWWWWWWWWttWWWWWWWWWWWWWWAAWWWWWWWWWWWWWWWWttWWWWWWWWWWWW
 ''', objects=[
-    (OBJ_SPAWN, 8, 11, 0),
-    (OBJ_EXIT, 9, 1, 1),        # the drain hole: to the forest
-    (OBJ_NPC, 4, 4, 0),         # the Sage of the Drain
-    (OBJ_SHOP, 12, 13, 0),      # the shopkeeper behind the counter
-    (OBJ_SIGN, 3, 14, 0),
+    (OBJ_SPAWN, 12, 15, 0),
+    (OBJ_EXIT, 9, 1, 1),        # the drain hole: up to the wood
+    (OBJ_NPC, 21, 4, 0),        # the Pale Gatekeeper on the rug
+    (OBJ_SHOP, 4, 4, 0),        # the Billious Peddler behind the counter
 ])

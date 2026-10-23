@@ -26,7 +26,7 @@ PAL = ['#080810',   # 0 night, backdrop
        '#e0b030',   # 9 gold mid
        '#fff0a0',   # A gold bright
        '#ffffff',   # B white
-       '#c0b8d8',   # C pale lavender
+       '#ff8030',   # C petal orange
        '#c02038',   # D crimson
        '#6c4880',   # E violet light
        '#101810']   # F outline
@@ -70,11 +70,11 @@ def render():
     # stars
     for _ in range(70):
         x, y = rnd.randrange(240), rnd.randrange(0, 90)
-        px[x, y] = C[0xc] if rnd.random() < 0.7 else C[0xb]
+        px[x, y] = C[0xb] if rnd.random() < 0.7 else C[0xe]
     for (x, y) in ((30, 18), (200, 12), (70, 40), (170, 48), (120, 8), (220, 60)):
         px[x, y] = C[0xb]
         for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            px[x + dx, y + dy] = C[0xc]
+            px[x + dx, y + dy] = C[0xe]
     # rays from the Grail, dashed
     gx, gy = 120, 46
     for k in range(16):
@@ -136,14 +136,14 @@ def render():
     for (x0, dirn) in ((4, 1), (235, -1)):
         x, y = x0, 158
         for i in range(44):
-            px[max(0, min(239, x)), y] = C[0xe] if i % 5 else C[0xc]
+            px[max(0, min(239, x)), y] = C[0xe] if i % 5 else C[0xb]
             y -= 1
             x += dirn if (i // 3) % 2 else 0
             if i % 9 == 4:
                 px[max(0, min(239, x + dirn * 2)), y + 1] = C[0xd]
     # the name
     path = next(p for p in FONTS if os.path.exists(p))
-    fnt = ImageFont.truetype(path, 32)
+    fnt = ImageFont.truetype(path, 28)
     text = 'BARTGAME'
     bbox = d.textbbox((0, 0), text, font=fnt)
     tw = bbox[2] - bbox[0]
@@ -188,7 +188,55 @@ def render():
     for _ in range(50):
         x, y = rnd.randrange(240), rnd.randrange(60, 150)
         if px[x, y] in (C[0], C[1], C[2], C[3], C[4], C[5]):
-            px[x, y] = rnd.choice([C[9], C[0xa], C[0xc]])
+            px[x, y] = rnd.choice([C[9], C[0xa], C[0xb]])
+    # two blooms flank the name: the hero's own flower
+    for bx in (18, 222):
+        by = 96
+        for k in range(8):
+            ang = k * math.pi / 4 + math.pi / 8
+            cxp, cyp = bx + math.cos(ang) * 6.5, by + math.sin(ang) * 6.0
+            for y in range(by - 12, by + 13):
+                for x in range(bx - 12, bx + 13):
+                    dx, dy = x + 0.5 - cxp, y + 0.5 - cyp
+                    if dx * dx + dy * dy <= 3.8 * 3.8:
+                        ddx, ddy = x + 0.5 - bx, y + 0.5 - by
+                        d = (ddx * ddx + ddy * ddy) ** 0.5
+                        px[x, y] = C[0xc] if d > 6.5 else C[0xd]
+        for y in range(by - 6, by + 7):
+            for x in range(bx - 6, bx + 7):
+                dx, dy = (x + 0.5 - bx) / 6.0, (y + 0.5 - by) / 6.0
+                if dx * dx + dy * dy <= 1.0:
+                    px[x, y] = C[0xb] if dx + dy < 0.9 else C[0xa]
+        for (ex, ey) in ((bx - 3, by - 2), (bx + 1, by - 2)):
+            for yy in range(3):
+                px[ex, ey + yy] = C[0xf]; px[ex + 1, ey + yy] = C[0xf]
+            px[ex, ey] = C[0xb]
+        px[bx - 1, by + 3] = C[0xf]; px[bx, by + 3] = C[0xf]
+        # an outline round the bloom
+        for y in range(by - 13, by + 14):
+            for x in range(bx - 13, bx + 14):
+                if px[x, y] in (C[0xc], C[0xd], C[0xb], C[0xa], C[0xf]):
+                    continue
+                for ddx, ddy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    if px[x + ddx, y + ddy] in (C[0xc], C[0xd]):
+                        px[x, y] = C[0xf]
+                        break
+    # a gold filigree frame round the screen, knots at the corners
+    for i in range(240):
+        for yy in (3, 156):
+            px[i, yy] = C[8]
+        for yy in (4, 155):
+            px[i, yy] = C[7]
+    for j in range(160):
+        for xx in (3, 236):
+            px[xx, j] = C[8]
+        for xx in (4, 235):
+            px[xx, j] = C[7]
+    for (kx, ky) in ((3, 3), (236, 3), (3, 156), (236, 156)):
+        for ddx in range(-3, 4):
+            for ddy in range(-3, 4):
+                if abs(ddx) + abs(ddy) <= 3 and 0 <= kx + ddx < 240 and 0 <= ky + ddy < 160:
+                    px[kx + ddx, ky + ddy] = C[0xa] if abs(ddx) + abs(ddy) < 2 else C[8]
     out = [[nearest(C, px[x, y]) for x in range(240)] for y in range(160)]
     return out, PAL
 

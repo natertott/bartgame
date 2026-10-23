@@ -64,7 +64,7 @@ if __name__ == '__main__':
     out = sys.argv[2] if len(sys.argv) > 2 else '/tmp/room.png'
     c = P.boot()
     P.run(c, 40)
-    P.hold(c, 'UP', 150); P.hold(c, 'RIGHT', 14); P.hold(c, 'UP', 60); P.run(c, 40)
+    P.enter_forest(c)
     names = render(c, out)
     for row in names:
         print(' '.join('%-10s' % n for n in row))
