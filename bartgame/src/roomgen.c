@@ -19,15 +19,17 @@ static u8 sReach[FOREST_W * FOREST_H];
 #define W FOREST_W
 #define H FOREST_H
 
+/* The floor: mostly plain grass, so the sprites read; the blight, the
+   flowers and the bones are accents. */
 static u16 moss_pick(void) {
-    int r = rng_range(&sR, 20);
-    if (r < 12)
+    int r = rng_range(&sR, 40);
+    if (r < 31)
         return MT_MOSS0 + rng_range(&sR, 3);
-    if (r < 15)
+    if (r < 34)
         return MT_MOSS_BLIGHT;
-    if (r < 17)
+    if (r < 36)
         return MT_MOSS_BLIGHT2;
-    if (r < 19)
+    if (r < 39)
         return MT_MOSS_FLOWERS;
     return MT_BONES;
 }

@@ -490,6 +490,7 @@ static const u8 sWalk1Frame[4] = { F_HERO_WALK_N1, F_HERO_WALK_E1, F_HERO_WALK_S
 static const u8 sWalk2Frame[4] = { F_HERO_WALK_N2, F_HERO_WALK_E2, F_HERO_WALK_S2, F_HERO_WALK_E2 };
 static const u8 sAtkFrame[4] = { F_HERO_ATK_N, F_HERO_ATK_E, F_HERO_ATK_S, F_HERO_ATK_E };
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
+static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 
 static void draw_sword(void) {
     Actor* a = gPlayer;
@@ -562,10 +563,10 @@ void player_draw(void) {
             frame = sHurtFrame[FACE_S];
             break;
         case PS_JUMP:
-            frame = sWalk1Frame[f];
+            frame = sJumpFrame[f];
             break;
         case PS_ITEMGET:
-            frame = F_HERO_IDLE_S;
+            frame = F_HERO_ITEMGET;
             break;
         default:
             if (a->speed && sWalkTimer) {

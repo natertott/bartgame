@@ -1271,6 +1271,45 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the art redrawn (Oct 2026)
+
+The user: "massively improve the quality of the art work ... very
+clear, crisp textures and sprites ... much more vibrant, much more
+stylized ... a mix between the movie Excalibur and the Legend of Zelda
+... Rework all of the sprites and the animations."
+
+Everything drawn is new. Eleven 16-color palettes replace four: every
+material has a dark hue outline, three tones and a gleam, shadows lean
+blue and lights lean gold. The ground is hand-placed tufts, flowers,
+blight stains and pebbles instead of speckle noise; the canopy walls are
+leaf masses of overlapping lit blobs that wrap at the tile edge so they
+seam; the wall face is thick dark trunks under a leaf fringe; trunk,
+stump and thorn tiles moved to the grass palette so they sit on real
+grass. The hero is a chunky outlined plant-knight: a poppy bloom with a
+pale face and a gold stamen crest, a leaf cape over a chrome gorget and
+breastplate, a gold belt, root boots, with new jump and item-get frames
+wired into `player.c`. The monsters, the chrome thorn knight with its
+crimson tabard and violet shield, the five NPCs, the one-eyed Blight
+Heart, the pickups, the Grail and every effect were redrawn. The HUD,
+the text box and the map got new tiles; the font is a hand-drawn 5x7
+instead of a thresholded TrueType; the title is a painted night over the
+wood with the Grail burning above a bevelled gold name.
+
+**How it is made.** `art/px.py` holds the painter: letter legends to hex
+rows, automatic outlines, flips, compose, and a canvas with lit blobs
+and shaded balls (one lighting rule for every round thing: beetles,
+slimes, bombs, the heart). `tools/preview.py` and a scratch renderer
+showed every sheet at 6x between passes; the first pass of nearly every
+sprite needed one more (eyes too small, a profile that read as a hood,
+a wall face that read as a fence, a sewer whose floor matched its
+walls). The room generator's floor mix went from 40% accent tiles to
+22% so the sprites read.
+
+**Measured on the new ROM**: critical path 18/18 on three seeds, quests
+12/12, lag 1.000 with 65 beetles, 20,000 mazes clean on the host. The
+world tileset is 226 of 1024 tiles, the sprites 559 OBJ tiles, the title
+379.
+
 ### BARTGAME: the new game, first demo (Oct 2026)
 
 The user: "build the game ... a working demo of the game that has a hub

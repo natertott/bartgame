@@ -27,6 +27,19 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
   giver.
 - **The Blight Heart.** At the deepest glade. Cut it out, take the Grail.
 
+## The look
+
+Excalibur's emerald wood and chrome plate drawn the way Zelda draws
+them: dark hue outlines, three tones and a gleam per material, light
+from the upper left, saturated greens and gold. Every material has its
+own 16-color palette (grass, wood, stone and water, sewer, HUD; hero,
+effects, bugs, blight, iron, folk). The ground is hand-placed tufts and
+pebbles, never noise; the canopy walls are leaf masses of lit blobs that
+wrap at the tile edge; the hero, the monsters, the NPCs, the boss and
+the items are drawn pixel by pixel with letter legends in `art/*.py`,
+and the font is a hand-drawn 5x7. `tools/preview.py` renders any sheet
+or tile to PNG at 4x.
+
 ## Controls
 
 | key | action |
@@ -79,8 +92,21 @@ src/            the engine and the game
   text.c        BG0 text, the message box, menus, the HUD
   sound.c       PSG sound effects and a three-track tracker
   game.c        states: title, play, transitions, map, win
-art/            pixel art as hex-digit rows: palettes, tiles, sprites,
-                HUD tiles, the hub room, the PIL-rendered font and title
+art/            pixel art as rows of letters mapped to palette indices
+  palettes.py   the 16-color palettes, BG and OBJ
+  px.py         the painter: legends, outlines, flips, compose, a canvas
+                with lit blobs and shaded balls for round things
+  tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
+                stones, water, gates, chests, the sewer set
+  hero.py       Bart: 22 frames and the sword
+  monsters.py   beetle, bat, slime, spitter, knight, its sword, the boss
+  items.py      pickups, key items, effects, projectiles
+  folk.py       the five NPCs
+  sprites.py    the sheet list, in the engine's frame order
+  hud.py        hearts, icons, the text box frame, the map
+  font.py       the 5x7 font
+  title.py      the title screen, painted with PIL in 16 colors
+  rooms.py      the hub room
 tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
   preview.py        render art to PNG
