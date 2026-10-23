@@ -1,6 +1,6 @@
 # New game handoff: read this first
 
-Written Oct 2026, on branch `claude/gba-fan-game-start-ptuvhn`, for the agent
+Written Oct 2026 and revised for a from-scratch engine, on branch `claude/gba-fan-game-start-ptuvhn`, for the agent
 who builds the new game.
 
 ## What the new game is
@@ -26,47 +26,53 @@ mod. QUICKSTART keeps Nintendo's overworld exactly as drawn and randomizes
 what happens in each room. Almost all of it lives in `src/game.c` (about
 1.26 MB) behind `#ifdef QUICKSTART`.
 
-The new game inverts that. The engine and its rules stay. The map is
-generated. The art is new.
+The new game keeps TMC's rules and nothing else. The engine is new, the
+map is generated, the art is new.
 
-## The recommended starting point
+## The starting point: a new engine that plays like TMC
 
-**Fork the decomp. Keep its engine code. Replace its world data and art.**
-Do not rewrite the engine from scratch.
+**The user's decision: the new agent builds the engine from scratch.** It
+must play like TMC: the controls, player and enemy speeds, the bounce, the
+roll, fire rates, knockback. And it must be built for the highest
+performance the GBA allows, with a much higher ceiling than TMC for
+on-screen enemies, sprites, animations and content.
 
-| option | cost | what you get |
-|---|---|---|
-| Fork the decomp, keep the code, replace data (recommended) | low | every mechanic exactly as shipped, already proven at 60 fps |
-| Rewrite an engine in C to match the mechanics | very high | years of re-deriving physics, collision and 100 enemy AIs by hand |
-| Port QUICKSTART as-is and bolt on generation | medium | 1.26 MB of overworld-specific code you will mostly delete |
+**Read `12_FROM_SCRATCH_ENGINE.md` next.** It says what the new agent needs
+from TMC (the feel spec, the behavior vocabulary, and TMC's measured
+ceilings), what it can ignore (TMC's formats, structs, load pipeline,
+scripts, sound engine and toolchain), and gives a high-performance engine
+design with a cycle and memory budget.
 
-"Exact mechanics" is only cheap one way. Player physics, the collision
-matrix, 103 enemy AIs and 192 object kinds are already C, already match the
-original, and already run. What has to be new is the world data pipeline,
-the generator and the art.
+The decomp stays useful as an **oracle**:
+
+- readable C for every behavior to port: the player, 37 item files, 103
+  enemy AIs,
+- a running reference the Python harness can drive and measure,
+- exact tables, extracted to `data/` by `tools/newgame/extract_feel.py`.
 
 QUICKSTART's mode code is a **reference, not a base.** Its systems are
 the design vocabulary the new game inherits: waves, ? rooms, the win
-chain, quests, puzzles, the reach model and the budgets. But they are
-written against fixed vanilla rooms. Lift the ideas and the tables. Lift
-code only where it is room-independent.
+chain, quests, puzzles, the reach model and the budgets. Lift the ideas
+and the tables, not the code.
 
 ## Reading order
 
 | file | what it answers |
 |---|---|
 | `00_README.md` (this) | what the new game is, the starting point, the reading order |
-| `01_ENGINE_ARCHITECTURE.md` | build, toolchain, memory map, main loop, tasks, RNG, scripts, text, sound, save |
-| `02_PLAYER_AND_MOVEMENT.md` | player state machine, flags, speeds, physics, items in hand, falls, transitions |
-| `03_WORLD_TILES_COLLISION.md` | map format, layers, tile types, collision bytes, act tiles, rooms, areas, exits, the load pipeline, **where a generator plugs in** |
-| `04_ENTITIES_ENEMIES_OBJECTS.md` | entity struct and limits, enemy definitions, the damage matrix, the enemy roster, objects, NPCs, managers |
+| **`12_FROM_SCRATCH_ENGINE.md`** | **read second.** What to take from TMC and what to leave. The feel spec with exact numbers. TMC's ceilings and the engine design that beats them |
+| `01_ENGINE_ARCHITECTURE.md` | reference: how TMC's engine is built (memory map, main loop, RNG, scripts, text, sound, save) |
+| `02_PLAYER_AND_MOVEMENT.md` | spec: the player's states, speeds, physics, surfaces, ledges, falls, items |
+| `03_WORLD_TILES_COLLISION.md` | spec: tile behaviors, collision shapes, act tiles, the area grid. Reference: TMC's formats and load pipeline |
+| `04_ENTITIES_ENEMIES_OBJECTS.md` | spec: the enemy roster, the damage matrix, the object vocabulary. TMC's limits, to beat |
 | `05_ITEMS_AND_ECONOMY.md` | items, the tier table, kinstones and fusers, charms, shop |
 | `06_CURRENT_GAME_DESIGN.md` | QUICKSTART's run loop: hub, regions, waves, ? rooms, chain, quests, difficulty |
 | `07_PROCGEN_DESIGN.md` | **the core deliverable**: how to generate areas, puzzles and gates, what QUICKSTART learned, a recommended architecture |
-| `08_PERFORMANCE.md` | measured budgets: CPU, entities, GFX slots, palettes, audio; how to get "max enemies" |
-| `09_ASSETS_AND_RESKIN.md` | the asset pipeline and formats; how to replace every Nintendo asset |
+| `08_PERFORMANCE.md` | TMC's measured walls: CPU, entities, GFX slots, palettes, audio |
+| `09_ASSETS_AND_RESKIN.md` | reference: TMC's asset formats; what new art must preserve (animation cues, hitboxes, behavior ids) |
 | `10_TOOLING_AND_TESTING.md` | the emulator harness, calling ROM functions, scenario boots, probes, doctrine |
 | `11_TRAPS.md` | every trap that has cost a session, in one list |
+| `data/` | `enemies.csv`, `hitboxes.csv`, `collision_matrix.csv`, `player_animations.csv`: TMC's mechanics as data |
 
 ## Existing docs worth reading next
 

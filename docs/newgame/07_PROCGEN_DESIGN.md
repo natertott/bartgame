@@ -269,6 +269,10 @@ Each of these cost QUICKSTART a session or more. Full list in `11_TRAPS.md`.
 
 ## 8. Memory and time budgets for generation
 
+These were sized against TMC's memory map. The new engine owns its own
+map (`12_FROM_SCRATCH_ENGINE.md` §3), and will have more EWRAM free
+than TMC's 31 KB. The per-room and per-area sizes still hold.
+
 | resource | budget | note |
 |---|---|---|
 | EWRAM free | about 31 KB above `gEndOfEwram` (0x02038560) | the graph for 9 areas, the current room's RAM exit list and entity lists, generator scratch |
@@ -295,9 +299,10 @@ typedef struct {
 
 ## 9. Suggested build order
 
-1. **One authored room, loaded from RAM.** Prove the plumbing: a
-   `GeneratedRoomLoad` hook writes `mapData`, a RAM exit list, a RAM
-   entity list. Collision, act tiles and rendering run unchanged.
+1. **One authored room, loaded by the new engine's room loader** from
+   the in-RAM form the generator will produce: tiles, exits, entity list.
+   (Had TMC's engine been kept, this was a `GeneratedRoomLoad` hook in
+   `LoadRoomGfx`. See `03_WORLD_TILES_COLLISION.md`.)
 2. **One generated room**, from a seed, with a frame and exits only.
    Render it with `room_shot.py`.
 3. **An area of 4 rooms** with borders and one door. Walk it in the

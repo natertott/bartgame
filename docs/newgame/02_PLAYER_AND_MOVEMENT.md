@@ -1,7 +1,11 @@
 # 02. Player and movement
 
-All vanilla. The new game keeps this code unchanged. Re-skin only the
-sprite sheets and palettes (see `09_ASSETS_AND_RESKIN.md`).
+All vanilla. **This is the spec the new engine reproduces**: every speed,
+state, surface and edge case here is what "plays like TMC" means. Struct
+offsets and function names are only there to find the code to port.
+`12_FROM_SCRATCH_ENGINE.md` §2 adds the timings (roll phases, arcs,
+knockback, item speeds), and `data/player_animations.csv` the animation
+cues that drive them.
 
 Source: `src/player.c` (the state machine), `src/playerUtils.c` (surfaces,
 respawn, ledges, the room tileset loader), `src/item/*.c` (item use),

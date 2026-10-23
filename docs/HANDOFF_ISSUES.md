@@ -409,7 +409,13 @@ so nobody re-invents them:
   entrance, three Minish caves). Not plain ground for anything placed.
 - **44 GFX sheet slots, and this is the real wall, not RAM.** Every live
   enemy holds its own slot (they arrive through `LoadSwapGFX`, not a shared
-  sheet), so nineteen enemies of a *single kind* hold nineteen slots. Every
+  sheet), so nineteen enemies of a *single kind* hold nineteen slots.
+  **Corrected Oct 2026, measured:** that holds only for the 36 enemy forms
+  with swap sheets (Stalfos, Keaton, Gibdo, Darknut, Ball and Chain,
+  Madderpillar, Lakitu among the roster). The other 172 use fixed sheets that
+  every instance shares: 1, 6 and 8 Octoroks hold one 3-slot sheet, 6 Bow
+  Moblins one 8-slot sheet. 6 Stalfos take 18 slots against 8 for one
+  (`docs/newgame/08_PERFORMANCE.md`). Every
   distinct NPC id costs a sheet, and some NPCs cost two because they call
   `LoadExtraSpriteData`. `QUICKSTART_GFX_HARD_FLOOR` is 2 and
   `QuickStartRoomEnemyCeiling` now prices against the table rather than room

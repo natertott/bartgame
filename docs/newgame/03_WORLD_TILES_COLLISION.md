@@ -1,8 +1,16 @@
 # 03. World, tiles, collision, rooms, and where a generator plugs in
 
 This is the part of the engine the new game changes most. The vanilla world
-is ROM data. The new game's nine areas are generated at run time, so the
-pipeline below must be fed from RAM. The last section says how.
+is ROM data. The new game's nine areas are generated at run time.
+
+**How to read it for a from-scratch engine** (`12_FROM_SCRATCH_ENGINE.md`):
+the tile behaviors (collision shapes, act tiles, ledges, holes, doors,
+water versus land) and the area-grid rules are **spec**. The new engine
+needs the same behaviors under its own format. TMC's layouts (`MapLayer`,
+`RoomResInfo`, LZ77 maps, property lists) and its load pipeline are
+**reference**. The last section, "where a generator plugs in", says how
+TMC's own engine would take generated rooms. It shows which state a room
+needs at play time, which is the checklist for the new engine's room loader.
 
 Sources: `include/map.h`, `include/tiles.h`, `include/room.h`,
 `include/area.h`, `include/transitions.h`, `src/playerUtils.c` (the loader),

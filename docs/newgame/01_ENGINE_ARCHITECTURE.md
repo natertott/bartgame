@@ -3,6 +3,13 @@
 The engine is the Minish Cap decomp. Everything here is vanilla unless it
 says QUICKSTART.
 
+**Reference, not design.** The new engine is built from scratch
+(`12_FROM_SCRATCH_ENGINE.md`). Use this document to find your way around
+TMC's code while porting behavior and while using TMC as the measuring
+oracle. Two parts carry over as rules: generate from a run seed with your
+own PRNG, never a shared gameplay RNG (the RNG section), and keep a run
+state block for generated rooms (the save section).
+
 ## Build and toolchain
 
 | piece | what it is |

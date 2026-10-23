@@ -2,7 +2,8 @@
 
 The new game built on this engine has its own handoff set in
 `docs/newgame/`. `10_TOOLING_AND_TESTING.md` there says which of these
-tools to carry over and what to build for generated areas.
+tools to carry over and what to build for generated areas. Its own tools
+(`extract_feel.py`, `feel_trace.py`) are in `tools/newgame/`.
 
 - `emu.py` - minimal mgba harness (boot/warp/memory peek+poke/Qs flag set).
 - `parse_tables.py` - parses the placement-bearing tables out of src/game.c

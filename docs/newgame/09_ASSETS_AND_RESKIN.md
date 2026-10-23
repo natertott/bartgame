@@ -4,6 +4,19 @@ The brief: same mechanics, **its own sprites and map**. This document says
 where every asset lives, what format it is in, and what a re-skin must
 keep identical so the code still works.
 
+**For a from-scratch engine** (`12_FROM_SCRATCH_ENGINE.md`), TMC's formats
+are reference: the new engine defines its own pipeline. Three things carry
+over as spec:
+
+- **animations carry per-keyframe flag cues** that gameplay reads (the
+  roll's speed phases, the sword's tile-touch points). New art must keep
+  each animation's timing and cues (`data/player_animations.csv`);
+- **hitboxes come from data, not art** (`data/hitboxes.csv`). New art
+  should fit them;
+- **tile behavior ids are separate from tile art**, so art can change freely.
+
+The asset-ownership note below applies unchanged.
+
 ## Where assets come from today
 
 The decomp repo contains **no game assets**. `make` runs

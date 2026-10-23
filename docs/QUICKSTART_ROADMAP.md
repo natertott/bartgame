@@ -1271,6 +1271,68 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### The new game builds its own engine: `12_FROM_SCRATCH_ENGINE.md` (Oct 2026)
+
+The user: the new agent "will be building the engine from scratch ... should
+play like TMC in terms of controls and player/sprite mechanics (like
+player/enemy speeds, bounce, roll, fire rate, etc etc) ... built from the
+ground up to have the absolute highest performance possible on the GBA ...
+a much greater ceiling for on-screen enemies, sprites, animations, and
+content than what TMC can offer us."
+
+That overturns the handoff's "fork the decomp" advice. The new doc says what
+the agent needs from TMC: the feel spec, the behavior vocabulary, and TMC's
+measured ceilings. The README and docs 01-04, 07-11 now mark themselves as
+spec or reference.
+
+**Two tools, under `tools/newgame/`.** `extract_feel.py` writes TMC's
+mechanics as data: 213 enemy forms, 131 hitboxes, 5,220 collision-matrix
+cells and 158 player animations with their keyframe cues. The matrix and
+the animations come from the vanilla ROM. `feel_trace.py` records one enemy
+frame by frame beside a standing player.
+
+**What went wrong on the way.**
+
+- **The first extraction was silently misaligned.** Rows whose hitbox was
+  not named `gHitbox_*`, or carried a cast, failed the regex and were
+  dropped. Every later id shifted, and row 0x46 "Bow Moblin" carried
+  Lakitu Cloud's values. The Bow Moblin's sheet then read as swap while the
+  ROM showed it shared. The parser now holds each row's place and stops on
+  one it cannot read: 102 ids, 213 forms.
+- **The first traces read nothing.** The region's endless wave refilled the
+  room with Octoroks, and a message box froze everything. The tracer now
+  pins its enemy by address, culls the refills, and dismisses messages.
+- **The first shot count was 0, and it was the probe.** The tracer matched
+  projectiles by parent, and `EnemyCreateProjectile` sets no parent. Shots
+  are now counted by appearance in the emptied room. The Octorok also spits
+  only at the end of a walk while facing the player. Spawned 64 px south of
+  the player over 10,800 frames: 10 rocks at 2.5 px/frame, at least 98
+  frames apart, 320 median.
+
+**A handoff claim corrected, measured.** "Every live enemy holds its own
+GFX slot, so nineteen of one kind hold nineteen" (`HANDOFF_ISSUES.md` §4)
+is true only of swap-sheet kinds: 36 of 213 forms. Counting the slots each
+live instance points at, with a two-kind control showing two slots:
+
+| kind | sheet | instances | slots |
+|---|---|---|---|
+| Octorok | fixed | 1, 6, 8 | one 3-slot sheet |
+| Keese | fixed | 12 | one sheet |
+| Bow Moblin | fixed | 1, 6 | one 8-slot sheet |
+| Stalfos | swap | 1, 6 | 8, 18 |
+| Keaton | swap | 1, 6 | 7, 12 |
+| Darknut | swap | 1, 4 | 8, 14 |
+
+**Feel facts read from the source** and written into the doc:
+
+- The roll's speed follows its animation cues: 2.0, then +0.125 a frame,
+  then 3.0, then 0, over 25 frames.
+- Gravity is 0.125 px/frame². A cape jump is about 33 frames and 17 px.
+- A typical enemy contact knocks the player back 1.5 px/frame for 8 frames,
+  with 30 invulnerable frames.
+- The sword's charge to a spin is 80 frames, 40 with Fast Spin.
+- There is no hit pause: nothing outside `main.c` sets `pauseFrames`.
+
 ### Handoff for the new game: `docs/newgame/` (Oct 2026)
 
 The user is starting a new game on this engine: the same mechanics, its

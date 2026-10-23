@@ -48,10 +48,18 @@ until the room changes) rather than writing positions, wherever the
 question is about movement. "Is this door reachable" is answered by
 walking through it.
 
+## Tools already written for the new game (`tools/newgame/`)
+
+| tool | job |
+|---|---|
+| `extract_feel.py` | TMC's mechanics as data in `docs/newgame/data/`: enemy stats and sheets, hitboxes, the collision matrix, player animation timings and cues |
+| `feel_trace.py ID [FORM] [--at DX,DY]` | one enemy beside a standing player in the real game, recorded frame by frame, with its projectiles and their intervals |
+
 ## What to build for the new game
 
 | tool | job |
 |---|---|
+| a feel diff | the same recorded inputs played in TMC (mGBA) and in the new engine, the player's position compared every frame (`12_FROM_SCRATCH_ENGINE.md` §2) |
 | a scenario boot | boot straight into (seed, area, room) with a kit. The first thing to build |
 | `gen_dump.py` | call the ROM generator for a seed and dump the graph and both layers' tiles |
 | `gen_twin.py` | the Python twin of the generator (`07_PROCGEN_DESIGN.md` §5) |

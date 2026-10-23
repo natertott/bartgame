@@ -1,8 +1,13 @@
-# 08. Performance: the measured walls, and how to get "max enemies"
+# 08. Performance: TMC's measured walls
 
 The brief asks for max enemies, events and graphics. These numbers were
 measured on the current ROM with the tools in `tools/quickstart/`. Read
 `docs/QUICKSTART_BUDGET.md` for the full study.
+
+**These are TMC's ceilings, the ones the new engine must beat.** The new
+engine is built from scratch (`12_FROM_SCRATCH_ENGINE.md` §3 has the design
+and its budget). The fixes suggested below for TMC itself are superseded
+there. The measurements, and the reasons each wall exists, still hold.
 
 ## The walls, in the order you hit them
 
@@ -31,29 +36,44 @@ Bandit gangs (6 entities per placement) ever dipped, to 0.92.
   the entity streams its current animation frame into them. N instances
   cost N slots.
 
-Most vanilla enemies use swap sheets, because Nintendo's rooms held a
-handful at a time. So **19 enemies of one kind hold 19 slots**. A
-roster entry's `cost` (1 to 8 slots) is that per-instance price.
+**Most enemies use fixed, shared sheets.** Of 213 enemy forms
+(`data/enemies.csv`), 172 are fixed, 36 swap, 4 have none and 1 reuses
+common art. Measured in the ROM (Oct 2026, slots each live instance points
+at, with a two-kind control that showed two slots):
 
-**This is the single biggest lever for "max enemies".** Converting the
-common chaff enemies to fixed, shared sheets makes a horde of one kind
-cost one sheet. The trade:
+| kind | sheet | instances | slots held |
+|---|---|---|---|
+| Octorok | fixed | 1 / 6 / 8 | 1 sheet of 3 slots, every time |
+| Keese | fixed | 12 | 1 sheet |
+| Bow Moblin | fixed | 1 / 6 | 1 sheet of 8 slots, every time |
+| Stalfos | swap | 1 / 6 | 8 / 18 slots used (+2 per instance) |
+| Keaton | swap | 1 / 6 | 7 / 12 slots used (+1 per instance) |
+| Darknut | swap | 1 / 4 | 8 / 14 slots used (+2 per instance) |
 
-| | swap (vanilla default) | fixed (shared) |
+So the GFX cost of a wave is **the sum of its distinct fixed kinds' sheet
+sizes plus a per-instance price for each swap-kind enemy**. The roster's
+`cost` field is the per-kind sheet price. An earlier handoff note said
+every live enemy holds its own slot, so 19 of one kind hold 19 slots. That
+is true only of the swap kinds, which in QUICKSTART's roster are Stalfos,
+Keaton, Gibdo, Scissors Beetle, Darknut, the Ball and Chain Soldier,
+Madderpillar, Lakitu and ENEMY_4D.
+
+The trade between the two:
+
+| | swap (per instance) | fixed (shared) |
 |---|---|---|
 | VRAM per instance | the current frame only | nothing after the first |
 | VRAM for the kind | one frame per instance | every frame of every animation |
 | best for | big sprites with many frames, few on screen | small sprites with few frames, many on screen |
 
-A 16x16 frame at 4bpp is 128 bytes, so one slot holds 4 frames. A Keese
-with 8 frames is 2 slots fixed, shared by any number. Swap is 1 slot each.
-Re-art the chaff to small frame counts (2-4 frames per direction) and
-use fixed sheets, and a room can field 30+ of one kind for a few slots.
+A 16x16 frame at 4bpp is 128 bytes, so one slot holds 4 frames. The
+lesson for a new engine: hordes want small, shared, resident frame sets.
+Streaming frames per instance is for big sprites with many frames, of
+which only a few are on screen.
 
-The conversion is per enemy definition: the `gfx` field of
-`EnemyDefinition` names the sheet and its gfx type, and
-`gFixedTypeGfxData` holds fixed sheets' sizes. Test each with
-`gfx_trace.py`.
+The sheet kind is the `gfx` field of `EnemyDefinition`: 0x8000 common art,
+0x4000 swap (slot count in bits 4-11), otherwise a fixed sheet index into
+`gFixedTypeGfxData` (`LoadEnemySprite`, `src/enemyUtils.c`).
 
 **The reaper is slow.** A sheet nobody uses anymore sat at reference count
 0 for a **median 663 frames** (11 seconds) before it was freed. Vanilla
@@ -203,14 +223,15 @@ probes read.
 spawns.** A baseline before your first change has saved sessions: several
 "regressions" were pre-existing conditions nobody had a baseline for.
 
-## A target budget for the new game
+## A target budget, if TMC's engine were kept
 
-A starting point, to be re-measured per area theme:
+Superseded by `12_FROM_SCRATCH_ENGINE.md` §3 for the new engine. Kept as
+the measured envelope of TMC itself:
 
 | budget | value |
 |---|---|
 | audio | 5 channels, no reverb, 13,379 Hz (`audiolight`-like) |
-| enemy kinds per room | 3-4, at most 2 swap-sheet kinds |
+| enemy kinds per room | 3-4, few swap-sheet instances |
 | live enemies | 24-32 chaff on fixed sheets, plus 2-4 heavies |
 | entity reserve | 16 |
 | projectiles | capped per kind |

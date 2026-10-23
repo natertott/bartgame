@@ -3,6 +3,12 @@
 All vanilla engine. The enemy roster and caps are QUICKSTART's and carry
 over as data.
 
+**For a from-scratch engine** (`12_FROM_SCRATCH_ENGINE.md`): the enemy
+behaviors, stats, the collision matrix and the object vocabulary are
+**spec** (`data/enemies.csv`, `data/collision_matrix.csv`). TMC's entity
+record and its limits (72 entities, 44 GFX slots, 9 dynamic palettes) are
+what the new engine is designed to beat.
+
 Sources: `include/entity.h`, `src/entity.c`, `include/enemy.h`,
 `src/enemy.c`, `src/enemyUtils.c`, `include/definitions.h`,
 `src/objectDefinitions.c`, `include/collision.h`, `src/collision.c`, and

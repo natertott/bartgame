@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| The new game builds its own engine: `docs/newgame/12_FROM_SCRATCH_ENGINE.md` (the feel spec, TMC's ceilings, a high-performance design), `tools/newgame/` (`extract_feel.py`, `feel_trace.py`) and `docs/newgame/data/`. Corrected: only swap-sheet enemies cost GFX slots per instance | "The new game builds its own engine" |
 | Handoff documents for the new game, in `docs/newgame/` (00-11): engine, player, world and the generator hook, entities, items, the current design, a procgen architecture, performance, assets, tooling, traps. No code change | "Handoff for the new game" |
 | Hyrule Castle is the sixteenth region: three wave rooms with no clear rewards, no boss, never the drop; the throne room, the sanctuary courtyard and the cellar tunnel as ? rooms 119-121; the halls' flag doors opened, the hedge ladder reopened, the sanctuary door refused; fusers from the garden and North Hyrule Field; every quest kind hosts; 15 boulder-puzzle boards appended. Also fixed: fusers wearing a non-Zelda face were swept in the town and the castle. `castle_probe.py` 39/39 | "Hyrule Castle is the sixteenth region" |
 | Hyrule Town's well no longer freezes: the fall was cancelled mid-air by containment. The well room and the main underground room are Hyrule Town region rooms; ladders, passage and the chimney roof loop all cross, other doors stay shut. `well_probe.py` 7/7 (control 1/7) | "Hyrule Town's well" |
