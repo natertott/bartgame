@@ -318,8 +318,8 @@ static void title_show(void) {
     gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
     actors_clear();
     bg0_clear();
-    bg0_print(10, 14, "PRESS START");
-    bg0_print(8, 17, "a game of the drain");
+    bg0_print_hud(10, 14, "PRESS START");
+    bg0_print_hud(8, 17, "a game of the drain");
     gGame.state = GS_TITLE;
     gAnimTiles = 0;
     dark_off();
@@ -353,9 +353,9 @@ static void start_run(u32 seed) {
 static void update_title(void) {
     sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
     if ((gFrame & 32) == 0)
-        bg0_print(10, 14, "PRESS START");
+        bg0_print_hud(10, 14, "PRESS START");
     else
-        bg0_print(10, 14, "           ");
+        bg0_print_hud(10, 14, "           ");
     if (sTitlePhase == 0 && (gKeysDown & KEY_START)) {
         sTitlePhase = 1;
         fade_start(16, 2);

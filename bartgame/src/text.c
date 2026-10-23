@@ -18,13 +18,27 @@
 #define PAL14 (14 << 12)
 #define SWORD_TILE 8     /* player.c streams the sword sheet here */
 #define MINIMAP_TILE 16  /* 16 OBJ tiles the CPU draws the map into */
+/* the font again with the box's own dark fill behind every glyph, for
+   text inside a box: nothing of the world shows through a letter */
+#define FONT_BOX (FONT_GLYPHS + HUD_TILE_COUNT)
+#define BOX_INK 0xE      /* the hud palette's box fill */
 
 static u16 sBg0[32 * 32] ALIGN4;
 static u8 sBg0Dirty;
 
 void text_init(void) {
+    int i, n;
+    vu16* box = CHARBLOCK(2) + FONT_BOX * 16;
     dma3_copy32(font_tiles, CHARBLOCK(2), FONT_GLYPHS * 32);
     dma3_copy32(hud_tiles, CHARBLOCK(2) + FONT_GLYPHS * 16, HUD_TILE_COUNT * 32);
+    for (i = 0; i < FONT_GLYPHS * 16; i++) {
+        u16 w = font_tiles[i], o = 0;
+        for (n = 0; n < 4; n++) {
+            u16 v = (w >> (n * 4)) & 15;
+            o |= (v ? v : BOX_INK) << (n * 4);
+        }
+        box[i] = o;
+    }
     bg0_clear();
 }
 
@@ -40,14 +54,17 @@ void bg0_put(int tx, int ty, u16 tile) {
     sBg0Dirty = 1;
 }
 
-static void bg0_print_pal(int tx, int ty, const char* s, u16 pal) {
+/* opaque: the box font, spaces filled; else the plain font over the world */
+static void bg0_print_pal(int tx, int ty, const char* s, u16 pal, bool8 opaque) {
     while (*s) {
         char ch = *s++;
         if (tx >= 0 && tx < 29 && ty >= 0 && ty < 32) {
-            if (ch > 32 && ch < 127)
-                sBg0[ty * 32 + tx] = (ch - 32) | pal;
-            else if (ch == ' ')
-                sBg0[ty * 32 + tx] = 0;
+            if (ch >= 32 && ch < 127) {
+                if (opaque)
+                    sBg0[ty * 32 + tx] = (FONT_BOX + ch - 32) | pal;
+                else
+                    sBg0[ty * 32 + tx] = (ch == ' ') ? 0 : ((ch - 32) | pal);
+            }
         }
         tx++;
     }
@@ -55,14 +72,18 @@ static void bg0_print_pal(int tx, int ty, const char* s, u16 pal) {
 }
 
 void bg0_print(int tx, int ty, const char* s) {
-    bg0_print_pal(tx, ty, s, PAL15);
+    bg0_print_pal(tx, ty, s, PAL15, TRUE);
 }
 
 void bg0_print_gold(int tx, int ty, const char* s) {
-    bg0_print_pal(tx, ty, s, PAL14);
+    bg0_print_pal(tx, ty, s, PAL14, TRUE);
 }
 
-void bg0_print_num(int tx, int ty, int n, int width) {
+void bg0_print_hud(int tx, int ty, const char* s) {
+    bg0_print_pal(tx, ty, s, PAL15, FALSE);
+}
+
+static void print_num(int tx, int ty, int n, int width, bool8 opaque) {
     char buf[8];
     int i = 7;
     buf[i] = 0;
@@ -74,7 +95,15 @@ void bg0_print_num(int tx, int ty, int n, int width) {
     } while (n && i > 0);
     while (7 - i < width && i > 0)
         buf[--i] = ' ';
-    bg0_print(tx, ty, &buf[i]);
+    bg0_print_pal(tx, ty, &buf[i], PAL15, opaque);
+}
+
+void bg0_print_num(int tx, int ty, int n, int width) {
+    print_num(tx, ty, n, width, TRUE);
+}
+
+void bg0_print_num_hud(int tx, int ty, int n, int width) {
+    print_num(tx, ty, n, width, FALSE);
 }
 
 void bg0_fill(int tx, int ty, int w, int h, u16 tile) {
@@ -421,18 +450,18 @@ void hud_draw(void) {
         bg0_put(1 + i, 0, t);
     }
     bg0_put(1, 1, HT_GILT);
-    bg0_print_num(2, 1, gPl.gilt, 3);
+    bg0_print_num_hud(2, 1, gPl.gilt, 3);
     bg0_put(6, 1, HT_KEY);
-    bg0_print_num(7, 1, gPl.keys, 1);
+    bg0_print_num_hud(7, 1, gPl.keys, 1);
     /* the three buttons and what they hold, then R's hand */
     for (i = 0; i < SLOT_COUNT; i++) {
         int eq = gPl.equip[i];
         bg0_put(sSlotX[i] - 1, 0, sSlotBtn[i]);
         slot(sSlotX[i], eq != EQ_NONE);
         if (eq == EQ_BOMBS)
-            bg0_print_num(sSlotX[i], 2, gPl.bombs, 2);
+            bg0_print_num_hud(sSlotX[i], 2, gPl.bombs, 2);
         else
-            bg0_print(sSlotX[i], 2, "  ");
+            bg0_print_hud(sSlotX[i], 2, "  ");
         hud_equip_icon(eq, sSlotX[i] * 8, 0, 0);
     }
     bg0_put(20, 0, HT_BTN_R);

@@ -9,6 +9,9 @@ void bg0_put(int tx, int ty, u16 tile);
 void bg0_print(int tx, int ty, const char* s);
 void bg0_print_gold(int tx, int ty, const char* s);
 void bg0_print_num(int tx, int ty, int n, int width);
+/* over the world, nothing behind the letters: the HUD and the title */
+void bg0_print_hud(int tx, int ty, const char* s);
+void bg0_print_num_hud(int tx, int ty, int n, int width);
 void bg0_fill(int tx, int ty, int w, int h, u16 tile);
 void bg0_frame(int tx, int ty, int w, int h);
 

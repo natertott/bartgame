@@ -362,3 +362,11 @@ t('rule', '''
     ........
     ........
 ''')
+
+# Tiles that sit inside a box keep nothing transparent: the fill shows
+# where the drawing does not, so no scene shows through a cursor, a rule,
+# the hand, an unknown map cell, a coin or the corners of a slot.
+for _n in ('rule', 'cursor', 'arrow', 'map_unknown', 'hand', 'gilt', 'item_box',
+           'slot_tl', 'slot_tr', 'slot_bl', 'slot_br', 'slot_lit_tl', 'slot_lit_tr', 'slot_lit_bl', 'slot_lit_br',
+           'btn_l', 'btn_a', 'btn_b', 'btn_r'):
+    TILES[_n] = [r.replace('.', 'e') for r in TILES[_n]]

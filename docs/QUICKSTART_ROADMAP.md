@@ -1428,6 +1428,20 @@ The lift probe looked for the thrown object four frames after the
 press, by which time a bush thrown at a near wall had already broken;
 it looks on the next frame now.
 
+**The boxes were see-through (follow-up).** The user: the scene showed
+behind the menu text instead of a solid black ground. The font's glyph
+tiles kept index 0 behind the strokes and a space was tile 0, so inside
+a box every letter cell and every blank showed the layers under BG0,
+the hero's sprite included; the frame's fill tiles were the only
+opaque ones. `text_init` now builds a second copy of the font at
+`FONT_BOX` with the box fill (E) behind every glyph; `bg0_print`,
+`bg0_print_gold` and `bg0_print_num` use it and fill spaces, and the
+HUD's numbers and the title's PRESS START use `bg0_print_hud` and
+`bg0_print_num_hud`, the plain font over the world. The rule, cursor,
+arrow, unknown-map, hand, coin, button and slot tiles fill their
+transparent pixels too. Checked by counting colours inside the pause
+box: before, 1,769 pixels of grass green among the fill; after, none.
+
 **Open.** A one-wide plank path that turns a corner over water shows
 planks of both directions meeting at the corner. Islands are rare
 (rx >= 4 and ry >= 3 clearings). Props drawn on the wood and stone
