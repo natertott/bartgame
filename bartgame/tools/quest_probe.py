@@ -119,6 +119,14 @@ def go(c, w, target):
     return CP.cell(c) == target
 
 
+def tt_floor(c, tx, ty):
+    """is this tile plain floor, by the art's own type table"""
+    sys.path.insert(0, os.path.join(HERE, '..', 'art'))
+    import tiles
+    v = CP.tt_at(c, tx, ty)
+    return v is not None and v != 0xFFFF and tiles.METATILES[v]['type'] == 'FLOOR'
+
+
 def npc_pos(c):
     a = CP.find_actor(c, 5)
     return a
@@ -235,10 +243,15 @@ def main():
         torches = [k for k, v in g.items() if v == CP.mt('TORCH')]
         check('TORCH: four censers stand cold', len(torches) == 4, str(torches))
         for (tx, ty) in torches:
-            CP.heal(c)
-            CP.teleport(c, tx * 16 + 8, (ty + 1) * 16 + 14)
-            P.hold(c, 'UP', 4)
-            P.press(c, 'B', 2, 30)
+            # from below first, then whichever side has ground
+            for dx, dy, key in ((0, 1, 'UP'), (-1, 0, 'RIGHT'), (1, 0, 'LEFT'), (0, -1, 'DOWN')):
+                if tt_floor(c, tx + dx, ty + dy):
+                    CP.heal(c)
+                    clear_enemies(c)  # a bite cancels the swing: this tests the lamp
+                    CP.teleport(c, (tx + dx) * 16 + 8, (ty + dy) * 16 + 14)
+                    P.hold(c, key, 4)
+                    P.press(c, 'B', 2, 30)
+                    break
         w_, h_, g = CP.room_tiles(c)
         lit = [k for k, v in g.items() if v == CP.mt('TORCH_LIT')]
         check('TORCH: the lamp lights them', len(lit) == 4, 'lit %d' % len(lit))

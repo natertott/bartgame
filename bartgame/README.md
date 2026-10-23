@@ -34,9 +34,14 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 Grime and glamour, after the concept boards: a chibi flower-child hero
 with a round cream face in a ring of orange petals, a green hood and
 tunic; the Billious Peddler, purple-hided under a red hood; the Pale
-Gatekeeper in a tall violet hat. Deep saturated greens, teal water that
-glows, amber lanterns, warm grey stone, violet blight with magenta
-cracks, gold frames. Every material has its own 16-color palette and a
+Gatekeeper in a tall violet hat. A forest falling into sickness: a
+canopy that goes from blue-black to lit green, dark olive turf with
+bright tips, warm soil trails, deep navy water with foam that drifts,
+amber lanterns hung in the trees, white and gold stars on the ground,
+fireflies; rocks in three shapes sunk in moss and soil on a palette of
+their own; and the rot, by depth: stained grass split by glowing cracks
+at the second stage, then purple to the walls, pitted, veined with
+light, under a mist, with dead black trees clawing up. Every material has its own 16-color palette and a
 dark hue outline, three tones and a gleam, light from the upper left.
 The ground is textured turf with hand-placed tufts, flowers and
 pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
@@ -57,8 +62,11 @@ ledges you can drop from, with one ramp back up. Trees stand in the
 big clearings, bushes and stones narrow the paths without ever closing
 them, and a hoard is sometimes dug into the wall behind a bush or a
 boulder. Fireflies drift over the living rooms. Set pieces span tiles,
-painted whole and sliced: a great tree of 3x4 with a hollow in its
-trunk and roots over three tiles of turf, a flower meadow of 3x3
+painted whole and sliced: two great trees of 3x4 (one with a hollow in
+its trunk, one lopsided with a lantern on its low branch) and roots
+over three tiles of turf, two 2x3 trees (one with a lantern hung in
+it) and the blight's 2x3 dead tree, a rock wedged in a stump's roots
+(2x2), a flower meadow of 3x3
 round a flat stone, clover and fairy rings of 2x2, a great boulder of
 2x2, a hollow log of 2x1, a lily raft of 2x2 on open water; cliffs end
 in capped stones, lakes have rounded corners and banks on every side

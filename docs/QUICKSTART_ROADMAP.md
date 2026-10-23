@@ -1271,6 +1271,82 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the sickness, after the forest board (Oct 2026)
+
+The user: more dynamism and variety in the forest's things (several
+larger trees, rocks that belong to the scenery, mossed over, buried,
+in the roots of trees), and the art pulled back toward the vision
+board as closely as the GBA allows: the sparkle, the blight, the
+darkness, the disgust, the beauty, the glamour; a forest falling into
+a deep sickness, not a stale one.
+
+**The board, read again.** Its forest is dark: a canopy of blue-black
+with lit green clusters, ground of olive with bright grass clumps and
+warm soil, deep navy water with cyan sparkle, amber lanterns hung in
+gnarled trees, white four-point stars on the grass, and on its right
+half the rot: purple ground that glows, black dead trees veined with
+magenta, crystal clusters, grey stone walls lit violet, a drifting
+purple mist. Palettes moved toward it: grass deep/dark/mid/light/bright
+'#14301c' '#20482a' '#3a6a2c' '#5c9c3a' '#a4dc4c' (GRASS_MID darker,
+so every prop's grass-through follows), soil '#4e3c20'..'#b49c58',
+canopy '#0a1a1c' '#103428' '#1a5438' '#2e864c' '#60c060', water
+'#081a48' '#103478' '#1c6cc0' foam '#a8f4ff', blight '#200c38'..'#ffb4ff'
+with a brighter glow. An eighth BG palette, `cliff`: stone deep..bright,
+moss dark..light, soil dark..light, cream, lichen violet, grass mid and
+bright, so a rock can sit in textured turf with a ring of soil and a
+cap of moss instead of on a flat square of one green.
+
+**Variety.** Rocks in three shapes on the cliff palette (`rock` sunk in
+moss with tufts over its foot, `rock2` buried flat with grass over its
+edge, `rock3` two stones stacked with lichen), the liftable small stone
+and the boulder redrawn the same way, the great boulder with a sapling
+rooted in its crack, and `treerock` (2x2): a stone wedged in the roots
+of a stump. Trees: `tree2` (2x3, a lantern hung in the crown with its
+glow on the leaves), `gtree2` (3x4, lopsided, a lantern under its low
+branch, a knot), and `btree` (2x3 on the blight palette): a black
+twisted trunk, bare branches clawing up on the overlay, magenta veins,
+glow at the tips. `scatter_rocks` picks a shape per rock; `place_tree`
+takes the room's kind (the dead tree in the rot, else one in three
+with a lantern); `place_great_tree` picks a shape; a treerock stands in
+two rooms of five. Ledges and pits moved to the cliff palette with a
+mossy brow and a foot of soil.
+
+**The sickness by depth.** `sick` (stage 2): grass stained violet
+(`blight_ground0/1`) split by glowing cracks (`blight_ground2`), one
+canopy tile in five sick. `blighted` (stage 3, the arena): the floor a
+mix of `blight_floor` (purple with patches), the new `blight_floor2`
+(dark purple, pits of black, short seams of light that pulse),
+`blight_ground2` and the veins; the canopy `canopy_blight` or the new
+`canopy_blight2` (leaves veined with light, two frames); fourteen
+`blight_mist` overlays (sparse motes that drift) and the dead trees.
+The living rooms get `sparkle_white` overlays (four-point stars that
+wink, ten a room) beside the gold motes, 22 tall grass clumps and 16
+flower tiles. Turf gets eight bright tips a tile instead of four.
+Tileset 780 of 1024 tiles, 54 animated.
+
+**Got wrong on the way.** The first `blight_floor2` carried two long
+cracks per tile; tiled, they read as a rain of slashes. Shortened to
+three two-pixel seams. The water stayed too bright a blue for the dark
+wood and went two shades deeper.
+
+**Measured.** Critical path with the boss 18/18 on 0xB4A7, 0x1234 and
+0x7777; the quests 12/12 on 0x28c, 0x1234 and 0x3; the hands 14/14.
+Every room of the pinned seed rendered and read against the board.
+
+**Probes hardened on the way.** `cross` held the direction for the
+whole 160 frames, so after the room changed the hero walked on into
+whatever the new room had in front of the door; in cell 17 of 0x28c
+that was water, he was mid-fall when the probe placed him at the next
+gate, and the fall snapped him back. `walk_until_new_room` releases
+the key the frame the room changes, and `teleport` now sets the state
+to normal and the safe ground to the spot. The censers: three of the
+four in cell 18 of 0x28c had a wall or a cliff below them, and the
+probe only lit from below; the generator now wants open, reached
+ground south of a censer (the hero's natural side), and the probe
+tries the other sides too, clearing the room's monsters first, since a
+bite cancels the swing.
+
+
 ### BARTGAME: the pause menu, the hands and the winding wood (Oct 2026)
 
 The user asked for three things: a pause menu after the Minish Cap's,

@@ -8,76 +8,76 @@ has a dark hue outline, three or four body tones and a gleam. Values
 are multiples of 8 so they survive the GBA's 5-bit channels.
 """
 
-GRASS_MID = '#44a046'
+GRASS_MID = '#3a6a2c'
 
 BG_PALETTES = [
-    # 0 forest ground: grass, paths, flowers, a blight stain, a gold mote
+    # 0 forest ground: dark olive grass with bright tips, warm soil, flowers, blight, a gold mote
     ('forest', ['#000000',
-                '#0c1a14',   # 1 outline, deep shadow
-                '#124a34',   # 2 grass deep
-                '#2a7a3c',   # 3 grass dark
+                '#060a10',   # 1 outline, deep shadow
+                '#14301c',   # 2 grass deep
+                '#20482a',   # 3 grass dark
                 GRASS_MID,   # 4 grass mid
-                '#6cc050',   # 5 grass light
-                '#a8e060',   # 6 grass bright
-                '#6a4a28',   # 7 path dark
-                '#a07a40',   # 8 path mid
-                '#d0aa64',   # 9 path light
-                '#58a8ff',   # A flower blue
-                '#ff80c0',   # B flower pink
-                '#fff8e0',   # C cream, white petals, bone
-                '#7030b0',   # D blight violet
-                '#d060f0',   # E blight magenta
-                '#ffe070']), # F gold mote
-    # 1 wood: canopy, trees, stumps, thorns, fences, logs, bridges, lanterns
+                '#5c9c3a',   # 5 grass light
+                '#a4dc4c',   # 6 grass bright
+                '#4e3c20',   # 7 path dark
+                '#86703c',   # 8 path mid
+                '#b49c58',   # 9 path light
+                '#4aa0ff',   # A flower blue
+                '#ff78c8',   # B flower pink
+                '#fff6dc',   # C cream, white petals, bone, stars
+                '#6a28b8',   # D blight violet
+                '#d05cff',   # E blight magenta
+                '#ffe878']), # F gold mote
+    # 1 wood: canopy blue-black to lit green, bark, lantern amber
     ('wood', ['#000000',
-              '#081410',     # 1 outline
-              '#082418',     # 2 leaf deepest
-              '#145838',     # 3 leaf dark
-              '#1e8048',     # 4 leaf mid
-              '#3aa858',     # 5 leaf light
-              '#78d070',     # 6 leaf bright
-              '#3a2210',     # 7 bark dark
-              '#6a4020',     # 8 bark mid
-              '#a06838',     # 9 bark light
-              '#d09858',     # A bark highlight
-              '#c06020',     # B lantern amber dark
-              '#ffb040',     # C lantern amber
-              '#fff8c0',     # D lantern bright
+              '#04080c',     # 1 outline
+              '#0a1a1c',     # 2 leaf deepest
+              '#103428',     # 3 leaf dark
+              '#1a5438',     # 4 leaf mid
+              '#2e864c',     # 5 leaf light
+              '#60c060',     # 6 leaf bright
+              '#2a1a10',     # 7 bark dark
+              '#4e3420',     # 8 bark mid
+              '#7c5430',     # 9 bark light
+              '#ac7c48',     # A bark highlight
+              '#c05818',     # B lantern amber dark
+              '#ffb038',     # C lantern amber
+              '#fff6c0',     # D lantern bright
               GRASS_MID,     # E grass showing through
-              '#d060f0']),   # F thorn magenta
-    # 2 stone: rocks, cliffs, ruins, water, gates, chests, torches, statues
+              '#d05cff']),   # F thorn magenta
+    # 2 stone: ruins, water, gates, chests, torches, statues
     ('stone', ['#000000',
-               '#101820',    # 1 outline
-               '#2c3040',    # 2 stone deep
-               '#4c5060',    # 3 stone dark
-               '#787c88',    # 4 stone mid
-               '#aab0b8',    # 5 stone light
-               '#e0e4e8',    # 6 stone bright
-               '#103a7a',    # 7 water deep
-               '#1c64c0',    # 8 water mid
-               '#40a8e8',    # 9 water light
-               '#c8f4ff',    # A water foam
+               '#0a1018',    # 1 outline
+               '#1a2030',    # 2 stone deep
+               '#303848',    # 3 stone dark
+               '#565e70',    # 4 stone mid
+               '#848c9c',    # 5 stone light
+               '#b8c0cc',    # 6 stone bright
+               '#081a48',    # 7 water deep
+               '#103478',    # 8 water mid
+               '#1c6cc0',    # 9 water light
+               '#a8f4ff',    # A water foam
                '#8a5c18',    # B gold dark, wood shadow
                '#e8b838',    # C gold mid
                '#fff4b0',    # D gold bright, flame
                GRASS_MID,    # E moss, grass showing through
                '#a06838']),  # F wood
-    # 3 blight: the deep rooms, purple ground, crystals, dead trees
+    # 3 blight: the deep rooms, purple ground that glows, crystals, dead trees
     ('blight', ['#000000',
-                '#100818',   # 1 outline
-                '#24103c',   # 2 blight deepest
-                '#3c1860',   # 3 blight deep
-                '#6428a0',   # 4 blight mid
-                '#9848d8',   # 5 blight light
-                '#d868f8',   # 6 magenta glow
-                '#f8b0ff',   # 7 pink bright
-                '#1c1018',   # 8 dead bark dark
-                '#3a2830',   # 9 dead bark
-                '#5c4048',   # A dead bark light
-                '#c090ff',   # B crystal light
-                '#2a7a3c',   # C grass dark
+                '#0c0414',   # 1 outline
+                '#200c38',   # 2 blight deepest
+                '#381458',   # 3 blight deep
+                '#6020a8',   # 4 blight mid
+                '#9a3ce8',   # 5 blight light
+                '#d868ff',   # 6 magenta glow
+                '#ffb4ff',   # 7 pink bright
+                '#140c14',   # 8 dead bark dark
+                '#30202c',   # 9 dead bark
+                '#56404c',   # A dead bark light
+                '#c8a0ff',   # B crystal light
+                '#1e4028',   # C grass dark
                 GRASS_MID,   # D grass mid
-                '#ffe070',   # E gold mote
+                '#ffe878',   # E gold mote
                 '#ffffff']), # F white
     # 4 sewer: wet stone, moss, teal water, rust, candlelight
     ('sewer', ['#000000',
@@ -131,6 +131,23 @@ BG_PALETTES = [
              '#9040d8',      # D violet
              '#0c0a14',      # E box fill
              '#3a3a48']),    # F slate, empty
+    # 7 cliff: rocks and ledges sunk in moss and soil
+    ('cliff', ['#000000',
+               '#0a1018',    # 1 outline
+               '#1c2432',    # 2 stone deep
+               '#34404e',    # 3 stone dark
+               '#5a6878',    # 4 stone mid
+               '#8a98a4',    # 5 stone light
+               '#c0ccd4',    # 6 stone bright
+               '#1c3a1c',    # 7 moss dark
+               '#3a7a30',    # 8 moss mid
+               '#7cc048',    # 9 moss light
+               '#3a2a16',    # A soil dark
+               '#6e5634',    # B soil
+               '#fff6dc',    # C cream
+               '#8a3cd8',    # D lichen violet
+               GRASS_MID,    # E grass mid
+               '#a4dc4c']),  # F grass bright
 ]
 
 OBJ_PALETTES = [

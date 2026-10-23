@@ -57,9 +57,14 @@ def gstate(c):
 
 
 def teleport(c, x, y):
+    """put the hero at (x, y) standing, and make it his safe ground, so a
+    fall in progress does not snap him back to where he was"""
     a = P.sym('gActors')
+    pl = P.sym('gPl')
     P.w16(c, a + 8, 0); P.w16(c, a + 10, x)
     P.w16(c, a + 12, 0); P.w16(c, a + 14, y)
+    P.w8(c, a + 2, 0)   # state: normal
+    P.w16(c, pl + 14, x); P.w16(c, pl + 16, y)
     for _ in range(3):
         c.run_frame()
 
@@ -120,21 +125,33 @@ def cross(c, side, frames=160):
     clear_enemies(c)
     teleport(c, x, y)
     before = cell(c)
-    P.hold(c, key, frames)
-    for _ in range(60):
-        c.run_frame()
+    walk_until_new_room(c, key, frames)
     if P.r8(c, P.sym('gTbActive')):
         # walked into a chest or a sign on arrival, or a box opened on the
         # way: close it, and walk again if the room did not change
         dismiss(c)
         if cell(c) == before:
             teleport(c, x, y)
-            P.hold(c, key, frames)
-            for _ in range(60):
-                c.run_frame()
+            walk_until_new_room(c, key, frames)
             if P.r8(c, P.sym('gTbActive')):
                 dismiss(c)
     return cell(c), before
+
+
+def walk_until_new_room(c, key, frames):
+    """hold the key until the room changes (or frames run out), then let
+    the transition finish with nothing held: the hero stays at the door
+    instead of walking on into whatever the new room has there"""
+    start = cell(c)
+    k = P.key(c, key)
+    c.set_keys(k)
+    for _ in range(frames):
+        c.run_frame()
+        if cell(c) != start:
+            break
+    c.clear_keys(k)
+    for _ in range(60):
+        c.run_frame()
 
 
 def side_between(a, b):

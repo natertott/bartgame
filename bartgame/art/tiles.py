@@ -83,7 +83,7 @@ def marks(base, placements, w=16, h=16):
     bases get a texture first, seeded by where the marks go."""
     seed = sum((x + 1) * 31 + (y + 1) * 7 for art, x, y in placements)
     if base == 4:
-        c = Canvas.from_rows(turf(seed, 4, 3, 5, 7, 4, w, h))
+        c = Canvas.from_rows(turf(seed, 4, 3, 5, 6, 8, w, h))
     elif base == 8:
         c = Canvas.from_rows(turf(seed, 8, 7, 9, 5, 5, w, h))
     else:
@@ -1698,6 +1698,483 @@ def nicked(frame, dmask, phase):
 
 for _m in range(1, 16):
     mt('water_c%x' % _m, 'stone', 'WATER', frames=[nicked(_w1, _m, 0), nicked(_w2, _m, 1)], anim_speed=20)
+
+# ====================================================== the sickness ===
+# After the forest board again: the ground darker and the lights
+# brighter; rocks sunk in moss and soil on a palette of their own, in
+# several shapes; trees in several shapes, lanterns hung in them; the
+# blight glowing, with its own dead trees and a mist.
+def remt(name, pal, type_, art=None, frames=None, coll=None, anim_speed=8):
+    """replace a metatile in place, keeping its id"""
+    for i, m in enumerate(METATILES):
+        if m['name'] == name:
+            d = {'name': name, 'pal': pal, 'type': type_}
+            if frames:
+                d['frames'] = frames
+            else:
+                d['art'] = art
+            if coll is not None:
+                d['coll'] = coll
+            if anim_speed:
+                d['anim_speed'] = anim_speed
+            METATILES[i] = d
+            return
+    raise KeyError(name)
+
+
+# Palette 'cliff': 1 outline, 2-6 stone deep..bright, 7-9 moss dark..light,
+# A-B soil dark..light, C cream, D lichen violet, E grass mid, F grass
+# bright. Turf on it: grass with moss-dark dashes and bright tips.
+def cturf(seed, w=16, h=16):
+    return turf(seed, 0xe, 7, 0xf, 6, 5, w, h)
+
+
+def rock_on(ground, draw, w=16, h=16):
+    """draw(c) paints a rock on a transparent canvas; it is outlined and
+    laid on the ground rows, with a soil shadow under it first."""
+    g = Canvas.from_rows(ground)
+    c = Canvas(w, h)
+    draw(c)
+    c.outline(1)
+    return compose(g.rows(), c.rows())
+
+
+def soil_ring(g, cx, cy, rx, ry):
+    g.ellipse(cx, cy, rx, ry, 0xa)
+    g.ellipse(cx, cy - 0.5, rx - 1, ry - 1, 0xb)
+
+
+# a mossy stone sunk in the soil, tufts over its foot
+def _rock(c):
+    ball(c, 8, 8.5, 6.5, 5.5, (2, 3, 4, 5, 6))
+    c.ellipse(6, 4.5, 3.5, 1.5, 8)
+    c.ellipse(5.5, 4, 2, 0.8, 9)
+    c.set(12, 7, 0xd)
+    c.set(3, 10, 0xd)
+
+
+_g = Canvas.from_rows(cturf(21)); soil_ring(_g, 8, 11, 8, 4.5)
+_r = rock_on(_g.rows(), _rock)
+_r = compose(_r, A('''
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ................
+    ..f.........f...
+    .f9........f9...
+    ................
+    ................
+    ................
+'''))
+remt('rock', 'cliff', 'SOLID', _r)
+
+
+# a flat stone buried to its shoulders, grass growing over its edge
+def _rock2(c):
+    c.ellipse(8, 9.5, 7, 3.6, 3)
+    c.ellipse(7.5, 9, 6.5, 3, 4)
+    c.ellipse(6.5, 8, 4.5, 1.8, 5)
+    c.ellipse(5.5, 7.5, 2, 0.8, 6)
+    c.set(10, 10, 2)
+    c.set(11, 10, 2)
+
+
+_g = Canvas.from_rows(cturf(22)); soil_ring(_g, 8, 11.5, 8, 3)
+_r = rock_on(_g.rows(), _rock2)
+_r = compose(_r, A('''
+    ................
+    ................
+    ................
+    ................
+    ................
+    ..............f.
+    .............f9.
+    ................
+    ................
+    ................
+    ................
+    ...f.......f....
+    ..f9......f9e...
+    ................
+    ................
+    ................
+'''))
+mt('rock2', 'cliff', 'SOLID', _r)
+
+
+# two stones stacked, moss between them, lichen on the top one
+def _rock3(c):
+    ball(c, 8, 11, 6.5, 3.8, (2, 3, 4, 5, 6))
+    ball(c, 7.5, 5.5, 4.5, 3.5, (2, 3, 4, 5, 6))
+    c.ellipse(8, 8.5, 4.5, 1, 8)
+    c.set(6, 3, 0xd)
+    c.set(9, 4, 0xd)
+    c.set(5, 5, 0xd)
+
+
+_g = Canvas.from_rows(cturf(23)); soil_ring(_g, 8, 13, 7.5, 2.8)
+mt('rock3', 'cliff', 'SOLID', rock_on(_g.rows(), _rock3))
+
+
+# the small stone, light enough to lift, a cap of moss
+def _rock_small(c):
+    ball(c, 8, 9, 4.5, 3.8, (2, 3, 4, 5, 6))
+    c.ellipse(7, 6.5, 2.5, 1, 8)
+    c.set(6, 6, 9)
+
+
+_g = Canvas.from_rows(cturf(24)); soil_ring(_g, 8, 11.5, 5.5, 2.5)
+remt('rock_small', 'cliff', 'LIFT1', rock_on(_g.rows(), _rock_small))
+
+
+# the boulder: dark, cracked, mossy; only the gauntlet moves it
+def _boulder(c):
+    ball(c, 8, 8, 7, 6.5, (2, 3, 4, 5, 6))
+    for x, y in ((9, 4), (9, 5), (10, 6), (10, 7), (11, 8), (11, 9), (12, 10)):
+        c.set(x, y, 1)
+    c.ellipse(5.5, 3.5, 3, 1.4, 8)
+    c.set(4, 3, 9)
+    c.set(3, 9, 0xd)
+    c.set(12, 5, 0xd)
+
+
+_g = Canvas.from_rows(cturf(25)); soil_ring(_g, 8, 12, 8, 3.5)
+remt('boulder', 'cliff', 'LIFT2', rock_on(_g.rows(), _boulder))
+
+
+# the great boulder again: moss on its crown, lichen, a sapling rooted in a crack
+def _gboulder(c):
+    ball(c, 16, 15.5, 13.5, 11.5, (2, 3, 4, 5, 6))
+    c.ellipse(11, 7, 6, 2.6, 8)
+    c.ellipse(10, 6.5, 4, 1.4, 9)
+    c.ellipse(21, 6, 3, 1.4, 8)
+    for i, (x, y) in enumerate(((18, 10), (18, 11), (19, 12), (19, 13), (20, 14), (20, 15), (21, 16), (21, 17), (22, 18))):
+        c.set(x, y, 1)
+        if i % 3 == 0:
+            c.set(x + 1, y, 2)
+    for x, y in ((6, 12), (7, 16), (25, 12), (24, 19), (14, 22)):
+        c.set(x, y, 0xd)
+    # the sapling
+    c.vline(23, 1, 6, 0xb)
+    c.set(23, 0, 9)
+    c.set(22, 2, 9); c.set(21, 2, 8); c.set(24, 3, 9); c.set(25, 3, 8); c.set(22, 4, 9)
+
+
+_g = Canvas.from_rows(cturf(26, 32, 32)); soil_ring(_g, 16, 25, 15, 5)
+_rows = rock_on(_g.rows(), _gboulder, 32, 32)
+for _i in range(4):
+    remt('gboulder_%d' % _i, 'cliff', 'SOLID', slice16(_rows, _i % 2, _i // 2))
+
+
+# a rock wedged in the roots of a stump: roots of soil-brown wrap a stone
+def _treerock(c):
+    ball(c, 13, 17, 8.5, 7, (2, 3, 4, 5, 6))
+    c.ellipse(10, 11.5, 4, 1.6, 8)
+    # the stump
+    c.rect(18, 2, 28, 14, 0xb)
+    c.vline(18, 2, 14, 0xa); c.vline(19, 3, 14, 0xa)
+    c.vline(27, 2, 14, 0xa)
+    c.ellipse(23, 2.5, 5, 1.8, 0xb); c.ellipse(23, 2.5, 3.5, 1.1, 0xc); c.ellipse(23, 2.5, 2, 0.6, 0xb)
+    # roots over the stone
+    for x0, y0, x1, y1 in ((20, 14, 12, 20), (22, 14, 17, 22), (26, 14, 29, 24)):
+        n = max(abs(x1 - x0), abs(y1 - y0))
+        for k in range(n + 1):
+            x = x0 + (x1 - x0) * k // n
+            y = y0 + (y1 - y0) * k // n
+            c.set(x, y, 0xb); c.set(x + 1, y, 0xb); c.set(x, y + 1, 0xa)
+    c.set(5, 14, 0xd); c.set(8, 21, 0xd)
+
+
+_g = Canvas.from_rows(cturf(27, 32, 32)); soil_ring(_g, 15, 25, 14, 5)
+_rows = rock_on(_g.rows(), _treerock, 32, 32)
+piece('treerock', 'cliff', 'SOLID', _rows, 2, 2)
+
+
+# cliffs on the cliff palette: a mossy brow, blocks of stone hung with
+# moss, a foot of soil
+_cliff = A('''
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    eeeeeeeeeeeeeeee
+    9999999999999999
+    1111111111111111
+    5555515555551555
+    4484414444441484
+    4444414448441444
+    1111111111111111
+    4451444444144444
+    4451448444144884
+    3331333333133333
+    1111111111111111
+    aaaaaaaaaaaaaaaa
+    bbabbbbbabbbbbba
+''')
+_cliff = compose(cturf(28), _cliff)
+remt('ledge_s', 'cliff', 'LEDGE_S', _cliff)
+_cap_w = []
+for _y, _r in enumerate(_cliff):
+    if _y < 4:
+        _cap_w.append(_r)
+    else:
+        _cap_w.append(cturf(28)[_y][:3] + ('1' if _y < 14 else 'a') + _r[4:])
+remt('ledge_s_w', 'cliff', 'LEDGE_S', _cap_w)
+remt('ledge_s_e', 'cliff', 'LEDGE_S', hflip(_cap_w))
+remt('ledge_n', 'cliff', 'LEDGE_N', vflip(_cliff))
+remt('pit', 'cliff', 'PIT', compose(cturf(29), A('''
+    ................
+    ................
+    1111111111111111
+    4544454444544454
+    3333333333333333
+    2222122222122222
+    1111111111111111
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+    0000000000000000
+''')))
+
+
+# ---------------------------------------------------------------- trees --
+def tree_piece(name, rows, crown_pal, ground_pal, ground_w, ground_e, coll=3):
+    """a 2x3 tree: crown on the overlay (4 tiles), trunks solid on the ground"""
+    for i in range(4):
+        mt('%s_%d' % (name, i), crown_pal, 'FLOOR', slice16(rows, i % 2, i // 2))
+    mt('%s_4' % name, ground_pal, 'SOLID', compose(ground_w, slice16(rows, 0, 2)), coll=coll)
+    mt('%s_5' % name, ground_pal, 'SOLID', compose(ground_e, slice16(rows, 1, 2)), coll=coll)
+
+
+LANTERN_SMALL = A('''
+    .1.
+    111
+    1c1
+    1d1
+    1b1
+    .1.
+''')
+
+
+def hang_lantern(rows, x, y):
+    c = Canvas.from_rows(rows)
+    c.blit(LANTERN_SMALL, x, y)
+    for dx, dy in ((-2, 2), (4, 2), (-1, 6), (3, 6), (1, -2), (-3, 4), (5, 4)):
+        if c.get(x + 1 + dx, y + 3 + dy) in (2, 3, 4):
+            c.set(x + 1 + dx, y + 3 + dy, 0xc)
+    return c.rows()
+
+
+# the tree with a lantern hung in its crown
+tree_piece('tree2', hang_lantern(_tree, 22, 18), 'wood', 'forest',
+           marks(GRASS, [(TUFT['a'], 1, 2), (TUFT['e'], 3, 9), (TUFT['c'], 1, 13), (TUFT['b'], 9, 14)]),
+           marks(GRASS, [(TUFT['b'], 11, 3), (TUFT['a'], 12, 8), (TUFT['e'], 7, 14), (TUFT['c'], 14, 13)]))
+
+
+# a second great tree: lopsided, a lantern on its low branch, a knot
+def great_tree2_art():
+    c = Canvas(48, 64)
+    crown = [(20, 8, 7.5), (32, 12, 9.0), (10, 16, 8.5), (26, 20, 12.0), (40, 24, 6.5), (6, 27, 6.0),
+             (18, 31, 9.0), (34, 32, 8.0), (26, 38, 7.0), (12, 38, 5.0)]
+    for cx, cy, r in sorted(crown, key=lambda q: q[1]):
+        blob(c, cx, cy, r, (2, 4, 5, 6), wrap=False)
+    c.rect(21, 42, 29, 60, 8)
+    c.vline(21, 42, 60, 7); c.vline(22, 45, 59, 9)
+    c.vline(29, 42, 60, 7); c.vline(28, 44, 60, 8)
+    c.vline(25, 47, 57, 9)
+    # the low branch to the left, and the lantern under it
+    c.hline(8, 21, 44, 8); c.hline(6, 20, 45, 7); c.hline(10, 20, 43, 9)
+    c.ellipse(26, 53, 2, 1.5, 7); c.set(26, 53, 1)
+    c.hline(10, 20, 58, 8); c.hline(6, 15, 59, 7); c.hline(12, 20, 59, 9)
+    c.hline(30, 40, 58, 8); c.hline(35, 43, 59, 7); c.hline(30, 37, 59, 9)
+    c.hline(21, 29, 61, 7)
+    c.hline(16, 21, 57, 9); c.hline(29, 34, 57, 9)
+    c.outline(1)
+    return hang_lantern(c.rows(), 10, 46)
+
+
+_gtree2 = great_tree2_art()
+for _i in range(9):
+    mt('gtree2_%d' % _i, 'wood', 'FLOOR', slice16(_gtree2, _i % 3, _i // 3))
+mt('gtree2_9', 'forest', 'FLOOR', compose(_root_w, slice16(_gtree2, 0, 3)))
+mt('gtree2_10', 'forest', 'SOLID', compose(_root_c, slice16(_gtree2, 1, 3)), coll=3)
+mt('gtree2_11', 'forest', 'FLOOR', compose(_root_e, slice16(_gtree2, 2, 3)))
+
+
+# the blight's dead tree, 2x3: a black twisted trunk, bare branches
+# clawing up, veins of magenta light, glow at the tips
+def btree_art():
+    c = Canvas(32, 48)
+    # trunk
+    for y in range(22, 46):
+        w = 3 + (46 - y) // 8
+        x0 = 16 - w // 2 + ((y // 5) % 2)
+        c.hline(x0 - w // 2, x0 + w // 2 + 1, y, 9)
+        c.set(x0 - w // 2, y, 8)
+        c.set(x0 + w // 2 + 1, y, 0xa)
+    # branches: (from, to) pairs
+    for x0, y0, x1, y1 in ((16, 24, 4, 6), (17, 22, 26, 2), (15, 28, 2, 18), (18, 26, 30, 14), (16, 24, 14, 4),
+                           (6, 10, 1, 1), (24, 8, 31, 5), (4, 16, 0, 20)):
+        n = max(abs(x1 - x0), abs(y1 - y0))
+        for k in range(n + 1):
+            x = x0 + (x1 - x0) * k // n
+            y = y0 + (y1 - y0) * k // n
+            c.set(x, y, 9)
+            if k < n * 2 // 3:
+                c.set(x + 1, y, 0xa)
+    # roots
+    c.hline(6, 13, 45, 9); c.hline(3, 9, 46, 8); c.hline(19, 27, 45, 9); c.hline(23, 29, 46, 8)
+    c.outline(1)
+    # veins and glow
+    for x, y in ((16, 30), (16, 34), (15, 38), (17, 42), (12, 16), (21, 12), (8, 22), (26, 18)):
+        c.set(x, y, 6)
+    for x, y in ((4, 6), (26, 2), (2, 18), (30, 14), (14, 4), (1, 1), (31, 5), (0, 20)):
+        c.set(x, y, 7)
+    return c.rows()
+
+
+_btree = btree_art()
+_bground = marks(BL, [(BL_PATCH, 2, 10), (A('2'), 13, 8), (A('5'), 6, 14)])
+_bground2 = marks(BL, [(BL_PATCH, 9, 11), (A('2'), 3, 9), (A('5'), 12, 13)])
+tree_piece('btree', _btree, 'blight', 'blight', _bground, _bground2)
+
+# ---------------------------------------------------------------- blight --
+# the deep rooms' floor: dark purple, pits of black, a few short seams of
+# light that pulse
+_bf2 = marks(3, [(A('22'), 3, 2), (A('2'), 4, 3), (A('222'), 10, 9), (A('22'), 11, 10), (A('2'), 13, 4), (A('2'), 6, 13),
+                 (A('4'), 8, 6), (A('4'), 14, 14), (A('4'), 1, 8), (A('22'), 8, 14)])
+_bcr1 = A('''
+    ................
+    ................
+    ................
+    ................
+    ......6.........
+    .......6........
+    ................
+    ................
+    ................
+    ................
+    ............6...
+    ...........6....
+    ................
+    ................
+    ..6.............
+    ................
+''')
+_bcr2 = [r.replace('6', '7') for r in _bcr1]
+mt('blight_floor2', 'blight', 'FLOOR', frames=[compose(_bf2, _bcr1), compose(_bf2, _bcr2)], anim_speed=20)
+
+# a mist that drifts over the deep rooms: sparse motes on the overlay
+_mist1 = A('''
+    ................
+    ..5.......6.....
+    ................
+    ......5.........
+    ..............5.
+    ....6...........
+    ................
+    .........5......
+    .5..............
+    ..........6.....
+    ......5.........
+    ................
+    ............5...
+    ...6............
+    ................
+    .........5......
+''')
+_mist2 = A('''
+    ................
+    ...5.......6....
+    ................
+    .......5........
+    ..............6.
+    ....5...........
+    ................
+    ..........5.....
+    ..5.............
+    ...........6....
+    .......5........
+    ................
+    .............5..
+    ....6...........
+    ................
+    ..........5.....
+''')
+mt('blight_mist', 'blight', 'FLOOR', frames=[_mist1, _mist2], anim_speed=16)
+
+# a sicker canopy: the leaves veined with light
+_cb2 = leaf_mass(CANOPY_B, [(BLIGHT_TIP, 4, 1), (BLIGHT_TIP, 11, 7), (BLIGHT_TIP, 2, 8), (BLIGHT_TIP, 14, 13)], tones=(1, 2, 3, 4))
+_cbv1 = A('''
+    ................
+    ......6.........
+    .....6..........
+    .....6....6.....
+    ....67...6......
+    ....6....6......
+    ............6...
+    ...........67...
+    ...........6....
+    ..6.............
+    ..6.............
+    .67.............
+    .6........6.....
+    .........6......
+    .........6......
+    ................
+''')
+_cbv2 = [r.replace('7', '6').replace('6', '7', 1) for r in _cbv1]
+mt('canopy_blight2', 'wood', 'SOLID', frames=[compose(_cb2, _cbv1), compose(_cb2, _cbv2)], anim_speed=18)
+
+# white sparkles on the ground, four-point stars that wink
+_sw1 = A('''
+    ................
+    ....c...........
+    ...ccc..........
+    ..ccfcc.........
+    ...ccc..........
+    ....c...........
+    ................
+    ................
+    ................
+    ............c...
+    ...........ccc..
+    ............c...
+    ................
+    ................
+    ......c.........
+    ................
+''')
+_sw2 = A('''
+    ................
+    ................
+    ....c...........
+    ...ccc..........
+    ....c...........
+    ................
+    ................
+    ................
+    ...........c....
+    ..........ccc...
+    .........ccfcc..
+    ..........ccc...
+    ...........c....
+    ................
+    ................
+    ......c.........
+''')
+mt('sparkle_white', 'forest', 'FLOOR', frames=[_sw1, _sw2], anim_speed=16)
 
 # =============================================================== sewer ===
 def flagstones(seed, slabs, moss=()):

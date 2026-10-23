@@ -122,7 +122,7 @@ static bool8 is_plain(int x, int y) {
     if (!is_floor(x, y))
         return FALSE;
     t = room_get(x, y);
-    return t < MT_MOSS_FLOWERS2 || (t >= MT_BLIGHT_GROUND0 && t <= MT_BLIGHT_FLOOR) || t == MT_MOSS_SHADE;
+    return t < MT_MOSS_FLOWERS2 || (t >= MT_BLIGHT_GROUND0 && t <= MT_BLIGHT_FLOOR) || t == MT_BLIGHT_FLOOR2 || t == MT_MOSS_SHADE;
 }
 
 /* a w by h block of plain ground, away from the doors */
@@ -368,18 +368,23 @@ static u16 moss_pick(void) {
     return MT_BONES;
 }
 
-/* The deep rooms: grass stained violet, the arena purple to the walls. */
-static u16 blight_pick(bool8 arena) {
+/* The sickness by depth: level 1 is grass stained violet and split by
+   glowing cracks; level 2 is purple to the walls, cracked and pitted;
+   the arena deepest of all. */
+static u16 blight_pick(int level, bool8 arena) {
     int r = rng_range(&sR, 20);
     if (arena)
-        return r < 15 ? MT_BLIGHT_FLOOR : r < 18 ? MT_BLIGHT_VEIN : MT_BLIGHT_GROUND0;
-    return r < 17 ? MT_BLIGHT_GROUND0 + (r & 1) : MT_BLIGHT_GROUND2;
+        return r < 11 ? MT_BLIGHT_FLOOR2 : r < 17 ? MT_BLIGHT_FLOOR : MT_BLIGHT_VEIN;
+    if (level >= 2)
+        return r < 8 ? MT_BLIGHT_FLOOR : r < 14 ? MT_BLIGHT_FLOOR2 : r < 17 ? MT_BLIGHT_GROUND2 : MT_BLIGHT_VEIN;
+    return r < 15 ? MT_BLIGHT_GROUND0 + (r & 1) : MT_BLIGHT_GROUND2;
 }
 
 /* a free-standing tree: 2x3, crown on the overlay, trunks solid. Both
    trunks must stand without closing a way. */
-static bool8 place_tree(int x, int y) {
+static bool8 place_tree_kind(int x, int y, u16 crown, u16 trunk) {
     int dx, dy;
+    u16 was;
     if (x < 1 || y < 2 || x + 1 > W - 2 || y + 2 > H - 2)
         return FALSE;
     for (dy = 0; dy < 2; dy++)
@@ -388,23 +393,35 @@ static bool8 place_tree(int x, int y) {
                 return FALSE;
     if (!simple_spot(x, y + 2) || near_door(x + 1, y + 2))
         return FALSE;
-    room_set(x, y + 2, MT_TREE_TRUNK_W);
+    was = room_get(x, y + 2);
+    room_set(x, y + 2, trunk);
     if (!simple_spot(x + 1, y + 2)) {
-        room_set(x, y + 2, MT_MOSS0);
+        room_set(x, y + 2, was);
         return FALSE;
     }
-    room_set(x + 1, y + 2, MT_TREE_TRUNK_E);
-    room_set_overlay(x, y, MT_TREE_TOP_NW);
-    room_set_overlay(x + 1, y, MT_TREE_TOP_NE);
-    room_set_overlay(x, y + 1, MT_TREE_MID_W);
-    room_set_overlay(x + 1, y + 1, MT_TREE_MID_E);
+    room_set(x + 1, y + 2, trunk + 1);
+    room_set_overlay(x, y, crown);
+    room_set_overlay(x + 1, y, crown + 1);
+    room_set_overlay(x, y + 1, crown + 2);
+    room_set_overlay(x + 1, y + 1, crown + 3);
     return TRUE;
+}
+
+/* a tree of the room's kind: the blight's dead tree in the deep rooms,
+   else one in three with a lantern hung in it */
+static bool8 place_tree(int x, int y, bool8 blighted) {
+    if (blighted)
+        return place_tree_kind(x, y, MT_BTREE_0, MT_BTREE_4);
+    if (rng_range(&sR, 3) == 0)
+        return place_tree_kind(x, y, MT_TREE2_0, MT_TREE2_4);
+    return place_tree_kind(x, y, MT_TREE_TOP_NW, MT_TREE_TRUNK_W);
 }
 
 /* the great tree: a 3x3 crown on the overlay over anything, a row of
    roots on plain ground, the trunk solid where it closes no way */
 static bool8 place_great_tree(int x, int y) {
     int dx, dy;
+    u16 base = (rng_next(&sR) & 1) ? MT_GTREE2_0 : MT_GTREE_0;
     if (x < 1 || y < 2 || x + 2 > W - 2 || y + 3 > H - 2)
         return FALSE;
     for (dy = 0; dy < 3; dy++)
@@ -415,10 +432,10 @@ static bool8 place_great_tree(int x, int y) {
         return FALSE;
     for (dy = 0; dy < 3; dy++)
         for (dx = 0; dx < 3; dx++)
-            room_set_overlay(x + dx, y + dy, MT_GTREE_0 + dy * 3 + dx);
-    room_set(x, y + 3, MT_GTREE_9);
-    room_set(x + 1, y + 3, MT_GTREE_10);
-    room_set(x + 2, y + 3, MT_GTREE_11);
+            room_set_overlay(x + dx, y + dy, base + dy * 3 + dx);
+    room_set(x, y + 3, base + 9);
+    room_set(x + 1, y + 3, base + 10);
+    room_set(x + 2, y + 3, base + 11);
     return TRUE;
 }
 
@@ -441,6 +458,20 @@ static void scatter_ground(u16 base, int w, int h, int n, int tries) {
         int x = 2 + rng_range(&sR, W - 4 - w), y = 3 + rng_range(&sR, H - 5 - h);
         if (fits_plain(x, y, w, h)) {
             stamp_ground(x, y, w, h, base);
+            n--;
+        }
+    }
+}
+
+/* n rocks, each of one of three shapes: sunk in moss, buried flat,
+   stacked */
+static void scatter_rocks(int n, int tries) {
+    static const u16 kinds[3] = { MT_ROCK, MT_ROCK2, MT_ROCK3 };
+    int i;
+    for (i = 0; i < tries && n > 0; i++) {
+        int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
+        if (is_plain(x, y) && simple_spot(x, y)) {
+            room_set(x, y, kinds[rng_range(&sR, 3)]);
             n--;
         }
     }
@@ -604,6 +635,7 @@ void roomgen_build(int cell) {
     memset(sPath, 0, sizeof(sPath));
     bool8 blighted = (c->stage >= 3) || (c->arch == ARCH_ARENA);
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
+    bool8 sick = (c->stage == 2) && !blighted; /* the stain spreading, not yet the rot */
 
     room_clear(W, H, MT_CANOPY);
     for (y = 0; y < H; y++)
@@ -697,7 +729,7 @@ void roomgen_build(int cell) {
                     if (sPath[y][x] & P_MID)
                         mt = blighted ? MT_BLIGHT_VEIN : MT_PATH;
                     else
-                        mt = blighted ? blight_pick(arena) : moss_pick();
+                        mt = blighted ? blight_pick(2, arena) : sick ? blight_pick(1, FALSE) : moss_pick();
                     break;
                 case M_WATER: {
                     /* banks where ground lies beside it; lilies only on open water */
@@ -781,6 +813,8 @@ void roomgen_build(int cell) {
             else if (above != M_WALL && above != M_WATER)
                 mt = MT_CANOPY_N;
             else if (blighted)
+                mt = (rng_range(&sR, 3) == 0) ? MT_CANOPY_BLIGHT2 : MT_CANOPY_BLIGHT;
+            else if (sick && rng_range(&sR, 5) == 0)
                 mt = MT_CANOPY_BLIGHT;
             else if (below == M_WALL && below2 != M_WALL && below2 != M_WATER && rng_range(&sR, 6) == 0 && (x < W / 2 - 2 || x > W / 2 + 1 || y > 1))
                 mt = MT_CANOPY_LANTERN;
@@ -835,7 +869,7 @@ void roomgen_build(int cell) {
        or a fairy ring in the big clearings, a great boulder, a hollow
        log, clover), then trees, a lantern at a clearing's heart, then
        the things that narrow the ways */
-    if (!arena) {
+    if (!arena && !blighted) {
         int want = (c->arch == ARCH_GROVE) ? 2 : (rng_range(&sR, 3) != 0) ? 1 : 0, k;
         for (k = 0; k < 40 && want > 0; k++)
             if (place_great_tree(1 + rng_range(&sR, W - 5), 2 + rng_range(&sR, H - 8)))
@@ -863,7 +897,7 @@ void roomgen_build(int cell) {
             int want = 1 + rng_range(&sR, 2);
             for (k = 0; k < 12 && want > 0; k++) {
                 int tx = cl->x - cl->rx + 1 + rng_range(&sR, cl->rx * 2 - 2), ty = cl->y - cl->ry + rng_range(&sR, cl->ry);
-                if (place_tree(tx, ty))
+                if (place_tree(tx, ty, blighted))
                     want--;
             }
         }
@@ -875,6 +909,8 @@ void roomgen_build(int cell) {
             scatter_block(MT_GBOULDER_0, 2, 2, 1, 40);
         if (rng_next(&sR) & 1)
             scatter_block(MT_HLOG_0, 2, 1, 1, 40);
+        if (rng_range(&sR, 5) < 2)
+            scatter_block(MT_TREEROCK_0, 2, 2, 1, 40);
         if (blighted)
             scatter_ground(MT_SHROOMRING_0, 2, 2, 1 + rng_range(&sR, 2), 30);
         else
@@ -883,11 +919,13 @@ void roomgen_build(int cell) {
     if (!blighted) {
         scatter_solid(MT_BUSH, 4 + rng_range(&sR, 4), 120);
         scatter_solid(MT_ROCK_SMALL, 1 + rng_range(&sR, 3), 80);
+        scatter_rocks(1 + rng_range(&sR, 3), 60);
         scatter_solid(MT_STUMP, rng_range(&sR, 2), 40);
         scatter_solid(MT_LOG, rng_range(&sR, 2), 40);
         scatter_solid(MT_LANTERN_POST, rng_range(&sR, 2), 40);
-        scatter_floor(MT_TALL_GRASS, 8);
-        scatter_floor(MT_MOSS_FLOWERS, 6);
+        scatter_floor(MT_TALL_GRASS, 22);
+        scatter_floor(MT_MOSS_FLOWERS, 10);
+        scatter_floor(MT_MOSS_FLOWERS2, 6);
     } else {
         scatter_solid(MT_BLIGHT_CRYSTAL, 2 + rng_range(&sR, 3), 80);
         scatter_solid(MT_DEAD_TREE, 1 + rng_range(&sR, 2), 60);
@@ -915,10 +953,10 @@ void roomgen_build(int cell) {
             scatter_floor(MT_BONES, 10);
             scatter_floor(MT_BLIGHT_POOL, 3);
             scatter_solid(MT_DEAD_TREE, 1 + rng_range(&sR, 2), 40);
-            scatter_solid(MT_ROCK, 2, 40);
+            scatter_rocks(2, 40);
             break;
         case ARCH_POND:
-            scatter_solid(MT_ROCK, 2, 40);
+            scatter_rocks(2, 40);
             scatter_floor(MT_MOSS_FLOWERS, 4);
             break;
         case ARCH_ARENA:
@@ -1018,8 +1056,18 @@ void roomgen_build(int cell) {
             ensure_spot(&gSpots.npc);
             gSpots.has_npc = 1;
             for (i = 0; i < 4; i++) {
+                /* a censer wants open ground in front of it, to the south,
+                   where the hero stands to swing the lamp */
                 Spot t;
-                ensure_spot(&t);
+                int k, found = 0;
+                for (k = 0; k < 400 && !found; k++)
+                    if (find_spot(&t, 1, 2) && is_floor(t.x, t.y + 1) && reached(t.x, t.y + 1))
+                        found = 1;
+                for (k = 0; k < 600 && !found; k++)
+                    if (find_spot(&t, 1, 1) && is_floor(t.x, t.y + 1) && reached(t.x, t.y + 1))
+                        found = 1;
+                if (!found)
+                    ensure_spot(&t);
                 if (t.x == gSpots.npc.x && t.y == gSpots.npc.y && is_floor(t.x, t.y + 2))
                     t.y += 2;
                 gSpots.torches[gSpots.torch_count++] = t;
@@ -1072,11 +1120,17 @@ void roomgen_build(int cell) {
                 gSpots.spawns[gSpots.spawn_count++] = sp;
         }
     }
-    /* gold on the floor: the wood is rotten, but it shines */
+    /* gold on the floor: the wood is rotten, but it shines; white stars
+       over the living rooms, a mist over the rotten ones */
     for (i = 0; i < 12; i++) {
         int px = 2 + rng_range(&sR, W - 4), py = 3 + rng_range(&sR, H - 5);
         if (is_floor(px, py))
             room_set_overlay(px, py, MT_SPARKLE);
+    }
+    for (i = 0; i < (blighted ? 14 : 10); i++) {
+        int px = 2 + rng_range(&sR, W - 4), py = 3 + rng_range(&sR, H - 5);
+        if (is_floor(px, py))
+            room_set_overlay(px, py, blighted ? MT_BLIGHT_MIST : MT_SPARKLE_WHITE);
     }
     room_render();
 }
