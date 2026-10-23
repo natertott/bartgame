@@ -2266,6 +2266,159 @@ mt('blight_wall', 'blight', 'SOLID', blight_wall_art(5))
 mt('blight_wall2', 'blight', 'SOLID', blight_wall_art(9))
 mt('blight_wall_lit', 'blight', 'SOLID', frames=[blight_wall_art(5, True, 0), blight_wall_art(5, True, 1)], anim_speed=16)
 
+# ===================================================== the transitions ===
+# No generic boundary is a hard line. Ground that meets water gets a
+# shore: a dark soil lip, a strip of sand, reeds dipping in; ground that
+# meets the canopy gets a verge: shadow and fallen leaves under a wall,
+# undergrowth against its sides, ferns above a crown; a soil trail gets
+# ragged grass creeping over its edge. One tile per combination of
+# sides (N=1 E=2 S=4 W=8), all on one turf so their untouched quarters
+# share subtiles.
+TURF_EDGE = turf(50)
+
+
+def edged(base, mask, painters):
+    c = Canvas.from_rows(base)
+    for bit, paint in painters:
+        if mask & bit:
+            paint(c)
+    return c.rows()
+
+
+def mirror_x(paint):
+    """a painter for the opposite side: paint on a flipped canvas"""
+    def p(c):
+        f = Canvas.from_rows(hflip(c.rows()))
+        paint(f)
+        g = hflip(f.rows())
+        for y in range(16):
+            for x in range(16):
+                c.set(x, y, int(g[y][x], 16))
+    return p
+
+
+def mirror_y(paint):
+    def p(c):
+        f = Canvas.from_rows(vflip(c.rows()))
+        paint(f)
+        g = vflip(f.rows())
+        for y in range(16):
+            for x in range(16):
+                c.set(x, y, int(g[y][x], 16))
+    return p
+
+
+# --- the shore: water on that side
+def shore_n(c):
+    for x in range(16):
+        c.set(x, 0, 9)
+        c.set(x, 1, 9 if (x * 3) % 4 else 8)
+        c.set(x, 2, 7)
+        c.set(x, 3, 3 if (x * 5) % 3 else 7)
+    for x in (2, 6, 11, 14):
+        c.set(x, 0, 5); c.set(x, 1, 5); c.set(x, 2, 5)
+        c.set(x + 1, 0, 6)
+
+
+def shore_e(c):
+    for y in range(16):
+        c.set(15, y, 9)
+        c.set(14, y, 9 if (y * 3) % 4 else 8)
+        c.set(13, y, 7)
+        c.set(12, y, 3 if (y * 5) % 3 else 7)
+    for y in (1, 5, 9, 13):
+        c.set(15, y, 5); c.set(14, y, 5); c.set(13, y, 5)
+        c.set(15, y + 1, 6)
+
+
+shore_s = mirror_y(shore_n)
+shore_w = mirror_x(shore_e)
+SHORE = [(1, shore_n), (2, shore_e), (4, shore_s), (8, shore_w)]
+for _m in range(1, 16):
+    mt('shore_%x' % _m, 'forest', 'FLOOR', edged(TURF_EDGE, _m, SHORE))
+
+
+# water at a corner only: a nick of soil and sand
+def nick(cx, cy, sx, sy):
+    def p(c):
+        c.set(cx, cy, 9); c.set(cx + sx, cy, 9); c.set(cx, cy + sy, 9); c.set(cx + sx, cy + sy, 8)
+        c.set(cx + 2 * sx, cy, 7); c.set(cx, cy + 2 * sy, 7); c.set(cx + 2 * sx, cy + sy, 7); c.set(cx + sx, cy + 2 * sy, 7)
+        c.set(cx + 3 * sx, cy, 3); c.set(cx, cy + 3 * sy, 3)
+    return p
+
+
+NICKS = [(1, nick(0, 0, 1, 1)), (2, nick(15, 0, -1, 1)), (4, nick(15, 15, -1, -1)), (8, nick(0, 15, 1, -1))]
+for _m in range(1, 16):
+    mt('shore_c%x' % _m, 'forest', 'FLOOR', edged(TURF_EDGE, _m, NICKS))
+
+
+# --- the verge: the canopy on that side
+def verge_n(c):
+    """the wall's shadow and the leaves it drops"""
+    for y in range(7):
+        for x in range(16):
+            v = c.get(x, y)
+            if y < 5 or (x * 7 + y) % 3:
+                if v in (4, 5, 6):
+                    c.set(x, y, 3)
+                elif v == 3:
+                    c.set(x, y, 2)
+    for x, y in ((3, 2), (9, 1), (13, 3), (6, 4)):
+        c.set(x, y, 7)
+        c.set(x + 1, y, 8)
+
+
+def verge_e(c):
+    """undergrowth against the trunks: a dark strip, leaf tips"""
+    for y in range(16):
+        c.set(15, y, 1)
+        c.set(14, y, 2)
+        c.set(13, y, 3 if (y * 5) % 4 else 2)
+    for y in (2, 7, 12):
+        c.set(12, y, 5); c.set(11, y + 1, 5); c.set(13, y - 1, 6)
+
+
+def verge_s(c):
+    """ferns above the crown below"""
+    for x in range(16):
+        c.set(x, 15, 2)
+        c.set(x, 14, 2 if (x * 3) % 5 else 3)
+    for x in (1, 4, 7, 10, 13):
+        c.set(x, 13, 5); c.set(x, 12, 6 if x % 2 else 5); c.set(x + 1, 13, 5); c.set(x + 1, 11, 5)
+
+
+verge_w = mirror_x(verge_e)
+VERGE = [(1, verge_n), (2, verge_e), (4, verge_s), (8, verge_w)]
+for _m in range(1, 16):
+    mt('verge_%x' % _m, 'forest', 'FLOOR', edged(TURF_EDGE, _m, VERGE))
+
+
+# --- the trail's edge: grass creeping over the soil on that side
+PATH_EDGE = next(m for m in METATILES if m['name'] == 'path')['art']
+
+
+def pedge_n(c):
+    for x in range(16):
+        d = 1 + ((x * 7) % 3)
+        for y in range(d):
+            c.set(x, y, 4 if (x + y) % 3 else 5)
+        c.set(x, d, 3)
+
+
+def pedge_e(c):
+    for y in range(16):
+        d = 1 + ((y * 7) % 3)
+        for k in range(d):
+            c.set(15 - k, y, 4 if (y + k) % 3 else 5)
+        c.set(15 - d, y, 3)
+
+
+pedge_s = mirror_y(pedge_n)
+pedge_w = mirror_x(pedge_e)
+PEDGE = [(1, pedge_n), (2, pedge_e), (4, pedge_s), (8, pedge_w)]
+for _m in range(1, 16):
+    mt('pedge_%x' % _m, 'forest', 'FLOOR', edged(PATH_EDGE, _m, PEDGE))
+
 # =============================================================== sewer ===
 def flagstones(seed, slabs, moss=()):
     """slabs: (x0, y0, x1, y1, tone); mortar between; moss: (x, y) spots."""

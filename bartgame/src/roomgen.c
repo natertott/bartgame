@@ -127,7 +127,8 @@ static bool8 is_plain(int x, int y) {
     if (!is_floor(x, y))
         return FALSE;
     t = room_get(x, y);
-    return t < MT_MOSS_FLOWERS2 || (t >= MT_BLIGHT_GROUND0 && t <= MT_BLIGHT_FLOOR) || t == MT_BLIGHT_FLOOR2 || t == MT_MOSS_SHADE;
+    return t < MT_MOSS_FLOWERS2 || (t >= MT_BLIGHT_GROUND0 && t <= MT_BLIGHT_FLOOR) || t == MT_BLIGHT_FLOOR2 || t == MT_MOSS_SHADE ||
+           (t >= MT_SHORE_1 && t <= MT_VERGE_F);
 }
 
 /* a w by h block of plain ground, away from the doors */
@@ -642,6 +643,21 @@ static void carve_to_center(int x, int y) {
     }
 }
 
+/* A spot for something opened or lit from the south: a chest, a censer.
+   Clearance first, then any spot that blocks nothing, always with open,
+   reached ground in front of it; then the room's middle. */
+static void ensure_spot(Spot* out);
+static void ensure_fronted_spot(Spot* out) {
+    int k;
+    for (k = 0; k < 400; k++)
+        if (find_spot(out, 1, 2) && is_floor(out->x, out->y + 1) && reached(out->x, out->y + 1))
+            return;
+    for (k = 0; k < 600; k++)
+        if (find_spot(out, 1, 1) && is_floor(out->x, out->y + 1) && reached(out->x, out->y + 1))
+            return;
+    ensure_spot(out);
+}
+
 /* A spot for something the run depends on. Tries for clearance, then
    for a spot that blocks nothing, then opens the room's middle. */
 static void ensure_spot(Spot* out) {
@@ -832,12 +848,43 @@ void roomgen_build(int cell) {
                 else if (l && !r)
                     room_set(x, y, MT_LEDGE_S_E);
             }
-    /* grass in the shadow of a wall or a cliff is darker */
-    if (!blighted)
-        for (y = 2; y < H; y++)
-            for (x = 0; x < W; x++)
-                if (sMask[y][x] == M_FLOOR && (sMask[y - 1][x] == M_WALL || sMask[y - 1][x] == M_LEDGE) && room_get(x, y) < MT_MOSS_FLOWERS2)
-                    room_set(x, y, MT_MOSS_SHADE);
+    /* the transitions: no generic boundary is a hard line. Plain grass
+       that meets water gets a shore on those sides (or a nick where
+       water lies at a corner only); grass that meets the canopy, or
+       stands under a cliff, gets a verge; a trail gets grass creeping
+       over its edges where grass lies beside it. */
+    if (!blighted && !sick)
+        for (y = 1; y < H - 1; y++)
+            for (x = 1; x < W - 1; x++) {
+                u16 t;
+                int wm, dm, xm;
+                if (sMask[y][x] != M_FLOOR)
+                    continue;
+                t = room_get(x, y);
+                if (sPath[y][x] & P_MID) {
+                    int pm = ((sMask[y - 1][x] == M_FLOOR && !(sPath[y - 1][x] & P_MID)) ? 1 : 0) | ((sMask[y][x + 1] == M_FLOOR && !(sPath[y][x + 1] & P_MID)) ? 2 : 0) |
+                             ((sMask[y + 1][x] == M_FLOOR && !(sPath[y + 1][x] & P_MID)) ? 4 : 0) | ((sMask[y][x - 1] == M_FLOOR && !(sPath[y][x - 1] & P_MID)) ? 8 : 0);
+                    if (pm && t == MT_PATH)
+                        room_set(x, y, MT_PEDGE_1 + pm - 1);
+                    continue;
+                }
+                if (t > MT_MOSS_BLIGHT2)
+                    continue;
+                wm = (watery(sMask[y - 1][x]) ? 1 : 0) | (watery(sMask[y][x + 1]) ? 2 : 0) | (watery(sMask[y + 1][x]) ? 4 : 0) | (watery(sMask[y][x - 1]) ? 8 : 0);
+                if (wm) {
+                    room_set(x, y, MT_SHORE_1 + wm - 1);
+                    continue;
+                }
+                dm = (watery(sMask[y - 1][x - 1]) ? 1 : 0) | (watery(sMask[y - 1][x + 1]) ? 2 : 0) | (watery(sMask[y + 1][x + 1]) ? 4 : 0) | (watery(sMask[y + 1][x - 1]) ? 8 : 0);
+                if (dm) {
+                    room_set(x, y, MT_SHORE_C1 + dm - 1);
+                    continue;
+                }
+                xm = ((sMask[y - 1][x] == M_WALL || sMask[y - 1][x] == M_LEDGE) ? 1 : 0) | (sMask[y][x + 1] == M_WALL ? 2 : 0) |
+                     (sMask[y + 1][x] == M_WALL ? 4 : 0) | (sMask[y][x - 1] == M_WALL ? 8 : 0);
+                if (xm)
+                    room_set(x, y, MT_VERGE_1 + xm - 1);
+            }
 
     /* the canopy: a face where ground lies below it, a lit crown where
        ground lies above it, lanterns hung over the ways */
@@ -849,7 +896,8 @@ void roomgen_build(int cell) {
             u8 below = (y + 1 < H) ? sMask[y + 1][x] : M_WALL;
             u8 above = (y > 0) ? sMask[y - 1][x] : M_WALL;
             u8 below2 = (y + 2 < H) ? sMask[y + 2][x] : M_WALL;
-            if (below != M_WALL && below != M_WATER && below != M_FALL)
+            if (below != M_WALL && below != M_FALL)
+                /* a face over ground, and over water too: trunks at the water's edge */
                 mt = blighted ? ((rng_range(&sR, 5) == 0) ? MT_BLIGHT_WALL_LIT : (rng_next(&sR) & 1) ? MT_BLIGHT_WALL : MT_BLIGHT_WALL2) : MT_CANOPY_S;
             else if (above != M_WALL && above != M_WATER)
                 mt = MT_CANOPY_N;
@@ -1084,7 +1132,7 @@ void roomgen_build(int cell) {
         case ROLE_KEYITEM:
         case ROLE_CHEST:
         case ROLE_KEYCHEST:
-            ensure_spot(&gSpots.chest);
+            ensure_fronted_spot(&gSpots.chest);
             gSpots.has_chest = 1;
             room_set(gSpots.chest.x, gSpots.chest.y, (c->flags & CF_CHEST_OPEN) ? MT_CHEST_OPEN : MT_CHEST);
             break;
@@ -1100,15 +1148,7 @@ void roomgen_build(int cell) {
                 /* a censer wants open ground in front of it, to the south,
                    where the hero stands to swing the lamp */
                 Spot t;
-                int k, found = 0;
-                for (k = 0; k < 400 && !found; k++)
-                    if (find_spot(&t, 1, 2) && is_floor(t.x, t.y + 1) && reached(t.x, t.y + 1))
-                        found = 1;
-                for (k = 0; k < 600 && !found; k++)
-                    if (find_spot(&t, 1, 1) && is_floor(t.x, t.y + 1) && reached(t.x, t.y + 1))
-                        found = 1;
-                if (!found)
-                    ensure_spot(&t);
+                ensure_fronted_spot(&t);
                 if (t.x == gSpots.npc.x && t.y == gSpots.npc.y && is_floor(t.x, t.y + 2))
                     t.y += 2;
                 gSpots.torches[gSpots.torch_count++] = t;

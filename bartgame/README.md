@@ -72,7 +72,13 @@ it) and the blight's 2x3 dead tree, a rock wedged in a stump's roots
 round a flat stone, clover and fairy rings of 2x2, a great boulder of
 2x2, a hollow log of 2x1, a lily raft of 2x2 on open water; cliffs end
 in capped stones, lakes have rounded corners and banks on every side
-the ground touches.
+the ground touches. No generic boundary is a hard line: grass that
+meets water ends in a shore of soil, sand and reeds; grass that meets
+the canopy has a verge of shadow and fallen leaves under a wall,
+undergrowth against its sides and ferns above a crown; a trail has
+grass creeping over its edges; the canopy shows its trunks at the
+water's edge. Each is one tile per combination of sides, chosen by the
+generator from the tiles around it.
 
 ## The interface
 

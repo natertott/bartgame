@@ -1271,6 +1271,60 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the transitions (Oct 2026)
+
+The user: the hard boundaries between tile kinds (grass straight into
+water, ground into trees, trees into water) should each have a drawn
+transition, a small ledge, a sandy beachhead, foliage into the water,
+possibly across tiles; for walls, water, ground and foliage, not for
+single things like boulders, trees and chests.
+
+**The tiles.** Three families of fifteen, one per combination of the
+sides N=1 E=2 S=4 W=8, built by `edged()` from painters per side, with
+the E/W and S painters mirrored from the W/N ones, all on one turf
+(`turf(50)`) so a variant's untouched quarters share subtiles: the set
+costs 44 subtiles, not 240. `shore_1..f`: water on that side; a strip
+of sand (path light with path mid specks), a dark soil lip, a row of
+grass dark, reeds of grass light and bright dipping in. `shore_c1..f`:
+water at a corner only; a nick of sand and soil. `verge_1..f`: the
+canopy on that side; under a wall (N) the shadow band of the old
+`moss_shade` with fallen leaves in path browns; against its sides (E,
+W) a dark strip of undergrowth with leaf tips; above a crown (S) ferns
+rising from a dark row. `pedge_1..f`: on the trail, grass creeping one
+to three pixels over the edge on that side with a ragged dark seam.
+The water side already had its banks and corners (`water_1..f`,
+`water_c1..f`), so ground to water is now a two-tile transition: reeds
+and sand on the ground, a dark line and drifting foam on the water.
+
+**The generator.** After the ground is laid and before the dressing, in
+living rooms (not blighted, not sick), every plain grass tile (ids up
+to `moss_blight2`) with water or a fall on a side becomes the shore of
+that mask; with water at a corner only, the nick; with the canopy on a
+side, or a cliff above, the verge. Every trail tile (`P_MID`) with
+plain floor (not trail) on a side gets the creeping-grass edge. The
+old shade pass is gone (the verge's N painter is it). The canopy's
+face (`canopy_s`, trunks) now also shows over water, so a wall meets
+a lake with trunks at the water's edge rather than a flat leaf mass.
+`is_plain` takes the shore and verge ids, so bushes and stones may
+still stand by the water or against a wall. Tileset 841 of 1024, 57
+animated.
+
+**Found on the way.** On the pinned seed the cloak's chest stood on a
+one-tile causeway with water right below it, so it could not be opened
+from the front at all; the old wide-margin water check had let the
+probe stand there, the new edge check drops him in. Chests, like
+censers, now take `ensure_fronted_spot`: clearance first, then any
+spot that blocks nothing, always with open, reached ground south of
+it. Critical path 18/18 on three seeds after, quests 12/12, hands
+14/14, guard 11/11.
+
+**Open.** Sick rooms (stained grass) and blighted rooms keep hard
+edges: their ground is on the blight palette, and the shore and verge
+families are forest-palette grass. A blight-palette set would be the
+same painters on a stained base. Water against a bridge keeps the
+water's bank line only. The trail's edge has no diagonal-only case.
+
+
 ### BARTGAME: the shield, the water's edge, going under (Oct 2026)
 
 The user: start with a sword on B and a shield on L; the shield blocks
