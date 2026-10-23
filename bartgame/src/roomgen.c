@@ -33,7 +33,8 @@ static u8 sReach[FOREST_W * FOREST_H];
 #define H FOREST_H
 
 /* the carve mask: what a tile will be before it is dressed */
-enum { M_WALL, M_FLOOR, M_WATER, M_BRIDGE_H, M_BRIDGE_V, M_LEDGE, M_RAMP };
+enum { M_WALL, M_FLOOR, M_WATER, M_BRIDGE_H, M_BRIDGE_V, M_LEDGE, M_RAMP, M_FALL };
+static int sTerraceRow; /* the cliff's row, or -1 */
 static u8 sMask[H][W];
 /* the paths: which way they run where they run, and their middle line */
 #define P_H 1
@@ -66,6 +67,10 @@ static u8 type_at(int x, int y) {
 static bool8 passable(int x, int y) {
     u8 t = type_at(x, y);
     return t == TT_FLOOR || t == TT_SLOW || t == TT_HURT || t == TT_THORN || t == TT_DOOR_OPEN || t == TT_STAIRS;
+}
+
+static bool8 watery(u8 m) {
+    return m == M_WATER || m == M_FALL;
 }
 
 static bool8 in_ellipse(int dx, int dy, int rx, int ry) {
@@ -335,6 +340,7 @@ static void raise_terrace(void) {
             n++;
     if (n < 2)
         return;
+    sTerraceRow = ty;
     ramp = rng_range(&sR, n);
     for (x = 1; x < W - 1; x++) {
         if (sMask[ty][x] != M_FLOOR || sMask[ty + 1][x] != M_FLOOR)
@@ -345,6 +351,36 @@ static void raise_terrace(void) {
         } else {
             sMask[ty + 1][x] = M_LEDGE;
         }
+    }
+}
+
+/* Water pours off the cliff: in a run of ledges four or more long, two
+   ledges become a fall, a pool of water gathers on the high ground
+   behind them and a churned pool on the low ground under them, as far
+   as the ground allows. One or two a cliff. */
+static void add_waterfalls(void) {
+    int ty = sTerraceRow, made = 0, want = 1 + (int)(rng_next(&sR) & 1), guard = 0;
+    if (ty < 0)
+        return;
+    while (made < want && guard++ < 30) {
+        int fx = 2 + rng_range(&sR, W - 6), k, ok = 1, dy;
+        for (k = -1; k <= 2; k++)
+            if (sMask[ty + 1][fx + k] != M_LEDGE)
+                ok = 0;
+        if (!ok)
+            continue;
+        sMask[ty + 1][fx] = M_FALL;
+        sMask[ty + 1][fx + 1] = M_FALL;
+        for (k = 0; k < 2; k++) {
+            if (sMask[ty][fx + k] == M_FLOOR && !(sPath[ty][fx + k] & P_MID))
+                sMask[ty][fx + k] = M_WATER;
+            for (dy = 2; dy <= 3; dy++) {
+                if (ty + dy >= H - 1 || sMask[ty + dy][fx + k] != M_FLOOR || (sPath[ty + dy][fx + k] & P_MID))
+                    break;
+                sMask[ty + dy][fx + k] = M_WATER;
+            }
+        }
+        made++;
     }
 }
 
@@ -633,6 +669,7 @@ void roomgen_build(int cell) {
     memset(&gSpots, 0, sizeof(gSpots));
     memset(sMask, 0, sizeof(sMask));
     memset(sPath, 0, sizeof(sPath));
+    sTerraceRow = -1;
     bool8 blighted = (c->stage >= 3) || (c->arch == ARCH_ARENA);
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
     bool8 sick = (c->stage == 2) && !blighted; /* the stain spreading, not yet the rot */
@@ -719,6 +756,7 @@ void roomgen_build(int cell) {
     }
     if (!arena && !entry && !water && (c->arch == ARCH_RUINS || c->arch == ARCH_BONEYARD || rng_range(&sR, 3) == 0))
         raise_terrace();
+    add_waterfalls();
 
     /* lay the ground */
     for (y = 0; y < H; y++) {
@@ -733,9 +771,11 @@ void roomgen_build(int cell) {
                     break;
                 case M_WATER: {
                     /* banks where ground lies beside it; lilies only on open water */
-                    int bank = ((y == 0 || sMask[y - 1][x] != M_WATER) ? 1 : 0) | ((x == W - 1 || sMask[y][x + 1] != M_WATER) ? 2 : 0) |
-                               ((y == H - 1 || sMask[y + 1][x] != M_WATER) ? 4 : 0) | ((x == 0 || sMask[y][x - 1] != M_WATER) ? 8 : 0);
-                    if (bank) {
+                    int bank = ((y == 0 || !watery(sMask[y - 1][x])) ? 1 : 0) | ((x == W - 1 || !watery(sMask[y][x + 1])) ? 2 : 0) |
+                               ((y == H - 1 || !watery(sMask[y + 1][x])) ? 4 : 0) | ((x == 0 || !watery(sMask[y][x - 1])) ? 8 : 0);
+                    if (y > 0 && sMask[y - 1][x] == M_FALL) {
+                        mt = MT_WATER_FOAM; /* the churn under a fall */
+                    } else if (bank) {
                         mt = MT_WATER + bank;
                     } else {
                         /* open water: ground at a corner nicks it */
@@ -750,6 +790,7 @@ void roomgen_build(int cell) {
                 case M_BRIDGE_H: mt = MT_BRIDGE; break;
                 case M_BRIDGE_V: mt = MT_BRIDGE_V; break;
                 case M_LEDGE: mt = MT_LEDGE_S; break;
+                case M_FALL: mt = MT_WATERFALL; break;
                 case M_RAMP: mt = MT_PATH; break;
                 default: mt = MT_CANOPY; break;
             }
@@ -808,8 +849,8 @@ void roomgen_build(int cell) {
             u8 below = (y + 1 < H) ? sMask[y + 1][x] : M_WALL;
             u8 above = (y > 0) ? sMask[y - 1][x] : M_WALL;
             u8 below2 = (y + 2 < H) ? sMask[y + 2][x] : M_WALL;
-            if (below != M_WALL && below != M_WATER)
-                mt = MT_CANOPY_S;
+            if (below != M_WALL && below != M_WATER && below != M_FALL)
+                mt = blighted ? ((rng_range(&sR, 5) == 0) ? MT_BLIGHT_WALL_LIT : (rng_next(&sR) & 1) ? MT_BLIGHT_WALL : MT_BLIGHT_WALL2) : MT_CANOPY_S;
             else if (above != M_WALL && above != M_WATER)
                 mt = MT_CANOPY_N;
             else if (blighted)

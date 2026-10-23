@@ -62,7 +62,7 @@ for cell in range(25):
     flat = [n for row in names for n in row]
     floor = sum(1 for n in flat if n not in ('canopy', 'canopy2', 'canopy_s', 'canopy_n', 'canopy_lan', 'canopy_bli'))
     info.append((cell, ARCH[arch], stage, floor, len(flat)))
-    feats = {k: sum(1 for n in flat if n.startswith(k)) for k in ('ledge_s', 'water', 'bridge', 'bush', 'rock_small', 'boulder', 'tree_trunk', 'lantern_po', 'canopy_lan', 'moss_shade', 'path')}
+    feats = {k: sum(1 for n in flat if n.startswith(k)) for k in ('ledge_s', 'waterfall', 'water_foam', 'blight_wal', 'water', 'bridge', 'bush', 'rock_small', 'boulder', 'tree_trunk', 'lantern_po', 'canopy_lan', 'moss_shade', 'path')}
     print('   ', ' '.join('%s=%d' % kv for kv in feats.items() if kv[1]))
     sp = spots(c)
     if sp:

@@ -41,7 +41,8 @@ amber lanterns hung in the trees, white and gold stars on the ground,
 fireflies; rocks in three shapes sunk in moss and soil on a palette of
 their own; and the rot, by depth: stained grass split by glowing cracks
 at the second stage, then purple to the walls, pitted, veined with
-light, under a mist, with dead black trees clawing up. Every material has its own 16-color palette and a
+light, under a mist, with dead black trees clawing up and walls of
+old stone lit violet from below, a crystal set in some. Every material has its own 16-color palette and a
 dark hue outline, three tones and a gleam, light from the upper left.
 The ground is textured turf with hand-placed tufts, flowers and
 pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
@@ -58,7 +59,8 @@ a squeeze of one, with a soil trail down the middle. A clearing can be
 a lake round an island, and a path that meets water runs straight over
 it on planks; a river may wander across the room, bridged where the
 paths cross it; a dry room may rise, its upper part behind a cliff of
-ledges you can drop from, with one ramp back up. Trees stand in the
+ledges you can drop from, with one ramp back up, and water pours off
+the cliff in one or two places into a churned pool below. Trees stand in the
 big clearings, bushes and stones narrow the paths without ever closing
 them, and a hoard is sometimes dug into the wall behind a bush or a
 boulder. Fireflies drift over the living rooms. Set pieces span tiles,

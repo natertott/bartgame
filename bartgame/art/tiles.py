@@ -2176,6 +2176,96 @@ _sw2 = A('''
 ''')
 mt('sparkle_white', 'forest', 'FLOOR', frames=[_sw1, _sw2], anim_speed=16)
 
+# ----------------------------------------------------- falls and walls --
+# A waterfall off a cliff: the lip foams, streaks of lit water pour down
+# the face, three frames scrolling.
+def waterfall_frame(k):
+    c = Canvas(16, 16, 8)
+    for x in range(16):
+        c.set(x, 0, 0xa)
+        c.set(x, 1, 9 if (x + k) % 3 else 0xa)
+    for x in (1, 4, 7, 10, 13):
+        for y in range(2, 16):
+            c.set(x, y, 9)
+            if (y + k * 2) % 6 == 0:
+                c.set(x, y, 0xa)
+                c.set(x + 1, y, 0xa)
+            elif (y + k * 2) % 6 == 3:
+                c.set(x + 1, y, 9)
+    for x in (3, 9, 15):
+        for y in range(2, 16):
+            if (y + k * 2 + 2) % 5 == 0:
+                c.set(x, y, 7)
+    return c.rows()
+
+
+mt('waterfall', 'stone', 'WATER', frames=[waterfall_frame(0), waterfall_frame(1), waterfall_frame(2)], anim_speed=6)
+
+
+# the pool a fall lands in: water churned white
+def foam_frame(frame, k):
+    c = Canvas.from_rows(frame)
+    for x in range(16):
+        for y in range(0, 6):
+            if ((x * 5 + y * 3 + k * 4) % 7) < 2 and y < 4 - (x % 3):
+                c.set(x, y, 0xa)
+            elif ((x * 3 + y * 5 + k) % 9) == 0:
+                c.set(x, y, 9)
+    return c.rows()
+
+
+mt('water_foam', 'stone', 'WATER', frames=[foam_frame(_w1, 0), foam_frame(_w2, 1)], anim_speed=10)
+
+
+# The deep rooms' walls: old stone blocks, violet light climbing them
+# from the ground, a crystal set in the lit ones.
+def blight_wall_art(seed, lit=False, k=0):
+    rnd = random.Random(seed)
+    c = Canvas(16, 16, 8)
+    for row in range(4):
+        y0 = row * 4
+        off = 0 if row % 2 == 0 else 4
+        for bx in range(-1, 3):
+            x0 = bx * 8 + off
+            for y in range(y0 + 1, y0 + 4):
+                for x in range(x0 + 1, x0 + 8):
+                    if 0 <= x < 16:
+                        c.set(x, y, 9)
+            for x in range(x0 + 1, x0 + 7):
+                if 0 <= x < 16:
+                    c.set(x, y0 + 1, 0xa)
+            if 0 <= x0 + 1 < 16:
+                c.set(x0 + 1, y0 + 2, 0xa)
+    # the glow from below
+    for y in range(10, 16):
+        for x in range(16):
+            v = c.get(x, y)
+            p = (y - 9) * 2 + rnd.randrange(3)
+            if v == 9 and p > 6:
+                c.set(x, y, 5 if p > 9 else 4)
+            elif v == 0xa and p > 8:
+                c.set(x, y, 6 if p > 11 else 5)
+            elif v == 8 and p > 10:
+                c.set(x, y, 4)
+    if lit:
+        c.blit(A('''
+            ..1..
+            .1b1.
+            1b771
+            1b6b1
+            .161.
+            ..1..
+        '''), 6, 5)
+        for x, y in ((4, 6), (12, 7), (5, 11), (11, 11), (8, 3)):
+            c.set(x, y, 6 if (x + k) % 2 else 5)
+    c.hline(0, 15, 0, 1)
+    return c.rows()
+
+
+mt('blight_wall', 'blight', 'SOLID', blight_wall_art(5))
+mt('blight_wall2', 'blight', 'SOLID', blight_wall_art(9))
+mt('blight_wall_lit', 'blight', 'SOLID', frames=[blight_wall_art(5, True, 0), blight_wall_art(5, True, 1)], anim_speed=16)
+
 # =============================================================== sewer ===
 def flagstones(seed, slabs, moss=()):
     """slabs: (x0, y0, x1, y1, tone); mortar between; moss: (x, y) spots."""

@@ -1271,6 +1271,27 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: waterfalls and the lit walls (Oct 2026)
+
+Two more pieces of the forest board. **Waterfalls:** `raise_terrace`
+keeps its row in `sTerraceRow`; `add_waterfalls` picks one or two
+places where four ledges run together, turns the middle two into
+`M_FALL`, gathers a pool of water on the high ground behind them
+(floor tiles that carry no trail) and a pool two deep under them as
+far as the ground allows. `waterfall` is a stone-palette tile of three
+frames, streaks of lit water scrolling down a dark face under a
+foaming lip; `water_foam` is the churn under it (water whose north
+neighbour is a fall), and the bank mask treats a fall as water so no
+line is drawn between them. A fall is WATER-typed: walk into it and
+you take the quarter heart and the way back, like any water. **The
+lit walls:** in a blighted room every wall face (a wall tile with
+ground below it) is `blight_wall`, `blight_wall2` or, one in five,
+`blight_wall_lit`: old stone blocks on the blight palette's bark greys,
+violet light climbing them from the ground, a crystal set in the lit
+ones with a glow that pulses. Tileset 797 of 1024, 57 animated.
+Critical path, quests and hands probes as before.
+
+
 ### BARTGAME: the sickness, after the forest board (Oct 2026)
 
 The user: more dynamism and variety in the forest's things (several
