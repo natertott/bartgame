@@ -9,6 +9,7 @@
 #include "objects.h"
 #include "game.h"
 #include "react.h"
+#include "myst.h"
 
 /* If the tile is part of a door opening, which side. -1 otherwise. */
 int tile_gate_side(int tx, int ty) {
@@ -92,8 +93,11 @@ static u16 ground_under(int tx, int ty) {
 /* lifts a bush, a pot or a stone off its tile; returns what is carried */
 int room_lift(int tx, int ty) {
     u16 mt = room_get(tx, ty);
-    int kind = (mt == MT_BUSH) ? CARRY_BUSH : (mt == MT_SW_POT) ? CARRY_POT : (mt == MT_BOULDER) ? CARRY_BOULDER : CARRY_ROCK;
+    bool8 pot = (mt == MT_SW_POT || mt == MT_CAVE_FLOOR_LIFT || mt == MT_HOLLOW_FLOOR_LIFT || mt == MT_THICKET_FLOOR_LIFT);
+    int kind = (mt == MT_BUSH) ? CARRY_BUSH : pot ? CARRY_POT : (mt == MT_BOULDER) ? CARRY_BOULDER : CARRY_ROCK;
     room_change(tx, ty, ground_under(tx, ty));
+    room_change_overlay(tx, ty, MT_NONE); /* a mystery's pot is drawn on the overlay */
+    myst_tile_cleared(tx, ty);
     return kind;
 }
 
@@ -101,7 +105,9 @@ int room_lift(int tx, int ty) {
 void room_break_lift(int tx, int ty) {
     u16 mt = room_get(tx, ty);
     room_change(tx, ty, ground_under(tx, ty));
+    room_change_overlay(tx, ty, MT_NONE);
     fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
+    myst_tile_cleared(tx, ty);
     if ((mt == MT_BUSH || mt == MT_SW_POT) && (hash32(gGame.run_frames, tx * 7 + ty) & 3) == 0)
         drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
 }

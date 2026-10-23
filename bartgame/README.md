@@ -28,6 +28,19 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
   the Heart. Dead ends hold chests, shrines and three kinds of quest
   giver.
 - **The Blight Heart.** At the deepest glade. Cut it out, take the Grail.
+- **The mystery rooms.** Two rooms in five have a mouth in a wall: a
+  cave's dark arch, a hollow in the trunks, a gap in the brambles. Walk
+  in. Behind it is a cave, the hollow of a tree or a thicket of brush,
+  small, medium or large, holding one event: six pots, one with a
+  prize; a chest; a stranger who sells a piece of heart for ten gilt;
+  a spring that fills the hearts; waves of monsters, or a survive-the-
+  clock, or a knight captain, behind a way out that shuts until it is
+  won; stone plates to step on; censers to light; boulders to lift.
+  Every won fight or solved room leaves a chest: ten gilt in a small
+  room, a piece of heart in a medium one, a small key and twenty gilt
+  in a large one. The small rooms deal the quiet kinds and the
+  gauntlets; the captain, the plates, the censers and the boulders need
+  the floor of a medium or large room.
 
 ## The look
 
@@ -148,6 +161,7 @@ src/            the engine and the game
   react.c       what tiles do when struck, burned, blown up, unlocked
   world.c       the maze: spanning tree, staged gates, key placement
   roomgen.c     a room from a cell: border, doors, features, flood check
+  myst.c        the mystery rooms: cave, hollow, thicket; ten event kinds
   enemy.c       rot beetle, spore bat, blight spitter, gloom slime,
                 thorn knight (ports of TMC's AIs and numbers)
   boss.c        the Blight Heart
@@ -203,6 +217,7 @@ python3 tools/critical_path.py --seed 0x1234 --boss
 python3 tools/quest_probe.py --seed 0x28c
 python3 tools/lift_probe.py               # roll, lift, throw, boulder, pause menu
 python3 tools/guard_probe.py              # the loadout, the water's edge, a hole, the shield
+python3 tools/myst_probe.py               # every mystery kind forced, played to its reward
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```

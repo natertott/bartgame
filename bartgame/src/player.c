@@ -190,6 +190,15 @@ bool8 player_hurt(int damage, int from_dir) {
     return TRUE;
 }
 
+void player_heart_piece(void) {
+    gPl.hearts_pieces++;
+    if (gPl.hearts_pieces >= 4) {
+        gPl.hearts_pieces = 0;
+        gPl.hp_max += 8;
+        gPl.hp = gPl.hp_max;
+    }
+}
+
 void player_heal(int amount) {
     gPl.hp += amount;
     if (gPl.hp > gPl.hp_max)
@@ -661,7 +670,11 @@ void player_ledge_jump_sub(void) {
 static const u8 sIdleFrame[4] = { F_HERO_IDLE_N, F_HERO_IDLE_E, F_HERO_IDLE_S, F_HERO_IDLE_E };
 static const u8 sWalk1Frame[4] = { F_HERO_WALK_N1, F_HERO_WALK_E1, F_HERO_WALK_S1, F_HERO_WALK_E1 };
 static const u8 sWalk2Frame[4] = { F_HERO_WALK_N2, F_HERO_WALK_E2, F_HERO_WALK_S2, F_HERO_WALK_E2 };
-static const u8 sAtkFrame[4] = { F_HERO_ATK_N, F_HERO_ATK_E, F_HERO_ATK_S, F_HERO_ATK_E };
+static const u8 sAtkFrame[3][4] = {
+    { F_HERO_ATK_N1, F_HERO_ATK_E1, F_HERO_ATK_S1, F_HERO_ATK_E1 }, /* the wind-up */
+    { F_HERO_ATK_N, F_HERO_ATK_E, F_HERO_ATK_S, F_HERO_ATK_E },     /* the blow */
+    { F_HERO_ATK_N3, F_HERO_ATK_E3, F_HERO_ATK_S3, F_HERO_ATK_E3 }, /* the follow-through */
+};
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
@@ -739,7 +752,7 @@ void player_draw(void) {
             break;
         }
         case PS_ATTACK:
-            frame = sAtkFrame[f];
+            frame = sAtkFrame[gPl.sword_phase][f];
             break;
         case PS_HURT:
         case PS_DEAD:
@@ -804,14 +817,14 @@ void player_draw(void) {
         actor_draw(a);
         draw_sword();
     } else if (gPl.shield_up && a->facing == FACE_N) {
+        actor_draw(a); /* earlier OAM entries draw on top: hero first, shield behind */
         draw_shield();
-        actor_draw(a);
     } else {
+        if (gPl.shield_up)
+            draw_shield();
         if (a->state == PS_ATTACK)
             draw_sword();
         actor_draw(a);
-        if (gPl.shield_up)
-            draw_shield();
     }
     /* the load, rising from the chest to over the head */
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry) {

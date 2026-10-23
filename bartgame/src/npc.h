@@ -3,7 +3,7 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { NPC_SAGE, NPC_MERCHANT, NPC_HERMIT, NPC_NUN, NPC_GARDENER, NPC_COUNT };
+enum { NPC_SAGE, NPC_MERCHANT, NPC_HERMIT, NPC_NUN, NPC_GARDENER, NPC_STRANGER, NPC_COUNT };
 
 Actor* npc_spawn(int type, int px, int py);
 void npc_room_reset(void);

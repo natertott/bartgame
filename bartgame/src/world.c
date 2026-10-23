@@ -17,6 +17,7 @@
       with the stage. */
 #include "gba.h"
 #include "world.h"
+#include "myst.h"
 
 World gWorld EWRAM_BSS;
 
@@ -202,6 +203,38 @@ static int pick_room(Rng* r, int exclude_goal) {
         }
     }
     return best;
+}
+
+/* The mysteries: two cells in five, never the entry, the goal or the
+   gardener's dark garden. A size, a style, then a kind from the size's
+   pool: the small pool is the quiet kinds and the gauntlets; the medium
+   pool adds the plates and the censers; the large pool is mostly fights
+   and the set pieces. Censers and boulders stand on grass: thickets. */
+static void myst_generate(World* w, Rng* r) {
+    int i;
+    for (i = 0; i < CELLS; i++) {
+        Cell* c = &w->cells[i];
+        int size, style, roll, kind;
+        w->myst[i] = 0;
+        w->myst_flags[i] = 0;
+        if (i == w->entry || i == w->goal || c->role == ROLE_NPC_TORCH)
+            continue;
+        if (rng_range(r, 10) >= 4)
+            continue;
+        roll = rng_range(r, 10);
+        size = roll < 4 ? MS_SMALL : roll < 7 ? MS_MEDIUM : MS_LARGE;
+        style = rng_range(r, 3);
+        roll = rng_range(r, 16);
+        if (size == MS_SMALL)
+            kind = roll < 3 ? MK_POTS : roll < 6 ? MK_CHEST : roll < 9 ? MK_NPC : roll < 10 ? MK_FAIRY : roll < 14 ? MK_WAVES : MK_SURVIVE;
+        else if (size == MS_MEDIUM)
+            kind = roll < 2 ? MK_POTS : roll < 4 ? MK_CHEST : roll < 6 ? MK_NPC : roll < 7 ? MK_FAIRY : roll < 11 ? MK_WAVES : roll < 13 ? MK_SURVIVE : roll < 15 ? MK_SWITCHES : MK_TORCHES;
+        else
+            kind = roll < 4 ? MK_WAVES : roll < 6 ? MK_SURVIVE : roll < 10 ? MK_MINIBOSS : roll < 12 ? MK_SWITCHES : roll < 13 ? MK_TORCHES : roll < 14 ? MK_BOULDERS : roll < 15 ? MK_CHEST : MK_FAIRY;
+        if (kind == MK_TORCHES || kind == MK_BOULDERS)
+            style = MY_THICKET;
+        w->myst[i] = MYST_PACK(kind, size, style);
+    }
 }
 
 void world_generate(u32 seed) {
@@ -482,6 +515,7 @@ void world_generate(u32 seed) {
         loops++;
     }
 
+    myst_generate(w, &r);
     /* archetypes, themes, density */
     for (i = 0; i < CELLS; i++) {
         Cell* c = &w->cells[i];

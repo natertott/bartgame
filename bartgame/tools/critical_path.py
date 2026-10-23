@@ -90,12 +90,13 @@ def tt_at(c, tx, ty):
 
 
 def dismiss(c, frames=400):
-    """Close item-get and text boxes: A presses until play resumes."""
+    """Close item-get and text boxes: A presses until the box is gone and
+    play resumes (a box can be open while the hero's state reads normal)."""
+    tb = P.sym('gTbActive')
     for _ in range(frames // 8):
-        P.press(c, 'A', 2, 6)
-        st = P.actor(c, 0)['state']
-        if st == 0:
+        if not P.r8(c, tb) and P.actor(c, 0)['state'] == 0:
             break
+        P.press(c, 'A', 2, 6)
     for _ in range(10):
         c.run_frame()
 

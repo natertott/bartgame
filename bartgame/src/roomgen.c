@@ -24,6 +24,7 @@
 #include "room.h"
 #include "world.h"
 #include "roomgen.h"
+#include "myst.h"
 
 RoomSpots gSpots;
 static Rng sR;
@@ -1127,6 +1128,21 @@ void roomgen_build(int cell) {
         flood_reach(sx, sy);
     }
 
+    /* the mystery's mouth: a face of the wall with reached ground below */
+    if (gWorld.myst[cell]) {
+        int tries, style = MYST_STYLE(gWorld.myst[cell]);
+        for (tries = 0; tries < 400; tries++) {
+            int mx = 2 + rng_range(&sR, W - 4), my = 1 + rng_range(&sR, H - 4);
+            if (sMask[my][mx] == M_WALL && sMask[my + 1][mx] == M_FLOOR && is_floor(mx, my + 1) && reached(mx, my + 1) && !near_door(mx, my + 1) &&
+                room_get_overlay(mx, my) == MT_NONE) {
+                room_set(mx, my, style == MY_CAVE ? MT_MOUTH_CAVE : style == MY_HOLLOW ? MT_MOUTH_HOLLOW : MT_MOUTH_THICKET);
+                gSpots.mouth.x = mx;
+                gSpots.mouth.y = my;
+                gSpots.has_mouth = 1;
+                break;
+            }
+        }
+    }
     /* role objects */
     switch (c->role) {
         case ROLE_KEYITEM:

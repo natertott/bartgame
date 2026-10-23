@@ -20,13 +20,14 @@
 #include "react.h"
 #include "game.h"
 #include "npc.h"
+#include "myst.h"
 
 static u16 sNpcTile;
 static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
 static u8 sPendingReward;
 
-static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT, F_NPC_NUN, F_NPC_GARDENER };
+static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT, F_NPC_NUN, F_NPC_GARDENER, F_NPC_HERMIT };
 
 Actor* npc_spawn(int type, int px, int py) {
     if (!sNpcTile)
@@ -127,10 +128,10 @@ static void reward_drop(Actor* a, int kind) {
 
 /* who speaks: a name in gold and a portrait beside the words */
 static const char* const sNames[NPC_COUNT] = {
-    "The Pale Gatekeeper", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener"
+    "The Pale Gatekeeper", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener", "A Stranger"
 };
 static const u8 sPortraits[NPC_COUNT] = {
-    F_PORTRAIT_GATEKEEPER, F_PORTRAIT_PEDDLER, F_PORTRAIT_HERMIT, F_PORTRAIT_NUN, F_PORTRAIT_GARDENER
+    F_PORTRAIT_GATEKEEPER, F_PORTRAIT_PEDDLER, F_PORTRAIT_HERMIT, F_PORTRAIT_NUN, F_PORTRAIT_GARDENER, F_PORTRAIT_HERMIT
 };
 
 static void start_text(const char* s) {
@@ -257,6 +258,19 @@ static void talk_gardener(Actor* a) {
         start_text("Four censers stand cold in this garden. Somewhere in the wood is a flame that is not of this wood. Bring it.");
 }
 
+/* the stranger in a mystery room: a piece of heart for ten gilt, once */
+static void talk_stranger(Actor* a) {
+    (void)a;
+    if (myst_done()) {
+        start_text("I have nothing more. The wood has nothing more. Go on, little petal.");
+        return;
+    }
+    if (myst_stranger_trade())
+        start_text("Ten gilt, and a piece of a heart that was somebody's. Fair, I'd say.|It beats a little on your stalk. A PIECE OF HEART.");
+    else
+        start_text("I sell pieces of hearts. Ten gilt the piece. You have less. Come back heavier.");
+}
+
 bool8 npc_try_talk(void) {
     Actor* a = npc_facing();
     if (!a || gPlayer->state != PS_NORMAL)
@@ -270,6 +284,7 @@ bool8 npc_try_talk(void) {
         case NPC_HERMIT: talk_hermit(a); break;
         case NPC_NUN: talk_nun(a); break;
         case NPC_GARDENER: talk_gardener(a); break;
+        case NPC_STRANGER: talk_stranger(a); break;
     }
     return TRUE;
 }

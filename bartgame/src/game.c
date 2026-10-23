@@ -10,6 +10,7 @@
 #include "text.h"
 #include "world.h"
 #include "roomgen.h"
+#include "myst.h"
 #include "enemy.h"
 #include "objects.h"
 #include "items.h"
@@ -147,8 +148,14 @@ static void load_forest(int cell, int from_side) {
     actors_clear();
     sprites_reset();
     npc_room_reset();
-    roomgen_door_pos(from_side, &px, &py);
-    player_init(px, py, (from_side + 2) & 3);
+    if (from_side == SIDE_MOUTH && gSpots.has_mouth) {
+        px = gSpots.mouth.x * 16 + 8;
+        py = (gSpots.mouth.y + 1) * 16 + 14;
+        player_init(px, py, FACE_S);
+    } else {
+        roomgen_door_pos(from_side, &px, &py);
+        player_init(px, py, (from_side + 2) & 3);
+    }
     camera_update(px, py - 16, TRUE);
     spawn_cell_objects();
     dark_off();
@@ -158,6 +165,24 @@ static void load_forest(int cell, int from_side) {
         if (c->role == ROLE_NPC_TORCH && !(c->flags & CF_QUEST_DONE))
             sDark = 1;
     }
+}
+
+/* a mystery room: the hero stands over its way out, facing in */
+static void load_myst(int cell) {
+    int px, py;
+    gGame.area = AREA_MYST;
+    gGame.cell = cell;
+    myst_build(cell);
+    actors_clear();
+    sprites_reset();
+    objects_room_reset();
+    npc_room_reset();
+    enemy_load_sheets_for_theme(gWorld.cells[cell].theme);
+    myst_start_pos(&px, &py);
+    player_init(px, py, FACE_N);
+    camera_update(px, py - 16, TRUE);
+    dark_off();
+    myst_enter();
 }
 
 static void begin_transition(int area, int cell, int side) {
@@ -232,13 +257,17 @@ static void give_chest(Cell* c) {
 
 static void check_chest(void) {
     Actor* a = gPlayer;
-    if (gGame.area != AREA_FOREST || a->state != PS_NORMAL)
+    if ((gGame.area != AREA_FOREST && gGame.area != AREA_MYST) || a->state != PS_NORMAL)
         return;
     if (!(a->coll & COLL_N) || a->facing != FACE_N)
         return;
     int tx = PX(a->x) >> 4, ty = (PX(a->y) - 6 - 8) >> 4;
     if (room_type(tx, ty) != TT_CHEST)
         return;
+    if (gGame.area == AREA_MYST) {
+        myst_chest_opened(tx, ty);
+        return;
+    }
     Cell* c = &gWorld.cells[gGame.cell];
     if (c->flags & CF_CHEST_OPEN)
         return;
@@ -279,8 +308,18 @@ static void check_exits(void) {
         return;
     }
     int cell = gGame.cell;
+    if (gGame.area == AREA_MYST) {
+        /* the way out is in the bottom wall; the mouth, back in the wood */
+        if (room_type_px(px, py - 6) == TT_MYST)
+            begin_transition(AREA_FOREST, cell, SIDE_MOUTH);
+        return;
+    }
     if (room_type_px(px, py - 6) == TT_STAIRS) {
         begin_transition(AREA_SEWER, 0, 0);
+        return;
+    }
+    if (room_type_px(px, py - 6) == TT_MYST) {
+        begin_transition(AREA_MYST, cell, 0);
         return;
     }
     /* the feet box stops 12 px short of the top edge and 6 of the sides */
@@ -676,6 +715,8 @@ static void update_play(void) {
     enemies_update();
     npcs_update();
     objects_update();
+    if (gGame.area == AREA_MYST)
+        myst_update();
     check_chest();
     check_shrine();
     check_exits();
@@ -692,6 +733,8 @@ static void update_transition(void) {
         if (sNextArea == AREA_SEWER) {
             load_sewer(1);
             bgm_play(BGM_SEWER);
+        } else if (sNextArea == AREA_MYST) {
+            load_myst(sNextCell);
         } else {
             int was_forest = (gGame.area == AREA_FOREST);
             load_forest(sNextCell, sNextSide);

@@ -21,7 +21,8 @@ typedef struct {
     Spot boss;
     Spot shrine;
     Spot treasure;  /* the alcove's hoard, behind a bush or a boulder */
-    u8 has_chest, has_npc, has_relic, has_boss, has_shrine, has_treasure;
+    Spot mouth;     /* the mystery's mouth in a wall */
+    u8 has_chest, has_npc, has_relic, has_boss, has_shrine, has_treasure, has_mouth;
 } RoomSpots;
 
 extern RoomSpots gSpots;

@@ -64,5 +64,6 @@ void player_cloak_jump(void);
 u16 player_equip_keys(int eq);     /* the key bits of the buttons holding eq */
 void player_equip_set(int slot, int eq);
 bool8 player_has_item(int eq);
+void player_heart_piece(void); /* a quarter heart; four make a whole */
 
 #endif

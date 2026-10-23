@@ -1271,6 +1271,79 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the mystery rooms, the swing, the shield in front (Oct 2026)
+
+Three asks. **The shield drew behind the Bloom**: the OAM is drawn
+lowest entry on top, and `player_draw` allocated the hero's entry
+before the shield's; swapped for south, east and west, and kept the
+other way for north, where the shield's back belongs behind him. **The
+swing barely moved the body**: three poses per facing now, a wind-up
+(`atk_*1`, the sword hand raised high, the head a pixel up), the blow
+(the old pose) and a follow-through (`atk_*3`, the arm swung across
+the body, the head a pixel down), picked by `sword_phase`; facing south
+the blade travels from the hero's left to his right, so the south
+poses are mirrored, and facing east it comes down over the head, so
+the east wind-up starts high and right.
+
+**The mystery rooms.** After the romhack's ? rooms (the roadmap's
+"? event variety" and "combat rebalance" entries: pools by room size,
+quiet kinds and gauntlets in the small pool, miniboss and gate puzzle
+only where there is floor, fairies rare, no free prizes). Here:
+`gWorld.myst[cell]` packs kind, size and style; `myst_generate` gives
+two cells in five one (never the entry, the goal or the gardener's
+dark garden): a size (small 4/10, medium 3/10, large 3/10), a style
+(cave, hollow, thicket), and a kind from the size's pool of sixteen:
+small: pots 3, chest 3, stranger 3, spring 1, waves 4, survive 2;
+medium: pots 2, chest 2, stranger 2, spring 1, waves 4, survive 2,
+plates 2, censers 1; large: waves 4, survive 2, captain 4, plates 2,
+censers 1, boulders 1, chest 1, spring 1. Censers and boulders stand
+on grass, so those rooms are thickets. The forest generator puts the
+mouth in a wall face with reached ground below it (`gSpots.mouth`), a
+MYST-typed tile: the arch of a cave, a hollow in the trunks, a gap in
+the brambles. `check_exits` sends the hero into `AREA_MYST`;
+`load_myst` builds the room (`myst_build`: 12x9, 18x12 or 24x16 of the
+style's wall, face, two floors, props and glows off the lane and the
+middle, the event's furniture, the way out in the bottom wall, shut
+for a fight) and stands him over the way out facing in. Leaving puts
+him under the mouth (`SIDE_MOUTH`). Switches, pots and chests are
+floor tiles carrying the type under one overlay drawing, so one
+drawing serves all three styles; lifting a pot clears its overlay.
+`myst_update` runs the event: waves of 2 + size (+1 after the first),
+two waves or three in a large room, 45 frames of quiet between; the
+survive clock 15, 20 or 25 seconds with a monster every 90 frames up
+to 3 + size alive; the captain a knight with 30 hp and 4 damage and
+two beetles; plates pressed by the feet; censers through
+`room_torches_unlit`; boulders counted when lifted; the pots' prize
+pot through `myst_tile_cleared`; the spring heals on touch. `finish`
+opens the way out, sets a chest at the middle and marks nothing until
+the chest is opened: ten gilt, a piece of heart (`player_heart_piece`)
+or a key and twenty gilt by size, then `MF_DONE`. The stranger
+(`NPC_STRANGER`, the hermit's sprite and portrait) trades ten gilt for
+a piece once. Done rooms rebuild quiet with an opened chest. Art: for
+each style a wall mass, a face, two floors, a prop, a glow and a way
+out (`mystery()`), the three mouths, the overlay switch, plate, pot,
+chest and open chest, the spring. Tileset 961 of 1024, 58 animated.
+
+**Measured.** `tools/myst_probe.py` forces each kind on one cell,
+walks in through the mouth, plays it and leaves: 28/28 (chest ten
+gilt; the prize pot; four plates and a piece of heart; three waves
+behind a shut door and a key; the captain's 30 hp; the clock; the
+spring; the stranger's trade; censers; boulders). Critical path 18/18,
+quests 12/12, guard 11/11, hands 14/14, verify-world clean.
+
+**Got wrong on the way.** The probes' `dismiss` stopped as soon as the
+hero's state read normal, which it does under an open box, so the
+spring's words stayed open and the next walk went nowhere; it now
+waits for the box itself. The rooms were sparse at two props and glows
+a size; four plus three a size now.
+
+**Open.** The tileset is at 961 of 1024 subtiles; the next tile family
+needs a budget pass (the sewer set is the obvious place to save).
+Mystery rooms do not show on the mini-map or the pause map. A done
+room's spring still heals (by design); a died-in fight restarts from
+the hub, as every death does.
+
+
 ### BARTGAME: the transitions (Oct 2026)
 
 The user: the hard boundaries between tile kinds (grass straight into

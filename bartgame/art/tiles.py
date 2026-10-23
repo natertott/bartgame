@@ -24,7 +24,7 @@ from px import L, Canvas, compose, outline, hflip, vflip, opaque, remap, blank, 
 
 TYPES = ['FLOOR', 'SOLID', 'PIT', 'WATER', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W',
          'THORN', 'CRACK', 'WEB', 'DOOR', 'DOOR_OPEN', 'TORCH', 'TORCH_LIT', 'SLOW', 'HURT',
-         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS', 'LIFT1', 'LIFT2']
+         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS', 'LIFT1', 'LIFT2', 'MYST']
 
 SOLID_TYPES = {'SOLID', 'THORN', 'CRACK', 'WEB', 'DOOR', 'TORCH', 'TORCH_LIT', 'CHEST', 'CHEST_OPEN',
                'LIFT1', 'LIFT2', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W'}
@@ -2418,6 +2418,320 @@ pedge_w = mirror_x(pedge_e)
 PEDGE = [(1, pedge_n), (2, pedge_e), (4, pedge_s), (8, pedge_w)]
 for _m in range(1, 16):
     mt('pedge_%x' % _m, 'forest', 'FLOOR', edged(PATH_EDGE, _m, PEDGE))
+
+# ====================================================== mystery rooms ===
+# Behind a mouth in the forest's walls: a damp cave (the cliff palette),
+# the hollow of a tree, a thicket of brush (the wood palette). Each has a
+# wall mass, a wall face, two floors, a solid thing, a glowing thing, its
+# way out, and floors that carry a type under an overlay: a switch, a
+# pot, a chest, drawn on the overlay so one drawing serves all three.
+def mystery(name, pal, wall, face, floor0, floor1, prop, glow, exit_):
+    mt('%s_wall' % name, pal, 'SOLID', wall)
+    mt('%s_face' % name, pal, 'SOLID', face)
+    mt('%s_floor0' % name, pal, 'FLOOR', floor0)
+    mt('%s_floor1' % name, pal, 'FLOOR', floor1)
+    mt('%s_prop' % name, pal, 'SOLID', prop)
+    mt('%s_glow' % name, pal, 'FLOOR', glow)
+    mt('%s_exit' % name, pal, 'MYST', exit_)
+    mt('%s_floor_switch' % name, pal, 'SWITCH', floor0)
+    mt('%s_floor_lift' % name, pal, 'LIFT1', floor1)
+    mt('%s_floor_chest' % name, pal, 'CHEST', floor0)
+
+
+# --- the cave: lumps of wet rock, a block face dripping moss, a floor of
+#     stone with puddles that catch the light, stalagmites, pale fungus
+def rock_mass(seed):
+    rnd = random.Random(seed)
+    c = Canvas(16, 16, 2)
+    pts = [(rnd.randrange(16), rnd.randrange(16), 2.2 + rnd.random() * 2) for _ in range(7)]
+    for cx, cy, r in sorted(pts, key=lambda q: q[1]):
+        blob(c, cx, cy, r, (2, 3, 4, 5))
+    for _ in range(5):
+        c.wrap_set(rnd.randrange(16), rnd.randrange(16), 1)
+    return c.rows()
+
+
+def cave_face():
+    c = Canvas(16, 16, 3)
+    for row in range(3):
+        y0 = row * 5
+        off = 0 if row % 2 == 0 else 4
+        for bx in range(-1, 3):
+            x0 = bx * 8 + off
+            for y in range(y0 + 1, y0 + 5):
+                for x in range(x0 + 1, x0 + 8):
+                    if 0 <= x < 16 and y < 15:
+                        c.set(x, y, 4)
+            for x in range(x0 + 1, x0 + 7):
+                if 0 <= x < 16 and y0 + 1 < 15:
+                    c.set(x, y0 + 1, 5)
+    c.hline(0, 15, 0, 1)
+    c.hline(0, 15, 15, 0xa)
+    for x, y in ((3, 1), (3, 2), (3, 3), (11, 6), (11, 7), (7, 11), (7, 12), (7, 13)):
+        c.set(x, y, 8)
+    c.set(3, 4, 9); c.set(11, 8, 9); c.set(7, 14, 9)
+    return c.rows()
+
+
+def cave_floor(seed, puddle):
+    c = Canvas.from_rows(turf(seed, 3, 2, 4, 6, 5))
+    if puddle:
+        c.ellipse(9, 10, 4, 2.2, 2)
+        c.ellipse(9, 10, 3, 1.4, 1)
+        c.set(8, 9, 0xc); c.set(7, 10, 5)
+    for x, y in ((2, 3), (13, 6), (4, 13)):
+        c.set(x, y, 7)
+    return c.rows()
+
+
+def cave_prop():
+    c = Canvas(16, 16)
+    for y in range(2, 15):
+        w = 1 + (y - 2) * 5 // 13
+        c.hline(8 - w, 8 + w, y, 4)
+        c.set(8 - w, y, 3)
+        c.set(8 + w, y, 5)
+    c.set(8, 2, 6); c.set(7, 4, 6)
+    c.outline(1)
+    return compose(cave_floor(31, False), c.rows())
+
+
+def cave_glow():
+    c = Canvas.from_rows(cave_floor(32, False))
+    for cx, cy, r in ((5, 9, 2.5), (10, 7, 2.0), (12, 11, 1.5)):
+        c.ellipse(cx, cy, r, r * 0.6, 0xd)
+        c.ellipse(cx, cy - 0.5, r * 0.5, 0.5, 0xc)
+        c.vline(int(cx), int(cy), int(cy) + 2, 0xc)
+    return c.rows()
+
+
+def arch(base_rows, inner):
+    """a doorway in a wall: the base with a dark arch cut, lit at the foot"""
+    c = Canvas.from_rows(base_rows)
+    for y in range(16):
+        for x in range(16):
+            dx, dy = (x + 0.5 - 8) / 6.0, (y + 0.5 - 9) / 8.0
+            if dy > 0:
+                dy = 0
+            if dx * dx + dy * dy <= 1.0 and y < 16:
+                c.set(x, y, inner)
+    for x in range(3, 13):
+        c.set(x, 15, 0xe)
+    c.outline(1)
+    return c.rows()
+
+
+mystery('cave', 'cliff', rock_mass(3), cave_face(), cave_floor(21, False), cave_floor(22, True), cave_prop(), cave_glow(),
+        arch(rock_mass(3), 1))
+
+
+# --- the hollow: bark grain, the rings of the heartwood as a face, a floor
+#     of chips and root, a knot, a shelf of amber fungus
+def bark_mass(seed):
+    rnd = random.Random(seed)
+    c = Canvas(16, 16, 8)
+    for x in range(16):
+        tone = 7 if x % 5 == 0 else 9 if x % 5 == 2 else 8
+        for y in range(16):
+            c.set(x, y, tone if (y + x) % 7 else 7)
+    for _ in range(2):
+        cx, cy = rnd.randrange(16), rnd.randrange(16)
+        for r, t in ((2.6, 7), (1.8, 9), (0.9, 7)):
+            for y in range(16):
+                for xx in range(16):
+                    dx, dy = ((xx - cx + 8) % 16 - 8), ((y - cy + 8) % 16 - 8)
+                    if dx * dx / (r * r * 1.4) + dy * dy / (r * r) <= 1:
+                        c.set(xx, y, t)
+    return c.rows()
+
+
+def hollow_face():
+    c = Canvas(16, 16, 8)
+    for y in range(16):
+        for x in range(16):
+            d = ((x - 8) ** 2 / 2.2 + (y + 6) ** 2 / 9) ** 0.5
+            c.set(x, y, (9, 0xa, 8, 7)[int(d) % 4])
+    c.hline(0, 15, 0, 1)
+    c.hline(0, 15, 15, 7)
+    c.hline(0, 15, 14, 7)
+    return c.rows()
+
+
+def hollow_floor(seed, root):
+    c = Canvas.from_rows(turf(seed, 8, 7, 9, 7, 5))
+    if root:
+        for x in range(16):
+            y = 10 + int(2.5 * math.sin(x / 2.5))
+            c.set(x, y, 9); c.set(x, y + 1, 7)
+    for x, y in ((3, 3), (12, 5), (6, 13)):
+        c.set(x, y, 0xa)
+    return c.rows()
+
+
+def hollow_prop():
+    c = Canvas(16, 16)
+    ball(c, 8, 9, 6, 5, (7, 7, 8, 9, 0xa))
+    c.ellipse(7, 7, 2.5, 1.5, 7)
+    c.ellipse(7, 7, 1.2, 0.7, 9)
+    c.outline(1)
+    return compose(hollow_floor(41, False), c.rows())
+
+
+def hollow_glow():
+    c = Canvas.from_rows(hollow_floor(42, False))
+    for cx, cy, r in ((5, 8, 3.0), (11, 11, 2.5)):
+        c.ellipse(cx, cy, r, r * 0.5, 0xb)
+        c.ellipse(cx, cy - 0.5, r * 0.8, r * 0.3, 0xc)
+        c.set(int(cx), int(cy) - 1, 0xd)
+    return c.rows()
+
+
+mystery('hollow', 'wood', bark_mass(5), hollow_face(), hollow_floor(43, False), hollow_floor(44, True), hollow_prop(), hollow_glow(),
+        arch(bark_mass(5), 1))
+
+
+# --- the thicket: a bramble mass barbed with magenta, a face of stems and
+#     leaves, a floor of turf under leaf litter, a stump, berries that glow
+def bramble_mass(seed):
+    rows = leaf_mass(CANOPY_B if seed % 2 else CANOPY_A, [], tones=(2, 3, 4, 5))
+    c = Canvas.from_rows(rows)
+    rnd = random.Random(seed)
+    for _ in range(6):
+        x, y = rnd.randrange(16), rnd.randrange(16)
+        c.wrap_set(x, y, 1); c.wrap_set(x + 1, y + 1, 1); c.wrap_set(x + 2, y, 0xf)
+    return c.rows()
+
+
+def thicket_face():
+    c = Canvas(16, 16, 3)
+    for x in (1, 4, 7, 10, 13):
+        c.vline(x, 2, 15, 8)
+        c.vline(x + 1, 3, 15, 7)
+    for x, y in ((2, 4), (5, 7), (8, 3), (11, 9), (14, 5), (3, 11), (9, 12), (12, 2)):
+        c.set(x, y, 5); c.set(x + 1, y, 4); c.set(x, y + 1, 4)
+    for x, y in ((6, 5), (12, 11), (0, 9)):
+        c.set(x, y, 0xf)
+    c.hline(0, 15, 0, 2)
+    c.hline(0, 15, 1, 2)
+    c.hline(0, 15, 15, 1)
+    return c.rows()
+
+
+def thicket_floor(seed, litter):
+    c = Canvas.from_rows(turf(seed, 4, 3, 5, 6, 6))
+    rnd = random.Random(seed)
+    for _ in range(10 if litter else 5):
+        x, y = rnd.randrange(16), rnd.randrange(16)
+        c.wrap_set(x, y, 8); c.wrap_set(x + 1, y, 9 if rnd.random() < 0.5 else 7)
+    return c.rows()
+
+
+def thicket_prop():
+    c = Canvas(16, 16)
+    c.rect(4, 6, 11, 13, 8)
+    c.vline(4, 6, 13, 7); c.vline(11, 6, 13, 9)
+    c.ellipse(7.5, 5.5, 4.5, 2.3, 9); c.ellipse(7.5, 5.5, 3, 1.5, 0xa); c.ellipse(7.5, 5.5, 1.5, 0.7, 9)
+    c.outline(1)
+    return compose(thicket_floor(51, False), c.rows())
+
+
+def thicket_glow():
+    c = Canvas.from_rows(thicket_floor(52, False))
+    for x, y in ((3, 4), (6, 9), (10, 5), (12, 11), (8, 13)):
+        c.set(x, y, 3); c.set(x + 1, y, 3); c.set(x, y + 1, 3)
+        c.set(x + 1, y + 1, 0xf); c.set(x + 2, y, 0xd)
+    return c.rows()
+
+
+mystery('thicket', 'wood', bramble_mass(7), thicket_face(), thicket_floor(53, True), thicket_floor(54, False), thicket_prop(), thicket_glow(),
+        arch(bramble_mass(7), 1))
+
+# --- the mouths in the forest's walls: in the trunk face's place
+_mouth_rock = Canvas.from_rows(_face)
+for _y in range(16):
+    for _x in range(16):
+        if _mouth_rock.get(_x, _y) in (7, 8, 9):
+            _mouth_rock.set(_x, _y, 4)
+mt('mouth_cave', 'cliff', 'MYST', arch([r.replace('1', '1') for r in _mouth_rock.rows()], 1))
+mt('mouth_hollow', 'wood', 'MYST', arch(_face, 1))
+_mouth_thicket = Canvas.from_rows(_face)
+for _y in range(16):
+    for _x in range(16):
+        if _mouth_thicket.get(_x, _y) in (7, 8, 9):
+            _mouth_thicket.set(_x, _y, 3 if (_x + _y) % 3 else 4)
+mt('mouth_thicket', 'wood', 'MYST', arch(_mouth_thicket.rows(), 1))
+
+# --- things on the overlay, one drawing for every style
+mt('myst_switch', 'cliff', 'FLOOR', L({}, '''
+    ................
+    ................
+    ................
+    .....111111.....
+    ....16655551....
+    ...1655554441...
+    ...1555544431...
+    ...1544444331...
+    ...1444433321...
+    ....14333221....
+    .....111111.....
+    ................
+    ................
+    ................
+    ................
+    ................
+'''))
+mt('myst_switch_down', 'cliff', 'FLOOR', L({}, '''
+    ................
+    ................
+    ................
+    ................
+    ................
+    .....111111.....
+    ....14433331....
+    ...1433333221...
+    ...1333322221...
+    ....12222211....
+    .....111111.....
+    ................
+    ................
+    ................
+    ................
+    ................
+'''))
+mt('myst_pot', 'cliff', 'FLOOR', L({}, '''
+    ................
+    ................
+    ....11111111....
+    ...1bccbbbcb1...
+    ....1bbbbbb1....
+    ...1bccbbbbb1...
+    ..1bbbbbbbbbb1..
+    .1bcbbbbbbbaab1.
+    .1bbbbbbbbbaab1.
+    .1bbbbbbbbbaa1..
+    .1abbbbbbbaaa1..
+    ..1aabbbbaaa1...
+    ...1aaaaaaa1....
+    ....1111111.....
+    ................
+    ................
+'''))
+_chest_rows = next(m for m in METATILES if m['name'] == 'chest')['art']
+_chest_open_rows = next(m for m in METATILES if m['name'] == 'chest_open')['art']
+mt('myst_chest', 'stone', 'FLOOR', [r.replace('e', '.') for r in _chest_rows])
+mt('myst_chest_open', 'stone', 'FLOOR', [r.replace('e', '.') for r in _chest_open_rows])
+
+# a spring: water that glows, the fairy's gift
+_spring1 = Canvas.from_rows(_w1); _spring2 = Canvas.from_rows(_w2)
+for _c, _k in ((_spring1, 0), (_spring2, 1)):
+    for _y in range(16):
+        for _x in range(16):
+            if _x in (0, 15) or _y in (0, 15):
+                _c.set(_x, _y, 1)
+    for _x, _y in ((4, 4), (11, 6), (7, 10), (12, 12), (3, 12)):
+        _c.set((_x + _k) % 16, _y, 0xd)
+        _c.set((_x + _k + 1) % 16, _y, 0xa)
+mt('myst_spring', 'stone', 'FLOOR', frames=[_spring1.rows(), _spring2.rows()], anim_speed=12)
 
 # =============================================================== sewer ===
 def flagstones(seed, slabs, moss=()):

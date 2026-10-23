@@ -53,6 +53,8 @@ typedef struct {
     u8 path[CELLS];                /* entry..goal */
     u8 path_len;
     u8 stages;
+    u8 myst[CELLS];       /* MYST_PACK(kind, size, style), 0 for none (myst.h) */
+    u8 myst_flags[CELLS]; /* MF_* */
 } World;
 
 extern World gWorld;
