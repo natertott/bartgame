@@ -1271,6 +1271,15 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: knights at five hits (Oct 2026)
+
+The user: knights should die after five hits of the regular sword. The
+sword deals 2, so the knight's hp went 12 to 10; the mystery rooms'
+captain, scaled as twice a knight, 30 to 20 (ten hits). The blocked
+hits from the front do not count, as before. Mystery probe 28/28,
+quests 12/12, critical path 18/18.
+
+
 ### BARTGAME: the mystery rooms, the swing, the shield in front (Oct 2026)
 
 Three asks. **The shield drew behind the Bloom**: the OAM is drawn

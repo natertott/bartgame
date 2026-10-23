@@ -295,7 +295,7 @@ void myst_update(void) {
                     spawn_one(EN_KNIGHT);
                     k = actor_find(AK_ENEMY, EN_KNIGHT);
                     if (k) {
-                        k->hp = 30;
+                        k->hp = 20; /* twice a knight: ten sword hits */
                         k->damage = 4;
                     }
                     spawn_one(EN_BEETLE);

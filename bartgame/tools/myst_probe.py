@@ -175,7 +175,7 @@ def main():
     P.run(c, 60)
     knights = [i for i in range(1, 96) if P.actor(c, i)['kind'] == 2 and P.actor(c, i)['type'] == 4]
     P.snap(c, os.path.join(S, 'myst_miniboss.png'))
-    check('MINIBOSS: a knight captain with thirty hearts of hp', len(knights) == 1 and P.actor(c, knights[0])['hp'] == 30, str([P.actor(c, i)['hp'] for i in knights]))
+    check('MINIBOSS: a knight captain with twenty hp', len(knights) == 1 and P.actor(c, knights[0])['hp'] == 20, str([P.actor(c, i)['hp'] for i in knights]))
     kill_all(c); P.run(c, 20)
     check('MINIBOSS: slain, a chest', bool(tiles_of(c, lambda m: m['type'] == 'CHEST')), '')
     leave(c)
