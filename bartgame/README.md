@@ -14,13 +14,17 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
   north wall leads up into the wood; the stairs in the wood's first glade
   lead back down.
 - **The Blighted Wood.** A 5x5 maze of rooms, generated from a seed rolled
-  on the title screen. Every room is a glade, a grove, a ruin, a pond, a
-  thicket or a boneyard, full of monsters. Three key gates stand on the
-  way to the Heart: a cracked wall, a pale web, a chasm. Their keys, the
+  on the title screen: a growing tree that mostly runs in corridors and
+  branches a third of the time, so about half the rooms lie off the way
+  to the Heart. Every room is a glade, a grove, a ruin, a pond, a thicket
+  or a boneyard, full of monsters. Three key gates stand on the way to
+  the Heart: a cracked wall, a pale web, a chasm. Their keys, the
   Blightseed Bombs, the Grail Lamp and the Petal Cloak, wait in chests
   that are always reachable before the gate they open. Locked doors on
   the side branches want small keys; the keys sit in rooms that need no
-  key. Dead ends hold chests, shrines and three kinds of quest giver.
+  key, and no lock ever stands between you and a key item, a key chest or
+  the Heart. Dead ends hold chests, shrines and three kinds of quest
+  giver.
 - **The Blight Heart.** At the deepest glade. Cut it out, take the Grail.
 
 ## Controls
@@ -28,13 +32,13 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 | key | action |
 |---|---|
 | D-pad | walk (1.25 px per frame, like Link) |
-| A | sword swing; talk to someone you face; open a chest from below |
+| A | sword swing; talk to someone you face |
 | B | the chosen item: set a bomb, swing the lamp, leap with the cloak |
 | L | choose the next item |
 | R | roll (24 frames, invulnerable for the first 18) |
 | Start | the map of the wood |
 
-Walk into a locked door with a key to open it. Push into a ledge for a
+Walk into a chest from below to open it. Walk into a locked door with a key to open it. Push into a ledge for a
 moment to drop off it. Pits and water cost a quarter heart and put you
 back on the last safe ground.
 
@@ -106,3 +110,16 @@ python3 tools/critical_path.py --boss     # title to win screen, 18 checks
 python3 tools/quest_probe.py --seed 0x28c
 python3 tools/perf_probe.py
 ```
+
+The critical path probe takes the seed from `probe.boot(seed=...)`; the
+delivered ROM passed it on six seeds (0xB4A7, 0x28c, 0x3, 0x1234, 0x7,
+0x51). The maze generator is also compiled for the host and checked over
+twenty thousand seeds without an emulator:
+
+```
+make verify-world    # every key item, key chest and the goal reachable
+                     # in order, without a lock; all three quests present
+```
+
+`build/host/dump.c` prints one seed's maze, `build/host/stats.c` the
+averages (path length, side rooms, dead ends, locks, chests).

@@ -1303,6 +1303,26 @@ world's charblock and the animated-tile DMA kept writing over them. Two
 "failures" were the probes: a swarm knocked a standing hero onto the exit
 stairs, and extra A presses re-opened a dialogue so the box ate the jump.
 
+**Beyond the pinned seed.** Running the critical path on five more seeds
+found four generator defects the pinned seed never showed. Two key gates
+could land on one path edge when the path was short. A locked door could
+stand in front of a key item: the lock check looked only at the first
+room behind the door, not the whole branch. A key chest could sit in the
+lane the hero walks on entering, so it opened itself and its text box ate
+every later input. The spanning tree, a straight-biased depth-first walk,
+put 18 to 21 of the 25 rooms on the way to the Heart, which left too few
+side branches for locks at all. Now the gates take distinct, spread
+edges; a lock is refused if anything the run needs lies anywhere beyond
+it; spots keep out of the four door lanes; the tree grows from a random
+open cell a third of the time (mean path 13, about 12 side rooms, 1.1
+locks per run). `make verify-world` compiles `world.c` for the host and
+checks twenty thousand seeds: every key item, key chest and the goal
+reachable in order without a lock, all three quests present. The cloak
+jump grew from 32 to 40 px: with a one-tile chasm at the room's edge, the
+north landing window was 10 px wide. The probe itself stood a tile too
+far from west doors (the one side the generator did not keep clear) and
+let monsters bite the hero off a chest; both fixed.
+
 ### The new game builds its own engine: `12_FROM_SCRATCH_ENGINE.md` (Oct 2026)
 
 The user: the new agent "will be building the engine from scratch ... should

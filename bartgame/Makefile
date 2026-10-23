@@ -75,3 +75,10 @@ clean:
 	rm -rf $(BUILD) $(TARGET).gba
 
 -include $(OBJS:.o=.d)
+
+# The maze generator compiled for the host: twenty thousand seeds checked
+# for reachability (keys before gates, no lock in the way) and quests.
+verify-world:
+	gcc -w -I src -I build/gen -o build/host/gates build/host/gates.c src/world.c src/util.c
+	./build/host/gates
+.PHONY: verify-world

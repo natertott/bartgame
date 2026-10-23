@@ -99,6 +99,10 @@ static bool8 clear3(int x, int y) {
     return TRUE;
 }
 
+/* Near a door, or in the lane a player walks along when entering: a
+   chest there opens itself as the hero arrives, a torch there blocks the
+   door. The lane is the four tiles wide the door is centred on, for the
+   first six tiles into the room. */
 static bool8 near_door(int x, int y) {
     int s, x0, y0, x1, y1;
     for (s = 0; s < 4; s++) {
@@ -108,6 +112,10 @@ static bool8 near_door(int x, int y) {
         if (ABS(x - x1) <= 3 && ABS(y - y1) <= 3)
             return TRUE;
     }
+    if (x >= W / 2 - 2 && x <= W / 2 + 1 && (y <= 6 || y >= H - 7))
+        return TRUE;
+    if (y >= H / 2 - 2 && y <= H / 2 + 1 && (x <= 6 || x >= W - 7))
+        return TRUE;
     return FALSE;
 }
 
@@ -157,6 +165,23 @@ static bool8 find_spot(Spot* out, int tries, bool8 need_clear) {
         return TRUE;
     }
     return FALSE;
+}
+
+/* A spot for something the run depends on. Tries for clearance, then
+   without, then carves a clearing at the room's middle and uses it. */
+static void ensure_spot(Spot* out) {
+    if (find_spot(out, 200, TRUE))
+        return;
+    if (find_spot(out, 400, FALSE))
+        return;
+    int cx = W / 2, cy = H / 2, dx, dy;
+    for (dy = -1; dy <= 1; dy++)
+        for (dx = -1; dx <= 1; dx++) {
+            room_set(cx + dx, cy + dy, MT_PATH);
+            room_set_overlay(cx + dx, cy + dy, MT_NONE);
+        }
+    out->x = cx;
+    out->y = cy;
 }
 
 /* carve passable tiles toward the room center from a blocked spot: the
@@ -449,31 +474,32 @@ void roomgen_build(int cell) {
         case ROLE_KEYITEM:
         case ROLE_CHEST:
         case ROLE_KEYCHEST:
-            if (find_spot(&gSpots.chest, 200, TRUE)) {
-                gSpots.has_chest = 1;
-                room_set(gSpots.chest.x, gSpots.chest.y, (c->flags & CF_CHEST_OPEN) ? MT_CHEST_OPEN : MT_CHEST);
-            }
+            ensure_spot(&gSpots.chest);
+            gSpots.has_chest = 1;
+            room_set(gSpots.chest.x, gSpots.chest.y, (c->flags & CF_CHEST_OPEN) ? MT_CHEST_OPEN : MT_CHEST);
             break;
         case ROLE_NPC_HUNT:
         case ROLE_NPC_FETCH:
-            if (find_spot(&gSpots.npc, 200, TRUE))
-                gSpots.has_npc = 1;
+            ensure_spot(&gSpots.npc);
+            gSpots.has_npc = 1;
             break;
         case ROLE_NPC_TORCH: {
             int i;
-            if (find_spot(&gSpots.npc, 200, TRUE))
-                gSpots.has_npc = 1;
+            ensure_spot(&gSpots.npc);
+            gSpots.has_npc = 1;
             for (i = 0; i < 4; i++) {
                 Spot t;
-                if (find_spot(&t, 200, TRUE)) {
-                    gSpots.torches[gSpots.torch_count++] = t;
-                    room_set(t.x, t.y, (c->flags & CF_QUEST_DONE) ? MT_TORCH_LIT : MT_TORCH);
-                }
+                ensure_spot(&t);
+                if (t.x == gSpots.npc.x && t.y == gSpots.npc.y)
+                    t.y += 2;
+                gSpots.torches[gSpots.torch_count++] = t;
+                room_set(t.x, t.y, (c->flags & CF_QUEST_DONE) ? MT_TORCH_LIT : MT_TORCH);
             }
             break;
         }
         case ROLE_RELIC:
-            if (!(c->flags & CF_RELIC_TAKEN) && find_spot(&gSpots.relic, 200, TRUE)) {
+            if (!(c->flags & CF_RELIC_TAKEN)) {
+                ensure_spot(&gSpots.relic);
                 gSpots.has_relic = 1;
                 room_set(gSpots.relic.x, gSpots.relic.y, MT_MOSSY_STONE);
                 room_set_overlay(gSpots.relic.x, gSpots.relic.y, MT_SPARKLE);

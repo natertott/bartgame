@@ -1,0 +1,4 @@
+build/*
+!build/host/
+build/host/*
+!build/host/*.c

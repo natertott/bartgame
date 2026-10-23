@@ -465,7 +465,9 @@ void player_update(void) {
         gPl.lamp_timer--;
 }
 
-/* Jumps with the Petal Cloak: forward 1.0, zvel 2.0, about 33 frames. */
+/* Jumps with the Petal Cloak: forward 1.25, zvel 2.0, 32 frames in the
+   air, so 40 px: two and a half tiles. A one-tile chasm is cleared from
+   anywhere within a tile and a half of its edge. */
 void player_cloak_jump(void) {
     Actor* a = gPlayer;
     if (a->state != PS_NORMAL)
@@ -473,7 +475,7 @@ void player_cloak_jump(void) {
     int dir = input_dir();
     if (dir == DIR_NONE)
         dir = facing_to_dir(a->facing);
-    start_jump(dir, Q8(1.0), Q16(2.0));
+    start_jump(dir, Q8(1.25), Q16(2.0));
     a->sub = 0;
     sfx_play(SFX_JUMP);
 }

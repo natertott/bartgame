@@ -166,16 +166,25 @@ def main():
                 a = P.actor(c, i)
                 if a['kind'] == 2:
                     P.w16(c, A + i * 64 + 26, 1)
-            # swing where they are: simpler, strike each by teleporting beside it
-            for step in range(40):
+            # strike each from behind (a thorn knight's shield takes hits
+            # from the front), rotating through the survivors
+            for step in range(60):
                 en = [P.actor(c, i) for i in range(1, 96)]
                 en = [e for e in en if e['kind'] == 2]
                 if not en:
                     break
-                e = en[0]
+                e = en[step % len(en)]
                 CP.heal(c)
-                CP.teleport(c, e['x'] - 14, e['y'] + 2)
-                P.hold(c, 'RIGHT', 2)
+                f = e['facing']  # 0 N, 1 E, 2 S, 3 W: stand on the far side
+                if f == 1:
+                    CP.teleport(c, e['x'] - 14, e['y'] + 2); key = 'RIGHT'
+                elif f == 3:
+                    CP.teleport(c, e['x'] + 14, e['y'] + 2); key = 'LEFT'
+                elif f == 0:
+                    CP.teleport(c, e['x'], e['y'] + 18); key = 'UP'
+                else:
+                    CP.teleport(c, e['x'], e['y'] - 14); key = 'DOWN'
+                P.hold(c, key, 2)
                 P.press(c, 'A', 2, 16)
             keys0 = P.r8(c, pl + 6)
             talk(c, npc)

@@ -96,14 +96,16 @@ def dismiss(c, frames=400):
 
 
 def door_inside(side):
-    """a standing spot two tiles inside a door, and the key to walk out"""
+    """a standing spot two tiles inside a door (the tiles the generator
+    keeps clear), and the key to walk out. The hero's feet are 4 px above
+    the y given, so the north spot sits one row lower than the others."""
     if side == 0:
         return (W_ROOM * 8, 3 * 16 + 8, 'UP')
     if side == 2:
         return (W_ROOM * 8, (H_ROOM - 3) * 16 + 8, 'DOWN')
     if side == 1:
         return ((W_ROOM - 3) * 16 + 8, H_ROOM * 8 + 8, 'RIGHT')
-    return (3 * 16 + 8, H_ROOM * 8 + 8, 'LEFT')
+    return (2 * 16 + 8, H_ROOM * 8 + 8, 'LEFT')
 
 
 def heal(c):
@@ -120,6 +122,9 @@ def cross(c, side, frames=160):
     P.hold(c, key, frames)
     for _ in range(60):
         c.run_frame()
+    if P.r8(c, P.sym('gTbActive')):
+        # walked into a chest or a sign on arrival: close it
+        dismiss(c)
     return cell(c), before
 
 
@@ -139,18 +144,34 @@ def face_gate(c, side):
         c.run_frame()
 
 
+def clear_enemies(c):
+    """monsters in the room vanish: this probe tests gates and chests,
+    not fights (a bite at the teleport knocks the hero off the chest)"""
+    A = P.sym('gActors')
+    for i in range(1, 96):
+        if P.actor(c, i)['kind'] == 2:
+            P.w8(c, A + i * 64, 0)
+
+
 def open_chest(c):
+    """stand under the room's chest and push into it; up to three tries"""
     w, h, g = room_tiles(c)
     chest = [k for k, v in g.items() if v == mt('CHEST')]
     if not chest:
         return False
     tx, ty = chest[0]
-    teleport(c, tx * 16 + 8, (ty + 1) * 16 + 14)
-    P.hold(c, 'UP', 20)
-    for _ in range(80):
-        c.run_frame()
-    dismiss(c)
-    return True
+    for attempt in range(3):
+        heal(c)
+        clear_enemies(c)
+        P.run(c, 4)
+        teleport(c, tx * 16 + 8, (ty + 1) * 16 + 14)
+        P.hold(c, 'UP', 20)
+        for _ in range(80):
+            c.run_frame()
+        dismiss(c)
+        if tt_at(c, tx, ty) == mt('CHEST_OPEN'):
+            return True
+    return False
 
 
 def pl(c, off, w=False):

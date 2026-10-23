@@ -9,7 +9,8 @@
       construction. QUICKSTART's lesson: never leave a key to a random
       draw.
    3. Side branches get locked doors whose small keys sit in rooms that
-      need no key at all, so two keys can never deadlock.
+      need no key at all, so two keys can never deadlock; no lock ever
+      stands between the entry and a key item, a key chest or the goal.
    4. Dead ends get chests, quest givers, relics and shrines. A few extra
       edges within one stage make loops.
    5. Every room gets an archetype, an enemy theme and a density that grows
@@ -75,7 +76,15 @@ static void tree_build(Rng* r, int entry) {
     stack[sp++] = entry;
     int last_dir = -1;
     while (sp) {
-        int cur = stack[sp - 1];
+        /* a growing tree: mostly grow from the newest cell (corridors),
+           but a third of the time from any open cell (branches, so the
+           maze has side rooms and not one long hall) */
+        int pick = sp - 1;
+        if (sp > 1 && rng_range(r, 3) == 0) {
+            pick = rng_range(r, sp);
+            last_dir = -1;
+        }
+        int cur = stack[pick];
         int cand[4], nc = 0;
         for (i = 0; i < 4; i++) {
             int n = cell_neighbor(cur, i);
@@ -83,6 +92,8 @@ static void tree_build(Rng* r, int entry) {
                 cand[nc++] = i;
         }
         if (nc == 0) {
+            for (i = pick; i < sp - 1; i++)
+                stack[i] = stack[i + 1];
             sp--;
             last_dir = -1;
             continue;
@@ -148,6 +159,23 @@ static bool8 pass_stage(int cell, int side) {
     if (g == GATE_CHASM && sStageLimit < 3)
         return FALSE;
     return TRUE;
+}
+
+/* Does the subtree beyond `cell`, entered from `from`, hold a room the run
+   depends on? A lock in front of one would strand the player. */
+static bool8 subtree_holds_key(int cell, int from) {
+    int s;
+    u8 role = gWorld.cells[cell].role;
+    if (role == ROLE_KEYITEM || role == ROLE_KEYCHEST || cell == gWorld.goal)
+        return TRUE;
+    for (s = 0; s < 4; s++) {
+        int n = cell_neighbor(cell, s);
+        if (n < 0 || n == from || !sTree[cell][s])
+            continue;
+        if (subtree_holds_key(n, cell))
+            return TRUE;
+    }
+    return FALSE;
 }
 
 static int degree(int cell) {
@@ -227,15 +255,20 @@ void world_generate(u32 seed) {
     w->cells[goal].arch = ARCH_ARENA;
 
     /* three key gates on the main path at rising depths */
-    int edges = w->path_len - 1; /* edges on the path */
+    int edges = w->path_len - 1; /* edges on the path, 0..edges-1 */
     static const u8 gate_types[3] = { GATE_CRACK, GATE_WEB, GATE_CHASM };
     int lo = 1;
     for (i = 0; i < 3; i++) {
-        /* the gate i sits on edge index e in [lo, edges - (3 - i)] */
-        int hi = edges - (2 - i);
+        /* gate i takes an edge in [lo, hi], leaving room for the gates
+           after it, and never the same edge twice; spread along the path */
+        int hi = edges - 1 - (2 - i);
+        int span;
         if (hi < lo)
             hi = lo;
-        int e = lo + (int)rng_range(&r, hi - lo + 1);
+        span = (hi - lo) / (3 - i) + 1;
+        int e = lo + (int)rng_range(&r, span);
+        if (e > hi)
+            e = hi;
         if (e > edges - 1)
             e = edges - 1;
         if (e < 1)
@@ -278,40 +311,44 @@ void world_generate(u32 seed) {
             w->cells[i].stage = 3; /* unreachable without keys: behind a lock only */
     w->stages = 4;
 
-    /* locked doors on side branches: an edge whose far side is a subtree
-       without the goal, with its key in a room needing no key. Two of them. */
+    /* locked doors on side branches: a tree edge from a parent reachable
+       without any lock to a roleless child off the main path, with
+       nothing the run needs beyond it. Its key waits in a room reachable
+       at the lock's stage with no locks. Two of them. */
     int locks = 0;
-    for (i = 0; i < CELLS && locks < 2; i++) {
-        int c = w->path[rng_range(&r, w->path_len)];
-        for (s = 0; s < 4; s++) {
-            int n = cell_neighbor(c, s);
-            if (n < 0 || !sTree[c][s] || w->cells[c].gate[s] != GATE_OPEN)
-                continue;
-            /* n must be off the path (not the parent or child on the path) */
-            int onpath = 0, k;
-            for (k = 0; k < w->path_len; k++)
-                if (w->path[k] == n)
-                    onpath = 1;
-            if (onpath || w->cells[n].role != ROLE_NONE)
-                continue;
-            w->cells[c].gate[s] = GATE_LOCK;
-            w->cells[n].gate[opposite(s)] = GATE_LOCK;
-            /* its key: a room reachable at the lock's stage with no locks */
-            sStageLimit = w->cells[c].stage;
-            flood(w->entry, pass_stage);
-            int room = pick_room(&r, 1);
-            if (room >= 0) {
-                w->cells[room].role = ROLE_KEYCHEST;
-                w->cells[room].role_arg = CHEST_KEY;
-                /* the room behind the lock holds a reward */
-                w->cells[n].role = ROLE_CHEST;
-                w->cells[n].role_arg = (locks == 0) ? CHEST_HEART_CONTAINER : CHEST_GILT;
-                locks++;
-            } else {
-                w->cells[c].gate[s] = GATE_OPEN;
-                w->cells[n].gate[opposite(s)] = GATE_OPEN;
-            }
-            break;
+    for (i = 0; i < 80 && locks < 2; i++) {
+        int c = rng_range(&r, CELLS);
+        s = rng_range(&r, 4);
+        int n = cell_neighbor(c, s);
+        if (n < 0 || !sTree[c][s] || w->cells[c].gate[s] != GATE_OPEN)
+            continue;
+        if (w->cells[n].dist != w->cells[c].dist + 1 || w->cells[n].role != ROLE_NONE)
+            continue;
+        int onpath = 0, k;
+        for (k = 0; k < w->path_len; k++)
+            if (w->path[k] == n)
+                onpath = 1;
+        if (onpath || subtree_holds_key(n, c))
+            continue;
+        sStageLimit = 3;
+        flood(w->entry, pass_stage);
+        if (sDist[c] == 0xFF)
+            continue; /* already behind a lock */
+        w->cells[c].gate[s] = GATE_LOCK;
+        w->cells[n].gate[opposite(s)] = GATE_LOCK;
+        sStageLimit = w->cells[c].stage;
+        flood(w->entry, pass_stage);
+        int room = pick_room(&r, 1);
+        if (room >= 0) {
+            w->cells[room].role = ROLE_KEYCHEST;
+            w->cells[room].role_arg = CHEST_KEY;
+            /* the room behind the lock holds a reward */
+            w->cells[n].role = ROLE_CHEST;
+            w->cells[n].role_arg = (locks == 0) ? CHEST_HEART_CONTAINER : CHEST_GILT;
+            locks++;
+        } else {
+            w->cells[c].gate[s] = GATE_OPEN;
+            w->cells[n].gate[opposite(s)] = GATE_OPEN;
         }
     }
 
@@ -376,9 +413,10 @@ void world_generate(u32 seed) {
     /* the fetch quest's relic: a room at the same or lower stage, not behind a lock */
     if (fetch_relic >= 0) {
         int st = w->cells[fetch_relic].stage;
+        int best = -1, bs = -1;
+      again:
         sStageLimit = st;
         flood(w->entry, pass_stage);
-        int best = -1, bs = -1;
         for (i = 0; i < CELLS; i++) {
             Cell* c = &w->cells[i];
             if (sDist[i] == 0xFF || i == fetch_relic || i == w->goal || i == w->entry)
@@ -394,6 +432,9 @@ void world_generate(u32 seed) {
         if (best >= 0) {
             w->cells[best].role = ROLE_RELIC;
             w->cells[fetch_relic].role_arg = best;
+        } else if (st < 3) {
+            st = 3; /* nothing free this early: a chamber deeper in */
+            goto again;
         } else {
             w->cells[fetch_relic].role = ROLE_NPC_HUNT;
         }
