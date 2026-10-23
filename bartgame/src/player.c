@@ -1,4 +1,4 @@
-/* BARTGAME: the player. Bart, half man half plant, moves like Link.
+/* BARTGAME: the player. The Bloom, half man half plant, moves like Link.
 
    Constants are TMC's (docs/newgame/12_FROM_SCRATCH_ENGINE.md):
      walk 1.25 px/f, roll 24 frames (3.0, then 2.0, ramping back to 3.0),
@@ -10,6 +10,8 @@
 #include "actor.h"
 #include "player.h"
 #include "sound.h"
+#include "react.h"
+#include "objects.h"
 
 Actor* gPlayer;
 PlayerState gPl;
@@ -39,7 +41,57 @@ void player_new_game(void) {
     gPl.hp = 24;
     gPl.items = ITEM_SWORD;
     gPl.sword_dmg = 2;
-    gPl.bitem = BITEM_NONE;
+    gPl.equip[SLOT_A] = EQ_SWORD;
+    gPl.equip[SLOT_B] = EQ_NONE;
+    gPl.equip[SLOT_L] = EQ_NONE;
+    gPl.carry = CARRY_NONE;
+}
+
+/* ------------------------------------------------------------- equip -- */
+u16 player_equip_keys(int eq) {
+    u16 k = 0;
+    if (gPl.equip[SLOT_A] == eq)
+        k |= KEY_A;
+    if (gPl.equip[SLOT_B] == eq)
+        k |= KEY_B;
+    if (gPl.equip[SLOT_L] == eq)
+        k |= KEY_L;
+    return k;
+}
+
+bool8 player_has_item(int eq) {
+    switch (eq) {
+        case EQ_SWORD: return (gPl.items & ITEM_SWORD) != 0;
+        case EQ_BOMBS: return (gPl.items & ITEM_BOMBS) != 0;
+        case EQ_LAMP: return (gPl.items & ITEM_LAMP) != 0;
+        case EQ_CLOAK: return (gPl.items & ITEM_CLOAK) != 0;
+        default: return FALSE;
+    }
+}
+
+/* put eq on a button; an item sits on one button only */
+void player_equip_set(int slot, int eq) {
+    int i;
+    if (eq != EQ_NONE && !player_has_item(eq))
+        return;
+    if (eq != EQ_NONE)
+        for (i = 0; i < SLOT_COUNT; i++)
+            if (gPl.equip[i] == eq)
+                gPl.equip[i] = EQ_NONE;
+    gPl.equip[slot] = eq;
+}
+
+/* a new item goes to the first free of B and L */
+static void auto_equip(int eq) {
+    int i;
+    for (i = 0; i < SLOT_COUNT; i++)
+        if (gPl.equip[i] == eq)
+            return;
+    for (i = SLOT_B; i < SLOT_COUNT; i++)
+        if (gPl.equip[i] == EQ_NONE) {
+            gPl.equip[i] = eq;
+            return;
+        }
 }
 
 void player_init(int px, int py, int facing) {
@@ -96,6 +148,7 @@ void player_hurt(int damage, int from_dir) {
     gPl.hp -= damage;
     if (gPl.hp < 0)
         gPl.hp = 0;
+    gPl.carry = CARRY_NONE;
     a->state = PS_HURT;
     a->timer = HURT_FRAMES;
     a->kb_dir = from_dir;
@@ -125,12 +178,12 @@ void player_item_get(int item_bit, int sprite_frame) {
     a->state = PS_ITEMGET;
     a->timer = 0;
     a->facing = FACE_S;
-    if (item_bit == ITEM_BOMBS && gPl.bitem == BITEM_NONE)
-        gPl.bitem = BITEM_BOMBS;
-    if (item_bit == ITEM_LAMP && gPl.bitem == BITEM_NONE)
-        gPl.bitem = BITEM_LAMP;
-    if (item_bit == ITEM_CLOAK && gPl.bitem == BITEM_NONE)
-        gPl.bitem = BITEM_CLOAK;
+    if (item_bit == ITEM_BOMBS)
+        auto_equip(EQ_BOMBS);
+    if (item_bit == ITEM_LAMP)
+        auto_equip(EQ_LAMP);
+    if (item_bit == ITEM_CLOAK)
+        auto_equip(EQ_CLOAK);
     sfx_play(SFX_ITEM);
 }
 
@@ -246,6 +299,7 @@ static void start_jump(int dir, int forward_speed, s32 zvel) {
 
 static void start_fall(void) {
     Actor* a = gPlayer;
+    gPl.carry = CARRY_NONE;
     a->state = PS_FALL;
     a->timer = FALL_FRAMES;
     gPl.sword_active = 0;
@@ -270,14 +324,71 @@ static void check_floor(void) {
     remember_safe_spot();
 }
 
+/* --------------------------------------------------------- lifting -- */
+#define LIFT_FRAMES 12
+
+/* the tile one step ahead of the feet, where a bush or a stone would be */
+static void facing_tile(int* tx, int* ty) {
+    Actor* a = gPlayer;
+    int px = PX(a->x), py = PX(a->y) - 6;
+    switch (a->facing) {
+        case FACE_N: py -= 11; break;
+        case FACE_S: py += 11; break;
+        case FACE_E: px += 11; break;
+        default: px -= 11; break;
+    }
+    *tx = px >> 4;
+    *ty = py >> 4;
+}
+
+/* R in front of a bush, a pot or a stone: lift it. Boulders want the
+   gauntlet. Returns TRUE when R was spent. */
+static bool8 try_lift(void) {
+    Actor* a = gPlayer;
+    int tx, ty;
+    facing_tile(&tx, &ty);
+    u8 t = room_type(tx, ty);
+    if (t == TT_LIFT1 || (t == TT_LIFT2 && (gPl.items & ITEM_GAUNTLET))) {
+        gPl.carry = room_lift(tx, ty);
+        a->state = PS_LIFT;
+        a->timer = 0;
+        a->speed = 0;
+        gPl.sword_active = 0;
+        sfx_play(SFX_PICKUP);
+        return TRUE;
+    }
+    if (t == TT_LIFT2) {
+        sfx_play(SFX_BUMP);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void throw_carried(void) {
+    Actor* a = gPlayer;
+    thrown_spawn(gPl.carry, PX(a->x), PX(a->y), a->facing);
+    gPl.carry = CARRY_NONE;
+    a->state = PS_NORMAL;
+    a->timer = 0;
+    sfx_play(SFX_ROLL);
+}
+
+static void state_lift(void) {
+    Actor* a = gPlayer;
+    if (++a->timer >= LIFT_FRAMES) {
+        a->state = PS_CARRY;
+        a->timer = 0;
+    }
+}
+
 static void state_normal(void) {
     Actor* a = gPlayer;
     int dir = input_dir();
     if (gPl.item_cooldown)
         gPl.item_cooldown--;
 
-    /* attack */
-    if ((gKeysDown & KEY_A) || gPl.queued_attack) {
+    /* attack, with whichever button holds the sword */
+    if ((gKeysDown & player_equip_keys(EQ_SWORD)) || gPl.queued_attack) {
         gPl.queued_attack = 0;
         a->state = PS_ATTACK;
         a->timer = 0;
@@ -289,16 +400,20 @@ static void state_normal(void) {
         sfx_play(SFX_SWORD);
         return;
     }
-    /* roll */
-    if ((gKeysDown & KEY_R) && dir != DIR_NONE) {
-        a->state = PS_ROLL;
-        a->timer = 0;
-        a->dir = (a->facing * 8);
-        if ((dir & 7) == 0)
-            a->dir = dir;
-        a->facing = dir_to_facing(a->dir);
-        sfx_play(SFX_ROLL);
-        return;
+    /* R: lift what stands ahead, else roll when moving */
+    if (gKeysDown & KEY_R) {
+        if (try_lift())
+            return;
+        if (dir != DIR_NONE) {
+            a->state = PS_ROLL;
+            a->timer = 0;
+            a->dir = (a->facing * 8);
+            if ((dir & 7) == 0)
+                a->dir = dir;
+            a->facing = dir_to_facing(a->dir);
+            sfx_play(SFX_ROLL);
+            return;
+        }
     }
     if (dir == DIR_NONE) {
         a->speed = 0;
@@ -350,11 +465,32 @@ static void state_roll(void) {
         sfx_play(SFX_BUMP);
         return;
     }
-    if ((gKeysDown & KEY_A) && t >= 18)
+    if ((gKeysDown & player_equip_keys(EQ_SWORD)) && t >= 18)
         gPl.queued_attack = 1;
     if (++a->timer >= ROLL_FRAMES) {
         a->state = PS_NORMAL;
         a->timer = 0;
+    }
+    check_floor();
+}
+
+/* walking with the load over the head; R throws it */
+static void state_carry(void) {
+    Actor* a = gPlayer;
+    int dir = input_dir();
+    if (gKeysDown & KEY_R) {
+        throw_carried();
+        return;
+    }
+    if (dir == DIR_NONE) {
+        a->speed = 0;
+        sWalkTimer = 0;
+    } else {
+        a->facing = facing_from_dir(dir, a->facing);
+        a->dir = dir;
+        a->speed = WALK_SPEED;
+        actor_move(a, a->speed, dir);
+        sWalkTimer++;
     }
     check_floor();
 }
@@ -459,6 +595,8 @@ void player_update(void) {
         case PS_JUMP: state_jump(); break;
         case PS_ITEMGET: state_itemget(); break;
         case PS_DEAD: state_dead(); break;
+        case PS_LIFT: state_lift(); break;
+        case PS_CARRY: state_carry(); break;
         default: break;
     }
     if (gPl.lamp_timer)
@@ -566,8 +704,10 @@ void player_draw(void) {
             frame = sJumpFrame[f];
             break;
         case PS_ITEMGET:
+        case PS_LIFT:
             frame = F_HERO_ITEMGET;
             break;
+        case PS_CARRY:
         default:
             if (a->speed && sWalkTimer) {
                 int step = (sWalkTimer / 7) & 3; /* TMC: 30-frame cycle */
@@ -606,5 +746,12 @@ void player_draw(void) {
         if (a->state == PS_ATTACK)
             draw_sword();
         actor_draw(a);
+    }
+    /* the load, rising from the chest to over the head */
+    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry) {
+        int lift = (a->state == PS_LIFT) ? (a->timer * 20) / LIFT_FRAMES : 20;
+        int sx = PX(a->x) - 8 - gCamX;
+        int sy = PX(a->y) - 24 - lift - PX(a->z) - gCamY;
+        draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
     }
 }

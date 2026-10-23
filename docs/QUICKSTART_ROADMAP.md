@@ -1271,6 +1271,172 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the pause menu, the hands and the winding wood (Oct 2026)
+
+The user asked for three things: a pause menu after the Minish Cap's,
+with up to three items equipped to A, B and L and R kept for rolling
+and for picking up bushes, pots and small rocks (bigger things later,
+with an upgrade); art closer to the vision board's richness, textures,
+deep colors and bright shimmering lights; and forest rooms that are
+paths and winding mazes with open areas and tight squeezes, not flat
+boxes with things scattered in them.
+
+**The buttons.** `gPl.equip[SLOT_A..SLOT_L]` holds an `EQ_*` per button
+(none, sword, bombs, lamp, cloak); `player_equip_keys(eq)` returns the
+key bits of whichever buttons hold the thing, so the sword swings on
+whatever button it sits on and `items.c` fires the bombs, the lamp and
+the cloak the same way. A new item takes the first free of B and L. The
+pause menu (Start) has two pages, R turns them: ITEMS shows the three
+buttons with their icons, the R hand marked "lift", the row of owned
+things with a lit frame on the cursor and the chosen one's name in
+gold and two lines of description; A, B or L puts the item on that
+button, `player_equip_set` clearing it from any other. Worn things
+(the gauntlet, the relic) only bump. THE WOOD is the old map page with
+the quests and the run's numbers. The HUD shows the three slots with
+their icons, lit when held, the bomb count under the slot that holds
+them, and the R hand.
+
+**The hands.** Tile types `LIFT1` (bush, small rock, pot) and `LIFT2`
+(boulder); both solid. R before one of them, standing still, lifts it:
+`room_lift` swaps the tile for the ground next to it and returns the
+kind; `PS_LIFT` holds the item-get pose for twelve frames and
+`PS_CARRY` walks with the thing drawn over the head from the `lift`
+sheet. R again throws it: an `OBJ_THROWN` actor at 2.5 px a frame from
+z 24 with gravity 1/8, breaking in a puff on the ground, a wall, the
+room's edge or a hittable monster (two damage for a bush or a pot, four
+for a stone), with a 25% drop. A boulder needs the Rot Gauntlet
+(`ITEM_GAUNTLET`), the second lock's reward, with a guaranteed
+`CHEST_GAUNTLET` in some free room. The sword cuts bushes; a bomb
+breaks any LIFT1 tile. Hurt or falling drops what is carried (it is
+lost). R while walking still rolls.
+
+**The wood.** `roomgen.c` rewritten; rooms are 32x24 (`FOREST_W/H`),
+the BG maps were already 64x64 tiles. A room starts as solid canopy in
+a carve mask (wall, floor, water, bridge-h, bridge-v, ledge, ramp): a
+two-wide corridor three deep from each open door; three to five
+elliptical clearings (3-6 by 2-4); from each door's inner end a winding
+path to its nearest clearing, the clearings chained, a fourth link for
+a loop. `carve_path` steps one tile at a time toward the target along
+the longer axis three times in four, carving a w by w block where w
+changes every few steps among 1, 1, 2, 2, 2, 3, and marks each tile
+with the direction it ran and the middle line, which becomes a soil
+trail. A clearing with rx >= 4 and ry >= 3 is a lake one time in three
+(always in a pond room): a ring of water round an island, the paths
+already through it left dry. A path that steps onto water lays a plank
+in the direction it moves and keeps its axis until it is off the
+water, so bridges run straight from shore to island. A river (one room
+in three, every pond room) meanders two tiles wide, its position
+wandering one tile every four; it only shows where it crosses open
+ground, two tiles under the trees on either side, so a bridge always
+spans water and the canopy is not cut by blue bands; where it crosses a
+marked path both its rows become planks across. A dry room (one in
+three, every ruins and boneyard) raises a terrace: on one of the rows
+7, 8, 13, 14 or 15 (never the side doors' rows) every floor tile with
+floor above becomes a south ledge the hero can drop from, except one,
+the ramp; the high ground then joins the low only through the ramp and
+the drops. The canopy is auto-tiled from the mask: a trunk face where
+ground lies below, a lit crown where ground lies above, a hanging
+lantern one time in six where a face lies two rows down, fireflies in
+the leaves one tile in seven; grass with a wall or a cliff above it is
+the darker `moss_shade`. Door gates, the approach clearing and the flood
+repair from the first door are as before, with water on the repair's
+way getting planks. Dressing: one or two 2x3 trees in a clearing of
+rx >= 4, a lantern post at a clearing's heart; 4-7 bushes, 1-3 small
+stones, stumps, logs, lantern posts, tall grass and flowers; the
+archetype's thorns, pillars, ruin walls, statue, bones, pools,
+crystals, dead trees. Every solid is placed only where `simple_spot`
+holds: the floor round the tile forms a single run round its ring of
+eight, so whatever went through it can go round it, and no bush, torch
+or tree trunk ever closes a way. Three rooms in five dig an alcove: a
+pocket two tiles into the wall beside a path, a bush or a boulder
+across its mouth, a sparkle on the hoard tile, where `spawn_cell_objects`
+puts a placed ten-gilt pickup (`v[2]`, no fading) until `CELL_LOOTED`
+(bit 4 of `Cell.opened`) marks it taken. Monster spots: density + 2.
+Floor coverage over the pinned seed's 25 rooms: 119 to 313 of 768
+tiles; 20 of 24 non-arena rooms have water, 3 have a cliff.
+
+**The art.** `marks()` now textures its base: grass gets seven dark
+dashes and four lit tips per tile, soil five and five, seeded by the
+marks' positions, so moss0-2, the stains, the flowers, the bones and
+the trunk grass all carry it. `moss_flowers2` (gold and cream),
+`moss_shade`, `bridge_v` (the planks transposed), `canopy_glint` (two
+frames, the lights trade places), and water in sixteen variants
+(`MT_WATER + mask`, N=1 E=2 S=4 W=8 for ground on that side): a dark
+bank line and a fringe of foam that drifts between the frames; lilies
+only on open water. Fireflies: `FX_FIREFLY` actors, six per living
+room, each on its own loop (`x += SIN(ph)`, `y += SIN(2ph+64)/2`), a
+white spark in a gold glow that swells and goes dark 24 frames in 128.
+Palette: grass deep and leaf deepest a shade deeper, lantern bright a
+shade brighter. Tileset 465 of 1024 tiles, 31 animated.
+
+**Set pieces.** The user's note mid-round: everything was one tile;
+things should span tiles, with art that uses the area. So, painted
+whole and sliced row-major into `name_0..` by `piece()`: the great tree
+(3x4: a crown of ten lit leaf masses 48 wide on the overlay over
+whatever lies behind it, a trunk with a dark hollow, roots over three
+tiles of turf; the trunk tile solid in its top half, the root tiles
+ground), the flower meadow (3x3: forty blossoms thickest round a flat
+stone at the heart and thinning to the rim, so it blends into the
+turf), clover (2x2), the fairy ring (2x2: eight glowing mushrooms round
+a violet stain, the blighted rooms' meadow), the great boulder (2x2: a
+lit sphere with moss on its crown, a crack, a shadow), the hollow log
+(2x1), the lily raft (2x2 animated: broad pads and a gold lotus on open
+water), the ends of a cliff (`ledge_s_w/e`: the stone stops and the
+grass wraps) and lake corners (`water_c1..f`: a nick of bank and foam
+where ground touches open water diagonally). The generator places a
+great tree in two rooms of three (two in a grove) with `place_great_tree`
+(crown tiles free of overlays and doors, roots on plain ground, the
+trunk a simple spot), a meadow or a fairy ring in every clearing of
+rx >= 4 and ry >= 3, one great boulder and one hollow log in half the
+rooms through `simple_block` (the single-run test round a block's
+ring), one or two clover or fairy rings anywhere, a raft on each lake
+where two by two of water has water on every side, caps on every
+cliff's ends. `is_grass` became `is_plain`, which also takes the blight
+grounds: before that the blighted rooms got none of their crystals and
+dead trees, since `scatter_solid` only took grass. Tileset 676 of 1024
+tiles, 50 animated.
+
+**Measured.** Critical path with the boss 18/18 on 0xB4A7, 0x1234 and
+0x7777; the quests 12/12 on 0x28c, 0x1234 and 0x3; the new
+`tools/lift_probe.py` 14/14 (roll, lift a bush, the ground bare, throw
+as an object, it breaks, a boulder bumps without the gauntlet and lifts
+with it, the alcove opens, Start opens the menu, RIGHT then L puts the
+bombs on L, Start closes, L drops a bomb); 64 beetles at lag 1.000;
+`make verify-world` 20,000 seeds clean. Every room of the pinned seed
+rendered from RAM (`tools/roomdump.py` through a warp of the
+transition's statics) and checked by eye.
+
+**Got wrong on the way.** The boss roamed over the canopy: its clamp
+was the room rectangle, and the arena is now an ellipse of floor in
+the middle of a 512x384 room, so the probe could not reach it (11
+swings in 400 steps); `clamp_in_room` now pulls it a pixel a frame
+toward the middle when outside an ellipse 80 px in from the sides.
+The first rivers converted wall tiles too, which drew blue bands
+straight through the canopy. The first clearings (2-5 by 2-3, two to
+four of them) left floor at 13-28% and the rooms read as corridors.
+The probe's roll test pressed R through `hold`, whose `set_keys`
+replaces the held d-pad, so the hero stood still; both keys are held
+together now. The quest probe clears a hunt room's monsters through
+RAM before each crossing, which finishes the hunt and opens a box in
+mid-walk; the probes now close any box before walking and before
+talking, and walk again if the room did not change. With the corridors
+funnelling monsters into the door lanes, a bite at the thorn gate (hp
+24 to 12) stopped the sword cutting it and the crossing failed; the
+critical path probe now clears the room's monsters before every
+crossing, as the quest probe already did: it tests gates, not fights.
+The lift probe looked for the thrown object four frames after the
+press, by which time a bush thrown at a near wall had already broken;
+it looks on the next frame now.
+
+**Open.** A one-wide plank path that turns a corner over water shows
+planks of both directions meeting at the corner. Islands are rare
+(rx >= 4 and ry >= 3 clearings). Props drawn on the wood and stone
+palettes sit on a flat patch of the single grass tone, which shows a
+little against the textured turf. The terrace is a single cliff row;
+no east or west ledges yet. The thrown object does not hurt the hero's
+own bombs or trigger switches.
+
+
 ### BARTGAME: the concept boards become the game (Oct 2026)
 
 The user uploaded four boards: a UI design board, a forest scene, the

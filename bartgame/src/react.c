@@ -77,12 +77,44 @@ void room_thorn_cut(int tx, int ty) {
         drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
 }
 
+/* what lies under a bush or a stone: the floor beside it, or grass */
+static u16 ground_under(int tx, int ty) {
+    static const s8 d[4][2] = { { 0, 1 }, { -1, 0 }, { 1, 0 }, { 0, -1 } };
+    int i;
+    for (i = 0; i < 4; i++) {
+        u16 m = room_get(tx + d[i][0], ty + d[i][1]);
+        if (m != MT_NONE && metatile_type[m] == TT_FLOOR && m != MT_BRIDGE && m != MT_PATH)
+            return m;
+    }
+    return MT_MOSS0 + (hash32(tx, ty) % 3);
+}
+
+/* lifts a bush, a pot or a stone off its tile; returns what is carried */
+int room_lift(int tx, int ty) {
+    u16 mt = room_get(tx, ty);
+    int kind = (mt == MT_BUSH) ? CARRY_BUSH : (mt == MT_SW_POT) ? CARRY_POT : (mt == MT_BOULDER) ? CARRY_BOULDER : CARRY_ROCK;
+    room_change(tx, ty, ground_under(tx, ty));
+    return kind;
+}
+
+/* a bush cut or a pot smashed where it stands */
+void room_break_lift(int tx, int ty) {
+    u16 mt = room_get(tx, ty);
+    room_change(tx, ty, ground_under(tx, ty));
+    fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
+    if ((mt == MT_BUSH || mt == MT_SW_POT) && (hash32(gGame.run_frames, tx * 7 + ty) & 3) == 0)
+        drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
+}
+
 void react_cut_box(int x0, int y0, int x1, int y1) {
     int tx, ty;
     for (ty = y0 >> 4; ty <= (y1 >> 4); ty++)
-        for (tx = x0 >> 4; tx <= (x1 >> 4); tx++)
+        for (tx = x0 >> 4; tx <= (x1 >> 4); tx++) {
             if (room_type(tx, ty) == TT_THORN)
                 room_thorn_cut(tx, ty);
+            else if (room_type(tx, ty) == TT_LIFT1 && room_get(tx, ty) == MT_BUSH)
+                room_break_lift(tx, ty);
+        }
 }
 
 void react_burn_box(int x0, int y0, int x1, int y1) {

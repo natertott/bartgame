@@ -390,9 +390,19 @@ static void slot(int tx, int lit) {
     bg0_put(tx + 1, 1, lit ? HT_SLOT_LIT_BR : HT_SLOT_BR);
 }
 
-static void slot_icon(int tx, int frame) {
-    draw_sprite(tx * 8, 0, SHEET_ITEMS, items_sheet_tile(), frame, 0, 0, PAL_OBJ_FX);
+/* the icon of what a button holds, as a sprite over the slot */
+void hud_equip_icon(int eq, int px, int py, int prio) {
+    switch (eq) {
+        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_HERO); break;
+        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_FX); break;
+        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_FX); break;
+        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_FX); break;
+        default: break;
+    }
 }
+
+static const u8 sSlotX[SLOT_COUNT] = { 12, 15, 18 };
+static const u16 sSlotBtn[SLOT_COUNT] = { HT_BTN_A, HT_BTN_B, HT_BTN_L };
 
 void hud_draw(void) {
     int i;
@@ -414,24 +424,19 @@ void hud_draw(void) {
     bg0_print_num(2, 1, gPl.gilt, 3);
     bg0_put(6, 1, HT_KEY);
     bg0_print_num(7, 1, gPl.keys, 1);
-    /* the item slots: the sword on A, the chosen item lit */
-    bg0_put(12, 0, HT_BTN_L);
-    slot(13, 1);
-    slot(15, gPl.bitem == BITEM_BOMBS);
-    slot(17, gPl.bitem == BITEM_LAMP);
-    slot(19, gPl.bitem == BITEM_CLOAK);
-    bg0_put(21, 0, HT_BTN_R);
-    if (gPl.items & ITEM_BOMBS)
-        bg0_print_num(15, 2, gPl.bombs, 2);
-    else
-        bg0_print(15, 2, "  ");
-    draw_sprite(13 * 8, 0, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, 0, PAL_OBJ_HERO);
-    if (gPl.items & ITEM_BOMBS)
-        slot_icon(15, F_ITEMS_BOMBS);
-    if (gPl.items & ITEM_LAMP)
-        slot_icon(17, F_ITEMS_LAMP);
-    if (gPl.items & ITEM_CLOAK)
-        slot_icon(19, F_ITEMS_CLOAK);
+    /* the three buttons and what they hold, then R's hand */
+    for (i = 0; i < SLOT_COUNT; i++) {
+        int eq = gPl.equip[i];
+        bg0_put(sSlotX[i] - 1, 0, sSlotBtn[i]);
+        slot(sSlotX[i], eq != EQ_NONE);
+        if (eq == EQ_BOMBS)
+            bg0_print_num(sSlotX[i], 2, gPl.bombs, 2);
+        else
+            bg0_print(sSlotX[i], 2, "  ");
+        hud_equip_icon(eq, sSlotX[i] * 8, 0, 0);
+    }
+    bg0_put(20, 0, HT_BTN_R);
+    bg0_put(21, 0, HT_HAND);
     /* the mini-map at the top right */
     {
         OamEntry* o = oam_alloc();

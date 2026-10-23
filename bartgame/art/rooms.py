@@ -16,7 +16,7 @@ LEGEND = {
     'R1': 'sw_rug_nw', 'R2': 'sw_rug_ne', 'R3': 'sw_rug_sw', 'R4': 'sw_rug_se',
     'CC': 'sw_counter', 'A1': 'sw_awning_l', 'A2': 'sw_awning_r',
     'BB': 'sw_barrel', 'CR': 'sw_crate', 'SK': 'sw_skull', 'GD': 'sw_gold', 'CN': 'sw_candles',
-    'RR': 'sw_rubble', 'AA': 'sw_arch', 'ST': 'stairs_down',
+    'RR': 'sw_rubble', 'AA': 'sw_arch', 'ST': 'stairs_down', 'PT': 'sw_pot',
     '  ': None,
 }
 
@@ -65,7 +65,7 @@ WWWWPPWWWWLNWWBTWWHHWWWWWFWFWFWWWWBRWWLNWWWWPHPHPHWWttWWWWWW
 WWWWWWWSWWWWWWWWWW..WWWWWFWFWFWWWWWWWWWWWWWWWWWWWWWSWWWWWWWW
 ..,,A1A2A1A2..;;..,,..;;~~~~~~..,,..;;..,,..;;..,,BB..;;..,,
 ,,CRCCCCCCCC..,,GD..,,..ESESES..;;..,,BB..R1R2..CN..,,..;;..
-;;SK........,,..;;..,,..;;..,,..,,..;;..,,R3R4..,,..;;..,,..
+;;SK..PT....,,..;;..,,..;;..,,..,,..;;..,,R3R4..,,..;;..,,PT
 ..,,..;;..,,CN..,,..;;..,,..;;..;;..,,..;;..,,..CR..,,..;;..
 ,,..;;..,,..;;..,,RR..,,..;;..,,..;;..,,..;;..,,..;;..,,..,,
 WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
@@ -73,7 +73,7 @@ WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
 ~~~~~~~~~~LP~~~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~~~LP~~~~~~~~~~~~
 ESESESESESESESESESESESESESESGGGGESESESESESESESESESESESESESES
 ..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,
-,,..;;..,,GD..;;..CN..;;D1D2..,,..;;..,,..;;..,,..;;RR..,,..
+,,..;;..,,GD..;;..CN..;;D1D2..,,PT;;..,,..;;..,,..;;RR..,,..
 WELDWEWE..,,..;;..,,..;;D3D4..;;..,,..;;..,,..;;WEWEWELDWE..
 ~~~~~~~~,,..;;..,,..;;..,,..;;..,,..;;..,,SK..,,~~~~~~~~~~..
 ~~~~~~~~..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,~~~~~~~~~~,,

@@ -8,7 +8,8 @@ enum { PJ_SEED, PJ_SPORE, PJ_SHARD };
 /* pickups: frames in the items sheet */
 enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL };
 /* effects */
-enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ };
+enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ, FX_FIREFLY };
+#define OBJ_THROWN 20 /* an AK_OBJECT type: a load in flight */
 
 Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool8 from_player);
 Actor* pickup_spawn(int type, int px, int py);
@@ -20,5 +21,7 @@ void objects_room_reset(void);
 u16 items_sheet_tile(void);
 void bomb_place(int px, int py);
 int bombs_live(void);
+Actor* thrown_spawn(int kind, int px, int py, int facing);
+u16 lift_sheet_tile(void);
 
 #endif

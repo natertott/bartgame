@@ -1,4 +1,4 @@
-/* BARTGAME: the B button, the L button, keys in doors, thorns under the
+/* BARTGAME: the item buttons, keys in doors, thorns and bushes under the
    sword. The items are the keys to the maze:
      Blightseed Bombs  open cracked walls
      Grail Lamp        burns webs, lights censers, burns thorns
@@ -16,22 +16,6 @@
 
 static u8 sDoorMsgLatch;
 static u8 sLampFx;
-
-static void cycle_item(void) {
-    int i;
-    for (i = 0; i < BITEM_COUNT; i++) {
-        gPl.bitem = (gPl.bitem + 1) % BITEM_COUNT;
-        if (gPl.bitem == BITEM_NONE)
-            continue;
-        if (gPl.bitem == BITEM_BOMBS && (gPl.items & ITEM_BOMBS))
-            break;
-        if (gPl.bitem == BITEM_LAMP && (gPl.items & ITEM_LAMP))
-            break;
-        if (gPl.bitem == BITEM_CLOAK && (gPl.items & ITEM_CLOAK))
-            break;
-    }
-    sfx_play(SFX_MENU);
-}
 
 static void use_bomb(void) {
     Actor* a = gPlayer;
@@ -59,16 +43,18 @@ static void use_lamp(void) {
     sfx_play(SFX_LAMP);
 }
 
+/* The buttons: each of A, B and L holds what the pause menu gave it.
+   The sword is the player's (player.c); the rest is here. */
 void items_update(void) {
     Actor* a = gPlayer;
-    if (gKeysDown & KEY_L)
-        cycle_item();
-    if ((gKeysDown & KEY_B) && a->state == PS_NORMAL && !gPl.item_cooldown) {
-        switch (gPl.bitem) {
-            case BITEM_BOMBS: use_bomb(); break;
-            case BITEM_LAMP: use_lamp(); break;
-            case BITEM_CLOAK: player_cloak_jump(); gPl.item_cooldown = 10; break;
-            default: break;
+    if (a->state == PS_NORMAL && !gPl.item_cooldown) {
+        if (gKeysDown & player_equip_keys(EQ_BOMBS))
+            use_bomb();
+        else if (gKeysDown & player_equip_keys(EQ_LAMP))
+            use_lamp();
+        else if (gKeysDown & player_equip_keys(EQ_CLOAK)) {
+            player_cloak_jump();
+            gPl.item_cooldown = 10;
         }
     }
     /* the lamp's flame */

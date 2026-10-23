@@ -2,8 +2,8 @@
 #define ROOMGEN_H
 #include "gba.h"
 
-#define FOREST_W 24
-#define FOREST_H 16
+#define FOREST_W 32
+#define FOREST_H 24
 
 /* places the generator found for things, in metatiles */
 typedef struct {
@@ -20,7 +20,8 @@ typedef struct {
     u8 torch_count;
     Spot boss;
     Spot shrine;
-    u8 has_chest, has_npc, has_relic, has_boss, has_shrine;
+    Spot treasure;  /* the alcove's hoard, behind a bush or a boulder */
+    u8 has_chest, has_npc, has_relic, has_boss, has_shrine, has_treasure;
 } RoomSpots;
 
 extern RoomSpots gSpots;

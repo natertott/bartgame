@@ -38,37 +38,66 @@ Gatekeeper in a tall violet hat. Deep saturated greens, teal water that
 glows, amber lanterns, warm grey stone, violet blight with magenta
 cracks, gold frames. Every material has its own 16-color palette and a
 dark hue outline, three tones and a gleam, light from the upper left.
-The ground is hand-placed tufts and pebbles, never noise; the canopy
-walls are leaf masses of lit blobs that wrap at the tile edge; every
+The ground is textured turf with hand-placed tufts, flowers and
+pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
+tile edge, with lanterns and fireflies in the leaves; water has a dark
+bank and a drifting foam fringe wherever ground touches it; every
 sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
 font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
+**The wood's rooms.** Every forest room is 32x24 tiles carved out of
+solid canopy: a corridor in from each door, three to five clearings,
+and winding paths between them whose width wanders from three tiles to
+a squeeze of one, with a soil trail down the middle. A clearing can be
+a lake round an island, and a path that meets water runs straight over
+it on planks; a river may wander across the room, bridged where the
+paths cross it; a dry room may rise, its upper part behind a cliff of
+ledges you can drop from, with one ramp back up. Trees stand in the
+big clearings, bushes and stones narrow the paths without ever closing
+them, and a hoard is sometimes dug into the wall behind a bush or a
+boulder. Fireflies drift over the living rooms. Set pieces span tiles,
+painted whole and sliced: a great tree of 3x4 with a hollow in its
+trunk and roots over three tiles of turf, a flower meadow of 3x3
+round a flat stone, clover and fairy rings of 2x2, a great boulder of
+2x2, a hollow log of 2x1, a lily raft of 2x2 on open water; cliffs end
+in capped stones, lakes have rounded corners and banks on every side
+the ground touches.
+
 ## The interface
 
-- **HUD.** Hearts, the purse and the keys at the top left; the sword on
-  A and the three key items in gold slots between L and R, the chosen
-  one lit; a parchment mini-map of the wood at the top right, red where
-  you stand, gold at the Heart.
+- **HUD.** Hearts, the purse and the keys at the top left; three gold
+  slots for A, B and L with what each button holds, lit when it holds
+  something, the bomb count under the slot that holds the bombs; the R
+  hand that lifts; a parchment mini-map of the wood at the top right,
+  red where you stand, gold at the Heart.
 - **Dialogue.** A speaker's name in gold and a 32x32 portrait beside the
   words. A advances, B hurries the typing.
 - **The shop.** A list with icons and prices, a description of the item
   under the cursor, your gilt in the corner. A buys, B leaves.
-- **Pause (Start).** The map with its legend, what you carry with
-  icons, how the three quests stand, your gilt, keys and kills.
+- **Pause (Start).** Two pages, R turns them. ITEMS: the three buttons
+  with what they hold, the row of everything you own; walk it with the
+  d-pad and press A, B or L to put the item on that button (the worn
+  things, the gauntlet and the relic, only show). THE WOOD: the map with
+  its legend, how the three quests stand, your gilt, keys and kills.
 
 ## Controls
 
 | key | action |
 |---|---|
 | D-pad | walk (1.25 px per frame, like Link) |
-| A | sword swing; talk to someone you face |
-| B | the chosen item: set a bomb, swing the lamp, leap with the cloak |
-| L | choose the next item |
-| R | roll (24 frames, invulnerable for the first 18) |
-| Start | the map of the wood |
+| A | what A holds (the sword to begin with); talk to someone you face |
+| B | what B holds: set a bomb, swing the lamp, leap with the cloak |
+| L | what L holds |
+| R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face; throw what you carry |
+| Start | the pause menu: the items, then the map |
 
-Walk into a chest from below to open it. Walk into a locked door with a key to open it. Push into a ledge for a
+The Rot Gauntlet from the second lock's chest lifts boulders too. A
+thrown thing flies two and a half pixels a frame, breaks on the ground,
+a wall or a monster (two hearts of damage for a bush or a pot, four for
+a stone) and may leave a heart or a coin. The sword cuts bushes; bombs
+break bushes, stones and pots. Walk into a chest from below to open it.
+Walk into a locked door with a key to open it. Push into a ledge for a
 moment to drop off it. Pits and water cost a quarter heart and put you
 back on the last safe ground.
 
@@ -152,13 +181,16 @@ Every probe drives the real ROM in mGBA and reads RAM by linker symbol:
 
 ```
 python3 tools/critical_path.py --boss     # title to win screen, 18 checks
+python3 tools/critical_path.py --seed 0x1234 --boss
 python3 tools/quest_probe.py --seed 0x28c
+python3 tools/lift_probe.py               # roll, lift, throw, boulder, pause menu
 python3 tools/perf_probe.py
+python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```
 
-The critical path probe takes the seed from `probe.boot(seed=...)`; the
-delivered ROM passed it on six seeds (0xB4A7, 0x28c, 0x3, 0x1234, 0x7,
-0x51). The maze generator is also compiled for the host and checked over
+The delivered ROM passed the critical path on three seeds (0xB4A7,
+0x1234, 0x7777), the quests on 0x28c, 0x1234 and 0x3, the hands probe
+14/14, and 64 beetles at full speed. The maze generator is also compiled for the host and checked over
 twenty thousand seeds without an emulator:
 
 ```

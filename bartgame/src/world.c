@@ -344,7 +344,7 @@ void world_generate(u32 seed) {
             w->cells[room].role_arg = CHEST_KEY;
             /* the room behind the lock holds a reward */
             w->cells[n].role = ROLE_CHEST;
-            w->cells[n].role_arg = (locks == 0) ? CHEST_HEART_CONTAINER : CHEST_GILT;
+            w->cells[n].role_arg = (locks == 0) ? CHEST_HEART_CONTAINER : CHEST_GAUNTLET;
             locks++;
         } else {
             w->cells[c].gate[s] = GATE_OPEN;
@@ -410,6 +410,28 @@ void world_generate(u32 seed) {
             }
         }
     }
+    /* the Root Gauntlet, which lifts boulders, waits in some chest */
+    {
+        int have = 0, best = -1, bs = -1;
+        for (i = 0; i < CELLS; i++)
+            if (w->cells[i].role == ROLE_CHEST && w->cells[i].role_arg == CHEST_GAUNTLET)
+                have = 1;
+        for (i = 0; i < CELLS && !have; i++) {
+            Cell* c = &w->cells[i];
+            if (c->role != ROLE_NONE || i == w->entry || i == w->goal)
+                continue;
+            int sc = c->dist + (int)rng_range(&r, 4);
+            if (sc > bs) {
+                bs = sc;
+                best = i;
+            }
+        }
+        if (!have && best >= 0) {
+            w->cells[best].role = ROLE_CHEST;
+            w->cells[best].role_arg = CHEST_GAUNTLET;
+        }
+    }
+
     /* the fetch quest's relic: a room at the same or lower stage, not behind a lock */
     if (fetch_relic >= 0) {
         int st = w->cells[fetch_relic].stage;

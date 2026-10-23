@@ -67,13 +67,19 @@ static void spore_fan(Actor* e) {
     sfx_play(SFX_SPIT);
 }
 
-/* keep the heart inside the arena floor */
+/* Keep the heart over the arena floor: an ellipse of ground round the
+   room's middle, a tile in from the trees. Outside it the heart is drawn
+   back toward the middle a pixel a frame, so it slides along the rim. */
 static void clamp_in_room(Actor* e) {
-    int px = PX(e->x), py = PX(e->y);
-    px = CLAMP(px, 40, room_px_w() - 40);
-    py = CLAMP(py, 64, room_px_h() - 24);
-    e->x = px << 16;
-    e->y = py << 16;
+    int cx = room_px_w() / 2, cy = room_px_h() / 2 + 8;
+    int rx = (room_px_w() / 2 - 80) >> 2, ry = (room_px_h() / 2 - 64) >> 2;
+    int dx = (PX(e->x) - cx) >> 2, dy = (PX(e->y) - cy) >> 2;
+    if (dx * dx * ry * ry + dy * dy * rx * rx > rx * rx * ry * ry) {
+        if (dx > 0) e->x -= 1 << 16;
+        if (dx < 0) e->x += 1 << 16;
+        if (dy > 0) e->y -= 1 << 16;
+        if (dy < 0) e->y += 1 << 16;
+    }
 }
 
 void boss_update(Actor* e) {

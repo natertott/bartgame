@@ -3,7 +3,7 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN };
+enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY };
 
 /* items, as bits in gPl.items */
 #define ITEM_SWORD 0x01
@@ -11,14 +11,20 @@ enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_
 #define ITEM_LAMP 0x04
 #define ITEM_CLOAK 0x08
 #define ITEM_RELIC 0x10
+#define ITEM_GAUNTLET 0x20 /* worn: lifts boulders */
 
-/* B-button item ids */
-enum { BITEM_NONE, BITEM_BOMBS, BITEM_LAMP, BITEM_CLOAK, BITEM_COUNT };
+/* what a button holds: the pause menu assigns one to A, B and L */
+enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_COUNT };
+enum { SLOT_A, SLOT_B, SLOT_L, SLOT_COUNT };
+
+/* what the hero carries over his head */
+enum { CARRY_NONE, CARRY_BUSH, CARRY_ROCK, CARRY_BOULDER, CARRY_POT };
 
 typedef struct {
     s16 hp, hp_max;
     u16 gilt;
-    u8 keys, bombs, items, bitem;
+    u8 keys, bombs, items;
+    u8 equip[SLOT_COUNT]; /* EQ_* per button: A, B, L */
     u8 sword_dmg;
     s16 safe_x, safe_y; /* last safe standing spot, room px */
     u8 safe_timer;
@@ -34,6 +40,7 @@ typedef struct {
     u8 hearts_pieces;
     u8 input_lock;
     u8 queued_attack;
+    u8 carry;           /* CARRY_* over the head */
 } PlayerState;
 
 extern Actor* gPlayer;
@@ -52,5 +59,8 @@ bool8 player_is_vulnerable(void);
 void player_set_pos(int px, int py);
 void player_face(int facing);
 void player_cloak_jump(void);
+u16 player_equip_keys(int eq);     /* the key bits of the buttons holding eq */
+void player_equip_set(int slot, int eq);
+bool8 player_has_item(int eq);
 
 #endif

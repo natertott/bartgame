@@ -20,13 +20,14 @@ Palette 'props':  1 outline, 2-4 wood, 5 stone mid, 6-7 bone, 8-9 teal
 """
 import random
 
-from px import L, Canvas, compose, outline, hflip, vflip, opaque, remap, blank  # noqa: F401
+from px import L, Canvas, compose, outline, hflip, vflip, opaque, remap, blank, ball  # noqa: F401
 
 TYPES = ['FLOOR', 'SOLID', 'PIT', 'WATER', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W',
          'THORN', 'CRACK', 'WEB', 'DOOR', 'DOOR_OPEN', 'TORCH', 'TORCH_LIT', 'SLOW', 'HURT',
-         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS']
+         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS', 'LIFT1', 'LIFT2']
 
-SOLID_TYPES = {'SOLID', 'THORN', 'CRACK', 'WEB', 'DOOR', 'TORCH', 'TORCH_LIT', 'CHEST', 'CHEST_OPEN'}
+SOLID_TYPES = {'SOLID', 'THORN', 'CRACK', 'WEB', 'DOOR', 'TORCH', 'TORCH_LIT', 'CHEST', 'CHEST_OPEN',
+               'LIFT1', 'LIFT2', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W'}
 
 
 def default_coll(t):
@@ -63,9 +64,30 @@ def flat(c, w=16, h=16):
     return [('%x' % c) * w] * h
 
 
-def marks(base, placements, w=16, h=16):
-    """A flat tile with small drawings placed on it (wrapping)."""
+def turf(seed, base=4, dark=3, light=5, n_dark=7, n_light=4, w=16, h=16):
+    """Ground with texture: the body tone, short dark dashes where blades
+    or grains overlap, single lit tips. Deterministic from the seed."""
+    rnd = random.Random(seed)
     c = Canvas(w, h, base)
+    for _ in range(n_dark):
+        x, y = rnd.randrange(w), rnd.randrange(h)
+        c.wrap_set(x, y, dark)
+        c.wrap_set(x + 1, y, dark)
+    for _ in range(n_light):
+        c.wrap_set(rnd.randrange(w), rnd.randrange(h), light)
+    return c.rows()
+
+
+def marks(base, placements, w=16, h=16):
+    """A tile with small drawings placed on it (wrapping). Grass and soil
+    bases get a texture first, seeded by where the marks go."""
+    seed = sum((x + 1) * 31 + (y + 1) * 7 for art, x, y in placements)
+    if base == 4:
+        c = Canvas.from_rows(turf(seed, 4, 3, 5, 7, 4, w, h))
+    elif base == 8:
+        c = Canvas.from_rows(turf(seed, 8, 7, 9, 5, 5, w, h))
+    else:
+        c = Canvas(w, h, base)
     for art, x, y in placements:
         c.wrap_blit(art, x, y)
     return c.rows()
@@ -169,6 +191,14 @@ FLOWER_CREAM = A('''
     cfc
     .c.
 ''')
+FLOWER_GOLD = A('''
+    .f.
+    fcf
+    .f.
+''')
+mt('moss_flowers2', 'forest', 'FLOOR', marks(GRASS, [
+    (FLOWER_GOLD, 3, 3), (FLOWER_CREAM, 11, 2), (FLOWER_GOLD, 8, 9), (FLOWER_PINK, 2, 12),
+    (TUFT['a'], 13, 7), (TUFT['e'], 6, 6), (TUFT['c'], 13, 13), (FLOWER_CREAM, 10, 13)]))
 mt('moss_flowers', 'forest', 'FLOOR', marks(GRASS, [
     (FLOWER_BLUE, 2, 2), (FLOWER_PINK, 11, 4), (FLOWER_CREAM, 7, 9), (FLOWER_BLUE, 1, 11),
     (TUFT['a'], 6, 2), (TUFT['b'], 13, 10), (TUFT['e'], 4, 7), (TUFT['c'], 12, 13),
@@ -193,6 +223,29 @@ mt('tall_grass', 'forest', 'FLOOR', compose(marks(GRASS, [(TUFT['b'], 13, 1), (T
     .....2...2......
     ................
 ''')))
+
+# Grass in the shadow of a wall or a cliff: deep green over the top two
+# thirds, a ragged edge where the light returns.
+_shade_top = A('''
+    3333333333333333
+    3323333333323333
+    3333333333333333
+    2333333233333332
+    3333333333333333
+    3333233333333333
+    3333333333323333
+    3233333333333333
+    3333333323333333
+    3333333333333333
+    3343333343333433
+    3433343334333343
+    4344434444344434
+    ................
+    ................
+    ................
+''')
+mt('moss_shade', 'forest', 'FLOOR', compose(marks(GRASS, [(TUFT['e'], 2, 13), (TUFT['b'], 9, 13), (TUFT['f'], 13, 14),
+                                                          (TUFT['c'], 5, 14)]), _shade_top))
 
 # Soil: a warm trodden path with pebbles and a few dark footmarks.
 PEBBLE = A('''
@@ -342,6 +395,19 @@ TIPS_A = [(LEAF_TIP, 5, 4), (LEAF_TIP2, 13, 3), (LEAF_TIP, 0, 7), (LEAF_TIP2, 10
 TIPS_B = [(LEAF_TIP2, 4, 1), (LEAF_TIP, 11, 7), (LEAF_TIP2, 2, 8), (LEAF_TIP, 14, 13), (LEAF_TIP2, 7, 12)]
 mt('canopy', 'wood', 'SOLID', leaf_mass(CANOPY_A, TIPS_A))
 mt('canopy2', 'wood', 'SOLID', leaf_mass(CANOPY_B, TIPS_B))
+
+# Fireflies in the leaves: two frames, the lights trade places.
+def glint(rows, pts):
+    c = Canvas.from_rows(rows)
+    for x, y in pts:
+        c.wrap_set(x, y, 0xd)
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            c.wrap_set(x + dx, y + dy, 0xc)
+    return c.rows()
+
+
+mt('canopy_glint', 'wood', 'SOLID', frames=[glint(leaf_mass(CANOPY_A, TIPS_A), [(3, 4), (12, 9)]),
+                                             glint(leaf_mass(CANOPY_A, TIPS_A), [(8, 13), (13, 3)])], anim_speed=28)
 
 # A lantern hung in the canopy: amber light on the leaves around it.
 _lant_base = leaf_mass(CANOPY_B, TIPS_B)
@@ -616,6 +682,8 @@ mt('bridge', 'wood', 'FLOOR', A('''
     9aaaaaaaaaaaaaa9
     1111111111111111
 '''))
+# The same planks for a way that runs north-south: the rails at the sides.
+mt('bridge_v', 'wood', 'FLOOR', [''.join(r[i] for r in METATILES[-1]['art']) for i in range(16)])
 
 # Thorns: a bramble of dark vines, magenta barbs, on the grass.
 mt('thorn', 'wood', 'THORN', L({'g': 0xe}, '''
@@ -657,6 +725,69 @@ mt('stump', 'forest', 'SOLID', compose(marks(GRASS, [(TUFT['a'], 0, 12), (TUFT['
     ...1111111111...
     ................
 ''')))
+
+# A bush: a round leafy thing with berries, lifted with R or cut.
+mt('bush', 'wood', 'LIFT1', L({'g': 0xe}, '''
+    gggggggggggggggg
+    gggggg1111gggggg
+    gggg1155551ggggg
+    ggg1556f65551ggg
+    gg15565555f5541g
+    gg1554444544441g
+    g155f44444f44431
+    g154444f44444431
+    g15444444444f331
+    g1444f444f433331
+    g1434444433333 1
+    gg1333433333321g
+    gg1233333322221g
+    ggg11222222211gg
+    gggg1111111 1ggg
+    gggggggggggggggg
+'''))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
+
+# A small stone, light enough to lift.
+mt('rock_small', 'stone', 'LIFT1', L({'m': 0xe}, '''
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmm1111mmmmmm
+    mmmm11556611mmmm
+    mmm1556655441mmm
+    mm15565554433 1m
+    mm1555544443331m
+    mm1444444433321m
+    mm1444443333221m
+    mmm13333322211mm
+    mmmm11111111mmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+'''))
+METATILES[-1]['art'] = [r.replace(' ', '3') for r in METATILES[-1]['art']]
+
+# A boulder: dark, cracked, only the gauntlet moves it.
+mt('boulder', 'stone', 'LIFT2', L({'m': 0xe}, '''
+    mmmmmmmmmmmmmmmm
+    mmmmm111111mmmmm
+    mmm1144555411mmm
+    mm144455544331mm
+    m14455544433321m
+    m1455444143332 1
+    m1444441443332 1
+    m1444414444332 1
+    m1333144433322 1
+    m1333314333222 1
+    m1222333322221 1
+    mm12222222211 1m
+    mm11122221111mmm
+    mmmm11111111mmmm
+    mmmmmmmmmmmmmmmm
+    mmmmmmmmmmmmmmmm
+'''))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
 
 # ------------------------------------------------------------- stones --
 mt('rock', 'stone', 'SOLID', L({'m': 0xe}, '''
@@ -775,6 +906,38 @@ _w2 = A('''
     7788888888888888
 ''')
 mt('water', 'stone', 'WATER', frames=[_w1, _w2], anim_speed=20)
+
+
+# Water against ground: a dark bank and a fringe of foam on each side the
+# ground lies, one tile per combination (N=1, E=2, S=4, W=8), the foam
+# drifting between the frames.
+def banked(frame, mask, phase):
+    c = Canvas.from_rows(frame)
+
+    def foam(i):
+        return ((i + phase) % 6) < 2
+
+    if mask & 1:
+        for x in range(16):
+            c.set(x, 0, 1)
+            c.set(x, 1, 0xa if foam(x) else 7)
+    if mask & 4:
+        for x in range(16):
+            c.set(x, 15, 1)
+            c.set(x, 14, 0xa if foam(x + 3) else 8)
+    if mask & 8:
+        for y in range(16):
+            c.set(0, y, 1)
+            c.set(1, y, 0xa if foam(y) else 7)
+    if mask & 2:
+        for y in range(16):
+            c.set(15, y, 1)
+            c.set(14, y, 0xa if foam(y + 3) else 8)
+    return c.rows()
+
+
+for _m in range(1, 16):
+    mt('water_%x' % _m, 'stone', 'WATER', frames=[banked(_w1, _m, 0), banked(_w2, _m, 2)], anim_speed=20)
 
 # A lily pad on the water, a pale gold bud on it.
 _lily = A('''
@@ -1305,6 +1468,236 @@ mt('dead_tree', 'blight', 'SOLID', L({'g': 3}, '''
     ggg6ggg6gg6ggggg
 '''), coll=3)
 METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
+
+# ========================================================== set pieces ===
+# Things that span several tiles, painted whole and sliced: a great tree
+# of 3x4, a flower meadow of 3x3, clover and mushroom rings of 2x2, a
+# great boulder of 2x2, a hollow log of 2x1, a lily raft of 2x2 on the
+# water, the ends of a cliff, the corners of a lake.
+import math
+
+
+def piece(name, pal, types, rows, w, h, coll=None, frames=None):
+    """A w x h metatile painting sliced row-major into name_0..; types is
+    one type for all tiles or one per tile. frames: a list of whole
+    paintings for an animated piece."""
+    for i in range(w * h):
+        tx, ty = i % w, i // w
+        t = types[i] if isinstance(types, (list, tuple)) else types
+        if frames:
+            mt('%s_%d' % (name, i), pal, t, frames=[slice16(f, tx, ty) for f in frames], coll=coll, anim_speed=20)
+        else:
+            mt('%s_%d' % (name, i), pal, t, slice16(rows, tx, ty), coll=coll)
+
+
+# The great tree: a crown of lit leaf masses 48 wide, a thick trunk with a
+# hollow, roots that spread over three tiles of turf. The crown rides the
+# overlay layer over whatever is behind it; the roots are ground.
+def great_tree_art():
+    c = Canvas(48, 64)
+    crown = [(24, 9, 8.5), (12, 14, 9.5), (36, 14, 9.5), (24, 17, 13.0), (7, 25, 7.0), (41, 25, 7.0),
+             (15, 31, 9.0), (33, 31, 9.0), (24, 35, 8.5), (24, 42, 5.5)]
+    for cx, cy, r in sorted(crown, key=lambda q: q[1]):
+        blob(c, cx, cy, r, (2, 4, 5, 6), wrap=False)
+    # the trunk
+    c.rect(19, 40, 28, 60, 8)
+    c.vline(19, 40, 60, 7)
+    c.vline(20, 43, 59, 9)
+    c.vline(28, 40, 60, 7)
+    c.vline(27, 42, 60, 8)
+    c.vline(23, 46, 56, 9)
+    c.vline(25, 44, 52, 7)
+    # a hollow, dark, with a lit lip
+    c.ellipse(24, 51, 2.5, 3.5, 1)
+    c.set(22, 48, 0xa)
+    c.set(23, 48, 0xa)
+    # the roots
+    c.hline(9, 18, 58, 8); c.hline(5, 13, 59, 7); c.hline(11, 18, 59, 9); c.hline(7, 11, 60, 8)
+    c.hline(29, 38, 58, 8); c.hline(34, 42, 59, 7); c.hline(29, 36, 59, 9); c.hline(36, 40, 60, 8)
+    c.hline(19, 28, 61, 7)
+    c.hline(14, 19, 57, 9); c.hline(28, 33, 57, 9)
+    c.outline(1)
+    return c.rows()
+
+
+_gtree = great_tree_art()
+for _i in range(9):
+    mt('gtree_%d' % _i, 'wood', 'FLOOR', slice16(_gtree, _i % 3, _i // 3))
+_root_w = marks(GRASS, [(TUFT['a'], 1, 2), (TUFT['e'], 2, 12), (TUFT['c'], 12, 1)])
+_root_e = marks(GRASS, [(TUFT['b'], 12, 3), (TUFT['a'], 2, 13), (TUFT['f'], 13, 12)])
+_root_c = marks(GRASS, [(TUFT['e'], 1, 1), (TUFT['c'], 14, 2)])
+mt('gtree_9', 'forest', 'FLOOR', compose(_root_w, slice16(_gtree, 0, 3)))
+mt('gtree_10', 'forest', 'SOLID', compose(_root_c, slice16(_gtree, 1, 3)), coll=3)
+mt('gtree_11', 'forest', 'FLOOR', compose(_root_e, slice16(_gtree, 2, 3)))
+
+
+# A flower meadow: 48x48 of turf, blossoms thickest at the heart round a
+# flat mossy stone, thinning to the rim so it blends into the grass.
+def meadow_art(seed):
+    rnd = random.Random(seed)
+    c = Canvas.from_rows(turf(seed, 4, 3, 5, 26, 16, 48, 48))
+    flowers = [FLOWER_BLUE, FLOWER_PINK, FLOWER_CREAM, FLOWER_GOLD]
+    for i in range(40):
+        ang = rnd.random() * 2 * math.pi
+        rad = (rnd.random() ** 0.55) * 21
+        x, y = int(24 + rad * math.cos(ang)), int(24 + rad * math.sin(ang))
+        if abs(x - 24) < 7 and abs(y - 25) < 4:
+            continue
+        c.blit(flowers[i % 4], x - 1, y - 1)
+    for i in range(16):
+        c.blit(TUFT['abcdef'[i % 6]], rnd.randrange(45), rnd.randrange(45))
+    c.ellipse(24.5, 26, 6.5, 3.5, 7)
+    c.ellipse(24, 25.5, 6, 3, 8)
+    c.ellipse(23, 24.5, 4, 1.8, 9)
+    c.set(22, 24, 0xc)
+    c.set(21, 24, 0xc)
+    return c.rows()
+
+
+piece('meadow', 'forest', 'FLOOR', meadow_art(7), 3, 3)
+
+# Clover: dark three-leaved clumps on the turf, a cream gleam on the lucky one.
+CLOVER = A('''
+    .3.3.
+    33233
+    .333.
+    ..2..
+''')
+
+
+def clover_art(seed):
+    rnd = random.Random(seed)
+    c = Canvas.from_rows(turf(seed, 4, 3, 5, 10, 6, 32, 32))
+    for i in range(14):
+        c.wrap_blit(CLOVER, rnd.randrange(32), rnd.randrange(32))
+    c.set(13, 14, 0xc)
+    c.set(21, 23, 0xc)
+    return c.rows()
+
+
+piece('clover', 'forest', 'FLOOR', clover_art(3), 2, 2)
+
+
+# A fairy ring: glowing mushrooms in a circle round a violet stain.
+def shroomring_art():
+    c = Canvas.from_rows(turf(11, 4, 3, 5, 10, 4, 32, 32))
+    c.ellipse(16, 16.5, 6, 4, 0xd)
+    c.ellipse(15.5, 16, 4, 2.5, 0xe)
+    c.ellipse(15, 15.5, 2, 1, 0xd)
+    for k in range(8):
+        ang = k * math.pi / 4 + 0.3
+        x, y = int(16 + 11 * math.cos(ang)), int(16 + 9 * math.sin(ang))
+        c.blit(MUSHROOM, x - 2, y - 2)
+    return c.rows()
+
+
+piece('shroomring', 'forest', 'FLOOR', shroomring_art(), 2, 2)
+
+
+# A great boulder: a lit stone two tiles across, moss on its crown, a
+# crack down its face, a shadow under it.
+def gboulder_art():
+    c = Canvas(32, 32)
+    ball(c, 16, 15, 13.5, 11.5, (2, 3, 4, 5, 6))
+    c.ellipse(11, 6.5, 5, 2.2, 0xe)
+    c.ellipse(20, 5.5, 3, 1.4, 0xe)
+    for i, (x, y) in enumerate(((18, 10), (18, 11), (19, 12), (19, 13), (20, 14), (20, 15), (21, 16), (21, 17), (22, 18))):
+        c.set(x, y, 1)
+        if i % 3 == 0:
+            c.set(x + 1, y, 2)
+    c.hline(5, 27, 27, 2)
+    c.outline(1)
+    return opaque(c.rows(), 'e')
+
+
+piece('gboulder', 'stone', 'SOLID', gboulder_art(), 2, 2)
+
+
+# A hollow log two tiles long: rings at the cut end, a dark hollow at the
+# other, moss on its back.
+def hlog_art():
+    c = Canvas(32, 16)
+    c.rect(3, 4, 29, 12, 8)
+    c.hline(4, 28, 4, 0xa)
+    c.hline(4, 28, 5, 9)
+    c.hline(4, 28, 11, 7)
+    c.hline(4, 28, 12, 7)
+    for x in (9, 14, 20, 25):
+        c.set(x, 7, 7)
+        c.set(x + 1, 8, 7)
+    c.ellipse(5.5, 8.5, 3, 4.5, 9)
+    c.ellipse(5.5, 8.5, 2, 3.5, 1)
+    c.ellipse(27.5, 8.5, 3, 4.5, 9)
+    c.ellipse(27.5, 8.5, 2, 3.5, 8)
+    c.ellipse(27.5, 8.5, 1, 2, 9)
+    c.ellipse(14, 4.5, 4, 1.2, 0x5)
+    c.ellipse(22, 4.5, 2.5, 1, 0x5)
+    c.outline(1)
+    return opaque(c.rows(), 'e')
+
+
+piece('hlog', 'wood', 'SOLID', hlog_art(), 2, 1)
+
+
+# A lily raft: broad pads on open water, a gold lotus on the largest.
+def raft_art(frame):
+    c = Canvas(32, 32)
+    for ty in range(2):
+        for tx in range(2):
+            c.blit(frame, tx * 16, ty * 16)
+    for cx, cy, r in ((11, 12, 6.5), (23, 20, 5.5), (8, 24, 4.0), (24, 8, 3.5)):
+        c.ellipse(cx, cy, r + 0.6, r * 0.8 + 0.6, 1)
+        c.ellipse(cx, cy, r, r * 0.8, 0xe)
+        c.set(int(cx + r * 0.6), int(cy - r * 0.5), 1)
+        c.set(int(cx + r * 0.7), int(cy - r * 0.3), 1)
+    c.blit(A('''
+        .d.d.
+        dcdcd
+        .ddd.
+        ..c..
+    '''), 9, 9)
+    return c.rows()
+
+
+piece('raft', 'stone', 'WATER', None, 2, 2, frames=[raft_art(_w1), raft_art(_w2)])
+
+# The ends of a cliff: the stone face stops and the grass wraps round.
+_ledge_rows = next(m for m in METATILES if m['name'] == 'ledge_s')['art']
+_cap_w = []
+for _y, _r in enumerate(_ledge_rows):
+    if _y < 4:
+        _cap_w.append(_r)
+    else:
+        _cap_w.append('eee' + ('1' if _y < 15 else 'e') + _r[4:])
+mt('ledge_s_w', 'stone', 'LEDGE_S', _cap_w)
+mt('ledge_s_e', 'stone', 'LEDGE_S', hflip(_cap_w))
+
+
+# Open water with ground at a corner: a nick of bank and foam there.
+def nicked(frame, dmask, phase):
+    c = Canvas.from_rows(frame)
+
+    def nick(x0, y0, sx, sy):
+        c.set(x0, y0, 1)
+        c.set(x0 + sx, y0, 1)
+        c.set(x0, y0 + sy, 1)
+        c.set(x0 + sx, y0 + sy, 0xa if phase == 0 else 7)
+        c.set(x0 + 2 * sx, y0, 7)
+        c.set(x0, y0 + 2 * sy, 7)
+
+    if dmask & 1:
+        nick(0, 0, 1, 1)
+    if dmask & 2:
+        nick(15, 0, -1, 1)
+    if dmask & 4:
+        nick(15, 15, -1, -1)
+    if dmask & 8:
+        nick(0, 15, 1, -1)
+    return c.rows()
+
+
+for _m in range(1, 16):
+    mt('water_c%x' % _m, 'stone', 'WATER', frames=[nicked(_w1, _m, 0), nicked(_w2, _m, 1)], anim_speed=20)
 
 # =============================================================== sewer ===
 def flagstones(seed, slabs, moss=()):
@@ -2039,6 +2432,26 @@ mt('sw_skull', 'props', 'FLOOR', on_floor(L({'g': 'g'}, '''
     ggg1661gggg1771g
     gggg11gggggg11gg
 ''')))
+# A clay pot, lifted or smashed.
+mt('sw_pot', 'props', 'LIFT1', on_floor(L({'g': 'g'}, '''
+    gggggggggggggggg
+    gggggggggggggggg
+    gggggg1111gggggg
+    ggggg144441ggggg
+    ggggg122221ggggg
+    gggg14444441gggg
+    ggg1443333441ggg
+    gg14433333334 1g
+    gg14433333332 1g
+    gg14333333332 1g
+    gg13333333322 1g
+    gg13332222222 1g
+    ggg122222222 1gg
+    gggg11111111 ggg
+    gggggggggggggggg
+    gggggggggggggggg
+''')))
+METATILES[-1]['art'] = [r.replace(' ', '1') for r in METATILES[-1]['art']]
 mt('sw_gold', 'props', 'FLOOR', on_floor(L({'g': 'g'}, '''
     gggggggggggggggg
     gggggggggggggggg

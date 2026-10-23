@@ -14,7 +14,7 @@ BG_PALETTES = [
     # 0 forest ground: grass, paths, flowers, a blight stain, a gold mote
     ('forest', ['#000000',
                 '#0c1a14',   # 1 outline, deep shadow
-                '#1a5a3a',   # 2 grass deep
+                '#124a34',   # 2 grass deep
                 '#2a7a3c',   # 3 grass dark
                 GRASS_MID,   # 4 grass mid
                 '#6cc050',   # 5 grass light
@@ -31,7 +31,7 @@ BG_PALETTES = [
     # 1 wood: canopy, trees, stumps, thorns, fences, logs, bridges, lanterns
     ('wood', ['#000000',
               '#081410',     # 1 outline
-              '#0c3024',     # 2 leaf deepest
+              '#082418',     # 2 leaf deepest
               '#145838',     # 3 leaf dark
               '#1e8048',     # 4 leaf mid
               '#3aa858',     # 5 leaf light
@@ -42,7 +42,7 @@ BG_PALETTES = [
               '#d09858',     # A bark highlight
               '#c06020',     # B lantern amber dark
               '#ffb040',     # C lantern amber
-              '#fff0a0',     # D lantern bright
+              '#fff8c0',     # D lantern bright
               GRASS_MID,     # E grass showing through
               '#d060f0']),   # F thorn magenta
     # 2 stone: rocks, cliffs, ruins, water, gates, chests, torches, statues
@@ -253,7 +253,24 @@ OBJ_PALETTES = [
                   '#b0a0d0', # D lavender, steel
                   '#f0c040', # E gold
                   '#ffffff']), # F white
-    # 7 ui sprites: the mini-map
+    # 7 lift: bushes, stones and pots carried over the head
+    ('lift', ['#000000',
+              '#081410',     # 1 outline
+              '#145838',     # 2 leaf deep
+              '#1e8048',     # 3 leaf mid
+              '#3aa858',     # 4 leaf light
+              '#78d070',     # 5 leaf bright
+              '#d060f0',     # 6 berry
+              '#2c3040',     # 7 stone deep
+              '#4c5060',     # 8 stone dark
+              '#787c88',     # 9 stone mid
+              '#aab0b8',     # A stone light
+              '#3a2410',     # B clay dark
+              '#6a4420',     # C clay mid
+              '#a07040',     # D clay light
+              '#e0e4e8',     # E gleam
+              '#f8d050']),   # F gold
+    # 8 ui sprites: the mini-map
     ('ui', ['#000000',
             '#161020',       # 1 dark
             '#e8d8a8',       # 2 parchment

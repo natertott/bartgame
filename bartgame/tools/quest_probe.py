@@ -91,16 +91,17 @@ def go(c, w, target):
         g = cells[frm]['gate'][s]
         CP.heal(c)
         clear_enemies(c)
+        # a hunt room counts its monsters: their vanishing can finish the
+        # quest and open a box; close it before the walk
+        P.run(c, 20)
+        if P.r8(c, P.sym('gTbActive')):
+            CP.dismiss(c)
         if g == 2:
             CP.face_gate(c, s)
             P.press(c, 'A', 2, 14)
             P.press(c, 'A', 2, 14)
         if g == 6:
-            pl = P.sym('gPl')
-            for _ in range(6):
-                if P.r8(c, pl + 9) == 3:
-                    break
-                P.press(c, 'L', 2, 4)
+            CP.equip_b(c, CP.EQ_CLOAK)
             x, y, key = CP.door_inside(s)
             CP.teleport(c, x, y)
             P.hold(c, key, 10)
@@ -126,10 +127,18 @@ def npc_pos(c):
 def talk(c, npc):
     """stand below the NPC, face up, press A, then page through until the
     box closes (never re-opening it)"""
+    tb = P.sym('gTbActive')
+    if P.r8(c, tb):
+        # a box is open already (a quest's own words): close it first, or
+        # A would only turn its pages
+        print('   (a box was open before the talk)')
+        CP.dismiss(c)
+    CP.heal(c)
+    clear_enemies(c)
     CP.teleport(c, npc['x'], npc['y'] + 22)
     P.hold(c, 'UP', 6)
     P.press(c, 'A', 2, 30)
-    tb = P.sym('gTbActive')
+    print('   talk: box %d state %d hero %s' % (P.r8(c, tb), CP.gstate(c), P.player_pos(c)))
     for _ in range(12):
         if not P.r8(c, tb):
             break
@@ -221,10 +230,7 @@ def main():
     for cellid in cells_with('torch')[:1]:
         ok = go(c, w, cellid)
         check('TORCH: reached the gardener', ok, 'cell %d' % CP.cell(c))
-        for _ in range(6):
-            if P.r8(c, pl + 9) == 2:
-                break
-            P.press(c, 'L', 2, 4)
+        CP.equip_b(c, CP.EQ_LAMP)
         w_, h_, g = CP.room_tiles(c)
         torches = [k for k, v in g.items() if v == CP.mt('TORCH')]
         check('TORCH: four censers stand cold', len(torches) == 4, str(torches))

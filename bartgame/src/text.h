@@ -39,6 +39,7 @@ bool8 shop_active(void);
 
 /* the HUD and the mini-map */
 void hud_draw(void);
+void hud_equip_icon(int eq, int px, int py, int prio);
 void hud_clear(void);
 void minimap_render(void);
 

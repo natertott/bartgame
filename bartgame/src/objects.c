@@ -10,8 +10,9 @@
 #include "enemy.h"
 #include "react.h"
 #include "game.h"
+#include "world.h"
 
-static u16 sItemsTile, sFxTile, sProjTile;
+static u16 sItemsTile, sFxTile, sProjTile, sLiftTile;
 
 static void ensure_sheets(void) {
     if (!sItemsTile)
@@ -20,11 +21,18 @@ static void ensure_sheets(void) {
         sFxTile = sprite_load_sheet(SHEET_FX);
     if (!sProjTile)
         sProjTile = sprite_load_sheet(SHEET_PROJ);
+    if (!sLiftTile)
+        sLiftTile = sprite_load_sheet(SHEET_LIFT);
 }
 
 void objects_room_reset(void) {
-    sItemsTile = sFxTile = sProjTile = 0;
+    sItemsTile = sFxTile = sProjTile = sLiftTile = 0;
     ensure_sheets();
+}
+
+u16 lift_sheet_tile(void) {
+    ensure_sheets();
+    return sLiftTile;
 }
 
 u16 items_sheet_tile(void) {
@@ -105,8 +113,9 @@ static void pickup_update(Actor* a) {
     actor_gravity(a);
     if (a->timer < 255)
         a->timer++;
-    /* floor drops fade after ten seconds; keys and relics stay */
-    if (a->type <= PK_GILT_BIG) {
+    /* floor drops fade after ten seconds; keys, relics and a placed
+       hoard (v[2]) stay */
+    if (a->type <= PK_GILT_BIG && !a->v[2]) {
         a->v[0]++;
         if (a->v[0] == 0)
             a->v[1]++;
@@ -138,6 +147,8 @@ static void pickup_update(Actor* a) {
         }
         if (gPl.gilt > 999)
             gPl.gilt = 999;
+        if (a->v[2])
+            gWorld.cells[gGame.cell].opened |= CELL_LOOTED;
         actor_free(a);
     }
 }
@@ -170,6 +181,11 @@ Actor* fx_spawn(int type, int px, int py) {
         case FX_BLAST: a->frame = F_FX_BLAST1; a->hitbox = HB_BLAST; break;
         case FX_FLAME: a->frame = F_FX_FLAME1; a->hitbox = HB_MED; break;
         case FX_SPARK: a->frame = F_FX_PUFF1; break;
+        case FX_FIREFLY:
+            a->frame = F_FX_FIREFLY1;
+            a->z = Q16(10);
+            a->prio = 0;
+            break;
         default: break;
     }
     a->y += Q16(8); /* effects sit on their center */
@@ -202,6 +218,19 @@ static void fx_update(Actor* a) {
             if (t >= 20)
                 actor_free(a);
             break;
+        case FX_FIREFLY: {
+            /* a slow loop in the air, a glow that swells and goes dark */
+            int ph = (gFrame + a->v[0] * 8) & 255;
+            a->x += SIN(ph);
+            a->y += SIN((ph * 2 + 64) & 255) >> 1;
+            a->frame = ((gFrame + a->v[0] * 4) & 32) ? F_FX_FIREFLY1 : F_FX_FIREFLY2;
+            if (((gFrame + a->v[0] * 8) & 127) < 24)
+                a->flags |= AF_HIDDEN;
+            else
+                a->flags &= ~AF_HIDDEN;
+            a->timer = 0;
+            break;
+        }
         default:
             actor_free(a);
             break;
@@ -226,7 +255,71 @@ void bomb_place(int px, int py) {
 }
 
 int bombs_live(void) {
-    return actor_count(AK_OBJECT);
+    int i, n = 0;
+    for (i = 1; i < ACTOR_MAX; i++)
+        if (gActors[i].kind == AK_OBJECT && gActors[i].type == FX_BOMB_OBJ)
+            n++;
+    return n;
+}
+
+/* ------------------------------------------------------- thrown loads -- */
+/* A bush, pot or stone thrown from over the head: 2.5 px a frame, falling
+   from 24 px up, about three tiles. Breaks on the ground, on a wall or on
+   a monster, which it hurts for 2 (a bush or pot) or 4 (a stone). */
+Actor* thrown_spawn(int kind, int px, int py, int facing) {
+    ensure_sheets();
+    Actor* a = actor_new(AK_OBJECT, OBJ_THROWN, px, py);
+    if (!a)
+        return NULL;
+    actor_set_sheet(a, SHEET_LIFT, sLiftTile);
+    a->frame = kind - 1;
+    a->dir = facing * 8;
+    a->speed = Q8(2.5);
+    a->z = Q16(24);
+    a->zvel = Q16(0.5);
+    a->damage = (kind == CARRY_ROCK || kind == CARRY_BOULDER) ? 4 : 2;
+    a->hitbox = HB_SMALL;
+    a->flags = AF_FLYING;
+    a->prio = 1;
+    a->v[0] = kind;
+    a->timer = 0;
+    return a;
+}
+
+static void thrown_break(Actor* a) {
+    int px = PX(a->x), py = PX(a->y);
+    fx_spawn(FX_PUFF, px, py - PX(a->z));
+    sfx_play(SFX_BUMP);
+    if ((a->v[0] == CARRY_BUSH || a->v[0] == CARRY_POT) && (hash32(gGame.run_frames, px) & 3) == 0)
+        drop_roll(px, py, hash32(py, px));
+    actor_free(a);
+}
+
+static void thrown_update(Actor* a) {
+    int i;
+    actor_move_free(a, a->speed, a->dir);
+    a->z += a->zvel;
+    a->zvel -= Q16(0.125);
+    if (++a->timer > 120) {
+        thrown_break(a);
+        return;
+    }
+    int px = PX(a->x), py = PX(a->y);
+    if (a->z <= 0 || px < 8 || py < 8 || px > room_px_w() - 8 || py > room_px_h() - 8 || (a->timer > 4 && room_solid_px(px, py - 4))) {
+        a->z = 0;
+        thrown_break(a);
+        return;
+    }
+    for (i = 1; i < ACTOR_MAX; i++) {
+        Actor* e = &gActors[i];
+        if (e->kind != AK_ENEMY || !(e->flags & AF_HITTABLE) || e->iframes)
+            continue;
+        if (actors_overlap(a, e)) {
+            enemy_hurt(e, a->damage, a->dir, Q8(1.5));
+            thrown_break(a);
+            return;
+        }
+    }
 }
 
 /* The blast: a 40x40 box. Hurts enemies for 8, the player for 4, and
@@ -248,9 +341,12 @@ static void bomb_explode(Actor* a) {
     if (actor_box_overlap(gPlayer, x0, y0, x1, y1))
         player_hurt(4, actor_dir_to(a, gPlayer));
     for (ty = (y0 >> 4); ty <= (y1 >> 4); ty++)
-        for (tx = (x0 >> 4); tx <= (x1 >> 4); tx++)
+        for (tx = (x0 >> 4); tx <= (x1 >> 4); tx++) {
             if (room_type(tx, ty) == TT_CRACK)
                 room_crack_open(tx, ty);
+            else if (room_type(tx, ty) == TT_LIFT1)
+                room_break_lift(tx, ty);
+        }
     actor_free(a);
 }
 
@@ -275,7 +371,12 @@ void objects_update(void) {
             case AK_PROJ: proj_update(a); break;
             case AK_PICKUP: pickup_update(a); break;
             case AK_FX: fx_update(a); break;
-            case AK_OBJECT: bomb_update(a); break;
+            case AK_OBJECT:
+                if (a->type == OBJ_THROWN)
+                    thrown_update(a);
+                else
+                    bomb_update(a);
+                break;
             default: break;
         }
     }

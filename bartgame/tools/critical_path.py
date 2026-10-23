@@ -10,7 +10,7 @@ with its key item, in order, until the goal room.
 Rooms are crossed by teleporting the hero next to the door and walking
 through it (the probe tests gates, not room interiors).
 
-    python3 tools/critical_path.py [--rom bartgame.gba]
+    python3 tools/critical_path.py [--seed N] [--boss]
 """
 import os
 import sys
@@ -21,7 +21,7 @@ import probe as P  # noqa: E402
 
 S = os.environ.get('SNAPDIR', '/tmp')
 GATE = {0: 'WALL', 1: 'open', 2: 'thorn', 3: 'CRACK', 4: 'WEB', 5: 'LOCK', 6: 'CHASM', 7: 'exit'}
-W_ROOM, H_ROOM = 24, 16
+W_ROOM, H_ROOM = 32, 24
 res = []
 
 
@@ -117,14 +117,23 @@ def cross(c, side, frames=160):
     hero is healed first: this tests gates, not fights."""
     x, y, key = door_inside(side)
     heal(c)
+    clear_enemies(c)
     teleport(c, x, y)
     before = cell(c)
     P.hold(c, key, frames)
     for _ in range(60):
         c.run_frame()
     if P.r8(c, P.sym('gTbActive')):
-        # walked into a chest or a sign on arrival: close it
+        # walked into a chest or a sign on arrival, or a box opened on the
+        # way: close it, and walk again if the room did not change
         dismiss(c)
+        if cell(c) == before:
+            teleport(c, x, y)
+            P.hold(c, key, frames)
+            for _ in range(60):
+                c.run_frame()
+            if P.r8(c, P.sym('gTbActive')):
+                dismiss(c)
     return cell(c), before
 
 
@@ -180,11 +189,24 @@ def pl(c, off, w=False):
 
 
 ITEMS, BOMBS, KEYS = 8, 7, 6
+EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK = range(5)
+
+
+def equip_b(c, eq):
+    """put an item on B through gPl.equip (A, B, L at 9, 10, 11), clearing
+    any other button that held it"""
+    s = P.sym('gPl')
+    for slot in range(3):
+        if P.r8(c, s + 9 + slot) == eq:
+            P.w8(c, s + 9 + slot, 0)
+    P.w8(c, s + 10, eq)
 
 
 def main():
-    c = P.boot()
+    seed = int(sys.argv[sys.argv.index('--seed') + 1], 0) if '--seed' in sys.argv else 0xB4A7
+    c = P.boot(seed=seed)
     P.run(c, 40)
+    print('seed', hex(seed))
     w = world(c)
     print('entry', w['entry'], 'goal', w['goal'], 'path', w['path'])
     print('gates', [(w['gate_cell'][i], w['gate_side'][i], GATE[w['cells'][w['gate_cell'][i]]['gate'][w['gate_side'][i]]]) for i in range(3)])
@@ -225,8 +247,9 @@ def main():
         route.reverse()
         for (frm, s) in route:
             g = cells[frm]['gate'][s]
-            if g == 2:  # thorns: cut them first
+            if g == 2:  # thorns: cut them first, no monster at the hero's back
                 heal(c)
+                clear_enemies(c)
                 face_gate(c, s)
                 for _ in range(2):
                     P.press(c, 'A', 2, 14)
@@ -259,6 +282,7 @@ def main():
     gc, gs = w['gate_cell'][0], w['gate_side'][0]
     ok = go_to(gc)
     check('CRACK: reached the cracked wall', ok, 'cell %d' % cell(c))
+    equip_b(c, EQ_BOMBS)
     face_gate(c, gs)
     P.press(c, 'B', 2, 4)
     x, y, key = door_inside(gs)
@@ -275,11 +299,7 @@ def main():
     gc, gs = w['gate_cell'][1], w['gate_side'][1]
     ok = go_to(gc)
     check('WEB: reached the web', ok, 'cell %d' % cell(c))
-    # select the lamp with L (bombs -> lamp)
-    for _ in range(6):
-        if pl(c, 9) == 2:
-            break
-        P.press(c, 'L', 2, 4)
+    equip_b(c, EQ_LAMP)
     face_gate(c, gs)
     P.press(c, 'B', 2, 30)
     P.snap(c, os.path.join(S, 'cp3.png'))
@@ -293,10 +313,7 @@ def main():
     gc, gs = w['gate_cell'][2], w['gate_side'][2]
     ok = go_to(gc)
     check('CHASM: reached the chasm', ok, 'cell %d' % cell(c))
-    for _ in range(6):
-        if pl(c, 9) == 3:
-            break
-        P.press(c, 'L', 2, 4)
+    equip_b(c, EQ_CLOAK)
     x, y, key = door_inside(gs)
     teleport(c, x, y)
     P.hold(c, key, 10)

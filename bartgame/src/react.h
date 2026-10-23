@@ -12,5 +12,7 @@ void react_cut_box(int x0, int y0, int x1, int y1);
 void react_burn_box(int x0, int y0, int x1, int y1);
 int room_torches_unlit(void);
 int tile_gate_side(int tx, int ty);
+int room_lift(int tx, int ty);
+void room_break_lift(int tx, int ty);
 
 #endif
