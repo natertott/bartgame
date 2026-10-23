@@ -1442,6 +1442,17 @@ arrow, unknown-map, hand, coin, button and slot tiles fill their
 transparent pixels too. Checked by counting colours inside the pause
 box: before, 1,769 pixels of grass green among the fill; after, none.
 
+**Two more (follow-up).** The dialogue box and the shop still showed
+the scene through their letters: the typewriter in `textbox_update`
+put glyphs with `bg0_put` and the plain font index, bypassing the box
+font; it uses `FONT_BOX` now, and a count of stone greys inside the box
+went from 994 pixels to none. And the sword's swing showed stray pixels
+on its last frame: the blade sheet is three frames of four tiles at OBJ
+tiles 8..19, and the HUD's mini-map was drawn into tiles 16..31, so the
+map's parchment overwrote the third frame. The map lives in the last
+sixteen OBJ tiles now (`OBJ_TILE_MINIMAP` 1008) and the sheet allocator
+stops below it.
+
 **Open.** A one-wide plank path that turns a corner over water shows
 planks of both directions meeting at the corner. Islands are rare
 (rx >= 4 and ry >= 3 clearings). Props drawn on the wood and stone

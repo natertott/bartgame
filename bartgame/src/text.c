@@ -17,7 +17,7 @@
 #define PAL15 (15 << 12)
 #define PAL14 (14 << 12)
 #define SWORD_TILE 8     /* player.c streams the sword sheet here */
-#define MINIMAP_TILE 16  /* 16 OBJ tiles the CPU draws the map into */
+#define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
 #define FONT_BOX (FONT_GLYPHS + HUD_TILE_COUNT)
@@ -308,7 +308,7 @@ void textbox_update(void) {
                 sTbDone = 1;
                 return;
             }
-            bg0_put(tb_text_x() + sTbCol, tb_text_y() + sTbRow, ch == ' ' ? HT_BOX_FILL : (ch - 32));
+            bg0_put(tb_text_x() + sTbCol, tb_text_y() + sTbRow, FONT_BOX + ch - 32);
             sTbCol++;
             sTbPos++;
             if ((i & 3) == 0 && ch != ' ')

@@ -63,6 +63,7 @@ typedef struct Actor {
 } Actor;
 
 #define ACTOR_MAX 96
+#define OBJ_TILE_MINIMAP 1008 /* the last 16 OBJ tiles: the HUD's mini-map, above the sheets */
 extern Actor gActors[ACTOR_MAX];
 extern const Hitbox gHitboxes[];
 enum { HB_HERO, HB_HERO_FEET, HB_SMALL, HB_MED, HB_TALL, HB_BIG, HB_PROJ, HB_SWORD, HB_BLAST };

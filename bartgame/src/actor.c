@@ -252,7 +252,7 @@ int actor_dist2(const Actor* a, const Actor* b) {
 }
 
 /* ------------------------------------------------------------ sprites -- */
-#define OBJ_TILE_FIRST_FREE 32 /* 0..7 hero frame, 8..11 sword, rest reserved */
+#define OBJ_TILE_FIRST_FREE 32 /* 0..7 hero frame, 8..19 sword sheet, rest reserved */
 static u16 sNextTile;
 static u16 sSheetTile[SHEET_COUNT];
 
@@ -267,7 +267,7 @@ u16 sprite_load_sheet(int sheet) {
     if (sSheetTile[sheet] != 0xFFFF)
         return sSheetTile[sheet];
     const SpriteSheet* sh = &sheets[sheet];
-    if (sNextTile + sh->tile_count > 1024)
+    if (sNextTile + sh->tile_count > OBJ_TILE_MINIMAP)
         return 0;
     u16 base = sNextTile;
     sNextTile += (sh->tile_count + 1) & ~1;
