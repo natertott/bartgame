@@ -39,7 +39,10 @@ def sym(name):
     return _syms[name]
 
 
-def boot(rom=ROM, frames=30):
+def boot(rom=ROM, frames=30, seed=0xB4A7, start=True):
+    """Boot to the title, pin the run seed, press Start, and wait for the
+    sewer. seed=None leaves the title's own roll. start=False stays on the
+    title screen."""
     img = mgba.image.Image(240, 160)
     c = mgba.core.load_path(rom)
     c.set_video_buffer(img)
@@ -47,6 +50,18 @@ def boot(rom=ROM, frames=30):
     c.reset()
     for _ in range(frames):
         c.run_frame()
+    if not start:
+        return c
+    if seed is not None:
+        a = sym('gSeedOverride')
+        w16(c, a, seed & 0xFFFF)
+        w16(c, a + 2, seed >> 16)
+    press(c, 'START', 2, 40)
+    for _ in range(40):
+        c.run_frame()
+    # the opening text box
+    press(c, 'A', 2, 20)
+    press(c, 'A', 2, 20)
     return c
 
 

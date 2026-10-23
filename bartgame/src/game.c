@@ -18,6 +18,9 @@
 #include "game.h"
 
 GameState gGame;
+u32 gSeedOverride; /* probes set this before pressing Start */
+
+static void draw_world(void);
 
 /* pending transition */
 static u8 sNextArea, sNextCell, sNextSide;
@@ -60,8 +63,10 @@ static void load_sewer(int at_drain) {
     sprites_reset();
     objects_room_reset();
     npc_room_reset();
+    gDbg[4] = def->object_count;
     for (i = 0; i < def->object_count; i++) {
         const u8* ob = &def->objects[i * 4];
+        gDbg[5] = (gDbg[5] << 4) | ob[0];
         if (ob[0] == OBJ_NPC)
             npc_spawn(NPC_SAGE, ob[1] * 16 + 8, ob[2] * 16 + 14);
         if (ob[0] == OBJ_SHOP)
@@ -236,16 +241,140 @@ static void check_exits(void) {
     begin_transition(AREA_FOREST, n, (side + 2) & 3);
 }
 
-/* ----------------------------------------------------------- states -- */
-void game_init(void) {
-    gGame.state = GS_PLAY;
-    gGame.seed = 0xB4A7;
-    world_generate(gGame.seed);
+/* ------------------------------------------------------------ title -- */
+static u8 sTitlePhase;
+static u32 sTitleSeed;
+static u8 sDiedFlag;
+
+static void title_show(void) {
+    /* the title art lives in the world's charblock while it is shown */
+    dma3_copy32(title_tiles, CHARBLOCK(0), TITLE_TILE_COUNT * 32);
+    dma3_copy32(title_map, SCREENBLOCK(28), 32 * 20 * 2);
+    dma3_fill32(0, SCREENBLOCK(24), 0x2000);
+    pal_set_bg(0, title_pal);
+    gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
+    actors_clear();
+    bg0_clear();
+    bg0_print(10, 14, "PRESS START");
+    bg0_print(8, 17, "a game of the drain");
+    gGame.state = GS_TITLE;
+    sTitlePhase = 0;
+    sTitleSeed = 0x5EED;
+    fade_set(16);
+    fade_start(0, 1);
+    video_show(DCNT_BG0 | DCNT_BG2);
+    bgm_play(BGM_TITLE);
+}
+
+static void start_run(u32 seed) {
+    gGame.seed = seed;
+    gGame.run_frames = 0;
+    gGame.deaths = 0;
+    gGame.kills = 0;
+    world_generate(seed);
     player_new_game();
+    tiles_init();
+    bg0_clear();
     load_sewer(0);
+    gGame.state = GS_PLAY;
     fade_set(16);
     fade_start(0, 1);
     video_show(DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
+    bgm_play(BGM_SEWER);
+    textbox_open("You wake in the drain. The stalk you grew on is your spine now. Up the ladder is the wood.");
+}
+
+static void update_title(void) {
+    sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
+    if ((gFrame & 32) == 0)
+        bg0_print(10, 14, "PRESS START");
+    else
+        bg0_print(10, 14, "           ");
+    if (sTitlePhase == 0 && (gKeysDown & KEY_START)) {
+        sTitlePhase = 1;
+        fade_start(16, 2);
+        sfx_play(SFX_MENU);
+    }
+    if (sTitlePhase == 1 && fade_done())
+        start_run(gSeedOverride ? gSeedOverride : (sTitleSeed >> 4));
+}
+
+/* -------------------------------------------------------------- map -- */
+static void map_open(void) {
+    int x, y;
+    bg0_fill(0, 3, 32, 17, 0);
+    bg0_frame(9, 4, 13, 10);
+    bg0_print(11, 5, "THE WOOD");
+    for (y = 0; y < MAZE_H; y++) {
+        for (x = 0; x < MAZE_W; x++) {
+            int i = y * MAZE_W + x;
+            Cell* c = &gWorld.cells[i];
+            u16 t = HT_MAP_UNKNOWN;
+            if (c->flags & CF_VISITED)
+                t = HT_MAP_CELL;
+            if (i == gWorld.goal && (c->flags & CF_VISITED))
+                t = HT_MAP_GOAL;
+            if (gGame.area == AREA_FOREST && i == gGame.cell)
+                t = HT_MAP_HERE;
+            bg0_put(13 + x, 7 + y, t);
+        }
+    }
+    bg0_print(10, 13, "B: close");
+    gGame.state = GS_MAP;
+    sfx_play(SFX_MENU);
+}
+
+static void update_map(void) {
+    draw_world();
+    if (gKeysDown & (KEY_B | KEY_START)) {
+        bg0_fill(0, 3, 32, 17, 0);
+        gGame.state = GS_PLAY;
+    }
+}
+
+/* -------------------------------------------------------------- win -- */
+static u16 sWinTimer;
+
+void game_win(void) {
+    gGame.state = GS_WIN;
+    sWinTimer = 0;
+    fade_start(16, 1);
+    bgm_play(BGM_WIN);
+}
+
+static void update_win(void) {
+    sWinTimer++;
+    if (sWinTimer < 40) {
+        draw_world();
+        return;
+    }
+    if (sWinTimer == 40) {
+        int secs = gGame.run_frames / 60;
+        actors_clear();
+        video_show(DCNT_BG0);
+        bg0_clear();
+        bg0_print(7, 4, "THE HEART IS CUT.");
+        bg0_print(3, 7, "The wood breathes again, slowly.");
+        bg0_print(3, 8, "Somewhere a king stops dreaming.");
+        bg0_print(5, 11, "gilt");
+        bg0_print_num(10, 11, gPl.gilt, 3);
+        bg0_print(15, 11, "time");
+        bg0_print_num(20, 11, secs / 60, 2);
+        bg0_print(22, 11, ":");
+        bg0_print_num(23, 11, (secs % 60) / 10, 1);
+        bg0_print_num(24, 11, secs % 10, 1);
+        bg0_print(5, 12, "deaths");
+        bg0_print_num(12, 12, gGame.deaths, 2);
+        bg0_print(10, 16, "PRESS START");
+        fade_start(0, 1);
+    }
+    if (sWinTimer > 120 && (gKeysDown & KEY_START))
+        title_show();
+}
+
+/* ----------------------------------------------------------- states -- */
+void game_init(void) {
+    title_show();
 }
 
 static void draw_world(void) {
@@ -277,9 +406,15 @@ static void update_play(void) {
     if (gPlayer->state == PS_DEAD) {
         if (gPl.dead_timer > 120) {
             gPl.hp = gPl.hp_max;
+            gGame.deaths++;
+            sDiedFlag = 1;
             begin_transition(AREA_SEWER, 0, 0);
         }
         draw_world();
+        return;
+    }
+    if (gKeysDown & KEY_START) {
+        map_open();
         return;
     }
     items_update();
@@ -298,23 +433,37 @@ static void update_transition(void) {
     if (sTransPhase == 0) {
         if (!fade_done())
             return;
-        if (sNextArea == AREA_SEWER)
+        if (sNextArea == AREA_SEWER) {
             load_sewer(1);
-        else
+            bgm_play(BGM_SEWER);
+        } else {
+            int was_forest = (gGame.area == AREA_FOREST);
             load_forest(sNextCell, sNextSide);
+            if (!was_forest)
+                bgm_play(BGM_FOREST);
+        }
         sTransPhase = 1;
         fade_start(0, 2);
         return;
     }
-    if (fade_done())
+    if (fade_done()) {
         gGame.state = GS_PLAY;
+        if (sDiedFlag) {
+            sDiedFlag = 0;
+            textbox_open("The muck takes you back. It always does. The wood keeps what you opened.");
+        }
+    }
 }
 
 void game_update(void) {
-    gGame.run_frames++;
+    if (gGame.state == GS_PLAY || gGame.state == GS_TRANSITION)
+        gGame.run_frames++;
     switch (gGame.state) {
+        case GS_TITLE: update_title(); break;
         case GS_PLAY: update_play(); break;
         case GS_TRANSITION: update_transition(); break;
+        case GS_MAP: update_map(); break;
+        case GS_WIN: update_win(); break;
         default: break;
     }
 }

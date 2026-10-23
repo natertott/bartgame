@@ -86,7 +86,7 @@ def mt(name, pal, type_, art=None, frames=None, coll=None, anim_speed=8):
 MOSS = 2
 for i in range(3):
     mt('moss%d' % i, 'forest', 'FLOOR', speckle(10 + i, MOSS, [(1, 18), (3, 10), (4, 2)]))
-mt('moss_blight', 'forest', 'FLOOR', overlay(speckle(20, MOSS, [(1, 14), (3, 8)]), clumps(21, 0, 0xa, 0, 1)))
+mt('moss_blight', 'forest', 'FLOOR', overlay(speckle(20, MOSS, [(1, 14), (3, 8)]), [r.replace('0', '.') for r in clumps(21, 0, 0xa, 3, 2)]))
 _bl = speckle(22, MOSS, [(1, 12), (3, 6)])
 _bl = overlay(_bl, [r.replace('0', '.') for r in clumps(23, 0, 0xb, 3, 2)])
 mt('moss_blight2', 'forest', 'FLOOR', _bl)

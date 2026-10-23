@@ -6,7 +6,7 @@
 /* projectiles */
 enum { PJ_SEED, PJ_SPORE, PJ_SHARD };
 /* pickups: frames in the items sheet */
-enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC };
+enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL };
 /* effects */
 enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ };
 

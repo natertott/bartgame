@@ -101,7 +101,7 @@ extern const u16 pal_obj[];
 #define MT_SW_COUNTER 58
 #define MT_SW_RUBBLE 59
 #define METATILE_COUNT 60
-#define TILESET_TILE_COUNT 191
+#define TILESET_TILE_COUNT 195
 extern const u16 tileset_tiles[];
 extern const u16 metatile_map[];
 extern const u8 metatile_type[];
@@ -149,8 +149,9 @@ typedef struct { const u16* tiles; u16 tile_count; u8 frame_tiles; u8 shape; u8 
 #define F_ITEMS_GILT 10
 #define F_ITEMS_BOMB_PICKUP 11
 #define F_ITEMS_SPARK 12
-#define SHEET_ITEMS_FRAMES 13
-#define SHEET_ITEMS_TILES 52
+#define F_ITEMS_GRAIL 13
+#define SHEET_ITEMS_FRAMES 14
+#define SHEET_ITEMS_TILES 56
 #define F_BEETLE_WALK_S1 0
 #define F_BEETLE_WALK_S2 1
 #define F_BEETLE_WALK_E1 2
@@ -214,6 +215,18 @@ typedef struct { const u16* tiles; u16 tile_count; u8 frame_tiles; u8 shape; u8 
 #define F_PROJ_SHARD 2
 #define SHEET_PROJ_FRAMES 3
 #define SHEET_PROJ_TILES 3
+#define F_NPC_SAGE 0
+#define F_NPC_MERCHANT 1
+#define F_NPC_HERMIT 2
+#define F_NPC_NUN 3
+#define F_NPC_GARDENER 4
+#define SHEET_NPC_FRAMES 5
+#define SHEET_NPC_TILES 40
+#define F_BOSS_PULSE1 0
+#define F_BOSS_PULSE2 1
+#define F_BOSS_HURT 2
+#define SHEET_BOSS_FRAMES 3
+#define SHEET_BOSS_TILES 48
 #define SHEET_HERO 0
 #define SHEET_SWORD 1
 #define SHEET_ITEMS 2
@@ -225,7 +238,9 @@ typedef struct { const u16* tiles; u16 tile_count; u8 frame_tiles; u8 shape; u8 
 #define SHEET_KSWORD 8
 #define SHEET_FX 9
 #define SHEET_PROJ 10
-#define SHEET_COUNT 11
+#define SHEET_NPC 11
+#define SHEET_BOSS 12
+#define SHEET_COUNT 13
 extern const SpriteSheet sheets[];
 
 extern const u16 font_tiles[];

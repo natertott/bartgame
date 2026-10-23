@@ -11,12 +11,15 @@ typedef struct {
     u8 cell;        /* forest cell index */
     u8 timer;
     u32 seed;
-    u16 run_frames;
+    u32 run_frames;
+    u16 deaths;
+    u16 kills;
 } GameState;
 
 extern GameState gGame;
 
 void game_init(void);
 void game_update(void);
+void game_win(void);
 
 #endif

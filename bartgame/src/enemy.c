@@ -15,6 +15,7 @@
 #include "objects.h"
 #include "enemy.h"
 #include "boss.h"
+#include "game.h"
 
 const EnemyDef gEnemyDefs[EN_COUNT] = {
     [EN_BEETLE] = { SHEET_BEETLE, 2, Q8(0.5), 2, HB_SMALL, AF_HITTABLE | AF_HURTS, 0 },
@@ -100,6 +101,7 @@ int enemies_alive(void) {
 }
 
 void enemy_kill(Actor* e) {
+    gGame.kills++;
     fx_spawn(FX_PUFF, PX(e->x), PX(e->y) - 8);
     drop_roll(PX(e->x), PX(e->y), rand_next());
     sfx_play(SFX_KILL);

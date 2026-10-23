@@ -291,8 +291,53 @@ def main():
     ok = go_to(w['goal'])
     check('GOAL: the goal room is entered', ok, 'cell %d' % cell(c))
     P.snap(c, os.path.join(S, 'cp5.png'))
+    if '--boss' in sys.argv:
+        boss_fight(c)
     print('RESULT %s %d/%d' % ('PASS' if all(res) else 'FAIL', sum(res), len(res)))
     return 0 if all(res) else 1
+
+
+def find_actor(c, kind, typ=None):
+    for i in range(1, 96):
+        a = P.actor(c, i)
+        if a['kind'] == kind and (typ is None or a['type'] == typ):
+            return a
+    return None
+
+
+def boss_fight(c):
+    """Swing at the Heart until it dies, take the Grail, reach the win."""
+    boss = find_actor(c, 2, 5)
+    check('BOSS: the Heart is in the goal room', boss is not None, str(boss))
+    swings = 0
+    for step in range(400):
+        heal(c)
+        boss = find_actor(c, 2, 5)
+        if boss is None:
+            break
+        px, py = P.player_pos(c)
+        dx, dy = boss['x'] - px, boss['y'] + 8 - py
+        keys = []
+        if abs(dx) > 12: keys.append('RIGHT' if dx > 0 else 'LEFT')
+        if abs(dy) > 10: keys.append('DOWN' if dy > 0 else 'UP')
+        if keys:
+            P.hold(c, keys, 6)
+        if abs(dx) < 30 and abs(dy) < 30:
+            P.press(c, 'A', 2, 14)
+            swings += 1
+        if step == 60:
+            P.snap(c, os.path.join(S, 'cp6.png'))
+    check('BOSS: the Heart dies to the sword', find_actor(c, 2, 5) is None, 'swings %d hp left %s' % (swings, find_actor(c, 2, 5)))
+    P.run(c, 140)
+    grail = find_actor(c, 4, 6)
+    check('BOSS: the Grail drops', grail is not None or gstate(c) == 6, str(grail))
+    if grail:
+        teleport(c, grail['x'], grail['y'] + 2)
+        P.run(c, 10)
+    P.run(c, 200)
+    st = gstate(c)
+    check('WIN: the Grail ends the run', st == 6, 'state %d' % st)
+    P.snap(c, os.path.join(S, 'cp7.png'))
 
 
 if __name__ == '__main__':

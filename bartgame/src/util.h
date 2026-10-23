@@ -6,6 +6,7 @@ typedef struct {
     u32 s;
 } Rng;
 
+extern u32 gDbg[8];
 u32 rand_next(void);
 u32 rand_range(u32 n);
 void rng_seed(Rng* r, u32 seed);

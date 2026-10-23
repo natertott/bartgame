@@ -50,6 +50,8 @@ void memset32(void* dst, u32 value, u32 bytes) {
         *d++ = value;
 }
 
+u32 gDbg[8];
+
 /* Two streams: gameplay (advanced by everything) and a seedable one for
    the generator, so the world is a pure function of the run seed. */
 static u32 sRand = 0x1234567;

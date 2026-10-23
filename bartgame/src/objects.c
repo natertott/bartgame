@@ -9,6 +9,7 @@
 #include "objects.h"
 #include "enemy.h"
 #include "react.h"
+#include "game.h"
 
 static u16 sItemsTile, sFxTile, sProjTile;
 
@@ -24,6 +25,11 @@ static void ensure_sheets(void) {
 void objects_room_reset(void) {
     sItemsTile = sFxTile = sProjTile = 0;
     ensure_sheets();
+}
+
+u16 items_sheet_tile(void) {
+    ensure_sheets();
+    return sItemsTile;
 }
 
 /* ------------------------------------------------------- projectiles -- */
@@ -85,7 +91,7 @@ Actor* pickup_spawn(int type, int px, int py) {
     if (!a)
         return NULL;
     actor_set_sheet(a, SHEET_ITEMS, sItemsTile);
-    static const u8 frames[] = { F_ITEMS_HEART, F_ITEMS_GILT, F_ITEMS_BOMB_PICKUP, F_ITEMS_GILT_BIG, F_ITEMS_KEY, F_ITEMS_RELIC };
+    static const u8 frames[] = { F_ITEMS_HEART, F_ITEMS_GILT, F_ITEMS_BOMB_PICKUP, F_ITEMS_GILT_BIG, F_ITEMS_KEY, F_ITEMS_RELIC, F_ITEMS_GRAIL };
     a->frame = frames[type];
     a->hitbox = HB_SMALL;
     a->timer = 0;
@@ -128,6 +134,7 @@ static void pickup_update(Actor* a) {
                 break;
             case PK_KEY: gPl.keys++; sfx_play(SFX_KEY); break;
             case PK_RELIC: gPl.items |= ITEM_RELIC; sfx_play(SFX_SECRET); break;
+            case PK_GRAIL: game_win(); sfx_play(SFX_WIN); break;
         }
         if (gPl.gilt > 999)
             gPl.gilt = 999;

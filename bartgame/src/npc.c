@@ -32,9 +32,13 @@ Actor* npc_spawn(int type, int px, int py) {
     if (!sNpcTile)
         sNpcTile = sprite_load_sheet(SHEET_NPC);
     Actor* a = actor_new(AK_NPC, type, px, py);
+    gDbg[0]++;
+    gDbg[1] = (u32)a;
+    gDbg[2] = sNpcTile;
     if (!a)
         return NULL;
     actor_set_sheet(a, SHEET_NPC, sNpcTile);
+    gDbg[3] = a->kind;
     a->frame = sFrames[type];
     a->hitbox = HB_TALL;
     a->flags = AF_SOLID;
