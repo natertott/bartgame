@@ -96,7 +96,7 @@ src/            the engine and the game
                 grid, BG map rendering, camera, animated tiles
   actor.c       the actor pool, tile collision with corner assist,
                 hit boxes, OBJ VRAM sheets
-  player.c      Bart: walk, roll, sword, knockback, falls, jumps
+  player.c      the Bloom: walk, roll, sword, knockback, falls, jumps
   items.c       B and L, keys in doors, thorns under the sword
   react.c       what tiles do when struck, burned, blown up, unlocked
   world.c       the maze: spanning tree, staged gates, key placement
