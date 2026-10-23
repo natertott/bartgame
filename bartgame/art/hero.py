@@ -373,22 +373,39 @@ def itemget():
     return compose(out, ITEMGET_ARMS, 0, 6)
 
 
-# the roll: the bloom ducks, then a ball of leaf and petal, then up
-def roll_ball():
+# the roll: the bloom ducks, curls into a ball of leaf and petal that
+# tumbles forward (the petal crown and the face turn round it, the boots
+# tucked opposite), lands in a squash and comes up
+def roll_ball(ang):
+    """the curled bloom, the crown turned to ang degrees: 0 up, 90 to
+    the right, so a run of 0, 90, 180, 270 rolls clockwise (east)"""
     c = Canvas(16, 16)
     ball(c, 8, 8.5, 7, 7, (8, 8, 9, 0xa, 0xa))
+    a = math.radians(ang)
+    fx, fy = 8 + math.sin(a) * 3.4, 8.5 - math.cos(a) * 3.4
     for y in range(16):
         for x in range(16):
             dx, dy = x + 0.5 - 8, y + 0.5 - 8.5
-            if dx * dx + dy * dy <= 3.2 * 3.2:
-                c.set(x, y, 3 if dx + dy > -1 else 4)
+            d = (dx * dx + dy * dy) ** 0.5
+            if d > 7.3:
+                continue
+            pa = math.atan2(dx, -dy)
+            diff = (pa - a + math.pi) % (2 * math.pi) - math.pi
+            if abs(diff) < 1.0 and d > 2.2:
+                c.set(x, y, 5 if d > 6.1 else 4 if d > 4.7 else 3)
+            back = (pa - a) % (2 * math.pi) - math.pi
+            if abs(back) < 0.45 and 4.4 < d < 6.6:
+                c.set(x, y, 0xb)
+            if (x + 0.5 - fx) ** 2 + (y + 0.5 - fy) ** 2 <= 1.9 * 1.9:
+                c.set(x, y, 6)
     c.outline(1)
     return c.rows()
 
 
 ROLL_1 = compose(compose(blank(16, 32), BODY_S_JUMP, 0, 18), HEAD_S, 0, 10)
-ROLL_2 = compose(blank(16, 32), roll_ball(), 0, 16)
-ROLL_3 = compose(compose(blank(16, 32), BODY_S, 0, 18), HEAD_S, 0, 8)
+ROLL_BALLS = [compose(blank(16, 32), roll_ball(ang), 0, 16) for ang in (0, 90, 180, 270)]
+ROLL_6 = compose(compose(blank(16, 32), BODY_S_JUMP, 0, 18), HEAD_S, 0, 11)
+ROLL_7 = compose(compose(blank(16, 32), BODY_S, 0, 18), HEAD_S, 0, 8)
 
 FRAMES = {
     'idle_s': frame(HEAD_S, BODY_S),
@@ -412,8 +429,12 @@ FRAMES = {
     'atk_n3': frame(HEAD_N, BODY_N_ATK3, 5),
     'atk_e3': frame(HEAD_E, BODY_E_ATK3, 5),
     'roll_1': ROLL_1,
-    'roll_2': ROLL_2,
-    'roll_3': ROLL_3,
+    'roll_2': ROLL_BALLS[0],
+    'roll_3': ROLL_BALLS[1],
+    'roll_4': ROLL_BALLS[2],
+    'roll_5': ROLL_BALLS[3],
+    'roll_6': ROLL_6,
+    'roll_7': ROLL_7,
     'hurt_s': frame(HEAD_S, BODY_S_HURT),
     'hurt_n': frame(HEAD_N, BODY_N_HURT),
     'hurt_e': frame(HEAD_E, BODY_E_HURT),

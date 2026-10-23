@@ -1271,6 +1271,26 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the drain's grime and glint, the hub's two drawn large, a tumbling roll (Oct 2026)
+
+Thirty metatiles joined the sewer set: stained, cracked and mossed
+slabs, a puddle, bones, glowing fungus, a drip that rings on the floor;
+bricks cracked, mossed, chained, dripping, webbed, scratched, rusted, a
+barred window, a skull in a niche; scum, bubbles and glints on the
+channel, mossed banks; and three transparent glint overlays that wink
+over anything wet. The hub room was relaid with them and gained an
+overlay layer (rooms.py). The sewer set is 277 of 1,024 subtiles.
+
+The Pale Gatekeeper and the Billious Peddler are drawn at 32x32 on a
+sheet of their own (`folk32`, two frames each: a blink; her orb pulses,
+his hands rub). The roll has seven frames: a duck, the curled bloom
+turning through four angles (the crown and the boots travel round the
+ball, three ticks a frame), a squash on landing, the rise.
+
+Not verified: how the overlay glints look over the waterfall at speed
+on hardware; mGBA shows them fine. The two big sprites stand on the
+same tall hitbox as before, so talking to them is unchanged.
+
 ### BARTGAME: a tileset per area (Oct 2026)
 
 The one global tileset stood at 961 of the 1,024 subtiles a background

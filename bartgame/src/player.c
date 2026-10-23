@@ -747,7 +747,9 @@ void player_draw(void) {
     switch (a->state) {
         case PS_ROLL: {
             int t = a->timer;
-            frame = t < 6 ? F_HERO_ROLL_1 : t < 18 ? F_HERO_ROLL_2 : F_HERO_ROLL_3;
+            /* duck, the ball tumbling (four turns, three frames each,
+               twice round), a squash on landing, up */
+            frame = t < 3 ? F_HERO_ROLL_1 : t < 18 ? F_HERO_ROLL_2 + ((t - 3) / 3) % 4 : t < 21 ? F_HERO_ROLL_6 : F_HERO_ROLL_7;
             a->hflip = (a->dir > 16);
             break;
         }

@@ -6,7 +6,7 @@ from tiles import A, hflip, vflip  # noqa: F401
 from hero import FRAMES as HERO, SWORD, SHIELD
 from monsters import BEETLE, BAT, SLIME, SPITTER, KNIGHT, KSWORD, BOSS
 from items import ITEMS, FX, PROJ, LIFT
-from folk import NPC
+from folk import NPC, BIG
 from portraits import PORTRAITS
 
 SHEETS = []
@@ -31,6 +31,7 @@ sheet('ksword', 'iron', 16, 16, KSWORD)
 sheet('fx', 'fx', 16, 16, FX)
 sheet('proj', 'fx', 8, 8, PROJ)
 sheet('npc', 'folk', 16, 32, NPC)
+sheet('folk32', 'folk', 32, 32, BIG)
 sheet('boss', 'blight', 32, 32, BOSS)
 sheet('portrait', 'portrait', 32, 32, PORTRAITS)
 sheet('lift', 'lift', 16, 16, LIFT)

@@ -23,6 +23,7 @@
 #include "myst.h"
 
 static u16 sNpcTile;
+static u16 sBigTile; /* the hub's two at 32x32 */
 static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
 static u8 sPendingReward;
@@ -38,9 +39,20 @@ Actor* npc_spawn(int type, int px, int py) {
     gDbg[2] = sNpcTile;
     if (!a)
         return NULL;
-    actor_set_sheet(a, SHEET_NPC, sNpcTile);
+    if (type == NPC_SAGE || type == NPC_MERCHANT) {
+        /* the Gatekeeper and the Peddler are drawn large, two frames
+           each: the second is a blink (her orb pulses, his hands rub) */
+        if (!sBigTile)
+            sBigTile = sprite_load_sheet(SHEET_FOLK32);
+        actor_set_sheet(a, SHEET_FOLK32, sBigTile);
+        a->v[0] = type == NPC_SAGE ? F_FOLK32_SAGE_1 : F_FOLK32_MERCHANT_1;
+        a->v[1] = 1;
+        a->frame = a->v[0];
+    } else {
+        actor_set_sheet(a, SHEET_NPC, sNpcTile);
+        a->frame = sFrames[type];
+    }
     gDbg[3] = a->kind;
-    a->frame = sFrames[type];
     a->hitbox = HB_TALL;
     a->flags = AF_SOLID;
     a->prio = 2;
@@ -49,6 +61,7 @@ Actor* npc_spawn(int type, int px, int py) {
 
 void npc_room_reset(void) {
     sNpcTile = 0;
+    sBigTile = 0;
     sTalking = NULL;
     sDlgState = 0;
 }
@@ -59,8 +72,10 @@ void npcs_update(void) {
         Actor* a = &gActors[i];
         if (a->kind != AK_NPC)
             continue;
-        /* a slow breathing bob */
+        /* a slow breathing bob; the large ones blink now and then */
         a->z = ((gFrame + i * 20) & 32) ? 0 : Q16(1);
+        if (a->v[1])
+            a->frame = a->v[0] + (((gFrame + i * 37) & 127) < 10 ? 1 : 0);
         /* keep the hero out of them */
         if (actors_overlap(a, gPlayer) && gPlayer->state != PS_HURT) {
             int d = actor_dir_to(a, gPlayer);

@@ -17,6 +17,19 @@ LEGEND = {
     'CC': 'sw_counter', 'A1': 'sw_awning_l', 'A2': 'sw_awning_r',
     'BB': 'sw_barrel', 'CR': 'sw_crate', 'SK': 'sw_skull', 'GD': 'sw_gold', 'CN': 'sw_candles',
     'RR': 'sw_rubble', 'AA': 'sw_arch', 'ST': 'stairs_down', 'PT': 'sw_pot',
+    # grime: stained, cracked, mossed slabs, a puddle, bones, fungus, a drip
+    'gr': 'sw_floor_grime', 'g2': 'sw_floor_grime2', 'cr': 'sw_floor_crack', 'c2': 'sw_floor_crack2',
+    'ms': 'sw_floor_moss', 'm2': 'sw_floor_moss2', 'pd': 'sw_floor_puddle', 'bn': 'sw_floor_bones',
+    'sh': 'sw_floor_shroom', 'dp': 'sw_floor_drip',
+    # the bricks: cracked, mossed, chained, dripping, webbed, glowing, scratched, rusted
+    'WC': 'sw_wall_crack', 'WM': 'sw_wall_moss', 'CH': 'sw_wall_chain', 'WD': 'sw_wall_drip',
+    'W1': 'sw_wall_web', 'W2': 'sw_wall_web_r', 'FU': 'sw_wall_fungus', 'TA': 'sw_wall_tally',
+    'WN': 'sw_wall_window', 'SU': 'sw_wall_skull', 'RU': 'sw_wall_rust', 'TM': 'sw_wall_top_moss',
+    # the channel: scum, bubbles, glints, mossed banks
+    '~s': 'sw_water_scum', '~b': 'sw_water_bubble', '~g': 'sw_water_glint',
+    'EM': 'sw_water_edge_n_moss', 'SM': 'sw_water_edge_s_moss',
+    # glints, for the overlay layer
+    '*1': 'sw_glint', '*2': 'sw_glint2', '*3': 'sw_glint3',
     '  ': None,
 }
 
@@ -58,26 +71,46 @@ def expand(rows, w, h, mt_names):
 # stands under a red awning on the left, the Gatekeeper's rug glows on
 # the right. A channel crosses the hall with a grate bridge, the great
 # round drain lies below it, and ladders go down into the pools in the
-# lower corners.
+# lower corners. The slabs are stained, cracked and mossed, the bricks
+# chained, webbed and dripping, and glints wink over anything wet.
 room('sewer_main', '''
-TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-WWWWPPWWWWLNWWBTWWHHWWWWWFWFWFWWWWBRWWLNWWWWPHPHPHWWttWWWWWW
-WWWWWWWSWWWWWWWWWW..WWWWWFWFWFWWWWWWWWWWWWWWWWWWWWWSWWWWWWWW
-..,,A1A2A1A2..;;..,,..;;~~~~~~..,,..;;..,,..;;..,,BB..;;..,,
-,,CRCCCCCCCC..,,GD..,,..ESESES..;;..,,BB..R1R2..CN..,,..;;..
-;;SK..PT....,,..;;..,,..;;..,,..,,..;;..,,R3R4..,,..;;..,,PT
-..,,..;;..,,CN..,,..;;..,,..;;..;;..,,..;;..,,..CR..,,..;;..
-,,..;;..,,..;;..,,RR..,,..;;..,,..;;..,,..;;..,,..;;..,,..,,
-WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
-~~~~LP~~~~~~~~~~~~LP~~~~~~~~GGGG~~~~~~~~LP~~~~~~~~~~~~~~LP~~
-~~~~~~~~~~LP~~~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~~~LP~~~~~~~~~~~~
-ESESESESESESESESESESESESESESGGGGESESESESESESESESESESESESESES
-..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,
-,,..;;..,,GD..;;..CN..;;D1D2..,,PT;;..,,..;;..,,..;;RR..,,..
-WELDWEWE..,,..;;..,,..;;D3D4..;;..,,..;;..,,..;;WEWEWELDWE..
-~~~~~~~~,,..;;..,,..;;..,,..;;..,,..;;..,,SK..,,~~~~~~~~~~..
-~~~~~~~~..;;..,,..;;..,,..;;..,,..;;..,,..;;..,,~~~~~~~~~~,,
-WWWWWWWWWWWWttWWWWWWWWWWWWWWAAWWWWWWWWWWWWWWWWttWWWWWWWWWWWW
+TTTTTMTTTTTMTTTTTTTMTTTTTTTTTMTTTTTTTTTTTMTTTTTTTMTTTTTMTTTT
+W1CHPPWDWCLNWMBTFUHHRUWNWFWFWFWDTABRWMLNSUCHPHPHPHWCttFUWDW2
+WWTAWWWSWCWWFUWWRU..WWWWWFWFWFWWTAWWWCWWWWFUWWWWWWWSWWTAWDWW
+ms,,A1A2A1A2..gr..,,cr;;~g~b~g..dp..;;..g2..;;bn,,BB..ms..,,
+,,CRCCCCCCCCcr,,GD..pd..ESESES..gr..m2BB..R1R2..CN..c2..;;..
+;;SK..PT..g2,,..ms..,,..sh..,,cr,,..bn..,,R3R4..gr..;;pd,,PT
+..c2..;;gr,,CN..,,m2;;..,,pd;;..;;g2,,..cr..ms..CR..,,dp;;..
+,,..;;ms,,..bn..,,RR..,,gr;;..c2..;;sh,,..m2..,,..gr..,,cr,,
+WEWEWEEMWEWEWEWEWEEMWEWEWEWEGGGGWEWEWEEMWEWEWEWEEMWEWEWEWEWE
+~s~~LP~~~g~~~~~b~~LP~~~~~s~~GGGG~~~g~~~~LP~~~b~~~~~s~~~~LP~g
+~~~~~g~~~~LP~~~~~s~~~~~b~~~~GGGG~~~s~~~~~g~~~~LP~~~~~b~~~s~~
+ESESESESESSMESESESESESESSMESGGGGESESESESSMESESESESESESSMESES
+..gr..;;dp,,..;;c2,,..ms..,,..g2..,,cr;;..,,pd;;..bn..;;m2,,
+,,..cr..,,GD..sh..CNms;;D1D2gr,,PT;;..c2..;;g2,,..;;RR..gr..
+WELDEMWE..ms..;;gr,,pd;;D3D4..c2..,,m2;;..sh..;;WEEMWELDWE..
+~~~s~~~g,,g2;;..,,bn;;..pd..;;ms,,..cr..,,SKgr,,~~~b~~~s~~..
+~g~~~b~~cr;;..ms..;;..gr..;;dp,,..g2..,,bn;;c2,,~s~~~g~~~b,,
+WWCHWWWCWWFUttWWTAWWWMWWWWWWAAWWRUWWWWWDWWWWFUttWWWCWWCHWWWW
+''', overlay='''
+                                                            
+                *2      *2                    *1            
+      *1                    *1                    *3        
+                        *1  *3  *1                          
+                *2  *1                                      
+                                          *3          *3    
+                          *2                          *1    
+                                                            
+                                                            
+        *2                                                  
+                                        *1                  
+                                                            
+        *2                                  *1              
+          *1                                                
+                    *3                                      
+      *3                *2                                  
+                                                    *2      
+                                      *2                    
 ''', objects=[
     (OBJ_SPAWN, 12, 15, 0),
     (OBJ_EXIT, 9, 1, 1),        # the drain hole: up to the wood
