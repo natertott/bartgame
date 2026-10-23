@@ -1271,6 +1271,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the new game, first demo (Oct 2026)
+
+The user: "build the game ... a working demo of the game that has a hub
+world and 1 overworld map area. The hub world is a sewer. The overworld
+map area is a mystical forest that has been overtaken by a blight ...
+Build everything: the engine, the sprites, the animation, everything."
+
+It lives in `bartgame/`, its own tree with its own README. Nothing in the
+decomp is used at run time; `tools/bin/gbafix` writes the header. What
+was built: a from-scratch engine (Thumb C, no libc, PSG sound), a Python
+art pipeline, the Drain hub with a sage and a shop, a 5x5 maze generated
+from the title's seed with crack, web and chasm gates and their key
+items always placed before them, six room archetypes, five monster AIs
+ported from TMC's numbers, bombs, lamp, cloak, keys, three quest kinds,
+shrines, the Blight Heart boss, title, map, win and death screens.
+
+**Measured in mGBA**, by probes that read RAM by linker symbol:
+`tools/critical_path.py --boss` walks the key chain to the win screen,
+18/18; `tools/quest_probe.py` plays the three quests, 12/12;
+`tools/perf_probe.py` holds lag 1.000 with 65 beetles, 25 knights or 41
+spitters live.
+
+**What went wrong on the way.** The Makefile tracked no header
+dependencies, so a padded struct never recompiled and a probe read actors
+at the wrong stride; `-MMD -MP` fixed it. A `grep` for "error" hid make's
+"Error 1", so two ROMs tested were stale and an hour went to NPCs that
+"did not spawn". A metatile built from a clump helper used '0' where it
+meant transparent and drew whole floors black. The title's tiles share the
+world's charblock and the animated-tile DMA kept writing over them. Two
+"failures" were the probes: a swarm knocked a standing hero onto the exit
+stairs, and extra A presses re-opened a dialogue so the box ate the jump.
+
 ### The new game builds its own engine: `12_FROM_SCRATCH_ENGINE.md` (Oct 2026)
 
 The user: the new agent "will be building the engine from scratch ... should

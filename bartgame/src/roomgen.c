@@ -504,10 +504,10 @@ void roomgen_build(int cell) {
                 gSpots.spawns[gSpots.spawn_count++] = sp;
         }
     }
-    /* a few sparkles on the floor */
+    /* gold on the floor: the wood is rotten, but it shines */
     {
         int i;
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < 6; i++) {
             int px = 2 + rng_range(&sR, W - 4), py = 3 + rng_range(&sR, H - 5);
             if (is_floor(px, py))
                 room_set_overlay(px, py, MT_SPARKLE);

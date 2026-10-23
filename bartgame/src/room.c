@@ -5,6 +5,7 @@
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
+u8 gAnimTiles; /* off while the title owns the charblock */
 
 #define SB_OVERLAY 24
 #define SB_GROUND 28
@@ -24,6 +25,8 @@ void tiles_init(void) {
    base tiles, so every instance in the room animates at once. */
 void tiles_animate(void) {
     int i;
+    if (!gAnimTiles)
+        return;
     for (i = 0; i < TILE_ANIM_COUNT; i++) {
         const TileAnim* ta = &tile_anims[i];
         if (ta->frames == 0)

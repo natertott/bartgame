@@ -83,16 +83,16 @@ def mt(name, pal, type_, art=None, frames=None, coll=None, anim_speed=8):
 
 
 # ------------------------------------------------------------- forest ---
-MOSS = 2
+MOSS = 3
 for i in range(3):
-    mt('moss%d' % i, 'forest', 'FLOOR', speckle(10 + i, MOSS, [(1, 18), (3, 10), (4, 2)]))
-mt('moss_blight', 'forest', 'FLOOR', overlay(speckle(20, MOSS, [(1, 14), (3, 8)]), [r.replace('0', '.') for r in clumps(21, 0, 0xa, 3, 2)]))
-_bl = speckle(22, MOSS, [(1, 12), (3, 6)])
+    mt('moss%d' % i, 'forest', 'FLOOR', speckle(10 + i, MOSS, [(2, 16), (4, 10), (5, 3), (1, 3)]))
+mt('moss_blight', 'forest', 'FLOOR', overlay(speckle(20, MOSS, [(2, 14), (4, 8)]), [r.replace('0', '.') for r in clumps(21, 0, 0xa, 3, 2)]))
+_bl = speckle(22, MOSS, [(2, 12), (4, 6)])
 _bl = overlay(_bl, [r.replace('0', '.') for r in clumps(23, 0, 0xb, 3, 2)])
 mt('moss_blight2', 'forest', 'FLOOR', _bl)
-mt('moss_flowers', 'forest', 'FLOOR', overlay(speckle(24, MOSS, [(1, 14), (3, 8)]),
+mt('moss_flowers', 'forest', 'FLOOR', overlay(speckle(24, MOSS, [(2, 14), (4, 8)]),
                                             [r.replace('0', '.') for r in speckle(25, 0, [(0xf, 3), (0xc, 2), (0xe, 2)])]))
-mt('path', 'forest', 'FLOOR', speckle(30, 7, [(6, 16), (8, 12), (9, 2)]))
+mt('path', 'forest', 'FLOOR', speckle(30, 8, [(7, 16), (9, 10), (6, 3)]))
 mt('path_edge_n', 'forest', 'FLOOR', overlay(speckle(31, 7, [(6, 12), (8, 10)]),
                                            A('''
     2222222222222222
@@ -265,8 +265,8 @@ _trunk_w = A('''
     ................
     ................
 ''')
-mt('tree_trunk_w', 'forest', 'SOLID', overlay(speckle(60, MOSS, [(1, 14), (3, 6)]), _trunk_w), coll=0b0011)
-mt('tree_trunk_e', 'forest', 'SOLID', overlay(speckle(61, MOSS, [(1, 14), (3, 6)]), hflip(_trunk_w)), coll=0b0011)
+mt('tree_trunk_w', 'forest', 'SOLID', overlay(speckle(60, MOSS, [(2, 14), (4, 6)]), _trunk_w), coll=0b0011)
+mt('tree_trunk_e', 'forest', 'SOLID', overlay(speckle(61, MOSS, [(2, 14), (4, 6)]), hflip(_trunk_w)), coll=0b0011)
 
 mt('rock', 'forest2', 'SOLID', overlay(speckle(70, 1, [(1, 0)]), A('''
     ....22222.......
@@ -323,7 +323,7 @@ mt('ruin_wall', 'forest2', 'SOLID', A('''
     3333223333333223
     1111111111111111
 '''))
-mt('thorn', 'forest', 'THORN', overlay(speckle(80, MOSS, [(1, 14), (3, 6)]), A('''
+mt('thorn', 'forest', 'THORN', overlay(speckle(80, MOSS, [(2, 14), (4, 6)]), A('''
     ....6.....c.....
     .c.66.6..66.6...
     .66.666.66666c..
@@ -341,7 +341,7 @@ mt('thorn', 'forest', 'THORN', overlay(speckle(80, MOSS, [(1, 14), (3, 6)]), A('
     .....6.666.6....
     ................
 ''')))
-mt('stump', 'forest', 'SOLID', overlay(speckle(81, MOSS, [(1, 14), (3, 6)]), A('''
+mt('stump', 'forest', 'SOLID', overlay(speckle(81, MOSS, [(2, 14), (4, 6)]), A('''
     ................
     ................
     ....7777777.....
@@ -618,7 +618,7 @@ mt('chest_open', 'forest2', 'CHEST_OPEN', A('''
     ................
     ................
 '''), coll=0b1111)
-mt('bones', 'forest', 'FLOOR', overlay(speckle(100, MOSS, [(1, 14), (3, 8)]), A('''
+mt('bones', 'forest', 'FLOOR', overlay(speckle(100, MOSS, [(2, 14), (4, 8)]), A('''
     ................
     ................
     ..9.............

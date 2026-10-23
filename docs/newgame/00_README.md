@@ -18,6 +18,13 @@ The user's brief, in their words:
 > Optimized to run on Game Boy Advance for max performance: max enemies,
 > events, graphics.
 
+## Where the game is now
+
+The first demo is built: `bartgame/` in this repo, with its own
+`README.md`. It follows `12_FROM_SCRATCH_ENGINE.md`: a new engine, TMC's
+numbers, a generated maze. The documents below are the research and the
+design it was built from.
+
 ## What this repo is
 
 This repo is `zeldaret/tmc`, the matching decompilation of *The Legend of

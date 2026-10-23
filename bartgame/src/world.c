@@ -345,6 +345,34 @@ void world_generate(u32 seed) {
             c->role_arg = CHEST_GILT;
         }
     }
+    /* every run gets at least one of each quest, in rooms still free */
+    {
+        int want[3] = { ROLE_NPC_HUNT, ROLE_NPC_FETCH, ROLE_NPC_TORCH };
+        int q;
+        for (q = 0; q < 3; q++) {
+            int have = 0, best = -1, bs = -1;
+            for (i = 0; i < CELLS; i++)
+                if (w->cells[i].role == want[q])
+                    have = 1;
+            if (have)
+                continue;
+            for (i = 0; i < CELLS; i++) {
+                Cell* c = &w->cells[i];
+                if (c->role != ROLE_NONE || i == w->entry || i == w->goal)
+                    continue;
+                int sc = c->dist * 2 + (int)rng_range(&r, 5);
+                if (sc > bs) {
+                    bs = sc;
+                    best = i;
+                }
+            }
+            if (best >= 0) {
+                w->cells[best].role = want[q];
+                if (want[q] == ROLE_NPC_FETCH)
+                    fetch_relic = best;
+            }
+        }
+    }
     /* the fetch quest's relic: a room at the same or lower stage, not behind a lock */
     if (fetch_relic >= 0) {
         int st = w->cells[fetch_relic].stage;

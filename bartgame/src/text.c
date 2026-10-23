@@ -101,7 +101,8 @@ void text_flush(void) {
 
 static const char* sTbText;
 static const char* sTbPos;   /* next char to type */
-static u8 sTbActive, sTbCol, sTbRow, sTbWait, sTbDone;
+u8 gTbActive; /* probes read it */
+static u8 sTbCol, sTbRow, sTbWait, sTbDone;
 static const char* const* sMenuOpts;
 static s8 sMenuCount, sMenuCursor, sMenuResult;
 
@@ -114,7 +115,7 @@ static void tb_clear_lines(void) {
 void textbox_open(const char* s) {
     sTbText = s;
     sTbPos = s;
-    sTbActive = 1;
+    gTbActive = 1;
     sTbDone = 0;
     sTbWait = 0;
     bg0_frame(TB_X, TB_Y, TB_W, TB_H);
@@ -122,11 +123,11 @@ void textbox_open(const char* s) {
 }
 
 bool8 textbox_active(void) {
-    return sTbActive;
+    return gTbActive;
 }
 
 void textbox_close(void) {
-    sTbActive = 0;
+    gTbActive = 0;
     sMenuCount = 0;
     bg0_fill(TB_X, TB_Y, TB_W, TB_H, 0);
 }
@@ -163,7 +164,7 @@ static int word_len(const char* s) {
    A advances a full page, B shows the whole page at once. */
 void textbox_update(void) {
     int i;
-    if (!sTbActive)
+    if (!gTbActive)
         return;
     if (sTbDone) {
         if (sMenuCount) {

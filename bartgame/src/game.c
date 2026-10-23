@@ -15,6 +15,7 @@
 #include "items.h"
 #include "boss.h"
 #include "npc.h"
+#include "react.h"
 #include "game.h"
 
 GameState gGame;
@@ -32,6 +33,39 @@ static const char* const sKeyItemText[4] = {
     "You found the GRAIL LAMP!|A flame that is not of this wood. Swing it with B to burn webs and light censers.",
     "You found the PETAL CLOAK!|Press B to leap. A chasm is only a breath wide.",
 };
+
+/* --------------------------------------------------------- darkness -- */
+/* The gardener's rooms are dark: a window of light around the hero that
+   grows with every censer lit and flares while the lamp swings. */
+static u8 sDark;
+
+static void dark_off(void) {
+    sDark = 0;
+    REG_DISPCNT &= ~DCNT_WIN0;
+    REG_BLDCNT = 0;
+    REG_BLDY = 0;
+}
+
+static void dark_update(void) {
+    if (!sDark)
+        return;
+    int unlit = room_torches_unlit();
+    if (unlit == 0) {
+        dark_off();
+        return;
+    }
+    int r = 40 + (4 - unlit) * 22 + (gPl.lamp_timer ? 14 : 0);
+    int cx = PX(gPlayer->x) - gCamX, cy = PX(gPlayer->y) - 16 - gCamY;
+    int x0 = CLAMP(cx - r, 0, 240), x1 = CLAMP(cx + r, 0, 240);
+    int y0 = CLAMP(cy - r, 0, 160), y1 = CLAMP(cy + r, 0, 160);
+    REG_WIN0H = (x0 << 8) | x1;
+    REG_WIN0V = (y0 << 8) | y1;
+    REG_WININ = 0x001F;  /* every layer, no effect inside the light */
+    REG_WINOUT = 0x003F; /* darkened outside */
+    REG_BLDCNT = 0x00C0 | 0x0016; /* brightness down on BG1, BG2 and OBJ */
+    REG_BLDY = 11;
+    REG_DISPCNT |= DCNT_WIN0;
+}
 
 /* ----------------------------------------------------- cell objects -- */
 static void spawn_cell_objects(void) {
@@ -84,6 +118,7 @@ static void load_sewer(int at_drain) {
     }
     player_init(sx, sy, facing);
     camera_update(sx, sy - 16, TRUE);
+    dark_off();
 }
 
 static void load_forest(int cell, int from_side) {
@@ -99,6 +134,12 @@ static void load_forest(int cell, int from_side) {
     player_init(px, py, (from_side + 2) & 3);
     camera_update(px, py - 16, TRUE);
     spawn_cell_objects();
+    dark_off();
+    {
+        Cell* c = &gWorld.cells[cell];
+        if (c->role == ROLE_NPC_TORCH && !(c->flags & CF_QUEST_DONE))
+            sDark = 1;
+    }
 }
 
 static void begin_transition(int area, int cell, int side) {
@@ -258,6 +299,8 @@ static void title_show(void) {
     bg0_print(10, 14, "PRESS START");
     bg0_print(8, 17, "a game of the drain");
     gGame.state = GS_TITLE;
+    gAnimTiles = 0;
+    dark_off();
     sTitlePhase = 0;
     sTitleSeed = 0x5EED;
     fade_set(16);
@@ -274,6 +317,7 @@ static void start_run(u32 seed) {
     world_generate(seed);
     player_new_game();
     tiles_init();
+    gAnimTiles = 1;
     bg0_clear();
     load_sewer(0);
     gGame.state = GS_PLAY;
@@ -353,19 +397,22 @@ static void update_win(void) {
         actors_clear();
         video_show(DCNT_BG0);
         bg0_clear();
-        bg0_print(7, 4, "THE HEART IS CUT.");
-        bg0_print(3, 7, "The wood breathes again, slowly.");
-        bg0_print(3, 8, "Somewhere a king stops dreaming.");
-        bg0_print(5, 11, "gilt");
-        bg0_print_num(10, 11, gPl.gilt, 3);
-        bg0_print(15, 11, "time");
-        bg0_print_num(20, 11, secs / 60, 2);
-        bg0_print(22, 11, ":");
-        bg0_print_num(23, 11, (secs % 60) / 10, 1);
-        bg0_print_num(24, 11, secs % 10, 1);
-        bg0_print(5, 12, "deaths");
-        bg0_print_num(12, 12, gGame.deaths, 2);
-        bg0_print(10, 16, "PRESS START");
+        bg0_print(6, 4, "THE HEART IS CUT.");
+        bg0_print(2, 7, "The wood breathes again,");
+        bg0_print(2, 8, "slowly. Somewhere a king");
+        bg0_print(2, 9, "stops dreaming.");
+        bg0_print(4, 12, "gilt");
+        bg0_print_num(9, 12, gPl.gilt, 3);
+        bg0_print(14, 12, "time");
+        bg0_print_num(19, 12, secs / 60, 2);
+        bg0_print(21, 12, ":");
+        bg0_print_num(22, 12, (secs % 60) / 10, 1);
+        bg0_print_num(23, 12, secs % 10, 1);
+        bg0_print(4, 13, "deaths");
+        bg0_print_num(11, 13, gGame.deaths, 2);
+        bg0_print(4, 14, "slain");
+        bg0_print_num(11, 14, gGame.kills, 3);
+        bg0_print(9, 17, "PRESS START");
         fade_start(0, 1);
     }
     if (sWinTimer > 120 && (gKeysDown & KEY_START))
@@ -385,7 +432,22 @@ static void draw_world(void) {
     hud_draw();
 }
 
+u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */
+
+static void debug_spawn(void) {
+    if (!gDbgSpawn)
+        return;
+    int type = gDbgSpawn & 0xFF, n = gDbgSpawn >> 8, i;
+    gDbgSpawn = 0;
+    for (i = 0; i < n; i++) {
+        int px = PX(gPlayer->x) - 60 + (i % 8) * 16;
+        int py = PX(gPlayer->y) - 60 + (i / 8) * 20;
+        enemy_spawn(type, CLAMP(px, 24, room_px_w() - 24), CLAMP(py, 40, room_px_h() - 24));
+    }
+}
+
 static void update_play(void) {
+    debug_spawn();
     if (npc_dialogue_active()) {
         npc_dialogue_update();
         npcs_update();
@@ -425,6 +487,7 @@ static void update_play(void) {
     check_shrine();
     check_exits();
     camera_update(PX(gPlayer->x), PX(gPlayer->y) - 16, FALSE);
+    dark_update();
     draw_world();
 }
 
