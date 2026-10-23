@@ -3,7 +3,7 @@ hex digits ('.' = transparent), stored in OBJ 1D order. The drawings live
 in hero.py, monsters.py, items.py and folk.py; this module only lists
 them in the order the engine's F_* constants are generated."""
 from tiles import A, hflip, vflip  # noqa: F401
-from hero import FRAMES as HERO, SWORD
+from hero import FRAMES as HERO, SWORD, SHIELD
 from monsters import BEETLE, BAT, SLIME, SPITTER, KNIGHT, KSWORD, BOSS
 from items import ITEMS, FX, PROJ, LIFT
 from folk import NPC
@@ -20,6 +20,7 @@ def sheet(name, pal, w, h, frames):
 
 sheet('hero', 'hero', 16, 32, HERO)
 sheet('sword', 'hero', 16, 16, SWORD)
+sheet('shield', 'hero', 16, 16, SHIELD)
 sheet('items', 'fx', 16, 16, ITEMS)
 sheet('beetle', 'bugs', 16, 16, BEETLE)
 sheet('bat', 'bugs', 16, 16, BAT)

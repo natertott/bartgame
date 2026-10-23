@@ -177,6 +177,7 @@ def main():
     check('PAUSE: START opens the pause menu', CP.gstate(c) == GS_MAP, 'state %d' % CP.gstate(c))
     P.snap(c, os.path.join(S, 'pause1.png'))
     P.press(c, 'RIGHT', 2, 4)
+    P.press(c, 'RIGHT', 2, 4)  # sword, shield, then the bombs
     P.press(c, 'L', 2, 4)
     check('PAUSE: L puts the bombs on the L trigger', P.r8(c, pl + 11) == EQ_BOMBS, 'equip %d %d %d' % (P.r8(c, pl + 9), P.r8(c, pl + 10), P.r8(c, pl + 11)))
     P.snap(c, os.path.join(S, 'pause2.png'))

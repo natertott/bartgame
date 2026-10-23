@@ -346,6 +346,97 @@ FRAMES = {
     'itemget': itemget(),
 }
 
+# Going under. Into water: the bloom flails, the petals go under, rings
+# spread. Into a hole: the bloom shrinks away into the dark.
+def ring(w, y, h=3):
+    c = Canvas(16, 32)
+    for yy in range(32):
+        for xx in range(16):
+            dx, dy = (xx + 0.5 - 8) / (w / 2.0), (yy + 0.5 - y) / (h / 2.0)
+            e = dx * dx + dy * dy
+            if 0.55 <= e <= 1.0:
+                c.set(xx, yy, 0xe)
+    return c.rows()
+
+
+DROWN_1 = compose(compose(compose(blank(16, 32), ring(14, 27, 5)), HEAD_S, 0, 12), ITEMGET_ARMS, 0, 14)
+DROWN_2 = compose(compose(blank(16, 32), ring(12, 28, 4)), [r if i < 7 else '.' * 16 for i, r in enumerate(HEAD_S)], 0, 21)
+DROWN_3 = compose(ring(14, 28, 5), ring(6, 28, 2))
+
+
+def shrink(rows, k):
+    """every k-th pixel of a frame, the first opaque of each block"""
+    h, w = len(rows), len(rows[0])
+    out = []
+    for y in range(0, h, k):
+        line = ''
+        for x in range(0, w, k):
+            ch = '.'
+            for dy in range(k):
+                for dx in range(k):
+                    if y + dy < h and x + dx < w and rows[y + dy][x + dx] != '.':
+                        ch = rows[y + dy][x + dx]
+                        break
+                if ch != '.':
+                    break
+            line += ch
+        out.append(line)
+    return out
+
+
+_whole = frame(HEAD_S, BODY_S_HURT)
+FALL_1 = compose(blank(16, 32), [r for r in frame(HEAD_S, BODY_S_HURT)], 0, 4)
+FALL_2 = compose(blank(16, 32), shrink(_whole, 2), 4, 16)
+FALL_3 = compose(blank(16, 32), shrink(_whole, 4), 6, 24)
+
+FRAMES.update({
+    'drown_1': DROWN_1, 'drown_2': DROWN_2, 'drown_3': DROWN_3,
+    'fall_1': FALL_1, 'fall_2': FALL_2, 'fall_3': FALL_3,
+    # the guard: hunched a little behind the shield
+    'guard_s': frame(HEAD_S, BODY_S, 5),
+    'guard_n': frame(HEAD_N, BODY_N, 5),
+    'guard_e': frame(HEAD_E, BODY_E, 5),
+})
+
+
+# The Bark Shield: wooden planks bound in brass, a steel boss. Seen from
+# the front, the side, and behind (its back, when the bloom faces away).
+def shield_front():
+    c = Canvas(16, 16)
+    c.ellipse(7.5, 8, 6.5, 7, 0xf)
+    c.ellipse(7.5, 8, 5.2, 5.7, 0xc)
+    for x in (4, 8, 12):
+        c.vline(x, 3, 13, 0xb)
+    c.ellipse(7.5, 8, 2.0, 2.0, 0xd)
+    c.set(7, 7, 0xe)
+    for y in range(16):
+        for x in range(16):
+            if c.get(x, y) == 0xc and (x + 0.5 - 7.5) + (y + 0.5 - 8) > 6:
+                c.set(x, y, 0xb)
+    c.outline(1)
+    return c.rows()
+
+
+def shield_side():
+    c = Canvas(16, 16)
+    c.ellipse(8, 8, 2.8, 7, 0xf)
+    c.ellipse(8, 8, 1.6, 5.6, 0xc)
+    c.vline(8, 4, 12, 0xb)
+    c.set(8, 8, 0xd)
+    c.outline(1)
+    return c.rows()
+
+
+def shield_back():
+    c = Canvas(16, 16)
+    c.ellipse(7.5, 9, 6.5, 2.4, 0xf)
+    c.ellipse(7.5, 9, 5.2, 1.4, 0xb)
+    c.outline(1)
+    return c.rows()
+
+
+SHIELD = {'front': shield_front(), 'side': shield_side(), 'back': shield_back()}
+
 # The sword: a bright blade, a gold cross guard. Pointing S, E and SE.
 SWORD = {
     'blade_s': L({}, '''

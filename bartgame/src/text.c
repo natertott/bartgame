@@ -17,6 +17,7 @@
 #define PAL15 (15 << 12)
 #define PAL14 (14 << 12)
 #define SWORD_TILE 8     /* player.c streams the sword sheet here */
+#define SHIELD_TILE 20   /* and the shield after it */
 #define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
@@ -426,6 +427,7 @@ void hud_equip_icon(int eq, int px, int py, int prio) {
         case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_FX); break;
         case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_FX); break;
         case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_FX); break;
+        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_HERO); break;
         default: break;
     }
 }

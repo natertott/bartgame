@@ -96,9 +96,9 @@ the ground touches.
 | key | action |
 |---|---|
 | D-pad | walk (1.25 px per frame, like Link) |
-| A | what A holds (the sword to begin with); talk to someone you face |
-| B | what B holds: set a bomb, swing the lamp, leap with the cloak |
-| L | what L holds |
+| A | what A holds (empty to begin with); talk to someone you face |
+| B | what B holds: the sword to begin with; or set a bomb, swing the lamp, leap with the cloak |
+| L | what L holds: the Bark Shield to begin with. Hold it and the Bloom guards: slower, facing fixed, bites and seeds from the front are turned |
 | R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face; throw what you carry |
 | Start | the pause menu: the items, then the map |
 
@@ -108,7 +108,9 @@ a wall or a monster (two hearts of damage for a bush or a pot, four for
 a stone) and may leave a heart or a coin. The sword cuts bushes; bombs
 break bushes, stones and pots. Walk into a chest from below to open it.
 Walk into a locked door with a key to open it. Push into a ledge for a
-moment to drop off it. Pits and water cost a quarter heart and put you
+moment to drop off it. The moment your feet cross into water you go
+under where you stand, petals last, rings spreading; into a hole, you
+shrink away into the dark. Either costs a quarter heart and puts you
 back on the last safe ground.
 
 ## Building
@@ -194,6 +196,7 @@ python3 tools/critical_path.py --boss     # title to win screen, 18 checks
 python3 tools/critical_path.py --seed 0x1234 --boss
 python3 tools/quest_probe.py --seed 0x28c
 python3 tools/lift_probe.py               # roll, lift, throw, boulder, pause menu
+python3 tools/guard_probe.py              # the loadout, the water's edge, a hole, the shield
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```

@@ -23,6 +23,7 @@ PlayerState gPl;
 #define FALL_FRAMES 36
 #define HERO_TILE 0
 #define SWORD_TILE 8
+#define SHIELD_TILE 20 /* three frames, resident after the sword */
 
 static u8 sLastFrame = 0xFF;
 static u8 sWalkTimer;
@@ -39,11 +40,11 @@ void player_new_game(void) {
     memset(&gPl, 0, sizeof(gPl));
     gPl.hp_max = 24;
     gPl.hp = 24;
-    gPl.items = ITEM_SWORD;
+    gPl.items = ITEM_SWORD | ITEM_SHIELD;
     gPl.sword_dmg = 2;
-    gPl.equip[SLOT_A] = EQ_SWORD;
-    gPl.equip[SLOT_B] = EQ_NONE;
-    gPl.equip[SLOT_L] = EQ_NONE;
+    gPl.equip[SLOT_A] = EQ_NONE;
+    gPl.equip[SLOT_B] = EQ_SWORD;
+    gPl.equip[SLOT_L] = EQ_SHIELD;
     gPl.carry = CARRY_NONE;
 }
 
@@ -65,6 +66,7 @@ bool8 player_has_item(int eq) {
         case EQ_BOMBS: return (gPl.items & ITEM_BOMBS) != 0;
         case EQ_LAMP: return (gPl.items & ITEM_LAMP) != 0;
         case EQ_CLOAK: return (gPl.items & ITEM_CLOAK) != 0;
+        case EQ_SHIELD: return (gPl.items & ITEM_SHIELD) != 0;
         default: return FALSE;
     }
 }
@@ -116,6 +118,7 @@ void player_init(int px, int py, int facing) {
     sLastFrame = 0xFF;
     /* the sword blade sheet stays resident in tiles 8..19 */
     dma3_copy32(sheets[SHEET_SWORD].tiles, OBJ_TILE(SWORD_TILE), sheets[SHEET_SWORD].tile_count * 32);
+    dma3_copy32(sheets[SHEET_SHIELD].tiles, OBJ_TILE(SHIELD_TILE), sheets[SHEET_SHIELD].tile_count * 32);
 }
 
 void player_set_pos(int px, int py) {
@@ -141,10 +144,32 @@ bool8 player_is_vulnerable(void) {
     return TRUE;
 }
 
-void player_hurt(int damage, int from_dir) {
+bool8 player_hurt(int damage, int from_dir) {
     Actor* a = gPlayer;
     if (!player_is_vulnerable())
-        return;
+        return FALSE;
+    /* the shield: a blow from the front, while it is held, is turned.
+       from_dir is the way the blow pushes, so the front is the facing
+       turned round. */
+    if (gPl.shield_up) {
+        int front = (facing_to_dir(a->facing) + 16) & 31;
+        int d = (from_dir - front) & 31;
+        if (d <= 5 || d >= 27) {
+            int px = PX(a->x), py = PX(a->y) - 12;
+            switch (a->facing) {
+                case FACE_N: py -= 10; break;
+                case FACE_S: py += 8; break;
+                case FACE_E: px += 10; break;
+                default: px -= 10; break;
+            }
+            fx_spawn(FX_CLANG, px, py);
+            sfx_play(SFX_BUMP);
+            a->kb_dir = from_dir;
+            a->kb_speed = Q8(0.75);
+            a->kb_timer = 6;
+            return FALSE;
+        }
+    }
     gPl.hp -= damage;
     if (gPl.hp < 0)
         gPl.hp = 0;
@@ -162,6 +187,7 @@ void player_hurt(int damage, int from_dir) {
         a->timer = 0;
         gPl.dead_timer = 0;
     }
+    return TRUE;
 }
 
 void player_heal(int amount) {
@@ -297,11 +323,17 @@ static void start_jump(int dir, int forward_speed, s32 zvel) {
     gPl.sword_active = 0;
 }
 
-static void start_fall(void) {
+/* into water (water TRUE) or a hole: the hero is drawn into the tile's
+   middle and goes under there */
+static void start_fall(bool8 water, int tx, int ty) {
     Actor* a = gPlayer;
     gPl.carry = CARRY_NONE;
+    gPl.shield_up = 0;
     a->state = PS_FALL;
+    a->sub = water ? 1 : 0;
     a->timer = FALL_FRAMES;
+    a->x = (tx * 16 + 8) << 16;
+    a->y = (ty * 16 + 13) << 16;
     gPl.sword_active = 0;
     sfx_play(SFX_FALL);
 }
@@ -310,14 +342,12 @@ static void check_floor(void) {
     Actor* a = gPlayer;
     if (a->z > 0)
         return;
-    u8 t = room_type_px(PX(a->x), PX(a->y) - 4);
+    /* the feet point: the moment it crosses into water or a hole, in */
+    int px = PX(a->x), py = PX(a->y) - 2;
+    u8 t = room_type_px(px, py);
     if (t == TT_PIT || t == TT_WATER) {
-        /* only when the feet center is well inside the tile */
-        int fx = PX(a->x) & 15, fy = (PX(a->y) - 4) & 15;
-        if (fx >= 3 && fx <= 12 && fy >= 3 && fy <= 12) {
-            start_fall();
-            return;
-        }
+        start_fall(t == TT_WATER, px >> 4, py >> 4);
+        return;
     }
     if (t == TT_HURT && (gFrame & 31) == 0)
         player_hurt(2, (a->dir + 16) & 31);
@@ -415,12 +445,16 @@ static void state_normal(void) {
             return;
         }
     }
+    /* the shield: held up while its button is held, the hero slows and
+       keeps facing the way the shield points */
+    gPl.shield_up = ((gKeysHeld & player_equip_keys(EQ_SHIELD)) && !gPl.carry) ? 1 : 0;
     if (dir == DIR_NONE) {
         a->speed = 0;
         gPl.push_timer = 0;
         sWalkTimer = 0;
     } else {
-        a->facing = facing_from_dir(dir, a->facing);
+        if (!gPl.shield_up)
+            a->facing = facing_from_dir(dir, a->facing);
         a->dir = dir;
         int ledge = ledge_ahead(dir);
         if (ledge >= 0) {
@@ -434,7 +468,7 @@ static void state_normal(void) {
         } else {
             gPl.push_timer = 0;
         }
-        a->speed = WALK_SPEED;
+        a->speed = gPl.shield_up ? WALK_SPEED / 2 : WALK_SPEED;
         actor_move(a, a->speed, dir);
         sWalkTimer++;
     }
@@ -443,6 +477,7 @@ static void state_normal(void) {
 
 static void state_roll(void) {
     Actor* a = gPlayer;
+    gPl.shield_up = 0;
     int t = a->timer;
     int speed;
     if (t == 0)
@@ -629,6 +664,19 @@ static const u8 sWalk2Frame[4] = { F_HERO_WALK_N2, F_HERO_WALK_E2, F_HERO_WALK_S
 static const u8 sAtkFrame[4] = { F_HERO_ATK_N, F_HERO_ATK_E, F_HERO_ATK_S, F_HERO_ATK_E };
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
+static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
+
+/* the shield held before the hero: in front for S, E and W, behind for N */
+static void draw_shield(void) {
+    Actor* a = gPlayer;
+    int sx = PX(a->x) - 8 - gCamX, sy = PX(a->y) - 32 - gCamY - PX(a->z);
+    switch (a->facing) {
+        case FACE_S: draw_sprite(sx, sy + 15, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, a->prio, PAL_OBJ_HERO); break;
+        case FACE_N: draw_sprite(sx, sy + 9, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_BACK, 0, a->prio, PAL_OBJ_HERO); break;
+        case FACE_E: draw_sprite(sx + 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 0, a->prio, PAL_OBJ_HERO); break;
+        default: draw_sprite(sx - 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 1, a->prio, PAL_OBJ_HERO); break;
+    }
+}
 
 static void draw_sword(void) {
     Actor* a = gPlayer;
@@ -697,9 +745,15 @@ void player_draw(void) {
         case PS_DEAD:
             frame = sHurtFrame[f];
             break;
-        case PS_FALL:
-            frame = sHurtFrame[FACE_S];
+        case PS_FALL: {
+            int t = FALL_FRAMES - a->timer;
+            if (a->sub)
+                frame = t < 12 ? F_HERO_DROWN_1 : t < 24 ? F_HERO_DROWN_2 : F_HERO_DROWN_3;
+            else
+                frame = t < 8 ? F_HERO_FALL_1 : t < 16 ? F_HERO_FALL_2 : F_HERO_FALL_3;
+            a->hflip = 0;
             break;
+        }
         case PS_JUMP:
             frame = sJumpFrame[f];
             break;
@@ -709,6 +763,10 @@ void player_draw(void) {
             break;
         case PS_CARRY:
         default:
+            if (gPl.shield_up) {
+                frame = sGuardFrame[f];
+                break;
+            }
             if (a->speed && sWalkTimer) {
                 int step = (sWalkTimer / 7) & 3; /* TMC: 30-frame cycle */
                 frame = step == 1 ? sWalk1Frame[f] : step == 3 ? sWalk2Frame[f] : sIdleFrame[f];
@@ -720,13 +778,16 @@ void player_draw(void) {
     hero_set_frame(frame);
     a->frame = 0;
     if (a->state == PS_FALL) {
-        /* sink: draw lower and lower, then vanish */
+        /* going under: the drowning frames in place, the hole's frames
+           shrinking; the last frames show nothing */
         int t = FALL_FRAMES - a->timer;
-        if (t > 24)
-            return;
         int sx = PX(a->x) - 8 - gCamX;
-        int sy = PX(a->y) - 32 - gCamY + t;
-        draw_sprite(sx, sy, SHEET_HERO, HERO_TILE, 0, a->hflip, a->prio, a->pal);
+        int sy = PX(a->y) - 32 - gCamY;
+        if (!a->sub && t >= 24)
+            return;
+        if (a->sub && t >= 32)
+            return;
+        draw_sprite(sx, sy, SHEET_HERO, HERO_TILE, 0, 0, a->prio, a->pal);
         return;
     }
     if (a->state == PS_DEAD && gPl.dead_timer > 60 && (gPl.dead_timer & 4))
@@ -742,10 +803,15 @@ void player_draw(void) {
     if (a->state == PS_ATTACK && a->facing == FACE_N) {
         actor_draw(a);
         draw_sword();
+    } else if (gPl.shield_up && a->facing == FACE_N) {
+        draw_shield();
+        actor_draw(a);
     } else {
         if (a->state == PS_ATTACK)
             draw_sword();
         actor_draw(a);
+        if (gPl.shield_up)
+            draw_shield();
     }
     /* the load, rising from the chest to over the head */
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry) {

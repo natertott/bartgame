@@ -379,6 +379,7 @@ typedef struct {
 
 static const PauseItem sPauseItems[] = {
     { EQ_SWORD, ITEM_SWORD, 0xFF, "Sword", "A simple blade with a", "hopeful edge. Cuts bushes." },
+    { EQ_SHIELD, ITEM_SHIELD, 0xFF, "Bark Shield", "Planks bound in brass. Held", "up, it turns bites and seeds." },
     { EQ_BOMBS, ITEM_BOMBS, F_ITEMS_BOMBS, "Blightseeds", "Seeds that burst and open", "cracked walls." },
     { EQ_LAMP, ITEM_LAMP, F_ITEMS_LAMP, "Grail Lamp", "A flame not of this wood.", "Burns webs, lights censers." },
     { EQ_CLOAK, ITEM_CLOAK, F_ITEMS_CLOAK, "Petal Cloak", "Petals that catch the air.", "Leaps chasms and pits." },
@@ -525,7 +526,7 @@ static void update_map(void) {
         for (i = 0; i < sPauseOwnedCount; i++) {
             const PauseItem* it = &sPauseItems[sPauseOwned[i]];
             if (it->icon == 0xFF)
-                hud_equip_icon(EQ_SWORD, (3 + i * 4) * 8, 10 * 8, 0);
+                hud_equip_icon(it->eq, (3 + i * 4) * 8, 10 * 8, 0);
             else
                 draw_sprite((3 + i * 4) * 8, 10 * 8, SHEET_ITEMS, items_sheet_tile(), it->icon, 0, 0, PAL_OBJ_FX);
         }

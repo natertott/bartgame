@@ -1271,6 +1271,63 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the shield, the water's edge, going under (Oct 2026)
+
+The user: start with a sword on B and a shield on L; the shield blocks
+most attacks and projectiles while used, with the Bloom shown holding
+it, wooden to begin with; proper animations for drowning and for
+falling into a hole; and the hit detection at water and holes, which
+only drowned the hero deep inside a wide pool, should trip the moment
+the feet cross a tile's edge.
+
+**The loadout.** `ITEM_SHIELD` (0x40), `EQ_SHIELD`; a new game owns
+sword and shield, equip A none, B sword, L shield. `player_has_item`
+knows it; the pause table lists the Bark Shield ("Planks bound in
+brass. Held up, it turns bites and seeds."), and the owned row draws
+every holdable through `hud_equip_icon`, which draws the shield from a
+new resident `shield` sheet at OBJ tiles 20..31 (three frames: front,
+side, back) after the sword's 8..19.
+
+**The guard.** While the shield's button is held in the normal state
+(and nothing is carried), `gPl.shield_up` is set: walk speed halves,
+the facing stays where it was, the hero wears the `guard_s/n/e` frames
+(hunched one pixel), and the shield is drawn before him (front view
+south, side view east and west, its back behind him north, drawn under
+him then). Rolling, lifting, falling and hurt drop the guard.
+`player_hurt` now returns whether the blow landed: with the shield up,
+a blow whose push direction lies within five thirty-seconds of the
+facing turned round (so, from the front) is turned: a clang before
+the hero, the bump sound, a six-frame shove of 0.75 px, no damage, no
+invulnerability. Every attack goes through `player_hurt` (bites,
+knight swings, seeds, spores, blasts), so all of them are turned from
+the front; from the sides and behind they land.
+
+**Going under.** `check_floor` tests the feet point two pixels above
+the feet, with no inner margin: the frame it reads water or a pit, the
+hero goes under. `start_fall` now takes the kind and the tile, drops
+the carry and the guard, and draws the hero into the tile's middle so
+the animation sits in the water or the hole. Six hero frames: `drown_1`
+(the bloom flailing, arms up, a ring of water), `drown_2` (only the
+petals above the ring), `drown_3` (rings), and `fall_1/2/3` (the hurt
+pose, then the same shrunk to half and to a quarter, sinking). Water
+shows its three for 32 of the 36 frames; a hole its three for 24, then
+nothing until the return.
+
+**Measured.** The new `tools/guard_probe.py`: the loadout; walking into
+a pond the hero goes under with his feet one pixel before the tile's
+edge (x 271 of 272) and comes back a quarter heart down; the chasm
+gate without the cloak drops him in and brings him back; a beetle set
+at his front while he guards costs nothing, at his back a quarter
+heart. 11/11. Critical path 18/18 on two seeds, quests 12/12, hands
+14/14.
+
+**Got wrong on the way.** The probes pressed A for the sword and B for
+the items, and the patch that moved them aborted on an unrelated
+assertion before reaching them, so every thorn gate failed and the
+menu probe put the shield on L; retargeted, all pass. The probes'
+`equip_b` now writes slot A (the free one) and keeps its name.
+
+
 ### BARTGAME: waterfalls and the lit walls (Oct 2026)
 
 Two more pieces of the forest board. **Waterfalls:** `raise_terrace`

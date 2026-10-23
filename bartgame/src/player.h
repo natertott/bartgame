@@ -12,9 +12,10 @@ enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_
 #define ITEM_CLOAK 0x08
 #define ITEM_RELIC 0x10
 #define ITEM_GAUNTLET 0x20 /* worn: lifts boulders */
+#define ITEM_SHIELD 0x40   /* the Bark Shield */
 
 /* what a button holds: the pause menu assigns one to A, B and L */
-enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_COUNT };
+enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD, EQ_COUNT };
 enum { SLOT_A, SLOT_B, SLOT_L, SLOT_COUNT };
 
 /* what the hero carries over his head */
@@ -41,6 +42,7 @@ typedef struct {
     u8 input_lock;
     u8 queued_attack;
     u8 carry;           /* CARRY_* over the head */
+    u8 shield_up;       /* the shield held before the hero this frame */
 } PlayerState;
 
 extern Actor* gPlayer;
@@ -50,7 +52,7 @@ void player_init(int px, int py, int facing);
 void player_new_game(void);
 void player_update(void);
 void player_draw(void);
-void player_hurt(int damage, int from_dir);
+bool8 player_hurt(int damage, int from_dir); /* FALSE when the shield took it */
 void player_heal(int amount);
 void player_item_get(int item_bit, int sprite_frame);
 bool8 player_sword_box(int* x0, int* y0, int* x1, int* y1);

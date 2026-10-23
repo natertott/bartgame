@@ -98,15 +98,15 @@ def go(c, w, target):
             CP.dismiss(c)
         if g == 2:
             CP.face_gate(c, s)
-            P.press(c, 'A', 2, 14)
-            P.press(c, 'A', 2, 14)
+            P.press(c, 'B', 2, 14)
+            P.press(c, 'B', 2, 14)
         if g == 6:
             CP.equip_b(c, CP.EQ_CLOAK)
             x, y, key = CP.door_inside(s)
             CP.teleport(c, x, y)
             P.hold(c, key, 10)
             c.set_keys(P.key(c, key))
-            P.press(c, 'B', 2, 0)
+            P.press(c, 'A', 2, 0)
             for _ in range(70):
                 c.run_frame()
             c.clear_keys(P.key(c, key))
@@ -202,7 +202,7 @@ def main():
                 else:
                     CP.teleport(c, e['x'], e['y'] - 14); key = 'DOWN'
                 P.hold(c, key, 2)
-                P.press(c, 'A', 2, 16)
+                P.press(c, 'B', 2, 16)
             keys0 = P.r8(c, pl + 6)
             talk(c, npc)
             P.run(c, 60)
@@ -250,7 +250,7 @@ def main():
                     clear_enemies(c)  # a bite cancels the swing: this tests the lamp
                     CP.teleport(c, (tx + dx) * 16 + 8, (ty + dy) * 16 + 14)
                     P.hold(c, key, 4)
-                    P.press(c, 'B', 2, 30)
+                    P.press(c, 'A', 2, 30)
                     break
         w_, h_, g = CP.room_tiles(c)
         lit = [k for k, v in g.items() if v == CP.mt('TORCH_LIT')]

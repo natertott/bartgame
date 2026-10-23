@@ -206,17 +206,18 @@ def pl(c, off, w=False):
 
 
 ITEMS, BOMBS, KEYS = 8, 7, 6
-EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK = range(5)
+EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD = range(6)
 
 
 def equip_b(c, eq):
-    """put an item on B through gPl.equip (A, B, L at 9, 10, 11), clearing
-    any other button that held it"""
+    """put an item on A through gPl.equip (A, B, L at 9, 10, 11), clearing
+    any other button that held it. The sword starts on B and the shield
+    on L, so A is the probes' item button (the name is historical)."""
     s = P.sym('gPl')
     for slot in range(3):
         if P.r8(c, s + 9 + slot) == eq:
             P.w8(c, s + 9 + slot, 0)
-    P.w8(c, s + 10, eq)
+    P.w8(c, s + 9, eq)
 
 
 def main():
@@ -269,7 +270,7 @@ def main():
                 clear_enemies(c)
                 face_gate(c, s)
                 for _ in range(2):
-                    P.press(c, 'A', 2, 14)
+                    P.press(c, 'B', 2, 14)
             elif g == 5 and pl(c, KEYS) == 0:
                 print('   route needs a key at', frm, s)
             new, before = cross(c, s)
@@ -277,7 +278,7 @@ def main():
             if new == before:
                 # maybe a thorn remained; try once more
                 face_gate(c, s)
-                P.press(c, 'A', 2, 14)
+                P.press(c, 'B', 2, 14)
                 new, before = cross(c, s)
             if new != (ny_of(frm, s)):
                 print('   crossing failed at', frm, 'side', s, 'got', new)
@@ -301,7 +302,7 @@ def main():
     check('CRACK: reached the cracked wall', ok, 'cell %d' % cell(c))
     equip_b(c, EQ_BOMBS)
     face_gate(c, gs)
-    P.press(c, 'B', 2, 4)
+    P.press(c, 'A', 2, 4)
     x, y, key = door_inside(gs)
     P.hold(c, {'UP': 'DOWN', 'DOWN': 'UP', 'LEFT': 'RIGHT', 'RIGHT': 'LEFT'}[key], 30)
     P.run(c, 170)
@@ -318,7 +319,7 @@ def main():
     check('WEB: reached the web', ok, 'cell %d' % cell(c))
     equip_b(c, EQ_LAMP)
     face_gate(c, gs)
-    P.press(c, 'B', 2, 30)
+    P.press(c, 'A', 2, 30)
     P.snap(c, os.path.join(S, 'cp3.png'))
     new, before = cross(c, gs)
     check('WEB: the lamp burned it', new == ny_of(gc, gs), 'cell %d -> %d' % (before, new))
@@ -335,7 +336,7 @@ def main():
     teleport(c, x, y)
     P.hold(c, key, 10)
     c.set_keys(P.key(c, key))
-    P.press(c, 'B', 2, 0)
+    P.press(c, 'A', 2, 0)
     for _ in range(60):
         c.run_frame()
     c.clear_keys(P.key(c, key))
@@ -378,7 +379,7 @@ def boss_fight(c):
         if keys:
             P.hold(c, keys, 6)
         if abs(dx) < 30 and abs(dy) < 30:
-            P.press(c, 'A', 2, 14)
+            P.press(c, 'B', 2, 14)
             swings += 1
         if step == 60:
             P.snap(c, os.path.join(S, 'cp6.png'))
