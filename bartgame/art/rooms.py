@@ -72,43 +72,45 @@ def expand(rows, w, h, mt_names):
 # the right. A channel crosses the hall with a grate bridge, the great
 # round drain lies below it, and ladders go down into the pools in the
 # lower corners. The slabs are stained, cracked and mossed, the bricks
-# chained, webbed and dripping, and glints wink over anything wet.
+# chained, webbed and dripping; fungus, bones and drips keep to the foot
+# of the walls and the pools, and glints wink only over water, the walls
+# and the rug, so nothing on the open floor looks like a thing to pick up.
 room('sewer_main', '''
 TTTTTMTTTTTMTTTTTTTMTTTTTTTTTMTTTTTTTTTTTMTTTTTTTMTTTTTMTTTT
 W1CHPPWDWCLNWMBTFUHHRUWNWFWFWFWDTABRWMLNSUCHPHPHPHWCttFUWDW2
 WWTAWWWSWCWWFUWWRU..WWWWWFWFWFWWTAWWWCWWWWFUWWWWWWWSWWTAWDWW
-ms,,A1A2A1A2..gr..,,cr;;~g~b~g..dp..;;..g2..;;bn,,BB..ms..,,
-,,CRCCCCCCCCcr,,GD..pd..ESESES..gr..m2BB..R1R2..CN..c2..;;..
-;;SK..PT..g2,,..ms..,,..sh..,,cr,,..bn..,,R3R4..gr..;;pd,,PT
-..c2..;;gr,,CN..,,m2;;..,,pd;;..;;g2,,..cr..ms..CR..,,dp;;..
-,,..;;ms,,..bn..,,RR..,,gr;;..c2..;;sh,,..m2..,,..gr..,,cr,,
+sh,,A1A2A1A2..gr..,,cr;;~g~b~gdp,,..;;..g2..;;..,,BB..msdpbn
+,,CRCCCCCCCCcr,,GD..,,..ESESES..gr..m2BB..R1R2..CN..c2..;;..
+;;SK..PT..g2,,..ms..,,..;;..,,cr,,..;;..,,R3R4..gr..;;pd,,PT
+..c2..;;gr,,CN..,,m2;;..,,..;;..;;g2,,..cr..ms..CR..,,..;;..
+,,..;;ms,,..;;..,,RR..,,gr;;..c2..;;..,,..m2..,,..gr..,,crsh
 WEWEWEEMWEWEWEWEWEEMWEWEWEWEGGGGWEWEWEEMWEWEWEWEEMWEWEWEWEWE
 ~s~~LP~~~g~~~~~b~~LP~~~~~s~~GGGG~~~g~~~~LP~~~b~~~~~s~~~~LP~g
 ~~~~~g~~~~LP~~~~~s~~~~~b~~~~GGGG~~~s~~~~~g~~~~LP~~~~~b~~~s~~
 ESESESESESSMESESESESESESSMESGGGGESESESESSMESESESESESESSMESES
-..gr..;;dp,,..;;c2,,..ms..,,..g2..,,cr;;..,,pd;;..bn..;;m2,,
-,,..cr..,,GD..sh..CNms;;D1D2gr,,PT;;..c2..;;g2,,..;;RR..gr..
-WELDEMWE..ms..;;gr,,pd;;D3D4..c2..,,m2;;..sh..;;WEEMWELDWE..
-~~~s~~~g,,g2;;..,,bn;;..pd..;;ms,,..cr..,,SKgr,,~~~b~~~s~~..
-~g~~~b~~cr;;..ms..;;..gr..;;dp,,..g2..,,bn;;c2,,~s~~~g~~~b,,
+..pd..;;..,,..;;c2,,..ms..,,..g2..,,cr;;..,,..;;..,,..;;m2,,
+,,..cr..,,GD..;;..CNms;;D1D2gr,,PT;;..c2..;;g2,,..;;RR..pd..
+WELDEMWE..ms..;;gr,,..;;D3D4..c2..,,m2;;..,,..;;WEEMWELDWE..
+~~~s~~~gbng2;;..,,..;;..,,..;;ms,,..cr..,,SKbn,,~~~b~~~s~~..
+~g~~~b~~sh;;..ms..;;..gr..;;..,,..g2..dp..;;c2sh~s~~~g~~~b,,
 WWCHWWWCWWFUttWWTAWWWMWWWWWWAAWWRUWWWWWDWWWWFUttWWWCWWCHWWWW
 ''', overlay='''
                                                             
                 *2      *2                    *1            
       *1                    *1                    *3        
-                        *1  *3  *1                          
-                *2  *1                                      
-                                          *3          *3    
-                          *2                          *1    
+                        *1  *3                              
+                                                            
+                                          *3                
+                                                            
                                                             
                                                             
         *2                                                  
                                         *1                  
                                                             
-        *2                                  *1              
-          *1                                                
-                    *3                                      
-      *3                *2                                  
+                                                            
+                                                            
+                                                            
+      *3                                                    
                                                     *2      
                                       *2                    
 ''', objects=[

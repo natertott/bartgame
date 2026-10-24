@@ -1279,7 +1279,9 @@ bricks cracked, mossed, chained, dripping, webbed, scratched, rusted, a
 barred window, a skull in a niche; scum, bubbles and glints on the
 channel, mossed banks; and three transparent glint overlays that wink
 over anything wet. The hub room was relaid with them and gained an
-overlay layer (rooms.py). The sewer set is 277 of 1,024 subtiles.
+overlay layer (rooms.py). Fungus, bones, drips and puddles keep to the
+foot of the walls and the pools, and glints lie only on water, walls
+and the rug: anything bright on open floor read as a pickup. The sewer set is 277 of 1,024 subtiles.
 
 The Pale Gatekeeper and the Billious Peddler are drawn at 32x32 on a
 sheet of their own (`folk32`, two frames each: a blink; her orb pulses,

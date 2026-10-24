@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the hub's floor decorations moved to the walls and pools, glints off the open floor and the gold, so nothing reads as a pickup | "BARTGAME: the drain's decorations keep to the walls" |
 | BARTGAME: thirty grime, drip and glint tiles for the drain and a relaid hub with a glint overlay; the Gatekeeper and Peddler at 32x32 with a blink; a seven-frame tumbling roll | "BARTGAME: grime and glint in the drain, the hub's two drawn large, a tumbling roll" |
 | BARTGAME: a tileset per area (forest 692, sewer 162, mystery 146 of 1,024 each), loaded when the area changes; knights at five sword hits | "BARTGAME: a tileset per area" |
 | BARTGAME: the mystery rooms: behind mouths in the forest's walls, caves, tree hollows and thickets in three sizes holding ten event kinds drawn from size pools (pots, chest, stranger, spring, waves, survive, captain, plates, censers, boulders) with chests paying by size; the sword swing in three poses; the shield drawn in front. `tools/myst_probe.py` 28/28 | "BARTGAME: the mystery rooms" |
