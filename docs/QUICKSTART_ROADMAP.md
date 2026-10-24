@@ -1271,6 +1271,40 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: chunk-built rooms, the bow, the Drain Cap, open knights (Oct 2026)
+
+The forest generator plans each room on a 10x7 grid of 3x3-tile chunks
+(roomgen.c: `plan`, `expand`, the `K_*` kinds and `C_*` sides). Strokes
+lay the plan: door landings, three or four rectangular clearings
+rounded by the trees with lakes in the wide ones, winding chunk paths
+with widths that vary by the chunk and pockets of glade along them,
+a river or a cliff. Every chunk expands into the mask; the old tile
+passes (shores, verges, trail edges, canopy faces) draw the seams, and
+the door lanes are carved six deep so the way in is always open to
+where the chunk paths take over. Dressing is by the chunk: designed
+pieces (a tree, a bush ring, a rock fall, a ruined wall between
+pillars, a thorn hedge, dead trees with bones, a crystal cluster...)
+with the usual closes-no-way tests; single thorns, dead trees, ruin
+walls and crystals are no longer scattered. Quest givers now want two
+open tiles below them (`ensure_npc_spot`): the gardener once stood at
+a lake's edge and could not be spoken to from below.
+
+Mechanics: knights take the sword from any side; a swing gathers
+pickups it reaches and turns seeds and spores back the way the hero
+faces (a shard it breaks); the carried load is held with both arms up
+(nine `carry_*` frames) and a swing drops it; the Thorn Bow (chest of
+the first stage, `CHEST_BOW`) with twenty arrows, `PJ_ARROW` at 3 px a
+frame for 2, drops of 1, 5 and 10 once owned, the Peddler's third ware;
+the Drain Cap (`ITEM2_HUBCAP`, in the pack from the start, on no
+button) opens a 32x32 mouth under the hero (`FX_MOUTH`, `PS_SWALLOWED`),
+fades, and drops him from the drain's ceiling onto his spawn
+(`player_drop_in`). `gPl` grew `arrows` and `items2` at its end, so
+probe offsets held. `tools/wood_probe.py` plays all of it: 22 checks.
+
+The keys: a run has 1.14 locked doors on average (verify-world), on
+side branches, and keys come from key chests, the gardener and large
+mystery rooms, so a player can finish with several unused. Not changed.
+
 ### BARTGAME: the drain's grime and glint, the hub's two drawn large, a tumbling roll (Oct 2026)
 
 Thirty metatiles joined the sewer set: stained, cracked and mossed

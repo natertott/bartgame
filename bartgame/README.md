@@ -65,18 +65,29 @@ sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
 font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
-**The wood's rooms.** Every forest room is 32x24 tiles carved out of
-solid canopy: a corridor in from each door, three to five clearings,
-and winding paths between them whose width wanders from three tiles to
-a squeeze of one, with a soil trail down the middle. A clearing can be
-a lake round an island, and a path that meets water runs straight over
-it on planks; a river may wander across the room, bridged where the
-paths cross it; a dry room may rise, its upper part behind a cliff of
-ledges you can drop from, with one ramp back up, and water pours off
-the cliff in one or two places into a churned pool below. Trees stand in the
-big clearings, bushes and stones narrow the paths without ever closing
-them, and a hoard is sometimes dug into the wall behind a bush or a
-boulder. Fireflies drift over the living rooms. Set pieces span tiles,
+**The wood's rooms.** Every forest room is 32x24 tiles, planned as a
+grid of 3x3-tile chunks (ten by seven over the carvable part) drawn
+from a bank of pieces: forest, open ground, paths of one, two or three
+tiles' width, water, plank bridges, cliffs and their ramps. The plan is
+laid in strokes that span chunks: a landing inside each door, three or
+four clearings (rectangles of open chunks, rounded off by the trees, a
+lake in the heart of a wide one), winding chunk paths from the doors to
+the clearings and between them that open into pockets of glade here and
+there, then a river meandering across the room, bridged where a path
+crosses it, or a cliff along one row of chunks with ledges you can drop
+from and a ramp wherever a path runs down through it, and water pouring
+off the cliff into a churned pool. Every stroke chooses its pieces to
+meet, so water, ledges and paths are shapes and never a scatter of
+single tiles. What stands on the open ground is laid by the chunk as a
+designed piece: a tree, a ring of bushes, a fall of rocks, a ruined
+wall between its pillars, a colonnade, a hedge of thorns, two dead
+trees and their bones, a cluster of crystals, a lantern among flowers,
+a meadow, a clover patch, a hollow log by its stump, a great boulder, a
+tree on its rock, a fairy ring, a pool; only what reads alone on a tile
+is still scattered alone: bushes, rocks, posts, stumps, logs, pillars,
+flowers and grass. Nothing closes a way, and a hoard is sometimes dug
+into the wall behind a bush or a boulder. Fireflies drift over the
+living rooms. Set pieces span tiles,
 painted whole and sliced: two great trees of 3x4 (one with a hollow in
 its trunk, one lopsided with a lantern on its low branch) and roots
 over three tiles of turf, two 2x3 trees (one with a lantern hung in
@@ -115,17 +126,22 @@ generator from the tiles around it.
 | key | action |
 |---|---|
 | D-pad | walk (1.25 px per frame, like Link) |
-| A | what A holds (empty to begin with); talk to someone you face |
+| A | what A holds (empty to begin with); talk to someone you face. The Thorn Bow, from a chest near the start, looses an arrow the way you face; the Drain Cap, in the pack from the start, opens a mouth under you that takes you home to the drain |
 | B | what B holds: the sword to begin with; or set a bomb, swing the lamp, leap with the cloak |
 | L | what L holds: the Bark Shield to begin with. Hold it and the Bloom guards: slower, facing fixed, bites and seeds from the front are turned |
-| R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face; throw what you carry |
+| R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face, held over your head with both arms up; throw what you carry. A sword swing while carrying drops the load at your feet |
 | Start | the pause menu: the items, then the map |
 
 The Rot Gauntlet from the second lock's chest lifts boulders too. A
 thrown thing flies two and a half pixels a frame, breaks on the ground,
 a wall or a monster (two hearts of damage for a bush or a pot, four for
-a stone) and may leave a heart or a coin. The sword cuts bushes; bombs
-break bushes, stones and pots. Walk into a chest from below to open it.
+a stone) and may leave a heart or a coin. The sword cuts bushes, gathers
+any heart or coin its swing reaches, turns a spitter's seed back the
+way you face (yours now, it hurts what it meets) and lands on a thorn
+knight from any side. Bombs break bushes, stones and pots. Arrows, two
+hearts of damage and stopped by walls, come twenty with the bow, in
+ones, fives and tens from the dead, and ten for ten gilt from the
+Peddler. Walk into a chest from below to open it.
 Walk into a locked door with a key to open it. Push into a ledge for a
 moment to drop off it. The moment your feet cross into water you go
 under where you stand, petals last, rings spreading; into a hole, you

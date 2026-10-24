@@ -165,7 +165,7 @@ def main():
         CP.teleport(c, hx, hy)
         c.set_keys(P.key(c, 'L')); P.run(c, 2)
         hp0 = CP.pl(c, 0, True)
-        put_beetle(hx, hy + 14)
+        put_beetle(hx, hy + 9)
         P.run(c, 12)
         c.clear_keys(P.key(c, 'L'))
         check('SHIELD: a bite from behind lands', CP.pl(c, 0, True) < hp0, 'hp %d -> %d' % (hp0, CP.pl(c, 0, True)))

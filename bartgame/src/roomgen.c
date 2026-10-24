@@ -1,24 +1,27 @@
 /* BARTGAME: a forest room from a maze cell. Deterministic from the world
    seed and the cell index, so a room is the same every visit.
 
-   A room is 32x24 metatiles and starts as solid canopy. The generator
-   carves it: a corridor in from each open door, two to four clearings,
-   and winding paths between them whose width wanders between three
-   tiles and one, so a glade opens and then the trunks squeeze in. A
-   clearing can be a lake round an island, and a path that meets water
-   runs straight over it on planks. A river may meander across the room,
-   bridged where the paths cross it. A room with no water may rise: the
-   upper part stands behind a cliff of ledges the hero can drop from, and
-   one ramp leads back up. A soil trail follows the middle of every path.
+   A room is 32x24 metatiles, planned as a grid of 3x3-tile chunks (ten
+   by seven over the carvable part) drawn from a bank: forest, open
+   ground, paths of one, two or three tiles' width, water, plank
+   bridges, cliffs and their ramps. The plan is laid in strokes: a
+   landing inside each door, two or three clearings (rectangles of
+   open chunks, a lake in the heart of a wide one), winding chunk paths
+   from the doors to the clearings and between them, then a river
+   meandering across or a cliff along a row. Every stroke chooses its
+   pieces to meet, so water, ledges and paths are shapes and never a
+   scatter of single tiles. The chunks expand into a mask; the mask
+   becomes ground, and the tile passes draw the seams: shores, verges,
+   trail edges, the canopy's faces and crowns.
 
-   Then the dressing: trees in the big clearings, bushes and stones that
-   narrow the paths without ever closing them, flowers, tall grass,
-   lantern posts, the archetype's ruins or bones or crystals, and a hoard
-   dug into the wall behind a bush or a boulder. The canopy is tiled by
-   what lies beside it: a face of trunks above ground, a lit crown below
-   it, lanterns hung over the paths. Everything the run depends on is
-   placed on ground the flood from the first door reaches, and a door the
-   flood misses is carved to. */
+   Then the dressing, by the chunk: a tree, a ring of bushes, a fall of
+   rocks, a ruined wall between its pillars, a hedge of thorns, dead
+   trees and their bones, crystals, a lantern among flowers, a meadow, a
+   hollow log by its stump, a great boulder; and alone on a tile only
+   what reads alone: bushes, rocks, posts, stumps, logs, pillars,
+   flowers, grass. Nothing closes a way. Everything the run depends on
+   is placed on ground the flood from the first door reaches, and a door
+   the flood misses is carved to. */
 #include "gba.h"
 #include "util.h"
 #include "room.h"
@@ -43,12 +46,6 @@ static u8 sMask[H][W];
 #define P_MID 4
 static u8 sPath[H][W];
 
-typedef struct {
-    s8 x, y, rx, ry;
-    u8 lake;
-} Clearing;
-static Clearing sClear[5];
-static int sClearCount;
 
 /* ------------------------------------------------------------ helpers -- */
 static bool8 inside(int x, int y) {
@@ -72,10 +69,6 @@ static bool8 passable(int x, int y) {
 
 static bool8 watery(u8 m) {
     return m == M_WATER || m == M_FALL;
-}
-
-static bool8 in_ellipse(int dx, int dy, int rx, int ry) {
-    return dx * dx * ry * ry + dy * dy * rx * rx <= rx * rx * ry * ry;
 }
 
 /* door opening tiles per side: two metatiles */
@@ -205,39 +198,90 @@ static void carve(int x, int y) {
         sMask[y][x] = M_FLOOR;
 }
 
-static void carve_ellipse(int cx, int cy, int rx, int ry) {
-    int x, y;
-    for (y = cy - ry; y <= cy + ry; y++)
-        for (x = cx - rx; x <= cx + rx; x++)
-            if (in_ellipse(x - cx, y - cy, rx, ry))
-                carve(x, y);
+/* ------------------------------------------------------------- chunks -- */
+/* The room is planned on a grid of 3x3-tile chunks, ten across and
+   seven down over the carvable part (x 1..30, y 2..22). Every chunk is
+   a piece from a bank: forest, open ground, a path of some width running
+   out of one side or more, water, a plank bridge, a cliff with or
+   without its ramp. The plan is laid in strokes that span chunks, so a
+   lake, a river, a cliff or a path is a shape and never a scatter of
+   tiles, and the pieces along a stroke are chosen to meet: a path's
+   band always holds the middle line, a bridge is the middle line over
+   water, a cliff's ledge row is the chunk's last row with a landing
+   forced under it. Then each chunk is expanded into the mask and the
+   tile passes (shores, verges, trail edges, the canopy's faces) finish
+   the seams. */
+#define CW 10
+#define CH 7
+#define CX0 1
+#define CY0 2
+enum { K_FOREST, K_OPEN, K_PATH, K_WATER, K_BRIDGE, K_CLIFF, K_CLIFF_RAMP };
+#define C_N 1
+#define C_E 2
+#define C_S 4
+#define C_W 8
+typedef struct {
+    u8 kind;
+    u8 conn;  /* C_*: the sides a path runs out of this chunk */
+    u8 width; /* a path's: 1, 2 or 3 tiles */
+    u8 shift; /* a two-wide band takes the middle and the low (0) or high (1) line */
+    u8 lake;  /* water of a lake, else of a river */
+} Chunk;
+static Chunk sChunk[CH][CW];
+typedef struct {
+    s8 x, y, w, h;
+} CRect;
+static CRect sClear[4];
+static int sClearCount;
+static bool8 sWater;
+
+static bool8 cinside(int cx, int cy) {
+    return cx >= 0 && cy >= 0 && cx < CW && cy < CH;
 }
 
-/* a w by w block of path round (x, y), marked with the way it runs */
-static void carve_block(int x, int y, int w, bool8 horiz) {
-    int dx, dy;
-    for (dy = 0; dy < w; dy++)
-        for (dx = 0; dx < w; dx++) {
-            int px = x + dx - w / 2, py = y + dy - w / 2;
-            carve(px, py);
-            if (interior(px, py) && sMask[py][px] == M_FLOOR)
-                sPath[py][px] |= horiz ? P_H : P_V;
-        }
-    if (interior(x, y) && sMask[y][x] == M_FLOOR)
-        sPath[y][x] |= P_MID;
+static Chunk* chunk(int cx, int cy) {
+    return &sChunk[cy][cx];
 }
 
-/* A winding path from (x0,y0) to (x1,y1). It mostly heads along the
-   longer remaining axis but wanders; every few steps its width changes,
-   three tiles, two, or a squeeze of one. Over water it runs straight and
-   one plank wide. */
-static void carve_path(int x0, int y0, int x1, int y1) {
-    int x = x0, y = y0, w = 2, steps = 0, next = 4 + rng_range(&sR, 4), guard = 0;
-    int lock = -1; /* on planks the path keeps its axis: 0 x, 1 y */
-    bool8 horiz = ABS(x1 - x0) >= ABS(y1 - y0);
-    carve_block(x, y, w, horiz);
-    while ((x != x1 || y != y1) && guard++ < 600) {
-        int ax = ABS(x1 - x), ay = ABS(y1 - y);
+static u8 ckind(int cx, int cy) {
+    return cinside(cx, cy) ? sChunk[cy][cx].kind : K_FOREST;
+}
+
+static bool8 cwatery(int cx, int cy) {
+    u8 k = ckind(cx, cy);
+    return k == K_WATER || k == K_BRIDGE;
+}
+
+/* a path runs out of this chunk by side (a C_* bit): forest becomes a
+   path of some width, water a bridge, open ground keeps a trail */
+static void cjoin(int cx, int cy, int side) {
+    static const u8 widths[6] = { 1, 1, 2, 2, 2, 3 };
+    Chunk* k = chunk(cx, cy);
+    if (k->kind == K_FOREST) {
+        k->kind = K_PATH;
+        k->width = widths[rng_range(&sR, 6)];
+        k->shift = rng_next(&sR) & 1;
+    } else if (k->kind == K_WATER) {
+        k->kind = K_BRIDGE;
+    }
+    k->conn |= side;
+}
+
+static void door_chunk(int cx, int cy, int conn) {
+    Chunk* k = chunk(cx, cy);
+    k->kind = K_PATH;
+    k->width = 3;
+    k->conn |= conn;
+}
+
+/* A winding path of chunks from a to b: mostly along the longer axis
+   left, but wandering; over water it keeps its axis, so planks run
+   straight. */
+static void cpath(int x0, int y0, int x1, int y1) {
+    int x = x0, y = y0, guard = 0, lock = -1;
+    while ((x != x1 || y != y1) && guard++ < 100) {
+        int ax = ABS(x1 - x), ay = ABS(y1 - y), nx = x, ny = y, s;
+        bool8 horiz;
         if (lock == 0 && ax)
             horiz = TRUE;
         else if (lock == 1 && ay)
@@ -249,109 +293,330 @@ static void carve_path(int x0, int y0, int x1, int y1) {
         else
             horiz = (rng_range(&sR, 4) < 3) ? (ax >= ay) : (ax < ay);
         if (horiz)
-            x += (x1 > x) ? 1 : -1;
+            nx += (x1 > x) ? 1 : -1;
         else
-            y += (y1 > y) ? 1 : -1;
-        if (interior(x, y) && (sMask[y][x] == M_WATER || sMask[y][x] == M_BRIDGE_H || sMask[y][x] == M_BRIDGE_V)) {
-            if (sMask[y][x] == M_WATER)
-                sMask[y][x] = horiz ? M_BRIDGE_H : M_BRIDGE_V;
-            lock = horiz ? 0 : 1;
-            steps = 0;
+            ny += (y1 > y) ? 1 : -1;
+        s = horiz ? ((nx > x) ? 1 : 3) : ((ny > y) ? 2 : 0);
+        cjoin(x, y, 1 << s);
+        cjoin(nx, ny, 1 << ((s + 2) & 3));
+        lock = cwatery(nx, ny) ? (horiz ? 0 : 1) : -1;
+        x = nx;
+        y = ny;
+    }
+}
+
+/* a rectangle of chunks inside the forest's rim, over no other clearing */
+static bool8 crect_free(int x, int y, int w, int h) {
+    int i, j;
+    if (x < 1 || y < 1 || x + w > CW - 1 || y + h > CH - 1)
+        return FALSE;
+    for (j = y; j < y + h; j++)
+        for (i = x; i < x + w; i++)
+            if (sChunk[j][i].kind != K_FOREST)
+                return FALSE;
+    return TRUE;
+}
+
+static void add_clearing(int x, int y, int w, int h) {
+    int i, j;
+    for (j = y; j < y + h; j++)
+        for (i = x; i < x + w; i++)
+            sChunk[j][i].kind = K_OPEN;
+    sClear[sClearCount].x = x;
+    sClear[sClearCount].y = y;
+    sClear[sClearCount].w = w;
+    sClear[sClearCount].h = h;
+    sClearCount++;
+}
+
+/* A river one chunk wide meandering across the room, through open ground
+   and under the trees where ground lies beside it. A path it meets must
+   cross it, and does, on planks; a path running along it, or a cliff,
+   sends the river elsewhere. */
+static void river(bool8 vertical) {
+    int tries;
+    for (tries = 0; tries < 6; tries++) {
+        int len = vertical ? CH : CW, i, ok = 1, lim = (vertical ? CW : CH) - 2;
+        int pos = vertical ? 2 + rng_range(&sR, CW - 4) : 1 + rng_range(&sR, CH - 2);
+        s8 at[CW];
+        for (i = 0; i < len; i++) {
+            if (i && (i & 1) == 0)
+                pos += (int)rng_range(&sR, 3) - 1;
+            pos = CLAMP(pos, 1, lim);
+            at[i] = pos;
+        }
+        for (i = 0; i < len && ok; i++) {
+            int cx = vertical ? at[i] : i, cy = vertical ? i : at[i];
+            Chunk* k = chunk(cx, cy);
+            if (k->kind == K_PATH || k->kind == K_BRIDGE) {
+                int across = vertical ? (C_E | C_W) : (C_N | C_S), along = vertical ? (C_N | C_S) : (C_E | C_W);
+                if (!(k->conn & across) || (k->conn & along))
+                    ok = 0;
+            } else if (k->kind == K_OPEN && (k->conn & (vertical ? (C_N | C_S) : (C_E | C_W)))) {
+                ok = 0;
+            } else if (k->kind == K_CLIFF || k->kind == K_CLIFF_RAMP) {
+                ok = 0;
+            }
+        }
+        if (!ok)
             continue;
+        for (i = 0; i < len; i++) {
+            int cx = vertical ? at[i] : i, cy = vertical ? i : at[i];
+            Chunk* k = chunk(cx, cy);
+            switch (k->kind) {
+                case K_FOREST: {
+                    u8 a = vertical ? ckind(cx - 1, cy) : ckind(cx, cy - 1);
+                    u8 b = vertical ? ckind(cx + 1, cy) : ckind(cx, cy + 1);
+                    if (a != K_FOREST || b != K_FOREST)
+                        k->kind = K_WATER;
+                    break;
+                }
+                case K_OPEN: k->kind = k->conn ? K_BRIDGE : K_WATER; break;
+                case K_PATH: k->kind = K_BRIDGE; break;
+                default: break;
+            }
         }
-        lock = -1;
-        carve_block(x, y, w, horiz);
-        if (++steps >= next) {
-            static const u8 widths[6] = { 1, 1, 2, 2, 2, 3 };
-            w = widths[rng_range(&sR, 6)];
-            next = (w == 1) ? 3 + rng_range(&sR, 3) : 4 + rng_range(&sR, 5);
-            steps = 0;
-        }
-    }
-}
-
-/* A clearing's heart becomes a lake: a ring of water round an island, or
-   a pond with no island when it is small. The paths already through it
-   stay dry, as causeways. */
-static void fill_lake(const Clearing* c) {
-    int x, y, irx = c->rx - 3, iry = c->ry - 2;
-    for (y = c->y - c->ry + 1; y <= c->y + c->ry - 1; y++)
-        for (x = c->x - c->rx + 1; x <= c->x + c->rx - 1; x++) {
-            if (!interior(x, y) || sMask[y][x] != M_FLOOR || sPath[y][x])
-                continue;
-            if (!in_ellipse(x - c->x, y - c->y, c->rx - 1, c->ry - 1))
-                continue;
-            if (irx >= 1 && iry >= 1 && in_ellipse(x - c->x, y - c->y, irx, iry))
-                continue;
-            sMask[y][x] = M_WATER;
-        }
-}
-
-/* A river two tiles wide meandering across the room. Ground it crosses
-   becomes water; a path it crosses gets planks, straight across. */
-static void carve_river(bool8 horizontal) {
-    static s8 at[W];     /* the river's position along its length */
-    static u8 open[W];   /* it crosses ground here */
-    int i, pos = horizontal ? 6 + rng_range(&sR, H - 12) : 7 + rng_range(&sR, W - 14);
-    int len = horizontal ? W : H;
-    for (i = 0; i < len; i++) {
-        int k;
-        if (i && (i & 3) == 0)
-            pos += (int)rng_range(&sR, 3) - 1;
-        at[i] = pos;
-        open[i] = 0;
-        for (k = 0; k < 2; k++) {
-            int x = horizontal ? i : pos + k, y = horizontal ? pos + k : i;
-            if (interior(x, y) && sMask[y][x] != M_WALL)
-                open[i] = 1;
-        }
-    }
-    for (i = 1; i < len - 1; i++) {
-        int k, bridge = 0, seen = 0;
-        for (k = -2; k <= 2; k++)
-            if (i + k >= 0 && i + k < len && open[i + k])
-                seen = 1;
-        if (!seen)
-            continue; /* it runs on under the trees */
-        for (k = 0; k < 2; k++) {
-            int x = horizontal ? i : at[i] + k, y = horizontal ? at[i] + k : i;
-            if (interior(x, y) && sMask[y][x] == M_FLOOR && (sPath[y][x] & (P_H | P_V)))
-                bridge = 1;
-        }
-        for (k = 0; k < 2; k++) {
-            int x = horizontal ? i : at[i] + k, y = horizontal ? at[i] + k : i;
-            if (!interior(x, y))
-                continue;
-            if (sMask[y][x] == M_FLOOR)
-                sMask[y][x] = bridge ? (horizontal ? M_BRIDGE_V : M_BRIDGE_H) : M_WATER;
-            else if (sMask[y][x] == M_WALL)
-                sMask[y][x] = M_WATER;
-        }
-    }
-}
-
-/* The upper part of the room rises. Where the ground runs on from row ty
-   into row ty+1 a cliff of ledges takes the step: the hero drops from
-   them, and one crossing is a ramp back up. Rows the side doors use are
-   left alone. */
-static void raise_terrace(void) {
-    static const u8 rows[5] = { 7, 8, 13, 14, 15 };
-    int ty = rows[rng_range(&sR, 5)], x, n = 0, ramp;
-    for (x = 1; x < W - 1; x++)
-        if (sMask[ty][x] == M_FLOOR && sMask[ty + 1][x] == M_FLOOR)
-            n++;
-    if (n < 2)
+        sWater = TRUE;
         return;
-    sTerraceRow = ty;
-    ramp = rng_range(&sR, n);
-    for (x = 1; x < W - 1; x++) {
-        if (sMask[ty][x] != M_FLOOR || sMask[ty + 1][x] != M_FLOOR)
+    }
+}
+
+/* A cliff across the room: along one row of chunks, open ground with
+   ground under it ends in a ledge the hero drops from, and where a path
+   runs down through it a ramp carries the path. A path running along the
+   row, or water in it, sends the cliff to another row. */
+static void terrace(void) {
+    static const u8 rows[4] = { 1, 2, 4, 5 };
+    int tries, cx;
+    for (tries = 0; tries < 4; tries++) {
+        int r = rows[rng_range(&sR, 4)], n = 0, ok = 1;
+        for (cx = 0; cx < CW && ok; cx++) {
+            Chunk* k = chunk(cx, r);
+            u8 below = ckind(cx, r + 1);
+            bool8 ground_below = (below == K_OPEN || below == K_PATH);
+            if (k->kind == K_WATER || k->kind == K_BRIDGE)
+                ok = 0;
+            else if (k->kind == K_PATH && ((k->conn & (C_E | C_W)) || !ground_below))
+                ok = 0;
+            else if ((k->kind == K_OPEN || k->kind == K_PATH) && ground_below)
+                n++;
+        }
+        if (!ok || n < 2)
             continue;
-        if (ramp-- == 0) {
-            sMask[ty + 1][x] = M_RAMP;
-            sPath[ty + 1][x] |= P_MID | P_V;
+        for (cx = 0; cx < CW; cx++) {
+            Chunk* k = chunk(cx, r);
+            u8 below = ckind(cx, r + 1);
+            if (below != K_OPEN && below != K_PATH)
+                continue;
+            if (k->kind == K_PATH)
+                k->kind = K_CLIFF_RAMP;
+            else if (k->kind == K_OPEN)
+                k->kind = (k->conn & (C_N | C_S)) ? K_CLIFF_RAMP : K_CLIFF;
+        }
+        sTerraceRow = CY0 + r * 3 + 1;
+        return;
+    }
+}
+
+/* the plan: doors, clearings and their lakes, the paths between, then a
+   river or a cliff */
+static void plan(const Cell* c, bool8 arena, bool8 entry) {
+    int s, i, nodes[4][2], nn = 0;
+    memset(sChunk, 0, sizeof(sChunk));
+    sClearCount = 0;
+    sWater = FALSE;
+    /* the doors: a landing three deep, the width of its two chunks */
+    for (s = 0; s < 4; s++) {
+        if (c->gate[s] == GATE_WALL)
+            continue;
+        if (s == SIDE_N) {
+            door_chunk(4, 0, C_N | C_S); door_chunk(5, 0, C_N | C_S);
+            nodes[nn][0] = 4 + (rng_next(&sR) & 1); nodes[nn][1] = 0;
+        } else if (s == SIDE_S) {
+            door_chunk(4, CH - 1, C_N | C_S); door_chunk(5, CH - 1, C_N | C_S);
+            nodes[nn][0] = 4 + (rng_next(&sR) & 1); nodes[nn][1] = CH - 1;
+        } else if (s == SIDE_E) {
+            door_chunk(CW - 1, 3, C_E | C_W);
+            nodes[nn][0] = CW - 1; nodes[nn][1] = 3;
         } else {
-            sMask[ty + 1][x] = M_LEDGE;
+            door_chunk(0, 3, C_E | C_W);
+            nodes[nn][0] = 0; nodes[nn][1] = 3;
+        }
+        nn++;
+    }
+    /* the clearings: rectangles of open chunks */
+    if (arena) {
+        add_clearing(1, 1, CW - 2, CH - 2);
+    } else if (entry) {
+        add_clearing(3, 2, 4, 3);
+        {
+            int x = (rng_next(&sR) & 1) ? 1 : CW - 3, y = 1 + rng_range(&sR, 2);
+            if (crect_free(x, y, 2, 2))
+                add_clearing(x, y, 2, 2);
+        }
+    } else {
+        int want = 3 + rng_range(&sR, 2), tries;
+        for (tries = 0; tries < 60 && sClearCount < want; tries++) {
+            int w = 2 + rng_range(&sR, 2), h = 2 + rng_range(&sR, 2), x, y;
+            if (sClearCount == 0 && (rng_next(&sR) & 1))
+                w++;
+            x = 1 + rng_range(&sR, CW - 1 - w);
+            y = 1 + rng_range(&sR, CH - 1 - h);
+            if (crect_free(x, y, w, h))
+                add_clearing(x, y, w, h);
+        }
+        /* a lake in the heart of a wide clearing, a ring of ground round it */
+        for (i = 0; i < sClearCount; i++) {
+            CRect* r = &sClear[i];
+            int ix, iy, iw, ih, x, y;
+            if (r->w < 3 || !(c->arch == ARCH_POND || rng_range(&sR, 3) == 0))
+                continue;
+            ix = r->x + 1;
+            iw = r->w - 2;
+            if (r->h >= 3) {
+                iy = r->y + 1;
+                ih = r->h - 2;
+            } else {
+                iy = r->y;
+                ih = r->h;
+            }
+            for (y = iy; y < iy + ih; y++)
+                for (x = ix; x < ix + iw; x++) {
+                    sChunk[y][x].kind = K_WATER;
+                    sChunk[y][x].lake = 1;
+                }
+            sWater = TRUE;
+        }
+    }
+    /* paths: each door to its nearest clearing, the clearings in a chain,
+       one more link for a loop when there are three */
+    for (i = 0; i < nn; i++) {
+        int best = 0, bd = 1 << 30, k;
+        for (k = 0; k < sClearCount; k++) {
+            int d = ABS(nodes[i][0] - (sClear[k].x + sClear[k].w / 2)) + ABS(nodes[i][1] - (sClear[k].y + sClear[k].h / 2));
+            if (d < bd) {
+                bd = d;
+                best = k;
+            }
+        }
+        cpath(nodes[i][0], nodes[i][1], sClear[best].x + sClear[best].w / 2, sClear[best].y + sClear[best].h / 2);
+    }
+    for (i = 0; i + 1 < sClearCount; i++)
+        cpath(sClear[i].x + sClear[i].w / 2, sClear[i].y + sClear[i].h / 2, sClear[i + 1].x + sClear[i + 1].w / 2, sClear[i + 1].y + sClear[i + 1].h / 2);
+    if (sClearCount >= 3 && (rng_next(&sR) & 1))
+        cpath(sClear[0].x + sClear[0].w / 2, sClear[0].y + sClear[0].h / 2, sClear[2].x + sClear[2].w / 2, sClear[2].y + sClear[2].h / 2);
+    /* here and there a path opens into a pocket of glade and closes again */
+    {
+        int cx, cy;
+        for (cy = 1; cy < CH - 1; cy++)
+            for (cx = 1; cx < CW - 1; cx++) {
+                Chunk* k = chunk(cx, cy);
+                if (k->kind == K_PATH && k->width < 3 && rng_range(&sR, 4) == 0)
+                    k->kind = K_OPEN;
+            }
+    }
+    /* a river, or a cliff: never both */
+    if (!arena && !entry && (c->arch == ARCH_POND || rng_range(&sR, 3) == 0))
+        river(rng_next(&sR) & 1);
+    if (!arena && !entry && !sWater && (c->arch == ARCH_RUINS || c->arch == ARCH_BONEYARD || rng_range(&sR, 3) == 0))
+        terrace();
+}
+
+/* does line i of three lie in a band of this width? the middle always does */
+static bool8 in_band(int i, int w, int shift) {
+    return w == 3 || i == 1 || (w == 2 && i == (shift ? 2 : 0));
+}
+
+/* every chunk into the mask: the kinds' shapes, the paths' bands and
+   their middle lines as trails */
+static void expand(void) {
+    int cx, cy, dx, dy;
+    for (cy = 0; cy < CH; cy++) {
+        for (cx = 0; cx < CW; cx++) {
+            Chunk* k = chunk(cx, cy);
+            int ox = CX0 + cx * 3, oy = CY0 + cy * 3;
+            int w = (k->kind == K_BRIDGE) ? 1 : k->width;
+            for (dy = 0; dy < 3; dy++) {
+                for (dx = 0; dx < 3; dx++) {
+                    u8 m = M_WALL, p = 0;
+                    bool8 ew = (k->conn & (C_E | C_W)) != 0, ns = (k->conn & (C_N | C_S)) != 0;
+                    bool8 along_h = (dx == 1 || (dx == 0 && (k->conn & C_W)) || (dx == 2 && (k->conn & C_E)));
+                    bool8 along_v = (dy == 1 || (dy == 0 && (k->conn & C_N)) || (dy == 2 && (k->conn & C_S)));
+                    bool8 h = ew && in_band(dy, w, k->shift) && along_h;
+                    bool8 v = ns && in_band(dx, w, k->shift) && along_v;
+                    bool8 midh = ew && dy == 1 && along_h, midv = ns && dx == 1 && along_v;
+                    switch (k->kind) {
+                        case K_OPEN:
+                            m = M_FLOOR;
+                            if (midh || midv)
+                                p = P_MID;
+                            break;
+                        case K_PATH:
+                            if (h || v) {
+                                m = M_FLOOR;
+                                p = (h ? P_H : 0) | (v ? P_V : 0) | ((midh || midv) ? P_MID : 0);
+                            }
+                            break;
+                        case K_WATER:
+                            m = M_WATER;
+                            break;
+                        case K_BRIDGE:
+                            m = midh ? M_BRIDGE_H : midv ? M_BRIDGE_V : M_WATER;
+                            break;
+                        case K_CLIFF:
+                            m = (dy == 2) ? M_LEDGE : M_FLOOR;
+                            if (midh && dy != 2)
+                                p = P_MID;
+                            break;
+                        case K_CLIFF_RAMP:
+                            m = (dy == 2) ? ((dx == 1) ? M_RAMP : M_LEDGE) : M_FLOOR;
+                            if (dx == 1)
+                                p = P_MID | P_V;
+                            else if (midh && dy != 2)
+                                p = P_MID;
+                            break;
+                        default:
+                            break;
+                    }
+                    sMask[oy + dy][ox + dx] = m;
+                    sPath[oy + dy][ox + dx] = p;
+                }
+            }
+        }
+    }
+    /* a lake's corners are nicked round; the ground under a cliff is a
+       landing the ledges drop onto */
+    for (cy = 0; cy < CH; cy++) {
+        for (cx = 0; cx < CW; cx++) {
+            Chunk* k = chunk(cx, cy);
+            int ox = CX0 + cx * 3, oy = CY0 + cy * 3;
+            if (k->kind == K_WATER && k->lake) {
+                bool8 n = cwatery(cx, cy - 1), e = cwatery(cx + 1, cy), s = cwatery(cx, cy + 1), w = cwatery(cx - 1, cy);
+                if (!n && !w) sMask[oy][ox] = M_FLOOR;
+                if (!n && !e) sMask[oy][ox + 2] = M_FLOOR;
+                if (!s && !w) sMask[oy + 2][ox] = M_FLOOR;
+                if (!s && !e) sMask[oy + 2][ox + 2] = M_FLOOR;
+            }
+            if ((k->kind == K_CLIFF || k->kind == K_CLIFF_RAMP) && cy + 1 < CH)
+                for (dx = 0; dx < 3; dx++)
+                    if (sMask[oy + 3][ox + dx] == M_WALL)
+                        sMask[oy + 3][ox + dx] = M_FLOOR;
+            /* a clearing's outer corners are rounded off by the trees,
+               a path's bends are rounded in */
+            if (k->kind == K_OPEN) {
+                bool8 n = ckind(cx, cy - 1) == K_FOREST, e = ckind(cx + 1, cy) == K_FOREST;
+                bool8 s = ckind(cx, cy + 1) == K_FOREST, w = ckind(cx - 1, cy) == K_FOREST;
+                if (n && w && !sPath[oy][ox]) sMask[oy][ox] = M_WALL;
+                if (n && e && !sPath[oy][ox + 2]) sMask[oy][ox + 2] = M_WALL;
+                if (s && w && !sPath[oy + 2][ox]) sMask[oy + 2][ox] = M_WALL;
+                if (s && e && !sPath[oy + 2][ox + 2]) sMask[oy + 2][ox + 2] = M_WALL;
+            }
+            if (k->kind == K_PATH && k->width < 3) {
+                if ((k->conn & (C_N | C_E)) == (C_N | C_E)) sMask[oy][ox + 2] = M_FLOOR;
+                if ((k->conn & (C_N | C_W)) == (C_N | C_W)) sMask[oy][ox] = M_FLOOR;
+                if ((k->conn & (C_S | C_E)) == (C_S | C_E)) sMask[oy + 2][ox + 2] = M_FLOOR;
+                if ((k->conn & (C_S | C_W)) == (C_S | C_W)) sMask[oy + 2][ox] = M_FLOOR;
+            }
         }
     }
 }
@@ -571,6 +836,119 @@ static void dig_alcove(bool8 blighted) {
     }
 }
 
+/* ------------------------------------------------- the chunk dressing -- */
+/* What stands on open ground is laid by the chunk, as a designed piece:
+   a tree, a ring of bushes, a fall of rocks, a ruined wall between its
+   pillars, a colonnade, a hedge of thorns, two dead trees and their
+   bones, a cluster of crystals, a lantern among flowers, a meadow, a
+   clover patch, a hollow log by its stump, a great boulder, a tree on
+   its rock, a fairy ring, a pool. Each thing checks it closes no way.
+   Only what reads alone on a tile is still scattered alone: bushes,
+   rocks, posts, stumps, logs, pillars, flowers and grass. */
+enum { V_PLAIN, V_MEADOW, V_TREE, V_BUSHES, V_ROCKS, V_RUIN, V_COLONNADE, V_THORNS, V_DEAD, V_CRYSTAL,
+       V_LANTERN, V_CLOVER, V_LOG, V_GBOULDER, V_TREEROCK, V_SHROOMRING, V_POOL };
+
+/* plain ground that is not the trail and not a door's lane */
+static bool8 plain_free(int x, int y) {
+    return is_plain(x, y) && !(sPath[y][x] & P_MID) && !near_door(x, y);
+}
+
+static bool8 plain_block(int x, int y, int w, int h) {
+    int dx, dy;
+    for (dy = 0; dy < h; dy++)
+        for (dx = 0; dx < w; dx++)
+            if (!plain_free(x + dx, y + dy))
+                return FALSE;
+    return TRUE;
+}
+
+static void solid_at(int x, int y, u16 mt) {
+    if (plain_free(x, y) && simple_spot(x, y))
+        room_set(x, y, mt);
+}
+
+static void floor_at(int x, int y, u16 mt) {
+    if (plain_free(x, y))
+        room_set(x, y, mt);
+}
+
+static void block_at(int x, int y, int w, int h, u16 base, bool8 solid) {
+    if (plain_block(x, y, w, h) && (!solid || simple_block(x, y, w, h)))
+        stamp_ground(x, y, w, h, base);
+}
+
+static int pick_variant(const Cell* c, bool8 blighted) {
+    int r = rng_range(&sR, 16);
+    if (blighted)
+        return r < 4 ? V_DEAD : r < 8 ? V_CRYSTAL : r < 10 ? V_SHROOMRING : r < 12 ? V_POOL : r < 13 ? V_ROCKS : V_PLAIN;
+    switch (c->arch) {
+        case ARCH_GROVE: return r < 7 ? V_TREE : r < 9 ? V_LOG : r < 11 ? V_BUSHES : r < 12 ? V_TREEROCK : r < 13 ? V_CLOVER : V_PLAIN;
+        case ARCH_RUINS: return r < 5 ? V_RUIN : r < 7 ? V_COLONNADE : r < 9 ? V_ROCKS : r < 11 ? V_TREE : r < 12 ? V_GBOULDER : V_PLAIN;
+        case ARCH_THICKET: return r < 5 ? V_THORNS : r < 9 ? V_BUSHES : r < 11 ? V_TREE : r < 12 ? V_LOG : V_PLAIN;
+        case ARCH_BONEYARD: return r < 5 ? V_DEAD : r < 7 ? V_POOL : r < 9 ? V_ROCKS : r < 10 ? V_TREE : r < 11 ? V_GBOULDER : V_PLAIN;
+        case ARCH_POND: return r < 3 ? V_ROCKS : r < 5 ? V_LANTERN : r < 7 ? V_CLOVER : r < 9 ? V_TREE : r < 10 ? V_MEADOW : V_PLAIN;
+        default:
+            return r < 4 ? V_TREE : r < 6 ? V_BUSHES : r < 7 ? V_ROCKS : r < 8 ? V_LANTERN : r < 9 ? V_CLOVER : r < 10 ? V_LOG : r < 11 ? V_MEADOW : r < 12 ? V_GBOULDER : r < 13 ? V_TREEROCK : V_PLAIN;
+    }
+}
+
+static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
+    static const u16 rocks[3] = { MT_ROCK, MT_ROCK2, MT_ROCK3 };
+    int ox = CX0 + cx * 3, oy = CY0 + cy * 3, r = rng_range(&sR, 2);
+    switch (v) {
+        case V_MEADOW: block_at(ox, oy, 3, 3, MT_MEADOW_0, FALSE); break;
+        case V_TREE: place_tree(ox + r, oy, blighted); break;
+        case V_BUSHES:
+            solid_at(ox, oy, MT_BUSH); solid_at(ox + 2, oy + 1, MT_BUSH); solid_at(ox + 1, oy + 2, MT_BUSH);
+            break;
+        case V_ROCKS:
+            solid_at(ox, oy, rocks[rng_range(&sR, 3)]); solid_at(ox + 2, oy + 1, rocks[rng_range(&sR, 3)]); solid_at(ox + 1, oy + 2, MT_ROCK_SMALL);
+            break;
+        case V_RUIN:
+            solid_at(ox, oy, MT_PILLAR); solid_at(ox + 1, oy, MT_RUIN_WALL); solid_at(ox + 2, oy, MT_PILLAR);
+            floor_at(ox, oy + 2, MT_MOSSY_STONE); floor_at(ox + 2, oy + 1, MT_MOSSY_STONE);
+            break;
+        case V_COLONNADE:
+            solid_at(ox, oy, MT_PILLAR); solid_at(ox + 2, oy, MT_PILLAR); solid_at(ox, oy + 2, MT_PILLAR); solid_at(ox + 2, oy + 2, MT_PILLAR);
+            floor_at(ox + 1, oy + 1, MT_MOSSY_STONE);
+            break;
+        case V_THORNS:
+            if (r) {
+                floor_at(ox, oy, MT_THORN); floor_at(ox + 1, oy, MT_THORN); floor_at(ox + 2, oy, MT_THORN);
+            } else {
+                floor_at(ox, oy, MT_THORN); floor_at(ox, oy + 1, MT_THORN); floor_at(ox, oy + 2, MT_THORN);
+            }
+            break;
+        case V_DEAD:
+            solid_at(ox, oy, MT_DEAD_TREE); solid_at(ox + 2, oy + 1, MT_DEAD_TREE);
+            floor_at(ox + 1, oy + 2, MT_BONES); floor_at(ox, oy + 2, MT_BONES);
+            break;
+        case V_CRYSTAL:
+            solid_at(ox + 1, oy, MT_BLIGHT_CRYSTAL); solid_at(ox, oy + 1, MT_BLIGHT_CRYSTAL); solid_at(ox + 2, oy + 1, MT_BLIGHT_CRYSTAL);
+            floor_at(ox + 1, oy + 1, MT_BLIGHT_VEIN); floor_at(ox + 1, oy + 2, MT_BLIGHT_VEIN);
+            break;
+        case V_LANTERN:
+            solid_at(ox + 1, oy + 1, MT_LANTERN_POST);
+            floor_at(ox, oy, MT_MOSS_FLOWERS); floor_at(ox + 2, oy + 2, MT_MOSS_FLOWERS2);
+            break;
+        case V_CLOVER:
+            block_at(ox + r, oy + r, 2, 2, MT_CLOVER_0, FALSE);
+            floor_at(ox + 2 - r * 2, oy + 2 - r * 2, MT_MOSS_FLOWERS);
+            break;
+        case V_LOG:
+            block_at(ox, oy + 1, 2, 1, MT_HLOG_0, TRUE);
+            solid_at(ox + 2, oy, MT_STUMP);
+            break;
+        case V_GBOULDER: block_at(ox + r, oy + r, 2, 2, MT_GBOULDER_0, TRUE); break;
+        case V_TREEROCK: block_at(ox + r, oy + r, 2, 2, MT_TREEROCK_0, TRUE); break;
+        case V_SHROOMRING: block_at(ox + r, oy + r, 2, 2, MT_SHROOMRING_0, FALSE); break;
+        case V_POOL:
+            floor_at(ox + 1, oy + 1, MT_BLIGHT_POOL); floor_at(ox + 2, oy, MT_BONES);
+            break;
+        default: break;
+    }
+}
+
 /* ------------------------------------------------------- reachability -- */
 /* flood from (sx, sy) over passable tiles into sReach */
 static void flood_reach(int sx, int sy) {
@@ -659,6 +1037,16 @@ static void ensure_fronted_spot(Spot* out) {
     ensure_spot(out);
 }
 
+/* A spot for someone to talk to: clearance round them and two tiles of
+   open, reached ground below, where the hero stands to speak. */
+static void ensure_npc_spot(Spot* out) {
+    int k;
+    for (k = 0; k < 400; k++)
+        if (find_spot(out, 1, 2) && is_floor(out->x, out->y + 2) && reached(out->x, out->y + 1) && reached(out->x, out->y + 2))
+            return;
+    ensure_fronted_spot(out);
+}
+
 /* A spot for something the run depends on. Tries for clearance, then
    for a spot that blocks nothing, then opens the room's middle. */
 static void ensure_spot(Spot* out) {
@@ -680,8 +1068,6 @@ static void ensure_spot(Spot* out) {
 void roomgen_build(int cell) {
     Cell* c = &gWorld.cells[cell];
     int x, y, s, i;
-    int nodes[4][2], nn = 0;
-    bool8 water = FALSE;
     rng_seed(&sR, hash32(gWorld.seed, cell * 7919 + 13));
     memset(&gSpots, 0, sizeof(gSpots));
     memset(sMask, 0, sizeof(sMask));
@@ -696,13 +1082,19 @@ void roomgen_build(int cell) {
         for (x = 0; x < W; x++)
             room_set_overlay(x, y, MT_NONE);
 
-    /* the door corridors, two wide and three deep, and their inner ends */
+    /* the plan in chunks, then the mask from it */
+    plan(c, arena, entry);
+    expand();
+
+    /* the door corridors: two wide and six deep from each opening, a
+       trail, so the lane a hero walks in by is always open to where the
+       chunk paths take over */
     for (s = 0; s < 4; s++) {
         int x0, y0, x1, y1, k;
         if (c->gate[s] == GATE_WALL)
             continue;
         roomgen_gate_tiles(s, &x0, &y0, &x1, &y1);
-        for (k = 1; k <= 3; k++) {
+        for (k = 1; k <= 6; k++) {
             int ox = (s == SIDE_E) ? -k : (s == SIDE_W) ? k : 0;
             int oy = (s == SIDE_N) ? k : (s == SIDE_S) ? -k : 0;
             carve(x0 + ox, y0 + oy);
@@ -711,68 +1103,8 @@ void roomgen_build(int cell) {
                 sPath[y0 + oy][x0 + ox] |= P_MID | ((s == SIDE_N || s == SIDE_S) ? P_V : P_H);
             if (interior(x1 + ox, y1 + oy))
                 sPath[y1 + oy][x1 + ox] |= P_MID | ((s == SIDE_N || s == SIDE_S) ? P_V : P_H);
-            if (k == 3) {
-                nodes[nn][0] = x1 + ox;
-                nodes[nn][1] = y1 + oy;
-                nn++;
-            }
         }
     }
-
-    /* the clearings */
-    sClearCount = 0;
-    if (arena) {
-        sClear[0].x = W / 2; sClear[0].y = H / 2; sClear[0].rx = 12; sClear[0].ry = 8; sClear[0].lake = 0;
-        sClearCount = 1;
-    } else if (entry) {
-        sClear[0].x = W / 2; sClear[0].y = H / 2 + 1; sClear[0].rx = 9; sClear[0].ry = 5; sClear[0].lake = 0;
-        sClear[1].x = 6 + rng_range(&sR, 4); sClear[1].y = 5 + rng_range(&sR, 3); sClear[1].rx = 3; sClear[1].ry = 2; sClear[1].lake = 0;
-        sClearCount = 2;
-    } else {
-        int k = 3 + rng_range(&sR, 3);
-        for (i = 0; i < k; i++) {
-            Clearing* cl = &sClear[i];
-            cl->x = 6 + rng_range(&sR, W - 12);
-            cl->y = 5 + rng_range(&sR, H - 10);
-            cl->rx = 3 + rng_range(&sR, 4);
-            cl->ry = 2 + rng_range(&sR, 3);
-            cl->lake = (cl->rx >= 4 && cl->ry >= 3 && (c->arch == ARCH_POND || rng_range(&sR, 3) == 0)) ? 1 : 0;
-            if (cl->lake)
-                water = TRUE;
-        }
-        sClearCount = k;
-    }
-    for (i = 0; i < sClearCount; i++)
-        carve_ellipse(sClear[i].x, sClear[i].y, sClear[i].rx, sClear[i].ry);
-    for (i = 0; i < sClearCount; i++)
-        if (sClear[i].lake)
-            fill_lake(&sClear[i]);
-
-    /* paths: each door to its nearest clearing; the clearings in a chain;
-       one more link for a loop when there are three or more */
-    for (i = 0; i < nn; i++) {
-        int best = 0, bd = 1 << 30, k;
-        for (k = 0; k < sClearCount; k++) {
-            int d = ABS(nodes[i][0] - sClear[k].x) + ABS(nodes[i][1] - sClear[k].y);
-            if (d < bd) {
-                bd = d;
-                best = k;
-            }
-        }
-        carve_path(nodes[i][0], nodes[i][1], sClear[best].x, sClear[best].y);
-    }
-    for (i = 0; i + 1 < sClearCount; i++)
-        carve_path(sClear[i].x, sClear[i].y, sClear[i + 1].x, sClear[i + 1].y);
-    if (sClearCount >= 3 && (rng_next(&sR) & 1))
-        carve_path(sClear[0].x, sClear[0].y, sClear[sClearCount - 1].x, sClear[sClearCount - 1].y);
-
-    /* a river, or a terrace: never both */
-    if (!arena && !entry && (c->arch == ARCH_POND || rng_range(&sR, 3) == 0)) {
-        carve_river(rng_next(&sR) & 1);
-        water = TRUE;
-    }
-    if (!arena && !entry && !water && (c->arch == ARCH_RUINS || c->arch == ARCH_BONEYARD || rng_range(&sR, 3) == 0))
-        raise_terrace();
     add_waterfalls();
 
     /* lay the ground */
@@ -814,16 +1146,15 @@ void roomgen_build(int cell) {
             room_set(x, y, mt);
         }
     }
-    /* a lily raft on each lake's open water, where two by two of water
-       has water all round */
-    for (i = 0; i < sClearCount; i++) {
-        Clearing* cl = &sClear[i];
-        int done = 0;
-        if (!cl->lake)
-            continue;
-        for (y = cl->y - cl->ry; y <= cl->y + cl->ry && !done; y++)
-            for (x = cl->x - cl->rx; x <= cl->x + cl->rx && !done; x++) {
+    /* lily rafts on the open water of the lakes: two by two of water with
+       water all round, one raft to a lake, two to a room at most */
+    {
+        int rafts = 0, lx = -99, ly = -99;
+        for (y = 2; y < H - 3 && rafts < 2; y++)
+            for (x = 1; x < W - 3 && rafts < 2; x++) {
                 int dx, dy, ok = 1;
+                if (ABS(x - lx) < 8 && ABS(y - ly) < 8)
+                    continue;
                 for (dy = -1; dy <= 2 && ok; dy++)
                     for (dx = -1; dx <= 2; dx++) {
                         if ((dx == -1 || dx == 2) && (dy == -1 || dy == 2))
@@ -835,7 +1166,9 @@ void roomgen_build(int cell) {
                     }
                 if (ok) {
                     stamp_ground(x, y, 2, 2, MT_RAFT_0);
-                    done = 1;
+                    rafts++;
+                    lx = x;
+                    ly = y;
                 }
             }
     }
@@ -955,61 +1288,29 @@ void roomgen_build(int cell) {
         }
     }
 
-    /* dressing: the pieces that span tiles first (a great tree, a meadow
-       or a fairy ring in the big clearings, a great boulder, a hollow
-       log, clover), then trees, a lantern at a clearing's heart, then
-       the things that narrow the ways */
+    /* dressing: a great tree or two whose crown lies over the forest
+       above its roots; then every open chunk gets its piece; then what
+       may stand alone on a tile, narrowing the ways but never closing
+       one; then the ground's accents */
     if (!arena && !blighted) {
         int want = (c->arch == ARCH_GROVE) ? 2 : (rng_range(&sR, 3) != 0) ? 1 : 0, k;
-        for (k = 0; k < 40 && want > 0; k++)
-            if (place_great_tree(1 + rng_range(&sR, W - 5), 2 + rng_range(&sR, H - 8)))
+        for (k = 0; k < 40 && want > 0; k++) {
+            int cx = rng_range(&sR, CW), cy = 1 + rng_range(&sR, CH - 1);
+            if (ckind(cx, cy) == K_OPEN && ckind(cx, cy - 1) != K_WATER && place_great_tree(CX0 + cx * 3, CY0 + cy * 3 - 3))
                 want--;
-    }
-    for (i = 0; i < sClearCount; i++) {
-        Clearing* cl = &sClear[i];
-        int k;
-        if (cl->lake || arena)
-            continue;
-        if (cl->rx >= 4 && cl->ry >= 3) {
-            for (k = 0; k < 10; k++) {
-                int px = cl->x - cl->rx + 1 + rng_range(&sR, cl->rx * 2 - 3), py = cl->y - cl->ry + 1 + rng_range(&sR, cl->ry * 2 - 3);
-                if (blighted && fits_plain(px, py, 2, 2)) {
-                    stamp_ground(px, py, 2, 2, MT_SHROOMRING_0);
-                    break;
-                }
-                if (!blighted && fits_plain(px, py, 3, 3)) {
-                    stamp_ground(px, py, 3, 3, MT_MEADOW_0);
-                    break;
-                }
-            }
         }
-        if (cl->rx >= 4 && cl->ry >= 3) {
-            int want = 1 + rng_range(&sR, 2);
-            for (k = 0; k < 12 && want > 0; k++) {
-                int tx = cl->x - cl->rx + 1 + rng_range(&sR, cl->rx * 2 - 2), ty = cl->y - cl->ry + rng_range(&sR, cl->ry);
-                if (place_tree(tx, ty, blighted))
-                    want--;
-            }
-        }
-        if (cl->rx >= 3 && (rng_next(&sR) & 1) && is_plain(cl->x, cl->y + 1) && simple_spot(cl->x, cl->y + 1))
-            room_set(cl->x, cl->y + 1, MT_LANTERN_POST);
     }
     if (!arena) {
-        if (rng_next(&sR) & 1)
-            scatter_block(MT_GBOULDER_0, 2, 2, 1, 40);
-        if (rng_next(&sR) & 1)
-            scatter_block(MT_HLOG_0, 2, 1, 1, 40);
-        if (rng_range(&sR, 5) < 2)
-            scatter_block(MT_TREEROCK_0, 2, 2, 1, 40);
-        if (blighted)
-            scatter_ground(MT_SHROOMRING_0, 2, 2, 1 + rng_range(&sR, 2), 30);
-        else
-            scatter_ground(MT_CLOVER_0, 2, 2, 1 + rng_range(&sR, 2), 30);
+        int cx, cy;
+        for (cy = 0; cy < CH; cy++)
+            for (cx = 0; cx < CW; cx++)
+                if (ckind(cx, cy) == K_OPEN)
+                    dress_chunk(cx, cy, pick_variant(c, blighted), blighted);
     }
     if (!blighted) {
-        scatter_solid(MT_BUSH, 4 + rng_range(&sR, 4), 120);
+        scatter_solid(MT_BUSH, 3 + rng_range(&sR, 3), 120);
         scatter_solid(MT_ROCK_SMALL, 1 + rng_range(&sR, 3), 80);
-        scatter_rocks(1 + rng_range(&sR, 3), 60);
+        scatter_rocks(1 + rng_range(&sR, 2), 60);
         scatter_solid(MT_STUMP, rng_range(&sR, 2), 40);
         scatter_solid(MT_LOG, rng_range(&sR, 2), 40);
         scatter_solid(MT_LANTERN_POST, rng_range(&sR, 2), 40);
@@ -1017,33 +1318,23 @@ void roomgen_build(int cell) {
         scatter_floor(MT_MOSS_FLOWERS, 10);
         scatter_floor(MT_MOSS_FLOWERS2, 6);
     } else {
-        scatter_solid(MT_BLIGHT_CRYSTAL, 2 + rng_range(&sR, 3), 80);
-        scatter_solid(MT_DEAD_TREE, 1 + rng_range(&sR, 2), 60);
         scatter_solid(MT_BOULDER, rng_range(&sR, 2), 40);
+        scatter_rocks(rng_range(&sR, 2), 40);
         scatter_floor(MT_BLIGHT_VEIN, 5);
     }
     switch (c->arch) {
-        case ARCH_GROVE:
-            scatter_solid(MT_THORN, 2 + rng_range(&sR, 2), 60);
-            scatter_solid(MT_LOG, 1, 40);
-            break;
         case ARCH_RUINS:
-            scatter_solid(MT_PILLAR, 2 + rng_range(&sR, 3), 80);
-            scatter_solid(MT_RUIN_WALL, 1 + rng_range(&sR, 3), 60);
+            scatter_solid(MT_PILLAR, 1 + rng_range(&sR, 2), 80);
             scatter_floor(MT_MOSSY_STONE, 10);
             if (rng_range(&sR, 3) == 0)
                 scatter_solid(MT_STATUE, 1, 40);
             break;
         case ARCH_THICKET:
-            scatter_solid(MT_THORN, 5 + rng_range(&sR, 4), 120);
             scatter_solid(MT_BUSH, 3, 60);
-            scatter_solid(MT_STUMP, 1, 40);
             break;
         case ARCH_BONEYARD:
-            scatter_floor(MT_BONES, 10);
-            scatter_floor(MT_BLIGHT_POOL, 3);
-            scatter_solid(MT_DEAD_TREE, 1 + rng_range(&sR, 2), 40);
-            scatter_rocks(2, 40);
+            scatter_floor(MT_BONES, 8);
+            scatter_rocks(1, 40);
             break;
         case ARCH_POND:
             scatter_rocks(2, 40);
@@ -1154,11 +1445,11 @@ void roomgen_build(int cell) {
             break;
         case ROLE_NPC_HUNT:
         case ROLE_NPC_FETCH:
-            ensure_spot(&gSpots.npc);
+            ensure_npc_spot(&gSpots.npc);
             gSpots.has_npc = 1;
             break;
         case ROLE_NPC_TORCH:
-            ensure_spot(&gSpots.npc);
+            ensure_npc_spot(&gSpots.npc);
             gSpots.has_npc = 1;
             for (i = 0; i < 4; i++) {
                 /* a censer wants open ground in front of it, to the south,
