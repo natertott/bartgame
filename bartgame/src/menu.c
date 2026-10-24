@@ -302,7 +302,7 @@ static void footer(const char* hint) {
     bg0_print_hud(2, 18, "R: next page");
     bg0_print_hud(18, 18, "Start: out");
     bg0_print_hud(2, 19, hint);
-    bg0_print_hud(16, 19, sSavedTimer ? "      Saved." : "Select: save");
+    bg0_print_hud(17, 19, sSavedTimer ? "      Saved." : "Select: save");
 }
 
 static void grid_icons(const MenuItem* list, const u8* idx, int count) {
