@@ -21,5 +21,6 @@ extern GameState gGame;
 void game_init(void);
 void game_update(void);
 void game_win(void);
+void game_return_to_hub(void); /* the Drain Cap: fade, the hub's spawn, from the ceiling */
 
 #endif

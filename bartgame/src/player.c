@@ -46,6 +46,9 @@ void player_new_game(void) {
     gPl.equip[SLOT_B] = EQ_SWORD;
     gPl.equip[SLOT_L] = EQ_SHIELD;
     gPl.carry = CARRY_NONE;
+    /* the Drain Cap is in the pack from the start, on no button */
+    gPl.items2 = ITEM2_HUBCAP;
+    gPl.arrows = 0;
 }
 
 /* ------------------------------------------------------------- equip -- */
@@ -67,6 +70,8 @@ bool8 player_has_item(int eq) {
         case EQ_LAMP: return (gPl.items & ITEM_LAMP) != 0;
         case EQ_CLOAK: return (gPl.items & ITEM_CLOAK) != 0;
         case EQ_SHIELD: return (gPl.items & ITEM_SHIELD) != 0;
+        case EQ_BOW: return (gPl.items2 & ITEM2_BOW) != 0;
+        case EQ_HUBCAP: return (gPl.items2 & ITEM2_HUBCAP) != 0;
         default: return FALSE;
     }
 }
@@ -84,7 +89,7 @@ void player_equip_set(int slot, int eq) {
 }
 
 /* a new item goes to the first free of B and L */
-static void auto_equip(int eq) {
+void player_auto_equip(int eq) {
     int i;
     for (i = 0; i < SLOT_COUNT; i++)
         if (gPl.equip[i] == eq)
@@ -139,7 +144,7 @@ bool8 player_is_vulnerable(void) {
         return FALSE;
     if (a->state == PS_ROLL && a->timer < 18)
         return FALSE;
-    if (a->state == PS_HURT || a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET)
+    if (a->state == PS_HURT || a->state == PS_FALL || a->state == PS_DEAD || a->state == PS_ITEMGET || a->state == PS_SWALLOWED)
         return FALSE;
     return TRUE;
 }
@@ -214,11 +219,11 @@ void player_item_get(int item_bit, int sprite_frame) {
     a->timer = 0;
     a->facing = FACE_S;
     if (item_bit == ITEM_BOMBS)
-        auto_equip(EQ_BOMBS);
+        player_auto_equip(EQ_BOMBS);
     if (item_bit == ITEM_LAMP)
-        auto_equip(EQ_LAMP);
+        player_auto_equip(EQ_LAMP);
     if (item_bit == ITEM_CLOAK)
-        auto_equip(EQ_CLOAK);
+        player_auto_equip(EQ_CLOAK);
     sfx_play(SFX_ITEM);
 }
 
@@ -526,6 +531,21 @@ static void state_carry(void) {
         throw_carried();
         return;
     }
+    /* a sword swing drops the load at the feet, where it breaks, and
+       the swing follows */
+    if (gKeysDown & player_equip_keys(EQ_SWORD)) {
+        Actor* t = thrown_spawn(gPl.carry, PX(a->x), PX(a->y), a->facing);
+        if (t) {
+            t->speed = 0;
+            t->z = Q16(20);
+            t->zvel = 0;
+        }
+        gPl.carry = CARRY_NONE;
+        a->state = PS_NORMAL;
+        a->timer = 0;
+        gPl.queued_attack = 1;
+        return;
+    }
     if (dir == DIR_NONE) {
         a->speed = 0;
         sWalkTimer = 0;
@@ -587,6 +607,11 @@ static void state_jump(void) {
             actor_move(a, a->speed, a->dir);
     }
     if (a->z <= 0) {
+        if (a->sub == 2) {
+            /* down from the drain's ceiling: a thump and a puff */
+            fx_spawn(FX_PUFF, PX(a->x), PX(a->y) - 4);
+            sfx_play(SFX_BUMP);
+        }
         a->z = 0;
         a->zvel = 0;
         a->sub = 0;
@@ -594,6 +619,66 @@ static void state_jump(void) {
         a->speed = 0;
         check_floor();
     }
+}
+
+/* The Drain Cap's mouth has the hero: he flails, sinks, is gone; then
+   the game takes him home (game_return_to_hub). */
+static void state_swallowed(void) {
+    Actor* a = gPlayer;
+    a->speed = 0;
+    if (a->timer < 255)
+        a->timer++;
+    if (a->timer == 30)
+        a->flags |= AF_HIDDEN;
+    if (a->timer == 44) {
+        extern void game_return_to_hub(void);
+        game_return_to_hub();
+    }
+}
+
+void player_swallow(void) {
+    Actor* a = gPlayer;
+    if (a->state != PS_NORMAL)
+        return;
+    a->state = PS_SWALLOWED;
+    a->timer = 0;
+    a->speed = 0;
+    a->facing = FACE_S;
+    gPl.carry = CARRY_NONE;
+    gPl.shield_up = 0;
+    gPl.sword_active = 0;
+    fx_spawn(FX_MOUTH, PX(a->x), PX(a->y));
+    sfx_play(SFX_FALL);
+}
+
+void player_drop_in(void) {
+    Actor* a = gPlayer;
+    a->flags &= ~AF_HIDDEN;
+    a->state = PS_JUMP;
+    a->sub = 2;
+    a->speed = 0;
+    a->z = Q16(96);
+    a->zvel = 0;
+    a->timer = 0;
+    a->facing = FACE_S;
+}
+
+/* the bow: an arrow from the chest, the way the hero faces */
+bool8 player_shoot(void) {
+    Actor* a = gPlayer;
+    if (gPl.arrows == 0)
+        return FALSE;
+    int px = PX(a->x), py = PX(a->y) - 4;
+    switch (a->facing) {
+        case FACE_N: py -= 6; break;
+        case FACE_S: py += 6; break;
+        case FACE_E: px += 6; break;
+        default: px -= 6; break;
+    }
+    gPl.arrows--;
+    proj_spawn(PJ_ARROW, px, py, facing_to_dir(a->facing), Q8(3.0), 2, TRUE);
+    sfx_play(SFX_SPIT);
+    return TRUE;
 }
 
 static void state_itemget(void) {
@@ -641,6 +726,7 @@ void player_update(void) {
         case PS_DEAD: state_dead(); break;
         case PS_LIFT: state_lift(); break;
         case PS_CARRY: state_carry(); break;
+        case PS_SWALLOWED: state_swallowed(); break;
         default: break;
     }
     if (gPl.lamp_timer)
@@ -678,6 +764,12 @@ static const u8 sAtkFrame[3][4] = {
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
+/* the load over the head: arms up, standing and the two walking steps */
+static const u8 sCarryFrame[3][4] = {
+    { F_HERO_CARRY_N, F_HERO_CARRY_E, F_HERO_CARRY_S, F_HERO_CARRY_E },
+    { F_HERO_CARRY_N1, F_HERO_CARRY_E1, F_HERO_CARRY_S1, F_HERO_CARRY_E1 },
+    { F_HERO_CARRY_N2, F_HERO_CARRY_E2, F_HERO_CARRY_S2, F_HERO_CARRY_E2 },
+};
 
 /* the shield held before the hero: in front for S, E and W, behind for N */
 static void draw_shield(void) {
@@ -776,7 +868,16 @@ void player_draw(void) {
         case PS_LIFT:
             frame = F_HERO_ITEMGET;
             break;
-        case PS_CARRY:
+        case PS_SWALLOWED:
+            /* startled, then shrinking into the mouth like into a hole */
+            frame = a->timer < 10 ? F_HERO_JUMP_S : a->timer < 20 ? F_HERO_FALL_2 : F_HERO_FALL_3;
+            a->hflip = 0;
+            break;
+        case PS_CARRY: {
+            int step = (a->speed && sWalkTimer) ? (sWalkTimer / 7) & 3 : 0;
+            frame = sCarryFrame[step == 1 ? 1 : step == 3 ? 2 : 0][f];
+            break;
+        }
         default:
             if (gPl.shield_up) {
                 frame = sGuardFrame[f];

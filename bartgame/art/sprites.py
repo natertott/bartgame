@@ -5,7 +5,7 @@ them in the order the engine's F_* constants are generated."""
 from tiles import A, hflip, vflip  # noqa: F401
 from hero import FRAMES as HERO, SWORD, SHIELD
 from monsters import BEETLE, BAT, SLIME, SPITTER, KNIGHT, KSWORD, BOSS
-from items import ITEMS, FX, PROJ, LIFT
+from items import ITEMS, FX, PROJ, LIFT, ARROW, MOUTH
 from folk import NPC, BIG
 from portraits import PORTRAITS
 
@@ -35,3 +35,5 @@ sheet('folk32', 'folk', 32, 32, BIG)
 sheet('boss', 'blight', 32, 32, BOSS)
 sheet('portrait', 'portrait', 32, 32, PORTRAITS)
 sheet('lift', 'lift', 16, 16, LIFT)
+sheet('arrow', 'fx', 16, 16, ARROW)
+sheet('mouth', 'fx', 32, 32, MOUTH)

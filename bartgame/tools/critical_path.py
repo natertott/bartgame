@@ -52,6 +52,10 @@ def cell(c):
     return P.r8(c, P.sym('gGame') + 2)
 
 
+def area(c):
+    return P.r8(c, P.sym("gGame") + 1)
+
+
 def gstate(c):
     return P.r8(c, P.sym('gGame'))
 

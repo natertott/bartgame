@@ -3,7 +3,7 @@
 #include "gba.h"
 #include "actor.h"
 
-enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY };
+enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_DEAD, PS_TALK, PS_FROZEN, PS_LIFT, PS_CARRY, PS_SWALLOWED };
 
 /* items, as bits in gPl.items */
 #define ITEM_SWORD 0x01
@@ -13,9 +13,12 @@ enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_
 #define ITEM_RELIC 0x10
 #define ITEM_GAUNTLET 0x20 /* worn: lifts boulders */
 #define ITEM_SHIELD 0x40   /* the Bark Shield */
+/* more items, as bits in gPl.items2 */
+#define ITEM2_BOW 0x01     /* the Thorn Bow, with its arrows */
+#define ITEM2_HUBCAP 0x02  /* the Drain Cap: the way home */
 
 /* what a button holds: the pause menu assigns one to A, B and L */
-enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD, EQ_COUNT };
+enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD, EQ_BOW, EQ_HUBCAP, EQ_COUNT };
 enum { SLOT_A, SLOT_B, SLOT_L, SLOT_COUNT };
 
 /* what the hero carries over his head */
@@ -43,6 +46,8 @@ typedef struct {
     u8 queued_attack;
     u8 carry;           /* CARRY_* over the head */
     u8 shield_up;       /* the shield held before the hero this frame */
+    u8 arrows;          /* for the bow, 50 at most */
+    u8 items2;          /* ITEM2_* */
 } PlayerState;
 
 extern Actor* gPlayer;
@@ -65,5 +70,9 @@ u16 player_equip_keys(int eq);     /* the key bits of the buttons holding eq */
 void player_equip_set(int slot, int eq);
 bool8 player_has_item(int eq);
 void player_heart_piece(void); /* a quarter heart; four make a whole */
+void player_auto_equip(int eq); /* onto the first free of B and L */
+void player_swallow(void);      /* the Drain Cap: a mouth takes the hero under */
+void player_drop_in(void);      /* arriving from the ceiling, falling to the feet */
+bool8 player_shoot(void);       /* the bow: an arrow the way he faces, FALSE without one */
 
 #endif

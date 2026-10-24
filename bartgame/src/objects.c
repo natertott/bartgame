@@ -12,7 +12,7 @@
 #include "game.h"
 #include "world.h"
 
-static u16 sItemsTile, sFxTile, sProjTile, sLiftTile;
+static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile;
 
 static void ensure_sheets(void) {
     if (!sItemsTile)
@@ -26,7 +26,7 @@ static void ensure_sheets(void) {
 }
 
 void objects_room_reset(void) {
-    sItemsTile = sFxTile = sProjTile = sLiftTile = 0;
+    sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = 0;
     ensure_sheets();
 }
 
@@ -46,8 +46,16 @@ Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool
     Actor* a = actor_new(AK_PROJ, type, px, py);
     if (!a)
         return NULL;
-    actor_set_sheet(a, SHEET_PROJ, sProjTile);
-    a->frame = type == PJ_SEED ? F_PROJ_SEED : type == PJ_SPORE ? F_PROJ_SPORE : F_PROJ_SHARD;
+    if (type == PJ_ARROW) {
+        if (!sArrowTile)
+            sArrowTile = sprite_load_sheet(SHEET_ARROW);
+        actor_set_sheet(a, SHEET_ARROW, sArrowTile);
+        a->frame = dir == DIR_N ? F_ARROW_N : dir == DIR_S ? F_ARROW_S : F_ARROW_E;
+        a->hflip = (dir == DIR_W);
+    } else {
+        actor_set_sheet(a, SHEET_PROJ, sProjTile);
+        a->frame = type == PJ_SEED ? F_PROJ_SEED : type == PJ_SPORE ? F_PROJ_SPORE : F_PROJ_SHARD;
+    }
     a->dir = dir;
     a->speed = speed;
     a->damage = damage;
@@ -81,13 +89,34 @@ static void proj_update(Actor* a) {
             actor_free(a);
             return;
         }
-        /* the sword knocks seeds away */
+        /* the sword turns seeds and spores back the way the hero faces,
+           his now; a shard it only breaks */
         int x0, y0, x1, y1;
         if (player_sword_box(&x0, &y0, &x1, &y1) && actor_box_overlap(a, x0, y0, x1, y1)) {
             fx_spawn(FX_CLANG, px, py);
             sfx_play(SFX_BUMP);
-            actor_free(a);
-            return;
+            if (a->type == PJ_SHARD) {
+                actor_free(a);
+                return;
+            }
+            a->dir = facing_to_dir(gPlayer->facing);
+            a->speed = Q8(3.0);
+            a->v[0] = 1;
+            a->timer = 0;
+        }
+    } else {
+        /* the hero's: it hurts the first monster it meets */
+        int i;
+        for (i = 1; i < ACTOR_MAX; i++) {
+            Actor* e = &gActors[i];
+            if (e->kind != AK_ENEMY || !(e->flags & AF_HITTABLE) || e->iframes)
+                continue;
+            if (actors_overlap(a, e)) {
+                enemy_hurt(e, a->damage, a->dir, Q8(1.5));
+                fx_spawn(FX_SPARK, px, py);
+                actor_free(a);
+                return;
+            }
         }
     }
 }
@@ -99,7 +128,8 @@ Actor* pickup_spawn(int type, int px, int py) {
     if (!a)
         return NULL;
     actor_set_sheet(a, SHEET_ITEMS, sItemsTile);
-    static const u8 frames[] = { F_ITEMS_HEART, F_ITEMS_GILT, F_ITEMS_BOMB_PICKUP, F_ITEMS_GILT_BIG, F_ITEMS_KEY, F_ITEMS_RELIC, F_ITEMS_GRAIL };
+    static const u8 frames[] = { F_ITEMS_HEART, F_ITEMS_GILT, F_ITEMS_BOMB_PICKUP, F_ITEMS_GILT_BIG, F_ITEMS_KEY, F_ITEMS_RELIC, F_ITEMS_GRAIL,
+                                 F_ITEMS_ARROW1, F_ITEMS_ARROW5, F_ITEMS_ARROW10 };
     a->frame = frames[type];
     a->hitbox = HB_SMALL;
     a->timer = 0;
@@ -115,7 +145,7 @@ static void pickup_update(Actor* a) {
         a->timer++;
     /* floor drops fade after ten seconds; keys, relics and a placed
        hoard (v[2]) stay */
-    if (a->type <= PK_GILT_BIG && !a->v[2]) {
+    if ((a->type <= PK_GILT_BIG || a->type >= PK_ARROW1) && !a->v[2]) {
         a->v[0]++;
         if (a->v[0] == 0)
             a->v[1]++;
@@ -128,7 +158,11 @@ static void pickup_update(Actor* a) {
             return;
         }
     }
-    if (a->timer > 6 && actors_overlap(a, gPlayer)) {
+    /* the hero gathers it by touch, or with a sword swing that reaches it */
+    int sx0, sy0, sx1, sy1;
+    bool8 reached = actors_overlap(a, gPlayer) ||
+                    (player_sword_box(&sx0, &sy0, &sx1, &sy1) && actor_box_overlap(a, sx0, sy0, sx1, sy1));
+    if (a->timer > 6 && reached) {
         switch (a->type) {
             case PK_HEART: player_heal(8); sfx_play(SFX_HEART); break;
             case PK_GILT: gPl.gilt += 1; sfx_play(SFX_PICKUP); break;
@@ -144,7 +178,12 @@ static void pickup_update(Actor* a) {
             case PK_KEY: gPl.keys++; sfx_play(SFX_KEY); break;
             case PK_RELIC: gPl.items |= ITEM_RELIC; sfx_play(SFX_SECRET); break;
             case PK_GRAIL: game_win(); sfx_play(SFX_WIN); break;
+            case PK_ARROW1: gPl.arrows += 1; sfx_play(SFX_PICKUP); break;
+            case PK_ARROW5: gPl.arrows += 5; sfx_play(SFX_PICKUP); break;
+            case PK_ARROW10: gPl.arrows += 10; sfx_play(SFX_PICKUP); break;
         }
+        if (gPl.arrows > 50)
+            gPl.arrows = 50;
         if (gPl.gilt > 999)
             gPl.gilt = 999;
         if (a->v[2])
@@ -163,6 +202,9 @@ void drop_roll(int px, int py, u32 roll) {
         pickup_spawn(PK_GILT_BIG, px, py);
     else if (r < 12 && (gPl.items & ITEM_BOMBS))
         pickup_spawn(PK_BOMB, px, py);
+    /* with the bow, the dead drop arrows: one often, five sometimes, ten rarely */
+    else if (r >= 12 && (gPl.items2 & ITEM2_BOW))
+        pickup_spawn(r < 14 ? PK_ARROW1 : r < 15 ? PK_ARROW5 : PK_ARROW10, px, py);
 }
 
 /* ----------------------------------------------------------- effects -- */
@@ -185,6 +227,16 @@ Actor* fx_spawn(int type, int px, int py) {
             a->frame = F_FX_FIREFLY1;
             a->z = Q16(10);
             a->prio = 0;
+            break;
+        case FX_MOUTH:
+            /* 32x32, on the ground under the hero's feet, drawn after him
+               so it lies beneath */
+            if (!sMouthTile)
+                sMouthTile = sprite_load_sheet(SHEET_MOUTH);
+            actor_set_sheet(a, SHEET_MOUTH, sMouthTile);
+            a->frame = F_MOUTH_M1;
+            a->prio = 2;
+            a->y += Q16(8);
             break;
         default: break;
     }
@@ -216,6 +268,13 @@ static void fx_update(Actor* a) {
         case FX_FLAME:
             a->frame = (t & 4) ? F_FX_FLAME1 : F_FX_FLAME2;
             if (t >= 20)
+                actor_free(a);
+            break;
+        case FX_MOUTH:
+            a->frame = t < 10 ? F_MOUTH_M1 : t < 26 ? F_MOUTH_M2 : F_MOUTH_M3;
+            if (t == 26)
+                sfx_play(SFX_KILL);
+            if (t >= 60)
                 actor_free(a);
             break;
         case FX_FIREFLY: {

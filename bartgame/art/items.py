@@ -522,3 +522,135 @@ PROJ = {
         ........
     '''),
 }
+
+
+# ------------------------------------------------- the bow and arrows --
+# The Thorn Bow: a stave of dark gold wood, a grey string, an arrow
+# nocked and pointing right. Arrows: grey shafts, white heads, red
+# fletching; bundles of one, five (banded) and ten (a quiver).
+from portraits import line  # noqa: E402
+
+ITEMS['bow'] = L({' ': 6}, '''
+    ................
+    .....11.........
+    ....1651........
+    ...165d1........
+    ...16 d1........
+    ..165 d1........
+    ..165 d1........
+    ..165 d1.33.....
+    ..1651dddddd881.
+    ..165 d1.33.....
+    ..165 d1........
+    ..165 d1........
+    ...16 d1........
+    ...165d1........
+    ....1651........
+    .....11.........
+''')
+
+
+def arrow_diag(c, x0, y0, x1, y1):
+    """an arrow from (x0, y0), the fletched end, to (x1, y1), the head"""
+    line(c, x0, y0, x1, y1, 0xd)
+    c.set(x1, y1, 8)
+    c.set(x1 - 1, y1, 8); c.set(x1, y1 + 1, 8)
+    c.set(x0 + 1, y0, 3); c.set(x0, y0 - 1, 3); c.set(x0 + 1, y0 - 1, 3)
+
+
+def arrow_pick(n):
+    c = Canvas(16, 16)
+    if n == 1:
+        arrow_diag(c, 2, 13, 12, 3)
+    elif n == 5:
+        for i in range(3):
+            arrow_diag(c, 1 + i * 3, 13, 10 + i * 3, 4)
+        for x in range(4, 13):
+            c.set(x, 8 + (12 - x) // 3 - 1, 6)
+    else:
+        c.rect(4, 7, 11, 14, 5)
+        c.hline(4, 11, 7, 6); c.vline(4, 7, 14, 6)
+        c.set(7, 10, 6); c.set(8, 11, 6)
+        for i, x in enumerate((5, 7, 9, 11)):
+            c.vline(x, 2 + (i % 2), 7, 0xd)
+            c.set(x, 1 + (i % 2), 8)
+    c.outline(1)
+    return c.rows()
+
+
+ITEMS['arrow1'] = arrow_pick(1)
+ITEMS['arrow5'] = arrow_pick(5)
+ITEMS['arrow10'] = arrow_pick(10)
+
+
+# The drain cap: an iron manhole cover from the hub, ringed and studded,
+# a violet gleam on it.
+def hubcap():
+    c = Canvas(16, 16)
+    ball(c, 8, 8, 7, 7, (0xc, 0xc, 0xd, 0xe, 0xe))
+    for y in range(16):
+        for x in range(16):
+            d = ((x + 0.5 - 8) ** 2 + (y + 0.5 - 8) ** 2) ** 0.5
+            if 4.6 < d <= 5.4 and (x + y) % 2 == 0:
+                c.set(x, y, 1)
+    for (x, y) in ((8, 3), (8, 12), (3, 8), (12, 8), (5, 5), (10, 5), (5, 10), (10, 10)):
+        c.set(x, y, 1)
+    c.set(6, 4, 0xb); c.set(5, 5, 0xb)
+    c.outline(1)
+    return c.rows()
+
+
+ITEMS['hubcap'] = hubcap()
+
+
+# the arrow in flight: 16 px, three headings (west is east flipped)
+def arrow_fly(d):
+    c = Canvas(16, 16)
+    if d == 'e':
+        c.hline(1, 12, 7, 0xd); c.set(13, 7, 8); c.set(14, 7, 8); c.set(13, 6, 8); c.set(13, 8, 8)
+        c.set(1, 6, 3); c.set(2, 6, 3); c.set(1, 8, 3); c.set(2, 8, 3)
+    elif d == 's':
+        c.vline(7, 1, 12, 0xd); c.set(7, 13, 8); c.set(7, 14, 8); c.set(6, 13, 8); c.set(8, 13, 8)
+        c.set(6, 1, 3); c.set(6, 2, 3); c.set(8, 1, 3); c.set(8, 2, 3)
+    else:
+        c.vline(7, 3, 14, 0xd); c.set(7, 2, 8); c.set(7, 1, 8); c.set(6, 2, 8); c.set(8, 2, 8)
+        c.set(6, 13, 3); c.set(6, 14, 3); c.set(8, 13, 3); c.set(8, 14, 3)
+    c.outline(1)
+    return c.rows()
+
+
+ARROW = {'e': arrow_fly('e'), 's': arrow_fly('s'), 'n': arrow_fly('n')}
+
+
+# The mouth in the ground: lips of blight violet part, open on a dark
+# gullet ringed with teeth and a red tongue, then clench shut.
+def mouth(phase):
+    c = Canvas(32, 32)
+    if phase == 0:
+        c.ellipse(16, 16, 11, 4.5, 9)
+        c.ellipse(16, 16, 9, 2.5, 1)
+        c.hline(9, 22, 16, 2)
+        for x in range(8, 25, 4):
+            c.set(x, 15, 8)
+    elif phase == 1:
+        c.ellipse(16, 16, 14, 10, 9)
+        c.ellipse(16, 16, 12, 8, 1)
+        c.ellipse(16, 20, 8, 4, 2)
+        c.ellipse(16, 21, 6, 2.5, 3)
+        for x in range(6, 27, 4):
+            c.set(x, 9, 8); c.set(x, 10, 8); c.set(x + 1, 9, 8)
+            c.set(x, 23, 8); c.set(x, 22, 8); c.set(x + 1, 23, 8)
+        for (x, y) in ((5, 12), (26, 12), (5, 19), (26, 19)):
+            c.set(x, y, 0xa)
+    else:
+        c.ellipse(16, 16, 14, 4, 9)
+        c.ellipse(16, 16, 12, 2, 0xa)
+        for x in range(5, 28, 3):
+            c.set(x, 16, 8)
+        c.hline(4, 27, 15, 1)
+        c.set(7, 13, 0xb); c.set(24, 13, 0xb)
+    c.outline(1)
+    return c.rows()
+
+
+MOUTH = {'m1': mouth(0), 'm2': mouth(1), 'm3': mouth(2)}

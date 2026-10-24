@@ -166,13 +166,15 @@ static void talk_sage(void) {
         start_text("You carry the seed, the flame and the petal. The Heart waits in the deepest glade. Cut it out.");
 }
 
-static const ShopItem sShop[2] = {
+static const ShopItem sShop[3] = {
     { "Healing Petal", "A preserved bloom. It", "restores two hearts.", 10, F_ITEMS_HEART },
     { "Blightseeds x5", "Five seeds that burst and", "open cracked walls.", 15, F_ITEMS_BOMBS },
+    { "Arrows x10", "Thorn-tipped, fletched with", "crow. For the bow.", 10, F_ITEMS_ARROW10 },
 };
 
+/* the third ware, arrows, is on the counter once the hero has the bow */
 static void talk_merchant(void) {
-    shop_open("The Billious Peddler", sShop, 2);
+    shop_open("The Billious Peddler", sShop, (gPl.items2 & ITEM2_BOW) ? 3 : 2);
     sDlgState = 2;
 }
 
@@ -198,6 +200,17 @@ static void finish_shop(int choice) {
             start_text("Five seeds. Keep them from the damp.");
         } else {
             start_text("Fifteen gilt. The dead pay better than you. Everything here is mine, and it stays mine.");
+        }
+    } else if (choice == 2) {
+        if (gPl.gilt >= 10) {
+            gPl.gilt -= 10;
+            gPl.arrows += 10;
+            if (gPl.arrows > 50)
+                gPl.arrows = 50;
+            sfx_play(SFX_PICKUP);
+            start_text("Ten arrows. Aim for the soft parts. Everything has soft parts.");
+        } else {
+            start_text("Ten gilt the bundle. Come back when the dead have paid you.");
         }
     } else {
         sDlgState = 0;

@@ -28,6 +28,7 @@ static void draw_world(void);
 /* pending transition */
 static u8 sNextArea, sNextCell, sNextSide;
 static u8 sTransPhase;
+static u8 sHubcap; /* the pending transition is the Drain Cap's: drop in at the spawn */
 
 static const char* const sKeyItemText[4] = {
     "",
@@ -197,6 +198,11 @@ static void begin_transition(int area, int cell, int side) {
     fade_start(16, 2);
 }
 
+void game_return_to_hub(void) {
+    sHubcap = 1;
+    begin_transition(AREA_SEWER, 0, 0);
+}
+
 /* --------------------------------------------------------- chests -- */
 static void give_chest(Cell* c) {
     switch (c->role) {
@@ -235,6 +241,13 @@ static void give_chest(Cell* c) {
                         gPl.bombs = 30;
                     player_item_get(0, 1);
                     textbox_open("Eight BLIGHTSEEDS, still warm.");
+                    break;
+                case CHEST_BOW:
+                    gPl.items2 |= ITEM2_BOW;
+                    gPl.arrows = 20;
+                    player_item_get(0, F_ITEMS_BOW);
+                    player_auto_equip(EQ_BOW);
+                    textbox_open("You found the THORN BOW!|Twenty arrows with it. Loose one with its button. The dead drop more; the Peddler sells them.");
                     break;
                 case CHEST_HEART_CONTAINER:
                     gPl.hp_max += 8;
@@ -412,7 +425,7 @@ static void update_title(void) {
    picks a thing and A, B or L takes it; R turns to the map page. */
 typedef struct {
     u8 eq;        /* EQ_* when a button can hold it, else EQ_NONE */
-    u8 item_bit;  /* owned when this bit is set (0: always shown) */
+    u16 item_bit; /* owned when this bit of gPl.items is set; 0x100 and up: of gPl.items2 */
     u8 icon;      /* frame of the items sheet, or 0xFF for the sword */
     const char* name;
     const char* d1;
@@ -427,7 +440,15 @@ static const PauseItem sPauseItems[] = {
     { EQ_CLOAK, ITEM_CLOAK, F_ITEMS_CLOAK, "Petal Cloak", "Petals that catch the air.", "Leaps chasms and pits." },
     { EQ_NONE, ITEM_GAUNTLET, F_ITEMS_GAUNTLET, "Root Gauntlet", "Worn, not held. Roots that", "lift boulders out of the way." },
     { EQ_NONE, ITEM_RELIC, F_ITEMS_RELIC, "the Relic", "The Weeping Nun's. Bring it", "back to her." },
+    { EQ_BOW, 0x100 | ITEM2_BOW, F_ITEMS_BOW, "Thorn Bow", "Yew and gut. Loosed with its", "button. Walls stop the arrows." },
+    { EQ_HUBCAP, 0x100 | ITEM2_HUBCAP, F_ITEMS_HUBCAP, "Drain Cap", "Iron from the hub. Used, the", "muck opens and takes you home." },
 };
+
+static bool8 pause_owned(const PauseItem* it) {
+    if (it->item_bit >= 0x100)
+        return (gPl.items2 & (it->item_bit >> 8)) != 0;
+    return (gPl.items & it->item_bit) != 0;
+}
 #define PAUSE_ITEM_COUNT ((int)(sizeof(sPauseItems) / sizeof(sPauseItems[0])))
 
 static u8 sPausePage;   /* 0 items, 1 map */
@@ -461,7 +482,7 @@ static void pause_items_page(void) {
     /* what the hero owns, in a row */
     sPauseOwnedCount = 0;
     for (i = 0; i < PAUSE_ITEM_COUNT; i++)
-        if (gPl.items & sPauseItems[i].item_bit)
+        if (pause_owned(&sPauseItems[i]))
             sPauseOwned[sPauseOwnedCount++] = i;
     if (sPauseCursor >= sPauseOwnedCount)
         sPauseCursor = 0;
@@ -475,9 +496,9 @@ static void pause_items_page(void) {
     if (sPauseOwnedCount) {
         const PauseItem* it = &sPauseItems[sPauseOwned[sPauseCursor]];
         bg0_print_gold(3, 13, it->name);
-        if (it->eq == EQ_BOMBS) {
+        if (it->eq == EQ_BOMBS || it->eq == EQ_BOW) {
             bg0_print(16, 13, "held");
-            bg0_print_num(21, 13, gPl.bombs, 2);
+            bg0_print_num(21, 13, it->eq == EQ_BOMBS ? gPl.bombs : gPl.arrows, 2);
         }
         bg0_print(3, 14, it->d1);
         bg0_print(3, 15, it->d2);
@@ -734,7 +755,11 @@ static void update_transition(void) {
         if (!fade_done())
             return;
         if (sNextArea == AREA_SEWER) {
-            load_sewer(1);
+            load_sewer(sHubcap ? 0 : 1);
+            if (sHubcap) {
+                sHubcap = 0;
+                player_drop_in();
+            }
             bgm_play(BGM_SEWER);
         } else if (sNextArea == AREA_MYST) {
             load_myst(sNextCell);

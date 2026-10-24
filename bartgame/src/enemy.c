@@ -3,7 +3,7 @@
    feel traces): the rot beetle (Beetle), the spore bat (Keese), the blight
    spitter (Octorok: walk 30/60/60/90, pause 24..80, spit facing the
    player three times in four), the gloom slime (ChuChu), the thorn knight
-   (Darknut: 0.375 px/f, 12 hp, shield front). The Blight Heart boss is
+   (Darknut: 0.375 px/f, 10 hp, no shield: it is hit from any side). The Blight Heart boss is
    its own file. */
 #include "gba.h"
 #include "video.h"
@@ -129,16 +129,6 @@ void enemy_hurt(Actor* e, int damage, int from_dir, int knockback) {
         }
         enemy_kill(e);
     }
-}
-
-/* the knight's shield: a frontal hit does no damage */
-static bool8 knight_blocks(Actor* e, int from_dir) {
-    int facing_dir = facing_to_dir(e->facing);
-    int diff = (from_dir - facing_dir) & 31;
-    /* the hit comes FROM the attacker toward the knight: the attacker is in
-       front when the hit direction is opposite the knight's facing */
-    int toward = (diff + 16) & 31;
-    return toward <= 5 || toward >= 27;
 }
 
 /* ------------------------------------------------------------ the AIs -- */
@@ -475,19 +465,9 @@ void enemies_update(void) {
         /* the sword */
         if (sword && (e->flags & AF_HITTABLE) && !e->iframes && actor_box_overlap(e, sx0, sy0, sx1, sy1)) {
             int from = actor_dir_to(gPlayer, e);
-            if (e->type == EN_KNIGHT && knight_blocks(e, from)) {
-                fx_spawn(FX_CLANG, PX(e->x), PX(e->y) - 16);
-                sfx_play(SFX_BUMP);
-                e->iframes = 10;
-                /* the hero is pushed back a little */
-                gPlayer->kb_dir = (from + 16) & 31;
-                gPlayer->kb_speed = Q8(1.0);
-                gPlayer->kb_timer = 6;
-            } else {
-                enemy_hurt(e, gPl.sword_dmg, from, Q8(1.5));
-                if (e->kind != AK_ENEMY)
-                    continue;
-            }
+            enemy_hurt(e, gPl.sword_dmg, from, Q8(1.5));
+            if (e->kind != AK_ENEMY)
+                continue;
         }
         /* contact: the hero is knocked back, and the biter recoils too
            (TMC: the enemy side of the matrix gets 1.0 px/f) */

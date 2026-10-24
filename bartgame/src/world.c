@@ -465,6 +465,32 @@ void world_generate(u32 seed) {
         }
     }
 
+    /* the Thorn Bow waits in a chest near the start: a free room of the
+       first stage, the nearest to the entry that is not the entry */
+    {
+        int best = -1, bs = 999;
+        for (i = 0; i < CELLS; i++) {
+            Cell* c = &w->cells[i];
+            if (c->role != ROLE_NONE || i == w->entry || i == w->goal || c->stage != 0)
+                continue;
+            int sc = c->dist * 2 + (int)rng_range(&r, 3);
+            if (sc < bs) {
+                bs = sc;
+                best = i;
+            }
+        }
+        if (best < 0)
+            for (i = 0; i < CELLS; i++)
+                if (w->cells[i].role == ROLE_NONE && i != w->entry && i != w->goal) {
+                    best = i;
+                    break;
+                }
+        if (best >= 0) {
+            w->cells[best].role = ROLE_CHEST;
+            w->cells[best].role_arg = CHEST_BOW;
+        }
+    }
+
     /* the fetch quest's relic: a room at the same or lower stage, not behind a lock */
     if (fetch_relic >= 0) {
         int st = w->cells[fetch_relic].stage;

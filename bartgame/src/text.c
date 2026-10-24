@@ -324,9 +324,10 @@ void textbox_update(void) {
 
 /* --------------------------------------------------------------- shop -- */
 #define SH_X 1
-#define SH_Y 7
+#define SH_Y 5
 #define SH_W 28
-#define SH_H 13
+#define SH_H 15
+#define SH_DESC (SH_Y + 10) /* the description rows, under three wares */
 
 static const ShopItem* sShopItems;
 static u8 sShopCount, sShopCursor, sShopActive;
@@ -337,15 +338,15 @@ static void shop_refresh(void) {
     int i;
     for (i = 0; i < sShopCount; i++)
         bg0_put(SH_X + 3, SH_Y + 3 + i * 2, (i == sShopCursor) ? HT_CURSOR : HT_BOX_FILL);
-    bg0_fill(SH_X + 2, SH_Y + 8, SH_W - 4, 2, HT_BOX_FILL);
-    bg0_print(SH_X + 2, SH_Y + 8, sShopItems[sShopCursor].desc1);
-    bg0_print(SH_X + 2, SH_Y + 9, sShopItems[sShopCursor].desc2);
+    bg0_fill(SH_X + 2, SH_DESC, SH_W - 4, 2, HT_BOX_FILL);
+    bg0_print(SH_X + 2, SH_DESC, sShopItems[sShopCursor].desc1);
+    bg0_print(SH_X + 2, SH_DESC + 1, sShopItems[sShopCursor].desc2);
 }
 
 void shop_open(const char* title, const ShopItem* items, int n) {
     int i;
     sShopItems = items;
-    sShopCount = n > 2 ? 2 : n;
+    sShopCount = n > 3 ? 3 : n;
     sShopCursor = 0;
     sShopResult = -2;
     sShopActive = 1;
@@ -361,7 +362,7 @@ void shop_open(const char* title, const ShopItem* items, int n) {
         bg0_print_num(SH_X + 22, row, items[i].price, 3);
     }
     for (i = 0; i < 26; i++)
-        bg0_put(SH_X + 1 + i, SH_Y + 7, HT_RULE);
+        bg0_put(SH_X + 1 + i, SH_DESC - 1, HT_RULE);
     bg0_print(SH_X + 2, SH_Y + SH_H - 2, "A: buy  B: leave");
     bg0_put(SH_X + 20, SH_Y + SH_H - 2, HT_GILT);
     bg0_print_num(SH_X + 21, SH_Y + SH_H - 2, gPl.gilt, 4);
@@ -428,6 +429,8 @@ void hud_equip_icon(int eq, int px, int py, int prio) {
         case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_FX); break;
         case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_FX); break;
         case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_HERO); break;
+        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_FX); break;
+        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_FX); break;
         default: break;
     }
 }
@@ -462,6 +465,8 @@ void hud_draw(void) {
         slot(sSlotX[i], eq != EQ_NONE);
         if (eq == EQ_BOMBS)
             bg0_print_num_hud(sSlotX[i], 2, gPl.bombs, 2);
+        else if (eq == EQ_BOW)
+            bg0_print_num_hud(sSlotX[i], 2, gPl.arrows, 2);
         else
             bg0_print_hud(sSlotX[i], 2, "  ");
         hud_equip_icon(eq, sSlotX[i] * 8, 0, 0);

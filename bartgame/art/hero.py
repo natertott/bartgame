@@ -373,6 +373,33 @@ def itemget():
     return compose(out, ITEMGET_ARMS, 0, 6)
 
 
+# carrying: the load over the head, both arms straight up (one, seen
+# from the side); the body without its side arms under them
+def armless_s(body):
+    out = []
+    for i, r in enumerate(body):
+        if 2 <= i <= 6:
+            r = '....' + r[4:12] + '....'
+        out.append(r)
+    return out
+
+
+def armless_e(body):
+    out = []
+    for i, r in enumerate(body):
+        if 3 <= i <= 6:
+            r = r[:12] + '....'
+        out.append(r)
+    return out
+
+
+ARMS_E = ['.' * 10 + r[10:14] + '..' for r in ITEMGET_ARMS]
+
+
+def carry(head, body, arms):
+    return compose(frame(head, body, 8), arms, 0, 6)
+
+
 # the roll: the bloom ducks, curls into a ball of leaf and petal that
 # tumbles forward (the petal crown and the face turn round it, the boots
 # tucked opposite), lands in a squash and comes up
@@ -442,6 +469,15 @@ FRAMES = {
     'jump_n': frame(HEAD_N, BODY_N_JUMP, 2),
     'jump_e': frame(HEAD_E, BODY_E_JUMP, 2),
     'itemget': itemget(),
+    'carry_s': carry(HEAD_S, armless_s(BODY_S), ITEMGET_ARMS),
+    'carry_s1': carry(HEAD_S, armless_s(BODY_S_W1), ITEMGET_ARMS),
+    'carry_s2': carry(HEAD_S, armless_s(BODY_S_W2), ITEMGET_ARMS),
+    'carry_n': carry(HEAD_N, armless_s(BODY_N), ITEMGET_ARMS),
+    'carry_n1': carry(HEAD_N, armless_s(BODY_N_W1), ITEMGET_ARMS),
+    'carry_n2': carry(HEAD_N, armless_s(BODY_N_W2), ITEMGET_ARMS),
+    'carry_e': carry(HEAD_E, armless_e(BODY_E), ARMS_E),
+    'carry_e1': carry(HEAD_E, armless_e(BODY_E_W1), ARMS_E),
+    'carry_e2': carry(HEAD_E, armless_e(BODY_E_W2), ARMS_E),
 }
 
 # Going under. Into water: the bloom flails, the petals go under, rings

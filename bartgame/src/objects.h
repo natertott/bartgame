@@ -4,11 +4,11 @@
 #include "actor.h"
 
 /* projectiles */
-enum { PJ_SEED, PJ_SPORE, PJ_SHARD };
+enum { PJ_SEED, PJ_SPORE, PJ_SHARD, PJ_ARROW };
 /* pickups: frames in the items sheet */
-enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL };
+enum { PK_HEART, PK_GILT, PK_BOMB, PK_GILT_BIG, PK_KEY, PK_RELIC, PK_GRAIL, PK_ARROW1, PK_ARROW5, PK_ARROW10 };
 /* effects */
-enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ, FX_FIREFLY };
+enum { FX_PUFF, FX_CLANG, FX_BLAST, FX_FLAME, FX_SPARK, FX_BOMB_OBJ, FX_FIREFLY, FX_MOUTH };
 #define OBJ_THROWN 20 /* an AK_OBJECT type: a load in flight */
 
 Actor* proj_spawn(int type, int px, int py, int dir, int speed, int damage, bool8 from_player);
