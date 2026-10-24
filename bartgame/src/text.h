@@ -8,6 +8,8 @@ void bg0_clear(void);
 void bg0_put(int tx, int ty, u16 tile);
 void bg0_put_pal(int tx, int ty, u16 tile, int pal); /* tile 0 clears */
 #define MENU_TILE_BASE (FONT_GLYPHS * 2 + HUD_TILE_COUNT) /* the menu tiles in BG0's charblock */
+#define FONT_BOLD_BASE (MENU_TILE_BASE + MENU_TILE_COUNT)    /* the bold font after them */
+void bg0_print_big(int tx, int ty, const char* s, bool8 gold); /* the bold font, nothing behind it */
 void bg0_print(int tx, int ty, const char* s);
 void bg0_print_gold(int tx, int ty, const char* s);
 void bg0_print_num(int tx, int ty, int n, int width);
@@ -44,6 +46,7 @@ bool8 shop_active(void);
 
 /* the HUD and the mini-map */
 void hud_draw(void);
+void hud_draw_bar(void); /* the hearts, the purse, the buttons: no mini-map */
 void hud_equip_icon(int eq, int px, int py, int prio);
 void hud_clear(void);
 void minimap_render(void);

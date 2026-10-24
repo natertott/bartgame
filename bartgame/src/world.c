@@ -542,6 +542,34 @@ void world_generate(u32 seed) {
     }
 
     myst_generate(w, &r);
+    /* the Map and the Astrolabe wait in two more chests, in free rooms:
+       the Map early (the first stage, nearest after the bow), the
+       Astrolabe anywhere free */
+    {
+        int want[2] = { CHEST_MAP, CHEST_ASTROLABE }, q;
+        for (q = 0; q < 2; q++) {
+            int best = -1, bs = 999;
+            for (i = 0; i < CELLS; i++) {
+                Cell* c = &w->cells[i];
+                if (c->role != ROLE_NONE || i == w->entry || i == w->goal)
+                    continue;
+                if (q == 0 && c->stage > 1)
+                    continue;
+                {
+                    int sc = (q == 0 ? c->dist * 2 : (int)(c->dist & 3)) + (int)rng_range(&r, 3);
+                    if (sc < bs) {
+                        bs = sc;
+                        best = i;
+                    }
+                }
+            }
+            if (best >= 0) {
+                w->cells[best].role = ROLE_CHEST;
+                w->cells[best].role_arg = want[q];
+            }
+        }
+    }
+
     /* archetypes, themes, density */
     for (i = 0; i < CELLS; i++) {
         Cell* c = &w->cells[i];

@@ -1271,6 +1271,33 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: one rotted plank, big items, bare pages, the Map and the Astrolabe (Oct 2026)
+
+The pause backdrop is one 240x160 plank generated in `art/planks.py`
+(grain periodic every 32 pixels so a row's tiles repeat; a knot, a
+crack, rot with mould and mushrooms, grime), deduplicated to 140 tiles
+and laid on BG3 from `planks_map`. The pages lost their bars, titles,
+footers, legend and the save hint: the items page keeps the HUD's top
+row, the others show nothing but their wells and words, in a bold font
+(`font.render_bold`, the glyphs a pixel wider, 95 more tiles in BG0's
+charblock). Items and pickups are 24 pixels in 32-pixel sprites
+(`art/items32.py`: `pick32` on the ground, `icon32` for the menu and the
+item-get; the small `items` sheet stays for the HUD and the shop). The
+zoom is 180x126 at six pixels a tile (368 tiles; with the plank's 140
+that is 508 of charblock 3's 512). The divide in the zoom's pixel loop
+cost a B press; it is a counter table now.
+
+Marks clear when their business is done (a mystery's MF_DONE, a quest's
+CF_QUEST_DONE, a chest's CF_CHEST_OPEN, a shrine's CF_SHRINE_USED, the
+relic's taking). The Map (`ITEM2_MAP`, a chest of the first stage) draws
+every cell; the Astrolabe (`ITEM2_ASTROLABE`, any free room) adds chests
+(at their spot once visited, else the room's middle), the Heart, and the
+barriers: `gate_mark` from the world's gates and `world_gate_open`, dots
+on the overview's N and W edges, marks at the doors in the zoom. Both
+chests are placed after the relic's room so the fetch quest never loses
+its relic (verify-world back to 19,996 of 19,999 with all three quests).
+Saving is automatic at a win and a death; Select does nothing.
+
 ### BARTGAME: the pause menu on planks, the drawn map, the save file (Oct 2026)
 
 `src/menu.c` holds the pause menu now (out of game.c): three pages on

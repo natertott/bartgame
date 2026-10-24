@@ -43,6 +43,7 @@ void text_init(void) {
     }
     /* the menu's tiles after the box font: the carved frames draw with them */
     dma3_copy32(menu_tiles, CHARBLOCK(2) + MENU_TILE_BASE * 16, MENU_TILE_COUNT * 32);
+    dma3_copy32(font_bold_tiles, CHARBLOCK(2) + FONT_BOLD_BASE * 16, FONT_GLYPHS * 32);
     bg0_clear();
 }
 
@@ -92,6 +93,17 @@ void bg0_print_gold(int tx, int ty, const char* s) {
 
 void bg0_print_hud(int tx, int ty, const char* s) {
     bg0_print_pal(tx, ty, s, PAL15, FALSE);
+}
+
+void bg0_print_big(int tx, int ty, const char* s, bool8 gold) {
+    u16 pal = gold ? PAL14 : PAL15;
+    while (*s) {
+        char ch = *s++;
+        if (tx >= 0 && tx < 30 && ty >= 0 && ty < 32 && ch >= 32 && ch < 127)
+            sBg0[ty * 32 + tx] = (ch == ' ') ? 0 : ((FONT_BOLD_BASE + ch - 32) | pal);
+        tx++;
+    }
+    sBg0Dirty = 1;
 }
 
 static void print_num(int tx, int ty, int n, int width, bool8 opaque) {
@@ -450,7 +462,26 @@ void hud_equip_icon(int eq, int px, int py, int prio) {
 static const u8 sSlotX[SLOT_COUNT] = { 12, 15, 18 };
 static const u16 sSlotBtn[SLOT_COUNT] = { HT_BTN_A, HT_BTN_B, HT_BTN_L };
 
+static void hud_bar(void);
+
 void hud_draw(void) {
+    hud_bar();
+    /* the mini-map at the top right */
+    {
+        OamEntry* o = oam_alloc();
+        if (o) {
+            o->attr0 = ATTR0_Y(0) | ATTR0_SQUARE;
+            o->attr1 = ATTR1_X(206) | ATTR1_SIZE(2);
+            o->attr2 = ATTR2_TILE(MINIMAP_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UI);
+        }
+    }
+}
+
+void hud_draw_bar(void) {
+    hud_bar();
+}
+
+static void hud_bar(void) {
     int i;
     int hearts = (gPl.hp_max + 7) / 8;
     int hp = gPl.hp;
@@ -485,15 +516,6 @@ void hud_draw(void) {
     }
     bg0_put(20, 0, HT_BTN_R);
     bg0_put(21, 0, HT_HAND);
-    /* the mini-map at the top right */
-    {
-        OamEntry* o = oam_alloc();
-        if (o) {
-            o->attr0 = ATTR0_Y(0) | ATTR0_SQUARE;
-            o->attr1 = ATTR1_X(206) | ATTR1_SIZE(2);
-            o->attr2 = ATTR2_TILE(MINIMAP_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UI);
-        }
-    }
 }
 
 /* ----------------------------------------------------------- mini-map -- */

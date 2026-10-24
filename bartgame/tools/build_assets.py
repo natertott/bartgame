@@ -277,6 +277,11 @@ data = b''
 for g in glyphs:
     data += tile_bytes(g, 0, 0)
 c.append(c_array_u16('font_tiles', bytes_to_u16(data)))
+bdata = b''
+for g in font.render_bold():
+    bdata += tile_bytes(g, 0, 0)
+c.append(c_array_u16('font_bold_tiles', bytes_to_u16(bdata)))
+h.append('extern const u16 font_bold_tiles[];')
 h.append('extern const u16 font_tiles[];')
 h.append('#define FONT_GLYPHS %d\n' % len(glyphs))
 
@@ -296,6 +301,16 @@ for i, (name, rows) in enumerate(hud.MENU.items()):
 c.append(c_array_u16('menu_tiles', bytes_to_u16(data)))
 h.append('extern const u16 menu_tiles[];')
 h.append('#define MENU_TILE_COUNT %d\n' % len(hud.MENU))
+import planks  # noqa: E402
+ptiles, pmap = planks.tiles_and_map()
+data = b''
+for t in ptiles:
+    data += bytes(t[i] | (t[i + 1] << 4) for i in range(0, 64, 2))
+c.append(c_array_u16('planks_tiles', bytes_to_u16(data)))
+c.append(c_array_u16('planks_map', pmap))
+h.append('extern const u16 planks_tiles[];\nextern const u16 planks_map[];')
+h.append('#define PLANKS_TILE_COUNT %d\n' % len(ptiles))
+print('planks: %d tiles' % len(ptiles))
 
 # --------------------------------------------------------------- title --
 tpix, tpal = title.render()  # 240x160 indices, palette of <=16 hex colors

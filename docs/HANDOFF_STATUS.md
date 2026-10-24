@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: one rotted plank behind bare pause pages in a bold font, items and pickups at 24 pixels, maps larger with marks that clear when done, the Map and the Astrolabe, autosave at a win or a death | "BARTGAME: one rotted plank, big items, bare pages, the Map and the Astrolabe" |
 | BARTGAME: the pause menu on rotted planks with an items grid, key items and a drawn map that zooms into a cell with its marks; carved frames on every box; a save file in SRAM with CONTINUE on the title | "BARTGAME: the pause menu on planks, the drawn map, the save file" |
 | BARTGAME: rooms planned on a grid of 3x3 chunks from a bank of pieces, dressed by the chunk; the Thorn Bow and arrows; the Drain Cap home; knights open from the front; the sword gathers and deflects; carry with arms up | "BARTGAME: chunk-built rooms, the bow, the Drain Cap, open knights" |
 | BARTGAME: the hub's floor decorations moved to the walls and pools, glints off the open floor and the gold, so nothing reads as a pickup | "BARTGAME: the drain's decorations keep to the walls" |

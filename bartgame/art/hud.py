@@ -505,3 +505,77 @@ m('frame_b', '''
     DDDDDDDD
     ........
 ''')
+
+# the pause menu's wells: a 4x4-tile carved hollow round a 32-pixel
+# icon, dim or lit (the right and bottom sides are the left and top
+# flipped)
+m('well_tl', '''
+    ........
+    .DDDDDDD
+    .DEEEEEE
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+''')
+m('well_t', '''
+    ........
+    DDDDDDDD
+    EEEEEEEE
+    DDDDDDDD
+    11111111
+    11111111
+    11111111
+    11111111
+''')
+m('well_l', '''
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+    .DED1111
+''')
+m('well_fill', '''
+    11111111
+    11111111
+    11111111
+    11111111
+    11111111
+    11111111
+    11111111
+    11111111
+''')
+m('well_lit_tl', '''
+    ........
+    .2222222
+    .2FFFFFF
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+''')
+m('well_lit_t', '''
+    ........
+    22222222
+    FFFFFFFF
+    AAAAAAAA
+    11111111
+    11111111
+    11111111
+    11111111
+''')
+m('well_lit_l', '''
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+    .2FA1111
+''')

@@ -12,7 +12,7 @@
 #include "game.h"
 #include "world.h"
 
-static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile;
+static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 
 static void ensure_sheets(void) {
     if (!sItemsTile)
@@ -23,10 +23,20 @@ static void ensure_sheets(void) {
         sProjTile = sprite_load_sheet(SHEET_PROJ);
     if (!sLiftTile)
         sLiftTile = sprite_load_sheet(SHEET_LIFT);
+    if (!sPickTile)
+        sPickTile = sprite_load_sheet(SHEET_PICK32);
+}
+
+/* the treasures at 32 pixels, for the item-get and the pause menu: loaded
+   when first wanted, so a room's monsters come first */
+u16 icon32_sheet_tile(void) {
+    if (!sIconTile)
+        sIconTile = sprite_load_sheet(SHEET_ICON32);
+    return sIconTile;
 }
 
 void objects_room_reset(void) {
-    sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = 0;
+    sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = sPickTile = sIconTile = 0;
     ensure_sheets();
 }
 
@@ -127,9 +137,9 @@ Actor* pickup_spawn(int type, int px, int py) {
     Actor* a = actor_new(AK_PICKUP, type, px, py);
     if (!a)
         return NULL;
-    actor_set_sheet(a, SHEET_ITEMS, sItemsTile);
-    static const u8 frames[] = { F_ITEMS_HEART, F_ITEMS_GILT, F_ITEMS_BOMB_PICKUP, F_ITEMS_GILT_BIG, F_ITEMS_KEY, F_ITEMS_RELIC, F_ITEMS_GRAIL,
-                                 F_ITEMS_ARROW1, F_ITEMS_ARROW5, F_ITEMS_ARROW10 };
+    actor_set_sheet(a, SHEET_PICK32, sPickTile);
+    static const u8 frames[] = { F_PICK32_HEART, F_PICK32_GILT, F_PICK32_BOMB_PICKUP, F_PICK32_GILT_BIG, F_PICK32_KEY, F_PICK32_RELIC, F_PICK32_GRAIL,
+                                 F_PICK32_ARROW1, F_PICK32_ARROW5, F_PICK32_ARROW10 };
     a->frame = frames[type];
     a->hitbox = HB_SMALL;
     a->timer = 0;

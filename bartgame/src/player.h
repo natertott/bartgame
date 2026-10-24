@@ -16,6 +16,8 @@ enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_
 /* more items, as bits in gPl.items2 */
 #define ITEM2_BOW 0x01     /* the Thorn Bow, with its arrows */
 #define ITEM2_HUBCAP 0x02  /* the Drain Cap: the way home */
+#define ITEM2_MAP 0x04     /* the Map: every cell of the wood drawn */
+#define ITEM2_ASTROLABE 0x08 /* the Astrolabe: chests, the Heart and the barriers marked */
 
 /* what a button holds: the pause menu assigns one to A, B and L */
 enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD, EQ_BOW, EQ_HUBCAP, EQ_COUNT };

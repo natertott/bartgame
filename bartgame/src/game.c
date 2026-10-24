@@ -214,13 +214,13 @@ static void give_chest(Cell* c) {
             int bit = item == 1 ? ITEM_BOMBS : item == 2 ? ITEM_LAMP : ITEM_CLOAK;
             if (item == 1)
                 gPl.bombs = 10;
-            player_item_get(bit, item);
+            player_item_get(bit, item == 1 ? F_ICON32_BOMBS : item == 2 ? F_ICON32_LAMP : F_ICON32_CLOAK);
             textbox_open(sKeyItemText[item]);
             break;
         }
         case ROLE_KEYCHEST:
             gPl.keys++;
-            player_item_get(0, 4);
+            player_item_get(0, F_ICON32_KEY);
             textbox_open("A SMALL KEY. Somewhere a lock remembers it.");
             sfx_play(SFX_KEY);
             break;
@@ -228,7 +228,7 @@ static void give_chest(Cell* c) {
             switch (c->role_arg) {
                 case CHEST_HEART_PIECE:
                     gPl.hearts_pieces++;
-                    player_item_get(0, 5);
+                    player_item_get(0, F_ICON32_HEART_PIECE);
                     if (gPl.hearts_pieces >= 4) {
                         gPl.hearts_pieces = 0;
                         gPl.hp_max += 8;
@@ -242,29 +242,39 @@ static void give_chest(Cell* c) {
                     gPl.bombs += 8;
                     if (gPl.bombs > 30)
                         gPl.bombs = 30;
-                    player_item_get(0, 1);
+                    player_item_get(0, F_ICON32_BOMBS);
                     textbox_open("Eight BLIGHTSEEDS, still warm.");
                     break;
                 case CHEST_BOW:
                     gPl.items2 |= ITEM2_BOW;
                     gPl.arrows = 20;
-                    player_item_get(0, F_ITEMS_BOW);
+                    player_item_get(0, F_ICON32_BOW);
                     player_auto_equip(EQ_BOW);
                     textbox_open("You found the THORN BOW!|Twenty arrows with it. Loose one with its button. The dead drop more; the Peddler sells them.");
+                    break;
+                case CHEST_MAP:
+                    gPl.items2 |= ITEM2_MAP;
+                    player_item_get(0, F_ICON32_MAP);
+                    textbox_open("You found the MAP OF THE WOOD!|Every chamber is drawn on it now. Look at it from the pause menu.");
+                    break;
+                case CHEST_ASTROLABE:
+                    gPl.items2 |= ITEM2_ASTROLABE;
+                    player_item_get(0, F_ICON32_ASTROLABE);
+                    textbox_open("You found the ASTROLABE!|Brass that remembers. The map shows chests, the Heart and what bars the ways.");
                     break;
                 case CHEST_HEART_CONTAINER:
                     gPl.hp_max += 8;
                     gPl.hp = gPl.hp_max;
-                    player_item_get(0, 6);
+                    player_item_get(0, F_ICON32_HEART_CONTAINER);
                     textbox_open("A HEART CONTAINER. Something in the dark decided you should live longer.");
                     break;
                 case CHEST_GAUNTLET:
-                    player_item_get(ITEM_GAUNTLET, F_ITEMS_GAUNTLET);
+                    player_item_get(ITEM_GAUNTLET, F_ICON32_GAUNTLET);
                     textbox_open("The ROOT GAUNTLET. Roots wrap the arm and remember the strength of trees: boulders lift now.");
                     break;
                 default:
                     gPl.gilt += 30;
-                    player_item_get(0, 7);
+                    player_item_get(0, F_ICON32_GILT_BIG);
                     textbox_open("Thirty GILT. The dead have no use for it.");
                     break;
             }
@@ -463,6 +473,7 @@ static void update_title(void) {
 static u16 sWinTimer;
 
 void game_win(void) {
+    save_write(); /* the run is kept at a win */
     gGame.state = GS_WIN;
     sWinTimer = 0;
     fade_start(16, 1);
@@ -555,6 +566,7 @@ static void update_play(void) {
             gPl.hp = gPl.hp_max;
             gGame.deaths++;
             sDiedFlag = 1;
+            save_write(); /* and at a death: the wood keeps what was opened */
             begin_transition(AREA_SEWER, 0, 0);
         }
         draw_world();

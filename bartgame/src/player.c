@@ -910,10 +910,9 @@ void player_draw(void) {
         return;
     /* the found item, held up over the head */
     if (a->state == PS_ITEMGET && gPl.got_item) {
-        extern u16 items_sheet_tile(void);
-        int sx = PX(a->x) - 8 - gCamX;
-        int sy = PX(a->y) - 48 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
-        draw_sprite(sx, sy, SHEET_ITEMS, items_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_FX);
+        int sx = PX(a->x) - 16 - gCamX;
+        int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
+        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_FX);
     }
     /* the sword draws under the hero when swung north, over otherwise */
     if (a->state == PS_ATTACK && a->facing == FACE_N) {

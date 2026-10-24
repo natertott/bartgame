@@ -6,7 +6,7 @@
            put the chosen one on their button
   MAP      the overview's cursor moves by cell; A looks closer, B comes
            back; the relic shows once the Nun has asked
-  SAVE     Select writes the file; after a reset the title offers
+  SAVE     a death writes the file; after a reset the title offers
            CONTINUE, and the run resumes in the drain with what it had
 
     python3 tools/menu_probe.py
@@ -98,10 +98,16 @@ def main():
     check('MAP: B comes back', zoom(c) == 0, 'zoom %d' % zoom(c))
     P.press(c, 'START', 2, 8)
     check('PAGES: Start closes', CP.gstate(c) == GS_PLAY, 'state %d' % CP.gstate(c))
-    # SAVE
-    P.press(c, 'START', 2, 8); P.press(c, 'SELECT', 2, 8)
-    check('SAVE: Select saves (the footer says so)', P.r8(c, LP.ssym('sSavedTimer')) > 0, '')
-    P.press(c, 'START', 2, 8)
+    # SAVE: the game saves itself at a death
+    P.w16(c, pl, 2)
+    A = P.sym('gActors')
+    P.w8(c, A + 2, 7)   # the hero's state: dead
+    P.w16(c, pl, 0)
+    for _ in range(200):
+        c.run_frame()
+    check('SAVE: a death takes the hero home', CP.area(c) == 0, 'area %d' % CP.area(c))
+    CP.dismiss(c)
+    P.w16(c, pl + 4, 123)
     gilt = P.r16(c, pl + 4)
     items = P.r8(c, pl + 8)
     c.reset()
@@ -115,7 +121,7 @@ def main():
         c.run_frame()
     P.press(c, 'A', 2, 20); P.press(c, 'A', 2, 20)
     check('SAVE: CONTINUE wakes in the drain', CP.gstate(c) == GS_PLAY and CP.area(c) == 0, 'state %d area %d' % (CP.gstate(c), CP.area(c)))
-    check('SAVE: with the gilt and items it had', P.r16(c, pl + 4) == gilt and P.r8(c, pl + 8) == items, 'gilt %d items %d' % (P.r16(c, pl + 4), P.r8(c, pl + 8)))
+    check('SAVE: with the items it had', P.r8(c, pl + 8) == items, 'items %d' % P.r8(c, pl + 8))
     w2 = CP.world(c)
     check('SAVE: the same wood', w2['entry'] == w['entry'] and w2['goal'] == w['goal'] and w2['cells'][0]['gate'] == w['cells'][0]['gate'], '')
     # NEW GAME from the title is still there

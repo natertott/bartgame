@@ -115,28 +115,39 @@ generator from the tiles around it.
   words. A advances, B hurries the typing.
 - **The shop.** A list with icons and prices, a description of the item
   under the cursor, your gilt in the corner. A buys, B leaves.
-- **Pause (Start).** Three pages on a backdrop of rotted planks, R
-  turns them, Select saves on any of them. ITEMS: the three buttons with
-  what they hold, then everything you own that a button can hold, in a
-  grid of four to a row that scrolls when the rows outgrow the page; the
-  item under the cursor is named and described in a panel (what it is,
-  what it does, how it is used), and A, B or L puts it on that button.
-  KEY ITEMS: the pieces of heart found and the hearts grown, then what
-  is worn or carried and not held: small keys, the Root Gauntlet, the
-  Relic, each described. THE WOOD: the map, drawn from the rooms
-  themselves at a pixel a tile, visited cells as they are laid out and
-  the rest parchment; a cursor walks the cells, the name of the cell
-  under it in a banner, and A looks closer: the cell at four pixels a
-  tile with its marks, a door into a mystery, who stands there (a gold
-  mark while their quest is open), a chest not yet opened, a shrine not
-  yet used, the Bloom, and the Nun's relic once she has asked for it
-  (at its spot if that room is known, else at the room's middle). The
-  overview shows the same as dots.
-- **Boxes.** Every message, shop and panel sits in a carved wood frame.
-- **The save file.** Select on any pause page writes the run to SRAM:
-  the wood as generated and as you have changed it, the map's marks,
-  everything you carry and the counts. The title then offers CONTINUE
-  and NEW GAME; a continued run wakes in the drain.
+- **Pause (Start).** Three pages on one great plank of rotted wood,
+  its grain the width of the screen, a knot, a crack, patches of rot
+  with mould and mushrooms. R turns the pages, Start closes. ITEMS:
+  the HUD's hearts, purse and buttons along the top, then everything
+  you own that a button can hold in carved wells, four to a row, the
+  rows scrolling when they outgrow the page; the item under the cursor
+  is named and described in a bold hand (what it is, what it does, how
+  it is used), and A, B or L puts it on that button. KEY ITEMS: the
+  pieces of heart lit by count and the hearts grown, then the worn and
+  carried things: small keys, the Root Gauntlet, the Relic, the Map,
+  the Astrolabe. THE WOOD: the map drawn from the rooms themselves at
+  a pixel a tile, visited cells as they are laid out and the rest
+  parchment, a cursor walking the cells with the cell's name below; A
+  looks closer at six pixels a tile. The marks: a door into a mystery
+  until it is won, a quest giver until the quest is paid, a chest until
+  opened, a shrine until used, the Nun's relic from her asking to its
+  taking, and the Bloom. There is no legend; the marks speak for
+  themselves. Nothing is saved from here.
+- **The Map and the Astrolabe.** Two chests of the wood hold them. The
+  Map draws every cell, seen or not. The Astrolabe adds the chests, the
+  Heart and the barriers between rooms (cracked walls, webs, locked
+  doors, chasms, thorns), on the overview as dots at the cell edges and
+  in the close look at the doors themselves.
+- **Items.** The things on the ground and in the menu are drawn at 24
+  pixels in 32-pixel sprites: hearts, coins, a purse, seeds, keys, arrows
+  in ones, fives and quivers, the relic, the Grail; the tools and
+  treasures likewise, and the found thing is held up at that size. The
+  HUD's slots keep the small icons.
+- **Boxes.** Every message, shop and banner sits in a carved wood frame.
+- **The save file.** The game saves itself, to SRAM, when the Heart is
+  cut and when the Bloom dies: the wood as generated and as you have
+  changed it, the map's marks, everything you carry and the counts. The
+  title offers CONTINUE and NEW GAME; a continued run wakes in the drain.
 
 ## Controls
 
@@ -148,7 +159,6 @@ generator from the tiles around it.
 | L | what L holds: the Bark Shield to begin with. Hold it and the Bloom guards: slower, facing fixed, bites and seeds from the front are turned |
 | R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face, held over your head with both arms up; throw what you carry. A sword swing while carrying drops the load at your feet |
 | Start | the pause menu: items, key items, the map |
-| Select | in the pause menu: save |
 
 The Rot Gauntlet from the second lock's chest lifts boulders too. A
 thrown thing flies two and a half pixels a frame, breaks on the ground,
