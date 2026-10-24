@@ -8,6 +8,7 @@ from monsters import BEETLE, BAT, SLIME, SPITTER, KNIGHT, KSWORD, BOSS
 from items import ITEMS, FX, PROJ, LIFT, ARROW, MOUTH
 from folk import NPC, BIG
 from portraits import PORTRAITS
+from marks import MARKS, DOTS, CURSOR
 
 SHEETS = []
 
@@ -37,3 +38,6 @@ sheet('portrait', 'portrait', 32, 32, PORTRAITS)
 sheet('lift', 'lift', 16, 16, LIFT)
 sheet('arrow', 'fx', 16, 16, ARROW)
 sheet('mouth', 'fx', 32, 32, MOUTH)
+sheet('marks', 'ui', 16, 16, MARKS)
+sheet('dots', 'ui', 8, 8, DOTS)
+sheet('cursor', 'ui', 32, 32, CURSOR)

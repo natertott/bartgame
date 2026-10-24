@@ -29,6 +29,9 @@ enum { THEME_BUGS, THEME_BLIGHT, THEME_DEAD, THEME_MIXED };
 #define CF_CLEARED 0x20
 #define CF_QUEST_ACTIVE 0x40
 #define CF_SHRINE_USED 0x80
+/* what the map marks in a visited cell, as pairs in World.mark */
+enum { MP_MOUTH, MP_NPC, MP_CHEST, MP_RELIC, MP_SHRINE, MP_COUNT };
+
 /* in Cell.opened above the four gate bits */
 #define CELL_LOOTED 0x10 /* the alcove's hoard is taken */
 
@@ -55,6 +58,7 @@ typedef struct {
     u8 stages;
     u8 myst[CELLS];       /* MYST_PACK(kind, size, style), 0 for none (myst.h) */
     u8 myst_flags[CELLS]; /* MF_* */
+    u8 mark[CELLS][MP_COUNT * 2]; /* the map's marks per visited cell: x+1, y+1 pairs, 0 for none */
 } World;
 
 extern World gWorld;

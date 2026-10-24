@@ -115,11 +115,28 @@ generator from the tiles around it.
   words. A advances, B hurries the typing.
 - **The shop.** A list with icons and prices, a description of the item
   under the cursor, your gilt in the corner. A buys, B leaves.
-- **Pause (Start).** Two pages, R turns them. ITEMS: the three buttons
-  with what they hold, the row of everything you own; walk it with the
-  d-pad and press A, B or L to put the item on that button (the worn
-  things, the gauntlet and the relic, only show). THE WOOD: the map with
-  its legend, how the three quests stand, your gilt, keys and kills.
+- **Pause (Start).** Three pages on a backdrop of rotted planks, R
+  turns them, Select saves on any of them. ITEMS: the three buttons with
+  what they hold, then everything you own that a button can hold, in a
+  grid of four to a row that scrolls when the rows outgrow the page; the
+  item under the cursor is named and described in a panel (what it is,
+  what it does, how it is used), and A, B or L puts it on that button.
+  KEY ITEMS: the pieces of heart found and the hearts grown, then what
+  is worn or carried and not held: small keys, the Root Gauntlet, the
+  Relic, each described. THE WOOD: the map, drawn from the rooms
+  themselves at a pixel a tile, visited cells as they are laid out and
+  the rest parchment; a cursor walks the cells, the name of the cell
+  under it in a banner, and A looks closer: the cell at four pixels a
+  tile with its marks, a door into a mystery, who stands there (a gold
+  mark while their quest is open), a chest not yet opened, a shrine not
+  yet used, the Bloom, and the Nun's relic once she has asked for it
+  (at its spot if that room is known, else at the room's middle). The
+  overview shows the same as dots.
+- **Boxes.** Every message, shop and panel sits in a carved wood frame.
+- **The save file.** Select on any pause page writes the run to SRAM:
+  the wood as generated and as you have changed it, the map's marks,
+  everything you carry and the counts. The title then offers CONTINUE
+  and NEW GAME; a continued run wakes in the drain.
 
 ## Controls
 
@@ -130,7 +147,8 @@ generator from the tiles around it.
 | B | what B holds: the sword to begin with; or set a bomb, swing the lamp, leap with the cloak |
 | L | what L holds: the Bark Shield to begin with. Hold it and the Bloom guards: slower, facing fixed, bites and seeds from the front are turned |
 | R | roll while walking (24 frames, invulnerable for the first 18); standing still, lift the bush, small stone or pot you face, held over your head with both arms up; throw what you carry. A sword swing while carrying drops the load at your feet |
-| Start | the pause menu: the items, then the map |
+| Start | the pause menu: items, key items, the map |
+| Select | in the pause menu: save |
 
 The Rot Gauntlet from the second lock's chest lifts boulders too. A
 thrown thing flies two and a half pixels a frame, breaks on the ground,
@@ -183,6 +201,8 @@ src/            the engine and the game
   boss.c        the Blight Heart
   objects.c     projectiles, pickups, effects, bombs
   npc.c         the sage, the merchant, the hermit, the nun, the gardener
+  menu.c        the pause menu: items, key items, the drawn map
+  save.c        the save file in SRAM
   text.c        BG0 text, the message box with portraits, the shop,
                 the HUD, the mini-map
   sound.c       PSG sound effects and a three-track tracker
@@ -245,6 +265,8 @@ python3 tools/quest_probe.py --seed 0x28c
 python3 tools/lift_probe.py               # roll, lift, throw, boulder, pause menu
 python3 tools/guard_probe.py              # the loadout, the water's edge, a hole, the shield
 python3 tools/myst_probe.py               # every mystery kind forced, played to its reward
+python3 tools/wood_probe.py               # the bow, the Drain Cap, the sword's gathering and deflecting, open knights
+python3 tools/menu_probe.py               # the three pause pages, the grid, the map's zoom, save and continue
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```

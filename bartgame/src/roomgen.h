@@ -28,6 +28,9 @@ typedef struct {
 extern RoomSpots gSpots;
 
 void roomgen_build(int cell);
+/* the cell's mask and trail lines as the build lays them, for the map:
+   M_* values (roomgen.c) per tile, row-major 32x24 */
+void roomgen_preview(int cell, const u8** mask, const u8** path);
 void roomgen_door_pos(int side, int* px, int* py);
 void roomgen_gate_tiles(int side, int* x0, int* y0, int* x1, int* y1);
 

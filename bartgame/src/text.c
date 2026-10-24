@@ -22,6 +22,7 @@
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
 #define FONT_BOX (FONT_GLYPHS + HUD_TILE_COUNT)
+#define MENU_PAL 8
 #define BOX_INK 0xE      /* the hud palette's box fill */
 
 static u16 sBg0[32 * 32] ALIGN4;
@@ -40,6 +41,8 @@ void text_init(void) {
         }
         box[i] = o;
     }
+    /* the menu's tiles after the box font: the carved frames draw with them */
+    dma3_copy32(menu_tiles, CHARBLOCK(2) + MENU_TILE_BASE * 16, MENU_TILE_COUNT * 32);
     bg0_clear();
 }
 
@@ -52,6 +55,13 @@ void bg0_put(int tx, int ty, u16 tile) {
     if (tx < 0 || ty < 0 || tx >= 32 || ty >= 32)
         return;
     sBg0[ty * 32 + tx] = tile ? (tile | PAL15) : 0;
+    sBg0Dirty = 1;
+}
+
+void bg0_put_pal(int tx, int ty, u16 tile, int pal) {
+    if (tx < 0 || ty < 0 || tx >= 32 || ty >= 32)
+        return;
+    sBg0[ty * 32 + tx] = tile ? (tile | (pal << 12)) : 0;
     sBg0Dirty = 1;
 }
 
@@ -114,22 +124,24 @@ void bg0_fill(int tx, int ty, int w, int h, u16 tile) {
             bg0_put(tx + x, ty + y, tile);
 }
 
-/* a framed box: gold rule corners, dark fill */
+/* a framed box: a carved wood frame round a dark fill */
 void bg0_frame(int tx, int ty, int w, int h) {
     int x, y;
     for (y = 0; y < h; y++) {
         for (x = 0; x < w; x++) {
-            u16 t = HT_BOX_FILL;
-            u16 fl = 0;
+            u16 t = 0xFFFF, fl = 0;
             if (y == 0)
-                t = (x == 0) ? HT_BOX_TL : (x == w - 1) ? HT_BOX_TL : HT_BOX_T;
+                t = (x == 0 || x == w - 1) ? MN_FRAME_TL : MN_FRAME_T;
             else if (y == h - 1)
-                t = (x == 0) ? HT_BOX_BL : (x == w - 1) ? HT_BOX_BL : HT_BOX_B;
+                t = (x == 0 || x == w - 1) ? MN_FRAME_BL : MN_FRAME_B;
             else if (x == 0 || x == w - 1)
-                t = HT_BOX_L;
-            if (x == w - 1 && t != HT_BOX_T && t != HT_BOX_B)
-                fl = ATTR1_HFLIP >> 2; /* 0x400: BG hflip */
-            bg0_put(tx + x, ty + y, t | fl);
+                t = MN_FRAME_L;
+            if (x == w - 1 && t != MN_FRAME_T && t != MN_FRAME_B)
+                fl = 0x400; /* BG hflip: the right side is the left turned */
+            if (t == 0xFFFF)
+                bg0_put(tx + x, ty + y, HT_BOX_FILL);
+            else
+                bg0_put_pal(tx + x, ty + y, (MENU_TILE_BASE + t) | fl, MENU_PAL);
         }
     }
 }

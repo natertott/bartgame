@@ -1271,6 +1271,34 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the pause menu on planks, the drawn map, the save file (Oct 2026)
+
+`src/menu.c` holds the pause menu now (out of game.c): three pages on
+BG3, which draws from charblock 3 (the room maps' block, given back by
+`room_render` on the way out) at screenblock 22 in the new `menu` BG
+palette (slot 8). ITEMS is a grid of four to a row with a scroll and a
+description panel; KEY ITEMS shows the pieces of heart and the worn
+things; THE WOOD draws the map from `roomgen_preview` (seed, plan,
+expand, lanes and falls, nothing after: the mask and the trail lines)
+at a pixel a tile, and a cell at four pixels a tile on A, with marks
+cached per visited cell in `World.mark` (mouth, NPC, chest, relic,
+shrine). The boxes' frames are carved wood tiles in the menu palette
+(`bg0_frame`), after the font and HUD tiles in BG0's charblock.
+
+`src/save.c`: one checksummed record in SRAM (the World, the
+PlayerState, the counts), written by Select on any pause page, read
+by the title, which offers CONTINUE and NEW GAME when it is there; a
+continued run wakes in the drain. The ROM carries "SRAM_V113".
+
+What was measured: the map page took 15 frames to draw and ate button
+presses. Two causes: `%` in the plank pattern and in `rng_range` and
+`rand_range` (the ARM7 has no divider; libgcc's modulo costs hundreds
+of cycles), now multiply-and-shift (every room changed, all probes
+pass, verify-world 0 bad, three seeds in 20,000 short one quest where
+it was none); and a per-pixel picture buffer, now tile words written
+straight from the masks. Both pages draw within a frame.
+`tools/menu_probe.py`: 21 checks, including save, reset, continue.
+
 ### BARTGAME: chunk-built rooms, the bow, the Drain Cap, open knights (Oct 2026)
 
 The forest generator plans each room on a 10x7 grid of 3x3-tile chunks

@@ -370,3 +370,138 @@ for _n in ('rule', 'cursor', 'arrow', 'map_unknown', 'hand', 'gilt', 'item_box',
            'slot_tl', 'slot_tr', 'slot_bl', 'slot_br', 'slot_lit_tl', 'slot_lit_tr', 'slot_lit_bl', 'slot_lit_br',
            'btn_l', 'btn_a', 'btn_b', 'btn_r'):
     TILES[_n] = [r.replace('.', 'e') for r in TILES[_n]]
+
+
+# ---------------------------------------------------------- menu tiles --
+# BG tiles in the 'menu' palette: rotted planks for the pause pages'
+# backdrop (an upper and a lower half of a plank, with a knot, a crack,
+# moss and the ends), and a carved wood frame for the boxes (the right
+# side is the left flipped). 1 ink, D plank dark, E plank, F plank light,
+# 6 moss.
+MENU = {}
+
+
+def m(name, art):
+    MENU[name] = A(art)
+
+
+m('plank_a', '''
+    FFFFFFFF
+    EEEEEEEE
+    EEDEEEEE
+    EEEEEEDE
+    EEEEEEEE
+    DEEEEEEE
+    EEEEDEEE
+    EEEEEEEE
+''')
+m('plank_b', '''
+    EEEEEEEE
+    EDEEEEEE
+    EEEEEDEE
+    EEEEEEEE
+    EEDEEEEE
+    DDDDDDDD
+    11111111
+    1D111D11
+''')
+m('plank_knot', '''
+    FFFFFFFF
+    EEEEEEEE
+    EEEDDDEE
+    EEDFEDEE
+    EEDEDDEE
+    EEEDDEEE
+    EEEEEEEE
+    EEEEEEEE
+''')
+m('plank_crack', '''
+    FFFFFFFF
+    EEEEEEEE
+    EEEEE1EE
+    EEEE1EEE
+    EEE1EEEE
+    EEE1EEEE
+    EE1EEEEE
+    EEEEEEEE
+''')
+m('plank_moss', '''
+    EEEEEEEE
+    E6EEEEEE
+    66EEE6EE
+    E6EE666E
+    EEEEE6EE
+    DDDDDDDD
+    11111111
+    16111D11
+''')
+m('plank_a_end', '''
+    FFFFFFF1
+    EEEEEED1
+    EEDEEED1
+    EEEEEED1
+    EEEEEED1
+    DEEEEED1
+    EEEEDED1
+    EEEEEED1
+''')
+m('plank_b_end', '''
+    EEEEEED1
+    EDEEEED1
+    EEEEEDD1
+    EEEEEED1
+    EEDEEED1
+    DDDDDDD1
+    11111111
+    1D111D11
+''')
+m('frame_tl', '''
+    ........
+    .DDDDDDD
+    .DFFFFFF
+    .DFEEEEE
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+''')
+m('frame_t', '''
+    ........
+    DDDDDDDD
+    FFFFFFFF
+    EEEEEEEE
+    11111111
+    11111111
+    11111111
+    11111111
+''')
+m('frame_l', '''
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+''')
+m('frame_bl', '''
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFE1111
+    .DFEEEEE
+    .DFFFFFF
+    .DDDDDDD
+    ........
+''')
+m('frame_b', '''
+    11111111
+    11111111
+    11111111
+    11111111
+    EEEEEEEE
+    FFFFFFFF
+    DDDDDDDD
+    ........
+''')

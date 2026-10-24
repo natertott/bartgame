@@ -289,6 +289,13 @@ for i, (name, rows) in enumerate(hud.TILES.items()):
 c.append(c_array_u16('hud_tiles', bytes_to_u16(data)))
 h.append('extern const u16 hud_tiles[];')
 h.append('#define HUD_TILE_COUNT %d\n' % len(hud.TILES))
+data = b''
+for i, (name, rows) in enumerate(hud.MENU.items()):
+    data += tile_bytes(parse_art(rows, 8, 8), 0, 0)
+    h.append('#define MN_%s %d' % (cname(name), i))
+c.append(c_array_u16('menu_tiles', bytes_to_u16(data)))
+h.append('extern const u16 menu_tiles[];')
+h.append('#define MENU_TILE_COUNT %d\n' % len(hud.MENU))
 
 # --------------------------------------------------------------- title --
 tpix, tpal = title.render()  # 240x160 indices, palette of <=16 hex colors

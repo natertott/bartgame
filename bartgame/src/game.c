@@ -18,6 +18,8 @@
 #include "npc.h"
 extern u16 items_sheet_tile(void);
 #include "react.h"
+#include "menu.h"
+#include "save.h"
 #include "game.h"
 
 GameState gGame;
@@ -27,6 +29,7 @@ static void draw_world(void);
 
 /* pending transition */
 static u8 sNextArea, sNextCell, sNextSide;
+static u8 sTitleCursor, sTitleHasSave; /* the title's choice when a save exists */
 static u8 sTransPhase;
 static u8 sHubcap; /* the pending transition is the Drain Cap's: drop in at the spawn */
 
@@ -373,7 +376,10 @@ static void title_show(void) {
     gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
     actors_clear();
     bg0_clear();
-    bg0_print_hud(10, 14, "PRESS START");
+    sTitleHasSave = save_exists();
+    sTitleCursor = 0;
+    if (!sTitleHasSave)
+        bg0_print_hud(10, 14, "PRESS START");
     bg0_print_hud(8, 17, "a game of the drain");
     gGame.state = GS_TITLE;
     gAnimTiles = 0;
@@ -405,228 +411,51 @@ static void start_run(u32 seed) {
     textbox_open("You wake in the drain. The stalk you grew on is your spine now. Up the ladder is the wood.");
 }
 
+/* a saved run wakes in the drain with everything it had */
+static void continue_run(void) {
+    if (!save_load()) {
+        start_run(sTitleSeed >> 4);
+        return;
+    }
+    tiles_init();
+    gAnimTiles = 1;
+    bg0_clear();
+    load_sewer(0);
+    gGame.state = GS_PLAY;
+    fade_set(16);
+    fade_start(0, 1);
+    video_show(DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | DCNT_OBJ);
+    bgm_play(BGM_SEWER);
+    textbox_open("You wake in the drain again. The wood remembers what you opened, and so do you.");
+}
+
 static void update_title(void) {
     sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
-    if ((gFrame & 32) == 0)
+    if (sTitleHasSave) {
+        /* a saved run: continue it, or begin anew */
+        bg0_print_hud(11, 14, "CONTINUE");
+        bg0_print_hud(11, 15, "NEW GAME");
+        bg0_put(9, 14, sTitleCursor == 0 ? HT_CURSOR : 0);
+        bg0_put(9, 15, sTitleCursor == 1 ? HT_CURSOR : 0);
+        if (sTitlePhase == 0 && (gKeysDown & (KEY_UP | KEY_DOWN))) {
+            sTitleCursor ^= 1;
+            sfx_play(SFX_MENU);
+        }
+    } else if ((gFrame & 32) == 0) {
         bg0_print_hud(10, 14, "PRESS START");
-    else
+    } else {
         bg0_print_hud(10, 14, "           ");
-    if (sTitlePhase == 0 && (gKeysDown & KEY_START)) {
+    }
+    if (sTitlePhase == 0 && (gKeysDown & (KEY_START | KEY_A))) {
         sTitlePhase = 1;
         fade_start(16, 2);
         sfx_play(SFX_MENU);
     }
-    if (sTitlePhase == 1 && fade_done())
-        start_run(gSeedOverride ? gSeedOverride : (sTitleSeed >> 4));
-}
-
-/* ------------------------------------------------------------ pause -- */
-/* The pause menu, after The Minish Cap: an items page where the cursor
-   picks a thing and A, B or L takes it; R turns to the map page. */
-typedef struct {
-    u8 eq;        /* EQ_* when a button can hold it, else EQ_NONE */
-    u16 item_bit; /* owned when this bit of gPl.items is set; 0x100 and up: of gPl.items2 */
-    u8 icon;      /* frame of the items sheet, or 0xFF for the sword */
-    const char* name;
-    const char* d1;
-    const char* d2;
-} PauseItem;
-
-static const PauseItem sPauseItems[] = {
-    { EQ_SWORD, ITEM_SWORD, 0xFF, "Sword", "A simple blade with a", "hopeful edge. Cuts bushes." },
-    { EQ_SHIELD, ITEM_SHIELD, 0xFF, "Bark Shield", "Planks bound in brass. Held", "up, it turns bites and seeds." },
-    { EQ_BOMBS, ITEM_BOMBS, F_ITEMS_BOMBS, "Blightseeds", "Seeds that burst and open", "cracked walls." },
-    { EQ_LAMP, ITEM_LAMP, F_ITEMS_LAMP, "Grail Lamp", "A flame not of this wood.", "Burns webs, lights censers." },
-    { EQ_CLOAK, ITEM_CLOAK, F_ITEMS_CLOAK, "Petal Cloak", "Petals that catch the air.", "Leaps chasms and pits." },
-    { EQ_NONE, ITEM_GAUNTLET, F_ITEMS_GAUNTLET, "Root Gauntlet", "Worn, not held. Roots that", "lift boulders out of the way." },
-    { EQ_NONE, ITEM_RELIC, F_ITEMS_RELIC, "the Relic", "The Weeping Nun's. Bring it", "back to her." },
-    { EQ_BOW, 0x100 | ITEM2_BOW, F_ITEMS_BOW, "Thorn Bow", "Yew and gut. Loosed with its", "button. Walls stop the arrows." },
-    { EQ_HUBCAP, 0x100 | ITEM2_HUBCAP, F_ITEMS_HUBCAP, "Drain Cap", "Iron from the hub. Used, the", "muck opens and takes you home." },
-};
-
-static bool8 pause_owned(const PauseItem* it) {
-    if (it->item_bit >= 0x100)
-        return (gPl.items2 & (it->item_bit >> 8)) != 0;
-    return (gPl.items & it->item_bit) != 0;
-}
-#define PAUSE_ITEM_COUNT ((int)(sizeof(sPauseItems) / sizeof(sPauseItems[0])))
-
-static u8 sPausePage;   /* 0 items, 1 map */
-static u8 sPauseCursor; /* index into the owned list */
-static u8 sPauseOwned[PAUSE_ITEM_COUNT];
-static u8 sPauseOwnedCount;
-static const u8 sPauseSlotX[SLOT_COUNT] = { 5, 11, 17 };
-
-static void pause_items_page(void) {
-    int i;
-    bg0_fill(0, 3, 32, 17, 0);
-    bg0_frame(1, 3, 28, 17);
-    bg0_print_gold(3, 4, "ITEMS");
-    bg0_print(15, 4, "R: map  Start: out");
-    /* the three buttons */
-    bg0_put(sPauseSlotX[0] - 1, 6, HT_BTN_A);
-    bg0_put(sPauseSlotX[1] - 1, 6, HT_BTN_B);
-    bg0_put(sPauseSlotX[2] - 1, 6, HT_BTN_L);
-    for (i = 0; i < SLOT_COUNT; i++) {
-        int x = sPauseSlotX[i], lit = gPl.equip[i] != EQ_NONE;
-        bg0_put(x, 6, lit ? HT_SLOT_LIT_TL : HT_SLOT_TL);
-        bg0_put(x + 1, 6, lit ? HT_SLOT_LIT_TR : HT_SLOT_TR);
-        bg0_put(x, 7, lit ? HT_SLOT_LIT_BL : HT_SLOT_BL);
-        bg0_put(x + 1, 7, lit ? HT_SLOT_LIT_BR : HT_SLOT_BR);
-    }
-    bg0_put(23, 6, HT_BTN_R);
-    bg0_put(24, 6, HT_HAND);
-    bg0_print(22, 7, "lift");
-    for (i = 0; i < 26; i++)
-        bg0_put(2 + i, 9, HT_RULE);
-    /* what the hero owns, in a row */
-    sPauseOwnedCount = 0;
-    for (i = 0; i < PAUSE_ITEM_COUNT; i++)
-        if (pause_owned(&sPauseItems[i]))
-            sPauseOwned[sPauseOwnedCount++] = i;
-    if (sPauseCursor >= sPauseOwnedCount)
-        sPauseCursor = 0;
-    for (i = 0; i < sPauseOwnedCount; i++) {
-        int x = 3 + i * 4, lit = (i == sPauseCursor);
-        bg0_put(x, 10, lit ? HT_SLOT_LIT_TL : HT_SLOT_TL);
-        bg0_put(x + 1, 10, lit ? HT_SLOT_LIT_TR : HT_SLOT_TR);
-        bg0_put(x, 11, lit ? HT_SLOT_LIT_BL : HT_SLOT_BL);
-        bg0_put(x + 1, 11, lit ? HT_SLOT_LIT_BR : HT_SLOT_BR);
-    }
-    if (sPauseOwnedCount) {
-        const PauseItem* it = &sPauseItems[sPauseOwned[sPauseCursor]];
-        bg0_print_gold(3, 13, it->name);
-        if (it->eq == EQ_BOMBS || it->eq == EQ_BOW) {
-            bg0_print(16, 13, "held");
-            bg0_print_num(21, 13, it->eq == EQ_BOMBS ? gPl.bombs : gPl.arrows, 2);
-        }
-        bg0_print(3, 14, it->d1);
-        bg0_print(3, 15, it->d2);
-    }
-    bg0_print(3, 17, "small keys");
-    bg0_print_num(14, 17, gPl.keys, 1);
-    bg0_print(3, 18, "A, B or L takes the item");
-}
-
-static const char* quest_status(int role) {
-    int i;
-    for (i = 0; i < CELLS; i++) {
-        Cell* c = &gWorld.cells[i];
-        if (c->role != role)
-            continue;
-        if (c->flags & CF_QUEST_DONE)
-            return "done";
-        if (c->flags & CF_QUEST_ACTIVE)
-            return "open";
-        if (c->flags & CF_VISITED)
-            return "found";
-        return "unknown";
-    }
-    return "none";
-}
-
-static void pause_map_page(void) {
-    int x, y;
-    bg0_fill(0, 3, 32, 17, 0);
-    bg0_frame(1, 3, 28, 17);
-    bg0_print_gold(3, 4, "THE WOOD");
-    bg0_print(13, 4, "R: items  Start: out");
-    for (y = 0; y < MAZE_H; y++) {
-        for (x = 0; x < MAZE_W; x++) {
-            int i = y * MAZE_W + x;
-            Cell* c = &gWorld.cells[i];
-            u16 t = HT_MAP_UNKNOWN;
-            if (c->flags & CF_VISITED)
-                t = HT_MAP_CELL;
-            if (i == gWorld.goal && (c->flags & CF_VISITED))
-                t = HT_MAP_GOAL;
-            if (gGame.area == AREA_FOREST && i == gGame.cell)
-                t = HT_MAP_HERE;
-            bg0_put(3 + x, 6 + y, t);
-        }
-    }
-    bg0_put(9, 6, HT_MAP_HERE);
-    bg0_print(10, 6, "you");
-    bg0_put(9, 7, HT_MAP_GOAL);
-    bg0_print(10, 7, "Heart");
-    bg0_put(9, 8, HT_MAP_CELL);
-    bg0_print(10, 8, "seen");
-    bg0_print_gold(17, 6, "QUESTS");
-    bg0_print(17, 7, "hunt");
-    bg0_print(23, 7, quest_status(ROLE_NPC_HUNT));
-    bg0_print(17, 8, "relic");
-    bg0_print(23, 8, quest_status(ROLE_NPC_FETCH));
-    bg0_print(17, 9, "fire");
-    bg0_print(23, 9, quest_status(ROLE_NPC_TORCH));
-    bg0_print_gold(3, 12, "THE RUN");
-    bg0_print(3, 13, "gilt");
-    bg0_print_num(8, 13, gPl.gilt, 3);
-    bg0_print(13, 13, "keys");
-    bg0_print_num(18, 13, gPl.keys, 1);
-    bg0_print(21, 13, "slain");
-    bg0_print_num(26, 13, gGame.kills, 2);
-    bg0_print(3, 14, "deaths");
-    bg0_print_num(10, 14, gGame.deaths, 2);
-    bg0_print(13, 14, "seeds");
-    bg0_print_num(19, 14, gPl.bombs, 2);
-    bg0_print(3, 16, "The Heart waits in the");
-    bg0_print(3, 17, "deepest glade. Cut it out.");
-}
-
-static void map_open(void) {
-    sPausePage = 0;
-    pause_items_page();
-    gGame.state = GS_MAP;
-    sfx_play(SFX_MENU);
-}
-
-static void update_map(void) {
-    int i;
-    draw_world();
-    if (sPausePage == 0) {
-        for (i = 0; i < SLOT_COUNT; i++)
-            hud_equip_icon(gPl.equip[i], sPauseSlotX[i] * 8, 6 * 8, 0);
-        for (i = 0; i < sPauseOwnedCount; i++) {
-            const PauseItem* it = &sPauseItems[sPauseOwned[i]];
-            if (it->icon == 0xFF)
-                hud_equip_icon(it->eq, (3 + i * 4) * 8, 10 * 8, 0);
-            else
-                draw_sprite((3 + i * 4) * 8, 10 * 8, SHEET_ITEMS, items_sheet_tile(), it->icon, 0, 0, PAL_OBJ_FX);
-        }
-        if ((gKeysDown & KEY_RIGHT) && sPauseCursor + 1 < sPauseOwnedCount) {
-            sPauseCursor++;
-            sfx_play(SFX_MENU);
-            pause_items_page();
-        }
-        if ((gKeysDown & KEY_LEFT) && sPauseCursor > 0) {
-            sPauseCursor--;
-            sfx_play(SFX_MENU);
-            pause_items_page();
-        }
-        if (sPauseOwnedCount && (gKeysDown & (KEY_A | KEY_B | KEY_L))) {
-            const PauseItem* it = &sPauseItems[sPauseOwned[sPauseCursor]];
-            int slot = (gKeysDown & KEY_A) ? SLOT_A : (gKeysDown & KEY_B) ? SLOT_B : SLOT_L;
-            if (it->eq != EQ_NONE) {
-                player_equip_set(slot, it->eq);
-                sfx_play(SFX_ITEM);
-            } else {
-                sfx_play(SFX_BUMP);
-            }
-            pause_items_page();
-        }
-    }
-    if (gKeysDown & KEY_R) {
-        sPausePage ^= 1;
-        sfx_play(SFX_MENU);
-        if (sPausePage)
-            pause_map_page();
+    if (sTitlePhase == 1 && fade_done()) {
+        if (sTitleHasSave && sTitleCursor == 0)
+            continue_run();
         else
-            pause_items_page();
-    }
-    if (gKeysDown & KEY_START) {
-        bg0_fill(0, 3, 32, 17, 0);
-        gGame.state = GS_PLAY;
-        gKeysDown = 0;
+            start_run(gSeedOverride ? gSeedOverride : (sTitleSeed >> 4));
     }
 }
 
@@ -732,7 +561,7 @@ static void update_play(void) {
         return;
     }
     if (gKeysDown & KEY_START) {
-        map_open();
+        menu_open();
         return;
     }
     items_update();
@@ -789,7 +618,7 @@ void game_update(void) {
         case GS_TITLE: update_title(); break;
         case GS_PLAY: update_play(); break;
         case GS_TRANSITION: update_transition(); break;
-        case GS_MAP: update_map(); break;
+        case GS_MAP: menu_update(); break;
         case GS_WIN: update_win(); break;
         default: break;
     }

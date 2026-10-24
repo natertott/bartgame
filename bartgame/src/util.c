@@ -61,8 +61,10 @@ u32 rand_next(void) {
     return sRand >> 8;
 }
 
+/* a range by multiply and shift: the ARM7 has no divider, and a modulo
+   costs hundreds of cycles through libgcc */
 u32 rand_range(u32 n) {
-    return n ? (rand_next() % n) : 0;
+    return (u32)(((unsigned long long)rand_next() * n) >> 24);
 }
 
 void rng_seed(Rng* r, u32 seed) {
@@ -82,7 +84,7 @@ u32 rng_next(Rng* r) {
 }
 
 u32 rng_range(Rng* r, u32 n) {
-    return n ? (rng_next(r) % n) : 0;
+    return (u32)(((unsigned long long)rng_next(r) * n) >> 32);
 }
 
 u32 hash32(u32 a, u32 b) {

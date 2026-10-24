@@ -6,6 +6,8 @@ void text_init(void);
 void text_flush(void);
 void bg0_clear(void);
 void bg0_put(int tx, int ty, u16 tile);
+void bg0_put_pal(int tx, int ty, u16 tile, int pal); /* tile 0 clears */
+#define MENU_TILE_BASE (FONT_GLYPHS * 2 + HUD_TILE_COUNT) /* the menu tiles in BG0's charblock */
 void bg0_print(int tx, int ty, const char* s);
 void bg0_print_gold(int tx, int ty, const char* s);
 void bg0_print_num(int tx, int ty, int n, int width);

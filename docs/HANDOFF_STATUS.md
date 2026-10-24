@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the pause menu on rotted planks with an items grid, key items and a drawn map that zooms into a cell with its marks; carved frames on every box; a save file in SRAM with CONTINUE on the title | "BARTGAME: the pause menu on planks, the drawn map, the save file" |
 | BARTGAME: rooms planned on a grid of 3x3 chunks from a bank of pieces, dressed by the chunk; the Thorn Bow and arrows; the Drain Cap home; knights open from the front; the sword gathers and deflects; carry with arms up | "BARTGAME: chunk-built rooms, the bow, the Drain Cap, open knights" |
 | BARTGAME: the hub's floor decorations moved to the walls and pools, glints off the open floor and the gold, so nothing reads as a pickup | "BARTGAME: the drain's decorations keep to the walls" |
 | BARTGAME: thirty grime, drip and glint tiles for the drain and a relaid hub with a glint overlay; the Gatekeeper and Peddler at 32x32 with a blink; a seven-frame tumbling roll | "BARTGAME: grime and glint in the drain, the hub's two drawn large, a tumbling roll" |

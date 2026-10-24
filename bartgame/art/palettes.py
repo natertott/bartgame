@@ -148,6 +148,23 @@ BG_PALETTES = [
                '#8a3cd8',    # D lichen violet
                GRASS_MID,    # E grass mid
                '#a4dc4c']),  # F grass bright
+    # 8 menu: the pause pages' planks, frames and the drawn map
+    ('menu', ['#000000',
+              '#0c0a14',      # 1 ink, the box fill
+              '#e8d8a8',      # 2 parchment
+              '#b8a070',      # 3 parchment dark
+              '#8a6c40',      # 4 parchment line
+              '#58a048',      # 5 grass
+              '#2a6a30',      # 6 grass dark, moss
+              '#14301c',      # 7 canopy
+              '#2878d8',      # 8 water
+              '#60c0ff',      # 9 water light
+              '#c8a060',      # A path
+              '#6a4420',      # B ledge
+              '#8838c8',      # C blight
+              '#2e1a0e',      # D plank dark
+              '#5a3a20',      # E plank
+              '#8a6038']),    # F plank light
 ]
 
 OBJ_PALETTES = [

@@ -1064,6 +1064,40 @@ static void ensure_spot(Spot* out) {
     out->y = cy;
 }
 
+/* The mask alone, for the map: the same seed, plan, expansion, door
+   lanes and falls as the build, and nothing after. It overwrites the
+   generator's scratch, which nothing reads once a room is built. */
+void roomgen_preview(int cell, const u8** mask, const u8** path) {
+    Cell* c = &gWorld.cells[cell];
+    int s;
+    bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
+    rng_seed(&sR, hash32(gWorld.seed, cell * 7919 + 13));
+    memset(sMask, 0, sizeof(sMask));
+    memset(sPath, 0, sizeof(sPath));
+    sTerraceRow = -1;
+    plan(c, arena, entry);
+    expand();
+    for (s = 0; s < 4; s++) {
+        int x0, y0, x1, y1, k;
+        if (c->gate[s] == GATE_WALL)
+            continue;
+        roomgen_gate_tiles(s, &x0, &y0, &x1, &y1);
+        for (k = 1; k <= 6; k++) {
+            int ox = (s == SIDE_E) ? -k : (s == SIDE_W) ? k : 0;
+            int oy = (s == SIDE_N) ? k : (s == SIDE_S) ? -k : 0;
+            carve(x0 + ox, y0 + oy);
+            carve(x1 + ox, y1 + oy);
+            if (interior(x0 + ox, y0 + oy))
+                sPath[y0 + oy][x0 + ox] |= P_MID;
+            if (interior(x1 + ox, y1 + oy))
+                sPath[y1 + oy][x1 + ox] |= P_MID;
+        }
+    }
+    add_waterfalls();
+    *mask = &sMask[0][0];
+    *path = &sPath[0][0];
+}
+
 /* ---------------------------------------------------------- the build -- */
 void roomgen_build(int cell) {
     Cell* c = &gWorld.cells[cell];
@@ -1507,6 +1541,16 @@ void roomgen_build(int cell) {
             if (find_spot(&sp, 60, 0))
                 gSpots.spawns[gSpots.spawn_count++] = sp;
         }
+    }
+    /* the map's marks for this cell */
+    {
+        u8* m = gWorld.mark[cell];
+        memset(m, 0, MP_COUNT * 2);
+        if (gSpots.has_mouth) { m[MP_MOUTH * 2] = gSpots.mouth.x + 1; m[MP_MOUTH * 2 + 1] = gSpots.mouth.y + 1; }
+        if (gSpots.has_npc) { m[MP_NPC * 2] = gSpots.npc.x + 1; m[MP_NPC * 2 + 1] = gSpots.npc.y + 1; }
+        if (gSpots.has_chest) { m[MP_CHEST * 2] = gSpots.chest.x + 1; m[MP_CHEST * 2 + 1] = gSpots.chest.y + 1; }
+        if (gSpots.has_relic) { m[MP_RELIC * 2] = gSpots.relic.x + 1; m[MP_RELIC * 2 + 1] = gSpots.relic.y + 1; }
+        if (gSpots.has_shrine) { m[MP_SHRINE * 2] = gSpots.shrine.x + 1; m[MP_SHRINE * 2 + 1] = gSpots.shrine.y + 1; }
     }
     /* gold on the floor: the wood is rotten, but it shines; white stars
        over the living rooms, a mist over the rotten ones */
