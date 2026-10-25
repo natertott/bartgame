@@ -252,15 +252,40 @@ int actor_dist2(const Actor* a, const Actor* b) {
 }
 
 /* ------------------------------------------------------------ sprites -- */
-#define OBJ_TILE_FIRST_FREE 56 /* 0..15 hero frame, 16..27 sword sheet, 28..39 shield, 40..55 the speaker's face */
+#define OBJ_TILE_FIRST_FREE 72 /* 0..31 hero frame, 32..43 sword sheet, 44..55 shield, 56..71 the speaker's face */
 static u16 sNextTile;
 static u16 sSheetTile[SHEET_COUNT];
+
+/* single frames resident on their own, for a sheet whose frames are
+   never on screen together (the folk: one of each kind in a room) */
+#define FRAME_CACHE 8
+static struct { u8 sheet, frame; u16 tile; } sFrameCache[FRAME_CACHE];
+static u8 sFrameCount;
 
 void sprites_reset(void) {
     int i;
     sNextTile = OBJ_TILE_FIRST_FREE;
     for (i = 0; i < SHEET_COUNT; i++)
         sSheetTile[i] = 0xFFFF;
+    sFrameCount = 0;
+}
+
+u16 sprite_load_frame(int sheet, int frame) {
+    int i;
+    const SpriteSheet* sh = &sheets[sheet];
+    for (i = 0; i < sFrameCount; i++)
+        if (sFrameCache[i].sheet == sheet && sFrameCache[i].frame == frame)
+            return sFrameCache[i].tile;
+    if (sFrameCount == FRAME_CACHE || sNextTile + sh->frame_tiles > OBJ_TILE_MINIMAP)
+        return 0;
+    u16 base = sNextTile;
+    sNextTile += (sh->frame_tiles + 1) & ~1;
+    dma3_copy32(sh->tiles + frame * sh->frame_tiles * 16, OBJ_TILE(base), sh->frame_tiles * 32);
+    sFrameCache[sFrameCount].sheet = sheet;
+    sFrameCache[sFrameCount].frame = frame;
+    sFrameCache[sFrameCount].tile = base;
+    sFrameCount++;
+    return base;
 }
 
 u16 sprite_load_sheet(int sheet) {

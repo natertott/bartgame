@@ -31,8 +31,9 @@ brief; they follow the same rules.
   at its feet point, so a frame whose feet sit higher will float.
 - **West is east flipped.** The engine mirrors east-facing frames for
   west, so draw east only, and keep east frames free of details that
-  would be wrong mirrored (a sword or shield in a specific hand is
-  fine because the blade and shield are separate sprites).
+  would be wrong mirrored. The Bloom's sword and leaf shield are drawn
+  in her own frames, so facing west they change hands; that is
+  accepted.
 - **Hit boxes** are fixed by the engine, not by the art. The Bloom's is
   12x12 pixels centred 8 pixels above her feet; small monsters 10x10
   or 14x14; the knight 14x26; the boss 28x28. Keep the visual mass
@@ -57,17 +58,30 @@ better ones, but each group stays at 15 colours. Listed in index order
 | lift | carried objects | `#081410 #145838 #1e8048 #3aa858 #78d070 #d060f0 #2c3040 #4c5060 #787c88 #aab0b8 #3a2410 #6a4420 #a07040 #e0e4e8 #f8d050` |
 | ui | map marks, dots, cursor | `#161020 #e8d8a8 #b8a070 #8a5c18 #e8b838 #fff4b0 #2a6a30 #58a048 #f03030 #ffffff #38a0ff #8890a0 #3a3a48 #ff80c0 #ffe070` |
 
+Sheets delivered as full-colour illustrations (the latest delivery's
+Bloom, folk, hub folk, portraits, small items, pickups, 32px icons and
+shields) are cut and quantized by the importer, which derives each
+group's colours from the drawings: the hero, folk and portrait groups
+above, and five more groups of their own, `gear` (the sword and shield
+icons), `items` (the 16px items), `pick` (the 32px pickups), `icons`
+(the 32px icons) and `folk32` (the hub's two). Each portrait has a
+palette of its own.
+
 ## 2. The Bloom (the hero)
 
-Sheet `hero`, **32x32**, group hero, **50 frames** in this order.
+Sheet `hero`, **64x32**, group hero, **50 frames** in this order. The
+frame is twice as wide as she is so that a swing's arc fits beside
+her.
 
 A chibi flower child: a ring of eight orange-red petals round a round
 cream face with big dark eyes and a small smile; a green hood collar
 over a green tunic with leaf sleeves; a belt with a gold buckle; brown
 boots. About 30 pixels tall with the petals; the head (petals
-included) is more than half the figure. She holds a sword only in the
-attack frames and the engine draws the blade separately, so her hand
-shows a hilt at most. Feet on row 31, centred on column 16.
+included) is more than half the figure. Her frames carry her gear:
+the attack frames draw the sword and its arc, the guard frames draw
+the leaf she guards with. The engine draws no blade or shield over
+her. Feet on row 31, her flower head centred on column 32, so an
+outflung arm or sword does not shift her.
 
 Suffixes: `_s` faces the camera (south), `_n` shows her back (the back
 of the bloom, petals and the hood), `_e` faces right in three-quarter
@@ -77,30 +91,30 @@ profile. West is `_e` mirrored.
 |---|---|---|
 | `idle_s` `idle_n` `idle_e` | standing | the resting pose; also the first frame of every walk cycle |
 | `walk_s1` `walk_s2`, `walk_n1` `walk_n2`, `walk_e1` `walk_e2` | walking | two frames, left foot forward and right foot forward, alternated every 8 frames with a petal bob of 1 pixel; both keep the feet on the bottom row |
-| `atk_s1` `atk_n1` `atk_e1` | sword wind-up | 5 frames; the sword arm drawn back, body twisted the other way; no blade |
-| `atk_s` `atk_n` `atk_e` | the blow | 5 frames; the arm fully extended toward the facing; the blade sprite is placed at the hand, so the hand must sit at a consistent spot: facing south at the bottom centre, east at the right edge mid-height, north above the head |
-| `atk_s3` `atk_n3` `atk_e3` | follow-through | 5 frames; the arm across the body on the far side |
+| `atk_s1` `atk_n1` `atk_e1` | sword wind-up | 5 frames; the sword drawn back, body twisted the other way |
+| `atk_s` `atk_n` `atk_e` | the blow | 5 frames; the sword and its arc swept toward the facing; the hit box is the engine's whatever the art shows (facing east it reaches 22 pixels right of her centre, south 12 below her feet, north 32 above them), so keep the arc near it |
+| `atk_s3` `atk_n3` `atk_e3` | follow-through | 5 frames; the sword across the body on the far side |
 | `roll_1` | the duck | 3 frames; crouched, petals flattened |
 | `roll_2` `roll_3` `roll_4` `roll_5` | the ball | a tucked ball turning a quarter turn per frame; each shows 3 frames, the four cycle twice (12 frames of tumbling); petals, tunic and boots visible as it turns; the ball sits on the bottom row; mirrored when rolling west |
 | `roll_6` | landing squash | 3 frames; wide and low |
 | `roll_7` | rising | 3 frames; between squash and idle |
 | `hurt_s` `hurt_n` `hurt_e` | knocked back | eyes shut, petals flung back, arms out; also the death pose, which the engine blinks |
 | `jump_s` `jump_n` `jump_e` | the Petal Cloak leap | legs tucked, the cloak's petals spread wide like a parachute above; drawn 2 pixels higher than idle |
-| `itemget` | holding a prize up | facing the camera, both arms straight up, hands together above the petals; the prize is drawn separately 28 pixels above her feet; also the lifting pose when picking up a bush or stone |
-| `carry_s` `carry_n` `carry_e` | carrying a load | arms straight up holding something over the head (the load is a separate 16x16 sprite drawn 44 pixels above the feet); standing |
-| `carry_s1` `carry_s2`, `carry_n1` `carry_n2`, `carry_e1` `carry_e2` | carrying, walking | the two walk steps with the arms up |
+| `itemget` | holding a prize up | facing the camera, both arms straight up, hands empty above the petals; the engine draws the prize (a 32x32 icon) above her head |
+| `carry_s` `carry_n` `carry_e` | carrying a load | the load held at the chest; the engine draws the real load (a 16x16 bush, pot or stone) over her there: facing south centred 5 pixels right of her centre and 18 above her feet, east 8 right and 16 above, north across her back 15 above. A barrel drawn in the frame is covered by it; leave the arms round that spot; also the lifting pose, the load rising from her feet |
+| `carry_s1` `carry_s2`, `carry_n1` `carry_n2`, `carry_e1` `carry_e2` | carrying, walking | the two walk steps holding the load |
 | `drown_1` `drown_2` `drown_3` | sinking in water | 12 frames each; the figure sinking (chest deep, then shoulders, then only the petals above a ring of ripples); the water line stays near the frame's bottom; never mirrored |
 | `fall_1` `fall_2` `fall_3` | falling into a pit | 8 frames each; shrinking and dropping toward the centre, arms up, then gone but for the petals; never mirrored |
-| `guard_s` `guard_n` `guard_e` | shield raised | braced stance, the shield arm forward; the shield itself is a separate sprite placed in front |
+| `guard_s` `guard_n` `guard_e` | shield raised | braced stance, the shield held forward toward the facing (hidden behind her facing north) |
 
 ## 3. The sword blade
 
 Sheet `sword`, **16x16**, group hero, **3 frames**.
 
 A short straight blade with a cross guard and a wrapped grip, steel
-with a gleam line, gold at the pommel. The engine positions and flips
-these round the Bloom's hand through the three swing phases and uses
-`blade_s` as the A button's HUD icon.
+with a gleam line, gold at the pommel. Only `blade_s` is drawn now, as
+the equipped sword's HUD icon; the swing is in the Bloom's frames. The
+other two are kept so the sheet's order stays.
 
 | Frame | Orientation |
 |---|---|
@@ -111,7 +125,8 @@ these round the Bloom's hand through the three swing phases and uses
 ## 4. The Bark Shield
 
 Sheet `shield`, **16x16**, group hero, **3 frames**. Planks bound in
-brass with a central boss. Drawn in front of the guarding Bloom.
+brass with a central boss. Only `front` is drawn now, as the equipped
+shield's HUD icon; the guard is in the Bloom's frames.
 
 | Frame | What it shows |
 |---|---|
@@ -367,5 +382,5 @@ is made for the game rather than cut from the boards.
 2. At most 15 opaque colours per palette group; outline in the group's darkest colour.
 3. Feet on the bottom row and centred for every standing figure; east frames only, never west.
 4. Pairs that alternate (walk steps, blinks, pulses) differ only where they should.
-5. Attack frames without a blade; the hand at the stated spot.
+5. The Bloom's attack frames with the sword drawn in, her carry frames with the arms round the load's spot, her head centred at column 32 of 64.
 6. Nothing drawn outside the frame; petals included.

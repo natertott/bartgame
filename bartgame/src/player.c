@@ -21,9 +21,9 @@ PlayerState gPl;
 #define ATTACK_FRAMES 15
 #define HURT_FRAMES 8
 #define FALL_FRAMES 36
-#define HERO_TILE 0    /* 32x32: tiles 0..15 */
-#define SWORD_TILE 16
-#define SHIELD_TILE 28 /* three frames, resident after the sword */
+#define HERO_TILE 0    /* 64x32: tiles 0..31 */
+#define SWORD_TILE 32  /* the blade and the shield stay resident for the HUD */
+#define SHIELD_TILE 44
 
 static u8 sLastFrame = 0xFF;
 static u8 sWalkTimer;
@@ -112,8 +112,8 @@ void player_init(int px, int py, int facing) {
     a->y = py << 16;
     a->facing = facing;
     a->dir = facing_to_dir(facing);
-    a->w = 32;
-    a->h = 32;
+    a->w = sheets[SHEET_HERO].w; /* 64: the swing's arc reaches past 32 */
+    a->h = sheets[SHEET_HERO].h;
     a->pal = PAL_OBJ_HERO;
     a->sheet = SHEET_HERO;
     a->tile = HERO_TILE;
@@ -121,7 +121,7 @@ void player_init(int px, int py, int facing) {
     gPl.safe_x = px;
     gPl.safe_y = py;
     sLastFrame = 0xFF;
-    /* the sword blade sheet stays resident in tiles 16..27 */
+    /* the blade and shield sheets stay resident for the HUD's slots */
     dma3_copy32(sheets[SHEET_SWORD].tiles, OBJ_TILE(SWORD_TILE), sheets[SHEET_SWORD].tile_count * 32);
     dma3_copy32(sheets[SHEET_SHIELD].tiles, OBJ_TILE(SHIELD_TILE), sheets[SHEET_SHIELD].tile_count * 32);
 }
@@ -771,64 +771,17 @@ static const u8 sCarryFrame[3][4] = {
     { F_HERO_CARRY_N2, F_HERO_CARRY_E2, F_HERO_CARRY_S2, F_HERO_CARRY_E2 },
 };
 
-/* the shield held before the hero: in front for S, E and W, behind for N */
-static void draw_shield(void) {
-    Actor* a = gPlayer;
-    int sx = PX(a->x) - 8 - gCamX, sy = PX(a->y) - 32 - gCamY - PX(a->z);
-    switch (a->facing) {
-        case FACE_S: draw_sprite(sx, sy + 15, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, a->prio, PAL_OBJ_HERO); break;
-        case FACE_N: draw_sprite(sx, sy + 9, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_BACK, 0, a->prio, PAL_OBJ_HERO); break;
-        case FACE_E: draw_sprite(sx + 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 0, a->prio, PAL_OBJ_HERO); break;
-        default: draw_sprite(sx - 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 1, a->prio, PAL_OBJ_HERO); break;
-    }
-}
-
-static void draw_sword(void) {
-    Actor* a = gPlayer;
-    int px = PX(a->x) - gCamX, py = PX(a->y) - PX(a->z) - gCamY;
-    int phase = gPl.sword_phase;
-    int frame, hflip = 0, vflip = 0, sx = px - 8, sy = py - 24;
-    /* orientation per facing and phase: start side, forward, end side */
-    static const s8 off[4][3][2] = {
-        /* N: E side, up, W side */ { { 10, -24 }, { 0, -40 }, { -10, -24 } },
-        /* E */ { { 10, -32 }, { 14, -20 }, { 10, -8 } },
-        /* S: W side, down, E side */ { { -10, -14 }, { 0, -2 }, { 10, -14 } },
-        /* W */ { { -10, -32 }, { -14, -20 }, { -10, -8 } },
-    };
-    static const u8 orient[4][3] = {
-        { 1, 0, 1 },  /* N: diag NE?, up, NW */
-        { 1, 2, 1 },  /* E: NE, E, SE */
-        { 1, 0, 1 },  /* S: SW, S, SE */
-        { 1, 2, 1 },  /* W: NW, W, SW */
-    };
-    (void)orient;
-    /* frames: blade_s = 0 (down), blade_e = 1 (right), blade_se = 2 (diag) */
-    switch (a->facing) {
-        case FACE_N:
-            if (phase == 1) { frame = F_SWORD_BLADE_S; vflip = 1; }
-            else { frame = F_SWORD_BLADE_SE; vflip = 1; hflip = (phase == 2); }
-            break;
-        case FACE_S:
-            if (phase == 1) { frame = F_SWORD_BLADE_S; }
-            else { frame = F_SWORD_BLADE_SE; hflip = (phase == 0); }
-            break;
-        case FACE_E:
-            if (phase == 1) { frame = F_SWORD_BLADE_E; }
-            else { frame = F_SWORD_BLADE_SE; vflip = (phase == 0); }
-            break;
-        default:
-            if (phase == 1) { frame = F_SWORD_BLADE_E; hflip = 1; }
-            else { frame = F_SWORD_BLADE_SE; hflip = 1; vflip = (phase == 0); }
-            break;
-    }
-    sx = px - 8 + off[a->facing][phase][0];
-    sy = py - 8 + off[a->facing][phase][1];
-    OamEntry* o = oam_alloc();
-    if (!o)
-        return;
-    o->attr0 = ATTR0_Y(sy) | ATTR0_SQUARE;
-    o->attr1 = ATTR1_X(sx) | ATTR1_SIZE(1) | (hflip ? ATTR1_HFLIP : 0) | (vflip ? ATTR1_VFLIP : 0);
-    o->attr2 = ATTR2_TILE(SWORD_TILE + frame * 4) | ATTR2_PRIO(2) | ATTR2_PAL(PAL_OBJ_HERO);
+/* The load, held where the Bloom's carry frames hold their barrel: at
+   her chest, or across her back facing north, so it stays in sight; and
+   lifted there from the ground. Offsets of the 16x16 load from her feet,
+   by facing. */
+static void draw_load(Actor* a) {
+    static const s8 at[4][2] = { { -8, -23 }, { 0, -24 }, { -3, -26 }, { -16, -24 } }; /* N E S W */
+    int t = (a->state == PS_LIFT) ? a->timer : LIFT_FRAMES;
+    int gy = -12, cy = at[a->facing][1];
+    int sx = PX(a->x) + at[a->facing][0] - gCamX;
+    int sy = PX(a->y) + gy + ((cy - gy) * t) / LIFT_FRAMES - PX(a->z) - gCamY;
+    draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
 }
 
 void player_draw(void) {
@@ -865,8 +818,10 @@ void player_draw(void) {
             frame = sJumpFrame[f];
             break;
         case PS_ITEMGET:
-        case PS_LIFT:
             frame = F_HERO_ITEMGET;
+            break;
+        case PS_LIFT:
+            frame = sCarryFrame[0][f];
             break;
         case PS_SWALLOWED:
             /* startled, then shrinking into the mouth like into a hole */
@@ -897,8 +852,8 @@ void player_draw(void) {
         /* going under: the drowning frames in place, the hole's frames
            shrinking; the last frames show nothing */
         int t = FALL_FRAMES - a->timer;
-        int sx = PX(a->x) - 16 - gCamX;
-        int sy = PX(a->y) - 32 - gCamY;
+        int sx = PX(a->x) - a->w / 2 - gCamX;
+        int sy = PX(a->y) - a->h - gCamY;
         if (!a->sub && t >= 24)
             return;
         if (a->sub && t >= 32)
@@ -912,27 +867,11 @@ void player_draw(void) {
     if (a->state == PS_ITEMGET && gPl.got_item) {
         int sx = PX(a->x) - 16 - gCamX;
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
-        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_FX);
+        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_ICONS);
     }
-    /* the sword draws under the hero when swung north, over otherwise */
-    if (a->state == PS_ATTACK && a->facing == FACE_N) {
-        actor_draw(a);
-        draw_sword();
-    } else if (gPl.shield_up && a->facing == FACE_N) {
-        actor_draw(a); /* earlier OAM entries draw on top: hero first, shield behind */
-        draw_shield();
-    } else {
-        if (gPl.shield_up)
-            draw_shield();
-        if (a->state == PS_ATTACK)
-            draw_sword();
-        actor_draw(a);
-    }
-    /* the load, rising from the chest to over the head */
-    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry) {
-        int lift = (a->state == PS_LIFT) ? (a->timer * 20) / LIFT_FRAMES : 20;
-        int sx = PX(a->x) - 8 - gCamX;
-        int sy = PX(a->y) - 24 - lift - PX(a->z) - gCamY;
-        draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
-    }
+    /* the Bloom's frames carry the blade she swings and the leaf she
+       guards with; a load goes over her (earlier OAM entries draw on top) */
+    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry)
+        draw_load(a);
+    actor_draw(a);
 }

@@ -66,25 +66,42 @@ font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
 **The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
-pack (the fixed, engine-sized delivery), kept as delivered in
-`art/ref/pack/` and imported by `tools/import_pack.py` into `art/pack/`:
-one 4-bit indexed strip per sheet and `pack.json` with the frame names
-and palettes, which is all the build reads. Every sheet goes in index
-for index with the palette it carries, in the pack's nine OBJ palette
-groups (hero, fx, bugs, blight, iron, folk, portrait, lift, ui); the
-importer checks that sheets of a group share their colours and renames
-the knight's walk frames to the engine's spelling. The engine's frame
-order still follows the hand-drawn sheets the pack replaced, so code
-that counts frames keeps working; the frames the pack appends (Sister
-Mary Grace and Brother Mark on the folk and portrait sheets) come
-after, and its extra sheets (the upgraded shield, the shield menu
-symbols, the standalone gilt diamond) are imported but not yet used.
-Only the speaker's face is resident (16 OBJ tiles) and the portrait
-slot is loaded with the speaker's palette. The HUD tiles are the pack's
-too, quantized into the HUD palette the text inks depend on, with its
-8x8 slot squares opened out to the engine's 16x16 slots and its arrow
-turned to point down. The CPU-drawn mini-map writes through `ui_ink[]`
-into the pack's ui palette.
+pack, kept as delivered: `art/ref/pack/` holds the fixed, engine-sized
+sheets and `art/ref/pack_art/` the eight illustrated sheets that came
+after (the Bloom, the folk, the hub's two, the portraits, the small
+items, the pickups, the 32px icons, the shields). `tools/import_pack.py`
+imports both into `art/pack/`: one 4-bit indexed strip per sheet and
+`pack.json` with the frame names and palettes, which is all the build
+reads. The exact strips go in index for index with the palette they
+carry. The illustrations are cut by `tools/pack_art.py`: the haze round
+each figure keyed off, the cells cut given how many each row holds,
+each cell area-averaged down to its frame (a box that is mostly dark
+keeps its darks, so outlines and eyes survive), and each palette group
+derived by weighted k-means in Lab so small accents keep a colour.
+They replace the hero, the folk, the hub's two, the portraits, the
+items, the pickups, the icons and the shield, and take five more OBJ
+palette slots (gear, items, pick, icons, folk32), fourteen in all. The
+importer's docstrings name which cell went to which frame and the
+choices where the art has no exact pose.
+
+The Bloom is 64x32 now, centred on her flower head, so a swing's arc
+fits beside her. Her frames carry the sword she swings and the leaf
+she guards with, so the engine no longer draws a blade or shield over
+her; the sword's hit box is unchanged. A lifted load is drawn over her
+where her carry frames hold their barrel, at the chest or across her
+back facing north. The prize held up is the engine's icon; the coin
+the art drew there is taken out. Small folk stream the one frame they
+show into a cache of eight. The engine's frame order still follows the
+hand-drawn sheets the pack replaced, so code that counts frames keeps
+working; frames the pack appends (Sister Mary Grace and Brother Mark on
+the folk and portrait sheets) come after, and its extra sheets (the
+upgraded shield, the shield menu symbols, the standalone gilt diamond)
+are imported but not yet used. Only the speaker's face is resident (16
+OBJ tiles) and the portrait slot is loaded with the speaker's palette.
+The HUD tiles are the pack's too, quantized into the HUD palette the
+text inks depend on, with its 8x8 slot squares opened out to the
+engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
+mini-map writes through `ui_ink[]` into the pack's ui palette.
 
 **The style boards.** The tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
@@ -268,7 +285,8 @@ src/            the engine and the game
 art/            pixel art as rows of letters mapped to palette indices
   palettes.py   the 16-color palettes: BG from the boards over the drawn
                 ones, OBJ from the sprite pack, the remap tables
-  ref/          the four style boards; ref/pack/ the sprite pack as delivered
+  ref/          the four style boards; ref/pack/ the sprite pack's exact
+                sheets and ref/pack_art/ its illustrated sheets, as delivered
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
   pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
@@ -291,7 +309,8 @@ art/            pixel art as rows of letters mapped to palette indices
   rooms.py      the hub room: the Drain
 tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
-  import_pack.py    the sprite pack (art/ref/pack/) -> art/pack/
+  import_pack.py    the sprite pack (art/ref/pack/, art/ref/pack_art/) -> art/pack/
+  pack_art.py       cutting the illustrated sheets: cells, downscaling, palettes
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM

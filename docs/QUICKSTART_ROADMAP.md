@@ -1271,6 +1271,36 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the illustrated sprites in (Oct 2026)
+
+Eight illustrated sheets came after the fixed pack (the Bloom, the folk,
+the hub's two, the portraits, the small items, the pickups, the 32px
+icons, the shields), kept in `bartgame/art/ref/pack_art/`.
+`tools/import_pack.py` now runs in two stages: the fixed pack's exact
+strips as before, then `tools/pack_art.py` cuts the illustrations (cells
+by known counts per row, area-averaged downscaling that keeps outlines,
+weighted k-means palettes in Lab) into the hero, folk, folk32, portrait,
+items, pick32, icon32 and shield sheets. Five OBJ palette slots come
+back (gear, items, pick, icons, folk32).
+
+Engine: the Bloom is 64x32, centred on her flower head; her frames draw
+the sword and the leaf shield, so the separate blade and shield over
+her are gone (the hit box is unchanged, and the sword and shield sheets
+are now HUD icons only); a lifted load is drawn over her where the
+carry frames hold their barrel, across her back facing north; the coin
+in the item-get pose is erased so the real prize shows; small folk
+stream their one frame into a cache of eight. `docs/BARTGAME_ART_SPEC.md`
+describes the new contract.
+
+Choices and gaps: the art has no exact pose for some frames, so the
+back walk is one step and its mirror, the back swing's wind-up is the
+back idle and its blow and follow-through share one pose, the back leap is the back idle raised a pixel, and the
+back carry's second step mirrors its first (cell 36 draws the barrel on
+her back). Fourteen Bloom cells are spare. Pickups use the first of
+their four turns; folk use their first pose only. The `hubcap` icon is
+the art's mushroom bell. The two new folk and the upgraded shield are
+imported but unused, as before. The importer needs numpy.
+
 ### BARTGAME: the fixed sprite pack (Oct 2026)
 
 The pack's fixed delivery (revision native-4bpp-fixed-2026-10-25)

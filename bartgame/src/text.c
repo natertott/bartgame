@@ -16,9 +16,9 @@
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL15 (15 << 12)
 #define PAL14 (14 << 12)
-#define SWORD_TILE 16    /* player.c streams the sword sheet here */
-#define SHIELD_TILE 28   /* and the shield after it */
-#define PORTRAIT_TILE 40 /* the speaker's face, 16 tiles */
+#define SWORD_TILE 32    /* player.c keeps the sword sheet here */
+#define SHIELD_TILE 44   /* and the shield after it */
+#define PORTRAIT_TILE 56 /* the speaker's face, 16 tiles */
 #define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
@@ -422,7 +422,7 @@ void shop_draw(void) {
     if (!sShopActive)
         return;
     for (i = 0; i < sShopCount; i++)
-        draw_sprite((SH_X + 4) * 8 + 2, (SH_Y + 3 + i * 2) * 8 - 4, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_FX);
+        draw_sprite((SH_X + 4) * 8 + 2, (SH_Y + 3 + i * 2) * 8 - 4, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_ITEMS);
 }
 
 void shop_close(void) {
@@ -453,13 +453,13 @@ static void slot(int tx, int lit) {
 /* the icon of what a button holds, as a sprite over the slot */
 void hud_equip_icon(int eq, int px, int py, int prio) {
     switch (eq) {
-        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_HERO); break;
-        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_FX); break;
-        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_FX); break;
-        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_FX); break;
-        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_HERO); break;
-        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_FX); break;
-        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_FX); break;
+        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_ITEMS); break;
         default: break;
     }
 }

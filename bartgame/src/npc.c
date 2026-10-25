@@ -22,7 +22,6 @@
 #include "npc.h"
 #include "myst.h"
 
-static u16 sNpcTile;
 static u16 sBigTile; /* the hub's two at 32x32 */
 static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
@@ -31,12 +30,9 @@ static u8 sPendingReward;
 static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT, F_NPC_NUN, F_NPC_GARDENER, F_NPC_HERMIT };
 
 Actor* npc_spawn(int type, int px, int py) {
-    if (!sNpcTile)
-        sNpcTile = sprite_load_sheet(SHEET_NPC);
     Actor* a = actor_new(AK_NPC, type, px, py);
     gDbg[0]++;
     gDbg[1] = (u32)a;
-    gDbg[2] = sNpcTile;
     if (!a)
         return NULL;
     if (type == NPC_SAGE || type == NPC_MERCHANT) {
@@ -49,8 +45,9 @@ Actor* npc_spawn(int type, int px, int py) {
         a->v[1] = 1;
         a->frame = a->v[0];
     } else {
-        actor_set_sheet(a, SHEET_NPC, sNpcTile);
-        a->frame = sFrames[type];
+        /* the folk of the wood: only their own frame is resident */
+        actor_set_sheet(a, SHEET_NPC, sprite_load_frame(SHEET_NPC, sFrames[type]));
+        a->frame = 0;
     }
     gDbg[3] = a->kind;
     a->hitbox = HB_TALL;
@@ -60,7 +57,6 @@ Actor* npc_spawn(int type, int px, int py) {
 }
 
 void npc_room_reset(void) {
-    sNpcTile = 0;
     sBigTile = 0;
     sTalking = NULL;
     sDlgState = 0;

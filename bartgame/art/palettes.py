@@ -348,11 +348,14 @@ _BOARD_BG = {
     'props': ['#000000'] + _hexes(_st.PAL_PROPS),
 }
 BG_PALETTES = [(n, _BOARD_BG.get(n, cols)) for n, cols in OLD_BG_PALETTES]
-# The OBJ palettes are the sprite pack's groups (art/pack/pack.json), in
-# the slots the engine has always used. The portrait slot is reloaded
-# with each speaker's palette (PORTRAIT_PALETTES).
+# The OBJ palettes are the sprite pack's groups (art/pack/pack.json): the
+# slots the engine has always used, then the groups drawn from the
+# illustrated sheets (the sword and shields, the small items, the
+# pickups, the icons, the hub's two). The portrait slot is reloaded with
+# each speaker's palette (PORTRAIT_PALETTES).
 import pack as _pk  # noqa: E402
-_OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift', 'ui']
+_OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift', 'ui',
+              'gear', 'items', 'pick', 'icons', 'folk32']
 OBJ_PALETTES = [(n, _pk.GROUPS[n]) for n in _OBJ_ORDER]
 assert set(_pk.GROUPS) == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
 PORTRAIT_PALETTES = _pk.PORTRAIT_PALETTES

@@ -87,6 +87,7 @@ int facing_to_dir(int facing);
 /* sprites in OBJ VRAM */
 void sprites_reset(void);
 u16 sprite_load_sheet(int sheet);
+u16 sprite_load_frame(int sheet, int frame); /* one frame resident; frame 0 of the result */
 void actor_set_sheet(Actor* a, int sheet, u16 tile);
 void actor_draw(Actor* a);
 void draw_sprite(int sx, int sy, int sheet, u16 tile, int frame, int hflip, int prio, int pal);
