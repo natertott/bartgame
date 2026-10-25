@@ -307,7 +307,7 @@ static void grid_icons(const MenuItem* list, const u8* idx, int count) {
         int row = i / 4, col = i % 4;
         if (row < sScroll || row > sScroll + 1)
             continue;
-        draw_sprite(GRID_X(col) * 8, GRID_Y(row) * 8, SHEET_ICON32, icon32_sheet_tile(), list[idx[i]].icon, 0, 0, PAL_OBJ_FX);
+        draw_sprite(GRID_X(col) * 8, GRID_Y(row) * 8, SHEET_ICON32, icon32_sheet_tile(), list[idx[i]].icon, 0, 0, PAL_OBJ_ICONS);
     }
 }
 

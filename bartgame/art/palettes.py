@@ -329,7 +329,7 @@ OLD_OBJ_PALETTES = [
 # props, the Bloom, the folk and the faces take their colours from the
 # style boards (style.py); the rest keep their hand palettes. Hand-drawn
 # art in a replaced palette is remapped at build time, old index to the
-# nearest new colour (REMAP_BG, REMAP_OBJ).
+# nearest new colour (REMAP_BG).
 import style as _st
 
 
@@ -347,13 +347,17 @@ _BOARD_BG = {
     'sewer': ['#000000'] + _hexes(_st.PAL_SEWER),
     'props': ['#000000'] + _hexes(_st.PAL_PROPS),
 }
-_BOARD_OBJ = {
-    'hero': ['#000000'] + _hexes(_st.PAL_HERO),
-    'folk': ['#000000'] + _hexes(_st.PAL_FOLK),
-    'portrait': ['#000000'] + _hexes(_st.PAL_PORTRAIT),
-}
 BG_PALETTES = [(n, _BOARD_BG.get(n, cols)) for n, cols in OLD_BG_PALETTES]
-OBJ_PALETTES = [(n, _BOARD_OBJ.get(n, cols)) for n, cols in OLD_OBJ_PALETTES]
+# The OBJ palettes are the sprite pack's groups (art/pack/pack.json): the
+# old slots keep their order, then the groups the pack added (the sword
+# and shield, the three item sheets, the hub's two). The portrait slot is
+# reloaded with each speaker's own palette (PORTRAIT_PALETTES).
+import pack as _pk  # noqa: E402
+_OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift', 'ui',
+              'gear', 'items', 'pick', 'icons', 'folk32']
+OBJ_PALETTES = [(n, _pk.GROUPS[n]) for n in _OBJ_ORDER]
+assert set(_pk.GROUPS) == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
+PORTRAIT_PALETTES = _pk.PORTRAIT_PALETTES
 
 
 def _rgb(h):
@@ -378,8 +382,26 @@ def _remap(old, new):
 
 
 REMAP_BG = {n: _remap(dict(OLD_BG_PALETTES)[n], _BOARD_BG[n]) for n in _BOARD_BG}
-REMAP_OBJ = {n: _remap(dict(OLD_OBJ_PALETTES)[n], _BOARD_OBJ[n]) for n in _BOARD_OBJ}
 
 
 def remap_rows(rows, m):
     return [''.join('.' if ch in '. ' else '%x' % m[int(ch, 16)] for ch in r) for r in rows]
+
+
+# The mini-map is drawn by the CPU in the old 'ui' indices; UI_INK maps
+# each to the nearest colour of the pack's ui palette.
+UI_INK = _remap(dict(OLD_OBJ_PALETTES)['ui'], dict(OBJ_PALETTES)['ui'])
+
+
+# The comparison build (BART_TILES=pack, `make pack-tiles`) takes the area
+# palettes from the pack's own tile sheets; PACK_REMAP carries the board
+# colours of the tiles the pack does not cover onto them (pack_tiles.py).
+import os as _os  # noqa: E402
+PACK_TILES = _os.environ.get('BART_TILES') == 'pack'
+BOARD_BG_PALETTES = BG_PALETTES
+PACK_REMAP = {}
+if PACK_TILES:
+    _pt = {n: ['#000000'] + _pk.META['tiles'][n]['palette']
+           for n in ('forest', 'wood', 'stone', 'cliff', 'blight', 'sewer', 'props')}
+    BG_PALETTES = [(n, _pt.get(n, cols)) for n, cols in BOARD_BG_PALETTES]
+    PACK_REMAP = {n: _remap(dict(BOARD_BG_PALETTES)[n], _pt[n]) for n in _pt}

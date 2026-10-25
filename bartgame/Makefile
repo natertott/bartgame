@@ -1,6 +1,8 @@
 # BARTGAME: a GBA game built from scratch.
 #
 #   make            builds bartgame.gba
+#   make pack-tiles builds bartgame_packtiles.gba, with the sprite pack's
+#                   own tiles and HUD (a comparison build)
 #   make assets     regenerates build/gen/* from art/*.py
 #   make clean
 #
@@ -32,7 +34,7 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 SRC_IWRAM := $(wildcard src/*_iwram.c)
 SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
-ART       := $(wildcard art/*.py) tools/build_assets.py
+ART       := $(wildcard art/*.py) tools/build_assets.py art/pack/pack.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -46,7 +48,7 @@ assets: $(GEN)/assets.c
 
 $(GEN)/assets.c $(GEN)/assets.h: $(ART)
 	@mkdir -p $(GEN)
-	$(PYTHON) tools/build_assets.py $(GEN)
+	BART_TILES=$(BART_TILES) $(PYTHON) tools/build_assets.py $(GEN)
 
 $(BUILD)/assets.o: $(GEN)/assets.c
 	$(CC) $(CFLAGS) $(THUMB) -c $< -o $@
@@ -72,7 +74,14 @@ $(TARGET).gba: $(BUILD)/$(TARGET).elf
 	@$(PREFIX)size $<
 
 clean:
-	rm -rf $(BUILD) $(TARGET).gba
+	rm -rf $(BUILD) $(TARGET).gba build_pt bartgame_packtiles.gba
+
+# The comparison build: the sprite pack's own tile sheets and HUD tiles in
+# place of the ones cut from the style boards (art/pack_tiles.py), in a
+# build directory of its own.
+.PHONY: pack-tiles
+pack-tiles:
+	$(MAKE) BUILD=build_pt TARGET=bartgame_packtiles BART_TILES=pack
 
 -include $(OBJS:.o=.d)
 

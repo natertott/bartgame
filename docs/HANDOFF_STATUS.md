@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: every sprite from the BARTGAME GBA sprite pack (the revised illustrations cut by content, the exact strips as they are), new OBJ palettes, a palette per portrait, folk at 32x32, the title's tagline "a game from the drain", and a comparison build with the pack's own tiles | "BARTGAME: the sprite pack in, and the new tagline" |
 | BARTGAME: the four style boards sampled into the game: palettes derived from the boards, the Bloom at 32x32 with her sheet cut from the boards, the Peddler, the Gatekeeper and the portraits from them, the wood's, the blight's and the Drain's tiles cut by name, everything still drawn remapped into the board palettes, boxes in the UI board's navy and gold | "BARTGAME: the style boards cut into the game" |
 | BARTGAME: one rotted plank behind bare pause pages in a bold font, items and pickups at 24 pixels, maps larger with marks that clear when done, the Map and the Astrolabe, autosave at a win or a death | "BARTGAME: one rotted plank, big items, bare pages, the Map and the Astrolabe" |
 | BARTGAME: the pause menu on rotted planks with an items grid, key items and a drawn map that zooms into a cell with its marks; carved frames on every box; a save file in SRAM with CONTINUE on the title | "BARTGAME: the pause menu on planks, the drawn map, the save file" |

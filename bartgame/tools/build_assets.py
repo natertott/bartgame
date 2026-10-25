@@ -149,7 +149,18 @@ for i, (name, cols) in enumerate(palettes.OBJ_PALETTES):
     vals += [rgb15(x) for x in cols]
 c.append(c_array_u16('pal_obj', vals))
 h.append('#define PAL_OBJ_COUNT %d' % len(palettes.OBJ_PALETTES))
-h.append('extern const u16 pal_obj[];\n')
+h.append('extern const u16 pal_obj[];')
+assert len(palettes.OBJ_PALETTES) <= 16
+# a palette per portrait, loaded into the portrait slot with the speaker
+vals = []
+for cols in palettes.PORTRAIT_PALETTES:
+    assert len(cols) == 16
+    vals += [rgb15(x) for x in cols]
+c.append(c_array_u16('pal_portrait', vals))
+h.append('extern const u16 pal_portrait[];')
+# the old ui indices the CPU-drawn mini-map uses, in the pack's ui palette
+c.append('const u8 ui_ink[16] = { %s };' % ', '.join(str(palettes.UI_INK[i]) for i in range(16)))
+h.append('extern const u8 ui_ink[16];\n')
 
 # ----------------------------------------------------------- metatiles --
 TYPES = tiles.TYPES

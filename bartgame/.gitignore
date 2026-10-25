@@ -2,3 +2,4 @@ build/*
 !build/host/
 build/host/*
 !build/host/*.c
+build_pt/

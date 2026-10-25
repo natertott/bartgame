@@ -1271,6 +1271,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the sprite pack in (Oct 2026)
+
+Every sprite sheet now comes from the BARTGAME GBA sprite pack
+(`bartgame/art/ref/pack/`, imported by `tools/import_pack.py` into
+`art/pack/`). Exact 4-bit strips go in index for index; the seven
+revised sheets are large illustrations whose file names are crossed in
+the pack (hero.png holds the pickups, pick32.png the Bloom, items.png
+the shields, shield.png the folk, npc.png the small items), cut cell by
+cell, area-averaged to their frames with outlines kept, and quantized
+per group by weighted k-means in Lab. Five new OBJ palettes (gear,
+items, pick, icons, folk32); a palette per portrait loaded with the
+speaker; only the speaker's face resident at OBJ tiles 40..55
+(`OBJ_TILE_FIRST_FREE` 56); folk at 32x32; the CPU-drawn mini-map
+writes through `ui_ink[]` into the pack's ui palette. The title's
+tagline reads "a game from the drain". `make pack-tiles` builds a
+comparison ROM with the pack's own tiles and HUD.
+
+Open points from the pack, for the artist: the portraits of the Peddler
+(a bearded man) and the Gatekeeper (a guard with a spear) do not match
+their sprites (a beaked hooded figure, a violet-robed wizard); the
+Bloom's portraits have a white beard; the Bloom's illustration has no
+back view of the leap (jump_n is the back idle raised a pixel) and no
+rising frame after the roll (the curl frame is reused); the carry pose
+holds the load at the chest while the engine draws it overhead. Sister
+Mary Grace, Brother Mark and the upgraded green shield are in the pack
+but not in the game. The monster, effect, mark and `folk32` sheets are
+the pack's first pass (`folk32` is replaced by the revised folk). The
+pack's tiles and HUD are placeholders (no letters on the button
+badges, an empty bomb tile, khaki sewer water), so the default build
+keeps the board tiles. The Bloom's frame choices are in `bloom()` in
+`tools/import_pack.py`.
+
 ### BARTGAME: the style boards cut into the game (Oct 2026)
 
 The four boards (`bartgame/art/ref/`) are sampled into assets by

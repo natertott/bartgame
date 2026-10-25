@@ -252,7 +252,7 @@ int actor_dist2(const Actor* a, const Actor* b) {
 }
 
 /* ------------------------------------------------------------ sprites -- */
-#define OBJ_TILE_FIRST_FREE 40 /* 0..15 hero frame, 16..27 sword sheet, 28..39 shield */
+#define OBJ_TILE_FIRST_FREE 56 /* 0..15 hero frame, 16..27 sword sheet, 28..39 shield, 40..55 the speaker's face */
 static u16 sNextTile;
 static u16 sSheetTile[SHEET_COUNT];
 

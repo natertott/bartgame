@@ -18,6 +18,7 @@
 #define PAL14 (14 << 12)
 #define SWORD_TILE 16    /* player.c streams the sword sheet here */
 #define SHIELD_TILE 28   /* and the shield after it */
+#define PORTRAIT_TILE 40 /* the speaker's face, 16 tiles */
 #define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
@@ -180,7 +181,6 @@ static u8 sTbCol, sTbRow, sTbWait, sTbDone;
 static const char* const* sMenuOpts;
 static s8 sMenuCount, sMenuCursor, sMenuResult;
 static s8 sTbPortrait = -1;
-static u16 sTbPortraitTile;
 
 static int tb_text_x(void) {
     return TB_X + (sTbPortrait >= 0 ? 6 : 2);
@@ -203,8 +203,13 @@ static void tb_clear_lines(void) {
 /* A speaker's name in gold over the text, their portrait at the left. */
 void textbox_open_named(const char* name, int portrait, const char* s) {
     sTbPortrait = portrait;
-    if (portrait >= 0)
-        sTbPortraitTile = sprite_load_sheet(SHEET_PORTRAIT);
+    if (portrait >= 0) {
+        /* only the speaker's face is resident, in its own 16 tiles, and
+           each face has a palette of its own */
+        const SpriteSheet* sh = &sheets[SHEET_PORTRAIT];
+        dma3_copy32(sh->tiles + portrait * sh->frame_tiles * 16, OBJ_TILE(PORTRAIT_TILE), sh->frame_tiles * 32);
+        pal_set_obj(PAL_OBJ_PORTRAIT, &pal_portrait[portrait * 16]);
+    }
     sTbText = s;
     sTbPos = s;
     gTbActive = 1;
@@ -235,7 +240,7 @@ void textbox_close(void) {
 void textbox_draw(void) {
     if (!gTbActive || sTbPortrait < 0)
         return;
-    draw_sprite(TB_X * 8 + 8, TB_Y * 8 + 8, SHEET_PORTRAIT, sTbPortraitTile, sTbPortrait, 0, 0, PAL_OBJ_PORTRAIT);
+    draw_sprite(TB_X * 8 + 8, TB_Y * 8 + 8, SHEET_PORTRAIT, PORTRAIT_TILE, 0, 0, 0, PAL_OBJ_PORTRAIT);
 }
 
 /* A prompt on the first line, then up to two options with a cursor. */
@@ -417,7 +422,7 @@ void shop_draw(void) {
     if (!sShopActive)
         return;
     for (i = 0; i < sShopCount; i++)
-        draw_sprite((SH_X + 4) * 8 + 2, (SH_Y + 3 + i * 2) * 8 - 4, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_FX);
+        draw_sprite((SH_X + 4) * 8 + 2, (SH_Y + 3 + i * 2) * 8 - 4, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_ITEMS);
 }
 
 void shop_close(void) {
@@ -448,13 +453,13 @@ static void slot(int tx, int lit) {
 /* the icon of what a button holds, as a sprite over the slot */
 void hud_equip_icon(int eq, int px, int py, int prio) {
     switch (eq) {
-        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_HERO); break;
-        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_FX); break;
-        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_FX); break;
-        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_FX); break;
-        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_HERO); break;
-        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_FX); break;
-        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_FX); break;
+        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_ITEMS); break;
         default: break;
     }
 }
@@ -571,7 +576,7 @@ void minimap_render(void) {
         for (y = 0; y < 8; y++) {
             for (x = 0; x < 8; x += 4) {
                 const u8* p = &buf[(ty + y) * 32 + tx + x];
-                sMapTiles[i * 16 + y * 2 + x / 4] = p[0] | (p[1] << 4) | (p[2] << 8) | (p[3] << 12);
+                sMapTiles[i * 16 + y * 2 + x / 4] = ui_ink[p[0]] | (ui_ink[p[1]] << 4) | (ui_ink[p[2]] << 8) | (ui_ink[p[3]] << 12);
             }
         }
     }

@@ -4143,3 +4143,9 @@ mt('sw_glint3', 'sewer', 'FLOOR', frames=_gl3, anim_speed=18)
 # remapped into the boards' palettes (tiles_style.py)
 import tiles_style  # noqa: E402
 tiles_style.apply(METATILES)
+
+# the comparison build puts the sprite pack's own tiles in instead
+import palettes as _pl  # noqa: E402
+if _pl.PACK_TILES:
+    import pack_tiles  # noqa: E402
+    pack_tiles.apply(METATILES)

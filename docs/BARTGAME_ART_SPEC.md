@@ -265,7 +265,8 @@ clay pot. Each centred, resting on the bottom rows, outlined.
 
 ## 12. Folk (NPCs)
 
-**Small NPCs.** Sheet `npc`, **16x32**, group folk, 5 frames, facing
+**Small NPCs.** Sheet `npc`, **32x32** (16x32 in the first spec; the
+engine now takes the wider frame), group folk, 5 frames, facing
 the camera, feet on the bottom row.
 
 | Frame | Who |

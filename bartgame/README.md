@@ -65,31 +65,58 @@ sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
 font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
-**The style boards.** Four reference boards live in `art/ref/`: the
-sprite sheets (the Bloom's idle, walk, directions and sword, the
-Peddler's and the Gatekeeper's idles, directions and casts), the
-Drain, the blighted wood, and the UI board. `art/sample.py` cuts them:
-a crop is scaled to its GBA size, keyed from the sheet's grey, and
-quantized to a palette of fifteen colours derived from the boards
-themselves (median cut over the crops a palette serves, each crop
-weighing the same; sprites take the fifteen farthest apart so a few
-bright colours survive the darks). `art/style.py` names every crop:
-the Bloom's frames at 32x32 (`art/hero32.py` makes the rest of her
-states from them: a leg bob for the front and back walks, the curled
-ball of the roll, arms up for a load, the sinking frames), the Peddler
-and the Gatekeeper at 32x32, the three board portraits, and the tiles:
-grass, path, canopy, flowers, bushes, tufts, stumps, logs, two oaks at
-32x48 cut into crown quarters masked round an ellipse and a trunk,
-water, lilies, falls, bridges, ledges, the well, rocks; the blight's
-ground, veins, crystals, dead trees, walls, the door, the arch, the
-pool, the pillar; the Drain's floors, walls, water, falls, pipes,
-grates, the drain, lanterns, banners, ladders, posts, and the stall's
-props. `art/tiles_style.py` puts them into the metatiles by name;
-every metatile, HUD tile and sprite still drawn by hand is remapped,
-colour by nearest colour, into the board palettes
-(`palettes.REMAP_BG`, `REMAP_OBJ`), so nothing on screen is off the
-boards' palette. The HUD and the boxes keep their drawn tiles in the
-UI board's colours: navy fills, gold frames, its reds.
+**The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
+pack, kept as delivered in `art/ref/pack/` and imported by
+`tools/import_pack.py` into `art/pack/` (one indexed strip per sheet and
+`pack.json` with the palettes; the build reads only those). The pack
+has two kinds of sheet. Most are exact 4-bit strips at the engine's
+frame size (the monsters, the effects, the projectiles, the arrows,
+the mouth, the carried objects, the map marks, the sword); they go in
+index for index. Seven were revised as large illustrations, one figure
+per cell of a grid, and their file names are crossed in the pack:
+`hero.png` holds the pickups, `pick32.png` the Bloom, `items.png` the
+shields, `shield.png` the folk, `npc.png` the small items, so the
+importer names each by what it shows. A cell is found by the grid's
+transparent gaps, scaled to its frame by area averaging (a box a third
+or more near-black takes the outline, so lines and eyes survive), and
+quantized to its palette group: one outline colour and fourteen by a
+weighted k-means in Lab, each colour weighing as the square root of its
+area so small accents keep a colour. The Bloom's illustration has 55
+cells for 50 frames; the importer picks each frame's cell by pose and
+lists the five spares. New OBJ palettes give the sword and shield, the
+16-pixel items, the ground pickups, the menu icons and the hub's two
+their own colours; each portrait carries a palette of its own, loaded
+with the speaker, and only the speaker's face is resident (16 OBJ
+tiles). The folk are 32x32 now. The hub's Gatekeeper and Peddler are
+the pack's revised figures, with a blink each made by brightening her
+orb and his lantern; the pack's first-pass `folk32` sheet is not used.
+
+**The style boards.** The tiles come from four reference boards in
+`art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
+board. `art/sample.py` cuts them: a crop is scaled to its GBA size,
+keyed from the sheet's grey, and quantized to a palette of fifteen
+colours derived from the boards themselves (median cut over the crops
+a palette serves, each crop weighing the same). `art/style.py` names
+every crop: grass, path, canopy, flowers, bushes, tufts, stumps, logs,
+two oaks at 32x48 cut into crown quarters masked round an ellipse and a
+trunk, water, lilies, falls, bridges, ledges, the well, rocks; the
+blight's ground, veins, crystals, dead trees, walls, the door, the
+arch, the pool, the pillar; the Drain's floors, walls, water, falls,
+pipes, grates, the drain, lanterns, banners, ladders, posts, and the
+stall's props. `art/tiles_style.py` puts them into the metatiles by
+name; every metatile and HUD tile still drawn by hand is remapped,
+colour by nearest colour, into the board palettes (`palettes.REMAP_BG`).
+The HUD and the boxes keep their drawn tiles in the UI board's colours.
+
+**The comparison build.** `make pack-tiles` builds
+`bartgame_packtiles.gba` with the sprite pack's own tile sheets and HUD
+tiles instead (`art/pack_tiles.py`, switched on by `BART_TILES=pack`).
+The pack calls them representative families: the area palettes become
+the pack's, a pack tile goes on each metatile it names, the pack's
+foam-rimmed water on the engine's banked water (the turf beside it is
+plain grass, as the pack draws the rim on the water side), path edges
+are built from its four one-sided edges, and everything else is
+remapped into the pack's colours.
 
 **The wood's rooms.** Every forest room is 32x24 tiles, planned as a
 grid of 3x3-tile chunks (ten by seven over the carvable part) drawn
@@ -244,29 +271,32 @@ src/            the engine and the game
   sound.c       PSG sound effects and a three-track tracker
   game.c        states: title, play, transitions, map, win
 art/            pixel art as rows of letters mapped to palette indices
-  palettes.py   the 16-color palettes, BG and OBJ: the boards' palettes
-                over the drawn ones, with the remap tables
-  ref/          the four style boards
+  palettes.py   the 16-color palettes: BG from the boards over the drawn
+                ones, OBJ from the sprite pack, the remap tables
+  ref/          the four style boards; ref/pack/ the sprite pack as delivered
+  pack/         the sprite pack imported: a strip per sheet, pack.json
+  pack.py       reads art/pack/ for the build
+  pack_tiles.py the pack's tiles and HUD, for `make pack-tiles`
   sample.py     cutting a board: key, scale, derive a palette, quantize
-  style.py      every crop by name, and the palettes derived from them
+  style.py      every tile crop by name, and the palettes derived from them
   tiles_style.py the sampled tiles into the metatiles; the rest remapped
-  hero32.py     the Bloom at 32x32 from the sheets, the other states made
   px.py         the painter: legends, outlines, flips, compose, a canvas
                 with lit blobs and shaded balls for round things
   tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
                 stones, water, gates, chests, the sewer set
-  hero.py       the drawn Bloom (the sword and shield still come from it)
+  hero.py       the drawn Bloom, kept for the engine's frame order
   monsters.py   beetle, bat, slime, spitter, knight, its sword, the boss
   items.py      pickups, key items, effects, projectiles
   folk.py       the five NPCs
   portraits.py  the dialogue portraits, 32x32
-  sprites.py    the sheet list, in the engine's frame order
+  sprites.py    the sheet list: the pack's sheets in the engine's frame order
   hud.py        hearts, icons, item slots, the text box frame, the map
   font.py       the 5x7 font
   title.py      the title screen, painted with PIL in 16 colors
   rooms.py      the hub room: the Drain
 tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
+  import_pack.py    the sprite pack (art/ref/pack/) -> art/pack/
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM

@@ -1,0 +1,198 @@
+{
+  "checks": [
+    {
+      "sheet": "hero",
+      "passed": true,
+      "colors_including_transparent": 16,
+      "file": "sheets/characters/hero.png"
+    },
+    {
+      "sheet": "sword",
+      "passed": true,
+      "colors_including_transparent": 6,
+      "file": "sheets/characters/sword.png"
+    },
+    {
+      "sheet": "shield",
+      "passed": true,
+      "colors_including_transparent": 8,
+      "file": "sheets/characters/shield.png"
+    },
+    {
+      "sheet": "items",
+      "passed": true,
+      "colors_including_transparent": 14,
+      "file": "sheets/objects/items.png"
+    },
+    {
+      "sheet": "pick32",
+      "passed": true,
+      "colors_including_transparent": 11,
+      "file": "sheets/objects/pick32.png"
+    },
+    {
+      "sheet": "icon32",
+      "passed": true,
+      "colors_including_transparent": 15,
+      "file": "sheets/objects/icon32.png"
+    },
+    {
+      "sheet": "beetle",
+      "passed": true,
+      "colors_including_transparent": 8,
+      "file": "sheets/monsters/beetle.png"
+    },
+    {
+      "sheet": "bat",
+      "passed": true,
+      "colors_including_transparent": 8,
+      "file": "sheets/monsters/bat.png"
+    },
+    {
+      "sheet": "slime",
+      "passed": true,
+      "colors_including_transparent": 7,
+      "file": "sheets/monsters/slime.png"
+    },
+    {
+      "sheet": "spitter",
+      "passed": true,
+      "colors_including_transparent": 9,
+      "file": "sheets/monsters/spitter.png"
+    },
+    {
+      "sheet": "knight",
+      "passed": true,
+      "colors_including_transparent": 12,
+      "file": "sheets/monsters/knight.png"
+    },
+    {
+      "sheet": "ksword",
+      "passed": true,
+      "colors_including_transparent": 6,
+      "file": "sheets/monsters/ksword.png"
+    },
+    {
+      "sheet": "boss",
+      "passed": true,
+      "colors_including_transparent": 11,
+      "file": "sheets/monsters/boss.png"
+    },
+    {
+      "sheet": "proj",
+      "passed": true,
+      "colors_including_transparent": 9,
+      "file": "sheets/effects/proj.png"
+    },
+    {
+      "sheet": "arrow",
+      "passed": true,
+      "colors_including_transparent": 5,
+      "file": "sheets/effects/arrow.png"
+    },
+    {
+      "sheet": "fx",
+      "passed": true,
+      "colors_including_transparent": 14,
+      "file": "sheets/effects/fx.png"
+    },
+    {
+      "sheet": "mouth",
+      "passed": true,
+      "colors_including_transparent": 10,
+      "file": "sheets/effects/mouth.png"
+    },
+    {
+      "sheet": "lift",
+      "passed": true,
+      "colors_including_transparent": 12,
+      "file": "sheets/objects/lift.png"
+    },
+    {
+      "sheet": "npc",
+      "passed": true,
+      "colors_including_transparent": 15,
+      "file": "sheets/characters/npc.png"
+    },
+    {
+      "sheet": "folk32",
+      "passed": true,
+      "colors_including_transparent": 15,
+      "file": "sheets/characters/folk32.png"
+    },
+    {
+      "sheet": "portrait",
+      "passed": true,
+      "colors_including_transparent": 14,
+      "file": "sheets/characters/portrait.png"
+    },
+    {
+      "sheet": "marks",
+      "passed": true,
+      "colors_including_transparent": 15,
+      "file": "sheets/map/marks.png"
+    },
+    {
+      "sheet": "dots",
+      "passed": true,
+      "colors_including_transparent": 12,
+      "file": "sheets/map/dots.png"
+    },
+    {
+      "sheet": "cursor",
+      "passed": true,
+      "colors_including_transparent": 3,
+      "file": "sheets/map/cursor.png"
+    },
+    {
+      "sheet": "forest",
+      "passed": true,
+      "colors_including_transparent": 14,
+      "file": "sheets/tiles/forest.png"
+    },
+    {
+      "sheet": "wood",
+      "passed": true,
+      "colors_including_transparent": 13,
+      "file": "sheets/tiles/wood.png"
+    },
+    {
+      "sheet": "stone",
+      "passed": true,
+      "colors_including_transparent": 14,
+      "file": "sheets/tiles/stone.png"
+    },
+    {
+      "sheet": "cliff",
+      "passed": true,
+      "colors_including_transparent": 9,
+      "file": "sheets/tiles/cliff.png"
+    },
+    {
+      "sheet": "blight",
+      "passed": true,
+      "colors_including_transparent": 12,
+      "file": "sheets/tiles/blight.png"
+    },
+    {
+      "sheet": "sewer",
+      "passed": true,
+      "colors_including_transparent": 13,
+      "file": "sheets/tiles/sewer.png"
+    },
+    {
+      "sheet": "props",
+      "passed": true,
+      "colors_including_transparent": 10,
+      "file": "sheets/tiles/props.png"
+    },
+    {
+      "sheet": "hud",
+      "passed": true,
+      "colors_including_transparent": 11,
+      "file": "sheets/ui/hud.png"
+    }
+  ],
+  "total_sheets": 32,
+  "all_passed": true
+}

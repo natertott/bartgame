@@ -1,5 +1,6 @@
-"""The style boards, cut into the game: palettes derived from the boards,
-sprites and tiles sampled from them. See sample.py for the cutting.
+"""The style boards, cut into the game: palettes derived from the boards
+and the tiles sampled from them (the sprites come from the sprite pack,
+art/pack/). See sample.py for the cutting.
 Every box is (left, top, right, bottom) on the named board.
 """
 import sample as SM
@@ -8,11 +9,6 @@ BG = [(75, 75, 75), (60, 60, 60), (90, 90, 90), (70, 68, 66), (82, 80, 78), (100
 OUT = (26, 12, 16)
 
 # ------------------------------------------------------------ palettes --
-HERO_BIG = (40, 110, 215, 385)
-PAL_HERO = [OUT] + SM.derive([('sheets', HERO_BIG)], 14, BG, 40)
-PAL_FOLK = [(16, 12, 20)] + SM.derive([('sheets', (788, 118, 872, 206)), ('sheets', (1035, 85, 1235, 385)), ('sheets', (1268, 95, 1328, 180))], 14, BG, 40, spread=True)
-# the three board faces, and a skin, a green and a gold for the drawn ones
-PAL_PORTRAIT = [(16, 12, 20)] + SM.derive([('ui', (775, 235, 925, 385)), ('ui', (775, 420, 925, 570)), ('sheets', (1078, 112, 1182, 216))], 11, spread=True) + [(232, 200, 160), (46, 128, 64), (240, 192, 64)]
 # the forest scene: the palettes come from the very crops the tiles use
 F_GRASS, F_PATH, F_TREE, F_FLOWERS, F_BUSH, F_TUFT = (340, 575, 380, 615), (625, 290, 665, 330), (100, 662, 260, 812), (395, 705, 435, 745), (520, 170, 620, 250), (828, 300, 898, 380)
 PAL_FOREST = SM.derive([('forest', b) for b in (F_GRASS, F_PATH, F_TREE, F_FLOWERS, F_BUSH, F_TUFT)], 15)
@@ -33,72 +29,6 @@ PAL_PROPS = SM.derive([('sewer', b) for b in (P_CHEST, P_SKULL, P_CANDLES, P_AWN
 def hexes(pal):
     return ['#%02x%02x%02x' % c for c in pal]
 
-
-# ---------------------------------------------------------------- hero --
-# the Bloom from the big drawing (sword masked) and from the sheets
-def _masked_sheets():
-    from PIL import ImageDraw
-    im = SM.board('sheets').copy()
-    d = ImageDraw.Draw(im)
-    d.polygon([(150, 195), (215, 195), (215, 300), (165, 300), (148, 262)], fill=(75, 75, 75))
-    # the Peddler's angry marks and the Gatekeeper's speech bubble
-    d.rectangle([932, 98, 982, 142], fill=(75, 75, 75))
-    d.rectangle([1390, 212, 1428, 262], fill=(75, 75, 75))
-    return im
-
-
-SM._boards['sheets_masked'] = _masked_sheets()
-HERO_H = 30
-
-
-def hero_fit(name, box, height=HERO_H, shift=(0, 0)):
-    return SM.fit(name, box, 32, 32, PAL_HERO, BG, 40, height=height, shift=shift)
-
-
-HERO_SRC = {
-    'idle_s': hero_fit('sheets_masked', HERO_BIG),
-    'idle_s2': hero_fit('sheets', (222, 100, 280, 175)),
-    'walk_s1': hero_fit('sheets', (222, 205, 282, 280)),
-    'walk_s2': hero_fit('sheets', (290, 205, 352, 280)),
-    'walk_s3': hero_fit('sheets', (360, 205, 422, 280)),
-    'walk_s4': hero_fit('sheets', (428, 205, 492, 280)),
-    'dir_s': hero_fit('sheets', (220, 312, 262, 386)),
-    'dir_n': hero_fit('sheets', (263, 312, 304, 386)),
-    'dir_e': hero_fit('sheets', (305, 312, 346, 386)),
-    'dir_w': hero_fit('sheets', (347, 312, 388, 386)),
-    'sword': hero_fit('sheets', (395, 312, 458, 386)),
-    'cast': hero_fit('sheets', (460, 312, 514, 386)),
-}
-
-# ---------------------------------------------------------------- folk --
-def folk_fit(box, height=30, shift=(0, 0), name='sheets_masked'):
-    return SM.fit(name, box, 32, 32, PAL_FOLK, BG, 40, height=height, shift=shift)
-
-
-FOLK_SRC = {
-    'peddler': folk_fit((788, 118, 872, 206)),
-    'peddler_angry': folk_fit((888, 118, 975, 206)),
-    'peddler_s': folk_fit((780, 290, 832, 386)),
-    'peddler_s2': folk_fit((780, 290, 832, 386), shift=(0, 1)),
-    'peddler_e': folk_fit((836, 290, 890, 386)),
-    'peddler_n': folk_fit((890, 290, 938, 386)),
-    'peddler_w': folk_fit((940, 290, 992, 386)),
-    'gatekeeper': folk_fit((1268, 95, 1328, 180)),
-    'gatekeeper2': folk_fit((1348, 95, 1412, 180)),
-    'gatekeeper_cast': folk_fit((1245, 215, 1328, 292)),
-    'gatekeeper_talk': folk_fit((1343, 215, 1395, 292)),
-    'gatekeeper_s': folk_fit((1245, 322, 1292, 390)),
-    'gatekeeper_e': folk_fit((1294, 322, 1346, 390)),
-    'gatekeeper_n': folk_fit((1348, 322, 1397, 390)),
-    'gatekeeper_w': folk_fit((1398, 322, 1436, 390)),
-}
-
-# ----------------------------------------------------------- portraits --
-PORTRAIT_SRC = {
-    'hero': SM.tile('ui', (775, 235, 925, 385), 32, 32, PAL_PORTRAIT, wrap=False),
-    'peddler': SM.tile('ui', (775, 420, 925, 570), 32, 32, PAL_PORTRAIT, wrap=False),
-    'gatekeeper': SM.fit('sheets', (1078, 112, 1182, 216), 32, 32, PAL_PORTRAIT, BG, 40, height=32, bottom=False),
-}
 
 # --------------------------------------------------------- forest tiles --
 def ft(box, w=16, h=16, wrap=True, pal=None):

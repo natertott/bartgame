@@ -390,7 +390,7 @@ static void title_show(void) {
     sTitleCursor = 0;
     if (!sTitleHasSave)
         bg0_print_hud(10, 14, "PRESS START");
-    bg0_print_hud(8, 17, "a game of the drain");
+    bg0_print_hud(5, 17, "a game from the drain"); /* 21 letters, centred */
     gGame.state = GS_TITLE;
     gAnimTiles = 0;
     dark_off();
