@@ -4137,3 +4137,9 @@ _gl2 = [star(star(_blank16, 12, 3, False), 3, 12),
 mt('sw_glint2', 'sewer', 'FLOOR', frames=_gl2, anim_speed=14)
 _gl3 = [star(_blank16, 8, 7, False), star(_blank16, 8, 7), ['................'] * 16]
 mt('sw_glint3', 'sewer', 'FLOOR', frames=_gl3, anim_speed=18)
+
+
+# the style boards' tiles replace what they cover, and the rest is
+# remapped into the boards' palettes (tiles_style.py)
+import tiles_style  # noqa: E402
+tiles_style.apply(METATILES)

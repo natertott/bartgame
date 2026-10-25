@@ -16,8 +16,8 @@
 #define BG0_MAP SCREENBLOCK(23)
 #define PAL15 (15 << 12)
 #define PAL14 (14 << 12)
-#define SWORD_TILE 8     /* player.c streams the sword sheet here */
-#define SHIELD_TILE 20   /* and the shield after it */
+#define SWORD_TILE 16    /* player.c streams the sword sheet here */
+#define SHIELD_TILE 28   /* and the shield after it */
 #define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
@@ -136,24 +136,24 @@ void bg0_fill(int tx, int ty, int w, int h, u16 tile) {
             bg0_put(tx + x, ty + y, tile);
 }
 
-/* a framed box: a carved wood frame round a dark fill */
+/* a framed box: the UI board's gold frame round its navy fill (the
+   right side is the left turned) */
 void bg0_frame(int tx, int ty, int w, int h) {
     int x, y;
     for (y = 0; y < h; y++) {
         for (x = 0; x < w; x++) {
-            u16 t = 0xFFFF, fl = 0;
+            u16 t, fl = 0;
             if (y == 0)
-                t = (x == 0 || x == w - 1) ? MN_FRAME_TL : MN_FRAME_T;
+                t = (x == 0 || x == w - 1) ? HT_BOX_TL : HT_BOX_T;
             else if (y == h - 1)
-                t = (x == 0 || x == w - 1) ? MN_FRAME_BL : MN_FRAME_B;
+                t = (x == 0 || x == w - 1) ? HT_BOX_BL : HT_BOX_B;
             else if (x == 0 || x == w - 1)
-                t = MN_FRAME_L;
-            if (x == w - 1 && t != MN_FRAME_T && t != MN_FRAME_B)
-                fl = 0x400; /* BG hflip: the right side is the left turned */
-            if (t == 0xFFFF)
-                bg0_put(tx + x, ty + y, HT_BOX_FILL);
+                t = HT_BOX_L;
             else
-                bg0_put_pal(tx + x, ty + y, (MENU_TILE_BASE + t) | fl, MENU_PAL);
+                t = HT_BOX_FILL;
+            if (x == w - 1 && t != HT_BOX_T && t != HT_BOX_B && t != HT_BOX_FILL)
+                fl = 0x400;
+            bg0_put(tx + x, ty + y, t | fl);
         }
     }
 }

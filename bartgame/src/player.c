@@ -21,9 +21,9 @@ PlayerState gPl;
 #define ATTACK_FRAMES 15
 #define HURT_FRAMES 8
 #define FALL_FRAMES 36
-#define HERO_TILE 0
-#define SWORD_TILE 8
-#define SHIELD_TILE 20 /* three frames, resident after the sword */
+#define HERO_TILE 0    /* 32x32: tiles 0..15 */
+#define SWORD_TILE 16
+#define SHIELD_TILE 28 /* three frames, resident after the sword */
 
 static u8 sLastFrame = 0xFF;
 static u8 sWalkTimer;
@@ -112,7 +112,7 @@ void player_init(int px, int py, int facing) {
     a->y = py << 16;
     a->facing = facing;
     a->dir = facing_to_dir(facing);
-    a->w = 16;
+    a->w = 32;
     a->h = 32;
     a->pal = PAL_OBJ_HERO;
     a->sheet = SHEET_HERO;
@@ -121,7 +121,7 @@ void player_init(int px, int py, int facing) {
     gPl.safe_x = px;
     gPl.safe_y = py;
     sLastFrame = 0xFF;
-    /* the sword blade sheet stays resident in tiles 8..19 */
+    /* the sword blade sheet stays resident in tiles 16..27 */
     dma3_copy32(sheets[SHEET_SWORD].tiles, OBJ_TILE(SWORD_TILE), sheets[SHEET_SWORD].tile_count * 32);
     dma3_copy32(sheets[SHEET_SHIELD].tiles, OBJ_TILE(SHIELD_TILE), sheets[SHEET_SHIELD].tile_count * 32);
 }
@@ -897,7 +897,7 @@ void player_draw(void) {
         /* going under: the drowning frames in place, the hole's frames
            shrinking; the last frames show nothing */
         int t = FALL_FRAMES - a->timer;
-        int sx = PX(a->x) - 8 - gCamX;
+        int sx = PX(a->x) - 16 - gCamX;
         int sy = PX(a->y) - 32 - gCamY;
         if (!a->sub && t >= 24)
             return;

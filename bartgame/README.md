@@ -65,6 +65,32 @@ sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
 font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
+**The style boards.** Four reference boards live in `art/ref/`: the
+sprite sheets (the Bloom's idle, walk, directions and sword, the
+Peddler's and the Gatekeeper's idles, directions and casts), the
+Drain, the blighted wood, and the UI board. `art/sample.py` cuts them:
+a crop is scaled to its GBA size, keyed from the sheet's grey, and
+quantized to a palette of fifteen colours derived from the boards
+themselves (median cut over the crops a palette serves, each crop
+weighing the same; sprites take the fifteen farthest apart so a few
+bright colours survive the darks). `art/style.py` names every crop:
+the Bloom's frames at 32x32 (`art/hero32.py` makes the rest of her
+states from them: a leg bob for the front and back walks, the curled
+ball of the roll, arms up for a load, the sinking frames), the Peddler
+and the Gatekeeper at 32x32, the three board portraits, and the tiles:
+grass, path, canopy, flowers, bushes, tufts, stumps, logs, two oaks at
+32x48 cut into crown quarters masked round an ellipse and a trunk,
+water, lilies, falls, bridges, ledges, the well, rocks; the blight's
+ground, veins, crystals, dead trees, walls, the door, the arch, the
+pool, the pillar; the Drain's floors, walls, water, falls, pipes,
+grates, the drain, lanterns, banners, ladders, posts, and the stall's
+props. `art/tiles_style.py` puts them into the metatiles by name;
+every metatile, HUD tile and sprite still drawn by hand is remapped,
+colour by nearest colour, into the board palettes
+(`palettes.REMAP_BG`, `REMAP_OBJ`), so nothing on screen is off the
+boards' palette. The HUD and the boxes keep their drawn tiles in the
+UI board's colours: navy fills, gold frames, its reds.
+
 **The wood's rooms.** Every forest room is 32x24 tiles, planned as a
 grid of 3x3-tile chunks (ten by seven over the carvable part) drawn
 from a bank of pieces: forest, open ground, paths of one, two or three
@@ -218,12 +244,18 @@ src/            the engine and the game
   sound.c       PSG sound effects and a three-track tracker
   game.c        states: title, play, transitions, map, win
 art/            pixel art as rows of letters mapped to palette indices
-  palettes.py   the 16-color palettes, BG and OBJ
+  palettes.py   the 16-color palettes, BG and OBJ: the boards' palettes
+                over the drawn ones, with the remap tables
+  ref/          the four style boards
+  sample.py     cutting a board: key, scale, derive a palette, quantize
+  style.py      every crop by name, and the palettes derived from them
+  tiles_style.py the sampled tiles into the metatiles; the rest remapped
+  hero32.py     the Bloom at 32x32 from the sheets, the other states made
   px.py         the painter: legends, outlines, flips, compose, a canvas
                 with lit blobs and shaded balls for round things
   tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
                 stones, water, gates, chests, the sewer set
-  hero.py       the Bloom: 22 frames and the sword
+  hero.py       the drawn Bloom (the sword and shield still come from it)
   monsters.py   beetle, bat, slime, spitter, knight, its sword, the boss
   items.py      pickups, key items, effects, projectiles
   folk.py       the five NPCs

@@ -10,7 +10,7 @@ are multiples of 8 so they survive the GBA's 5-bit channels.
 
 GRASS_MID = '#3a6a2c'
 
-BG_PALETTES = [
+OLD_BG_PALETTES = [
     # 0 forest ground: dark olive grass with bright tips, warm soil, flowers, blight, a gold mote
     ('forest', ['#000000',
                 '#060a10',   # 1 outline, deep shadow
@@ -167,7 +167,7 @@ BG_PALETTES = [
               '#8a6038']),    # F plank light
 ]
 
-OBJ_PALETTES = [
+OLD_OBJ_PALETTES = [
     # 0 hero: petals, a cream face, hood greens, leather, steel, gold
     ('hero', ['#000000',
               '#1a0c10',     # 1 outline
@@ -322,3 +322,64 @@ OBJ_PALETTES = [
             '#ff80c0',       # E pink
             '#ffe070']),     # F gold mote
 ]
+
+
+# ------------------------------------------------- the boards' palettes --
+# The forest, the water and its cliffs, the blight, the drain and its
+# props, the Bloom, the folk and the faces take their colours from the
+# style boards (style.py); the rest keep their hand palettes. Hand-drawn
+# art in a replaced palette is remapped at build time, old index to the
+# nearest new colour (REMAP_BG, REMAP_OBJ).
+import style as _st
+
+
+def _hexes(pal):
+    return ['#%02x%02x%02x' % c for c in pal]
+
+
+_BOARD_BG = {
+    'hud': ['#000000'] + _hexes(_st.PAL_HUD),
+    'forest': ['#000000'] + _hexes(_st.PAL_FOREST),
+    'wood': ['#000000'] + _hexes(_st.PAL_FOREST),
+    'stone': ['#000000'] + _hexes(_st.PAL_CLIFF),
+    'cliff': ['#000000'] + _hexes(_st.PAL_CLIFF),
+    'blight': ['#000000'] + _hexes(_st.PAL_BLIGHT),
+    'sewer': ['#000000'] + _hexes(_st.PAL_SEWER),
+    'props': ['#000000'] + _hexes(_st.PAL_PROPS),
+}
+_BOARD_OBJ = {
+    'hero': ['#000000'] + _hexes(_st.PAL_HERO),
+    'folk': ['#000000'] + _hexes(_st.PAL_FOLK),
+    'portrait': ['#000000'] + _hexes(_st.PAL_PORTRAIT),
+}
+BG_PALETTES = [(n, _BOARD_BG.get(n, cols)) for n, cols in OLD_BG_PALETTES]
+OBJ_PALETTES = [(n, _BOARD_OBJ.get(n, cols)) for n, cols in OLD_OBJ_PALETTES]
+
+
+def _rgb(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+
+
+def _remap(old, new):
+    """index 1..15 of the old palette to the nearest of the new; 0 stays"""
+    m = {0: 0}
+    for i in range(1, 16):
+        o = _rgb(old[i]) if i < len(old) else (0, 0, 0)
+        best, bd = 1, 1 << 30
+        for j in range(1, 16):
+            if j >= len(new):
+                break
+            d = sum((o[k] - _rgb(new[j])[k]) ** 2 for k in range(3))
+            if d < bd:
+                bd = d
+                best = j
+        m[i] = best
+    return m
+
+
+REMAP_BG = {n: _remap(dict(OLD_BG_PALETTES)[n], _BOARD_BG[n]) for n in _BOARD_BG}
+REMAP_OBJ = {n: _remap(dict(OLD_OBJ_PALETTES)[n], _BOARD_OBJ[n]) for n in _BOARD_OBJ}
+
+
+def remap_rows(rows, m):
+    return [''.join('.' if ch in '. ' else '%x' % m[int(ch, 16)] for ch in r) for r in rows]

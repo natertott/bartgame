@@ -579,3 +579,10 @@ m('well_lit_l', '''
     .2FA1111
     .2FA1111
 ''')
+
+
+# the UI board's palette: navy fills, gold frames, the board's reds; the
+# drawn tiles are remapped into it
+import palettes  # noqa: E402
+for _n, _rows in TILES.items():
+    TILES[_n] = palettes.remap_rows(_rows, palettes.REMAP_BG['hud'])

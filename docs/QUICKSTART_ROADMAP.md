@@ -1271,6 +1271,31 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the style boards cut into the game (Oct 2026)
+
+The four boards (`bartgame/art/ref/`) are sampled into assets by
+`art/sample.py` and `art/style.py`: a crop keyed from the sheet grey,
+scaled to its GBA size, quantized to a palette derived from the crops
+it serves (median cut, crops weighted equally; sprites keep the
+fifteen colours farthest apart). The Bloom is now 32x32 (OBJ tiles
+0..15; the sword at 16, the shield at 28, `OBJ_TILE_FIRST_FREE` 40),
+her sheet from the boards with the missing states made in
+`art/hero32.py`. The Peddler (front view) and the Gatekeeper come from
+the sheets, the three portraits from the boards. Tiles that the boards
+cover replace the drawn ones by name in `art/tiles_style.py`; the rest
+(shores, verges, doors, pits, the mystery sets, monsters, items) are
+remapped into the board palettes by nearest colour. The HUD keeps its
+drawn tiles in the UI board's colours; `bg0_frame` draws every box
+with the HUD's gold frame on navy instead of the carved planks.
+
+Known soft spots: the drawn shore and verge tiles were coloured for
+the old forest palette and now read a little flat after the remap;
+the board's hearts, coin and slots do not scale to 8x8 cleanly, so
+those stay drawn; the Peddler's idle with the sack is too busy at
+32 pixels (`FOLK_SRC['peddler']`), so the hub uses his front view;
+the carry pose's raised arms are plain bars. A board crop is a box in
+`art/style.py`; move the box, rebuild.
+
 ### BARTGAME: one rotted plank, big items, bare pages, the Map and the Astrolabe (Oct 2026)
 
 The pause backdrop is one 240x160 plank generated in `art/planks.py`
