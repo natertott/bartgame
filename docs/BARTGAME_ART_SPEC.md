@@ -333,37 +333,12 @@ centred.
 bracket frame the size of one overview cell (32 wide, 24 tall, drawn
 in the upper 24 rows), transparent inside.
 
-## 15. Tiles, in brief
+## 15. Tiles
 
-Background tiles are 16x16 (some 32 or 48 wide pieces split into
-16x16), one 16-colour palette per area, drawn to wrap where they
-repeat. The style boards cover most of these already; the ones still
-hand-drawn are marked.
-
-- **Forest** (group forest, 15 colours): grass in three variants,
-  flowers, tall grass, path, path edges; shore edges round water in
-  every combination (hand-drawn, 30 tiles); meadow, clover and
-  mushroom-ring clusters (hand-drawn).
-- **Wood** (overlay layer, shares the forest colours): canopy walls in
-  two variants with a glint and a lantern (animated), bushes, logs,
-  fences, thorns, two oaks as 32x48 pieces (crown quarters, trunk
-  halves), the hollow and thicket cave sets (hand-drawn).
-- **Stone** (water and ruins): water with animated foam edges in every
-  combination, lilies, rafts, a waterfall, locked and open doors,
-  chests closed and open, torches, cracks, webs, statues, stairs.
-- **Cliff**: ledges south and north with ends, rocks in three sizes,
-  boulders, pits, bridges, the cave set.
-- **Blight**: purple ground in three variants, veins (animated),
-  crystals, dead trees and blighted oaks (2x3), walls plain and lit,
-  pools, mist.
-- **Sewer** (the Drain): floors in three variants plus grime, cracks,
-  moss, puddles, bones, mushrooms, drips; walls plain and with cracks,
-  moss, chains, drips, webs, fungus, tallies, a window, a skull, rust;
-  water with scum, bubbles, glints and edges; a grate, the big drain in
-  four quarters, pipes vertical and horizontal, ladders, torches,
-  lanterns, two banners, an arch, rubble.
-- **Props** (the stall): candles (animated), counter, awning halves,
-  rug quarters, barrel, crate, skull, pot, gold.
+Background tiles have a specification of their own,
+`BARTGAME_TILE_SPEC.md`: every tile in the wood, its mystery rooms and
+the Drain, entry by entry, with sizes, joins, frames, palette groups and
+how to deliver them.
 
 ## 16. The HUD and boxes
 

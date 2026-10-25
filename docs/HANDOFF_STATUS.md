@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: a tile spec for the artist: every tile placed in the wood, the mystery rooms and the Drain (117 entries, 328 tiles) with sizes, joins, frames, groups and the current art; the sprite spec points to it | "BARTGAME: a tile spec for the artist" |
 | BARTGAME: the eight illustrated sheets cut into the hero, folk, portraits, items, pickups, icons and shield; the Bloom at 64x32 with her sword and leaf shield drawn in, the load held over her, five more OBJ palettes, the art spec updated | "BARTGAME: the illustrated sprites in, the Bloom at 64x32" |
 | BARTGAME: the fixed sprite pack in as delivered: every sheet an exact strip, the pack's nine palette groups, folk at 16x32 again, the hub's own folk32, the pack's HUD with lettered badges in both builds | "BARTGAME: the fixed sprite pack, its HUD in both builds" |
 | BARTGAME: every sprite from the BARTGAME GBA sprite pack (the revised illustrations cut by content, the exact strips as they are), new OBJ palettes, a palette per portrait, folk at 32x32, the title's tagline "a game from the drain", and a comparison build with the pack's own tiles | "BARTGAME: the sprite pack in, and the new tagline" |

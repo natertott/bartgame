@@ -1271,6 +1271,28 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: a tile spec for the artist (Oct 2026)
+
+The tiles are the weakest art left: most are crops of the style boards
+scaled down, or hand-drawn and remapped, and read as noise in game (the
+Drain's water reads as brickwork). `docs/BARTGAME_TILE_SPEC.md` lists
+every background tile the game places in the wood, its mystery rooms
+and the Drain for an artist to redraw: 117 entries, 328 tiles (232 in
+the wood, 27 in the mystery rooms, 69 in the Drain), each with its
+size, layer, palette group, frames, collision and joins, the current
+art at 3x in `docs/tile_spec/`, and room views. It sets a budget of 12
+background palettes (wood 6, mystery rooms 2, Drain 4) and 1,023 8x8
+pieces per area (the wood's list is 928). Eight tiles the game never
+places are left out (`moss_shade`, `relic`, `fence`, `pit_inner`,
+`ledge_n`, `path_edge_n`, `sw_floor_slime`, `sw_ladder`). The Drain's
+lantern is asked for with 2 frames; it has 1 now.
+
+Open: an importer for the delivery (one PNG per entry in a folder per
+group), and the optional additions the spec lists (gates by
+orientation, a blighted crown, edge families in the blight, pool banks
+on every side in the Drain, a fairy ring on blight), each of which needs
+a small engine change to use.
+
 ### BARTGAME: the illustrated sprites in (Oct 2026)
 
 Eight illustrated sheets came after the fixed pack (the Bloom, the folk,
