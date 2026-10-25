@@ -14,7 +14,9 @@ HERE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pack')
 META = json.load(open(os.path.join(HERE, 'pack.json')))
 
 GROUPS = {g: ['#000000'] + cols for g, cols in META['groups'].items()}
-PORTRAIT_PALETTES = [['#000000'] + META['portrait_palettes'][n] for n in META['sheets']['portrait']['frames']]
+# a palette per portrait when the pack gives one, else the group's
+PORTRAIT_PALETTES = [['#000000'] + META.get('portrait_palettes', {}).get(n, META['groups']['portrait'])
+                     for n in META['sheets']['portrait']['frames']]
 
 
 def group(sheet):

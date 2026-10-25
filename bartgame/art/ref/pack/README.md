@@ -1,27 +1,37 @@
-# BARTGAME — GBA sprite pack (first complete asset pass)
+# BARTGAME GBA Sprite Pack — FIXED, engine-sized
 
-**Sprite sheets:** 32. **Individual engine frames:** 462.
+This is the implementation asset directory, not a montage of concept illustrations.
+The `sheets/` folder contains 35 real **4-bit indexed PNG strips** at EXACT frame dimensions, palette index 0 transparent. All originally defined 32 sheets remain at their original paths, indices, and frame dimensions.
 
-## Original palette art direction
+## What to load
 
-Filth beneath splendor: blackened iron and bruised earth; polished gold flashes; vivid orange-red flower; oceanic teal against midnight forest; supernatural acid-violet blight. Inspired by the high-contrast heraldry and magical light of *Excalibur* (1981). This is original pixel art, not a copy of Nintendo's or any film asset.
+- `sheets/`: flat horizontal strips, zero padding, frames in documented order.
+- `frames/`: individually saved native-size indexed PNGs named `000_frame_name.png`, etc.
+- `gba_4bpp_tiles/`: optional raw GBA 4bpp 8x8 tiled graphics, frame-major and tile-row-major within each frame. Supports hardware 1D OBJ tile mapping when used with the matching animation entries.
+- `palettes/*.gba.pal`: 16 BGR555 little-endian values, 32 bytes per group; index 0 transparent.
+- `manifest.json`, `frame_index.csv`, `sprite_frames.h`: authoritative machine-readable mapping.
+- `validate_pack.py`: independent validation, needs Pillow.
 
-## Folders
+## Corrections included
 
-- `sheets/characters`, `sheets/monsters`, `sheets/objects`, `sheets/effects`, `sheets/map`: exactly sized horizontal animation strips in required frame order, no gaps.
-- `sheets/tiles`: 16x16 BG tile strips including named adjacency, cliff, cave, vegetation and sewer tile sets.
-- `sheets/ui/hud.png`: 8x8 tile strip.
-- `palettes/*.gba.pal`: raw little-endian GBA BGR555 arrays with 16 entries, transparent index zero. Text RGB888 palette companion files.
-- `frame_index.csv`: per-frame bounding boxes and frame names (indices are zero-based).
-- `manifest.json`: dimensions, palette groups, counts and order.
-- `sprite_frames.h`: frame indices for easy C / C++ engine integration.
-- `previews`: enlarged nearest-neighbor **previews only**, not game assets.
-- `reference_only`: non-runtime concept art for further polishing.
+1. Original seven incorrectly assigned large illustration files **removed** from runtime paths; all engine-facing filenames now contain correctly sized indexed sheets.
+2. Bloom sprite has a stalk, root feet, and leaf-arms (50 original ordered frames, including recovery and north leap). Carry pose now raises the hands above the flower head.
+3. Distinct shabby round **base** shield at `shield.png`; polished tree-emblem **upgraded** shield at new `shield_upgraded.png`. New `shield_menu.png` has both menu symbols.
+4. Four-faced golden diamond GILT in `items`, `pick32`, HUD, and standalone `currency32`.
+5. Corrected old-man Bloom, purple-hide hooked-nose Peddler and violet wizard Gatekeeper portraits, all authored at 32x32.
+6. Sister Mary Grace and Brother Mark appended to `npc` (indices 5 and 6) and `portrait` (indices 7 and 8). Original indices are unchanged.
+7. HUD A/B/L/R glyphs and bomb icon drawn. Sewer-water indices adjusted to cool aquamarine tones.
 
-## Hardware constraints
+## Compatibility notes
 
-All master sprite sheets are **4-bit paletted PNGs** containing at most 16 indices (index 0 transparent, 15 opaque). No antialiasing or fractional alpha. Frames are the exact dimensions in the supplied specification. The transparent index in these PNGs is 0. Sprite sheets are laid out *horizontally*, ordered by index, including north/south/east and no unneeded west frames. Indexing follows spec even when certain animations have very small motion differences.
+- The original engine needs no index changes for its original 32 sheets. Two appended NPCs and portraits require adding IDs if used in-game.
+- Additional optional sheets (`shield_upgraded`, `shield_menu`, `currency32`) are not in the original 32-sheet spec, and need explicit game integration.
+- Image width reflects a *strip*, not a supported standalone GBA sprite shape. Crop into individual frames or use raw .4bpp data.
+- The tile-strip families are **palette-valid, correctly ordered first-pass art**, but the open-ended procedural terrain categories are not guaranteed to be production-quality seamless autotiles. Treat adjacency rules and level composition as an engine/design task.
+- Using one palette bank per group is valid for art exports; OBJ and BG palette bank selection and VRAM residency are controlled by the GBA engine. Never load all palettes indiscriminately into one bank.
+- Colors conform to 15 opaque colors per bank. The portrait bank was intentionally revised to support red petals, gold, purple, flesh, and green.
+- No automatically downscaled 1000+ px illustrations are included in runtime assets. Native pixels are pixel-authored/reconstructed to satisfy the spec; some designs may still warrant a future hand-art pass.
 
-BG tiles use dedicated area palettes (15 opaque colors each). Because GBA **hardware cannot directly load PNG**, convert these indexed master PNGs to tile and palette assets using your existing build system or tools like grit. The .gba.pal files are already BGR555 palette data. Beware: a 16x16 or 32x32 object consists of 8x8 hardware tiles; BG atlas-to-map assembly is the engine's responsibility.
+## Typical handoff
 
-**Honest limitation:** This is a coherent programmatically rendered, pixel-native first pass of every listed sheet, not a hand-refined commercial-quality final sprite set. Some environment categories with open-ended requirements receive representative families; procedural edge blending and autotile pairing will require play-testing. The references contain higher-detail mood boards and are *not* engine-ready.
+Pass this whole ZIP to the implementing agent. Point the importer at `manifest.json`; for each entry use `png_path`, `frame_width`, `frame_height`, and `frames`, or use the corresponding `.4bpp.bin` plus `.gba.pal` resources. Run `python validate_pack.py` before compiling.

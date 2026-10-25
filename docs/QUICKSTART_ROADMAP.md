@@ -1271,6 +1271,28 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the fixed sprite pack (Oct 2026)
+
+The pack's fixed delivery (revision native-4bpp-fixed-2026-10-25)
+replaces the first one in `bartgame/art/ref/pack/`. Every sheet is now a
+4-bit indexed strip at the engine's frame size, so `tools/import_pack.py`
+copies them index for index and no longer cuts illustrations; the
+weighted k-means and area downscaling are gone with them (in git history
+if a pack of illustrations comes again). The OBJ palettes are the pack's
+nine groups again (the gear, items, pick, icons and folk32 slots are
+dropped); the folk are 16x32 again; the hub uses the pack's `folk32`. The
+pack's HUD tiles are in both builds, quantized into the engine's HUD
+palette; its 8x8 slot squares are opened out into the engine's four
+corner tiles and its right-pointing arrow turned to point down.
+
+Still open: the two folk the pack adds (Sister Mary Grace, Brother Mark)
+and its upgraded shield, shield menu symbols and standalone gilt
+diamond are imported but have no place in the game; the Bloom's
+portraits keep a white beard, which the pack's changelog calls the
+old-man Bloom; the pack's tiles are still first-pass terrain (its
+changelog says so), so the default build keeps the board tiles and
+`make pack-tiles` builds the comparison ROM.
+
 ### BARTGAME: the sprite pack in (Oct 2026)
 
 Every sprite sheet now comes from the BARTGAME GBA sprite pack

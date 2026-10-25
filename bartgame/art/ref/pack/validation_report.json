@@ -1,198 +1,674 @@
 {
+  "all_passed": true,
+  "checked_sheets": 35,
+  "checked_frames": 472,
+  "original_spec_sheets": 32,
+  "errors": [],
   "checks": [
     {
       "sheet": "hero",
+      "file": "sheets/characters/hero.png",
       "passed": true,
-      "colors_including_transparent": 16,
-      "file": "sheets/characters/hero.png"
+      "frame_count": 50,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        1600,
+        32
+      ],
+      "palette": "hero",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 25600,
+      "sha256": "45153320b6a86965700d26a8e30b76062d20678b4236513a561e5e1286603f2e"
     },
     {
       "sheet": "sword",
+      "file": "sheets/characters/sword.png",
       "passed": true,
-      "colors_including_transparent": 6,
-      "file": "sheets/characters/sword.png"
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "hero",
+      "opaque_colors": 5,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "6065caa67cba26c01553dc184485d09b699b4fa3eaf1a5c8152a3179da57a01a"
     },
     {
       "sheet": "shield",
+      "file": "sheets/characters/shield.png",
       "passed": true,
-      "colors_including_transparent": 8,
-      "file": "sheets/characters/shield.png"
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "hero",
+      "opaque_colors": 5,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "1cfca4622f9684fe1457c92707698d301d8e8282fa0bf5e39bf2f4a36f6d026a"
     },
     {
       "sheet": "items",
+      "file": "sheets/objects/items.png",
       "passed": true,
-      "colors_including_transparent": 14,
-      "file": "sheets/objects/items.png"
+      "frame_count": 20,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        320,
+        16
+      ],
+      "palette": "fx",
+      "opaque_colors": 13,
+      "bit_depth": 4,
+      "bin_bytes": 2560,
+      "sha256": "15252fcec813e9c0536c85fe956e92878ff18802060536b577a3d537ce183023"
     },
     {
       "sheet": "pick32",
+      "file": "sheets/objects/pick32.png",
       "passed": true,
-      "colors_including_transparent": 11,
-      "file": "sheets/objects/pick32.png"
+      "frame_count": 10,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        320,
+        32
+      ],
+      "palette": "fx",
+      "opaque_colors": 10,
+      "bit_depth": 4,
+      "bin_bytes": 5120,
+      "sha256": "2840e8426533dc6ca9335a65dc90258b57dc2f46f37fc2e6333028dc89a59eec"
     },
     {
       "sheet": "icon32",
+      "file": "sheets/objects/icon32.png",
       "passed": true,
-      "colors_including_transparent": 15,
-      "file": "sheets/objects/icon32.png"
+      "frame_count": 16,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        512,
+        32
+      ],
+      "palette": "fx",
+      "opaque_colors": 13,
+      "bit_depth": 4,
+      "bin_bytes": 8192,
+      "sha256": "01f439ef6c832b9b73b622af434d6a6d3ecf3cedf551ac3d8af057feb1f565a7"
     },
     {
       "sheet": "beetle",
+      "file": "sheets/monsters/beetle.png",
       "passed": true,
-      "colors_including_transparent": 8,
-      "file": "sheets/monsters/beetle.png"
+      "frame_count": 4,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        64,
+        16
+      ],
+      "palette": "bugs",
+      "opaque_colors": 7,
+      "bit_depth": 4,
+      "bin_bytes": 512,
+      "sha256": "889127add2f4550e23a918e4cd9122af13044bd53ed71158ea558fab3643bfba"
     },
     {
       "sheet": "bat",
+      "file": "sheets/monsters/bat.png",
       "passed": true,
-      "colors_including_transparent": 8,
-      "file": "sheets/monsters/bat.png"
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "bugs",
+      "opaque_colors": 7,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "0901d54192c4a411e3cb97ed5fb2c4877a5eddbb45b0c11338e05eb0c018f3c5"
     },
     {
       "sheet": "slime",
+      "file": "sheets/monsters/slime.png",
       "passed": true,
-      "colors_including_transparent": 7,
-      "file": "sheets/monsters/slime.png"
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "bugs",
+      "opaque_colors": 6,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "62bb0e48bd726b33ba5f967dd47e6ca378ee8283cee48585430b3f56f292740e"
     },
     {
       "sheet": "spitter",
+      "file": "sheets/monsters/spitter.png",
       "passed": true,
-      "colors_including_transparent": 9,
-      "file": "sheets/monsters/spitter.png"
+      "frame_count": 9,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        144,
+        16
+      ],
+      "palette": "blight",
+      "opaque_colors": 8,
+      "bit_depth": 4,
+      "bin_bytes": 1152,
+      "sha256": "5ee1f2d159d4a83ddb9a0d111eb7328ba5532cbe26cac5ca6f49290bd481ac30"
     },
     {
       "sheet": "knight",
+      "file": "sheets/monsters/knight.png",
       "passed": true,
-      "colors_including_transparent": 12,
-      "file": "sheets/monsters/knight.png"
+      "frame_count": 12,
+      "frame_size": [
+        16,
+        32
+      ],
+      "sheet_size": [
+        192,
+        32
+      ],
+      "palette": "iron",
+      "opaque_colors": 11,
+      "bit_depth": 4,
+      "bin_bytes": 3072,
+      "sha256": "a80d9ea94b5686e715aacfa2f1d8e1bd0b95ecf1d5eb61874a9a3be1ec1a13a1"
     },
     {
       "sheet": "ksword",
+      "file": "sheets/monsters/ksword.png",
       "passed": true,
-      "colors_including_transparent": 6,
-      "file": "sheets/monsters/ksword.png"
+      "frame_count": 2,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        32,
+        16
+      ],
+      "palette": "iron",
+      "opaque_colors": 5,
+      "bit_depth": 4,
+      "bin_bytes": 256,
+      "sha256": "40fe132f082496abe1092ec28262f63f2d9b05d44639b9c608aed833797be3ea"
     },
     {
       "sheet": "boss",
+      "file": "sheets/monsters/boss.png",
       "passed": true,
-      "colors_including_transparent": 11,
-      "file": "sheets/monsters/boss.png"
+      "frame_count": 3,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        96,
+        32
+      ],
+      "palette": "blight",
+      "opaque_colors": 10,
+      "bit_depth": 4,
+      "bin_bytes": 1536,
+      "sha256": "62de8804644e20dae84906a1603c20ce2bf10f3cfec129ddb66067a06b19b001"
     },
     {
       "sheet": "proj",
+      "file": "sheets/effects/proj.png",
       "passed": true,
-      "colors_including_transparent": 9,
-      "file": "sheets/effects/proj.png"
+      "frame_count": 3,
+      "frame_size": [
+        8,
+        8
+      ],
+      "sheet_size": [
+        24,
+        8
+      ],
+      "palette": "fx",
+      "opaque_colors": 8,
+      "bit_depth": 4,
+      "bin_bytes": 96,
+      "sha256": "fd8d9e34fdf16ac07d597da8c699909bb59e8f3338af333ddf5943244e267002"
     },
     {
       "sheet": "arrow",
+      "file": "sheets/effects/arrow.png",
       "passed": true,
-      "colors_including_transparent": 5,
-      "file": "sheets/effects/arrow.png"
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "fx",
+      "opaque_colors": 4,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "0aaaeb3f57ad9171a4325657a77753a963c3f7d019ab380d639bd9d149c8a8cd"
     },
     {
       "sheet": "fx",
+      "file": "sheets/effects/fx.png",
       "passed": true,
-      "colors_including_transparent": 14,
-      "file": "sheets/effects/fx.png"
+      "frame_count": 13,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        208,
+        16
+      ],
+      "palette": "fx",
+      "opaque_colors": 13,
+      "bit_depth": 4,
+      "bin_bytes": 1664,
+      "sha256": "f0d7710c9e2bbbb6095473a8cbe6778f3fc83cf5dae7aac043d7600ba3af9c3e"
     },
     {
       "sheet": "mouth",
+      "file": "sheets/effects/mouth.png",
       "passed": true,
-      "colors_including_transparent": 10,
-      "file": "sheets/effects/mouth.png"
+      "frame_count": 3,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        96,
+        32
+      ],
+      "palette": "fx",
+      "opaque_colors": 9,
+      "bit_depth": 4,
+      "bin_bytes": 1536,
+      "sha256": "bc390e425b13634bdf3a89286156528ef48b6adeb33eb6084bbf0777d069c115"
     },
     {
       "sheet": "lift",
+      "file": "sheets/objects/lift.png",
       "passed": true,
-      "colors_including_transparent": 12,
-      "file": "sheets/objects/lift.png"
+      "frame_count": 4,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        64,
+        16
+      ],
+      "palette": "lift",
+      "opaque_colors": 11,
+      "bit_depth": 4,
+      "bin_bytes": 512,
+      "sha256": "f983fdf91202bb1bbcbacea3f990934b565ff8dd437c25bda8222403d2d9314d"
     },
     {
       "sheet": "npc",
+      "file": "sheets/characters/npc.png",
       "passed": true,
-      "colors_including_transparent": 15,
-      "file": "sheets/characters/npc.png"
+      "frame_count": 7,
+      "frame_size": [
+        16,
+        32
+      ],
+      "sheet_size": [
+        112,
+        32
+      ],
+      "palette": "folk",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 1792,
+      "sha256": "12566ed4351ecfbec538b15010c27d30f4c0b48fcbe6bec9e04eec9aaeecdf2e"
     },
     {
       "sheet": "folk32",
+      "file": "sheets/characters/folk32.png",
       "passed": true,
-      "colors_including_transparent": 15,
-      "file": "sheets/characters/folk32.png"
+      "frame_count": 4,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        128,
+        32
+      ],
+      "palette": "folk",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 2048,
+      "sha256": "1418b7876de9afee345ee801d23d47aaad162bd740a8c327e8d572b8aad6738a"
     },
     {
       "sheet": "portrait",
+      "file": "sheets/characters/portrait.png",
       "passed": true,
-      "colors_including_transparent": 14,
-      "file": "sheets/characters/portrait.png"
+      "frame_count": 9,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        288,
+        32
+      ],
+      "palette": "portrait",
+      "opaque_colors": 15,
+      "bit_depth": 4,
+      "bin_bytes": 4608,
+      "sha256": "d085a6e29b7fbc6270fc93a532cbc988b5002fbd344bd26bc11a1a2bd1199e3d"
     },
     {
       "sheet": "marks",
+      "file": "sheets/map/marks.png",
       "passed": true,
-      "colors_including_transparent": 15,
-      "file": "sheets/map/marks.png"
+      "frame_count": 13,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        208,
+        16
+      ],
+      "palette": "ui",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 1664,
+      "sha256": "60a2a89ecb5af01be9925c367a2f662f2ed7616e45e6e7cdbd260c2c013ab74c"
     },
     {
       "sheet": "dots",
+      "file": "sheets/map/dots.png",
       "passed": true,
-      "colors_including_transparent": 12,
-      "file": "sheets/map/dots.png"
+      "frame_count": 12,
+      "frame_size": [
+        8,
+        8
+      ],
+      "sheet_size": [
+        96,
+        8
+      ],
+      "palette": "ui",
+      "opaque_colors": 11,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "d541bd40ebab5fb2098bbcf1372dfeb12118f9dfc5ee18ef530015fd37550f75"
     },
     {
       "sheet": "cursor",
+      "file": "sheets/map/cursor.png",
       "passed": true,
-      "colors_including_transparent": 3,
-      "file": "sheets/map/cursor.png"
+      "frame_count": 1,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        32,
+        32
+      ],
+      "palette": "ui",
+      "opaque_colors": 2,
+      "bit_depth": 4,
+      "bin_bytes": 512,
+      "sha256": "586f6c985439d5bffb5de03b2196e5734ed8be4a9ab938c02f11b892f00b534e"
     },
     {
       "sheet": "forest",
+      "file": "sheets/tiles/forest.png",
       "passed": true,
-      "colors_including_transparent": 14,
-      "file": "sheets/tiles/forest.png"
+      "frame_count": 43,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        688,
+        16
+      ],
+      "palette": "forest",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 5504,
+      "sha256": "240df4a5845d9b31b734472cef6f97e4a5bef281aa8bcb4c6306816ff11c825e"
     },
     {
       "sheet": "wood",
+      "file": "sheets/tiles/wood.png",
       "passed": true,
-      "colors_including_transparent": 13,
-      "file": "sheets/tiles/wood.png"
+      "frame_count": 39,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        624,
+        16
+      ],
+      "palette": "forest",
+      "opaque_colors": 12,
+      "bit_depth": 4,
+      "bin_bytes": 4992,
+      "sha256": "338e7a1868d2d91121b6bfd49a2282ff2f010458b437919888a2a4a61484702f"
     },
     {
       "sheet": "stone",
+      "file": "sheets/tiles/stone.png",
       "passed": true,
-      "colors_including_transparent": 14,
-      "file": "sheets/tiles/stone.png"
+      "frame_count": 35,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        560,
+        16
+      ],
+      "palette": "stone",
+      "opaque_colors": 14,
+      "bit_depth": 4,
+      "bin_bytes": 4480,
+      "sha256": "4db69425d6b0ad44fac8e32f287e73757594a8f24dee0c50459f10b21810a3e4"
     },
     {
       "sheet": "cliff",
+      "file": "sheets/tiles/cliff.png",
       "passed": true,
-      "colors_including_transparent": 9,
-      "file": "sheets/tiles/cliff.png"
+      "frame_count": 22,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        352,
+        16
+      ],
+      "palette": "stone",
+      "opaque_colors": 9,
+      "bit_depth": 4,
+      "bin_bytes": 2816,
+      "sha256": "1f2816be01af173198c497a6cf0280dbd063e5d54fde1bf6d06cb78d05f54a7a"
     },
     {
       "sheet": "blight",
+      "file": "sheets/tiles/blight.png",
       "passed": true,
-      "colors_including_transparent": 12,
-      "file": "sheets/tiles/blight.png"
+      "frame_count": 26,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        416,
+        16
+      ],
+      "palette": "blight_tile",
+      "opaque_colors": 11,
+      "bit_depth": 4,
+      "bin_bytes": 3328,
+      "sha256": "24c796bb6c0772728f22995a4bbf4caebb2ffe3458cc878d3ffd810c774a6200"
     },
     {
       "sheet": "sewer",
+      "file": "sheets/tiles/sewer.png",
       "passed": true,
-      "colors_including_transparent": 13,
-      "file": "sheets/tiles/sewer.png"
+      "frame_count": 48,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        768,
+        16
+      ],
+      "palette": "sewer",
+      "opaque_colors": 13,
+      "bit_depth": 4,
+      "bin_bytes": 6144,
+      "sha256": "b3751c482a0458d68b95cf9a45d5109dbd0e0385cc860ac77a3ffad13a8f597c"
     },
     {
       "sheet": "props",
+      "file": "sheets/tiles/props.png",
       "passed": true,
-      "colors_including_transparent": 10,
-      "file": "sheets/tiles/props.png"
+      "frame_count": 18,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        288,
+        16
+      ],
+      "palette": "props",
+      "opaque_colors": 10,
+      "bit_depth": 4,
+      "bin_bytes": 2304,
+      "sha256": "e6746f06ccda8d1f9887b005ff7f5ced8f1be4fe579fcfe08b77c4c50775f2f6"
     },
     {
       "sheet": "hud",
+      "file": "sheets/ui/hud.png",
       "passed": true,
-      "colors_including_transparent": 11,
-      "file": "sheets/ui/hud.png"
+      "frame_count": 25,
+      "frame_size": [
+        8,
+        8
+      ],
+      "sheet_size": [
+        200,
+        8
+      ],
+      "palette": "hud",
+      "opaque_colors": 11,
+      "bit_depth": 4,
+      "bin_bytes": 800,
+      "sha256": "7e8d8032969019ae1cde2d679544d93491f8a08f5397c9cac4412a2245109cd0"
+    },
+    {
+      "sheet": "shield_upgraded",
+      "file": "sheets/characters/shield_upgraded.png",
+      "passed": true,
+      "frame_count": 3,
+      "frame_size": [
+        16,
+        16
+      ],
+      "sheet_size": [
+        48,
+        16
+      ],
+      "palette": "hero",
+      "opaque_colors": 7,
+      "bit_depth": 4,
+      "bin_bytes": 384,
+      "sha256": "086ddce6e25973bd8c5b3d9653921b9e7b5c1079f8b40c098a4e1f3ffcf4785a"
+    },
+    {
+      "sheet": "shield_menu",
+      "file": "sheets/objects/shield_menu.png",
+      "passed": true,
+      "frame_count": 2,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        64,
+        32
+      ],
+      "palette": "hero",
+      "opaque_colors": 7,
+      "bit_depth": 4,
+      "bin_bytes": 1024,
+      "sha256": "30c72a5681160cbaf84d035dd4d89b7b60c7fe74b9963d9e68fa1c699710c8da"
+    },
+    {
+      "sheet": "currency32",
+      "file": "sheets/objects/currency32.png",
+      "passed": true,
+      "frame_count": 1,
+      "frame_size": [
+        32,
+        32
+      ],
+      "sheet_size": [
+        32,
+        32
+      ],
+      "palette": "fx",
+      "opaque_colors": 4,
+      "bit_depth": 4,
+      "bin_bytes": 512,
+      "sha256": "2cb1f310812e5288407cb5fca20db1b8bd865d75b0273228fd32646bb87777df"
     }
-  ],
-  "total_sheets": 32,
-  "all_passed": true
+  ]
 }

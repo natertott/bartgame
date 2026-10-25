@@ -183,9 +183,28 @@ def apply(metatiles):
 
 
 # --------------------------------------------------------------- the HUD --
+def corner(t, cy, cx):
+    """one corner of a 16x16 slot from an 8x8 framed square: the square's
+    quarter on that corner, its middle row and column carried inward"""
+    out = []
+    for y in range(8):
+        sy = (y if y < 4 else 4) if cy == 0 else (3 if y < 4 else y)
+        out.append(''.join(t[sy][(x if x < 4 else 4) if cx == 0 else (3 if x < 4 else x)] for x in range(8)))
+    return out
+
+
+def quarter_turn(t):
+    """a quarter turn clockwise: the pack's arrow points right, the
+    engine's points down (and is flipped for up)"""
+    n = len(t)
+    return [''.join(t[n - 1 - x][y] for x in range(n)) for y in range(n)]
+
+
 def hud_tiles(current):
     """the pack's HUD tiles under the engine's names, each colour the
-    nearest of the engine's HUD palette"""
+    nearest of the engine's HUD palette (its text inks are fixed entries
+    of it). The slots are the pack's 8x8 framed squares opened out to the
+    engine's 16x16."""
     H = T['hud']
     src = ['#000000'] + pack.META['tiles']['hud']['palette']
     dst = dict(palettes.BG_PALETTES)['hud']
@@ -195,14 +214,14 @@ def hud_tiles(current):
         'heart_full': q['heart_full'], 'heart_half': q['heart_half'], 'heart_empty': q['heart_empty'],
         'gilt': q['coin'], 'key': q['key'], 'bomb': q['bomb'],
         'btn_a': q['badge_a'], 'btn_b': q['badge_b'], 'btn_l': q['badge_l'], 'btn_r': q['badge_r'],
-        'slot_tl': q['slot_corner_dark'], 'slot_tr': hf(q['slot_corner_dark']),
-        'slot_bl': vf(q['slot_corner_dark']), 'slot_br': hf(vf(q['slot_corner_dark'])),
-        'slot_lit_tl': q['slot_corner_lit'], 'slot_lit_tr': hf(q['slot_corner_lit']),
-        'slot_lit_bl': vf(q['slot_corner_lit']), 'slot_lit_br': hf(vf(q['slot_corner_lit'])),
+        'slot_tl': corner(q['slot_plain'], 0, 0), 'slot_tr': corner(q['slot_plain'], 0, 1),
+        'slot_bl': corner(q['slot_plain'], 1, 0), 'slot_br': corner(q['slot_plain'], 1, 1),
+        'slot_lit_tl': corner(q['slot_lit'], 0, 0), 'slot_lit_tr': corner(q['slot_lit'], 0, 1),
+        'slot_lit_bl': corner(q['slot_lit'], 1, 0), 'slot_lit_br': corner(q['slot_lit'], 1, 1),
         'box_tl': q['box_corner'], 'box_t': q['box_top'], 'box_l': q['box_side'], 'box_fill': q['box_fill'],
         'box_bl': q['box_bottom_corner'], 'box_b': q['box_bottom'],
         'cursor': q['cursor_hand'], 'hand': q['cursor_hand'], 'map_unknown': q['map_cell0'], 'map_cell': q['map_cell1'],
-        'rule': q['rule'], 'arrow': q['arrow'],
+        'rule': q['rule'], 'arrow': quarter_turn(q['arrow']),
     }
     assert set(out) <= set(current), sorted(set(out) - set(current))
     return out

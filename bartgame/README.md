@@ -66,30 +66,25 @@ font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
 to PNG at 4x.
 
 **The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
-pack, kept as delivered in `art/ref/pack/` and imported by
-`tools/import_pack.py` into `art/pack/` (one indexed strip per sheet and
-`pack.json` with the palettes; the build reads only those). The pack
-has two kinds of sheet. Most are exact 4-bit strips at the engine's
-frame size (the monsters, the effects, the projectiles, the arrows,
-the mouth, the carried objects, the map marks, the sword); they go in
-index for index. Seven were revised as large illustrations, one figure
-per cell of a grid, and their file names are crossed in the pack:
-`hero.png` holds the pickups, `pick32.png` the Bloom, `items.png` the
-shields, `shield.png` the folk, `npc.png` the small items, so the
-importer names each by what it shows. A cell is found by the grid's
-transparent gaps, scaled to its frame by area averaging (a box a third
-or more near-black takes the outline, so lines and eyes survive), and
-quantized to its palette group: one outline colour and fourteen by a
-weighted k-means in Lab, each colour weighing as the square root of its
-area so small accents keep a colour. The Bloom's illustration has 55
-cells for 50 frames; the importer picks each frame's cell by pose and
-lists the five spares. New OBJ palettes give the sword and shield, the
-16-pixel items, the ground pickups, the menu icons and the hub's two
-their own colours; each portrait carries a palette of its own, loaded
-with the speaker, and only the speaker's face is resident (16 OBJ
-tiles). The folk are 32x32 now. The hub's Gatekeeper and Peddler are
-the pack's revised figures, with a blink each made by brightening her
-orb and his lantern; the pack's first-pass `folk32` sheet is not used.
+pack (the fixed, engine-sized delivery), kept as delivered in
+`art/ref/pack/` and imported by `tools/import_pack.py` into `art/pack/`:
+one 4-bit indexed strip per sheet and `pack.json` with the frame names
+and palettes, which is all the build reads. Every sheet goes in index
+for index with the palette it carries, in the pack's nine OBJ palette
+groups (hero, fx, bugs, blight, iron, folk, portrait, lift, ui); the
+importer checks that sheets of a group share their colours and renames
+the knight's walk frames to the engine's spelling. The engine's frame
+order still follows the hand-drawn sheets the pack replaced, so code
+that counts frames keeps working; the frames the pack appends (Sister
+Mary Grace and Brother Mark on the folk and portrait sheets) come
+after, and its extra sheets (the upgraded shield, the shield menu
+symbols, the standalone gilt diamond) are imported but not yet used.
+Only the speaker's face is resident (16 OBJ tiles) and the portrait
+slot is loaded with the speaker's palette. The HUD tiles are the pack's
+too, quantized into the HUD palette the text inks depend on, with its
+8x8 slot squares opened out to the engine's 16x16 slots and its arrow
+turned to point down. The CPU-drawn mini-map writes through `ui_ink[]`
+into the pack's ui palette.
 
 **The style boards.** The tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
@@ -106,11 +101,11 @@ pipes, grates, the drain, lanterns, banners, ladders, posts, and the
 stall's props. `art/tiles_style.py` puts them into the metatiles by
 name; every metatile and HUD tile still drawn by hand is remapped,
 colour by nearest colour, into the board palettes (`palettes.REMAP_BG`).
-The HUD and the boxes keep their drawn tiles in the UI board's colours.
+The HUD and the boxes are drawn in the UI board's colours.
 
 **The comparison build.** `make pack-tiles` builds
-`bartgame_packtiles.gba` with the sprite pack's own tile sheets and HUD
-tiles instead (`art/pack_tiles.py`, switched on by `BART_TILES=pack`).
+`bartgame_packtiles.gba` with the sprite pack's own tile sheets instead
+(`art/pack_tiles.py`, switched on by `BART_TILES=pack`).
 The pack calls them representative families: the area palettes become
 the pack's, a pack tile goes on each metatile it names, the pack's
 foam-rimmed water on the engine's banked water (the turf beside it is
@@ -276,7 +271,7 @@ art/            pixel art as rows of letters mapped to palette indices
   ref/          the four style boards; ref/pack/ the sprite pack as delivered
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
-  pack_tiles.py the pack's tiles and HUD, for `make pack-tiles`
+  pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
   sample.py     cutting a board: key, scale, derive a palette, quantize
   style.py      every tile crop by name, and the palettes derived from them
   tiles_style.py the sampled tiles into the metatiles; the rest remapped

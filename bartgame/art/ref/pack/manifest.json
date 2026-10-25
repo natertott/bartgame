@@ -4,8 +4,8 @@
   "transparent_index": 0,
   "pixels_per_byte": 2,
   "design": "soot and gold, molten petal-red, aquamarine bioluminescence, ultraviolet blight",
-  "total_sheets": 32,
-  "total_frames": 462,
+  "total_sheets": 35,
+  "total_frames": 472,
   "sheets": [
     {
       "name": "hero",
@@ -70,8 +70,12 @@
       ],
       "palette_file": "palettes/hero.gba.pal",
       "max_index": 15,
-      "opaque_colors": 15,
-      "png_path": "sheets/characters/hero.png"
+      "opaque_colors": 14,
+      "png_path": "sheets/characters/hero.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/hero.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "sword",
@@ -90,7 +94,11 @@
       "palette_file": "palettes/hero.gba.pal",
       "max_index": 15,
       "opaque_colors": 5,
-      "png_path": "sheets/characters/sword.png"
+      "png_path": "sheets/characters/sword.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/sword.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "shield",
@@ -107,9 +115,13 @@
         "back"
       ],
       "palette_file": "palettes/hero.gba.pal",
-      "max_index": 15,
-      "opaque_colors": 7,
-      "png_path": "sheets/characters/shield.png"
+      "max_index": 14,
+      "opaque_colors": 5,
+      "png_path": "sheets/characters/shield.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/shield.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "items",
@@ -145,7 +157,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 14,
       "opaque_colors": 13,
-      "png_path": "sheets/objects/items.png"
+      "png_path": "sheets/objects/items.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/items.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "pick32",
@@ -171,7 +187,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 14,
       "opaque_colors": 10,
-      "png_path": "sheets/objects/pick32.png"
+      "png_path": "sheets/objects/pick32.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/pick32.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "icon32",
@@ -202,8 +222,12 @@
       ],
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 14,
-      "opaque_colors": 14,
-      "png_path": "sheets/objects/icon32.png"
+      "opaque_colors": 13,
+      "png_path": "sheets/objects/icon32.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/icon32.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "beetle",
@@ -223,7 +247,11 @@
       "palette_file": "palettes/bugs.gba.pal",
       "max_index": 14,
       "opaque_colors": 7,
-      "png_path": "sheets/monsters/beetle.png"
+      "png_path": "sheets/monsters/beetle.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/beetle.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "bat",
@@ -242,7 +270,11 @@
       "palette_file": "palettes/bugs.gba.pal",
       "max_index": 15,
       "opaque_colors": 7,
-      "png_path": "sheets/monsters/bat.png"
+      "png_path": "sheets/monsters/bat.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/bat.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "slime",
@@ -261,7 +293,11 @@
       "palette_file": "palettes/bugs.gba.pal",
       "max_index": 15,
       "opaque_colors": 6,
-      "png_path": "sheets/monsters/slime.png"
+      "png_path": "sheets/monsters/slime.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/slime.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "spitter",
@@ -286,7 +322,11 @@
       "palette_file": "palettes/blight.gba.pal",
       "max_index": 15,
       "opaque_colors": 8,
-      "png_path": "sheets/monsters/spitter.png"
+      "png_path": "sheets/monsters/spitter.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/spitter.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "knight",
@@ -314,7 +354,11 @@
       "palette_file": "palettes/iron.gba.pal",
       "max_index": 14,
       "opaque_colors": 11,
-      "png_path": "sheets/monsters/knight.png"
+      "png_path": "sheets/monsters/knight.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/knight.4bpp.bin",
+      "gba_tiles_per_frame": 8,
+      "gba_tile_bytes_per_frame": 256,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "ksword",
@@ -332,7 +376,11 @@
       "palette_file": "palettes/iron.gba.pal",
       "max_index": 13,
       "opaque_colors": 5,
-      "png_path": "sheets/monsters/ksword.png"
+      "png_path": "sheets/monsters/ksword.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/ksword.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "boss",
@@ -351,7 +399,11 @@
       "palette_file": "palettes/blight.gba.pal",
       "max_index": 15,
       "opaque_colors": 10,
-      "png_path": "sheets/monsters/boss.png"
+      "png_path": "sheets/monsters/boss.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/boss.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "proj",
@@ -370,7 +422,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 15,
       "opaque_colors": 8,
-      "png_path": "sheets/effects/proj.png"
+      "png_path": "sheets/effects/proj.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/proj.4bpp.bin",
+      "gba_tiles_per_frame": 1,
+      "gba_tile_bytes_per_frame": 32,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "arrow",
@@ -389,7 +445,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 10,
       "opaque_colors": 4,
-      "png_path": "sheets/effects/arrow.png"
+      "png_path": "sheets/effects/arrow.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/arrow.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "fx",
@@ -418,7 +478,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 15,
       "opaque_colors": 13,
-      "png_path": "sheets/effects/fx.png"
+      "png_path": "sheets/effects/fx.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/fx.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "mouth",
@@ -437,7 +501,11 @@
       "palette_file": "palettes/fx.gba.pal",
       "max_index": 15,
       "opaque_colors": 9,
-      "png_path": "sheets/effects/mouth.png"
+      "png_path": "sheets/effects/mouth.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/mouth.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "lift",
@@ -457,7 +525,11 @@
       "palette_file": "palettes/lift.gba.pal",
       "max_index": 14,
       "opaque_colors": 11,
-      "png_path": "sheets/objects/lift.png"
+      "png_path": "sheets/objects/lift.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/lift.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "npc",
@@ -465,20 +537,26 @@
       "group": "folk",
       "frame_width": 16,
       "frame_height": 32,
-      "frame_count": 5,
-      "sheet_width": 80,
+      "frame_count": 7,
+      "sheet_width": 112,
       "sheet_height": 32,
       "frames": [
         "sage",
         "merchant",
         "hermit",
         "nun",
-        "gardener"
+        "gardener",
+        "sister_mary_grace",
+        "brother_mark"
       ],
       "palette_file": "palettes/folk.gba.pal",
       "max_index": 15,
       "opaque_colors": 14,
-      "png_path": "sheets/characters/npc.png"
+      "png_path": "sheets/characters/npc.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/npc.4bpp.bin",
+      "gba_tiles_per_frame": 8,
+      "gba_tile_bytes_per_frame": 256,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "folk32",
@@ -498,7 +576,11 @@
       "palette_file": "palettes/folk.gba.pal",
       "max_index": 15,
       "opaque_colors": 14,
-      "png_path": "sheets/characters/folk32.png"
+      "png_path": "sheets/characters/folk32.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/folk32.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "portrait",
@@ -506,8 +588,8 @@
       "group": "portrait",
       "frame_width": 32,
       "frame_height": 32,
-      "frame_count": 7,
-      "sheet_width": 224,
+      "frame_count": 9,
+      "sheet_width": 288,
       "sheet_height": 32,
       "frames": [
         "hero",
@@ -516,12 +598,18 @@
         "gatekeeper",
         "hermit",
         "nun",
-        "gardener"
+        "gardener",
+        "sister_mary_grace",
+        "brother_mark"
       ],
       "palette_file": "palettes/portrait.gba.pal",
       "max_index": 15,
-      "opaque_colors": 14,
-      "png_path": "sheets/characters/portrait.png"
+      "opaque_colors": 15,
+      "png_path": "sheets/characters/portrait.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/portrait.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "marks",
@@ -550,7 +638,11 @@
       "palette_file": "palettes/ui.gba.pal",
       "max_index": 15,
       "opaque_colors": 14,
-      "png_path": "sheets/map/marks.png"
+      "png_path": "sheets/map/marks.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/marks.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "dots",
@@ -578,7 +670,11 @@
       "palette_file": "palettes/ui.gba.pal",
       "max_index": 15,
       "opaque_colors": 11,
-      "png_path": "sheets/map/dots.png"
+      "png_path": "sheets/map/dots.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/dots.4bpp.bin",
+      "gba_tiles_per_frame": 1,
+      "gba_tile_bytes_per_frame": 32,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "cursor",
@@ -595,7 +691,11 @@
       "palette_file": "palettes/ui.gba.pal",
       "max_index": 11,
       "opaque_colors": 2,
-      "png_path": "sheets/map/cursor.png"
+      "png_path": "sheets/map/cursor.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/cursor.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "forest",
@@ -654,7 +754,11 @@
       "palette_file": "palettes/forest.gba.pal",
       "max_index": 15,
       "opaque_colors": 14,
-      "png_path": "sheets/tiles/forest.png"
+      "png_path": "sheets/tiles/forest.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/forest.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "wood",
@@ -709,7 +813,11 @@
       "palette_file": "palettes/forest.gba.pal",
       "max_index": 15,
       "opaque_colors": 12,
-      "png_path": "sheets/tiles/wood.png"
+      "png_path": "sheets/tiles/wood.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/wood.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "stone",
@@ -760,7 +868,11 @@
       "palette_file": "palettes/stone.gba.pal",
       "max_index": 15,
       "opaque_colors": 14,
-      "png_path": "sheets/tiles/stone.png"
+      "png_path": "sheets/tiles/stone.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/stone.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "cliff",
@@ -798,7 +910,11 @@
       "palette_file": "palettes/stone.gba.pal",
       "max_index": 14,
       "opaque_colors": 9,
-      "png_path": "sheets/tiles/cliff.png"
+      "png_path": "sheets/tiles/cliff.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/cliff.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "blight",
@@ -840,7 +956,11 @@
       "palette_file": "palettes/blight_tile.gba.pal",
       "max_index": 13,
       "opaque_colors": 11,
-      "png_path": "sheets/tiles/blight.png"
+      "png_path": "sheets/tiles/blight.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/blight.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "sewer",
@@ -904,7 +1024,11 @@
       "palette_file": "palettes/sewer.gba.pal",
       "max_index": 15,
       "opaque_colors": 13,
-      "png_path": "sheets/tiles/sewer.png"
+      "png_path": "sheets/tiles/sewer.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/sewer.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "props",
@@ -938,7 +1062,11 @@
       "palette_file": "palettes/props.gba.pal",
       "max_index": 15,
       "opaque_colors": 10,
-      "png_path": "sheets/tiles/props.png"
+      "png_path": "sheets/tiles/props.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/props.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     },
     {
       "name": "hud",
@@ -977,9 +1105,95 @@
         "arrow"
       ],
       "palette_file": "palettes/hud.gba.pal",
-      "max_index": 12,
-      "opaque_colors": 10,
-      "png_path": "sheets/ui/hud.png"
+      "max_index": 14,
+      "opaque_colors": 11,
+      "png_path": "sheets/ui/hud.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/hud.4bpp.bin",
+      "gba_tiles_per_frame": 1,
+      "gba_tile_bytes_per_frame": 32,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
+    },
+    {
+      "name": "shield_upgraded",
+      "category": "characters",
+      "group": "hero",
+      "frame_width": 16,
+      "frame_height": 16,
+      "frame_count": 3,
+      "sheet_width": 48,
+      "sheet_height": 16,
+      "frames": [
+        "front",
+        "side",
+        "back"
+      ],
+      "palette_file": "palettes/hero.gba.pal",
+      "max_index": 15,
+      "opaque_colors": 7,
+      "png_path": "sheets/characters/shield_upgraded.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/shield_upgraded.4bpp.bin",
+      "gba_tiles_per_frame": 4,
+      "gba_tile_bytes_per_frame": 128,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
+    },
+    {
+      "name": "shield_menu",
+      "category": "objects",
+      "group": "hero",
+      "frame_width": 32,
+      "frame_height": 32,
+      "frame_count": 2,
+      "sheet_width": 64,
+      "sheet_height": 32,
+      "frames": [
+        "base",
+        "upgraded"
+      ],
+      "palette_file": "palettes/hero.gba.pal",
+      "max_index": 15,
+      "opaque_colors": 7,
+      "png_path": "sheets/objects/shield_menu.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/shield_menu.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
+    },
+    {
+      "name": "currency32",
+      "category": "objects",
+      "group": "fx",
+      "frame_width": 32,
+      "frame_height": 32,
+      "frame_count": 1,
+      "sheet_width": 32,
+      "sheet_height": 32,
+      "frames": [
+        "gilt_diamond"
+      ],
+      "palette_file": "palettes/fx.gba.pal",
+      "max_index": 14,
+      "opaque_colors": 4,
+      "png_path": "sheets/objects/currency32.png",
+      "gba_4bpp_bin_path": "gba_4bpp_tiles/currency32.4bpp.bin",
+      "gba_tiles_per_frame": 16,
+      "gba_tile_bytes_per_frame": 512,
+      "gba_frame_index_layout": "1D frame-major, 8x8 tiles within frame row-major, 2 pixels per byte, left pixel low nibble"
     }
+  ],
+  "revision": "native-4bpp-fixed-2026-10-25",
+  "additional_frames": {
+    "npc": [
+      "sister_mary_grace",
+      "brother_mark"
+    ],
+    "portrait": [
+      "sister_mary_grace",
+      "brother_mark"
+    ]
+  },
+  "additional_sheets": [
+    "shield_upgraded",
+    "shield_menu",
+    "currency32"
   ]
 }

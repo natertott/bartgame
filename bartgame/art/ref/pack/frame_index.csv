@@ -168,6 +168,8 @@ npc,characters,folk,1,merchant,16,0,16,32
 npc,characters,folk,2,hermit,32,0,16,32
 npc,characters,folk,3,nun,48,0,16,32
 npc,characters,folk,4,gardener,64,0,16,32
+npc,characters,folk,5,sister_mary_grace,80,0,16,32
+npc,characters,folk,6,brother_mark,96,0,16,32
 folk32,characters,folk,0,sage_1,0,0,32,32
 folk32,characters,folk,1,sage_2,32,0,32,32
 folk32,characters,folk,2,merchant_1,64,0,32,32
@@ -179,6 +181,8 @@ portrait,characters,portrait,3,gatekeeper,96,0,32,32
 portrait,characters,portrait,4,hermit,128,0,32,32
 portrait,characters,portrait,5,nun,160,0,32,32
 portrait,characters,portrait,6,gardener,192,0,32,32
+portrait,characters,portrait,7,sister_mary_grace,224,0,32,32
+portrait,characters,portrait,8,brother_mark,256,0,32,32
 marks,map,ui,0,here,0,0,16,16
 marks,map,ui,1,door,16,0,16,16
 marks,map,ui,2,folk,32,0,16,16
@@ -461,3 +465,9 @@ hud,ui,hud,21,map_cell0,168,0,8,8
 hud,ui,hud,22,map_cell1,176,0,8,8
 hud,ui,hud,23,rule,184,0,8,8
 hud,ui,hud,24,arrow,192,0,8,8
+shield_upgraded,characters,hero,0,front,0,0,16,16
+shield_upgraded,characters,hero,1,side,16,0,16,16
+shield_upgraded,characters,hero,2,back,32,0,16,16
+shield_menu,objects,hero,0,base,0,0,32,32
+shield_menu,objects,hero,1,upgraded,32,0,32,32
+currency32,objects,fx,0,gilt_diamond,0,0,32,32

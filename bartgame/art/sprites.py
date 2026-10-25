@@ -19,8 +19,10 @@ from items32 import PICK32, ICON32
 SHEETS = []
 
 
-def sheet(name, order):
-    """the pack's sheet, its frames in the engine's order"""
+def sheet(name, order, extra=()):
+    """the pack's sheet, its frames in the engine's order (and any the
+    pack appends, after them)"""
+    order = list(order) + list(extra)
     frames = pack.frames(name)
     assert set(frames) == set(order), (name, sorted(set(frames) ^ set(order)))
     s = pack.META['sheets'][name]
@@ -43,10 +45,11 @@ sheet('knight', KNIGHT)
 sheet('ksword', KSWORD)
 sheet('fx', FX)
 sheet('proj', PROJ)
-sheet('npc', NPC)
+# two folk the pack added, not yet placed in the game
+sheet('npc', NPC, ['sister_mary_grace', 'brother_mark'])
 sheet('folk32', BIG)
 sheet('boss', BOSS)
-sheet('portrait', PORTRAITS)
+sheet('portrait', PORTRAITS, ['sister_mary_grace', 'brother_mark'])
 sheet('lift', LIFT)
 sheet('arrow', ARROW)
 sheet('mouth', MOUTH)

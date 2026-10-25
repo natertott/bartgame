@@ -776,10 +776,10 @@ static void draw_shield(void) {
     Actor* a = gPlayer;
     int sx = PX(a->x) - 8 - gCamX, sy = PX(a->y) - 32 - gCamY - PX(a->z);
     switch (a->facing) {
-        case FACE_S: draw_sprite(sx, sy + 15, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, a->prio, PAL_OBJ_GEAR); break;
-        case FACE_N: draw_sprite(sx, sy + 9, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_BACK, 0, a->prio, PAL_OBJ_GEAR); break;
-        case FACE_E: draw_sprite(sx + 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 0, a->prio, PAL_OBJ_GEAR); break;
-        default: draw_sprite(sx - 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 1, a->prio, PAL_OBJ_GEAR); break;
+        case FACE_S: draw_sprite(sx, sy + 15, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, a->prio, PAL_OBJ_HERO); break;
+        case FACE_N: draw_sprite(sx, sy + 9, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_BACK, 0, a->prio, PAL_OBJ_HERO); break;
+        case FACE_E: draw_sprite(sx + 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 0, a->prio, PAL_OBJ_HERO); break;
+        default: draw_sprite(sx - 9, sy + 13, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_SIDE, 1, a->prio, PAL_OBJ_HERO); break;
     }
 }
 
@@ -828,7 +828,7 @@ static void draw_sword(void) {
         return;
     o->attr0 = ATTR0_Y(sy) | ATTR0_SQUARE;
     o->attr1 = ATTR1_X(sx) | ATTR1_SIZE(1) | (hflip ? ATTR1_HFLIP : 0) | (vflip ? ATTR1_VFLIP : 0);
-    o->attr2 = ATTR2_TILE(SWORD_TILE + frame * 4) | ATTR2_PRIO(2) | ATTR2_PAL(PAL_OBJ_GEAR);
+    o->attr2 = ATTR2_TILE(SWORD_TILE + frame * 4) | ATTR2_PRIO(2) | ATTR2_PAL(PAL_OBJ_HERO);
 }
 
 void player_draw(void) {
@@ -912,7 +912,7 @@ void player_draw(void) {
     if (a->state == PS_ITEMGET && gPl.got_item) {
         int sx = PX(a->x) - 16 - gCamX;
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
-        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_ICONS);
+        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_FX);
     }
     /* the sword draws under the hero when swung north, over otherwise */
     if (a->state == PS_ATTACK && a->facing == FACE_N) {

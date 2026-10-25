@@ -1,7 +1,7 @@
-// Auto-generated BARTGAME sheet frame IDs.  GBA 4bpp indexed PNG masters.
+// BARTGAME fixed indexed sheet IDs, append-only stable existing IDs.
 #pragma once
 
-// hero: 32x32, 50 frames.
+// hero: 32x32, 50 frames
 #define BART_HERO_IDLE_S 0
 #define BART_HERO_IDLE_N 1
 #define BART_HERO_IDLE_E 2
@@ -53,17 +53,17 @@
 #define BART_HERO_GUARD_N 48
 #define BART_HERO_GUARD_E 49
 
-// sword: 16x16, 3 frames.
+// sword: 16x16, 3 frames
 #define BART_SWORD_BLADE_S 0
 #define BART_SWORD_BLADE_E 1
 #define BART_SWORD_BLADE_SE 2
 
-// shield: 16x16, 3 frames.
+// shield: 16x16, 3 frames
 #define BART_SHIELD_FRONT 0
 #define BART_SHIELD_SIDE 1
 #define BART_SHIELD_BACK 2
 
-// items: 16x16, 20 frames.
+// items: 16x16, 20 frames
 #define BART_ITEMS_NONE 0
 #define BART_ITEMS_BOMBS 1
 #define BART_ITEMS_LAMP 2
@@ -85,7 +85,7 @@
 #define BART_ITEMS_ARROW10 18
 #define BART_ITEMS_HUBCAP 19
 
-// pick32: 32x32, 10 frames.
+// pick32: 32x32, 10 frames
 #define BART_PICK32_HEART 0
 #define BART_PICK32_GILT 1
 #define BART_PICK32_BOMB_PICKUP 2
@@ -97,7 +97,7 @@
 #define BART_PICK32_ARROW5 8
 #define BART_PICK32_ARROW10 9
 
-// icon32: 32x32, 16 frames.
+// icon32: 32x32, 16 frames
 #define BART_ICON32_NONE 0
 #define BART_ICON32_BOMBS 1
 #define BART_ICON32_LAMP 2
@@ -115,23 +115,23 @@
 #define BART_ICON32_SWORD 14
 #define BART_ICON32_SHIELD 15
 
-// beetle: 16x16, 4 frames.
+// beetle: 16x16, 4 frames
 #define BART_BEETLE_WALK_S1 0
 #define BART_BEETLE_WALK_S2 1
 #define BART_BEETLE_WALK_E1 2
 #define BART_BEETLE_WALK_E2 3
 
-// bat: 16x16, 3 frames.
+// bat: 16x16, 3 frames
 #define BART_BAT_FLY1 0
 #define BART_BAT_FLY2 1
 #define BART_BAT_REST 2
 
-// slime: 16x16, 3 frames.
+// slime: 16x16, 3 frames
 #define BART_SLIME_IDLE 0
 #define BART_SLIME_SQUASH 1
 #define BART_SLIME_JUMP 2
 
-// spitter: 16x16, 9 frames.
+// spitter: 16x16, 9 frames
 #define BART_SPITTER_IDLE_S 0
 #define BART_SPITTER_WALK_S 1
 #define BART_SPITTER_SPIT_S 2
@@ -142,7 +142,7 @@
 #define BART_SPITTER_WALK_E 7
 #define BART_SPITTER_SPIT_E 8
 
-// knight: 16x32, 12 frames.
+// knight: 16x32, 12 frames
 #define BART_KNIGHT_WALK1_S 0
 #define BART_KNIGHT_WALK2_S 1
 #define BART_KNIGHT_IDLE_S 2
@@ -156,26 +156,26 @@
 #define BART_KNIGHT_IDLE_E 10
 #define BART_KNIGHT_ATK_E 11
 
-// ksword: 16x16, 2 frames.
+// ksword: 16x16, 2 frames
 #define BART_KSWORD_BLADE_E 0
 #define BART_KSWORD_BLADE_S 1
 
-// boss: 32x32, 3 frames.
+// boss: 32x32, 3 frames
 #define BART_BOSS_PULSE1 0
 #define BART_BOSS_PULSE2 1
 #define BART_BOSS_HURT 2
 
-// proj: 8x8, 3 frames.
+// proj: 8x8, 3 frames
 #define BART_PROJ_SEED 0
 #define BART_PROJ_SPORE 1
 #define BART_PROJ_SHARD 2
 
-// arrow: 16x16, 3 frames.
+// arrow: 16x16, 3 frames
 #define BART_ARROW_E 0
 #define BART_ARROW_S 1
 #define BART_ARROW_N 2
 
-// fx: 16x16, 13 frames.
+// fx: 16x16, 13 frames
 #define BART_FX_PUFF1 0
 #define BART_FX_PUFF2 1
 #define BART_FX_PUFF3 2
@@ -190,31 +190,33 @@
 #define BART_FX_FIREFLY1 11
 #define BART_FX_FIREFLY2 12
 
-// mouth: 32x32, 3 frames.
+// mouth: 32x32, 3 frames
 #define BART_MOUTH_M1 0
 #define BART_MOUTH_M2 1
 #define BART_MOUTH_M3 2
 
-// lift: 16x16, 4 frames.
+// lift: 16x16, 4 frames
 #define BART_LIFT_BUSH 0
 #define BART_LIFT_ROCK 1
 #define BART_LIFT_BOULDER 2
 #define BART_LIFT_POT 3
 
-// npc: 16x32, 5 frames.
+// npc: 16x32, 7 frames
 #define BART_NPC_SAGE 0
 #define BART_NPC_MERCHANT 1
 #define BART_NPC_HERMIT 2
 #define BART_NPC_NUN 3
 #define BART_NPC_GARDENER 4
+#define BART_NPC_SISTER_MARY_GRACE 5
+#define BART_NPC_BROTHER_MARK 6
 
-// folk32: 32x32, 4 frames.
+// folk32: 32x32, 4 frames
 #define BART_FOLK32_SAGE_1 0
 #define BART_FOLK32_SAGE_2 1
 #define BART_FOLK32_MERCHANT_1 2
 #define BART_FOLK32_MERCHANT_2 3
 
-// portrait: 32x32, 7 frames.
+// portrait: 32x32, 9 frames
 #define BART_PORTRAIT_HERO 0
 #define BART_PORTRAIT_HERO_SURPRISED 1
 #define BART_PORTRAIT_PEDDLER 2
@@ -222,8 +224,10 @@
 #define BART_PORTRAIT_HERMIT 4
 #define BART_PORTRAIT_NUN 5
 #define BART_PORTRAIT_GARDENER 6
+#define BART_PORTRAIT_SISTER_MARY_GRACE 7
+#define BART_PORTRAIT_BROTHER_MARK 8
 
-// marks: 16x16, 13 frames.
+// marks: 16x16, 13 frames
 #define BART_MARKS_HERE 0
 #define BART_MARKS_DOOR 1
 #define BART_MARKS_FOLK 2
@@ -238,7 +242,7 @@
 #define BART_MARKS_CHASM 11
 #define BART_MARKS_THORN 12
 
-// dots: 8x8, 12 frames.
+// dots: 8x8, 12 frames
 #define BART_DOTS_HERE 0
 #define BART_DOTS_DOOR 1
 #define BART_DOTS_FOLK 2
@@ -252,10 +256,10 @@
 #define BART_DOTS_CHASM 10
 #define BART_DOTS_THORN 11
 
-// cursor: 32x32, 1 frames.
+// cursor: 32x32, 1 frames
 #define BART_CURSOR_CELL 0
 
-// forest: 16x16, 43 frames.
+// forest: 16x16, 43 frames
 #define BART_FOREST_GRASS_1 0
 #define BART_FOREST_GRASS_2 1
 #define BART_FOREST_GRASS_3 2
@@ -300,7 +304,7 @@
 #define BART_FOREST_CLOVER 41
 #define BART_FOREST_MUSHROOM_RING 42
 
-// wood: 16x16, 39 frames.
+// wood: 16x16, 39 frames
 #define BART_WOOD_CANOPY_WALL_1 0
 #define BART_WOOD_CANOPY_WALL_2 1
 #define BART_WOOD_CANOPY_GLINT 2
@@ -341,7 +345,7 @@
 #define BART_WOOD_THICKET_CAVE_1_1 37
 #define BART_WOOD_THICKET_CAVE_2_1 38
 
-// stone: 16x16, 35 frames.
+// stone: 16x16, 35 frames
 #define BART_STONE_WATER_1 0
 #define BART_STONE_WATER_2 1
 #define BART_STONE_WATER_3 2
@@ -378,7 +382,7 @@
 #define BART_STONE_ARCH 33
 #define BART_STONE_MOSS_BRICK 34
 
-// cliff: 16x16, 22 frames.
+// cliff: 16x16, 22 frames
 #define BART_CLIFF_LEDGE_S 0
 #define BART_CLIFF_LEDGE_N 1
 #define BART_CLIFF_LEDGE_S_END_L 2
@@ -402,7 +406,7 @@
 #define BART_CLIFF_STONE_CAVE_1_1 20
 #define BART_CLIFF_STONE_CAVE_2_1 21
 
-// blight: 16x16, 26 frames.
+// blight: 16x16, 26 frames
 #define BART_BLIGHT_GROUND_1 0
 #define BART_BLIGHT_GROUND_2 1
 #define BART_BLIGHT_GROUND_3 2
@@ -430,7 +434,7 @@
 #define BART_BLIGHT_DEAD_TREE_0_2 24
 #define BART_BLIGHT_DEAD_TREE_1_2 25
 
-// sewer: 16x16, 48 frames.
+// sewer: 16x16, 48 frames
 #define BART_SEWER_FLOOR1 0
 #define BART_SEWER_FLOOR2 1
 #define BART_SEWER_FLOOR3 2
@@ -480,7 +484,7 @@
 #define BART_SEWER_ARCH 46
 #define BART_SEWER_RUBBLE 47
 
-// props: 16x16, 18 frames.
+// props: 16x16, 18 frames
 #define BART_PROPS_CANDLE1 0
 #define BART_PROPS_CANDLE2 1
 #define BART_PROPS_COUNTER 2
@@ -500,7 +504,7 @@
 #define BART_PROPS_BONE 16
 #define BART_PROPS_FISH 17
 
-// hud: 8x8, 25 frames.
+// hud: 8x8, 25 frames
 #define BART_HUD_HEART_FULL 0
 #define BART_HUD_HEART_HALF 1
 #define BART_HUD_HEART_EMPTY 2
@@ -526,3 +530,15 @@
 #define BART_HUD_MAP_CELL1 22
 #define BART_HUD_RULE 23
 #define BART_HUD_ARROW 24
+
+// shield_upgraded: 16x16, 3 frames
+#define BART_SHIELD_UPGRADED_FRONT 0
+#define BART_SHIELD_UPGRADED_SIDE 1
+#define BART_SHIELD_UPGRADED_BACK 2
+
+// shield_menu: 32x32, 2 frames
+#define BART_SHIELD_MENU_BASE 0
+#define BART_SHIELD_MENU_UPGRADED 1
+
+// currency32: 32x32, 1 frames
+#define BART_CURRENCY32_GILT_DIAMOND 0

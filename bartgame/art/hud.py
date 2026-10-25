@@ -587,15 +587,13 @@ import palettes  # noqa: E402
 for _n, _rows in TILES.items():
     TILES[_n] = palettes.remap_rows(_rows, palettes.REMAP_BG['hud'])
 
-# the comparison build: the sprite pack's HUD tiles, in this palette; the
-# tiles that sit inside a box keep nothing transparent
-if palettes.PACK_TILES:
-    import pack_tiles  # noqa: E402
-    _fill = TILES['box_fill'][0][0]
-    for _n, _rows in pack_tiles.hud_tiles(TILES).items():
-        TILES[_n] = _rows
-    _bf = TILES['box_fill'][0][0]
-    for _n in ('rule', 'cursor', 'arrow', 'map_unknown', 'hand', 'gilt', 'item_box',
-               'slot_tl', 'slot_tr', 'slot_bl', 'slot_br', 'slot_lit_tl', 'slot_lit_tr', 'slot_lit_bl', 'slot_lit_br',
-               'btn_l', 'btn_a', 'btn_b', 'btn_r'):
-        TILES[_n] = [r.replace('.', _bf if _bf != '.' else _fill) for r in TILES[_n]]
+# the sprite pack's HUD tiles replace the drawn ones they name, in this
+# palette; the tiles that sit inside a box keep nothing transparent
+import pack_tiles  # noqa: E402
+_fill = TILES['box_fill'][0][0]
+TILES.update(pack_tiles.hud_tiles(TILES))
+_bf = TILES['box_fill'][0][0]
+for _n in ('rule', 'cursor', 'arrow', 'map_unknown', 'hand', 'gilt', 'item_box',
+           'slot_tl', 'slot_tr', 'slot_bl', 'slot_br', 'slot_lit_tl', 'slot_lit_tr', 'slot_lit_bl', 'slot_lit_br',
+           'btn_l', 'btn_a', 'btn_b', 'btn_r'):
+    TILES[_n] = [r.replace('.', _bf if _bf != '.' else _fill) for r in TILES[_n]]
