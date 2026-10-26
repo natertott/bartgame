@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the Drain and the blight of the wood from two illustrated tile atlases (106 tiles, 8 palette groups), the hall's 3x2 waterfall and 2x1 arch, grate and counter, the 3x4 blighted tree placed in the blighted rooms, the tile spec marking what is delivered | "BARTGAME: the Drain and the blight from the tile atlases" |
 | BARTGAME: a tile spec for the artist: every tile placed in the wood, the mystery rooms and the Drain (117 entries, 328 tiles) with sizes, joins, frames, groups and the current art; the sprite spec points to it | "BARTGAME: a tile spec for the artist" |
 | BARTGAME: the eight illustrated sheets cut into the hero, folk, portraits, items, pickups, icons and shield; the Bloom at 64x32 with her sword and leaf shield drawn in, the load held over her, five more OBJ palettes, the art spec updated | "BARTGAME: the illustrated sprites in, the Bloom at 64x32" |
 | BARTGAME: the fixed sprite pack in as delivered: every sheet an exact strip, the pack's nine palette groups, folk at 16x32 again, the hub's own folk32, the pack's HUD with lettered badges in both builds | "BARTGAME: the fixed sprite pack, its HUD in both builds" |

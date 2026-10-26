@@ -34,7 +34,7 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 SRC_IWRAM := $(wildcard src/*_iwram.c)
 SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
-ART       := $(wildcard art/*.py) tools/build_assets.py art/pack/pack.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png)
+ART       := $(wildcard art/*.py) tools/build_assets.py art/pack/pack.json art/tile_art/tiles.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \

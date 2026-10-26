@@ -17,6 +17,10 @@ LEGEND = {
     'CC': 'sw_counter', 'A1': 'sw_awning_l', 'A2': 'sw_awning_r',
     'BB': 'sw_barrel', 'CR': 'sw_crate', 'SK': 'sw_skull', 'GD': 'sw_gold', 'CN': 'sw_candles',
     'RR': 'sw_rubble', 'AA': 'sw_arch', 'ST': 'stairs_down', 'PT': 'sw_pot',
+    # the atlas's wider pieces: the arch's and the grate's right halves, the
+    # counter's, the waterfall three by two
+    'AR': 'sw_arch_r', 'GR': 'sw_grate_r', 'CS': 'sw_counter_r',
+    'F1': 'sw_fall_0', 'F2': 'sw_fall_1', 'F3': 'sw_fall_2', 'F4': 'sw_fall_3', 'F5': 'sw_fall_4', 'F6': 'sw_fall_5',
     # grime: stained, cracked, mossed slabs, a puddle, bones, fungus, a drip
     'gr': 'sw_floor_grime', 'g2': 'sw_floor_grime2', 'cr': 'sw_floor_crack', 'c2': 'sw_floor_crack2',
     'ms': 'sw_floor_moss', 'm2': 'sw_floor_moss2', 'pd': 'sw_floor_puddle', 'bn': 'sw_floor_bones',
@@ -77,23 +81,23 @@ def expand(rows, w, h, mt_names):
 # and the rug, so nothing on the open floor looks like a thing to pick up.
 room('sewer_main', '''
 TTTTTMTTTTTMTTTTTTTMTTTTTTTTTMTTTTTTTTTTTMTTTTTTTMTTTTTMTTTT
-W1CHPPWDWCLNWMBTFUHHRUWNWFWFWFWDTABRWMLNSUCHPHPHPHWCttFUWDW2
-WWTAWWWSWCWWFUWWRU..WWWWWFWFWFWWTAWWWCWWWWFUWWWWWWWSWWTAWDWW
+W1CHPPWDWCLNWMBTFUHHRUWNF1F2F3WDTABRWMLNSUCHPHPHPHWCttFUWDW2
+WWTAWWWSWCWWFUWWRU..WWWWF4F5F6WWTAWWWCWWWWFUWWWWWWWSWWTAWDWW
 sh,,A1A2A1A2..gr..,,cr;;~g~b~gdp,,..;;..g2..;;..,,BB..msdpbn
-,,CRCCCCCCCCcr,,GD..,,..ESESES..gr..m2BB..R1R2..CN..c2..;;..
+,,CRCCCSCCCScr,,GD..,,..ESESES..gr..m2BB..R1R2..CN..c2..;;..
 ;;SK..PT..g2,,..ms..,,..;;..,,cr,,..;;..,,R3R4..gr..;;pd,,PT
 ..c2..;;gr,,CN..,,m2;;..,,..;;..;;g2,,..cr..ms..CR..,,..;;..
 ,,..;;ms,,..;;..,,RR..,,gr;;..c2..;;..,,..m2..,,..gr..,,crsh
-WEWEWEEMWEWEWEWEWEEMWEWEWEWEGGGGWEWEWEEMWEWEWEWEEMWEWEWEWEWE
-~s~~LP~~~g~~~~~b~~LP~~~~~s~~GGGG~~~g~~~~LP~~~b~~~~~s~~~~LP~g
-~~~~~g~~~~LP~~~~~s~~~~~b~~~~GGGG~~~s~~~~~g~~~~LP~~~~~b~~~s~~
-ESESESESESSMESESESESESESSMESGGGGESESESESSMESESESESESESSMESES
+WEWEWEEMWEWEWEWEWEEMWEWEWEWEGGGRWEWEWEEMWEWEWEWEEMWEWEWEWEWE
+~s~~LP~~~g~~~~~b~~LP~~~~~s~~GGGR~~~g~~~~LP~~~b~~~~~s~~~~LP~g
+~~~~~g~~~~LP~~~~~s~~~~~b~~~~GGGR~~~s~~~~~g~~~~LP~~~~~b~~~s~~
+ESESESESESSMESESESESESESSMESGGGRESESESESSMESESESESESESSMESES
 ..pd..;;..,,..;;c2,,..ms..,,..g2..,,cr;;..,,..;;..,,..;;m2,,
 ,,..cr..,,GD..;;..CNms;;D1D2gr,,PT;;..c2..;;g2,,..;;RR..pd..
 WELDEMWE..ms..;;gr,,..;;D3D4..c2..,,m2;;..,,..;;WEEMWELDWE..
 ~~~s~~~gbng2;;..,,..;;..,,..;;ms,,..cr..,,SKbn,,~~~b~~~s~~..
 ~g~~~b~~sh;;..ms..;;..gr..;;..,,..g2..dp..;;c2sh~s~~~g~~~b,,
-WWCHWWWCWWFUttWWTAWWWMWWWWWWAAWWRUWWWWWDWWWWFUttWWWCWWCHWWWW
+WWCHWWWCWWFUttWWTAWWWMWWWWWWAAARRUWWWWWDWWWWFUttWWWCWWCHWWWW
 ''', overlay='''
                                                             
                 *2      *2                    *1            

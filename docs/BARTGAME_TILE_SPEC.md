@@ -1,8 +1,10 @@
 # BARTGAME tile specification
 
-Every background tile the game draws in the wood, its mystery rooms and the Drain: what each one is, where it goes, what it must join, and how to deliver it. Written so an artist or an art-generating model can redraw the set without reading the code. The pictures show the tiles in the game now, which this delivery replaces. Use them for size, layout and joins, not for style.
+Every background tile the game draws in the wood, its mystery rooms and the Drain: what each one is, where it goes, what it must join, and how to deliver it. Written so an artist or an art-generating model can redraw the set without reading the code. The pictures show the tiles in the game now. Use them for size, layout and joins, not for style.
 
-117 entries, 328 tiles: 232 in the wood, 27 in the mystery rooms, 69 in the Drain. The pictures are in `tile_spec/`, one per entry (the current art at 3x, frames as rows), with room views in `tile_spec/rooms/`.
+**Status.** The Drain and the blight of the wood are delivered: the entries marked delivered show their new art as the game draws it. Still to draw: the living wood (its ground, edges, water, canopy, trees, things on the grass, cliffs and gates) and the mystery rooms. 53 of 117 entries (106 of 342 tiles) are delivered.
+
+117 entries, 342 tiles: 238 in the wood, 27 in the mystery rooms, 77 in the Drain. The pictures are in `tile_spec/`, one per entry (the current art at 3x, frames as rows), with room views in `tile_spec/rooms/`.
 
 ## 1. How the screen is built
 
@@ -16,8 +18,8 @@ Every background tile the game draws in the wood, its mystery rooms and the Drai
 ## 2. Hard rules (Game Boy Advance)
 
 - **Colour.** 4 bits a pixel: each palette group has 15 colours plus transparent. All 256 pixels of one tile come from one group. Where a tile shows two materials (a shore with grass and sand, a trunk with grass and bark), both must be in its group.
-- **Palette budget.** The wood may use up to 6 groups, the mystery rooms 2 of their own (they also see the wood's 6), the Drain 4. That is 12 of the 16 background palettes; the HUD, the pause menu and the text keep the other 4. Suggested groups are listed below; regroup freely within each area's count.
-- **Piece budget.** Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is 232 tiles for the wood (928 pieces), 27 for the mystery rooms and 69 for the Drain, so there is room for some reuse but not for many more variants. Animation frames beyond the first do not count.
+- **Palette budget.** The game has 14 background palettes for tiles and the HUD; the HUD and the pause menu keep 2 and the text 2 more of the 16. The delivered Drain uses 3, the blight 4 and the glints 1, so the living wood and the mystery rooms have 4 between them: the four wood groups below, the mystery rooms drawn in their colours. If that is too few, say so: the game can load palettes per area, which would give each area its own.
+- **Piece budget.** Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is 238 tiles for the wood (952 pieces), 27 for the mystery rooms and 77 for the Drain, so there is room for some reuse but not for many more variants. Animation frames beyond the first do not count.
 - **Pixels.** Exact sizes. No anti-aliasing, no partial transparency, no gradients finer than the palette. Every pixel is a palette colour or fully transparent.
 - **Style.** After the four BARTGAME style boards: "grime and glamour". Three tones per material plus a highlight; a dark outline on objects that stand up from the ground (rocks, props, trunks), none on flat ground textures. Detail should be rich but quiet: the ground is a backdrop for the sprites, so keep its contrast lower than theirs, and keep bright specks for things the player should notice.
 
@@ -26,17 +28,17 @@ Every background tile the game draws in the wood, its mystery rooms and the Drai
 | Group | Area | What goes in it |
 |---|---|---|
 | `wood_ground` | The wood | grass in all its variants, flowers, tall grass, bones, the trail, mossy flagstones, the meadow, clover and fairy ring, the trail edges, shores and verges, and the grass round tree trunks and roots (so a trunk tile needs its bark colours here too) |
-| `wood_leaf` | The wood | the canopy walls and their faces and crowns, tree crowns, bushes, stumps, logs, thorns, the lantern post |
+| `wood_leaf` | The wood | the canopy walls and their faces and crowns, tree crowns, bushes, stumps, logs, thorns, the lantern post; the hollow and the thicket |
 | `wood_water` | The wood | water, its banks, nicks and lilies, rafts, falls and foam, and the bridges |
-| `wood_stone` | The wood | rocks, boulders, cliffs, pillars, the ruined wall, the statue, pits, the gates, chests, censers, the stairs, the mystery mouths |
-| `wood_blight` | The wood | everything of the blight: its grounds, trail, pools, crystals, dead trees, walls, the sick canopy, the blighted tree, the mist |
-| `wood_spare` | The wood | free: give it to whatever needs more colours (the great trees, the flowers, the sparkles) |
-| `myst_cave` | The mystery rooms | the cave and the objects every mystery room shares (plates, pots, the chest, the spring) |
-| `myst_wood` | The mystery rooms | the hollow and the thicket |
-| `drain_stone` | The Drain | floors and their marks, walls, wall tops, pipes, the hole, the arch, rubble, the banks |
-| `drain_water` | The Drain | water, scum, bubbles, glints, lilies, the waterfall, the grate, the ladder |
-| `drain_props` | The Drain | the stall, the rug, barrels, crates, skull, pot, gold, candles, banners, the lantern, the torch |
-| `drain_spare` | The Drain | free: glows, fungus and glints, or whatever needs more colours |
+| `wood_stone` | The wood | rocks, boulders, cliffs, pillars, the ruined wall, the statue, pits, the gates, chests, censers, the stairs, the mystery mouths; the cave and the mystery rooms' plates, pots, chest and spring |
+| `blight_canopy` | The wood | done: the sick canopy, plain and lit |
+| `blight_ground` | The wood | done: the sick rooms' blighted grass |
+| `blight_floor` | The wood | done: the blighted rooms' floors, pits, veins, pools and mist |
+| `blight_growth` | The wood | done: the blight's walls, crystals, dead trees and the blighted tree |
+| `glints` | The wood | done: the wood's gold and white sparkles, the Drain's glints and its glowing fungus |
+| `drain_stone` | The Drain | done: floors and their marks, walls, wall tops, the hole, the arch, the banks, the drain |
+| `drain_water` | The Drain | done: water and its marks, bubbles, the waterfall, the grate, the ladder, the teal banner |
+| `drain_props` | The Drain | done: the stall, the rug, barrels, crates, skull, pot, gold, rubble, candles, pipes, the red banner, the lantern, the torch |
 
 ## 3. Delivery
 
@@ -106,8 +108,8 @@ The wood's walls: the border of every room and the masses between its clearings.
 | ![](tile_spec/canopy_lantern.png) **Canopy, lantern** | `wood_leaf/canopy_lantern.png` 16x32 | 16x16 | ground | 2 frames, each shown 10/60 s | solid | Canopy with a small amber lantern hung in the leaves above a way; its glow flickers. | Matches canopy on every edge. |
 | ![](tile_spec/canopy_face.png) **Canopy face** | `wood_leaf/canopy_face.png` 16x16 | 16x16 | ground | still | solid | The wall's lower edge where ground or water lies below: the canopy above, trunks, roots and deep shadow at its foot. | Repeats left-right. Its top meets canopy; its bottom meets grass, the trail or water. |
 | ![](tile_spec/canopy_crown.png) **Canopy crown** | `wood_leaf/canopy_crown.png` 16x16 | 16x16 | ground | still | solid | The wall's upper edge where ground lies above it: the lit, rounded tops of the leaf mass. | Repeats left-right. Its bottom meets canopy; its top meets grass or the trail. |
-| ![](tile_spec/canopy_sick.png) **Canopy, sick** | `wood_blight/canopy_sick.png` 16x16 | 16x16 | ground | still | solid | Canopy gone sick: leaves dulled toward grey-violet, veins of violet, magenta tips. Mixed into the sick rooms' canopy and filling the blighted rooms' walls. | Tiles with itself and with canopy in every direction. |
-| ![](tile_spec/canopy_sick_lit.png) **Canopy, sick, lit** | `wood_blight/canopy_sick_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 18/60 s | solid | Sick canopy with veins of light in the leaves that pulse. | Matches sick canopy on every edge. |
+| ![](tile_spec/canopy_sick.png) **Canopy, sick** (delivered) | `blight_canopy/canopy_sick.png` 16x16 | 16x16 | ground | still | solid | Canopy gone sick: leaves dulled toward grey-violet, veins of violet, magenta tips. Mixed into the sick rooms' canopy and filling the blighted rooms' walls. | Tiles with itself and with canopy in every direction. |
+| ![](tile_spec/canopy_sick_lit.png) **Canopy, sick, lit** (delivered) | `blight_canopy/canopy_sick_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 18/60 s | solid | Sick canopy with veins of light in the leaves that pulse. | Matches sick canopy on every edge. |
 
 ### Trees
 
@@ -119,7 +121,7 @@ A tree's crown is on the overlay, drawn over the Bloom so she walks behind it, a
 | ![](tile_spec/tree_lantern.png) **Oak with a lantern** | `wood_leaf/tree_lantern.png` 32x48 | 32x48 (2 by 3 tiles) | crown on the overlay, trunk on the ground | still | trunk row: bottom half | The oak of another shape, an amber lantern hung in its crown. One tree in three. | As the oak. |
 | ![](tile_spec/great_tree.png) **Great tree** | `wood_leaf/great_tree.png` 48x64 | 48x64 (3 by 4 tiles) | crown on the overlay, trunk on the ground | still | middle root: bottom half | A great tree, 48x64: a crown 48x48 on the top three rows, a thick trunk with a dark hollow in the middle of the bottom row, roots spreading over three tiles of grass. | Crown: overlay, transparent outside the leaves; it may overhang the canopy behind. Roots: ground on grass. |
 | ![](tile_spec/great_tree_2.png) **Great tree, lopsided** | `wood_leaf/great_tree_2.png` 48x64 | 48x64 (3 by 4 tiles) | crown on the overlay, trunk on the ground | still | middle root: bottom half | A second great tree: lopsided, a lantern on its low branch, a knot in the trunk. | As the great tree. |
-| ![](tile_spec/blight_tree.png) **Blighted tree** | `wood_blight/blight_tree.png` 32x48 | 32x48 (2 by 3 tiles) | crown on the overlay, trunk on the ground | still | trunk row: bottom half | The blighted rooms' tree, 32x48: a black twisted trunk, bare branches clawing up, magenta veins of light, glow at the tips. | Branches: overlay, transparent between them. Trunk tiles: ground on blight ground. |
+| ![](tile_spec/blight_tree.png) **Blighted tree** (delivered) | `blight_growth/blight_tree.png` 48x64 | 48x64 (3 by 4 tiles) | crown on the overlay, trunk on the ground | still | middle root: bottom half | The blighted rooms' tree, 48x64 like the great trees: a black twisted trunk, bare branches clawing up, magenta veins of light, glow at the tips. | Branches: overlay, transparent between them. Roots: ground on blight floor. |
 
 ### On the grass
 
@@ -173,16 +175,16 @@ The wood sickens toward its heart. The sick rooms are stained grass under a cano
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/blight_ground.png) **Blighted grass** | `wood_blight/blight_ground.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | The sick rooms' grass: stained violet and dulled, split by a few faint cracks. Two variants laid at random. | Each tiles with itself and the other in every direction. |
-| ![](tile_spec/blight_ground_lit.png) **Blighted grass, lit** | `wood_blight/blight_ground_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 12/60 s | walkable | The same with a crack of light that pulses. | Matches blighted grass on every edge. |
-| ![](tile_spec/blight_floor.png) **Blight floor** | `wood_blight/blight_floor.png` 16x16 | 16x16 | ground | still | walkable | The blighted rooms' floor: purple through and through, a texture of rot. | Tiles in every direction and with the pitted floor. |
-| ![](tile_spec/blight_floor_pits.png) **Blight floor, pitted** | `wood_blight/blight_floor_pits.png` 16x32 | 16x16 | ground | 2 frames, each shown 20/60 s | walkable | Dark purple, pits of black, a few short seams of light that pulse. | Matches the blight floor on every edge. |
-| ![](tile_spec/blight_vein.png) **Blight vein** | `wood_blight/blight_vein.png` 16x32 | 16x16 | ground | 2 frames, each shown 12/60 s | walkable | The blighted rooms' trail: a vein of glowing magenta through the purple, the lanes in from the doors. | Tiles in every direction; it meets blight floors without an edge tile. |
-| ![](tile_spec/blight_pool.png) **Blight pool** | `wood_blight/blight_pool.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | walkable, hurts | A pool of glowing blight that burns to stand in. | Its edges meet blight floors. |
-| ![](tile_spec/crystal.png) **Blight crystals** | `wood_blight/crystal.png` 16x16 | 16x16 | ground | still | solid | A cluster of violet crystals grown out of the ground, glowing at the tips. |  |
-| ![](tile_spec/dead_tree.png) **Dead tree** | `wood_blight/dead_tree.png` 16x16 | 16x16 | ground | still | bottom half | A small dead tree, black and twisted, on blight ground. |  |
-| ![](tile_spec/blight_wall.png) **Blight wall** | `wood_blight/blight_wall.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | The blighted rooms' wall face where ground lies below: old stone blocks, violet light climbing them from the ground. Two variants. | Repeats left-right with either variant. Its top meets sick canopy; its bottom meets blight floors. |
-| ![](tile_spec/blight_wall_lit.png) **Blight wall, crystal** | `wood_blight/blight_wall_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | solid | The wall face with a crystal set in it, glowing. | Matches the blight wall on every edge. |
+| ![](tile_spec/blight_ground.png) **Blighted grass** (delivered) | `blight_ground/blight_ground.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | The sick rooms' grass: stained violet and dulled, split by a few faint cracks. Two variants laid at random. | Each tiles with itself and the other in every direction. |
+| ![](tile_spec/blight_ground_lit.png) **Blighted grass, lit** (delivered) | `blight_ground/blight_ground_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 12/60 s | walkable | The same with a crack of light that pulses. | Matches blighted grass on every edge. |
+| ![](tile_spec/blight_floor.png) **Blight floor** (delivered) | `blight_floor/blight_floor.png` 16x16 | 16x16 | ground | still | walkable | The blighted rooms' floor: purple through and through, a texture of rot. | Tiles in every direction and with the pitted floor. |
+| ![](tile_spec/blight_floor_pits.png) **Blight floor, pitted** (delivered) | `blight_floor/blight_floor_pits.png` 16x32 | 16x16 | ground | 2 frames, each shown 20/60 s | walkable | Dark purple, pits of black, a few short seams of light that pulse. | Matches the blight floor on every edge. |
+| ![](tile_spec/blight_vein.png) **Blight vein** (delivered) | `blight_floor/blight_vein.png` 16x32 | 16x16 | ground | 2 frames, each shown 12/60 s | walkable | The blighted rooms' trail: a vein of glowing magenta through the purple, the lanes in from the doors. | Tiles in every direction; it meets blight floors without an edge tile. |
+| ![](tile_spec/blight_pool.png) **Blight pool** (delivered) | `blight_floor/blight_pool.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | walkable, hurts | A pool of glowing blight that burns to stand in. | Its edges meet blight floors. |
+| ![](tile_spec/crystal.png) **Blight crystals** (delivered) | `blight_growth/crystal.png` 16x16 | 16x16 | ground | still | solid | A cluster of violet crystals grown out of the ground, glowing at the tips. |  |
+| ![](tile_spec/dead_tree.png) **Dead tree** (delivered) | `blight_growth/dead_tree.png` 16x16 | 16x16 | ground | still | bottom half | A small dead tree, black and twisted, on blight ground. |  |
+| ![](tile_spec/blight_wall.png) **Blight wall** (delivered) | `blight_growth/blight_wall.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | The blighted rooms' wall face where ground lies below: old stone blocks, violet light climbing them from the ground. Two variants. | Repeats left-right with either variant. Its top meets sick canopy; its bottom meets blight floors. |
+| ![](tile_spec/blight_wall_lit.png) **Blight wall, crystal** (delivered) | `blight_growth/blight_wall_lit.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | solid | The wall face with a crystal set in it, glowing. | Matches the blight wall on every edge. |
 
 ### On the overlay
 
@@ -190,9 +192,9 @@ Drawn over the ground and over the sprites, transparent outside the drawing. Kee
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/sparkle.png) **Gold sparkle** | `wood_spare/sparkle.png` 16x48 | 16x16 | overlay (over the sprites) | 3 frames, each shown 14/60 s | walkable | A gold glint that winks: marks a hidden hoard, the relic and the shrine, and lies on the floor here and there. |  |
-| ![](tile_spec/sparkle_white.png) **White stars** | `wood_spare/sparkle_white.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 16/60 s | walkable | Two small white four-point stars that wink, over the living rooms' floors. |  |
-| ![](tile_spec/mist.png) **Blight mist** | `wood_blight/mist.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 16/60 s | walkable | Sparse violet motes of mist drifting over the blighted rooms. |  |
+| ![](tile_spec/sparkle.png) **Gold sparkle** (delivered) | `glints/sparkle.png` 16x48 | 16x16 | overlay (over the sprites) | 3 frames, each shown 14/60 s | walkable | A gold glint that winks: marks a hidden hoard, the relic and the shrine, and lies on the floor here and there. |  |
+| ![](tile_spec/sparkle_white.png) **White stars** (delivered) | `glints/sparkle_white.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 16/60 s | walkable | Two small white four-point stars that wink, over the living rooms' floors. |  |
+| ![](tile_spec/mist.png) **Blight mist** (delivered) | `blight_floor/mist.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 16/60 s | walkable | Sparse violet motes of mist drifting over the blighted rooms. |  |
 
 ## 5. The mystery rooms
 
@@ -206,9 +208,9 @@ Behind each mouth in the wood: a damp cave, the hollow of a tree, a thicket of b
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/cave.png) **Cave** | `myst_cave/cave.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, stalagmite: solid | Lumps of wet rock for the mass; a face of blocks dripping moss; a stone floor with puddles that catch the light (the variant one tile in four); a stalagmite; pale glowing fungus; the way out, a gap in the rock with daylight beyond. | Mass tiles in every direction. The face repeats left-right, its top meeting the mass. Floors tile with each other. The way out is used twice side by side. |
-| ![](tile_spec/hollow.png) **Hollow** | `myst_wood/hollow.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, knot: solid | Bark grain for the mass; the rings of the heartwood as the face; a floor of wood chips and root; a knot; a shelf of amber fungus; the way out. | As the cave. |
-| ![](tile_spec/thicket.png) **Thicket** | `myst_wood/thicket.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, stump: solid | A bramble mass barbed with magenta; a face of stems and leaves; turf under leaf litter; a stump; berries that glow; the way out. | As the cave. The censers, boulders and grass of the wood also stand here. |
+| ![](tile_spec/cave.png) **Cave** | `wood_stone/cave.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, stalagmite: solid | Lumps of wet rock for the mass; a face of blocks dripping moss; a stone floor with puddles that catch the light (the variant one tile in four); a stalagmite; pale glowing fungus; the way out, a gap in the rock with daylight beyond. | Mass tiles in every direction. The face repeats left-right, its top meeting the mass. Floors tile with each other. The way out is used twice side by side. |
+| ![](tile_spec/hollow.png) **Hollow** | `wood_leaf/hollow.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, knot: solid | Bark grain for the mass; the rings of the heartwood as the face; a floor of wood chips and root; a knot; a shelf of amber fungus; the way out. | As the cave. |
+| ![](tile_spec/thicket.png) **Thicket** | `wood_leaf/thicket.png` 112x16 | 7 tiles, 16x16 each | ground | still | mass, face, stump: solid | A bramble mass barbed with magenta; a face of stems and leaves; turf under leaf litter; a stump; berries that glow; the way out. | As the cave. The censers, boulders and grass of the wood also stand here. |
 
 ### Things in every room
 
@@ -216,10 +218,10 @@ Drawn on the overlay over any style's floor, transparent round the drawing. One 
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/plate.png) **Stone plate** | `myst_cave/plate.png` 32x16 | 2 tiles, 16x16 each | overlay (over the sprites) | still | walkable | A round stone plate set in the floor, raised; then pressed down and lit. | Keep it low and flat: the Bloom stands on it. |
-| ![](tile_spec/pot.png) **Pot** | `myst_cave/pot.png` 16x16 | 16x16 | overlay (over the sprites) | still | walkable | A clay pot, lifted or smashed; one in six holds a prize. | Must match the carried pot in the sprite spec. |
-| ![](tile_spec/room_chest.png) **Chest** | `myst_cave/room_chest.png` 32x16 | 2 tiles, 16x16 each | overlay (over the sprites) | still | walkable | A chest, closed and then open. |  |
-| ![](tile_spec/spring.png) **Fairy spring** | `myst_cave/spring.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 12/60 s | walkable | A small spring of glowing water in a stone ring that fills the hearts. |  |
+| ![](tile_spec/plate.png) **Stone plate** | `wood_stone/plate.png` 32x16 | 2 tiles, 16x16 each | overlay (over the sprites) | still | walkable | A round stone plate set in the floor, raised; then pressed down and lit. | Keep it low and flat: the Bloom stands on it. |
+| ![](tile_spec/pot.png) **Pot** | `wood_stone/pot.png` 16x16 | 16x16 | overlay (over the sprites) | still | walkable | A clay pot, lifted or smashed; one in six holds a prize. | Must match the carried pot in the sprite spec. |
+| ![](tile_spec/room_chest.png) **Chest** | `wood_stone/room_chest.png` 32x16 | 2 tiles, 16x16 each | overlay (over the sprites) | still | walkable | A chest, closed and then open. |  |
+| ![](tile_spec/spring.png) **Fairy spring** | `wood_stone/spring.png` 16x32 | 16x16 | overlay (over the sprites) | 2 frames, each shown 12/60 s | walkable | A small spring of glowing water in a stone ring that fills the hearts. |  |
 
 ## 6. The Drain
 
@@ -233,14 +235,14 @@ The hall's flagstones. Every floor tile tiles with every other in any arrangemen
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/d_floor.png) **Flagstones** | `drain_stone/d_floor.png` 48x16 | 3 tiles, 16x16 each | ground | still | walkable | Wet worn flagstones of greenish stone, dark joints between them: two cuts of slab, and a third with moss in the joints. |  |
-| ![](tile_spec/d_grime.png) **Grime** | `drain_stone/d_grime.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs with a dark stain of grime spread over them. |  |
-| ![](tile_spec/d_crack.png) **Cracked slabs** | `drain_stone/d_crack.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs split by a crack. |  |
-| ![](tile_spec/d_moss.png) **Mossy slabs** | `drain_stone/d_moss.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs with moss growing over them. |  |
-| ![](tile_spec/d_puddle.png) **Puddle** | `drain_stone/d_puddle.png` 16x32 | 16x16 | ground | 2 frames, each shown 24/60 s | walkable | A shallow puddle on the slabs with a slow ripple. |  |
-| ![](tile_spec/d_bones.png) **Bones** | `drain_stone/d_bones.png` 16x16 | 16x16 | ground | still | walkable | Bones on the slabs: a rib, a long bone, a jaw. |  |
-| ![](tile_spec/d_shroom.png) **Mushrooms** | `drain_stone/d_shroom.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | walkable | A cluster of small glowing mushrooms in a joint, the glow pulsing. |  |
-| ![](tile_spec/d_drip.png) **Drip** | `drain_stone/d_drip.png` 16x64 | 16x16 | ground | 4 frames, each shown 9/60 s | walkable | A wet spot where water drips from the vault: rings spread and fade. |  |
+| ![](tile_spec/d_floor.png) **Flagstones** (delivered) | `drain_stone/d_floor.png` 48x16 | 3 tiles, 16x16 each | ground | still | walkable | Wet worn flagstones of greenish stone, dark joints between them: two cuts of slab, and a third with moss in the joints. |  |
+| ![](tile_spec/d_grime.png) **Grime** (delivered) | `drain_stone/d_grime.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs with a dark stain of grime spread over them. |  |
+| ![](tile_spec/d_crack.png) **Cracked slabs** (delivered) | `drain_stone/d_crack.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs split by a crack. |  |
+| ![](tile_spec/d_moss.png) **Mossy slabs** (delivered) | `drain_stone/d_moss.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Slabs with moss growing over them. |  |
+| ![](tile_spec/d_puddle.png) **Puddle** (delivered) | `drain_water/d_puddle.png` 16x32 | 16x16 | ground | 2 frames, each shown 24/60 s | walkable | A shallow puddle on the slabs with a slow ripple. |  |
+| ![](tile_spec/d_bones.png) **Bones** (delivered) | `drain_stone/d_bones.png` 16x16 | 16x16 | ground | still | walkable | Bones on the slabs: a rib, a long bone, a jaw. |  |
+| ![](tile_spec/d_shroom.png) **Mushrooms** (delivered) | `drain_stone/d_shroom.png` 16x32 | 16x16 | ground | 2 frames, each shown 16/60 s | walkable | A cluster of small glowing mushrooms in a joint, the glow pulsing. |  |
+| ![](tile_spec/d_drip.png) **Drip** (delivered) | `drain_stone/d_drip.png` 16x64 | 16x16 | ground | 4 frames, each shown 9/60 s | walkable | A wet spot where water drips from the vault: rings spread and fade. |  |
 
 ### The walls
 
@@ -248,20 +250,20 @@ The back wall across the top of the hall is three rows: the wall's top course se
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/d_wall_top.png) **Wall top** | `drain_stone/d_wall_top.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | The top of the wall seen from above: heavy capstones; and with moss over them. | Repeats left-right; its bottom meets the brick face. |
-| ![](tile_spec/d_wall.png) **Brick face** | `drain_stone/d_wall.png` 16x16 | 16x16 | ground | still | solid | Old wet bricks, the hall's wall face. | Tiles left-right and up-down (the face is two rows tall). Every marked wall below matches it on every edge. |
-| ![](tile_spec/d_wall_marks.png) **Bricks, marked** | `drain_stone/d_wall_marks.png` 112x16 | 7 tiles, 16x16 each | ground | still | solid | The brick face with: green slime running down; a crack; moss; a hanging chain; scratched tally marks; a skull set in the bricks; a rust stain. | Each matches the plain face on every edge. |
-| ![](tile_spec/d_wall_drip.png) **Bricks, dripping** | `drain_stone/d_wall_drip.png` 16x64 | 16x16 | ground | 4 frames, each shown 7/60 s | solid | A wet streak down the bricks, a drop sliding down it and falling. |  |
-| ![](tile_spec/d_wall_web.png) **Bricks, cobweb** | `drain_stone/d_wall_web.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | A cobweb in the upper left corner; the same in the upper right. |  |
-| ![](tile_spec/d_wall_fungus.png) **Bricks, fungus** | `drain_spare/d_wall_fungus.png` 16x32 | 16x16 | ground | 2 frames, each shown 14/60 s | solid | Glowing fungus growing from the joints, the glow pulsing. |  |
-| ![](tile_spec/d_wall_window.png) **Barred window** | `drain_stone/d_wall_window.png` 16x32 | 16x16 | ground | 2 frames, each shown 22/60 s | solid | A small barred window in the bricks with a faint light beyond that wavers. |  |
-| ![](tile_spec/d_pipes.png) **Pipes** | `drain_stone/d_pipes.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | A rusted pipe mouth in the wall; a copper pipe running along the wall. | The run repeats left-right. |
-| ![](tile_spec/d_banners.png) **Banners** | `drain_props/d_banners.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | Banners hung on the bricks, teal and rust-red, a gold sigil on each. |  |
-| ![](tile_spec/d_lantern.png) **Lantern** | `drain_props/d_lantern.png` 16x32 | 16x16 | ground | 2 frames, each shown 10/60 s | solid | A lantern hung on the bricks, its glow flickering. |  |
-| ![](tile_spec/d_torch.png) **Wall torch** | `drain_props/d_torch.png` 16x32 | 16x16 | ground | 2 frames, each shown 6/60 s | solid | A torch burning in an iron sconce on the bricks. |  |
-| ![](tile_spec/d_hole.png) **The drain hole** | `drain_stone/d_hole.png` 16x16 | 16x16 | ground | still | the way out | A dark round opening in the back wall: the way up to the wood. |  |
-| ![](tile_spec/d_waterfall.png) **Waterfall** | `drain_water/d_waterfall.png` 16x32 | 16x16 | ground | 2 frames, each shown 4/60 s | solid | Water pouring out of the back wall into a basin, three tiles wide and two tall. | Tiles left-right and up-down; the frames scroll the water down so it loops fast. |
-| ![](tile_spec/d_arch.png) **Arch** | `drain_stone/d_arch.png` 16x16 | 16x16 | ground | still | top half | A dark low arch in the bottom wall. | Its sides meet the brick face. |
+| ![](tile_spec/d_wall_top.png) **Wall top** (delivered) | `drain_stone/d_wall_top.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | The top of the wall seen from above: heavy capstones; and with moss over them. | Repeats left-right; its bottom meets the brick face. |
+| ![](tile_spec/d_wall.png) **Brick face** (delivered) | `drain_stone/d_wall.png` 16x16 | 16x16 | ground | still | solid | Old wet bricks, the hall's wall face. | Tiles left-right and up-down (the face is two rows tall). Every marked wall below matches it on every edge. |
+| ![](tile_spec/d_wall_marks.png) **Bricks, marked** (delivered) | `drain_stone/d_wall_marks.png` 112x16 | 7 tiles, 16x16 each | ground | still | solid | The brick face with: green slime running down; a crack; moss; a hanging chain; scratched tally marks; a skull set in the bricks; a rust stain. | Each matches the plain face on every edge. |
+| ![](tile_spec/d_wall_drip.png) **Bricks, dripping** (delivered) | `drain_stone/d_wall_drip.png` 16x48 | 16x16 | ground | 3 frames, each shown 9/60 s | solid | A wet streak down the bricks, a drop sliding down it and falling. |  |
+| ![](tile_spec/d_wall_web.png) **Bricks, cobweb** (delivered) | `drain_stone/d_wall_web.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | A cobweb in the upper left corner; the same in the upper right. |  |
+| ![](tile_spec/d_wall_fungus.png) **Bricks, fungus** (delivered) | `glints/d_wall_fungus.png` 16x32 | 16x16 | ground | 2 frames, each shown 14/60 s | solid | Glowing fungus growing from the joints, the glow pulsing. |  |
+| ![](tile_spec/d_wall_window.png) **Barred window** (delivered) | `drain_stone/d_wall_window.png` 16x32 | 16x16 | ground | 2 frames, each shown 22/60 s | solid | A small barred window in the bricks with a faint light beyond that wavers. |  |
+| ![](tile_spec/d_pipes.png) **Pipes** (delivered) | `drain_props/d_pipes.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | A rusted pipe mouth in the wall; a copper pipe running along the wall. | The run repeats left-right. |
+| ![](tile_spec/d_banners.png) **Banners** (delivered) | `drain_water/d_banners.png` 32x16 | 2 tiles, 16x16 each | ground | still | solid | Banners hung on the bricks, teal and rust-red, a gold sigil on each. |  |
+| ![](tile_spec/d_lantern.png) **Lantern** (delivered) | `drain_props/d_lantern.png` 16x32 | 16x16 | ground | 2 frames, each shown 10/60 s | solid | A lantern hung on the bricks, its glow flickering. |  |
+| ![](tile_spec/d_torch.png) **Wall torch** (delivered) | `drain_props/d_torch.png` 16x32 | 16x16 | ground | 2 frames, each shown 6/60 s | solid | A torch burning in an iron sconce on the bricks. |  |
+| ![](tile_spec/d_hole.png) **The drain hole** (delivered) | `drain_stone/d_hole.png` 16x16 | 16x16 | ground | still | the way out | A dark round opening in the back wall: the way up to the wood. |  |
+| ![](tile_spec/d_waterfall.png) **Waterfall** (delivered) | `drain_water/d_waterfall.png` 48x64 | 48x32 (3 by 2 tiles) | ground | 2 frames, each shown 6/60 s | solid | Water pouring out of the back wall into a basin, 48x32: wall stones either side, the fall, its splash at the foot. | Its foot meets the basin's water below. |
+| ![](tile_spec/d_arch.png) **Arch** (delivered) | `drain_stone/d_arch.png` 32x16 | 32x16 (2 by 1 tiles) | ground | still | top half | A dark low arch in the bottom wall, 32x16. | Its sides meet the brick face. |
 
 ### The channel and the pools
 
@@ -269,13 +271,13 @@ A channel of dark water crosses the hall, and two pools lie in its lower corners
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/d_water.png) **Water** | `drain_water/d_water.png` 16x32 | 16x16 | ground | 2 frames, each shown 20/60 s | walkable | Dark teal sewer water with slow ripples. | Tiles in every direction in both frames. |
-| ![](tile_spec/d_water_marks.png) **Water, marked** | `drain_water/d_water_marks.png` 48x32 | 3 tiles, 16x16 each | ground | 2 frames, each shown 20/60 s | walkable | The water with: a skin of green scum; a glint of light; a lily pad. | Each matches plain water on every edge. The glint runs at 16, the others at 20. |
-| ![](tile_spec/d_bubble.png) **Bubbles** | `drain_water/d_bubble.png` 16x64 | 16x16 | ground | 4 frames, each shown 8/60 s | walkable | A bubble rising and popping. |  |
-| ![](tile_spec/d_bank_above.png) **Bank, water below** | `drain_stone/d_bank_above.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Flagstones with the stone lip of the channel along their bottom edge; and with moss over the lip. | Repeats left-right; its bottom meets water. |
-| ![](tile_spec/d_bank_below.png) **Bank, water above** | `drain_stone/d_bank_below.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Flagstones with the lip along their top edge; and with moss. | Repeats left-right; its top meets water. |
-| ![](tile_spec/d_grate.png) **Grate** | `drain_water/d_grate.png` 16x16 | 16x16 | ground | still | walkable | An iron grate over the channel, bars both ways, black water beneath: the way across. | Tiles in every direction (it is two wide and four tall). |
-| ![](tile_spec/d_ladder.png) **Ladder down** | `drain_water/d_ladder.png` 16x16 | 16x16 | ground | still | walkable | A ladder going down over the bank into a pool. | It stands in a row of bank tiles. |
+| ![](tile_spec/d_water.png) **Water** (delivered) | `drain_water/d_water.png` 16x32 | 16x16 | ground | 2 frames, each shown 20/60 s | walkable | Dark teal sewer water with slow ripples. | Tiles in every direction in both frames. |
+| ![](tile_spec/d_water_marks.png) **Water, marked** (delivered) | `drain_water/d_water_marks.png` 48x32 | 3 tiles, 16x16 each | ground | 2 frames, each shown 20/60 s | walkable | The water with: a skin of green scum; a glint of light; a lily pad. | Each matches plain water on every edge. The glint runs at 16, the others at 20. |
+| ![](tile_spec/d_bubble.png) **Bubbles** (delivered) | `drain_water/d_bubble.png` 16x64 | 16x16 | ground | 4 frames, each shown 8/60 s | walkable | A bubble rising and popping. |  |
+| ![](tile_spec/d_bank_above.png) **Bank, water below** (delivered) | `drain_stone/d_bank_above.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Flagstones with the stone lip of the channel along their bottom edge; and with moss over the lip. | Repeats left-right; its bottom meets water. |
+| ![](tile_spec/d_bank_below.png) **Bank, water above** (delivered) | `drain_stone/d_bank_below.png` 32x16 | 2 tiles, 16x16 each | ground | still | walkable | Flagstones with the lip along their top edge; and with moss. | Repeats left-right; its top meets water. |
+| ![](tile_spec/d_grate.png) **Grate** (delivered) | `drain_water/d_grate.png` 32x16 | 32x16 (2 by 1 tiles) | ground | still | walkable | An iron grate over the channel in a brass frame, 32x16, black water beneath: the way across. | Laid four high, so its top and bottom meet. |
+| ![](tile_spec/d_ladder.png) **Ladder down** (delivered) | `drain_water/d_ladder.png` 16x16 | 16x16 | ground | still | walkable | A ladder going down over the bank into a pool. | It stands in a row of bank tiles. |
 
 ### The stall, the rug and the clutter
 
@@ -283,13 +285,13 @@ The Peddler keeps a stall under a red awning on the left; the Gatekeeper stands 
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/d_drain.png) **The great drain** | `drain_stone/d_drain.png` 32x32 | 32x32 (2 by 2 tiles) | ground | still | walkable | A great round drain in the floor, 32x32: an iron ring, bars, darkness below. | Its outer edge is flagstone. |
-| ![](tile_spec/d_rug.png) **Rug** | `drain_props/d_rug.png` 32x32 | 32x32 (2 by 2 tiles) | ground | still | walkable | The Gatekeeper's rug, 32x32: violet with a gold border and a faint glow. | Its outer edge is flagstone. |
-| ![](tile_spec/d_awning.png) **Awning** | `drain_props/d_awning.png` 32x16 | 32x16 (2 by 1 tiles) | ground | still | solid | The stall's red awning, 32x16, scalloped hem, seen from above. | Laid twice side by side, so its ends meet. |
-| ![](tile_spec/d_counter.png) **Counter** | `drain_props/d_counter.png` 16x16 | 16x16 | ground | still | solid | The Peddler's counter: planks on a stone base, coins on it. | Repeats left-right (four long). |
-| ![](tile_spec/d_props.png) **Clutter** | `drain_props/d_props.png` 80x16 | 5 tiles, 16x16 each | ground | still | see what it is | Each on flagstones: a barrel; a crate; a skull; a little heap of gold coins; a heap of fallen stones. | Barrel, crate and rubble are solid; skull and gold are walked over. |
-| ![](tile_spec/d_pot.png) **Pot** | `drain_props/d_pot.png` 16x16 | 16x16 | ground | still | solid | A clay pot on flagstones, lifted or smashed. | Must match the carried pot in the sprite spec. |
-| ![](tile_spec/d_candles.png) **Candles** | `drain_props/d_candles.png` 16x32 | 16x16 | ground | 2 frames, each shown 7/60 s | solid | A cluster of candles on the floor, flames flickering, wax pooled. |  |
+| ![](tile_spec/d_drain.png) **The great drain** (delivered) | `drain_stone/d_drain.png` 32x32 | 32x32 (2 by 2 tiles) | ground | still | walkable | A great round drain in the floor, 32x32: an iron ring, bars, darkness below. | Its outer edge is flagstone. |
+| ![](tile_spec/d_rug.png) **Rug** (delivered) | `drain_props/d_rug.png` 32x32 | 32x32 (2 by 2 tiles) | ground | still | walkable | The Gatekeeper's rug, 32x32: violet with a gold border and a faint glow. | Its outer edge is flagstone. |
+| ![](tile_spec/d_awning.png) **Awning** (delivered) | `drain_props/d_awning.png` 32x16 | 32x16 (2 by 1 tiles) | ground | still | solid | The stall's red awning, 32x16, scalloped hem, seen from above. | Laid twice side by side, so its ends meet. |
+| ![](tile_spec/d_counter.png) **Counter** (delivered) | `drain_props/d_counter.png` 32x16 | 32x16 (2 by 1 tiles) | ground | still | solid | The Peddler's counter, 32x16: planks on a stone base, his wares on it, a banner hung on its front. | Laid twice side by side, so its ends meet. |
+| ![](tile_spec/d_props.png) **Clutter** (delivered) | `drain_props/d_props.png` 80x16 | 5 tiles, 16x16 each | ground | still | see what it is | Each on flagstones: a barrel; a crate; a skull; a little heap of gold coins; a heap of fallen stones. | Barrel, crate and rubble are solid; skull and gold are walked over. |
+| ![](tile_spec/d_pot.png) **Pot** (delivered) | `drain_props/d_pot.png` 16x16 | 16x16 | ground | still | solid | A clay pot on flagstones, lifted or smashed. | Must match the carried pot in the sprite spec. |
+| ![](tile_spec/d_candles.png) **Candles** (delivered) | `drain_props/d_candles.png` 16x32 | 16x16 | ground | 2 frames, each shown 7/60 s | solid | A cluster of candles on the floor, flames flickering, wax pooled. |  |
 
 ### On the overlay
 
@@ -297,7 +299,7 @@ Glints that wink over the water, the walls and the rug only, so nothing on the o
 
 | Entry | Key and file | Size | Layer | Frames | Solid | What it is | Joins |
 |---|---|---|---|---|---|---|---|
-| ![](tile_spec/d_glints.png) **Glints** | `drain_spare/d_glints.png` 48x48 | 3 tiles, 16x16 each | overlay (over the sprites) | 3 frames, each shown 12/60 s | walkable | Three small glints of light, each a different shape and speed. | Transparent but for the glint. Rates 12, 14 and 18. |
+| ![](tile_spec/d_glints.png) **Glints** (delivered) | `glints/d_glints.png` 48x48 | 3 tiles, 16x16 each | overlay (over the sprites) | 3 frames, each shown 12/60 s | walkable | Three small glints of light, each a different shape and speed. | Transparent but for the glint. Rates 12, 14 and 18. |
 
 ## 7. Sprites seen here
 

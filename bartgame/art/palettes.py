@@ -406,3 +406,20 @@ if PACK_TILES:
            for n in ('forest', 'wood', 'stone', 'cliff', 'blight', 'sewer', 'props')}
     BG_PALETTES = [(n, _pt.get(n, cols)) for n, cols in BOARD_BG_PALETTES]
     PACK_REMAP = {n: _remap(dict(BOARD_BG_PALETTES)[n], _pt[n]) for n in _pt}
+
+# The illustrated tile atlases (art/tile_art.py) bring palette groups of
+# their own, which take the place of the board palettes they replace;
+# TILE_ART_FROM keeps those, for the tiles still drawn in them.
+import tile_art as _ta  # noqa: E402
+TILE_ART_FROM = dict(BG_PALETTES)
+BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in _ta.RETIRE] + sorted(_ta.GROUPS.items())
+# A palette with the very colours of one before it shares that one's slot:
+# the boards gave the wood the forest's colours and the cliffs the stone's.
+# The metatiles drawn in it are moved over by tile_art.apply().
+MERGE = {}
+for _i, (_n, _c) in enumerate(BG_PALETTES):
+    for _m, _d in BG_PALETTES[:_i]:
+        if _d == _c and _m not in MERGE:
+            MERGE[_n] = _m
+            break
+BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in MERGE]

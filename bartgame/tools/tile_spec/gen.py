@@ -17,6 +17,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import spec_data as D  # noqa: E402
 
+# what has been delivered: an entry whose every tile the tile atlases
+# drew (art/tile_art/tiles.json), in the group it was imported in
+import json  # noqa: E402
+TILE_ART = json.load(open(os.path.join(HERE, '..', '..', 'art', 'tile_art', 'tiles.json')))['tiles']
+for _secs in (D.WOOD, D.MYST, D.DRAIN):
+    for _t, _i, _es in _secs:
+        for _e in _es:
+            _e['done'] = all(m in TILE_ART for m in _e['mts'])
+            if _e['done']:
+                _e['group'] = TILE_ART[_e['mts'][0]]['pal']
+
 IMG, CTX, PAGE, DOC, DOCIMG = sys.argv[1:6]
 os.makedirs(DOCIMG, exist_ok=True)
 AREAS = [('wood', 'The wood', D.WOOD), ('myst', 'The mystery rooms', D.MYST), ('drain', 'The Drain', D.DRAIN)]
@@ -89,14 +100,18 @@ def area_tiles(secs):
 
 
 COUNTS = {a: area_tiles(s) for a, _, s in AREAS}
+DONE_ENTRIES = sum(1 for _, _, s in AREAS for _, _, es in s for e in es if e['done'])
+DONE_TILES = sum(tiles_in(e) for _, _, s in AREAS for _, _, es in s for e in es if e['done'])
 TOTAL_ENTRIES = sum(len(es) for _, _, s in AREAS for _, _, es in s)
 TOTAL_TILES = sum(COUNTS.values())
 
 # ------------------------------------------------------------- shared prose
 INTRO = ('Every background tile the game draws in the wood, its mystery rooms and the Drain: what each one is, where it goes, '
          'what it must join, and how to deliver it. Written so an artist or an art-generating model can redraw the set without '
-         'reading the code. The pictures show the tiles in the game now, which this delivery replaces. Use them for size, '
-         'layout and joins, not for style.')
+         'reading the code. The pictures show the tiles in the game now. Use them for size, layout and joins, not for style.')
+STATUS = ('The Drain and the blight of the wood are delivered: the entries marked delivered show their new art as the game draws it. '
+          'Still to draw: the living wood (its ground, edges, water, canopy, trees, things on the grass, cliffs and gates) '
+          'and the mystery rooms.')
 
 SCREEN = [
     ('Tiles.', 'The world is built of 16x16 tiles. The screen shows 15 by 10 of them (240x160 pixels). The Bloom is 31 pixels tall, about two tiles; most monsters are one tile.'),
@@ -109,7 +124,7 @@ SCREEN = [
 
 RULES = [
     ('Colour.', '4 bits a pixel: each palette group has 15 colours plus transparent. All 256 pixels of one tile come from one group. Where a tile shows two materials (a shore with grass and sand, a trunk with grass and bark), both must be in its group.'),
-    ('Palette budget.', 'The wood may use up to 6 groups, the mystery rooms 2 of their own (they also see the wood\'s 6), the Drain 4. That is 12 of the 16 background palettes; the HUD, the pause menu and the text keep the other 4. Suggested groups are listed below; regroup freely within each area\'s count.'),
+    ('Palette budget.', 'The game has 14 background palettes for tiles and the HUD; the HUD and the pause menu keep 2 and the text 2 more of the 16. The delivered Drain uses 3, the blight 4 and the glints 1, so the living wood and the mystery rooms have 4 between them: the four wood groups below, the mystery rooms drawn in their colours. If that is too few, say so: the game can load palettes per area, which would give each area its own.'),
     ('Piece budget.', 'Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is %d tiles for the wood (%d pieces), %d for the mystery rooms and %d for the Drain, so there is room for some reuse but not for many more variants. Animation frames beyond the first do not count.' % (COUNTS['wood'], COUNTS['wood'] * 4, COUNTS['myst'], COUNTS['drain'])),
     ('Pixels.', 'Exact sizes. No anti-aliasing, no partial transparency, no gradients finer than the palette. Every pixel is a palette colour or fully transparent.'),
     ('Style.', 'After the four BARTGAME style boards: "grime and glamour". Three tones per material plus a highlight; a dark outline on objects that stand up from the ground (rocks, props, trunks), none on flat ground textures. Detail should be rich but quiet: the ground is a backdrop for the sprites, so keep its contrast lower than theirs, and keep bright specks for things the player should notice.'),
@@ -193,6 +208,7 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap }
 .facts dt { color: var(--muted) }
 .facts dd { margin: 0; min-width: 0 }
 .facts p { margin: 6px 0 0; font-size: 14.5px }
+.facts .done { font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); border: 1px solid var(--accent); border-radius: 3px; padding: 1px 6px; margin-left: 8px; vertical-align: 3px }
 .facts .order { font-family: var(--mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere }
 .note { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 12px 16px; margin: 14px 0 20px; max-width: 72ch }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto } }
@@ -208,6 +224,8 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap }
     w('</nav><main>')
     w('<h1>BARTGAME tile specification</h1>')
     w('<p class="lede">%s</p>' % esc(INTRO))
+    w('<div class="note"><p><span class="k">Status.</span> %s</p></div>' % esc(STATUS))
+    w('<div class="tally"><span><b>%d</b> of %d entries delivered</span><span><b>%d</b> of %d tiles</span></div>' % (DONE_ENTRIES, TOTAL_ENTRIES, DONE_TILES, TOTAL_TILES))
     w('<div class="tally"><span><b>%d</b> entries</span><span><b>%d</b> tiles</span><span><b>%d</b> in the wood</span><span><b>%d</b> in the mystery rooms</span><span><b>%d</b> in the Drain</span></div>'
       % (TOTAL_ENTRIES, TOTAL_TILES, COUNTS['wood'], COUNTS['myst'], COUNTS['drain']))
 
@@ -252,7 +270,7 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap }
                 cur = e.get('current_frames', 1)
                 note = '' if cur == e['frames'] else '<small>now %d frame%s; wanted %d</small>' % (cur, '' if cur == 1 else 's', e['frames'])
                 w('<div class="pic"><img src="%s" width="%d" height="%d" alt="%s, current art">%s</div>' % (data_uri(ipath), iw * k, ih * k, esc(e['title']), note))
-                w('<div class="facts"><h4>%s</h4><span class="key">%s/%s.png</span>' % (esc(e['title']), e['group'], e['key']))
+                w('<div class="facts"><h4>%s%s</h4><span class="key">%s/%s.png</span>' % (esc(e['title']), ' <span class="done">Delivered</span>' if e['done'] else '', e['group'], e['key']))
                 w('<dl><dt>Size</dt><dd>%s</dd><dt>File</dt><dd>%s</dd><dt>Layer</dt><dd>%s</dd><dt>Frames</dt><dd>%s</dd><dt>Solid</dt><dd>%s</dd></dl>'
                   % (size_text(e), file_text(e), LAYER[e['layer']], frames_text(e), esc(e['solid'])))
                 w('<p>%s</p>' % esc(e['what']))
@@ -285,6 +303,7 @@ def doc():
     w = out.append
     w('# BARTGAME tile specification\n')
     w(INTRO + '\n')
+    w('**Status.** ' + STATUS + ' %d of %d entries (%d of %d tiles) are delivered.\n' % (DONE_ENTRIES, TOTAL_ENTRIES, DONE_TILES, TOTAL_TILES))
     w('%d entries, %d tiles: %d in the wood, %d in the mystery rooms, %d in the Drain. The pictures are in `tile_spec/`, one per entry (the current art at 3x, frames as rows), with room views in `tile_spec/rooms/`.\n'
       % (TOTAL_ENTRIES, TOTAL_TILES, COUNTS['wood'], COUNTS['myst'], COUNTS['drain']))
     w('## 1. How the screen is built\n')
@@ -319,8 +338,8 @@ def doc():
                 joins = e['needs']
                 if order_text(e):
                     joins = (joins + ' ' if joins else '') + 'Order: ' + order_text(e) + '.'
-                w('| ![](tile_spec/%s.png) **%s** | `%s/%s.png` %s | %s | %s | %s | %s | %s | %s |' % (
-                    e['key'], e['title'], e['group'], e['key'], file_text(e), size_text(e), LAYER[e['layer']],
+                w('| ![](tile_spec/%s.png) **%s**%s | `%s/%s.png` %s | %s | %s | %s | %s | %s | %s |' % (
+                    e['key'], e['title'], ' (delivered)' if e['done'] else '', e['group'], e['key'], file_text(e), size_text(e), LAYER[e['layer']],
                     frames_text(e), e['solid'], md_escape_cell(e['what']), md_escape_cell(joins)))
             w('')
     w('## %d. Sprites seen here\n' % n)

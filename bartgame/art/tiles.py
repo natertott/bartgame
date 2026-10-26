@@ -2012,42 +2012,16 @@ mt('gtree2_10', 'forest', 'SOLID', compose(_root_c, slice16(_gtree2, 1, 3)), col
 mt('gtree2_11', 'forest', 'FLOOR', compose(_root_e, slice16(_gtree2, 2, 3)))
 
 
-# the blight's dead tree, 2x3: a black twisted trunk, bare branches
-# clawing up, veins of magenta light, glow at the tips
-def btree_art():
-    c = Canvas(32, 48)
-    # trunk
-    for y in range(22, 46):
-        w = 3 + (46 - y) // 8
-        x0 = 16 - w // 2 + ((y // 5) % 2)
-        c.hline(x0 - w // 2, x0 + w // 2 + 1, y, 9)
-        c.set(x0 - w // 2, y, 8)
-        c.set(x0 + w // 2 + 1, y, 0xa)
-    # branches: (from, to) pairs
-    for x0, y0, x1, y1 in ((16, 24, 4, 6), (17, 22, 26, 2), (15, 28, 2, 18), (18, 26, 30, 14), (16, 24, 14, 4),
-                           (6, 10, 1, 1), (24, 8, 31, 5), (4, 16, 0, 20)):
-        n = max(abs(x1 - x0), abs(y1 - y0))
-        for k in range(n + 1):
-            x = x0 + (x1 - x0) * k // n
-            y = y0 + (y1 - y0) * k // n
-            c.set(x, y, 9)
-            if k < n * 2 // 3:
-                c.set(x + 1, y, 0xa)
-    # roots
-    c.hline(6, 13, 45, 9); c.hline(3, 9, 46, 8); c.hline(19, 27, 45, 9); c.hline(23, 29, 46, 8)
-    c.outline(1)
-    # veins and glow
-    for x, y in ((16, 30), (16, 34), (15, 38), (17, 42), (12, 16), (21, 12), (8, 22), (26, 18)):
-        c.set(x, y, 6)
-    for x, y in ((4, 6), (26, 2), (2, 18), (30, 14), (14, 4), (1, 1), (31, 5), (0, 20)):
-        c.set(x, y, 7)
-    return c.rows()
-
-
-_btree = btree_art()
 _bground = marks(BL, [(BL_PATCH, 2, 10), (A('2'), 13, 8), (A('5'), 6, 14)])
 _bground2 = marks(BL, [(BL_PATCH, 9, 11), (A('2'), 3, 9), (A('5'), 12, 13)])
-tree_piece('btree', _btree, 'blight', 'blight', _bground, _bground2)
+# the blighted tree, 3x4 like the great trees: its crown on the overlay
+# over whatever is behind, its roots on blight ground, the middle one
+# solid at the foot. Its art is the tile atlas's (art/tile_art.py).
+for _i in range(9):
+    mt('btree_%d' % _i, 'blight', 'FLOOR', flat(0))
+mt('btree_9', 'blight', 'FLOOR', _bground)
+mt('btree_10', 'blight', 'SOLID', _bground2, coll=3)
+mt('btree_11', 'blight', 'FLOOR', _bground)
 
 # ---------------------------------------------------------------- blight --
 # the deep rooms' floor: dark purple, pits of black, a few short seams of
@@ -4139,6 +4113,15 @@ _gl3 = [star(_blank16, 8, 7, False), star(_blank16, 8, 7), ['................'] 
 mt('sw_glint3', 'sewer', 'FLOOR', frames=_gl3, anim_speed=18)
 
 
+# The Drain's pieces the tile atlas draws wider than the hand-drawn set:
+# the arch and the grate two tiles wide, the counter two wide (laid
+# twice), the waterfall three by two. Their art is the atlas's.
+mt('sw_arch_r', 'sewer', 'SOLID', flat(1), coll=12)
+mt('sw_grate_r', 'sewer', 'FLOOR', flat(1))
+mt('sw_counter_r', 'props', 'SOLID', flat(1))
+for _i in range(6):
+    mt('sw_fall_%d' % _i, 'sewer', 'SOLID', frames=[flat(1), flat(1)], anim_speed=6)
+
 # the style boards' tiles replace what they cover, and the rest is
 # remapped into the boards' palettes (tiles_style.py)
 import tiles_style  # noqa: E402
@@ -4149,3 +4132,7 @@ import palettes as _pl  # noqa: E402
 if _pl.PACK_TILES:
     import pack_tiles  # noqa: E402
     pack_tiles.apply(METATILES)
+
+# the illustrated tile atlases over both (tile_art.py)
+import tile_art  # noqa: E402
+tile_art.apply(METATILES)

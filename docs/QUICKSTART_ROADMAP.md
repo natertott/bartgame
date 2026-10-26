@@ -1271,6 +1271,38 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the Drain and the blight from the tile atlases (Oct 2026)
+
+Two illustrated atlases came for the tile spec: the whole Drain, and the
+blight of the wood with its sparkles and mist. They are kept as
+delivered in `bartgame/art/ref/tile_art/` and imported by
+`tools/import_tiles.py` (106 tiles, 8 palette groups) into
+`art/tile_art/tiles.json`, which `art/tile_art.py` applies last in both
+builds. The board palettes they replace are retired and the two board
+palettes that duplicated others (`wood`, `cliff`) share their slots, so
+12 of the 14 tile slots are used (14 in the comparison build).
+
+Engine and layout: the hall's waterfall is the atlas's 3x2 piece, its
+arch, grate and counter 2x1 pieces; the blighted tree is 3x4 and the
+blighted rooms now place it (one chunk in sixteen tries; it was never
+placed before, though the spec listed it); the blighted floors are
+weighted so the plain rot is the ground and the pits and veins accents,
+and the vein, which the blighted rooms lay along every trail, is the
+plain rot with only the atlas vein's bright cracks. The Makefile now
+rebuilds the assets when `art/tile_art/tiles.json` changes.
+
+Choices: the atlas's wall drip has 3 frames, not 4; its glints are the
+lower row of each group; the 8th wall mark (a second rust) is unused;
+the cells are not all square, so each is squeezed to its tile. The tile
+spec marks the delivered entries (53 of 117) and its palette budget is
+now 4 groups for the living wood and the mystery rooms together.
+
+Open: the living wood and the mystery rooms are still the board and
+hand-drawn tiles. If their delivery needs more than 4 palettes, the game
+should load palettes per area (each area would then have its own 14).
+The bones and the fairy ring are still green-grass tiles in the blighted
+rooms (one of the spec's additions).
+
 ### BARTGAME: a tile spec for the artist (Oct 2026)
 
 The tiles are the weakest art left: most are crops of the style boards

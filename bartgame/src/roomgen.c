@@ -673,13 +673,14 @@ static u16 moss_pick(void) {
 
 /* The sickness by depth: level 1 is grass stained violet and split by
    glowing cracks; level 2 is purple to the walls, cracked and pitted;
-   the arena deepest of all. */
+   the arena deepest of all. The plain rot is the ground; the pits and
+   the veins of light are accents on it. */
 static u16 blight_pick(int level, bool8 arena) {
     int r = rng_range(&sR, 20);
     if (arena)
-        return r < 11 ? MT_BLIGHT_FLOOR2 : r < 17 ? MT_BLIGHT_FLOOR : MT_BLIGHT_VEIN;
+        return r < 13 ? MT_BLIGHT_FLOOR : r < 16 ? MT_BLIGHT_FLOOR2 : MT_BLIGHT_VEIN;
     if (level >= 2)
-        return r < 8 ? MT_BLIGHT_FLOOR : r < 14 ? MT_BLIGHT_FLOOR2 : r < 17 ? MT_BLIGHT_GROUND2 : MT_BLIGHT_VEIN;
+        return r < 11 ? MT_BLIGHT_FLOOR : r < 13 ? MT_BLIGHT_FLOOR2 : r < 17 ? MT_BLIGHT_GROUND2 : MT_BLIGHT_VEIN;
     return r < 15 ? MT_BLIGHT_GROUND0 + (r & 1) : MT_BLIGHT_GROUND2;
 }
 
@@ -710,21 +711,18 @@ static bool8 place_tree_kind(int x, int y, u16 crown, u16 trunk) {
     return TRUE;
 }
 
-/* a tree of the room's kind: the blight's dead tree in the deep rooms,
-   else one in three with a lantern hung in it */
-static bool8 place_tree(int x, int y, bool8 blighted) {
-    if (blighted)
-        return place_tree_kind(x, y, MT_BTREE_0, MT_BTREE_4);
+/* a living tree: one in three with a lantern hung in it */
+static bool8 place_tree(int x, int y) {
     if (rng_range(&sR, 3) == 0)
         return place_tree_kind(x, y, MT_TREE2_0, MT_TREE2_4);
     return place_tree_kind(x, y, MT_TREE_TOP_NW, MT_TREE_TRUNK_W);
 }
 
-/* the great tree: a 3x3 crown on the overlay over anything, a row of
-   roots on plain ground, the trunk solid where it closes no way */
-static bool8 place_great_tree(int x, int y) {
+/* a tree of 3x4, a great tree or the blight's: a 3x3 crown on the
+   overlay over anything, a row of roots on plain ground, the trunk solid
+   where it closes no way */
+static bool8 place_big_tree(int x, int y, u16 base) {
     int dx, dy;
-    u16 base = (rng_next(&sR) & 1) ? MT_GTREE2_0 : MT_GTREE_0;
     if (x < 1 || y < 2 || x + 2 > W - 2 || y + 3 > H - 2)
         return FALSE;
     for (dy = 0; dy < 3; dy++)
@@ -740,6 +738,10 @@ static bool8 place_great_tree(int x, int y) {
     room_set(x + 1, y + 3, base + 10);
     room_set(x + 2, y + 3, base + 11);
     return TRUE;
+}
+
+static bool8 place_great_tree(int x, int y) {
+    return place_big_tree(x, y, (rng_next(&sR) & 1) ? MT_GTREE2_0 : MT_GTREE_0);
 }
 
 /* n solid pieces of w by h on plain ground, each where it closes no way */
@@ -880,7 +882,7 @@ static void block_at(int x, int y, int w, int h, u16 base, bool8 solid) {
 static int pick_variant(const Cell* c, bool8 blighted) {
     int r = rng_range(&sR, 16);
     if (blighted)
-        return r < 4 ? V_DEAD : r < 8 ? V_CRYSTAL : r < 10 ? V_SHROOMRING : r < 12 ? V_POOL : r < 13 ? V_ROCKS : V_PLAIN;
+        return r < 4 ? V_DEAD : r < 8 ? V_CRYSTAL : r < 10 ? V_SHROOMRING : r < 12 ? V_POOL : r < 13 ? V_ROCKS : r < 14 ? V_TREE : V_PLAIN;
     switch (c->arch) {
         case ARCH_GROVE: return r < 7 ? V_TREE : r < 9 ? V_LOG : r < 11 ? V_BUSHES : r < 12 ? V_TREEROCK : r < 13 ? V_CLOVER : V_PLAIN;
         case ARCH_RUINS: return r < 5 ? V_RUIN : r < 7 ? V_COLONNADE : r < 9 ? V_ROCKS : r < 11 ? V_TREE : r < 12 ? V_GBOULDER : V_PLAIN;
@@ -897,7 +899,13 @@ static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
     int ox = CX0 + cx * 3, oy = CY0 + cy * 3, r = rng_range(&sR, 2);
     switch (v) {
         case V_MEADOW: block_at(ox, oy, 3, 3, MT_MEADOW_0, FALSE); break;
-        case V_TREE: place_tree(ox + r, oy, blighted); break;
+        case V_TREE:
+            /* the blight's tree is 3x4: its crown reaches into the chunk above */
+            if (blighted)
+                place_big_tree(ox, oy - 1, MT_BTREE_0);
+            else
+                place_tree(ox + r, oy);
+            break;
         case V_BUSHES:
             solid_at(ox, oy, MT_BUSH); solid_at(ox + 2, oy + 1, MT_BUSH); solid_at(ox + 1, oy + 2, MT_BUSH);
             break;

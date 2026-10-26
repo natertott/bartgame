@@ -103,7 +103,29 @@ text inks depend on, with its 8x8 slot squares opened out to the
 engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
 mini-map writes through `ui_ink[]` into the pack's ui palette.
 
-**The style boards.** The tiles come from four reference boards in
+**The tile atlases.** The Drain's tiles and the blight of the wood come
+from two illustrated atlases, kept as delivered in `art/ref/tile_art/`
+and imported by `tools/import_tiles.py` into `art/tile_art/tiles.json`,
+which `art/tile_art.py` lays over the metatiles last, in both builds. A
+cell's rough box is snapped to its frame line and the frame trimmed off;
+the art is reduced to 16x16 (or a piece's size) by the median of each
+box's middle tones, a mostly dark box keeping its darks and, for tiles
+whose light is the point (veins, glints, flames, fungus), a strong bright
+accent keeping its colour. Things drawn on a dark ground (props,
+banners, drips, crystals, the trees) are keyed from the cell's edges and
+laid on a floor or wall tile cut from the same atlas; the blight's
+standing things get a dark outline. Eight palette groups are derived
+from the art and colours are matched with lightness weighing double.
+They take the place of the board palettes they replace (`sewer`,
+`props`, `blight`), and two board palettes that held the very same
+colours share a slot (`palettes.MERGE`), so 12 of the 14 tile slots are
+in use. The atlases draw some pieces wider than the hand-drawn set: the
+Drain's waterfall is 3x2, its arch, grate and counter 2x1, and the
+blighted tree is 3x4 like the great trees, now placed in the blighted
+rooms. `docs/BARTGAME_TILE_SPEC.md` (written by `tools/tile_spec/`)
+lists every tile for the artist and marks what is delivered.
+
+**The style boards.** The other tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
 board. `art/sample.py` cuts them: a crop is scaled to its GBA size,
 keyed from the sheet's grey, and quantized to a palette of fifteen
@@ -286,10 +308,13 @@ art/            pixel art as rows of letters mapped to palette indices
   palettes.py   the 16-color palettes: BG from the boards over the drawn
                 ones, OBJ from the sprite pack, the remap tables
   ref/          the four style boards; ref/pack/ the sprite pack's exact
-                sheets and ref/pack_art/ its illustrated sheets, as delivered
+                sheets and ref/pack_art/ its illustrated sheets, as delivered;
+                ref/tile_art/ the Drain's and the blight's tile atlases
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
   pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
+  tile_art/     the tile atlases imported: tiles.json, the groups and tiles
+  tile_art.py   lays the atlases' tiles over the metatiles, in both builds
   sample.py     cutting a board: key, scale, derive a palette, quantize
   style.py      every tile crop by name, and the palettes derived from them
   tiles_style.py the sampled tiles into the metatiles; the rest remapped
@@ -311,6 +336,8 @@ tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
   import_pack.py    the sprite pack (art/ref/pack/, art/ref/pack_art/) -> art/pack/
   pack_art.py       cutting the illustrated sheets: cells, downscaling, palettes
+  import_tiles.py   the tile atlases (art/ref/tile_art/) -> art/tile_art/
+  tile_spec/        the tile spec for the artist: entries, renders, the doc
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM

@@ -24,7 +24,7 @@ BACKDROP = PAL['forest'][0]
 OVERLAY = set(['sparkle', 'sparkle_white', 'blight_mist', 'myst_switch', 'myst_switch_down', 'myst_pot',
                'myst_chest', 'myst_chest_open', 'myst_spring', 'sw_glint', 'sw_glint2', 'sw_glint3',
                'tree_top_nw', 'tree_top_ne', 'tree_mid_w', 'tree_mid_e'] +
-              ['tree2_%d' % i for i in range(4)] + ['btree_%d' % i for i in range(4)] +
+              ['tree2_%d' % i for i in range(4)] + ['btree_%d' % i for i in range(9)] +
               ['gtree_%d' % i for i in range(9)] + ['gtree2_%d' % i for i in range(9)])
 
 
@@ -117,7 +117,8 @@ for r in rooms.ROOMS:
     for layer in ('ground', 'overlay'):
         if r.get(layer):
             hub |= set(names[i] for i in rooms.expand(r[layer], r['w'], r['h'], mt_names) if i != 0xFFFF)
-NEVER = {'moss_shade', 'relic', 'fence', 'pit_inner', 'ledge_n', 'path_edge_n', 'sw_floor_slime', 'sw_ladder', 'black'}
+NEVER = {'moss_shade', 'relic', 'fence', 'pit_inner', 'ledge_n', 'path_edge_n', 'sw_floor_slime', 'sw_ladder', 'black',
+         'sw_waterfall'}  # the hall's waterfall is the atlas's 3x2 piece now
 # floors that carry a switch, a pot or a chest reuse the plain floor's drawing
 ALIAS = {'%s_floor_%s' % (st, k) for st in ('cave', 'hollow', 'thicket') for k in ('switch', 'lift', 'chest')}
 placed = set()
