@@ -24,7 +24,7 @@ from px import L, Canvas, compose, outline, hflip, vflip, opaque, remap, blank, 
 
 TYPES = ['FLOOR', 'SOLID', 'PIT', 'WATER', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W',
          'THORN', 'CRACK', 'WEB', 'DOOR', 'DOOR_OPEN', 'TORCH', 'TORCH_LIT', 'SLOW', 'HURT',
-         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS', 'LIFT1', 'LIFT2', 'MYST']
+         'EXIT', 'CHEST', 'CHEST_OPEN', 'SWITCH', 'STAIRS', 'LIFT1', 'LIFT2', 'MYST', 'FRONT']
 
 SOLID_TYPES = {'SOLID', 'THORN', 'CRACK', 'WEB', 'DOOR', 'TORCH', 'TORCH_LIT', 'CHEST', 'CHEST_OPEN',
                'LIFT1', 'LIFT2', 'LEDGE_N', 'LEDGE_E', 'LEDGE_S', 'LEDGE_W'}
@@ -4175,3 +4175,7 @@ wood_art.apply(METATILES)
 # the environment art pack, V3, over all (env_pack.py)
 import env_pack  # noqa: E402
 env_pack.apply(METATILES)
+
+# the Drain's hall, painted whole and cut into cells of its own (sw_drain.py)
+import sw_drain  # noqa: E402
+METATILES.extend(sw_drain.METATILES)

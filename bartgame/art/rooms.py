@@ -61,6 +61,12 @@ def room(name, ground, overlay=None, objects=()):
 def expand(rows, w, h, mt_names):
     out = []
     assert len(rows) == h, 'room has %d rows, want %d' % (len(rows), h)
+    if not isinstance(rows[0], str):
+        # rows of metatile names (a painted room), None where empty
+        for row in rows:
+            assert len(row) == w
+            out += [0xFFFF if n is None else mt_names[n] for n in row]
+        return out
     for y, row in enumerate(rows):
         assert len(row) == w * 2, 'room row %d has %d chars, want %d' % (y, len(row), w * 2)
         for x in range(w):
@@ -70,56 +76,14 @@ def expand(rows, w, h, mt_names):
     return out
 
 
-# The Drain: a vaulted hall. A waterfall pours from the top wall into a
-# basin; the drain hole up to the wood is beside it. The Peddler's stall
-# stands under a red awning on the left, a crate beside it, under the
-# red banner; the Gatekeeper's rug lies on the right, under the teal. A
-# channel crosses the hall with a grate bridge, the great round drain
-# lies below it, and ladders go down into the pools in the lower
-# corners. Less is more: the slabs are plain, the bricks plain but for
-# the lanterns, banners, pipes and two drips, nothing lies about on the
-# floor, and only a few glints wink over the water.
-room('sewer_main', '''
-TTTTTTTTTTTMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMTTTTTTTTTT
-WWPPWWBRWWWWLNWWWWHHWWWDWFWFWFWDWWWWWWBTWWLNWWWWWWWWWWPPWWWW
-WWWWWWWWWWWWWWWWWW..WWWWWFWFWFWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-....A1A2A1A2............~~~~~~..............................
-..CRCCCCCCCC............ESESES............R1R2..............
-..........................................R3R4..............
-............................................................
-............................................................
-WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
-~~~~~~~~~~~~LP~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~LP~~~~~~~~~~~~~~
-ESESESESESESESESESESESESESESGGGGESESESESESESESESESESESESESES
-............................................................
-........................D1D2................................
-WELDWEWE................D3D4....................WEWEWELDWE..
-~~~~~~~~........................................~~~~~~~~~~..
-~~~~~~~~........................................~~~~~~~~~~..
-WWWWWWWWWWWWttWWWWWWWWWWWWWWAAWWWWWWWWWWWWWWWWttWWWWWWWWWWWW
-''', overlay='''
-                                                            
-                                                            
-                                                            
-                          *1                                
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                *2                                          
-                                                  *3        
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-''', objects=[
-    (OBJ_SPAWN, 12, 15, 0),
-    (OBJ_EXIT, 9, 1, 1),        # the drain hole: up to the wood
-    (OBJ_NPC, 21, 4, 0),        # the Pale Gatekeeper on the rug
-    (OBJ_SHOP, 4, 4, 0),        # the Billious Peddler behind the counter
-])
+# The Drain: painted whole (sw_hall.py) and cut into its own cells
+# (sw_drain.py). The objects are its own too: where a run begins, the
+# drain hole up to the wood, the Gatekeeper on her rug, the Peddler
+# behind his counter.
+import sw_drain  # noqa: E402
+ROOMS.append({'name': 'sewer_main', 'w': sw_drain.W, 'h': sw_drain.H,
+              'ground': sw_drain.GROUND, 'overlay': sw_drain.OVERLAY,
+              'objects': [(OBJ_SPAWN, 12, 16, 0),
+                          (OBJ_EXIT, 9, 2, 1),
+                          (OBJ_NPC, 21, 5, 0),
+                          (OBJ_SHOP, 4, 5, 0)]})

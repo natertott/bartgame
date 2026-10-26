@@ -9,12 +9,14 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 
 ## The demo
 
-- **The Drain.** You wake in a sewer hall: a waterfall into a basin, a
-  channel with a grate bridge, the great round drain, lanterns and
-  banners, and nothing lying about on its slabs. The Pale Gatekeeper on her rug explains; the Billious Peddler
-  under his red awning sells Healing Petals and Blightseeds for gilt. The
-  drain hole in the north wall leads up into the wood; the arch in the
-  wood's first glade leads back down.
+- **The Drain.** You wake in a sewer hall: brass pipes on the walls, a
+  barred arch whose falls pour into a basin, banners and hanging
+  lanterns, a railed channel with a grate bridge, the great round drain,
+  spouts pouring into the water below. The Pale Gatekeeper on her rug,
+  among candles, books and a crow, explains; the Billious Peddler behind
+  his counter under a red awning sells Healing Petals and Blightseeds for
+  gilt. The drain hole in the north wall, vines hanging into it, leads
+  up into the wood; the arch in the wood's first glade leads back down.
 - **The Blighted Wood.** A 5x5 maze of rooms, generated from a seed rolled
   on the title screen: a growing tree that mostly runs in corridors and
   branches a third of the time, so about half the rooms lie off the way
@@ -104,8 +106,8 @@ text inks depend on, with its 8x8 slot squares opened out to the
 engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
 mini-map writes through `ui_ink[]` into the pack's ui palette.
 
-**The environment art pack.** Every background tile of the wood, the
-mystery rooms and the Drain is the environment art pack V3's, kept as
+**The environment art pack.** Every background tile of the wood and the
+mystery rooms is the environment art pack V3's, kept as
 delivered in `art/ref/pack_v3/` (its assets, manifest, palettes,
 previews and handoff; not its build scripts or reference boards). It
 was drawn for the first tile spec: 117 entries, one PNG each, in twelve
@@ -117,18 +119,55 @@ left to right (variants, a family of fifteen in the order 1..15, a
 piece row by row) and its animation frames are further rows below,
 with the pack's frame times. What the game lays that the first spec
 had no entry for takes a pack tile's art: a mystery room's crown is its
-wall and its floor's edges its floor. The hall lays the pack's single
-waterfall, grate and counter tiles repeated and its one-tile arch. The
+wall and its floor's edges its floor. The
 blighted rooms are built from the pack's blight set: its floor, now and
 then pitted, its vein for the trail, the sick canopy and the blight
 walls, with no edge tiles, since the pack draws its edges in the living
 grass only; what the pack draws on grass (stones, bones, flowers) is
 not scattered there. The sick rooms get patches of the stained ground,
 never a strip one tile wide. The blighted tree is 2x3, as the pack draws
-it, and the fairy's spring lies on the overlay. The pack's Drain marks
-and clutter are imported but not laid: the hall stays plain.
+it, and the fairy's spring lies on the overlay.
 `docs/BARTGAME_TILE_SPEC.md` (written by `tools/tile_spec/`) lists every
 tile laid, marks the pack's, and lists the pieces the pack lacks.
+
+**The Drain, painted.** The hub hall is drawn from scratch at the GBA's
+own resolution, never scaled from a picture: `art/sw_hall.py` paints
+it whole, 30x20 metatiles, pixel by pixel in clusters and clean edges,
+with `art/sw_paint.py`'s tools (a canvas of named colours on the 5-bit
+grid, one hue-shifted grey for every stone and the iron, brass, water,
+moss, wood, two cloths, flame; pipes, posts and domes shaded by their
+surface normal against one light from the upper left) and
+`art/sw_props.py`'s hand-drawn props. Its rows: the back wall (brick,
+brass pipes with collars and a valve, the barred arch and its falls,
+the drain hole with its ladder and vines, two banners, two lanterns),
+the upper floor (the Peddler's stall, the basin, the Gatekeeper's
+corner), the railed channel and its bridge, the lower floor (the great
+drain, two grates, crates and barrels in its corners), the railed
+front edge and the water below with its spouts, a ladder and lily pads;
+brass pipes down both side walls. The floor is random paving, stones of
+one or two courses that never leave a sliver, moss grown in some of its
+joints, a crack in a few. It is painted for every tick of a 24-tick
+clock (a tick is 4 frames): the channel's crests drift with the flow,
+the falls pour, the basin's rings spread, the spouts splash, the
+lanterns and candles flicker.
+
+`art/sw_cut.py` cuts the painting into 16x16 cells, stores each cell's
+animation with the fewest frames and the slowest speed that replay it,
+and shares a metatile between identical cells. Each 8x8 piece takes one
+of 11 hand-set palettes (`TEMPLATES`: wall, water, floor, the far
+railing over water, red, purple, teal, wood, flame, books, lily; the
+area has 13 slots), as the hardware allows; a piece that fits none would give its strays to the
+nearest colours, and the build reports every such pixel. The build
+gives a metatile a palette per quarter (`qpals`). Everything that
+repeats is painted on a period that divides 96 (the floor 96x80, the
+bricks 48, the water and the posts 32, the copings 96), and the right
+side wall is the left one's mirror, so the hall fits: 1,007 of the
+sewer's 1,024 pieces, 376 metatiles, 38 animated, 11 palettes.
+`art/sw_drain.py` gives each cell its collision by quarter and its
+type; the floor in front of the Peddler's counter is of type `FRONT`,
+where the hero is drawn over the overlay (OAM priority 1) that hides
+the Peddler's legs. `tools/sw_preview.py` renders the painting,
+`tools/hall_shots.py` captures the hall from the ROM.
 
 **Before the pack.** The tile atlases (`art/ref/tile_art/`, imported by
 `tools/import_tiles.py` into `art/tile_art/tiles.json` and laid by
@@ -358,7 +397,12 @@ art/            pixel art as rows of letters mapped to palette indices
   hud.py        hearts, icons, item slots, the text box frame, the map
   font.py       the 5x7 font
   title.py      the title screen, painted with PIL in 16 colors
-  rooms.py      the hub room: the Drain
+  rooms.py      the hub room: the Drain's objects (its cells: sw_drain.py)
+  sw_paint.py   the Drain's painter: colours, ramps, a canvas, lit tubes
+  sw_props.py   the Drain's props, drawn by hand
+  sw_hall.py    the Drain's hall, painted whole for every tick of its clock
+  sw_cut.py     cutting the painting into metatiles; the hand-set palettes
+  sw_drain.py   the hall for the build: collision, types, the cut
 tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
   import_pack.py    the sprite pack (art/ref/pack/, art/ref/pack_art/) -> art/pack/
@@ -370,6 +414,9 @@ tools/
   golden_capture.py fixed scenes captured raw from the ROM, with what is on screen
   compose_frame.py  a scene drawn straight from the art pack's PNGs, for comparing
   compare_frames.py two 240x160 frames compared pixel for pixel
+  sw_preview.py     the Drain's painting rendered, before it is cut
+  hall_shots.py     the Drain's views and the whole hall, captured from the ROM
+  hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM
@@ -412,6 +459,7 @@ python3 tools/guard_probe.py              # the loadout, the water's edge, a hol
 python3 tools/myst_probe.py               # every mystery kind forced, played to its reward
 python3 tools/wood_probe.py               # the bow, the Drain Cap, the sword's gathering and deflecting, open knights
 python3 tools/menu_probe.py               # the three pause pages, the grid, the map's zoom, save and continue
+python3 tools/hall_probe.py               # the Drain walked from the spawn: the hole, the shop, the Gatekeeper
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```

@@ -194,8 +194,8 @@ for r in rooms.ROOMS:
             hub_used |= set(rooms.expand(r[layer], r['w'], r['h'], mt_names))
 MYST_EXTRA = {'torch', 'torch_lit', 'boulder', 'chest', 'chest_open', 'sparkle', 'black', 'moss0', 'moss1', 'moss2'}
 SETS = [
-    ('forest', lambda n, i: not n.startswith(('sw_', 'cave_', 'hollow_', 'thicket_', 'myst_'))),
-    ('sewer', lambda n, i: n.startswith('sw_') or i in hub_used),
+    ('forest', lambda n, i: not n.startswith(('sw_', 'swh_', 'cave_', 'hollow_', 'thicket_', 'myst_'))),
+    ('sewer', lambda n, i: n.startswith('swh_') or i in hub_used),
     ('myst', lambda n, i: n.startswith(('cave_', 'hollow_', 'thicket_', 'myst_')) or n in MYST_EXTRA),
 ]
 TYPES_IDX = {t: i for i, t in enumerate(TYPES)}
@@ -217,27 +217,30 @@ for si, (sname, pred) in enumerate(SETS):
     entries = []
     anims = []
     held = 0
-    # the set's palette groups, in the order its metatiles first use them
+    # the set's palette groups, in the order its metatiles first use them;
+    # a metatile may give each of its quarters a palette of its own (qpals)
     set_pals = []
     for i, mt in enumerate(tiles.METATILES):
-        if pred(mt['name'], i) and mt['pal'] not in set_pals:
-            set_pals.append(mt['pal'])
+        if pred(mt['name'], i):
+            for pn in mt.get('qpals') or [mt['pal']]:
+                if pn not in set_pals:
+                    set_pals.append(pn)
     assert len(set_pals) <= PAL_AREA_SLOTS, ('tileset %s needs %d palettes' % (sname, len(set_pals)), set_pals)
     for i, mt in enumerate(tiles.METATILES):
         if not pred(mt['name'], i):
             entries += [0, 0, 0, 0]
             continue
         held += 1
-        pal = set_pals.index(mt['pal'])
+        qpals = [set_pals.index(pn) for pn in (mt.get('qpals') or [mt['pal']] * 4)]
         frames = mt.get('frames') or [mt['art']]
         pix = parse_art(frames[0], 16, 16)
         animated = len(frames) > 1
         base = None
-        for (x0, y0) in ((0, 0), (8, 0), (0, 8), (8, 8)):
+        for q, (x0, y0) in enumerate(((0, 0), (8, 0), (0, 8), (8, 8))):
             n, hf, vf = ts.add(pix, x0, y0, dedup=not animated)
             if base is None:
                 base = n
-            entries.append(n | (hf << 10) | (vf << 11) | (pal << 12))
+            entries.append(n | (hf << 10) | (vf << 11) | (qpals[q] << 12))
         if animated:
             data = b''
             for fr in frames:

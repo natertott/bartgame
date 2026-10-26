@@ -123,6 +123,8 @@ The Drain's 725 free pieces would hold a fully unique 240x160 pilot frame: 150 c
 
 ## 5. Golden scenes and the comparison loop
 
+*The Drain has since been redrawn from scratch (`art/sw_hall.py`, Oct 2026). The `drain` scene and `drain_hall.json` below describe the hall before it; the living and blighted scenes still hold.*
+
 `scenes/` has three fixed scenes. All use the pinned seed 0xB4A7, so every room and camera is reproducible. Each scene folder contains:
 
 | File | What it is |

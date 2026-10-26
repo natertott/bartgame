@@ -430,3 +430,6 @@ for _i, (_n, _c) in enumerate(BG_PALETTES):
             MERGE[_n] = _m
             break
 BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in MERGE]
+# the Drain's hall: palettes packed from its painting (sw_drain.py)
+import sw_drain as _sd  # noqa: E402
+BG_PALETTES += _sd.PALETTES

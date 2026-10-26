@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the Drain redrawn from scratch: painted whole at native resolution, 30x20, pipes, falls, stall, corner, railed channel and front, spouts; cut into 376 metatiles in 11 hand-set palettes, a palette per 8x8 piece; FRONT tiles for the counter; a hall probe | "BARTGAME: the Drain redrawn from scratch" |
 | BARTGAME: the Drain art pilot taken out at the user's word; the game as before it; the parallel-make fix kept | "BARTGAME: the Drain art pilot taken out" |
 | BARTGAME: the artist's native Drain pilot in as delivered and shown by its own ROM (`make pilot`); captured raw from mGBA, VRAM, palettes and OAM matching the files byte for byte, the frame matching the master to 1 step (0 pixels once the colour expansion is the same) | "BARTGAME: the Drain art pilot, captured from the ROM" |
 | BARTGAME: an engine contract for the artist: every metatile's hardware entries, banks, collision and art source; the three tile specs' keys mapped; three golden scenes captured raw from the ROM; an independent compositor matching the engine to the pixel | "BARTGAME: an engine contract and golden scenes for the artist" |

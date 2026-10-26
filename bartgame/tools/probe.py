@@ -161,11 +161,31 @@ if __name__ == '__main__':
     print('player at', player_pos(c), '->', out)
 
 
+def hall_exit(c):
+    """the drain hole's cell in the loaded hall: the cell of type EXIT"""
+    R = sym('gRoom')
+    w, h = r8(c, R), r8(c, R + 1)
+    types = sym('metatile_type')
+    exit_t = int(open(os.path.join(ROOT, 'build', 'gen', 'assets.h')).read().split('#define TT_EXIT ')[1].split()[0])
+    for y in range(h):
+        for x in range(w):
+            mt = r16(c, R + 2 + (y * 32 + x) * 2) & 0xFFFF
+            if mt != 0xFFFF and r8(c, types + mt) == exit_t:
+                return x, y
+    raise AssertionError('the hall has no exit')
+
+
 def enter_forest(c):
-    """from the hub's spawn, right to the grate bridge, up the hall, left
-    along the upper floor and up into the drain hole"""
-    hold(c, 'RIGHT', 22)
-    hold(c, 'UP', 118)
-    hold(c, 'LEFT', 62)
-    hold(c, 'UP', 90)
+    """from the hub up into the drain hole: the hero is set at the hole's
+    mouth and walks up into it (tools/hall_probe.py walks the whole way
+    from the spawn)"""
+    ex, ey = hall_exit(c)
+    a = sym('gActors')
+    pl = sym('gPl')
+    x, y = ex * 16 + 8, (ey + 2) * 16 + 10
+    w16(c, a + 8, 0); w16(c, a + 10, x)
+    w16(c, a + 12, 0); w16(c, a + 14, y)
+    w16(c, pl + 14, x); w16(c, pl + 16, y)
+    run(c, 3)
+    hold(c, 'UP', 60)
     run(c, 40)

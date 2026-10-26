@@ -199,7 +199,7 @@ def main():
             if k % 8 == 0 and zmax and len(snaps) < 7:
                 P.snap(c, os.path.join(S, 'wood_cap%d.png' % len(snaps))); snaps.append(1)
     pos = P.player_pos(c)
-    check('CAP: home in the drain, at the spawn', CP.area(c) == 0 and pos == (12 * 16 + 8, 15 * 16 + 14), 'area %d pos %s' % (CP.area(c), pos))
+    check('CAP: home in the drain, at the spawn', CP.area(c) == 0 and pos == (12 * 16 + 8, 16 * 16 + 14), 'area %d pos %s' % (CP.area(c), pos))
     check('CAP: he dropped in from the ceiling', zmax >= 40 and state(c) == PS_NORMAL, 'zmax %d state %d' % (zmax, state(c)))
     # CAP: in the drain, only words
     P.press(c, 'A', 2, 4)
@@ -207,8 +207,8 @@ def main():
     check('CAP: in the drain, the cap only speaks', P.r8(c, tb) and state(c) == PS_NORMAL, 'box %d state %d' % (P.r8(c, tb), state(c)))
     CP.dismiss(c)
     # BOW: the Peddler's third ware
-    CP.teleport(c, 4 * 16 + 8, 5 * 16 + 14 + 8)
-    P.hold(c, 'UP', 6)
+    CP.teleport(c, 4 * 16 + 8, 7 * 16 + 6)
+    P.hold(c, 'UP', 8)
     P.press(c, 'A', 2, 30)
     count = P.r8(c, LP.ssym('sShopCount'))
     check('BOW: the Peddler sells arrows now', count == 3, 'wares %d' % count)

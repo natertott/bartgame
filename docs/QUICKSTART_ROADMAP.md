@@ -1271,6 +1271,58 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the Drain redrawn from scratch (Oct 2026)
+
+The user made us the artist and gave an illustration of a sewer hall to
+work from, not to copy: GBA art, crisp, high quality, drawn anew. The
+sewer comes first; the Bloom's sprites stay; the UI, the menus, the
+dialogue boxes, the title and the wood come later.
+
+The hall is painted whole at native resolution (`art/sw_hall.py`, with
+`sw_paint.py`'s colours and lit tubes and `sw_props.py`'s hand-drawn
+props), 30x20 metatiles, for every tick of a 24-tick clock, and cut
+into cells (`sw_cut.py`, `sw_drain.py`). The layout follows the
+illustration's ideas:
+- a four-row back wall: brick, brass pipes, a barred arch with its
+  falls, banners, lanterns, the drain hole with a ladder and vines;
+- the Peddler's stall, the basin and the Gatekeeper's corner (canopy,
+  candles, books, crates, a crow, a rug);
+- a railed channel with a grate bridge, the great drain and its
+  grates, a railed front edge, spouts into the water below, lily pads;
+- brass pipes down both side walls.
+The objects moved down one row with the taller wall: spawn (12,16),
+drain hole (9,2), Gatekeeper (21,5), Peddler (4,5). The Peddler stands
+behind his counter: the counter is on the overlay, and the floor in
+front of it is a new type, `FRONT`, where the hero is drawn over the
+overlay (OAM priority 1).
+
+What was got wrong on the way, and measured:
+- Packing palettes freely from the painting needed 26, then 25 even
+  with a palette per 8x8 piece (the build now takes `qpals`). The cause
+  was the variety of colours per piece, not the packer. The fix was 11
+  hand-set palettes (`sw_cut.TEMPLATES`) and painting to them: one
+  hue-shifted grey for all stone and iron, one white, the banner's teal
+  from the water. A piece that fits none is remapped to the nearest
+  colours and reported; 125 pixels are now.
+- The 8x8 pieces ran to 1,089 of 1,024. Strips with different periods
+  (copings 64, floor 96, water 48, posts 32), a rail gleam every 15 px
+  and absolute-position noise made cells unique. With every repeat
+  dividing 96, the right side wall mirrored, and the basin's rings and
+  the spouts' splashes kept to their own cells, the sewer set holds
+  1,007 pieces, 376 metatiles, 38 animated.
+- `probe.enter_forest` walked a fixed key script from the spawn; it now
+  finds the hall's EXIT cell and walks up into it.
+  `tools/hall_probe.py` (new) walks the whole way by path from the
+  spawn to the hole, the Peddler and the Gatekeeper, opens the shop,
+  talks, checks the drawing order and that nothing makes the hero fall.
+  `wood_probe` knows the new spawn and counter.
+
+All eight probes, the comparison build's critical path and
+verify-world pass. `tools/hall_shots.py` captures the views and the
+whole hall from the ROM; its captures are in `docs/drain/`. The engine
+contract's Drain scene (`docs/engine_contract/`) describes the hall
+before this.
+
 ### BARTGAME: the Drain art pilot taken out (Oct 2026)
 
 The user judged the pilot's art bad and went back to the game as it was
