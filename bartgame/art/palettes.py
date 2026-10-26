@@ -351,13 +351,18 @@ BG_PALETTES = [(n, _BOARD_BG.get(n, cols)) for n, cols in OLD_BG_PALETTES]
 # The OBJ palettes are the sprite pack's groups (art/pack/pack.json): the
 # slots the engine has always used, then the groups drawn from the
 # illustrated sheets (the sword and shields, the small items, the
-# pickups, the icons, the hub's two). The portrait slot is reloaded with
-# each speaker's palette (PORTRAIT_PALETTES).
+# pickups, the icons), then the Drain's two keepers, drawn by hand in a
+# palette each (sw_folk.py; the pack's own pair, folk32, is no longer
+# drawn). The portrait slot is reloaded with each speaker's palette
+# (PORTRAIT_PALETTES).
 import pack as _pk  # noqa: E402
+import sw_folk as _sf  # noqa: E402
 _OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift', 'ui',
-              'gear', 'items', 'pick', 'icons', 'folk32']
+              'gear', 'items', 'pick', 'icons']
 OBJ_PALETTES = [(n, _pk.GROUPS[n]) for n in _OBJ_ORDER]
-assert set(_pk.GROUPS) == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
+assert set(_pk.GROUPS) - {'folk32'} == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
+OBJ_PALETTES += [(n, ['#000000'] + ['#%02x%02x%02x' % c for _, c in pal])
+                 for n, pal in (('peddler', _sf.PEDDLER_PAL), ('gatekeeper', _sf.GATEKEEPER_PAL))]
 PORTRAIT_PALETTES = _pk.PORTRAIT_PALETTES
 
 

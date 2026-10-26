@@ -1267,9 +1267,10 @@ def pole(g, x, y0, y1):
         g.put(x + 2, y, 'd1')
 
 
-def counter(o, x0, x1, y0, y1):
-    """the Peddler's counter, on the overlay so he stands behind it: a
-    wooden top, red cloth draped down its front, a gold diamond on it"""
+def counter(g, o, x0, x1, y0, y1):
+    """the Peddler's counter: a wooden top on the ground, so his hands and
+    his coin lie over it, and red cloth draped down its front on the
+    overlay, so he stands behind it; a gold diamond on the cloth"""
     top = y0 + 6
     for y in range(y0, y1):
         for x in range(x0, x1):
@@ -1291,7 +1292,7 @@ def counter(o, x0, x1, y0, y1):
                     col = 'b4' if (u % 2 == 0) else 'b3'
                 if u in (0, x1 - x0 - 1):
                     col = 'g0'
-            o.put(x, y, col)
+            (g if y < top else o).put(x, y, col)
     # the gold diamond on the cloth
     cx, cy = (x0 + x1) // 2, top + (y1 - top) // 2 - 1
     for dy in range(-4, 5):
@@ -1310,12 +1311,13 @@ def paint_stall(g, o):
             c = g.get(x, y)
             if c and c[0] == 'g':
                 g.put(x, y, shift(c, -1))
-    awning(g, STALL_X0 + 3, STALL_X1 - 3, 34, 52, ('r1', 'r2', 'r3', 'r4'), ('b3', 'b5'))
-    pole(g, STALL_X0 + 2, 56, COUNTER_Y1 + 1)
-    pole(g, STALL_X1 - 5, 56, COUNTER_Y1 + 1)
-    counter(o, COUNTER_X0, COUNTER_X1, COUNTER_Y0, COUNTER_Y1)
-    o.blit(SP.COINS, COUNTER_X0 + 8, COUNTER_Y0 - 3)
-    o.blit(SP.FLASK_RED, COUNTER_X1 - 16, COUNTER_Y0 - 5)
+    # the awning rides high, clear of his hood
+    awning(g, STALL_X0 + 3, STALL_X1 - 3, 26, 39, ('r1', 'r2', 'r3', 'r4'), ('b3', 'b5'))
+    pole(g, STALL_X0 + 2, 43, COUNTER_Y1 + 1)
+    pole(g, STALL_X1 - 5, 43, COUNTER_Y1 + 1)
+    counter(g, o, COUNTER_X0, COUNTER_X1, COUNTER_Y0, COUNTER_Y1)
+    g.blit(SP.COINS, COUNTER_X0 + 2, COUNTER_Y0 - 1)
+    g.blit(SP.FLASK_RED, COUNTER_X1 - 9, COUNTER_Y0 - 4)
     # at its ends: the chest and a barrel with a skull on it
     shadow(g, 26, COUNTER_Y1, 8)
     shadow(g, STALL_X1 - 5, COUNTER_Y1, 6)

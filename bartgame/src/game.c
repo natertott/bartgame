@@ -519,6 +519,7 @@ void game_init(void) {
 }
 
 static void draw_world(void) {
+    npcs_draw_front();
     player_draw();
     enemies_draw();
     npcs_draw();

@@ -288,6 +288,16 @@ u16 sprite_load_frame(int sheet, int frame) {
     return base;
 }
 
+/* tiles held for a sprite whose frames stream in one at a time (the
+   hub's two keepers): nothing is copied */
+u16 sprite_alloc(int tiles) {
+    if (sNextTile + tiles > OBJ_TILE_MINIMAP)
+        return 0;
+    u16 base = sNextTile;
+    sNextTile += (tiles + 1) & ~1;
+    return base;
+}
+
 u16 sprite_load_sheet(int sheet) {
     if (sSheetTile[sheet] != 0xFFFF)
         return sSheetTile[sheet];

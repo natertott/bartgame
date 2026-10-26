@@ -64,8 +64,9 @@ shields) are cut and quantized by the importer, which derives each
 group's colours from the drawings: the hero, folk and portrait groups
 above, and five more groups of their own, `gear` (the sword and shield
 icons), `items` (the 16px items), `pick` (the 32px pickups), `icons`
-(the 32px icons) and `folk32` (the hub's two). Each portrait has a
-palette of its own.
+(the 32px icons) and `folk32` (the hub's two, still in the pack but no
+longer drawn: the keepers are drawn by hand now, see "The hub's two,
+large"). Each portrait has a palette of its own.
 
 ## 2. The Bloom (the hero)
 
@@ -291,14 +292,28 @@ the camera, feet on the bottom row.
 | `nun` | the Weeping Nun: a white wimple, a dark habit, folded hands, a gold cross, a tear on her cheek |
 | `gardener` | the Blind Gardener: a green hood, a blindfold, a grey beard, a brown apron, a rake, a flower in his belt |
 
-**The hub's two, large.** Sheet `folk32`, **32x32**, group folk, 4
-frames; about 30 pixels tall, feet on the bottom row, facing the
-camera. `sage_1` the Gatekeeper standing with her staff; `sage_2` the
-same with her orb flared bright (shown briefly, as a blink). `merchant_1`
-the Peddler behind his counter, hands together; `merchant_2` the same
-with the hands rubbing, a glint in the eye (also brief). Keep the two
-frames of each pair identical except for the change, or the blink will
-jitter.
+**The hub's two, large.** Drawn by hand, not from the pack, in
+`art/sw_folk.py`, each in a palette of its own (OBJ slots `peddler` and
+`gatekeeper`, 15 colours each), lit from the upper left like the hall.
+Every frame is the keeper's parts put together, so a blink or a hand's
+business is one part swapped.
+
+- **The Billious Peddler**: two sprites of **64x32**, his head over his
+  body, drawn at the stall so that nothing of him but his hands, his
+  cuffs and his coin comes below the counter's back edge (the counter's
+  top is on the ground layer, its cloth on the overlay). `peddler_head`,
+  5 frames: `open`, `blink`, `left` (watching the hero round to his
+  left), `down` (at his coin), `grin`. `peddler_body`, 14 frames: `rest`
+  (a hand on his coin, a hand on the counter), `tap` and `tap2` (his
+  fingers drumming), `lift`, the coin's
+  seven turns `spin9 spin7 spin5 spin3 spin5b spin7b spin9b`, `slap`,
+  `rub0` and `rub1` (hands rubbing). His acts, the steps npc.c plays
+  between customers, are `PEDDLER_ACTS` in the same file.
+- **The Pale Gatekeeper**: one sprite of **64x64**, `gatekeeper`, 6
+  frames: `idle`, `breath` (her hat and head a pixel lower), `kindle`
+  (a light over her raised palm), each followed by its blink. Over her
+  orb, `wisp`, **16x16**, 4 frames of violet flame; the orb's two glow
+  colours (`v`, `V`) pulse through `ORB_GLOW` in her palette.
 
 ## 13. Dialogue portraits
 

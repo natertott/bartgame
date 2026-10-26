@@ -22,12 +22,190 @@
 #include "npc.h"
 #include "myst.h"
 
-static u16 sBigTile; /* the hub's two at 32x32 */
 static Actor* sTalking;
 static u8 sDlgState; /* 0 none, 1 text, 2 shop menu, 3 after-menu text */
 static u8 sPendingReward;
 
 static const u8 sFrames[NPC_COUNT] = { F_NPC_SAGE, F_NPC_MERCHANT, F_NPC_HERMIT, F_NPC_NUN, F_NPC_GARDENER, F_NPC_HERMIT };
+
+/* ------------------------------------------------ the hub's two keepers --
+   The Peddler behind his counter and the Gatekeeper on her rug are drawn
+   large and by hand (art/sw_folk.py), and kept busy. He breathes and
+   blinks and watches the hero come; between customers he spins a coin and
+   slaps it flat, rubs his hands, drums his fingers (his acts, steps of
+   body and face from the art). She breathes and blinks, now and then
+   kindles a light over her palm, and the wisp over her orb burns while
+   its glow pulses in two entries of her palette. Each sprite's frames
+   stream into tiles held for it, queued for the VBlank like the hero's,
+   so a whole repertoire costs the VRAM of one frame. */
+#define KEEPER_BLINK 6
+static Rng sKeepRng;
+
+static struct {
+    Actor* a;
+    u16 head_tile, body_tile;
+    u8 head, body;          /* the frames in the tiles */
+    const u8* step;         /* the act in hand, or NULL */
+    u8 t, act;
+    u16 idle, blink_in;
+    u8 blink;
+} sPed;
+
+static struct {
+    Actor* a;
+    u16 tile, wisp_tile;
+    u8 frame;               /* the frame in the tiles */
+    u16 idle, blink_in;
+    u8 kindle, blink, glow;
+} sGate;
+
+/* a frame into a sprite's held tiles: at once, or at the next VBlank */
+static void keeper_frame(int sheet, int frame, u16 tile, bool8 now) {
+    const SpriteSheet* sh = &sheets[sheet];
+    const u16* src = sh->tiles + frame * sh->frame_tiles * 16;
+    if (now)
+        dma3_copy32(src, OBJ_TILE(tile), sh->frame_tiles * 32);
+    else
+        vram_queue(src, OBJ_TILE(tile), sh->frame_tiles * 32);
+}
+
+static void keeper_spawn(Actor* a) {
+    rng_seed(&sKeepRng, 0x6B33 + a->type);
+    if (a->type == NPC_MERCHANT) {
+        sPed.a = a;
+        sPed.head_tile = sprite_alloc(sheets[SHEET_PEDDLER_HEAD].frame_tiles);
+        sPed.body_tile = sprite_alloc(sheets[SHEET_PEDDLER_BODY].frame_tiles);
+        sPed.head = F_PEDDLER_HEAD_OPEN;
+        sPed.body = F_PEDDLER_BODY_REST;
+        keeper_frame(SHEET_PEDDLER_HEAD, sPed.head, sPed.head_tile, TRUE);
+        keeper_frame(SHEET_PEDDLER_BODY, sPed.body, sPed.body_tile, TRUE);
+        sPed.step = NULL;
+        sPed.idle = 150;
+        sPed.blink_in = 90;
+        sPed.blink = 0;
+        actor_set_sheet(a, SHEET_PEDDLER_BODY, sPed.body_tile);
+    } else {
+        sGate.a = a;
+        sGate.tile = sprite_alloc(sheets[SHEET_GATEKEEPER].frame_tiles);
+        sGate.wisp_tile = sprite_load_sheet(SHEET_WISP);
+        sGate.frame = F_GATEKEEPER_IDLE;
+        keeper_frame(SHEET_GATEKEEPER, sGate.frame, sGate.tile, TRUE);
+        sGate.idle = 240;
+        sGate.blink_in = 50;
+        sGate.blink = sGate.kindle = sGate.glow = 0;
+        actor_set_sheet(a, SHEET_GATEKEEPER, sGate.tile);
+    }
+}
+
+/* blinks come every few seconds, a few frames long */
+static bool8 keeper_blinks(u16* blink_in, u8* blink) {
+    if (*blink) {
+        (*blink)--;
+        return TRUE;
+    }
+    if (*blink_in && --*blink_in)
+        return FALSE;
+    *blink = KEEPER_BLINK;
+    *blink_in = 150 + rng_range(&sKeepRng, 150);
+    return TRUE;
+}
+
+static void peddler_update(void) {
+    Actor* a = sPed.a;
+    bool8 talking = sTalking == a && sDlgState;
+    u8 body = F_PEDDLER_BODY_REST, face = F_PEDDLER_HEAD_OPEN;
+    if (talking) {
+        /* a customer: his business waits, and he grins over his wares */
+        sPed.step = NULL;
+        sPed.idle = 120;
+        if (sDlgState == 2)
+            face = F_PEDDLER_HEAD_GRIN;
+    } else if (sPed.step) {
+        body = sPed.step[0];
+        face = sPed.step[1];
+        if (++sPed.t >= sPed.step[2]) {
+            sPed.t = 0;
+            sPed.step += 3;
+            if (!sPed.step[2]) {
+                sPed.step = NULL;
+                sPed.idle = 180 + rng_range(&sKeepRng, 240);
+            }
+        }
+    } else if (!--sPed.idle) {
+        /* the coin twice as often as the rest, never the same act twice */
+        static const u8 kActs[4] = { 0, 1, 0, 2 };
+        u8 act;
+        do
+            act = kActs[rng_range(&sKeepRng, 4)];
+        while (act == sPed.act && act != 0);
+        sPed.act = act;
+        sPed.step = &peddler_acts[peddler_act_at[act]];
+        sPed.t = 0;
+    }
+    /* his eyes follow the hero round to his left */
+    if (face == F_PEDDLER_HEAD_OPEN && PX(gPlayer->x) < PX(a->x) - 24 && PX(gPlayer->y) < PX(a->y) + 96)
+        face = F_PEDDLER_HEAD_LEFT;
+    if (keeper_blinks(&sPed.blink_in, &sPed.blink) && face != F_PEDDLER_HEAD_GRIN)
+        face = F_PEDDLER_HEAD_BLINK;
+    if (face != sPed.head) {
+        sPed.head = face;
+        keeper_frame(SHEET_PEDDLER_HEAD, face, sPed.head_tile, FALSE);
+    }
+    if (body != sPed.body) {
+        sPed.body = body;
+        keeper_frame(SHEET_PEDDLER_BODY, body, sPed.body_tile, FALSE);
+    }
+}
+
+static void gatekeeper_update(void) {
+    bool8 talking = sTalking == sGate.a && sDlgState;
+    u8 frame;
+    if (sGate.kindle) {
+        sGate.kindle--;
+    } else if (!talking && !--sGate.idle) {
+        sGate.kindle = 80;
+        sGate.idle = 300 + rng_range(&sKeepRng, 300);
+    }
+    if (sGate.kindle)
+        frame = F_GATEKEEPER_KINDLE;
+    else
+        frame = ((gFrame + 40) & 64) ? F_GATEKEEPER_BREATH : F_GATEKEEPER_IDLE;
+    if (keeper_blinks(&sGate.blink_in, &sGate.blink))
+        frame++; /* each pose's blink follows it */
+    if (frame != sGate.frame) {
+        sGate.frame = frame;
+        keeper_frame(SHEET_GATEKEEPER, frame, sGate.tile, FALSE);
+    }
+    /* the orb's glow: a step every eight frames, held at its brightest
+       while her own light burns */
+    if (!(gFrame & 7)) {
+        u8 g = sGate.kindle ? ORB_GLOW_STEPS / 2 : (sGate.glow + 1) % ORB_GLOW_STEPS;
+        sGate.glow = g;
+        gPalObj[PAL_OBJ_GATEKEEPER * 16 + ORB_GLOW_INDEX] = orb_glow[g * 2];
+        gPalObj[PAL_OBJ_GATEKEEPER * 16 + ORB_GLOW_INDEX + 1] = orb_glow[g * 2 + 1];
+        gPalDirty = 1;
+    }
+}
+
+/* his head over his body, breathing; her wisp over her */
+static void peddler_draw(void) {
+    Actor* a = sPed.a;
+    int sx = PX(a->x) - 32 - gCamX, sy = PX(a->y) - gCamY;
+    int breath = ((gFrame + 17) >> 6) & 1;
+    if (!sPed.head_tile || !sPed.body_tile)
+        return; /* no tiles to hold him: better unseen than drawn from another's */
+    draw_sprite(sx, sy - 48 + breath, SHEET_PEDDLER_HEAD, sPed.head_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
+    draw_sprite(sx, sy - 32, SHEET_PEDDLER_BODY, sPed.body_tile, 0, 0, a->prio, PAL_OBJ_PEDDLER);
+}
+
+static void gatekeeper_draw(void) {
+    Actor* a = sGate.a;
+    int sx = PX(a->x) - 32 - gCamX, sy = PX(a->y) - 64 - gCamY;
+    if (!sGate.tile || !sGate.wisp_tile)
+        return;
+    draw_sprite(sx + WISP_X, sy + WISP_Y, SHEET_WISP, sGate.wisp_tile, (gFrame / 6) & 3, 0, a->prio, PAL_OBJ_GATEKEEPER);
+    draw_sprite(sx, sy, SHEET_GATEKEEPER, sGate.tile, 0, 0, a->prio, PAL_OBJ_GATEKEEPER);
+}
 
 Actor* npc_spawn(int type, int px, int py) {
     Actor* a = actor_new(AK_NPC, type, px, py);
@@ -36,14 +214,7 @@ Actor* npc_spawn(int type, int px, int py) {
     if (!a)
         return NULL;
     if (type == NPC_SAGE || type == NPC_MERCHANT) {
-        /* the Gatekeeper and the Peddler are drawn large, two frames
-           each: the second is a blink (her orb pulses, his hands rub) */
-        if (!sBigTile)
-            sBigTile = sprite_load_sheet(SHEET_FOLK32);
-        actor_set_sheet(a, SHEET_FOLK32, sBigTile);
-        a->v[0] = type == NPC_SAGE ? F_FOLK32_SAGE_1 : F_FOLK32_MERCHANT_1;
-        a->v[1] = 1;
-        a->frame = a->v[0];
+        keeper_spawn(a);
     } else {
         /* the folk of the wood: only their own frame is resident */
         actor_set_sheet(a, SHEET_NPC, sprite_load_frame(SHEET_NPC, sFrames[type]));
@@ -57,7 +228,8 @@ Actor* npc_spawn(int type, int px, int py) {
 }
 
 void npc_room_reset(void) {
-    sBigTile = 0;
+    sPed.a = NULL;
+    sGate.a = NULL;
     sTalking = NULL;
     sDlgState = 0;
 }
@@ -68,10 +240,12 @@ void npcs_update(void) {
         Actor* a = &gActors[i];
         if (a->kind != AK_NPC)
             continue;
-        /* a slow breathing bob; the large ones blink now and then */
-        a->z = ((gFrame + i * 20) & 32) ? 0 : Q16(1);
-        if (a->v[1])
-            a->frame = a->v[0] + (((gFrame + i * 37) & 127) < 10 ? 1 : 0);
+        if (a == sPed.a)
+            peddler_update();
+        else if (a == sGate.a)
+            gatekeeper_update();
+        else
+            a->z = ((gFrame + i * 20) & 32) ? 0 : Q16(1); /* a slow breathing bob */
         /* keep the hero out of them */
         if (actors_overlap(a, gPlayer) && gPlayer->state != PS_HURT) {
             int d = actor_dir_to(a, gPlayer);
@@ -80,11 +254,29 @@ void npcs_update(void) {
     }
 }
 
+/* the folk nearer the viewer than the hero are drawn before him, so over
+   him; the rest after */
+static void npcs_draw_pass(bool8 front) {
+    int i, hy = PX(gPlayer->y);
+    for (i = 1; i < ACTOR_MAX; i++) {
+        Actor* a = &gActors[i];
+        if (a->kind != AK_NPC || (PX(a->y) > hy) != front)
+            continue;
+        if (a == sPed.a)
+            peddler_draw();
+        else if (a == sGate.a)
+            gatekeeper_draw();
+        else
+            actor_draw(a);
+    }
+}
+
+void npcs_draw_front(void) {
+    npcs_draw_pass(TRUE);
+}
+
 void npcs_draw(void) {
-    int i;
-    for (i = 1; i < ACTOR_MAX; i++)
-        if (gActors[i].kind == AK_NPC)
-            actor_draw(&gActors[i]);
+    npcs_draw_pass(FALSE);
 }
 
 /* the NPC the hero faces, within reach */

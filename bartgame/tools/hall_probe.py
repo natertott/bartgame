@@ -9,6 +9,11 @@
   EXIT     up the drain hole: the wood
   RETURN   back down it: the hero stands in the hole's mouth, on floor
   SAFE     no ground the hero can reach lets him fall
+  ALIVE    the keepers idle: the Peddler's head and body frames stream
+           in turn, the Gatekeeper breathes, her wisp burns and her
+           orb's glow pulses in her palette
+  BEHIND   a step behind the Gatekeeper she is drawn over the hero; in
+           front of her, he over her
 
     python3 tools/hall_probe.py
 """
@@ -102,6 +107,46 @@ def hero_prio(c):
     return (P.r16(c, 0x07000000 + 4) >> 10) & 3
 
 
+def hdr_defs(*names):
+    hdr = open(os.path.join(P.ROOT, 'build', 'gen', 'assets.h')).read()
+    return [int(hdr.split('#define %s ' % n)[1].split()[0]) for n in names]
+
+
+def oam_entries(c):
+    """the sprites on screen: (index, tile, palette, shape, size)"""
+    out = []
+    for i in range(128):
+        a0, a1, a2 = (P.r16(c, 0x07000000 + i * 8 + k) & 0xFFFF for k in (0, 2, 4))
+        if a0 & 0x0200:
+            continue
+        out.append((i, a2 & 0x3FF, a2 >> 12, a0 >> 14, a1 >> 14))
+    return out
+
+
+def tiles_sum(c, tile, n):
+    """a sample of a sprite's tiles in OBJ VRAM, to tell its frames apart"""
+    base = 0x06010000 + tile * 32
+    return tuple(P.r16(c, base + k) & 0xFFFF for k in range(0, n * 32, 24))
+
+
+def alive(c, pal, shape_size, frames=600, every=6):
+    """what a keeper shows over a while: the distinct frames of its
+    streamed sprite, the wisp's tiles, its palette's glow"""
+    seen, wisps, glows = set(), set(), set()
+    glow_at = 0x05000200 + (pal * 16 + hdr_defs('ORB_GLOW_INDEX')[0]) * 2
+    for _ in range(frames // every):
+        P.run(c, every)
+        for (i, tile, p, shape, size) in oam_entries(c):
+            if p != pal:
+                continue
+            if (shape, size) == shape_size:
+                seen.add(tiles_sum(c, tile, 64 if shape_size == (0, 3) else 32))
+            elif (shape, size) == (0, 1):
+                wisps.add(tile)
+        glows.add(P.r16(c, glow_at) & 0xFFFF)
+    return seen, wisps, glows
+
+
 def main():
     c = P.boot(seed=0xB4A7)
     P.run(c, 40)
@@ -153,6 +198,31 @@ def main():
                 if P.r8(c, types + mt) in tt.values():
                     bad.append((cx, cy))
     check('SAFE: nothing to fall into where the hero stands', not bad, 'cells %s' % bad[:6])
+    # ALIVE: the Peddler, from in front of his counter; the Gatekeeper
+    # from her rug
+    ped_pal, gate_pal = hdr_defs('PAL_OBJ_PEDDLER', 'PAL_OBJ_GATEKEEPER')
+    CP.teleport(c, *peddler)
+    P.run(c, 90)
+    seen, _, _ = alive(c, ped_pal, (1, 3), 900)
+    check('ALIVE: the Peddler idles, his frames streaming in', len(seen) >= 6, '%d distinct head and body frames' % len(seen))
+    CP.teleport(c, *gatekeeper)
+    P.run(c, 90)
+    seen, wisps, glows = alive(c, gate_pal, (0, 3), 600)
+    check('ALIVE: the Gatekeeper breathes and blinks', len(seen) >= 2, '%d distinct frames' % len(seen))
+    check('ALIVE: her wisp burns, her orb glows', len(wisps) >= 3 and len(glows) >= 4, 'wisp frames %d, glow colours %d' % (len(wisps), len(glows)))
+    # BEHIND: her sprite's place in OAM against the hero's
+    def order(pos):
+        CP.teleport(c, *pos)
+        P.run(c, 60)
+        ents = oam_entries(c)
+        hero = [i for (i, t, p, sh, sz) in ents if p == 0 and (sh, sz) == (1, 3)]
+        her = [i for (i, t, p, sh, sz) in ents if p == gate_pal and (sh, sz) == (0, 3)]
+        return (hero[0] if hero else -1), (her[0] if her else -1)
+    hero_i, her_i = order((21 * 16 - 22, 5 * 16 + 6))
+    check('BEHIND: a step behind her, she is over the hero', 0 <= her_i < hero_i, 'oam hero %d, her %d' % (hero_i, her_i))
+    P.snap(c, os.path.join(S, 'hall_behind.png'))
+    hero_i, her_i = order(gatekeeper)
+    check('BEHIND: in front of her, the hero is over her', 0 <= hero_i < her_i, 'oam hero %d, her %d' % (hero_i, her_i))
     # EXIT and RETURN
     CP.teleport(c, *mouth)
     P.hold(c, 'UP', 60)

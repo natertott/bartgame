@@ -13,9 +13,10 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
   barred arch whose falls pour into a basin, banners and hanging
   lanterns, a railed channel with a grate bridge, the great round drain,
   spouts pouring into the water below. The Pale Gatekeeper on her rug,
-  among candles, books and a crow, explains; the Billious Peddler behind
-  his counter under a red awning sells Healing Petals and Blightseeds for
-  gilt. The drain hole in the north wall, vines hanging into it, leads
+  among candles, books and a crow, a wisp burning over her orb,
+  explains; the Billious Peddler behind his counter under a red awning,
+  spinning a coin between customers, sells Healing Petals and
+  Blightseeds for gilt. The drain hole in the north wall, vines hanging into it, leads
   up into the wood; the arch in the wood's first glade leads back down.
 - **The Blighted Wood.** A 5x5 maze of rooms, generated from a seed rolled
   on the title screen: a growing tree that mostly runs in corridors and
@@ -48,8 +49,9 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 
 Grime and glamour, after the concept boards: a chibi flower-child hero
 with a round cream face in a ring of orange petals, a green hood and
-tunic; the Billious Peddler, purple-hided under a red hood; the Pale
-Gatekeeper in a tall violet hat. A forest falling into sickness: a
+tunic; the Billious Peddler, hunched in a purple hood specked with gold,
+a beak of a nose; the Pale Gatekeeper in a tall violet hat, her orb
+aglow. A forest falling into sickness: a
 canopy that goes from blue-black to lit green, dark olive turf with
 bright tips, warm soil trails, deep navy water with foam that drifts,
 amber lanterns hung in the trees, white and gold stars on the ground,
@@ -83,7 +85,9 @@ keeps its darks, so outlines and eyes survive), and each palette group
 derived by weighted k-means in Lab so small accents keep a colour.
 They replace the hero, the folk, the hub's two, the portraits, the
 items, the pickups, the icons and the shield, and take five more OBJ
-palette slots (gear, items, pick, icons, folk32), fourteen in all. The
+palette slots (gear, items, pick, icons, folk32), fourteen in all (the
+hub's two have since been drawn by hand, below: `folk32`'s slot is the
+Peddler's, and the Gatekeeper has a fifteenth). The
 importer's docstrings name which cell went to which frame and the
 choices where the art has no exact pose.
 
@@ -161,13 +165,39 @@ nearest colours, and the build reports every such pixel. The build
 gives a metatile a palette per quarter (`qpals`). Everything that
 repeats is painted on a period that divides 96 (the floor 96x80, the
 bricks 48, the water and the posts 32, the copings 96), and the right
-side wall is the left one's mirror, so the hall fits: 1,007 of the
-sewer's 1,024 pieces, 376 metatiles, 38 animated, 11 palettes.
+side wall is the left one's mirror, so the hall fits: 999 of the
+sewer's 1,024 pieces, 370 metatiles, 38 animated, 11 palettes.
 `art/sw_drain.py` gives each cell its collision by quarter and its
 type; the floor in front of the Peddler's counter is of type `FRONT`,
 where the hero is drawn over the overlay (OAM priority 1) that hides
 the Peddler's legs. `tools/sw_preview.py` renders the painting,
 `tools/hall_shots.py` captures the hall from the ROM.
+
+**The Drain's keepers.** The Billious Peddler and the Pale Gatekeeper
+are drawn by hand at the hall's own scale, not from the pack, in
+`art/sw_folk.py`: letter drawings over a palette each (OBJ slots 13 and
+14), lit from the upper left like the hall and outlined in their
+darkest colour, every frame put together from parts. The Peddler,
+hunched in a purple hood specked with gold, a beak of a pink nose
+under yellow eyes, a chain of red gems, is two sprites of 64x32, his
+head over his body, so what his face does and what his hands do mix
+freely. The awning rides higher to clear his hood, and the counter's
+top lies on the ground layer, so his hands and his coin rest on it
+while its cloth, on the overlay, hides his legs. He breathes and
+blinks, and his eyes follow the hero round to his left; between
+customers he spins his coin and slaps it flat, rubs his hands, drums
+his fingers (`PEDDLER_ACTS`, steps of body, face and frames held), and
+he grins over his wares. The Gatekeeper, gaunt and grey-haired under a
+tall hat with a bent tip, red eyes in its shadow, a gold-trimmed robe
+with a brooch and stars, a twisted staff, is one sprite of 64x64, with
+a wisp of violet flame burning over her orb in a second of 16x16. She
+breathes and blinks and now and then kindles a light over her raised
+palm, and her orb's glow pulses in two entries of her palette
+(`ORB_GLOW`). Their frames stream into tiles held for them, queued for
+the VBlank like the hero's, so all 29 frames cost the VRAM of one
+each. The folk nearer the viewer than the hero are drawn before him,
+so a hero behind the Gatekeeper is hidden by her robe.
+`tools/folk_preview.py` renders their frames and the pair in the hall.
 
 **Before the pack.** The tile atlases (`art/ref/tile_art/`, imported by
 `tools/import_tiles.py` into `art/tile_art/tiles.json` and laid by
@@ -403,6 +433,7 @@ art/            pixel art as rows of letters mapped to palette indices
   sw_hall.py    the Drain's hall, painted whole for every tick of its clock
   sw_cut.py     cutting the painting into metatiles; the hand-set palettes
   sw_drain.py   the hall for the build: collision, types, the cut
+  sw_folk.py    the Drain's two keepers, drawn by hand: parts, frames, acts
 tools/
   build_assets.py   art -> build/gen/assets.c with deduplicated tiles
   import_pack.py    the sprite pack (art/ref/pack/, art/ref/pack_art/) -> art/pack/
@@ -416,7 +447,8 @@ tools/
   compare_frames.py two 240x160 frames compared pixel for pixel
   sw_preview.py     the Drain's painting rendered, before it is cut
   hall_shots.py     the Drain's views and the whole hall, captured from the ROM
-  hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls
+  folk_preview.py   the keepers' frames on a sheet, or the pair in the hall
+  hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls, the keepers alive
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM
@@ -459,7 +491,7 @@ python3 tools/guard_probe.py              # the loadout, the water's edge, a hol
 python3 tools/myst_probe.py               # every mystery kind forced, played to its reward
 python3 tools/wood_probe.py               # the bow, the Drain Cap, the sword's gathering and deflecting, open knights
 python3 tools/menu_probe.py               # the three pause pages, the grid, the map's zoom, save and continue
-python3 tools/hall_probe.py               # the Drain walked from the spawn: the hole, the shop, the Gatekeeper
+python3 tools/hall_probe.py               # the Drain walked from the spawn: the hole, the shop, the Gatekeeper, the keepers' idles
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 ```

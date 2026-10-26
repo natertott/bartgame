@@ -1271,6 +1271,87 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the Drain's keepers drawn by hand, alive (Oct 2026)
+
+The user liked the redrawn Drain and asked next for the Billious Peddler
+and the Pale Gatekeeper: redesigned the same way, from the same
+illustration, and given idles that move a little or keep them busy at
+their stalls, so the game feels alive.
+
+Both are drawn by hand at the hall's scale in `art/sw_folk.py`, in parts
+(letter drawings over a palette each), and every frame is the parts put
+together:
+- The Peddler: hunched in a purple hood specked with gold, its tip
+  flopped back; a beak of a pink nose curving down past a frown; yellow
+  eyes under an angry brow; a pointed ear with a gold ring; a chain of
+  red gems; lavender sleeves; a coin under his hand. Two sprites of
+  64x32, head over body: 5 head frames, 14 body frames.
+- The Gatekeeper: a tall hat with a hooked tip and a gold band; grey
+  hair; a gaunt face in its shadow with red eyes and a hooked nose; a
+  dark robe trimmed in gold with a brooch, stars and a crescent; a
+  twisted gold staff and an orb. One sprite of 64x64 with 6 frames, and
+  a wisp of 16x16 with 4.
+Each has an OBJ palette of its own. `peddler` takes folk32's slot (13)
+and `gatekeeper` is a new one (14), 15 in all. The pack's `folk32`
+sheet stays in the pack, unbuilt.
+
+The idles, in `src/npc.c`:
+- The Peddler breathes: his head sprite sits a pixel lower every 64
+  frames. He blinks every 2.5 to 5 s, and looks left when the hero comes
+  round to his left. Every 3 to 7 s he does one of his acts. These are
+  `PEDDLER_ACTS`, steps of body, face and frames held, emitted by the
+  build as `peddler_acts`:
+  - he spins his coin four turns, slowing, and slaps it flat with a
+    grin (twice as often as the others);
+  - he rubs his hands, grinning;
+  - he drums his fingers.
+  A customer stops him, and he grins while the shop is open.
+- The Gatekeeper breathes, her hat and head a pixel lower, and blinks.
+  Every 5 to 10 s she kindles a light over her raised palm for 80
+  frames. Her wisp burns in four frames. Every eight frames her orb's
+  glow steps through eight colours in two entries of her palette
+  (`ORB_GLOW`), held bright while her light burns.
+- A local Rng drives the idles, so the game's own random numbers are
+  untouched.
+- Their frames stream into tiles held for them (`sprite_alloc`, new),
+  queued for the VBlank like the hero's. All 29 frames cost 128 tiles;
+  the wisp's 16 tiles are resident.
+
+The stall changed to take him:
+- the awning rides higher and shorter, 26 to 39 (was 34 to 52), to
+  clear his hood;
+- the counter's top is on the ground layer and only its cloth on the
+  overlay, so his hands and his coin lie over it; nothing of him but
+  hands, cuffs and coin comes below the counter's back edge;
+- the coins went to the counter's left end, the red flask to its right.
+The sewer set now holds 999 pieces and 370 metatiles, 38 animated, with
+106 pixels remapped.
+
+Drawing order: the folk nearer the viewer than the hero are drawn
+before him (`npcs_draw_front`), so a hero behind the Gatekeeper is
+hidden by her robe.
+
+What was got wrong on the way:
+- The first passes, from shaded ellipses, were blobs. The keepers are
+  placed pixel by pixel, the face first, over many passes, with a
+  zoomed grid and the screen-size view side by side.
+- The Gatekeeper's face read as a white mask and her nose as a slash.
+  Her face went into the shadow of her brim: red eyes, and only the
+  nose's ridge lit, hooking to a shadowed tip.
+- The Peddler's tap was one pixel nobody would see. It is now two
+  frames of drumming fingers.
+- hall_probe's OAM reads came back signed; they are masked.
+
+`tools/hall_probe.py` adds two checks, 15/15 in all:
+- ALIVE: in 15 s the Peddler shows 10 distinct head and body frames;
+  in 10 s the Gatekeeper shows 4, her wisp 4 and her orb 5 colours.
+- BEHIND: the OAM order around her.
+All the probes, the comparison build's critical path and verify-world
+pass. The captures and GIFs are in `docs/drain/` (`keepers_sheet.png`,
+`peddler.gif`, `gatekeeper.gif`); `tools/folk_preview.py` renders the
+frames, or the pair in the hall. The dialogue portraits are still the
+pack's, left for the dialogue-box pass.
+
 ### BARTGAME: the Drain redrawn from scratch (Oct 2026)
 
 The user made us the artist and gave an illustration of a sewer hall to

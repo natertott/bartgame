@@ -299,6 +299,33 @@ c.append('};')
 h.append('#define SHEET_COUNT %d' % len(sheet_names))
 h.append('extern const SpriteSheet sheets[];\n')
 print('sprites: %d sheets, %d tiles' % (len(sheet_names), sum(s[1] for s in sheet_names)))
+# the Gatekeeper's orb: its two glow colours through one pulse, stepped
+# into her palette (npc.c)
+import sw_folk  # noqa: E402
+vals = []
+for pair in sw_folk.ORB_GLOW:
+    vals += [rgb15('#%02x%02x%02x' % col) for col in pair]
+c.append(c_array_u16('orb_glow', vals))
+h.append('#define ORB_GLOW_STEPS %d' % len(sw_folk.ORB_GLOW))
+h.append('#define ORB_GLOW_INDEX %d /* her palette: the glow, then its light */' % (1 + [k for k, _ in sw_folk.GATEKEEPER_PAL].index('v')))
+assert [k for k, _ in sw_folk.GATEKEEPER_PAL].index('V') == [k for k, _ in sw_folk.GATEKEEPER_PAL].index('v') + 1
+h.append('extern const u16 orb_glow[];')
+h.append('#define WISP_X %d /* the wisp over her orb, on her sprite */' % sw_folk.WISP_AT[0])
+h.append('#define WISP_Y %d' % sw_folk.WISP_AT[1])
+# the Peddler's business: steps of (body frame, head frame, frames held),
+# each act ended by a 0 hold
+frame_of = {sh['name']: {f: i for i, f in enumerate(sh['frames'])} for sh in sprites.SHEETS}
+vals, starts = [], []
+for act in sw_folk.PEDDLER_ACTS:
+    starts.append(len(vals))
+    for (b, f, t) in act:
+        vals += [frame_of['peddler_body'][b], frame_of['peddler_head'][f], t]
+    vals += [0, 0, 0]
+c.append('const u8 peddler_acts[%d] = { %s };' % (len(vals), ', '.join(str(v) for v in vals)))
+c.append('const u16 peddler_act_at[%d] = { %s };' % (len(starts), ', '.join(str(v) for v in starts)))
+h.append('#define PEDDLER_ACTS %d' % len(starts))
+h.append('extern const u8 peddler_acts[];')
+h.append('extern const u16 peddler_act_at[];')
 
 # ---------------------------------------------------------------- font --
 glyphs = font.render()  # list of 95 pixel grids 8x8
