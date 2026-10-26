@@ -1,0 +1,6479 @@
+{
+ "versions": [
+  {
+   "version": "v1",
+   "commit": "4297bb8",
+   "what": "the first tile spec; the art pack V3 was drawn for it",
+   "entries": 117,
+   "tiles": 328
+  },
+  {
+   "version": "v2",
+   "commit": "0477e1d",
+   "what": "the painted drafts; the 41-page PDF",
+   "entries": 99,
+   "tiles": 423
+  },
+  {
+   "version": "v3",
+   "commit": "718efd8",
+   "what": "the current spec; what the game lays now",
+   "entries": 103,
+   "tiles": 293
+  }
+ ],
+ "keys": [
+  {
+   "key": "grass",
+   "v1": {
+    "path": "wood_ground/grass.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss0",
+     "moss1",
+     "moss2"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/grass.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss0",
+     "moss1",
+     "moss2"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/grass.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss0",
+     "moss1",
+     "moss2"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/grass.png",
+   "notes": []
+  },
+  {
+   "key": "grass_stain",
+   "v1": {
+    "path": "wood_ground/grass_stain.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_blight",
+     "moss_blight2"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/grass_stain.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_blight",
+     "moss_blight2"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/grass_stain.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_blight",
+     "moss_blight2"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/grass_stain.png",
+   "notes": []
+  },
+  {
+   "key": "flowers",
+   "v1": {
+    "path": "wood_ground/flowers.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_flowers",
+     "moss_flowers2"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/flowers.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_flowers",
+     "moss_flowers2"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/flowers.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "moss_flowers",
+     "moss_flowers2"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/flowers.png",
+   "notes": []
+  },
+  {
+   "key": "tall_grass",
+   "v1": {
+    "path": "wood_ground/tall_grass.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "tall_grass"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/tall_grass.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "tall_grass"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/tall_grass.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "tall_grass"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/tall_grass.png",
+   "notes": []
+  },
+  {
+   "key": "bones",
+   "v1": {
+    "path": "wood_ground/bones.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bones"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/bones.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bones"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/bones.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bones"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/bones.png",
+   "notes": []
+  },
+  {
+   "key": "trail",
+   "v1": {
+    "path": "wood_ground/trail.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "path"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/trail.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "path"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/trail.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "path"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/trail.png",
+   "notes": []
+  },
+  {
+   "key": "flagstone",
+   "v1": {
+    "path": "wood_ground/flagstone.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mossy_stone"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/flagstone.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mossy_stone"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/flagstone.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mossy_stone"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/flagstone.png",
+   "notes": []
+  },
+  {
+   "key": "meadow",
+   "v1": {
+    "path": "wood_ground/meadow.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "piece",
+     3,
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "meadow_0",
+     "meadow_1",
+     "meadow_2",
+     "meadow_3",
+     "meadow_4",
+     "meadow_5",
+     "meadow_6",
+     "meadow_7",
+     "meadow_8"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/meadow.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "piece",
+     3,
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "meadow_0",
+     "meadow_1",
+     "meadow_2",
+     "meadow_3",
+     "meadow_4",
+     "meadow_5",
+     "meadow_6",
+     "meadow_7",
+     "meadow_8"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/meadow.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "piece",
+     3,
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "meadow_0",
+     "meadow_1",
+     "meadow_2",
+     "meadow_3",
+     "meadow_4",
+     "meadow_5",
+     "meadow_6",
+     "meadow_7",
+     "meadow_8"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/meadow.png",
+   "notes": []
+  },
+  {
+   "key": "clover",
+   "v1": {
+    "path": "wood_ground/clover.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "clover_0",
+     "clover_1",
+     "clover_2",
+     "clover_3"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/clover.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "clover_0",
+     "clover_1",
+     "clover_2",
+     "clover_3"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/clover.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "clover_0",
+     "clover_1",
+     "clover_2",
+     "clover_3"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/clover.png",
+   "notes": []
+  },
+  {
+   "key": "fairy_ring",
+   "v1": {
+    "path": "wood_ground/fairy_ring.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shroomring_0",
+     "shroomring_1",
+     "shroomring_2",
+     "shroomring_3"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/fairy_ring.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shroomring_0",
+     "shroomring_1",
+     "shroomring_2",
+     "shroomring_3"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/fairy_ring.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shroomring_0",
+     "shroomring_1",
+     "shroomring_2",
+     "shroomring_3"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/fairy_ring.png",
+   "notes": []
+  },
+  {
+   "key": "trail_edge",
+   "v1": {
+    "path": "wood_ground/trail_edge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pedge_1",
+     "pedge_2",
+     "pedge_3",
+     "pedge_4",
+     "pedge_5",
+     "pedge_6",
+     "pedge_7",
+     "pedge_8",
+     "pedge_9",
+     "pedge_a",
+     "pedge_b",
+     "pedge_c",
+     "pedge_d",
+     "pedge_e",
+     "pedge_f"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/trail_edge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pedge_1",
+     "pedge_2",
+     "pedge_3",
+     "pedge_4",
+     "pedge_5",
+     "pedge_6",
+     "pedge_7",
+     "pedge_8",
+     "pedge_9",
+     "pedge_a",
+     "pedge_b",
+     "pedge_c",
+     "pedge_d",
+     "pedge_e",
+     "pedge_f"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/trail_edge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pedge_1",
+     "pedge_2",
+     "pedge_3",
+     "pedge_4",
+     "pedge_5",
+     "pedge_6",
+     "pedge_7",
+     "pedge_8",
+     "pedge_9",
+     "pedge_a",
+     "pedge_b",
+     "pedge_c",
+     "pedge_d",
+     "pedge_e",
+     "pedge_f"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/trail_edge.png",
+   "notes": []
+  },
+  {
+   "key": "shore",
+   "v1": {
+    "path": "wood_ground/shore.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_1",
+     "shore_2",
+     "shore_3",
+     "shore_4",
+     "shore_5",
+     "shore_6",
+     "shore_7",
+     "shore_8",
+     "shore_9",
+     "shore_a",
+     "shore_b",
+     "shore_c",
+     "shore_d",
+     "shore_e",
+     "shore_f"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/shore.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_1",
+     "shore_2",
+     "shore_3",
+     "shore_4",
+     "shore_5",
+     "shore_6",
+     "shore_7",
+     "shore_8",
+     "shore_9",
+     "shore_a",
+     "shore_b",
+     "shore_c",
+     "shore_d",
+     "shore_e",
+     "shore_f"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/shore.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_1",
+     "shore_2",
+     "shore_3",
+     "shore_4",
+     "shore_5",
+     "shore_6",
+     "shore_7",
+     "shore_8",
+     "shore_9",
+     "shore_a",
+     "shore_b",
+     "shore_c",
+     "shore_d",
+     "shore_e",
+     "shore_f"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/shore.png",
+   "notes": []
+  },
+  {
+   "key": "shore_corner",
+   "v1": {
+    "path": "wood_ground/shore_corner.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_c1",
+     "shore_c2",
+     "shore_c3",
+     "shore_c4",
+     "shore_c5",
+     "shore_c6",
+     "shore_c7",
+     "shore_c8",
+     "shore_c9",
+     "shore_ca",
+     "shore_cb",
+     "shore_cc",
+     "shore_cd",
+     "shore_ce",
+     "shore_cf"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/shore_corner.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_c1",
+     "shore_c2",
+     "shore_c3",
+     "shore_c4",
+     "shore_c5",
+     "shore_c6",
+     "shore_c7",
+     "shore_c8",
+     "shore_c9",
+     "shore_ca",
+     "shore_cb",
+     "shore_cc",
+     "shore_cd",
+     "shore_ce",
+     "shore_cf"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/shore_corner.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "shore_c1",
+     "shore_c2",
+     "shore_c3",
+     "shore_c4",
+     "shore_c5",
+     "shore_c6",
+     "shore_c7",
+     "shore_c8",
+     "shore_c9",
+     "shore_ca",
+     "shore_cb",
+     "shore_cc",
+     "shore_cd",
+     "shore_ce",
+     "shore_cf"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/shore_corner.png",
+   "notes": []
+  },
+  {
+   "key": "verge",
+   "v1": {
+    "path": "wood_ground/verge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "verge_1",
+     "verge_2",
+     "verge_3",
+     "verge_4",
+     "verge_5",
+     "verge_6",
+     "verge_7",
+     "verge_8",
+     "verge_9",
+     "verge_a",
+     "verge_b",
+     "verge_c",
+     "verge_d",
+     "verge_e",
+     "verge_f"
+    ]
+   },
+   "v2": {
+    "path": "wood_ground/verge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "verge_1",
+     "verge_2",
+     "verge_3",
+     "verge_4",
+     "verge_5",
+     "verge_6",
+     "verge_7",
+     "verge_8",
+     "verge_9",
+     "verge_a",
+     "verge_b",
+     "verge_c",
+     "verge_d",
+     "verge_e",
+     "verge_f"
+    ]
+   },
+   "v3": {
+    "path": "wood_ground/verge.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "verge_1",
+     "verge_2",
+     "verge_3",
+     "verge_4",
+     "verge_5",
+     "verge_6",
+     "verge_7",
+     "verge_8",
+     "verge_9",
+     "verge_a",
+     "verge_b",
+     "verge_c",
+     "verge_d",
+     "verge_e",
+     "verge_f"
+    ]
+   },
+   "importer_reads": "assets/wood_ground/verge.png",
+   "notes": []
+  },
+  {
+   "key": "water",
+   "v1": {
+    "path": "wood_water/water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water"
+    ]
+   },
+   "importer_reads": "assets/wood_water/water.png",
+   "notes": []
+  },
+  {
+   "key": "water_bank",
+   "v1": {
+    "path": "wood_water/water_bank.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_1",
+     "water_2",
+     "water_3",
+     "water_4",
+     "water_5",
+     "water_6",
+     "water_7",
+     "water_8",
+     "water_9",
+     "water_a",
+     "water_b",
+     "water_c",
+     "water_d",
+     "water_e",
+     "water_f"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/water_bank.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_1",
+     "water_2",
+     "water_3",
+     "water_4",
+     "water_5",
+     "water_6",
+     "water_7",
+     "water_8",
+     "water_9",
+     "water_a",
+     "water_b",
+     "water_c",
+     "water_d",
+     "water_e",
+     "water_f"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/water_bank.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_1",
+     "water_2",
+     "water_3",
+     "water_4",
+     "water_5",
+     "water_6",
+     "water_7",
+     "water_8",
+     "water_9",
+     "water_a",
+     "water_b",
+     "water_c",
+     "water_d",
+     "water_e",
+     "water_f"
+    ]
+   },
+   "importer_reads": "assets/wood_water/water_bank.png",
+   "notes": []
+  },
+  {
+   "key": "water_nick",
+   "v1": {
+    "path": "wood_water/water_nick.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_c1",
+     "water_c2",
+     "water_c3",
+     "water_c4",
+     "water_c5",
+     "water_c6",
+     "water_c7",
+     "water_c8",
+     "water_c9",
+     "water_ca",
+     "water_cb",
+     "water_cc",
+     "water_cd",
+     "water_ce",
+     "water_cf"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/water_nick.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_c1",
+     "water_c2",
+     "water_c3",
+     "water_c4",
+     "water_c5",
+     "water_c6",
+     "water_c7",
+     "water_c8",
+     "water_c9",
+     "water_ca",
+     "water_cb",
+     "water_cc",
+     "water_cd",
+     "water_ce",
+     "water_cf"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/water_nick.png",
+    "size": [
+     240,
+     32
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_c1",
+     "water_c2",
+     "water_c3",
+     "water_c4",
+     "water_c5",
+     "water_c6",
+     "water_c7",
+     "water_c8",
+     "water_c9",
+     "water_ca",
+     "water_cb",
+     "water_cc",
+     "water_cd",
+     "water_ce",
+     "water_cf"
+    ]
+   },
+   "importer_reads": "assets/wood_water/water_nick.png",
+   "notes": []
+  },
+  {
+   "key": "lily",
+   "v1": {
+    "path": "wood_water/lily.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_lily"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/lily.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_lily"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/lily.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_lily"
+    ]
+   },
+   "importer_reads": "assets/wood_water/lily.png",
+   "notes": []
+  },
+  {
+   "key": "lily_raft",
+   "v1": {
+    "path": "wood_water/lily_raft.png",
+    "size": [
+     32,
+     64
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "raft_0",
+     "raft_1",
+     "raft_2",
+     "raft_3"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/lily_raft.png",
+    "size": [
+     32,
+     64
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "raft_0",
+     "raft_1",
+     "raft_2",
+     "raft_3"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/lily_raft.png",
+    "size": [
+     32,
+     64
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "raft_0",
+     "raft_1",
+     "raft_2",
+     "raft_3"
+    ]
+   },
+   "importer_reads": "assets/wood_water/lily_raft.png",
+   "notes": []
+  },
+  {
+   "key": "waterfall",
+   "v1": {
+    "path": "wood_water/waterfall.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "ground",
+    "metatiles": [
+     "waterfall"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/waterfall.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "ground",
+    "metatiles": [
+     "waterfall"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/waterfall.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "ground",
+    "metatiles": [
+     "waterfall"
+    ]
+   },
+   "importer_reads": "assets/wood_water/waterfall.png",
+   "notes": []
+  },
+  {
+   "key": "foam",
+   "v1": {
+    "path": "wood_water/foam.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_foam"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/foam.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_foam"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/foam.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "water_foam"
+    ]
+   },
+   "importer_reads": "assets/wood_water/foam.png",
+   "notes": []
+  },
+  {
+   "key": "canopy",
+   "v1": {
+    "path": "wood_leaf/canopy.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy",
+     "canopy2"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/canopy.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy",
+     "canopy2"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/canopy.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy",
+     "canopy2"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/canopy.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_glint",
+   "v1": {
+    "path": "wood_leaf/canopy_glint.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_glint"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/canopy_glint.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_glint"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/canopy_glint.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_glint"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/canopy_glint.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_lantern",
+   "v1": {
+    "path": "wood_leaf/canopy_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_lantern"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/canopy_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_lantern"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/canopy_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_lantern"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/canopy_lantern.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_face",
+   "v1": {
+    "path": "wood_leaf/canopy_face.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_s"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/canopy_face.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_s"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/canopy_face.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_s"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/canopy_face.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_crown",
+   "v1": {
+    "path": "wood_leaf/canopy_crown.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_n"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/canopy_crown.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_n"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/canopy_crown.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_n"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/canopy_crown.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_sick",
+   "v1": {
+    "path": "wood_blight/canopy_sick.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_blight"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/canopy_sick.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_blight"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/canopy_sick.png",
+   "notes": []
+  },
+  {
+   "key": "canopy_sick_lit",
+   "v1": {
+    "path": "wood_blight/canopy_sick_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_blight2"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/canopy_sick_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "canopy_blight2"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/canopy_sick_lit.png",
+   "notes": []
+  },
+  {
+   "key": "tree",
+   "v1": {
+    "path": "wood_leaf/tree.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree_top_nw",
+     "tree_top_ne",
+     "tree_mid_w",
+     "tree_mid_e",
+     "tree_trunk_w",
+     "tree_trunk_e"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/tree.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree_top_nw",
+     "tree_top_ne",
+     "tree_mid_w",
+     "tree_mid_e",
+     "tree_trunk_w",
+     "tree_trunk_e"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/tree.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree_top_nw",
+     "tree_top_ne",
+     "tree_mid_w",
+     "tree_mid_e",
+     "tree_trunk_w",
+     "tree_trunk_e"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/tree.png",
+   "notes": []
+  },
+  {
+   "key": "tree_lantern",
+   "v1": {
+    "path": "wood_leaf/tree_lantern.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree2_0",
+     "tree2_1",
+     "tree2_2",
+     "tree2_3",
+     "tree2_4",
+     "tree2_5"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/tree_lantern.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree2_0",
+     "tree2_1",
+     "tree2_2",
+     "tree2_3",
+     "tree2_4",
+     "tree2_5"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/tree_lantern.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "tree2_0",
+     "tree2_1",
+     "tree2_2",
+     "tree2_3",
+     "tree2_4",
+     "tree2_5"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/tree_lantern.png",
+   "notes": []
+  },
+  {
+   "key": "great_tree",
+   "v1": {
+    "path": "wood_leaf/great_tree.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree_0",
+     "gtree_1",
+     "gtree_2",
+     "gtree_3",
+     "gtree_4",
+     "gtree_5",
+     "gtree_6",
+     "gtree_7",
+     "gtree_8",
+     "gtree_9",
+     "gtree_10",
+     "gtree_11"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/great_tree.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree_0",
+     "gtree_1",
+     "gtree_2",
+     "gtree_3",
+     "gtree_4",
+     "gtree_5",
+     "gtree_6",
+     "gtree_7",
+     "gtree_8",
+     "gtree_9",
+     "gtree_10",
+     "gtree_11"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/great_tree.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree_0",
+     "gtree_1",
+     "gtree_2",
+     "gtree_3",
+     "gtree_4",
+     "gtree_5",
+     "gtree_6",
+     "gtree_7",
+     "gtree_8",
+     "gtree_9",
+     "gtree_10",
+     "gtree_11"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/great_tree.png",
+   "notes": []
+  },
+  {
+   "key": "great_tree_2",
+   "v1": {
+    "path": "wood_leaf/great_tree_2.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree2_0",
+     "gtree2_1",
+     "gtree2_2",
+     "gtree2_3",
+     "gtree2_4",
+     "gtree2_5",
+     "gtree2_6",
+     "gtree2_7",
+     "gtree2_8",
+     "gtree2_9",
+     "gtree2_10",
+     "gtree2_11"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/great_tree_2.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree2_0",
+     "gtree2_1",
+     "gtree2_2",
+     "gtree2_3",
+     "gtree2_4",
+     "gtree2_5",
+     "gtree2_6",
+     "gtree2_7",
+     "gtree2_8",
+     "gtree2_9",
+     "gtree2_10",
+     "gtree2_11"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/great_tree_2.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "gtree2_0",
+     "gtree2_1",
+     "gtree2_2",
+     "gtree2_3",
+     "gtree2_4",
+     "gtree2_5",
+     "gtree2_6",
+     "gtree2_7",
+     "gtree2_8",
+     "gtree2_9",
+     "gtree2_10",
+     "gtree2_11"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/great_tree_2.png",
+   "notes": []
+  },
+  {
+   "key": "blight_tree",
+   "v1": {
+    "path": "wood_blight/blight_tree.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "btree_0",
+     "btree_1",
+     "btree_2",
+     "btree_3",
+     "btree_4",
+     "btree_5"
+    ]
+   },
+   "v2": {
+    "path": "blight_growth/blight_tree.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     4
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "btree_0",
+     "btree_1",
+     "btree_2",
+     "btree_3",
+     "btree_4",
+     "btree_5",
+     "btree_6",
+     "btree_7",
+     "btree_8",
+     "btree_9",
+     "btree_10",
+     "btree_11"
+    ]
+   },
+   "v3": {
+    "path": "wood_blight/blight_tree.png",
+    "size": [
+     32,
+     48
+    ],
+    "shape": [
+     "piece",
+     2,
+     3
+    ],
+    "frames": 1,
+    "layer": "both",
+    "metatiles": [
+     "btree_0",
+     "btree_1",
+     "btree_2",
+     "btree_3",
+     "btree_4",
+     "btree_5"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_tree.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "bush",
+   "v1": {
+    "path": "wood_leaf/bush.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bush"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/bush.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bush"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/bush.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bush"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/bush.png",
+   "notes": []
+  },
+  {
+   "key": "stone_small",
+   "v1": {
+    "path": "wood_stone/stone_small.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock_small"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/stone_small.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock_small"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/stone_small.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock_small"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/stone_small.png",
+   "notes": []
+  },
+  {
+   "key": "boulder",
+   "v1": {
+    "path": "wood_stone/boulder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "boulder"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/boulder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "boulder"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/boulder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "boulder"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/boulder.png",
+   "notes": []
+  },
+  {
+   "key": "rocks",
+   "v1": {
+    "path": "wood_stone/rocks.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock",
+     "rock2",
+     "rock3"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/rocks.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock",
+     "rock2",
+     "rock3"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/rocks.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rock",
+     "rock2",
+     "rock3"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/rocks.png",
+   "notes": []
+  },
+  {
+   "key": "stump",
+   "v1": {
+    "path": "wood_leaf/stump.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stump"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/stump.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stump"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/stump.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stump"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/stump.png",
+   "notes": []
+  },
+  {
+   "key": "log",
+   "v1": {
+    "path": "wood_leaf/log.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "log"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/log.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "log"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/log.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "log"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/log.png",
+   "notes": []
+  },
+  {
+   "key": "hollow_log",
+   "v1": {
+    "path": "wood_leaf/hollow_log.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hlog_0",
+     "hlog_1"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/hollow_log.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hlog_0",
+     "hlog_1"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/hollow_log.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hlog_0",
+     "hlog_1"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/hollow_log.png",
+   "notes": []
+  },
+  {
+   "key": "great_boulder",
+   "v1": {
+    "path": "wood_stone/great_boulder.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "gboulder_0",
+     "gboulder_1",
+     "gboulder_2",
+     "gboulder_3"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/great_boulder.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "gboulder_0",
+     "gboulder_1",
+     "gboulder_2",
+     "gboulder_3"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/great_boulder.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "gboulder_0",
+     "gboulder_1",
+     "gboulder_2",
+     "gboulder_3"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/great_boulder.png",
+   "notes": []
+  },
+  {
+   "key": "tree_rock",
+   "v1": {
+    "path": "wood_stone/tree_rock.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "treerock_0",
+     "treerock_1",
+     "treerock_2",
+     "treerock_3"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/tree_rock.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "treerock_0",
+     "treerock_1",
+     "treerock_2",
+     "treerock_3"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/tree_rock.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "treerock_0",
+     "treerock_1",
+     "treerock_2",
+     "treerock_3"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/tree_rock.png",
+   "notes": []
+  },
+  {
+   "key": "pillar",
+   "v1": {
+    "path": "wood_stone/pillar.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pillar"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/pillar.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pillar"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/pillar.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pillar"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/pillar.png",
+   "notes": []
+  },
+  {
+   "key": "ruin_wall",
+   "v1": {
+    "path": "wood_stone/ruin_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ruin_wall"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/ruin_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ruin_wall"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/ruin_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ruin_wall"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/ruin_wall.png",
+   "notes": []
+  },
+  {
+   "key": "statue",
+   "v1": {
+    "path": "wood_stone/statue.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "statue"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/statue.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "statue"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/statue.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "statue"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/statue.png",
+   "notes": []
+  },
+  {
+   "key": "lantern_post",
+   "v1": {
+    "path": "wood_leaf/lantern_post.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "lantern_post"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/lantern_post.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "lantern_post"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/lantern_post.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "lantern_post"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/lantern_post.png",
+   "notes": []
+  },
+  {
+   "key": "thorns",
+   "v1": {
+    "path": "wood_leaf/thorns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thorn"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/thorns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thorn"
+    ]
+   },
+   "v3": {
+    "path": "wood_leaf/thorns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thorn"
+    ]
+   },
+   "importer_reads": "assets/wood_leaf/thorns.png",
+   "notes": []
+  },
+  {
+   "key": "cliff",
+   "v1": {
+    "path": "wood_stone/cliff.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ledge_s_w",
+     "ledge_s",
+     "ledge_s_e"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/cliff.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ledge_s_w",
+     "ledge_s",
+     "ledge_s_e"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/cliff.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "ledge_s_w",
+     "ledge_s",
+     "ledge_s_e"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/cliff.png",
+   "notes": []
+  },
+  {
+   "key": "bridge",
+   "v1": {
+    "path": "wood_water/bridge.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/bridge.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/bridge.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge"
+    ]
+   },
+   "importer_reads": "assets/wood_water/bridge.png",
+   "notes": []
+  },
+  {
+   "key": "bridge_ns",
+   "v1": {
+    "path": "wood_water/bridge_ns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge_v"
+    ]
+   },
+   "v2": {
+    "path": "wood_water/bridge_ns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge_v"
+    ]
+   },
+   "v3": {
+    "path": "wood_water/bridge_ns.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "bridge_v"
+    ]
+   },
+   "importer_reads": "assets/wood_water/bridge_ns.png",
+   "notes": []
+  },
+  {
+   "key": "pit",
+   "v1": {
+    "path": "wood_stone/pit.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pit"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/pit.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pit"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/pit.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pit"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/pit.png",
+   "notes": []
+  },
+  {
+   "key": "crack",
+   "v1": {
+    "path": "wood_stone/crack.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "crack"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/crack.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "crack"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/crack.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "crack"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/crack.png",
+   "notes": []
+  },
+  {
+   "key": "web",
+   "v1": {
+    "path": "wood_stone/web.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "web"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/web.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "web"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/web.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "web"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/web.png",
+   "notes": []
+  },
+  {
+   "key": "door_locked",
+   "v1": {
+    "path": "wood_stone/door_locked.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_locked"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/door_locked.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_locked"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/door_locked.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_locked"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/door_locked.png",
+   "notes": []
+  },
+  {
+   "key": "door_open",
+   "v1": {
+    "path": "wood_stone/door_open.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_open"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/door_open.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_open"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/door_open.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "door_open"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/door_open.png",
+   "notes": []
+  },
+  {
+   "key": "stairs",
+   "v1": {
+    "path": "wood_stone/stairs.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stairs_down"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/stairs.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stairs_down"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/stairs.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "stairs_down"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/stairs.png",
+   "notes": []
+  },
+  {
+   "key": "chest",
+   "v1": {
+    "path": "wood_stone/chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "chest",
+     "chest_open"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "chest",
+     "chest_open"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "chest",
+     "chest_open"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/chest.png",
+   "notes": []
+  },
+  {
+   "key": "censer",
+   "v1": {
+    "path": "wood_stone/censer.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "torch"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/censer.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "torch"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/censer.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "torch"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/censer.png",
+   "notes": []
+  },
+  {
+   "key": "censer_lit",
+   "v1": {
+    "path": "wood_stone/censer_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "torch_lit"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/censer_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "torch_lit"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/censer_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "torch_lit"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/censer_lit.png",
+   "notes": []
+  },
+  {
+   "key": "mouths",
+   "v1": {
+    "path": "wood_stone/mouths.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mouth_cave",
+     "mouth_hollow",
+     "mouth_thicket"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/mouths.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mouth_cave",
+     "mouth_hollow",
+     "mouth_thicket"
+    ]
+   },
+   "v3": {
+    "path": "wood_stone/mouths.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "mouth_cave",
+     "mouth_hollow",
+     "mouth_thicket"
+    ]
+   },
+   "importer_reads": "assets/wood_stone/mouths.png",
+   "notes": []
+  },
+  {
+   "key": "blight_ground",
+   "v1": {
+    "path": "wood_blight/blight_ground.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_ground0",
+     "blight_ground1"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_ground.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_ground0",
+     "blight_ground1"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_ground.png",
+   "notes": []
+  },
+  {
+   "key": "blight_ground_lit",
+   "v1": {
+    "path": "wood_blight/blight_ground_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_ground2"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_ground_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_ground2"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_ground_lit.png",
+   "notes": []
+  },
+  {
+   "key": "blight_floor",
+   "v1": {
+    "path": "wood_blight/blight_floor.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_floor"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_floor.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_floor"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_floor.png",
+   "notes": []
+  },
+  {
+   "key": "blight_floor_pits",
+   "v1": {
+    "path": "wood_blight/blight_floor_pits.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_floor2"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_floor_pits.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_floor2"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_floor_pits.png",
+   "notes": []
+  },
+  {
+   "key": "blight_vein",
+   "v1": {
+    "path": "wood_blight/blight_vein.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_vein"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_vein.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_vein"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_vein.png",
+   "notes": []
+  },
+  {
+   "key": "blight_pool",
+   "v1": {
+    "path": "wood_blight/blight_pool.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_pool"
+    ]
+   },
+   "v2": {
+    "path": "wood_blight/blight_pool.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_pool"
+    ]
+   },
+   "v3": {
+    "path": "wood_blight/blight_pool.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_pool"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_pool.png",
+   "notes": []
+  },
+  {
+   "key": "crystal",
+   "v1": {
+    "path": "wood_blight/crystal.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_crystal"
+    ]
+   },
+   "v2": {
+    "path": "wood_blight/crystal.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_crystal"
+    ]
+   },
+   "v3": {
+    "path": "wood_blight/crystal.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_crystal"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/crystal.png",
+   "notes": []
+  },
+  {
+   "key": "dead_tree",
+   "v1": {
+    "path": "wood_blight/dead_tree.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "dead_tree"
+    ]
+   },
+   "v2": {
+    "path": "wood_blight/dead_tree.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "dead_tree"
+    ]
+   },
+   "v3": {
+    "path": "wood_blight/dead_tree.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "dead_tree"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/dead_tree.png",
+   "notes": []
+  },
+  {
+   "key": "blight_wall",
+   "v1": {
+    "path": "wood_blight/blight_wall.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_wall",
+     "blight_wall2"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_wall.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "blight_wall",
+     "blight_wall2"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_wall.png",
+   "notes": []
+  },
+  {
+   "key": "blight_wall_lit",
+   "v1": {
+    "path": "wood_blight/blight_wall_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_wall_lit"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "wood_blight/blight_wall_lit.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "blight_wall_lit"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/blight_wall_lit.png",
+   "notes": []
+  },
+  {
+   "key": "sparkle",
+   "v1": {
+    "path": "wood_spare/sparkle.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle"
+    ]
+   },
+   "v2": {
+    "path": "wood_spare/sparkle.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle"
+    ]
+   },
+   "v3": {
+    "path": "wood_spare/sparkle.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle"
+    ]
+   },
+   "importer_reads": "assets/wood_spare/sparkle.png",
+   "notes": []
+  },
+  {
+   "key": "sparkle_white",
+   "v1": {
+    "path": "wood_spare/sparkle_white.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle_white"
+    ]
+   },
+   "v2": {
+    "path": "wood_spare/sparkle_white.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle_white"
+    ]
+   },
+   "v3": {
+    "path": "wood_spare/sparkle_white.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "sparkle_white"
+    ]
+   },
+   "importer_reads": "assets/wood_spare/sparkle_white.png",
+   "notes": []
+  },
+  {
+   "key": "mist",
+   "v1": {
+    "path": "wood_blight/mist.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "blight_mist"
+    ]
+   },
+   "v2": {
+    "path": "wood_blight/mist.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "blight_mist"
+    ]
+   },
+   "v3": {
+    "path": "wood_blight/mist.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "blight_mist"
+    ]
+   },
+   "importer_reads": "assets/wood_blight/mist.png",
+   "notes": []
+  },
+  {
+   "key": "cave",
+   "v1": {
+    "path": "myst_cave/cave.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "cave_wall",
+     "cave_face",
+     "cave_floor0",
+     "cave_floor1",
+     "cave_prop",
+     "cave_glow",
+     "cave_exit"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/cave.png",
+    "size": [
+     144,
+     32
+    ],
+    "shape": [
+     "vars",
+     9
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "cave_wall",
+     "cave_face",
+     "cave_crown",
+     "cave_floor0",
+     "cave_floor1",
+     "cave_prop",
+     "cave_glow",
+     "cave_exit",
+     "cave_spring"
+    ]
+   },
+   "v3": {
+    "path": "myst_cave/cave.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "cave_wall",
+     "cave_face",
+     "cave_floor0",
+     "cave_floor1",
+     "cave_prop",
+     "cave_glow",
+     "cave_exit"
+    ]
+   },
+   "importer_reads": "assets/myst_cave/cave.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "hollow",
+   "v1": {
+    "path": "myst_wood/hollow.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hollow_wall",
+     "hollow_face",
+     "hollow_floor0",
+     "hollow_floor1",
+     "hollow_prop",
+     "hollow_glow",
+     "hollow_exit"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/hollow.png",
+    "size": [
+     144,
+     32
+    ],
+    "shape": [
+     "vars",
+     9
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "hollow_wall",
+     "hollow_face",
+     "hollow_crown",
+     "hollow_floor0",
+     "hollow_floor1",
+     "hollow_prop",
+     "hollow_glow",
+     "hollow_exit",
+     "hollow_spring"
+    ]
+   },
+   "v3": {
+    "path": "myst_wood/hollow.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hollow_wall",
+     "hollow_face",
+     "hollow_floor0",
+     "hollow_floor1",
+     "hollow_prop",
+     "hollow_glow",
+     "hollow_exit"
+    ]
+   },
+   "importer_reads": "assets/myst_wood/hollow.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "thicket",
+   "v1": {
+    "path": "myst_wood/thicket.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thicket_wall",
+     "thicket_face",
+     "thicket_floor0",
+     "thicket_floor1",
+     "thicket_prop",
+     "thicket_glow",
+     "thicket_exit"
+    ]
+   },
+   "v2": {
+    "path": "wood_leaf/thicket.png",
+    "size": [
+     144,
+     32
+    ],
+    "shape": [
+     "vars",
+     9
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "thicket_wall",
+     "thicket_face",
+     "thicket_crown",
+     "thicket_floor0",
+     "thicket_floor1",
+     "thicket_prop",
+     "thicket_glow",
+     "thicket_exit",
+     "thicket_spring"
+    ]
+   },
+   "v3": {
+    "path": "myst_wood/thicket.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thicket_wall",
+     "thicket_face",
+     "thicket_floor0",
+     "thicket_floor1",
+     "thicket_prop",
+     "thicket_glow",
+     "thicket_exit"
+    ]
+   },
+   "importer_reads": "assets/myst_wood/thicket.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "plate",
+   "v1": {
+    "path": "myst_cave/plate.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_switch",
+     "myst_switch_down"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/plate.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_switch",
+     "myst_switch_down"
+    ]
+   },
+   "v3": {
+    "path": "myst_cave/plate.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_switch",
+     "myst_switch_down"
+    ]
+   },
+   "importer_reads": "assets/myst_cave/plate.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "pot",
+   "v1": {
+    "path": "myst_cave/pot.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_pot"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/pot.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_pot"
+    ]
+   },
+   "v3": {
+    "path": "myst_cave/pot.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_pot"
+    ]
+   },
+   "importer_reads": "assets/myst_cave/pot.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "room_chest",
+   "v1": {
+    "path": "myst_cave/room_chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_chest",
+     "myst_chest_open"
+    ]
+   },
+   "v2": {
+    "path": "wood_stone/room_chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_chest",
+     "myst_chest_open"
+    ]
+   },
+   "v3": {
+    "path": "myst_cave/room_chest.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_chest",
+     "myst_chest_open"
+    ]
+   },
+   "importer_reads": "assets/myst_cave/room_chest.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "spring",
+   "v1": {
+    "path": "myst_cave/spring.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_spring"
+    ]
+   },
+   "v2": null,
+   "v3": {
+    "path": "myst_cave/spring.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "overlay",
+    "metatiles": [
+     "myst_spring"
+    ]
+   },
+   "importer_reads": "assets/myst_cave/spring.png",
+   "notes": []
+  },
+  {
+   "key": "d_floor",
+   "v1": {
+    "path": "drain_stone/d_floor.png",
+    "size": [
+     48,
+     16
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor0",
+     "sw_floor1",
+     "sw_floor2"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_floor.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor0"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_floor.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor0"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_floor.png",
+   "notes": []
+  },
+  {
+   "key": "d_grime",
+   "v1": {
+    "path": "drain_stone/d_grime.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_grime",
+     "sw_floor_grime2"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_grime.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_crack",
+   "v1": {
+    "path": "drain_stone/d_crack.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_crack",
+     "sw_floor_crack2"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_crack.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_moss",
+   "v1": {
+    "path": "drain_stone/d_moss.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_moss",
+     "sw_floor_moss2"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_moss.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_puddle",
+   "v1": {
+    "path": "drain_stone/d_puddle.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_puddle"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_puddle.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_bones",
+   "v1": {
+    "path": "drain_stone/d_bones.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_bones"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_bones.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_shroom",
+   "v1": {
+    "path": "drain_stone/d_shroom.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_shroom"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_shroom.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_drip",
+   "v1": {
+    "path": "drain_stone/d_drip.png",
+    "size": [
+     16,
+     64
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 4,
+    "layer": "ground",
+    "metatiles": [
+     "sw_floor_drip"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_drip.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_wall_top",
+   "v1": {
+    "path": "drain_stone/d_wall_top.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_top",
+     "sw_wall_top_moss"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_wall_top.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_top",
+     "sw_wall_top_moss"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_wall_top.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_top",
+     "sw_wall_top_moss"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_wall_top.png",
+   "notes": []
+  },
+  {
+   "key": "d_wall",
+   "v1": {
+    "path": "drain_stone/d_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_wall.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_wall.png",
+   "notes": []
+  },
+  {
+   "key": "d_wall_marks",
+   "v1": {
+    "path": "drain_stone/d_wall_marks.png",
+    "size": [
+     112,
+     16
+    ],
+    "shape": [
+     "vars",
+     7
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_slime",
+     "sw_wall_crack",
+     "sw_wall_moss",
+     "sw_wall_chain",
+     "sw_wall_tally",
+     "sw_wall_skull",
+     "sw_wall_rust"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_wall_marks.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_wall_drip",
+   "v1": {
+    "path": "drain_stone/d_wall_drip.png",
+    "size": [
+     16,
+     64
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 4,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_drip"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_wall_drip.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_drip"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_wall_drip.png",
+    "size": [
+     16,
+     48
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 3,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_drip"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_wall_drip.png",
+   "notes": []
+  },
+  {
+   "key": "d_wall_web",
+   "v1": {
+    "path": "drain_stone/d_wall_web.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_web",
+     "sw_wall_web_r"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_wall_web.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_wall_fungus",
+   "v1": {
+    "path": "drain_spare/d_wall_fungus.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_fungus"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_spare/d_wall_fungus.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_wall_window",
+   "v1": {
+    "path": "drain_stone/d_wall_window.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_wall_window"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_stone/d_wall_window.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_pipes",
+   "v1": {
+    "path": "drain_stone/d_pipes.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_pipe",
+     "sw_pipe_h"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_pipes.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_pipe"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_pipes.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_pipe"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_pipes.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "d_banners",
+   "v1": {
+    "path": "drain_props/d_banners.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_banner_teal",
+     "sw_banner_red"
+    ]
+   },
+   "v2": {
+    "path": "drain_water/d_banners.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_banner_teal",
+     "sw_banner_red"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_banners.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_banner_teal",
+     "sw_banner_red"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_banners.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "d_lantern",
+   "v1": {
+    "path": "drain_props/d_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_lantern"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_lantern"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_lantern.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_lantern"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_lantern.png",
+   "notes": []
+  },
+  {
+   "key": "d_torch",
+   "v1": {
+    "path": "drain_props/d_torch.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_torch_lit"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_torch.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_torch_lit"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_torch.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_torch_lit"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_torch.png",
+   "notes": []
+  },
+  {
+   "key": "d_hole",
+   "v1": {
+    "path": "drain_stone/d_hole.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_hole"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_hole.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_hole"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_hole.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_hole"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_hole.png",
+   "notes": []
+  },
+  {
+   "key": "d_waterfall",
+   "v1": {
+    "path": "drain_water/d_waterfall.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_waterfall"
+    ]
+   },
+   "v2": {
+    "path": "drain_water/d_waterfall.png",
+    "size": [
+     48,
+     64
+    ],
+    "shape": [
+     "piece",
+     3,
+     2
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_fall_0",
+     "sw_fall_1",
+     "sw_fall_2",
+     "sw_fall_3",
+     "sw_fall_4",
+     "sw_fall_5"
+    ]
+   },
+   "v3": {
+    "path": "drain_water/d_waterfall.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_waterfall"
+    ]
+   },
+   "importer_reads": "assets/drain_water/d_waterfall.png",
+   "notes": []
+  },
+  {
+   "key": "d_arch",
+   "v1": {
+    "path": "drain_stone/d_arch.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_arch"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_arch.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_arch",
+     "sw_arch_r"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_arch.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_arch"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_arch.png",
+   "notes": []
+  },
+  {
+   "key": "d_water",
+   "v1": {
+    "path": "drain_water/d_water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water"
+    ]
+   },
+   "v2": {
+    "path": "drain_water/d_water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water"
+    ]
+   },
+   "v3": {
+    "path": "drain_water/d_water.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water"
+    ]
+   },
+   "importer_reads": "assets/drain_water/d_water.png",
+   "notes": []
+  },
+  {
+   "key": "d_water_marks",
+   "v1": {
+    "path": "drain_water/d_water_marks.png",
+    "size": [
+     48,
+     32
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_scum",
+     "sw_water_glint",
+     "sw_lilypad"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_water/d_water_marks.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_bubble",
+   "v1": {
+    "path": "drain_water/d_bubble.png",
+    "size": [
+     16,
+     64
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 4,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_bubble"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_water/d_bubble.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_bank_above",
+   "v1": {
+    "path": "drain_stone/d_bank_above.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_n",
+     "sw_water_edge_n_moss"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_bank_above.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_n"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_bank_above.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_n"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_bank_above.png",
+   "notes": []
+  },
+  {
+   "key": "d_bank_below",
+   "v1": {
+    "path": "drain_stone/d_bank_below.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "vars",
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_s",
+     "sw_water_edge_s_moss"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_bank_below.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_s"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_bank_below.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_water_edge_s"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_bank_below.png",
+   "notes": []
+  },
+  {
+   "key": "d_grate",
+   "v1": {
+    "path": "drain_water/d_grate.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_grate"
+    ]
+   },
+   "v2": {
+    "path": "drain_water/d_grate.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_grate",
+     "sw_grate_r"
+    ]
+   },
+   "v3": {
+    "path": "drain_water/d_grate.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_grate"
+    ]
+   },
+   "importer_reads": "assets/drain_water/d_grate.png",
+   "notes": []
+  },
+  {
+   "key": "d_ladder",
+   "v1": {
+    "path": "drain_water/d_ladder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_ladder_down"
+    ]
+   },
+   "v2": {
+    "path": "drain_water/d_ladder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_ladder_down"
+    ]
+   },
+   "v3": {
+    "path": "drain_water/d_ladder.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_ladder_down"
+    ]
+   },
+   "importer_reads": "assets/drain_water/d_ladder.png",
+   "notes": []
+  },
+  {
+   "key": "d_drain",
+   "v1": {
+    "path": "drain_stone/d_drain.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_drain_nw",
+     "sw_drain_ne",
+     "sw_drain_sw",
+     "sw_drain_se"
+    ]
+   },
+   "v2": {
+    "path": "drain_stone/d_drain.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_drain_nw",
+     "sw_drain_ne",
+     "sw_drain_sw",
+     "sw_drain_se"
+    ]
+   },
+   "v3": {
+    "path": "drain_stone/d_drain.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_drain_nw",
+     "sw_drain_ne",
+     "sw_drain_sw",
+     "sw_drain_se"
+    ]
+   },
+   "importer_reads": "assets/drain_stone/d_drain.png",
+   "notes": []
+  },
+  {
+   "key": "d_rug",
+   "v1": {
+    "path": "drain_props/d_rug.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_rug_nw",
+     "sw_rug_ne",
+     "sw_rug_sw",
+     "sw_rug_se"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_rug.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_rug_nw",
+     "sw_rug_ne",
+     "sw_rug_sw",
+     "sw_rug_se"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_rug.png",
+    "size": [
+     32,
+     32
+    ],
+    "shape": [
+     "piece",
+     2,
+     2
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_rug_nw",
+     "sw_rug_ne",
+     "sw_rug_sw",
+     "sw_rug_se"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_rug.png",
+   "notes": []
+  },
+  {
+   "key": "d_awning",
+   "v1": {
+    "path": "drain_props/d_awning.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_awning_l",
+     "sw_awning_r"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_awning.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_awning_l",
+     "sw_awning_r"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_awning.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_awning_l",
+     "sw_awning_r"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_awning.png",
+   "notes": []
+  },
+  {
+   "key": "d_counter",
+   "v1": {
+    "path": "drain_props/d_counter.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_counter"
+    ]
+   },
+   "v2": {
+    "path": "drain_props/d_counter.png",
+    "size": [
+     32,
+     16
+    ],
+    "shape": [
+     "piece",
+     2,
+     1
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_counter",
+     "sw_counter_r"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_counter.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_counter"
+    ]
+   },
+   "importer_reads": "assets/drain_props/d_counter.png",
+   "notes": []
+  },
+  {
+   "key": "d_props",
+   "v1": {
+    "path": "drain_props/d_props.png",
+    "size": [
+     80,
+     16
+    ],
+    "shape": [
+     "vars",
+     5
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_barrel",
+     "sw_crate",
+     "sw_skull",
+     "sw_gold",
+     "sw_rubble"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_props/d_props.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_pot",
+   "v1": {
+    "path": "drain_props/d_pot.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_pot"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_props/d_pot.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_candles",
+   "v1": {
+    "path": "drain_props/d_candles.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_candles"
+    ]
+   },
+   "v2": null,
+   "v3": null,
+   "importer_reads": "assets/drain_props/d_candles.png",
+   "notes": [
+    "retired in v3: the game no longer lays it; the importer still reads the v1 file"
+   ]
+  },
+  {
+   "key": "d_glints",
+   "v1": {
+    "path": "drain_spare/d_glints.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sw_glint",
+     "sw_glint2",
+     "sw_glint3"
+    ]
+   },
+   "v2": {
+    "path": "glints/d_glints.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sw_glint",
+     "sw_glint2",
+     "sw_glint3"
+    ]
+   },
+   "v3": {
+    "path": "drain_spare/d_glints.png",
+    "size": [
+     48,
+     48
+    ],
+    "shape": [
+     "vars",
+     3
+    ],
+    "frames": 3,
+    "layer": "overlay",
+    "metatiles": [
+     "sw_glint",
+     "sw_glint2",
+     "sw_glint3"
+    ]
+   },
+   "importer_reads": "assets/drain_spare/d_glints.png",
+   "notes": [
+    "path differs between versions"
+   ]
+  },
+  {
+   "key": "trail_corner",
+   "v1": null,
+   "v2": {
+    "path": "wood_ground/trail_corner.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "pedge_c1",
+     "pedge_c2",
+     "pedge_c3",
+     "pedge_c4",
+     "pedge_c5",
+     "pedge_c6",
+     "pedge_c7",
+     "pedge_c8",
+     "pedge_c9",
+     "pedge_ca",
+     "pedge_cb",
+     "pedge_cc",
+     "pedge_cd",
+     "pedge_ce",
+     "pedge_cf"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "verge_corner",
+   "v1": null,
+   "v2": {
+    "path": "wood_ground/verge_corner.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "corner"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "verge_c1",
+     "verge_c2",
+     "verge_c3",
+     "verge_c4",
+     "verge_c5",
+     "verge_c6",
+     "verge_c7",
+     "verge_c8",
+     "verge_c9",
+     "verge_ca",
+     "verge_cb",
+     "verge_cc",
+     "verge_cd",
+     "verge_ce",
+     "verge_cf"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "rot",
+   "v1": null,
+   "v2": {
+    "path": "wood_blight/rot.png",
+    "size": [
+     752,
+     16
+    ],
+    "shape": [
+     "vars",
+     47
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "rot_00",
+     "rot_01",
+     "rot_02",
+     "rot_03",
+     "rot_04",
+     "rot_05",
+     "rot_06",
+     "rot_07",
+     "rot_08",
+     "rot_09",
+     "rot_0a",
+     "rot_0b",
+     "rot_0c",
+     "rot_0d",
+     "rot_0e",
+     "rot_0f",
+     "rot_10",
+     "rot_14",
+     "rot_18",
+     "rot_1c",
+     "rot_20",
+     "rot_21",
+     "rot_28",
+     "rot_29",
+     "rot_30",
+     "rot_38",
+     "rot_40",
+     "rot_41",
+     "rot_42",
+     "rot_43",
+     "rot_50",
+     "rot_60",
+     "rot_61",
+     "rot_70",
+     "rot_80",
+     "rot_82",
+     "rot_84",
+     "rot_86",
+     "rot_90",
+     "rot_94",
+     "rot_a0",
+     "rot_b0",
+     "rot_c0",
+     "rot_c2",
+     "rot_d0",
+     "rot_e0",
+     "rot_f0"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "cave_edges",
+   "v1": null,
+   "v2": {
+    "path": "wood_stone/cave_edges.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "cave_edge_1",
+     "cave_edge_2",
+     "cave_edge_3",
+     "cave_edge_4",
+     "cave_edge_5",
+     "cave_edge_6",
+     "cave_edge_7",
+     "cave_edge_8",
+     "cave_edge_9",
+     "cave_edge_a",
+     "cave_edge_b",
+     "cave_edge_c",
+     "cave_edge_d",
+     "cave_edge_e",
+     "cave_edge_f"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "hollow_edges",
+   "v1": null,
+   "v2": {
+    "path": "wood_leaf/hollow_edges.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "hollow_edge_1",
+     "hollow_edge_2",
+     "hollow_edge_3",
+     "hollow_edge_4",
+     "hollow_edge_5",
+     "hollow_edge_6",
+     "hollow_edge_7",
+     "hollow_edge_8",
+     "hollow_edge_9",
+     "hollow_edge_a",
+     "hollow_edge_b",
+     "hollow_edge_c",
+     "hollow_edge_d",
+     "hollow_edge_e",
+     "hollow_edge_f"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "thicket_edges",
+   "v1": null,
+   "v2": {
+    "path": "wood_ground/thicket_edges.png",
+    "size": [
+     240,
+     16
+    ],
+    "shape": [
+     "fam",
+     "side"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "thicket_edge_1",
+     "thicket_edge_2",
+     "thicket_edge_3",
+     "thicket_edge_4",
+     "thicket_edge_5",
+     "thicket_edge_6",
+     "thicket_edge_7",
+     "thicket_edge_8",
+     "thicket_edge_9",
+     "thicket_edge_a",
+     "thicket_edge_b",
+     "thicket_edge_c",
+     "thicket_edge_d",
+     "thicket_edge_e",
+     "thicket_edge_f"
+    ]
+   },
+   "v3": null,
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "v2 only: dropped in v3 (the art pack had none)"
+   ]
+  },
+  {
+   "key": "d_lily",
+   "v1": null,
+   "v2": {
+    "path": "drain_water/d_lily.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_lilypad"
+    ]
+   },
+   "v3": {
+    "path": "drain_water/d_lily.png",
+    "size": [
+     16,
+     32
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 2,
+    "layer": "ground",
+    "metatiles": [
+     "sw_lilypad"
+    ]
+   },
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "a v3 key the pack has no file for; its tiles are drawn from the v1 file that holds them"
+   ]
+  },
+  {
+   "key": "d_crate",
+   "v1": null,
+   "v2": {
+    "path": "drain_props/d_crate.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_crate"
+    ]
+   },
+   "v3": {
+    "path": "drain_props/d_crate.png",
+    "size": [
+     16,
+     16
+    ],
+    "shape": [
+     "one"
+    ],
+    "frames": 1,
+    "layer": "ground",
+    "metatiles": [
+     "sw_crate"
+    ]
+   },
+   "importer_reads": null,
+   "notes": [
+    "new in v2",
+    "a v3 key the pack has no file for; its tiles are drawn from the v1 file that holds them"
+   ]
+  }
+ ]
+}

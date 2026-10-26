@@ -1271,6 +1271,30 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: an engine contract and golden scenes for the artist (Oct 2026)
+
+The artist agent's fidelity plan asked for the engine's facts.
+`docs/BARTGAME_ENGINE_CONTRACT.md` answers it, with data in
+`docs/engine_contract/`:
+
+- `engine_asset_contract.json` (written by `tools/engine_contract.py`)
+  holds every metatile with its hardware 8x8 entries, banks, type,
+  collision, layer and art source, plus the area budgets and the
+  platform facts.
+- `key_migration.json` covers the three tile specs: v1 (117 entries,
+  which the pack V3 was drawn for), v2 (99, the PDF) and v3 (103,
+  laid now).
+- There are three fixed scenes (drain, living, blighted, seed 0xB4A7),
+  captured raw from the ROM by `tools/golden_capture.py`, with layouts
+  read from RAM, VRAM, palette RAM and OAM.
+
+`tools/compose_frame.py` draws the same scenes straight from the pack's
+PNGs. Against the engine's room capture, `tools/compare_frames.py` finds
+0 of 38,400 pixels different at tolerance 0 in all three. The renderer
+draws the pack exactly; the fidelity gap is in the art as delivered.
+The contract gives the pilot (the Drain at camera 0,0) and the layers,
+palettes and comparison a master must go through.
+
 ### BARTGAME: the environment art pack V3, exactly (Oct 2026)
 
 The user's redesigned pack for the wood, the mystery rooms and the

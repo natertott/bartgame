@@ -366,6 +366,10 @@ tools/
   import_tiles.py   the tile atlases (art/ref/tile_art/) -> art/tile_art/
   tile_spec/        the tile spec for the artist: entries, renders, the doc
   roomgrids.py      many rooms dumped from the ROM as tile names, rendered from the art
+  engine_contract.py the art contract as data: metatiles, banks, budgets, the specs' keys
+  golden_capture.py fixed scenes captured raw from the ROM, with what is on screen
+  compose_frame.py  a scene drawn straight from the art pack's PNGs, for comparing
+  compare_frames.py two 240x160 frames compared pixel for pixel
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM
