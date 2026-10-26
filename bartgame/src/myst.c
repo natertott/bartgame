@@ -34,17 +34,18 @@
 
 /* a style's tiles: its wall, the wall's face along the top and crown
    along the bottom, its floors, the floor's edges by the walls beside it
-   (edge + bits - 1; 1 N, 2 E, 4 S, 8 W), its things and its spring */
+   (edge + bits - 1; 1 N, 2 E, 4 S, 8 W) and its things. The art pack
+   draws the crown as the wall and the edges as the floor. */
 typedef struct {
-    u16 wall, face, crown, floor0, floor1, edge, prop, glow, exit, fsw, flift, fchest, spring;
+    u16 wall, face, crown, floor0, floor1, edge, prop, glow, exit, fsw, flift, fchest;
 } Style;
 static const Style kStyle[3] = {
     { MT_CAVE_WALL, MT_CAVE_FACE, MT_CAVE_CROWN, MT_CAVE_FLOOR0, MT_CAVE_FLOOR1, MT_CAVE_EDGE_1, MT_CAVE_PROP, MT_CAVE_GLOW, MT_CAVE_EXIT,
-      MT_CAVE_FLOOR_SWITCH, MT_CAVE_FLOOR_LIFT, MT_CAVE_FLOOR_CHEST, MT_CAVE_SPRING },
+      MT_CAVE_FLOOR_SWITCH, MT_CAVE_FLOOR_LIFT, MT_CAVE_FLOOR_CHEST },
     { MT_HOLLOW_WALL, MT_HOLLOW_FACE, MT_HOLLOW_CROWN, MT_HOLLOW_FLOOR0, MT_HOLLOW_FLOOR1, MT_HOLLOW_EDGE_1, MT_HOLLOW_PROP, MT_HOLLOW_GLOW, MT_HOLLOW_EXIT,
-      MT_HOLLOW_FLOOR_SWITCH, MT_HOLLOW_FLOOR_LIFT, MT_HOLLOW_FLOOR_CHEST, MT_HOLLOW_SPRING },
+      MT_HOLLOW_FLOOR_SWITCH, MT_HOLLOW_FLOOR_LIFT, MT_HOLLOW_FLOOR_CHEST },
     { MT_THICKET_WALL, MT_THICKET_FACE, MT_THICKET_CROWN, MT_THICKET_FLOOR0, MT_THICKET_FLOOR1, MT_THICKET_EDGE_1, MT_THICKET_PROP, MT_THICKET_GLOW, MT_THICKET_EXIT,
-      MT_THICKET_FLOOR_SWITCH, MT_THICKET_FLOOR_LIFT, MT_THICKET_FLOOR_CHEST, MT_THICKET_SPRING },
+      MT_THICKET_FLOOR_SWITCH, MT_THICKET_FLOOR_LIFT, MT_THICKET_FLOOR_CHEST },
 };
 static const u8 kSize[3][2] = { { 12, 9 }, { 18, 12 }, { 24, 16 } };
 
@@ -158,7 +159,7 @@ void myst_build(int cell) {
             place_chest(cx(), cy(), done);
             break;
         case MK_FAIRY:
-            room_set(cx(), cy(), st->spring);
+            room_set_overlay(cx(), cy(), MT_MYST_SPRING); /* the spring is drawn over the floor */
             break;
         case MK_SWITCHES: {
             static const s8 at[4][2] = { { 3, 3 }, { -4, 3 }, { 3, -4 }, { -4, -4 } };
@@ -268,7 +269,7 @@ void myst_update(void) {
     int i;
     if (sPhase == 9) {
         /* the spring keeps giving */
-        if (sKind == MK_FAIRY && room_get(PX(a->x) >> 4, (PX(a->y) - 4) >> 4) == kStyle[sStyle].spring && gPl.hp < gPl.hp_max && (gFrame & 15) == 0) {
+        if (sKind == MK_FAIRY && room_get_overlay(PX(a->x) >> 4, (PX(a->y) - 4) >> 4) == MT_MYST_SPRING && gPl.hp < gPl.hp_max && (gFrame & 15) == 0) {
             player_heal(2);
             if ((gFrame & 31) == 0)
                 sfx_play(SFX_HEART);
@@ -341,7 +342,7 @@ void myst_update(void) {
             break;
         case MK_FAIRY: {
             int tx = PX(a->x) >> 4, ty = (PX(a->y) - 4) >> 4;
-            if (room_get(tx, ty) == kStyle[sStyle].spring && gPl.hp < gPl.hp_max) {
+            if (room_get_overlay(tx, ty) == MT_MYST_SPRING && gPl.hp < gPl.hp_max) {
                 player_heal(gPl.hp_max);
                 sfx_play(SFX_HEART);
                 fx_spawn(FX_SPARK, PX(a->x), PX(a->y) - 16);

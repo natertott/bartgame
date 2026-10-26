@@ -209,7 +209,7 @@ h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
 h.append('extern const u8 metatile_coll[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
-h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; const u16* pals_blight; } Tileset;')
+h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; } Tileset;')
 set_rows = []
 for si, (sname, pred) in enumerate(SETS):
     ts = Tileset()
@@ -248,8 +248,6 @@ for si, (sname, pred) in enumerate(SETS):
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
     c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
-    # the same groups in the blight's colours, for a blighted room
-    c.append(c_array_u16('tileset_%s_pals_blight' % sname, [rgb15(x) for n in set_pals for x in palettes.BG_BLIGHT.get(n, dict(palettes.BG_PALETTES)[n])]))
     for k, (base, nfr, data, speed) in enumerate(anims):
         c.append(c_array_u16('tile_anim_%s_%d' % (sname, k), bytes_to_u16(data)))
     c.append('static const TileAnim tile_anims_%s[%d] = {' % (sname, max(1, len(anims))))
@@ -259,7 +257,7 @@ for si, (sname, pred) in enumerate(SETS):
         c.append('    { 0, 0, 0, NULL },')
     c.append('};')
     h.append('#define TS_%s %d' % (sname.upper(), si))
-    set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d, tileset_%s_pals, %d, tileset_%s_pals_blight },' % (sname, len(ts.tiles), sname, sname, len(anims), sname, len(set_pals), sname))
+    set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d, tileset_%s_pals, %d },' % (sname, len(ts.tiles), sname, sname, len(anims), sname, len(set_pals)))
     print('tileset %s: %d tiles, %d metatiles held, %d animated, %d palettes' % (sname, len(ts.tiles), held, len(anims), len(set_pals)))
 c.append('const Tileset tilesets[%d] = {' % len(SETS))
 c += set_rows

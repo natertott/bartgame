@@ -191,7 +191,7 @@ def main():
     ok = enter(c, cell, 'fairy', 0, 1)
     check('FAIRY: a small hollow', ok, 'area %d' % area(c))
     P.w16(c, pl, 6)
-    spring = tiles_of(c, lambda m: m['name'].endswith('_spring'))
+    spring = tiles_of(c, lambda m: m['name'] == 'myst_spring', 1)
     if spring:
         CP.teleport(c, spring[0][0] * 16 + 8, spring[0][1] * 16 + 12)
         P.run(c, 10); CP.dismiss(c)

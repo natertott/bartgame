@@ -2014,13 +2014,17 @@ mt('gtree2_11', 'forest', 'FLOOR', compose(_root_e, slice16(_gtree2, 2, 3)))
 
 _bground = marks(BL, [(BL_PATCH, 2, 10), (A('2'), 13, 8), (A('5'), 6, 14)])
 _bground2 = marks(BL, [(BL_PATCH, 9, 11), (A('2'), 3, 9), (A('5'), 12, 13)])
-# the blighted tree, 3x4 like the great trees: its crown on the overlay
-# over whatever is behind, its roots on blight ground, the middle one
-# solid at the foot. Its art is the tile atlas's (art/tile_art.py).
-for _i in range(9):
+# the blighted tree, 2x3 like the oaks: its crown on the overlay, its
+# trunks solid at the foot (its art is the environment pack's). The
+# atlas drew it 3x4 (btree_6..11 are what is left of that, not laid).
+for _i in range(4):
+    mt('btree_%d' % _i, 'blight', 'FLOOR', flat(0))
+mt('btree_4', 'blight', 'SOLID', _bground, coll=3)
+mt('btree_5', 'blight', 'SOLID', _bground2, coll=3)
+for _i in range(6, 9):
     mt('btree_%d' % _i, 'blight', 'FLOOR', flat(0))
 mt('btree_9', 'blight', 'FLOOR', _bground)
-mt('btree_10', 'blight', 'SOLID', _bground2, coll=3)
+mt('btree_10', 'blight', 'FLOOR', _bground2)
 mt('btree_11', 'blight', 'FLOOR', _bground)
 
 # ---------------------------------------------------------------- blight --
@@ -4167,3 +4171,7 @@ tile_art.apply(METATILES)
 # the terrain painter (wood_art.py), over both
 import wood_art  # noqa: E402
 wood_art.apply(METATILES)
+
+# the environment art pack, V3, over all (env_pack.py)
+import env_pack  # noqa: E402
+env_pack.apply(METATILES)

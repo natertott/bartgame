@@ -53,11 +53,10 @@ bright tips, warm soil trails, deep navy water with foam that drifts,
 amber lanterns hung in the trees, white and gold stars on the ground,
 fireflies; rocks in three shapes sunk in moss and soil on a palette of
 their own; and the rot, by depth: a stain in the grass here and there,
-then patches of bare violet earth that fade into the grass through
-sick greens, then whole rooms gone over: the same wood in the blight's
-colours, violet-grey earth, ash trails, indigo leaves, dead grey bark,
-murky water, magenta light, under a mist, with crystals and stripped
-snags and the blighted tree. Every material has its own 16-color palette and a
+then patches of stained ground in the sick rooms, then whole rooms gone
+over: a dark violet floor pitted and veined with magenta light, a sick
+canopy, walls of blighted stone, under a mist, with crystals, snags,
+pools and the blighted tree. Every material has its own 16-color palette and a
 dark hue outline, three tones and a gleam, light from the upper left.
 The ground is textured turf with hand-placed tufts, flowers and
 pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
@@ -105,54 +104,41 @@ text inks depend on, with its 8x8 slot squares opened out to the
 engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
 mini-map writes through `ui_ink[]` into the pack's ui palette.
 
-**The tile atlases.** The Drain's tiles and the blight of the wood come
-from two illustrated atlases, kept as delivered in `art/ref/tile_art/`
-and imported by `tools/import_tiles.py` into `art/tile_art/tiles.json`,
-which `art/tile_art.py` lays over the metatiles last, in both builds. A
-cell's rough box is snapped to its frame line and the frame trimmed off;
-the art is reduced to 16x16 (or a piece's size) by the median of each
-box's middle tones, a mostly dark box keeping its darks and, for tiles
-whose light is the point (veins, glints, flames, fungus), a strong bright
-accent keeping its colour. Things drawn on a dark ground (props,
-banners, drips, crystals, the trees) are keyed from the cell's edges and
-laid on a floor or wall tile cut from the same atlas; the blight's
-standing things get a dark outline. Eight palette groups are derived
-from the art and colours are matched with lightness weighing double.
-They take the place of the board palettes they replace (`sewer`,
-`props`, `blight`), and two board palettes that held the very same
-colours share a slot (`palettes.MERGE`). The atlases draw some pieces
-wider than the hand-drawn set: the Drain's waterfall is 3x2, its arch,
-grate and counter 2x1, and the blighted tree is 3x4 like the great
-trees. Of the blight's atlas only the tree's crown is still drawn: its
-floors, walls and canopy read as noise against the wood and are painted
-again below. The Drain's floor mottle is brought to two closer tones
-(`tile_art.CALM`). `docs/BARTGAME_TILE_SPEC.md` (written by
-`tools/tile_spec/`) lists every tile for the artist and marks what is
-delivered.
+**The environment art pack.** Every background tile of the wood, the
+mystery rooms and the Drain is the environment art pack V3's, kept as
+delivered in `art/ref/pack_v3/` (its assets, manifest, palettes,
+previews and handoff; not its build scripts or reference boards). It
+was drawn for the first tile spec: 117 entries, one PNG each, in twelve
+palette groups of fifteen colours. `art/env_pack.py` lays them over the
+metatiles last, in both builds, index for index: every pixel is one of
+its group's colours exactly and every ground tile is opaque, both
+checked, so the tiles are the pack's to the pixel. A PNG's tiles run
+left to right (variants, a family of fifteen in the order 1..15, a
+piece row by row) and its animation frames are further rows below,
+with the pack's frame times. What the game lays that the first spec
+had no entry for takes a pack tile's art: a mystery room's crown is its
+wall and its floor's edges its floor. The hall lays the pack's single
+waterfall, grate and counter tiles repeated and its one-tile arch. The
+blighted rooms are built from the pack's blight set: its floor, now and
+then pitted, its vein for the trail, the sick canopy and the blight
+walls, with no edge tiles, since the pack draws its edges in the living
+grass only; what the pack draws on grass (stones, bones, flowers) is
+not scattered there. The sick rooms get patches of the stained ground,
+never a strip one tile wide. The blighted tree is 2x3, as the pack draws
+it, and the fairy's spring lies on the overlay. The pack's Drain marks
+and clutter are imported but not laid: the hall stays plain.
+`docs/BARTGAME_TILE_SPEC.md` (written by `tools/tile_spec/`) lists every
+tile laid, marks the pack's, and lists the pieces the pack lacks.
 
-**The painted wood.** The living wood, the blight and the mystery rooms
-are painted in code (`art/wood_art.py`) with a small terrain painter
-(`art/paint.py`): value noise on a torus so every texture tiles, a 4x4
-Bayer dither, lit clumps with soft rims, and edge families whose bands
-are local to each quarter of a tile, so the build's dedupe shares their
-pieces. The colours are one named table; each palette group is the
-colours its tiles use, at most fifteen, so a colour two groups share is
-the very same in both. Floors are one calm tone with an even fine
-texture and lighter than the walls, which are lumped and darker, so
-what can be walked on reads at once. Every edge is drawn: grass over a
-trail, a verge under the canopy, a shore by water, nicks where those
-lie only at a corner. A blighted room is a living room in other
-colours: each group has a blighted twin (`wood_art.BLIGHT`) and the
-room loads the twins (`tiles_blight()`), so the blight has every edge
-the wood has. In a sick room the rot breaks through as soft blobs of
-bare earth, the grass's very texture gone over to earth, one tile for
-each way grass can lie around it, sides and corners (47), fading
-through the sick greens. The mystery rooms are boxes with their floor
-shaded toward each wall and the wall's lumps hanging over it; the
-thicket is the wood's own grass and canopy, so its censers and boulders
-meet it without a seam. `tools/roomgrids.py` dumps many rooms as grids
-of tile names from the ROM and renders them from the art in seconds,
-for judging art across many real rooms.
+**Before the pack.** The tile atlases (`art/ref/tile_art/`, imported by
+`tools/import_tiles.py` into `art/tile_art/tiles.json` and laid by
+`art/tile_art.py`) and the painted wood (`art/wood_art.py`, with the
+terrain painter `art/paint.py`: tiling value noise, a Bayer dither, lit
+clumps, edge bands local to each quarter tile) still run first; the pack
+covers all they draw, so they only matter for a tile the pack does not.
+`tools/roomgrids.py` dumps many rooms as grids of tile names from the
+ROM and renders them from the art in seconds, for judging art across
+many real rooms.
 
 **The palettes by area.** The hardware's sixteen BG palettes are shared
 out by area: each tileset (the wood, the Drain, the mystery rooms) loads
@@ -344,7 +330,8 @@ art/            pixel art as rows of letters mapped to palette indices
                 ones, OBJ from the sprite pack, the remap tables
   ref/          the four style boards; ref/pack/ the sprite pack's exact
                 sheets and ref/pack_art/ its illustrated sheets, as delivered;
-                ref/tile_art/ the Drain's and the blight's tile atlases
+                ref/tile_art/ the Drain's and the blight's tile atlases;
+                ref/pack_v3/ the environment art pack V3
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
   pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
@@ -357,8 +344,9 @@ art/            pixel art as rows of letters mapped to palette indices
                 with lit blobs and shaded balls for round things
   paint.py      the terrain painter: tiling noise, dither, lit clumps,
                 edge bands and nicks local to each quarter tile
-  wood_art.py   the living wood, the blight's twins and rot, the mystery
-                rooms, painted; laid over the metatiles last
+  wood_art.py   the living wood, the blight and the mystery rooms, painted
+                before the pack came (it covers them all now)
+  env_pack.py   the environment art pack V3, laid over all, index for index
   tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
                 stones, water, gates, chests, the sewer set
   hero.py       the drawn Bloom, kept for the engine's frame order

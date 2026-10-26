@@ -81,23 +81,23 @@ def expand(rows, w, h, mt_names):
 # floor, and only a few glints wink over the water.
 room('sewer_main', '''
 TTTTTTTTTTTMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMTTTTTTTTTT
-WWPPWWBRWWWWLNWWWWHHWWWDF1F2F3WDWWWWWWBTWWLNWWWWWWWWWWPPWWWW
-WWWWWWWWWWWWWWWWWW..WWWWF4F5F6WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+WWPPWWBRWWWWLNWWWWHHWWWDWFWFWFWDWWWWWWBTWWLNWWWWWWWWWWPPWWWW
+WWWWWWWWWWWWWWWWWW..WWWWWFWFWFWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 ....A1A2A1A2............~~~~~~..............................
-..CRCCCSCCCS............ESESES............R1R2..............
+..CRCCCCCCCC............ESESES............R1R2..............
 ..........................................R3R4..............
 ............................................................
 ............................................................
-WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGRWEWEWEWEWEWEWEWEWEWEWEWEWEWE
-~~~~~~~~~~~~LP~~~~~~~~~~~~~~GGGR~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~GGGR~~~~~~~~~~~~LP~~~~~~~~~~~~~~
-ESESESESESESESESESESESESESESGGGRESESESESESESESESESESESESESES
+WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGGWEWEWEWEWEWEWEWEWEWEWEWEWEWE
+~~~~~~~~~~~~LP~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~GGGG~~~~~~~~~~~~LP~~~~~~~~~~~~~~
+ESESESESESESESESESESESESESESGGGGESESESESESESESESESESESESESES
 ............................................................
 ........................D1D2................................
 WELDWEWE................D3D4....................WEWEWELDWE..
 ~~~~~~~~........................................~~~~~~~~~~..
 ~~~~~~~~........................................~~~~~~~~~~..
-WWWWWWWWWWWWttWWWWWWWWWWWWWWAAARWWWWWWWWWWWWWWttWWWWWWWWWWWW
+WWWWWWWWWWWWttWWWWWWWWWWWWWWAAWWWWWWWWWWWWWWWWttWWWWWWWWWWWW
 ''', overlay='''
                                                             
                                                             

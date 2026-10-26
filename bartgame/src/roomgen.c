@@ -45,6 +45,10 @@ static u8 sMask[H][W];
 #define P_V 2
 #define P_MID 4
 static u8 sPath[H][W];
+/* the room's trail (the blight's vein in a blighted room) and whether it
+   is blighted, for the helpers that put ground down */
+static u16 sTrail;
+static bool8 sBlighted;
 
 
 /* ------------------------------------------------------------ helpers -- */
@@ -655,9 +659,8 @@ static void add_waterfalls(void) {
 /* The floor: mostly plain grass, so the sprites read; the blight, the
    flowers, the tall grass and the bones are accents. */
 /* The grass and its accents. The blight shows in it by depth: none in
-   the living wood, a stain here and there from the first stage on. A
-   blighted room is this same grass in the blight's colours (its
-   palettes are swapped when it loads), so it needs nothing of its own. */
+   the living wood, a stain here and there from the first stage on, and
+   patches of stained ground in the sick rooms (lay_rot). */
 static u16 moss_pick(int stage) {
     int r = rng_range(&sR, 40);
     if (r < 33)
@@ -671,6 +674,12 @@ static u16 moss_pick(int stage) {
     if (r < 39)
         return MT_TALL_GRASS;
     return MT_BONES;
+}
+
+/* The blighted rooms' floor: the blight floor, now and then pitted, its
+   pits glowing; their trail is the vein. */
+static u16 blight_pick(void) {
+    return (rng_range(&sR, 8) == 0) ? MT_BLIGHT_FLOOR2 : MT_BLIGHT_FLOOR;
 }
 
 /* a free-standing tree: 2x3, crown on the overlay, trunks solid. Both
@@ -796,9 +805,9 @@ static void scatter_floor(u16 mt, int n) {
 
 /* The grass's edge at (x, y), or 0 where it meets only grass: a shore
    on the sides water lies (or a nick where it lies at a corner only); a
-   verge on the sides the canopy stands or a cliff drops (or at a corner). */
+   verge on the sides the canopy stands or a cliff drops. */
 static u16 grass_edge(int x, int y) {
-    int wm, dm, xm, cm;
+    int wm, dm, xm;
     wm = (watery(sMask[y - 1][x]) ? 1 : 0) | (watery(sMask[y][x + 1]) ? 2 : 0) | (watery(sMask[y + 1][x]) ? 4 : 0) | (watery(sMask[y][x - 1]) ? 8 : 0);
     if (wm)
         return MT_SHORE_1 + wm - 1;
@@ -807,16 +816,12 @@ static u16 grass_edge(int x, int y) {
         return MT_SHORE_C1 + dm - 1;
     xm = ((sMask[y - 1][x] == M_WALL || sMask[y - 1][x] == M_LEDGE) ? 1 : 0) | (sMask[y][x + 1] == M_WALL ? 2 : 0) |
          (sMask[y + 1][x] == M_WALL ? 4 : 0) | (sMask[y][x - 1] == M_WALL ? 8 : 0);
-    if (xm)
-        return MT_VERGE_1 + xm - 1;
-    cm = (sMask[y - 1][x - 1] == M_WALL ? 1 : 0) | (sMask[y - 1][x + 1] == M_WALL ? 2 : 0) |
-         (sMask[y + 1][x + 1] == M_WALL ? 4 : 0) | (sMask[y + 1][x - 1] == M_WALL ? 8 : 0);
-    return cm ? MT_VERGE_C1 + cm - 1 : 0;
+    return xm ? MT_VERGE_1 + xm - 1 : 0;
 }
 
 /* grass, or grass at an edge */
 static bool8 grass_family(u16 t) {
-    return t <= MT_MOSS_BLIGHT2 || (t >= MT_SHORE_1 && t <= MT_VERGE_F) || (t >= MT_VERGE_C1 && t <= MT_VERGE_CF);
+    return t <= MT_MOSS_BLIGHT2 || (t >= MT_SHORE_1 && t <= MT_VERGE_F);
 }
 
 /* after the mask changed late (an alcove dug): the canopy's faces and
@@ -830,12 +835,12 @@ static void refresh_edges(int x0, int y0, int x1, int y1) {
                 bool8 below = sMask[y + 1][x] != M_WALL && sMask[y + 1][x] != M_FALL;
                 bool8 above = sMask[y - 1][x] != M_WALL && sMask[y - 1][x] != M_WATER;
                 if (below)
-                    room_set(x, y, MT_CANOPY_S);
+                    room_set(x, y, sBlighted ? MT_BLIGHT_WALL : MT_CANOPY_S);
                 else if (above)
-                    room_set(x, y, MT_CANOPY_N);
-                else if (t == MT_CANOPY_S || t == MT_CANOPY_N)
-                    room_set(x, y, MT_CANOPY);
-            } else if (sMask[y][x] == M_FLOOR && !(sPath[y][x] & P_MID) && grass_family(t)) {
+                    room_set(x, y, sBlighted ? MT_CANOPY_BLIGHT : MT_CANOPY_N);
+                else if (t == MT_CANOPY_S || t == MT_CANOPY_N || t == MT_BLIGHT_WALL)
+                    room_set(x, y, sBlighted ? MT_CANOPY_BLIGHT : MT_CANOPY);
+            } else if (!sBlighted && sMask[y][x] == M_FLOOR && !(sPath[y][x] & P_MID) && grass_family(t)) {
                 u16 e = grass_edge(x, y);
                 room_set(x, y, e ? e : MT_MOSS0 + ((x + y) % 3));
             }
@@ -866,7 +871,7 @@ static void dig_alcove(void) {
         sMask[my][mx] = M_FLOOR;
         sMask[iy][ix] = M_FLOOR;
         room_set(mx, my, (rng_next(&sR) & 1) ? MT_BOULDER : MT_BUSH);
-        room_set(ix, iy, MT_MOSS0);
+        room_set(ix, iy, sBlighted ? MT_BLIGHT_FLOOR : MT_MOSS0);
         room_set_overlay(ix, iy, MT_SPARKLE);
         refresh_edges(MIN(x, ix) - 1, MIN(y, iy) - 1, MAX(x, ix) + 1, MAX(y, iy) + 1);
         gSpots.treasure.x = ix;
@@ -874,11 +879,6 @@ static void dig_alcove(void) {
         gSpots.has_treasure = 1;
         return;
     }
-}
-
-/* floor of the mask that is not the trail: what a trail's edge is drawn against */
-static bool8 plain_grass(int x, int y) {
-    return x >= 0 && y >= 0 && x < W && y < H && sMask[y][x] == M_FLOOR && !(sPath[y][x] & P_MID);
 }
 
 /* ------------------------------------------------- the chunk dressing -- */
@@ -925,7 +925,7 @@ static void block_at(int x, int y, int w, int h, u16 base, bool8 solid) {
 static int pick_variant(const Cell* c, bool8 blighted) {
     int r = rng_range(&sR, 16);
     if (blighted)
-        return r < 4 ? V_DEAD : r < 8 ? V_CRYSTAL : r < 10 ? V_SHROOMRING : r < 12 ? V_POOL : r < 13 ? V_ROCKS : r < 14 ? V_TREE : V_PLAIN;
+        return r < 4 ? V_DEAD : r < 8 ? V_CRYSTAL : r < 10 ? V_POOL : r < 12 ? V_TREE : V_PLAIN;
     switch (c->arch) {
         case ARCH_GROVE: return r < 7 ? V_TREE : r < 9 ? V_LOG : r < 11 ? V_BUSHES : r < 12 ? V_TREEROCK : r < 13 ? V_CLOVER : V_PLAIN;
         case ARCH_RUINS: return r < 5 ? V_RUIN : r < 7 ? V_COLONNADE : r < 9 ? V_ROCKS : r < 11 ? V_TREE : r < 12 ? V_GBOULDER : V_PLAIN;
@@ -943,9 +943,8 @@ static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
     switch (v) {
         case V_MEADOW: block_at(ox, oy, 3, 3, MT_MEADOW_0, FALSE); break;
         case V_TREE:
-            /* the blight's tree is 3x4: its crown reaches into the chunk above */
             if (blighted)
-                place_big_tree(ox, oy - 1, MT_BTREE_0);
+                place_tree_kind(ox + r, oy, MT_BTREE_0, MT_BTREE_4);
             else
                 place_tree(ox + r, oy);
             break;
@@ -972,11 +971,11 @@ static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
             break;
         case V_DEAD:
             solid_at(ox, oy, MT_DEAD_TREE); solid_at(ox + 2, oy + 1, MT_DEAD_TREE);
-            floor_at(ox + 1, oy + 2, MT_BONES); floor_at(ox, oy + 2, MT_BONES);
+            floor_at(ox + 1, oy + 2, blighted ? MT_BLIGHT_FLOOR2 : MT_BONES); floor_at(ox, oy + 2, blighted ? MT_BLIGHT_FLOOR : MT_BONES);
             break;
         case V_CRYSTAL:
             solid_at(ox + 1, oy, MT_BLIGHT_CRYSTAL); solid_at(ox, oy + 1, MT_BLIGHT_CRYSTAL); solid_at(ox + 2, oy + 1, MT_BLIGHT_CRYSTAL);
-            floor_at(ox + 1, oy + 1, MT_MOSS_BLIGHT2); floor_at(ox + 1, oy + 2, MT_MOSS_BLIGHT);
+            floor_at(ox + 1, oy + 1, MT_BLIGHT_VEIN); floor_at(ox + 1, oy + 2, MT_BLIGHT_VEIN);
             break;
         case V_LANTERN:
             solid_at(ox + 1, oy + 1, MT_LANTERN_POST);
@@ -994,7 +993,7 @@ static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
         case V_TREEROCK: block_at(ox + r, oy + r, 2, 2, MT_TREEROCK_0, TRUE); break;
         case V_SHROOMRING: block_at(ox + r, oy + r, 2, 2, MT_SHROOMRING_0, FALSE); break;
         case V_POOL:
-            floor_at(ox + 1, oy + 1, MT_BLIGHT_POOL); floor_at(ox + 2, oy, MT_BONES);
+            floor_at(ox + 1, oy + 1, MT_BLIGHT_POOL); floor_at(ox + 2, oy, blighted ? MT_BLIGHT_FLOOR2 : MT_BONES);
             break;
         default: break;
     }
@@ -1059,7 +1058,7 @@ static void carve_to_center(int x, int y) {
     while (x != cx || y != cy) {
         bool8 horiz = (x != cx);
         if (interior(x, y) && !passable(x, y)) {
-            room_set(x, y, (room_type(x, y) == TT_WATER) ? (horiz ? MT_BRIDGE : MT_BRIDGE_V) : MT_PATH);
+            room_set(x, y, (room_type(x, y) == TT_WATER) ? (horiz ? MT_BRIDGE : MT_BRIDGE_V) : sTrail);
             room_set_overlay(x, y, MT_NONE);
         }
         if (horiz)
@@ -1068,7 +1067,7 @@ static void carve_to_center(int x, int y) {
             y += (cy > y) ? 1 : -1;
     }
     if (!passable(cx, cy)) {
-        room_set(cx, cy, MT_PATH);
+        room_set(cx, cy, sTrail);
         room_set_overlay(cx, cy, MT_NONE);
     }
 }
@@ -1108,7 +1107,7 @@ static void ensure_spot(Spot* out) {
     int cx = W / 2, cy = H / 2, dx, dy;
     for (dy = -1; dy <= 1; dy++)
         for (dx = -1; dx <= 1; dx++) {
-            room_set(cx + dx, cy + dy, MT_PATH);
+            room_set(cx + dx, cy + dy, sTrail);
             room_set_overlay(cx + dx, cy + dy, MT_NONE);
         }
     out->x = cx;
@@ -1151,37 +1150,22 @@ void roomgen_preview(int cell, const u8** mask, const u8** path) {
 
 /* ---------------------------------------------------------- the build -- */
 /* ------------------------------------------------------------ the rot -- */
-/* The blight's bare earth breaking through a sick room's grass: a few
-   soft blobs of it, kept only where every tile round is ground off the
-   trail, so its edges are all with grass; each tile drawn for the way the grass
-   lies round it, on its sides and, where it lies only diagonally, at its
-   corners. Laid last, over nothing that was put down. */
+/* The blight breaking through a sick room's grass: a few soft blobs of
+   the stained ground, kept only where every tile round is ground off
+   the trail (so no edge of grass is broken), never a strip one tile
+   wide, now and then a tile of it lit. Laid last, over nothing that was
+   put down. */
 static bool8 grassy(u16 t) {
     return t <= MT_TALL_GRASS;
 }
 
-/* the corners a side of grass already covers */
-static int rot_blocked(int sd) {
-    return ((sd & 9) ? 1 : 0) | ((sd & 3) ? 2 : 0) | ((sd & 6) ? 4 : 0) | ((sd & 12) ? 8 : 0);
-}
-
 static void lay_rot(int stage) {
     static u8 rot[H][W];
-    static u8 combo[16][16];
-    static bool8 ready;
     s8 bx[6], by[6];
     u8 br[6];
     int n, k, x, y;
     if (stage < 1)
         return;
-    if (!ready) {
-        int sd, cn, i = 0;
-        for (sd = 0; sd < 16; sd++)
-            for (cn = 0; cn < 16; cn++)
-                if (!(cn & rot_blocked(sd)))
-                    combo[sd][cn] = i++;
-        ready = TRUE;
-    }
     n = (stage >= 2) ? 4 + rng_range(&sR, 3) : 1 + rng_range(&sR, 2);
     /* each blob's heart on open grass */
     for (k = 0; k < n; k++) {
@@ -1209,8 +1193,6 @@ static void lay_rot(int stage) {
     for (y = 1; y < H - 1; y++)
         for (x = 1; x < W - 1; x++) {
             int dx, dy, ok = rot[y][x];
-            /* ground all round, none of it trail: whatever stands there
-               is drawn on grass at the side it turns to the rot */
             for (dy = -1; dy <= 1 && ok; dy++)
                 for (dx = -1; dx <= 1; dx++)
                     if (sMask[y + dy][x + dx] != M_FLOOR || (sPath[y + dy][x + dx] & P_MID))
@@ -1225,14 +1207,9 @@ static void lay_rot(int stage) {
                 if (rot[y][x] == 2 && ((rot[y - 1][x] != 2 && rot[y + 1][x] != 2) || (rot[y][x - 1] != 2 && rot[y][x + 1] != 2)))
                     rot[y][x] = 1;
     for (y = 1; y < H - 1; y++)
-        for (x = 1; x < W - 1; x++) {
-            int sd, cn;
-            if (rot[y][x] != 2)
-                continue;
-            sd = (rot[y - 1][x] != 2 ? 1 : 0) | (rot[y][x + 1] != 2 ? 2 : 0) | (rot[y + 1][x] != 2 ? 4 : 0) | (rot[y][x - 1] != 2 ? 8 : 0);
-            cn = (rot[y - 1][x - 1] != 2 ? 1 : 0) | (rot[y - 1][x + 1] != 2 ? 2 : 0) | (rot[y + 1][x + 1] != 2 ? 4 : 0) | (rot[y + 1][x - 1] != 2 ? 8 : 0);
-            room_set(x, y, MT_ROT_00 + combo[sd][cn & ~rot_blocked(sd)]);
-        }
+        for (x = 1; x < W - 1; x++)
+            if (rot[y][x] == 2)
+                room_set(x, y, (rng_range(&sR, 8) == 0) ? MT_BLIGHT_GROUND2 : MT_BLIGHT_GROUND0 + (rng_next(&sR) & 1));
 }
 
 bool8 roomgen_blighted(int cell) {
@@ -1249,6 +1226,8 @@ void roomgen_build(int cell) {
     memset(sPath, 0, sizeof(sPath));
     sTerraceRow = -1;
     bool8 blighted = roomgen_blighted(cell);
+    sBlighted = blighted;
+    sTrail = blighted ? MT_BLIGHT_VEIN : MT_PATH;
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
 
     room_clear(W, H, MT_CANOPY);
@@ -1288,9 +1267,9 @@ void roomgen_build(int cell) {
             switch (sMask[y][x]) {
                 case M_FLOOR:
                     if (sPath[y][x] & P_MID)
-                        mt = MT_PATH;
+                        mt = sTrail;
                     else
-                        mt = moss_pick(c->stage);
+                        mt = blighted ? blight_pick() : moss_pick(c->stage);
                     break;
                 case M_WATER: {
                     /* banks where ground lies beside it; lilies only on open water */
@@ -1314,7 +1293,7 @@ void roomgen_build(int cell) {
                 case M_BRIDGE_V: mt = MT_BRIDGE_V; break;
                 case M_LEDGE: mt = MT_LEDGE_S; break;
                 case M_FALL: mt = MT_WATERFALL; break;
-                case M_RAMP: mt = MT_PATH; break;
+                case M_RAMP: mt = sTrail; break;
                 default: mt = MT_CANOPY; break;
             }
             room_set(x, y, mt);
@@ -1360,8 +1339,9 @@ void roomgen_build(int cell) {
        that meets water gets a shore on those sides (or a nick where
        water lies at a corner only); grass that meets the canopy, or
        stands under a cliff, gets a verge; a trail gets grass creeping
-       over its edges where grass lies beside it. */
-    for (y = 1; y < H - 1; y++)
+       over its edges where grass lies beside it. The pack draws them in
+       the living grass only, so a blighted room has none. */
+    for (y = 1; y < H - 1 && !blighted; y++)
         for (x = 1; x < W - 1; x++) {
             u16 t;
             if (sMask[y][x] != M_FLOOR)
@@ -1370,15 +1350,8 @@ void roomgen_build(int cell) {
             if (sPath[y][x] & P_MID) {
                 int pm = ((sMask[y - 1][x] == M_FLOOR && !(sPath[y - 1][x] & P_MID)) ? 1 : 0) | ((sMask[y][x + 1] == M_FLOOR && !(sPath[y][x + 1] & P_MID)) ? 2 : 0) |
                          ((sMask[y + 1][x] == M_FLOOR && !(sPath[y + 1][x] & P_MID)) ? 4 : 0) | ((sMask[y][x - 1] == M_FLOOR && !(sPath[y][x - 1] & P_MID)) ? 8 : 0);
-                if (pm && t == MT_PATH) {
+                if (pm && t == MT_PATH)
                     room_set(x, y, MT_PEDGE_1 + pm - 1);
-                } else if (t == MT_PATH) {
-                    /* grass at a corner only: a rounded tongue of it */
-                    int cm = (plain_grass(x - 1, y - 1) ? 1 : 0) | (plain_grass(x + 1, y - 1) ? 2 : 0) |
-                             (plain_grass(x + 1, y + 1) ? 4 : 0) | (plain_grass(x - 1, y + 1) ? 8 : 0);
-                    if (cm)
-                        room_set(x, y, MT_PEDGE_C1 + cm - 1);
-                }
                 continue;
             }
             if (t > MT_MOSS_BLIGHT2)
@@ -1400,9 +1373,12 @@ void roomgen_build(int cell) {
             u8 below2 = (y + 2 < H) ? sMask[y + 2][x] : M_WALL;
             if (below != M_WALL && below != M_FALL)
                 /* a face over ground, and over water too: trunks at the water's edge */
-                mt = MT_CANOPY_S;
+                mt = blighted ? ((rng_range(&sR, 5) == 0) ? MT_BLIGHT_WALL_LIT : (rng_next(&sR) & 1) ? MT_BLIGHT_WALL : MT_BLIGHT_WALL2) : MT_CANOPY_S;
             else if (above != M_WALL && above != M_WATER)
-                mt = MT_CANOPY_N;
+                /* the pack draws no blighted crown: the sick canopy goes to the edge */
+                mt = blighted ? MT_CANOPY_BLIGHT : MT_CANOPY_N;
+            else if (blighted)
+                mt = (rng_range(&sR, 3) == 0) ? MT_CANOPY_BLIGHT2 : MT_CANOPY_BLIGHT;
             else if (below == M_WALL && below2 != M_WALL && below2 != M_WATER && rng_range(&sR, 6) == 0 && (x < W / 2 - 2 || x > W / 2 + 1 || y > 1))
                 mt = MT_CANOPY_LANTERN;
             else if (rng_range(&sR, 7) == 0)
@@ -1421,21 +1397,21 @@ void roomgen_build(int cell) {
             continue;
         roomgen_gate_tiles(s, &x0, &y0, &x1, &y1);
         if (s == SIDE_N) {
-            room_set(x0, 0, MT_PATH); room_set(x1, 0, MT_PATH);
-            room_set(x0, 1, MT_PATH); room_set(x1, 1, MT_PATH);
+            room_set(x0, 0, sTrail); room_set(x1, 0, sTrail);
+            room_set(x0, 1, sTrail); room_set(x1, 1, sTrail);
         } else if (s == SIDE_S) {
-            room_set(x0, H - 1, MT_PATH); room_set(x1, H - 1, MT_PATH);
+            room_set(x0, H - 1, sTrail); room_set(x1, H - 1, sTrail);
         } else if (s == SIDE_E) {
-            room_set(W - 1, y0, MT_PATH); room_set(W - 1, y1, MT_PATH);
+            room_set(W - 1, y0, sTrail); room_set(W - 1, y1, sTrail);
         } else {
-            room_set(0, y0, MT_PATH); room_set(0, y1, MT_PATH);
+            room_set(0, y0, sTrail); room_set(0, y1, sTrail);
         }
-        u16 gt = MT_PATH;
+        u16 gt = sTrail;
         bool8 open = world_gate_open(cell, s);
         switch (g) {
             case GATE_THORN: gt = MT_THORN; break;
             case GATE_CRACK: gt = open ? MT_DOOR_OPEN : MT_CRACK; break;
-            case GATE_WEB: gt = open ? MT_PATH : MT_WEB; break;
+            case GATE_WEB: gt = open ? sTrail : MT_WEB; break;
             case GATE_LOCK: gt = open ? MT_DOOR_OPEN : MT_DOOR_LOCKED; break;
             case GATE_CHASM: gt = MT_PIT; break;
             case GATE_EXIT: gt = MT_STAIRS_DOWN; break;
@@ -1447,7 +1423,7 @@ void roomgen_build(int cell) {
             if (g == GATE_CHASM && s == SIDE_N) {
                 /* a pit band through the whole opening, 1 deep */
                 room_set(x0, 1, MT_PIT); room_set(x1, 1, MT_PIT);
-                room_set(x0, 0, MT_PATH); room_set(x1, 0, MT_PATH);
+                room_set(x0, 0, sTrail); room_set(x1, 0, sTrail);
             }
         }
     }
@@ -1482,11 +1458,10 @@ void roomgen_build(int cell) {
         scatter_floor(MT_MOSS_FLOWERS, 10);
         scatter_floor(MT_MOSS_FLOWERS2, 6);
     } else {
-        scatter_solid(MT_BOULDER, rng_range(&sR, 2), 40);
-        scatter_rocks(rng_range(&sR, 2), 40);
-        scatter_floor(MT_MOSS_BLIGHT2, 4);
+        /* the pack draws stones and bones on grass: the blight keeps to its own */
+        scatter_floor(MT_BLIGHT_FLOOR2, 3);
     }
-    switch (c->arch) {
+    switch (blighted && !arena ? ARCH_COUNT : c->arch) {
         case ARCH_RUINS:
             scatter_solid(MT_PILLAR, 1 + rng_range(&sR, 2), 80);
             scatter_floor(MT_MOSSY_STONE, 10);
@@ -1535,11 +1510,11 @@ void roomgen_build(int cell) {
             int oy = (s == SIDE_N) ? k : (s == SIDE_S) ? -k : 0;
             int ax = x0 + ox, ay = y0 + oy, bx = x1 + ox, by = y1 + oy;
             if (interior(ax, ay) && (!passable(ax, ay) || room_get_overlay(ax, ay) != MT_NONE)) {
-                room_set(ax, ay, MT_PATH);
+                room_set(ax, ay, sTrail);
                 room_set_overlay(ax, ay, MT_NONE);
             }
             if (interior(bx, by) && (!passable(bx, by) || room_get_overlay(bx, by) != MT_NONE)) {
-                room_set(bx, by, MT_PATH);
+                room_set(bx, by, sTrail);
                 room_set_overlay(bx, by, MT_NONE);
             }
         }

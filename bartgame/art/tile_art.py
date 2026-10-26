@@ -15,11 +15,6 @@ import palettes
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = json.load(open(os.path.join(HERE, 'tile_art', 'tiles.json')))
 GROUPS = {g: ['#000000'] + cols for g, cols in sorted(DATA['palettes'].items())}
-# The Drain's floor is a mottle of two tones; brought closer together, it
-# lies quiet under what stands on it (its props carry the same floor)
-CALM = {'drain_stone': {'#635141': '#594a3d'}, 'drain_props': {'#61533b': '#574a3a'}}
-for _g, _m in CALM.items():
-    GROUPS[_g] = [_m.get(c, c) for c in GROUPS[_g]]
 TILES = DATA['tiles']
 RETIRE = {'sewer': 'drain_stone', 'props': 'drain_props', 'blight': 'blight_floor'}
 

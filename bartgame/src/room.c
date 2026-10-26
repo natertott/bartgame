@@ -17,18 +17,11 @@ u8 gAnimTiles; /* off while the title owns the charblock */
 static const Tileset* sTs = &tilesets[TS_SEWER];
 
 void tiles_load(int set) {
+    int i;
     sTs = &tilesets[set];
     dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
-    tiles_blight(FALSE);
-}
-
-/* a blighted room is a living one in the blight's colours: the set's
-   groups loaded in their blighted twins */
-void tiles_blight(bool8 on) {
-    int i;
-    const u16* p = on ? sTs->pals_blight : sTs->pals;
     for (i = 0; i < sTs->pal_count; i++)
-        pal_set_bg(i, &p[i * 16]);
+        pal_set_bg(i, &sTs->pals[i * 16]);
 }
 
 void tiles_init(void) {

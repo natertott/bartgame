@@ -17,17 +17,19 @@ SIDE = ['N', 'E', 'N+E', 'S', 'N+S', 'E+S', 'N+E+S', 'W', 'N+W', 'E+W', 'N+E+W',
 CORNER = ['NW', 'NE', 'NW+NE', 'SE', 'NW+SE', 'NE+SE', 'NW+NE+SE', 'SW', 'NW+SW', 'NE+SW', 'NW+NE+SW', 'SE+SW', 'NW+SE+SW', 'NE+SE+SW', 'all four']
 
 GROUPS = [
-    # area, key, what goes in it; done: the delivered atlases' groups, as imported
-    ('wood', 'wood_ground', 'grass in all its variants, flowers, tall grass, bones, the trail, mossy flagstones, the meadow, clover and fairy ring, the trail edges, shores and verges, and the grass round tree trunks and roots (so a trunk tile needs its bark colours here too)'),
-    ('wood', 'wood_leaf', 'the canopy walls and their faces and crowns, tree crowns, bushes, stumps, logs, thorns, the lantern post; the hollow and the thicket'),
-    ('wood', 'wood_water', 'water, its banks, nicks and lilies, rafts, falls and foam, and the bridges'),
-    ('wood', 'wood_stone', 'rocks, boulders, cliffs, pillars, the ruined wall, the statue, pits, the gates, chests, censers, the stairs, the mystery mouths; the cave and the mystery rooms\' plates, pots, chest and spring'),
-    ('wood', 'wood_blight', 'the rot, the stains, the blight pool, crystals and snags, and the blighted twin of every wood group (a second palette strip each)'),
-    ('wood', 'blight_growth', 'done: the blighted tree\'s crown'),
-    ('wood', 'glints', 'done: the wood\'s gold and white sparkles, the Drain\'s glints and its glowing fungus'),
+    # area, key, what goes in it; done: delivered in the environment art pack, V3
+    ('wood', 'wood_ground', 'done: grass in all its variants, flowers, tall grass, bones, the trail, mossy flagstones, the meadow, clover and fairy ring, the trail edges, shores and verges'),
+    ('wood', 'wood_leaf', 'done: the canopy walls and their faces and crowns, tree crowns and trunks, bushes, stumps, logs, thorns, the lantern post'),
+    ('wood', 'wood_water', 'done: water, its banks, nicks and lilies, rafts, falls and foam, and the bridges'),
+    ('wood', 'wood_stone', 'done: rocks, boulders, cliffs, pillars, the ruined wall, the statue, pits, the gates, chests, censers, the stairs, the mystery mouths'),
+    ('wood', 'wood_blight', 'done: the sick canopy, the stained ground, the blighted rooms\' floors, pits, veins, pools, crystals, snags, walls, mist and the blighted tree'),
+    ('wood', 'wood_spare', 'done: the wood\'s gold and white sparkles'),
+    ('myst', 'myst_cave', 'done: the cave, and the plates, pots, chest and spring of every mystery room'),
+    ('myst', 'myst_wood', 'done: the hollow and the thicket'),
     ('drain', 'drain_stone', 'done: floors and their marks, walls, wall tops, the hole, the arch, the banks, the drain'),
-    ('drain', 'drain_water', 'done: water and its marks, bubbles, the waterfall, the grate, the ladder, the teal banner'),
-    ('drain', 'drain_props', 'done: the stall, the rug, barrels, crates, skull, pot, gold, rubble, candles, pipes, the red banner, the lantern, the torch'),
+    ('drain', 'drain_water', 'done: water and its marks, bubbles, the waterfall, the grate, the ladder'),
+    ('drain', 'drain_props', 'done: the stall, the rug, the clutter, the banners, the lantern, the torch'),
+    ('drain', 'drain_spare', 'done: the Drain\'s glints and its glowing fungus'),
 ]
 
 
@@ -81,12 +83,6 @@ WOOD = [
         E('verge', 'Verges', fam('verge_'), ('fam', 'side'), 'ground', 'wood_ground',
           'Grass beside the canopy wall on the marked sides. A wall to the north casts shadow and drops leaves; walls east or west push undergrowth and roots in; a wall to the south has ferns at its foot. A cliff above counts as a wall to the north.',
           'The unmarked sides are plain grass. The wall side must meet the canopy\'s face, its crown or its plain mass.'),
-        E('trail_corner', 'Trail nicks', fam('pedge_c'), ('fam', 'corner'), 'ground', 'wood_ground',
-          'The trail with grass at the marked corners only: a rounded tongue of grass in that corner, where a trail turns.',
-          'Everything but the marked corners is plain trail; the nick meets the trail edges and plain grass round the corner.'),
-        E('verge_corner', 'Verge nicks', fam('verge_c'), ('fam', 'corner'), 'ground', 'wood_ground',
-          'Grass touching the canopy only at the marked corners: a little shade and a leaf or two hanging in that corner.',
-          'Everything but the marked corners is plain grass.'),
     ]),
     ('Water', 'Ponds, rivers and lakes. Water is drawn under the sprites; the Bloom swims or sinks in it. Every water tile has two frames that alternate every 20 frames, so ripples drift.', [
         E('water', 'Open water', ['water'], ('one',), 'ground', 'wood_water',
@@ -121,6 +117,11 @@ WOOD = [
         E('canopy_crown', 'Canopy crown', ['canopy_n'], ('one',), 'ground', 'wood_leaf',
           'The wall\'s upper edge where ground lies above it: the lit, rounded tops of the leaf mass.',
           'Repeats left-right. Its bottom meets canopy; its top meets grass or the trail.', solid='solid'),
+        E('canopy_sick', 'Canopy, sick', ['canopy_blight'], ('one',), 'ground', 'wood_blight',
+          'Canopy gone sick: leaves dulled toward grey-violet, veins of violet, magenta tips. Mixed into the sick rooms\' canopy and filling the blighted rooms\' walls.',
+          'Tiles with itself and with canopy in every direction.', solid='solid'),
+        E('canopy_sick_lit', 'Canopy, sick, lit', ['canopy_blight2'], ('one',), 'ground', 'wood_blight',
+          'Sick canopy with veins of light in the leaves that pulse.', 'Matches sick canopy on every edge.', frames=2, rate=18, solid='solid'),
     ]),
     ('Trees', 'A tree\'s crown is on the overlay, drawn over the Bloom so she walks behind it, and is transparent outside the leaves. Its trunk tiles are ground, grass included, with only their bottom half solid.', [
         E('tree', 'Oak', ['tree_top_nw', 'tree_top_ne', 'tree_mid_w', 'tree_mid_e', 'tree_trunk_w', 'tree_trunk_e'], ('piece', 2, 3), 'both', 'wood_leaf',
@@ -133,9 +134,9 @@ WOOD = [
           'Crown: overlay, transparent outside the leaves; it may overhang the canopy behind. Roots: ground on grass.', solid='middle root: bottom half'),
         E('great_tree_2', 'Great tree, lopsided', ['gtree2_%d' % i for i in range(12)], ('piece', 3, 4), 'both', 'wood_leaf',
           'A second great tree: lopsided, a lantern on its low branch, a knot in the trunk.', 'As the great tree.', solid='middle root: bottom half'),
-        E('blight_tree', 'Blighted tree', ['btree_%d' % i for i in range(12)], ('piece', 3, 4), 'both', 'blight_growth',
-          'The blighted rooms\' tree, 48x64 like the great trees: a black twisted trunk, bare branches clawing up, magenta veins of light, glow at the tips.',
-          'Branches: overlay, transparent between them. Roots: ground on grass, which the blighted rooms show as their earth.', solid='middle root: bottom half'),
+        E('blight_tree', 'Blighted tree', ['btree_%d' % i for i in range(6)], ('piece', 2, 3), 'both', 'wood_blight',
+          'The blighted rooms\' tree, 32x48: a black twisted trunk, bare branches clawing up, magenta veins of light, glow at the tips.',
+          'Branches: overlay, transparent between them. Trunk tiles: ground on blight ground.', solid='trunk row: bottom half'),
     ]),
     ('On the grass', 'Things that stand on a living room\'s floor. Each is drawn on its own patch of grass that matches plain grass at the tile\'s edges.', [
         E('bush', 'Bush', ['bush'], ('one',), 'ground', 'wood_leaf',
@@ -197,15 +198,26 @@ WOOD = [
           'The ways into the mystery rooms, set into a canopy face: a mouth in mossy rock; an opening in a great trunk; a dark tunnel through brambles.',
           'Each stands in a row of canopy faces: its top and sides meet the face, its bottom meets the grass.', solid='the way in'),
     ]),
-    ('The blight', 'The wood sickens toward its heart. A blighted room is the living wood itself in the blight\'s colours: every palette group of the wood has a blighted twin, the same colours in the same order turned violet-grey earth, ash trail, indigo leaves, dead grey bark, murky water and magenta light, and a blighted room loads the twins. So the blight has every edge the living wood has, and a redrawn wood is a redrawn blight. Deliver, with each wood group, its blighted twin as a second palette strip. What the blight adds of its own: the stains and the rot in the living rooms on the way in, and the crystals, snags, pools and mist.', [
-        E('rot', 'Rot', ['rot_%x%x' % (sd, cn) for sd in range(16) for cn in range(16) if not cn & ((1 if sd & 9 else 0) | (2 if sd & 3 else 0) | (4 if sd & 6 else 0) | (8 if sd & 12 else 0))],
-          ('vars', 47), 'ground', 'wood_blight',
-          'Bare violet earth where the blight breaks through a sick room\'s grass, in soft blobs of several tiles: the first is the earth alone, then one for every way grass can lie around it. Grass on a side (N, E, S, W) or, where it lies only diagonally, at a corner (NW, NE, SE, SW), in the order sides 0..15 and for each the corners its sides leave free.',
-          'Where grass lies, the tile fades into plain grass over a few pixels through dull sick greens, so a blob has no line round it. The earth alone is what a blighted room\'s grass becomes in the twin palette.'),
+    ('The blight', 'The wood sickens toward its heart. The sick rooms are stained grass under a canopy going violet; the blighted rooms are purple to the walls; the arena, where the Blight Heart waits, is the deepest.', [
+        E('blight_ground', 'Blighted grass', ['blight_ground0', 'blight_ground1'], ('vars', 2), 'ground', 'wood_blight',
+          'The sick rooms\' grass: stained violet and dulled, split by a few faint cracks. Two variants laid at random.', 'Each tiles with itself and the other in every direction.'),
+        E('blight_ground_lit', 'Blighted grass, lit', ['blight_ground2'], ('one',), 'ground', 'wood_blight',
+          'The same with a crack of light that pulses.', 'Matches blighted grass on every edge.', frames=2, rate=12),
+        E('blight_floor', 'Blight floor', ['blight_floor'], ('one',), 'ground', 'wood_blight',
+          'The blighted rooms\' floor: purple through and through, a texture of rot.', 'Tiles in every direction and with the pitted floor.'),
+        E('blight_floor_pits', 'Blight floor, pitted', ['blight_floor2'], ('one',), 'ground', 'wood_blight',
+          'Dark purple, pits of black, a few short seams of light that pulse.', 'Matches the blight floor on every edge.', frames=2, rate=20),
+        E('blight_vein', 'Blight vein', ['blight_vein'], ('one',), 'ground', 'wood_blight',
+          'The blighted rooms\' trail: a vein of glowing magenta through the purple, the lanes in from the doors.', 'Tiles in every direction; it meets blight floors without an edge tile.', frames=2, rate=12),
         E('blight_pool', 'Blight pool', ['blight_pool'], ('one',), 'ground', 'wood_blight',
-          'A pool of glowing blight that burns to stand in: a dark rim, a glowing body, slow rings.', 'Drawn on grass, which meets plain grass at the edges.', frames=2, rate=16, solid='walkable, hurts'),
-        E('crystal', 'Blight crystals', ['blight_crystal'], ('one',), 'ground', 'wood_blight', 'A cluster of magenta crystals grown out of the grass, glowing at the tips.', 'Drawn on grass.', solid='solid'),
-        E('dead_tree', 'Dead tree', ['dead_tree'], ('one',), 'ground', 'wood_blight', 'A small snag the blight has stripped: a crooked trunk, two bare limbs, a knot of light.', 'Drawn on grass.', solid='bottom half'),
+          'A pool of glowing blight that burns to stand in.', 'Its edges meet blight floors.', frames=2, rate=16, solid='walkable, hurts'),
+        E('crystal', 'Blight crystals', ['blight_crystal'], ('one',), 'ground', 'wood_blight', 'A cluster of violet crystals grown out of the ground, glowing at the tips.', '', solid='solid'),
+        E('dead_tree', 'Dead tree', ['dead_tree'], ('one',), 'ground', 'wood_blight', 'A small dead tree, black and twisted, on blight ground.', '', solid='bottom half'),
+        E('blight_wall', 'Blight wall', ['blight_wall', 'blight_wall2'], ('vars', 2), 'ground', 'wood_blight',
+          'The blighted rooms\' wall face where ground lies below: old stone blocks, violet light climbing them from the ground. Two variants.',
+          'Repeats left-right with either variant. Its top meets sick canopy; its bottom meets blight floors.', solid='solid'),
+        E('blight_wall_lit', 'Blight wall, crystal', ['blight_wall_lit'], ('one',), 'ground', 'wood_blight',
+          'The wall face with a crystal set in it, glowing.', 'Matches the blight wall on every edge.', frames=2, rate=16, solid='solid'),
     ]),
     ('On the overlay', 'Drawn over the ground and over the sprites, transparent outside the drawing. Keep them small and sparse.', [
         E('sparkle', 'Gold sparkle', ['sparkle'], ('one',), 'overlay', 'wood_spare',
@@ -218,28 +230,23 @@ WOOD = [
 ]
 
 MYST = [
-    ('The three rooms', 'Behind each mouth in the wood: a damp cave, the hollow of a tree, a thicket of brush. A room is 12x9, 18x12 or 24x16 tiles: a wall border one tile thick, two tiles at the top (the wall mass, then its face), a crown along the bottom wall (its lit top seen from the room), the floor inside shaded toward every wall, the way out in the middle of the bottom wall. The thicket is drawn in the wood\'s own grass, canopy and verges, so the censers and boulders its events stand on meet it.', [
-        E('cave', 'Cave', ['cave_wall', 'cave_face', 'cave_crown', 'cave_floor0', 'cave_floor1', 'cave_prop', 'cave_glow', 'cave_exit', 'cave_spring'], ('vars', 9), 'ground', 'wood_stone',
-          'Lumps of cool stone for the mass; a face of rock, seams and a little moss; the mass\'s lit tops above a strip of floor; a calm grey floor of gravel; the same with a small puddle (one tile in fourteen); a stalagmite; pale cyan mushrooms; the way out, the floor going down into dark; the fairy\'s spring in a ring of stones.',
-          'Mass tiles in every direction. Face and crown repeat left-right. Floors tile with each other. The way out is used twice side by side.', frames=2, rate=12, solid='mass, face, crown, stalagmite: solid'),
-        E('cave_edges', 'Cave floor edges', fam('cave_edge_'), ('fam', 'side'), 'ground', 'wood_stone',
-          'The floor beside the walls on the marked sides: shade deepening to the wall, and the wall\'s lumps hanging over at east and west. Only N, E, S, W and the four two-side corners are laid.', 'The unmarked sides are plain floor.'),
-        E('hollow', 'Hollow', ['hollow_wall', 'hollow_face', 'hollow_crown', 'hollow_floor0', 'hollow_floor1', 'hollow_prop', 'hollow_glow', 'hollow_exit', 'hollow_spring'], ('vars', 9), 'ground', 'wood_leaf',
-          'Gnarled bark lumps for the mass; the inner wall of the trunk, its grain running down; the lumps\' lit tops; a floor of packed earth and wood chips; a knuckle of root through it; a burl with a cut top; amber fungus; the way out; the spring.',
-          'As the cave.', frames=2, rate=12, solid='mass, face, crown, burl: solid'),
-        E('hollow_edges', 'Hollow floor edges', fam('hollow_edge_'), ('fam', 'side'), 'ground', 'wood_leaf',
-          'As the cave\'s, in the hollow\'s earth and bark.', 'The unmarked sides are plain floor.'),
-        E('thicket', 'Thicket', ['thicket_wall', 'thicket_face', 'thicket_crown', 'thicket_floor0', 'thicket_floor1', 'thicket_prop', 'thicket_glow', 'thicket_exit', 'thicket_spring'], ('vars', 9), 'ground', 'wood_leaf',
-          'The wood\'s canopy, its face and crown; its grass; a bramble; glowing flowers; the trail going out; the spring on grass.',
-          'As the cave. The censers, boulders and grass of the wood also stand here.', frames=2, rate=12, solid='mass, face, crown, bramble: solid'),
-        E('thicket_edges', 'Thicket floor edges', fam('thicket_edge_'), ('fam', 'side'), 'ground', 'wood_ground',
-          'The wood\'s verges.', 'The unmarked sides are plain grass.'),
+    ('The three rooms', 'Behind each mouth in the wood: a damp cave, the hollow of a tree, a thicket of brush. A room is 12x9, 18x12 or 24x16 tiles: a wall border one tile thick, two tiles at the top (the wall mass, then its face), the floor inside, the way out in the middle of the bottom wall. Each style is the same seven drawings, delivered as one strip in this order: wall mass, wall face, floor, floor variant, solid thing, glowing thing, way out.', [
+        E('cave', 'Cave', ['cave_wall', 'cave_face', 'cave_floor0', 'cave_floor1', 'cave_prop', 'cave_glow', 'cave_exit'], ('vars', 7), 'ground', 'myst_cave',
+          'Lumps of wet rock for the mass; a face of blocks dripping moss; a stone floor with puddles that catch the light (the variant one tile in four); a stalagmite; pale glowing fungus; the way out, a gap in the rock with daylight beyond.',
+          'Mass tiles in every direction. The face repeats left-right, its top meeting the mass. Floors tile with each other. The way out is used twice side by side.', solid='mass, face, stalagmite: solid'),
+        E('hollow', 'Hollow', ['hollow_wall', 'hollow_face', 'hollow_floor0', 'hollow_floor1', 'hollow_prop', 'hollow_glow', 'hollow_exit'], ('vars', 7), 'ground', 'myst_wood',
+          'Bark grain for the mass; the rings of the heartwood as the face; a floor of wood chips and root; a knot; a shelf of amber fungus; the way out.',
+          'As the cave.', solid='mass, face, knot: solid'),
+        E('thicket', 'Thicket', ['thicket_wall', 'thicket_face', 'thicket_floor0', 'thicket_floor1', 'thicket_prop', 'thicket_glow', 'thicket_exit'], ('vars', 7), 'ground', 'myst_wood',
+          'A bramble mass barbed with magenta; a face of stems and leaves; turf under leaf litter; a stump; berries that glow; the way out.',
+          'As the cave. The censers, boulders and grass of the wood also stand here.', solid='mass, face, stump: solid'),
     ]),
     ('Things in every room', 'Drawn on the overlay over any style\'s floor, transparent round the drawing. One drawing serves all three styles.', [
-        E('plate', 'Stone plate', ['myst_switch', 'myst_switch_down'], ('vars', 2), 'overlay', 'wood_stone',
+        E('plate', 'Stone plate', ['myst_switch', 'myst_switch_down'], ('vars', 2), 'overlay', 'myst_cave',
           'A round stone plate set in the floor, raised; then pressed down and lit.', 'Keep it low and flat: the Bloom stands on it.'),
-        E('pot', 'Pot', ['myst_pot'], ('one',), 'overlay', 'wood_stone', 'A clay pot, lifted or smashed; one in six holds a prize.', 'Must match the carried pot in the sprite spec.'),
-        E('room_chest', 'Chest', ['myst_chest', 'myst_chest_open'], ('vars', 2), 'overlay', 'wood_stone', 'A chest, closed and then open.', ''),
+        E('pot', 'Pot', ['myst_pot'], ('one',), 'overlay', 'myst_cave', 'A clay pot, lifted or smashed; one in six holds a prize.', 'Must match the carried pot in the sprite spec.'),
+        E('room_chest', 'Chest', ['myst_chest', 'myst_chest_open'], ('vars', 2), 'overlay', 'myst_cave', 'A chest, closed and then open.', ''),
+        E('spring', 'Fairy spring', ['myst_spring'], ('one',), 'overlay', 'myst_cave', 'A small spring of glowing water in a stone ring that fills the hearts.', '', frames=2, rate=12),
     ]),
 ]
 
@@ -260,9 +267,9 @@ DRAIN = [
         E('d_lantern', 'Lantern', ['sw_lantern'], ('one',), 'ground', 'drain_props', 'A lantern hung on the bricks, its glow flickering.', '', frames=2, rate=10, solid='solid'),
         E('d_torch', 'Wall torch', ['sw_torch_lit'], ('one',), 'ground', 'drain_props', 'A torch burning in an iron sconce on the bricks.', '', frames=2, rate=6, solid='solid'),
         E('d_hole', 'The drain hole', ['sw_hole'], ('one',), 'ground', 'drain_stone', 'A dark round opening in the back wall: the way up to the wood.', '', solid='the way out'),
-        E('d_waterfall', 'Waterfall', ['sw_fall_%d' % i for i in range(6)], ('piece', 3, 2), 'ground', 'drain_water',
-          'Water pouring out of the back wall into a basin, 48x32: wall stones either side, the fall, its splash at the foot.', 'Its foot meets the basin\'s water below.', frames=2, rate=6, solid='solid'),
-        E('d_arch', 'Arch', ['sw_arch', 'sw_arch_r'], ('piece', 2, 1), 'ground', 'drain_stone', 'A dark low arch in the bottom wall, 32x16.', 'Its sides meet the brick face.', solid='top half'),
+        E('d_waterfall', 'Waterfall', ['sw_waterfall'], ('one',), 'ground', 'drain_water',
+          'Water pouring out of the back wall into a basin, three tiles wide and two tall.', 'Tiles left-right and up-down; the frames scroll the water down so it loops fast.', frames=2, rate=4, solid='solid'),
+        E('d_arch', 'Arch', ['sw_arch'], ('one',), 'ground', 'drain_stone', 'A dark low arch in the bottom wall.', 'Its sides meet the brick face.', solid='top half'),
     ]),
     ('The channel and the pools', 'A channel of dark water crosses the hall, and two pools lie in its lower corners. The water carries no bank of its own: the floor tiles beside it draw the lip.', [
         E('d_water', 'Water', ['sw_water'], ('one',), 'ground', 'drain_water', 'Dark teal sewer water with slow ripples.', 'Tiles in every direction in both frames.', frames=2, rate=20),
@@ -271,7 +278,7 @@ DRAIN = [
           'Flagstones with the stone lip of the channel along their bottom edge.', 'Repeats left-right; its bottom meets water.'),
         E('d_bank_below', 'Bank, water above', ['sw_water_edge_s'], ('one',), 'ground', 'drain_stone',
           'Flagstones with the lip along their top edge, moss hanging over it.', 'Repeats left-right; its top meets water.'),
-        E('d_grate', 'Grate', ['sw_grate', 'sw_grate_r'], ('piece', 2, 1), 'ground', 'drain_water', 'An iron grate over the channel in a brass frame, 32x16, black water beneath: the way across.', 'Laid four high, so its top and bottom meet.'),
+        E('d_grate', 'Grate', ['sw_grate'], ('one',), 'ground', 'drain_water', 'An iron grate over the channel, bars both ways, black water beneath: the way across.', 'Tiles in every direction (it is two wide and four tall).'),
         E('d_ladder', 'Ladder down', ['sw_ladder_down'], ('one',), 'ground', 'drain_water', 'A ladder going down over the bank into a pool.', 'It stands in a row of bank tiles.'),
     ]),
     ('The stall and the rug', 'The Peddler keeps a stall under a red awning on the left, a crate beside it; the Gatekeeper stands on a glowing rug on the right. Nothing else lies on the floor.', [
@@ -282,7 +289,7 @@ DRAIN = [
         E('d_awning', 'Awning', ['sw_awning_l', 'sw_awning_r'], ('piece', 2, 1), 'ground', 'drain_props',
           'The stall\'s red awning, 32x16, scalloped hem, seen from above.', 'Laid twice side by side, so its ends meet.', solid='solid'),
         E('d_crate', 'Crate', ['sw_crate'], ('one',), 'ground', 'drain_props', 'A crate on flagstones beside the stall.', '', solid='solid'),
-        E('d_counter', 'Counter', ['sw_counter', 'sw_counter_r'], ('piece', 2, 1), 'ground', 'drain_props', 'The Peddler\'s counter, 32x16: planks on a stone base, his wares on it, a banner hung on its front.', 'Laid twice side by side, so its ends meet.', solid='solid'),
+        E('d_counter', 'Counter', ['sw_counter'], ('one',), 'ground', 'drain_props', 'The Peddler\'s counter: planks on a stone base, coins on it.', 'Repeats left-right (four long).', solid='solid'),
     ]),
     ('On the overlay', 'Glints that wink over the water, the walls and the rug only, so nothing on the open floor looks like a thing to pick up.', [
         E('d_glints', 'Glints', ['sw_glint', 'sw_glint2', 'sw_glint3'], ('vars', 3), 'overlay', 'drain_spare',
@@ -292,6 +299,11 @@ DRAIN = [
 
 ADDITIONS = [
     ('Gates by orientation', 'Each gate (cracked wall, web, locked and open door, stairs) as two halves, one pair for north and south walls and one for east and west walls, so a door in a side wall can be drawn from the side.'),
+    ('The blighted crown', 'A sick canopy crown, for the blighted rooms\' walls where ground lies above them. The sick canopy runs to the edge there today.'),
+    ('Edges in the blight', 'The blight floor meeting the vein, water and the walls has no edge tiles, so its joins are hard lines. The same fifteen-tile families as the living wood\'s trail edges, shores and verges would end that.'),
+    ('Corner nicks', 'The trail and the verges with grass or the canopy at a corner only, fifteen each, as the shores have. Where a trail turns or the canopy steps, the corner is square today.'),
+    ('Things on blight ground', 'The chest, the censers, the mouths, the thorns and the cliff drawn on the blight floor. In a blighted room they stand on a square of grass today.'),
+    ('Soft edges for the stained ground', 'The stained ground with plain grass creeping over it on the marked sides, fifteen and fifteen corners, so its patches in the sick rooms fade into the grass.'),
     ('Pool banks in the Drain', 'Banks with the water to the left and to the right, and the four outer corners, so the pools and the basin under the waterfall get a lip on every side.'),
 ]
 

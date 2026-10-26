@@ -17,28 +17,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import spec_data as D  # noqa: E402
 
-# what has been delivered: an entry whose every tile the tile atlases
-# drew (art/tile_art/tiles.json), in the group it was imported in
-import json  # noqa: E402
-TILE_ART = json.load(open(os.path.join(HERE, '..', '..', 'art', 'tile_art', 'tiles.json')))['tiles']
-# and what is painted in code as a draft (art/wood_art.py), which an
-# artist may redraw
+# what has been delivered: an entry whose every tile the environment art
+# pack (V3, art/ref/pack_v3/, art/env_pack.py) draws, in the pack's group
 sys.path.insert(0, os.path.join(HERE, '..', '..', 'art'))
-import wood_art  # noqa: E402
-PAINTED = set(wood_art.build()[0])
+import env_pack  # noqa: E402
+DRAWN = {n: env_pack.ASSETS[k]['group'] for k, (_, mts) in env_pack.ENTRIES.items() for n in mts}
 for _secs in (D.WOOD, D.MYST, D.DRAIN):
     for _t, _i, _es in _secs:
         for _e in _es:
-            _e['painted'] = all(m in PAINTED for m in _e['mts'])
-            _e['done'] = all(m in TILE_ART and m not in PAINTED for m in _e['mts'])
+            _e['done'] = all(m in DRAWN for m in _e['mts'])
+            _e['painted'] = False
             if _e['done']:
-                _e['group'] = TILE_ART[_e['mts'][0]]['pal']
+                _e['group'] = DRAWN[_e['mts'][0]]
 
 IMG, CTX, PAGE, DOC, DOCIMG = sys.argv[1:6]
 os.makedirs(DOCIMG, exist_ok=True)
 AREAS = [('wood', 'The wood', D.WOOD), ('myst', 'The mystery rooms', D.MYST), ('drain', 'The Drain', D.DRAIN)]
 AREA_NOTE = {
-    'wood': 'Rooms are 32x24 tiles, laid out by the game, so any tile can meet any of its listed neighbours. The wood has three moods: the living rooms (green), the sick rooms (soft blobs of bare violet earth in the grass) and the blighted rooms (the same wood in the blight\'s colours), with the arena of the Blight Heart deepest of all. Every room, blighted or not, lays the same edge tiles.',
+    'wood': 'Rooms are 32x24 tiles, laid out by the game, so any tile can meet any of its listed neighbours. The wood has three moods: the living rooms (green), the sick rooms (patches of stained ground in the grass) and the blighted rooms (the blight floor, its vein, the sick canopy and the blight walls), with the arena of the Blight Heart deepest of all. The edge tiles are laid in the living and sick rooms.',
     'myst': 'Small rooms behind the mouths in the wood\'s walls, one of three styles. They share the wood\'s censers, boulders, gold sparkle and grass.',
     'drain': 'One hand-laid hall, 30x18 tiles, the hub under the wood: the Peddler\'s stall, the Gatekeeper\'s rug, a channel of water with a grate across it, the great drain, two pools in the lower corners, a waterfall pouring from the back wall beside the hole up to the wood.',
 }
@@ -115,11 +111,9 @@ TOTAL_TILES = sum(COUNTS.values())
 INTRO = ('Every background tile the game draws in the wood, its mystery rooms and the Drain: what each one is, where it goes, '
          'what it must join, and how to deliver it. Written so an artist or an art-generating model can redraw the set without '
          'reading the code. The pictures show the tiles in the game now. Use them for size, layout and joins, not for style.')
-STATUS = ('The Drain and the blighted tree\'s crown are delivered: the entries marked delivered show their art as the game draws it. '
-          'The living wood, the blight and the mystery rooms are painted in code as a draft, marked draft: their pictures are the reference '
-          'for size, joins and how calm a floor must be, and any of them may be redrawn. The blight is no longer a set of floors of its own: '
-          'a blighted room loads the wood\'s tiles in a blighted twin of each palette, so it needs only its accents and the twin palettes. '
-          'The Drain\'s hall now lays only its plain slabs, walls, water and set pieces; its marks and clutter are kept but not laid.')
+STATUS = ('Every entry is delivered, in the environment art pack V3: the pictures show its tiles as the game draws them, index for index. '
+          'The blighted rooms are built from the pack\'s own blight tiles. The Drain\'s hall lays only its plain slabs, walls, water and set '
+          'pieces; the pack\'s marks and clutter are kept but not laid.')
 
 SCREEN = [
     ('Tiles.', 'The world is built of 16x16 tiles. The screen shows 15 by 10 of them (240x160 pixels). The Bloom is 31 pixels tall, about two tiles; most monsters are one tile.'),
@@ -132,8 +126,8 @@ SCREEN = [
 
 RULES = [
     ('Colour.', '4 bits a pixel: each palette group has 15 colours plus transparent. All 256 pixels of one tile come from one group. Where a tile shows two materials (a shore with grass and sand, a trunk with grass and bark), both must be in its group.'),
-    ('Palette budget.', 'Each area loads its own palettes: up to 13 groups for the wood, 13 for the mystery rooms and 13 for the Drain, the pause menu, the gold text and the text keeping the other 3 of the 16. The wood uses 12 today, the mystery rooms 9 and the Drain 4. A blighted room loads the twin of each wood group in the same slots, so the twins cost nothing.'),
-    ('Piece budget.', 'Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is %d tiles for the wood (%d pieces), %d for the mystery rooms and %d for the Drain, more than the wood can hold unless pieces repeat. The drafts fit the wood in about 700 pieces because every edge band stays inside its quarter of the tile, so the quarters of an edge family repeat and are stored once: draw edge families the same way. Animation frames beyond the first do not count.' % (COUNTS['wood'], COUNTS['wood'] * 4, COUNTS['myst'], COUNTS['drain'])),
+    ('Palette budget.', 'Each area loads its own palettes: up to 13 groups for the wood, 13 for the mystery rooms and 13 for the Drain, the pause menu, the gold text and the text keeping the other 3 of the 16. With the pack the wood uses 6, the mystery rooms 5 and the Drain 4.'),
+    ('Piece budget.', 'Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is %d tiles for the wood (%d pieces), %d for the mystery rooms and %d for the Drain, so there is room for some reuse but not for many more variants. The pack fits the wood in 873 pieces. Animation frames beyond the first do not count.' % (COUNTS['wood'], COUNTS['wood'] * 4, COUNTS['myst'], COUNTS['drain'])),
     ('Pixels.', 'Exact sizes. No anti-aliasing, no partial transparency, no gradients finer than the palette. Every pixel is a palette colour or fully transparent.'),
     ('Style.', 'After the four BARTGAME style boards: "grime and glamour". Three tones per material plus a highlight; a dark outline on objects that stand up from the ground (rocks, props, trunks), none on flat ground textures. Detail should be rich but quiet: the ground is a backdrop for the sprites, so keep its contrast lower than theirs, and keep bright specks for things the player should notice.'),
 ]

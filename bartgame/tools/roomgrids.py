@@ -106,11 +106,9 @@ def dump_myst(out, seed=0xB4A7):
         json.dump(rooms, f)
 
 
-def tile_rgba(m, frame=0, blight=False):
+def tile_rgba(m, frame=0):
     import palettes
-    name = palettes.MERGE.get(m['pal'], m['pal'])
-    pal = palettes.BG_BLIGHT.get(name) if blight else None
-    pal = pal or dict(palettes.BG_PALETTES)[name]
+    pal = dict(palettes.BG_PALETTES)[palettes.MERGE.get(m['pal'], m['pal'])]
     art = (m.get('frames') or [m['art']])
     rows = art[min(frame, len(art) - 1)]
     out = []
@@ -130,8 +128,6 @@ def render_room(room, by_name, scale=1, cache=None):
     from PIL import Image
     cache = {} if cache is None else cache
     g, o = room['ground'], room['overlay']
-    blight = room['stage'] >= 3 or room['arch'] == 'arena'
-    cache = cache.setdefault(blight, {})
     h, w = len(g), len(g[0])
     im = Image.new('RGB', (w * 16, h * 16), (0, 0, 0))
     px = im.load()
@@ -142,7 +138,7 @@ def render_room(room, by_name, scale=1, cache=None):
                 if not n:
                     continue
                 if n not in cache:
-                    cache[n] = tile_rgba(by_name[n], blight=blight) if n in by_name else None
+                    cache[n] = tile_rgba(by_name[n]) if n in by_name else None
                 t = cache[n]
                 if t is None:
                     continue

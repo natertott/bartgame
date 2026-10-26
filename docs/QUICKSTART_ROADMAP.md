@@ -1271,6 +1271,44 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the environment art pack V3, exactly (Oct 2026)
+
+The user's redesigned pack for the wood, the mystery rooms and the
+Drain is in, as delivered in `bartgame/art/ref/pack_v3/` (assets,
+manifest, palettes, previews, handoff; its build scripts and reference
+boards left out). It was drawn for the first tile spec (117 entries,
+328 tiles, 12 palette groups). `art/env_pack.py` lays every entry over
+its metatiles last, in both builds, index for index: every pixel is one
+of its group's 15 colours (checked) and every ground tile is opaque
+(checked). Tiles the first spec had no entry for take pack art: the
+mystery crowns are the wall, their floor edges the floor. The hall now
+lays the pack's single waterfall, grate and counter tiles repeated and
+a one-tile arch.
+
+At the user's choice, blighted rooms are built from the pack's blight
+set again (floor, pits now and then, vein for the trail, sick canopy,
+blight walls) instead of last round's twin palettes, which are removed
+(`tiles_blight`, `pals_blight`). The pack draws edges in living grass
+only, so blighted rooms have none, and nothing the pack draws on grass
+is scattered there. Sick rooms lay the pack's stained ground in patches
+(`lay_rot`). The blighted tree is the pack's 2x3 again. The spring is
+on the overlay. Trail and verge corner nicks are no longer laid (the
+pack has none). At the user's choice the hall stays decluttered; the
+pack's marks and clutter are imported but not laid. The wood uses 6
+palettes (873 pieces), the mystery rooms 5, the Drain 4.
+
+All seven probes, the comparison build's critical path and verify-world
+pass. The tile spec marks all 103 laid entries delivered and lists what
+the pack lacks: a blighted crown, edges in the blight, corner nicks,
+things on blight ground, soft edges for the stained ground.
+
+Open, in the pack's art as delivered: things on grass (rocks, boulders,
+censers, chests, flagstones, tree trunks) sit on squares darker than
+the plain grass; the three grass variants differ in tone, so the grid
+shows; the blight floor's tiles show their edges; the water's banks and
+the bridges are a bright cream that outshines the floor; in blighted
+rooms the chest, censers, mouths, thorns and cliffs stand on grass.
+
 ### BARTGAME: the wood painted and blended, the blight in twin palettes (Oct 2026)
 
 Each area now loads its own BG palettes: up to 13 groups in slots 0..12

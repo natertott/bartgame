@@ -1,0 +1,1115 @@
+{
+  "wood_ground": {
+    "atlas": "wood_ground.png",
+    "entries": {
+      "wood_ground/grass.png": {
+        "x": 0,
+        "y": 0,
+        "width": 48,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/grass_stain.png": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/flowers.png": {
+        "x": 0,
+        "y": 64,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/tall_grass.png": {
+        "x": 0,
+        "y": 96,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/bones.png": {
+        "x": 0,
+        "y": 128,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/trail.png": {
+        "x": 0,
+        "y": 160,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/flagstone.png": {
+        "x": 0,
+        "y": 192,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/meadow.png": {
+        "x": 0,
+        "y": 224,
+        "width": 48,
+        "height": 48,
+        "frames": 1,
+        "frame_height": 48,
+        "layer": "ground"
+      },
+      "wood_ground/clover.png": {
+        "x": 0,
+        "y": 288,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "wood_ground/fairy_ring.png": {
+        "x": 0,
+        "y": 336,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "wood_ground/trail_edge.png": {
+        "x": 0,
+        "y": 384,
+        "width": 240,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/shore.png": {
+        "x": 0,
+        "y": 416,
+        "width": 240,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/shore_corner.png": {
+        "x": 0,
+        "y": 448,
+        "width": 240,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_ground/verge.png": {
+        "x": 0,
+        "y": 480,
+        "width": 240,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "wood_water": {
+    "atlas": "wood_water.png",
+    "entries": {
+      "wood_water/water.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/water_bank.png": {
+        "x": 0,
+        "y": 48,
+        "width": 240,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/water_nick.png": {
+        "x": 0,
+        "y": 96,
+        "width": 240,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/lily.png": {
+        "x": 0,
+        "y": 144,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/lily_raft.png": {
+        "x": 0,
+        "y": 192,
+        "width": 32,
+        "height": 64,
+        "frames": 2,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "wood_water/waterfall.png": {
+        "x": 0,
+        "y": 272,
+        "width": 16,
+        "height": 48,
+        "frames": 3,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/foam.png": {
+        "x": 0,
+        "y": 336,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/bridge.png": {
+        "x": 0,
+        "y": 384,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_water/bridge_ns.png": {
+        "x": 0,
+        "y": 416,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "wood_leaf": {
+    "atlas": "wood_leaf.png",
+    "entries": {
+      "wood_leaf/canopy.png": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/canopy_glint.png": {
+        "x": 0,
+        "y": 32,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/canopy_lantern.png": {
+        "x": 0,
+        "y": 80,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/canopy_face.png": {
+        "x": 0,
+        "y": 128,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/canopy_crown.png": {
+        "x": 0,
+        "y": 160,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/tree.png": {
+        "x": 0,
+        "y": 192,
+        "width": 32,
+        "height": 48,
+        "frames": 1,
+        "frame_height": 48,
+        "layer": "crown on the overlay, trunk on the ground"
+      },
+      "wood_leaf/tree_lantern.png": {
+        "x": 0,
+        "y": 256,
+        "width": 32,
+        "height": 48,
+        "frames": 1,
+        "frame_height": 48,
+        "layer": "crown on the overlay, trunk on the ground"
+      },
+      "wood_leaf/great_tree.png": {
+        "x": 0,
+        "y": 320,
+        "width": 48,
+        "height": 64,
+        "frames": 1,
+        "frame_height": 64,
+        "layer": "crown on the overlay, trunk on the ground"
+      },
+      "wood_leaf/great_tree_2.png": {
+        "x": 0,
+        "y": 400,
+        "width": 48,
+        "height": 64,
+        "frames": 1,
+        "frame_height": 64,
+        "layer": "crown on the overlay, trunk on the ground"
+      },
+      "wood_leaf/bush.png": {
+        "x": 0,
+        "y": 480,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/stump.png": {
+        "x": 0,
+        "y": 512,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/log.png": {
+        "x": 0,
+        "y": 544,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/hollow_log.png": {
+        "x": 0,
+        "y": 576,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/lantern_post.png": {
+        "x": 0,
+        "y": 608,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_leaf/thorns.png": {
+        "x": 0,
+        "y": 656,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "wood_blight": {
+    "atlas": "wood_blight.png",
+    "entries": {
+      "wood_blight/canopy_sick.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/canopy_sick_lit.png": {
+        "x": 0,
+        "y": 32,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_tree.png": {
+        "x": 0,
+        "y": 80,
+        "width": 32,
+        "height": 48,
+        "frames": 1,
+        "frame_height": 48,
+        "layer": "crown on the overlay, trunk on the ground"
+      },
+      "wood_blight/blight_ground.png": {
+        "x": 0,
+        "y": 144,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_ground_lit.png": {
+        "x": 0,
+        "y": 176,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_floor.png": {
+        "x": 0,
+        "y": 224,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_floor_pits.png": {
+        "x": 0,
+        "y": 256,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_vein.png": {
+        "x": 0,
+        "y": 304,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_pool.png": {
+        "x": 0,
+        "y": 352,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/crystal.png": {
+        "x": 0,
+        "y": 400,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/dead_tree.png": {
+        "x": 0,
+        "y": 432,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_wall.png": {
+        "x": 0,
+        "y": 464,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/blight_wall_lit.png": {
+        "x": 0,
+        "y": 496,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_blight/mist.png": {
+        "x": 0,
+        "y": 544,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      }
+    }
+  },
+  "wood_stone": {
+    "atlas": "wood_stone.png",
+    "entries": {
+      "wood_stone/stone_small.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/boulder.png": {
+        "x": 0,
+        "y": 32,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/rocks.png": {
+        "x": 0,
+        "y": 64,
+        "width": 48,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/great_boulder.png": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "wood_stone/tree_rock.png": {
+        "x": 0,
+        "y": 144,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "wood_stone/pillar.png": {
+        "x": 0,
+        "y": 192,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/ruin_wall.png": {
+        "x": 0,
+        "y": 224,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/statue.png": {
+        "x": 0,
+        "y": 256,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/cliff.png": {
+        "x": 0,
+        "y": 288,
+        "width": 48,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/pit.png": {
+        "x": 0,
+        "y": 320,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/crack.png": {
+        "x": 0,
+        "y": 352,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/web.png": {
+        "x": 0,
+        "y": 384,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/door_locked.png": {
+        "x": 0,
+        "y": 416,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/door_open.png": {
+        "x": 0,
+        "y": 448,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/stairs.png": {
+        "x": 0,
+        "y": 480,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/chest.png": {
+        "x": 0,
+        "y": 512,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/censer.png": {
+        "x": 0,
+        "y": 544,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/censer_lit.png": {
+        "x": 0,
+        "y": 576,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "wood_stone/mouths.png": {
+        "x": 0,
+        "y": 624,
+        "width": 48,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "wood_spare": {
+    "atlas": "wood_spare.png",
+    "entries": {
+      "wood_spare/sparkle.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 48,
+        "frames": 3,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      },
+      "wood_spare/sparkle_white.png": {
+        "x": 0,
+        "y": 64,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      }
+    }
+  },
+  "myst_cave": {
+    "atlas": "myst_cave.png",
+    "entries": {
+      "myst_cave/cave.png": {
+        "x": 0,
+        "y": 0,
+        "width": 112,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "myst_cave/plate.png": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      },
+      "myst_cave/pot.png": {
+        "x": 0,
+        "y": 64,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      },
+      "myst_cave/room_chest.png": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      },
+      "myst_cave/spring.png": {
+        "x": 0,
+        "y": 128,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      }
+    }
+  },
+  "myst_wood": {
+    "atlas": "myst_wood.png",
+    "entries": {
+      "myst_wood/hollow.png": {
+        "x": 0,
+        "y": 0,
+        "width": 112,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "myst_wood/thicket.png": {
+        "x": 0,
+        "y": 32,
+        "width": 112,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "drain_stone": {
+    "atlas": "drain_stone.png",
+    "entries": {
+      "drain_stone/d_floor.png": {
+        "x": 0,
+        "y": 0,
+        "width": 48,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_grime.png": {
+        "x": 0,
+        "y": 32,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_crack.png": {
+        "x": 0,
+        "y": 64,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_moss.png": {
+        "x": 0,
+        "y": 96,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_puddle.png": {
+        "x": 0,
+        "y": 128,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_bones.png": {
+        "x": 0,
+        "y": 176,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_shroom.png": {
+        "x": 0,
+        "y": 208,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_drip.png": {
+        "x": 0,
+        "y": 256,
+        "width": 16,
+        "height": 64,
+        "frames": 4,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall_top.png": {
+        "x": 0,
+        "y": 336,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall.png": {
+        "x": 0,
+        "y": 368,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall_marks.png": {
+        "x": 0,
+        "y": 400,
+        "width": 112,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall_drip.png": {
+        "x": 0,
+        "y": 432,
+        "width": 16,
+        "height": 64,
+        "frames": 4,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall_web.png": {
+        "x": 0,
+        "y": 512,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_wall_window.png": {
+        "x": 0,
+        "y": 544,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_pipes.png": {
+        "x": 0,
+        "y": 592,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_hole.png": {
+        "x": 0,
+        "y": 624,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_arch.png": {
+        "x": 0,
+        "y": 656,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_bank_above.png": {
+        "x": 0,
+        "y": 688,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_bank_below.png": {
+        "x": 0,
+        "y": 720,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_stone/d_drain.png": {
+        "x": 0,
+        "y": 752,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      }
+    }
+  },
+  "drain_spare": {
+    "atlas": "drain_spare.png",
+    "entries": {
+      "drain_spare/d_wall_fungus.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_spare/d_glints.png": {
+        "x": 0,
+        "y": 48,
+        "width": 48,
+        "height": 48,
+        "frames": 3,
+        "frame_height": 16,
+        "layer": "overlay (over the sprites)"
+      }
+    }
+  },
+  "drain_props": {
+    "atlas": "drain_props.png",
+    "entries": {
+      "drain_props/d_banners.png": {
+        "x": 0,
+        "y": 0,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_lantern.png": {
+        "x": 0,
+        "y": 32,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_torch.png": {
+        "x": 0,
+        "y": 80,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_rug.png": {
+        "x": 0,
+        "y": 128,
+        "width": 32,
+        "height": 32,
+        "frames": 1,
+        "frame_height": 32,
+        "layer": "ground"
+      },
+      "drain_props/d_awning.png": {
+        "x": 0,
+        "y": 176,
+        "width": 32,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_counter.png": {
+        "x": 0,
+        "y": 208,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_props.png": {
+        "x": 0,
+        "y": 240,
+        "width": 80,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_pot.png": {
+        "x": 0,
+        "y": 272,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_props/d_candles.png": {
+        "x": 0,
+        "y": 304,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  },
+  "drain_water": {
+    "atlas": "drain_water.png",
+    "entries": {
+      "drain_water/d_waterfall.png": {
+        "x": 0,
+        "y": 0,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_water/d_water.png": {
+        "x": 0,
+        "y": 48,
+        "width": 16,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_water/d_water_marks.png": {
+        "x": 0,
+        "y": 96,
+        "width": 48,
+        "height": 32,
+        "frames": 2,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_water/d_bubble.png": {
+        "x": 0,
+        "y": 144,
+        "width": 16,
+        "height": 64,
+        "frames": 4,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_water/d_grate.png": {
+        "x": 0,
+        "y": 224,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      },
+      "drain_water/d_ladder.png": {
+        "x": 0,
+        "y": 256,
+        "width": 16,
+        "height": 16,
+        "frames": 1,
+        "frame_height": 16,
+        "layer": "ground"
+      }
+    }
+  }
+}

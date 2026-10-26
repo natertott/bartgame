@@ -118,14 +118,17 @@ for r in rooms.ROOMS:
         if r.get(layer):
             hub |= set(names[i] for i in rooms.expand(r[layer], r['w'], r['h'], mt_names) if i != 0xFFFF)
 NEVER = {'moss_shade', 'relic', 'fence', 'pit_inner', 'ledge_n', 'path_edge_n', 'sw_floor_slime', 'sw_ladder', 'black',
-         'sw_waterfall',  # the hall's waterfall is the atlas's 3x2 piece now
-         # a blighted room is the living wood in its twin palettes: the
-         # blight's own floors, veins, walls and sick canopy are laid no more
-         'blight_floor', 'blight_floor2', 'blight_vein', 'blight_ground0', 'blight_ground1', 'blight_ground2',
-         'canopy_blight', 'canopy_blight2', 'blight_wall', 'blight_wall2', 'blight_wall_lit',
-         'myst_spring'}  # each mystery style has its own spring
+         # the atlas's wider hall pieces and 3x4 blighted tree, laid no more
+         'sw_arch_r', 'sw_grate_r', 'sw_counter_r'} | {'sw_fall_%d' % i for i in range(6)} | {'btree_%d' % i for i in range(6, 12)}
+# drawn but not laid: the painted rot and corner nicks (the art pack has none)
+NEVER |= {'pedge_c%x' % m for m in range(1, 16)} | {'verge_c%x' % m for m in range(1, 16)}
+NEVER |= {m['name'] for m in tiles.METATILES if m['name'].startswith('rot_')}
+NEVER |= {'%s_spring' % st for st in ('cave', 'hollow', 'thicket')}
 # floors that carry a switch, a pot or a chest reuse the plain floor's drawing
 ALIAS = {'%s_floor_%s' % (st, k) for st in ('cave', 'hollow', 'thicket') for k in ('switch', 'lift', 'chest')}
+# a mystery room's crown is its wall and its floor's edges its floor, in the pack's art
+ALIAS |= {'%s_crown' % st for st in ('cave', 'hollow', 'thicket')}
+ALIAS |= {'%s_edge_%x' % (st, m) for st in ('cave', 'hollow', 'thicket') for m in range(1, 16)}
 placed = set()
 for n in names:
     if n.startswith('sw_'):

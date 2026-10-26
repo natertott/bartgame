@@ -24,6 +24,19 @@ int tile_gate_side(int tx, int ty) {
     return -1;
 }
 
+/* the room's trail and plain ground: the blight's own in a blighted room */
+static bool8 blighted_here(void) {
+    return gGame.area == AREA_FOREST && roomgen_blighted(gGame.cell);
+}
+
+static u16 trail_here(void) {
+    return blighted_here() ? MT_BLIGHT_VEIN : MT_PATH;
+}
+
+static u16 ground_here(int tx, int ty) {
+    return blighted_here() ? MT_BLIGHT_FLOOR : MT_MOSS0 + (hash32(tx, ty) % 3);
+}
+
 static void open_gate_tiles(int side, u16 mt) {
     int x0, y0, x1, y1;
     roomgen_gate_tiles(side, &x0, &y0, &x1, &y1);
@@ -37,7 +50,7 @@ void room_crack_open(int tx, int ty) {
     if (side >= 0)
         open_gate_tiles(side, MT_DOOR_OPEN);
     else
-        room_change(tx, ty, MT_PATH);
+        room_change(tx, ty, trail_here());
     fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
     sfx_play(SFX_SECRET);
 }
@@ -45,9 +58,9 @@ void room_crack_open(int tx, int ty) {
 void room_web_burn(int tx, int ty) {
     int side = tile_gate_side(tx, ty);
     if (side >= 0)
-        open_gate_tiles(side, MT_PATH);
+        open_gate_tiles(side, trail_here());
     else
-        room_change(tx, ty, MT_PATH);
+        room_change(tx, ty, trail_here());
     fx_spawn(FX_FLAME, tx * 16 + 8, ty * 16 + 8);
     sfx_play(SFX_LAMP);
 }
@@ -73,7 +86,7 @@ void room_torch_light(int tx, int ty) {
 
 void room_thorn_cut(int tx, int ty) {
     /* a hedge cut leaves grass; a gate of thorns, the trail it closed */
-    room_change(tx, ty, tile_gate_side(tx, ty) >= 0 ? MT_PATH : MT_MOSS0 + (hash32(tx, ty) % 3));
+    room_change(tx, ty, tile_gate_side(tx, ty) >= 0 ? trail_here() : ground_here(tx, ty));
     fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
     if ((hash32(gGame.run_frames, tx * 7 + ty) & 7) == 0)
         drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
@@ -85,7 +98,7 @@ static u16 ground_under(int tx, int ty) {
     static const s8 d[4][2] = { { 0, 1 }, { -1, 0 }, { 1, 0 }, { 0, -1 } };
     int i;
     if (gGame.area == AREA_FOREST)
-        return MT_MOSS0 + (hash32(tx, ty) % 3);
+        return ground_here(tx, ty);
     if (gGame.area == AREA_MYST)
         return myst_ground(tx, ty);
     for (i = 0; i < 4; i++) {

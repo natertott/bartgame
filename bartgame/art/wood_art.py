@@ -1076,34 +1076,9 @@ def mouth(kind):
 
 
 # -------------------------------------------------------------- the blight --
-# A blighted room is a living room in other colours: BLIGHT maps each of
-# the wood's colours to its blighted twin, and the room loads its groups
-# so mapped. Grass turns to a violet-grey earth, the trail to ash, the
-# leaves to indigo, bark to dead grey, water to murk, the lanterns' and
-# the flowers' light to the blight's magenta. So a blighted room has
-# every edge and transition of a living one, and reads the same: floor
-# low and calm, walls darker and clumped.
-BLIGHT = {
-    'outline': '#120c18',
-    'leaf_deep': '#141024', 'shadow': '#1e1838', 'leaf_md': '#2a2450', 'leaf_mid': '#363064',
-    'leaf_lt': '#46407e', 'leaf_br': '#5a5494', 'leaf_hl': '#7a72b2',
-    'grass_d': '#463c4a', 'grass_m': '#564b5a', 'grass_l': '#6a5d6c', 'grass_b': '#6a5d6c', 'grass_t': '#80728a',
-    'soil': '#352d3a', 'trail_d': '#62566a', 'trail_m': '#7a6e7e', 'trail_l': '#908496', 'trail_h': '#aa9eae',
-    'white': '#b4a6bc', 'yellow': '#b44ac0', 'blue': '#73508a',
-    'bark_dk': '#1e1820', 'bark': '#3a3238', 'bark_l': '#564c52', 'bark_ll': '#72686c', 'wood_cut': '#948a88',
-    'amber': '#b44ac0', 'glow': '#e88af0',
-    'water_deep': '#14202a', 'water_dk': '#1a2c38', 'water_md': '#223c48', 'water_mid': '#2c4e5a',
-    'water_lt': '#3e646c', 'ripple': '#6a9698', 'foam': '#b4d4d0',
-    'lily': '#3a3048', 'lily_l': '#5a4a6c', 'lily_flower': '#e88af0',
-    'stone_0': '#22202a', 'stone_1': '#38374a', 'stone_2': '#535466', 'stone_3': '#747486', 'stone_4': '#9e9cae',
-    'berry': '#b44ac0',
-    # the stains' sick greens, gone over to earth
-    'sick_d': '#463c4a', 'sick_m': '#564b5a', 'sick_l': '#6a5d6c',
-}
 # the same earth, for the rot drawn into a living room
 EARTH = dict(d=ID['earth_2'], m=ID['earth_3'], l=ID['earth_4'], b=ID['earth_4'], t=ID['earth_5'])
 SICK = dict(d=ID['sick_d'], m=ID['sick_m'], l=ID['sick_l'], b=ID['sick_l'], t=ID['grass_b'])
-assert all(BLIGHT[k] == HEX[EARTH[r]] for k, r in (('grass_d', 'd'), ('grass_m', 'm'), ('grass_l', 'l')))
 BT = dict(o=ID['bt_o'], d=ID['bt_d'], m=ID['bt_m'], l=ID['bt_l'], g=ID['bt_g'], md=ID['mag_d'], mg=ID['mag'], ml=ID['mag_l'])
 
 
@@ -1768,13 +1743,6 @@ def build():
 def group(name):
     _, groups = build()
     return ['#000000'] + [HEX[i] for i in groups[name]] + ['#000000'] * (15 - len(groups[name]))
-
-
-def group_blight(name):
-    """a group's palette with each colour turned to its blighted twin"""
-    _, groups = build()
-    cols = [BLIGHT.get(COLORS[i - 1][0], HEX[i]) for i in groups[name]]
-    return ['#000000'] + cols + ['#000000'] * (15 - len(cols))
 
 
 def group_names():

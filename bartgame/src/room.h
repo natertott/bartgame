@@ -28,7 +28,6 @@ extern u8 gAnimTiles;
 
 void tiles_init(void);
 void tiles_load(int set); /* TS_FOREST, TS_SEWER, TS_MYST */
-void tiles_blight(bool8 on); /* the set's groups in the blight's colours, or their own */
 void tiles_animate(void);
 void room_clear(int w, int h, u16 fill);
 void room_set(int mx, int my, u16 mt);
