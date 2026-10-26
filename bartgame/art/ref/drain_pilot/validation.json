@@ -1,0 +1,18 @@
+{
+  "native_resolution_pass": true,
+  "BG_unique_8x8_pieces_including_blank": 659,
+  "BG_max_8x8_pieces": 1024,
+  "BG_palette_banks_used": 13,
+  "BG_palette_banks_available": 13,
+  "OBJ_palette_banks_used": 3,
+  "OBJ_palette_banks_available": 14,
+  "all_BG_4bpp_binary_tiles_readback_match": true,
+  "BG2_opaque": true,
+  "BG1_transparent_away_from_canopies": true,
+  "sprite_count": 3,
+  "original_source_resolution": [
+    1536,
+    1024
+  ],
+  "artist_note": "Native-resolution GBA-constrained pixel adaptation from the approved illustration, including manually authored details; NOT independent-from-source hand-painted art and not a complete 30x18 replacement hall."
+}

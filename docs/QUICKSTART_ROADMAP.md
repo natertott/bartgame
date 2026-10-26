@@ -1271,6 +1271,51 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the Drain art pilot, captured from the ROM (Oct 2026)
+
+The artist's native Drain pilot is in, as delivered, in
+`bartgame/art/ref/drain_pilot/`. It is 659 4bpp characters, two 32x32
+maps, 13 BG banks and three OBJ sprites, built from engine commit
+`718efd8`. Its two source reference PNGs are left out.
+`tools/build_assets.py` takes it byte for byte. It checks each file's
+size, every map entry's piece and bank, and each sprite's tile count.
+
+`make pilot` builds `bartgame_drainpilot.gba`, which boots into
+`src/pilot.c`:
+
+- charblock 0, screenblocks 28 (BG2) and 24 (BG1), 32x32 while shown;
+- scroll (0,0), BG banks 0-12, with 13-15 kept;
+- no HUD, no world actors, no collision;
+- the pilot's OBJ banks 0-2 in banks 13-15, since the game holds 0-13.
+  Leaving puts bank 13 back.
+
+Start fades to the title and Select comes back. The main ROM leaves the
+pilot out; only its linker stubs reorder. The hall is untouched.
+
+`tools/pilot_capture.py` captures the raw mGBA frame and reads back the
+hardware:
+
+- VRAM, palette RAM, OAM and the registers all match the files byte for
+  byte.
+- Against `master_240x160.png`, 16,674 of 38,400 pixels differ by 1 at
+  tolerance 0, and 0 at tolerance 1.
+- Against the master in mGBA's colour expansion, 0 differ. The same holds
+  for the room layers and the ground.
+- The 1-step gap is the colour expansion. The artist's verifier uses
+  `round(c*255/31)` and mGBA uses `(c<<3)|(c>>2)`; they differ at
+  c = 3, 7, 24 and 28.
+
+The pack's `build_pilot.py` needed OpenCV. With it installed, the script
+rewrote every file byte for byte and `verify_exports.py` passed. The
+capture is in `docs/engine_contract/pilot/` and the result for the artist
+in `docs/BARTGAME_DRAIN_PILOT_CAPTURE.md`. All seven probes, the
+comparison build's critical path and verify-world pass.
+
+A fix on the way: under `make -j`, the asset rule ran twice at once, and
+a compile could read a half-written `assets.h` (`unknown type name
+'RoomDef'`). `assets.h` now hangs off `assets.c`, so it runs once. The
+ROMs are byte-identical.
+
 ### BARTGAME: an engine contract and golden scenes for the artist (Oct 2026)
 
 The artist agent's fidelity plan asked for the engine's facts.

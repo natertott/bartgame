@@ -1,0 +1,12 @@
+{
+ "a": "ground_hw_240x160.png",
+ "b": "engine_capture_ground_240x160.png",
+ "tolerance": 0,
+ "pixels": 38400,
+ "mismatched": 0,
+ "match_percent": 100.0,
+ "worst_channel_difference": 0,
+ "mismatched_by_cell": {},
+ "cell_px": 16,
+ "pass": true
+}

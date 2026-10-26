@@ -1,0 +1,212 @@
+{
+ "rom": "bartgame_drainpilot.gba",
+ "frames_run_before_capture": 90,
+ "readback_all_match": true,
+ "readback": {
+  "BG characters, VRAM 0x06000000 vs gba/drain_bg_4bpp.chr": {
+   "match": true,
+   "bytes": 21088
+  },
+  "BG1 map, screenblock 24 vs gba/drain_bg1_overlay.map": {
+   "match": true,
+   "bytes": 2048
+  },
+  "BG2 map, screenblock 28 vs gba/drain_bg2_ground.map": {
+   "match": true,
+   "bytes": 2048
+  },
+  "BG palette RAM banks 0-12 vs gba/drain_bg_palettes.pal": {
+   "match": true,
+   "bytes": 416
+  },
+  "OBJ palette RAM banks 13-15 vs banks 0-2 of gba/drain_obj_palettes.pal": {
+   "match": true,
+   "bytes": 96
+  },
+  "OBJ bloom tiles, OBJ VRAM tile 72 vs gba/obj_bloom_4bpp.bin": {
+   "match": true,
+   "bytes": 512
+  },
+  "OAM bloom": {
+   "match": true,
+   "want": {
+    "x": 104,
+    "y": 65,
+    "size": [
+     32,
+     32
+    ],
+    "priority": 2,
+    "palette": 13
+   },
+   "got": {
+    "slot": 0,
+    "x": 104,
+    "y": 65,
+    "w": 32,
+    "h": 32,
+    "tile": 72,
+    "priority": 2,
+    "palette": 13,
+    "hflip": false,
+    "vflip": false
+   }
+  },
+  "OBJ peddler tiles, OBJ VRAM tile 88 vs gba/obj_peddler_4bpp.bin": {
+   "match": true,
+   "bytes": 512
+  },
+  "OAM peddler": {
+   "match": true,
+   "want": {
+    "x": 23,
+    "y": 48,
+    "size": [
+     32,
+     32
+    ],
+    "priority": 2,
+    "palette": 14
+   },
+   "got": {
+    "slot": 1,
+    "x": 23,
+    "y": 48,
+    "w": 32,
+    "h": 32,
+    "tile": 88,
+    "priority": 2,
+    "palette": 14,
+    "hflip": false,
+    "vflip": false
+   }
+  },
+  "OBJ gatekeeper tiles, OBJ VRAM tile 104 vs gba/obj_gatekeeper_4bpp.bin": {
+   "match": true,
+   "bytes": 1024
+  },
+  "OAM gatekeeper": {
+   "match": true,
+   "want": {
+    "x": 187,
+    "y": 48,
+    "size": [
+     32,
+     64
+    ],
+    "priority": 2,
+    "palette": 15
+   },
+   "got": {
+    "slot": 2,
+    "x": 187,
+    "y": 48,
+    "w": 32,
+    "h": 64,
+    "tile": 104,
+    "priority": 2,
+    "palette": 15,
+    "hflip": false,
+    "vflip": false
+   }
+  },
+  "registers": {
+   "match": true,
+   "DISPCNT": "0x1640",
+   "BG1CNT": "0x1801",
+   "BG2CNT": "0x1c02",
+   "want": "DISPCNT 0x1640 (mode 0, OBJ 1D, BG1, BG2, OBJ); BG1CNT 0x1801 (priority 1, characters 0, screenblock 24, 32x32); BG2CNT 0x1c02 (priority 2, screenblock 28)"
+  },
+  "scroll": {
+   "match": true,
+   "BG1": [
+    0,
+    0
+   ],
+   "BG2": [
+    0,
+    0
+   ]
+  },
+  "visible sprites": {
+   "match": true,
+   "count": 3
+  },
+  "fade": {
+   "match": true,
+   "level": 0
+  },
+  "state": {
+   "match": true,
+   "gGame.state": 7,
+   "want": "GS_PILOT (7)"
+  },
+  "Start leaves for the title": {
+   "match": true,
+   "gGame.state": 0
+  },
+  "Select on the title shows the same frame again": {
+   "match": true,
+   "gGame.state": 7,
+   "identical": true
+  },
+  "a run begun after the pilot has the game's VRAM": {
+   "gGame.state": 1,
+   "gAnimTiles": 1,
+   "BG1CNT": "0xd801",
+   "BG2CNT": "0xdc02",
+   "OBJ bank 13 is the folk's again": true,
+   "match": true
+  }
+ },
+ "compare": {
+  "master_tol0": {
+   "a": "art/ref/drain_pilot/master_240x160.png",
+   "b": "engine_capture_240x160.png",
+   "tolerance": 0,
+   "mismatched": 16674,
+   "worst_channel_difference": 1,
+   "pass": false
+  },
+  "master_tol1": {
+   "a": "art/ref/drain_pilot/master_240x160.png",
+   "b": "engine_capture_240x160.png",
+   "tolerance": 1,
+   "mismatched": 0,
+   "worst_channel_difference": 1,
+   "pass": true
+  },
+  "master_tol8": {
+   "a": "art/ref/drain_pilot/master_240x160.png",
+   "b": "engine_capture_240x160.png",
+   "tolerance": 8,
+   "mismatched": 0,
+   "worst_channel_difference": 1,
+   "pass": true
+  },
+  "master_hw_tol0": {
+   "a": "master_hw_240x160.png",
+   "b": "engine_capture_240x160.png",
+   "tolerance": 0,
+   "mismatched": 0,
+   "worst_channel_difference": 0,
+   "pass": true
+  },
+  "bg_hw_tol0": {
+   "a": "bg_hw_240x160.png",
+   "b": "engine_capture_bg_240x160.png",
+   "tolerance": 0,
+   "mismatched": 0,
+   "worst_channel_difference": 0,
+   "pass": true
+  },
+  "ground_hw_tol0": {
+   "a": "ground_hw_240x160.png",
+   "b": "engine_capture_ground_240x160.png",
+   "tolerance": 0,
+   "mismatched": 0,
+   "worst_channel_difference": 0,
+   "pass": true
+  }
+ }
+}

@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the artist's native Drain pilot in as delivered and shown by its own ROM (`make pilot`); captured raw from mGBA, VRAM, palettes and OAM matching the files byte for byte, the frame matching the master to 1 step (0 pixels once the colour expansion is the same) | "BARTGAME: the Drain art pilot, captured from the ROM" |
 | BARTGAME: an engine contract for the artist: every metatile's hardware entries, banks, collision and art source; the three tile specs' keys mapped; three golden scenes captured raw from the ROM; an independent compositor matching the engine to the pixel | "BARTGAME: an engine contract and golden scenes for the artist" |
 | BARTGAME: the environment art pack V3 in exactly, index for index (117 entries, 12 groups); blighted rooms from the pack's blight set; stained patches in sick rooms; the 2x3 blighted tree; the hall's pieces as single tiles; the twin palettes removed; the tile spec marks all delivered | "BARTGAME: the environment art pack V3, exactly" |
 | BARTGAME: palettes per area (menu fixed in slot 13); the living wood, the blight and the mystery rooms painted in code with every edge drawn; blighted rooms as the wood in twin palettes; rot blobs in sick rooms; the Drain's hall decluttered; a room grid dump and renderer; the tile spec's drafts | "BARTGAME: the wood painted and blended, the blight in twin palettes" |

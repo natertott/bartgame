@@ -9,6 +9,7 @@ Reads the art modules in ../art and writes OUTDIR/assets.c and assets.h:
   sprites       per sheet, frames of 4bpp tiles in OBJ 1D order
   font          8x8 glyphs for ASCII 32..126
   title         the title screen as tiles + map + palette
+  drain pilot   the artist's native Drain scene, byte for byte (make pilot)
   rooms         hand-authored rooms as metatile grids
 
 Pixel art is written as rows of hex digits: one character per pixel, the
@@ -354,6 +355,43 @@ c.append(c_array_u16('title_pal', [rgb15(x) for x in tpal] + [0] * (16 - len(tpa
 h.append('extern const u16 title_tiles[];\nextern const u16 title_map[];\nextern const u16 title_pal[];')
 h.append('#define TITLE_TILE_COUNT %d\n' % len(tts.tiles))
 print('title: %d tiles' % len(tts.tiles))
+
+# ---------------------------------------------------------- drain pilot --
+# The artist's native 240x160 Drain pilot (art/ref/drain_pilot, kept as
+# delivered): its own 4bpp characters, two 32x32 screen maps, 13 BG banks
+# and three OBJ sprites, taken byte for byte, for src/pilot.c to show.
+import json  # noqa: E402
+PILOT = os.path.join(HERE, '..', 'art', 'ref', 'drain_pilot')
+plo = json.load(open(os.path.join(PILOT, 'layout.json')))
+
+
+def pilot_bytes(rel, size):
+    b = open(os.path.join(PILOT, rel), 'rb').read()
+    assert len(b) == size, ('drain pilot: %s is %d bytes, not %d' % (rel, len(b), size))
+    return b
+
+
+pchr = pilot_bytes(plo['character_file'], plo['tile_count'] * 32)
+c.append(c_array_u16('pilot_chr', bytes_to_u16(pchr)))
+for layer, nm in (('BG2', 'pilot_ground_map'), ('BG1', 'pilot_overlay_map')):
+    m = bytes_to_u16(pilot_bytes(plo[layer]['map_file'], 2048))
+    for e in m:
+        assert e & 0x3FF < plo['tile_count'] and not e & 0x0C00 and e >> 12 < 13, ('drain pilot: %s entry 0x%04x' % (layer, e))
+    c.append(c_array_u16(nm, m))
+c.append(c_array_u16('pilot_bg_pal', bytes_to_u16(pilot_bytes(plo['BG_palette_file'], 13 * 32))))
+c.append(c_array_u16('pilot_obj_pal', bytes_to_u16(pilot_bytes(plo['OBJ_palette_file'], 16 * 32))))
+h.append('extern const u16 pilot_chr[];\nextern const u16 pilot_ground_map[];\nextern const u16 pilot_overlay_map[];\n'
+         'extern const u16 pilot_bg_pal[];\nextern const u16 pilot_obj_pal[];')
+h.append('typedef struct { const u16* tiles; u8 tile_count, x, y, w, h, pal; } PilotSprite;')
+psp = []
+for sp in plo['sprite_placement']:
+    w, hgt = sp['size']
+    assert sp['tile_count_8x8'] == (w // 8) * (hgt // 8)
+    c.append(c_array_u16('pilot_obj_%s' % sp['name'], bytes_to_u16(pilot_bytes('gba/obj_%s_4bpp.bin' % sp['name'], sp['tile_count_8x8'] * 32))))
+    psp.append('    { pilot_obj_%s, %d, %d, %d, %d, %d, %d },' % (sp['name'], sp['tile_count_8x8'], sp['x'], sp['y'], w, hgt, sp['palette_bank_obj']))
+c.append('const PilotSprite pilot_sprites[%d] = {\n%s\n};' % (len(psp), '\n'.join(psp)))
+h.append('extern const PilotSprite pilot_sprites[];\n#define PILOT_SPRITE_COUNT %d\n#define PILOT_TILE_COUNT %d\n' % (len(psp), plo['tile_count']))
+print('drain pilot: %d tiles, %d sprites' % (plo['tile_count'], len(psp)))
 
 # --------------------------------------------------------------- rooms --
 h.append('typedef struct { u8 w, h; const u16* ground; const u16* overlay; const u8* objects; u8 object_count; } RoomDef;')

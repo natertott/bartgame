@@ -2,7 +2,7 @@
 #define GAME_H
 #include "gba.h"
 
-enum { GS_TITLE, GS_PLAY, GS_TRANSITION, GS_TEXT, GS_MAP, GS_DEAD, GS_WIN };
+enum { GS_TITLE, GS_PLAY, GS_TRANSITION, GS_TEXT, GS_MAP, GS_DEAD, GS_WIN, GS_PILOT };
 enum { AREA_SEWER, AREA_FOREST, AREA_MYST };
 
 typedef struct {

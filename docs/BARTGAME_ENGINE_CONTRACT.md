@@ -156,6 +156,8 @@ The Drain's 725 free pieces would hold a fully unique 240x160 pilot frame: 150 c
    - We build, capture the same camera with `tools/golden_capture.py`, and run `python3 tools/compare_frames.py master_bg_240x160.png engine_capture_bg_240x160.png --tolerance 8 --output diff.png --report report.json`.
    - A pass means every pixel is within 8 per channel, which covers BGR555. Mismatches are reported per 16x16 cell.
 
+**The pilot as delivered.** The native pilot (`BARTGAME_DRAIN_NATIVE_240x160_GBA_PILOT`) came as raw characters, maps and banks instead. `make pilot` shows it in the ROM as delivered. The capture and its comparison are in `docs/BARTGAME_DRAIN_PILOT_CAPTURE.md` and `engine_contract/pilot/`. mGBA expands a 5-bit channel c to `(c<<3)|(c>>2)`, so build masters with that expansion to compare at tolerance 0.
+
 For the wood, a master must be built from tiles that repeat, because rooms are generated. The living and blighted scenes show the tiles as the generator lays them.
 
 ## 6. What the pack V3 lacks, and how it looks in the engine
@@ -194,6 +196,9 @@ For the wood, a master must be built from tiles that repeat, because rooms are g
 | `tools/compose_frame.py` | The independent compositor |
 | `tools/compare_frames.py` | The frame comparison |
 | `tools/engine_contract.py` | Writes `engine_asset_contract.json` and `key_migration.json` |
+| `art/ref/drain_pilot/` | The native Drain pilot as delivered |
+| `src/pilot.c` | The pilot screen, in `make pilot` only |
+| `tools/pilot_capture.py` | The pilot captured from the ROM, read back and compared |
 
 To regenerate everything from the repo:
 

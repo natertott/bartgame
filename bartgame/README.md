@@ -173,6 +173,17 @@ plain grass, as the pack draws the rim on the water side), path edges
 are built from its four one-sided edges, and everything else is
 remapped into the pack's colours.
 
+**The Drain art pilot.** `make pilot` builds `bartgame_drainpilot.gba`,
+which boots into the artist's native 240x160 Drain scene
+(`art/ref/drain_pilot/`, as delivered), shown by `src/pilot.c` with its
+own 659 characters, two 32x32 maps, 13 BG banks and three sprites, and
+no HUD, world actors or collision. Start fades to the title; Select on
+the title comes back. Its OBJ banks 0-2 load into 13-15 (the game holds
+0-13). The main ROM leaves it out, and the Drain hall is unchanged.
+`tools/pilot_capture.py` captures it raw and checks VRAM, palette RAM
+and OAM against the files byte for byte
+(`docs/BARTGAME_DRAIN_PILOT_CAPTURE.md`).
+
 **The wood's rooms.** Every forest room is 32x24 tiles, planned as a
 grid of 3x3-tile chunks (ten by seven over the carvable part) drawn
 from a bank of pieces: forest, open ground, paths of one, two or three
@@ -288,6 +299,7 @@ back on the last safe ground.
 
 ```
 make            # bartgame.gba, from src/ and the art in art/*.py
+make pilot      # bartgame_drainpilot.gba, booting into the Drain art pilot
 make clean
 ```
 
@@ -325,13 +337,15 @@ src/            the engine and the game
                 the HUD, the mini-map
   sound.c       PSG sound effects and a three-track tracker
   game.c        states: title, play, transitions, map, win
+  pilot.c       the Drain art pilot, a fixed screen (make pilot only)
 art/            pixel art as rows of letters mapped to palette indices
   palettes.py   the 16-color palettes: BG from the boards over the drawn
                 ones, OBJ from the sprite pack, the remap tables
   ref/          the four style boards; ref/pack/ the sprite pack's exact
                 sheets and ref/pack_art/ its illustrated sheets, as delivered;
                 ref/tile_art/ the Drain's and the blight's tile atlases;
-                ref/pack_v3/ the environment art pack V3
+                ref/pack_v3/ the environment art pack V3;
+                ref/drain_pilot/ the native Drain pilot
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
   pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
@@ -370,6 +384,7 @@ tools/
   golden_capture.py fixed scenes captured raw from the ROM, with what is on screen
   compose_frame.py  a scene drawn straight from the art pack's PNGs, for comparing
   compare_frames.py two 240x160 frames compared pixel for pixel
+  pilot_capture.py  the Drain pilot captured raw, read back, compared
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM
