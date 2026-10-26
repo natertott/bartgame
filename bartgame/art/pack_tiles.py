@@ -1,6 +1,6 @@
 """The comparison build's tiles (BART_TILES=pack, `make pack-tiles`): the
-sprite pack's own tile sheets and HUD tiles (art/pack/tiles/) put into
-the metatiles by what they show.
+sprite pack's own tile sheets (art/pack/tiles/) put into the metatiles
+by what they show.
 
 The pack's tiles are a first pass (its README calls them representative
 families), so the default build keeps the tiles cut from the style
@@ -18,9 +18,7 @@ boards; this build is there to compare. The mapping:
     and hold one where it has one.
 
 Every metatile the pack does not cover keeps its art, remapped colour by
-colour into the pack's palette for its area (palettes.PACK_REMAP). The
-HUD tiles are quantized into the HUD palette the engine already uses,
-since its text inks come from fixed entries of it."""
+colour into the pack's palette for its area (palettes.PACK_REMAP)."""
 import os
 
 from PIL import Image
@@ -180,48 +178,3 @@ def apply(metatiles):
             m['frames'] = [palettes.remap_rows(f, rm) for f in m['frames']]
         else:
             m['art'] = palettes.remap_rows(m['art'], rm)
-
-
-# --------------------------------------------------------------- the HUD --
-def corner(t, cy, cx):
-    """one corner of a 16x16 slot from an 8x8 framed square: the square's
-    quarter on that corner, its middle row and column carried inward"""
-    out = []
-    for y in range(8):
-        sy = (y if y < 4 else 4) if cy == 0 else (3 if y < 4 else y)
-        out.append(''.join(t[sy][(x if x < 4 else 4) if cx == 0 else (3 if x < 4 else x)] for x in range(8)))
-    return out
-
-
-def quarter_turn(t):
-    """a quarter turn clockwise: the pack's arrow points right, the
-    engine's points down (and is flipped for up)"""
-    n = len(t)
-    return [''.join(t[n - 1 - x][y] for x in range(n)) for y in range(n)]
-
-
-def hud_tiles(current):
-    """the pack's HUD tiles under the engine's names, each colour the
-    nearest of the engine's HUD palette (its text inks are fixed entries
-    of it). The slots are the pack's 8x8 framed squares opened out to the
-    engine's 16x16."""
-    H = T['hud']
-    src = ['#000000'] + pack.META['tiles']['hud']['palette']
-    dst = dict(palettes.BG_PALETTES)['hud']
-    m = palettes._remap(src, dst)
-    q = {n: palettes.remap_rows(r, m) for n, r in H.items()}
-    out = {
-        'heart_full': q['heart_full'], 'heart_half': q['heart_half'], 'heart_empty': q['heart_empty'],
-        'gilt': q['coin'], 'key': q['key'], 'bomb': q['bomb'],
-        'btn_a': q['badge_a'], 'btn_b': q['badge_b'], 'btn_l': q['badge_l'], 'btn_r': q['badge_r'],
-        'slot_tl': corner(q['slot_plain'], 0, 0), 'slot_tr': corner(q['slot_plain'], 0, 1),
-        'slot_bl': corner(q['slot_plain'], 1, 0), 'slot_br': corner(q['slot_plain'], 1, 1),
-        'slot_lit_tl': corner(q['slot_lit'], 0, 0), 'slot_lit_tr': corner(q['slot_lit'], 0, 1),
-        'slot_lit_bl': corner(q['slot_lit'], 1, 0), 'slot_lit_br': corner(q['slot_lit'], 1, 1),
-        'box_tl': q['box_corner'], 'box_t': q['box_top'], 'box_l': q['box_side'], 'box_fill': q['box_fill'],
-        'box_bl': q['box_bottom_corner'], 'box_b': q['box_bottom'],
-        'cursor': q['cursor_hand'], 'hand': q['cursor_hand'], 'map_unknown': q['map_cell0'], 'map_cell': q['map_cell1'],
-        'rule': q['rule'], 'arrow': quarter_turn(q['arrow']),
-    }
-    assert set(out) <= set(current), sorted(set(out) - set(current))
-    return out

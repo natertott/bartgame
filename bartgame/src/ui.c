@@ -20,6 +20,7 @@ static const u8 sFrames[][4] = {
     { UI_ROW_TL, UI_ROW_T, UI_ROW_L, UI_SLOT_FILL },
     { UI_SROW_TL, UI_SROW_T, UI_SROW_L, UI_SLOT_FILL },
     { UI_BUB_TL, UI_BUB_T, UI_BUB_L, UI_BUB_FILL },
+    { UI_HUD_TL, UI_HUD_T, UI_HUD_L, UI_FILL },
 };
 
 static const u8 sPlates[][4] = {

@@ -66,9 +66,9 @@ The ground is textured turf with hand-placed tufts, flowers and
 pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
 tile edge, with lanterns and fireflies in the leaves; water has a dark
 bank and a drifting foam fringe wherever ground touches it; every
-sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
-HUD's figures are a hand-drawn 5x7, and every word of the UI is in a
-face of its own, proportional and nine rows high (`art/ui_font.py`).
+sprite is drawn pixel by pixel with letter legends in `art/*.py`; every
+word and figure of the UI, the HUD's too, is in a face of its own,
+proportional and nine rows high (`art/ui_font.py`).
 `tools/preview.py` renders any sheet or tile to PNG at 4x.
 
 **The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
@@ -109,10 +109,9 @@ drawn: the dialogue faces are busts of 48x48 drawn by hand
 (`art/faces.py`), after each speaker's sprite, in a palette each. Only
 the speaker's face is resident, in a 64x64 sprite kept above the
 sheets, and the portrait slot is loaded with its palette.
-The HUD tiles are the pack's too, quantized into the HUD palette the
-text inks depend on, with its 8x8 slot squares opened out to the
-engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
-mini-map writes through `ui_ink[]` into the pack's ui palette.
+The pack's HUD tiles are no longer drawn: the HUD is the UI kit's,
+drawn by hand (`art/ui_kit.py`), its slots holding the pack's 32-pixel
+treasure icons.
 
 **The environment art pack.** Every background tile of the wood and the
 mystery rooms is the environment art pack V3's, kept as
@@ -217,7 +216,7 @@ many real rooms.
 out by area: each tileset (the wood, the Drain, the mystery rooms) loads
 up to thirteen groups of its own into slots 0 to 12 when the area is
 entered (up to twelve groups, slots 0 to 11), and the pause map, the UI
-kit and the text and HUD keep slots 12, 13 and 15.
+kit and the HUD's hearts keep slots 12, 13 and 15.
 
 **The style boards.** The other tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
@@ -232,9 +231,10 @@ blight's ground, veins, crystals, dead trees, walls, the door, the
 arch, the pool, the pillar; the Drain's floors, walls, water, falls,
 pipes, grates, the drain, lanterns, banners, ladders, posts, and the
 stall's props. `art/tiles_style.py` puts them into the metatiles by
-name; every metatile and HUD tile still drawn by hand is remapped,
-colour by nearest colour, into the board palettes (`palettes.REMAP_BG`).
-The HUD and the boxes are drawn in the UI board's colours.
+name; every metatile still drawn by hand is remapped, colour by
+nearest colour, into the board palettes (`palettes.REMAP_BG`). The HUD
+and the boxes are drawn in the UI kit's palettes, after the UI board's
+navy and gold.
 
 **The comparison build.** `make pack-tiles` builds
 `bartgame_packtiles.gba` with the sprite pack's own tile sheets instead
@@ -287,11 +287,16 @@ generator from the tiles around it.
 
 ## The interface
 
-- **HUD.** Hearts, the purse and the keys at the top left; three gold
-  slots for A, B and L with what each button holds, lit when it holds
-  something, the bomb count under the slot that holds the bombs; the R
-  hand that lifts; a parchment mini-map of the wood at the top right,
-  red where you stand, gold at the Heart.
+- **HUD.** Navy panels in a thin double gold line, two pixels in from
+  the screen's edge. At the left the hearts, ten at most, over the purse,
+  the keys and R's glove that lifts. At the right a slot of 32 pixels for
+  each of A, B and L, holding the pause menu's own icon of what the
+  button holds, its badge on the corner and the count of seeds or arrows
+  at its foot; then a mini-map of the wood on the navy grid, green where
+  you have been, gold at the Heart, red where you stand. The icons,
+  badges, counts and the mini-map are sprites, first in OAM; in the
+  gardener's dark rooms they are the OBJ window too, so the dark leaves
+  them lit.
 - **Dialogue.** A navy box in a double gold line along the foot of the
   screen. A speaker's face at the left behind a gold divider, their name
   in gold on a plate over the box's top edge; the words type in the UI's
@@ -333,7 +338,7 @@ generator from the tiles around it.
   pixels in 32-pixel sprites: hearts, coins, a purse, seeds, keys, arrows
   in ones, fives and quivers, the relic, the Grail; the tools and
   treasures likewise, and the found thing is held up at that size. The
-  HUD's slots keep the small icons.
+  HUD's slots show the same icons.
 - **Boxes.** Every message, the shop, the pause pages, the title's words
   and the win's tally share one kit of navy panels, gold frames, plates,
   tabs and slots (`art/ui_kit.py`), after the UI boards.
@@ -421,7 +426,7 @@ art/            pixel art as rows of letters mapped to palette indices
                 ref/pack_v3/ the environment art pack V3
   pack/         the sprite pack imported: a strip per sheet, pack.json
   pack.py       reads art/pack/ for the build
-  pack_tiles.py the pack's HUD tiles; its tiles, for `make pack-tiles`
+  pack_tiles.py the pack's tiles, for `make pack-tiles`
   tile_art/     the tile atlases imported: tiles.json, the groups and tiles
   tile_art.py   lays the atlases' tiles over the metatiles, in both builds
   sample.py     cutting a board: key, scale, derive a palette, quantize
@@ -443,10 +448,9 @@ art/            pixel art as rows of letters mapped to palette indices
   portraits.py  drawing helpers, once the 32x32 portraits'
   faces.py      the dialogue faces, 48x48, drawn by hand after the sprites
   ui_font.py    the UI's own face: proportional, nine rows
-  ui_kit.py     the boxes' and pages' frames, plates, tabs, slots, marks
+  ui_kit.py     the boxes', pages' and HUD's frames, plates, tabs, slots,
+                marks; the hearts and R's glove
   sprites.py    the sheet list: the pack's sheets in the engine's frame order
-  hud.py        hearts, icons, item slots, the map's cells
-  font.py       the 5x7 font: the HUD's figures
   title.py      the title screen, painted with PIL in 16 colors
   rooms.py      the hub room: the Drain's objects (its cells: sw_drain.py)
   sw_paint.py   the Drain's painter: colours, ramps, a canvas, lit tubes
@@ -469,6 +473,7 @@ tools/
   sw_preview.py     the Drain's painting rendered, before it is cut
   hall_shots.py     the Drain's views and the whole hall, captured from the ROM
   ui_shots.py       the boxes, the shop, the pause pages and the map, captured from the ROM
+  hud_shots.py      the HUD in the hall, the wood and the dark, captured from the ROM
   folk_preview.py   the keepers' frames on a sheet, or the pair in the hall
   hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls, the keepers alive
   preview.py        render art to PNG
@@ -517,6 +522,7 @@ python3 tools/hall_probe.py               # the Drain walked from the spawn: the
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
 python3 tools/ui_shots.py out/            # the boxes, the shop, the pause pages and the map, and a sheet
+python3 tools/hud_shots.py out/           # the HUD in six states, a sheet and its bands at 4x
 ```
 
 The delivered ROM passed the critical path on three seeds (0xB4A7,

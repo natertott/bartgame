@@ -484,7 +484,7 @@ static void map_page(void) {
 
 static void draw_page(void) {
     bg0_clear();
-    bg0_pool_reset();
+    bg0_pool_reset_full();
     ui_backdrop_clear();
     page_frame();
     switch (sPage) {
@@ -705,6 +705,23 @@ static void grid_move(const MenuItem* list, const u8* idx, int count) {
     }
 }
 
+/* the icon of what a button holds, small, for the side panel; the blade
+   and the shield stay resident at these tiles (player.c) */
+#define SWORD_TILE 32
+#define SHIELD_TILE 44
+static void equip_icon(int eq, int px, int py, int prio) {
+    switch (eq) {
+        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_GEAR); break;
+        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_ITEMS); break;
+        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_ITEMS); break;
+        default: break;
+    }
+}
+
 void menu_update(void) {
     static u8 idx[ITEM_COUNT];
     switch (sPage) {
@@ -714,7 +731,7 @@ void menu_update(void) {
             if (n)
                 draw_sprite(2 * 8, DESC_SLOT_TY * 8, SHEET_ICON32, icon32_sheet_tile(), sItems[idx[sCursor]].icon, 0, 1, PAL_OBJ_ICONS);
             for (s = 0; s < SLOT_COUNT; s++)
-                hud_equip_icon(gPl.equip[s], 25 * 8, SIDE_BADGE_TY(s) * 8 - 4, 1);
+                equip_icon(gPl.equip[s], 25 * 8, SIDE_BADGE_TY(s) * 8 - 4, 1);
             grid_move(sItems, idx, n);
             if (n && (gKeysDown & (KEY_A | KEY_B | KEY_L))) {
                 const MenuItem* it = &sItems[idx[sCursor]];

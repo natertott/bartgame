@@ -96,7 +96,7 @@ def oam(c):
     out = []
     for i in range(128):
         a0, a1, a2 = (u16(c, 0x07000000 + i * 8 + k) for k in (0, 2, 4))
-        if (a0 & 0x0300) == 0x0200:   # hidden
+        if (a0 & 0x0300) == 0x0200 or (a0 & 0x0C00) == 0x0800:   # hidden, or the OBJ window
             continue
         shape, size = a0 >> 14, a1 >> 14
         w, h = [[(8, 8), (16, 16), (32, 32), (64, 64)], [(16, 8), (32, 8), (32, 16), (64, 32)], [(8, 16), (8, 32), (16, 32), (32, 64)]][shape][size]

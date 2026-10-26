@@ -1,8 +1,8 @@
 /* BARTGAME: BG0, the layer over the world: the HUD, the message box
    with its speaker's face and name plate, and the shop. BG0 is 32x32
    tiles at screenblock 23 in charblock 2, whose tiles stay under 384
-   (screenblocks 22 and 23 follow them): 0 is clear, 1..10 the HUD's
-   figures, then the HUD's tiles, then the UI kit, then the pool the
+   (screenblocks 22 and 23 follow them): 0 is clear, then the hearts and
+   R's hand, then the UI kit, then the HUD's purse, then the pool the
    words are set into a pixel at a time (vwf.c). */
 #include "gba.h"
 #include "video.h"
@@ -18,13 +18,14 @@
 #include "assets.h"
 
 #define BG0_MAP SCREENBLOCK(23)
-#define PAL15 (15 << 12)
-#define DIGIT_TILE 1
-#define POOL_FIRST (UI_BG0 + UI_TILE_COUNT)
+#define PAL_HUD (PAL_SLOT_HUD << 12) /* the hearts, R's hand */
+#define HUD_PURSE_TILE (UI_BG0 + UI_TILE_COUNT) /* the purse's own tiles */
+#define HUD_PURSE_TW 6
+/* a box over the world keeps the HUD's purse; the pages that fill the
+   screen take its tiles too, and the purse is set again after them */
+#define POOL_FULL HUD_PURSE_TILE
+#define POOL_FIRST (HUD_PURSE_TILE + HUD_PURSE_TW)
 #define POOL_END 384
-#define SWORD_TILE 32    /* player.c keeps the sword sheet here */
-#define SHIELD_TILE 44   /* and the shield after it */
-#define MINIMAP_TILE OBJ_TILE_MINIMAP /* 16 OBJ tiles the CPU draws the map into */
 
 #if HUD_TILE_BASE + HUD_TILE_COUNT > UI_BG0
 #error "the HUD's tiles run into the kit's"
@@ -33,14 +34,17 @@
 static u16 sBg0[32 * 32] ALIGN4;
 static u8 sBg0Dirty;
 
+static void hud_init(void);
+static void hud_stale(void);
+
 void text_init(void) {
     const SpriteSheet* marks = &sheets[SHEET_UIMARKS];
     dma3_fill32(0, CHARBLOCK(2), 32);
-    dma3_copy32(font_tiles + ('0' - ' ') * 16, CHARBLOCK(2) + DIGIT_TILE * 16, 10 * 32);
     dma3_copy32(hud_tiles, CHARBLOCK(2) + HUD_TILE_BASE * 16, HUD_TILE_COUNT * 32);
     dma3_copy32(ui_tiles, CHARBLOCK(2) + UI_BG0 * 16, UI_TILE_COUNT * 32);
     /* the marks over the boxes stay resident above the sheets */
     dma3_copy32(marks->tiles, OBJ_TILE(OBJ_TILE_UI), marks->tile_count * 32);
+    hud_init();
     bg0_pool_reset();
     bg0_clear();
 }
@@ -53,7 +57,7 @@ void bg0_clear(void) {
 void bg0_put(int tx, int ty, u16 tile) {
     if (tx < 0 || ty < 0 || tx >= 32 || ty >= 32)
         return;
-    sBg0[ty * 32 + tx] = tile ? (tile | PAL15) : 0;
+    sBg0[ty * 32 + tx] = tile ? (tile | PAL_HUD) : 0;
     sBg0Dirty = 1;
 }
 
@@ -69,16 +73,13 @@ u16* bg0_map(void) {
     return sBg0;
 }
 
-void bg0_print_num_hud(int tx, int ty, int n, int width) {
-    char buf[8];
-    int i;
-    vwf_num(buf, n, width);
-    for (i = 0; buf[i]; i++)
-        bg0_put(tx + i, ty, buf[i] == ' ' ? 0 : DIGIT_TILE + buf[i] - '0');
-}
-
 void bg0_pool_reset(void) {
     vwf_pool(POOL_FIRST, POOL_END);
+}
+
+void bg0_pool_reset_full(void) {
+    vwf_pool(POOL_FULL, POOL_END);
+    hud_stale();
 }
 
 bool8 bg0_canvas(Canvas* c, int tx, int ty, int tw, int th) {
@@ -366,7 +367,7 @@ void shop_open(int face, const char* greet, const ShopItem* items, int n) {
     face_load(face);
     video_show(DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
     bg0_clear();
-    bg0_pool_reset();
+    bg0_pool_reset_full();
     ui_backdrop_open();
     ui_frame(gBg3, UI_BG3, 0, 0, 30, 20, FR_PANEL);
     /* the keeper's face, and their words in a bubble that points at it */
@@ -464,135 +465,186 @@ bool8 shop_active(void) {
 }
 
 /* ---------------------------------------------------------------- HUD -- */
-void hud_clear(void) {
-    bg0_fill(0, 0, 32, 3, 0);
+/* Panels in the kit's HUD frame, two pixels in from the screen's edge:
+   at the left the hearts over the purse, the keys and R's hand; at the
+   right the three buttons' slots by the mini-map, each holding the pause
+   menu's own 32x32 icon of what it holds, its button's badge on its
+   corner and the count of its seeds or arrows. The frames, the hearts and
+   the purse are BG0's; the icons, badges, counts and the mini-map are
+   sprites, first in OAM, so nothing of the world cuts into them. */
+#define HUD_H 4
+#define HUD_SLOT_TX(s) (14 + (s) * 4)
+#define HUD_MAP_TX 26
+
+static Canvas sPurse, sCount[SLOT_COUNT];
+static u32 sCountPix[SLOT_COUNT][4 * 8];
+static s16 sPurseGilt, sPurseKeys;       /* what the purse shows */
+static u8 sHudEq[SLOT_COUNT];            /* whose icons are resident */
+static s16 sHudCount[SLOT_COUNT];        /* what each count shows, -1 none */
+
+static void hud_init(void) {
+    int s;
+    vwf_canvas_at(&sPurse, HUD_PURSE_TILE, HUD_PURSE_TW, 1);
+    for (s = 0; s < SLOT_COUNT; s++) {
+        vwf_canvas_obj(&sCount[s], sCountPix[s], OBJ_TILE_HUD_COUNTS + s * 4, 2, 2);
+        sHudEq[s] = 0xFF;
+        sHudCount[s] = -1;
+    }
+    hud_stale();
 }
 
-static void slot(int tx, int lit) {
-    bg0_put(tx, 0, lit ? HT_SLOT_LIT_TL : HT_SLOT_TL);
-    bg0_put(tx + 1, 0, lit ? HT_SLOT_LIT_TR : HT_SLOT_TR);
-    bg0_put(tx, 1, lit ? HT_SLOT_LIT_BL : HT_SLOT_BL);
-    bg0_put(tx + 1, 1, lit ? HT_SLOT_LIT_BR : HT_SLOT_BR);
+static void hud_stale(void) {
+    sPurseGilt = -1;
 }
 
-/* the icon of what a button holds, as a sprite over the slot */
-void hud_equip_icon(int eq, int px, int py, int prio) {
+/* the icon a button's item has in the pause menu, or -1 */
+static int hud_icon(int eq) {
     switch (eq) {
-        case EQ_SWORD: draw_sprite(px, py, SHEET_SWORD, SWORD_TILE, F_SWORD_BLADE_S, 0, prio, PAL_OBJ_GEAR); break;
-        case EQ_BOMBS: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOMBS, 0, prio, PAL_OBJ_ITEMS); break;
-        case EQ_LAMP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_LAMP, 0, prio, PAL_OBJ_ITEMS); break;
-        case EQ_CLOAK: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_CLOAK, 0, prio, PAL_OBJ_ITEMS); break;
-        case EQ_SHIELD: draw_sprite(px, py, SHEET_SHIELD, SHIELD_TILE, F_SHIELD_FRONT, 0, prio, PAL_OBJ_GEAR); break;
-        case EQ_BOW: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_BOW, 0, prio, PAL_OBJ_ITEMS); break;
-        case EQ_HUBCAP: draw_sprite(px, py, SHEET_ITEMS, items_sheet_tile(), F_ITEMS_HUBCAP, 0, prio, PAL_OBJ_ITEMS); break;
-        default: break;
+        case EQ_SWORD: return F_ICON32_SWORD;
+        case EQ_SHIELD: return F_ICON32_SHIELD;
+        case EQ_BOMBS: return F_ICON32_BOMBS;
+        case EQ_LAMP: return F_ICON32_LAMP;
+        case EQ_CLOAK: return F_ICON32_CLOAK;
+        case EQ_BOW: return F_ICON32_BOW;
+        case EQ_HUBCAP: return F_ICON32_HUBCAP;
+        default: return -1;
     }
 }
 
-static const u8 sSlotX[SLOT_COUNT] = { 12, 15, 18 };
-static const u16 sSlotBtn[SLOT_COUNT] = { HT_BTN_A, HT_BTN_B, HT_BTN_L };
+/* what a button's item counts: the seeds, the arrows; else -1 */
+static int hud_count(int eq) {
+    return eq == EQ_BOMBS ? gPl.bombs : eq == EQ_BOW ? gPl.arrows : -1;
+}
 
-static void hud_bar(void);
+/* the gilt by its coin and the keys by theirs, set again when they change */
+static void hud_purse(void) {
+    char buf[6];
+    int x;
+    vwf_clear(&sPurse, UI_INK_NAVY);
+    vwf_kit_px(&sPurse, 0, 0, UI_COIN, 0);
+    x = vwf_text(&sPurse, 10, 1, vwf_num(buf, gPl.gilt, 0), UI_INK_CREAM);
+    vwf_kit_px(&sPurse, x + 3, 0, UI_KEY, 0);
+    vwf_text(&sPurse, x + 12, 1, vwf_num(buf, gPl.keys, 0), UI_INK_CREAM);
+    vwf_flush(&sPurse, FALSE);
+}
 
-void hud_draw(void) {
-    hud_bar();
-    /* the mini-map at the top right */
-    {
-        OamEntry* o = oam_alloc();
-        if (o) {
-            o->attr0 = ATTR0_Y(0) | ATTR0_SQUARE;
-            o->attr1 = ATTR1_X(206) | ATTR1_SIZE(2);
-            o->attr2 = ATTR2_TILE(MINIMAP_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UI);
+/* the icons copied in when a button takes another item, the counts set
+   when they change */
+static void hud_refresh(void) {
+    const SpriteSheet* icons = &sheets[SHEET_ICON32];
+    int s;
+    if (gPl.gilt != sPurseGilt || gPl.keys != sPurseKeys) {
+        sPurseGilt = gPl.gilt;
+        sPurseKeys = gPl.keys;
+        hud_purse();
+    }
+    for (s = 0; s < SLOT_COUNT; s++) {
+        int eq = gPl.equip[s], n = hud_count(eq);
+        if (eq != sHudEq[s]) {
+            int f = hud_icon(eq);
+            sHudEq[s] = eq;
+            if (f >= 0)
+                vram_queue(icons->tiles + f * icons->frame_tiles * 16, OBJ_TILE(OBJ_TILE_HUD_ICONS + s * 16),
+                           icons->frame_tiles * 32);
+        }
+        if (n != sHudCount[s]) {
+            sHudCount[s] = n;
+            if (n >= 0) {
+                char buf[6];
+                vwf_num(buf, n, 0);
+                vwf_clear(&sCount[s], 0);
+                vwf_text_fx(&sCount[s], 14 - vwf_width(buf), 5, buf, UI_INK_CREAM, UI_INK_DARK, FX_OUTLINE);
+                vwf_flush(&sCount[s], FALSE);
+            }
         }
     }
 }
 
-void hud_draw_bar(void) {
-    hud_bar();
+/* the frames, the hearts, the purse and R on BG0, laid again each frame */
+static void hud_bar(void) {
+    u16* m = bg0_map();
+    int i, s, w, hearts = (gPl.hp_max + 7) / 8, hp = gPl.hp;
+    if (hearts > 10)
+        hearts = 10;
+    w = 2 + (hearts > 8 ? hearts : 8);
+    memset32(m, 0, HUD_H * 32 * 2);
+    ui_frame(m, UI_BG0, 0, 0, w, HUD_H, FR_HUD);
+    for (i = 0; i < hearts; i++) {
+        bg0_put(1 + i, 1, hp >= 8 ? HT_HEART_FULL : hp >= 4 ? HT_HEART_HALF : HT_HEART_EMPTY);
+        hp -= 8;
+    }
+    vwf_map(&sPurse, m, 1, 2, UI_PAL);
+    ui_tile(m, UI_BG0, w - 3, 2, UI_BADGE_R, 0);
+    bg0_put(w - 2, 2, HT_HAND);
+    for (s = 0; s < SLOT_COUNT; s++)
+        ui_frame(m, UI_BG0, HUD_SLOT_TX(s), 0, 4, HUD_H, FR_HUD);
+    ui_frame(m, UI_BG0, HUD_MAP_TX, 0, 4, HUD_H, FR_HUD);
 }
 
-static void hud_bar(void) {
-    int i;
-    int hearts = (gPl.hp_max + 7) / 8;
-    int hp = gPl.hp;
-    /* hearts along the top, the purse and the keys under them */
-    for (i = 0; i < hearts && i < 10; i++) {
-        u16 t;
-        if (hp >= 8)
-            t = HT_HEART_FULL;
-        else if (hp >= 4)
-            t = HT_HEART_HALF;
-        else
-            t = HT_HEART_EMPTY;
-        hp -= 8;
-        bg0_put(1 + i, 0, t);
+static void obj_square(int x, int y, int size, int tile, int pal) {
+    OamEntry* o = oam_alloc();
+    if (!o)
+        return;
+    o->attr0 = ATTR0_Y(y) | ATTR0_SQUARE;
+    o->attr1 = ATTR1_X(x) | ATTR1_SIZE(size);
+    o->attr2 = ATTR2_TILE(tile) | ATTR2_PRIO(0) | ATTR2_PAL(pal);
+}
+
+/* the badges and counts over the icons, then the icons, the mini-map */
+static void hud_sprites(void) {
+    int s;
+    for (s = 0; s < SLOT_COUNT; s++) {
+        int x = HUD_SLOT_TX(s) * 8;
+        draw_sprite(x + 2, 2, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_BADGE_A + s, 0, 0, PAL_OBJ_UIKIT);
+        if (sHudCount[s] >= 0)
+            obj_square(x + 14, 14, 1, OBJ_TILE_HUD_COUNTS + s * 4, PAL_OBJ_UIKIT);
     }
-    bg0_put(1, 1, HT_GILT);
-    bg0_print_num_hud(2, 1, gPl.gilt, 3);
-    bg0_put(6, 1, HT_KEY);
-    bg0_print_num_hud(7, 1, gPl.keys, 1);
-    /* the three buttons and what they hold, then R's hand */
-    for (i = 0; i < SLOT_COUNT; i++) {
-        int eq = gPl.equip[i];
-        bg0_put(sSlotX[i] - 1, 0, sSlotBtn[i]);
-        slot(sSlotX[i], eq != EQ_NONE);
-        if (eq == EQ_BOMBS)
-            bg0_print_num_hud(sSlotX[i], 2, gPl.bombs, 2);
-        else if (eq == EQ_BOW)
-            bg0_print_num_hud(sSlotX[i], 2, gPl.arrows, 2);
-        else
-            bg0_fill(sSlotX[i], 2, 2, 1, 0);
-        hud_equip_icon(eq, sSlotX[i] * 8, 0, 0);
-    }
-    bg0_put(20, 0, HT_BTN_R);
-    bg0_put(21, 0, HT_HAND);
+    for (s = 0; s < SLOT_COUNT; s++)
+        if (hud_icon(sHudEq[s]) >= 0)
+            obj_square(HUD_SLOT_TX(s) * 8, 0, 2, OBJ_TILE_HUD_ICONS + s * 16, PAL_OBJ_ICONS);
+    obj_square(HUD_MAP_TX * 8, 0, 2, OBJ_TILE_MINIMAP, PAL_OBJ_UIKIT);
+}
+
+void hud_draw(void) {
+    hud_refresh();
+    hud_bar();
+    hud_sprites();
 }
 
 /* ----------------------------------------------------------- mini-map -- */
-/* A 32x32 sprite drawn by the CPU: a parchment in a gold frame, the five
-   by five cells of the wood, green where seen, gold at the Heart, a red
-   dot where the hero stands (blue at the entry while he is below). */
+/* A 32x32 sprite drawn by the CPU inside the HUD's frame: the five by
+   five cells of the wood at four pixels each, the panels' navy with a
+   faint grid where nothing is seen yet, green with a lit edge where the
+   hero has been, gold at the Heart; a red dot where he stands, a pale
+   one at the way in while he is below. */
 static u16 sMapTiles[16 * 16];
 
 void minimap_render(void) {
     static u8 buf[32 * 32];
-    int x, y, i;
-    for (y = 0; y < 32; y++) {
-        for (x = 0; x < 32; x++) {
-            u8 col = 2;
-            int edge = (x == 0 || y == 0 || x == 31 || y == 31);
-            int inner = (x == 1 || y == 1 || x == 30 || y == 30);
-            if (edge)
-                col = 4;
-            else if (inner)
-                col = 5;
-            else if (x == 2 || y == 2 || x == 29 || y == 29)
-                col = 3;
-            if ((x < 2 && y < 2) || (x > 29 && y < 2) || (x < 2 && y > 29) || (x > 29 && y > 29))
-                col = 0;
-            buf[y * 32 + x] = col;
-        }
-    }
+    int x, y, i, here = (gGame.area == AREA_FOREST) ? gGame.cell : gWorld.entry;
+    memset32(buf, 0, sizeof(buf));
     for (i = 0; i < CELLS; i++) {
         Cell* c = &gWorld.cells[i];
-        int cx = 4 + (i % MAZE_W) * 5, cy = 4 + (i / MAZE_W) * 5;
-        u8 col = 3;
-        if (c->flags & CF_VISITED)
-            col = (i == gWorld.goal) ? 5 : 8;
+        int cx = 6 + (i % MAZE_W) * 4, cy = 6 + (i / MAZE_W) * 4;
+        bool8 seen = (c->flags & CF_VISITED) != 0, goal = i == gWorld.goal;
         for (y = 0; y < 4; y++)
-            for (x = 0; x < 4; x++)
+            for (x = 0; x < 4; x++) {
+                bool8 edge = x == 0 || y == 0;
+                u8 col;
+                if (!seen)
+                    col = edge ? UI_INK_RAISED : UI_INK_NAVY;
+                else if (goal)
+                    col = edge ? UI_INK_PALE : UI_INK_GOLD;
+                else
+                    col = edge ? OBJ_INK_GREEN_LIT : OBJ_INK_GREEN;
                 buf[(cy + y) * 32 + cx + x] = col;
-        if (col == 8) {
-            buf[cy * 32 + cx] = 7;
-            buf[(cy + 3) * 32 + cx + 3] = 7;
-        }
-        if ((gGame.area == AREA_FOREST && i == gGame.cell) || (gGame.area != AREA_FOREST && i == gWorld.entry)) {
-            u8 dot = (gGame.area == AREA_FOREST) ? 9 : 0xb;
-            buf[(cy + 1) * 32 + cx + 1] = dot;
+            }
+        if (i == here) {
+            u8 dot = (gGame.area == AREA_FOREST) ? UI_INK_RED : UI_INK_CREAM;
+            buf[(cy + 1) * 32 + cx + 1] = UI_INK_PALE;
             buf[(cy + 1) * 32 + cx + 2] = dot;
             buf[(cy + 2) * 32 + cx + 1] = dot;
             buf[(cy + 2) * 32 + cx + 2] = dot;
-            buf[(cy + 1) * 32 + cx + 1] = 0xa;
         }
     }
     /* pack to 4bpp tiles, 4x4 tiles in row order */
@@ -601,9 +653,9 @@ void minimap_render(void) {
         for (y = 0; y < 8; y++) {
             for (x = 0; x < 8; x += 4) {
                 const u8* p = &buf[(ty + y) * 32 + tx + x];
-                sMapTiles[i * 16 + y * 2 + x / 4] = ui_ink[p[0]] | (ui_ink[p[1]] << 4) | (ui_ink[p[2]] << 8) | (ui_ink[p[3]] << 12);
+                sMapTiles[i * 16 + y * 2 + x / 4] = p[0] | (p[1] << 4) | (p[2] << 8) | (p[3] << 12);
             }
         }
     }
-    dma3_copy32(sMapTiles, OBJ_TILE(MINIMAP_TILE), sizeof(sMapTiles));
+    dma3_copy32(sMapTiles, OBJ_TILE(OBJ_TILE_MINIMAP), sizeof(sMapTiles));
 }

@@ -1,6 +1,6 @@
 """The UI kit: the boxes, plates, tabs and slots of the dialogue box, the
-shop and the pause menu, drawn by hand as 8x8 tiles over the UI palette,
-after the boards' navy panels in gold frames.
+shop, the pause menu and the HUD, drawn by hand as 8x8 tiles over the UI
+palette, after the boards' navy panels in gold frames.
 
 Tiles are letter drawings over PAL's letters. A frame is drawn from its
 top-left corner, top edge and left edge; the engine flips them for the
@@ -9,6 +9,11 @@ other three sides, so every frame is the same all round.
     PAL         the UI palette: 15 colours by letter
     TILES       {name: 8 rows of 8 letters}
     TEXT        the colours the text is set in, by name
+    HUD_PAL     the HUD's hearts and R's glove: their own palette
+    HUD_TILES   {name: 8 rows of 8 letters} over HUD_PAL
+    MAP_PAL     the pause map's colours
+    OBJ_PAL     PAL as the sprites have it, the map's greens in it
+    OBJ_MARKS   {name: 8 rows of 8 letters}: the marks drawn as sprites
 """
 
 # 5-bit values (multiples of 8)
@@ -541,6 +546,123 @@ t('rule_end', '''
     22222222
 ''')
 
+# ----------------------------------------------------------- the HUD --
+# The HUD's panels float over the world: the same double gold line as
+# the boxes', set two pixels in from the tile's edge so a margin of the
+# world shows round each panel, then two of navy before what it holds.
+t('hud_tl', '''
+    ........
+    ........
+    ...ooooo
+    ..oGGGGG
+    ..oGoooo
+    ..oGoYYY
+    ..oGoY22
+    ..oGoY22
+''')
+t('hud_t', '''
+    ........
+    ........
+    oooooooo
+    GGGGGGGG
+    oooooooo
+    YYYYYYYY
+    22222222
+    22222222
+''')
+t('hud_l', '''
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+    ..oGoY22
+''')
+# a gold key, for the keys on the purse's line
+t('key', '''
+    ........
+    .ooo....
+    oGWYo...
+    oYoYoooo
+    oYYYYYYo
+    .ooo.YoY
+    .....o.o
+    ........
+''')
+
+# The hearts and R's hand sit on the HUD's panel in a palette of their
+# own (BG slot 15, 'hud'): the panels' navies, then the hearts' reds and
+# the hand's cream. Every pixel is set, the navy where nothing is drawn,
+# so no room shows through between them.
+HUD_PAL = [
+    ('o', (8, 8, 16)),          # 1 outline
+    ('2', (24, 32, 56)),        # 2 navy: the panel's fill, as the kit's
+    ('3', (40, 48, 80)),        # 3 navy, raised: an empty heart
+    ('4', (72, 88, 120)),       # 4 navy edge: an empty heart's gleam
+    ('R', (136, 24, 40)),       # 5 heart, dark
+    ('r', (216, 48, 56)),       # 6 heart red
+    ('q', (248, 120, 112)),     # 7 heart, lit
+    ('W', (248, 240, 192)),     # 8 a gleam
+    ('c', (232, 224, 208)),     # 9 cream: the hand
+    ('s', (136, 144, 168)),     # A slate: the hand's shade
+]
+for _k, _c in HUD_PAL:
+    assert all(v % 8 == 0 for v in _c), _k
+assert dict(HUD_PAL)['2'] == RGB['2']
+HUD_INDEX = {k: i + 1 for i, (k, _) in enumerate(HUD_PAL)}
+HUD_TILES = {}
+
+
+def ht(name, art):
+    rows = [r.strip() for r in art.strip('\n').split('\n')]
+    assert len(rows) == 8 and all(len(r) == 8 and set(r) <= set(HUD_INDEX) for r in rows), name
+    HUD_TILES[name] = rows
+
+
+ht('heart_full', '''
+    2oo2oo22
+    oWqoqro2
+    oqrrrro2
+    orrrrRo2
+    2orrRo22
+    22oRo222
+    222o2222
+    22222222
+''')
+ht('heart_half', '''
+    2oo2oo22
+    oWqo33o2
+    oqrr33o2
+    orrr33o2
+    2orr3o22
+    22oro222
+    222o2222
+    22222222
+''')
+ht('heart_empty', '''
+    2oo2oo22
+    o43o33o2
+    o33333o2
+    o33333o2
+    2o333o22
+    22o3o222
+    222o2222
+    22222222
+''')
+# R lifts and throws: an open glove
+ht('hand', '''
+    22o2o2o2
+    2ocococo
+    2ocococo
+    oococcco
+    occcccco
+    2occccso
+    22occso2
+    222ooo22
+''')
+
 # ----------------------------------------------------------- the map --
 # The map's own colours (a palette of their own, the menu's second):
 # the ground is the panel's deepest navy with a faint grid, the ways are
@@ -565,10 +687,17 @@ MAP_PAL = [
 for _k, _c in MAP_PAL:
     assert all(v % 8 == 0 for v in _c), _k
 MAP_INDEX = {k: i + 1 for i, (k, _) in enumerate(MAP_PAL)}
+MAP_RGB = dict(MAP_PAL)
+
+# The kit's palette as the sprites have it (OBJ slot 'uikit'): the same
+# letters, but the parchment and its ink, which no sprite draws, are the
+# map's greens, for the HUD's mini-map.
+OBJ_PAL = [(k, MAP_RGB['g'] if k == 'p' else MAP_RGB['G'] if k == 'b' else c) for k, c in PAL]
 
 # ---------------------------------------------------------- sprites --
 # Marks drawn as sprites over the boxes, in the kit's palette (OBJ slot
-# 'uikit'): the box's "more" arrow, the shop's pointer, 8x8 each
+# 'uikit'): the box's "more" arrow, the shop's pointer, the map cursor's
+# corner, and the buttons' badges over the HUD's icons, 8x8 each
 OBJ_MARKS = {
     'next': [
         '........',
@@ -602,6 +731,11 @@ OBJ_MARKS = {
         '........',
     ],
 }
+
+
+# the badges are the kit's own, as sprites so they sit over the icons
+for _b in ('badge_a', 'badge_b', 'badge_l'):
+    OBJ_MARKS[_b] = TILES[_b]
 
 
 def obj_rows(rows):

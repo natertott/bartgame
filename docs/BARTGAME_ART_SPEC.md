@@ -114,8 +114,9 @@ Sheet `sword`, **16x16**, group hero, **3 frames**.
 
 A short straight blade with a cross guard and a wrapped grip, steel
 with a gleam line, gold at the pommel. Only `blade_s` is drawn now, as
-the equipped sword's HUD icon; the swing is in the Bloom's frames. The
-other two are kept so the sheet's order stays.
+the sword's small icon by its button on the pause page's side; the
+swing is in the Bloom's frames. The other two are kept so the sheet's
+order stays.
 
 | Frame | Orientation |
 |---|---|
@@ -126,20 +127,21 @@ other two are kept so the sheet's order stays.
 ## 4. The Bark Shield
 
 Sheet `shield`, **16x16**, group hero, **3 frames**. Planks bound in
-brass with a central boss. Only `front` is drawn now, as the equipped
-shield's HUD icon; the guard is in the Bloom's frames.
+brass with a central boss. Only `front` is drawn now, as the shield's
+small icon by its button on the pause page's side; the guard is in the
+Bloom's frames.
 
 | Frame | What it shows |
 |---|---|
-| `front` | the shield face on, held before her when facing south; also the HUD icon when equipped |
+| `front` | the shield face on, held before her when facing south; also its small icon on the pause page |
 | `side` | the shield edge on, seen from the side, held out to the right (mirrored for west) |
 | `back` | the shield seen from behind over her shoulders when she faces north: its rim and straps |
 
 ## 5. Items at 16 pixels
 
-Sheet `items`, **16x16**, group fx, **20 frames**. Used in the HUD's
-equipment slots and the shop list. Centred, with an outline; each must
-read at 16 pixels on a dark navy slot.
+Sheet `items`, **16x16**, group fx, **20 frames**. Used on the pause
+page's side, by each button's badge, and in the shop list. Centred, with
+an outline; each must read at 16 pixels on a dark navy slot.
 
 | Frame | What it is |
 |---|---|
@@ -176,8 +178,13 @@ subjects as the 16-pixel versions, with more detail: `heart`, `gilt`,
 ## 7. Treasure icons at 32 pixels
 
 Sheet `icon32`, **32x32**, group fx, **16 frames**. The pause menu's
-item grid (shown on navy slots with a gold frame) and the item-get pose
-(held above the Bloom's head). About 24 pixels wide, centred both ways.
+item grid (shown on navy slots with a gold frame), the item-get pose
+(held above the Bloom's head) and the HUD's slots for A, B and L: there
+the icon is drawn whole over a 32-pixel slot in a thin gold frame, and
+may run over the frame's line, with the button's badge on its top-left
+corner and, for the seeds and the bow, a count over its lower right,
+outlined so it reads over the icon. About 24 pixels wide, centred both
+ways.
 `none` (transparent), `bombs`, `lamp`, `cloak`, `key`, `heart_piece`,
 `heart_container`, `gilt_big`, `relic`, `gauntlet`, `bow`, `hubcap`,
 and four with no 16-pixel version:
@@ -364,19 +371,32 @@ how to deliver them.
 
 ## 16. The HUD
 
-8x8 BG tiles in the HUD palette (cream, ink, three heart reds, three
-golds, grey, navy, blue, violet, slate): hearts full, half and empty; a
-coin; a key; a bomb; the A, B, L and R button badges; item slots in
-four corners, lit and unlit; a cursor hand; map cells. The HUD's
-figures are the 5x7 font's. These are drawn at 8x8 and the board's
-drawings do not scale to that size cleanly, so they are the one place
-where the art is made for the game rather than cut from the boards.
+Drawn from the UI kit (`art/ui_kit.py`), like the boxes: panels of the
+boxes' navy in a thinner double gold line (`hud_tl`, `hud_t`, `hud_l`),
+set two pixels in from the tile's edge so a margin of the world shows
+round each, 32 pixels tall. At the left the hearts, ten at most, over
+the purse: the coin and the gilt, the key and the keys, the R badge and
+R's glove. At the right three slots of 32x32, one for each of A, B and
+L, each holding its item's treasure icon (section 7) with the button's
+badge on the corner and the count of seeds or arrows in the UI's face;
+then the mini-map, a 32x32 sprite the engine draws: the five by five
+cells of the wood at four pixels each on the navy grid, green with a
+lit rim where the Bloom has been, gold at the Heart, a red dot where
+she stands, a cream one at the way in while she is below.
+
+The hearts and the glove are 8x8 tiles in a palette of their own
+(`HUD_PAL`: the kit's navies, three heart reds, a gleam, cream and
+slate): `heart_full`, `heart_half` (its left half red), `heart_empty`
+(a socket of raised navy) and `hand`. Every pixel is set, the panel's
+navy where nothing is drawn, so no room shows through. A heart is 7
+pixels square with its outline, lit from the upper left. Like the kit,
+they are drawn for the game rather than cut from the boards.
 
 ## 16a. The boxes, the shop and the pause pages
 
 Drawn from the UI kit, `art/ui_kit.py`, after the UI boards: navy
 panels in a double gold line, an outline round them and a stud at each
-corner. 47 tiles of 8x8 in a palette of their own (`PAL`, fifteen
+corner. 51 tiles of 8x8 in a palette of their own (`PAL`, fifteen
 colours by letter); a frame is its corner, edge and side, which the
 engine turns for the other three:
 
@@ -390,6 +410,7 @@ engine turns for the other three:
 | `row_*`, `srow_*` | a ware's row in the shop, the chosen one gold |
 | `bub_*` | the shop keeper's speech bubble, its tail and the join |
 | `coin`, `rule`, `rule_end` | prices and the purse; a rule under a heading |
+| `hud_tl`, `hud_t`, `hud_l`, `key` | the HUD's panels, in a thinner line two pixels in; the keys on its purse |
 
 The words are in the UI's own face, `art/ui_font.py`: proportional,
 nine rows (capitals in seven, descenders in two), every glyph drawn by
@@ -399,7 +420,7 @@ of a line. The pause map has a palette of its own too (`MAP_PAL`):
 navy ground with a faint grid, green ways with a lit rim, water, the
 blight in violet. Marks over the boxes are sprites in the kit's colours
 (`OBJ_MARKS`): the box's "more" arrow, the shop's pointer, the map
-cursor's corner.
+cursor's corner, and the HUD's A, B and L badges.
 
 ## 17. Checklist for a delivery
 

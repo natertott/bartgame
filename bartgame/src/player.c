@@ -22,7 +22,7 @@ PlayerState gPl;
 #define HURT_FRAMES 8
 #define FALL_FRAMES 36
 #define HERO_TILE 0    /* 64x32: tiles 0..31 */
-#define SWORD_TILE 32  /* the blade and the shield stay resident for the HUD */
+#define SWORD_TILE 32  /* the blade and the shield stay resident for the pause page */
 #define SHIELD_TILE 44
 
 static u8 sLastFrame = 0xFF;

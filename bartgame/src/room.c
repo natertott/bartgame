@@ -31,8 +31,7 @@ void tiles_init(void) {
         pal_set_obj(i, &pal_obj[i * 16]);
     pal_set_bg(PAL_SLOT_MENU, &pal_bg[PAL_BG_MENU * 16]);
     pal_set_bg(PAL_SLOT_MAP, &pal_bg[PAL_BG_MAP * 16]);
-    /* text uses palette 15 entries: 1 ink, 2 shadow */
-    pal_set_bg(PAL_SLOT_TEXT, &pal_bg[PAL_BG_HUD * 16]);
+    pal_set_bg(PAL_SLOT_HUD, &pal_bg[PAL_BG_HUD * 16]); /* the hearts, R's hand */
 }
 
 /* Animated metatiles: copy the current frame's four subtiles over the

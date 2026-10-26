@@ -48,7 +48,7 @@ static u8 sDark;
 
 static void dark_off(void) {
     sDark = 0;
-    REG_DISPCNT &= ~DCNT_WIN0;
+    REG_DISPCNT &= ~(DCNT_WIN0 | DCNT_OBJWIN);
     REG_BLDCNT = 0;
     REG_BLDY = 0;
 }
@@ -68,10 +68,26 @@ static void dark_update(void) {
     REG_WIN0H = (x0 << 8) | x1;
     REG_WIN0V = (y0 << 8) | y1;
     REG_WININ = 0x001F;  /* every layer, no effect inside the light */
-    REG_WINOUT = 0x003F; /* darkened outside */
+    REG_WINOUT = 0x1F3F; /* darkened outside, but not in the UI's sprites */
     REG_BLDCNT = 0x00C0 | 0x0016; /* brightness down on BG1, BG2 and OBJ */
     REG_BLDY = 11;
-    REG_DISPCNT |= DCNT_WIN0;
+    REG_DISPCNT |= DCNT_WIN0 | DCNT_OBJWIN;
+}
+
+/* the UI's sprites, the first n in OAM, as the OBJ window too: the dark
+   leaves the HUD's icons and the speaker's face be, and only them. The
+   window goes before them, where mGBA must have it as it draws them. */
+static void dark_spare(int n) {
+    int i;
+    if (n * 2 > 128)
+        return;
+    for (i = n - 1; i >= 0; i--) {
+        gOam[i + n].attr0 = gOam[i].attr0;
+        gOam[i + n].attr1 = gOam[i].attr1;
+        gOam[i + n].attr2 = gOam[i].attr2;
+        gOam[i].attr0 = (gOam[i].attr0 & ~ATTR0_BLEND) | ATTR0_WINDOW;
+    }
+    gOamCount = n * 2;
 }
 
 /* ----------------------------------------------------- cell objects -- */
@@ -407,7 +423,7 @@ static void title_show(void) {
     gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
     actors_clear();
     bg0_clear();
-    bg0_pool_reset();
+    bg0_pool_reset_full();
     sTitleHasSave = save_exists();
     sTitleCursor = 0;
     if (sTitleHasSave) {
@@ -523,7 +539,7 @@ static void update_win(void) {
         actors_clear();
         video_show(DCNT_BG0);
         bg0_clear();
-        bg0_pool_reset();
+        bg0_pool_reset_full();
         m = bg0_map();
         /* the tale's end in a panel under a gold plate, the run's count in
            two columns under a rule */
@@ -571,13 +587,15 @@ void game_init(void) {
 }
 
 static void draw_world(void) {
-    textbox_draw(); /* first in OAM: between sprites the order rules */
+    textbox_draw(); /* the UI first in OAM: between sprites the order rules */
+    hud_draw();
+    if (sDark)
+        dark_spare(gOamCount);
     npcs_draw_front();
     player_draw();
     enemies_draw();
     npcs_draw();
     objects_draw();
-    hud_draw();
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */

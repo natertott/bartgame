@@ -9,9 +9,10 @@ void bg0_clear(void);
 void bg0_put(int tx, int ty, u16 tile);
 void bg0_fill(int tx, int ty, int w, int h, u16 tile);
 u16* bg0_map(void); /* the shadow map, to be pushed at the next VBlank */
-void bg0_print_num_hud(int tx, int ty, int n, int width); /* the HUD's figures */
-/* the text pool starts again: a new screen of words */
+/* the text pool starts again: a new box of words over the world, the
+   HUD's purse kept; or a new page over the whole screen, the purse too */
 void bg0_pool_reset(void);
+void bg0_pool_reset_full(void);
 /* a clear canvas mapped at (tx, ty) in the kit's palette */
 bool8 bg0_canvas(Canvas* c, int tx, int ty, int tw, int th);
 /* a canvas shown at (tx, ty), or its place cleared */
@@ -49,11 +50,9 @@ void shop_close(void);
 int shop_result(void); /* -2 open, -1 left, else the choice */
 bool8 shop_active(void);
 
-/* the HUD and the mini-map */
+/* the HUD and the mini-map: hud_draw lays the panels and draws its
+   sprites, so it goes first in OAM */
 void hud_draw(void);
-void hud_draw_bar(void); /* the hearts, the purse, the buttons: no mini-map */
-void hud_equip_icon(int eq, int px, int py, int prio);
-void hud_clear(void);
 void minimap_render(void);
 
 #endif

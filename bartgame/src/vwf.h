@@ -15,13 +15,18 @@
 enum { FX_NONE, FX_SHADOW, FX_OUTLINE };
 
 typedef struct {
-    u16 tile;          /* the first tile, in BG0's charblock */
+    u16 tile;          /* the first tile, in BG0's charblock or OBJ VRAM */
     u8 tw, th;         /* in tiles */
+    u8 obj;            /* set: its tiles are a sprite's, in OBJ 1D order */
     u32* px;           /* tw * th tiles of eight words, 4bpp, row-major by tile */
 } Canvas;
 
 void vwf_pool(int first, int end); /* the pool starts again */
 bool8 vwf_canvas(Canvas* c, int tw, int th);
+/* a canvas of BG0's tiles held for good at tile, outside the pool */
+void vwf_canvas_at(Canvas* c, int tile, int tw, int th);
+/* a canvas for a sprite: buf of tw * th * 8 words, copied to OBJ tile */
+void vwf_canvas_obj(Canvas* c, u32* buf, int tile, int tw, int th);
 void vwf_clear(Canvas* c, int ink); /* every pixel the one ink; 0 is clear */
 /* a kit tile into one of the canvas's tiles: over what is there (its
    clear pixels leave it), or copied whole; hflip 1, vflip 2 */

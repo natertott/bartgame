@@ -183,12 +183,14 @@ contract = {
             'BG3': "the shop's and the pause menu's backdrop: the UI kit's panels and the map's picture; priority 3, charblock 3, screenblock 22",
         },
         'sprites': ('OBJ priority 2 (above the ground, under the overlay); some effects priority 1 (above the overlay). '
-                    'OBJ VRAM 1024 4bpp tiles: sheets and frames are streamed in per room below tile 936; 936.. the UI marks, '
-                    '944.. the speaker\'s face (a 64x64 sprite), the last 16 tiles the mini-map. '
+                    'OBJ VRAM 1024 4bpp tiles: sheets and frames are streamed in per room below tile 876; 876.. the HUD\'s '
+                    'three 32x32 icons, 924.. their counts, 936.. the UI marks and badges, 944.. the speaker\'s face '
+                    '(a 64x64 sprite), the last 16 tiles the mini-map. '
                     'Sprite palettes are separate from BG palettes.'),
         'bg_palettes': {'area_slots': [0, h_define('PAL_AREA_SLOTS') - 1], 'pause_map': h_define('PAL_SLOT_MAP'),
-                        'ui_kit': h_define('PAL_SLOT_MENU'), 'text_and_hud': h_define('PAL_SLOT_TEXT')},
-        'blending': 'none in rooms (BLDCNT 0); fades use brightness only',
+                        'ui_kit': h_define('PAL_SLOT_MENU'), 'hud_hearts': h_define('PAL_SLOT_HUD')},
+        'blending': ('none in rooms (BLDCNT 0) but the dark ones: brightness down outside a window of light, '
+                     'the UI\'s sprites spared by the OBJ window; fades use brightness only'),
         'colour': 'BGR555: each channel 5 bits; an 8-bit value v is stored as v >> 3, and read back as (c << 3) | (c >> 2)',
     },
     'tiles': {

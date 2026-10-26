@@ -1271,6 +1271,94 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the HUD redrawn, its items at full size (Oct 2026)
+
+The user liked the boxes and asked for the HUD in the same style, with
+the items shown as the pause page shows them, in their detailed 32-pixel
+icons rather than the 16-pixel sprites, and the slots made larger if
+needed. The same process: the HUD's VRAM and OAM budget studied, the
+layout mocked over captured rooms and judged in three rounds before the
+engine (a heavy frame first, then the thin inset one with the slots by
+the mini-map, R moved to the purse's line, the key drawn again with a
+bow and two teeth), then the engine, then captures from the ROM.
+
+The art, drawn by hand in `art/ui_kit.py`:
+- `hud_tl`, `hud_t`, `hud_l`: the boxes' double gold line, thinner, set
+  two pixels in from the tile's edge so a margin of the room shows round
+  each panel; `key`, for the keys on the purse's line. The kit is 51
+  tiles now.
+- The hearts (full, half, empty) and R's glove in a palette of their own
+  (`HUD_PAL`, BG slot 15, `PAL_SLOT_HUD`, was `PAL_SLOT_TEXT`): the kit's
+  navies, three heart reds, a gleam, cream and slate. Every pixel is
+  set, the panel's navy where nothing is drawn.
+- The sprites' copy of the kit's palette (`OBJ_PAL`, OBJ slot 'uikit')
+  has the map's greens where the parchment and its ink are, for the
+  mini-map; the A, B and L badges are sprites in it.
+- `art/hud.py`, `art/font.py`, the old 'hud' palette from the boards
+  (`style.PAL_HUD` and the UI crops), `ui_ink[]` and the pack's HUD
+  tiles (`pack_tiles.hud_tiles`) are gone: nothing drew them any more.
+
+The engine (`src/text.c`):
+- A band 32 pixels tall. At the left a panel ten tiles wide, a tile more
+  for each heart past eight, with up to ten hearts over the purse: the
+  coin, the gilt, the key and the keys in the UI's face, one canvas of
+  six tiles kept at BG0 56 to 61; the R badge and the glove at its end.
+  At the right three slots of 4x4 tiles at tiles 14, 18 and 22 for A, B
+  and L, and the mini-map's at 26.
+- A slot's icon is the pause page's own `icon32` frame, copied from ROM
+  into OBJ VRAM 876 to 923 when its button takes another item; the badge
+  on its corner; the seeds' or arrows' count in a canvas set into OBJ
+  VRAM 924 to 935, cream outlined in black, set again when it changes.
+  `hud_draw` lays the panels on BG0 every frame and draws its sprites
+  first in OAM after the box's, so nothing of the world cuts into them.
+- BG0's charblock: 0 clear, 1 to 4 the hearts and the glove, 5 to 55 the
+  kit, 56 to 61 the purse, the pool from 62 to 383. A page over the
+  whole screen (the shop, the pause pages, the title, the win) takes the
+  purse's tiles too (`bg0_pool_reset_full`), and the purse is set again
+  after it.
+- OBJ VRAM: the sheets stop at 876 (they stopped at 936). The measured
+  peak is 832 tiles, in the boss room and in the Drain with the pause
+  page open, over four seeds, every cell of the wood, every kind of
+  mystery room and the shop.
+- A canvas can be set into a fixed place of BG0 (`vwf_canvas_at`) or
+  into OBJ VRAM (`vwf_canvas_obj`).
+- The mini-map: the five by five cells at four pixels each on the navy
+  grid, green with a lit rim where the Bloom has been, gold at the
+  Heart, a red dot where she stands and a cream one at the way in while
+  she is below; packed straight to 4bpp.
+- The gardener's dark rooms: the UI's sprites are copied as the OBJ
+  window (`dark_spare` in `game.c`, WINOUT 0x1F3F), so the brightness
+  drop leaves the HUD's icons and a speaker's face lit and nothing else.
+  The copies go first in OAM: mGBA picks a sprite's darkened palette as
+  it draws it, and needs the window there before.
+- The pause page's small icons by the button badges are its only user
+  of the 16-pixel item sprites; the function moved into `menu.c`.
+
+Every probe passes: critical path 14/14, quests 12/12, lift 14/14, guard
+11/11, mysteries 28/28, wood 22/22, menu 21/21, hall 15/15, the
+comparison ROM's critical path 14/14, and the world check over 19,999
+seeds clean. `tools/hud_shots.py` captures the HUD in the hall at the
+start, with ten hearts and both counts, with the lamp, cloak and cap,
+with nothing held, in the wood and in the dark; the captures are in
+`docs/hud/`.
+
+Got wrong on the way: the hearts and the hand were see-through and
+showed the room inside the panel until they were drawn on its navy; a
+first window over the whole band kept the HUD lit in the dark but lit
+the room between the panels too; the OBJ window did nothing while its
+copies came after the sprites they spare; a capture script of mine left
+a DISPCNT write behind and hid the HUD in the wood, which looked like a
+bug. The hall probe read the hero's priority from OAM slot 0, which is
+the HUD's now; it finds the hero by its tile, and waits for the camera
+after a teleport (the old check read whatever was in slot 0 and passed
+by chance).
+
+Open: an icon drawn wide (the bow, the cap, the sword's tip) runs over
+its slot's frame; that is the look chosen, not a fault. The sword and
+shield sheets stay resident (24 tiles) for the pause page's small icons
+alone. `docs/engine_contract/` is as of 718efd8; its script says what
+OBJ VRAM and the palette slots hold now.
+
 ### BARTGAME: the boxes, the shop and the pause pages redrawn (Oct 2026)
 
 The user liked the keepers and asked next for the dialogue boxes, the

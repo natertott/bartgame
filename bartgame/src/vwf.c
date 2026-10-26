@@ -1,7 +1,8 @@
 /* BARTGAME: the UI's text, set a pixel at a time. A glyph of the face
    (art/ui_font.py) is a width and nine rows of bits; it is drawn into a
-   canvas, a run of BG0's tiles held from the pool, which is copied to
-   VRAM when it is done or, a few letters at a time, at the VBlank. */
+   canvas, a run of BG0's tiles held from the pool (or a sprite's tiles),
+   which is copied to VRAM when it is done or, a few letters at a time,
+   at the VBlank. */
 #include "gba.h"
 #include "video.h"
 #include "actor.h"
@@ -22,12 +23,25 @@ bool8 vwf_canvas(Canvas* c, int tw, int th) {
         c->tw = c->th = 0;
         return FALSE;
     }
-    c->tile = sNext;
-    c->tw = tw;
-    c->th = th;
-    c->px = sPix + c->tile * 8;
+    vwf_canvas_at(c, sNext, tw, th);
     sNext += n;
     return TRUE;
+}
+
+void vwf_canvas_at(Canvas* c, int tile, int tw, int th) {
+    c->tile = tile;
+    c->tw = tw;
+    c->th = th;
+    c->obj = 0;
+    c->px = sPix + tile * 8;
+}
+
+void vwf_canvas_obj(Canvas* c, u32* buf, int tile, int tw, int th) {
+    c->tile = tile;
+    c->tw = tw;
+    c->th = th;
+    c->obj = 1;
+    c->px = buf;
 }
 
 void vwf_clear(Canvas* c, int ink) {
@@ -211,7 +225,7 @@ int vwf_block(Canvas* c, int x, int y, int w, int pitch, const char* s, int ink,
 }
 
 void vwf_flush(Canvas* c, bool8 now) {
-    vu16* dst = CHARBLOCK(2) + c->tile * 16;
+    vu16* dst = c->obj ? OBJ_TILE(c->tile) : CHARBLOCK(2) + c->tile * 16;
     u32 bytes = c->tw * c->th * 32;
     if (!bytes)
         return;

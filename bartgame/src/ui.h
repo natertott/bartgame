@@ -2,18 +2,19 @@
 #define UI_H
 #include "gba.h"
 #include "vwf.h"
+#include "assets.h"
 
 /* The UI kit's frames laid into a map of 32 tiles to a row: BG0's, over
    the world, or BG3's, the backdrop of the shop and the pause menu. On
    BG3 every clear pixel of the kit is the panel's own navy. */
-#define UI_BG0 46 /* the kit's first tile in BG0's charblock */
+#define UI_BG0 (HUD_TILE_BASE + HUD_TILE_COUNT) /* the kit's first tile in BG0's charblock */
 #define UI_BG3 1  /* and in BG3's; tile 0 there is the panel's fill */
 #define UI_PAL PAL_SLOT_MENU
 #define UI_HF 0x400
 #define UI_VF 0x800
 
 /* a frame's corner, edge, side and fill */
-enum { FR_PANEL, FR_SLOT, FR_SEL, FR_EMPTY, FR_ROW, FR_SROW, FR_BUB };
+enum { FR_PANEL, FR_SLOT, FR_SEL, FR_EMPTY, FR_ROW, FR_SROW, FR_BUB, FR_HUD };
 /* two tiles tall: a name plate, a tab, the open tab */
 enum { PL_PLATE, PL_TAB, PL_TABON };
 

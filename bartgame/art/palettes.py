@@ -115,23 +115,9 @@ OLD_BG_PALETTES = [
                '#4c1c78',    # D rug violet dark
                '#8838c8',    # E rug violet
                '#808690']),  # F stone light (the floor's lit edges)
-    # 6 HUD and text
-    ('hud', ['#000000',
-             '#f8f0d8',      # 1 ink cream
-             '#2a1c10',      # 2 ink shadow
-             '#e82838',      # 3 heart red
-             '#ff7878',      # 4 heart bright
-             '#801020',      # 5 heart dark
-             '#8a5c18',      # 6 gold dark
-             '#e8b838',      # 7 gold mid
-             '#fff4b0',      # 8 gold bright
-             '#8890a0',      # 9 grey
-             '#161020',      # A frame fill
-             '#38a0ff',      # B blue
-             '#1848a0',      # C blue dark
-             '#9040d8',      # D violet
-             '#0c0a14',      # E box fill
-             '#3a3a48']),    # F slate, empty
+    # 6 the HUD's hearts and R's hand on the panels' navy (ui_kit.HUD_PAL),
+    #   the rest unused
+    ('hud', (['#000000'] + ['#%02x%02x%02x' % c for _, c in _uk.HUD_PAL] + ['#000000'] * 15)[:16]),
     # 7 cliff: rocks and ledges sunk in moss and soil
     ('cliff', ['#000000',
                '#0a1018',    # 1 outline
@@ -327,7 +313,6 @@ def _hexes(pal):
 
 
 _BOARD_BG = {
-    'hud': ['#000000'] + _hexes(_st.PAL_HUD),
     'forest': ['#000000'] + _hexes(_st.PAL_FOREST),
     'wood': ['#000000'] + _hexes(_st.PAL_FOREST),
     'stone': ['#000000'] + _hexes(_st.PAL_CLIFF),
@@ -352,7 +337,7 @@ OBJ_PALETTES = [(n, _pk.GROUPS[n]) for n in _OBJ_ORDER]
 assert set(_pk.GROUPS) - {'folk32'} == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
 OBJ_PALETTES += [(n, ['#000000'] + ['#%02x%02x%02x' % c for _, c in pal])
                  for n, pal in (('peddler', _sf.PEDDLER_PAL), ('gatekeeper', _sf.GATEKEEPER_PAL),
-                                ('uikit', _uk.PAL))]
+                                ('uikit', _uk.OBJ_PAL))]
 # the dialogue box's faces (faces.py), each its own palette, in the face
 # sheet's order
 import faces as _fc  # noqa: E402
@@ -385,11 +370,6 @@ REMAP_BG = {n: _remap(dict(OLD_BG_PALETTES)[n], _BOARD_BG[n]) for n in _BOARD_BG
 
 def remap_rows(rows, m):
     return [''.join('.' if ch in '. ' else '%x' % m[int(ch, 16)] for ch in r) for r in rows]
-
-
-# The mini-map is drawn by the CPU in the old 'ui' indices; UI_INK maps
-# each to the nearest colour of the pack's ui palette.
-UI_INK = _remap(dict(OLD_OBJ_PALETTES)['ui'], dict(OBJ_PALETTES)['ui'])
 
 
 # The comparison build (BART_TILES=pack, `make pack-tiles`) takes the area

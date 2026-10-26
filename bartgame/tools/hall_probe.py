@@ -103,8 +103,15 @@ def walk(c, pts, frames=900):
 
 
 def hero_prio(c):
-    """the OAM priority of the hero's sprite (drawn first, slot 0)"""
-    return (P.r16(c, 0x07000000 + 4) >> 10) & 3
+    """the OAM priority of the hero's sprite, the 64x32 one at tile 0 (the
+    UI's sprites come before it in OAM)"""
+    for i in range(128):
+        a0, a1, a2 = (P.r16(c, 0x07000000 + i * 8 + k) & 0xFFFF for k in (0, 2, 4))
+        if a0 & 0x0200 or (a0 >> 10) & 3 == 2:
+            continue
+        if a2 & 0x3FF == 0 and a0 >> 14 == 1 and a1 >> 14 == 3:
+            return (a2 >> 10) & 3
+    return -1
 
 
 def hdr_defs(*names):
@@ -183,7 +190,7 @@ def main():
             P.snap(c, os.path.join(S, 'hall_gatekeeper.png'))
             CP.dismiss(c)
     CP.teleport(c, *spawn)
-    P.run(c, 4)
+    P.run(c, 30)   # the camera catches up and the hero is on screen again
     check('FRONT: out on the floor, under the overlay', hero_prio(c) == 2, 'priority %d' % hero_prio(c))
     # SAFE: every cell the hero can stand in is plain ground
     types = P.sym('metatile_type')

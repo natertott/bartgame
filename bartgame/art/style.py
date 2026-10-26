@@ -105,21 +105,3 @@ SEWER_SRC['props'] = {
     'awning': pt(P_AWNING, 32, 16), 'counter': pt(P_COUNTER, 32, 16), 'rug': pt(P_RUG, 32, 32),
     'shelf': pt(P_SHELF, 16, 32), 'gold': pt((285, 440, 345, 500)), 'pot': pt((1028, 390, 1068, 450)),
 }
-
-
-# -------------------------------------------------------------- the UI --
-# the HUD and the boxes: hearts, the coin, the dialogue frame on its
-# navy fill, the item slots. Cream and ink are pinned for the hand-drawn
-# tiles that stay (the key, the bomb, the button letters, the cursor).
-U_HEARTS, U_COIN, U_FRAME, U_FILL, U_SLOT_LIT, U_SLOT = (54, 215, 230, 251), (613, 215, 647, 249), (935, 215, 1000, 280), (1300, 255, 1332, 287), (640, 698, 712, 770), (738, 698, 810, 770)
-# the board's navy, golds and reds, with the blue and violet the drawn
-# key, bomb and map tiles need
-# in the drawn palette's order (room.c takes the gold text ink from 6 and 8):
-# cream, ink, heart red, heart bright, heart dark, gold dark, gold, gold
-# bright, grey, frame fill, blue, blue dark, violet, box fill, slate
-PAL_HUD = [(248, 240, 216), (42, 28, 16), (212, 41, 47), (240, 120, 120), (130, 16, 26), (130, 90, 30), (209, 174, 117), (247, 230, 177),
-           (102, 102, 97), (34, 37, 51), (56, 160, 255), (24, 72, 160), (144, 64, 216), (12, 16, 30), (58, 58, 72)]
-
-# the board's UI elements do not scale cleanly to 8x8 tiles, so the
-# HUD's hearts, coin, slots and frames stay drawn, in this palette.
-UI_SRC = {}
