@@ -119,30 +119,6 @@ def render():
     return glyphs
 
 
-def render_bold():
-    """the same glyphs a pixel wider, bold, for the pause pages: ink
-    where the glyph or its left neighbour is ink"""
-    glyphs = []
-    for code in range(32, 127):
-        rows = GLYPHS[chr(code)]
-        src = [[0] * 8 for _ in range(8)]
-        for y, r in enumerate(rows):
-            for x, ch in enumerate(r):
-                if ch == '#':
-                    src[y][x] = 1
-        g = [[0] * 8 for _ in range(8)]
-        for y in range(8):
-            for x in range(8):
-                if src[y][x] or (x > 0 and src[y][x - 1]):
-                    g[y][x] = 1
-        for y in range(8):
-            for x in range(8):
-                if g[y][x] == 1 and y + 1 < 8 and x + 1 < 8 and g[y + 1][x + 1] == 0:
-                    g[y + 1][x + 1] = 2
-        glyphs.append(g)
-    return glyphs
-
-
 if __name__ == '__main__':
     gs = render()
     for g in gs[33:60]:

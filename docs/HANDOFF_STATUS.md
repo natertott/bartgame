@@ -44,6 +44,7 @@ charts and a report into `docs/sim/` and `docs/QUICKSTART_SIM_REPORT.md`.
 
 | what | roadmap entry |
 |---|---|
+| BARTGAME: the boxes, the shop and the pause pages redrawn after the UI boards: a kit of navy panels in gold frames, plates, tabs and slots; a proportional face set a pixel at a time with highlighted words; 48x48 faces drawn by hand for the six who speak; a full-screen shop with the keeper's bubble; tabs, slots and a navy-grid map with a legend | "BARTGAME: the boxes, the shop and the pause pages redrawn" |
 | BARTGAME: the Drain's keepers drawn by hand and alive: the Peddler in two 64x32 sprites, head over body, spinning his coin, rubbing his hands, drumming, breathing, blinking, watching; the Gatekeeper in 64x64 with a wisp, breathing, blinking, kindling a light, her orb's glow pulsing; frames streamed into held tiles; the counter's top on the ground; folk in front of the hero drawn over him | "BARTGAME: the Drain's keepers drawn by hand, alive" |
 | BARTGAME: the Drain redrawn from scratch: painted whole at native resolution, 30x20, pipes, falls, stall, corner, railed channel and front, spouts; cut into 376 metatiles in 11 hand-set palettes, a palette per 8x8 piece; FRONT tiles for the counter; a hall probe | "BARTGAME: the Drain redrawn from scratch" |
 | BARTGAME: the Drain art pilot taken out at the user's word; the game as before it; the parallel-make fix kept | "BARTGAME: the Drain art pilot taken out" |

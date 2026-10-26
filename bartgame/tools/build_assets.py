@@ -7,7 +7,8 @@ Reads the art modules in ../art and writes OUTDIR/assets.c and assets.h:
                 4 map entries per metatile, its type and collision byte,
                 and the animated metatiles' frame data
   sprites       per sheet, frames of 4bpp tiles in OBJ 1D order
-  font          8x8 glyphs for ASCII 32..126
+  font          8x8 glyphs for ASCII 32..126 (the HUD takes its figures)
+  ui            the UI's proportional face, its kit of frames and inks
   title         the title screen as tiles + map + palette
   rooms         hand-authored rooms as metatile grids
 
@@ -142,12 +143,13 @@ c.append(c_array_u16('pal_bg', vals))
 h.append('#define PAL_BG_COUNT %d' % len(palettes.BG_PALETTES))
 h.append('extern const u16 pal_bg[];')
 # The hardware's 16 BG palettes: each area's tileset loads its own groups
-# into the first PAL_AREA_SLOTS when the area is entered; the pause
-# menu's planks, the gold text and the text and HUD keep the last three.
-PAL_AREA_SLOTS = 13
+# into the first PAL_AREA_SLOTS when the area is entered; the pause map,
+# the UI kit (the boxes, the shop, the pause pages) and the HUD keep
+# slots of their own after them (14 is free).
+PAL_AREA_SLOTS = 12
 h.append('#define PAL_AREA_SLOTS %d' % PAL_AREA_SLOTS)
+h.append('#define PAL_SLOT_MAP 12 /* the pause map, its own colours */')
 h.append('#define PAL_SLOT_MENU 13')
-h.append('#define PAL_SLOT_GOLD 14')
 h.append('#define PAL_SLOT_TEXT 15')
 vals = []
 for i, (name, cols) in enumerate(palettes.OBJ_PALETTES):
@@ -159,13 +161,13 @@ c.append(c_array_u16('pal_obj', vals))
 h.append('#define PAL_OBJ_COUNT %d' % len(palettes.OBJ_PALETTES))
 h.append('extern const u16 pal_obj[];')
 assert len(palettes.OBJ_PALETTES) <= 16
-# a palette per portrait, loaded into the portrait slot with the speaker
+# a palette per face, loaded into the portrait slot with the speaker
 vals = []
-for cols in palettes.PORTRAIT_PALETTES:
+for cols in palettes.FACE_PALETTES:
     assert len(cols) == 16
     vals += [rgb15(x) for x in cols]
-c.append(c_array_u16('pal_portrait', vals))
-h.append('extern const u16 pal_portrait[];')
+c.append(c_array_u16('pal_face', vals))
+h.append('extern const u16 pal_face[];')
 # the old ui indices the CPU-drawn mini-map uses, in the pack's ui palette
 c.append('const u8 ui_ink[16] = { %s };' % ', '.join(str(palettes.UI_INK[i]) for i in range(16)))
 h.append('extern const u8 ui_ink[16];\n')
@@ -333,40 +335,61 @@ data = b''
 for g in glyphs:
     data += tile_bytes(g, 0, 0)
 c.append(c_array_u16('font_tiles', bytes_to_u16(data)))
-bdata = b''
-for g in font.render_bold():
-    bdata += tile_bytes(g, 0, 0)
-c.append(c_array_u16('font_bold_tiles', bytes_to_u16(bdata)))
-h.append('extern const u16 font_bold_tiles[];')
 h.append('extern const u16 font_tiles[];')
 h.append('#define FONT_GLYPHS %d\n' % len(glyphs))
 
 # ----------------------------------------------------------------- hud --
+# the UI's own face, set a pixel at a time (src/vwf.c): a width and nine
+# rows of bits a glyph, bit x the pixel x
+import ui_font  # noqa: E402
+VWF_FIRST, VWF_LAST = 32, 128
+widths, bits = [], []
+for code in range(VWF_FIRST, VWF_LAST + 1):
+    w, rows = ui_font.glyph(chr(code))
+    widths.append(w)
+    for r in rows:
+        bits.append(sum(1 << x for x, ch in enumerate(r) if ch == '#'))
+c.append('const u8 vwf_w[%d] = { %s };' % (len(widths), ', '.join(str(v) for v in widths)))
+c.append('const u8 vwf_bits[%d] = { %s };' % (len(bits), ', '.join(str(v) for v in bits)))
+h.append('#define VWF_FIRST %d' % VWF_FIRST)
+h.append('#define VWF_COUNT %d' % len(widths))
+h.append('#define VWF_HEIGHT %d' % ui_font.HEIGHT)
+h.append('#define VWF_SPACE 3')
+h.append('extern const u8 vwf_w[];')
+h.append('extern const u8 vwf_bits[];')
+h.append('#define CH_COIN "\\x7f"')
+h.append('#define CH_HEART "\\x80"')
+
+# the UI kit: frames, plates, tabs, slots (art/ui_kit.py), in its palette
+import ui_kit  # noqa: E402
+data = b''
+for i, (name, rows) in enumerate(ui_kit.TILES.items()):
+    pix = [[ui_kit.INDEX.get(ch, 0) for ch in r] for r in rows]
+    data += tile_bytes(pix, 0, 0)
+    h.append('#define UI_%s %d' % (cname(name), i))
+c.append(c_array_u16('ui_tiles', bytes_to_u16(data)))
+h.append('extern const u16 ui_tiles[];')
+h.append('#define UI_TILE_COUNT %d' % len(ui_kit.TILES))
+for nm, k in (('CREAM', 'c'), ('HIGH', 'h'), ('RED', 'r'), ('GOLD', 'G'), ('DIM', 's'), ('BROWN', 'b'),
+              ('DARK', 'o'), ('DEEP', '1'), ('NAVY', '2'), ('RAISED', '3'), ('EDGE', '4'), ('PARCH', 'p'),
+              ('GOLD_DARK', 'y'), ('GOLD_MID', 'Y'), ('PALE', 'W')):
+    h.append('#define UI_INK_%s %d' % (nm, ui_kit.INDEX[k]))
+# the pause map's colours, in its own palette (PAL_SLOT_MAP)
+for nm, k in (('OUTLINE', 'o'), ('GROUND', 'n'), ('GRID', 'N'), ('DEEP', 'k'), ('GREEN', 'g'), ('LIT', 'G'),
+              ('PALE', 'L'), ('WATER', 'w'), ('WATER_LIT', 'W'), ('BROWN', 'b'), ('BLIGHT', 'v'),
+              ('BLIGHT_LIT', 'V'), ('UNKNOWN_EDGE', 'U'), ('GOLD', 'y'), ('CREAM', 'c')):
+    h.append('#define MAP_INK_%s %d' % (nm, ui_kit.MAP_INDEX[k]))
+h.append('')
+
 import hud  # noqa: E402
 data = b''
+h.append('#define HUD_TILE_BASE 11 /* BG0: the blank, the ten figures, then these */')
 for i, (name, rows) in enumerate(hud.TILES.items()):
     data += tile_bytes(parse_art(rows, 8, 8), 0, 0)
-    h.append('#define HT_%s (FONT_GLYPHS + %d)' % (cname(name), i))
+    h.append('#define HT_%s (HUD_TILE_BASE + %d)' % (cname(name), i))
 c.append(c_array_u16('hud_tiles', bytes_to_u16(data)))
 h.append('extern const u16 hud_tiles[];')
 h.append('#define HUD_TILE_COUNT %d\n' % len(hud.TILES))
-data = b''
-for i, (name, rows) in enumerate(hud.MENU.items()):
-    data += tile_bytes(parse_art(rows, 8, 8), 0, 0)
-    h.append('#define MN_%s %d' % (cname(name), i))
-c.append(c_array_u16('menu_tiles', bytes_to_u16(data)))
-h.append('extern const u16 menu_tiles[];')
-h.append('#define MENU_TILE_COUNT %d\n' % len(hud.MENU))
-import planks  # noqa: E402
-ptiles, pmap = planks.tiles_and_map()
-data = b''
-for t in ptiles:
-    data += bytes(t[i] | (t[i + 1] << 4) for i in range(0, 64, 2))
-c.append(c_array_u16('planks_tiles', bytes_to_u16(data)))
-c.append(c_array_u16('planks_map', pmap))
-h.append('extern const u16 planks_tiles[];\nextern const u16 planks_map[];')
-h.append('#define PLANKS_TILE_COUNT %d\n' % len(ptiles))
-print('planks: %d tiles' % len(ptiles))
 
 # --------------------------------------------------------------- title --
 tpix, tpal = title.render()  # 240x160 indices, palette of <=16 hex colors

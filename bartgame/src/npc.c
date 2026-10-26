@@ -334,7 +334,7 @@ static const char* const sNames[NPC_COUNT] = {
     "The Pale Gatekeeper", "The Billious Peddler", "The Hermit Knight", "The Weeping Nun", "The Blind Gardener", "A Stranger"
 };
 static const u8 sPortraits[NPC_COUNT] = {
-    F_PORTRAIT_GATEKEEPER, F_PORTRAIT_PEDDLER, F_PORTRAIT_HERMIT, F_PORTRAIT_NUN, F_PORTRAIT_GARDENER, F_PORTRAIT_HERMIT
+    F_FACE_GATEKEEPER, F_FACE_PEDDLER, F_FACE_HERMIT, F_FACE_NUN, F_FACE_GARDENER, F_FACE_HERMIT
 };
 
 static void start_text(const char* s) {
@@ -347,7 +347,7 @@ static void talk_sage(void) {
     Cell* goal = &gWorld.cells[gWorld.goal];
     (void)goal;
     if (!(gPl.items & ITEM_BOMBS))
-        start_text("Ahh... you bloomed. In the muck, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. Three doors it keeps: one cracked, one webbed, one a chasm.|What opens them lies in chests before them. Cut what you can. R rolls. Go up the drain, little bloom.");
+        start_text("Ahh... you " INK_HIGH "bloomed" INK_BASE ". In the muck, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. " INK_HIGH "Three doors" INK_BASE " it keeps: one cracked, one webbed, one a chasm.|What opens them lies in chests before them. Cut what you can. " INK_GOLD "R" INK_BASE " rolls. Go up the drain, little bloom.");
     else if (!(gPl.items & ITEM_CLOAK))
         start_text("The blight keeps its keys close to its locks. Look for chests in the dead ends. The wood is a maze, but every maze is a tree.");
     else
@@ -355,14 +355,15 @@ static void talk_sage(void) {
 }
 
 static const ShopItem sShop[3] = {
-    { "Healing Petal", "A preserved bloom. It", "restores two hearts.", 10, F_ITEMS_HEART },
-    { "Blightseeds x5", "Five seeds that burst and", "open cracked walls.", 15, F_ITEMS_BOMBS },
-    { "Arrows x10", "Thorn-tipped, fletched with", "crow. For the bow.", 10, F_ITEMS_ARROW10 },
+    { "Healing Petal", "A preserved bloom, still sweet.", "Restores 2 hearts.", 10, F_ITEMS_HEART, OWN_NONE },
+    { "Blightseeds", "Seeds that burst and open cracked walls.", "Five seeds.", 15, F_ITEMS_BOMBS, OWN_BOMBS },
+    { "Arrows", "Thorn-tipped, fletched with crow. For the bow.", "A bundle of ten.", 10, F_ITEMS_ARROW10, OWN_ARROWS },
 };
 
 /* the third ware, arrows, is on the counter once the hero has the bow */
 static void talk_merchant(void) {
-    shop_open("The Billious Peddler", sShop, (gPl.items2 & ITEM2_BOW) ? 3 : 2);
+    shop_open(F_FACE_PEDDLER, "Fine goods for foul places. Touch nothing you can't afford, little petal.", sShop,
+              (gPl.items2 & ITEM2_BOW) ? 3 : 2);
     sDlgState = 2;
 }
 
@@ -441,7 +442,7 @@ static void talk_nun(Actor* a) {
         gPl.hp_max += 8;
         gPl.hp = gPl.hp_max;
         sfx_play(SFX_SECRET);
-        start_text("My relic! Here, the only gift I have: a heart that was once a saint's.|It beats on your stalk now. A HEART CONTAINER.");
+        start_text("My relic! Here, the only gift I have: a heart that was once a saint's.|It beats on your stalk now. A " INK_HIGH "heart container" INK_BASE ".");
         return;
     }
     c->flags |= CF_QUEST_ACTIVE;
@@ -482,7 +483,7 @@ static void talk_stranger(Actor* a) {
         return;
     }
     if (myst_stranger_trade())
-        start_text("Ten gilt, and a piece of a heart that was somebody's. Fair, I'd say.|It beats a little on your stalk. A PIECE OF HEART.");
+        start_text("Ten gilt, and a piece of a heart that was somebody's. Fair, I'd say.|It beats a little on your stalk. A " INK_HIGH "piece of heart" INK_BASE ".");
     else
         start_text("I sell pieces of hearts. Ten gilt the piece. You have less. Come back heavier.");
 }

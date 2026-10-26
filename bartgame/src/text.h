@@ -1,43 +1,48 @@
 #ifndef TEXT_H
 #define TEXT_H
 #include "gba.h"
+#include "vwf.h"
 
 void text_init(void);
 void text_flush(void);
 void bg0_clear(void);
 void bg0_put(int tx, int ty, u16 tile);
-void bg0_put_pal(int tx, int ty, u16 tile, int pal); /* tile 0 clears */
-#define MENU_TILE_BASE (FONT_GLYPHS * 2 + HUD_TILE_COUNT) /* the menu tiles in BG0's charblock */
-#define FONT_BOLD_BASE (MENU_TILE_BASE + MENU_TILE_COUNT)    /* the bold font after them */
-void bg0_print_big(int tx, int ty, const char* s, bool8 gold); /* the bold font, nothing behind it */
-void bg0_print(int tx, int ty, const char* s);
-void bg0_print_gold(int tx, int ty, const char* s);
-void bg0_print_num(int tx, int ty, int n, int width);
-/* over the world, nothing behind the letters: the HUD and the title */
-void bg0_print_hud(int tx, int ty, const char* s);
-void bg0_print_num_hud(int tx, int ty, int n, int width);
 void bg0_fill(int tx, int ty, int w, int h, u16 tile);
-void bg0_frame(int tx, int ty, int w, int h);
+u16* bg0_map(void); /* the shadow map, to be pushed at the next VBlank */
+void bg0_print_num_hud(int tx, int ty, int n, int width); /* the HUD's figures */
+/* the text pool starts again: a new screen of words */
+void bg0_pool_reset(void);
+/* a clear canvas mapped at (tx, ty) in the kit's palette */
+bool8 bg0_canvas(Canvas* c, int tx, int ty, int tw, int th);
+/* a canvas shown at (tx, ty), or its place cleared */
+void bg0_show(const Canvas* c, int tx, int ty, bool8 on);
+/* a name plate of s centred, its foot over a box's top edge when edge
+   is set (the plate is a canvas, its art and its words as one) */
+void bg0_plate(Canvas* c, int tx, int ty, const char* s, int ink, bool8 edge);
 
-/* the message box: plain, or with a speaker's name and portrait */
+/* the message box: plain, or with a speaker's name and face */
 void textbox_open(const char* s);
-void textbox_open_named(const char* name, int portrait, const char* s);
-void textbox_open_menu(const char* prompt, const char* const* options, int count);
-int textbox_menu_result(void); /* -2 open, -1 cancelled, else the choice */
+void textbox_open_named(const char* name, int face, const char* s);
 void textbox_update(void);
 void textbox_draw(void);
 bool8 textbox_active(void);
 void textbox_close(void);
 
-/* the shop */
+/* the speaker's face: its sprite resident, its palette loaded */
+void face_load(int face); /* a frame of the face sheet: F_FACE_* */
+void face_draw(int x, int y, int prio); /* the face's 48 pixels square at (x, y) */
+
+/* the shop: the keeper's face and words, the wares, the one chosen */
+enum { OWN_NONE, OWN_BOMBS, OWN_ARROWS };
 typedef struct {
     const char* name;
-    const char* desc1;
-    const char* desc2;
+    const char* desc;   /* set to the panel's width */
+    const char* effect; /* in red under it */
     u16 price;
-    u8 icon; /* a frame of the items sheet */
+    u8 icon;            /* a frame of the items sheet */
+    u8 own;             /* OWN_*: what the hero already carries of it */
 } ShopItem;
-void shop_open(const char* title, const ShopItem* items, int n);
+void shop_open(int face, const char* greet, const ShopItem* items, int n);
 void shop_update(void);
 void shop_draw(void);
 void shop_close(void);

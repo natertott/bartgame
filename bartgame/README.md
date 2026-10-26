@@ -67,8 +67,9 @@ pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
 tile edge, with lanterns and fireflies in the leaves; water has a dark
 bank and a drifting foam fringe wherever ground touches it; every
 sprite is drawn pixel by pixel with letter legends in `art/*.py`; the
-font is a hand-drawn 5x7. `tools/preview.py` renders any sheet or tile
-to PNG at 4x.
+HUD's figures are a hand-drawn 5x7, and every word of the UI is in a
+face of its own, proportional and nine rows high (`art/ui_font.py`).
+`tools/preview.py` renders any sheet or tile to PNG at 4x.
 
 **The sprite pack.** Every sprite comes from the BARTGAME GBA sprite
 pack, kept as delivered: `art/ref/pack/` holds the fixed, engine-sized
@@ -103,8 +104,11 @@ hand-drawn sheets the pack replaced, so code that counts frames keeps
 working; frames the pack appends (Sister Mary Grace and Brother Mark on
 the folk and portrait sheets) come after, and its extra sheets (the
 upgraded shield, the shield menu symbols, the standalone gilt diamond)
-are imported but not yet used. Only the speaker's face is resident (16
-OBJ tiles) and the portrait slot is loaded with the speaker's palette.
+are imported but not yet used. The pack's 32x32 portraits are no longer
+drawn: the dialogue faces are busts of 48x48 drawn by hand
+(`art/faces.py`), after each speaker's sprite, in a palette each. Only
+the speaker's face is resident, in a 64x64 sprite kept above the
+sheets, and the portrait slot is loaded with its palette.
 The HUD tiles are the pack's too, quantized into the HUD palette the
 text inks depend on, with its 8x8 slot squares opened out to the
 engine's 16x16 slots and its arrow turned to point down. The CPU-drawn
@@ -212,8 +216,8 @@ many real rooms.
 **The palettes by area.** The hardware's sixteen BG palettes are shared
 out by area: each tileset (the wood, the Drain, the mystery rooms) loads
 up to thirteen groups of its own into slots 0 to 12 when the area is
-entered, and the pause menu's planks, the gold text and the text and
-HUD keep slots 13 to 15.
+entered (up to twelve groups, slots 0 to 11), and the pause map, the UI
+kit and the text and HUD keep slots 12, 13 and 15.
 
 **The style boards.** The other tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
@@ -288,28 +292,38 @@ generator from the tiles around it.
   something, the bomb count under the slot that holds the bombs; the R
   hand that lifts; a parchment mini-map of the wood at the top right,
   red where you stand, gold at the Heart.
-- **Dialogue.** A speaker's name in gold and a 32x32 portrait beside the
-  words. A advances, B hurries the typing.
-- **The shop.** A list with icons and prices, a description of the item
-  under the cursor, your gilt in the corner. A buys, B leaves.
-- **Pause (Start).** Three pages on one great plank of rotted wood,
-  its grain the width of the screen, a knot, a crack, patches of rot
-  with mould and mushrooms. R turns the pages, Start closes. ITEMS:
-  the HUD's hearts, purse and buttons along the top, then everything
-  you own that a button can hold in carved wells, four to a row, the
-  rows scrolling when they outgrow the page; the item under the cursor
-  is named and described in a bold hand (what it is, what it does, how
-  it is used), and A, B or L puts it on that button. KEY ITEMS: the
-  pieces of heart lit by count and the hearts grown, then the worn and
-  carried things: small keys, the Root Gauntlet, the Relic, the Map,
-  the Astrolabe. THE WOOD: the map drawn from the rooms themselves at
-  a pixel a tile, visited cells as they are laid out and the rest
-  parchment, a cursor walking the cells with the cell's name below; A
-  looks closer at six pixels a tile. The marks: a door into a mystery
-  until it is won, a quest giver until the quest is paid, a chest until
-  opened, a shrine until used, the Nun's relic from her asking to its
-  taking, and the Bloom. There is no legend; the marks speak for
-  themselves. Nothing is saved from here.
+- **Dialogue.** A navy box in a double gold line along the foot of the
+  screen. A speaker's face at the left behind a gold divider, their name
+  in gold on a plate over the box's top edge; the words type in the UI's
+  own face, wrapped by their width, the words that matter picked out in
+  the highlight and the buttons in gold. A gold arrow bobs while the
+  page waits. A advances, B hurries the typing.
+- **The shop.** The whole screen: the Peddler's face in a gold frame and
+  his words in a parchment bubble that points at him; the wares in rows
+  down the left, each with its icon and its price by a gilt coin (red
+  when you cannot pay it), a pointer at the chosen one and your purse on
+  a plate at the list's top edge; the chosen ware at the right, its
+  name, what it is, what it does in red and how many you carry. A buys,
+  B leaves.
+- **Pause (Start).** Three pages in a navy panel under tabs, the open
+  one gold; R turns the pages, Start closes. ITEMS: everything you own
+  that a button can hold, in slots four to a row, the chosen one rimmed
+  in gold and the empty ones dashed, the bombs and arrows counted in
+  their corners; what A, B and L hold at the right; the chosen item at
+  the foot in its slot, named in gold and described, with the words that
+  matter in the highlight. A, B or L puts it on that button. KEY ITEMS:
+  the worn and carried things in the same slots (the pieces of heart
+  counted out of four, the small keys counted), the hearts grown and the
+  pieces toward the next at the right. MAP: the wood drawn from the
+  rooms themselves at a pixel a tile on a navy grid, the ways green with
+  a lit rim, water blue, the blight violet; the cells not yet seen are
+  only the grid. Four gold corners mark the cell under the cursor; at
+  the right, the cell's name and how much of the wood is seen, and a
+  legend of the marks. A looks closer at five pixels a tile. The marks:
+  a door into a mystery until it is won, a quest giver until the quest
+  is paid, a chest until opened, a shrine until used, the Nun's relic
+  from her asking to its taking, and the Bloom. Nothing is saved from
+  here.
 - **The Map and the Astrolabe.** Two chests of the wood hold them. The
   Map draws every cell, seen or not. The Astrolabe adds the chests, the
   Heart and the barriers between rooms (cracked walls, webs, locked
@@ -320,7 +334,9 @@ generator from the tiles around it.
   in ones, fives and quivers, the relic, the Grail; the tools and
   treasures likewise, and the found thing is held up at that size. The
   HUD's slots keep the small icons.
-- **Boxes.** Every message, shop and banner sits in a carved wood frame.
+- **Boxes.** Every message, the shop, the pause pages, the title's words
+  and the win's tally share one kit of navy panels, gold frames, plates,
+  tabs and slots (`art/ui_kit.py`), after the UI boards.
 - **The save file.** The game saves itself, to SRAM, when the Heart is
   cut and when the Bloom dies: the wood as generated and as you have
   changed it, the map's marks, everything you carry and the counts. The
@@ -390,8 +406,10 @@ src/            the engine and the game
   npc.c         the sage, the merchant, the hermit, the nun, the gardener
   menu.c        the pause menu: items, key items, the drawn map
   save.c        the save file in SRAM
-  text.c        BG0 text, the message box with portraits, the shop,
-                the HUD, the mini-map
+  text.c        BG0: the message box with faces, the shop, the HUD, the
+                mini-map
+  ui.c          the UI kit's frames, plates and tabs on BG0 and BG3
+  vwf.c         the UI's words set a pixel at a time into tiles
   sound.c       PSG sound effects and a three-track tracker
   game.c        states: title, play, transitions, map, win
 art/            pixel art as rows of letters mapped to palette indices
@@ -422,10 +440,13 @@ art/            pixel art as rows of letters mapped to palette indices
   monsters.py   beetle, bat, slime, spitter, knight, its sword, the boss
   items.py      pickups, key items, effects, projectiles
   folk.py       the five NPCs
-  portraits.py  the dialogue portraits, 32x32
+  portraits.py  drawing helpers, once the 32x32 portraits'
+  faces.py      the dialogue faces, 48x48, drawn by hand after the sprites
+  ui_font.py    the UI's own face: proportional, nine rows
+  ui_kit.py     the boxes' and pages' frames, plates, tabs, slots, marks
   sprites.py    the sheet list: the pack's sheets in the engine's frame order
-  hud.py        hearts, icons, item slots, the text box frame, the map
-  font.py       the 5x7 font
+  hud.py        hearts, icons, item slots, the map's cells
+  font.py       the 5x7 font: the HUD's figures
   title.py      the title screen, painted with PIL in 16 colors
   rooms.py      the hub room: the Drain's objects (its cells: sw_drain.py)
   sw_paint.py   the Drain's painter: colours, ramps, a canvas, lit tubes
@@ -447,6 +468,7 @@ tools/
   compare_frames.py two 240x160 frames compared pixel for pixel
   sw_preview.py     the Drain's painting rendered, before it is cut
   hall_shots.py     the Drain's views and the whole hall, captured from the ROM
+  ui_shots.py       the boxes, the shop, the pause pages and the map, captured from the ROM
   folk_preview.py   the keepers' frames on a sheet, or the pair in the hall
   hall_probe.py     the Drain walked: hole, shop, talk, drawing order, no falls, the keepers alive
   preview.py        render art to PNG
@@ -494,6 +516,7 @@ python3 tools/menu_probe.py               # the three pause pages, the grid, the
 python3 tools/hall_probe.py               # the Drain walked from the spawn: the hole, the shop, the Gatekeeper, the keepers' idles
 python3 tools/perf_probe.py
 python3 tools/roomshots.py out/           # every room of a seed rendered from RAM, and a sheet
+python3 tools/ui_shots.py out/            # the boxes, the shop, the pause pages and the map, and a sheet
 ```
 
 The delivered ROM passed the critical path on three seeds (0xB4A7,

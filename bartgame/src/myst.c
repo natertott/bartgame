@@ -364,12 +364,12 @@ static void give_prize(void) {
             break;
         case MS_MEDIUM:
             player_heart_piece();
-            textbox_open("A PIECE OF HEART, warm in the cold. Four make a whole.");
+            textbox_open("A " INK_HIGH "piece of heart" INK_BASE ", warm in the cold. Four make a whole.");
             break;
         default:
             gPl.keys++;
             gPl.gilt += 20;
-            textbox_open("A SMALL KEY, and twenty gilt beside it. Somewhere a lock remembers.");
+            textbox_open("A " INK_HIGH "small key" INK_BASE ", and twenty gilt beside it. Somewhere a lock remembers.");
             break;
     }
     if (gPl.gilt > 999)

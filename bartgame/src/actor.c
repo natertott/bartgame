@@ -252,7 +252,7 @@ int actor_dist2(const Actor* a, const Actor* b) {
 }
 
 /* ------------------------------------------------------------ sprites -- */
-#define OBJ_TILE_FIRST_FREE 72 /* 0..31 hero frame, 32..43 sword sheet, 44..55 shield, 56..71 the speaker's face */
+#define OBJ_TILE_FIRST_FREE 56 /* 0..31 hero frame, 32..43 sword sheet, 44..55 shield */
 static u16 sNextTile;
 static u16 sSheetTile[SHEET_COUNT];
 
@@ -276,7 +276,7 @@ u16 sprite_load_frame(int sheet, int frame) {
     for (i = 0; i < sFrameCount; i++)
         if (sFrameCache[i].sheet == sheet && sFrameCache[i].frame == frame)
             return sFrameCache[i].tile;
-    if (sFrameCount == FRAME_CACHE || sNextTile + sh->frame_tiles > OBJ_TILE_MINIMAP)
+    if (sFrameCount == FRAME_CACHE || sNextTile + sh->frame_tiles > OBJ_TILE_SHEETS_END)
         return 0;
     u16 base = sNextTile;
     sNextTile += (sh->frame_tiles + 1) & ~1;
@@ -291,7 +291,7 @@ u16 sprite_load_frame(int sheet, int frame) {
 /* tiles held for a sprite whose frames stream in one at a time (the
    hub's two keepers): nothing is copied */
 u16 sprite_alloc(int tiles) {
-    if (sNextTile + tiles > OBJ_TILE_MINIMAP)
+    if (sNextTile + tiles > OBJ_TILE_SHEETS_END)
         return 0;
     u16 base = sNextTile;
     sNextTile += (tiles + 1) & ~1;
@@ -302,7 +302,7 @@ u16 sprite_load_sheet(int sheet) {
     if (sSheetTile[sheet] != 0xFFFF)
         return sSheetTile[sheet];
     const SpriteSheet* sh = &sheets[sheet];
-    if (sNextTile + sh->tile_count > OBJ_TILE_MINIMAP)
+    if (sNextTile + sh->tile_count > OBJ_TILE_SHEETS_END)
         return 0;
     u16 base = sNextTile;
     sNextTile += (sh->tile_count + 1) & ~1;
@@ -343,7 +343,7 @@ void actor_draw(Actor* a) {
 }
 
 /* ---------------------------------------------------- vram upload queue -- */
-#define VQ_MAX 8
+#define VQ_MAX 16
 static struct {
     const void* src;
     volatile void* dst;

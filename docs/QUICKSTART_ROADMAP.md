@@ -1271,6 +1271,106 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the boxes, the shop and the pause pages redrawn (Oct 2026)
+
+The user liked the keepers and asked next for the dialogue boxes, the
+pause menus and the map, after two new reference images: a dialogue box
+with a framed portrait and a name plate, a merchant's shop, an inventory
+page and a map page. The same process as the Drain and the keepers: the
+references studied, an art direction and a kit drawn by hand, mockups
+judged before the engine, then the engine, then captures from the ROM.
+The shop was redone too (it is in the reference, and the Peddler's words
+open it), and the portraits were redrawn at 48x48 to fill the new box.
+
+The art, all drawn by hand:
+- `art/ui_kit.py`: 47 tiles of 8x8 in a palette of fifteen (slot 13):
+  navy panels in a double gold line with studs, a divider, name plates,
+  item slots (gold when chosen, dashed when empty), tabs (gold when
+  open), button badges, the shop's rows, a parchment bubble with its tail
+  and the join, a coin, a rule. A frame is a corner, an edge and a side;
+  the engine turns them for the other three. The pause map's palette is
+  here too (slot 12): navy ground and grid, three greens and a pale path,
+  water and its light, a ledge brown, the blight and its light, gold.
+  Three marks for sprites in the kit's colours (OBJ slot 15): the box's
+  arrow, the shop's pointer, a corner of the map's cursor.
+- `art/ui_font.py`: the UI's own face, proportional, nine rows
+  (capitals seven), ASCII and a coin and a heart.
+- `art/faces.py`: six busts of 48x48, painted in shapes through a light
+  from the upper left and finished with letter drawings: the Bloom
+  surprised, the Peddler, the Gatekeeper, the Hermit Knight, the Weeping
+  Nun, the Blind Gardener, after their sprites in the game (the Hermit
+  bald with his long beard and rusted plate, the Gardener in his green
+  hood, as they walk, not as the pack's portraits had them). Each has a
+  palette of its own; the keepers' are their sprites'. The pack's 32x32
+  portrait sheet is no longer built.
+
+The engine:
+- `src/vwf.c`: the words set a pixel at a time into canvases, runs of
+  BG0's tiles held from a pool (93 to 383) with EWRAM buffers, copied at
+  once or at the VBlank. A byte under a space changes the ink (`INK_*` in
+  `vwf.h`): highlight, red, gold, dim. Lines wrap by their width.
+  `src/ui.c` lays the kit's frames, plates and tabs into BG0's map or
+  BG3's.
+- BG0's charblock: 0 clear, 1 to 10 the HUD's figures, the HUD's tiles,
+  the kit, then the pool. The box font, the bold font, the plank
+  backdrop and the carved frames are gone, and the gold text palette
+  (slot 14 is free).
+- The box: rows 13 to 19; with a speaker, the face at the left behind a
+  divider and the name in gold on a plate whose foot is drawn over the
+  box's edge in the same canvas. Three lines at 13 pixels, two letters
+  a frame. The arrow that waits is a sprite now; the old one was a tile
+  over the last column and covered its letter.
+- The face: one 64x64 sprite at OBJ tile 944, the marks at 936, the
+  mini-map at 1008; the sheets stop at 936 (the measured peak is 820
+  with the pause icons), and start at 56, the old face's 16 tiles free.
+  The box's sprites go first in OAM: between sprites the order decides,
+  not the priority bits, so a sprite of the world under the box could
+  have cut into the face.
+- The shop: the whole screen on BG3's backdrop (the kit loaded into
+  charblock 3 with its clear pixels navy; the room maps are drawn again
+  on the way out, as after the pause menu), the words on BG0, the face,
+  the icons and the pointer as sprites. The world is not drawn behind
+  it. A ware has a description, an effect in red and what the hero
+  carries of it; a price is red when the purse cannot pay it.
+- The pause pages: the tabs drawn into a canvas on BG0 five pixels under
+  the frame's edge, so the slots and the map clear them; four slots to a
+  row with counts in the corners; A, B and L at the right; the chosen
+  one at the foot. The key items' page has the hearts and pieces at the
+  right. The map: cells of 32x22 (each cell's top and bottom rows are
+  left out, so the picture fits under the tabs), the ways green with a
+  lit rim above and left and a shadow below and right, the cell under
+  the cursor in four gold corners, its name and the share seen at the
+  right, a legend of the marks. A looks closer at five pixels a tile
+  (it was six).
+- The title and the win in the new face, the win's tally in a panel
+  under a gold plate. Item names in the messages are in the highlight
+  now, not in capitals; the buttons in gold.
+- `textbox_open_menu` (never called) is gone. `VQ_MAX` is 16: a page
+  queues up to eight canvases.
+
+Measured: a look at the map draws in 7 frames (the first version took
+22); the first look at a map of every cell takes 48 frames once a run,
+for the room generator's 25 previews, which are kept for the run now
+(the old page paid about that at every opening). Every probe passes:
+critical path 14/14, quests 12/12, lift 14/14, guard 11/11, mysteries
+28/28, wood 22/22, menu 21/21, hall 15/15, the comparison ROM's
+critical path 14/14, and the world check over 19,999 seeds clean.
+`tools/ui_shots.py` captures the box, the shop, the Peddler after a
+sale, the three pages and the map with and without the Map and the
+Astrolabe; the captures are in `docs/ui/`.
+
+Got wrong on the way: the faces' light ran from the lower right (a sign
+in `lit()`) until the Nun's face showed it; the first full map's drawing
+swallowed the capture script's presses; the win's canvases were clear
+on a screen of BG0 alone and showed black until filled with navy; the
+coin glyph in the shop read as a cross, and the kit's coin is drawn
+into the canvas at a pixel instead.
+
+Open: the HUD is as it was (it was not asked for); its box, arrow,
+cursor and rule tiles are built but no longer drawn, and so is the
+pack's cursor sheet. `docs/engine_contract/` is as of 718efd8; its
+script now says what BG0, BG3, OBJ VRAM and the palette slots hold.
+
 ### BARTGAME: the Drain's keepers drawn by hand, alive (Oct 2026)
 
 The user liked the redrawn Drain and asked next for the Billious Peddler

@@ -177,16 +177,17 @@ contract = {
         'screen': [240, 160], 'refresh_hz': 59.73,
         'display_mode': 'mode 0, four tiled backgrounds, 4bpp (16-index banks, index 0 transparent), OBJ 1D mapping',
         'bg_layers': {
-            'BG0': 'text, HUD, dialogue: priority 0, charblock 2, screenblock 23, 32x32 tiles',
+            'BG0': 'the HUD, the boxes and every word of the UI, set a pixel at a time into tiles: priority 0, charblock 2, screenblock 23, 32x32 tiles',
             'BG1': "room overlay (tree crowns, sparkles, mist, the mystery rooms' pots, plates, chests, spring): priority 1, charblock 0, screenblock 24, 64x64 tiles",
             'BG2': 'room ground: priority 2, charblock 0, screenblock 28, 64x64 tiles',
-            'BG3': "the pause menu's plank backdrop: priority 3, charblock 3, screenblock 22",
+            'BG3': "the shop's and the pause menu's backdrop: the UI kit's panels and the map's picture; priority 3, charblock 3, screenblock 22",
         },
         'sprites': ('OBJ priority 2 (above the ground, under the overlay); some effects priority 1 (above the overlay). '
-                    'OBJ VRAM 1024 4bpp tiles: sheets and frames are streamed in per room, the last 16 tiles hold the mini-map. '
+                    'OBJ VRAM 1024 4bpp tiles: sheets and frames are streamed in per room below tile 936; 936.. the UI marks, '
+                    '944.. the speaker\'s face (a 64x64 sprite), the last 16 tiles the mini-map. '
                     'Sprite palettes are separate from BG palettes.'),
-        'bg_palettes': {'area_slots': [0, h_define('PAL_AREA_SLOTS') - 1], 'menu': h_define('PAL_SLOT_MENU'),
-                        'gold_text': h_define('PAL_SLOT_GOLD'), 'text_and_hud': h_define('PAL_SLOT_TEXT')},
+        'bg_palettes': {'area_slots': [0, h_define('PAL_AREA_SLOTS') - 1], 'pause_map': h_define('PAL_SLOT_MAP'),
+                        'ui_kit': h_define('PAL_SLOT_MENU'), 'text_and_hud': h_define('PAL_SLOT_TEXT')},
         'blending': 'none in rooms (BLDCNT 0); fades use brightness only',
         'colour': 'BGR555: each channel 5 bits; an 8-bit value v is stored as v >> 3, and read back as (c << 3) | (c >> 2)',
     },

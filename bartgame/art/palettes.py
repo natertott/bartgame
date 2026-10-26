@@ -10,6 +10,7 @@ are multiples of 8 so they survive the GBA's 5-bit channels.
 
 GRASS_MID = '#3a6a2c'
 
+import ui_kit as _uk  # noqa: E402
 OLD_BG_PALETTES = [
     # 0 forest ground: dark olive grass with bright tips, warm soil, flowers, blight, a gold mote
     ('forest', ['#000000',
@@ -148,23 +149,11 @@ OLD_BG_PALETTES = [
                '#8a3cd8',    # D lichen violet
                GRASS_MID,    # E grass mid
                '#a4dc4c']),  # F grass bright
-    # 8 menu: the pause pages' planks, frames and the drawn map
-    ('menu', ['#000000',
-              '#0c0a14',      # 1 ink, the box fill
-              '#e8d8a8',      # 2 parchment
-              '#b8a070',      # 3 parchment dark
-              '#8a6c40',      # 4 parchment line
-              '#58a048',      # 5 grass
-              '#2a6a30',      # 6 grass dark, moss
-              '#14301c',      # 7 canopy
-              '#2878d8',      # 8 water
-              '#60c0ff',      # 9 water light
-              '#c8a060',      # A path
-              '#6a4420',      # B ledge
-              '#8838c8',      # C blight
-              '#2e1a0e',      # D plank dark
-              '#5a3a20',      # E plank
-              '#8a6038']),    # F plank light
+    # 8 menu: the UI kit's navy, gold and inks (ui_kit.py), the boxes,
+    # the shop and the pause pages
+    ('menu', ['#000000'] + ['#%02x%02x%02x' % c for _, c in _uk.PAL]),
+    # 9 map: the pause map's ground, ways and water (ui_kit.MAP_PAL)
+    ('map', ['#000000'] + ['#%02x%02x%02x' % c for _, c in _uk.MAP_PAL]),
 ]
 
 OLD_OBJ_PALETTES = [
@@ -354,7 +343,7 @@ BG_PALETTES = [(n, _BOARD_BG.get(n, cols)) for n, cols in OLD_BG_PALETTES]
 # pickups, the icons), then the Drain's two keepers, drawn by hand in a
 # palette each (sw_folk.py; the pack's own pair, folk32, is no longer
 # drawn). The portrait slot is reloaded with each speaker's palette
-# (PORTRAIT_PALETTES).
+# (FACE_PALETTES).
 import pack as _pk  # noqa: E402
 import sw_folk as _sf  # noqa: E402
 _OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift', 'ui',
@@ -362,8 +351,12 @@ _OBJ_ORDER = ['hero', 'fx', 'bugs', 'blight', 'iron', 'folk', 'portrait', 'lift'
 OBJ_PALETTES = [(n, _pk.GROUPS[n]) for n in _OBJ_ORDER]
 assert set(_pk.GROUPS) - {'folk32'} == set(_OBJ_ORDER), set(_pk.GROUPS) ^ set(_OBJ_ORDER)
 OBJ_PALETTES += [(n, ['#000000'] + ['#%02x%02x%02x' % c for _, c in pal])
-                 for n, pal in (('peddler', _sf.PEDDLER_PAL), ('gatekeeper', _sf.GATEKEEPER_PAL))]
-PORTRAIT_PALETTES = _pk.PORTRAIT_PALETTES
+                 for n, pal in (('peddler', _sf.PEDDLER_PAL), ('gatekeeper', _sf.GATEKEEPER_PAL),
+                                ('uikit', _uk.PAL))]
+# the dialogue box's faces (faces.py), each its own palette, in the face
+# sheet's order
+import faces as _fc  # noqa: E402
+FACE_PALETTES = [['#000000'] + ['#%02x%02x%02x' % c for _, c in _p] for _n, _p, _r in _fc.FACES]
 
 
 def _rgb(h):

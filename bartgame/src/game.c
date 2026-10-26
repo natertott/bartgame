@@ -8,6 +8,7 @@
 #include "player.h"
 #include "sound.h"
 #include "text.h"
+#include "ui.h"
 #include "world.h"
 #include "roomgen.h"
 #include "myst.h"
@@ -35,9 +36,9 @@ static u8 sHubcap; /* the pending transition is the Drain Cap's: drop in at the 
 
 static const char* const sKeyItemText[4] = {
     "",
-    "You found the BLIGHTSEED BOMBS!|Dark seeds that burst. Set one with B beside a cracked wall.",
-    "You found the GRAIL LAMP!|A flame that is not of this wood. Swing it with B to burn webs and light censers.",
-    "You found the PETAL CLOAK!|Press B to leap. A chasm is only a breath wide.",
+    "You found the " INK_HIGH "Blightseeds" INK_BASE "!|Dark seeds that burst. Set one with " INK_GOLD "B" INK_BASE " beside a cracked wall.",
+    "You found the " INK_HIGH "Grail Lamp" INK_BASE "!|A flame that is not of this wood. Swing it with " INK_GOLD "B" INK_BASE " to burn webs and light censers.",
+    "You found the " INK_HIGH "Petal Cloak" INK_BASE "!|Press " INK_GOLD "B" INK_BASE " to leap. A chasm is only a breath wide.",
 };
 
 /* --------------------------------------------------------- darkness -- */
@@ -221,7 +222,7 @@ static void give_chest(Cell* c) {
         case ROLE_KEYCHEST:
             gPl.keys++;
             player_item_get(0, F_ICON32_KEY);
-            textbox_open("A SMALL KEY. Somewhere a lock remembers it.");
+            textbox_open("A " INK_HIGH "small key" INK_BASE ". Somewhere a lock remembers it.");
             sfx_play(SFX_KEY);
             break;
         default:
@@ -233,9 +234,9 @@ static void give_chest(Cell* c) {
                         gPl.hearts_pieces = 0;
                         gPl.hp_max += 8;
                         gPl.hp = gPl.hp_max;
-                        textbox_open("A fourth PIECE OF HEART. They beat as one: a new heart grows on the stalk.");
+                        textbox_open("A fourth " INK_HIGH "piece of heart" INK_BASE ". They beat as one: a new heart grows on the stalk.");
                     } else {
-                        textbox_open("A PIECE OF HEART. Four make a whole.");
+                        textbox_open("A " INK_HIGH "piece of heart" INK_BASE ". Four make a whole.");
                     }
                     break;
                 case CHEST_BOMBS:
@@ -243,39 +244,39 @@ static void give_chest(Cell* c) {
                     if (gPl.bombs > 30)
                         gPl.bombs = 30;
                     player_item_get(0, F_ICON32_BOMBS);
-                    textbox_open("Eight BLIGHTSEEDS, still warm.");
+                    textbox_open("Eight " INK_HIGH "blightseeds" INK_BASE ", still warm.");
                     break;
                 case CHEST_BOW:
                     gPl.items2 |= ITEM2_BOW;
                     gPl.arrows = 20;
                     player_item_get(0, F_ICON32_BOW);
                     player_auto_equip(EQ_BOW);
-                    textbox_open("You found the THORN BOW!|Twenty arrows with it. Loose one with its button. The dead drop more; the Peddler sells them.");
+                    textbox_open("You found the " INK_HIGH "Thorn Bow" INK_BASE "!|Twenty arrows with it. Loose one with its button. The dead drop more; the Peddler sells them.");
                     break;
                 case CHEST_MAP:
                     gPl.items2 |= ITEM2_MAP;
                     player_item_get(0, F_ICON32_MAP);
-                    textbox_open("You found the MAP OF THE WOOD!|Every chamber is drawn on it now. Look at it from the pause menu.");
+                    textbox_open("You found the " INK_HIGH "Map of the Wood" INK_BASE "!|Every chamber is drawn on it now. Look at it from the pause menu.");
                     break;
                 case CHEST_ASTROLABE:
                     gPl.items2 |= ITEM2_ASTROLABE;
                     player_item_get(0, F_ICON32_ASTROLABE);
-                    textbox_open("You found the ASTROLABE!|Brass that remembers. The map shows chests, the Heart and what bars the ways.");
+                    textbox_open("You found the " INK_HIGH "Astrolabe" INK_BASE "!|Brass that remembers. The map shows chests, the Heart and what bars the ways.");
                     break;
                 case CHEST_HEART_CONTAINER:
                     gPl.hp_max += 8;
                     gPl.hp = gPl.hp_max;
                     player_item_get(0, F_ICON32_HEART_CONTAINER);
-                    textbox_open("A HEART CONTAINER. Something in the dark decided you should live longer.");
+                    textbox_open("A " INK_HIGH "heart container" INK_BASE ". Something in the dark decided you should live longer.");
                     break;
                 case CHEST_GAUNTLET:
                     player_item_get(ITEM_GAUNTLET, F_ICON32_GAUNTLET);
-                    textbox_open("The ROOT GAUNTLET. Roots wrap the arm and remember the strength of trees: boulders lift now.");
+                    textbox_open("The " INK_HIGH "Root Gauntlet" INK_BASE ". Roots wrap the arm and remember the strength of trees: boulders lift now.");
                     break;
                 default:
                     gPl.gilt += 30;
                     player_item_get(0, F_ICON32_GILT_BIG);
-                    textbox_open("Thirty GILT. The dead have no use for it.");
+                    textbox_open("Thirty " INK_HIGH "gilt" INK_BASE ". The dead have no use for it.");
                     break;
             }
             break;
@@ -377,6 +378,26 @@ static u8 sTitlePhase;
 static u32 sTitleSeed;
 static u8 sDiedFlag;
 
+static Canvas sTitlePress, sTitleTag, sTitleMenu;
+
+/* a canvas of words centred across the screen at tile row ty, outlined
+   in the dark so the title's art does not swallow them */
+static void title_words(Canvas* c, int ty, int tw, int th) {
+    bg0_canvas(c, (30 - tw) / 2, ty, tw, th);
+}
+
+static void title_line(Canvas* c, int y, const char* s, int ink) {
+    vwf_text_fx(c, (c->tw * 8 - vwf_width(s)) / 2, y, s, ink, UI_INK_DARK, FX_OUTLINE);
+}
+
+/* the choice when a save exists: the chosen one in gold */
+static void title_menu(void) {
+    vwf_clear(&sTitleMenu, 0);
+    title_line(&sTitleMenu, 2, "Continue", sTitleCursor == 0 ? UI_INK_GOLD : UI_INK_CREAM);
+    title_line(&sTitleMenu, 14, "New Game", sTitleCursor == 1 ? UI_INK_GOLD : UI_INK_CREAM);
+    vwf_flush(&sTitleMenu, FALSE);
+}
+
 static void title_show(void) {
     /* the title art lives in the world's charblock while it is shown */
     dma3_copy32(title_tiles, CHARBLOCK(0), TITLE_TILE_COUNT * 32);
@@ -386,11 +407,20 @@ static void title_show(void) {
     gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
     actors_clear();
     bg0_clear();
+    bg0_pool_reset();
     sTitleHasSave = save_exists();
     sTitleCursor = 0;
-    if (!sTitleHasSave)
-        bg0_print_hud(10, 14, "PRESS START");
-    bg0_print_hud(5, 17, "a game from the drain"); /* 21 letters, centred */
+    if (sTitleHasSave) {
+        title_words(&sTitleMenu, 13, 8, 4);
+        title_menu();
+    } else {
+        title_words(&sTitlePress, 14, 8, 2);
+        title_line(&sTitlePress, 3, "Press Start", UI_INK_CREAM);
+        vwf_flush(&sTitlePress, TRUE);
+    }
+    title_words(&sTitleTag, 16, 12, 2);
+    title_line(&sTitleTag, 3, "a game from the drain", UI_INK_GOLD);
+    vwf_flush(&sTitleTag, TRUE);
     gGame.state = GS_TITLE;
     gAnimTiles = 0;
     dark_off();
@@ -398,7 +428,7 @@ static void title_show(void) {
     sTitleSeed = 0x5EED;
     fade_set(16);
     fade_start(0, 1);
-    video_show(DCNT_BG0 | DCNT_BG2);
+    video_show(DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
     bgm_play(BGM_TITLE);
 }
 
@@ -443,18 +473,17 @@ static void update_title(void) {
     sTitleSeed = sTitleSeed * 1103515245u + 12345u + gFrame;
     if (sTitleHasSave) {
         /* a saved run: continue it, or begin anew */
-        bg0_print_hud(11, 14, "CONTINUE");
-        bg0_print_hud(11, 15, "NEW GAME");
-        bg0_put(9, 14, sTitleCursor == 0 ? HT_CURSOR : 0);
-        bg0_put(9, 15, sTitleCursor == 1 ? HT_CURSOR : 0);
+        static const u8 nudge[4] = { 0, 1, 2, 1 };
         if (sTitlePhase == 0 && (gKeysDown & (KEY_UP | KEY_DOWN))) {
             sTitleCursor ^= 1;
+            title_menu();
             sfx_play(SFX_MENU);
         }
-    } else if ((gFrame & 32) == 0) {
-        bg0_print_hud(10, 14, "PRESS START");
+        int x = ((30 - 8) / 2) * 8 + (64 - vwf_width("Continue")) / 2 - 10;
+        draw_sprite(x + nudge[(gFrame >> 3) & 3], 13 * 8 + 2 + sTitleCursor * 12, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
     } else {
-        bg0_print_hud(10, 14, "           ");
+        /* Press Start blinks */
+        bg0_show(&sTitlePress, (30 - 8) / 2, 14, (gFrame & 32) == 0);
     }
     if (sTitlePhase == 0 && (gKeysDown & (KEY_START | KEY_A))) {
         sTitlePhase = 1;
@@ -487,26 +516,49 @@ static void update_win(void) {
         return;
     }
     if (sWinTimer == 40) {
-        int secs = gGame.run_frames / 60;
+        static Canvas plate, body, stats, press;
+        int secs = gGame.run_frames / 60, i, x;
+        char buf[12];
+        u16* m;
         actors_clear();
         video_show(DCNT_BG0);
         bg0_clear();
-        bg0_print(6, 4, "THE HEART IS CUT.");
-        bg0_print(2, 7, "The wood breathes again,");
-        bg0_print(2, 8, "slowly. Somewhere a king");
-        bg0_print(2, 9, "stops dreaming.");
-        bg0_print(4, 12, "gilt");
-        bg0_print_num(9, 12, gPl.gilt, 3);
-        bg0_print(14, 12, "time");
-        bg0_print_num(19, 12, secs / 60, 2);
-        bg0_print(21, 12, ":");
-        bg0_print_num(22, 12, (secs % 60) / 10, 1);
-        bg0_print_num(23, 12, secs % 10, 1);
-        bg0_print(4, 13, "deaths");
-        bg0_print_num(11, 13, gGame.deaths, 2);
-        bg0_print(4, 14, "slain");
-        bg0_print_num(11, 14, gGame.kills, 3);
-        bg0_print(9, 17, "PRESS START");
+        bg0_pool_reset();
+        m = bg0_map();
+        /* the tale's end in a panel under a gold plate, the run's count in
+           two columns under a rule */
+        ui_frame(m, UI_BG0, 3, 4, 24, 12, FR_PANEL);
+        x = ui_plate_tiles(vwf_width("The Heart is cut"), 6);
+        bg0_plate(&plate, (30 - x) / 2, 3, "The Heart is cut", UI_INK_GOLD, TRUE);
+        bg0_canvas(&body, 4, 6, 22, 3);
+        vwf_clear(&body, UI_INK_NAVY); /* BG0 alone: nothing behind the panel */
+        title_line(&body, 2, "The wood breathes again, slowly.", UI_INK_CREAM);
+        title_line(&body, 13, "Somewhere a king stops dreaming.", UI_INK_CREAM);
+        ui_tile(m, UI_BG0, 6, 10, UI_RULE_END, UI_HF);
+        for (i = 7; i < 23; i++)
+            ui_tile(m, UI_BG0, i, 10, UI_RULE, 0);
+        ui_tile(m, UI_BG0, 23, 10, UI_RULE_END, 0);
+        bg0_canvas(&stats, 5, 11, 20, 4);
+        vwf_clear(&stats, UI_INK_NAVY);
+        vwf_text(&stats, 4, 2, "Gilt", UI_INK_DIM);
+        vwf_text(&stats, 40, 2, vwf_num(buf, gPl.gilt, 0), UI_INK_GOLD);
+        vwf_text(&stats, 84, 2, "Time", UI_INK_DIM);
+        x = vwf_text(&stats, 120, 2, vwf_num(buf, secs / 60, 0), UI_INK_GOLD);
+        x = vwf_text(&stats, x, 2, ":", UI_INK_GOLD);
+        buf[0] = '0' + (secs % 60) / 10;
+        buf[1] = '0' + secs % 10;
+        buf[2] = 0;
+        vwf_text(&stats, x, 2, buf, UI_INK_GOLD);
+        vwf_text(&stats, 4, 16, "Deaths", UI_INK_DIM);
+        vwf_text(&stats, 40, 16, vwf_num(buf, gGame.deaths, 0), UI_INK_GOLD);
+        vwf_text(&stats, 84, 16, "Slain", UI_INK_DIM);
+        vwf_text(&stats, 120, 16, vwf_num(buf, gGame.kills, 0), UI_INK_GOLD);
+        bg0_canvas(&press, 11, 17, 8, 2);
+        title_line(&press, 3, "Press Start", UI_INK_CREAM);
+        vwf_flush(&plate, TRUE);
+        vwf_flush(&body, TRUE);
+        vwf_flush(&stats, TRUE);
+        vwf_flush(&press, TRUE);
         fade_start(0, 1);
     }
     if (sWinTimer > 120 && (gKeysDown & KEY_START))
@@ -519,14 +571,13 @@ void game_init(void) {
 }
 
 static void draw_world(void) {
+    textbox_draw(); /* first in OAM: between sprites the order rules */
     npcs_draw_front();
     player_draw();
     enemies_draw();
     npcs_draw();
     objects_draw();
     hud_draw();
-    textbox_draw();
-    shop_draw();
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */
@@ -547,6 +598,10 @@ static void update_play(void) {
     debug_spawn();
     if (npc_dialogue_active()) {
         npc_dialogue_update();
+        if (shop_active()) {
+            shop_draw(); /* the whole screen: no world behind it */
+            return;
+        }
         npcs_update();
         draw_world();
         return;
@@ -558,7 +613,10 @@ static void update_play(void) {
     }
     if ((gKeysDown & KEY_A) && npc_try_talk()) {
         gKeysDown &= ~KEY_A;
-        draw_world();
+        if (shop_active())
+            shop_draw();
+        else
+            draw_world();
         return;
     }
     player_update();
@@ -619,7 +677,7 @@ static void update_transition(void) {
         gGame.state = GS_PLAY;
         if (sDiedFlag) {
             sDiedFlag = 0;
-            textbox_open_named("The Bloom", F_PORTRAIT_HERO_SURPRISED, "The muck takes me back. It always does. The wood keeps what I opened...");
+            textbox_open_named("The Bloom", F_FACE_BLOOM_SURPRISED, "The muck takes me back. It always does. The wood keeps what I opened...");
         }
     }
 }

@@ -50,13 +50,13 @@ better ones, but each group stays at 15 colours. Listed in index order
 |---|---|---|
 | hero | the Bloom, sword, shield | `#1a0c10 #130b09 #231b14 #213017 #671914 #6e3c1c #c82428 #716937 #dd432a #739045 #e85f2f #eb7532 #ee8b3a #c3bb70 #f8dfa3` (outline, deep browns, tunic greens, petal reds and oranges, cream face) |
 | folk | the five NPCs, the two big hub NPCs | `#100c14 #0a0203 #12081e #24150e #35172d #43164f #622858 #694128 #873d85 #825342 #9c5557 #b06e31 #b36f73 #d08c6c #f0c18f` (outline, violets, purple hide, browns, gold, mauve skin, cream) |
-| portrait | dialogue faces | `#100c14 #06030a #412f3f #912037 #ee1e30 #7e7162 #d75945 #b27b6a #8f9e48 #f77d40 #d89f76 #fbde92 #e8c8a0 #2e8040 #f0c040` |
+| portrait | dialogue faces: the slot is loaded with each face's own palette (`art/faces.py`) | the pack's group, no longer drawn: `#100c14 #06030a #412f3f #912037 #ee1e30 #7e7162 #d75945 #b27b6a #8f9e48 #f77d40 #d89f76 #fbde92 #e8c8a0 #2e8040 #f0c040` |
 | fx | items, pickups, icons, effects, projectiles, arrows, the mouth | `#180c18 #901020 #e83040 #ff8080 #885818 #e0b030 #fff0a0 #ffffff #4a2888 #8a60d8 #c8b0ff #383848 #7a7a90 #c0c0d0 #58c8ff` (outline, reds, golds, white, violets, greys, blue glow) |
 | bugs | beetle, bat, slime | `#100818 #2a1840 #482870 #7040a8 #a070d8 #d8b0ff #88a020 #d0f040 #f8ffc0 #801828 #e03048 #186860 #30b0a0 #80f0d8 #e8e8f0` (outline, chitin violets, chartreuse eyes, reds, jelly teals, bone) |
 | blight | spitter, boss | `#141408 #304010 #507020 #80a830 #b8d848 #e8f888 #500818 #901030 #d82850 #ff6080 #ffb0c0 #401058 #9038c0 #f0e0c0 #ffffff` (outline, sick greens, raw flesh reds, violets, bone, white) |
 | iron | knight, its sword | `#101420 #283048 #4a5878 #8090b0 #c0d0e8 #f0f8ff #601020 #c02038 #301848 #6838a0 #f0c8a0 #b08060 #906018 #f8d050 #ff4040` (outline, steels, crimson, violets, skin, golds, eye glow) |
 | lift | carried objects | `#081410 #145838 #1e8048 #3aa858 #78d070 #d060f0 #2c3040 #4c5060 #787c88 #aab0b8 #3a2410 #6a4420 #a07040 #e0e4e8 #f8d050` |
-| ui | map marks, dots, cursor | `#161020 #e8d8a8 #b8a070 #8a5c18 #e8b838 #fff4b0 #2a6a30 #58a048 #f03030 #ffffff #38a0ff #8890a0 #3a3a48 #ff80c0 #ffe070` |
+| ui | map marks, dots | `#161020 #e8d8a8 #b8a070 #8a5c18 #e8b838 #fff4b0 #2a6a30 #58a048 #f03030 #ffffff #38a0ff #8890a0 #3a3a48 #ff80c0 #ffe070` |
 
 Sheets delivered as full-colour illustrations (the latest delivery's
 Bloom, folk, hub folk, portraits, small items, pickups, 32px icons and
@@ -66,7 +66,7 @@ above, and five more groups of their own, `gear` (the sword and shield
 icons), `items` (the 16px items), `pick` (the 32px pickups), `icons`
 (the 32px icons) and `folk32` (the hub's two, still in the pack but no
 longer drawn: the keepers are drawn by hand now, see "The hub's two,
-large"). Each portrait has a palette of its own.
+large"). The dialogue faces are drawn by hand now too, each in a palette of its own (see "Dialogue faces").
 
 ## 2. The Bloom (the hero)
 
@@ -315,20 +315,27 @@ business is one part swapped.
   orb, `wisp`, **16x16**, 4 frames of violet flame; the orb's two glow
   colours (`v`, `V`) pulse through `ORB_GLOW` in her palette.
 
-## 13. Dialogue portraits
+## 13. Dialogue faces
 
-Sheet `portrait`, **32x32**, group portrait, 7 frames. A bust, face
-filling the frame, shown in a gold frame on navy at the left of the
-text box. Lit oval faces with a shadow lower right, eyes with a glint,
-a dark outline round everything. Opaque to the frame edge is fine.
+Sheet `face`, **48x48** busts in sprites of **64x64** (the art in the
+upper left, the rest clear), 6 frames, drawn by hand in `art/faces.py`
+after each speaker's sprite in the game. Each has fifteen colours of its
+own; the keepers' are their sprites' own palettes. Shown at the left of
+the text box behind a gold divider, and in a gold frame in the shop.
+Lit from the upper left, outlined in the darkest colour, clear outside
+the bust so the box's navy shows round it.
 
-`hero` the Bloom smiling; `hero_surprised` the Bloom with round eyes
-and an open mouth; `peddler`; `gatekeeper`; `hermit`; `nun`;
-`gardener` (as described above).
+`bloom_surprised` the Bloom with round eyes and an open mouth (the
+death line); `peddler` under his starred hood, the long pink nose and
+the gem on his chain; `gatekeeper` in her hat, red eyes, her orb over
+her shoulder; `hermit` bald, the long white beard, rusted plate;
+`nun` eyes shut and wet, hands together; `gardener` in his green hood,
+milky eyes, a flower and his staff. The pack's 32x32 portraits are no
+longer drawn.
 
 ## 14. Map marks
 
-Group ui. Drawn over the pause menu's parchment map.
+Group ui. Drawn over the pause map's navy grid.
 
 **Marks.** Sheet `marks`, **16x16**, 13 frames, for the zoomed cell:
 `here` the Bloom's petal head; `door` a dark doorway; `folk` a hooded
@@ -344,9 +351,9 @@ centred.
 `chest` gold, `boss` red on dark, `crack`, `web`, `lock`, `chasm`,
 `thorn` in muted tones.
 
-**Cursor.** Sheet `cursor`, **32x32**, 1 frame `cell`: a gold corner
-bracket frame the size of one overview cell (32 wide, 24 tall, drawn
-in the upper 24 rows), transparent inside.
+**Cursor.** The cell cursor is four gold corners round the cell, one
+mark of the UI's sheet (`uimarks`, `corner`) turned for each. The pack's
+`cursor` sheet is no longer drawn.
 
 ## 15. Tiles
 
@@ -355,16 +362,44 @@ Background tiles have a specification of their own,
 the Drain, entry by entry, with sizes, joins, frames, palette groups and
 how to deliver them.
 
-## 16. The HUD and boxes
+## 16. The HUD
 
 8x8 BG tiles in the HUD palette (cream, ink, three heart reds, three
 golds, grey, navy, blue, violet, slate): hearts full, half and empty; a
 coin; a key; a bomb; the A, B, L and R button badges; item slots in
-four corners, lit and unlit; a box frame (corner, top, side, fill,
-bottom corner, bottom) in gold on navy; a cursor hand; map cells; a
-rule; an arrow. These are drawn at 8x8 and the board's drawings do not
-scale to that size cleanly, so they are the one place where the art
-is made for the game rather than cut from the boards.
+four corners, lit and unlit; a cursor hand; map cells. The HUD's
+figures are the 5x7 font's. These are drawn at 8x8 and the board's
+drawings do not scale to that size cleanly, so they are the one place
+where the art is made for the game rather than cut from the boards.
+
+## 16a. The boxes, the shop and the pause pages
+
+Drawn from the UI kit, `art/ui_kit.py`, after the UI boards: navy
+panels in a double gold line, an outline round them and a stud at each
+corner. 47 tiles of 8x8 in a palette of their own (`PAL`, fifteen
+colours by letter); a frame is its corner, edge and side, which the
+engine turns for the other three:
+
+| Tiles | What |
+|---|---|
+| `panel_*`, `fill` | the boxes and panels; `div_t`, `div_m` the divider after a face |
+| `plate_*` | a name plate, two tiles tall, on a box's top edge |
+| `slot_*`, `sel_*`, `empty_*` | an item's slot, the chosen one gold, an empty one dashed |
+| `tab_*`, `tabon_*` | the pause pages' tabs, the open one gold |
+| `badge_a`, `_b`, `_l`, `_r` | the buttons |
+| `row_*`, `srow_*` | a ware's row in the shop, the chosen one gold |
+| `bub_*` | the shop keeper's speech bubble, its tail and the join |
+| `coin`, `rule`, `rule_end` | prices and the purse; a rule under a heading |
+
+The words are in the UI's own face, `art/ui_font.py`: proportional,
+nine rows (capitals in seven, descenders in two), every glyph drawn by
+hand, with a coin and a heart past `~`. They are set a pixel at a time
+into tiles, so a word can be gold, red or the highlight in the middle
+of a line. The pause map has a palette of its own too (`MAP_PAL`):
+navy ground with a faint grid, green ways with a lit rim, water, the
+blight in violet. Marks over the boxes are sprites in the kit's colours
+(`OBJ_MARKS`): the box's "more" arrow, the shop's pointer, the map
+cursor's corner.
 
 ## 17. Checklist for a delivery
 
