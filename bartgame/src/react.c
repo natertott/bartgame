@@ -72,16 +72,22 @@ void room_torch_light(int tx, int ty) {
 }
 
 void room_thorn_cut(int tx, int ty) {
-    room_change(tx, ty, MT_MOSS0 + (hash32(tx, ty) % 3));
+    /* a hedge cut leaves grass; a gate of thorns, the trail it closed */
+    room_change(tx, ty, tile_gate_side(tx, ty) >= 0 ? MT_PATH : MT_MOSS0 + (hash32(tx, ty) % 3));
     fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
     if ((hash32(gGame.run_frames, tx * 7 + ty) & 7) == 0)
         drop_roll(tx * 16 + 8, ty * 16 + 12, hash32(ty, tx));
 }
 
-/* what lies under a bush or a stone: the floor beside it, or grass */
+/* what lies under a bush or a stone: in the wood, its grass (its tiles
+   beside may be edges of something); elsewhere the floor beside it */
 static u16 ground_under(int tx, int ty) {
     static const s8 d[4][2] = { { 0, 1 }, { -1, 0 }, { 1, 0 }, { 0, -1 } };
     int i;
+    if (gGame.area == AREA_FOREST)
+        return MT_MOSS0 + (hash32(tx, ty) % 3);
+    if (gGame.area == AREA_MYST)
+        return myst_ground(tx, ty);
     for (i = 0; i < 4; i++) {
         u16 m = room_get(tx + d[i][0], ty + d[i][1]);
         if (m != MT_NONE && metatile_type[m] == TT_FLOOR && m != MT_BRIDGE && m != MT_PATH)

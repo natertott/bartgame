@@ -21,10 +21,16 @@ import spec_data as D  # noqa: E402
 # drew (art/tile_art/tiles.json), in the group it was imported in
 import json  # noqa: E402
 TILE_ART = json.load(open(os.path.join(HERE, '..', '..', 'art', 'tile_art', 'tiles.json')))['tiles']
+# and what is painted in code as a draft (art/wood_art.py), which an
+# artist may redraw
+sys.path.insert(0, os.path.join(HERE, '..', '..', 'art'))
+import wood_art  # noqa: E402
+PAINTED = set(wood_art.build()[0])
 for _secs in (D.WOOD, D.MYST, D.DRAIN):
     for _t, _i, _es in _secs:
         for _e in _es:
-            _e['done'] = all(m in TILE_ART for m in _e['mts'])
+            _e['painted'] = all(m in PAINTED for m in _e['mts'])
+            _e['done'] = all(m in TILE_ART and m not in PAINTED for m in _e['mts'])
             if _e['done']:
                 _e['group'] = TILE_ART[_e['mts'][0]]['pal']
 
@@ -32,7 +38,7 @@ IMG, CTX, PAGE, DOC, DOCIMG = sys.argv[1:6]
 os.makedirs(DOCIMG, exist_ok=True)
 AREAS = [('wood', 'The wood', D.WOOD), ('myst', 'The mystery rooms', D.MYST), ('drain', 'The Drain', D.DRAIN)]
 AREA_NOTE = {
-    'wood': 'Rooms are 32x24 tiles, laid out by the game, so any tile can meet any of its listed neighbours. The wood has three moods: the living rooms (green), the sick rooms (stained grass, the canopy going violet) and the blighted rooms (purple to the walls), with the arena of the Blight Heart deepest of all. The edge tiles are used in the living rooms only.',
+    'wood': 'Rooms are 32x24 tiles, laid out by the game, so any tile can meet any of its listed neighbours. The wood has three moods: the living rooms (green), the sick rooms (soft blobs of bare violet earth in the grass) and the blighted rooms (the same wood in the blight\'s colours), with the arena of the Blight Heart deepest of all. Every room, blighted or not, lays the same edge tiles.',
     'myst': 'Small rooms behind the mouths in the wood\'s walls, one of three styles. They share the wood\'s censers, boulders, gold sparkle and grass.',
     'drain': 'One hand-laid hall, 30x18 tiles, the hub under the wood: the Peddler\'s stall, the Gatekeeper\'s rug, a channel of water with a grate across it, the great drain, two pools in the lower corners, a waterfall pouring from the back wall beside the hole up to the wood.',
 }
@@ -109,9 +115,11 @@ TOTAL_TILES = sum(COUNTS.values())
 INTRO = ('Every background tile the game draws in the wood, its mystery rooms and the Drain: what each one is, where it goes, '
          'what it must join, and how to deliver it. Written so an artist or an art-generating model can redraw the set without '
          'reading the code. The pictures show the tiles in the game now. Use them for size, layout and joins, not for style.')
-STATUS = ('The Drain and the blight of the wood are delivered: the entries marked delivered show their new art as the game draws it. '
-          'Still to draw: the living wood (its ground, edges, water, canopy, trees, things on the grass, cliffs and gates) '
-          'and the mystery rooms.')
+STATUS = ('The Drain and the blighted tree\'s crown are delivered: the entries marked delivered show their art as the game draws it. '
+          'The living wood, the blight and the mystery rooms are painted in code as a draft, marked draft: their pictures are the reference '
+          'for size, joins and how calm a floor must be, and any of them may be redrawn. The blight is no longer a set of floors of its own: '
+          'a blighted room loads the wood\'s tiles in a blighted twin of each palette, so it needs only its accents and the twin palettes. '
+          'The Drain\'s hall now lays only its plain slabs, walls, water and set pieces; its marks and clutter are kept but not laid.')
 
 SCREEN = [
     ('Tiles.', 'The world is built of 16x16 tiles. The screen shows 15 by 10 of them (240x160 pixels). The Bloom is 31 pixels tall, about two tiles; most monsters are one tile.'),
@@ -124,8 +132,8 @@ SCREEN = [
 
 RULES = [
     ('Colour.', '4 bits a pixel: each palette group has 15 colours plus transparent. All 256 pixels of one tile come from one group. Where a tile shows two materials (a shore with grass and sand, a trunk with grass and bark), both must be in its group.'),
-    ('Palette budget.', 'The game has 14 background palettes for tiles and the HUD; the HUD and the pause menu keep 2 and the text 2 more of the 16. The delivered Drain uses 3, the blight 4 and the glints 1, so the living wood and the mystery rooms have 4 between them: the four wood groups below, the mystery rooms drawn in their colours. If that is too few, say so: the game can load palettes per area, which would give each area its own.'),
-    ('Piece budget.', 'Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is %d tiles for the wood (%d pieces), %d for the mystery rooms and %d for the Drain, so there is room for some reuse but not for many more variants. Animation frames beyond the first do not count.' % (COUNTS['wood'], COUNTS['wood'] * 4, COUNTS['myst'], COUNTS['drain'])),
+    ('Palette budget.', 'Each area loads its own palettes: up to 13 groups for the wood, 13 for the mystery rooms and 13 for the Drain, the pause menu, the gold text and the text keeping the other 3 of the 16. The wood uses 12 today, the mystery rooms 9 and the Drain 4. A blighted room loads the twin of each wood group in the same slots, so the twins cost nothing.'),
+    ('Piece budget.', 'Each area holds at most 1,023 distinct 8x8 pieces. A 16x16 tile is four pieces; a piece repeated exactly, or mirrored, is stored once. This list is %d tiles for the wood (%d pieces), %d for the mystery rooms and %d for the Drain, more than the wood can hold unless pieces repeat. The drafts fit the wood in about 700 pieces because every edge band stays inside its quarter of the tile, so the quarters of an edge family repeat and are stored once: draw edge families the same way. Animation frames beyond the first do not count.' % (COUNTS['wood'], COUNTS['wood'] * 4, COUNTS['myst'], COUNTS['drain'])),
     ('Pixels.', 'Exact sizes. No anti-aliasing, no partial transparency, no gradients finer than the palette. Every pixel is a palette colour or fully transparent.'),
     ('Style.', 'After the four BARTGAME style boards: "grime and glamour". Three tones per material plus a highlight; a dark outline on objects that stand up from the ground (rocks, props, trunks), none on flat ground textures. Detail should be rich but quiet: the ground is a backdrop for the sprites, so keep its contrast lower than theirs, and keep bright specks for things the player should notice.'),
 ]
@@ -270,7 +278,7 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap }
                 cur = e.get('current_frames', 1)
                 note = '' if cur == e['frames'] else '<small>now %d frame%s; wanted %d</small>' % (cur, '' if cur == 1 else 's', e['frames'])
                 w('<div class="pic"><img src="%s" width="%d" height="%d" alt="%s, current art">%s</div>' % (data_uri(ipath), iw * k, ih * k, esc(e['title']), note))
-                w('<div class="facts"><h4>%s%s</h4><span class="key">%s/%s.png</span>' % (esc(e['title']), ' <span class="done">Delivered</span>' if e['done'] else '', e['group'], e['key']))
+                w('<div class="facts"><h4>%s%s</h4><span class="key">%s/%s.png</span>' % (esc(e['title']), ' <span class="done">Delivered</span>' if e['done'] else ' <span class="done">Draft</span>' if e['painted'] else '', e['group'], e['key']))
                 w('<dl><dt>Size</dt><dd>%s</dd><dt>File</dt><dd>%s</dd><dt>Layer</dt><dd>%s</dd><dt>Frames</dt><dd>%s</dd><dt>Solid</dt><dd>%s</dd></dl>'
                   % (size_text(e), file_text(e), LAYER[e['layer']], frames_text(e), esc(e['solid'])))
                 w('<p>%s</p>' % esc(e['what']))
@@ -339,7 +347,7 @@ def doc():
                 if order_text(e):
                     joins = (joins + ' ' if joins else '') + 'Order: ' + order_text(e) + '.'
                 w('| ![](tile_spec/%s.png) **%s**%s | `%s/%s.png` %s | %s | %s | %s | %s | %s | %s |' % (
-                    e['key'], e['title'], ' (delivered)' if e['done'] else '', e['group'], e['key'], file_text(e), size_text(e), LAYER[e['layer']],
+                    e['key'], e['title'], ' (delivered)' if e['done'] else ' (draft)' if e['painted'] else '', e['group'], e['key'], file_text(e), size_text(e), LAYER[e['layer']],
                     frames_text(e), e['solid'], md_escape_cell(e['what']), md_escape_cell(joins)))
             w('')
     w('## %d. Sprites seen here\n' % n)

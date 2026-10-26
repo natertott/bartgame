@@ -151,6 +151,7 @@ static void load_forest(int cell, int from_side) {
     gWorld.cells[cell].flags |= CF_VISITED;
     tiles_load(TS_FOREST);
     roomgen_build(cell);
+    tiles_blight(roomgen_blighted(cell));
     actors_clear();
     sprites_reset();
     npc_room_reset();

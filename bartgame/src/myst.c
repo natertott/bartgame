@@ -32,13 +32,19 @@
 #include "game.h"
 #include "myst.h"
 
+/* a style's tiles: its wall, the wall's face along the top and crown
+   along the bottom, its floors, the floor's edges by the walls beside it
+   (edge + bits - 1; 1 N, 2 E, 4 S, 8 W), its things and its spring */
 typedef struct {
-    u16 wall, face, floor0, floor1, prop, glow, exit, fsw, flift, fchest;
+    u16 wall, face, crown, floor0, floor1, edge, prop, glow, exit, fsw, flift, fchest, spring;
 } Style;
 static const Style kStyle[3] = {
-    { MT_CAVE_WALL, MT_CAVE_FACE, MT_CAVE_FLOOR0, MT_CAVE_FLOOR1, MT_CAVE_PROP, MT_CAVE_GLOW, MT_CAVE_EXIT, MT_CAVE_FLOOR_SWITCH, MT_CAVE_FLOOR_LIFT, MT_CAVE_FLOOR_CHEST },
-    { MT_HOLLOW_WALL, MT_HOLLOW_FACE, MT_HOLLOW_FLOOR0, MT_HOLLOW_FLOOR1, MT_HOLLOW_PROP, MT_HOLLOW_GLOW, MT_HOLLOW_EXIT, MT_HOLLOW_FLOOR_SWITCH, MT_HOLLOW_FLOOR_LIFT, MT_HOLLOW_FLOOR_CHEST },
-    { MT_THICKET_WALL, MT_THICKET_FACE, MT_THICKET_FLOOR0, MT_THICKET_FLOOR1, MT_THICKET_PROP, MT_THICKET_GLOW, MT_THICKET_EXIT, MT_THICKET_FLOOR_SWITCH, MT_THICKET_FLOOR_LIFT, MT_THICKET_FLOOR_CHEST },
+    { MT_CAVE_WALL, MT_CAVE_FACE, MT_CAVE_CROWN, MT_CAVE_FLOOR0, MT_CAVE_FLOOR1, MT_CAVE_EDGE_1, MT_CAVE_PROP, MT_CAVE_GLOW, MT_CAVE_EXIT,
+      MT_CAVE_FLOOR_SWITCH, MT_CAVE_FLOOR_LIFT, MT_CAVE_FLOOR_CHEST, MT_CAVE_SPRING },
+    { MT_HOLLOW_WALL, MT_HOLLOW_FACE, MT_HOLLOW_CROWN, MT_HOLLOW_FLOOR0, MT_HOLLOW_FLOOR1, MT_HOLLOW_EDGE_1, MT_HOLLOW_PROP, MT_HOLLOW_GLOW, MT_HOLLOW_EXIT,
+      MT_HOLLOW_FLOOR_SWITCH, MT_HOLLOW_FLOOR_LIFT, MT_HOLLOW_FLOOR_CHEST, MT_HOLLOW_SPRING },
+    { MT_THICKET_WALL, MT_THICKET_FACE, MT_THICKET_CROWN, MT_THICKET_FLOOR0, MT_THICKET_FLOOR1, MT_THICKET_EDGE_1, MT_THICKET_PROP, MT_THICKET_GLOW, MT_THICKET_EXIT,
+      MT_THICKET_FLOOR_SWITCH, MT_THICKET_FLOOR_LIFT, MT_THICKET_FLOOR_CHEST, MT_THICKET_SPRING },
 };
 static const u8 kSize[3][2] = { { 12, 9 }, { 18, 12 }, { 24, 16 } };
 
@@ -54,6 +60,17 @@ static u8 flags(void) { return gWorld.myst_flags[sCell]; }
 bool8 myst_done(void) { return (flags() & MF_DONE) != 0; }
 int myst_kind(void) { return sKind; }
 
+/* the plain floor at (x, y): shaded toward the walls it lies beside */
+static int edge_bits(int x, int y) {
+    return (y == 2 ? 1 : 0) | (x == sW - 2 ? 2 : 0) | (y == sH - 2 ? 4 : 0) | (x == 1 ? 8 : 0);
+}
+
+u16 myst_ground(int x, int y) {
+    const Style* st = &kStyle[sStyle];
+    int b = edge_bits(x, y);
+    return b ? st->edge + b - 1 : st->floor0;
+}
+
 static bool8 is_open_floor(int x, int y) {
     return x >= 1 && y >= 2 && x <= sW - 2 && y <= sH - 2 && room_type(x, y) == TT_FLOOR && room_get_overlay(x, y) == MT_NONE;
 }
@@ -66,13 +83,13 @@ static bool8 in_lane(int x, int y) {
 static void set_door(bool8 shut) {
     const Style* st = &kStyle[sStyle];
     sDoorShut = shut;
-    room_change(cx() - 1, sH - 1, shut ? st->wall : st->exit);
-    room_change(cx(), sH - 1, shut ? st->wall : st->exit);
+    room_change(cx() - 1, sH - 1, shut ? st->crown : st->exit);
+    room_change(cx(), sH - 1, shut ? st->crown : st->exit);
 }
 
 static void place_chest(int x, int y, bool8 open) {
     const Style* st = &kStyle[sStyle];
-    room_change(x, y, open ? st->floor0 : st->fchest);
+    room_change(x, y, open ? myst_ground(x, y) : st->fchest);
     room_change_overlay(x, y, open ? MT_MYST_CHEST_OPEN : MT_MYST_CHEST);
 }
 
@@ -95,16 +112,18 @@ void myst_build(int cell) {
         for (x = 0; x < sW; x++) {
             room_set_overlay(x, y, MT_NONE);
             if (x >= 1 && x <= sW - 2 && y >= 2 && y <= sH - 2)
-                room_set(x, y, (rng_range(&sR, 4) == 0) ? st->floor1 : st->floor0);
+                room_set(x, y, edge_bits(x, y) ? myst_ground(x, y) : (rng_range(&sR, 14) == 0) ? st->floor1 : st->floor0);
             else if (y == 1 && x >= 1 && x <= sW - 2)
                 room_set(x, y, st->face);
+            else if (y == sH - 1 && x >= 1 && x <= sW - 2)
+                room_set(x, y, st->crown);
         }
     /* glowing things and solid things, off the lane and the middle */
     n = 4 + sSize * 3;
     for (i = 0; i < n * 6; i++) {
         x = 1 + rng_range(&sR, sW - 2);
         y = 2 + rng_range(&sR, sH - 3);
-        if (!is_open_floor(x, y) || in_lane(x, y) || (ABS(x - cx()) <= 2 && ABS(y - cy()) <= 2))
+        if (!is_open_floor(x, y) || edge_bits(x, y) || in_lane(x, y) || (ABS(x - cx()) <= 2 && ABS(y - cy()) <= 2))
             continue;
         if (room_get(x, y) == st->glow || room_get(x, y) == st->prop)
             continue;
@@ -123,7 +142,7 @@ void myst_build(int cell) {
                 if (x < 1 || x > sW - 2 || y < 2 || y > sH - 2)
                     continue;
                 if (done) {
-                    room_set(x, y, st->floor1);
+                    room_set(x, y, myst_ground(x, y));
                     continue;
                 }
                 room_set(x, y, st->flift);
@@ -139,7 +158,7 @@ void myst_build(int cell) {
             place_chest(cx(), cy(), done);
             break;
         case MK_FAIRY:
-            room_set(cx(), cy(), MT_MYST_SPRING);
+            room_set(cx(), cy(), st->spring);
             break;
         case MK_SWITCHES: {
             static const s8 at[4][2] = { { 3, 3 }, { -4, 3 }, { 3, -4 }, { -4, -4 } };
@@ -149,7 +168,7 @@ void myst_build(int cell) {
                 y = cy() + at[i][1];
                 if (y < 2)
                     y = 2;
-                room_set(x, y, done ? st->floor0 : st->fsw);
+                room_set(x, y, done ? myst_ground(x, y) : st->fsw);
                 room_set_overlay(x, y, done ? MT_MYST_SWITCH_DOWN : MT_MYST_SWITCH);
             }
             if (done)
@@ -249,7 +268,7 @@ void myst_update(void) {
     int i;
     if (sPhase == 9) {
         /* the spring keeps giving */
-        if (sKind == MK_FAIRY && room_get(PX(a->x) >> 4, (PX(a->y) - 4) >> 4) == MT_MYST_SPRING && gPl.hp < gPl.hp_max && (gFrame & 15) == 0) {
+        if (sKind == MK_FAIRY && room_get(PX(a->x) >> 4, (PX(a->y) - 4) >> 4) == kStyle[sStyle].spring && gPl.hp < gPl.hp_max && (gFrame & 15) == 0) {
             player_heal(2);
             if ((gFrame & 31) == 0)
                 sfx_play(SFX_HEART);
@@ -309,7 +328,7 @@ void myst_update(void) {
             int tx = PX(a->x) >> 4, ty = (PX(a->y) - 4) >> 4;
             if (room_get_overlay(tx, ty) == MT_MYST_SWITCH) {
                 room_change_overlay(tx, ty, MT_MYST_SWITCH_DOWN);
-                room_change(tx, ty, kStyle[sStyle].floor0);
+                room_change(tx, ty, myst_ground(tx, ty));
                 sfx_play(SFX_BUMP);
                 if (++sCount >= sTotal)
                     finish();
@@ -322,7 +341,7 @@ void myst_update(void) {
             break;
         case MK_FAIRY: {
             int tx = PX(a->x) >> 4, ty = (PX(a->y) - 4) >> 4;
-            if (room_get(tx, ty) == MT_MYST_SPRING && gPl.hp < gPl.hp_max) {
+            if (room_get(tx, ty) == kStyle[sStyle].spring && gPl.hp < gPl.hp_max) {
                 player_heal(gPl.hp_max);
                 sfx_play(SFX_HEART);
                 fx_spawn(FX_SPARK, PX(a->x), PX(a->y) - 16);
@@ -361,7 +380,7 @@ static void give_prize(void) {
 void myst_chest_opened(int tx, int ty) {
     if (myst_done())
         return;
-    room_change(tx, ty, kStyle[sStyle].floor0);
+    room_change(tx, ty, myst_ground(tx, ty));
     room_change_overlay(tx, ty, MT_MYST_CHEST_OPEN);
     give_prize();
 }

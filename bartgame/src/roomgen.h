@@ -28,6 +28,7 @@ typedef struct {
 extern RoomSpots gSpots;
 
 void roomgen_build(int cell);
+bool8 roomgen_blighted(int cell); /* drawn in the blight's colours */
 /* the cell's mask and trail lines as the build lays them, for the map:
    M_* values (roomgen.c) per tile, row-major 32x24 */
 void roomgen_preview(int cell, const u8** mask, const u8** path);

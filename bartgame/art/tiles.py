@@ -4122,6 +4122,32 @@ mt('sw_counter_r', 'props', 'SOLID', flat(1))
 for _i in range(6):
     mt('sw_fall_%d' % _i, 'sewer', 'SOLID', frames=[flat(1), flat(1)], anim_speed=6)
 
+# The trail's and the verges' corner nicks: grass (or the canopy) at a
+# corner only. Their art is the painter's (wood_art.py).
+for _m in range(1, 16):
+    mt('pedge_c%x' % _m, 'forest', 'FLOOR', flat(4))
+for _m in range(1, 16):
+    mt('verge_c%x' % _m, 'forest', 'FLOOR', flat(4))
+
+# The rot: the blight's bare earth in a living room, one tile for each way
+# grass can lie around it, sides and corners (wood_art.rot_combos)
+def _rot_combos():
+    bl = lambda sd: (1 if sd & 9 else 0) | (2 if sd & 3 else 0) | (4 if sd & 6 else 0) | (8 if sd & 12 else 0)
+    return [(sd, cn) for sd in range(16) for cn in range(16) if not cn & bl(sd)]
+
+
+for _s, _c in _rot_combos():
+    mt('rot_%x%x' % (_s, _c), 'forest', 'FLOOR', flat(4))
+
+# the mystery rooms' crowns (their bottom wall seen from the room), the
+# floor's edges against the walls (1 N, 2 E, 4 S, 8 W) and their springs,
+# drawn in wood_art
+for _st in ('cave', 'hollow', 'thicket'):
+    mt('%s_crown' % _st, 'stone', 'SOLID', flat(1))
+    for _m in range(1, 16):
+        mt('%s_edge_%x' % (_st, _m), 'stone', 'FLOOR', flat(1))
+    mt('%s_spring' % _st, 'stone', 'FLOOR', flat(1))
+
 # the style boards' tiles replace what they cover, and the rest is
 # remapped into the boards' palettes (tiles_style.py)
 import tiles_style  # noqa: E402
@@ -4136,3 +4162,8 @@ if _pl.PACK_TILES:
 # the illustrated tile atlases over both (tile_art.py)
 import tile_art  # noqa: E402
 tile_art.apply(METATILES)
+
+# the living wood, the blight's floors and the mystery rooms drawn with
+# the terrain painter (wood_art.py), over both
+import wood_art  # noqa: E402
+wood_art.apply(METATILES)

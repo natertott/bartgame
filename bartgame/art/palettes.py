@@ -413,6 +413,10 @@ if PACK_TILES:
 import tile_art as _ta  # noqa: E402
 TILE_ART_FROM = dict(BG_PALETTES)
 BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in _ta.RETIRE] + sorted(_ta.GROUPS.items())
+# the living wood, the blight's floors and the mystery rooms drawn here
+# (wood_art.py), in palettes of their own
+import wood_art as _wa  # noqa: E402
+BG_PALETTES += [(n, _wa.group(n)) for n in _wa.group_names()]
 # A palette with the very colours of one before it shares that one's slot:
 # the boards gave the wood the forest's colours and the cliffs the stone's.
 # The metatiles drawn in it are moved over by tile_art.apply().
@@ -423,3 +427,6 @@ for _i, (_n, _c) in enumerate(BG_PALETTES):
             MERGE[_n] = _m
             break
 BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in MERGE]
+# A blighted room loads its groups in the blight's colours: the wood's
+# groups each have a blighted twin; the rest load as they are.
+BG_BLIGHT = {n: _wa.group_blight(n) for n in _wa.group_names() if n not in MERGE}

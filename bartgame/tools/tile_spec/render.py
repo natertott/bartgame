@@ -118,7 +118,12 @@ for r in rooms.ROOMS:
         if r.get(layer):
             hub |= set(names[i] for i in rooms.expand(r[layer], r['w'], r['h'], mt_names) if i != 0xFFFF)
 NEVER = {'moss_shade', 'relic', 'fence', 'pit_inner', 'ledge_n', 'path_edge_n', 'sw_floor_slime', 'sw_ladder', 'black',
-         'sw_waterfall'}  # the hall's waterfall is the atlas's 3x2 piece now
+         'sw_waterfall',  # the hall's waterfall is the atlas's 3x2 piece now
+         # a blighted room is the living wood in its twin palettes: the
+         # blight's own floors, veins, walls and sick canopy are laid no more
+         'blight_floor', 'blight_floor2', 'blight_vein', 'blight_ground0', 'blight_ground1', 'blight_ground2',
+         'canopy_blight', 'canopy_blight2', 'blight_wall', 'blight_wall2', 'blight_wall_lit',
+         'myst_spring'}  # each mystery style has its own spring
 # floors that carry a switch, a pot or a chest reuse the plain floor's drawing
 ALIAS = {'%s_floor_%s' % (st, k) for st in ('cave', 'hollow', 'thicket') for k in ('switch', 'lift', 'chest')}
 placed = set()

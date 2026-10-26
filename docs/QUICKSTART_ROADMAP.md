@@ -1271,6 +1271,47 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the wood painted and blended, the blight in twin palettes (Oct 2026)
+
+Each area now loads its own BG palettes: up to 13 groups in slots 0..12
+when the area is entered (`tiles_load`), with the pause menu's planks,
+the gold text and the text and HUD fixed in 13..15. The pause menu was
+drawn in the wrong colours in the last delivery (its slot was fixed at
+8, which the merged palettes had taken); it is in slot 13 now.
+
+The living wood, the blight and the mystery rooms are painted in code
+(`art/wood_art.py`, with the terrain painter `art/paint.py`): calm
+floors lighter than lumped, darker walls; every edge drawn (trail
+edges and nicks, verges and nicks, shores, banks); one colour table
+with groups computed from use. A blighted room is a living room in a
+blighted twin of each group (`wood_art.BLIGHT`, `tiles_blight()` after
+`roomgen_build`), so it has every edge the wood has; the atlas's
+blight floors, walls and sick canopy are laid no more. Sick rooms get
+soft blobs of rot (`lay_rot`, 47 tiles, sides and free corners) that
+fade into the grass; only where every tile round is ground off the
+trail, and never one tile wide. The crystals, snags, pool and the
+blighted tree's foot are repainted on grass so they take the twin
+palette. Alcoves dug late redraw the edges round them
+(`refresh_edges`). The mystery rooms are boxes with crowns, a floor
+shaded toward each wall (15 edge tiles a style, `myst_ground()`) and a
+spring per style; the thicket is the wood's own grass and canopy. The
+Drain's hall lays only plain slabs, plain bricks with its lanterns,
+banners, pipes and two drips, the stall with one crate, the rug, the
+channel, the drain, the pools and three glints; the floor's mottle is
+two closer tones (`tile_art.CALM`).
+
+`tools/roomgrids.py` dumps rooms from the ROM as tile names (`dump`,
+`myst`) and renders them from the art in seconds; 75 wood rooms and 9
+mystery rooms were reviewed that way and in game. All seven probes,
+the comparison build's critical path and verify-world pass. The tile
+spec marks the painted tiles as drafts and lists the rot, the corner
+families, the mystery edges, crowns and springs.
+
+Open: stage 1 rooms often get no rot (their one or two small blobs are
+thinned away by the strip rule); the canopy's two variants still show
+a faint repeat over a whole screen; the Drain's atlas tiles keep their
+own floor bits, which the calmer mottle only partly matches.
+
 ### BARTGAME: the Drain and the blight from the tile atlases (Oct 2026)
 
 Two illustrated atlases came for the tile spec: the whole Drain, and the

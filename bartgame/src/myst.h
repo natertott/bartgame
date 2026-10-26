@@ -26,5 +26,6 @@ void myst_tile_cleared(int tx, int ty); /* a pot or a boulder lifted or broken *
 bool8 myst_stranger_trade(void);     /* the stranger's deal; TRUE when it paid */
 bool8 myst_done(void);
 int myst_kind(void);
+u16 myst_ground(int x, int y);       /* the plain floor at a spot, shaded by the walls beside it */
 
 #endif

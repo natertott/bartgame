@@ -11,23 +11,34 @@ u8 gAnimTiles; /* off while the title owns the charblock */
 #define SB_GROUND 28
 
 /* the area's tileset: loaded whole into charblocks 0 and 1 when the
-   area changes, so each area has the full 1024 subtiles to itself */
+   area changes, so each area has the full 1024 subtiles to itself, and
+   its palettes into the first slots, so each has PAL_AREA_SLOTS of its
+   own */
 static const Tileset* sTs = &tilesets[TS_SEWER];
 
 void tiles_load(int set) {
     sTs = &tilesets[set];
     dma3_copy32(sTs->tiles, CHARBLOCK(0), sTs->tile_count * 32);
+    tiles_blight(FALSE);
+}
+
+/* a blighted room is a living one in the blight's colours: the set's
+   groups loaded in their blighted twins */
+void tiles_blight(bool8 on) {
+    int i;
+    const u16* p = on ? sTs->pals_blight : sTs->pals;
+    for (i = 0; i < sTs->pal_count; i++)
+        pal_set_bg(i, &p[i * 16]);
 }
 
 void tiles_init(void) {
     int i;
     tiles_load(TS_SEWER);
-    for (i = 0; i < PAL_BG_COUNT; i++)
-        pal_set_bg(i, &pal_bg[i * 16]);
     for (i = 0; i < PAL_OBJ_COUNT; i++)
         pal_set_obj(i, &pal_obj[i * 16]);
+    pal_set_bg(PAL_SLOT_MENU, &pal_bg[PAL_BG_MENU * 16]);
     /* text uses palette 15 entries: 1 ink, 2 shadow */
-    pal_set_bg(15, &pal_bg[PAL_BG_HUD * 16]);
+    pal_set_bg(PAL_SLOT_TEXT, &pal_bg[PAL_BG_HUD * 16]);
     {
         /* the same palette with gold ink, for names and headings */
         u16 gold[16];
@@ -36,7 +47,7 @@ void tiles_init(void) {
             gold[k] = pal_bg[PAL_BG_HUD * 16 + k];
         gold[1] = pal_bg[PAL_BG_HUD * 16 + 8];
         gold[2] = pal_bg[PAL_BG_HUD * 16 + 6];
-        pal_set_bg(14, gold);
+        pal_set_bg(PAL_SLOT_GOLD, gold);
     }
 }
 

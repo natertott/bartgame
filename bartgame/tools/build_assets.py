@@ -141,6 +141,14 @@ for i, (name, cols) in enumerate(palettes.BG_PALETTES):
 c.append(c_array_u16('pal_bg', vals))
 h.append('#define PAL_BG_COUNT %d' % len(palettes.BG_PALETTES))
 h.append('extern const u16 pal_bg[];')
+# The hardware's 16 BG palettes: each area's tileset loads its own groups
+# into the first PAL_AREA_SLOTS when the area is entered; the pause
+# menu's planks, the gold text and the text and HUD keep the last three.
+PAL_AREA_SLOTS = 13
+h.append('#define PAL_AREA_SLOTS %d' % PAL_AREA_SLOTS)
+h.append('#define PAL_SLOT_MENU 13')
+h.append('#define PAL_SLOT_GOLD 14')
+h.append('#define PAL_SLOT_TEXT 15')
 vals = []
 for i, (name, cols) in enumerate(palettes.OBJ_PALETTES):
     assert len(cols) == 16, name
@@ -201,7 +209,7 @@ h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
 h.append('extern const u8 metatile_coll[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
-h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; } Tileset;')
+h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; const u16* pals_blight; } Tileset;')
 set_rows = []
 for si, (sname, pred) in enumerate(SETS):
     ts = Tileset()
@@ -209,12 +217,18 @@ for si, (sname, pred) in enumerate(SETS):
     entries = []
     anims = []
     held = 0
+    # the set's palette groups, in the order its metatiles first use them
+    set_pals = []
+    for i, mt in enumerate(tiles.METATILES):
+        if pred(mt['name'], i) and mt['pal'] not in set_pals:
+            set_pals.append(mt['pal'])
+    assert len(set_pals) <= PAL_AREA_SLOTS, ('tileset %s needs %d palettes' % (sname, len(set_pals)), set_pals)
     for i, mt in enumerate(tiles.METATILES):
         if not pred(mt['name'], i):
             entries += [0, 0, 0, 0]
             continue
         held += 1
-        pal = bg_slots[mt['pal']]
+        pal = set_pals.index(mt['pal'])
         frames = mt.get('frames') or [mt['art']]
         pix = parse_art(frames[0], 16, 16)
         animated = len(frames) > 1
@@ -233,6 +247,9 @@ for si, (sname, pred) in enumerate(SETS):
             anims.append((base, len(frames), data, mt.get('anim_speed', 8)))
     c.append(c_array_u16('tileset_%s_tiles' % sname, bytes_to_u16(b''.join(ts.tiles))))
     c.append(c_array_u16('metatile_map_%s' % sname, entries, 8))
+    c.append(c_array_u16('tileset_%s_pals' % sname, [rgb15(x) for n in set_pals for x in dict(palettes.BG_PALETTES)[n]]))
+    # the same groups in the blight's colours, for a blighted room
+    c.append(c_array_u16('tileset_%s_pals_blight' % sname, [rgb15(x) for n in set_pals for x in palettes.BG_BLIGHT.get(n, dict(palettes.BG_PALETTES)[n])]))
     for k, (base, nfr, data, speed) in enumerate(anims):
         c.append(c_array_u16('tile_anim_%s_%d' % (sname, k), bytes_to_u16(data)))
     c.append('static const TileAnim tile_anims_%s[%d] = {' % (sname, max(1, len(anims))))
@@ -242,8 +259,8 @@ for si, (sname, pred) in enumerate(SETS):
         c.append('    { 0, 0, 0, NULL },')
     c.append('};')
     h.append('#define TS_%s %d' % (sname.upper(), si))
-    set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d },' % (sname, len(ts.tiles), sname, sname, len(anims)))
-    print('tileset %s: %d tiles, %d metatiles held, %d animated' % (sname, len(ts.tiles), held, len(anims)))
+    set_rows.append('    { tileset_%s_tiles, %d, metatile_map_%s, tile_anims_%s, %d, tileset_%s_pals, %d, tileset_%s_pals_blight },' % (sname, len(ts.tiles), sname, sname, len(anims), sname, len(set_pals), sname))
+    print('tileset %s: %d tiles, %d metatiles held, %d animated, %d palettes' % (sname, len(ts.tiles), held, len(anims), len(set_pals)))
 c.append('const Tileset tilesets[%d] = {' % len(SETS))
 c += set_rows
 c.append('};')

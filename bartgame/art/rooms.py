@@ -72,51 +72,51 @@ def expand(rows, w, h, mt_names):
 
 # The Drain: a vaulted hall. A waterfall pours from the top wall into a
 # basin; the drain hole up to the wood is beside it. The Peddler's stall
-# stands under a red awning on the left, the Gatekeeper's rug glows on
-# the right. A channel crosses the hall with a grate bridge, the great
-# round drain lies below it, and ladders go down into the pools in the
-# lower corners. The slabs are stained, cracked and mossed, the bricks
-# chained, webbed and dripping; fungus, bones and drips keep to the foot
-# of the walls and the pools, and glints wink only over water, the walls
-# and the rug, so nothing on the open floor looks like a thing to pick up.
+# stands under a red awning on the left, a crate beside it, under the
+# red banner; the Gatekeeper's rug lies on the right, under the teal. A
+# channel crosses the hall with a grate bridge, the great round drain
+# lies below it, and ladders go down into the pools in the lower
+# corners. Less is more: the slabs are plain, the bricks plain but for
+# the lanterns, banners, pipes and two drips, nothing lies about on the
+# floor, and only a few glints wink over the water.
 room('sewer_main', '''
-TTTTTMTTTTTMTTTTTTTMTTTTTTTTTMTTTTTTTTTTTMTTTTTTTMTTTTTMTTTT
-W1CHPPWDWCLNWMBTFUHHRUWNF1F2F3WDTABRWMLNSUCHPHPHPHWCttFUWDW2
-WWTAWWWSWCWWFUWWRU..WWWWF4F5F6WWTAWWWCWWWWFUWWWWWWWSWWTAWDWW
-sh,,A1A2A1A2..gr..,,cr;;~g~b~gdp,,..;;..g2..;;..,,BB..msdpbn
-,,CRCCCSCCCScr,,GD..,,..ESESES..gr..m2BB..R1R2..CN..c2..;;..
-;;SK..PT..g2,,..ms..,,..;;..,,cr,,..;;..,,R3R4..gr..;;pd,,PT
-..c2..;;gr,,CN..,,m2;;..,,..;;..;;g2,,..cr..ms..CR..,,..;;..
-,,..;;ms,,..;;..,,RR..,,gr;;..c2..;;..,,..m2..,,..gr..,,crsh
-WEWEWEEMWEWEWEWEWEEMWEWEWEWEGGGRWEWEWEEMWEWEWEWEEMWEWEWEWEWE
-~s~~LP~~~g~~~~~b~~LP~~~~~s~~GGGR~~~g~~~~LP~~~b~~~~~s~~~~LP~g
-~~~~~g~~~~LP~~~~~s~~~~~b~~~~GGGR~~~s~~~~~g~~~~LP~~~~~b~~~s~~
-ESESESESESSMESESESESESESSMESGGGRESESESESSMESESESESESESSMESES
-..pd..;;..,,..;;c2,,..ms..,,..g2..,,cr;;..,,..;;..,,..;;m2,,
-,,..cr..,,GD..;;..CNms;;D1D2gr,,PT;;..c2..;;g2,,..;;RR..pd..
-WELDEMWE..ms..;;gr,,..;;D3D4..c2..,,m2;;..,,..;;WEEMWELDWE..
-~~~s~~~gbng2;;..,,..;;..,,..;;ms,,..cr..,,SKbn,,~~~b~~~s~~..
-~g~~~b~~sh;;..ms..;;..gr..;;..,,..g2..dp..;;c2sh~s~~~g~~~b,,
-WWCHWWWCWWFUttWWTAWWWMWWWWWWAAARRUWWWWWDWWWWFUttWWWCWWCHWWWW
+TTTTTTTTTTTMTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTMTTTTTTTTTT
+WWPPWWBRWWWWLNWWWWHHWWWDF1F2F3WDWWWWWWBTWWLNWWWWWWWWWWPPWWWW
+WWWWWWWWWWWWWWWWWW..WWWWF4F5F6WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+....A1A2A1A2............~~~~~~..............................
+..CRCCCSCCCS............ESESES............R1R2..............
+..........................................R3R4..............
+............................................................
+............................................................
+WEWEWEWEWEWEWEWEWEWEWEWEWEWEGGGRWEWEWEWEWEWEWEWEWEWEWEWEWEWE
+~~~~~~~~~~~~LP~~~~~~~~~~~~~~GGGR~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~GGGR~~~~~~~~~~~~LP~~~~~~~~~~~~~~
+ESESESESESESESESESESESESESESGGGRESESESESESESESESESESESESESES
+............................................................
+........................D1D2................................
+WELDWEWE................D3D4....................WEWEWELDWE..
+~~~~~~~~........................................~~~~~~~~~~..
+~~~~~~~~........................................~~~~~~~~~~..
+WWWWWWWWWWWWttWWWWWWWWWWWWWWAAARWWWWWWWWWWWWWWttWWWWWWWWWWWW
 ''', overlay='''
                                                             
-                *2      *2                    *1            
-      *1                    *1                    *3        
-                        *1  *3                              
-                                                            
-                                          *3                
                                                             
                                                             
-                                                            
-        *2                                                  
-                                        *1                  
+                          *1                                
                                                             
                                                             
                                                             
                                                             
-      *3                                                    
-                                                    *2      
-                                      *2                    
+                                                            
+                *2                                          
+                                                  *3        
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
 ''', objects=[
     (OBJ_SPAWN, 12, 15, 0),
     (OBJ_EXIT, 9, 1, 1),        # the drain hole: up to the wood

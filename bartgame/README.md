@@ -10,8 +10,8 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 ## The demo
 
 - **The Drain.** You wake in a sewer hall: a waterfall into a basin, a
-  channel with a grate bridge, the great round drain, candles and
-  banners. The Pale Gatekeeper on her rug explains; the Billious Peddler
+  channel with a grate bridge, the great round drain, lanterns and
+  banners, and nothing lying about on its slabs. The Pale Gatekeeper on her rug explains; the Billious Peddler
   under his red awning sells Healing Petals and Blightseeds for gilt. The
   drain hole in the north wall leads up into the wood; the arch in the
   wood's first glade leads back down.
@@ -52,10 +52,12 @@ canopy that goes from blue-black to lit green, dark olive turf with
 bright tips, warm soil trails, deep navy water with foam that drifts,
 amber lanterns hung in the trees, white and gold stars on the ground,
 fireflies; rocks in three shapes sunk in moss and soil on a palette of
-their own; and the rot, by depth: stained grass split by glowing cracks
-at the second stage, then purple to the walls, pitted, veined with
-light, under a mist, with dead black trees clawing up and walls of
-old stone lit violet from below, a crystal set in some. Every material has its own 16-color palette and a
+their own; and the rot, by depth: a stain in the grass here and there,
+then patches of bare violet earth that fade into the grass through
+sick greens, then whole rooms gone over: the same wood in the blight's
+colours, violet-grey earth, ash trails, indigo leaves, dead grey bark,
+murky water, magenta light, under a mist, with crystals and stripped
+snags and the blighted tree. Every material has its own 16-color palette and a
 dark hue outline, three tones and a gleam, light from the upper left.
 The ground is textured turf with hand-placed tufts, flowers and
 pebbles; the canopy walls are leaf masses of lit blobs that wrap at the
@@ -118,12 +120,45 @@ standing things get a dark outline. Eight palette groups are derived
 from the art and colours are matched with lightness weighing double.
 They take the place of the board palettes they replace (`sewer`,
 `props`, `blight`), and two board palettes that held the very same
-colours share a slot (`palettes.MERGE`), so 12 of the 14 tile slots are
-in use. The atlases draw some pieces wider than the hand-drawn set: the
-Drain's waterfall is 3x2, its arch, grate and counter 2x1, and the
-blighted tree is 3x4 like the great trees, now placed in the blighted
-rooms. `docs/BARTGAME_TILE_SPEC.md` (written by `tools/tile_spec/`)
-lists every tile for the artist and marks what is delivered.
+colours share a slot (`palettes.MERGE`). The atlases draw some pieces
+wider than the hand-drawn set: the Drain's waterfall is 3x2, its arch,
+grate and counter 2x1, and the blighted tree is 3x4 like the great
+trees. Of the blight's atlas only the tree's crown is still drawn: its
+floors, walls and canopy read as noise against the wood and are painted
+again below. The Drain's floor mottle is brought to two closer tones
+(`tile_art.CALM`). `docs/BARTGAME_TILE_SPEC.md` (written by
+`tools/tile_spec/`) lists every tile for the artist and marks what is
+delivered.
+
+**The painted wood.** The living wood, the blight and the mystery rooms
+are painted in code (`art/wood_art.py`) with a small terrain painter
+(`art/paint.py`): value noise on a torus so every texture tiles, a 4x4
+Bayer dither, lit clumps with soft rims, and edge families whose bands
+are local to each quarter of a tile, so the build's dedupe shares their
+pieces. The colours are one named table; each palette group is the
+colours its tiles use, at most fifteen, so a colour two groups share is
+the very same in both. Floors are one calm tone with an even fine
+texture and lighter than the walls, which are lumped and darker, so
+what can be walked on reads at once. Every edge is drawn: grass over a
+trail, a verge under the canopy, a shore by water, nicks where those
+lie only at a corner. A blighted room is a living room in other
+colours: each group has a blighted twin (`wood_art.BLIGHT`) and the
+room loads the twins (`tiles_blight()`), so the blight has every edge
+the wood has. In a sick room the rot breaks through as soft blobs of
+bare earth, the grass's very texture gone over to earth, one tile for
+each way grass can lie around it, sides and corners (47), fading
+through the sick greens. The mystery rooms are boxes with their floor
+shaded toward each wall and the wall's lumps hanging over it; the
+thicket is the wood's own grass and canopy, so its censers and boulders
+meet it without a seam. `tools/roomgrids.py` dumps many rooms as grids
+of tile names from the ROM and renders them from the art in seconds,
+for judging art across many real rooms.
+
+**The palettes by area.** The hardware's sixteen BG palettes are shared
+out by area: each tileset (the wood, the Drain, the mystery rooms) loads
+up to thirteen groups of its own into slots 0 to 12 when the area is
+entered, and the pause menu's planks, the gold text and the text and
+HUD keep slots 13 to 15.
 
 **The style boards.** The other tiles come from four reference boards in
 `art/ref/`: the sprite sheets, the Drain, the blighted wood, and the UI
@@ -320,6 +355,10 @@ art/            pixel art as rows of letters mapped to palette indices
   tiles_style.py the sampled tiles into the metatiles; the rest remapped
   px.py         the painter: legends, outlines, flips, compose, a canvas
                 with lit blobs and shaded balls for round things
+  paint.py      the terrain painter: tiling noise, dither, lit clumps,
+                edge bands and nicks local to each quarter tile
+  wood_art.py   the living wood, the blight's twins and rot, the mystery
+                rooms, painted; laid over the metatiles last
   tiles.py      metatiles: grass, blight, paths, canopy walls, trees,
                 stones, water, gates, chests, the sewer set
   hero.py       the drawn Bloom, kept for the engine's frame order
@@ -338,6 +377,7 @@ tools/
   pack_art.py       cutting the illustrated sheets: cells, downscaling, palettes
   import_tiles.py   the tile atlases (art/ref/tile_art/) -> art/tile_art/
   tile_spec/        the tile spec for the artist: entries, renders, the doc
+  roomgrids.py      many rooms dumped from the ROM as tile names, rendered from the art
   preview.py        render art to PNG
   probe.py          mGBA harness: boot, keys, RAM by symbol, screenshots
   roomdump.py       render the loaded room from RAM

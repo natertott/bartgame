@@ -23,7 +23,7 @@
 /* the font again with the box's own dark fill behind every glyph, for
    text inside a box: nothing of the world shows through a letter */
 #define FONT_BOX (FONT_GLYPHS + HUD_TILE_COUNT)
-#define MENU_PAL 8
+#define MENU_PAL PAL_SLOT_MENU
 #define BOX_INK 0xE      /* the hud palette's box fill */
 
 static u16 sBg0[32 * 32] ALIGN4;

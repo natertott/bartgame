@@ -28,7 +28,7 @@
 /* BG3 carries the plank and the pictures: charblock 3, which the room
    maps own while the game plays and get back on the way out */
 #define MENU_SB 22
-#define MENU_PAL 8
+#define MENU_PAL PAL_SLOT_MENU
 #define PAL8 (MENU_PAL << 12)
 #define PIC_BASE PLANKS_TILE_COUNT
 /* the overview: five cells of 32x24 at a pixel a tile */
