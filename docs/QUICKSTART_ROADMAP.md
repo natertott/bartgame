@@ -1271,6 +1271,14 @@ a frame cost. Frame-rate samples have to assert the room did not change.
 
 Open defects and unexplained reports, roughly by player impact.
 
+### BARTGAME: the Drain art pilot taken out (Oct 2026)
+
+The user judged the pilot's art bad and went back to the game as it was
+before it. `make pilot`, `src/pilot.c`, `tools/pilot_capture.py`, the
+pilot pack and its captures are removed; the main ROM never held them.
+The one fix from that batch stays: under `make -j` the asset rule ran
+twice at once, and `assets.h` now hangs off `assets.c`.
+
 ### BARTGAME: the Drain art pilot, captured from the ROM (Oct 2026)
 
 The artist's native Drain pilot is in, as delivered, in

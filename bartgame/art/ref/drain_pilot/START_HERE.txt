@@ -1,9 +1,0 @@
-BARTGAME true 240x160 single-room GBA art pilot
-
-1. Inspect master_240x160.png (real native pixel dimensions).
-2. Inspect previews/master_960x640_NEAREST.png (4x magnification only).
-3. Give IMPLEMENTATION_HANDOFF.md and this entire ZIP to the coding agent.
-4. They must load the actual BG maps, 4bpp tiles and palettes in gba/, not the 1536x1024 art reference.
-5. Run python source/verify_exports.py to validate exact image reconstruction.
-
-STATUS: real GBA art assets for a 15x10 single-screen pilot, not yet integrated in ROM or a complete room pack.

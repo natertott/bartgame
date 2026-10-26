@@ -21,9 +21,6 @@ extern u16 items_sheet_tile(void);
 #include "menu.h"
 #include "save.h"
 #include "game.h"
-#ifdef ART_PILOT
-#include "pilot.h"
-#endif
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
@@ -470,15 +467,6 @@ static void update_title(void) {
         else
             start_run(gSeedOverride ? gSeedOverride : (sTitleSeed >> 4));
     }
-#ifdef ART_PILOT
-    /* the pilot build: Select goes back to the Drain art pilot */
-    if (sTitlePhase == 0 && (gKeysDown & KEY_SELECT)) {
-        sTitlePhase = 2;
-        fade_start(16, 2);
-    }
-    if (sTitlePhase == 2 && fade_done())
-        pilot_show();
-#endif
 }
 
 /* -------------------------------------------------------------- win -- */
@@ -527,11 +515,7 @@ static void update_win(void) {
 
 /* ----------------------------------------------------------- states -- */
 void game_init(void) {
-#ifdef ART_PILOT
-    pilot_show();
-#else
     title_show();
-#endif
 }
 
 static void draw_world(void) {
@@ -648,9 +632,6 @@ void game_update(void) {
         case GS_TRANSITION: update_transition(); break;
         case GS_MAP: menu_update(); break;
         case GS_WIN: update_win(); break;
-#ifdef ART_PILOT
-        case GS_PILOT: if (pilot_update()) title_show(); break;
-#endif
         default: break;
     }
 }

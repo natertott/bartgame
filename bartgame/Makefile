@@ -3,9 +3,6 @@
 #   make            builds bartgame.gba
 #   make pack-tiles builds bartgame_packtiles.gba, with the sprite pack's
 #                   own tiles and HUD (a comparison build)
-#   make pilot      builds bartgame_drainpilot.gba, which boots into the
-#                   artist's Drain art pilot (src/pilot.c); Start leaves
-#                   for the title, Select on the title comes back
 #   make assets     regenerates build/gen/* from art/*.py
 #   make clean
 #
@@ -27,7 +24,7 @@ TARGET  := bartgame
 ARCH    := -mcpu=arm7tdmi -mtune=arm7tdmi
 CFLAGS  := $(ARCH) -O2 -g -Wall -Wno-unused-function -fno-strict-aliasing \
            -fomit-frame-pointer -ffunction-sections -fdata-sections \
-           -fno-builtin -nostdlib -Isrc -I$(GEN) -MMD -MP $(CDEFS)
+           -fno-builtin -nostdlib -Isrc -I$(GEN) -MMD -MP
 THUMB   := -mthumb
 ARM     := -marm
 LDFLAGS := $(ARCH) -mthumb -nostdlib -Wl,-T,gba.ld -Wl,--gc-sections -Wl,-Map,$(BUILD)/$(TARGET).map
@@ -37,8 +34,7 @@ SRC_C     := $(filter-out %_iwram.c,$(wildcard src/*.c))
 SRC_IWRAM := $(wildcard src/*_iwram.c)
 SRC_S     := $(wildcard src/*.s)
 GEN_C     := $(GEN)/assets.c
-ART       := $(wildcard art/*.py) tools/build_assets.py art/pack/pack.json art/tile_art/tiles.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png) \
-             art/ref/drain_pilot/layout.json $(wildcard art/ref/drain_pilot/gba/*)
+ART       := $(wildcard art/*.py) tools/build_assets.py art/pack/pack.json art/tile_art/tiles.json $(wildcard art/pack/*.png) $(wildcard art/pack/tiles/*.png)
 
 OBJS := $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_C)) \
         $(patsubst src/%.c,$(BUILD)/%.o,$(SRC_IWRAM)) \
@@ -81,7 +77,7 @@ $(TARGET).gba: $(BUILD)/$(TARGET).elf
 	@$(PREFIX)size $<
 
 clean:
-	rm -rf $(BUILD) $(TARGET).gba build_pt bartgame_packtiles.gba build_pl bartgame_drainpilot.gba
+	rm -rf $(BUILD) $(TARGET).gba build_pt bartgame_packtiles.gba
 
 # The comparison build: the sprite pack's own tile sheets and HUD tiles in
 # place of the ones cut from the style boards (art/pack_tiles.py), in a
@@ -89,13 +85,6 @@ clean:
 .PHONY: pack-tiles
 pack-tiles:
 	$(MAKE) BUILD=build_pt TARGET=bartgame_packtiles BART_TILES=pack
-
-# The Drain art pilot: the artist's native 240x160 scene
-# (art/ref/drain_pilot) shown as delivered, the game booting into it, in a
-# build directory of its own. tools/pilot_capture.py captures it.
-.PHONY: pilot
-pilot:
-	$(MAKE) BUILD=build_pl TARGET=bartgame_drainpilot CDEFS=-DART_PILOT
 
 -include $(OBJS:.o=.d)
 
