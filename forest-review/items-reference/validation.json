@@ -1,0 +1,46 @@
+{
+  "rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+  "source_commit": "ac29db738895d4f27bd6360b4af745db5f6f27f2",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "item_rendering": {
+      "passed": 446,
+      "total": 446
+    },
+    "budget_palettes": {
+      "passed": 2046,
+      "total": 2046
+    },
+    "title": {
+      "passed": 79,
+      "total": 79
+    },
+    "bloom": {
+      "passed": 274,
+      "total": 274
+    },
+    "menu": {
+      "passed": 21,
+      "total": 21
+    },
+    "wood": {
+      "passed": 22,
+      "total": 22
+    },
+    "guard": {
+      "passed": 11,
+      "total": 11
+    },
+    "critical": {
+      "passed": 21,
+      "total": 21
+    }
+  },
+  "total_passed": 2920,
+  "maximum_OBJ_tiles": 836,
+  "OBJ_tile_limit": 876,
+  "OBJ_tile_headroom": 40,
+  "allocation_contexts": 582,
+  "artwork": "Actual JPEG crop/matte removal, NEAREST scaling, per-icon inventory palettes; four world material banks. Source catalogue is explicitly separate from native emulator captures.",
+  "shield_upgrade": "Green design supported via existing items2 byte bit0x10; displayed with ownership fixture, not assigned to a new loot reward."
+}

@@ -12,6 +12,8 @@ baserom*.gba
 !/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.zip
 !/downloads/title-reference-66422bc/bartgame-title-reference-66422bc.gba
 !/downloads/title-reference-66422bc/bartgame-title-reference-66422bc.zip
+!/downloads/items-reference-ac29db7/bartgame-items-reference-ac29db7.gba
+!/downloads/items-reference-ac29db7/bartgame-items-reference-ac29db7.zip
 
 # OS junk
 .DS_Store

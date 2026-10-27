@@ -1,0 +1,2 @@
+22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45  bartgame-items-reference-ac29db7.gba
+f747caf393ff66f93fc368e6b72c1eae538d6baa0207d8dcab894639362fcf19  bartgame-items-reference-ac29db7.zip

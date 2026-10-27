@@ -1,0 +1,124 @@
+{
+  "sources": {
+    "items": {
+      "path": "art/ref/items-reference.jpg",
+      "sha256": "33c9063b3e893b8017fc444dcb8c28580e2ebe73901db712d7c3125de0f68250"
+    },
+    "shields": {
+      "path": "art/ref/shields-reference.jpg",
+      "sha256": "d59cd77535626581372f21ede7fd0a2f966970213ad922c6274ac4c4a02b3c81"
+    }
+  },
+  "item_cell_cuts": {
+    "x": [
+      0,
+      250,
+      470,
+      700,
+      930,
+      1179
+    ],
+    "y": [
+      0,
+      264,
+      477,
+      683,
+      922
+    ]
+  },
+  "shield_cell_cuts": {
+    "x": [
+      0,
+      470,
+      705,
+      1179
+    ],
+    "y": [
+      0,
+      360,
+      735
+    ]
+  },
+  "resample": "NEAREST",
+  "native_sizes": [
+    16,
+    32
+  ],
+  "opaque_extent": "14px small / 30px large; aspect preserved",
+  "matte": "Border-connected light neutral checkerboard, enclosed checker holes and near-boundary JPEG neutral ringing removed; tiny compression components removed.",
+  "menu_palette": "Per-frame15colours plus transparency, RGB555",
+  "world_palettes": {
+    "gear": [
+      "#000000",
+      "#080810",
+      "#281820",
+      "#583030",
+      "#384050",
+      "#684840",
+      "#705850",
+      "#a06038",
+      "#787068",
+      "#a07048",
+      "#b07040",
+      "#988880",
+      "#b89070",
+      "#a8a8a0",
+      "#e8d098",
+      "#f0e8c8"
+    ],
+    "items": [
+      "#000000",
+      "#080810",
+      "#080030",
+      "#200840",
+      "#380868",
+      "#482838",
+      "#481878",
+      "#500890",
+      "#702090",
+      "#886050",
+      "#8820e0",
+      "#9830d8",
+      "#c07080",
+      "#c8a070",
+      "#e8c888",
+      "#f0e8c0"
+    ],
+    "pick": [
+      "#000000",
+      "#080810",
+      "#381020",
+      "#402830",
+      "#802838",
+      "#785040",
+      "#c03840",
+      "#a86838",
+      "#d04850",
+      "#e04848",
+      "#d86840",
+      "#c09860",
+      "#e8a850",
+      "#e8c880",
+      "#f0d888",
+      "#f8f0d0"
+    ],
+    "icons": [
+      "#000000",
+      "#080810",
+      "#003800",
+      "#083018",
+      "#182028",
+      "#204830",
+      "#383030",
+      "#305838",
+      "#684030",
+      "#487840",
+      "#906848",
+      "#78a858",
+      "#b08858",
+      "#d0b070",
+      "#d0c888",
+      "#f0e0b0"
+    ]
+  }
+}

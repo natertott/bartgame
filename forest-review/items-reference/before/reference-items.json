@@ -1,0 +1,181 @@
+{
+  "rom_sha256": "629b27d29cbffbfee63a8b70c450cdbd95a28da5bae78a43aa4401d081d7a211",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "capture_only": true,
+  "method": "Unmodified native240x160 mGBA framebuffers. Explicit full-inventory, upgraded-shield ownership and ground-actor display fixtures; real tool button inputs; Blightseeds earned from the generated plate trial.",
+  "passed": 16,
+  "total": 16,
+  "checks": [
+    {
+      "name": "Start opens the real inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens key items page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens map page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens key items page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens map page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens key items page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R opens map page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "inventory closes to live Drain",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "the actual Peddler shop opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "upgraded shield fixture opens the real inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual plate trial completes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "earned chest enters item-get",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ROM stayed fixed during review",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "captures": [
+    {
+      "file": "hud-sword-shield.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "hud-bomb-lantern-cape.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "hud-bow-cap.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "inventory-items.png",
+      "context": "real items page; full ownership render fixture"
+    },
+    {
+      "file": "inventory-key-items.png",
+      "context": "real key-items page; full ownership render fixture"
+    },
+    {
+      "file": "shop-items.png",
+      "context": "actual Peddler shop with imported heart, bomb and arrow-bundle sprites"
+    },
+    {
+      "file": "ground-pickups.png",
+      "context": "explicit ten-pickup actor render fixture on actual generated forest ground; no terrain or animation pose changes"
+    },
+    {
+      "file": "shield-wood-n.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-e.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-s.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-w.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-green-n.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-e.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-s.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-w.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "inventory-items-green-shield.png",
+      "context": "actual inventory with explicit green shield-upgrade ownership render fixture"
+    },
+    {
+      "file": "use-bow.png",
+      "context": "actual button-triggered use-bow on natural generated forest ground"
+    },
+    {
+      "file": "use-lantern.png",
+      "context": "actual button-triggered use-lantern on natural generated forest ground"
+    },
+    {
+      "file": "use-cape.png",
+      "context": "actual button-triggered use-cape on natural generated forest ground"
+    },
+    {
+      "file": "plant-bomb-hand.png",
+      "context": "actual button-triggered plant-bomb-hand on natural generated forest ground"
+    },
+    {
+      "file": "plant-bomb-ground.png",
+      "context": "same real bomb after its hand-to-ground release"
+    },
+    {
+      "file": "earned-blightseeds.png",
+      "context": "actual generated plate trial reward; earned, not a pose fixture"
+    }
+  ]
+}

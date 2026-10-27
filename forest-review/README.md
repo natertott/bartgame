@@ -1,6 +1,12 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: imported opening screen
+## Latest: supplied item and shield artwork
+
+[View the supplied sprites in the actual ROM](items-reference/README.md).
+The new item and both shield sheets are imported directly, with richer
+inventory palettes, matching held props and native mGBA comparisons.
+
+## Previous: imported opening screen
 
 [View the supplied title artwork in the actual ROM](title-reference/README.md).
 The title now uses the screenshot's complete composition and colours at

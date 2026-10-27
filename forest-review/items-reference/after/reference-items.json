@@ -1,0 +1,2335 @@
+{
+  "rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "capture_only": false,
+  "method": "Unmodified native240x160 mGBA framebuffers. Explicit full-inventory, upgraded-shield ownership and ground-actor display fixtures; real tool button inputs; Blightseeds earned from the generated plate trial.",
+  "passed": 446,
+  "total": 446,
+  "checks": [
+    {
+      "name": "hud-sword-shield HUD slot0 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 112, 'y': 0, 'tile': 876, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-sword-shield HUD slot0 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-sword-shield HUD slot0 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 112, 'y': 0, 'tile': 876, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-sword-shield HUD slot0 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-sword-shield HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-sword-shield HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-sword-shield HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-sword-shield HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot0 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot0 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot0 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot0 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot2 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot2 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot2 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bomb-lantern-cape HUD slot2 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot0 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot0 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot0 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot0 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot2 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot2 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hud-bow-cap HUD slot2 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "hud-bow-cap HUD slot2 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Start opens the real inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page SWORD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page SWORD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page SWORD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page SWORD exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "items page SHIELD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page SHIELD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page SHIELD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page SHIELD exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "items page BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page BOMBS exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page BOMBS exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "items page LAMP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page LAMP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page LAMP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page LAMP exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "items page CLOAK has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page CLOAK pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page CLOAK exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page CLOAK exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "items page BOW has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page BOW pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page BOW exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page BOW exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "items page HUBCAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 96, 'y': 64, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page HUBCAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page HUBCAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page HUBCAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "items page description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "items page description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "items page description exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "R opens key items page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 HEART_PIECE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 HEART_PIECE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 HEART_PIECE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 HEART_PIECE exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "key page0 KEY has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 KEY pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 KEY exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 KEY exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "key page0 GAUNTLET has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 GAUNTLET pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 GAUNTLET exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 GAUNTLET exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "key page0 RELIC has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 RELIC pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 RELIC exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 RELIC exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "key page0 MAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 MAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 MAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 MAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "key page0 ASTROLABE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 ASTROLABE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 ASTROLABE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 ASTROLABE exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "key page0 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page0 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page0 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "R opens map page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 SWORD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 SWORD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 SWORD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 SWORD exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "returned items0 SHIELD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 SHIELD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 SHIELD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 SHIELD exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "returned items0 BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 BOMBS exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 BOMBS exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "returned items0 LAMP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 LAMP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 LAMP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 LAMP exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "returned items0 CLOAK has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 CLOAK pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 CLOAK exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 CLOAK exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "returned items0 BOW has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 BOW pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 BOW exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 BOW exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "returned items0 HUBCAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 96, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 HUBCAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 HUBCAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 HUBCAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "returned items0 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items0 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items0 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "R opens key items page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 HEART_PIECE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 HEART_PIECE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 HEART_PIECE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 HEART_PIECE exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "key page1 KEY has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 KEY pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 KEY exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 KEY exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "key page1 GAUNTLET has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 GAUNTLET pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 GAUNTLET exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 GAUNTLET exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "key page1 RELIC has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 RELIC pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 RELIC exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 RELIC exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "key page1 MAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 MAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 MAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 MAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "key page1 ASTROLABE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 ASTROLABE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 ASTROLABE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 ASTROLABE exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "key page1 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page1 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page1 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "R opens map page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 SWORD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 SWORD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 SWORD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 SWORD exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "returned items1 SHIELD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 SHIELD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 SHIELD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 SHIELD exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "returned items1 BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 BOMBS exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 BOMBS exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "returned items1 LAMP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 LAMP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 LAMP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 LAMP exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "returned items1 CLOAK has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 CLOAK pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 CLOAK exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 CLOAK exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "returned items1 BOW has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 BOW pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 BOW exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 BOW exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "returned items1 HUBCAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 96, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 HUBCAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 HUBCAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 HUBCAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "returned items1 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items1 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items1 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "R opens key items page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 HEART_PIECE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 HEART_PIECE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 HEART_PIECE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 HEART_PIECE exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "key page2 KEY has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 KEY pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 KEY exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 KEY exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "key page2 GAUNTLET has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 GAUNTLET pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 GAUNTLET exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 GAUNTLET exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "key page2 RELIC has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 RELIC pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 RELIC exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 RELIC exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "key page2 MAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 MAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 MAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 MAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "key page2 ASTROLABE has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 ASTROLABE pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 ASTROLABE exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 ASTROLABE exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "key page2 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "key page2 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "key page2 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "7"
+    },
+    {
+      "name": "R opens map page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "R returns to items page2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 SWORD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 SWORD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 SWORD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 SWORD exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "returned items2 SHIELD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 SHIELD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 SHIELD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 SHIELD exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "returned items2 BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 BOMBS exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 BOMBS exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "returned items2 LAMP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 LAMP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 LAMP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 LAMP exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "returned items2 CLOAK has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 CLOAK pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 CLOAK exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 CLOAK exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "returned items2 BOW has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 BOW pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 BOW exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 BOW exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "returned items2 HUBCAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 96, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 HUBCAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 HUBCAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 HUBCAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "returned items2 description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "returned items2 description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "returned items2 description exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "inventory closes to live Drain",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot0 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot0 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot0 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot0 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot2 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot2 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot2 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "HUD after exact-palette menu HUD slot2 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "menu restores all non-animated world palette bytes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "the actual Peddler shop opens",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop HEART has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 27, 'y': 72, 'tile': 92, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop HEART pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop HEART uses its material bank",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 27, 'y': 72, 'tile': 92, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop HEART material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 27, 'y': 96, 'tile': 60, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop BOMBS uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 27, 'y': 96, 'tile': 60, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop BOMBS material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop ARROW10 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 27, 'y': 120, 'tile': 128, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop ARROW10 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "shop ARROW10 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 27, 'y': 120, 'tile': 128, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "shop ARROW10 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground HEART has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 40, 'y': 40, 'tile': 228, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground HEART pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground HEART uses its material bank",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 40, 'y': 40, 'tile': 228, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground HEART material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GILT has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 8, 'x': 72, 'y': 40, 'tile': 244, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GILT pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GILT uses its material bank",
+      "passed": true,
+      "detail": "{'index': 8, 'x': 72, 'y': 40, 'tile': 244, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GILT material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground BOMB_PICKUP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 9, 'x': 104, 'y': 40, 'tile': 260, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground BOMB_PICKUP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground BOMB_PICKUP uses its material bank",
+      "passed": true,
+      "detail": "{'index': 9, 'x': 104, 'y': 40, 'tile': 260, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground BOMB_PICKUP material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GILT_BIG has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 10, 'x': 136, 'y': 40, 'tile': 276, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GILT_BIG pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GILT_BIG uses its material bank",
+      "passed": true,
+      "detail": "{'index': 10, 'x': 136, 'y': 40, 'tile': 276, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GILT_BIG material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground KEY has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 11, 'x': 168, 'y': 40, 'tile': 292, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground KEY pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground KEY uses its material bank",
+      "passed": true,
+      "detail": "{'index': 11, 'x': 168, 'y': 40, 'tile': 292, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground KEY material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground RELIC has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 12, 'x': 40, 'y': 104, 'tile': 308, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground RELIC pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground RELIC uses its material bank",
+      "passed": true,
+      "detail": "{'index': 12, 'x': 40, 'y': 104, 'tile': 308, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground RELIC material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GRAIL has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 13, 'x': 72, 'y': 104, 'tile': 324, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GRAIL pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground GRAIL uses its material bank",
+      "passed": true,
+      "detail": "{'index': 13, 'x': 72, 'y': 104, 'tile': 324, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground GRAIL material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 14, 'x': 104, 'y': 104, 'tile': 340, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 14, 'x': 104, 'y': 104, 'tile': 340, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW5 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 15, 'x': 136, 'y': 104, 'tile': 356, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW5 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW5 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 15, 'x': 136, 'y': 104, 'tile': 356, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW5 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW10 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 16, 'x': 168, 'y': 104, 'tile': 372, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW10 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ground ARROW10 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 16, 'x': 168, 'y': 104, 'tile': 372, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "ground ARROW10 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood n has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood n pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood n uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood n material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood n HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood n HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood n HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood n HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood e has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood e pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood e uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood e material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood e HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood e HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood e HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood e HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood s has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood s pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood s uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "wood s material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood s HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood s HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood s HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood s HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood w has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}"
+    },
+    {
+      "name": "wood w pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood w uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}"
+    },
+    {
+      "name": "wood w material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood w HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood w HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "wood w HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "wood w HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green n has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green n pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green n uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green n material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green n HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green n HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green n HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green n HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green e has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green e pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green e uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green e material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green e HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green e HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green e HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green e HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green s has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green s pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green s uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "green s material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green s HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green s HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green s HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green s HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green w has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}"
+    },
+    {
+      "name": "green w pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green w uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}"
+    },
+    {
+      "name": "green w material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green w HUD slot1 has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green w HUD slot1 pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green w HUD slot1 uses its material bank",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}"
+    },
+    {
+      "name": "green w HUD slot1 material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "upgraded shield fixture opens the real inventory",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page SWORD has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 0, 'x': 16, 'y': 24, 'tile': 476, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page SWORD pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page SWORD exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page SWORD exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "green shield items page SHIELD_UPGRADED has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 1, 'x': 56, 'y': 24, 'tile': 492, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page SHIELD_UPGRADED pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page SHIELD_UPGRADED exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page SHIELD_UPGRADED exact palette uses menu slots",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "green shield items page BOMBS has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 2, 'x': 96, 'y': 24, 'tile': 508, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page BOMBS pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page BOMBS exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page BOMBS exact palette uses menu slots",
+      "passed": true,
+      "detail": "2"
+    },
+    {
+      "name": "green shield items page LAMP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 3, 'x': 136, 'y': 24, 'tile': 524, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page LAMP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page LAMP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page LAMP exact palette uses menu slots",
+      "passed": true,
+      "detail": "3"
+    },
+    {
+      "name": "green shield items page CLOAK has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 4, 'x': 16, 'y': 64, 'tile': 540, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page CLOAK pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page CLOAK exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page CLOAK exact palette uses menu slots",
+      "passed": true,
+      "detail": "4"
+    },
+    {
+      "name": "green shield items page BOW has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 56, 'y': 64, 'tile': 556, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page BOW pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page BOW exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page BOW exact palette uses menu slots",
+      "passed": true,
+      "detail": "5"
+    },
+    {
+      "name": "green shield items page HUBCAP has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 96, 'y': 64, 'tile': 572, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page HUBCAP pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page HUBCAP exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page HUBCAP exact palette uses menu slots",
+      "passed": true,
+      "detail": "6"
+    },
+    {
+      "name": "green shield items page description has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 16, 'y': 112, 'tile': 476, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "green shield items page description pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page description exact icon palette matches",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "green shield items page description exact palette uses menu slots",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "use-bow held source has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 72, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-bow held source pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "use-bow held source uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 72, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-bow held source material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "use-lantern held source has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 104, 'y': 72, 'tile': 56, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-lantern held source pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "use-lantern held source uses its material bank",
+      "passed": true,
+      "detail": "{'index': 5, 'x': 104, 'y': 72, 'tile': 56, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-lantern held source material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "use-cape held source has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 56, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-cape held source pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "use-cape held source uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 56, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "use-cape held source material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "bomb button creates a real planted object",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "real planted bomb has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 112, 'y': 102, 'tile': 76, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "real planted bomb pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "real planted bomb uses its material bank",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 112, 'y': 102, 'tile': 76, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "real planted bomb material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "real bomb warning has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 112, 'y': 102, 'tile': 152, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "real bomb warning pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "real bomb warning uses its material bank",
+      "passed": true,
+      "detail": "{'index': 7, 'x': 112, 'y': 102, 'tile': 152, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}"
+    },
+    {
+      "name": "real bomb warning material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "actual plate trial completes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "earned chest enters item-get",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "earned item-get has an actual OAM sprite",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 28, 'tile': 388, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "earned item-get pixels match source ROM frame",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "earned item-get uses its material bank",
+      "passed": true,
+      "detail": "{'index': 6, 'x': 104, 'y': 28, 'tile': 388, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}"
+    },
+    {
+      "name": "earned item-get material palette is resident",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ROM stayed fixed during review",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "captures": [
+    {
+      "file": "hud-sword-shield.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "hud-bomb-lantern-cape.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "hud-bow-cap.png",
+      "context": "full-inventory HUD render fixture in the actual Drain"
+    },
+    {
+      "file": "inventory-items.png",
+      "context": "real items page; full ownership render fixture"
+    },
+    {
+      "file": "inventory-key-items.png",
+      "context": "real key-items page; full ownership render fixture"
+    },
+    {
+      "file": "shop-items.png",
+      "context": "actual Peddler shop with imported heart, bomb and arrow-bundle sprites"
+    },
+    {
+      "file": "ground-pickups.png",
+      "context": "explicit ten-pickup actor render fixture on actual generated forest ground; no terrain or animation pose changes"
+    },
+    {
+      "file": "shield-wood-n.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-e.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-s.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-wood-w.png",
+      "context": "starting wooden shield; real held shield input"
+    },
+    {
+      "file": "shield-green-n.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-e.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-s.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "shield-green-w.png",
+      "context": "green upgrade ownership render fixture; real held shield input"
+    },
+    {
+      "file": "inventory-items-green-shield.png",
+      "context": "actual inventory with explicit green shield-upgrade ownership render fixture"
+    },
+    {
+      "file": "use-bow.png",
+      "context": "actual button-triggered use-bow on natural generated forest ground"
+    },
+    {
+      "file": "use-lantern.png",
+      "context": "actual button-triggered use-lantern on natural generated forest ground"
+    },
+    {
+      "file": "use-cape.png",
+      "context": "actual button-triggered use-cape on natural generated forest ground"
+    },
+    {
+      "file": "plant-bomb-hand.png",
+      "context": "actual button-triggered plant-bomb-hand on natural generated forest ground"
+    },
+    {
+      "file": "plant-bomb-ground.png",
+      "context": "same real bomb after its hand-to-ground release"
+    },
+    {
+      "file": "plant-bomb-lit.png",
+      "context": "same real planted bomb during the warning part of its fuse"
+    },
+    {
+      "file": "earned-blightseeds.png",
+      "context": "actual generated plate trial reward; earned, not a pose fixture"
+    }
+  ]
+}

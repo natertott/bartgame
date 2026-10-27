@@ -1,6 +1,28 @@
 # BARTGAME downloads
 
-## Latest: imported title artwork
+## Latest: supplied item and shield artwork
+
+This build includes the supplied item and shield designs, richer inventory
+palettes, matching held-item art, the imported title and Bloom animation polish.
+
+- [Download the updated GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/items-reference-ac29db7/bartgame-items-reference-ac29db7.gba)
+- [Download the updated ZIP](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/items-reference-ac29db7/bartgame-items-reference-ac29db7.zip)
+- [SHA256 checksums](items-reference-ac29db7/SHA256SUMS.txt)
+- [Actual mGBA item comparisons](../forest-review/items-reference/README.md)
+
+Open the `.gba` in mGBA. Built from source commit
+[`ac29db7`](https://github.com/natertott/bartgame/commit/ac29db7) on `forest-art`.
+All 2,920 rendering, palette, gameplay and title checks passed.
+The wooden shield starts owned. Green-and-gold upgrade art is supported;
+the upgrade has not been assigned to a new loot reward.
+
+ROM SHA256:
+
+```text
+22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45
+```
+
+## Previous: imported title artwork
 
 The opening screen now imports the supplied screenshot at 240×160, using
 2,070 colours in the GBA's direct-colour display.

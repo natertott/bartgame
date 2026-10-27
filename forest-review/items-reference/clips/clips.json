@@ -1,0 +1,2485 @@
+{
+  "rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "method": "Actual B-button actions on naturally generated forest ground. Full inventory, cleared actors, debug position/facing and green shield ownership are fixtures; no animation pose/frame assigned.",
+  "images": "GIF crop from native240x160 is(56,32)-(184,144), enlarged3x with nearest-neighbour, sampled every2 video frames with30/30/40ms GIF delays. PNGs are unchanged native framebuffers.",
+  "captures": [
+    {
+      "name": "bow-east",
+      "file": "bow-east.gif",
+      "position": [
+        264,
+        190
+      ],
+      "facing": "e",
+      "equipment_B": 6,
+      "green_shield_ownership_fixture": false,
+      "input": "B",
+      "held_frames": 1,
+      "video_frames": 40,
+      "gif_frames": 20,
+      "gif_duration_ms": 660,
+      "gif_color_count": 58,
+      "exact_GIF_palette": true,
+      "trace": [
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lantern-north",
+      "file": "lantern-north.gif",
+      "position": [
+        264,
+        190
+      ],
+      "facing": "n",
+      "equipment_B": 3,
+      "green_shield_ownership_fixture": false,
+      "input": "B",
+      "held_frames": 1,
+      "video_frames": 48,
+      "gif_frames": 24,
+      "gif_duration_ms": 800,
+      "gif_color_count": 64,
+      "exact_GIF_palette": true,
+      "trace": [
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cape-east",
+      "file": "cape-east.gif",
+      "position": [
+        264,
+        190
+      ],
+      "facing": "e",
+      "equipment_B": 4,
+      "green_shield_ownership_fixture": false,
+      "input": "B",
+      "held_frames": 1,
+      "video_frames": 48,
+      "gif_frames": 24,
+      "gif_duration_ms": 800,
+      "gif_color_count": 54,
+      "exact_GIF_palette": true,
+      "trace": [
+        {
+          "state": 5,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            265,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 2,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            266,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 3,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            267,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 4,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            269,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 5,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            270,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 6,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            271,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 7,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            272,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 8,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            274,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 9,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            275,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 10,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            276,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 11,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            277,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 12,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            279,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 13,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            280,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 14,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            281,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            282,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 16,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            284,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 17,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            285,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 18,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            286,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 19,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            287,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 20,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            289,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 21,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            290,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 22,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            291,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 23,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            292,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 24,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            294,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 25,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            295,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 26,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            296,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 27,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            297,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 28,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            299,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 29,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            300,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 30,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            301,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 31,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            302,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 32,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            304,
+            190
+          ]
+        },
+        {
+          "state": 5,
+          "timer": 33,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            305,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 34,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        }
+      ]
+    },
+    {
+      "name": "shield-wood-south",
+      "file": "shield-wood-south.gif",
+      "position": [
+        264,
+        190
+      ],
+      "facing": "s",
+      "equipment_B": 5,
+      "green_shield_ownership_fixture": false,
+      "input": "B",
+      "held_frames": 24,
+      "video_frames": 40,
+      "gif_frames": 20,
+      "gif_duration_ms": 660,
+      "gif_color_count": 59,
+      "exact_GIF_palette": true,
+      "trace": [
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ]
+    },
+    {
+      "name": "shield-green-south",
+      "file": "shield-green-south.gif",
+      "position": [
+        264,
+        190
+      ],
+      "facing": "s",
+      "equipment_B": 5,
+      "green_shield_ownership_fixture": true,
+      "input": "B",
+      "held_frames": 24,
+      "video_frames": 40,
+      "gif_frames": 20,
+      "gif_duration_ms": 660,
+      "gif_color_count": 58,
+      "exact_GIF_palette": true,
+      "trace": [
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ]
+    }
+  ]
+}

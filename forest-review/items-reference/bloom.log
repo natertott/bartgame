@@ -1,0 +1,276 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS action frame occupies one reserved 32px slot tile 56, frame tiles 16
+PASS n active effect present in hardware OAM at tick 3
+PASS n streamed frame agrees with live damage window at tick 3 ['sword_n1']
+PASS n effect anchored to combat box at tick 3 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 3 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 3
+PASS n active effect present in hardware OAM at tick 4
+PASS n streamed frame agrees with live damage window at tick 4 ['sword_n1']
+PASS n effect anchored to combat box at tick 4 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 4 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 4
+PASS n active effect present in hardware OAM at tick 5
+PASS n streamed frame agrees with live damage window at tick 5 ['sword_n1']
+PASS n effect anchored to combat box at tick 5 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 5 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 5
+PASS n active effect present in hardware OAM at tick 6
+PASS n streamed frame agrees with live damage window at tick 6 ['sword_n2']
+PASS n effect anchored to combat box at tick 6 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 6 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 6
+PASS n active effect present in hardware OAM at tick 7
+PASS n streamed frame agrees with live damage window at tick 7 ['sword_n2']
+PASS n effect anchored to combat box at tick 7 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 7 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 7
+PASS n active effect present in hardware OAM at tick 8
+PASS n streamed frame agrees with live damage window at tick 8 ['sword_n2']
+PASS n effect anchored to combat box at tick 8 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 8 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 8
+PASS n active effect present in hardware OAM at tick 9
+PASS n streamed frame agrees with live damage window at tick 9 ['sword_n2']
+PASS n effect anchored to combat box at tick 9 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 9 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 9
+PASS n active effect present in hardware OAM at tick 10
+PASS n streamed frame agrees with live damage window at tick 10 ['sword_n3']
+PASS n effect anchored to combat box at tick 10 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 10 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 10
+PASS n active effect present in hardware OAM at tick 11
+PASS n streamed frame agrees with live damage window at tick 11 ['sword_n3']
+PASS n effect anchored to combat box at tick 11 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 11 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 11
+PASS n active effect present in hardware OAM at tick 12
+PASS n streamed frame agrees with live damage window at tick 12 ['sword_n3']
+PASS n effect anchored to combat box at tick 12 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 12 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 12
+PASS n active effect present in hardware OAM at tick 13
+PASS n streamed frame agrees with live damage window at tick 13 ['sword_n3']
+PASS n effect anchored to combat box at tick 13 (106, 72) == (106, 72)
+PASS n visible sweep reaches all collision boundaries at tick 13 (0, 0, 27, 20)
+PASS n sword precedes Bloom in OAM at tick 13
+PASS n attack starts without an invisible hit
+PASS n damage window remains timer2 through12
+PASS n recovery and return to normal
+PASS e active effect present in hardware OAM at tick 3
+PASS e streamed frame agrees with live damage window at tick 3 ['sword_e1']
+PASS e effect anchored to combat box at tick 3 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 3 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 3
+PASS e active effect present in hardware OAM at tick 4
+PASS e streamed frame agrees with live damage window at tick 4 ['sword_e1']
+PASS e effect anchored to combat box at tick 4 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 4 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 4
+PASS e active effect present in hardware OAM at tick 5
+PASS e streamed frame agrees with live damage window at tick 5 ['sword_e1']
+PASS e effect anchored to combat box at tick 5 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 5 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 5
+PASS e active effect present in hardware OAM at tick 6
+PASS e streamed frame agrees with live damage window at tick 6 ['sword_e2']
+PASS e effect anchored to combat box at tick 6 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 6 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 6
+PASS e active effect present in hardware OAM at tick 7
+PASS e streamed frame agrees with live damage window at tick 7 ['sword_e2']
+PASS e effect anchored to combat box at tick 7 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 7 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 7
+PASS e active effect present in hardware OAM at tick 8
+PASS e streamed frame agrees with live damage window at tick 8 ['sword_e2']
+PASS e effect anchored to combat box at tick 8 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 8 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 8
+PASS e active effect present in hardware OAM at tick 9
+PASS e streamed frame agrees with live damage window at tick 9 ['sword_e2']
+PASS e effect anchored to combat box at tick 9 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 9 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 9
+PASS e active effect present in hardware OAM at tick 10
+PASS e streamed frame agrees with live damage window at tick 10 ['sword_e3']
+PASS e effect anchored to combat box at tick 10 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 10 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 10
+PASS e active effect present in hardware OAM at tick 11
+PASS e streamed frame agrees with live damage window at tick 11 ['sword_e3']
+PASS e effect anchored to combat box at tick 11 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 11 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 11
+PASS e active effect present in hardware OAM at tick 12
+PASS e streamed frame agrees with live damage window at tick 12 ['sword_e3']
+PASS e effect anchored to combat box at tick 12 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 12 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 12
+PASS e active effect present in hardware OAM at tick 13
+PASS e streamed frame agrees with live damage window at tick 13 ['sword_e3']
+PASS e effect anchored to combat box at tick 13 (124, 82) == (124, 82)
+PASS e visible sweep reaches all collision boundaries at tick 13 (0, 0, 18, 24)
+PASS e sword precedes Bloom in OAM at tick 13
+PASS e attack starts without an invisible hit
+PASS e damage window remains timer2 through12
+PASS e recovery and return to normal
+PASS s active effect present in hardware OAM at tick 3
+PASS s streamed frame agrees with live damage window at tick 3 ['sword_s1']
+PASS s effect anchored to combat box at tick 3 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 3 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 3
+PASS s active effect present in hardware OAM at tick 4
+PASS s streamed frame agrees with live damage window at tick 4 ['sword_s1']
+PASS s effect anchored to combat box at tick 4 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 4 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 4
+PASS s active effect present in hardware OAM at tick 5
+PASS s streamed frame agrees with live damage window at tick 5 ['sword_s1']
+PASS s effect anchored to combat box at tick 5 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 5 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 5
+PASS s active effect present in hardware OAM at tick 6
+PASS s streamed frame agrees with live damage window at tick 6 ['sword_s2']
+PASS s effect anchored to combat box at tick 6 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 6 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 6
+PASS s active effect present in hardware OAM at tick 7
+PASS s streamed frame agrees with live damage window at tick 7 ['sword_s2']
+PASS s effect anchored to combat box at tick 7 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 7 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 7
+PASS s active effect present in hardware OAM at tick 8
+PASS s streamed frame agrees with live damage window at tick 8 ['sword_s2']
+PASS s effect anchored to combat box at tick 8 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 8 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 8
+PASS s active effect present in hardware OAM at tick 9
+PASS s streamed frame agrees with live damage window at tick 9 ['sword_s2']
+PASS s effect anchored to combat box at tick 9 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 9 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 9
+PASS s active effect present in hardware OAM at tick 10
+PASS s streamed frame agrees with live damage window at tick 10 ['sword_s3']
+PASS s effect anchored to combat box at tick 10 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 10 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 10
+PASS s active effect present in hardware OAM at tick 11
+PASS s streamed frame agrees with live damage window at tick 11 ['sword_s3']
+PASS s effect anchored to combat box at tick 11 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 11 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 11
+PASS s active effect present in hardware OAM at tick 12
+PASS s streamed frame agrees with live damage window at tick 12 ['sword_s3']
+PASS s effect anchored to combat box at tick 12 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 12 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 12
+PASS s active effect present in hardware OAM at tick 13
+PASS s streamed frame agrees with live damage window at tick 13 ['sword_s3']
+PASS s effect anchored to combat box at tick 13 (106, 90) == (106, 90)
+PASS s visible sweep reaches all collision boundaries at tick 13 (0, 0, 27, 18)
+PASS s sword precedes Bloom in OAM at tick 13
+PASS s attack starts without an invisible hit
+PASS s damage window remains timer2 through12
+PASS s recovery and return to normal
+PASS w active effect present in hardware OAM at tick 3
+PASS w streamed frame agrees with live damage window at tick 3 ['sword_w1']
+PASS w effect anchored to combat box at tick 3 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 3 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 3
+PASS w active effect present in hardware OAM at tick 4
+PASS w streamed frame agrees with live damage window at tick 4 ['sword_w1']
+PASS w effect anchored to combat box at tick 4 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 4 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 4
+PASS w active effect present in hardware OAM at tick 5
+PASS w streamed frame agrees with live damage window at tick 5 ['sword_w1']
+PASS w effect anchored to combat box at tick 5 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 5 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 5
+PASS w active effect present in hardware OAM at tick 6
+PASS w streamed frame agrees with live damage window at tick 6 ['sword_w2']
+PASS w effect anchored to combat box at tick 6 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 6 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 6
+PASS w active effect present in hardware OAM at tick 7
+PASS w streamed frame agrees with live damage window at tick 7 ['sword_w2']
+PASS w effect anchored to combat box at tick 7 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 7 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 7
+PASS w active effect present in hardware OAM at tick 8
+PASS w streamed frame agrees with live damage window at tick 8 ['sword_w2']
+PASS w effect anchored to combat box at tick 8 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 8 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 8
+PASS w active effect present in hardware OAM at tick 9
+PASS w streamed frame agrees with live damage window at tick 9 ['sword_w2']
+PASS w effect anchored to combat box at tick 9 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 9 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 9
+PASS w active effect present in hardware OAM at tick 10
+PASS w streamed frame agrees with live damage window at tick 10 ['sword_w3']
+PASS w effect anchored to combat box at tick 10 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 10 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 10
+PASS w active effect present in hardware OAM at tick 11
+PASS w streamed frame agrees with live damage window at tick 11 ['sword_w3']
+PASS w effect anchored to combat box at tick 11 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 11 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 11
+PASS w active effect present in hardware OAM at tick 12
+PASS w streamed frame agrees with live damage window at tick 12 ['sword_w3']
+PASS w effect anchored to combat box at tick 12 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 12 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 12
+PASS w active effect present in hardware OAM at tick 13
+PASS w streamed frame agrees with live damage window at tick 13 ['sword_w3']
+PASS w effect anchored to combat box at tick 13 (97, 82) == (97, 82)
+PASS w visible sweep reaches all collision boundaries at tick 13 (0, 0, 18, 24)
+PASS w sword precedes Bloom in OAM at tick 13
+PASS w attack starts without an invisible hit
+PASS w damage window remains timer2 through12
+PASS w recovery and return to normal
+PASS n left inclusive edge lands target hp 18
+PASS n left one pixel outside misses target hp 20
+PASS n right inclusive edge lands target hp 18
+PASS n right one pixel outside misses target hp 20
+PASS n top inclusive edge lands target hp 18
+PASS n top one pixel outside misses target hp 20
+PASS n bottom inclusive edge lands target hp 18
+PASS n bottom one pixel outside misses target hp 20
+PASS e left inclusive edge lands target hp 18
+PASS e left one pixel outside misses target hp 20
+PASS e right inclusive edge lands target hp 18
+PASS e right one pixel outside misses target hp 20
+PASS e top inclusive edge lands target hp 18
+PASS e top one pixel outside misses target hp 20
+PASS e bottom inclusive edge lands target hp 18
+PASS e bottom one pixel outside misses target hp 20
+PASS s left inclusive edge lands target hp 18
+PASS s left one pixel outside misses target hp 20
+PASS s right inclusive edge lands target hp 18
+PASS s right one pixel outside misses target hp 20
+PASS s top inclusive edge lands target hp 18
+PASS s top one pixel outside misses target hp 20
+PASS s bottom inclusive edge lands target hp 18
+PASS s bottom one pixel outside misses target hp 20
+PASS w left inclusive edge lands target hp 18
+PASS w left one pixel outside misses target hp 20
+PASS w right inclusive edge lands target hp 18
+PASS w right one pixel outside misses target hp 20
+PASS w top inclusive edge lands target hp 18
+PASS w top one pixel outside misses target hp 20
+PASS w bottom inclusive edge lands target hp 18
+PASS w bottom one pixel outside misses target hp 20
+PASS heart beyond body contact stays before swing
+PASS sword still gathers a reached heart
+PASS sword still deflects an incoming seed
+PASS sword still cuts a reached bush
+PASS damage interrupts the sword and clears its hitbox
+PASS hurt Bloom has no lingering action effect
+PASS roll retains its protected opening
+PASS late roll still queues a sword input
+PASS queued sword follows roll recovery
+RESULT PASS 274/274

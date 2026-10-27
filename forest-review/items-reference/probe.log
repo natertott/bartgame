@@ -1,0 +1,448 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS hud-sword-shield HUD slot0 has an actual OAM sprite {'index': 3, 'x': 112, 'y': 0, 'tile': 876, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-sword-shield HUD slot0 pixels match source ROM frame
+PASS hud-sword-shield HUD slot0 uses its material bank {'index': 3, 'x': 112, 'y': 0, 'tile': 876, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-sword-shield HUD slot0 material palette is resident
+PASS hud-sword-shield HUD slot1 has an actual OAM sprite {'index': 4, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-sword-shield HUD slot1 pixels match source ROM frame
+PASS hud-sword-shield HUD slot1 uses its material bank {'index': 4, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-sword-shield HUD slot1 material palette is resident
+PASS hud-bomb-lantern-cape HUD slot0 has an actual OAM sprite {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot0 pixels match source ROM frame
+PASS hud-bomb-lantern-cape HUD slot0 uses its material bank {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot0 material palette is resident
+PASS hud-bomb-lantern-cape HUD slot1 has an actual OAM sprite {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot1 pixels match source ROM frame
+PASS hud-bomb-lantern-cape HUD slot1 uses its material bank {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot1 material palette is resident
+PASS hud-bomb-lantern-cape HUD slot2 has an actual OAM sprite {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot2 pixels match source ROM frame
+PASS hud-bomb-lantern-cape HUD slot2 uses its material bank {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bomb-lantern-cape HUD slot2 material palette is resident
+PASS hud-bow-cap HUD slot0 has an actual OAM sprite {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot0 pixels match source ROM frame
+PASS hud-bow-cap HUD slot0 uses its material bank {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot0 material palette is resident
+PASS hud-bow-cap HUD slot1 has an actual OAM sprite {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot1 pixels match source ROM frame
+PASS hud-bow-cap HUD slot1 uses its material bank {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot1 material palette is resident
+PASS hud-bow-cap HUD slot2 has an actual OAM sprite {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot2 pixels match source ROM frame
+PASS hud-bow-cap HUD slot2 uses its material bank {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS hud-bow-cap HUD slot2 material palette is resident
+PASS Start opens the real inventory
+PASS items page SWORD has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page SWORD pixels match source ROM frame
+PASS items page SWORD exact icon palette matches
+PASS items page SWORD exact palette uses menu slots 0
+PASS items page SHIELD has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page SHIELD pixels match source ROM frame
+PASS items page SHIELD exact icon palette matches
+PASS items page SHIELD exact palette uses menu slots 1
+PASS items page BOMBS has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page BOMBS pixels match source ROM frame
+PASS items page BOMBS exact icon palette matches
+PASS items page BOMBS exact palette uses menu slots 2
+PASS items page LAMP has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page LAMP pixels match source ROM frame
+PASS items page LAMP exact icon palette matches
+PASS items page LAMP exact palette uses menu slots 3
+PASS items page CLOAK has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page CLOAK pixels match source ROM frame
+PASS items page CLOAK exact icon palette matches
+PASS items page CLOAK exact palette uses menu slots 4
+PASS items page BOW has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page BOW pixels match source ROM frame
+PASS items page BOW exact icon palette matches
+PASS items page BOW exact palette uses menu slots 5
+PASS items page HUBCAP has an actual OAM sprite {'index': 6, 'x': 96, 'y': 64, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page HUBCAP pixels match source ROM frame
+PASS items page HUBCAP exact icon palette matches
+PASS items page HUBCAP exact palette uses menu slots 6
+PASS items page description has an actual OAM sprite {'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS items page description pixels match source ROM frame
+PASS items page description exact icon palette matches
+PASS items page description exact palette uses menu slots 0
+PASS R opens key items page0
+PASS key page0 HEART_PIECE has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 HEART_PIECE pixels match source ROM frame
+PASS key page0 HEART_PIECE exact icon palette matches
+PASS key page0 HEART_PIECE exact palette uses menu slots 7
+PASS key page0 KEY has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 KEY pixels match source ROM frame
+PASS key page0 KEY exact icon palette matches
+PASS key page0 KEY exact palette uses menu slots 1
+PASS key page0 GAUNTLET has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 GAUNTLET pixels match source ROM frame
+PASS key page0 GAUNTLET exact icon palette matches
+PASS key page0 GAUNTLET exact palette uses menu slots 2
+PASS key page0 RELIC has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 RELIC pixels match source ROM frame
+PASS key page0 RELIC exact icon palette matches
+PASS key page0 RELIC exact palette uses menu slots 3
+PASS key page0 MAP has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 MAP pixels match source ROM frame
+PASS key page0 MAP exact icon palette matches
+PASS key page0 MAP exact palette uses menu slots 4
+PASS key page0 ASTROLABE has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 ASTROLABE pixels match source ROM frame
+PASS key page0 ASTROLABE exact icon palette matches
+PASS key page0 ASTROLABE exact palette uses menu slots 5
+PASS key page0 description has an actual OAM sprite {'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page0 description pixels match source ROM frame
+PASS key page0 description exact icon palette matches
+PASS key page0 description exact palette uses menu slots 7
+PASS R opens map page0
+PASS R returns to items page0
+PASS returned items0 SWORD has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 SWORD pixels match source ROM frame
+PASS returned items0 SWORD exact icon palette matches
+PASS returned items0 SWORD exact palette uses menu slots 0
+PASS returned items0 SHIELD has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 SHIELD pixels match source ROM frame
+PASS returned items0 SHIELD exact icon palette matches
+PASS returned items0 SHIELD exact palette uses menu slots 6
+PASS returned items0 BOMBS has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 BOMBS pixels match source ROM frame
+PASS returned items0 BOMBS exact icon palette matches
+PASS returned items0 BOMBS exact palette uses menu slots 1
+PASS returned items0 LAMP has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 LAMP pixels match source ROM frame
+PASS returned items0 LAMP exact icon palette matches
+PASS returned items0 LAMP exact palette uses menu slots 2
+PASS returned items0 CLOAK has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 CLOAK pixels match source ROM frame
+PASS returned items0 CLOAK exact icon palette matches
+PASS returned items0 CLOAK exact palette uses menu slots 3
+PASS returned items0 BOW has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 BOW pixels match source ROM frame
+PASS returned items0 BOW exact icon palette matches
+PASS returned items0 BOW exact palette uses menu slots 4
+PASS returned items0 HUBCAP has an actual OAM sprite {'index': 6, 'x': 96, 'y': 64, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 HUBCAP pixels match source ROM frame
+PASS returned items0 HUBCAP exact icon palette matches
+PASS returned items0 HUBCAP exact palette uses menu slots 5
+PASS returned items0 description has an actual OAM sprite {'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items0 description pixels match source ROM frame
+PASS returned items0 description exact icon palette matches
+PASS returned items0 description exact palette uses menu slots 0
+PASS R opens key items page1
+PASS key page1 HEART_PIECE has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 HEART_PIECE pixels match source ROM frame
+PASS key page1 HEART_PIECE exact icon palette matches
+PASS key page1 HEART_PIECE exact palette uses menu slots 7
+PASS key page1 KEY has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 KEY pixels match source ROM frame
+PASS key page1 KEY exact icon palette matches
+PASS key page1 KEY exact palette uses menu slots 6
+PASS key page1 GAUNTLET has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 GAUNTLET pixels match source ROM frame
+PASS key page1 GAUNTLET exact icon palette matches
+PASS key page1 GAUNTLET exact palette uses menu slots 1
+PASS key page1 RELIC has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 RELIC pixels match source ROM frame
+PASS key page1 RELIC exact icon palette matches
+PASS key page1 RELIC exact palette uses menu slots 2
+PASS key page1 MAP has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 MAP pixels match source ROM frame
+PASS key page1 MAP exact icon palette matches
+PASS key page1 MAP exact palette uses menu slots 3
+PASS key page1 ASTROLABE has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 ASTROLABE pixels match source ROM frame
+PASS key page1 ASTROLABE exact icon palette matches
+PASS key page1 ASTROLABE exact palette uses menu slots 4
+PASS key page1 description has an actual OAM sprite {'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page1 description pixels match source ROM frame
+PASS key page1 description exact icon palette matches
+PASS key page1 description exact palette uses menu slots 7
+PASS R opens map page1
+PASS R returns to items page1
+PASS returned items1 SWORD has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 SWORD pixels match source ROM frame
+PASS returned items1 SWORD exact icon palette matches
+PASS returned items1 SWORD exact palette uses menu slots 0
+PASS returned items1 SHIELD has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 SHIELD pixels match source ROM frame
+PASS returned items1 SHIELD exact icon palette matches
+PASS returned items1 SHIELD exact palette uses menu slots 5
+PASS returned items1 BOMBS has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 BOMBS pixels match source ROM frame
+PASS returned items1 BOMBS exact icon palette matches
+PASS returned items1 BOMBS exact palette uses menu slots 6
+PASS returned items1 LAMP has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 LAMP pixels match source ROM frame
+PASS returned items1 LAMP exact icon palette matches
+PASS returned items1 LAMP exact palette uses menu slots 1
+PASS returned items1 CLOAK has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 CLOAK pixels match source ROM frame
+PASS returned items1 CLOAK exact icon palette matches
+PASS returned items1 CLOAK exact palette uses menu slots 2
+PASS returned items1 BOW has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 BOW pixels match source ROM frame
+PASS returned items1 BOW exact icon palette matches
+PASS returned items1 BOW exact palette uses menu slots 3
+PASS returned items1 HUBCAP has an actual OAM sprite {'index': 6, 'x': 96, 'y': 64, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 HUBCAP pixels match source ROM frame
+PASS returned items1 HUBCAP exact icon palette matches
+PASS returned items1 HUBCAP exact palette uses menu slots 4
+PASS returned items1 description has an actual OAM sprite {'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items1 description pixels match source ROM frame
+PASS returned items1 description exact icon palette matches
+PASS returned items1 description exact palette uses menu slots 0
+PASS R opens key items page2
+PASS key page2 HEART_PIECE has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 HEART_PIECE pixels match source ROM frame
+PASS key page2 HEART_PIECE exact icon palette matches
+PASS key page2 HEART_PIECE exact palette uses menu slots 7
+PASS key page2 KEY has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 KEY pixels match source ROM frame
+PASS key page2 KEY exact icon palette matches
+PASS key page2 KEY exact palette uses menu slots 5
+PASS key page2 GAUNTLET has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 GAUNTLET pixels match source ROM frame
+PASS key page2 GAUNTLET exact icon palette matches
+PASS key page2 GAUNTLET exact palette uses menu slots 6
+PASS key page2 RELIC has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 RELIC pixels match source ROM frame
+PASS key page2 RELIC exact icon palette matches
+PASS key page2 RELIC exact palette uses menu slots 1
+PASS key page2 MAP has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 MAP pixels match source ROM frame
+PASS key page2 MAP exact icon palette matches
+PASS key page2 MAP exact palette uses menu slots 2
+PASS key page2 ASTROLABE has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 ASTROLABE pixels match source ROM frame
+PASS key page2 ASTROLABE exact icon palette matches
+PASS key page2 ASTROLABE exact palette uses menu slots 3
+PASS key page2 description has an actual OAM sprite {'index': 6, 'x': 16, 'y': 112, 'tile': 708, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS key page2 description pixels match source ROM frame
+PASS key page2 description exact icon palette matches
+PASS key page2 description exact palette uses menu slots 7
+PASS R opens map page2
+PASS R returns to items page2
+PASS returned items2 SWORD has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 SWORD pixels match source ROM frame
+PASS returned items2 SWORD exact icon palette matches
+PASS returned items2 SWORD exact palette uses menu slots 0
+PASS returned items2 SHIELD has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 660, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 SHIELD pixels match source ROM frame
+PASS returned items2 SHIELD exact icon palette matches
+PASS returned items2 SHIELD exact palette uses menu slots 4
+PASS returned items2 BOMBS has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 676, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 BOMBS pixels match source ROM frame
+PASS returned items2 BOMBS exact icon palette matches
+PASS returned items2 BOMBS exact palette uses menu slots 5
+PASS returned items2 LAMP has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 692, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 LAMP pixels match source ROM frame
+PASS returned items2 LAMP exact icon palette matches
+PASS returned items2 LAMP exact palette uses menu slots 6
+PASS returned items2 CLOAK has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 612, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 CLOAK pixels match source ROM frame
+PASS returned items2 CLOAK exact icon palette matches
+PASS returned items2 CLOAK exact palette uses menu slots 1
+PASS returned items2 BOW has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 628, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 BOW pixels match source ROM frame
+PASS returned items2 BOW exact icon palette matches
+PASS returned items2 BOW exact palette uses menu slots 2
+PASS returned items2 HUBCAP has an actual OAM sprite {'index': 6, 'x': 96, 'y': 64, 'tile': 644, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 HUBCAP pixels match source ROM frame
+PASS returned items2 HUBCAP exact icon palette matches
+PASS returned items2 HUBCAP exact palette uses menu slots 3
+PASS returned items2 description has an actual OAM sprite {'index': 7, 'x': 16, 'y': 112, 'tile': 596, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS returned items2 description pixels match source ROM frame
+PASS returned items2 description exact icon palette matches
+PASS returned items2 description exact palette uses menu slots 0
+PASS inventory closes to live Drain
+PASS HUD after exact-palette menu HUD slot0 has an actual OAM sprite {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot0 pixels match source ROM frame
+PASS HUD after exact-palette menu HUD slot0 uses its material bank {'index': 4, 'x': 112, 'y': 0, 'tile': 876, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot0 material palette is resident
+PASS HUD after exact-palette menu HUD slot1 has an actual OAM sprite {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot1 pixels match source ROM frame
+PASS HUD after exact-palette menu HUD slot1 uses its material bank {'index': 5, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot1 material palette is resident
+PASS HUD after exact-palette menu HUD slot2 has an actual OAM sprite {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot2 pixels match source ROM frame
+PASS HUD after exact-palette menu HUD slot2 uses its material bank {'index': 6, 'x': 176, 'y': 0, 'tile': 908, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS HUD after exact-palette menu HUD slot2 material palette is resident
+PASS menu restores all non-animated world palette bytes
+PASS the actual Peddler shop opens
+PASS shop HEART has an actual OAM sprite {'index': 2, 'x': 27, 'y': 72, 'tile': 92, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop HEART pixels match source ROM frame
+PASS shop HEART uses its material bank {'index': 2, 'x': 27, 'y': 72, 'tile': 92, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop HEART material palette is resident
+PASS shop BOMBS has an actual OAM sprite {'index': 3, 'x': 27, 'y': 96, 'tile': 60, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop BOMBS pixels match source ROM frame
+PASS shop BOMBS uses its material bank {'index': 3, 'x': 27, 'y': 96, 'tile': 60, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop BOMBS material palette is resident
+PASS shop ARROW10 has an actual OAM sprite {'index': 4, 'x': 27, 'y': 120, 'tile': 128, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop ARROW10 pixels match source ROM frame
+PASS shop ARROW10 uses its material bank {'index': 4, 'x': 27, 'y': 120, 'tile': 128, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 0, 'flip': False}
+PASS shop ARROW10 material palette is resident
+PASS ground HEART has an actual OAM sprite {'index': 7, 'x': 40, 'y': 40, 'tile': 228, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground HEART pixels match source ROM frame
+PASS ground HEART uses its material bank {'index': 7, 'x': 40, 'y': 40, 'tile': 228, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground HEART material palette is resident
+PASS ground GILT has an actual OAM sprite {'index': 8, 'x': 72, 'y': 40, 'tile': 244, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GILT pixels match source ROM frame
+PASS ground GILT uses its material bank {'index': 8, 'x': 72, 'y': 40, 'tile': 244, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GILT material palette is resident
+PASS ground BOMB_PICKUP has an actual OAM sprite {'index': 9, 'x': 104, 'y': 40, 'tile': 260, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground BOMB_PICKUP pixels match source ROM frame
+PASS ground BOMB_PICKUP uses its material bank {'index': 9, 'x': 104, 'y': 40, 'tile': 260, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground BOMB_PICKUP material palette is resident
+PASS ground GILT_BIG has an actual OAM sprite {'index': 10, 'x': 136, 'y': 40, 'tile': 276, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GILT_BIG pixels match source ROM frame
+PASS ground GILT_BIG uses its material bank {'index': 10, 'x': 136, 'y': 40, 'tile': 276, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GILT_BIG material palette is resident
+PASS ground KEY has an actual OAM sprite {'index': 11, 'x': 168, 'y': 40, 'tile': 292, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground KEY pixels match source ROM frame
+PASS ground KEY uses its material bank {'index': 11, 'x': 168, 'y': 40, 'tile': 292, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground KEY material palette is resident
+PASS ground RELIC has an actual OAM sprite {'index': 12, 'x': 40, 'y': 104, 'tile': 308, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground RELIC pixels match source ROM frame
+PASS ground RELIC uses its material bank {'index': 12, 'x': 40, 'y': 104, 'tile': 308, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground RELIC material palette is resident
+PASS ground GRAIL has an actual OAM sprite {'index': 13, 'x': 72, 'y': 104, 'tile': 324, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GRAIL pixels match source ROM frame
+PASS ground GRAIL uses its material bank {'index': 13, 'x': 72, 'y': 104, 'tile': 324, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground GRAIL material palette is resident
+PASS ground ARROW1 has an actual OAM sprite {'index': 14, 'x': 104, 'y': 104, 'tile': 340, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW1 pixels match source ROM frame
+PASS ground ARROW1 uses its material bank {'index': 14, 'x': 104, 'y': 104, 'tile': 340, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW1 material palette is resident
+PASS ground ARROW5 has an actual OAM sprite {'index': 15, 'x': 136, 'y': 104, 'tile': 356, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW5 pixels match source ROM frame
+PASS ground ARROW5 uses its material bank {'index': 15, 'x': 136, 'y': 104, 'tile': 356, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW5 material palette is resident
+PASS ground ARROW10 has an actual OAM sprite {'index': 16, 'x': 168, 'y': 104, 'tile': 372, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW10 pixels match source ROM frame
+PASS ground ARROW10 uses its material bank {'index': 16, 'x': 168, 'y': 104, 'tile': 372, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS ground ARROW10 material palette is resident
+PASS wood n has an actual OAM sprite {'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood n pixels match source ROM frame
+PASS wood n uses its material bank {'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood n material palette is resident
+PASS wood n HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood n HUD slot1 pixels match source ROM frame
+PASS wood n HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood n HUD slot1 material palette is resident
+PASS wood e has an actual OAM sprite {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood e pixels match source ROM frame
+PASS wood e uses its material bank {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood e material palette is resident
+PASS wood e HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood e HUD slot1 pixels match source ROM frame
+PASS wood e HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood e HUD slot1 material palette is resident
+PASS wood s has an actual OAM sprite {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood s pixels match source ROM frame
+PASS wood s uses its material bank {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS wood s material palette is resident
+PASS wood s HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood s HUD slot1 pixels match source ROM frame
+PASS wood s HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood s HUD slot1 material palette is resident
+PASS wood w has an actual OAM sprite {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}
+PASS wood w pixels match source ROM frame
+PASS wood w uses its material bank {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}
+PASS wood w material palette is resident
+PASS wood w HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood w HUD slot1 pixels match source ROM frame
+PASS wood w HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 9, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS wood w HUD slot1 material palette is resident
+PASS green n has an actual OAM sprite {'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green n pixels match source ROM frame
+PASS green n uses its material bank {'index': 5, 'x': 112, 'y': 70, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green n material palette is resident
+PASS green n HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green n HUD slot1 pixels match source ROM frame
+PASS green n HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green n HUD slot1 material palette is resident
+PASS green e has an actual OAM sprite {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green e pixels match source ROM frame
+PASS green e uses its material bank {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green e material palette is resident
+PASS green e HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green e HUD slot1 pixels match source ROM frame
+PASS green e HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green e HUD slot1 material palette is resident
+PASS green s has an actual OAM sprite {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green s pixels match source ROM frame
+PASS green s uses its material bank {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS green s material palette is resident
+PASS green s HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green s HUD slot1 pixels match source ROM frame
+PASS green s HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green s HUD slot1 material palette is resident
+PASS green w has an actual OAM sprite {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}
+PASS green w pixels match source ROM frame
+PASS green w uses its material bank {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}
+PASS green w material palette is resident
+PASS green w HUD slot1 has an actual OAM sprite {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green w HUD slot1 pixels match source ROM frame
+PASS green w HUD slot1 uses its material bank {'index': 3, 'x': 144, 'y': 0, 'tile': 892, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 0, 'flip': False}
+PASS green w HUD slot1 material palette is resident
+PASS upgraded shield fixture opens the real inventory
+PASS green shield items page SWORD has an actual OAM sprite {'index': 0, 'x': 16, 'y': 24, 'tile': 476, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page SWORD pixels match source ROM frame
+PASS green shield items page SWORD exact icon palette matches
+PASS green shield items page SWORD exact palette uses menu slots 0
+PASS green shield items page SHIELD_UPGRADED has an actual OAM sprite {'index': 1, 'x': 56, 'y': 24, 'tile': 492, 'pal': 1, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page SHIELD_UPGRADED pixels match source ROM frame
+PASS green shield items page SHIELD_UPGRADED exact icon palette matches
+PASS green shield items page SHIELD_UPGRADED exact palette uses menu slots 1
+PASS green shield items page BOMBS has an actual OAM sprite {'index': 2, 'x': 96, 'y': 24, 'tile': 508, 'pal': 2, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page BOMBS pixels match source ROM frame
+PASS green shield items page BOMBS exact icon palette matches
+PASS green shield items page BOMBS exact palette uses menu slots 2
+PASS green shield items page LAMP has an actual OAM sprite {'index': 3, 'x': 136, 'y': 24, 'tile': 524, 'pal': 3, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page LAMP pixels match source ROM frame
+PASS green shield items page LAMP exact icon palette matches
+PASS green shield items page LAMP exact palette uses menu slots 3
+PASS green shield items page CLOAK has an actual OAM sprite {'index': 4, 'x': 16, 'y': 64, 'tile': 540, 'pal': 4, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page CLOAK pixels match source ROM frame
+PASS green shield items page CLOAK exact icon palette matches
+PASS green shield items page CLOAK exact palette uses menu slots 4
+PASS green shield items page BOW has an actual OAM sprite {'index': 5, 'x': 56, 'y': 64, 'tile': 556, 'pal': 5, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page BOW pixels match source ROM frame
+PASS green shield items page BOW exact icon palette matches
+PASS green shield items page BOW exact palette uses menu slots 5
+PASS green shield items page HUBCAP has an actual OAM sprite {'index': 6, 'x': 96, 'y': 64, 'tile': 572, 'pal': 6, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page HUBCAP pixels match source ROM frame
+PASS green shield items page HUBCAP exact icon palette matches
+PASS green shield items page HUBCAP exact palette uses menu slots 6
+PASS green shield items page description has an actual OAM sprite {'index': 7, 'x': 16, 'y': 112, 'tile': 476, 'pal': 0, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS green shield items page description pixels match source ROM frame
+PASS green shield items page description exact icon palette matches
+PASS green shield items page description exact palette uses menu slots 0
+PASS use-bow held source has an actual OAM sprite {'index': 6, 'x': 104, 'y': 72, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-bow held source pixels match source ROM frame
+PASS use-bow held source uses its material bank {'index': 6, 'x': 104, 'y': 72, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-bow held source material palette is resident
+PASS use-lantern held source has an actual OAM sprite {'index': 5, 'x': 104, 'y': 72, 'tile': 56, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-lantern held source pixels match source ROM frame
+PASS use-lantern held source uses its material bank {'index': 5, 'x': 104, 'y': 72, 'tile': 56, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-lantern held source material palette is resident
+PASS use-cape held source has an actual OAM sprite {'index': 6, 'x': 104, 'y': 56, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-cape held source pixels match source ROM frame
+PASS use-cape held source uses its material bank {'index': 6, 'x': 104, 'y': 56, 'tile': 56, 'pal': 12, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS use-cape held source material palette is resident
+PASS bomb button creates a real planted object
+PASS real planted bomb has an actual OAM sprite {'index': 7, 'x': 112, 'y': 102, 'tile': 76, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS real planted bomb pixels match source ROM frame
+PASS real planted bomb uses its material bank {'index': 7, 'x': 112, 'y': 102, 'tile': 76, 'pal': 10, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS real planted bomb material palette is resident
+PASS real bomb warning has an actual OAM sprite {'index': 7, 'x': 112, 'y': 102, 'tile': 152, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS real bomb warning pixels match source ROM frame
+PASS real bomb warning uses its material bank {'index': 7, 'x': 112, 'y': 102, 'tile': 152, 'pal': 11, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}
+PASS real bomb warning material palette is resident
+PASS actual plate trial completes
+PASS earned chest enters item-get
+PASS earned item-get has an actual OAM sprite {'index': 6, 'x': 104, 'y': 28, 'tile': 388, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS earned item-get pixels match source ROM frame
+PASS earned item-get uses its material bank {'index': 6, 'x': 104, 'y': 28, 'tile': 388, 'pal': 10, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}
+PASS earned item-get material palette is resident
+PASS ROM stayed fixed during review
+RESULT PASS 446/446; 23 native captures
