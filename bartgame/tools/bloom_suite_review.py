@@ -100,7 +100,7 @@ class Suite:
                 'game_state':P.r8(c,P.sym('gGame')),'area':C.area(c),'cell':C.cell(c),
                 'oam':[v for v in oam if v['pal']<13 and v['y']>28 and v['shape'] in (0,1)]}
 
-    def record(self,name,facing,total,events,point=None,note=None):
+    def record(self,name,facing,total,events,point=None,note=None,hook=None):
         if self.args.only and name not in self.args.only.split(','):return
         c=self.c;directory=self.out/name;directory.mkdir(exist_ok=True);frames=[];traces=[]
         initial={'background':self.background,'cell':self.cell,'position':list(point or P.player_pos(c)),
@@ -113,6 +113,7 @@ class Suite:
                     else:held.discard(key)
                 c.clear_keys(*range(10))
                 if held:c.set_keys(*(P.key(c,key) for key in sorted(held)))
+            if hook:hook(tick,traces)
             c.run_frame();frames.append(c.bg_video.to_pil().convert('RGB').copy());traces.append(self.trace())
         c.clear_keys(*range(10))
         selected=sorted(set([0,7,8,10,12,16,20,24,28,32,total-1]+[i for i in range(1,total) if traces[i]['state']!=traces[i-1]['state'] or traces[i]['hero_frame']!=traces[i-1]['hero_frame']]))
@@ -161,6 +162,13 @@ class Suite:
             valid('cap invokes actual swallow state','swallowed' in row['states'])
             valid('cap returns through ceiling drop',any(t['area']==0 and t['state']==5 and t['sub']==2 and t['z_q16']>32*65536 for t in traces))
         if name.endswith('forest-transition'):valid('ordinary exit reaches forest',any(t['area']==1 for t in traces))
+        if name=='air-hurt-recovery':
+            valid('actual cape jump precedes contact','jump' in row['states'])
+            valid('ordinary enemy collision triggers airborne hurt',any(t['state']==3 and t['z_q16']>0 for t in traces))
+            valid('exactly one contact hit is isolated',traces[-1]['hp']==22)
+        if name=='roll-wall-bounce':
+            valid('actual roll entered','roll' in row['states'])
+            valid('physical wall triggers the airborne bounce',any(t['state']==0 and t['z_q16']>0 for t in traces))
         row['validations']=validations
         if note:row['fixture_note']=note
         if self.old:
@@ -347,13 +355,64 @@ class Suite:
         self.record('drain-counter-shield-wood-n',0,48,{8:[('B',True)],36:[('B',False)]},point,'Actual authored TT_FRONT counter foreground; player priority1 follows normal rendering.')
         self.save()
 
+    def interrupts(self):
+        """Reproduce recovery bugs through input/collision on natural terrain."""
+        self.enter('forest');point=self.spot(1,60);self.reset(point,1,4)
+        _,_,grid=C.room_tiles(self.c)
+        away=[(x*16+8,y*16+14) for (x,y),mt in grid.items()
+              if P.r8(self.c,P.sym('metatile_type')+mt)==0 and
+              80<=abs(x*16+8-point[0])+abs(y*16+14-point[1])<=180]
+        assert away,'no distant natural floor for contact actor fixture'
+        enemy=W.spawn_enemy(self.c,0,*away[0]);base=P.sym('gActors')+enemy*64
+        contacted=False
+        def hit(tick,trace):
+            nonlocal contacted
+            if trace and trace[-1]['state']==3:
+                contacted=True;P.w8(self.c,base,0)
+            if tick==12 and not contacted:
+                x,y=P.player_pos(self.c)
+                P.w16(self.c,base+8,0);P.w16(self.c,base+10,x)
+                P.w16(self.c,base+12,0);P.w16(self.c,base+14,y-8)
+        self.record('air-hurt-recovery',1,100,{8:[('B',True)],9:[('B',False)]},point,
+                    'Natural open forest floor. A beetle is spawned on distant natural floor before recording; at tick12 its world position is moved into Bloom during the actual cape jump. Ordinary enemy collision causes hurt; only that enemy is cleared after the hit. No Bloom action state, pose, height or terrain is injected.',hit)
+        self.mark_recovery('air-hurt-recovery')
 
-def combine_reports(root,folders=('drain','worlds','special-v2','fore')):
+        self.enter('forest');target=None
+        for cell,d in enumerate(self.world['cells']):
+            if d['stage']>=2:continue
+            self.warp(cell);w,h,g=C.room_tiles(self.c)
+            def wall(x,y):
+                mt=g.get((x,y));return mt is not None and P.r8(self.c,P.sym('metatile_type')+mt)==1 and P.r8(self.c,P.sym('metatile_coll')+mt)==15
+            def floor(x,y):
+                mt=g.get((x,y));return mt is not None and P.r8(self.c,P.sym('metatile_type')+mt)==0 and P.r16(self.c,P.sym('gRoom')+2050+(y*32+x)*2)==-1
+            for y in range(4,h-3):
+                for x in range(4,w-3):
+                    if wall(x,y) and wall(x,y-1) and wall(x,y+1) and floor(x-1,y) and floor(x-2,y):
+                        target=(cell,(x-1)*16+8,y*16+14);break
+                if target:break
+            if target:break
+        assert target,'no natural broad solid wall with open approach'
+        self.cell,x,y=target;point=(x,y);self.reset(point,1,1)
+        self.record('roll-wall-bounce',1,90,{8:[('RIGHT',True),('R',True)],9:[('RIGHT',False),('R',False)]},point,
+                    'Simultaneous direction+R rolls into an existing full-collision canopy wall with three solid tiles along its span and two open approach tiles. Terrain, collision, height and action pose remain untouched.')
+        self.mark_recovery('roll-wall-bounce');self.save()
+
+    def mark_recovery(self,name):
+        row=next(r for r in self.rows if r['name']==name);last=row['trace'][-1]
+        row['intentional_behavior_change']=True
+        row['recovery_observation']={'landed':last['state']==0 and last['z_q16']==0 and last['zvel_q16']==0,
+                                     'final_state':last['state_name'],'final_z_q16':last['z_q16'],
+                                     'final_zvel_q16':last['zvel_q16'],'final_hp':last['hp']}
+        self.save()
+
+
+def combine_reports(root,folders=('drain','worlds','special-v2','fore','interrupt')):
     """Index independently captured groups without duplicating their traces."""
     root=Path(root);defs=B.definitions(root/'assets.h')
     poses={v:k[7:].lower() for k,v in defs.items() if k.startswith('F_HERO_')}
     captures=[];seen=set();checks=[];hashes=set();differences=[]
     for folder in folders:
+        if folder=='interrupt' and not (root/folder/'suite.json').exists():continue
         report=json.loads((root/folder/'suite.json').read_text());hashes.add(report['rom_sha256'])
         assert not report['missing'],(folder,report['missing'])
         for row in report['captures']:
@@ -362,6 +421,9 @@ def combine_reports(root,folders=('drain','worlds','special-v2','fore')):
             captures.append({'folder':folder,'name':row['name'],'background':row['background'],
                              'states':row['states'],'poses':row['poses'],'validations':row['validations'],
                              'gif':folder+'/'+row['name']+'.gif','filmstrip':folder+'/'+row['filmstrip']})
+            if row.get('intentional_behavior_change'):
+                captures[-1]['intentional_behavior_change']=True
+                captures[-1]['recovery_observation']=row['recovery_observation']
             comparison=row.get('gameplay_comparison')
             if comparison and comparison['different_frames']:
                 differences.append({'name':row['name'],'different_frames':comparison['different_frames']})
@@ -387,6 +449,7 @@ def main():
     for group in args.groups.split(','):
         if group=='special':suite.specials()
         elif group=='fore':suite.foregrounds()
+        elif group=='interrupt':suite.interrupts()
         else:suite.actions(group)
     suite.save();print('PASS:',len(suite.rows),'genuine action clips; missing:',suite.missing,flush=True)
 
