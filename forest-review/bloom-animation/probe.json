@@ -1,0 +1,2194 @@
+{
+  "rom_sha256": "b8d76c00875361f14c308fcf591f12903870c063ddd749780d29dca5142ef7d5",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "method": "real button actions; frozen-AI HB_SMALL boundary targets and local physical-floor fixture; real hardware OAM/OBJ VRAM inspection",
+  "passed": 274,
+  "total": 274,
+  "checks": [
+    {
+      "name": "action frame occupies one reserved 32px slot",
+      "passed": true,
+      "detail": "tile 56, frame tiles 16"
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 3",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 4",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_n1']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 5",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 6",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 7",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 8",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_n2']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 9",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 10",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 11",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 12",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_n3']"
+    },
+    {
+      "name": "n effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(106, 72) == (106, 72)"
+    },
+    {
+      "name": "n visible sweep reaches all collision boundaries at tick 13",
+      "passed": true,
+      "detail": "(0, 0, 27, 20)"
+    },
+    {
+      "name": "n sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 3",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 4",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_e1']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 5",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 6",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 7",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 8",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_e2']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 9",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 10",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 11",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 12",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_e3']"
+    },
+    {
+      "name": "e effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(124, 82) == (124, 82)"
+    },
+    {
+      "name": "e visible sweep reaches all collision boundaries at tick 13",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "e sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "e recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 3",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 4",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_s1']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 5",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 6",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 7",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 8",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_s2']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 9",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 10",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 11",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 12",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_s3']"
+    },
+    {
+      "name": "s effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(106, 90) == (106, 90)"
+    },
+    {
+      "name": "s visible sweep reaches all collision boundaries at tick 13",
+      "passed": true,
+      "detail": "(0, 0, 27, 18)"
+    },
+    {
+      "name": "s sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "s recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 3",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 3",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 3",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 3",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 4",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 4",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 4",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 4",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 5",
+      "passed": true,
+      "detail": "['sword_w1']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 5",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 5",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 5",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 6",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 6",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 6",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 6",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 7",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 7",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 7",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 7",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 8",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 8",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 8",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 8",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 9",
+      "passed": true,
+      "detail": "['sword_w2']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 9",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 9",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 9",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 10",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 10",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 10",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 10",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 11",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 11",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 11",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 11",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 12",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 12",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 12",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w active effect present in hardware OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w streamed frame agrees with live damage window at tick 13",
+      "passed": true,
+      "detail": "['sword_w3']"
+    },
+    {
+      "name": "w effect anchored to combat box at tick 13",
+      "passed": true,
+      "detail": "(97, 82) == (97, 82)"
+    },
+    {
+      "name": "w visible sweep reaches all collision boundaries at tick 13",
+      "passed": true,
+      "detail": "(0, 0, 18, 24)"
+    },
+    {
+      "name": "w sword precedes Bloom in OAM at tick 13",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w attack starts without an invisible hit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w damage window remains timer2 through12",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "w recovery and return to normal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "n left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "n bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "n bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "e bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "e bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "s bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "s bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w left inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w left one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w right inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w right one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w top inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w top one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "w bottom inclusive edge lands",
+      "passed": true,
+      "detail": "target hp 18"
+    },
+    {
+      "name": "w bottom one pixel outside misses",
+      "passed": true,
+      "detail": "target hp 20"
+    },
+    {
+      "name": "heart beyond body contact stays before swing",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still gathers a reached heart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still deflects an incoming seed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sword still cuts a reached bush",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "damage interrupts the sword and clears its hitbox",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "hurt Bloom has no lingering action effect",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "roll retains its protected opening",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "late roll still queues a sword input",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "queued sword follows roll recovery",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "attack_traces": [
+    {
+      "direction": "n",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "e",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "s",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    },
+    {
+      "direction": "w",
+      "frames": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            256,
+            230
+          ]
+        }
+      ]
+    }
+  ]
+}

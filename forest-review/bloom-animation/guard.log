@@ -1,0 +1,13 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS START: sword on B, shield on L, A free       equip [0, 1, 5]
+PASS WATER: a room has water with ground to its west cell 0 (17, 18)
+PASS WATER: the hero goes under                   state 4
+PASS WATER: back on safe ground, a quarter heart down state 0 hp 22 pos (260, 300)
+PASS WATER: it happens within 2 px of the edge    feet x 271 edge 272
+PASS HOLE: a chasm gate exists                    [(15, 2), (20, 0)]
+PASS HOLE: he falls in at the chasm               state 4 pos (264, 381)
+PASS HOLE: back on safe ground                    state 0 cell 15
+PASS SHIELD: a beetle is spawned
+PASS SHIELD: a bite from the front is turned      hp 24 -> 24 state 0
+PASS SHIELD: a bite from behind lands             hp 24 -> 22
+RESULT PASS 11/11

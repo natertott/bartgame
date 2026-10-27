@@ -1,0 +1,3557 @@
+{
+  "rom_sha256": "98cb0eaf83e35275abffee82dae39acb295a4b562c9acc47d03c16e69414aded",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "method": "Genuine button actions on natural generated forest ground. Full inventory, cleared actors, debug positioning/facing; no pose or frame assignment. PNGs native240x160; GIFs nearest2x atapproximately30fps.",
+  "captures": [
+    {
+      "name": "sword-n",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "n",
+      "input": [
+        "B"
+      ],
+      "held_frames": 1,
+      "game_frames": 32,
+      "gif": {
+        "frames": 16,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 530
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-031.png"
+      ],
+      "trace": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 1,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 530
+      }
+    },
+    {
+      "name": "sword-e",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "e",
+      "input": [
+        "B"
+      ],
+      "held_frames": 1,
+      "game_frames": 32,
+      "gif": {
+        "frames": 16,
+        "colour_count": 70,
+        "exact_palette": true,
+        "duration_ms": 530
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-031.png"
+      ],
+      "trace": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 1,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 530
+      }
+    },
+    {
+      "name": "sword-s",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "s",
+      "input": [
+        "B"
+      ],
+      "held_frames": 1,
+      "game_frames": 32,
+      "gif": {
+        "frames": 16,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 530
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-031.png"
+      ],
+      "trace": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 1,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 530
+      }
+    },
+    {
+      "name": "sword-w",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "w",
+      "input": [
+        "B"
+      ],
+      "held_frames": 1,
+      "game_frames": 32,
+      "gif": {
+        "frames": 16,
+        "colour_count": 70,
+        "exact_palette": true,
+        "duration_ms": 530
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-031.png"
+      ],
+      "trace": [
+        {
+          "state": 2,
+          "timer": 0,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 2,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 3,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 4,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 5,
+          "active": 1,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 6,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 7,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 8,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 9,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 10,
+          "active": 1,
+          "phase": 1,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 11,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 12,
+          "active": 1,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 13,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 2,
+          "timer": 14,
+          "active": 0,
+          "phase": 2,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 530
+      }
+    },
+    {
+      "name": "roll-n",
+      "cell": 22,
+      "position": [
+        264,
+        206
+      ],
+      "facing": "n",
+      "input": [
+        "UP",
+        "R"
+      ],
+      "held_frames": 1,
+      "game_frames": 40,
+      "gif": {
+        "frames": 20,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 660
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-039.png"
+      ],
+      "trace": [
+        {
+          "state": 1,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            206
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            203
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 2,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            201
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 3,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            199
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 4,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            197
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 5,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            195
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 6,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            193
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 7,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            191
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 8,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            189
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 9,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            187
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 10,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            185
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 11,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            183
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 12,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            181
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 13,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            179
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 14,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            177
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            175
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 16,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            173
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 17,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            170
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 18,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            168
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 19,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            166
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 20,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            163
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 21,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            161
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 22,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            158
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 23,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            155
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 0,
+          "position": [
+            264,
+            152
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 660
+      }
+    },
+    {
+      "name": "roll-e",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "e",
+      "input": [
+        "RIGHT",
+        "R"
+      ],
+      "held_frames": 1,
+      "game_frames": 40,
+      "gif": {
+        "frames": 20,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 660
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-039.png"
+      ],
+      "trace": [
+        {
+          "state": 1,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            267,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 2,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            269,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 3,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            271,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 4,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            273,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 5,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            275,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 6,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            277,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 7,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            279,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 8,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            281,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 9,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            283,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 10,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            285,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 11,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            287,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 12,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            289,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 13,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            291,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 14,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            293,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            295,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 16,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            297,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 17,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            299,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 18,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            301,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 19,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            303,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 20,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            306,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 21,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            308,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 22,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            311,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 23,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            314,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 1,
+          "position": [
+            317,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 660
+      }
+    },
+    {
+      "name": "roll-s",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "s",
+      "input": [
+        "DOWN",
+        "R"
+      ],
+      "held_frames": 1,
+      "game_frames": 40,
+      "gif": {
+        "frames": 20,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 660
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-039.png"
+      ],
+      "trace": [
+        {
+          "state": 1,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            193
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 2,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            195
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 3,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            197
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 4,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            199
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 5,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            201
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 6,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            203
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 7,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            205
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 8,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            207
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 9,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            209
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 10,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            211
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 11,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            213
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 12,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            215
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 13,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            217
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 14,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            219
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            221
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 16,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            223
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 17,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            225
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 18,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            227
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 19,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            229
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 20,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            232
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 21,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            234
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 22,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            237
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 23,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            240
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 2,
+          "position": [
+            264,
+            243
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 660
+      }
+    },
+    {
+      "name": "roll-w",
+      "cell": 22,
+      "position": [
+        264,
+        190
+      ],
+      "facing": "w",
+      "input": [
+        "LEFT",
+        "R"
+      ],
+      "held_frames": 1,
+      "game_frames": 40,
+      "gif": {
+        "frames": 20,
+        "colour_count": 69,
+        "exact_palette": true,
+        "duration_ms": 660
+      },
+      "native_frames": [
+        "frame-000.png",
+        "frame-003.png",
+        "frame-006.png",
+        "frame-009.png",
+        "frame-012.png",
+        "frame-018.png",
+        "frame-024.png",
+        "frame-039.png"
+      ],
+      "trace": [
+        {
+          "state": 1,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            264,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 1,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            261,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 2,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            259,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 3,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            257,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 4,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            255,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 5,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            253,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 6,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            251,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 7,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            249,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 8,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            247,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 9,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            245,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 10,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            243,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 11,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            241,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 12,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            239,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 13,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            237,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 14,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            235,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 15,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            233,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 16,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            231,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 17,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            228,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 18,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            226,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 19,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            224,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 20,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            221,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 21,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            219,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 22,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            216,
+            190
+          ]
+        },
+        {
+          "state": 1,
+          "timer": 23,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            213,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        },
+        {
+          "state": 0,
+          "timer": 0,
+          "active": 0,
+          "phase": 0,
+          "facing": 3,
+          "position": [
+            210,
+            190
+          ]
+        }
+      ],
+      "published_gif": {
+        "crop_from_native": [
+          56,
+          32,
+          184,
+          144
+        ],
+        "enlargement": 3,
+        "size": [
+          384,
+          336
+        ],
+        "exact_palette": true,
+        "duration_ms": 660
+      }
+    }
+  ],
+  "publication": "PNGs are unchanged native240x160 framebuffers. GIFs crop native(56,32)-(184,144), enlarged3x without smoothing, retaining captured frame timing. Before publication selects sword/roll; after includes all29 actions."
+}

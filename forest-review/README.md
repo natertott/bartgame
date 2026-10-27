@@ -1,6 +1,13 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: handheld item polish
+## Latest: Bloom action animation
+
+[Watch the real-mGBA animation comparisons](bloom-animation/README.md).
+Bloom now has compact rolls, visible sword reach in every direction and
+clearer item-use motions. The gallery includes animated before/after clips
+and unmodified native screenshots.
+
+## Previous: handheld item polish
 
 [Open the new item gallery and matched mGBA comparisons](items-handheld/README.md).
 This pass refines the full item set with stronger silhouettes, warmer colours

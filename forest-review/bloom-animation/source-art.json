@@ -1,0 +1,33 @@
+{
+  "hero_frames_before": 50,
+  "hero_frames_after": 68,
+  "hero_dimensions": [
+    64,
+    32
+  ],
+  "idle_walk_frames_unchanged": [
+    "idle_s",
+    "idle_n",
+    "idle_e",
+    "walk_s1",
+    "walk_s2",
+    "walk_n1",
+    "walk_e1",
+    "walk_e2",
+    "walk_n2"
+  ],
+  "hero_palette_unchanged": true,
+  "roll_connected_components": {
+    "roll_1": 1,
+    "roll_2": 1,
+    "roll_3": 1,
+    "roll_4": 1,
+    "roll_5": 1,
+    "roll_6": 1,
+    "roll_7": 1
+  },
+  "roll_baked_gray_shadows_removed": true,
+  "OBJ_palette_count": 16,
+  "sprite_sheet_count": 29,
+  "action_frame_resident_tiles": 16
+}

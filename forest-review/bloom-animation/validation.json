@@ -1,0 +1,45 @@
+{
+  "rom_sha256": "b8d76c00875361f14c308fcf591f12903870c063ddd749780d29dca5142ef7d5",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "probe": {
+      "passed": 274,
+      "total": 274
+    },
+    "wood": {
+      "passed": 22,
+      "total": 22
+    },
+    "lift": {
+      "passed": 14,
+      "total": 14
+    },
+    "guard": {
+      "passed": 11,
+      "total": 11
+    },
+    "menu": {
+      "passed": 21,
+      "total": 21
+    },
+    "critical": {
+      "passed": 21,
+      "total": 21
+    },
+    "sprite_budget": {
+      "passed": 1449,
+      "total": 1449,
+      "contexts": 582,
+      "maximum_tiles": 836,
+      "limit": 876,
+      "headroom_tiles": 40
+    }
+  },
+  "new_animation_checks": "probe.json",
+  "sprite_budget_checks": "budget.json",
+  "native_captures": {
+    "before_clips": 8,
+    "after_clips": 29
+  },
+  "gallery": "GIFs are labelled3x crops of real frames, sampled30fps. Gallery grids add600ms pause per loop. Native PNGs remain untouched240x160."
+}
