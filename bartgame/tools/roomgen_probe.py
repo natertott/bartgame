@@ -58,7 +58,9 @@ class Layout:
             return False
         if items & 4 and t == d['TT_PIT']:
             return False
-        if t in (d['TT_PIT'], d['TT_WATER']):
+        # Portal mouths trigger a room transition, so zero collision does
+        # not make them a walk-through passage to terrain behind the wall.
+        if t in (d['TT_PIT'], d['TT_WATER'], d['TT_MYST'], d['TT_EXIT']):
             return True
         quarter = (qy%2)*2 + qx%2
         return bool(mask & (8 >> quarter))
