@@ -149,6 +149,13 @@ def main():
         boulder = find_tile(c, 'BOULDER')
         if boulder:
             break
+    if not boulder:
+        # Outdoor layouts need not roll a boulder. The real boulder mystery
+        # supplies one without changing the generated forest's terrain.
+        import myst_probe as M
+        cell = next(i for i,d in enumerate(w['cells']) if d['role'] not in (1,2,3))
+        if M.enter(c, cell, 'boulders', 2, 2):
+            boulder = find_tile(c, 'BOULDER')
     check('BOULDER: a room keeps a boulder', boulder is not None, 'cell %d %s' % (cell, boulder))
     if boulder:
         bx, by, spot, key = boulder

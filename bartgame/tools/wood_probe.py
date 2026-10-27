@@ -85,6 +85,25 @@ def spawn_enemy(c, type_, x, y, facing=None):
     return i
 
 
+def north_shot_position(c):
+    """A natural, unobstructed firing lane, independent of forest dressing."""
+    room = P.sym('gRoom')
+    w, h, grid = CP.room_tiles(c)
+    solid = bytes(P.r8(c, room + 4098 + i) for i in range(4096))
+    types = P.sym('metatile_type')
+    floor = {mt for mt in set(grid.values()) if P.r8(c, types + mt) == 0}
+    candidates = []
+    for ty in range(6, h - 2):
+        for tx in range(2, w - 2):
+            x, y = tx * 16 + 8, ty * 16 + 14
+            points = [(x + dx, y - up) for dx in (-6, 0, 5) for up in range(0, 73, 4)]
+            if all(grid.get((px >> 4, py >> 4)) in floor and not solid[(py >> 3) * 64 + (px >> 3)]
+                   for px, py in points):
+                candidates.append((abs(x - 256) + abs(y - 230), x, y))
+    assert candidates, 'fixture needs a clear natural northbound firing lane'
+    return min(candidates)[1:]
+
+
 def main():
     c = P.boot()
     P.run(c, 40)
@@ -104,8 +123,11 @@ def main():
     hx, hy = 256, 230
     CP.teleport(c, hx, hy)
     P.hold(c, 'UP', 2)
-    # KNIGHT: facing the hero (south), struck from the south
-    k = spawn_enemy(c, EN_KNIGHT, hx, hy - 22, facing=2)
+    # KNIGHT: facing the hero (south), struck from the south. Stand outside
+    # body contact so the two-frame sword anticipation can complete; this
+    # checks a frontal sword hit, not a bite interrupting the wind-up.
+    fx, fy = P.player_pos(c)
+    k = spawn_enemy(c, EN_KNIGHT, fx, fy - 28, facing=2)
     hp0 = P.actor(c, k)['hp']
     P.press(c, 'B', 2, 14)
     hp1 = P.actor(c, k)['hp'] if P.actor(c, k)['kind'] == AK_ENEMY else 0
@@ -134,10 +156,20 @@ def main():
     P.run(c, 6)
     check('DEFLECT: it flies away up the room', P.actor(c, i)['kind'] != AK_PROJ or P.actor(c, i)['y'] < y0, 'y %d -> %d' % (y0, P.actor(c, i)['y']))
     P.run(c, 40)
-    # DEFLECT: the turned seed hurts a beetle in its way
+    # DEFLECT: the turned seed hurts a beetle in its way. Isolate the shot
+    # from earlier projectiles, random path decoration and chasing AI; the
+    # target remains beyond sword reach, so only the reflected seed can hit.
+    CP.clear_enemies(c)
+    for j in range(1, 96):
+        if P.actor(c, j)['kind'] == AK_PROJ:
+            P.w8(c, A + j * 64, 0)
+    fx, fy = north_shot_position(c)
+    CP.teleport(c, fx, fy)
+    P.w8(c, A + 7, 0); P.w8(c, A + 6, 0)
     i = free_slot(c)
-    put_actor(c, i, AK_PROJ, 0, hx, hy - 30, 6, flags=1, dir_=16, speed=0x100, damage=2, timer=1)
-    b = spawn_enemy(c, EN_BEETLE, hx, hy - 60)
+    put_actor(c, i, AK_PROJ, 0, fx, fy - 30, 6, flags=1, dir_=16, speed=0x100, damage=2, timer=1)
+    b = spawn_enemy(c, EN_BEETLE, fx, fy - 60)
+    P.w8(c, A + b * 64 + 29, 200); P.w16(c, A + b * 64 + 32, 0)
     P.press(c, 'B', 2, 40)
     check('DEFLECT: the turned seed hurts a beetle', P.actor(c, b)['kind'] != AK_ENEMY or P.actor(c, b)['hp'] < 2, 'kind %d hp %d' % (P.actor(c, b)['kind'], P.actor(c, b)['hp']))
     CP.clear_enemies(c); P.run(c, 20)
