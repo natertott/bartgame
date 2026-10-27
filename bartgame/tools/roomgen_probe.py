@@ -21,8 +21,8 @@ ROOM_SPOTS = {'chest': (25, 48), 'npc': (27, 49), 'relic': (29, 50),
               'boss': (40, 51), 'shrine': (42, 52), 'treasure': (44, 53), 'mouth': (46, 54)}
 
 
-def definitions():
-    h = Path(P.ROOT, 'build/gen/assets.h').read_text()
+def definitions(path=None):
+    h = (Path(path) if path else Path(P.ROOT, 'build/gen/assets.h')).read_text()
     return {name: int(value) for name, value in re.findall(r'^#define ((?:MT|TT)_\w+) (\d+)\s*$', h, re.M)}
 
 
@@ -100,7 +100,10 @@ class Layout:
                 ends=((ordered[0][0]-axis[0],ordered[0][1]-axis[1]),
                       (ordered[-1][0]+axis[0],ordered[-1][1]+axis[1]))
                 if not all(self.reaches(seen,p) and not self.blocked(p[0]*2,p[1]*2) for p in ends):
-                    errors.append('%s crossing %s has no traversable destination at both ends %s' % (name,ordered,ends))
+                    reverse={v:k for k,v in self.defs.items() if k.startswith('MT_')}
+                    details=[{'tile':p,'name':reverse.get(self.tiles.get(p)),'type':self.types.get(p),
+                              'collision':self.masks.get(p),'reachable':self.reaches(seen,p)} for p in ends]
+                    errors.append('%s crossing %s has no traversable destination at both ends %s' % (name,ordered,details))
         return count, errors
 
 
@@ -156,11 +159,21 @@ def inspect(c, cell, desc, defs):
     pocket=None
     if P.r8(c,g+53):
         spot=(P.r8(c,g+44),P.r8(c,g+45))
-        pocket={'spot':spot,'accessible_without_items':layout.reaches(seen,spot),
+        kind=P.r8(c,g+57)
+        pocket={'spot':spot,'kind':kind,'gate':(P.r8(c,g+55),P.r8(c,g+56)),
+                'accessible_without_items':layout.reaches(seen,spot),
                 'accessible_with_all_items':layout.reaches(layout.flood(landing(sides[0]),7),spot)}
-        # Legacy hoards behind liftable boulders remain optional and need the
-        # gauntlet rather than one of the three route keys, so only pocket
-        # kind metadata (when provided by the generator) makes this required.
+        if kind in (1,2,3):
+            item=1<<(kind-1)
+            pocket['accessible_with_required_item']=layout.reaches(layout.flood(landing(sides[0]),item),spot)
+            pocket['accessible_with_wrong_items']=layout.reaches(layout.flood(landing(sides[0]),7^item),spot)
+            opened=P.r8(c,P.sym('gWorld')+4+cell*13+4)&32
+            if not opened and pocket['accessible_without_items']:
+                errors.append('optional pocket %s can be bypassed without its item'%str(spot))
+            if not pocket['accessible_with_required_item']:
+                errors.append('optional pocket %s cannot be reached with its required item %d'%(str(spot),kind))
+            if not opened and pocket['accessible_with_wrong_items']:
+                errors.append('optional pocket %s accepts the wrong item'%str(spot))
     return {'cell':cell,'stage':desc['stage'],'role':desc['role'],
             'reachable_quarters':len(seen),'bridge_crossings':crossings,
             'optional_treasure':pocket,'failures':errors}
@@ -170,10 +183,15 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--seeds',default='0xB4A7,0xDEADBEEF,1,7,42')
     ap.add_argument('--out')
+    ap.add_argument('--rom', help='Frozen ROM paired with --map, for concurrent source/build work')
+    ap.add_argument('--map', help='Linker map paired with --rom')
+    ap.add_argument('--header', help='Generated assets.h matching a frozen ROM')
     args=ap.parse_args()
-    defs=definitions(); records=[]
+    if args.rom: P.ROM=args.rom
+    if args.map: P.MAP=args.map
+    defs=definitions(args.header); records=[]
     for seed in (int(n,0) for n in args.seeds.split(',')):
-        c=P.boot(seed=seed); CP.dismiss(c); world=CP.world(c); P.enter_forest(c)
+        c=P.boot(rom=P.ROM,seed=seed); CP.dismiss(c); world=CP.world(c); P.enter_forest(c)
         for cell,desc in enumerate(world['cells']):
             side=next(i for i,g in enumerate(desc['gate']) if g)
             CP.heal(c);warp(c,cell,side);CP.clear_enemies(c)
