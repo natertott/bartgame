@@ -3,7 +3,8 @@
 All 25 forest cells across three seeds, required and optional mysteries,
 menus, shop, bow and return-mouth allocations are exercised. Selected rooms
 also repeatedly change inventory pages and compare the hardware OAM/VRAM
-icons against their original ROM frames, including the selected description.
+icons and per-icon palettes against their exact ROM frames, including the
+selected description. Borrowed actor palettes must be restored on closing.
 Debug navigation, full inventory and cleared enemies isolate rendering.
 
     python tools/bloom_budget.py --out /tmp/bloom-budget.json
@@ -48,14 +49,19 @@ def picture(c,seed,label,frames,cursor):
     for i in range(128):
         at=0x07000000+i*8;a0=P.r16(c,at)&65535;a1=P.r16(c,at+2)&65535;a2=P.r16(c,at+4)&65535
         if (a0&0x0300)==0x0200:continue
-        if a0>>14==0 and a1>>14==2 and a2>>12==define('PAL_OBJ_ICONS'):
-            entries[(a1&511,a0&255)]=a2&1023
-    source,_,stride=sheet(c,define('SHEET_ICON32'))
+        if a0>>14==0 and a1>>14==2:
+            entries[(a1&511,a0&255)]=(a2&1023,a2>>12)
+    source=P.sym('icon32_exact_tiles')
+    palettes=P.sym('icon32_exact_pal')
     expected=[(16+(i%4)*40,24+(i//4)*40,f) for i,f in enumerate(frames)]+[(16,112,frames[cursor])]
     for x,y,frame in expected:
-        tile=entries.get((x,y))
-        ok=tile is not None and memory(c,0x06010000+tile*32,stride*32)==memory(c,source+frame*stride*32,stride*32)
-        check(seed,label+' icon (%d,%d)'%(x,y),ok,'frame %d tile %s'%(frame,tile))
+        entry=entries.get((x,y))
+        tile,pal=entry if entry is not None else (None,None)
+        pixels_ok=tile is not None and memory(c,0x06010000+tile*32,512)==memory(c,source+frame*512,512)
+        palette_ok=pal is not None and 0<=pal<8 and memory(c,0x05000200+pal*32,32)==memory(c,palettes+frame*32,32)
+        detail='frame %d tile %s palette %s'%(frame,tile,pal)
+        check(seed,label+' icon (%d,%d)'%(x,y),pixels_ok,detail)
+        check(seed,label+' exact palette (%d,%d)'%(x,y),palette_ok,detail)
 
 def repeat_pages(c,seed,label):
     # Old and new icon frames are intentionally mixed on repeated page
@@ -83,6 +89,9 @@ def inventory(c):
 
 def menus(c,seed,label,identity=False):
     C.dismiss(c);C.heal(c);C.clear_enemies(c)
+    # Menu icons borrow slots0..7, while the Drain keeper's animated orb
+    # uses slot14. Compare both CPU colours and the actual GPU palette.
+    world_palette=memory(c,P.sym('gPalObj'),8*32)
     P.press(c,'START',2,8)
     if C.gstate(c)!=4:
         check(seed,label+' menu opens',False,'state %d'%C.gstate(c));return
@@ -96,6 +105,8 @@ def menus(c,seed,label,identity=False):
         if C.gstate(c)!=4:break
         P.press(c,'START',2,16)
     check(seed,label+' menu closes',C.gstate(c)==1,'state %d'%C.gstate(c))
+    restored=memory(c,P.sym('gPalObj'),8*32)==world_palette and memory(c,0x05000200,8*32)==world_palette
+    check(seed,label+' borrowed palettes restored',restored)
 
 def extras(c,seed,label):
     C.heal(c);C.clear_enemies(c)
@@ -126,7 +137,7 @@ for seed in map(lambda s:int(s,0),args.seeds):
             check(seed,kind+' optional variant entry',False);continue
         inventory(c);rec(c,seed,'optional '+kind);menus(c,seed,'optional '+kind);extras(c,seed,'optional '+kind)
 check(0,'ROM remained unchanged during sweep',hashlib.sha256(Path(P.ROM).read_bytes()).hexdigest()==rom_hash)
-report={'rom_sha256':rom_hash,'emulator':'mGBA 0.10.5','limit':876,'maximum_next_tile':max(r['sNextTile'] for r in rows),'headroom_tiles':876-max(r['sNextTile'] for r in rows),'contexts':len(rows),'passed':sum(r['ok'] for r in checks),'total':len(checks),'failures':fail,'rows':rows,'checks':checks,'method':'Actual ROM transitions, full inventory fixture, cleared enemies after allocation; repeated menu pages compare hardware OAM/VRAM icons and markers against source ROM frame bytes.'}
+report={'rom_sha256':rom_hash,'emulator':'mGBA 0.10.5','limit':876,'maximum_next_tile':max(r['sNextTile'] for r in rows),'headroom_tiles':876-max(r['sNextTile'] for r in rows),'contexts':len(rows),'passed':sum(r['ok'] for r in checks),'total':len(checks),'failures':fail,'rows':rows,'checks':checks,'method':'Actual ROM transitions, full inventory fixture, cleared enemies after allocation; repeated menu pages compare hardware OAM/VRAM icons and per-icon palettes against exact ROM frame bytes. Slots0..7 must match their live world colours again after closing.'}
 Path(args.out).write_text(json.dumps(report,indent=2)+'\n')
 print('RESULT %s %d/%d, %d contexts, maximum %d/%d tiles'%('PASS' if not fail else 'FAIL',report['passed'],report['total'],len(rows),report['maximum_next_tile'],876),flush=True)
 sys.exit(bool(fail))
