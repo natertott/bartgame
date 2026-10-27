@@ -147,7 +147,12 @@ def inspect(c, cell, desc, defs):
         x,y=P.r8(c,g+off),P.r8(c,g+off+1)
         if name in ('chest','npc','mouth','shrine'):y+=1
         required.append((name,(x,y)))
-    for i in range(P.r8(c,g+39)):
+    torch_count=P.r8(c,g+39)
+    if desc['role']==7:
+        torch_sites={(P.r8(c,g+31+i*2),P.r8(c,g+32+i*2)) for i in range(torch_count)}
+        if torch_count!=4 or len(torch_sites)!=4:
+            errors.append('censer quest needs four distinct censers, found %d at %s' % (torch_count,sorted(torch_sites)))
+    for i in range(torch_count):
         required.append(('torch %d'%i,(P.r8(c,g+31+i*2),P.r8(c,g+32+i*2)+1)))
     for name,spot in required:
         if not layout.reaches(seen,spot): errors.append('%s approach %s unreachable before future items' % (name,spot))
