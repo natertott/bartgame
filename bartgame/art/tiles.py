@@ -4198,3 +4198,8 @@ forest_art.apply(METATILES, dict(_pl.BG_PALETTES))
 # the Drain's hall, painted whole and cut into cells of its own (sw_drain.py)
 import sw_drain  # noqa: E402
 METATILES.extend(sw_drain.METATILES)
+
+# Atlas-guided corruption after all earlier forest painters. Existing ids
+# remain stable; the visual pit clone is appended after every original tile.
+import blight_reference
+blight_reference.apply(METATILES, dict(_pl.BG_PALETTES))

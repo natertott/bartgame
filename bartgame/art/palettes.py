@@ -422,3 +422,9 @@ import clean_items as _clean_items
 OBJ_PALETTES = [(n, _clean_items.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
 import reference_items as _reference_items
 OBJ_PALETTES = [(n, _reference_items.BANK_PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
+
+# The atlas-guided decay materials reuse three forest slots and one spare.
+import blight_reference as _blight_reference
+BG_PALETTES = [(n, _blight_reference.GROUPS.get(n, c)) for n, c in BG_PALETTES]
+BG_PALETTES += [(n, c) for n, c in _blight_reference.GROUPS.items()
+                if n not in dict(BG_PALETTES)]
