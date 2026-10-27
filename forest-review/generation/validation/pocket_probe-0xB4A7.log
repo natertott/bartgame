@@ -2,19 +2,19 @@ drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
 PASS pocket starts behind its readable barrier 3 cell0 PIT
 PASS cape crosses the pocket neck pos (184, 314) gate(11, 17)
 PASS the hoard is collected from inside 3 cell0 treasure(11, 19) pos(184, 320)
-PASS loot stays taken after returning 
-PASS cape route keeps its jump terrain 
+PASS loot stays taken after returning
+PASS cape route keeps its jump terrain
 PASS pocket starts behind its readable barrier 2 cell5 WEB
-PASS item opens the local barrier 
-PASS local opening records its save bit 
+PASS item opens the local barrier
+PASS local opening records its save bit
 PASS the hoard is collected from inside 2 cell5 treasure(22, 16) pos(360, 281)
-PASS loot stays taken after returning 
-PASS opened bomb or candle neck stays open 
+PASS loot stays taken after returning
+PASS opened bomb or candle neck stays open
 PASS pocket starts behind its readable barrier 1 cell6 CRACK
-PASS item opens the local barrier 
-PASS local opening records its save bit 
+PASS item opens the local barrier
+PASS local opening records its save bit
 PASS the hoard is collected from inside 1 cell6 treasure(30, 17) pos(490, 284)
-PASS loot stays taken after returning 
-PASS opened bomb or candle neck stays open 
+PASS loot stays taken after returning
+PASS opened bomb or candle neck stays open
 PASS seed has all three item pocket types {1, 2, 3}
 RESULT PASS 18/18

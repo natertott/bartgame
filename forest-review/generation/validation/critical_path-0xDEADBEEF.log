@@ -8,7 +8,7 @@ PASS ENTRY: the drain leads to the entry cell     cell 22
    cross 20 side 0: 20 -> 15 pos (256, 364) hp 24
 PASS TRIAL: reached the seed trial room           cell 15
 drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
-PASS TRIAL: its event is completed and claimed    
+PASS TRIAL: its event is completed and claimed
 PASS KEYS: the earned chest grants the bombs      items 0x43 bombs 10
    cross 15 side 2: 15 -> 20 pos (256, 52) hp 24
    cross 20 side 1: 20 -> 21 pos (22, 200) hp 24
@@ -21,7 +21,7 @@ PASS CRACK: the bomb opened it                    cell 11 -> 12
    cross 14 side 2: 14 -> 19 pos (256, 52) hp 24
    cross 19 side 2: 19 -> 24 pos (256, 52) hp 24
 PASS TRIAL: reached the candle trial room         cell 24
-PASS TRIAL: its event is completed and claimed    
+PASS TRIAL: its event is completed and claimed
 PASS KEYS: the earned chest grants the lamp       items 0x47
    cross 24 side 0: 24 -> 19 pos (256, 364) hp 24
    cross 19 side 0: 19 -> 14 pos (256, 364) hp 24
@@ -33,7 +33,7 @@ PASS WEB: the lamp burned it                      cell 7 -> 2
    cross 2 side 3: 2 -> 1 pos (490, 200) hp 24
    cross 1 side 2: 1 -> 6 pos (256, 52) hp 24
 PASS TRIAL: reached the cape trial room           cell 6
-PASS TRIAL: its event is completed and claimed    
+PASS TRIAL: its event is completed and claimed
 PASS KEYS: the earned chest grants the cloak      items 0x4f
    cross 6 side 0: 6 -> 1 pos (256, 364) hp 24
    cross 1 side 1: 1 -> 2 pos (22, 200) hp 24

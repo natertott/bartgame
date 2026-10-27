@@ -11,10 +11,10 @@ PASS DEFLECT: the turned seed hurts a beetle        kind 0 hp 0
 PASS CARRY: a bush to lift                          (19, 8, (19, 9), 'UP')
 PASS CARRY: lifted, arms up                         state 11 carry 1
 PASS CARRY: a swing drops it and the sword comes out state 2 carry 0 thrown True
-PASS CARRY: the dropped load broke                  
+PASS CARRY: the dropped load broke
 PASS BOW: A looses an arrow, one fewer              arrows 19 arrow {'kind': 3, 'type': 3, 'state': 0, 'timer': 4, 'x': 256, 'y': 205, 'z': 6, 'speed': 768, 'hp': 0, 'coll': 0, 'facing': 2}
 PASS BOW: the arrow hit the beetle                  kind 0 hp 0
-PASS BOW: no arrows, nothing flies                  
+PASS BOW: no arrows, nothing flies
 PASS CAP: the mouth takes the hero                  state 12
 PASS CAP: home in the drain, at the spawn           area 0 pos (200, 270)
 PASS CAP: he dropped in from the ceiling            zmax 96 state 0

@@ -11,20 +11,20 @@ PASS SWITCHES: the chest pays a piece of heart      pieces 0 -> 1
 PASS WAVES: a large cave                            area 2
 PASS WAVES: the way out is shut                     exits 0
 PASS WAVES: monsters came in waves                  first wave 4
-PASS WAVES: three waves down, a chest and the way out 
+PASS WAVES: three waves down, a chest and the way out
 PASS WAVES: the large chest pays a key              keys 0 -> 1
 PASS MINIBOSS: a large hollow                       area 2
 PASS MINIBOSS: a knight captain with twenty hp      [20]
-PASS MINIBOSS: slain, a chest                       
+PASS MINIBOSS: slain, a chest
 PASS SURVIVE: a small thicket                       area 2
-PASS SURVIVE: the clock runs out, a chest           
+PASS SURVIVE: the clock runs out, a chest
 PASS FAIRY: a small hollow                          area 2
 PASS FAIRY: the spring fills the hearts             hp 24 / 24
-PASS NPC: a stranger in a small cave                
+PASS NPC: a stranger in a small cave
 PASS NPC: ten gilt buys a piece of heart            gilt 15 pieces 2
-PASS TORCHES: a medium thicket                      
+PASS TORCHES: a medium thicket
 PASS TORCHES: three censers lit, a chest            unlit 0
-PASS BOULDERS: a large thicket                      
+PASS BOULDERS: a large thicket
 PASS BOULDERS: every boulder lifted, a chest        left 0
-PASS BOULDERS: the way out, and the wood            
+PASS BOULDERS: the way out, and the wood
 RESULT PASS 28/28
