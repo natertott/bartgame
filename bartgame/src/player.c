@@ -1029,7 +1029,13 @@ void player_draw(void) {
         }
         default:
             if (a->state == PS_NORMAL && sUseTimer) {
-                frame = sUseItem == EQ_BOW ? sBowFrame[use_step()][f] : sUseFrame[use_step()][f];
+                /* EQ_NONE's transient visual pose is the carried-object
+                   throw. Keep the raised hands through release before
+                   bringing them down through the normal recovery poses. */
+                if (sUseItem == EQ_NONE && use_step() == 0)
+                    frame = sCarryFrame[0][f];
+                else
+                    frame = sUseItem == EQ_BOW ? sBowFrame[use_step()][f] : sUseFrame[use_step()][f];
                 break;
             }
             if (a->state == PS_NORMAL && gPl.shield_up) {
