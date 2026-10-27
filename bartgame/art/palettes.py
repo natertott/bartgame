@@ -420,3 +420,5 @@ OBJ_PALETTES = [(n, _enemies.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
 # Item materials share the same colours across HUD, menu and pickups.
 import clean_items as _clean_items
 OBJ_PALETTES = [(n, _clean_items.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
+import reference_items as _reference_items
+OBJ_PALETTES = [(n, _reference_items.BANK_PALETTES.get(n, c)) for n, c in OBJ_PALETTES]

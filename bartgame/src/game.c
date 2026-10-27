@@ -740,7 +740,13 @@ void game_update(void) {
         case GS_TITLE: update_title(); break;
         case GS_PLAY: update_play(); break;
         case GS_TRANSITION: update_transition(); break;
-        case GS_MAP: menu_update(); break;
+        case GS_MAP:
+            menu_update();
+            if (gGame.state == GS_PLAY) {
+                oam_clear();
+                draw_world();
+            }
+            break;
         case GS_WIN: update_win(); break;
         default: break;
     }

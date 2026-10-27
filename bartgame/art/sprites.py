@@ -95,3 +95,7 @@ bloom_animations.apply(SHEETS)
 # Streamed action props use the matching body hand anchors.
 import bloom_fx
 SHEETS.extend(bloom_fx.SHEETS)
+
+# Supplied item/shield screenshot pixels and matching held props.
+import reference_assets
+reference_assets.apply(SHEETS)

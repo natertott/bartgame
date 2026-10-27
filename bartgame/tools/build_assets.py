@@ -8,7 +8,7 @@ Reads the art modules in ../art and writes OUTDIR/assets.c and assets.h:
                 and the animated metatiles' frame data
   sprites       per sheet, frames of 4bpp tiles in OBJ 1D order
   ui            the UI's proportional face, its kit of frames and inks
-  title         the title screen as tiles + map + palette
+  title         the title screen as a native RGB555 bitmap
   rooms         hand-authored rooms as metatile grids
 
 Pixel art is written as rows of hex digits: one character per pixel, the
@@ -299,6 +299,26 @@ c.append('};')
 h.append('#define SHEET_COUNT %d' % len(sheet_names))
 h.append('extern const SpriteSheet sheets[];\n')
 print('sprites: %d sheets, %d tiles' % (len(sheet_names), sum(s[1] for s in sheet_names)))
+
+# The supplied item frames select one of four material banks in the world.
+# Paused inventory uses each original frame's own fifteen-colour ramp.
+for sh in sprites.SHEETS:
+    if 'frame_pal' in sh:
+        name=sh['name']+'_frame_pal'
+        values=[obj_slots[sh['frame_pal'][f]] for f in sh['frames']]
+        c.append(c_array_u8(name,values))
+        h.append('extern const u8 %s[];'%name)
+    if sh['name']=='icon32':
+        data=b'';cols=[]
+        for frame in sh['frames']:
+            rows,palette=sh['exact_frames'][frame]
+            pix=parse_art(rows,32,32)
+            for ty in range(0,32,8):
+                for tx in range(0,32,8):data+=tile_bytes(pix,tx,ty)
+            cols += [rgb15(v) for v in palette]
+        c.append(c_array_u16('icon32_exact_tiles',bytes_to_u16(data)))
+        c.append(c_array_u16('icon32_exact_pal',cols))
+        h.append('extern const u16 icon32_exact_tiles[], icon32_exact_pal[];')
 # the Gatekeeper's orb: its two glow colours through one pulse, stepped
 # into her palette (npc.c)
 import sw_folk  # noqa: E402
