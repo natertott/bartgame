@@ -12,6 +12,7 @@ import probe as P
 import critical_path as CP
 import lift_probe as L
 import myst_probe as M
+import bloom_probe as B
 
 UNDERLAY_OFFSET=2+2048+2048+4096
 checks=[]
@@ -46,6 +47,25 @@ def hero_priority(c):
         if ((a0>>14)&3)==1 and (a1>>14)==3 and (a2&1023)==0 and (a2>>12)==0:
             return (a2>>10)&3
     return None
+
+
+def large_chest_material(c,x,y):
+    """The larger chest replaces its BG1 drawing with one real OBJ frame."""
+    CP.clear_enemies(c);CP.heal(c);c.clear_keys(*range(10))
+    P.w8(c,P.sym('gActors')+35,0)
+    CP.teleport(c,x*16+8,(y+1)*16+14);P.run(c,48)
+    tile=P.r16(c,L.ssym('sChestTile'))&65535
+    frame=P.r8(c,L.ssym('sChestFrame'))
+    defs=B.definitions(Path(P.ROOT)/'build/gen/assets.h')
+    sh=P.sym('sheets')+defs['SHEET_INTERACTIVECHEST']*12
+    source=P.r32(c,sh);size=P.r8(c,sh+6)*32
+    got=B.bytes_at(c,0x06010000+tile*32,size)
+    pixels=B.pixels(got,32,32)
+    width=max((p[0] for p in pixels),default=-1)-min((p[0] for p in pixels),default=0)+1
+    height=max((p[1] for p in pixels),default=-1)-min((p[1] for p in pixels),default=0)+1
+    actual=[e for e in B.oam(c) if e['tile']==tile and e['shape']==0 and e['size']==2]
+    return (0<tile and tile+size//32<=876 and len(actual)==1 and width>16 and height>16 and
+            got==B.bytes_at(c,source+frame*size,size) and entry(c,24,x,y)==(0,0,0,0))
 
 
 def depth_checks(c,w):
@@ -88,7 +108,10 @@ def main():
             check('BG2 uses substrate',entry(c,28,x,y)==expected(c,base))
             ov=P.r16(c,P.sym('gRoom')+2050+(y*32+x)*2)&65535
             if ov in (65535,CP.mt('SPARKLE'),CP.mt('SPARKLE_WHITE'),CP.mt('BLIGHT_MIST')):
-                check('BG1 uses transparent prop',entry(c,24,x,y)==expected(c,mt))
+                if mt in (CP.mt('CHEST'),CP.mt('CHEST_OPEN')):
+                    check('chest uses enlarged OBJ above its substrate',large_chest_material(c,x,y))
+                else:
+                    check('BG1 uses transparent prop',entry(c,24,x,y)==expected(c,mt))
     check('nonzero props checked',counts>50,str(counts))
     depth_checks(c,w)
     # Lifting through the real button path must reveal the stored surface.
@@ -128,7 +151,7 @@ def main():
         check('chest opens through normal interaction',CP.open_chest(c))
         check('open chest retains substrate',under(c,x,y)==base)
         check('open chest background is original floor',entry(c,28,x,y)==expected(c,base))
-        check('open chest material is BG1',entry(c,24,x,y)==expected(c,CP.mt('CHEST_OPEN')))
+        check('open chest material is the enlarged OBJ',large_chest_material(c,x,y))
     print('RESULT %s %d/%d'%('PASS' if all(checks) else 'FAIL',sum(checks),len(checks)))
     return int(not all(checks))
 
