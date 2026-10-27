@@ -314,7 +314,13 @@ Actor* fx_spawn(int type, int px, int py) {
         case FX_PUFF: a->frame = F_FX_PUFF1; break;
         case FX_CLANG: a->frame = F_FX_CLANG; break;
         case FX_BLAST: a->frame = F_FX_BLAST1; a->hitbox = HB_BLAST; break;
-        case FX_FLAME: a->frame = F_FX_FLAME1; a->hitbox = HB_MED; break;
+        case FX_FLAME:
+            a->frame = F_FX_FLAME1;
+            a->hitbox = HB_MED;
+            /* Lamp fire shares the held tool's near/far presentation.
+               Its direction is visual; the existing burn box stays fixed. */
+            a->dir = facing_to_dir(gPlayer->facing);
+            break;
         case FX_SPARK: a->frame = F_FX_PUFF1; break;
         case FX_FIREFLY:
             a->frame = F_FX_FIREFLY1;
@@ -546,12 +552,13 @@ static bool8 player_hand_composite(void) {
            !(gPlayer->state == PS_DEAD && gPl.dead_timer > 60 && (gPl.dead_timer & 4));
 }
 
-/* A released load or player arrow keeps its hand-side depth while its
+/* A released load, player arrow or lamp flame keeps its hand-side depth while its
    visual rectangle still intersects Bloom. Physics and travel are wholly
    independent of this short composite stage. */
 static bool8 player_release_overlap(Actor* a) {
     if ((a->kind != AK_OBJECT || a->type != OBJ_THROWN) &&
-        (a->kind != AK_PROJ || a->type != PJ_ARROW || !a->v[0]))
+        (a->kind != AK_PROJ || a->type != PJ_ARROW || !a->v[0]) &&
+        (a->kind != AK_FX || a->type != FX_FLAME))
         return FALSE;
     if (!player_hand_composite())
         return FALSE;
