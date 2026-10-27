@@ -83,3 +83,7 @@ for (_name, _pal, _w, _h, _frames) in sw_folk.SHEETS:
 # Forest enemies retain their engine frame contracts, in newly drawn art.
 import forest_sprites
 forest_sprites.apply(SHEETS)
+
+# Unframed, simple item silhouettes in every active display size.
+import clean_items
+clean_items.apply(SHEETS)

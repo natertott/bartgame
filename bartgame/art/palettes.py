@@ -417,3 +417,6 @@ import forest_art as _forest
 BG_PALETTES += sorted(_forest.GROUPS.items())
 import forest_sprites as _enemies
 OBJ_PALETTES = [(n, _enemies.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
+# Item materials share the same colours across HUD, menu and pickups.
+import clean_items as _clean_items
+OBJ_PALETTES = [(n, _clean_items.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]
