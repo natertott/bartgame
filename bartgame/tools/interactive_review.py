@@ -143,7 +143,8 @@ class Review:
             target=(P.r8(c,S+55),P.r8(c,S+56));loot=(P.r8(c,S+44),P.r8(c,S+45))
             dx=(loot[0]>target[0])-(loot[0]<target[0]);dy=(loot[1]>target[1])-(loot[1]<target[1])
             face=1 if dx>0 else 3 if dx<0 else 2 if dy>0 else 0
-            return target,[(target[0]-dx)*16+8,(target[1]-dy)*16+12],face,{'pocket_kind':kind,'loot':loot,'direction':KEYS[face]}
+            distance=2 if all(self.safe(target[0]*16+8-dx*k,target[1]*16+12-dy*k) for k in (16,24,32)) else 1
+            return target,[(target[0]-distance*dx)*16+8,(target[1]-distance*dy)*16+12],face,{'pocket_kind':kind,'loot':loot,'direction':KEYS[face],'approach_distance_tiles':distance}
         if row.get('action')=='leave':
             target=(w//2-1,h-1);return target,[w*8,(h-2)*16-4],2,{}
         matches=self.find(feature,exact=not feature.endswith('_'))
@@ -205,11 +206,12 @@ class Review:
         elif action in ('bomb','lamp','cape'):
             pl=P.sym('gPl');kind=extra['pocket_kind'];P.w8(c,pl+8,P.r8(c,pl+8)|{1:2,2:4,3:8}[kind]);P.w8(c,pl+7,10)
             C.equip_b(c,{1:C.EQ_BOMBS,2:C.EQ_LAMP,3:C.EQ_CLOAK}[kind]);key=extra['direction']
-            if action=='cape':events={8:[(key,True)],11:[('A',True)],13:[('A',False)],36:[(key,False)]}
+            warm=13 if extra['approach_distance_tiles']==2 else 0
+            if action=='cape':events={8:[(key,True)],11+warm:[('A',True)],13+warm:[('A',False)],36+warm:[(key,False)]}
             else:
-                events={8:[(key,True)],13:[(key,False),('A',True)],15:[('A',False)]}
+                events={8:[(key,True)],13+warm:[(key,False),('A',True)],15+warm:[('A',False)]}
                 if action=='bomb':
-                    back=KEYS[(face+2)%4];events[17]=[(back,True)];events[47]=[(back,False)]
+                    back=KEYS[(face+2)%4];events[17+warm]=[(back,True)];events[47+warm]=[(back,False)]
         self.settle(point,face)
         if action=='shrine':P.w16(c,P.sym('gPl'),8)
         contract=B.contract(c);initial=self.snapshot_state(target);frames=[];trace=[];held=set();total=row.get('frames',64)
