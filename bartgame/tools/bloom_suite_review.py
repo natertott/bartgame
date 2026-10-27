@@ -101,6 +101,7 @@ class Suite:
                 'oam':[v for v in oam if v['pal']<13 and v['y']>28 and v['shape'] in (0,1)]}
 
     def record(self,name,facing,total,events,point=None,note=None):
+        if self.args.only and name not in self.args.only.split(','):return
         c=self.c;directory=self.out/name;directory.mkdir(exist_ok=True);frames=[];traces=[]
         initial={'background':self.background,'cell':self.cell,'position':list(point or P.player_pos(c)),
                  'facing':B.FACES[facing],'area':C.area(c)}
@@ -208,6 +209,7 @@ class Suite:
             plan=[(next(a for a in ACTIONS if a[0]==name),f) for name,f in wanted]
         for (action,eq,keys,total,held,travel),f in plan:
             name=background+'-'+action+'-'+B.FACES[f]
+            if self.args.only and name not in self.args.only.split(','):continue
             prior=next((r for r in self.old['captures'] if r['name']==name),None) if self.old else None
             if prior:
                 if self.background in ('forest','blight') and self.cell!=prior['cell']:self.warp(prior['cell'])
@@ -319,6 +321,7 @@ def main():
     ap.add_argument('--rom',default=P.ROM);ap.add_argument('--map',default=P.MAP)
     ap.add_argument('--assets-header',default=str(Path(P.ROOT)/'build/gen/assets.h'))
     ap.add_argument('--seed',default='0xB4A7');ap.add_argument('--groups',default='drain,forest,blight,cave,special')
+    ap.add_argument('--only',help='comma-separated exact clip names for targeted visual iteration')
     ap.add_argument('--match');args=ap.parse_args();suite=Suite(args)
     for group in args.groups.split(','):
         if group=='special':suite.specials()
