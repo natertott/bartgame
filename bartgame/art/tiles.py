@@ -4182,6 +4182,15 @@ for _i in range(8):
 for _i in range(6):
     mt('forest_canopy%d' % _i, 'wood', 'SOLID', flat(1))
 
+# Species share the oak's upper-half trunk collision and overlay crown.
+for _species in ('birch', 'fir', 'sicktree'):
+    for _i in range(6):
+        mt('%s_%d' % (_species,_i), 'wood', 'SOLID' if _i>=4 else 'FLOOR',
+           flat(0 if _i<4 else 4), coll=3 if _i>=4 else 0)
+for _name,_type in (('leaf_litter','FLOOR'),('fern_patch','FLOOR'),('sick_bones','FLOOR'),
+                    ('sick_stump','SOLID'),('sick_rock','SOLID')):
+    mt(_name,'forest',_type,flat(4))
+
 # The forest's final native-resolution art; keep the Drain's tiles intact.
 import forest_art  # noqa: E402
 forest_art.apply(METATILES, dict(_pl.BG_PALETTES))

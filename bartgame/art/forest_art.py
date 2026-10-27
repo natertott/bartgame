@@ -12,7 +12,7 @@ import paint as P
 INKS = dict(
     outline='#081820', leaf_deep='#082838', shadow='#103c38', leaf_md='#185044',
     leaf_mid='#20684c', leaf_lt='#308450', leaf_br='#60a850', leaf_hl='#a8c868',
-    grass_d='#305038', grass_m='#486040', grass_l='#587848', grass_b='#789848', grass_t='#b0c870',
+    grass_d='#305038', grass_m='#486840', grass_l='#608448', grass_b='#789848', grass_t='#b0c870',
     soil='#302820', trail_d='#685038', trail_m='#987848', trail_l='#b89860', trail_h='#d8c088',
     bark_dk='#201c20', bark='#503828', bark_l='#806040', bark_ll='#b09050', wood_cut='#d0b070',
     white='#e8e8c8', yellow='#e8c060', blue='#78c0d8', amber='#c88830', glow='#ffe0a0', gold_l='#fff0b8',
@@ -21,7 +21,7 @@ INKS = dict(
     stone_0='#202830', stone_1='#384048', stone_2='#586058', stone_3='#808878', stone_4='#b0b898',
     v_0='#180c30', v_1='#281840', v_2='#402050', v_3='#583068', v_4='#804088',
     mag_d='#702090', mag='#b038d8', mag_l='#f088f8',
-    sick_d='#283c38', sick_m='#485040', sick_l='#686850',
+    sick_d='#283c38', sick_m='#485040', sick_l='#989078',
     bt_o='#100c20', bt_d='#302038', bt_m='#503048', bt_l='#805068', bt_g='#d860e8',
     earth_0='#182030', earth_1='#283040', earth_2='#384048', earth_3='#505858',
     earth_4='#686868', earth_5='#888080', earth_6='#a8a098',
@@ -32,71 +32,156 @@ HEX = {i: INKS.get(n, h) for i, (n, h) in enumerate(W.COLORS, 1)}
 PREFIX = 'glade_'
 
 
+def stroke(img, points, colour, width=1, wrap=False):
+    """Native pixel branch strokes, shared by living roots and exposed veins."""
+    h,w=img.shape
+    for (x0,y0),(x1,y1) in zip(points,points[1:]):
+        n=max(abs(x1-x0),abs(y1-y0),1)
+        for i in range(n+1):
+            x=round(x0+(x1-x0)*i/n); y=round(y0+(y1-y0)*i/n)
+            for dy in range(width):
+                for dx in range(width):
+                    X,Y=x+dx,y+dy
+                    if wrap: X%=w; Y%=h
+                    if 0<=X<w and 0<=Y<h: img[Y,X]=colour
+
+
 def leaf_cluster(img, cx, cy, rx, ry, seed, sick=False, wrap=False):
-    """Overlapping pointed leaves; light occupies one side of the crown."""
-    rng = P.rng(seed)
-    h, w = img.shape
-    ramp = W.C('outline', 'leaf_deep', 'shadow', 'leaf_mid', 'leaf_lt', 'leaf_br', 'leaf_hl')
-    if sick:
-        ramp = W.C('bt_o', 'v_0', 'v_1', 'v_2', 'v_3', 'mag_d', 'mag')
-    # Broad overlapping volumes first; small leaf strokes are accents.
-    P.clump(img, cx, cy, rx, ramp[1:6], wrap=wrap, rough=0.14, seed=seed)
-    mask = P.disc(w, h, cx, cy, rx * 0.85, ry * 0.85, wrap=wrap)
-    for i in range(5):
-        x=int(cx-rx*.65+rng.rand()*rx*1.2)
-        y=int(cy-ry*.65+rng.rand()*ry*1.1)
-        P.stamp(img,x,y,['.h','lm'],dict(h=ramp[5],l=ramp[4],m=ramp[3]),wrap=wrap,mask=mask)
+    """A broken oval of leaves, lit as a whole rather than separate spheres."""
+    h,w=img.shape
+    yy,xx=np.mgrid[0:h,0:w]
+    dx=xx-cx; dy=yy-cy
+    if wrap:
+        dx=(dx+w/2)%w-w/2; dy=(dy+h/2)%h-h/2
+    jitter=P.vnoise(w,h,max(2,w//5),max(2,h//5),seed)
+    oval=(dx/rx)**2+(dy/ry)**2
+    angle=np.arctan2(dy,dx)
+    body=oval < .88+np.sin(angle*9+seed)*.07+(jitter-.5)*.28
+    light=-dx/rx*.65-dy/ry*.55
+    ramp=W.C('leaf_deep','shadow','leaf_md','leaf_mid','leaf_lt','leaf_br','leaf_hl')
+    if sick: ramp=W.C('bt_o','v_0','v_1','v_2','v_3','v_4','mag_d')
+    tones=np.where(light<-.5,0,np.where(light<-.15,1,np.where(light<.15,2,np.where(light<.45,3,4))))
+    tones=np.where((oval>.65)&(light<.2),0,tones)
+    for i,c in enumerate(ramp): img[body & (tones==i)]=c
+    # Paired pointed leaves appear in small groups with clear rest between.
+    rng=P.rng(seed)
+    for _ in range(max(7,int(rx*ry/4))):
+        x=int(cx+(rng.rand()-.5)*rx*1.5); y=int(cy+(rng.rand()-.5)*ry*1.3)
+        X,Y=x%w,y%h
+        if not body[Y,X]: continue
+        lit=light[Y,X]>.05
+        mark=['.hh.','hlm.','.dd.'] if (x+y)%2 else ['.hh.','.mlh','.dd.']
+        P.stamp(img,x,y,mark,
+                dict(h=ramp[5 if lit else 3],l=ramp[4 if lit else 2],m=ramp[3 if lit else 1],d=ramp[1]),
+                wrap=wrap,mask=body)
     return img
 
 
-def canopy(seed=0, sick=False):
-    img = np.full((16, 16), W.ID['v_0' if sick else 'leaf_deep'], np.uint8)
-    for i, (x,y,rx,ry) in enumerate(((2,3,7,5), (12,2,6,5), (6,11,7,5), (15,12,6,6))):
-        leaf_cluster(img,x,y,rx,ry,seed*31+i,sick,True)
+def canopy_mass(sick=False):
+    """A 32px continuous crown: its four tiles meet as one irregular mass."""
+    img=np.full((32,32),W.ID['v_0' if sick else 'leaf_deep'],np.uint8)
+    lobes=((4,5,11,8),(20,2,12,9),(30,15,11,9),(13,14,13,10),(4,29,12,9),(23,29,14,11))
+    for i,(x,y,rx,ry) in enumerate(lobes):
+        leaf_cluster(img,x,y,rx,ry,193+i*17,sick,True)
     return img
 
 
-def tree(cols=2, lantern=False, sick=False, variant=0):
-    w, h = cols*16, (cols+1)*16
-    crown_h = h-16
-    img = np.zeros((h,w), np.uint8)
-    # Ground-contact roots are opaque; the rest can overlap the floor.
+def canopy(seed=0,sick=False):
+    img=canopy_mass(sick)
+    k=seed%4
+    return img[(k//2)*16:(k//2+1)*16,(k%2)*16:(k%2+1)*16].copy()
+
+
+def canopy_face(seed=0):
+    img=canopy(seed)
+    img[8:,:]=W.ID['leaf_deep']
+    for x in (3+seed%2,11):
+        stroke(img,[(x,6),(x-1,12),(x+1,15)],W.ID['bark_dk'],3)
+        stroke(img,[(x,8),(x-1,13)],W.ID['bark'],1)
+    for i,(x,y) in enumerate(((1,6),(8,7),(15,6))):
+        leaf_cluster(img,x,y,6,4,319+i+seed,wrap=True)
+    img[15,:]=W.ID['shadow']
+    for x in (1,6,13): img[15,x]=W.ID['grass_m']
+    return img
+
+
+def woodland_grass(seed,tufts=3):
+    """Quiet turf leaves room for landmarks and readable enemies."""
+    img=np.full((16,16),W.ID['grass_m'],np.uint8)
+    for x,y in P.scatter(1201+seed*31,7,mind=4):
+        img[y,x]=W.ID['grass_d']
+        img[y,(x+1)%16]=W.ID['grass_d']
+    for i,(x,y) in enumerate(P.scatter(1301+seed*19,tufts,mind=6)):
+        P.stamp(img,x,y,['.l','ld'],dict(l=W.ID['grass_l'],d=W.ID['grass_d']),wrap=True)
+        if i==0: img[y,x]=W.ID['grass_b']
+    return img
+
+
+def flowing_water(seed,frame):
+    """Deep open water and sparse arcs; banks use this identical body tone."""
+    yy,xx=np.mgrid[0:16,0:16]
+    f=P.vnoise(16,16,2,2,301+seed)
+    img=np.where(f>.54,W.ID['water_md'],W.ID['water_dk']).astype(np.uint8)
+    for i,(x,y) in enumerate(((1,3),(10,10))):
+        x=(x+frame*2)%16
+        P.stamp(img,x,y,['.rrr.','l...l'],dict(r=W.ID['water_lt'],l=W.ID['water_md']),wrap=True)
+    return img
+
+
+def tree(cols=2,lantern=False,sick=False,variant=0,species='oak'):
+    """A full silhouette with branches, irregular crown, and rooted footing."""
+    w,h=cols*16,(cols+1)*16; mid=w//2
+    img=np.zeros((h,w),np.uint8)
     for x in range(cols):
-        img[-16:,x*16:x*16+16] = W.grass(x%3) if not sick else rotten(0)
-    bark = W.C('outline','bark_dk','bark','bark_l','bark_ll') if not sick else W.C('bt_o','bt_d','bt_m','bt_l','bt_g')
-    mid=w//2
-    for yy in range(h-28,h-4):
-        radius = 3 + max(0,yy-(h-12))//2
-        for xx in range(mid-radius,mid+radius+1):
-            img[yy,xx] = bark[1 if xx>mid+1 else 3 if xx<mid-1 else 2]
-        if yy%6!=0: img[yy,mid-1]=bark[4 if sick else 1]
-    # Splayed roots and long branches give the tree a recognisable silhouette.
-    for sign in (-1,1):
-        for k in range(12 if cols==3 else 8):
-            x=mid+sign*k; y=h-8+k//3
-            img[y:y+2,x]=bark[2]; img[y,x]=bark[3]
-    if sick:
-        # Dead thorned branches, a wound like a tarnished reliquary.
-        for sign in (-1,1):
-            for k in range(mid-2):
-                x=mid+sign*k; y=crown_h-5-k
-                img[y:y+3,x]=bark[2]
-                img[y,x]=bark[3]
-                if k%4==0: img[max(0,y-3):y,x]=bark[1]
-        img[h-22:h-15,mid-2:mid+3]=W.ID['v_0']
-        img[h-21:h-16,mid-1:mid+2]=W.ID['mag_d']
-        img[h-20:h-17,mid:mid+1]=W.ID['mag_l']
+        img[-16:,x*16:x*16+16]=woodland_grass(x%3) if not sick else rotten(variant)
+    bark=W.C('outline','bark_dk','bark','bark_l','bark_ll') if not sick else W.C('bt_o','bt_d','bt_m','bt_l','bt_g')
+    root=h-10
+    trunkx=mid+(1 if variant else -1)
+    if species=='birch':
+        # Two silver trunks, deliberately distinct from the broad old oak.
+        for tx in (mid-5,mid+3):
+            stroke(img,[(tx+2,h-31),(tx-1,h-15),(tx+1,root)],W.ID['bark_dk'],4)
+            stroke(img,[(tx+2,h-31),(tx-1,h-15),(tx+1,root)],W.ID['white'],2)
+            for y in range(h-27,root,5): img[y,tx:tx+2]=W.ID['bark']
+        blobs=[(mid-7,8,9,7),(mid+5,9,9,7),(mid-9,18,8,7),(mid+7,20,8,7),(mid,23,10,7)]
+    elif species=='fir':
+        stroke(img,[(mid,8),(mid,root)],bark[1],5)
+        stroke(img,[(mid,8),(mid-1,root)],bark[3],2)
+        # Long drooping boughs, a tapering dark yew rather than a cone icon.
+        blobs=[(mid,5,4,5),(mid-1,11,7,5),(mid+1,17,10,6),(mid-1,24,13,6),(mid+2,29,13,5)]
     else:
-        blobs = [(mid,9,mid*.56,8), (mid-7,16,mid*.53,8), (mid+7,18,mid*.5,8),
-                 (mid,25,mid*.7,8)]
-        if cols==3: blobs += [(10,29,9,9),(37,30,10,9),(24,38,14,8)]
+        stroke(img,[(trunkx-2,h-35),(trunkx+2,h-22),(trunkx-1,root)],bark[1],7)
+        stroke(img,[(trunkx-1,h-35),(trunkx+1,h-22),(trunkx-2,root)],bark[3],3)
+        stroke(img,[(mid,h-24),(mid-9,h-32),(mid-12,h-41)],bark[2],3)
+        stroke(img,[(mid,h-22),(mid+10,h-31),(mid+13,h-37)],bark[2],3)
+        blobs=[(mid-3,9,mid*.62,8),(mid-9,17,mid*.57,9),(mid+8,16,mid*.58,9),(mid-2,24,mid*.79,9)]
+        if cols==3: blobs += [(9,31,9,9),(38,30,10,9),(23,38,14,8)]
+    for sign in (-1,1):
+        stroke(img,[(mid,root-2),(mid+sign*6,root+2),(mid+sign*(w//2-4),h-3)],bark[1],3)
+        stroke(img,[(mid,root-2),(mid+sign*6,root+2),(mid+sign*(w//2-4),h-4)],bark[3],1)
+    if sick:
+        # Some clinging diseased foliage; splintered branches still read below.
+        for sign in (-1,1):
+            pts=[(mid,h-24),(mid+sign*7,h-33),(mid+sign*13,h-37),(mid+sign*11,h-43)]
+            stroke(img,pts,bark[1],3); stroke(img,pts,bark[3],1)
+        for i,(x,y,rx,ry) in enumerate([] if species=='dead' else blobs[:3]):
+            leaf_cluster(img,x,y,rx*.65,ry*.65,291+i,sick=True)
+        if species=='dead':
+            for pts in ([(mid,h-22),(mid-3,h-34),(mid-2,h-44),(mid-5,h-47)],
+                        [(mid-3,h-34),(mid-11,h-38),(mid-14,h-36)],
+                        [(mid+3,h-29),(mid+11,h-33),(mid+14,h-41)],
+                        [(mid+10,h-34),(mid+5,h-38),(mid+7,h-44)]):
+                stroke(img,pts,bark[1],3);stroke(img,pts,bark[3],1)
+        for x,y in ((mid-2,h-20),(mid+5,h-33),(mid-9,h-31)):
+            stroke(img,[(x,y-2),(x-1,y+2),(x+1,y+4)],W.ID['mag_d'],2)
+            img[y,x]=W.ID['mag_l']
+    else:
         for i,(x,y,rx,ry) in enumerate(blobs):
-            leaf_cluster(img,x+(variant if i%2 else -variant),y,rx,ry,71+i*11+variant)
+            leaf_cluster(img,x+variant*(1 if i%2 else -1),y,rx,ry,71+i*29+variant)
         if lantern:
-            y=crown_h-8; x=mid-9
-            img[y:y+8,x:x+3]=W.ID['bark_dk']
-            img[y+2:y+6,x+1]=W.ID['glow']
-            img[y+6,x:x+3]=W.ID['amber']
+            x=mid-10;y=h-26
+            stroke(img,[(x,y-3),(x,y+4)],W.ID['bark_dk'])
+            img[y:y+5,x-1:x+2]=W.ID['amber'];img[y+1:y+4,x]=W.ID['glow']
     return [img[y:y+16,x:x+16].copy() for y in range(0,h,16) for x in range(0,w,16)]
 
 
@@ -144,6 +229,76 @@ def masonry(seed=0, lit=False):
     return img
 
 
+def forest_prop(kind):
+    sick=kind.startswith('sick_')
+    img=rotten(4) if sick else woodland_grass(1)
+    if kind=='leaf_litter':
+        for x,y in ((2,5),(9,3),(12,11),(5,12)):
+            P.stamp(img,x,y,['.t.','tmd','.d.'],
+                    dict(t=W.ID['trail_l'],m=W.ID['trail_d'],d=W.ID['grass_d']),wrap=True)
+    elif kind=='fern_patch':
+        for x,y in ((4,11),(11,12)):
+            stroke(img,[(x,y),(x+1,y-7)],W.ID['grass_b'])
+            for k in range(4):
+                stroke(img,[(x-3+k//2,y-k*2),(x,y-k*2+1),(x+3-k//2,y-k*2-1)],W.ID['grass_l'])
+    elif kind=='sick_bones':
+        for x,y in ((2,5),(10,10)):
+            stroke(img,[(x,y),(x+3,y+3)],W.ID['bt_l'],2)
+            img[y,x]=W.ID['sick_l'];img[y+3,x+3]=W.ID['sick_l']
+        img[8:11,6:9]=W.ID['bt_d'];img[8,6:9]=W.ID['sick_l'];img[9,6]=W.ID['bt_o'];img[9,8]=W.ID['bt_o']
+    elif kind=='sick_stump':
+        body=P.disc(16,16,8,10,5,4)
+        img[body]=W.ID['bt_d']
+        img[body & (np.indices((16,16))[1]<6)]=W.ID['bt_l']
+        img[5:8,4:12]=W.ID['bt_m'];img[5,5:11]=W.ID['bt_l']
+        stroke(img,[(8,5),(7,8),(9,10)],W.ID['mag_d'])
+        img[7,7]=W.ID['mag_l']
+        stroke(img,[(4,11),(1,14)],W.ID['bt_d'],2);stroke(img,[(11,11),(14,14)],W.ID['bt_m'],2)
+    elif kind=='sick_rock':
+        body=P.disc(16,16,8,9,6,5)
+        img[body]=W.ID['bt_d'];img[body & (np.indices((16,16))[1]<7)]=W.ID['bt_l']
+        stroke(img,[(6,6),(10,6),(12,8)],W.ID['sick_l'])
+        stroke(img,[(8,5),(7,8),(9,10),(8,13)],W.ID['bt_o'])
+        img[11,8]=W.ID['mag_d']
+    return img
+
+
+def barrier(kind):
+    """The three tools have a repeatable visual language on every barrier."""
+    img=np.full((16,16),W.ID['outline'],np.uint8)
+    if kind=='crack':
+        yy,xx=np.mgrid[0:16,0:16]
+        img[:]=W.ID['stone_1']
+        for y in range(16):
+            for x in range(16):
+                if y%6==0 or (x+(y//6%2)*4)%8==0: img[y,x]=W.ID['stone_0']
+                elif y%6==1: img[y,x]=W.ID['stone_3']
+                elif y%6==5: img[y,x]=W.ID['stone_1']
+                else: img[y,x]=W.ID['stone_2']
+        # A jagged ochre fracture is not a decorative random crack.
+        pts=[(8,1),(6,4),(9,7),(6,10),(8,14)]
+        stroke(img,pts,W.ID['outline'],3)
+        stroke(img,pts,W.ID['yellow'])
+        img[7,9]=W.ID['gold_l']
+        stroke(img,[(5,14),(2,15)],W.ID['stone_0'],2)
+    elif kind=='web':
+        img[:]=W.ID['shadow']
+        # Tree-root frame and layered silk; a small amber cocoon at its heart.
+        for x in (1,13): stroke(img,[(x,0),(x+1,7),(x,15)],W.ID['bark_dk'],2)
+        for x,y in ((1,1),(8,0),(15,2),(15,8),(13,15),(8,15),(0,14),(0,7)):
+            stroke(img,[(x,y),(8,8)],W.ID['silk'])
+        for r in (3,6):
+            pts=[(8-r,8-r),(8,8-r-1),(8+r,8-r),(8+r+1,8),(8+r,8+r),(8,8+r+1),(8-r,8+r),(8-r-1,8),(8-r,8-r)]
+            stroke(img,pts,W.ID['silk'])
+        img[7:9,7:9]=W.ID['yellow'];img[7,7]=W.ID['gold_l']
+    else:
+        img[:]=W.ID['outline']
+        img[1,:]=W.ID['stone_0'];img[0,:]=W.ID['stone_2']
+        img[2,1:6]=W.ID['stone_1'];img[2,10:15]=W.ID['stone_1']
+        img[14,3:8]=W.ID['shadow'];img[15,9:14]=W.ID['shadow']
+    return img
+
+
 def event_object(kind):
     """Ceramic, gilt wood and worn stone, on transparent room overlays."""
     from px import Canvas
@@ -171,18 +326,29 @@ def event_object(kind):
 def build():
     # Build using the existing native-resolution drawing vocabulary, replacing
     # the pack's flattened cut-outs with ground/face/crown-aware metatiles.
-    T={n:(g,[a.copy() for a in frames],speed) for n,(g,frames,speed) in W.tiles().items()}
-    for i in range(3): T['moss%d'%i]=('wood_grass',[W.grass(i,3)],None)
+    grass_before,water_before=W.grass,W.water
+    W.grass,W.water=woodland_grass,flowing_water
+    try:
+        T={n:(g,[a.copy() for a in frames],speed) for n,(g,frames,speed) in W.tiles().items()}
+    finally:
+        W.grass,W.water=grass_before,water_before
+    for i in range(3): T['moss%d'%i]=('wood_grass',[woodland_grass(i,3)],None)
     for n,i in (('canopy',0),('canopy2',1),('canopy_glint',2)):
         T[n]=('wood_leaf',[canopy(i)],None)
+    T['canopy_s']=('wood_leaf',[canopy_face()],None)
     # Reuse the painter's silhouette-specific faces with the new leaf texture.
     for prefix,parts in (('tree',tree()),('tree2',tree(lantern=True,variant=1)),
                          ('gtree',tree(3)),('gtree2',tree(3,True,variant=1))):
         names=['tree_top_nw','tree_top_ne','tree_mid_w','tree_mid_e','tree_trunk_w','tree_trunk_e'] if prefix=='tree' else ['%s_%d'%(prefix,i) for i in range(len(parts))]
         for i,(n,a) in enumerate(zip(names,parts)):
             T[n]=('wood_tree',[a],None)
-    for i,a in enumerate(tree(sick=True)):
+    for i,a in enumerate(tree(sick=True,species='dead')):
         T['btree_%d'%i]=('wood_blight',[a],None)
+    for name,parts,sick in (('birch',tree(species='birch'),False),
+                            ('fir',tree(species='fir'),False),
+                            ('sicktree',tree(sick=True,variant=1),True)):
+        for i,a in enumerate(parts): T['%s_%d'%(name,i)]=('wood_blight' if sick else 'wood_tree',[a],None)
+
     for n,seed in (('blight_floor',0),('blight_floor2',1)):
         T[n]=('wood_deep',[rotten(seed,n.endswith('2'))],None)
     # A violet dirt trail remains visibly walkable against the bruised turf.
@@ -190,12 +356,16 @@ def build():
     for i in range(8):
         T['forest_rot%d'%i]=('wood_deep',[rotten(i+2,i==7)],None)
     for i in range(6):
-        T['forest_canopy%d'%i]=('wood_leaf',[canopy(i+3)],None)
+        T['forest_canopy%d'%i]=('wood_leaf',[canopy(i)],None)
     T['blight_crystal']=('wood_blight',[crystal()],None)
     for n,seed in (('blight_wall',0),('blight_wall2',1),('blight_wall_lit',2)):
         T[n]=('wood_blight',[masonry(seed,seed==2)],None)
     for n,i in (('canopy_blight',0),('canopy_blight2',1)):
         T[n]=('wood_blight',[canopy(i,True)],None)
+    for kind in ('leaf_litter','fern_patch','sick_bones','sick_stump','sick_rock'):
+        T[kind]=('wood_blight' if kind.startswith('sick_') else 'wood_grass',[forest_prop(kind)],None)
+    for kind in ('crack','web','pit'):
+        T[kind]=('wood_gate',[barrier(kind)],None)
     for n,kind in (('myst_pot','pot'),('myst_switch','plate'),('myst_switch_down','plate_down'),
                    ('myst_chest','chest'),('myst_chest_open','chest_open')):
         T[n]=('wood_stone',[event_object(kind)],None)
@@ -212,7 +382,7 @@ for n,(g,frames,speed) in TILES.items():
 # Trees combine grass, bark and foliage. Quantize those to the shared leaf ramp.
 for g,used in ORDERS.items():
     if len(used)>15:
-        priority=['outline','leaf_deep','shadow','leaf_mid','leaf_lt','leaf_br','leaf_hl','bark_dk','bark','bark_l','bark_ll','grass_m','grass_l','amber','glow'] if g=='wood_tree' else ['bt_o','bt_d','bt_m','bt_l','bt_g','v_0','v_1','v_2','v_3','mag_d','mag','mag_l','sick_d','bark','sick_l']
+        priority=['outline','leaf_deep','shadow','leaf_mid','leaf_lt','leaf_br','leaf_hl','bark_dk','bark','bark_l','bark_ll','grass_m','white','amber','glow'] if g=='wood_tree' else ['bt_o','bt_d','bt_m','bt_l','bt_g','v_0','v_1','v_2','v_3','mag_d','mag','mag_l','sick_d','bark','sick_l']
         order=[W.ID[n] for n in priority] if g in ('wood_tree', 'wood_blight') else W.build()[1][g][:15]
     else: order=sorted(used)
     GROUPS[PREFIX+g]=['#000000']+[HEX[i] for i in order]+['#000000']*(15-len(order))
