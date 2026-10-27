@@ -176,6 +176,36 @@ def gif(c,path,frames=96):
             'different_terrain_VRAM_states':len(terrain_hashes)}
 
 
+def visual_control(c,names,world,view,before,after):
+    """Retained terrain stays exact; explicitly bound shared blight pools.
+
+    The generator can place its harmful blight_pool material in an early
+    room. That named blight asset is intentionally redesigned everywhere.
+    Never waive a full image: validate every changed pixel against the
+    actual on-screen pool tiles, and retain the visible difference count.
+    """
+    changed=[(i%240,i//240) for i,(a,b) in enumerate(zip(before.getdata(),after.getdata())) if a!=b]
+    result={'file':view['image'],'identical':not changed,'different_pixels':len(changed)}
+    if changed and 'cell' in view:
+        cell=view['cell'];desc=world['cells'][cell]
+        L.warp(c,cell,next(i for i,g in enumerate(desc['gate']) if g));settle(c,view['position'])
+        camera=[P.r16(c,P.sym('gCamX')),P.r16(c,P.sym('gCamY'))]
+        assert camera==view['camera'],(cell,camera,view['camera'])
+        _,_,tiles,_=grid(c,names);bounds=[]
+        for (tx,ty),ns in tiles.items():
+            if ns[0]!='blight_pool':continue
+            x0=max(0,tx*16-camera[0]);y0=max(0,ty*16-camera[1])
+            x1=min(240,(tx+1)*16-camera[0]);y1=min(160,(ty+1)*16-camera[1])
+            if x0<x1 and y0<y1:bounds.append({'metatile':[tx,ty],'framebuffer_rect':[x0,y0,x1,y1]})
+        inside=bool(bounds) and all(any(b['framebuffer_rect'][0]<=x<b['framebuffer_rect'][2] and
+                                      b['framebuffer_rect'][1]<=y<b['framebuffer_rect'][3]
+                                      for b in bounds) for x,y in changed)
+        if inside:
+            result.update(allowed_changed_material='blight_pool',allowed_changed_bounds=bounds,
+                          changed_pixels_within_material=True,retained_pixels_identical=True)
+    return result
+
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('out');ap.add_argument('--rom',default=P.ROM);ap.add_argument('--map',default=P.MAP)
@@ -251,16 +281,19 @@ def main():
         assert not changes,changes
         if old.get('fixture_version')==report['fixture_version']:
             report['visual_controls']=[]
-            controls=['drain-control.png']+[r['image'] for r in report['rooms'] if r['stage']==0]
-            for filename in controls:
+            controls=[{'image':'drain-control.png'}]+[r for r in report['rooms'] if r['stage']==0]
+            for view in controls:
+                filename=view['image']
                 before=Image.open(Path(args.match).parent/filename).convert('RGB')
                 after=Image.open(out/filename).convert('RGB')
-                different=sum(a!=b for a,b in zip(before.getdata(),after.getdata()))
-                report['visual_controls'].append({'file':filename,'identical':different==0,'different_pixels':different})
-                print('CONTROL', 'PASS' if different==0 else 'DIFF', filename, different,flush=True)
+                control=visual_control(c,names,world,view,before,after)
+                report['visual_controls'].append(control)
+                status='PASS' if control['identical'] else 'BLIGHT_POOL_ONLY' if control.get('retained_pixels_identical') else 'DIFF'
+                print('CONTROL',status,filename,control['different_pixels'],flush=True)
         else:
             report['visual_controls_omitted']='Prior fixture left ambient fireflies alive; standing points and physical hashes reused, image controls require matching fixture versions.'
     (out/'capture.json').write_text(json.dumps(report,indent=2)+'\n')
+    assert all(v['identical'] or v.get('retained_pixels_identical') for v in report.get('visual_controls',[])),report['visual_controls']
     print('PASS:',len(report['rooms']),'generated rooms,',len(report['features']),'feature views',flush=True)
 
 
