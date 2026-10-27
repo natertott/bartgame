@@ -27,8 +27,8 @@ def plan():
     cases=[]
     def add(name,seed,cell,feature,**kw):cases.append(dict(name=name,seed=hex(seed),cell=cell,feature=feature,**kw))
     # Natural field loot: wood, brass and relic designs, against living and deep decay.
-    for n,s,c in [('forest-wood-chest',6,16),('blight-wood-chest',7,9),
-                  ('forest-brass-chest',7,16),('blight-brass-chest',7,18),
+    for n,s,c in [('forest-wood-chest',6,16),('blight-wood-chest',9,15),
+                  ('forest-brass-chest',7,10),('blight-brass-chest',7,18),
                   ('forest-relic-chest',SEED,21),('blight-relic-chest',6,19)]:
         add(n,s,c,'chest',action='chest',frames=112)
     # Every architectural style, including bright and heavily corrupted surroundings.
@@ -53,7 +53,7 @@ def plan():
         add(n,s,c,'pocket',action=('bomb','lamp','cape')[kind-1],frames=220 if kind==1 else 96)
     add('forest-locked-door',SEED,24,'door_locked',frames=64)
     add('blight-locked-door',7,14,'door_locked',frames=64)
-    add('forest-shrine',0xDEADBEEF,5,'statue',frames=64)
+    add('forest-shrine',0xDEADBEEF,5,'statue',action='shrine',frames=96)
     add('forest-relic-pedestal',SEED,23,'mossy_stone',frames=64)
     for feature,cell in [('bush',16),('rock_small',16),('thorn',11)]:
         add('forest-'+feature,SEED,cell,feature,frames=64)
@@ -182,18 +182,26 @@ class Review:
         if not chosen:self.missing.append(row);print('MISSING',row,flush=True);self.save();return
         target,point,face,extra=chosen;c=self.c;action=row.get('action');events={}
         if action=='chest':
-            point=[target[0]*16+8,(target[1]+1)*16+14]
-            events={8:[('UP',True)],31:[('UP',False)]}
+            point=[target[0]*16+8,target[1]*16+46]
+            if not self.safe(*point):point=[target[0]*16+8,target[1]*16+30]
+            events={8:[('UP',True)],36:[('UP',False)]}
         elif action=='enter':
-            point=[target[0]*16+8,(target[1]+1)*16+14]
+            point=[target[0]*16+8,target[1]*16+42]
+            if not self.safe(*point):point=[target[0]*16+8,target[1]*16+30]
             events={8:[('UP',True)],55:[('UP',False)]}
         elif action=='leave':events={8:[('DOWN',True)],56:[('DOWN',False)]}
+        elif action=='shrine':
+            target=(target[0],target[1]+1);point=[target[0]*16+8,target[1]*16+44]
+            events={8:[('UP',True)],36:[('UP',False)]}
         elif action=='switch':
-            point=[target[0]*16+8,target[1]*16+24];events={8:[('UP',True)],28:[('UP',False)]}
+            point=[target[0]*16+40,target[1]*16+12];face=3;key='LEFT'
+            if not self.safe(*point):point=[target[0]*16-24,target[1]*16+12];face=1;key='RIGHT'
+            if not self.safe(*point):point=[target[0]*16+8,target[1]*16+32];face=0;key='UP'
+            events={8:[(key,True)],34:[(key,False)]}
         elif action=='torch':
-            point=[target[0]*16+8,(target[1]+1)*16+14];C.equip_b(c,C.EQ_LAMP)
+            point=[target[0]*16+8,target[1]*16+46];C.equip_b(c,C.EQ_LAMP)
             P.w8(c,P.sym('gPl')+8,P.r8(c,P.sym('gPl')+8)|4)
-            events={8:[('UP',True)],12:[('UP',False),('A',True)],14:[('A',False)]}
+            events={8:[('UP',True)],25:[('UP',False),('A',True)],27:[('A',False)]}
         elif action in ('bomb','lamp','cape'):
             pl=P.sym('gPl');kind=extra['pocket_kind'];P.w8(c,pl+8,P.r8(c,pl+8)|{1:2,2:4,3:8}[kind]);P.w8(c,pl+7,10)
             C.equip_b(c,{1:C.EQ_BOMBS,2:C.EQ_LAMP,3:C.EQ_CLOAK}[kind]);key=extra['direction']
@@ -203,6 +211,7 @@ class Review:
                 if action=='bomb':
                     back=KEYS[(face+2)%4];events[17]=[(back,True)];events[47]=[(back,False)]
         self.settle(point,face)
+        if action=='shrine':P.w16(c,P.sym('gPl'),8)
         contract=B.contract(c);initial=self.snapshot_state(target);frames=[];trace=[];held=set();total=row.get('frames',64)
         for tick in range(total):
             for key,down in events.get(tick,[]):
@@ -210,7 +219,8 @@ class Review:
                 else:held.discard(key)
             c.clear_keys(*range(10))
             if held:c.set_keys(*(P.key(c,k) for k in sorted(held)))
-            C.heal(c);c.run_frame();frames.append(c.bg_video.to_pil().convert('RGB').copy());trace.append(self.snapshot_state(target))
+            if action!='shrine':C.heal(c)
+            c.run_frame();frames.append(c.bg_video.to_pil().convert('RGB').copy());trace.append(self.snapshot_state(target))
         c.clear_keys(*range(10));name=row['name'];folder=self.out/name;folder.mkdir(exist_ok=True)
         selected=sorted(set([0,7,12,20,32,48,64,80,total-1]+[i for i in range(1,total) if (trace[i]['state'],trace[i]['area'],trace[i]['target_ground'],trace[i]['target_overlay'])!=(trace[i-1]['state'],trace[i-1]['area'],trace[i-1]['target_ground'],trace[i-1]['target_overlay'])]))
         selected=[i for i in selected if i<total]
@@ -222,6 +232,9 @@ class Review:
         if action=='chest':check('actual chest opens',any(t['state_name']=='itemget' for t in trace) or trace[-1]['target_ground']!=initial['target_ground'])
         elif action=='enter':check('actual generated entrance reaches interior',any(t['area']==2 for t in trace))
         elif action=='leave':check('actual interior exit returns to forest',any(t['area']==1 for t in trace))
+        elif action=='shrine':
+            check('injured Bloom receives shrine healing',initial['hp']==8 and any(t['hp']==P.r16(c,P.sym('gPl')+2) for t in trace))
+            check('actual shrine trigger becomes spent',trace[-1]['target_ground']!=initial['target_ground'])
         elif action=='switch':check('actual floor plate becomes pressed',any(t['target_overlay']=='myst_switch_down' for t in trace))
         elif action=='torch':check('actual candle lights censer',any(t['target_ground']=='torch_lit' for t in trace))
         elif action in ('bomb','lamp'):check('actual item clears pocket barrier',trace[-1]['target_ground']!=initial['target_ground'])
