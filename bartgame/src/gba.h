@@ -50,6 +50,12 @@ typedef u8 bool8;
 #define REG_BG2VOFS REG16(0x1A)
 #define REG_BG3HOFS REG16(0x1C)
 #define REG_BG3VOFS REG16(0x1E)
+#define REG_BG2PA REG16(0x20)
+#define REG_BG2PB REG16(0x22)
+#define REG_BG2PC REG16(0x24)
+#define REG_BG2PD REG16(0x26)
+#define REG_BG2X REG32(0x28)
+#define REG_BG2Y REG32(0x2C)
 #define REG_WIN0H REG16(0x40)
 #define REG_WIN1H REG16(0x42)
 #define REG_WIN0V REG16(0x44)
@@ -91,6 +97,7 @@ typedef u8 bool8;
 #define REG_IME REG16(0x208)
 
 #define DCNT_MODE0 0x0000
+#define DCNT_MODE3 0x0003
 #define DCNT_OBJ_1D 0x0040
 #define DCNT_BG0 0x0100
 #define DCNT_BG1 0x0200

@@ -116,6 +116,10 @@ void bg0_plate(Canvas* c, int tx, int ty, const char* s, int ink, bool8 edge) {
 
 /* Push the shadow maps at VBlank. */
 void text_flush(void) {
+    /* Mode 3's bitmap occupies the normal BG0/BG3 map addresses. Keep
+       their shadows pending until the tiled world has been restored. */
+    if ((REG_DISPCNT & 7) == DCNT_MODE3)
+        return;
     if (sBg0Dirty) {
         dma3_copy32(sBg0, BG0_MAP, sizeof(sBg0));
         sBg0Dirty = 0;

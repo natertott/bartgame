@@ -404,16 +404,23 @@ static u8 sTitlePhase;
 static u32 sTitleSeed;
 static u8 sDiedFlag;
 
-static Canvas sTitlePress, sTitleTag, sTitleMenu;
-
-/* a canvas of words centred across the screen at tile row ty, outlined
-   in the dark so the title's art does not swallow them */
-static void title_words(Canvas* c, int ty, int tw, int th) {
-    bg0_canvas(c, (30 - tw) / 2, ty, tw, th);
-}
+static Canvas sTitlePress, sTitleMenu;
+/* Bitmap modes reserve OBJ tiles 0..511 for framebuffer space. The title
+   borrows the HUD's high tiles for one 64x32 transparent text sprite. */
+#define TITLE_TEXT_TILE OBJ_TILE_HUD_ICONS
+static u32 sTitleTextPixels[8 * 4 * 8] ALIGN4;
 
 static void title_line(Canvas* c, int y, const char* s, int ink) {
     vwf_text_fx(c, (c->tw * 8 - vwf_width(s)) / 2, y, s, ink, UI_INK_DARK, FX_OUTLINE);
+}
+
+static void title_text_draw(int y) {
+    OamEntry* o = oam_alloc();
+    if (!o)
+        return;
+    o->attr0 = ATTR0_Y(y) | ATTR0_WIDE;
+    o->attr1 = ATTR1_X(88) | ATTR1_SIZE(3);
+    o->attr2 = ATTR2_TILE(TITLE_TEXT_TILE) | ATTR2_PRIO(0) | ATTR2_PAL(PAL_OBJ_UIKIT);
 }
 
 /* the choice when a save exists: the chosen one in gold */
@@ -425,37 +432,50 @@ static void title_menu(void) {
 }
 
 static void title_show(void) {
-    /* the title art lives in the world's charblock while it is shown */
-    dma3_copy32(title_tiles, CHARBLOCK(0), TITLE_TILE_COUNT * 32);
-    dma3_copy32(title_map, SCREENBLOCK(28), 32 * 20 * 2);
-    dma3_fill32(0, SCREENBLOCK(24), 0x2000);
-    pal_set_bg(0, title_pal);
+    REG_DISPCNT = DCNT_BLANK;
+    gAnimTiles = 0;
+    /* An old canvas or hero upload could otherwise overwrite the bitmap
+       after it is copied, including the low OBJ tiles it covers. */
+    vram_flush_queue();
+    dark_off();
     gBgScroll[1][0] = gBgScroll[1][1] = gBgScroll[2][0] = gBgScroll[2][1] = 0;
     actors_clear();
+    oam_clear();
     bg0_clear();
-    bg0_pool_reset_full();
     sTitleHasSave = save_exists();
     sTitleCursor = 0;
     if (sTitleHasSave) {
-        title_words(&sTitleMenu, 13, 8, 4);
+        vwf_canvas_obj(&sTitleMenu, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
         title_menu();
     } else {
-        title_words(&sTitlePress, 14, 8, 2);
-        title_line(&sTitlePress, 3, "Press Start", UI_INK_CREAM);
+        vwf_canvas_obj(&sTitlePress, sTitleTextPixels, TITLE_TEXT_TILE, 8, 4);
+        vwf_clear(&sTitlePress, 0);
+        title_line(&sTitlePress, 2, "Press Start", UI_INK_CREAM);
         vwf_flush(&sTitlePress, TRUE);
     }
-    title_words(&sTitleTag, 16, 12, 2);
-    title_line(&sTitleTag, 3, "a game from the drain", UI_INK_GOLD);
-    vwf_flush(&sTitleTag, TRUE);
+    dma3_copy32(title_bitmap, MEM_VRAM, TITLE_BITMAP_BYTES);
+    REG_BG2CNT = BGCNT_PRIO(2);
+    REG_BG2PA = REG_BG2PD = 0x0100;
+    REG_BG2PB = REG_BG2PC = 0;
+    REG_BG2X = REG_BG2Y = 0;
+    pal_set_obj(PAL_OBJ_UIKIT, &pal_obj[PAL_OBJ_UIKIT * 16]);
     gGame.state = GS_TITLE;
-    gAnimTiles = 0;
-    dark_off();
     sTitlePhase = 0;
     sTitleSeed = 0x5EED;
     fade_set(16);
     fade_start(0, 1);
-    video_show(DCNT_BG0 | DCNT_BG2 | DCNT_OBJ);
+    REG_BLDCNT = 0x00D4; /* darken BG2 and OBJ */
+    REG_BLDY = 16;
+    REG_DISPCNT = DCNT_MODE3 | DCNT_OBJ_1D | DCNT_BG2 | DCNT_OBJ;
     bgm_play(BGM_TITLE);
+}
+
+static void title_restore_world(void) {
+    REG_DISPCNT = DCNT_MODE0 | DCNT_BLANK | DCNT_OBJ_1D;
+    REG_BLDCNT = REG_BLDY = 0;
+    REG_BG2CNT = BGCNT_PRIO(2) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(28) | BGCNT_SIZE_64x64;
+    tiles_init();
+    text_init(); /* the bitmap replaced BG0's font, HUD and kit tiles */
 }
 
 static void start_run(u32 seed) {
@@ -465,7 +485,7 @@ static void start_run(u32 seed) {
     gGame.kills = 0;
     world_generate(seed);
     player_new_game();
-    tiles_init();
+    title_restore_world();
     gAnimTiles = 1;
     bg0_clear();
     load_sewer(0);
@@ -483,7 +503,7 @@ static void continue_run(void) {
         start_run(sTitleSeed >> 4);
         return;
     }
-    tiles_init();
+    title_restore_world();
     gAnimTiles = 1;
     bg0_clear();
     load_sewer(0);
@@ -505,11 +525,13 @@ static void update_title(void) {
             title_menu();
             sfx_play(SFX_MENU);
         }
-        int x = ((30 - 8) / 2) * 8 + (64 - vwf_width("Continue")) / 2 - 10;
-        draw_sprite(x + nudge[(gFrame >> 3) & 3], 13 * 8 + 2 + sTitleCursor * 12, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
+        title_text_draw(120);
+        int x = 88 + (64 - vwf_width("Continue")) / 2 - 10;
+        draw_sprite(x + nudge[(gFrame >> 3) & 3], 122 + sTitleCursor * 12, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
     } else {
         /* Press Start blinks */
-        bg0_show(&sTitlePress, (30 - 8) / 2, 14, (gFrame & 32) == 0);
+        if ((gFrame & 32) == 0)
+            title_text_draw(140);
     }
     if (sTitlePhase == 0 && (gKeysDown & (KEY_START | KEY_A))) {
         sTitlePhase = 1;

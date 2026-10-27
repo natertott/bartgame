@@ -143,6 +143,17 @@ void fade_update(void) {
 /* Called right after VBlank: push everything the frame prepared. */
 void video_flush(void) {
     oam_flush();
+    if ((REG_DISPCNT & 7) == DCNT_MODE3) {
+        /* Direct-colour title pixels do not pass through a BG palette.
+           Fade the bitmap and its OBJ words together in hardware. */
+        REG_BLDCNT = 0x00C0 | DCNT_BG2 >> 8 | DCNT_OBJ >> 8;
+        REG_BLDY = gFadeLevel;
+        if (gPalDirty) {
+            dma3_copy32(gPalObj, MEM_PAL_OBJ, 512);
+            gPalDirty = 0;
+        }
+        return;
+    }
     REG_BG0HOFS = gBgScroll[0][0];
     REG_BG0VOFS = gBgScroll[0][1];
     REG_BG1HOFS = gBgScroll[1][0];
