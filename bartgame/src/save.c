@@ -7,10 +7,12 @@
 #include "player.h"
 #include "game.h"
 #include "save.h"
+#include "myst.h"
 
 #define SRAM ((volatile u8*)0x0E000000)
 #define SAVE_MAGIC 0x54524142u /* "BART" */
-#define SAVE_VERSION 1
+#define SAVE_VERSION 2
+#define SAVE_LEGACY_VERSION 1
 
 /* the string emulators and flash carts look for to give the ROM SRAM */
 const char gSramId[] __attribute__((used)) = "SRAM_V113";
@@ -50,7 +52,7 @@ static void sram_read(void* dst, int n) {
 }
 
 static bool8 file_valid(void) {
-    return sFile.magic == SAVE_MAGIC && sFile.version == SAVE_VERSION && sFile.size == sizeof(SaveFile) &&
+    return sFile.magic == SAVE_MAGIC && (sFile.version == SAVE_VERSION || sFile.version == SAVE_LEGACY_VERSION) && sFile.size == sizeof(SaveFile) &&
            sFile.sum == checksum((const u8*)&sFile, sizeof(SaveFile) - 4);
 }
 
@@ -74,6 +76,31 @@ bool8 save_exists(void) {
     return file_valid();
 }
 
+/* Old runs stored a free overworld item chest and an unrelated optional
+   mystery in each key room. Keep their graph and inventory intact, but turn
+   each unclaimed reward into the new solvable trial. In particular an old
+   optional mystery's MF_DONE must not consume the required item reward. */
+static void migrate_legacy_trials(void) {
+    static const u8 kinds[3] = { MK_SWITCHES, MK_WAVES, MK_MINIBOSS };
+    static const u8 items[3] = { ITEM_BOMBS, ITEM_LAMP, ITEM_CLOAK };
+    int i;
+    for (i = 0; i < CELLS; i++) {
+        Cell* c = &gWorld.cells[i];
+        int key;
+        if (c->role != ROLE_KEYITEM || c->role_arg < 1 || c->role_arg > 3)
+            continue;
+        key = c->role_arg - 1;
+        gWorld.myst[i] = MYST_PACK(kinds[key], MS_MEDIUM, (gWorld.seed + i) % 3);
+        if (gPl.items & items[key]) {
+            c->flags |= CF_ITEM_TAKEN | CF_CHEST_OPEN;
+            gWorld.myst_flags[i] |= MF_DONE | MF_WON;
+        } else {
+            c->flags &= ~(CF_ITEM_TAKEN | CF_CHEST_OPEN);
+            gWorld.myst_flags[i] = 0;
+        }
+    }
+}
+
 bool8 save_load(void) {
     sram_read(&sFile, sizeof(SaveFile));
     if (!file_valid())
@@ -84,6 +111,10 @@ bool8 save_load(void) {
     gGame.kills = sFile.kills;
     gGame.run_frames = sFile.run_frames;
     gGame.seed = gWorld.seed;
+    if (sFile.version == SAVE_LEGACY_VERSION) {
+        migrate_legacy_trials();
+        save_write(); /* persist the upgraded record with a fresh checksum */
+    }
     return TRUE;
 }
 
