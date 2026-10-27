@@ -407,6 +407,7 @@ void bomb_place(int px, int py) {
     a->pal = items_frame_pal[a->frame];
     a->timer = 0;
     a->timer2 = 0;
+    a->dir = facing_to_dir(gPlayer->facing); /* retain release-side depth through turns */
     a->prio = 2;
     a->hitbox = HB_SMALL;
     a->flags = AF_SOLID;
@@ -590,7 +591,7 @@ void objects_draw_hand(bool8 behind) {
             continue;
         if (!player_hand_composite())
             continue;
-        if ((gPlayer->facing == FACE_N) != behind)
+        if ((a->dir == DIR_N) != behind)
             continue;
         int t=a->timer2;
         int x=(a->vx*(8-t)+PX(a->x)*t)/8;
