@@ -1,0 +1,116 @@
+{
+  "source_commit": "cdb99b8ff213cd4328083b750acb9513237704b1",
+  "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+  "baseline_rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+  "emulator": "mGBA 0.10.5",
+  "scope": {
+    "passed": 3540,
+    "total": 3540,
+    "counts": {
+      "retained_metatile_contracts": 896,
+      "cosmetic_metatile_contracts": 16,
+      "forest_tiles": 267,
+      "forest_frames": 312,
+      "sewer_tiles": 370,
+      "sewer_frames": 623,
+      "myst_tiles": 97,
+      "myst_frames": 104,
+      "sprite_sheets": 29
+    },
+    "report": "validation/scope.json"
+  },
+  "physics": {
+    "unchanged_rooms": 75,
+    "checked_rooms": 75,
+    "report": "validation/physics.json"
+  },
+  "surfaces": {
+    "passed": 2538,
+    "total": 2538,
+    "log": "validation/surfaces.log"
+  },
+  "critical_path_and_heart": {
+    "passed": 21,
+    "total": 21,
+    "log": "validation/critical.log"
+  },
+  "optional_mysteries": {
+    "passed": 28,
+    "total": 28,
+    "log": "validation/myst.log"
+  },
+  "performance": {
+    "passed": 3,
+    "total": 3,
+    "report": "validation/performance.json"
+  },
+  "budget": {
+    "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+    "rom_bytes": 520752,
+    "tilesets": {
+      "forest": {
+        "subtiles": 993,
+        "max_subtiles": 1024,
+        "palettes": 12,
+        "max_palettes": 12,
+        "animated_metatiles": 59
+      },
+      "sewer": {
+        "subtiles": 999,
+        "max_subtiles": 1024,
+        "palettes": 11,
+        "max_palettes": 12,
+        "animated_metatiles": 38
+      },
+      "myst": {
+        "subtiles": 190,
+        "max_subtiles": 1024,
+        "palettes": 8,
+        "max_palettes": 12,
+        "animated_metatiles": 6
+      }
+    }
+  },
+  "capture_controls": {
+    "identical_frames": 18,
+    "bounded_material_changes": [
+      {
+        "file": "room-07-stage0.png",
+        "identical": false,
+        "different_pixels": 256,
+        "allowed_changed_material": "blight_pool",
+        "allowed_changed_bounds": [
+          {
+            "metatile": [
+              23,
+              15
+            ],
+            "framebuffer_rect": [
+              208,
+              124,
+              224,
+              140
+            ]
+          }
+        ],
+        "changed_pixels_within_material": true,
+        "retained_pixels_identical": true
+      }
+    ],
+    "method": "All pixels outside existing shared blight-pool bounds must be identical. Changed frames remain explicitly marked identical=false."
+  },
+  "captures": "gallery.json",
+  "files": {
+    "validation/budget.json": "940952c3acc27d8885ebc4c559b2431c6fced95c697684f6c64dc584cac47238",
+    "validation/build.log": "db19be703f7fc1c85223acc4c3d8cab7818a26e2ee2ca680f93a02095d674542",
+    "validation/critical.log": "5aa6927eea94d3fe98c0eeb009734dc639f429b4b66c51c9e37ce99d22cf75ed",
+    "validation/myst.log": "01db8a9b9ddb61a15fdf4c52159f2babbcda63da32678c063d44d7f6b9640881",
+    "validation/performance.json": "412cd2dad9837f0ff9ad7496d76c189e0499da2a43aa7c0c7a0d1b6b9a6f8279",
+    "validation/performance.log": "d193632b68b434b51c501681ce66d59c185b5cd665c087363741e83d1417446c",
+    "validation/physics.json": "ba7414dadeafd17416904f5c772b2fce7057391820ccb177e0be10ed597e329c",
+    "validation/physics.log": "9a003858b3f4401e9e4b5d7e6fcaaee6239b5f546101fd1d7be4518686f0dd87",
+    "validation/scope.json": "563a44f965e26bac0c28fed4f03ed822994265fb3836655555db20b9b6327734",
+    "validation/scope.log": "d22eb29276f566bbcea92bb09444a11bb014741f4270dac33564dbb39d26eedb",
+    "validation/surfaces.log": "106d72a920acbe60737f16b14e93047c20a1d638bb291b529e088b102ae26347"
+  }
+}

@@ -47,3 +47,7 @@ __pycache__/
 # The simulator's raw run dump (tools/quickstart/sim.py --out); 20 MB per
 # 10,000 runs. The report and charts it feeds are committed instead.
 docs/sim_runs.json
+
+# Reviewed playable Blighted Forest atlas build
+!/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.gba
+!/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.zip

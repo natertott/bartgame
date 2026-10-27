@@ -1,0 +1,229 @@
+{
+  "source": "art/ref/tile_art/blight.webp",
+  "supplied_screenshot": "art/ref/blight-reference.jpg",
+  "supplied_screenshot_sha256": "f296f16e8dc6fc68d6508926673331025c03f29975c13246cb565af31f3a597f",
+  "source_sha256": "d54be1e6fc3a0c9333c2afc6374b4e489bae53160e78df9f67cf65e6727d2fe5",
+  "source_size": [
+    1448,
+    1086
+  ],
+  "tile_crops": {
+    "canopy_sick": [
+      [
+        47,
+        133,
+        141,
+        226
+      ]
+    ],
+    "canopy_sick_lit": [
+      [
+        209,
+        133,
+        303,
+        226
+      ],
+      [
+        322,
+        133,
+        416,
+        226
+      ]
+    ],
+    "blight_wall": [
+      [
+        479,
+        133,
+        573,
+        226
+      ],
+      [
+        590,
+        133,
+        684,
+        226
+      ]
+    ],
+    "blight_wall_lit": [
+      [
+        750,
+        133,
+        844,
+        226
+      ],
+      [
+        863,
+        133,
+        956,
+        226
+      ]
+    ],
+    "blight_ground": [
+      [
+        35,
+        330,
+        127,
+        422
+      ],
+      [
+        144,
+        330,
+        236,
+        422
+      ]
+    ],
+    "blight_ground_lit": [
+      [
+        269,
+        330,
+        361,
+        422
+      ],
+      [
+        379,
+        330,
+        471,
+        422
+      ]
+    ],
+    "blight_floor": [
+      [
+        510,
+        330,
+        616,
+        422
+      ]
+    ],
+    "blight_floor_pits": [
+      [
+        656,
+        330,
+        762,
+        422
+      ],
+      [
+        776,
+        330,
+        872,
+        422
+      ]
+    ],
+    "blight_vein": [
+      [
+        910,
+        330,
+        1006,
+        422
+      ],
+      [
+        1030,
+        330,
+        1126,
+        422
+      ]
+    ],
+    "blight_pool": [
+      [
+        1180,
+        330,
+        1276,
+        422
+      ],
+      [
+        1303,
+        330,
+        1399,
+        422
+      ]
+    ],
+    "crystal": [
+      [
+        36,
+        536,
+        121,
+        622
+      ]
+    ],
+    "dead_tree": [
+      [
+        132,
+        535,
+        270,
+        662
+      ]
+    ],
+    "mist": [
+      [
+        800,
+        536,
+        872,
+        611
+      ],
+      [
+        883,
+        536,
+        956,
+        611
+      ]
+    ],
+    "sparkle": [
+      [
+        988,
+        536,
+        1061,
+        611
+      ],
+      [
+        1072,
+        536,
+        1145,
+        611
+      ],
+      [
+        1167,
+        536,
+        1240,
+        611
+      ]
+    ],
+    "sparkle_white": [
+      [
+        1270,
+        536,
+        1341,
+        611
+      ],
+      [
+        1345,
+        536,
+        1415,
+        611
+      ]
+    ]
+  },
+  "tree_crop": [
+    537,
+    470,
+    742,
+    707
+  ],
+  "tree_native_size": [
+    32,
+    48
+  ],
+  "native_tile_size": [
+    16,
+    16
+  ],
+  "resample": "Existing Atlas importer: weighted area reduction, middle-tone median, dark and bright-accent preservation",
+  "transparent_samples": [
+    "blight_vein",
+    "crystal",
+    "dead_tree",
+    "mist",
+    "sparkle",
+    "sparkle_white"
+  ],
+  "alpha": "Existing edge-keyed source object alpha retained. Mist carries area alpha; sparkles keep bright cores; veins retain luminous cracks.",
+  "composition": "Source sample interiors only; no text, sample frames or gold atlas border."
+}

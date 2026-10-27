@@ -1,6 +1,13 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: supplied item and shield artwork
+## Latest: Blighted Forest atlas artwork
+
+[View the new forest in real mGBA runs](blight-reference/README.md).
+Blue-violet canopy, mossy luminous ruins, quieter earth, blended decay,
+twisted trees and glowing growths follow the supplied atlas. The gallery
+includes matched comparisons, native frames and actual animation clips.
+
+## Previous: supplied item and shield artwork
 
 [View the supplied sprites in the actual ROM](items-reference/README.md).
 The new item and both shield sheets are imported directly, with richer
@@ -105,4 +112,5 @@ and [original native captures](captures/) are retained for comparison. Their
 old-layout invariance results apply to that artwork-only revision; the
 current engine intentionally generates new layouts.
 
-Compiled ROMs, local ZIP bundles and save fixtures are excluded from Git.
+Reviewed ROMs and ZIP bundles are versioned in [downloads](../downloads/README.md).
+Local build output and emulator save fixtures remain excluded from Git.

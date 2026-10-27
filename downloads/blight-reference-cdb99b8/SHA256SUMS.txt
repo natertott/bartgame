@@ -1,0 +1,2 @@
+d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76  bartgame-blight-reference-cdb99b8.gba
+10c1c190ba2df0b9afb55c04a353ff1a435c05447b8c1689e6c5727ef1779317  bartgame-blight-reference-cdb99b8.zip

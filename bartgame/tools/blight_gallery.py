@@ -105,7 +105,9 @@ def copy_captures(root, out, phase):
             changes = report.get('physical_comparison', {}).get('differences', [])
             assert not changes, (source, changes)
             controls = report.get('visual_controls', [])
-            assert all(c['identical'] for c in controls), (source, controls)
+            assert all(c['identical'] or
+                       (c.get('retained_pixels_identical') and c.get('allowed_changed_material') == 'blight_pool')
+                       for c in controls), (source, controls)
         destination.mkdir(parents=True, exist_ok=True)
         paths = [source / 'capture.json']
         paths += sorted(source.glob('*.png'))

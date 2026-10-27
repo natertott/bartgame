@@ -1,0 +1,35 @@
+{
+  "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+  "method": "Actual mGBA, settled camera, cleared enemies and healing; 180 video frames per ordinary/deep/Heart view.",
+  "samples": [
+    {
+      "seed": 6,
+      "cell": 0,
+      "stage": 0,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "cell": 19,
+      "stage": 3,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "seed": 6,
+      "cell": 18,
+      "stage": 3,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "total": 3
+}

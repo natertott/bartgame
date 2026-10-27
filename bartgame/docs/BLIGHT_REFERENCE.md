@@ -41,7 +41,7 @@ environment active:
 ```sh
 make -j4
 python art/blight_reference_source.py /tmp/blight-source.png
-python tools/blight_review.py /tmp/blight-new --seed 6
+python tools/blight_review.py /tmp/blight-new --seed 6 --deep-features
 ```
 
 For matched comparisons, retain the old ROM, linker map and generated
@@ -52,7 +52,7 @@ python tools/blight_review.py /tmp/blight-old \
   --rom /path/to/old.gba --map /path/to/old.map \
   --assets-header /path/to/old-assets.h --seed 6
 python tools/blight_review.py /tmp/blight-new \
-  --match /tmp/blight-old/capture.json
+  --match /tmp/blight-old/capture.json --deep-features
 ```
 
 PNG files are unmodified 240×160 mGBA framebuffers. The fixture navigates
@@ -78,6 +78,11 @@ solidity grids and spawn records in 75 rooms against the prior ROM.
 `tools/critical_path.py --boss` exercises all three progression items and
 the Heart. The optional mystery-room probe is also retained.
 
+One early room in seed 6 already contains a blight pool. Its existing
+hazard receives the new pool artwork too; the control report identifies
+that 16×16 change explicitly and checks every surrounding pixel. Normal
+healthy terrain, the shared stump, Drain and mystery artwork remain exact.
+
 The published gallery includes the final ROM hash, reports, matched
-captures from two seeds and exact healthy-forest and Drain controls:
+captures from two seeds and healthy-forest and Drain controls:
 [actual mGBA review](../../forest-review/blight-reference/README.md).

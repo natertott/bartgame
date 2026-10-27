@@ -1,6 +1,29 @@
 # BARTGAME downloads
 
-## Latest: supplied item and shield artwork
+## Latest: Blighted Forest atlas artwork
+
+The forest now uses blue-violet canopy, luminous mossy ruins, quieter purple
+earth, softer decay edges, twisted trees, crystals, pools and mist inspired
+by the supplied atlas. This build retains the previous item, title and
+Bloom animation updates.
+
+- [Download the updated GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.gba)
+- [Download the updated ZIP](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.zip)
+- [SHA256 checksums](blight-reference-cdb99b8/SHA256SUMS.txt)
+- [Actual mGBA screenshots, comparisons and animation](../forest-review/blight-reference/README.md)
+
+Open the `.gba` in mGBA. Built from source commit
+[`cdb99b8`](https://github.com/natertott/bartgame/commit/cdb99b8ff213cd4328083b750acb9513237704b1).
+All 75 sampled generated rooms preserve their collision and spawn records;
+all three required rewards and the Heart remain completable.
+
+ROM SHA256:
+
+```text
+d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76
+```
+
+## Previous: supplied item and shield artwork
 
 This build includes the supplied item and shield designs, richer inventory
 palettes, matching held-item art, the imported title and Bloom animation polish.

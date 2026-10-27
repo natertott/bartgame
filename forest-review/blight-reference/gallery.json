@@ -1,0 +1,854 @@
+{
+  "emulator": "mGBA 0.10.5",
+  "method": "Native PNG/GIF files copied byte-for-byte. Review sheets enlarge complete native frames 2x using nearest-neighbour scaling and add captions outside them. No altered framebuffer pixels or source-art overlays.",
+  "before": [
+    {
+      "folder": "before/seed-b4a7",
+      "seed": "0xb4a7",
+      "rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+      "rooms": 25,
+      "features": 5,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": null
+    },
+    {
+      "folder": "before/seed-6",
+      "seed": "0x6",
+      "rom_sha256": "22655879ab59d8c93a80e7dfcbaecec98465bb5f723086233c25516e0efd3d45",
+      "rooms": 25,
+      "features": 5,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": null
+    }
+  ],
+  "after": [
+    {
+      "folder": "after/seed-b4a7",
+      "seed": "0xb4a7",
+      "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+      "rooms": 25,
+      "features": 8,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": [
+        {
+          "file": "drain-control.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-11-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-16-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-21-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-22-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-23-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-24-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        }
+      ]
+    },
+    {
+      "folder": "after/seed-6",
+      "seed": "0x6",
+      "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+      "rooms": 25,
+      "features": 8,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": [
+        {
+          "file": "drain-control.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-00-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-05-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-07-stage0.png",
+          "identical": false,
+          "different_pixels": 256,
+          "allowed_changed_material": "blight_pool",
+          "allowed_changed_bounds": [
+            {
+              "metatile": [
+                23,
+                15
+              ],
+              "framebuffer_rect": [
+                208,
+                124,
+                224,
+                140
+              ]
+            }
+          ],
+          "changed_pixels_within_material": true,
+          "retained_pixels_identical": true
+        },
+        {
+          "file": "room-10-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-12-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-15-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-16-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-17-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-20-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-21-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-22-stage0.png",
+          "identical": true,
+          "different_pixels": 0
+        }
+      ]
+    }
+  ],
+  "native_files": [
+    {
+      "file": "before/seed-b4a7/capture.json",
+      "sha256": "5f7654de2d765d49006160c5e46fa33599dba812f7cb28273f4370c700280273"
+    },
+    {
+      "file": "before/seed-b4a7/blighted-tree.png",
+      "sha256": "5c2275295b41daed8444fb80c37867dbd5681a3d68d4a01c36ea5836030dd132"
+    },
+    {
+      "file": "before/seed-b4a7/crystals.png",
+      "sha256": "bfd7d67eaddbde78ef2b67404ef14bbb37abe11967bb779616637ee3c3013283"
+    },
+    {
+      "file": "before/seed-b4a7/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "before/seed-b4a7/glowing-pool.png",
+      "sha256": "f5b6351e4b174ed0e3283a40eff219e406e75cb17d7c0b3774bfbc41329261b5"
+    },
+    {
+      "file": "before/seed-b4a7/mixed-blight.png",
+      "sha256": "49dc942ca7bcf61ea574dbc0d72c0f318ef2c265228b08863850dbfdeffbdb19"
+    },
+    {
+      "file": "before/seed-b4a7/room-00-stage2.png",
+      "sha256": "b701234796e123c0ce2cb9ed836eaca87d59a027596fad1ed0a514fcbf35f01b"
+    },
+    {
+      "file": "before/seed-b4a7/room-01-stage2.png",
+      "sha256": "4116506319595b14fd1cae1bda184b9459b1322827f611c8daeeb833f9573dcd"
+    },
+    {
+      "file": "before/seed-b4a7/room-02-stage2.png",
+      "sha256": "7366a2cb9c1bb9a4e76485e6cd0d3027024bded18170cf30b044febe6a7f41f7"
+    },
+    {
+      "file": "before/seed-b4a7/room-03-stage2.png",
+      "sha256": "7bb18b876aefec50814de961d8e724281b6e24d54318df915de0a97186276040"
+    },
+    {
+      "file": "before/seed-b4a7/room-04-stage1.png",
+      "sha256": "874094d5ffd86dd28b9a2fbbc409d3ebf572a86b2b0dfe3d3ed5933f0dc02575"
+    },
+    {
+      "file": "before/seed-b4a7/room-05-stage2.png",
+      "sha256": "5d6562df429843eb2061e59dc8096a3475a602e5f54d37c59ad99fa61cab5f08"
+    },
+    {
+      "file": "before/seed-b4a7/room-06-stage2.png",
+      "sha256": "0a6b5b881694c789962132f3878f55a899048a951d7210d8f69b25fd9ec020df"
+    },
+    {
+      "file": "before/seed-b4a7/room-07-stage1.png",
+      "sha256": "7a658de50b2ba46649cf77bee8edea30ce680f017af424adf23baddd505424ec"
+    },
+    {
+      "file": "before/seed-b4a7/room-08-stage1.png",
+      "sha256": "6c166e5cb9193683f9cff04b9703af64a43a347c55f11e8ba10f9585c81d3f82"
+    },
+    {
+      "file": "before/seed-b4a7/room-09-stage1.png",
+      "sha256": "001f1375bc32c0f79ed748e23d5af2a227318a86d6561dbf3667a3178b3a0519"
+    },
+    {
+      "file": "before/seed-b4a7/room-10-stage2.png",
+      "sha256": "bbec97b56795c6fd86aba2898893f4bf7836f51b8a4a9389c91f6792b3ae2b39"
+    },
+    {
+      "file": "before/seed-b4a7/room-11-stage0.png",
+      "sha256": "ee35634d27734c2d6843cc7a3acd8b0e80c97ddb28afffd84d7f9963d2273228"
+    },
+    {
+      "file": "before/seed-b4a7/room-12-stage1.png",
+      "sha256": "ac7438a77856cb5aa4c81f7d17344be0ad1e3dc75757ee1654db16ce175dc941"
+    },
+    {
+      "file": "before/seed-b4a7/room-13-stage1.png",
+      "sha256": "7c97dd109bff854f55d1761e84e4f7c3028850e49de5b2058d587a2a7a3df3ee"
+    },
+    {
+      "file": "before/seed-b4a7/room-14-stage1.png",
+      "sha256": "7ad34822db61930176ba6bda9c11aed9446aa3af7861659c771d270e39c4fdea"
+    },
+    {
+      "file": "before/seed-b4a7/room-15-stage2.png",
+      "sha256": "6d19fb70ba9a8af3e58215a9f25cd1e13db03bf5bbb722ed75a125962820c788"
+    },
+    {
+      "file": "before/seed-b4a7/room-16-stage0.png",
+      "sha256": "843fadd7e281c570e16c8b91ad6164cd5a976509af3d2671fb05b8b74618bcf0"
+    },
+    {
+      "file": "before/seed-b4a7/room-17-stage1.png",
+      "sha256": "6115fc438966177f6d42ef9cafda391ca437935539985ad408a441638fe76d5c"
+    },
+    {
+      "file": "before/seed-b4a7/room-18-stage1.png",
+      "sha256": "0225899fbf74fd347b5a468336ee08c8017edceb281bacb5e7975101b7f0d5d2"
+    },
+    {
+      "file": "before/seed-b4a7/room-19-stage1.png",
+      "sha256": "2bd568a1bbcd723e63241e3cd3a68a87ec396ee3a03a517f59e6b163016d32c3"
+    },
+    {
+      "file": "before/seed-b4a7/room-20-stage3.png",
+      "sha256": "f48d30b17e25af612ddafc09f917fd64a60398cb7d7b91dbf7643c7a4dcb2830"
+    },
+    {
+      "file": "before/seed-b4a7/room-21-stage0.png",
+      "sha256": "9fdd061fc81eea7971c38cd9b573a31a17a9a833ce997749d7f308495e4f514c"
+    },
+    {
+      "file": "before/seed-b4a7/room-22-stage0.png",
+      "sha256": "11b161e3a26322f001603d562396ab3492ed161ee6c78ac06de4593b35dfac39"
+    },
+    {
+      "file": "before/seed-b4a7/room-23-stage0.png",
+      "sha256": "205044c85cfcaf8ebaf9e533e191f42f49a4fb9f2659ed9bcb0986cf351e8574"
+    },
+    {
+      "file": "before/seed-b4a7/room-24-stage0.png",
+      "sha256": "e1cee01d6424894562725847be91c061971c0ef63ef2074f8c202ce9e986a383"
+    },
+    {
+      "file": "before/seed-b4a7/ruined-wall.png",
+      "sha256": "1ef982bd1c20711417c7f9d323fa4fd7146d8e515c6f59e4b0848a1380826e19"
+    },
+    {
+      "file": "before/seed-b4a7/blighted-tree.gif",
+      "sha256": "2fc7da7a3b7914242e4ea56f482ff0f037b24170b966343c39365d88ab73893a"
+    },
+    {
+      "file": "before/seed-b4a7/glowing-pool.gif",
+      "sha256": "5b55af06a00723859745c7f230691ba112124967e96c28fe4a01ca709dfd8e25"
+    },
+    {
+      "file": "before/seed-b4a7/ruined-wall.gif",
+      "sha256": "167e8a080265452d554e1ce8bebc2291a8f0620b24e80ad0e87e056a91d5f6a2"
+    },
+    {
+      "file": "before/seed-6/capture.json",
+      "sha256": "d18de340a4c8027870545f6a5214b14ae4b4ea1fc40c257f3dc597889d7371a3"
+    },
+    {
+      "file": "before/seed-6/blighted-tree.png",
+      "sha256": "f4730f21c99501d52b9a1d8ec8badb86a14f7060e0cad7451aba4450e884d31d"
+    },
+    {
+      "file": "before/seed-6/crystals.png",
+      "sha256": "de5856e3e837d73314441679b044730483bc2ae0fdaa2ea46bd94183bac09dc5"
+    },
+    {
+      "file": "before/seed-6/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "before/seed-6/glowing-pool.png",
+      "sha256": "704300f9ef59036b8b2fdc1b6265a14b38bcbbc5e1f97f87729cbbf4b530c262"
+    },
+    {
+      "file": "before/seed-6/mixed-blight.png",
+      "sha256": "9760b6ea7dc0e78c4d4bb244fbfbec5ed121ae0ffaa7b0bf92d0473eee15ed18"
+    },
+    {
+      "file": "before/seed-6/room-00-stage0.png",
+      "sha256": "47cc922a034f9c7d9a4751b934097777d296deb4e6b18fd76ecdb47a671139fb"
+    },
+    {
+      "file": "before/seed-6/room-01-stage1.png",
+      "sha256": "25977c83ada514e7f395a3d122a09e712b6e020636203153ba38bf1b86efdb73"
+    },
+    {
+      "file": "before/seed-6/room-02-stage1.png",
+      "sha256": "64cd3564068b493fbe669dab569a3cd1d11541eef6fcdef9e5c924af26c83bfa"
+    },
+    {
+      "file": "before/seed-6/room-03-stage2.png",
+      "sha256": "c598d5e6f8ea0702ddeec26af60c60938a770d46059a3bc59e257222a664f222"
+    },
+    {
+      "file": "before/seed-6/room-04-stage3.png",
+      "sha256": "a7c32440e534252a74179f1501a3446e738538c0b6d444035fa55439b9364cfb"
+    },
+    {
+      "file": "before/seed-6/room-05-stage0.png",
+      "sha256": "cc9da5252789b9639cd20042570db03801242c7423db105d3265f3cec6ce56eb"
+    },
+    {
+      "file": "before/seed-6/room-06-stage1.png",
+      "sha256": "770f0bdb0bb452b38715894d680b1620509983d4a169f63ca17570b21e3071ca"
+    },
+    {
+      "file": "before/seed-6/room-07-stage0.png",
+      "sha256": "e766f630e4e72a5cdba835c2ebbe07a3ca089b89b101dc4129d18b57a0bd2b81"
+    },
+    {
+      "file": "before/seed-6/room-08-stage2.png",
+      "sha256": "b422e6c355fb12f7fe1d686700f3bed5ca61b26d8e5fcb584923775665cbfec9"
+    },
+    {
+      "file": "before/seed-6/room-09-stage3.png",
+      "sha256": "753f8c40c844b79f7fcbbf4c3a0f20a33cf208f6ac9d2b0033e737d747a7e34b"
+    },
+    {
+      "file": "before/seed-6/room-10-stage0.png",
+      "sha256": "ad6558712f5fcb21070a4f43053706a252a27c84fa0c2c972d93a51ba5e236cc"
+    },
+    {
+      "file": "before/seed-6/room-11-stage1.png",
+      "sha256": "a2288ddf7c5d0fe848c99aeb97a8996eb4911793d36fa50c28f63296113e3f2f"
+    },
+    {
+      "file": "before/seed-6/room-12-stage0.png",
+      "sha256": "6ba0429e507ffc13b8cc9ea06cbb8358d12af26a73b681fa2c434ad9ef71d2cd"
+    },
+    {
+      "file": "before/seed-6/room-13-stage2.png",
+      "sha256": "d0a1d6fe58a7f05f3612185650af7bd89435684f496875736598624b04b98708"
+    },
+    {
+      "file": "before/seed-6/room-14-stage3.png",
+      "sha256": "d1c39ae58f723e213e2a78b797ff69a2a7d8a5beffbd173acac308577d817a49"
+    },
+    {
+      "file": "before/seed-6/room-15-stage0.png",
+      "sha256": "460e36c468236d44bf611a103d8ab0ebe2f0139a98530ee8e83a863a546b1b4d"
+    },
+    {
+      "file": "before/seed-6/room-16-stage0.png",
+      "sha256": "072713771ffc8ac90107a80b3d83f18b3775e13c08c47e861de5b801b55056f4"
+    },
+    {
+      "file": "before/seed-6/room-17-stage0.png",
+      "sha256": "e236ac5f41a9100c2352869a2a42112847581551d144195d3698d608656117e9"
+    },
+    {
+      "file": "before/seed-6/room-18-stage3.png",
+      "sha256": "696ebcb5aa478a9f4d896c16faacc9e080c9b76dbb2a8a7826b63e68a7c8a59c"
+    },
+    {
+      "file": "before/seed-6/room-19-stage3.png",
+      "sha256": "4031b69708ec8cafefe420a00f3a79042f75889630bbbf33a483656e3fd5836f"
+    },
+    {
+      "file": "before/seed-6/room-20-stage0.png",
+      "sha256": "f4e453d9aa542f9dc32dcae8831a9013ae75350789ed49e4d420ec5dfa2d6a91"
+    },
+    {
+      "file": "before/seed-6/room-21-stage0.png",
+      "sha256": "611fee88fc69fa8660ed92e96d78f5f83ebaf3af7009c5c2bf8c2072f451a04c"
+    },
+    {
+      "file": "before/seed-6/room-22-stage0.png",
+      "sha256": "8bba4138fc21eb274d1217f8c7e5e6aad7f8faa9ddd32da3a95b8bcaf0fb0849"
+    },
+    {
+      "file": "before/seed-6/room-23-stage3.png",
+      "sha256": "3d6f091607baf5cd2118c5b7c5b759a66d5de550d1d81fa480c056ec3fc281cd"
+    },
+    {
+      "file": "before/seed-6/room-24-stage3.png",
+      "sha256": "18b35914c7cc942a8562a1ebdcb4f2be014fea65077c5aec2400720277ab6f69"
+    },
+    {
+      "file": "before/seed-6/ruined-wall.png",
+      "sha256": "998851ba10f69b0b70ba9fe2bb835dcf77b901fa47c0e1e46e97b178df2144af"
+    },
+    {
+      "file": "before/seed-6/blighted-tree.gif",
+      "sha256": "76c99d64a6c4f6adf87f2802f7fb99f80419b6ad67244c5ff4b33d513c610fb5"
+    },
+    {
+      "file": "before/seed-6/glowing-pool.gif",
+      "sha256": "91ec83e356eb817accf57db146eb0968da708e06b264b3674e246aec9a76559c"
+    },
+    {
+      "file": "before/seed-6/ruined-wall.gif",
+      "sha256": "6b581f090fd080e04b5833810f14cadb23679d4d012181ea90b172490a6f9e74"
+    },
+    {
+      "file": "after/seed-b4a7/capture.json",
+      "sha256": "719efa7d55b976975ee7d87fbed05c634f7342a4ef8f4111e78b829c8c3e303b"
+    },
+    {
+      "file": "after/seed-b4a7/blighted-tree.png",
+      "sha256": "011c1ec319619708220be40ac66a879887ccb6227480daa9f673897fd6a10a1d"
+    },
+    {
+      "file": "after/seed-b4a7/crystals.png",
+      "sha256": "b78dd4342541c828b3bef00cde42d2633cbf169554ed9cee88ed537c3d3909ad"
+    },
+    {
+      "file": "after/seed-b4a7/deep-pool.png",
+      "sha256": "18892bd6d5571b47c7ad654f290179b346c60263fa1c910309781f76ed4e4860"
+    },
+    {
+      "file": "after/seed-b4a7/deep-tree.png",
+      "sha256": "2015546efb6e2d2cfee897cd624f9fc7267975d925a96f3f054924ff45e92061"
+    },
+    {
+      "file": "after/seed-b4a7/deep-wall.png",
+      "sha256": "3be99c9a6ff57153d9048a7a2fabe4c8681aff316088e7867cfb89024e7715d4"
+    },
+    {
+      "file": "after/seed-b4a7/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "after/seed-b4a7/glowing-pool.png",
+      "sha256": "18892bd6d5571b47c7ad654f290179b346c60263fa1c910309781f76ed4e4860"
+    },
+    {
+      "file": "after/seed-b4a7/mixed-blight.png",
+      "sha256": "4a88630eda08cffe8f581f9cc69107e1be316497516eba430df113b4d7f0d1cc"
+    },
+    {
+      "file": "after/seed-b4a7/room-00-stage2.png",
+      "sha256": "f539145721260c32e6bee25b843c056e50ea69ceac7312284b1353a97273bdbe"
+    },
+    {
+      "file": "after/seed-b4a7/room-01-stage2.png",
+      "sha256": "c52de740ad12c329ed7d5a4ee185712ee285b83a3c21cafe7c348d5eb3f151ef"
+    },
+    {
+      "file": "after/seed-b4a7/room-02-stage2.png",
+      "sha256": "9645ff830af92e83de7990ad8ed12e666ff2b2ddd254e49bd37592bcaf840b3e"
+    },
+    {
+      "file": "after/seed-b4a7/room-03-stage2.png",
+      "sha256": "fc4e036a11cb40ce74bd7f89f7bfd1a9f6132fbeb586bbf6fbf4110957409d01"
+    },
+    {
+      "file": "after/seed-b4a7/room-04-stage1.png",
+      "sha256": "874094d5ffd86dd28b9a2fbbc409d3ebf572a86b2b0dfe3d3ed5933f0dc02575"
+    },
+    {
+      "file": "after/seed-b4a7/room-05-stage2.png",
+      "sha256": "a2790db2e6760a4d0438671e14abd62a0537ca28d7af921564155b531f5f2832"
+    },
+    {
+      "file": "after/seed-b4a7/room-06-stage2.png",
+      "sha256": "ffd0621c5701a1faeab79f42d6818a0684d8a467890db7a193b66aa3f6a6851f"
+    },
+    {
+      "file": "after/seed-b4a7/room-07-stage1.png",
+      "sha256": "7a658de50b2ba46649cf77bee8edea30ce680f017af424adf23baddd505424ec"
+    },
+    {
+      "file": "after/seed-b4a7/room-08-stage1.png",
+      "sha256": "41b4b0871de79e8b371188764b02a7d269bf1d86e0e3d9a98a9d631428b82e43"
+    },
+    {
+      "file": "after/seed-b4a7/room-09-stage1.png",
+      "sha256": "001f1375bc32c0f79ed748e23d5af2a227318a86d6561dbf3667a3178b3a0519"
+    },
+    {
+      "file": "after/seed-b4a7/room-10-stage2.png",
+      "sha256": "8890bb54c82f880750e10359be59150ad5cf55081ea13229fcc5908635e4dfcb"
+    },
+    {
+      "file": "after/seed-b4a7/room-11-stage0.png",
+      "sha256": "ee35634d27734c2d6843cc7a3acd8b0e80c97ddb28afffd84d7f9963d2273228"
+    },
+    {
+      "file": "after/seed-b4a7/room-12-stage1.png",
+      "sha256": "ac7438a77856cb5aa4c81f7d17344be0ad1e3dc75757ee1654db16ce175dc941"
+    },
+    {
+      "file": "after/seed-b4a7/room-13-stage1.png",
+      "sha256": "ef8f535968444f67fc93bc64d557cafec236e96a33fbc9deafda150023cac773"
+    },
+    {
+      "file": "after/seed-b4a7/room-14-stage1.png",
+      "sha256": "7ad34822db61930176ba6bda9c11aed9446aa3af7861659c771d270e39c4fdea"
+    },
+    {
+      "file": "after/seed-b4a7/room-15-stage2.png",
+      "sha256": "45d77a2b1abf2df389c8bf1a744d4a74c667b979e30b4390ae09367d1e8b43d7"
+    },
+    {
+      "file": "after/seed-b4a7/room-16-stage0.png",
+      "sha256": "843fadd7e281c570e16c8b91ad6164cd5a976509af3d2671fb05b8b74618bcf0"
+    },
+    {
+      "file": "after/seed-b4a7/room-17-stage1.png",
+      "sha256": "6115fc438966177f6d42ef9cafda391ca437935539985ad408a441638fe76d5c"
+    },
+    {
+      "file": "after/seed-b4a7/room-18-stage1.png",
+      "sha256": "0225899fbf74fd347b5a468336ee08c8017edceb281bacb5e7975101b7f0d5d2"
+    },
+    {
+      "file": "after/seed-b4a7/room-19-stage1.png",
+      "sha256": "2bd568a1bbcd723e63241e3cd3a68a87ec396ee3a03a517f59e6b163016d32c3"
+    },
+    {
+      "file": "after/seed-b4a7/room-20-stage3.png",
+      "sha256": "4baa0ead582ea6775e229f5d11140fdbea4696f0b659ab3adf71ef8128cdd788"
+    },
+    {
+      "file": "after/seed-b4a7/room-21-stage0.png",
+      "sha256": "9fdd061fc81eea7971c38cd9b573a31a17a9a833ce997749d7f308495e4f514c"
+    },
+    {
+      "file": "after/seed-b4a7/room-22-stage0.png",
+      "sha256": "11b161e3a26322f001603d562396ab3492ed161ee6c78ac06de4593b35dfac39"
+    },
+    {
+      "file": "after/seed-b4a7/room-23-stage0.png",
+      "sha256": "205044c85cfcaf8ebaf9e533e191f42f49a4fb9f2659ed9bcb0986cf351e8574"
+    },
+    {
+      "file": "after/seed-b4a7/room-24-stage0.png",
+      "sha256": "e1cee01d6424894562725847be91c061971c0ef63ef2074f8c202ce9e986a383"
+    },
+    {
+      "file": "after/seed-b4a7/ruined-wall.png",
+      "sha256": "dd15d638d064d2697fde9258f1b52ddcb193e055d01d23e7ddb091449b7effd8"
+    },
+    {
+      "file": "after/seed-b4a7/blighted-tree.gif",
+      "sha256": "302823dd480f95d98ccb8c195e7934bb0ad805d11f8b5b82e10b402ed605bd91"
+    },
+    {
+      "file": "after/seed-b4a7/deep-pool.gif",
+      "sha256": "88b004ae7ee80aaa550224af19c3bddb319c2a68c999440c384718cce5c67640"
+    },
+    {
+      "file": "after/seed-b4a7/deep-tree.gif",
+      "sha256": "b8c25ab5fc38891fa6bf90a6fda6f9284d3cc807d56db2f9e614fbefb67d8118"
+    },
+    {
+      "file": "after/seed-b4a7/deep-wall.gif",
+      "sha256": "6845a04c6328c85c0fc59aeb71353c462ff0edf533e03929f28fbfc8ec2d9004"
+    },
+    {
+      "file": "after/seed-b4a7/glowing-pool.gif",
+      "sha256": "88b004ae7ee80aaa550224af19c3bddb319c2a68c999440c384718cce5c67640"
+    },
+    {
+      "file": "after/seed-b4a7/ruined-wall.gif",
+      "sha256": "6e21779a589838337d679eb9d6c5760b39d005746ae51ef4874f090132f07526"
+    },
+    {
+      "file": "after/seed-6/capture.json",
+      "sha256": "1241b0b4766b223512227ffa2e027c6e9179bf6ba3e5ac057468605876abe63f"
+    },
+    {
+      "file": "after/seed-6/blighted-tree.png",
+      "sha256": "5a55dbe0c2cffdc61190f2a009a935bb54f6bb71e75ea9129bc19f05aca9b1c7"
+    },
+    {
+      "file": "after/seed-6/crystals.png",
+      "sha256": "d4645506461773c7f277f1af22c11d38c39b1fd89500b9385050fb4c599cef21"
+    },
+    {
+      "file": "after/seed-6/deep-pool.png",
+      "sha256": "6a1889e65a6f6efbd06a2573f82d22e4df49b37f35ec1839473947dad7d03590"
+    },
+    {
+      "file": "after/seed-6/deep-tree.png",
+      "sha256": "1d657e40fdc906012c634f061509b6a6b2e36598816d116506f48b45065639b6"
+    },
+    {
+      "file": "after/seed-6/deep-wall.png",
+      "sha256": "1e785cfff38edbe9c26075628ba6beeaef9794b5d374dcf299fe67cff090214f"
+    },
+    {
+      "file": "after/seed-6/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "after/seed-6/glowing-pool.png",
+      "sha256": "11bfa3fdefe7dd1c444a5234f3b1fc34b01a0726797cd3a5fa05e0c6d75d5e85"
+    },
+    {
+      "file": "after/seed-6/mixed-blight.png",
+      "sha256": "e111d8b3e99779a544ab42dd17d8879273d98c9025db0208760339bba571b4b7"
+    },
+    {
+      "file": "after/seed-6/room-00-stage0.png",
+      "sha256": "47cc922a034f9c7d9a4751b934097777d296deb4e6b18fd76ecdb47a671139fb"
+    },
+    {
+      "file": "after/seed-6/room-01-stage1.png",
+      "sha256": "25977c83ada514e7f395a3d122a09e712b6e020636203153ba38bf1b86efdb73"
+    },
+    {
+      "file": "after/seed-6/room-02-stage1.png",
+      "sha256": "2641f3c2c886605e0b186acc50be1c241827ebb088cd258e819ba0620669bb41"
+    },
+    {
+      "file": "after/seed-6/room-03-stage2.png",
+      "sha256": "3dd23a5af335ad315def72854dce2ba5e585369dcc402077a1f7574fe5485b15"
+    },
+    {
+      "file": "after/seed-6/room-04-stage3.png",
+      "sha256": "7bd5c60b664046910e2d34afa1e231a081188be2522688d10be2a5b6f90774bc"
+    },
+    {
+      "file": "after/seed-6/room-05-stage0.png",
+      "sha256": "cc9da5252789b9639cd20042570db03801242c7423db105d3265f3cec6ce56eb"
+    },
+    {
+      "file": "after/seed-6/room-06-stage1.png",
+      "sha256": "770f0bdb0bb452b38715894d680b1620509983d4a169f63ca17570b21e3071ca"
+    },
+    {
+      "file": "after/seed-6/room-07-stage0.png",
+      "sha256": "6fb0ad806a16136c27b2b561a1ced3cd1af77f9b8a5f9feea27e35cc652faaec"
+    },
+    {
+      "file": "after/seed-6/room-08-stage2.png",
+      "sha256": "54d03332ab10d55048be5da10e35f06f3e4ef002c8bb1a552a4bfd02a38fcf8c"
+    },
+    {
+      "file": "after/seed-6/room-09-stage3.png",
+      "sha256": "a0064901c3697a6660d1ae21b0998c55da038fc987d9697e80aa035df2179ae7"
+    },
+    {
+      "file": "after/seed-6/room-10-stage0.png",
+      "sha256": "ad6558712f5fcb21070a4f43053706a252a27c84fa0c2c972d93a51ba5e236cc"
+    },
+    {
+      "file": "after/seed-6/room-11-stage1.png",
+      "sha256": "a2288ddf7c5d0fe848c99aeb97a8996eb4911793d36fa50c28f63296113e3f2f"
+    },
+    {
+      "file": "after/seed-6/room-12-stage0.png",
+      "sha256": "6ba0429e507ffc13b8cc9ea06cbb8358d12af26a73b681fa2c434ad9ef71d2cd"
+    },
+    {
+      "file": "after/seed-6/room-13-stage2.png",
+      "sha256": "9b477a3fa4bf197572596fc28f5f5a518a99b3020e104901725a66f9e4f75dc5"
+    },
+    {
+      "file": "after/seed-6/room-14-stage3.png",
+      "sha256": "ff71c4af40114f48d7c25e9e17a32e237ceedba8108b36439709c96da1391814"
+    },
+    {
+      "file": "after/seed-6/room-15-stage0.png",
+      "sha256": "460e36c468236d44bf611a103d8ab0ebe2f0139a98530ee8e83a863a546b1b4d"
+    },
+    {
+      "file": "after/seed-6/room-16-stage0.png",
+      "sha256": "072713771ffc8ac90107a80b3d83f18b3775e13c08c47e861de5b801b55056f4"
+    },
+    {
+      "file": "after/seed-6/room-17-stage0.png",
+      "sha256": "e236ac5f41a9100c2352869a2a42112847581551d144195d3698d608656117e9"
+    },
+    {
+      "file": "after/seed-6/room-18-stage3.png",
+      "sha256": "d6c7317eb43ca6ff816043c672b85be9c006c942b659b72e068398c27bc20954"
+    },
+    {
+      "file": "after/seed-6/room-19-stage3.png",
+      "sha256": "a67a94851965f250d52dbb97608766c873fd7596501478328560f93656be998f"
+    },
+    {
+      "file": "after/seed-6/room-20-stage0.png",
+      "sha256": "f4e453d9aa542f9dc32dcae8831a9013ae75350789ed49e4d420ec5dfa2d6a91"
+    },
+    {
+      "file": "after/seed-6/room-21-stage0.png",
+      "sha256": "611fee88fc69fa8660ed92e96d78f5f83ebaf3af7009c5c2bf8c2072f451a04c"
+    },
+    {
+      "file": "after/seed-6/room-22-stage0.png",
+      "sha256": "8bba4138fc21eb274d1217f8c7e5e6aad7f8faa9ddd32da3a95b8bcaf0fb0849"
+    },
+    {
+      "file": "after/seed-6/room-23-stage3.png",
+      "sha256": "58400e4ee3ee42556de4fc27895cef7322b0d29573a2029f56c00a7a49d56ff9"
+    },
+    {
+      "file": "after/seed-6/room-24-stage3.png",
+      "sha256": "a026f979e3a959d7bcc9520e18d91f6df9ab3965fc16311e55650714478aae24"
+    },
+    {
+      "file": "after/seed-6/ruined-wall.png",
+      "sha256": "84259f77e9e1ca9b808ca99662fe277f9166259c5db0468fa88fc7c391f2b6f7"
+    },
+    {
+      "file": "after/seed-6/blighted-tree.gif",
+      "sha256": "7b345a3b314b072b611f82a9c2219c1ca863a5822b09bad44a0e45cbc41f2882"
+    },
+    {
+      "file": "after/seed-6/deep-pool.gif",
+      "sha256": "910dcbfd02a217be077a142f41890b602226add6d94ad151380a2a1ce1d666c6"
+    },
+    {
+      "file": "after/seed-6/deep-tree.gif",
+      "sha256": "03cfa0de298140b3c654f4a16a355b47331e0ff31c32c6755ab4d271994b8098"
+    },
+    {
+      "file": "after/seed-6/deep-wall.gif",
+      "sha256": "35b26bb9798d3794ac19def2c4a3a00c58867f9c10ed9fe6ff23e8975f5874cf"
+    },
+    {
+      "file": "after/seed-6/glowing-pool.gif",
+      "sha256": "f6f49b10b2ecec31d1fd906447a8a5595c69885bfee3f64d9f74d226828a147c"
+    },
+    {
+      "file": "after/seed-6/ruined-wall.gif",
+      "sha256": "d243eced5916da55cdf2fd491bf682a16a633fb1a3327fd5b6f9a092f5a907d5"
+    }
+  ],
+  "comparison_views": [
+    {
+      "dataset": "captures",
+      "file": "mixed-blight.png",
+      "caption": "Mixed forest / encroaching blight"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-19-stage3.png",
+      "caption": "Deep forest / canopy and ruined stone"
+    },
+    {
+      "dataset": "captures",
+      "file": "room-20-stage3.png",
+      "caption": "The Heart / final blight stage"
+    }
+  ],
+  "landscape_views": [
+    {
+      "dataset": "captures",
+      "file": "mixed-blight.png",
+      "caption": "Mixed forest",
+      "context": "Seed 0xB4A7 / stage 2"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-19-stage3.png",
+      "caption": "Blue-violet canopy and ruins",
+      "context": "Seed 6 / stage 3"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-04-stage3.png",
+      "caption": "Water and layered forest edges",
+      "context": "Seed 6 / stage 3"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "deep-wall.png",
+      "caption": "Mossy masonry and glowing growths",
+      "context": "Seed 6 / deep-forest feature view"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "deep-tree.png",
+      "caption": "Twisted tree at a clearing edge",
+      "context": "Seed 6 / deep-forest feature view"
+    },
+    {
+      "dataset": "captures",
+      "file": "room-20-stage3.png",
+      "caption": "The Heart",
+      "context": "Seed 0xB4A7 / stage 3 arena"
+    }
+  ],
+  "sheets": [
+    {
+      "file": "before-after.png",
+      "sha256": "880471c2a8353e657cab35a70ab26f563a5f2888e1c51c548f8701d2f96e91c3"
+    },
+    {
+      "file": "landscapes.png",
+      "sha256": "280a545967c5cba40886f34e10043f1812ed243607bd6a9c9ab4c44fa79af6fa"
+    }
+  ],
+  "source_preview": {
+    "file": "source-preview.png",
+    "sha256": "4688f3ef290b8dfa1ecb3b297931728fa7abd73b55df3c784f9bd775bfe32cb6",
+    "method": "Source-asset preview; separate from emulator captures."
+  }
+}

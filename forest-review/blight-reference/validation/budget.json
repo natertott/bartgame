@@ -1,0 +1,27 @@
+{
+  "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+  "rom_bytes": 520752,
+  "tilesets": {
+    "forest": {
+      "subtiles": 993,
+      "max_subtiles": 1024,
+      "palettes": 12,
+      "max_palettes": 12,
+      "animated_metatiles": 59
+    },
+    "sewer": {
+      "subtiles": 999,
+      "max_subtiles": 1024,
+      "palettes": 11,
+      "max_palettes": 12,
+      "animated_metatiles": 38
+    },
+    "myst": {
+      "subtiles": 190,
+      "max_subtiles": 1024,
+      "palettes": 8,
+      "max_palettes": 12,
+      "animated_metatiles": 6
+    }
+  }
+}

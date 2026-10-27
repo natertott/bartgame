@@ -1,0 +1,640 @@
+{
+  "seed": "0xb4a7",
+  "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+  "fixture_version": 2,
+  "emulator": "mGBA 0.10.5",
+  "method": "Native240x160 framebuffers; generated terrain and animation untouched. Debug room navigation, safe standing positions, healing and cleared enemies/ambient firefly actors isolate art. Animation-clock fixture resetsgFrame0 after camera settles, then runs64 actual frames. GIFs use real frames, sampled30fps/enlarged2xNN.",
+  "drain_image": "drain-control.png",
+  "rooms": [
+    {
+      "cell": 0,
+      "stage": 2,
+      "role": 3,
+      "position": [
+        248,
+        220
+      ],
+      "camera": [
+        128,
+        116
+      ],
+      "image": "room-00-stage2.png",
+      "logical_sha256": "674f14156046c9bebe71bf396ffe3e41ff51670388b9385934d112decc3517c8",
+      "solid_sha256": "320ff2e62fcff9ec8004a1f8e826f9b9b715f4974fc1dbea5462ef8c4bf0c759",
+      "spots_sha256": "75bc701c151d493ef3d111cdd849b7e1033d9219d7bf061e7e67ac3202e1d567"
+    },
+    {
+      "cell": 1,
+      "stage": 2,
+      "role": 5,
+      "position": [
+        296,
+        236
+      ],
+      "camera": [
+        176,
+        132
+      ],
+      "image": "room-01-stage2.png",
+      "logical_sha256": "226a74b9afc42af8f731c98e1bfeac54fa89af040302716ec929da989e83243a",
+      "solid_sha256": "9f7d572c69a6fecfe88ba4f1e881e731399717d2a31f9bb9d4c11b59be3c3672",
+      "spots_sha256": "34a793c7ad3b50464bfb56d1da43c1033e219e433a74fa50458e076f1342b77c"
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 5,
+      "position": [
+        376,
+        236
+      ],
+      "camera": [
+        256,
+        132
+      ],
+      "image": "room-02-stage2.png",
+      "logical_sha256": "3927846b44630267853dc688c2b5b3717b7394330ef0212a7fe3ee14982dce27",
+      "solid_sha256": "eba74cb6e2e40251b057bfc578b901d09a0a48d31ce20cd31387784bee815c1b",
+      "spots_sha256": "9cdce5af5c521786cc5b5ffba04d07bbba0a0a8501f67b9e095bf764c231c566"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 5,
+      "position": [
+        184,
+        252
+      ],
+      "camera": [
+        64,
+        148
+      ],
+      "image": "room-03-stage2.png",
+      "logical_sha256": "995f963ffbd74d725017e16e9bd3ac8ff298477ce3115bc4f64d37e690551c00",
+      "solid_sha256": "9be50308f2f2f7ecd950de28d3df9671488c454563360f4f1b6e053b2b2442f0",
+      "spots_sha256": "1a03d5d75edb6a847572950bed5e2824e8aa133181d5478057f900f0a3f6740e"
+    },
+    {
+      "cell": 4,
+      "stage": 1,
+      "role": 10,
+      "position": [
+        360,
+        252
+      ],
+      "camera": [
+        240,
+        148
+      ],
+      "image": "room-04-stage1.png",
+      "logical_sha256": "ed8e40a9cb62fce45ff92c86686ac99419ddb8859daaacf4dcc84fb889c83872",
+      "solid_sha256": "518140cee864a9b5ee152f69ad2b64da2e23660a6eb4e47db392278c2a454ae2",
+      "spots_sha256": "d18eaa41a3c2b64ca6b15ae2e627d85305ddcc8d99f624c9230b714bbfde1877"
+    },
+    {
+      "cell": 5,
+      "stage": 2,
+      "role": 6,
+      "position": [
+        248,
+        172
+      ],
+      "camera": [
+        128,
+        68
+      ],
+      "image": "room-05-stage2.png",
+      "logical_sha256": "d490c131d17c478fea92fca669e679ed69cf3133516a061233cc01c9d72572a7",
+      "solid_sha256": "222f249aa50dcf5d4513ce4296e62dcd1ad1dff183125ea94ccd5b525bbe6629",
+      "spots_sha256": "bc0a4e620d6154862f8dd7e3ab31c48a95bba2ee70e957aa236d51a95dc736cc"
+    },
+    {
+      "cell": 6,
+      "stage": 2,
+      "role": 0,
+      "position": [
+        328,
+        268
+      ],
+      "camera": [
+        208,
+        164
+      ],
+      "image": "room-06-stage2.png",
+      "logical_sha256": "2591ab157f8200bd2da81464fd14b4871e262385f458859ea97010b9915e1eff",
+      "solid_sha256": "81c3c770fe33524077942547dd85c70a182cc3e89a3333c1490eecbc62a78a99",
+      "spots_sha256": "0461027fda2f0bbc197b6cc4d0d95fe19e5619fabc50e8ceac9bbd20931d4ea1"
+    },
+    {
+      "cell": 7,
+      "stage": 1,
+      "role": 3,
+      "position": [
+        184,
+        236
+      ],
+      "camera": [
+        64,
+        132
+      ],
+      "image": "room-07-stage1.png",
+      "logical_sha256": "889114e607fee105baaa01cb2a54f02d85db742c57e6d8218a7caec232b4673f",
+      "solid_sha256": "cbd6f2c1a5a3d31e9e3111c67f363e81d6a6caf7bc30f6317cc6b0470a06b567",
+      "spots_sha256": "187867511d0617fbe899b9ddab939bdf5f447d7b71f05f930660232852a3cafe"
+    },
+    {
+      "cell": 8,
+      "stage": 1,
+      "role": 4,
+      "position": [
+        280,
+        172
+      ],
+      "camera": [
+        160,
+        68
+      ],
+      "image": "room-08-stage1.png",
+      "logical_sha256": "75b85a94842be064d73cc39c114f05899606a52a99067a42400ea38f9a5aa7aa",
+      "solid_sha256": "07739dabab2527e35407cc5fe20a4f717c9d625d0481dd603891453b93b7d23b",
+      "spots_sha256": "2ccacf86a94c26bf0633a6b5d0d448d570caa6e612c66b98a5f2ab7f47813535"
+    },
+    {
+      "cell": 9,
+      "stage": 1,
+      "role": 5,
+      "position": [
+        280,
+        156
+      ],
+      "camera": [
+        160,
+        52
+      ],
+      "image": "room-09-stage1.png",
+      "logical_sha256": "b687857616e202ab2f352c853d90ff0cc533037716c43f53836668ff3ed7c35d",
+      "solid_sha256": "a03b8abf417001f528f55aaabef4242873e1192904dd7ee8093378a85dc3fe84",
+      "spots_sha256": "b896eddd0f3d3fc5cb14ddbb63178c5a7682016aff649e0ead6ad39b5b3e7e4c"
+    },
+    {
+      "cell": 10,
+      "stage": 2,
+      "role": 7,
+      "position": [
+        312,
+        268
+      ],
+      "camera": [
+        192,
+        164
+      ],
+      "image": "room-10-stage2.png",
+      "logical_sha256": "d83aef05e008363583e4c5ffa9905c8c926acd8ec582a5c82615e58e9eb00f05",
+      "solid_sha256": "304e2f3a17fd93b3c133cf97aa5dcacc2d61a045a0018b49180689bb1b836d67",
+      "spots_sha256": "e99a7a7c683fa2cd81b065648a918eb3615c6db0ce7ec55ce067c891d86ff8df"
+    },
+    {
+      "cell": 11,
+      "stage": 0,
+      "role": 3,
+      "position": [
+        184,
+        172
+      ],
+      "camera": [
+        64,
+        68
+      ],
+      "image": "room-11-stage0.png",
+      "logical_sha256": "193b382e62628d5ab30ba9dd515cdd8e19cd0d158231cc3a447352f780a6caf7",
+      "solid_sha256": "68c468e1e03f52dbd285a0aea705ca1c3e84e9a819e2f9982d3fca7b895e0294",
+      "spots_sha256": "c5ae3370a3431f68d284dda45c896ca33be456a9e20fd66f6d5953bfab6bafb8"
+    },
+    {
+      "cell": 12,
+      "stage": 1,
+      "role": 4,
+      "position": [
+        184,
+        140
+      ],
+      "camera": [
+        64,
+        36
+      ],
+      "image": "room-12-stage1.png",
+      "logical_sha256": "ede364f673b584653e9a484d04fe19ef9f62117b6ee01d0635e6cea69d991873",
+      "solid_sha256": "de3e066aa381488dd3efb15597301bc8372f0e1cb8366a94bf8892091298f8dd",
+      "spots_sha256": "4dbf221c401151c89bc85c1cb2815909086eb1bfbff3aa2257669a596eb905f8"
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 0,
+      "position": [
+        232,
+        220
+      ],
+      "camera": [
+        112,
+        116
+      ],
+      "image": "room-13-stage1.png",
+      "logical_sha256": "06de75453d4128a902dd70b2ac21167281ef050486fc163d9f43490ffb7c5011",
+      "solid_sha256": "c02f4e8a54d8b0ba4432569461b72c5d99e3c4945b72a4b2df503798c242533d",
+      "spots_sha256": "bb415e51de41065e46b07b67ccf15f7595699287e052996d1acccbb92a9e8137"
+    },
+    {
+      "cell": 14,
+      "stage": 1,
+      "role": 0,
+      "position": [
+        280,
+        204
+      ],
+      "camera": [
+        160,
+        100
+      ],
+      "image": "room-14-stage1.png",
+      "logical_sha256": "1ad4e0d4c7ef1a0e3f5e147cc9073221a19ce698e44d49c4689b66c77c7480c2",
+      "solid_sha256": "4045720e703cb3a38aa1128aa929c4aa7f7d6d4c6eb529462c32a2ca91a1dd2b",
+      "spots_sha256": "a51eb78a652fa15ae4746bb0367be4d5469c55e521f722f06935d858592350ed"
+    },
+    {
+      "cell": 15,
+      "stage": 2,
+      "role": 5,
+      "position": [
+        280,
+        188
+      ],
+      "camera": [
+        160,
+        84
+      ],
+      "image": "room-15-stage2.png",
+      "logical_sha256": "098adcd7afb6cac665698e89c07acaaf2153f263cafb498045396c418cc7db9b",
+      "solid_sha256": "f9a77f117cd04f39ca899cecbaa5cdfdfbfdf9ec2d09aaab5503974388ef3ee2",
+      "spots_sha256": "c50371af1e746302799ccda972164a307590af7f43f700d2859e95af64c4c2f9"
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 10,
+      "position": [
+        296,
+        220
+      ],
+      "camera": [
+        176,
+        116
+      ],
+      "image": "room-16-stage0.png",
+      "logical_sha256": "2db5f40253d974aff0b11e7b758af7bab7a9b6d78abd5985fc41dc1ca2e67e7a",
+      "solid_sha256": "fe260a2d957806f710fd62f7568ec90352eb00e7594dd5f8a9dfdbf0f9310f76",
+      "spots_sha256": "e538cf355c3a9e78fad12a41c953d4e73db23fcd95353b8197813252c48707e4"
+    },
+    {
+      "cell": 17,
+      "stage": 1,
+      "role": 4,
+      "position": [
+        360,
+        236
+      ],
+      "camera": [
+        240,
+        132
+      ],
+      "image": "room-17-stage1.png",
+      "logical_sha256": "d68cecabeabd2afd4bc15693fdf7d640100300f7062e6393b35f8eada38e7b35",
+      "solid_sha256": "8a65b335fcb78435c22fa0c268076d28d224fc2214b2b2505b8c354121540a7b",
+      "spots_sha256": "b2467ab4c842578a0304868536f9b6fd5af71987a7d0c63b4b3a049b1f068160"
+    },
+    {
+      "cell": 18,
+      "stage": 1,
+      "role": 4,
+      "position": [
+        280,
+        220
+      ],
+      "camera": [
+        160,
+        116
+      ],
+      "image": "room-18-stage1.png",
+      "logical_sha256": "03be05c7783ef38d24f25db15dd72647d8248b6ec10a5117905c094dc33e8590",
+      "solid_sha256": "0ab7ef96552b199fedca2584da83d4121f54e338de3add702a5cee7624113ee5",
+      "spots_sha256": "fe44ab8019b3f6674a8c0134efb3af5ee0d582e8e1a08b0708e7eb0845e318b0"
+    },
+    {
+      "cell": 19,
+      "stage": 1,
+      "role": 0,
+      "position": [
+        312,
+        252
+      ],
+      "camera": [
+        192,
+        148
+      ],
+      "image": "room-19-stage1.png",
+      "logical_sha256": "12a9009df491b425fc523c44431e2403d1534859b901352e4a0c68a5596bd74c",
+      "solid_sha256": "4940e954ff0b694a468d251cdd68b63c4201965800ef29ba54fed98ed5c87562",
+      "spots_sha256": "5556f7045f34a510a5d36d7fc3dae65385be5260a88d59c85038237bf65e29ef"
+    },
+    {
+      "cell": 20,
+      "stage": 3,
+      "role": 2,
+      "position": [
+        256,
+        240
+      ],
+      "camera": [
+        136,
+        136
+      ],
+      "image": "room-20-stage3.png",
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 4,
+      "position": [
+        232,
+        300
+      ],
+      "camera": [
+        112,
+        196
+      ],
+      "image": "room-21-stage0.png",
+      "logical_sha256": "20ae2e8673b71daf3ee81605db0e028dda00d0d311dade19d9559eedb7fcb5b1",
+      "solid_sha256": "efbe700cfdd1139d66542893da31e0494aee964215df2a71594122e6980cc29f",
+      "spots_sha256": "f70edde5a0830e967ff9dfd2cb1b6be9ef796c7c7f04771f88d93b1c78f86bdb"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "position": [
+        216,
+        172
+      ],
+      "camera": [
+        96,
+        68
+      ],
+      "image": "room-22-stage0.png",
+      "logical_sha256": "71a231223e397332aa5f843cfc34d4c3ce29cc2a0b883eac6ff7c4e8334853ef",
+      "solid_sha256": "606c215c47b75260519d01db0ecad0b084a7dd16dfdf62626f7292de55075ca1",
+      "spots_sha256": "edff374ae420282532bb71d05d16e9ad8ad2d6c691d72287ed9e56e6c3eb5dd3"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 8,
+      "position": [
+        200,
+        188
+      ],
+      "camera": [
+        80,
+        84
+      ],
+      "image": "room-23-stage0.png",
+      "logical_sha256": "6ea5a3794b283d78b1c4b31645ee228ab77f61dc905882716c510f1cfc5e31e3",
+      "solid_sha256": "59ecea928821a1063a5dc8a4c8bac7f5816aa734f3d60777eef394b692e525d4",
+      "spots_sha256": "a1b3a8d5bb975fda9f532ab6ffbaf7d26d59aa1d6d64f02cce051ceea9db79fa"
+    },
+    {
+      "cell": 24,
+      "stage": 0,
+      "role": 4,
+      "position": [
+        216,
+        156
+      ],
+      "camera": [
+        96,
+        52
+      ],
+      "image": "room-24-stage0.png",
+      "logical_sha256": "8b77087d4e60ca6bcfcd1819cf71f8e95ae2f8a477e51ccb802b2f4333ee202e",
+      "solid_sha256": "2c0b28a48806281ebb0c7c66dbbdbff032db3f9130504ba70372f6cce1ff8735",
+      "spots_sha256": "0451d9d07797953a083f22806cfe3aa07a98fc77834ea510eb4f853d4a9cbcb6"
+    }
+  ],
+  "features": [
+    {
+      "feature": "blighted-tree",
+      "cell": 3,
+      "position": [
+        152,
+        300
+      ],
+      "image": "blighted-tree.png",
+      "logical_sha256": "995f963ffbd74d725017e16e9bd3ac8ff298477ce3115bc4f64d37e690551c00",
+      "solid_sha256": "9be50308f2f2f7ecd950de28d3df9671488c454563360f4f1b6e053b2b2442f0",
+      "spots_sha256": "1a03d5d75edb6a847572950bed5e2824e8aa133181d5478057f900f0a3f6740e"
+    },
+    {
+      "feature": "ruined-wall",
+      "cell": 20,
+      "position": [
+        184,
+        108
+      ],
+      "image": "ruined-wall.png",
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "feature": "glowing-pool",
+      "cell": 20,
+      "position": [
+        216,
+        268
+      ],
+      "image": "glowing-pool.png",
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "feature": "crystals",
+      "cell": 20,
+      "position": [
+        120,
+        156
+      ],
+      "image": "crystals.png",
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "feature": "mixed-blight",
+      "cell": 2,
+      "position": [
+        456,
+        236
+      ],
+      "image": "mixed-blight.png",
+      "logical_sha256": "3927846b44630267853dc688c2b5b3717b7394330ef0212a7fe3ee14982dce27",
+      "solid_sha256": "eba74cb6e2e40251b057bfc578b901d09a0a48d31ce20cd31387784bee815c1b",
+      "spots_sha256": "9cdce5af5c521786cc5b5ffba04d07bbba0a0a8501f67b9e095bf764c231c566"
+    },
+    {
+      "feature": "deep-wall",
+      "cell": 20,
+      "image": "deep-wall.png",
+      "supplemental": true,
+      "position": [
+        376,
+        124
+      ],
+      "focus_score": 1281,
+      "visible_feature_tiles": 7,
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "feature": "deep-pool",
+      "cell": 20,
+      "image": "deep-pool.png",
+      "supplemental": true,
+      "position": [
+        216,
+        268
+      ],
+      "focus_score": 1023,
+      "visible_feature_tiles": 1,
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    },
+    {
+      "feature": "deep-tree",
+      "cell": 20,
+      "image": "deep-tree.png",
+      "supplemental": true,
+      "position": [
+        136,
+        108
+      ],
+      "focus_score": 983,
+      "visible_feature_tiles": 1,
+      "logical_sha256": "f0509c808b5026c70cb94c4b50b3e3ee37703416950c2263c149a60244fc8168",
+      "solid_sha256": "97b95755ff59d01a3fed4b39d79a59bc7c35b66164e671c43e3d7a9b82810e8b",
+      "spots_sha256": "dbae5c89b51a8c1478be9b8dca74254cc812386d8a86a6ecbeac11e30a27c5ec"
+    }
+  ],
+  "animations": [
+    {
+      "file": "blighted-tree.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 102,
+      "different_terrain_VRAM_states": 23
+    },
+    {
+      "file": "ruined-wall.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 86,
+      "different_terrain_VRAM_states": 23
+    },
+    {
+      "file": "glowing-pool.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 77,
+      "different_terrain_VRAM_states": 23
+    },
+    {
+      "file": "deep-wall.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 86,
+      "different_terrain_VRAM_states": 23
+    },
+    {
+      "file": "deep-pool.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 77,
+      "different_terrain_VRAM_states": 23
+    },
+    {
+      "file": "deep-tree.gif",
+      "video_frames": 96,
+      "sample_stride": 2,
+      "duration_ms": 1600,
+      "exact_GIF_palette": true,
+      "unique_colours": 85,
+      "different_terrain_VRAM_states": 23
+    }
+  ],
+  "physical_comparison": {
+    "checked_rooms": 25,
+    "unchanged_rooms": 25,
+    "differences": []
+  },
+  "visual_controls": [
+    {
+      "file": "drain-control.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-11-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-16-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-21-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-22-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-23-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    },
+    {
+      "file": "room-24-stage0.png",
+      "identical": true,
+      "different_pixels": 0
+    }
+  ]
+}
