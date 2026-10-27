@@ -99,3 +99,7 @@ SHEETS.extend(bloom_fx.SHEETS)
 # Supplied item/shield screenshot pixels and matching held props.
 import reference_assets
 reference_assets.apply(SHEETS)
+
+# Bloom carries the same material shapes that were visible on the ground.
+import bloom_loads
+bloom_loads.apply(SHEETS)
