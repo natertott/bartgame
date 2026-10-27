@@ -123,7 +123,7 @@ def settle(c, position):
         C.heal(c);C.clear_enemies(c);c.run_frame()
     # The old terrain cycles have a 10,080-frame LCM. Pin the animation
     # clock after generation/navigation, then let all normal uploads run.
-    # This does not alter terrain, actor poses, RNG state, or framebuffer.
+    # Terrain, room RNG and framebuffer contents are never replaced.
     clock=P.sym('gFrame');P.w16(c,clock,0);P.w16(c,clock+2,0)
     P.w8(c,P.sym('gActors')+28,0)
     # Firefly positions integrate their drift before the animation-clock
