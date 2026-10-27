@@ -135,7 +135,9 @@ void interactive_draw(bool8 behind) {
             int frame=interactive_chest_tier()*2+open;
             int sx=sChestX*16-8-gCamX,sy=sChestY*16-16-gCamY;
             stream_frame(SHEET_INTERACTIVECHEST,frame,sChestTile,&sChestFrame);
-            draw_sprite(sx,sy,SHEET_INTERACTIVECHEST,sChestTile,0,0,2,PAL_OBJ_LIFT);
+            /* Flat litter can promote Bloom to priority one. A near chest
+               must still cover his feet when he stands north of its lid. */
+            draw_sprite(sx,sy,SHEET_INTERACTIVECHEST,sChestTile,0,0,far ? 2 : 1,PAL_OBJ_LIFT);
         }
     }
 }

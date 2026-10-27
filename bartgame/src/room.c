@@ -148,6 +148,28 @@ static void map_write(int sb_base, int mx, int my, u16 mt) {
    Their transparent artwork is displayed over the stored floor using BG1.
    Meaningful existing overlays win (crowns, portals, event furniture); only
    incidental sparkle/mist is suppressed where it would replace the prop. */
+static bool8 barrier_material(u16 mt) {
+    return mt == MT_CRACK || mt == MT_WEB;
+}
+
+static u16 barrier_floor(int x,int y,u16 base) {
+    static const s8 d[4][2]={{0,1},{0,-1},{1,0},{-1,0}};
+    int k;
+    if (base!=MT_NONE && metatile_type[base]==TT_FLOOR && !metatile_prop[base])
+        return base;
+    /* Continue the adjacent lane beneath transparent silk; a wall's stored
+       substrate is not the floor of the pocket cut through that wall. */
+    for(k=0;k<4;k++) {
+        int nx=x+d[k][0],ny=y+d[k][1];
+        if(nx<0 || ny<0 || nx>=gRoom.w || ny>=gRoom.h)continue;
+        u16 mt=room_get(nx,ny);
+        if(mt!=MT_NONE && metatile_type[mt]==TT_FLOOR && !metatile_prop[mt])
+            return mt;
+    }
+    if(gGame.area==AREA_MYST)return myst_ground(x,y);
+    return roomgen_blighted(gGame.cell) ? MT_BLIGHT_FLOOR : MT_PATH;
+}
+
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
@@ -166,6 +188,13 @@ static void render_cell(int x, int y) {
         /* A continuous wall behind the large portal avoids a second tiny
            doorway visible through transparent pixels around the frame. */
         map_write(SB_GROUND,x,y,roomgen_blighted(gGame.cell) ? MT_BLIGHT_WALL : MT_CANOPY_S);
+    } else if (barrier_material(ground)) {
+        /* The obstacle must cover the hoard beyond it, while its transparent
+           corners and silk reveal a continuous local floor. Physics still
+           reads the original CRACK/WEB tile and unchanged collision mask. */
+        map_write(SB_GROUND,x,y,barrier_floor(x,y,base));
+        if(overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
+            overlay=ground;
     } else if (ground!=MT_NONE && metatile_prop[ground] && base!=MT_NONE && base!=ground) {
         map_write(SB_GROUND,x,y,base);
         if (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
@@ -201,7 +230,7 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
            !(interactive_chest_ready() && interactive_chest_overlay(ov)))
             continue; /* this cell displays the authored crown, not material */
         if(interactive_chest_ready() && interactive_chest_tile(mt))continue;
-        if(mt==MT_NONE || !metatile_prop[mt])continue;
+        if(mt==MT_NONE || (!metatile_prop[mt] && !barrier_material(mt)))continue;
         if(metatile_coll[mt]==0 || py>=(y+1)*16 || z>=16)front=1;
         else if(px>=x*16 && px<(x+1)*16)behind=1;
     }
