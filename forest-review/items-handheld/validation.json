@@ -1,0 +1,29 @@
+{
+  "rom_sha256": "98cb0eaf83e35275abffee82dae39acb295a4b562c9acc47d03c16e69414aded",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "menu.log": {
+      "passed": 21,
+      "total": 21
+    },
+    "mechanics.log": {
+      "passed": 22,
+      "total": 22
+    }
+  },
+  "asset_header_identical_to_previous_pass": true,
+  "source_frames_preserve": "names, order, dimensions, OBJ allocations and palette slots",
+  "native_screenshots": {
+    "before": 6,
+    "after": 6,
+    "size": [
+      240,
+      160
+    ]
+  },
+  "capture_method": "Unmodified native emulator framebuffers. Full-inventory HUD/menu fixture; earned Blightseeds via generated plate trial. Contact sheets use nearest-neighbour enlargement only.",
+  "source_catalogues": [
+    "large-items.png",
+    "small-items.png"
+  ]
+}

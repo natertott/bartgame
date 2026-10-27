@@ -39,6 +39,17 @@ All 55 affected frames keep their original names, order and dimensions.
 The existing gear/items/pick/icons palette slots are reused, and projectile
 arrows map to the existing effects palette. No extra OBJ palette is needed.
 
+### Handheld polish
+
+The [latest item gallery](../../forest-review/items-handheld/README.md) records
+a further pass inspired by classic Zelda and Pokémon handheld readability.
+The sword, shield, key, cape, gauntlet and bow have dedicated native 32px
+drawings alongside their small variants. Material ramps are warmer and
+highlights use compact clusters. The sword grip, cape neckline and gauntlet
+fingers make their silhouettes more explicit. Heart containers have pale
+rims, heart pieces show quarters, and arrow bundles stagger both heads and
+fletching. The UI and gameplay use the same frame contracts as before.
+
 ## Reproduce the review
 
 ```sh

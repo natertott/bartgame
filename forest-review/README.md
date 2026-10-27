@@ -1,6 +1,12 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: blended surfaces and clean item icons
+## Latest: handheld item polish
+
+[Open the new item gallery and matched mGBA comparisons](items-handheld/README.md).
+This pass refines the full item set with stronger silhouettes, warmer colours
+and deliberate pixel clusters inspired by classic handheld games.
+
+## Previous: blended surfaces and clean item icons
 
 [Open the matched before/after and in-game item gallery](polish/README.md).
 This pass separates prop art from its floor, blends diagonal blight edges,

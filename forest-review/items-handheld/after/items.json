@@ -1,0 +1,32 @@
+{
+  "rom_sha256": "98cb0eaf83e35275abffee82dae39acb295a4b562c9acc47d03c16e69414aded",
+  "seed": "0xb4a7",
+  "emulator": "mGBA 0.10.5",
+  "method": "native frames; full-inventory UI fixture plus actual earned item-get",
+  "captures": [
+    {
+      "file": "hud-sword-shield.png",
+      "context": "full-inventory HUD render fixture"
+    },
+    {
+      "file": "hud-bomb-candle-cape.png",
+      "context": "full-inventory HUD render fixture"
+    },
+    {
+      "file": "hud-bow-cap.png",
+      "context": "full-inventory HUD render fixture"
+    },
+    {
+      "file": "inventory-items.png",
+      "context": "actual items menu with all tools owned"
+    },
+    {
+      "file": "inventory-key-items.png",
+      "context": "actual key-items menu with all tools owned"
+    },
+    {
+      "file": "earned-blightseeds.png",
+      "context": "bomb reward earned by stepping on trial plates and opening its chest"
+    }
+  ]
+}
