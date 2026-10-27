@@ -121,7 +121,7 @@ class Suite:
         for tick in selected:frames[tick].save(directory/f'frame-{tick:03d}.png')
         gif=R.make_gif(frames,self.out/(name+'.gif'))
         self.filmstrip(name,frames,traces)
-        row={'name':name,**initial,'video_frames':total,'inputs':{str(k):v for k,v in events.items()},
+        row={'name':name,**initial,'video_frames':total,'inputs':{str(k):[[key,bool(down)] for key,down in v] for k,v in events.items()},
              'gif':gif,'native_frames':[f'{name}/frame-{i:03d}.png' for i in selected],
              'filmstrip':name+'-frames.png','states':sorted(set(t['state_name'] for t in traces)),
              'poses':sorted(set(t['hero_frame_name'] for t in traces)),'trace':traces}
