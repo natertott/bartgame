@@ -1456,6 +1456,48 @@ bool8 roomgen_blighted(int cell) {
     return (c->stage >= 3) || (c->arch == ARCH_ARENA);
 }
 
+/* Frame a few clearing edges with a complete twisted tree. Each source
+   part replaces an already-solid wall quarter-for-quarter; no walkable
+   ground, overlay, event or layout RNG is touched. */
+static bool8 blight_wall_skin(u16 mt) {
+    return mt == MT_CANOPY_BLIGHT || mt == MT_CANOPY_BLIGHT2 ||
+           mt == MT_BLIGHT_WALL || mt == MT_BLIGHT_WALL2 || mt == MT_BLIGHT_WALL_LIT;
+}
+
+static void skin_blight_trees(int cell) {
+    int count, x, y, dx, dy, lastx = -99, lasty = -99;
+    for (count = 0; count < 2; count++) {
+        int bx = -1, by = -1;
+        u32 best = 0xffffffff;
+        for (y = 3; y < H - 1; y++) {
+            for (x = 1; x < W - 2; x++) {
+                bool8 clear = 1;
+                u32 rank;
+                if (ABS(x - lastx) + ABS(y - lasty) < 10 ||
+                    !blight_wall_skin(room_get(x, y)) || !blight_wall_skin(room_get(x + 1, y)) ||
+                    !is_floor(x, y + 1) || !is_floor(x + 1, y + 1))
+                    continue;
+                for (dy = -2; dy <= 0 && clear; dy++)
+                    for (dx = 0; dx < 2; dx++)
+                        if (!blight_wall_skin(room_get(x + dx, y + dy)) ||
+                            room_get_overlay(x + dx, y + dy) != MT_NONE)
+                            clear = 0;
+                if (!clear)
+                    continue;
+                rank = hash32(gWorld.seed, cell * 12289 + y * W + x);
+                if (rank < best) { best = rank; bx = x; by = y; }
+            }
+        }
+        if (bx < 0)
+            break;
+        for (dy = 0; dy < 3; dy++)
+            for (dx = 0; dx < 2; dx++)
+                room_set(bx + dx, by - 2 + dy, MT_FOREST_BLIGHT_TREE0 + dy * 2 + dx);
+        lastx = bx;
+        lasty = by;
+    }
+}
+
 void roomgen_build(int cell) {
     Cell* c = &gWorld.cells[cell];
     int x, y, s, i;
@@ -1956,7 +1998,19 @@ void roomgen_build(int cell) {
             }
             else if (mt == MT_CANOPY || mt == MT_CANOPY2)
                 room_set(x, y, MT_FOREST_CANOPY0 + ((x + (gWorld.seed & 1)) & 1) + 2 * ((y + ((gWorld.seed >> 1) & 1)) & 1));
+            else if (blighted && mt == MT_PIT)
+                room_set(x, y, MT_FOREST_BLIGHT_PIT);
+            else if ((blighted || c->stage >= 2) && mt == MT_DEAD_TREE) {
+                u16 base = gRoom.underlay[y * ROOM_MAX_W + x];
+                if (base == MT_NONE || metatile_type[base] != TT_FLOOR)
+                    gRoom.underlay[y * ROOM_MAX_W + x] = blighted ? MT_FOREST_ROT0 + ink % 8 : MT_MOSS0 + ink % 3;
+                room_set(x, y, MT_FOREST_BLIGHT_DEAD_TREE);
+            }
+            else if ((blighted || c->stage >= 2) && mt == MT_BLIGHT_VEIN)
+                room_set(x, y, MT_FOREST_BLIGHT_VEIN0 + ink % 8);
         }
     }
+    if (blighted)
+        skin_blight_trees(cell);
     room_render();
 }

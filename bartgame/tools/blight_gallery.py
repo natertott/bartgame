@@ -25,9 +25,9 @@ COMPARISONS = (
 LANDSCAPES = (
     ('captures', 'mixed-blight.png', 'Mixed forest', 'Seed 0xB4A7 / stage 2'),
     ('seed-6', 'room-19-stage3.png', 'Blue-violet canopy and ruins', 'Seed 6 / stage 3'),
-    ('seed-6', 'room-14-stage3.png', 'Bridges through deep blight', 'Seed 6 / stage 3'),
-    ('seed-6', 'glowing-pool.png', 'Glowing growths and pools', 'Seed 6 / deep-forest feature view'),
-    ('seed-6', 'blighted-tree.png', 'Twisted magenta tree', 'Seed 6 / mixed-forest feature view'),
+    ('seed-6', 'room-04-stage3.png', 'Water and layered forest edges', 'Seed 6 / stage 3'),
+    ('seed-6', 'deep-wall.png', 'Mossy masonry and glowing growths', 'Seed 6 / deep-forest feature view'),
+    ('seed-6', 'deep-tree.png', 'Twisted tree at a clearing edge', 'Seed 6 / deep-forest feature view'),
     ('captures', 'room-20-stage3.png', 'The Heart', 'Seed 0xB4A7 / stage 3 arena'),
 )
 INK = '#eee9d7'

@@ -113,8 +113,28 @@ def main():
     common=sorted(before.metatiles)
     for name in common:
         check('metatile_ids',name,name in after.metatiles and before.metatiles[name]==after.metatiles.get(name))
+        for field in ('type','coll'):
+            old=before.read(before.symbols['metatile_'+field]+before.metatiles[name],1)
+            new=after.read(after.symbols['metatile_'+field]+after.metatiles[name],1)
+            check('retained_contracts',name+' '+field,old==new)
+    clones=[('FOREST_BLIGHT_PIT','PIT'),('FOREST_BLIGHT_DEAD_TREE','DEAD_TREE')]
+    clones += [('FOREST_BLIGHT_VEIN%d'%i,'BLIGHT_VEIN') for i in range(8)]
+    clones += [('FOREST_BLIGHT_TREE%d'%i,'CANOPY_BLIGHT') for i in range(6)]
+    for name,source in clones:
+        present=name in after.metatiles
+        check('cosmetic_contracts',name+' exists',present)
+        if not present:continue
+        for field in ('type','coll'):
+            original=before.read(before.symbols['metatile_'+field]+before.metatiles[source],1)
+            clone=after.read(after.symbols['metatile_'+field]+after.metatiles[name],1)
+            check('cosmetic_contracts',name+' '+field,original==clone)
+    for prefix,length in (('FOREST_BLIGHT_VEIN',8),('FOREST_BLIGHT_TREE',6)):
+        values=[after.metatiles.get(prefix+str(i),-1) for i in range(length)]
+        check('cosmetic_contracts',prefix+' contiguous ids',values==list(range(values[0],values[0]+length)))
+    counts['retained_metatile_contracts']=len(common)
+    counts['cosmetic_metatile_contracts']=len(clones)
     skipped=[]
-    for set_name in ('forest','sewer'):
+    for set_name in ('forest','sewer','myst'):
         oldset,newset=before.tileset(set_name),after.tileset(set_name)
         checked=frames=0
         for name in common:
@@ -156,8 +176,8 @@ def main():
     output=Path(args.out);output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps(report,indent=2)+'\n')
     for row in mismatches:print('FAIL',row['group'],row['name'],row.get('detail',''))
-    print('RESULT %s %d/%d scope checks; %d forest tiles, %d Drain tiles, %d sprite sheets'%(
-        'PASS' if not mismatches else 'FAIL',report['passed'],report['total'],counts['forest_tiles'],counts['sewer_tiles'],counts['sprite_sheets']))
+    print('RESULT %s %d/%d scope checks; %d forest tiles, %d Drain tiles, %d mystery tiles, %d sprite sheets'%(
+        'PASS' if not mismatches else 'FAIL',report['passed'],report['total'],counts['forest_tiles'],counts['sewer_tiles'],counts['myst_tiles'],counts['sprite_sheets']))
     return int(bool(mismatches))
 
 
