@@ -215,8 +215,14 @@ def _make_banks():
         # Retain the old blade/marker materials alongside the imported art.
         for h in EXTRA_RGB.get(bank,()):
             c=[int(h[i:i+2],16)&248 for i in (1,3,5)]
-            samples.append(np.tile(np.asarray(c,dtype='uint8'),(32,1)))
-        result[bank]=_palette(np.concatenate(samples,axis=0))
+            weight=128 if bank=='gear' and h in ('#445468','#91adb5') else 32
+            samples.append(np.tile(np.asarray(c,dtype='uint8'),(weight,1)))
+        pixels=np.concatenate(samples,axis=0)
+        # JPEG gives the same near-black outline many slightly different
+        # hues. Spend one world ink on it, leaving the limited hardware
+        # colours for actual purple glow, leaf, steel and gold shading.
+        pixels[pixels.max(axis=1)<48]=(8,8,16)
+        result[bank]=_palette(pixels)
     return result
 
 
