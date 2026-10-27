@@ -16,6 +16,7 @@ SWORD_REACH = {'n': (0, 0, 27, 20), 'e': (0, 0, 18, 24),
                's': (0, 8, 27, 26), 'w': (0, 0, 18, 24)}
 # Every held-tool frame is drawn at Bloom's feet minus (16, 32).
 TOOL_HAND = {'n': (23, 16), 'e': (26, 19), 's': (23, 23)}
+NORTH_SWEEPS = {}
 
 
 def stroke(c, points, col, width=1):
@@ -71,6 +72,7 @@ def sword(direction, phase):
         tip=curve[at]
     else:
         tip={'n':((26,7),(1,10)), 'e':((8,0),(12,23)), 's':((27,17),(0,18))}[direction][phase==4]
+    if direction=='n':NORTH_SWEEPS[phase]=c.rows()
     pivots={'n':[(24,16),(24,16),(14,15),(4,16),(4,16)],
             'e':[(0,5),(0,5),(7,9),(0,13),(0,13)],
             's':[(24,1),(24,1),(14,8),(4,2),(4,2)]}
@@ -169,3 +171,26 @@ def ground_shadow():
 
 SHEETS=[{'name':'bloomfx','w':32,'h':32,'pal':'gear','frames':FRAMES},
         {'name':'bloomshadow','w':16,'h':8,'pal':'hero','frames':{'shadow':ground_shadow()}}]
+
+
+def apply_head_occlusion(sheets):
+    """North's blade passes beyond the flower; its reach sweep stays visible.
+
+    Match actual posed head alpha, not a rectangle that would erase exposed
+    steel at the petals' sides. This runs before the item-palette conversion.
+    """
+    hero=next(s for s in sheets if s['name']=='hero')['frames']
+    fx=next(s for s in sheets if s['name']=='bloomfx')['frames']
+    for phase,pose in enumerate(('atk_n1','atk_n1','atk_n','atk_n3','atk_n3')):
+        name='sword_n%d'%phase;before=fx[name];sweep=NORTH_SWEEPS[phase]
+        rows=[list(row) for row in before]
+        for y in range(16):
+            for x in range(28):
+                if hero[pose][y][18+x]!='.':rows[y][x]=sweep[y][x]
+        fx[name]=[''.join(row) for row in rows]
+        # Every contour and leading-crescent pixel survives the occlusion.
+        assert all(ch=='.' or fx[name][y][x]!='.'
+                   for y,row in enumerate(sweep) for x,ch in enumerate(row))
+        assert all(fx[name][y][x]==before[y][x]
+                   for y in range(32) for x in range(32)
+                   if not(y<16 and x<28 and hero[pose][y][18+x]!='.'))
