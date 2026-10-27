@@ -614,6 +614,8 @@ void objects_draw(void) {
                the gate's BG1 material until that gate has actually opened;
                flat sparkle below the bag must not promote it over the web
                or cracked stones that the player needs to recognize. */
+            if ((a->flags & AF_HIDDEN) || (a->iframes && (gFrame & 2)))
+                continue;
             draw_sprite(PX(a->x)-a->w/2-gCamX,PX(a->y)-a->h-PX(a->z)-gCamY,
                         a->sheet,a->tile,a->frame,a->hflip,2,a->pal);
             continue;
