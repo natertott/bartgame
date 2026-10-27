@@ -17,14 +17,16 @@ GROWTH='glade_wood_blight'
 STONE='blight_reference_stone'
 GROUPS={
  SICK:['#000000','#305038','#486840','#608448','#789848',
-       '#101020','#281038','#382050','#503068','#704080',
-       '#a018b8','#d830e8','#f080f8','#384838','#587050','#809058'],
+       '#304030','#404038','#484048','#483048','#382040',
+       '#503060','#603870','#802890','#b040b8','#d860e8','#f080f8'],
  DEEP:['#000000','#100818','#181028','#201030','#301840','#402050',
        '#583068','#784080','#601078','#a018c0','#d830e8','#f078f8',
        '#f8b8f8','#304830','#506838','#886048'],
- GROWTH:['#000000','#080c18','#101c48','#1c2868','#303880','#241030',
-         '#482050','#704080','#8010a0','#c020e0','#f050f8','#f8b0f8',
-         '#504038','#203c28','#587838','#b09050'],
+ # Seven legacy snag colors are retained exactly because dead_tree also
+ # appears in the healthy forest. Its RGB pixels are remapped losslessly.
+ GROWTH:['#000000','#100c20','#302038','#503048','#805068','#d860e8',
+         '#283c38','#503828','#101c48','#1c2868','#303880','#8010a0',
+         '#c020e0','#f8b0f8','#587838','#989078'],
  STONE:['#000000','#080c18','#181828','#303040','#484450','#686060',
         '#a09070','#183828','#405c30','#789848','#281030','#581858',
         '#b020d8','#f070f8','#f8c0f8','#c8a860'],
@@ -61,7 +63,7 @@ def floor(seed=0):
     # Opposite edges share the same subdued body colour, so seeded variants
     # can meet in any order without revealing square borders.
     base=np.array([42,22,60])
-    a[:,:,:3]=np.clip(a[:,:,:3]*.76+base*.24,0,255).astype('uint8')
+    a[:,:,:3]=np.clip(a[:,:,:3]*.48+base*.52,0,255).astype('uint8')
     a=np.roll(a,((seed*3)%16,(seed*5)%16),axis=(0,1))
     body=np.array([48,24,64])
     for edge in (0,15):
@@ -72,15 +74,24 @@ def floor(seed=0):
 
 
 def vein(seed=0,frame=0,subtle=False):
-    out=floor(seed).copy();crack=S.rgba_tile('blight_vein',frame=frame)
-    if subtle:
-        a=np.asarray(crack).copy();yy,xx=np.mgrid[:16,:16]
-        # Reveal one small connected fissure, retaining the atlas's branching
-        # silhouette rather than scattering disconnected bright pixels.
-        a[(xx-(7+seed%3))**2+(yy-8)**2>30,3]=0
-        crack=Image.fromarray(a)
-    out.alpha_composite(crack)
-    return out
+    """Quiet gravel and short subsurface root fissures, never a bright glyph.
+
+    The supplied vein silhouette is intentionally fragmented and turned as
+    material variation. Magenta is reserved for hazards and large growths.
+    """
+    out=floor(seed).copy();body=np.asarray(out).copy()
+    crack=S.rgba_tile('blight_vein',frame=frame)
+    crack=crack.transpose((Image.Transpose.FLIP_LEFT_RIGHT,Image.Transpose.ROTATE_90,
+                           Image.Transpose.FLIP_TOP_BOTTOM,Image.Transpose.ROTATE_270)[seed%4])
+    a=np.asarray(crack).copy();yy,xx=np.mgrid[:16,:16]
+    # Keep just one crooked limb of the reference fissure. Rotate and offset
+    # the oval so adjacent native tiles cannot form a carpet of repeated Ys.
+    cx,cy=((5,7),(10,6),(6,10),(10,10),(5,11),(11,5),(8,5),(8,11))[seed%8]
+    keep=((xx-cx)**2/32+(yy-cy)**2/20)<1
+    fade=np.minimum(np.minimum(xx,15-xx),np.minimum(yy,15-yy))/3
+    strength=(.13 if subtle else .22)*np.clip(fade,0,1)*keep*(a[:,:,3]/255)
+    body[:,:,:3]=np.rint(body[:,:,:3]*(1-strength[:,:,None])+a[:,:,:3]*strength[:,:,None]).astype('uint8')
+    return Image.fromarray(body)
 
 
 def leaf(frame=0,lit=False):
@@ -89,7 +100,16 @@ def leaf(frame=0,lit=False):
     behind=np.roll(behind,(5,7),axis=(0,1));dark=a[:,:,:3].max(axis=2)<30
     fill=behind[:,:,:3]
     fill=np.where((fill.max(axis=2)<30)[:,:,None],np.array([16,24,56]),fill*.65).astype('uint8')
-    a[dark,:3]=fill[dark];a[:,:,3]=255
+    a[dark,:3]=fill[dark]
+    # The atlas reads as blue-violet leaf masses with a few luminous flowers.
+    # Preserve two connected blossom pockets, cooling the remaining pink
+    # foliage into quieter blue leaves so a whole wall does not glitter.
+    yy,xx=np.mgrid[:16,:16]
+    buds=((xx-4)**2+(yy-11)**2<10)|((xx-12)**2+(yy-7)**2<6)
+    hot=(a[:,:,0]>90)&(a[:,:,2]>100)&(a[:,:,0]>a[:,:,1]*1.4)&~buds
+    value=np.minimum(76,a[:,:,:3].astype(float).mean(axis=2)*.65)
+    cool=np.stack((value*.6,value*.75,value*1.55),axis=2).astype('uint8')
+    a[hot,:3]=cool[hot];a[:,:,3]=255
     return Image.fromarray(a)
 
 
@@ -101,18 +121,27 @@ def patch(name,frame=0):
 
 
 def transition(name):
-    raw=F.TILES[name][1][0]
+    """A broad, irregular grass-to-bruise fringe for every side and corner."""
+    sides,corners=int(name[4],16),int(name[5],16)
+    yy,xx=np.mgrid[:16,:16];depth=11.5
+    waves={side:W.rot_wave(1700+side)+(depth-W.ROT_D) for side in (1,2,4,8)}
+    distances={1:(yy+.5)/waves[1][xx],4:(15.5-yy)/waves[4][xx],
+               8:(xx+.5)/waves[8][yy],2:(15.5-xx)/waves[2][yy]}
+    terms=[distances[side] for side in (1,2,4,8) if sides&side]
+    for bit,(cx,cy) in ((1,(0,0)),(2,(16,0)),(4,(16,16)),(8,(0,16))):
+        if corners&bit:terms.append(np.sqrt((xx+.5-cx)**2+(yy+.5-cy)**2)/depth)
+    u=-.14*np.log(sum(np.exp(-t/.14) for t in terms)) if terms else np.full((16,16),9.)
+    blend=np.clip((u-.14)/.94,0,1)
+    blend=blend*blend*(3-2*blend)
+    # Dither only the intermediate band. Both the outside edge and interior
+    # retain their authored colors and meet adjacent tiles without a seam.
+    intermediate=(blend>0)&(blend<1)
+    jitter=(W.P.B4[yy%4,xx%4]-.5)*.10
+    blend=np.clip(blend+intermediate*jitter,0,1)
+    turf=F.woodland_grass(0)
+    grass=np.array([[rgb(F.HEX[int(v)]) for v in row] for row in turf],dtype=float)
     purple=np.asarray(floor(0)).copy()
-    healthy=set(W.C('grass_d','grass_m','grass_l','grass_b','grass_t'))
-    fringe={W.ID['sick_d']:(56,64,56),W.ID['sick_m']:(72,64,72),W.ID['sick_l']:(104,72,112)}
-    for y in range(16):
-        for x in range(16):
-            v=int(raw[y,x])
-            if v in healthy:purple[y,x]=(*rgb(F.HEX[v]),255)
-            elif v in fringe:
-                mix=.30 if v==W.ID['sick_d'] else .52 if v==W.ID['sick_m'] else .72
-                turf=np.array(rgb(F.HEX[W.ID['grass_m']]))
-                purple[y,x,:3]=(turf*(1-mix)+purple[y,x,:3]*mix).astype('uint8')
+    purple[:,:,:3]=np.rint(grass*(1-blend[:,:,None])+purple[:,:,:3]*blend[:,:,None]).astype('uint8')
     return Image.fromarray(purple)
 
 
@@ -127,10 +156,37 @@ def haze(frame):
     return Image.fromarray(a)
 
 
+@lru_cache(maxsize=1)
+def tree_art():
+    a=np.asarray(S.tree_image()).copy()
+    # Reveal the source's warm bark between its violet veins. No extra
+    # outline, glow cloud or floating particles are added to its silhouette.
+    bark=(a[:,:,3]>0)&(a[:,:,0]>a[:,:,2]*.85)&(a[:,:,1]>a[:,:,0]*.35)
+    lifted=np.minimum(255,a[:,:,:3].astype(float)*1.22+np.array([7,9,3])).astype('uint8')
+    a[bark,:3]=lifted[bark]
+    return Image.fromarray(a)
+
+
 def tree_parts(variant=0):
-    im=S.tree_image()
+    im=tree_art()
     if variant:im=im.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
     return [im.crop((x*16,y*16,x*16+16,y*16+16)) for y in range(3) for x in range(2)]
+
+
+def wall_tree_parts():
+    """The full atlas tree can also emerge from a solid canopy boundary."""
+    tree=tree_art();back=Image.new('RGBA',(32,48))
+    for y in range(3):
+        for x in range(2):
+            tile=leaf().transpose(Image.Transpose.FLIP_LEFT_RIGHT) if (x+y)%2 else leaf()
+            back.alpha_composite(tile,(x*16,y*16))
+    # A quiet pocket behind the trunk separates dark bark from busy leaves.
+    a=np.asarray(back).copy();yy,xx=np.mgrid[:48,:32]
+    pocket=np.exp(-((xx-16)**2/55+(yy-26)**2/240))*.6
+    dark=np.array([20,16,32])
+    a[:,:,:3]=np.rint(a[:,:,:3]*(1-pocket[:,:,None])+dark*pocket[:,:,None]).astype('uint8')
+    back=Image.fromarray(a);back.alpha_composite(tree)
+    return [back.crop((x*16,y*16,x*16+16,y*16+16)) for y in range(3) for x in range(2)]
 
 
 def _data():
@@ -158,17 +214,19 @@ def _data():
     put('blight_vein',DEEP,[vein(0,f) for f in range(2)],16)
     put('blight_pool',DEEP,[S.rgba_tile('blight_pool',frame=f) for f in range(2)],16)
     put('blight_crystal',GROWTH,[S.rgba_tile('crystal')])
-    put('dead_tree',GROWTH,[S.rgba_tile('dead_tree')])
+    put('forest_blight_dead_tree',GROWTH,[S.rgba_tile('dead_tree')])
     for prefix,variant in (('btree',0),('sicktree',1)):
         for i,piece in enumerate(tree_parts(variant)):put('%s_%d'%(prefix,i),GROWTH,[piece])
     put('blight_mist',SICK,[haze(f) for f in range(2)],20)
     put('forest_blight_pit',DEEP,[S.rgba_tile('blight_floor_pits',frame=f) for f in range(2)],20)
+    for i in range(8):put('forest_blight_vein%d'%i,DEEP,[vein(i,f) for f in range(2)],24)
+    for i,piece in enumerate(wall_tree_parts()):put('forest_blight_tree%d'%i,GROWTH,[piece])
     return t
 
 
 TILES=_data()
 CHANGED_NAMES=set(TILES)
-PROPS={'blight_crystal','dead_tree'}
+PROPS={'blight_crystal','forest_blight_dead_tree'}
 
 
 def apply(metatiles,palettes):
@@ -177,6 +235,13 @@ def apply(metatiles,palettes):
     if not any(m['name']=='forest_blight_pit' for m in metatiles):
         clone=deepcopy(next(m for m in metatiles if m['name']=='pit'))
         clone['name']='forest_blight_pit';clone['prop']=False;metatiles.append(clone)
+    legacy_tree=deepcopy(next(m for m in metatiles if m['name']=='dead_tree'))
+    for name,source in [('forest_blight_dead_tree','dead_tree')]+[
+            ('forest_blight_vein%d'%i,'blight_vein') for i in range(8)]+[
+            ('forest_blight_tree%d'%i,'canopy_blight') for i in range(6)]:
+        if not any(m['name']==name for m in metatiles):
+            clone=deepcopy(next(m for m in metatiles if m['name']==source))
+            clone['name']=name;metatiles.append(clone)
     unchanged={m['name']:deepcopy(m) for m in metatiles if m['pal'] not in OLD_GROUPS and m['name'] not in TILES}
     physical={m['name']:(m['type'],m.get('coll')) for m in metatiles}
     for m in metatiles:
@@ -194,6 +259,10 @@ def apply(metatiles,palettes):
         if name in PROPS:m['prop']=True
         assert (m['type'],m.get('coll'))==physical[name],name
     assert all(next(m for m in metatiles if m['name']==n)==value for n,value in unchanged.items())
+    preserved=next(m for m in metatiles if m['name']=='dead_tree')
+    assert preserved.get('prop')==legacy_tree.get('prop')
+    assert np.array_equal(np.asarray(image(legacy_tree['art'],OLD_GROUPS[GROWTH])),
+                          np.asarray(image(preserved['art'],GROUPS[GROWTH]))), 'shared dead_tree colors changed'
 
 
 def preview(metatiles,path='/workspace/setup/blight-final-tiles.png'):
