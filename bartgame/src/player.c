@@ -971,6 +971,15 @@ void player_draw(void) {
                twice round), a squash on landing, up */
             frame = t < 3 ? F_HERO_ROLL_1 : t < 18 ? F_HERO_ROLL_2 + ((t - 3) / 3) % 4 : t < 21 ? F_HERO_ROLL_6 : F_HERO_ROLL_7;
             a->hflip = (a->dir > 16);
+            if (t < 3 || t >= 18) {
+                if (f == FACE_N) {
+                    frame = t < 3 ? F_HERO_ROLL_N1 : t < 21 ? F_HERO_ROLL_N6 : F_HERO_ROLL_N7;
+                    a->hflip = 0;
+                } else if (f == FACE_S) {
+                    frame = t < 3 ? F_HERO_ROLL_S1 : t < 21 ? F_HERO_ROLL_S6 : F_HERO_ROLL_S7;
+                    a->hflip = 0;
+                }
+            }
             break;
         }
         case PS_ATTACK:
@@ -1059,9 +1068,11 @@ void player_draw(void) {
        supplies directional depth. No prop is duplicated in body artwork. */
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f != FACE_N)
         draw_load(a);
+    objects_draw_hand(FALSE);
     draw_action(a,FALSE);
     actor_draw(a);
     draw_action(a,TRUE);
+    objects_draw_hand(TRUE);
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f == FACE_N)
         draw_load(a);
     draw_ground_shadow(a);
