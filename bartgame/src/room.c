@@ -2,6 +2,11 @@
 #include "gba.h"
 #include "video.h"
 #include "room.h"
+#include "interactive.h"
+#include "game.h"
+#include "world.h"
+#include "roomgen.h"
+#include "myst.h"
 
 Room gRoom EWRAM_BSS;
 s16 gCamX, gCamY;
@@ -146,7 +151,22 @@ static void map_write(int sb_base, int mx, int my, u16 mt) {
 static void render_cell(int x, int y) {
     int i=y*ROOM_MAX_W+x;
     u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
-    if (ground!=MT_NONE && metatile_prop[ground] && base!=MT_NONE && base!=ground) {
+    if (interactive_chest_ready() && (interactive_chest_tile(ground) ||
+        interactive_chest_overlay(overlay))) {
+        /* The larger OBJ chest owns its complete silhouette. Its original
+           logical tile and stored substrate still own physics and rewards. */
+        u16 floor=base;
+        if (floor==MT_NONE || interactive_chest_tile(floor))
+            floor=gGame.area==AREA_MYST ? myst_ground(x,y) : MT_MOSS0;
+        map_write(SB_GROUND,x,y,floor);
+        if (interactive_chest_overlay(overlay) || overlay==ground || overlay==MT_SPARKLE ||
+            overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
+            overlay=MT_NONE;
+    } else if (interactive_entry_ready() && interactive_mouth_tile(ground)) {
+        /* A continuous wall behind the large portal avoids a second tiny
+           doorway visible through transparent pixels around the frame. */
+        map_write(SB_GROUND,x,y,roomgen_blighted(gGame.cell) ? MT_BLIGHT_WALL : MT_CANOPY_S);
+    } else if (ground!=MT_NONE && metatile_prop[ground] && base!=MT_NONE && base!=ground) {
         map_write(SB_GROUND,x,y,base);
         if (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
             overlay=ground;
@@ -170,14 +190,17 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     if(priority!=2)return priority;
     if(px>=0 && py>=4 && px<gRoom.w*16 && py<gRoom.h*16) {
         u16 feet=gRoom.overlay[((py-4)/16)*ROOM_MAX_W+px/16];
-        if(feet!=MT_NONE && feet!=MT_SPARKLE && feet!=MT_SPARKLE_WHITE && feet!=MT_BLIGHT_MIST)
+        if(feet!=MT_NONE && feet!=MT_SPARKLE && feet!=MT_SPARKLE_WHITE && feet!=MT_BLIGHT_MIST &&
+           !(interactive_chest_ready() && interactive_chest_overlay(feet)))
             return priority;
     }
     for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
         int at=y*ROOM_MAX_W+x;
         u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
-        if(ov!=MT_NONE && ov!=MT_SPARKLE && ov!=MT_SPARKLE_WHITE && ov!=MT_BLIGHT_MIST)
+        if(ov!=MT_NONE && ov!=MT_SPARKLE && ov!=MT_SPARKLE_WHITE && ov!=MT_BLIGHT_MIST &&
+           !(interactive_chest_ready() && interactive_chest_overlay(ov)))
             continue; /* this cell displays the authored crown, not material */
+        if(interactive_chest_ready() && interactive_chest_tile(mt))continue;
         if(mt==MT_NONE || !metatile_prop[mt])continue;
         if(metatile_coll[mt]==0 || py>=(y+1)*16 || z>=16)front=1;
         else if(px>=x*16 && px<(x+1)*16)behind=1;
@@ -214,6 +237,7 @@ void room_change(int mx, int my, u16 mt) {
         if(mt==MT_NONE || !metatile_prop[mt])gRoom.underlay[i]=mt;
     }
     solid_cell_update(mx, my);
+    interactive_cell_changed(mx,my);
     render_cell(mx,my);
 }
 
@@ -222,6 +246,7 @@ void room_change_overlay(int mx, int my, u16 mt) {
         return;
     gRoom.overlay[my * ROOM_MAX_W + mx] = mt;
     solid_cell_update(mx, my);
+    interactive_cell_changed(mx,my);
     render_cell(mx,my);
 }
 

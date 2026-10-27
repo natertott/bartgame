@@ -22,6 +22,7 @@ extern u16 items_sheet_tile(void);
 #include "menu.h"
 #include "save.h"
 #include "game.h"
+#include "interactive.h"
 
 GameState gGame;
 u32 gSeedOverride; /* probes set this before pressing Start */
@@ -624,10 +625,12 @@ static void draw_world(void) {
     if (sDark)
         dark_spare(gOamCount);
     npcs_draw_front();
+    interactive_draw(FALSE);
     player_draw();
     enemies_draw();
     npcs_draw();
     objects_draw();
+    interactive_draw(TRUE);
 }
 
 u32 gDbgSpawn; /* probes: (count << 8) | type, spawns around the hero */

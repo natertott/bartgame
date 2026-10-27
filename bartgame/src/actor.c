@@ -3,6 +3,7 @@
 #include "video.h"
 #include "room.h"
 #include "actor.h"
+#include "interactive.h"
 
 Actor gActors[ACTOR_MAX];
 
@@ -268,6 +269,7 @@ void sprites_reset(void) {
     for (i = 0; i < SHEET_COUNT; i++)
         sSheetTile[i] = 0xFFFF;
     sFrameCount = 0;
+    interactive_room_reset();
 }
 
 u16 sprite_load_frame(int sheet, int frame) {

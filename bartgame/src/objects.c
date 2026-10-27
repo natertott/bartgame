@@ -13,7 +13,7 @@
 #include "world.h"
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
-#define ICON_CACHE_SLOTS 8
+#define ICON_CACHE_SLOTS 7
 static u8 sIconFrame[ICON_CACHE_SLOTS], sIconAge[ICON_CACHE_SLOTS];
 static u16 sIconWorldPal[256] ALIGN4;
 static u8 sIconMenu;
@@ -56,7 +56,7 @@ static void ensure_sheets(void) {
 }
 
 /* The bag shows at most seven distinct 32px icons at once; the selected
-   description reuses one of them. Keep eight frames rather than the whole
+   description reuses one of them. Keep seven frames rather than the whole
    sheet, leaving room for combat sprites after opening the bag. */
 u16 icon32_frame_tile(int frame) {
     int i, slot = -1;
