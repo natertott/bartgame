@@ -13,6 +13,8 @@
 #include "world.h"
 
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
+#define ICON_CACHE_SLOTS 8
+static u8 sIconFrame[ICON_CACHE_SLOTS], sIconAge[ICON_CACHE_SLOTS];
 
 static void ensure_sheets(void) {
     if (!sItemsTile)
@@ -27,16 +29,50 @@ static void ensure_sheets(void) {
         sPickTile = sprite_load_sheet(SHEET_PICK32);
 }
 
-/* the treasures at 32 pixels, for the item-get and the pause menu: loaded
-   when first wanted, so a room's monsters come first */
-u16 icon32_sheet_tile(void) {
-    if (!sIconTile)
-        sIconTile = sprite_load_sheet(SHEET_ICON32);
-    return sIconTile;
+/* The bag shows at most seven distinct 32px icons at once; the selected
+   description reuses one of them. Keep eight frames rather than the whole
+   sheet, leaving room for combat sprites after opening the bag. */
+u16 icon32_frame_tile(int frame) {
+    int i, slot = -1;
+    const SpriteSheet* sh = &sheets[SHEET_ICON32];
+    if (!sIconTile) {
+        sIconTile = sprite_alloc(ICON_CACHE_SLOTS * sh->frame_tiles);
+        if (!sIconTile)
+            return 0;
+    }
+    for (i=0;i<ICON_CACHE_SLOTS;i++)
+        if (sIconFrame[i] == frame) {
+            slot=i;
+            break;
+        }
+    if (slot < 0) {
+        for (i=0;i<ICON_CACHE_SLOTS;i++) {
+            if (sIconFrame[i] == 0xFF) {
+                slot=i;
+                break;
+            }
+            if (slot < 0 || sIconAge[i] > sIconAge[slot])
+                slot=i;
+        }
+        vram_queue(sh->tiles + frame * sh->frame_tiles * 16,
+                   OBJ_TILE(sIconTile + slot * sh->frame_tiles), sh->frame_tiles * 32);
+        sIconFrame[slot]=frame;
+    }
+    /* Maintain exact LRU ranks on hits as well as uploads. A page that
+       mixes cached and new icons must not evict an icon already drawn in
+       this frame; simple FIFO replacement does not guarantee that. */
+    int age=sIconAge[slot];
+    for (i=0;i<ICON_CACHE_SLOTS;i++)
+        if (i!=slot && sIconFrame[i]!=0xFF && sIconAge[i]<age)
+            sIconAge[i]++;
+    sIconAge[slot]=0;
+    return sIconTile + slot * sh->frame_tiles;
 }
 
 void objects_room_reset(void) {
     sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = sPickTile = sIconTile = 0;
+    memset(sIconFrame,0xFF,sizeof(sIconFrame));
+    memset(sIconAge,0xFF,sizeof(sIconAge));
     ensure_sheets();
 }
 
@@ -318,13 +354,18 @@ void bomb_place(int px, int py) {
     Actor* a = actor_new(AK_OBJECT, FX_BOMB_OBJ, px, py);
     if (!a)
         return;
-    actor_set_sheet(a, SHEET_FX, sFxTile);
-    a->frame = F_FX_BOMB1;
+    actor_set_sheet(a, SHEET_ITEMS, sItemsTile);
+    a->frame = F_ITEMS_BOMBS;
     a->timer = 0;
     a->timer2 = 0;
     a->prio = 2;
     a->hitbox = HB_SMALL;
     a->flags = AF_SOLID;
+    /* Store the release point for an eight-frame hand-to-ground motion.
+       Physics and the 150-frame fuse still start at the planted location. */
+    static const s8 hand[4][2] = { {7,-10}, {10,-7}, {7,-3}, {-10,-7} };
+    a->vx = PX(gPlayer->x)+hand[gPlayer->facing][0];
+    a->vy = PX(gPlayer->y)+hand[gPlayer->facing][1];
     sfx_play(SFX_BOMB_SET);
 }
 
@@ -431,9 +472,9 @@ static void bomb_update(Actor* a) {
         return;
     }
     if (a->timer2 >= 70 && (a->timer2 & 4))
-        a->frame = F_FX_BOMB2;
+        a->frame = F_ITEMS_BOMB_LIT;
     else
-        a->frame = F_FX_BOMB1;
+        a->frame = F_ITEMS_BOMBS;
 }
 
 /* ------------------------------------------------------------ update -- */
@@ -456,10 +497,27 @@ void objects_update(void) {
     }
 }
 
+/* The bomb being released is the actual object, drawn above the hand.
+   There is no second held-bomb sprite. Once planted it joins ground props. */
+void objects_draw_hand(void) {
+    int i;
+    for (i=1;i<ACTOR_MAX;i++) {
+        Actor* a=&gActors[i];
+        if (a->kind!=AK_OBJECT || a->type!=FX_BOMB_OBJ || a->timer2>=8)
+            continue;
+        int t=a->timer2;
+        int x=(a->vx*(8-t)+PX(a->x)*t)/8;
+        int y=(a->vy*(8-t)+PX(a->y)*t)/8;
+        draw_sprite(x-a->w/2-gCamX,y-a->h-gCamY,a->sheet,a->tile,a->frame,0,gPlayer->prio,a->pal);
+    }
+}
+
 void objects_draw(void) {
     int i;
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* a = &gActors[i];
+        if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8)
+            continue;
         if (a->kind == AK_PROJ || a->kind == AK_PICKUP || a->kind == AK_FX || a->kind == AK_OBJECT)
             actor_draw(a);
     }

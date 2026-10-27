@@ -37,12 +37,14 @@ static void use_bomb(void) {
     gPl.bombs--;
     bomb_place(px, py);
     gPl.item_cooldown = 12;
+    player_item_pose(EQ_BOMBS);
 }
 
 static void use_bow(void) {
-    if (player_shoot())
+    if (player_shoot()) {
         gPl.item_cooldown = 16;
-    else
+        player_item_pose(EQ_BOW);
+    } else
         sfx_play(SFX_BUMP);
 }
 
@@ -62,6 +64,7 @@ static void use_lamp(void) {
     gPl.lamp_timer = 20;
     gPl.item_cooldown = 24;
     sLampFx = 1;
+    player_item_pose(EQ_LAMP);
     sfx_play(SFX_LAMP);
 }
 

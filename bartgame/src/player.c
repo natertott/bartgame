@@ -27,6 +27,10 @@ PlayerState gPl;
 
 static u8 sLastFrame = 0xFF;
 static u8 sWalkTimer;
+/* Visual action state is transient, outside PlayerState/save data. One
+   streamed 32x32 layer serves the sword, held tools and airborne cape. */
+static u16 sActionTile, sLastActionFrame;
+static u8 sUseItem, sUseTimer, sUseLength, sUseFacing;
 
 static void hero_set_frame(int frame) {
     if (frame == sLastFrame)
@@ -121,6 +125,11 @@ void player_init(int px, int py, int facing) {
     gPl.safe_x = px;
     gPl.safe_y = py;
     sLastFrame = 0xFF;
+    sLastActionFrame = 0xFFFF;
+    sActionTile = sprite_alloc(16);
+    sUseItem = sUseTimer = sUseLength = 0;
+    sWalkTimer = 0;
+    gPl.sword_active = gPl.lamp_timer = gPl.shield_up = 0;
     /* the blade and shield sheets stay resident for the HUD's slots */
     dma3_copy32(sheets[SHEET_SWORD].tiles, OBJ_TILE(SWORD_TILE), sheets[SHEET_SWORD].tile_count * 32);
     dma3_copy32(sheets[SHEET_SHIELD].tiles, OBJ_TILE(SHIELD_TILE), sheets[SHEET_SHIELD].tile_count * 32);
@@ -227,19 +236,32 @@ void player_item_get(int item_bit, int sprite_frame) {
     sfx_play(SFX_ITEM);
 }
 
-/* The sword's hit box: a box in front covering the swing's arc. */
+/* Inclusive bounds from the feet. Rendering and every sword interaction
+   use this same reach; the active sweep cannot drift away from combat. */
+static void sword_bounds(int* x0, int* y0, int* x1, int* y1) {
+    static const s8 reach[4][4] = {
+        { -14, -32, 13, -12 }, { 4, -22, 22, 2 },
+        { -14, -6, 13, 12 }, { -23, -22, -5, 2 }
+    };
+    Actor* a = gPlayer;
+    const s8* r = reach[a->facing];
+    int px = PX(a->x), py = PX(a->y);
+    *x0 = px+r[0]; *y0 = py+r[1]; *x1 = px+r[2]; *y1 = py+r[3];
+}
+
 bool8 player_sword_box(int* x0, int* y0, int* x1, int* y1) {
     if (!gPl.sword_active)
         return FALSE;
-    Actor* a = gPlayer;
-    int px = PX(a->x), py = PX(a->y) - 8;
-    switch (a->facing) {
-        case FACE_N: *x0 = px - 14; *x1 = px + 13; *y0 = py - 24; *y1 = py - 4; break;
-        case FACE_S: *x0 = px - 14; *x1 = px + 13; *y0 = py + 2; *y1 = py + 20; break;
-        case FACE_E: *x0 = px + 4; *x1 = px + 22; *y0 = py - 14; *y1 = py + 10; break;
-        default: *x0 = px - 23; *x1 = px - 5; *y0 = py - 14; *y1 = py + 10; break;
-    }
+    sword_bounds(x0, y0, x1, y1);
     return TRUE;
+}
+
+void player_item_pose(int item) {
+    sUseItem = item;
+    sUseLength = item == EQ_LAMP ? 20 : item == EQ_BOW ? 16 : 12;
+    sUseTimer = sUseLength;
+    sUseFacing = gPlayer->facing;
+    gPl.shield_up = 0;
 }
 
 bool8 player_lamp_box(int* x0, int* y0, int* x1, int* y1) {
@@ -414,6 +436,7 @@ static void throw_carried(void) {
     gPl.carry = CARRY_NONE;
     a->state = PS_NORMAL;
     a->timer = 0;
+    player_item_pose(EQ_NONE);
     sfx_play(SFX_ROLL);
 }
 
@@ -437,7 +460,9 @@ static void state_normal(void) {
         a->state = PS_ATTACK;
         a->timer = 0;
         gPl.sword_phase = 0;
-        gPl.sword_active = 1;
+        gPl.sword_active = 0;
+        gPl.shield_up = 0;
+        sUseTimer = 0;
         a->speed = 0;
         if (dir != DIR_NONE)
             a->facing = facing_from_dir(dir, a->facing);
@@ -451,6 +476,8 @@ static void state_normal(void) {
         if (dir != DIR_NONE) {
             a->state = PS_ROLL;
             a->timer = 0;
+            sUseTimer = 0;
+            gPl.shield_up = 0;
             a->dir = (a->facing * 8);
             if ((dir & 7) == 0)
                 a->dir = dir;
@@ -461,7 +488,7 @@ static void state_normal(void) {
     }
     /* the shield: held up while its button is held, the hero slows and
        keeps facing the way the shield points */
-    gPl.shield_up = ((gKeysHeld & player_equip_keys(EQ_SHIELD)) && !gPl.carry) ? 1 : 0;
+    gPl.shield_up = ((gKeysHeld & player_equip_keys(EQ_SHIELD)) && !gPl.carry && !sUseTimer) ? 1 : 0;
     if (dir == DIR_NONE) {
         a->speed = 0;
         gPl.push_timer = 0;
@@ -561,10 +588,12 @@ static void state_carry(void) {
 
 static void state_attack(void) {
     Actor* a = gPlayer;
-    int t = a->timer;
-    gPl.sword_phase = t < 5 ? 0 : t < 10 ? 1 : 2;
-    gPl.sword_active = (t >= 1 && t <= 11);
-    if (++a->timer >= ATTACK_FRAMES) {
+    int t = ++a->timer;
+    gPl.sword_phase = t < 5 ? 0 : t < 9 ? 1 : 2;
+    /* Two anticipation frames, eleven live frames, then recovery. The
+       old input frame dealt an invisible hit before disabling again. */
+    gPl.sword_active = (t >= 2 && t <= 12);
+    if (t >= ATTACK_FRAMES) {
         a->state = PS_NORMAL;
         gPl.sword_active = 0;
         gPl.sword_phase = 0;
@@ -702,6 +731,8 @@ static void state_dead(void) {
 
 void player_update(void) {
     Actor* a = gPlayer;
+    if (sUseTimer)
+        sUseTimer--;
     if (a->iframes)
         a->iframes--;
     /* a small residual knockback (bounces) applies in NORMAL too */
@@ -731,6 +762,8 @@ void player_update(void) {
     }
     if (gPl.lamp_timer)
         gPl.lamp_timer--;
+    if (a->state != PS_NORMAL || a->facing != sUseFacing)
+        sUseTimer = 0;
 }
 
 /* Jumps with the Petal Cloak: forward 1.25, zvel 2.0, 32 frames in the
@@ -764,6 +797,16 @@ static const u8 sAtkFrame[3][4] = {
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
+static const u8 sUseFrame[3][4] = {
+    { F_HERO_USE_N1, F_HERO_USE_E1, F_HERO_USE_S1, F_HERO_USE_E1 },
+    { F_HERO_USE_N2, F_HERO_USE_E2, F_HERO_USE_S2, F_HERO_USE_E2 },
+    { F_HERO_USE_N3, F_HERO_USE_E3, F_HERO_USE_S3, F_HERO_USE_E3 },
+};
+static const u8 sCapeFrame[3][4] = {
+    { F_HERO_CAPE_N1, F_HERO_CAPE_E1, F_HERO_CAPE_S1, F_HERO_CAPE_E1 },
+    { F_HERO_CAPE_N2, F_HERO_CAPE_E2, F_HERO_CAPE_S2, F_HERO_CAPE_E2 },
+    { F_HERO_CAPE_N3, F_HERO_CAPE_E3, F_HERO_CAPE_S3, F_HERO_CAPE_E3 },
+};
 /* the load over the head: arms up, standing and the two walking steps */
 static const u8 sCarryFrame[3][4] = {
     { F_HERO_CARRY_N, F_HERO_CARRY_E, F_HERO_CARRY_S, F_HERO_CARRY_E },
@@ -780,8 +823,69 @@ static void draw_load(Actor* a) {
     int t = (a->state == PS_LIFT) ? a->timer : LIFT_FRAMES;
     int gy = -12, cy = at[a->facing][1];
     int sx = PX(a->x) + at[a->facing][0] - gCamX;
-    int sy = PX(a->y) + gy + ((cy - gy) * t) / LIFT_FRAMES - PX(a->z) - gCamY;
+    int ease = t * (2 * LIFT_FRAMES - t);
+    int sy = PX(a->y) + gy + ((cy - gy) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - PX(a->z) - gCamY;
     draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
+}
+
+static int use_step(void) {
+    int age = sUseLength - sUseTimer;
+    return age < 4 ? 0 : age < sUseLength - 4 ? 1 : 2;
+}
+
+static int cape_step(Actor* a) {
+    return a->timer < 4 ? 0 : a->zvel < 0 && a->z < Q16(6) ? 2 : 1;
+}
+
+static void action_frame(int frame, int sx, int sy, int flip, int prio) {
+    if (!sActionTile)
+        return;
+    const SpriteSheet* sh = &sheets[SHEET_BLOOMFX];
+    if (sLastActionFrame != frame) {
+        sLastActionFrame = frame;
+        vram_queue(sh->tiles + frame * sh->frame_tiles * 16, OBJ_TILE(sActionTile), sh->frame_tiles * 32);
+    }
+    draw_sprite(sx, sy, SHEET_BLOOMFX, sActionTile, 0, flip, prio, PAL_OBJ_GEAR);
+}
+
+/* This layer has its own anchor: southward reach extends below the feet,
+   and the northward blade must remain visible over the back of the bloom. */
+static void draw_action(Actor* a, bool8 behind) {
+    if (a->flags & AF_HIDDEN || (a->iframes && (gFrame & 2)))
+        return;
+    int f = a->facing;
+    int sx = PX(a->x)-16-gCamX, sy = PX(a->y)-32-PX(a->z)-gCamY;
+    if (behind) {
+        if (a->state == PS_JUMP && a->sub == 0) {
+            static const u8 cape[4] = { F_BLOOMFX_CAPE_N0, F_BLOOMFX_CAPE_E0, F_BLOOMFX_CAPE_S0, F_BLOOMFX_CAPE_E0 };
+            action_frame(cape[f]+cape_step(a), sx, sy, f==FACE_W, a->prio);
+        }
+        return;
+    }
+    if (a->state == PS_ATTACK) {
+        static const u8 sword[4] = { F_BLOOMFX_SWORD_N0, F_BLOOMFX_SWORD_E0, F_BLOOMFX_SWORD_S0, F_BLOOMFX_SWORD_W0 };
+        int x0,y0,x1,y1;
+        sword_bounds(&x0,&y0,&x1,&y1);
+        int t=a->timer;
+        int step=t<2?0:t<5?1:t<9?2:t<13?3:4;
+        action_frame(sword[f]+step, x0-gCamX, y0-(f==FACE_S?8:0)-gCamY-PX(a->z), 0, a->prio);
+    } else if (a->state == PS_NORMAL && sUseTimer) {
+        int base = -1;
+        if (sUseItem == EQ_BOW) {
+            static const u8 bow[4] = { F_BLOOMFX_BOW_N0, F_BLOOMFX_BOW_E0, F_BLOOMFX_BOW_S0, F_BLOOMFX_BOW_E0 };
+            base=bow[f];
+        } else if (sUseItem == EQ_LAMP) {
+            static const u8 lamp[4] = { F_BLOOMFX_LAMP_N0, F_BLOOMFX_LAMP_E0, F_BLOOMFX_LAMP_S0, F_BLOOMFX_LAMP_E0 };
+            base=lamp[f];
+        }
+        if (base>=0)
+            action_frame(base+use_step(), sx, sy, f==FACE_W, a->prio);
+    } else if (a->state == PS_NORMAL && gPl.shield_up) {
+        static const s8 at[4][2] = { { -8,-34 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
+        static const u8 frame[4] = { F_SHIELD_BACK, F_SHIELD_SIDE, F_SHIELD_FRONT, F_SHIELD_SIDE };
+        draw_sprite(PX(a->x)+at[f][0]-gCamX, PX(a->y)+at[f][1]-PX(a->z)-gCamY,
+                    SHEET_SHIELD, SHIELD_TILE, frame[f], f==FACE_W, a->prio, PAL_OBJ_GEAR);
+    }
 }
 
 void player_draw(void) {
@@ -819,13 +923,13 @@ void player_draw(void) {
             break;
         }
         case PS_JUMP:
-            frame = sJumpFrame[f];
+            frame = a->sub == 0 ? sCapeFrame[cape_step(a)][f] : sJumpFrame[f];
             break;
         case PS_ITEMGET:
             frame = F_HERO_ITEMGET;
             break;
         case PS_LIFT:
-            frame = sCarryFrame[0][f];
+            frame = a->timer < 4 ? sUseFrame[0][f] : sCarryFrame[0][f];
             break;
         case PS_SWALLOWED:
             /* startled, then shrinking into the mouth like into a hole */
@@ -838,6 +942,10 @@ void player_draw(void) {
             break;
         }
         default:
+            if (a->state == PS_NORMAL && sUseTimer) {
+                frame = sUseFrame[use_step()][f];
+                break;
+            }
             if (gPl.shield_up) {
                 frame = sGuardFrame[f];
                 break;
@@ -871,11 +979,13 @@ void player_draw(void) {
     if (a->state == PS_ITEMGET && gPl.got_item) {
         int sx = PX(a->x) - 16 - gCamX;
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
-        draw_sprite(sx, sy, SHEET_ICON32, icon32_sheet_tile(), gPl.got_item, 0, 1, PAL_OBJ_ICONS);
+        draw_sprite(sx, sy, SHEET_ICON32, icon32_frame_tile(gPl.got_item), 0, 0, 1, PAL_OBJ_ICONS);
     }
-    /* the Bloom's frames carry the blade she swings and the leaf she
-       guards with; a load goes over her (earlier OAM entries draw on top) */
+    /* Earlier OAM entries draw on top: tools stay visible over the body;
+       the cape opens behind it. Props contain no duplicate baked items. */
     if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry)
         draw_load(a);
+    draw_action(a,FALSE);
     actor_draw(a);
+    draw_action(a,TRUE);
 }

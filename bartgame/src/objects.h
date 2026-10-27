@@ -17,9 +17,10 @@ Actor* fx_spawn(int type, int px, int py);
 void drop_roll(int px, int py, u32 roll);
 void objects_update(void);
 void objects_draw(void);
+void objects_draw_hand(void); /* newly planted bomb passes from hand to ground */
 void objects_room_reset(void);
 u16 items_sheet_tile(void);
-u16 icon32_sheet_tile(void);
+u16 icon32_frame_tile(int frame); /* one cached 32px icon; draw with frame 0 */
 void bomb_place(int px, int py);
 int bombs_live(void);
 Actor* thrown_spawn(int kind, int px, int py, int facing);

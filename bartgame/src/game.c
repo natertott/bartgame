@@ -602,6 +602,7 @@ static void draw_world(void) {
     if (sDark)
         dark_spare(gOamCount);
     npcs_draw_front();
+    objects_draw_hand();
     player_draw();
     enemies_draw();
     npcs_draw();

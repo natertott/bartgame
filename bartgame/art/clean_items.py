@@ -342,6 +342,8 @@ def blade(frame):
 def make(name,size):
     if name=='none':return ['.'*size]*size
     if name in ('bombs','bomb_pickup'):return bomb(size,name=='bomb_pickup')
+    if name=='bomb_lit':
+        return [r.translate(str.maketrans({'d':'f','4':'8'})) for r in bomb(size,1)]
     if name=='lamp':return candle(size)
     if name=='cloak':return cloak(size)
     if name=='key':return key(size)
@@ -368,6 +370,7 @@ def apply(sheets):
         name=s['name']
         if name in ('icon32','items','pick32'):
             s['frames']={n:make(n,s['w']) for n in s['frames']}
+            if name=='items':s['frames']['bomb_lit']=make('bomb_lit',16)
         elif name=='sword':s['frames']={n:blade(n) for n in s['frames']}
         elif name=='shield':s['frames']={n:shield(16,n=='side',n=='back') for n in s['frames']}
         elif name=='arrow':

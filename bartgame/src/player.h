@@ -73,6 +73,7 @@ void player_equip_set(int slot, int eq);
 bool8 player_has_item(int eq);
 void player_heart_piece(void); /* a quarter heart; four make a whole */
 void player_auto_equip(int eq); /* onto the first free of B and L */
+void player_item_pose(int eq);  /* brief visual anticipation/use/recovery */
 void player_swallow(void);      /* the Drain Cap: a mouth takes the hero under */
 void player_drop_in(void);      /* arriving from the ceiling, falling to the feet */
 bool8 player_shoot(void);       /* the bow: an arrow the way he faces, FALSE without one */

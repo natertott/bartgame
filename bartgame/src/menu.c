@@ -349,7 +349,7 @@ static void grid_draw(int count) {
 static void grid_icons(const MenuItem* list, const u8* idx, int count) {
     int i;
     for (i = 0; i < count && i < 4 * GRID_ROWS; i++)
-        draw_sprite(GRID_TX(i % 4) * 8, GRID_TY(i / 4) * 8, SHEET_ICON32, icon32_sheet_tile(), list[idx[i]].icon, 0, 1, PAL_OBJ_ICONS);
+        draw_sprite(GRID_TX(i % 4) * 8, GRID_TY(i / 4) * 8, SHEET_ICON32, icon32_frame_tile(list[idx[i]].icon), 0, 0, 1, PAL_OBJ_ICONS);
 }
 
 /* the chosen one at the foot: its icon in a slot, its name in gold and
@@ -496,10 +496,10 @@ static void draw_page(void) {
 
 /* ------------------------------------------------------------ sprites -- */
 static void ensure_sheets(void) {
-    if (!sMarksTile)
-        sMarksTile = sprite_load_sheet(SHEET_MARKS);
-    if (!sDotsTile)
-        sDotsTile = sprite_load_sheet(SHEET_DOTS);
+    /* The allocator's cache resets on every room load. Resolve these
+       again so reopening the map cannot reuse another room's tile bases. */
+    sMarksTile = sprite_load_sheet(SHEET_MARKS);
+    sDotsTile = sprite_load_sheet(SHEET_DOTS);
 }
 
 static void mark16(int px, int py, int frame) {
@@ -672,7 +672,6 @@ void menu_open(void) {
     sOverviewDone = 0;
     sMapCur = (gGame.area == AREA_FOREST) ? gGame.cell : gWorld.entry;
     ensure_sheets();
-    icon32_sheet_tile();
     REG_BLDCNT = 0;
     REG_BLDY = 0;
     video_show(DCNT_BG0 | DCNT_BG3 | DCNT_OBJ);
@@ -729,7 +728,7 @@ void menu_update(void) {
             int n = gather(sItems, ITEM_COUNT, idx), s;
             grid_icons(sItems, idx, n);
             if (n)
-                draw_sprite(2 * 8, DESC_SLOT_TY * 8, SHEET_ICON32, icon32_sheet_tile(), sItems[idx[sCursor]].icon, 0, 1, PAL_OBJ_ICONS);
+                draw_sprite(2 * 8, DESC_SLOT_TY * 8, SHEET_ICON32, icon32_frame_tile(sItems[idx[sCursor]].icon), 0, 0, 1, PAL_OBJ_ICONS);
             for (s = 0; s < SLOT_COUNT; s++)
                 equip_icon(gPl.equip[s], 25 * 8, SIDE_BADGE_TY(s) * 8 - 4, 1);
             grid_move(sItems, idx, n);
@@ -745,7 +744,7 @@ void menu_update(void) {
             int n = gather(sKeys, KEY_COUNT, idx);
             grid_icons(sKeys, idx, n);
             if (n)
-                draw_sprite(2 * 8, DESC_SLOT_TY * 8, SHEET_ICON32, icon32_sheet_tile(), sKeys[idx[sCursor]].icon, 0, 1, PAL_OBJ_ICONS);
+                draw_sprite(2 * 8, DESC_SLOT_TY * 8, SHEET_ICON32, icon32_frame_tile(sKeys[idx[sCursor]].icon), 0, 0, 1, PAL_OBJ_ICONS);
             grid_move(sKeys, idx, n);
             break;
         }
