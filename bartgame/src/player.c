@@ -841,7 +841,6 @@ static const u8 sAtkFrame[3][4] = {
     { F_HERO_ATK_N3, F_HERO_ATK_E3, F_HERO_ATK_S3, F_HERO_ATK_E3 }, /* the follow-through */
 };
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
-static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
 static const u8 sGuardStep[2][4] = {
     { F_HERO_GUARD_N1, F_HERO_GUARD_E1, F_HERO_GUARD_S1, F_HERO_GUARD_E1 },
