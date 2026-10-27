@@ -931,7 +931,10 @@ static void draw_action(Actor* a, bool8 behind) {
             base=lamp[f];
         }
         if (base>=0)
-            action_frame(base+use_step(), sx, sy, f==FACE_W, a->prio);
+            /* The bow stays pinned to its hand through release/recovery;
+               only Bloom's pose changes. Its three source prop frames are
+               identical, so retain one streamed frame for the whole use. */
+            action_frame(base+(sUseItem==EQ_BOW ? 0 : use_step()), sx, sy, f==FACE_W, a->prio);
     } else if (a->state == PS_NORMAL && gPl.shield_up) {
         if (behind != (f == FACE_N))
             return;
