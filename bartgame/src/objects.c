@@ -186,7 +186,12 @@ static void pickup_update(Actor* a) {
                 sfx_play(SFX_PICKUP);
                 break;
             case PK_KEY: gPl.keys++; sfx_play(SFX_KEY); break;
-            case PK_RELIC: gPl.items |= ITEM_RELIC; sfx_play(SFX_SECRET); break;
+            case PK_RELIC:
+                gPl.items |= ITEM_RELIC;
+                if (gGame.area == AREA_FOREST && gWorld.cells[gGame.cell].role == ROLE_RELIC)
+                    gWorld.cells[gGame.cell].flags |= CF_RELIC_TAKEN;
+                sfx_play(SFX_SECRET);
+                break;
             case PK_GRAIL: game_win(); sfx_play(SFX_WIN); break;
             case PK_ARROW1: gPl.arrows += 1; sfx_play(SFX_PICKUP); break;
             case PK_ARROW5: gPl.arrows += 5; sfx_play(SFX_PICKUP); break;

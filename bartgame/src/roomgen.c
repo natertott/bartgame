@@ -1420,7 +1420,17 @@ static void lay_rot(int stage) {
                     rot[y][x] = 1;
     for (y = 1; y < H - 1; y++)
         for (x = 1; x < W - 1; x++)
-            if (rot[y][x] == 2)
+            if (stage >= 2 && rot[y][x]) {
+                static const u16 edge[16] = {
+                    MT_ROT_00, MT_ROT_10, MT_ROT_20, MT_ROT_30,
+                    MT_ROT_40, MT_ROT_50, MT_ROT_60, MT_ROT_70,
+                    MT_ROT_80, MT_ROT_90, MT_ROT_A0, MT_ROT_B0,
+                    MT_ROT_C0, MT_ROT_D0, MT_ROT_E0, MT_ROT_F0
+                };
+                int sides = (!rot[y-1][x] ? 1 : 0) | (!rot[y][x+1] ? 2 : 0) |
+                            (!rot[y+1][x] ? 4 : 0) | (!rot[y][x-1] ? 8 : 0);
+                room_set(x, y, edge[sides]);
+            } else if (rot[y][x] == 2)
                 room_set(x, y, (rng_range(&sR, 8) == 0) ? MT_BLIGHT_GROUND2 : MT_BLIGHT_GROUND0 + (rng_next(&sR) & 1));
 }
 
@@ -1846,10 +1856,13 @@ void roomgen_build(int cell) {
             }
             break;
         case ROLE_RELIC:
+            /* The pedestal and the layout draw are permanent. Skipping this
+               placement after collection shifts the RNG stream and moves
+               persistent pockets elsewhere when the player comes back. */
+            ensure_spot(&gSpots.relic);
+            room_set(gSpots.relic.x, gSpots.relic.y, MT_MOSSY_STONE);
             if (!(c->flags & CF_RELIC_TAKEN)) {
-                ensure_spot(&gSpots.relic);
                 gSpots.has_relic = 1;
-                room_set(gSpots.relic.x, gSpots.relic.y, MT_MOSSY_STONE);
                 room_set_overlay(gSpots.relic.x, gSpots.relic.y, MT_SPARKLE);
             }
             break;

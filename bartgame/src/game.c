@@ -350,8 +350,6 @@ static void check_shrine(void) {
         sfx_play(SFX_SECRET);
         textbox_open("A shrine the blight forgot. It remembers the sun. Your wounds close.");
     }
-    if (actor_find(AK_PICKUP, PK_RELIC) == NULL && gSpots.has_relic && (gPl.items & ITEM_RELIC))
-        c->flags |= CF_RELIC_TAKEN;
 }
 
 /* ------------------------------------------------------------ exits -- */
