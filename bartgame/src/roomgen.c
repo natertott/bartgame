@@ -158,7 +158,7 @@ static bool8 clear3(int x, int y) {
    another landmark or the top edge of the room. No collision is expanded. */
 static bool8 mouth_frame_space(int mx, int my) {
     int x,y;
-    if (mx < 2 || mx >= W-2 || my < 3 || my >= H-3)
+    if (mx < 2 || mx >= W-2 || my < 4 || my >= H-3)
         return FALSE;
     for (y=my-2;y<=my;y++) for (x=mx-1;x<=mx+1;x++) {
         u16 ov=room_get_overlay(x,y);
@@ -1877,7 +1877,7 @@ void roomgen_build(int cell) {
     if (gWorld.myst[cell]) {
         int tries, style = MYST_STYLE(gWorld.myst[cell]);
         for (tries = 0; tries < 400; tries++) {
-            int mx = 2 + rng_range(&sR, W - 4), my = 3 + rng_range(&sR, H - 6);
+            int mx = 2 + rng_range(&sR, W - 4), my = 4 + rng_range(&sR, H - 7);
             if (mouth_frame_space(mx,my) && sMask[my + 1][mx] == M_FLOOR && is_floor(mx, my + 1) && reached(mx, my + 1) && !near_door(mx, my + 1)) {
                 room_set(mx, my, style == MY_CAVE ? MT_MOUTH_CAVE : style == MY_HOLLOW ? MT_MOUTH_HOLLOW : MT_MOUTH_THICKET);
                 gSpots.mouth.x = mx;
@@ -1889,12 +1889,12 @@ void roomgen_build(int cell) {
         if (!gSpots.has_mouth) {
             /* Guaranteed task access even when no random wall-face trial
                succeeded: connect a secluded face to the central clearing. */
-            int mx = (hash32(gWorld.seed,cell) & 1) ? 4 : W-5, my = 3;
+            int mx = (hash32(gWorld.seed,cell) & 1) ? 4 : W-5, my = 4;
             int ax,ay,rx=W/2,ry=H/2;
             /* A whole native wall patch is preferable to widening a frame
                across traversable ground. Its approach can be connected
                without turning the surrounding frame into solid new cells. */
-            for(ay=3;ay<H-3;ay++) for(ax=2;ax<W-2;ax++)
+            for(ay=4;ay<H-3;ay++) for(ax=2;ax<W-2;ax++)
                 if(mouth_frame_space(ax,ay) && ABS(ax-W/2)>=3 && !near_door(ax,ay+1)) {mx=ax;my=ay;}
             for(ay=2;ay<H-1;ay++) for(ax=1;ax<W-1;ax++)
                 if(reached(ax,ay)) {rx=ax;ry=ay;}
