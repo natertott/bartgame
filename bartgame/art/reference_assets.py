@@ -3,7 +3,7 @@
 Frame dimensions and ordering retain the engine contracts. Item frames carry
 one of four world palette banks; paused inventory frames use their own ramps.
 """
-from PIL import Image, ImageOps
+from PIL import Image, ImageDraw, ImageOps
 import clean_items
 import reference_items as R
 
@@ -36,11 +36,70 @@ def centred(im,width,height,cx,cy,frame_size=32):
     return out
 
 
+HELD_GRIPS = {
+    # FX coordinates. Its top-left is feet(-16,-32); the hero sheet is
+    # 16 pixels wider on the left. Arrow launch height includes its z=6.
+    'bow': {'n':(16,9), 'e':(26,14), 's':(16,24)},
+    'lamp': {'n':(23,16), 'e':(26,19), 's':(23,23)},
+    'cape': {'n':(16,17), 'e':(16,17), 's':(16,17)},
+}
+
+
+def _hanging_lamp(direction,phase):
+    """Hold the ring, with the lantern hanging below a fixed hand grip."""
+    hx,hy=HELD_GRIPS['lamp'][direction]
+    w,h={'n':(10,15),'e':(8,13),'s':(8,10)}[direction]
+    lantern=fit(R.native_image('lamp'),w,h)
+    left=round(hx-lantern.width/2);top=hy-1
+    out=Image.new('RGBA',(32,32))
+    for y in range(lantern.height):
+        # Keep the ring motionless. Only the suspended lower body sways.
+        shift=int(phase==1 and y>=lantern.height-5)
+        out.alpha_composite(lantern.crop((0,y,lantern.width,y+1)),(left+shift,top+y))
+    return out
+
+
+def _cape_fabric(direction,phase):
+    """The supplied cloak's fabric, worn from the shoulders rather than
+    displaying its inventory hood and empty face opening over Bloom.
+    """
+    out=Image.new('RGBA',(32,32));draw=ImageDraw.Draw(out)
+    dark='#080810';shadow='#083018';body='#204830';mid='#305838';light='#487840'
+    if direction=='e':
+        tail=(6,1,7)[phase]
+        edge=[(15,16),(18,17),(18,21),(15,25),(12,29),(8,29),(6,31),
+              (tail,29),(tail+2,25),(9,22),(12,18)]
+        draw.polygon(edge,fill=dark)
+        draw.polygon([(15,18),(17,18),(16,22),(12,26),(8,28),(tail+3,28),
+                      (tail+4,26),(10,23),(13,20)],fill=body)
+        draw.line([(15,18),(13,22),(tail+4,27)],fill=light,width=2)
+        draw.line([(16,19),(14,23),(10,28)],fill=shadow)
+        # Retain the source's pointed leaf skirt as a trailing cloth edge.
+        skirt=R.native_image('cloak').crop((0,18,32,32))
+        skirt=fit(skirt,(10,16,10)[phase],9)
+        out.alpha_composite(skirt,(max(0,tail),23))
+    else:
+        half=(9,13,10)[phase]
+        edge=[(14,16),(18,16),(21,20),(16+half,27),(16+half-2,30),
+              (22,28),(20,31),(16,29),(12,31),(10,28),(16-half+2,30),
+              (16-half,27),(11,20)]
+        draw.polygon(edge,fill=dark)
+        draw.polygon([(14,18),(18,18),(20,21),(15+half,27),(21,27),
+                      (19,29),(16,27),(13,29),(11,27),(17-half,27),(12,21)],fill=body)
+        draw.polygon([(14,18),(16,18),(14,23),(10,27),(17-half,27),(12,21)],fill=light)
+        draw.polygon([(17,18),(19,21),(21,27),(18,26),(16,23)],fill=mid)
+        draw.line([(16,18),(15,23),(16,28)],fill=shadow)
+        # The lower source is actual cloth only: no golden front clasp or
+        # dark hood opening. Its native leaf points keep the item identity.
+        skirt=R.native_image('cloak').crop((0,18,32,32))
+        skirt=fit(skirt,half*2,9)
+        out.alpha_composite(skirt,(round(16-skirt.width/2),23))
+    return out
+
+
 def held(tool,direction,phase):
-    hand={'n':(23,16),'e':(26,19),'s':(23,23)}[direction]
-    hx,hy=hand
     if tool=='lamp':
-        return centred(R.native_image('lamp'),10,15,hx,hy-5+(0,-1,0)[phase])
+        return _hanging_lamp(direction,phase)
     if tool=='bow':
         # The source bow is diagonal. Turn its actual pixels so the limbs
         # and released arrow face the engine's cardinal shot direction.
@@ -48,16 +107,14 @@ def held(tool,direction,phase):
         bow=ImageOps.mirror(cropped(bow))
         if direction=='n':bow=bow.rotate(90,Image.Resampling.NEAREST,expand=True)
         elif direction=='s':bow=bow.rotate(270,Image.Resampling.NEAREST,expand=True)
-        w,h=(9,16) if direction=='e' else (16,9)
-        return centred(bow,w,h,hx,hy-(phase==0))
+        hx,hy=HELD_GRIPS['bow'][direction]
+        w,h={'n':(28,16),'e':(11,20),'s':(24,14)}[direction]
+        # Gameplay releases on the button frame. Keep the grip pinned
+        # through release/settle/recovery instead of moving the whole bow
+        # after the arrow has already left it.
+        return centred(bow,w,h,hx,hy)
     if tool=='cape':
-        # The imported cloak opens behind Bloom, whose original flower and
-        # clothing remain the foreground. Three spans follow the jump pose.
-        if direction=='e':
-            w,h=((11,18),(17,20),(10,19))[phase];cx,cy=10,21
-        else:
-            w,h=((22,22),(28,24),(20,22))[phase];cx,cy=16,20
-        return centred(R.native_image('cloak'),w,h,cx,cy)
+        return _cape_fabric(direction,phase)
     raise KeyError(tool)
 
 
