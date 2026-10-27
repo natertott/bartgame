@@ -217,6 +217,10 @@ bool8 player_hurt(int damage, int from_dir) {
     if (gPl.hp < 0)
         gPl.hp = 0;
     gPl.carry = CARRY_NONE;
+    /* A hurt roll-bounce has an ordinary airborne recovery, not a cape.
+       Actual jumps retain their cape/ledge/drop-in landing behaviour. */
+    if (a->z > 0 && a->state != PS_JUMP)
+        a->sub = 3;
     a->state = PS_HURT;
     a->timer = HURT_FRAMES;
     a->kb_dir = from_dir;
@@ -632,8 +636,11 @@ static void state_attack(void) {
 static void state_hurt(void) {
     Actor* a = gPlayer;
     actor_move(a, a->kb_speed, a->kb_dir);
-    if (--a->timer == 0)
-        a->state = PS_NORMAL;
+    if (--a->timer == 0) {
+        a->state = a->z > 0 ? PS_JUMP : PS_NORMAL;
+        if (a->state == PS_JUMP)
+            a->timer = 4; /* continue the airborne pose, not a new takeoff */
+    }
 }
 
 static void state_fall(void) {
@@ -760,20 +767,28 @@ static void state_dead(void) {
 
 void player_update(void) {
     Actor* a = gPlayer;
+    bool8 landed = FALSE;
     if (sUseTimer)
         sUseTimer--;
     if (a->iframes)
         a->iframes--;
+    /* Hurt and wall-bounce recovery must not freeze an existing flight.
+       JUMP advances its own arc; all other live airborne poses keep the
+       same gravity even after the short knockback timer has expired. */
+    if (a->state != PS_JUMP && a->state != PS_FALL && a->state != PS_DEAD &&
+        a->state != PS_SWALLOWED && (a->z > 0 || a->zvel > 0)) {
+        a->z += a->zvel;
+        a->zvel -= Q16(0.125);
+        if (a->z <= 0) {
+            a->z = 0;
+            a->zvel = 0;
+            landed = TRUE;
+        }
+    }
     /* a small residual knockback (bounces) applies in NORMAL too */
     if (a->kb_timer && a->state == PS_NORMAL) {
         actor_move(a, a->kb_speed, a->kb_dir);
         a->kb_timer--;
-        if (a->z > 0 || a->zvel > 0) {
-            a->z += a->zvel;
-            a->zvel -= Q16(0.125);
-            if (a->z < 0)
-                a->z = 0;
-        }
     }
     switch (a->state) {
         case PS_NORMAL: state_normal(); break;
@@ -789,6 +804,8 @@ void player_update(void) {
         case PS_SWALLOWED: state_swallowed(); break;
         default: break;
     }
+    if (landed && a->state != PS_FALL && a->state != PS_DEAD && a->state != PS_SWALLOWED)
+        check_floor();
     if (gPl.lamp_timer)
         gPl.lamp_timer--;
     if (a->state != PS_NORMAL || a->facing != sUseFacing)
