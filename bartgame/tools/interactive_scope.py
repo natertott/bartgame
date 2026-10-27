@@ -27,6 +27,7 @@ INTERACTIVE_NAMES = {
     'CAVE_EXIT', 'HOLLOW_EXIT', 'THICKET_EXIT',
     'CAVE_FLOOR_CHEST', 'HOLLOW_FLOOR_CHEST', 'THICKET_FLOOR_CHEST',
     'SW_LADDER', 'SW_HOLE', 'SW_TORCH_LIT', 'SW_POT', 'SWH_063',
+    'STATUE', 'SHRINE_PLATE',
 }
 NEW_SHEETS = {'interactivechest': (32, 32), 'interactiveentry': (32, 64)}
 
@@ -72,8 +73,19 @@ def main():
 
     check('scope_declaration', 'only named interactions declared',
           declared <= INTERACTIVE_NAMES, sorted(declared - INTERACTIVE_NAMES))
-    check('metatile_contracts', 'all names and identifiers retained',
-          before.metatiles == after.metatiles)
+    check('metatile_contracts', 'all original names and identifiers retained',
+          all(after.metatiles.get(name) == index
+              for name, index in before.metatiles.items()))
+    added_tiles = set(after.metatiles) - set(before.metatiles)
+    check('metatile_contracts', 'only healing shrine trigger plate added',
+          added_tiles == {'SHRINE_PLATE'}, sorted(added_tiles))
+    if 'SHRINE_PLATE' in after.metatiles:
+        index = after.metatiles['SHRINE_PLATE']
+        check('metatile_contracts', 'shrine plate appended after original ids',
+              index == max(before.metatiles.values()) + 1)
+        for field, expected in (('type', after.defs['TT_FLOOR']), ('coll', 0), ('prop', 1)):
+            actual = after.read(after.symbols['metatile_' + field] + index, 1)[0]
+            check('new_shrine_contract', field, actual == expected)
     for name, index in before.metatiles.items():
         if name not in after.metatiles:
             continue
@@ -82,6 +94,7 @@ def main():
             new = after.read(after.symbols['metatile_' + field] + after.metatiles[name], 1)
             check('metatile_contracts', name + ' ' + field, old == new)
     counts['physical_metatiles'] = len(before.metatiles)
+    counts['added_metatiles'] = sorted(name.lower() for name in added_tiles)
 
     for area in ('forest', 'sewer', 'myst'):
         oldset, newset = before.tileset(area), after.tileset(area)
@@ -106,6 +119,15 @@ def main():
             if old is not None and new is not None:
                 check('animation_contracts', area + ' ' + name,
                       old[:2] == new[:2])
+        if 'SHRINE_PLATE' in after.metatiles:
+            new = after.tile_art(newset, 'SHRINE_PLATE')
+            check('new_shrine_contract', area + ' only resident in forest',
+                  (new is not None) == (area == 'forest'))
+            if new is not None:
+                changed[area].append('shrine_plate')
+                changed_frames += new[0]
+                check('new_shrine_contract', 'declared shrine artwork',
+                      'SHRINE_PLATE' in declared)
         check('hardware_budget', area + ' subtiles', newset['tile_count'] <= 1024)
         check('hardware_budget', area + ' palettes', newset['palette_count'] <= 12)
         counts[area] = {
