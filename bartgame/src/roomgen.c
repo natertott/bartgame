@@ -1317,6 +1317,98 @@ static void ensure_npc_spot(Spot* out) {
     ensure_fronted_spot(out);
 }
 
+/* Censers reserve their south approach and the gardener's speaking lane.
+   Moving a coincident censer two tiles south used to put it in front of an
+   unchecked stump. Later censers could also claim an earlier approach. */
+static bool8 quest_torch_reserved(int x,int y) {
+    int i;
+    if(x==gSpots.npc.x && y>=gSpots.npc.y-1 && y<=gSpots.npc.y+2)
+        return TRUE;
+    for(i=0;i<gSpots.torch_count;i++)
+        if(x==gSpots.torches[i].x && y>=gSpots.torches[i].y && y<=gSpots.torches[i].y+1)
+            return TRUE;
+    if(gSpots.has_mouth && ABS(x-gSpots.mouth.x)<=1 &&
+       y>=gSpots.mouth.y-2 && y<=gSpots.mouth.y+1)
+        return TRUE;
+    return FALSE;
+}
+
+static void quest_flood(const Cell* c) {
+    int s;
+    for(s=0;s<4;s++) if(c->gate[s]!=GATE_WALL) {
+        int x0,y0,x1,y1;
+        roomgen_gate_tiles(s,&x0,&y0,&x1,&y1);
+        flood_reach(x0+(s==SIDE_W ? 1 : s==SIDE_E ? -1 : 0),
+                    y0+(s==SIDE_N ? 1 : s==SIDE_S ? -1 : 0));
+        return;
+    }
+    flood_reach(W/2,H/2);
+}
+
+static bool8 quest_torch_access(const Cell* c,Spot t,bool8 second) {
+    int i;
+    if(!reached(t.x,t.y+1) || !reached(gSpots.npc.x,gSpots.npc.y+1) ||
+       (second && !reached(gSpots.npc.x,gSpots.npc.y+2)))
+        return FALSE;
+    if(gSpots.has_mouth && !reached(gSpots.mouth.x,gSpots.mouth.y+1))
+        return FALSE;
+    for(i=0;i<gSpots.torch_count;i++)
+        if(!reached(gSpots.torches[i].x,gSpots.torches[i].y+1))
+            return FALSE;
+    for(i=0;i<4;i++) if(c->gate[i]!=GATE_WALL) {
+        int x0,y0,x1,y1;
+        roomgen_gate_tiles(i,&x0,&y0,&x1,&y1);
+        if(!reached(x0+(i==SIDE_W ? 1 : i==SIDE_E ? -1 : 0),
+                    y0+(i==SIDE_N ? 1 : i==SIDE_S ? -1 : 0)))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static bool8 quest_try_torch(const Cell* c,Spot t,bool8 second) {
+    u16 old;
+    bool8 okay;
+    if(near_door(t.x,t.y) || quest_torch_reserved(t.x,t.y) ||
+       !is_floor(t.x,t.y+1) || !reached(t.x,t.y+1))
+        return FALSE;
+    if(!is_floor(t.x,t.y) || !reached(t.x,t.y)) {
+        return FALSE;
+    }
+    old=room_get(t.x,t.y);
+    room_set(t.x,t.y,(c->flags&CF_QUEST_DONE) ? MT_TORCH_LIT : MT_TORCH);
+    quest_flood(c);
+    okay=quest_torch_access(c,t,second);
+    if(okay) {
+        gSpots.torches[gSpots.torch_count++]=t;
+        return TRUE;
+    }
+    room_set(t.x,t.y,old);
+    quest_flood(c);
+    return FALSE;
+}
+
+static void place_quest_torches(const Cell* c) {
+    int i,k,x,y;
+    bool8 second;
+    quest_flood(c);
+    second=reached(gSpots.npc.x,gSpots.npc.y+2);
+    for(i=0;i<4;i++) {
+        bool8 placed=FALSE;
+        /* Random broad clearings retain the usual distributed layout. */
+        for(k=0;k<1000 && !placed;k++) {
+            Spot t;
+            if(find_spot(&t,1,k<400 ? 2 : 1))
+                placed=quest_try_torch(c,t,second);
+        }
+        /* Exhaust the finite existing floor before abandoning a candidate;
+           no unchecked relocation or terrain carving is needed. */
+        for(y=3;y<H-3 && !placed;y++) for(x=2;x<W-2 && !placed;x++) {
+            Spot t={x,y};
+            placed=quest_try_torch(c,t,second);
+        }
+    }
+}
+
 /* A spot for something the run depends on. Tries for clearance, then
    for a spot that blocks nothing, then opens the room's middle. */
 static void ensure_spot(Spot* out) {
@@ -1927,16 +2019,7 @@ void roomgen_build(int cell) {
         case ROLE_NPC_TORCH:
             ensure_npc_spot(&gSpots.npc);
             gSpots.has_npc = 1;
-            for (i = 0; i < 4; i++) {
-                /* a censer wants open ground in front of it, to the south,
-                   where the hero stands to swing the lamp */
-                Spot t;
-                ensure_fronted_spot(&t);
-                if (t.x == gSpots.npc.x && t.y == gSpots.npc.y && is_floor(t.x, t.y + 2))
-                    t.y += 2;
-                gSpots.torches[gSpots.torch_count++] = t;
-                room_set(t.x, t.y, (c->flags & CF_QUEST_DONE) ? MT_TORCH_LIT : MT_TORCH);
-            }
+            place_quest_torches(c);
             break;
         case ROLE_RELIC:
             /* The pedestal and the layout draw are permanent. Skipping this
