@@ -91,6 +91,8 @@ pack-tiles:
 # The maze generator compiled for the host: twenty thousand seeds checked
 # for reachability (keys before gates, no lock in the way) and quests.
 verify-world:
-	gcc -w -I src -I build/gen -o build/host/gates build/host/gates.c src/world.c src/util.c
+	gcc -O2 -fno-builtin -w -I src -I build/gen -o build/host/gates build/host/gates.c src/world.c src/util.c
 	./build/host/gates
+	gcc -O2 -fno-builtin -w -I src -I build/gen -o build/host/pacing build/host/pacing.c src/world.c src/util.c
+	./build/host/pacing
 .PHONY: verify-world

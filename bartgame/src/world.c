@@ -20,6 +20,8 @@
 #include "myst.h"
 
 World gWorld EWRAM_BSS;
+u8 gWorldGenerationAttempts;
+u8 gWorldGenerationFallback;
 
 static const s8 sDx[4] = { 0, 1, 0, -1 };
 static const s8 sDy[4] = { -1, 0, 1, 0 };
@@ -237,13 +239,13 @@ static void myst_generate(World* w, Rng* r) {
     }
 }
 
-void world_generate(u32 seed) {
+static bool8 world_candidate(u32 seed, u32 layout_seed, const WorldTuning* tuning) {
     Rng r;
     int i, s;
     World* w = &gWorld;
     memset(w, 0, sizeof(*w));
     w->seed = seed;
-    rng_seed(&r, seed);
+    rng_seed(&r, layout_seed);
     for (i = 0; i < CELLS; i++)
         for (s = 0; s < 4; s++)
             w->cells[i].gate[s] = GATE_WALL;
@@ -275,11 +277,20 @@ void world_generate(u32 seed) {
             w->path[i] = rev[n - 1 - i];
         w->path_len = n;
     }
+    /* Reject an unsuitable skeleton before spending time on roles, quests,
+       loops and event assignment. Attempt zero is retained as a fallback. */
+    if (tuning && (w->path_len - 1 < tuning->spine_min ||
+                   w->path_len - 1 > tuning->spine_max))
+        return FALSE;
     /* tree edges become open gates; thorns on some */
     for (i = 0; i < CELLS; i++)
         for (s = 0; s < 4; s++)
-            if (sTree[i][s])
-                w->cells[i].gate[s] = (rng_range(&r, 5) == 0) ? GATE_THORN : GATE_OPEN;
+            if (sTree[i][s] && cell_neighbor(i, s) > i) {
+                int n = cell_neighbor(i, s);
+                int gate = (rng_range(&r, 5) == 0) ? GATE_THORN : GATE_OPEN;
+                w->cells[i].gate[s] = gate;
+                w->cells[n].gate[opposite(s)] = gate;
+            }
     /* the exit back to the sewer */
     w->cells[w->entry].gate[SIDE_S] = GATE_EXIT;
     w->cells[w->entry].role = ROLE_ENTRY;
@@ -322,9 +333,38 @@ void world_generate(u32 seed) {
     for (i = 0; i < 3; i++) {
         sStageLimit = i;
         flood(w->entry, pass_stage);
-        int room = pick_room(&r, 1);
+        int room = -1, best = -999, k;
+        for (k = 0; k < CELLS; k++) {
+            int p, onpath = 0, attachment = 0, depth = 0, sc;
+            if (sDist[k] == 0xFF || w->cells[k].role != ROLE_NONE)
+                continue;
+            for (p = 0; p < w->path_len; p++)
+                if (w->path[p] == k)
+                    onpath = 1;
+            p = k;
+            while (p != 0xFF) {
+                int j, at = -1;
+                for (j = 0; j < w->path_len; j++)
+                    if (w->path[j] == p) at = j;
+                if (at >= 0) { attachment = at; break; }
+                depth++;
+                p = sParent[p];
+            }
+            /* The previous barrier is behind this branch's attachment. */
+            if (i > 0) {
+                int prev = 0, j;
+                for (j = 0; j < w->path_len; j++)
+                    if (w->path[j] == w->gate_cell[i - 1]) prev = j;
+                if (attachment <= prev) continue;
+            }
+            sc = (!onpath ? 30 : 0) + MIN(depth, 4) * 8 +
+                 (degree(k) == 1 ? 6 : 0) + rng_range(&r, 7);
+            if (sc > best) { best = sc; room = k; }
+        }
         if (room < 0)
-            room = w->entry; /* degenerate: never with 25 cells */
+            room = pick_room(&r, 1);
+        if (room < 0)
+            room = w->entry; /* invalid candidates are rejected by pacing */
         w->key_cell[i] = room;
         w->cells[room].role = ROLE_KEYITEM;
         w->cells[room].role_arg = key_items[i];
@@ -542,6 +582,15 @@ void world_generate(u32 seed) {
     }
 
     myst_generate(w, &r);
+    /* These are the three milestones, never an event needing its own prize.
+       A floor-plate trial, a wave trial and a knight trial are all completable
+       with the starting sword; the event system grants the item's chest. */
+    {
+        static const u8 trials[3] = { MK_SWITCHES, MK_WAVES, MK_MINIBOSS };
+        for (i = 0; i < 3; i++)
+            w->myst[w->key_cell[i]] = MYST_PACK(trials[i], MS_MEDIUM,
+                                              rng_range(&r, 3));
+    }
     /* the Map and the Astrolabe wait in two more chests, in free rooms:
        the Map early (the first stage, nearest after the bow), the
        Astrolabe anywhere free */
@@ -591,4 +640,176 @@ void world_generate(u32 seed) {
         c->flags = 0;
         c->opened = 0;
     }
+    return TRUE;
+}
+
+/* -------------------------------------------------------- run pacing -- */
+const WorldTuning world_profiles[WORLD_PROFILE_COUNT] = {
+    /* crossings, detours, optional cells, spine, candidate budget */
+    { 18, 24, 1, 6,  9, 14, 24 }, /* focused */
+    { 24, 32, 2, 4, 10, 17, 32 }, /* balanced: the default */
+    { 25, 34, 3, 3,  9, 19, 64 }, /* wandering */
+};
+
+/* Actual graph distances: loops are counted, item barriers respected, locks
+   excluded. The parent path is also a certificate of the required visit set. */
+static int route_walk(int from, int to, int stage, u32* visits) {
+    u32 targets = to < 0 ? 0 : 1u << to;
+    int found = -1;
+    if (to < 0) {
+        int k;
+        for (k = 0; k < gWorld.path_len; k++) targets |= 1u << gWorld.path[k];
+    }
+    u8 q[CELLS], distance[CELLS], parent[CELLS];
+    int head = 0, tail = 0, i;
+    memset(distance, 255, sizeof(distance));
+    memset(parent, 255, sizeof(parent));
+    distance[from] = 0;
+    q[tail++] = from;
+    while (head < tail) {
+        int c = q[head++];
+        if (targets & (1u << c)) { found = c; break; }
+        for (i = 0; i < 4; i++) {
+            int n = cell_neighbor(c, i), g = gWorld.cells[c].gate[i];
+            if (n < 0 || distance[n] != 255 || g == GATE_WALL ||
+                g == GATE_EXIT || g == GATE_LOCK ||
+                (g == GATE_CRACK && stage < 1) ||
+                (g == GATE_WEB && stage < 2) ||
+                (g == GATE_CHASM && stage < 3)) continue;
+            distance[n] = distance[c] + 1;
+            parent[n] = c;
+            q[tail++] = n;
+        }
+    }
+    if (found < 0) return 255;
+    i = found;
+    while (i != 255) {
+        *visits |= 1u << i;
+        if (i == from) break;
+        i = parent[i];
+    }
+    return distance[found];
+}
+
+void world_route_metrics(WorldRouteMetrics* out) {
+    int i, j, from = gWorld.entry, crossings = 0;
+    u32 visits = 0;
+    memset(out, 0, sizeof(*out));
+    out->spine_edges = gWorld.path_len - 1;
+    for (i = 0; i < 4; i++) {
+        int to = i < 3 ? gWorld.key_cell[i] : gWorld.goal;
+        int d = route_walk(from, to, i, &visits);
+        if (d == 255) { out->required_crossings = 255; return; }
+        crossings += d;
+        from = to;
+        if (i < 3) {
+            u32 ignored = 0;
+            int onpath = 0, nearest = route_walk(to, -1, i, &ignored);
+            for (j = 0; j < gWorld.path_len; j++)
+                if (gWorld.path[j] == to) onpath = 1;
+            if (!onpath) out->detours++;
+            if (nearest != 255 && nearest > out->max_detour)
+                out->max_detour = nearest;
+        }
+    }
+    out->required_crossings = crossings;
+    for (i = 0; i < CELLS; i++) out->required_cells += (visits >> i) & 1;
+    out->backtrack_edges = crossings + 1 - out->required_cells;
+}
+
+static int outside(int value, int lo, int hi) {
+    return value < lo ? lo - value : value > hi ? value - hi : 0;
+}
+
+static bool8 milestones_fit(void) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        const Cell* c = &gWorld.cells[gWorld.key_cell[i]];
+        if (c->role != ROLE_KEYITEM || c->role_arg != i + 1 || c->stage != i)
+            return FALSE;
+    }
+    return gWorld.cells[gWorld.entry].role == ROLE_ENTRY;
+}
+
+static bool8 metrics_fit(const WorldRouteMetrics* m, const WorldTuning* t) {
+    return m->required_crossings >= t->min_crossings &&
+           m->required_crossings <= t->max_crossings &&
+           m->spine_edges >= t->spine_min && m->spine_edges <= t->spine_max &&
+           m->detours >= t->min_detours &&
+           m->required_cells <= CELLS - t->min_optional;
+}
+
+void world_generate_tuned(u32 seed, const WorldTuning* tuning) {
+    /* Keep the best candidate rather than an unbounded retry loop on the GBA.
+       The seed still names the whole run, including all art and event draws. */
+    World best;
+    WorldTuning settings = tuning ? *tuning : world_profiles[WORLD_BALANCED];
+    int attempt, best_score = 0x7fffffff;
+    int target;
+    settings.max_crossings = MAX(settings.min_crossings, settings.max_crossings);
+    settings.min_detours = MIN(settings.min_detours, 3);
+    settings.spine_min = CLAMP(settings.spine_min, 5, CELLS - 1);
+    settings.spine_max = CLAMP(settings.spine_max, settings.spine_min, CELLS - 1);
+    settings.attempts = settings.attempts ? MIN(settings.attempts, 128) : 64;
+    tuning = &settings;
+    gWorldGenerationFallback = 0;
+    target = tuning->min_crossings + hash32(seed, 0x726f7574) %
+                 (tuning->max_crossings - tuning->min_crossings + 1);
+    for (attempt = 0; attempt < tuning->attempts; attempt++) {
+        WorldRouteMetrics m;
+        int score;
+        gWorldGenerationAttempts = attempt + 1;
+        if (!world_candidate(seed, hash32(seed, attempt * 0x9e37u + 0x74726565),
+                             attempt ? tuning : NULL))
+            continue;
+        world_route_metrics(&m);
+        score = outside(m.required_crossings, tuning->min_crossings, tuning->max_crossings) * 40 +
+                outside(m.spine_edges, tuning->spine_min, tuning->spine_max) * 30 +
+                MAX(0, tuning->min_detours - m.detours) * 100 +
+                MAX(0, tuning->min_optional - (CELLS - m.required_cells)) * 150 +
+                ABS(m.required_crossings - target);
+        if (!milestones_fit()) score += 10000;
+        if (score < best_score) {
+            best_score = score;
+            memcpy(&best, &gWorld, sizeof(best));
+            /* A two-crossing tolerance avoids freezing the title while
+               hunting for an exact distance. All structural limits still
+               hold: their penalties are at least thirty. */
+            if (score <= 2) break;
+        }
+    }
+    memcpy(&gWorld, &best, sizeof(gWorld));
+    {
+        /* Four certified skeletons per named profile make the runtime bound
+           honest: exhausting the budget never silently requires all 25 rooms
+           or loses a mandatory detour. Art still uses the original run seed.
+           Custom infeasible targets return the best candidate, with this same
+           no-full-clear safety fallback. Budget changes keep certification. */
+        static const u32 fallback[WORLD_PROFILE_COUNT][4] = {
+            { 6, 7, 11, 16 }, { 1, 7, 8, 10 }, { 8, 27, 28, 31 }
+        };
+        WorldRouteMetrics m;
+        int profile = -1, p;
+        world_route_metrics(&m);
+        for (p = 0; p < WORLD_PROFILE_COUNT; p++) {
+            const WorldTuning* t = &world_profiles[p];
+            if (settings.min_crossings == t->min_crossings &&
+                settings.max_crossings == t->max_crossings &&
+                settings.min_detours == t->min_detours &&
+                settings.min_optional == t->min_optional &&
+                settings.spine_min == t->spine_min && settings.spine_max == t->spine_max)
+                profile = p;
+        }
+        if ((profile >= 0 && !metrics_fit(&m, tuning)) || m.required_cells >= CELLS ||
+            !milestones_fit()) {
+            if (profile < 0) profile = WORLD_BALANCED;
+            world_candidate(seed, fallback[profile][hash32(seed, 0x66616c6c) & 3], NULL);
+            gWorldGenerationFallback = 1;
+            gWorldGenerationAttempts++;
+        }
+    }
+}
+
+void world_generate(u32 seed) {
+    world_generate_tuned(seed, &world_profiles[WORLD_BALANCED]);
 }

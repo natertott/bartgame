@@ -34,6 +34,7 @@ enum { MP_MOUTH, MP_NPC, MP_CHEST, MP_RELIC, MP_SHRINE, MP_COUNT };
 
 /* in Cell.opened above the four gate bits */
 #define CELL_LOOTED 0x10 /* the alcove's hoard is taken */
+#define CELL_POCKET_OPEN 0x20 /* an internal item-gated pocket is open */
 
 typedef struct {
     u8 gate[4];
@@ -62,8 +63,28 @@ typedef struct {
 } World;
 
 extern World gWorld;
+extern u8 gWorldGenerationAttempts; /* bounded generation diagnostic */
+extern u8 gWorldGenerationFallback; /* a certified skeleton was used */
 
+/* Pacing is in room crossings, including returns for the three event rewards.
+   Settings affect generation only; the saved World/Cell layout is unchanged. */
+typedef struct {
+    u8 min_crossings, max_crossings;
+    u8 min_detours, min_optional;
+    u8 spine_min, spine_max;
+    u8 attempts; /* plus at most one certified fallback for named profiles */
+} WorldTuning;
+typedef struct {
+    u8 spine_edges, required_crossings, required_cells;
+    u8 detours, backtrack_edges, max_detour;
+} WorldRouteMetrics;
+enum { WORLD_FOCUSED, WORLD_BALANCED, WORLD_WANDERING, WORLD_PROFILE_COUNT };
+extern const WorldTuning world_profiles[WORLD_PROFILE_COUNT];
 void world_generate(u32 seed);
+/* Named profiles have certified pacing bounds. Other target combinations are
+   best effort under the given budget; inspect world_route_metrics afterward. */
+void world_generate_tuned(u32 seed, const WorldTuning* tuning);
+void world_route_metrics(WorldRouteMetrics* out);
 int cell_neighbor(int cell, int side);
 void world_open_gate(int cell, int side);
 bool8 world_gate_open(int cell, int side);

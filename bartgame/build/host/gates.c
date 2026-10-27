@@ -43,5 +43,5 @@ int main(void) {
         if (hunt && fetch && torch) quest_ok++;
     }
     printf("seeds 1..19999: bad %d, short paths %d, locks/run %.2f, key chests/run %.2f, all three quests %d\n", bad, shortp, locks_total / 19999.0, keych_total / 19999.0, quest_ok);
-    return 0;
+    return bad ? 1 : 0;
 }
