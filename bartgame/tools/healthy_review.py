@@ -130,7 +130,9 @@ def visual_control(c, names, world, view, before, after, changed_materials):
             # a transparent prop, not merely because a stale field names it.
             rendered = {names.get(mt, 'none'), names.get(ov, 'none')}
             if mt != 65535 and P.r8(c, prop + mt) and under not in (65535, mt):
-                rendered.add(names.get(under, 'none'))
+                incidental = {'none', 'sparkle', 'sparkle_white', 'blight_mist'}
+                visible_prop = names.get(ov, 'none') in incidental
+                rendered = {names.get(under, 'none'), names.get(mt if visible_prop else ov, 'none')}
             materials = sorted(rendered & changed_materials)
             if not materials:
                 continue
@@ -174,7 +176,7 @@ def main():
     P.snap(c, str(out / 'drain-control.png'))
     report = {'seed': hex(seed), 'rom_sha256': hashlib.sha256(Path(args.rom).read_bytes()).hexdigest(),
               'fixture_version': FIXTURE_VERSION, 'emulator': 'mGBA 0.10.5',
-              'method': 'Native240x160 mGBA framebuffers. Real generated terrain and animation; debug room navigation, safe standing points, healing, cleared enemies/ambient firefly actors, settled camera, then animationclock0 and64 real frames. GIFs sample96 actual frames at everyother frame and enlarge2xNN.',
+              'method': 'Native 240x160 mGBA framebuffers. Real generated terrain and animation; debug room navigation, safe standing points, healing, cleared enemies/ambient firefly actors, settled camera, then animation clock 0 and 64 real frames. GIFs sample 96 actual frames at every other frame and enlarge 2x with nearest-neighbour scaling.',
               'drain_image': 'drain-control.png', 'rooms': [], 'features': [], 'animations': [],
               'allowed_shared_materials': sorted(changed_materials)}
     world = C.world(c)
