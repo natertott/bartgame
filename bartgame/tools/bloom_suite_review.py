@@ -315,6 +315,38 @@ class Suite:
         self.record('drain-forest-transition',0,200,{8:[('UP',True)],68:[('UP',False)]},point)
         self.save()
 
+    def foregrounds(self):
+        """Actual authored crowns, physical props and Drain counter faces."""
+        self.enter('forest');target=None
+        for cell,d in enumerate(self.world['cells']):
+            if d['stage']>=2:continue
+            self.warp(cell);_,_,g=C.room_tiles(self.c);room=P.sym('gRoom')
+            for (x,y),mt in g.items():
+                ov=P.r16(self.c,room+2050+(y*32+x)*2)&65535
+                if ov==65535 or not 3<=x<29 or not 3<=y<21:continue
+                name=L.tiles.METATILES[ov]['name']
+                if name.startswith(('tree_top','tree_mid','tree2_','gtree','birch_','fir_')) and P.r8(self.c,P.sym('metatile_type')+mt)==0:
+                    target=(cell,x,y);break
+            if target:break
+        assert target,'no natural traversable tree crown'
+        cell,x,y=target;point=(x*16+8,y*16+12)
+        for action,eq,f,total,held in (('sword',1,0,40,1),('shield-wood',5,0,48,28),('cape',4,1,56,1)):
+            self.warp(cell);self.reset(point,f,eq)
+            self.record('forest-crown-'+action+'-'+B.FACES[f],f,total,{8:[('B',True)],8+held:[('B',False)]},point,'Generated traversable authored tree crown; no overlay or terrain replacement.')
+        # Known physical prop cases also used by the substrate/layering probe.
+        for y,label in ((16,'behind'),(18,'front')):
+            self.warp(6);point=(23*16+8,y*16+12);self.reset(point,0,5)
+            self.record('forest-rock-'+label+'-shield-wood-n',0,48,{8:[('B',True)],36:[('B',False)]},point,'Natural cell6 physical rock foreground case from surface_probe depth checks.')
+        # A TT_FRONT floor is the Drain's authored counter front, where Bloom
+        # deliberately draws above the counter overlay, using priority1.
+        self.enter('drain');_,_,g=C.room_tiles(self.c)
+        fronts=[(x,y) for (x,y),mt in g.items() if P.r8(self.c,P.sym('metatile_type')+mt)==self.defs['TT_FRONT']]
+        assert fronts,'no Drain counter FRONT terrain'
+        x,y=min(fronts,key=lambda p:abs(p[0]-12)+abs(p[1]-10));point=(x*16+8,y*16+12)
+        self.reset(point,0,5)
+        self.record('drain-counter-shield-wood-n',0,48,{8:[('B',True)],36:[('B',False)]},point,'Actual authored TT_FRONT counter foreground; player priority1 follows normal rendering.')
+        self.save()
+
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('out')
@@ -325,6 +357,7 @@ def main():
     ap.add_argument('--match');args=ap.parse_args();suite=Suite(args)
     for group in args.groups.split(','):
         if group=='special':suite.specials()
+        elif group=='fore':suite.foregrounds()
         else:suite.actions(group)
     suite.save();print('PASS:',len(suite.rows),'genuine action clips; missing:',suite.missing,flush=True)
 
