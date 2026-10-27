@@ -3,7 +3,7 @@
 python tools/blight_review.py OUT [--rom ROM --map MAP --assets-header HEADER]
 python tools/blight_review.py AFTER --match BEFORE/capture.json
 
-Debug navigation, healing and cleared enemies isolate the artwork. After the
+Debug navigation, healing and cleared enemies/fireflies isolate the artwork. After the
 camera settles, a clock fixture restarts terrain animation then runs 64 real
 frames so matched controls have identical timing. Terrain, objects and
 animation remain game-rendered. Native PNGs are unmodified
@@ -126,6 +126,15 @@ def settle(c, position):
     # This does not alter terrain, actor poses, RNG state, or framebuffer.
     clock=P.sym('gFrame');P.w16(c,clock,0);P.w16(c,clock+2,0)
     P.w8(c,P.sym('gActors')+28,0)
+    # Firefly positions integrate their drift before the animation-clock
+    # reset, so varying room-load duration can move their pixels by one.
+    # Remove only these incidental actors in both comparison builds; the
+    # terrain's real sparkle/mist animation and other objects stay intact.
+    actors=P.sym('gActors')
+    for i in range(1,96):
+        at=actors+i*64
+        if P.r8(c,at)==7 and P.r8(c,at+1)==6:  # AK_FX / FX_FIREFLY
+            P.w8(c,at,0)
     for _ in range(64):
         C.heal(c);C.clear_enemies(c);c.run_frame()
 
@@ -180,7 +189,8 @@ def main():
     c=P.boot(rom=args.rom,seed=seed);C.dismiss(c)
     settle(c,[200,270]);P.snap(c,str(out/'drain-control.png'))
     report={'seed':hex(seed),'rom_sha256':hashlib.sha256(Path(args.rom).read_bytes()).hexdigest(),
-            'emulator':'mGBA 0.10.5','method':'Native240x160 framebuffers; generated terrain and animation untouched. Debug room navigation, safe standing positions, healing and cleared enemies isolate art. Animation-clock fixture resetsgFrame0 after camera settles, then runs64 actual frames. GIFs use real frames, sampled30fps/enlarged2xNN.',
+            'fixture_version':2,
+            'emulator':'mGBA 0.10.5','method':'Native240x160 framebuffers; generated terrain and animation untouched. Debug room navigation, safe standing positions, healing and cleared enemies/ambient firefly actors isolate art. Animation-clock fixture resetsgFrame0 after camera settles, then runs64 actual frames. GIFs use real frames, sampled30fps/enlarged2xNN.',
             'drain_image':'drain-control.png','rooms':[],'features':[],'animations':[]}
     world=C.world(c);P.enter_forest(c)
     for cell,desc in enumerate(world['cells']):
@@ -239,14 +249,17 @@ def main():
         changes=[{'cell':a['cell'],'field':k} for a,b in zip(report['rooms'],old['rooms']) for k in keys if a[k]!=b[k]]
         report['physical_comparison']={'checked_rooms':len(report['rooms']),'unchanged_rooms':len(report['rooms'])-len(set(v['cell'] for v in changes)),'differences':changes}
         assert not changes,changes
-        report['visual_controls']=[]
-        controls=['drain-control.png']+[r['image'] for r in report['rooms'] if r['stage']==0]
-        for filename in controls:
-            before=Image.open(Path(args.match).parent/filename).convert('RGB')
-            after=Image.open(out/filename).convert('RGB')
-            different=sum(a!=b for a,b in zip(before.getdata(),after.getdata()))
-            report['visual_controls'].append({'file':filename,'identical':different==0,'different_pixels':different})
-            print('CONTROL', 'PASS' if different==0 else 'DIFF', filename, different,flush=True)
+        if old.get('fixture_version')==report['fixture_version']:
+            report['visual_controls']=[]
+            controls=['drain-control.png']+[r['image'] for r in report['rooms'] if r['stage']==0]
+            for filename in controls:
+                before=Image.open(Path(args.match).parent/filename).convert('RGB')
+                after=Image.open(out/filename).convert('RGB')
+                different=sum(a!=b for a,b in zip(before.getdata(),after.getdata()))
+                report['visual_controls'].append({'file':filename,'identical':different==0,'different_pixels':different})
+                print('CONTROL', 'PASS' if different==0 else 'DIFF', filename, different,flush=True)
+        else:
+            report['visual_controls_omitted']='Prior fixture left ambient fireflies alive; standing points and physical hashes reused, image controls require matching fixture versions.'
     (out/'capture.json').write_text(json.dumps(report,indent=2)+'\n')
     print('PASS:',len(report['rooms']),'generated rooms,',len(report['features']),'feature views',flush=True)
 
