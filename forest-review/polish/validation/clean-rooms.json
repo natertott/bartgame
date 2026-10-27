@@ -1,0 +1,2236 @@
+{
+  "checked_rooms": 125,
+  "failed_rooms": 0,
+  "rooms": [
+    {
+      "cell": 0,
+      "stage": 2,
+      "role": 3,
+      "reachable_quarters": 1114,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          11,
+          19
+        ],
+        "kind": 3,
+        "gate": [
+          11,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 1,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 728,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 708,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 940,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          13,
+          2
+        ],
+        "kind": 3,
+        "gate": [
+          13,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 4,
+      "stage": 1,
+      "role": 10,
+      "reachable_quarters": 1092,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          16,
+          7
+        ],
+        "kind": 3,
+        "gate": [
+          18,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 5,
+      "stage": 2,
+      "role": 6,
+      "reachable_quarters": 974,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          22,
+          16
+        ],
+        "kind": 2,
+        "gate": [
+          22,
+          15
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 6,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 896,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          30,
+          17
+        ],
+        "kind": 1,
+        "gate": [
+          29,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 7,
+      "stage": 1,
+      "role": 3,
+      "reachable_quarters": 834,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          29,
+          18
+        ],
+        "kind": 2,
+        "gate": [
+          28,
+          18
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 8,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 762,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          5,
+          9
+        ],
+        "kind": 2,
+        "gate": [
+          6,
+          9
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 9,
+      "stage": 1,
+      "role": 5,
+      "reachable_quarters": 856,
+      "bridge_crossings": 1,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 10,
+      "stage": 2,
+      "role": 7,
+      "reachable_quarters": 826,
+      "bridge_crossings": 1,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 11,
+      "stage": 0,
+      "role": 3,
+      "reachable_quarters": 810,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 12,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 1054,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 1154,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 14,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 848,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 15,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 870,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          23,
+          9
+        ],
+        "kind": 1,
+        "gate": [
+          23,
+          10
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 1160,
+      "bridge_crossings": 3,
+      "optional_treasure": {
+        "spot": [
+          26,
+          11
+        ],
+        "kind": 3,
+        "gate": [
+          26,
+          13
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 17,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 1214,
+      "bridge_crossings": 8,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 18,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 1062,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 19,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 1086,
+      "bridge_crossings": 3,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 20,
+      "stage": 3,
+      "role": 2,
+      "reachable_quarters": 1308,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 862,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "reachable_quarters": 802,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 8,
+      "reachable_quarters": 790,
+      "bridge_crossings": 5,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 24,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 968,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xb4a7"
+    },
+    {
+      "cell": 0,
+      "stage": 2,
+      "role": 9,
+      "reachable_quarters": 790,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          2,
+          18
+        ],
+        "kind": 2,
+        "gate": [
+          3,
+          18
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 1,
+      "stage": 2,
+      "role": 7,
+      "reachable_quarters": 750,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          25,
+          6
+        ],
+        "kind": 2,
+        "gate": [
+          25,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 904,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          5,
+          14
+        ],
+        "kind": 2,
+        "gate": [
+          6,
+          14
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 972,
+      "bridge_crossings": 3,
+      "optional_treasure": {
+        "spot": [
+          13,
+          22
+        ],
+        "kind": 3,
+        "gate": [
+          13,
+          20
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 4,
+      "stage": 3,
+      "role": 4,
+      "reachable_quarters": 1036,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          24,
+          9
+        ],
+        "kind": 2,
+        "gate": [
+          24,
+          10
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 5,
+      "stage": 0,
+      "role": 9,
+      "reachable_quarters": 896,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 6,
+      "stage": 2,
+      "role": 3,
+      "reachable_quarters": 760,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          22,
+          2
+        ],
+        "kind": 3,
+        "gate": [
+          22,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 7,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 724,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          18,
+          8
+        ],
+        "kind": 1,
+        "gate": [
+          17,
+          8
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 8,
+      "stage": 3,
+      "role": 2,
+      "reachable_quarters": 1288,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 9,
+      "stage": 3,
+      "role": 6,
+      "reachable_quarters": 632,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 10,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 852,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 11,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 946,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          5,
+          9
+        ],
+        "kind": 2,
+        "gate": [
+          6,
+          9
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 12,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 950,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          5,
+          18
+        ],
+        "kind": 1,
+        "gate": [
+          5,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 822,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 14,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 686,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          26,
+          12
+        ],
+        "kind": 2,
+        "gate": [
+          25,
+          12
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 15,
+      "stage": 0,
+      "role": 3,
+      "reachable_quarters": 814,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          8,
+          9
+        ],
+        "kind": 1,
+        "gate": [
+          9,
+          9
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 890,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 17,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 758,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 18,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 996,
+      "bridge_crossings": 7,
+      "optional_treasure": {
+        "spot": [
+          13,
+          21
+        ],
+        "kind": 2,
+        "gate": [
+          13,
+          20
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 19,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 994,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          2,
+          14
+        ],
+        "kind": 1,
+        "gate": [
+          3,
+          14
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 20,
+      "stage": 0,
+      "role": 8,
+      "reachable_quarters": 718,
+      "bridge_crossings": 3,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 5,
+      "reachable_quarters": 890,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          11,
+          3
+        ],
+        "kind": 2,
+        "gate": [
+          11,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "reachable_quarters": 832,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 708,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          30,
+          17
+        ],
+        "kind": 2,
+        "gate": [
+          29,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 24,
+      "stage": 1,
+      "role": 3,
+      "reachable_quarters": 756,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          19,
+          8
+        ],
+        "kind": 3,
+        "gate": [
+          19,
+          10
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0xdeadbeef"
+    },
+    {
+      "cell": 0,
+      "stage": 3,
+      "role": 2,
+      "reachable_quarters": 1280,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 1,
+      "stage": 3,
+      "role": 5,
+      "reachable_quarters": 824,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          5,
+          7
+        ],
+        "kind": 1,
+        "gate": [
+          6,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 2,
+      "stage": 3,
+      "role": 7,
+      "reachable_quarters": 740,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          5,
+          18
+        ],
+        "kind": 2,
+        "gate": [
+          5,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 6,
+      "reachable_quarters": 828,
+      "bridge_crossings": 3,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 4,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 1042,
+      "bridge_crossings": 6,
+      "optional_treasure": {
+        "spot": [
+          2,
+          16
+        ],
+        "kind": 1,
+        "gate": [
+          3,
+          16
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 5,
+      "stage": 1,
+      "role": 5,
+      "reachable_quarters": 1108,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          5,
+          12
+        ],
+        "kind": 1,
+        "gate": [
+          5,
+          13
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 6,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 744,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 7,
+      "stage": 1,
+      "role": 5,
+      "reachable_quarters": 966,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          5,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          6,
+          6
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 8,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 910,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          19,
+          3
+        ],
+        "kind": 1,
+        "gate": [
+          19,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 9,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 910,
+      "bridge_crossings": 6,
+      "optional_treasure": {
+        "spot": [
+          2,
+          14
+        ],
+        "kind": 2,
+        "gate": [
+          3,
+          14
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 10,
+      "stage": 1,
+      "role": 3,
+      "reachable_quarters": 940,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 11,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 872,
+      "bridge_crossings": 4,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 12,
+      "stage": 0,
+      "role": 0,
+      "reachable_quarters": 1004,
+      "bridge_crossings": 5,
+      "optional_treasure": {
+        "spot": [
+          24,
+          5
+        ],
+        "kind": 3,
+        "gate": [
+          24,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 960,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 14,
+      "stage": 2,
+      "role": 4,
+      "reachable_quarters": 852,
+      "bridge_crossings": 6,
+      "optional_treasure": {
+        "spot": [
+          11,
+          12
+        ],
+        "kind": 1,
+        "gate": [
+          11,
+          11
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 15,
+      "stage": 0,
+      "role": 5,
+      "reachable_quarters": 958,
+      "bridge_crossings": 5,
+      "optional_treasure": {
+        "spot": [
+          5,
+          15
+        ],
+        "kind": 2,
+        "gate": [
+          6,
+          15
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 8,
+      "reachable_quarters": 1026,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          26,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          26,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 17,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 1240,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 18,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 1282,
+      "bridge_crossings": 3,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 19,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 900,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          14,
+          11
+        ],
+        "kind": 1,
+        "gate": [
+          13,
+          11
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 20,
+      "stage": 0,
+      "role": 3,
+      "reachable_quarters": 960,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          27,
+          6
+        ],
+        "kind": 3,
+        "gate": [
+          25,
+          6
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 942,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "reachable_quarters": 956,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 698,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          22,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          22,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 24,
+      "stage": 2,
+      "role": 3,
+      "reachable_quarters": 1006,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x1"
+    },
+    {
+      "cell": 0,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 618,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          25,
+          18
+        ],
+        "kind": 2,
+        "gate": [
+          25,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 1,
+      "stage": 1,
+      "role": 10,
+      "reachable_quarters": 960,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          3,
+          18
+        ],
+        "kind": 1,
+        "gate": [
+          3,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 8,
+      "reachable_quarters": 984,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          11,
+          21
+        ],
+        "kind": 2,
+        "gate": [
+          11,
+          20
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 914,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          20,
+          17
+        ],
+        "kind": 2,
+        "gate": [
+          19,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 4,
+      "stage": 3,
+      "role": 2,
+      "reachable_quarters": 1316,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 5,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 964,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          14,
+          15
+        ],
+        "kind": 2,
+        "gate": [
+          13,
+          15
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 6,
+      "stage": 1,
+      "role": 5,
+      "reachable_quarters": 1110,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          21,
+          18
+        ],
+        "kind": 2,
+        "gate": [
+          21,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 7,
+      "stage": 3,
+      "role": 5,
+      "reachable_quarters": 970,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 8,
+      "stage": 2,
+      "role": 3,
+      "reachable_quarters": 842,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          17,
+          15
+        ],
+        "kind": 1,
+        "gate": [
+          16,
+          15
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 9,
+      "stage": 3,
+      "role": 10,
+      "reachable_quarters": 886,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 10,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 948,
+      "bridge_crossings": 7,
+      "optional_treasure": {
+        "spot": [
+          8,
+          18
+        ],
+        "kind": 1,
+        "gate": [
+          9,
+          18
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 11,
+      "stage": 1,
+      "role": 3,
+      "reachable_quarters": 976,
+      "bridge_crossings": 4,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 12,
+      "stage": 3,
+      "role": 7,
+      "reachable_quarters": 982,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          24,
+          8
+        ],
+        "kind": 3,
+        "gate": [
+          22,
+          8
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 13,
+      "stage": 3,
+      "role": 0,
+      "reachable_quarters": 760,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          7,
+          21
+        ],
+        "kind": 2,
+        "gate": [
+          7,
+          20
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 14,
+      "stage": 3,
+      "role": 6,
+      "reachable_quarters": 892,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          8,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          8,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 15,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 888,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          18,
+          8
+        ],
+        "kind": 1,
+        "gate": [
+          17,
+          8
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 16,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 604,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 17,
+      "stage": 0,
+      "role": 5,
+      "reachable_quarters": 740,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 18,
+      "stage": 3,
+      "role": 4,
+      "reachable_quarters": 568,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          11,
+          2
+        ],
+        "kind": 3,
+        "gate": [
+          11,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 19,
+      "stage": 3,
+      "role": 4,
+      "reachable_quarters": 990,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 20,
+      "stage": 1,
+      "role": 4,
+      "reachable_quarters": 768,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 780,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          2,
+          7
+        ],
+        "kind": 2,
+        "gate": [
+          3,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "reachable_quarters": 996,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 3,
+      "reachable_quarters": 718,
+      "bridge_crossings": 1,
+      "optional_treasure": {
+        "spot": [
+          7,
+          7
+        ],
+        "kind": 3,
+        "gate": [
+          9,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 24,
+      "stage": 3,
+      "role": 5,
+      "reachable_quarters": 846,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          29,
+          14
+        ],
+        "kind": 1,
+        "gate": [
+          28,
+          14
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x7"
+    },
+    {
+      "cell": 0,
+      "stage": 3,
+      "role": 2,
+      "reachable_quarters": 1272,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 1,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 796,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          8,
+          18
+        ],
+        "kind": 1,
+        "gate": [
+          8,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 7,
+      "reachable_quarters": 906,
+      "bridge_crossings": 1,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 6,
+      "reachable_quarters": 1054,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 4,
+      "stage": 2,
+      "role": 3,
+      "reachable_quarters": 664,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          22,
+          3
+        ],
+        "kind": 1,
+        "gate": [
+          22,
+          4
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 5,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 742,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 6,
+      "stage": 2,
+      "role": 5,
+      "reachable_quarters": 808,
+      "bridge_crossings": 3,
+      "optional_treasure": {
+        "spot": [
+          23,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          23,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 7,
+      "stage": 2,
+      "role": 0,
+      "reachable_quarters": 772,
+      "bridge_crossings": 5,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 8,
+      "stage": 0,
+      "role": 3,
+      "reachable_quarters": 868,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          2,
+          9
+        ],
+        "kind": 1,
+        "gate": [
+          3,
+          9
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 9,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 994,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          29,
+          16
+        ],
+        "kind": 2,
+        "gate": [
+          28,
+          16
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 10,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 1098,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 11,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 1044,
+      "bridge_crossings": 2,
+      "optional_treasure": {
+        "spot": [
+          19,
+          5
+        ],
+        "kind": 3,
+        "gate": [
+          19,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 12,
+      "stage": 1,
+      "role": 0,
+      "reachable_quarters": 962,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          24,
+          22
+        ],
+        "kind": 3,
+        "gate": [
+          24,
+          20
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 3,
+      "reachable_quarters": 682,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 14,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 972,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          8,
+          15
+        ],
+        "kind": 1,
+        "gate": [
+          8,
+          14
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 15,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 726,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          15,
+          6
+        ],
+        "kind": 1,
+        "gate": [
+          15,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 8,
+      "reachable_quarters": 684,
+      "bridge_crossings": 2,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 17,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 922,
+      "bridge_crossings": 3,
+      "optional_treasure": {
+        "spot": [
+          20,
+          5
+        ],
+        "kind": 3,
+        "gate": [
+          20,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 18,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 816,
+      "bridge_crossings": 5,
+      "optional_treasure": {
+        "spot": [
+          10,
+          6
+        ],
+        "kind": 2,
+        "gate": [
+          10,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 19,
+      "stage": 0,
+      "role": 0,
+      "reachable_quarters": 994,
+      "bridge_crossings": 4,
+      "optional_treasure": {
+        "spot": [
+          23,
+          10
+        ],
+        "kind": 2,
+        "gate": [
+          22,
+          10
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 20,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 644,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          6,
+          18
+        ],
+        "kind": 1,
+        "gate": [
+          6,
+          17
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 10,
+      "reachable_quarters": 766,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "reachable_quarters": 902,
+      "bridge_crossings": 0,
+      "optional_treasure": null,
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 4,
+      "reachable_quarters": 976,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          24,
+          8
+        ],
+        "kind": 3,
+        "gate": [
+          24,
+          10
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    },
+    {
+      "cell": 24,
+      "stage": 0,
+      "role": 0,
+      "reachable_quarters": 1038,
+      "bridge_crossings": 0,
+      "optional_treasure": {
+        "spot": [
+          30,
+          7
+        ],
+        "kind": 3,
+        "gate": [
+          28,
+          7
+        ],
+        "accessible_without_items": false,
+        "accessible_with_all_items": true,
+        "accessible_with_required_item": true,
+        "accessible_with_wrong_items": false
+      },
+      "failures": [],
+      "seed": "0x2a"
+    }
+  ]
+}

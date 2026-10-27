@@ -1,0 +1,14 @@
+[
+  {
+    "tool": "menu_probe",
+    "exit_code": 0
+  },
+  {
+    "tool": "wood_probe",
+    "exit_code": 0
+  },
+  {
+    "tool": "myst_probe",
+    "exit_code": 0
+  }
+]

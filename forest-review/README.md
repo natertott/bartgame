@@ -1,5 +1,13 @@
 # Forest engine and artwork rework — real mGBA review
 
+## Latest: blended surfaces and clean item icons
+
+[Open the matched before/after and in-game item gallery](polish/README.md).
+This pass separates prop art from its floor, blends diagonal blight edges,
+and simplifies all active item-icon frames. The engine-rework images below
+are retained as the earlier comparison, before this surface/icon pass.
+
+
 The maze now has three earned progression trials, tunable route lengths,
 required detours, optional item-gated glades, and more coherent terrain.
 The images below are from the actual built ROM running in mGBA 0.10.5.

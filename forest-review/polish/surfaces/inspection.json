@@ -1,0 +1,36 @@
+{
+  "method": "native mGBA frames; same seed, room, standing point; enemies cleared for surface comparison",
+  "seed": "0xB4A7",
+  "cases": [
+    {
+      "cell": 0,
+      "label": "mixed-blight",
+      "standing": [
+        16,
+        11
+      ],
+      "prop": "mossy_stone",
+      "floor": "rot_10"
+    },
+    {
+      "cell": 6,
+      "label": "shore-and-props",
+      "standing": [
+        23,
+        18
+      ],
+      "prop": "rock2",
+      "floor": "rot_00"
+    },
+    {
+      "cell": 20,
+      "label": "deep-blight",
+      "standing": [
+        13,
+        6
+      ],
+      "prop": "sick_rock",
+      "floor": "blight_floor"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "rom_sha256": "e47321b3bb33ced066d833e1631613742797b9f683afcc6eac4fe865bf09544b",
+  "framebuffer": "240x160 mGBA 0.10.5",
+  "surface_checks": "2526/2526 including front/behind/canopy sprite ordering",
+  "unchanged_collision_and_spawns": "75/75 rooms across three seeds",
+  "room_connectivity": "125/125",
+  "icons": "55 active frames redrawn; names, dimensions and palette slots retained",
+  "budget": {
+    "forest_subtiles": 869,
+    "limit": 1024,
+    "forest_palettes": 11,
+    "palette_limit": 12,
+    "room_underlay_bytes": 2048
+  },
+  "runtime_menu": "21/21"
+}
