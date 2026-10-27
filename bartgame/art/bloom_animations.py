@@ -17,7 +17,7 @@ SWORD_HAND = {
     's': ((42, 19), (32, 26), (22, 20)),
 }
 USE_HAND = {'n': (39, 16), 'e': (42, 19), 's': (39, 23)}
-BOW_HAND = {'n': (32, 9), 'e': (42, 14), 's': (32, 24)}
+BOW_HAND = {'n': (32, 5), 'e': (42, 14), 's': (32, 24)}
 CARRY_HAND = ((25, 7), (39, 7))
 
 
@@ -182,8 +182,8 @@ def _bow(idle, facing, phase):
     c=_base(idle,facing,0,1 if phase==2 else 0)
     hand=BOW_HAND[facing]
     if facing=='n':
-        _arm(c,(27,18),(24,13),(27,10))
-        _arm(c,(37,18),(40,13),hand)
+        _arm(c,(27,18),(24,11),(27,6))
+        _arm(c,(37,18),(40,11),hand)
         _head_in_front(c,idle,facing,1 if phase==2 else 0)
     elif facing=='s':
         _arm(c,(27,18),(27,22),(29,24))
