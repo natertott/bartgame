@@ -87,3 +87,11 @@ forest_sprites.apply(SHEETS)
 # Unframed, simple item silhouettes in every active display size.
 import clean_items
 clean_items.apply(SHEETS)
+
+# Bloom action bodies keep the original idle/walk art and palette.
+import bloom_animations
+bloom_animations.apply(SHEETS)
+
+# Streamed action props use the matching body hand anchors.
+import bloom_fx
+SHEETS.extend(bloom_fx.SHEETS)
