@@ -4203,3 +4203,7 @@ METATILES.extend(sw_drain.METATILES)
 # remain stable; the visual pit clone is appended after every original tile.
 import blight_reference
 blight_reference.apply(METATILES, dict(_pl.BG_PALETTES))
+
+# Living woodland materials after the blight source; imported decay stays exact.
+import healthy_reference
+healthy_reference.apply(METATILES, dict(_pl.BG_PALETTES))

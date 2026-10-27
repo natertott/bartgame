@@ -428,3 +428,7 @@ import blight_reference as _blight_reference
 BG_PALETTES = [(n, _blight_reference.GROUPS.get(n, c)) for n, c in BG_PALETTES]
 BG_PALETTES += [(n, c) for n, c in _blight_reference.GROUPS.items()
                 if n not in dict(BG_PALETTES)]
+
+# The living woodland shares the decay atlas's cool shadows and gold light.
+import healthy_reference as _healthy_reference
+BG_PALETTES = [(n, _healthy_reference.GROUPS.get(n, c)) for n, c in BG_PALETTES]
