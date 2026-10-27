@@ -149,8 +149,10 @@ class Suite:
         if name.startswith('lift-carry-throw-'):
             valid('real carried load present',any(t['carry'] for t in traces))
             valid('real thrown load actor released',any(o['kind']==6 and o['type']==20 for t in traces for o in t['objects']))
+            if name.endswith('sword-drop'):valid('sword interrupts carry after releasing load','attack' in row['states'])
         if 'drowning' in name:valid('water fall subtype is active',any(t['state']==4 and t['sub']==1 for t in traces))
         if 'pit-fall' in name:valid('pit fall subtype is active',any(t['state']==4 and t['sub']==0 for t in traces))
+        if name.endswith('ledge-jump'):valid('actual ledge-drop jump entered',any(t['state']==5 and t['sub']==1 for t in traces))
         if 'hurt-' in name:valid('actual contact hurt state entered','hurt' in row['states'])
         if name.endswith('-death'):valid('actual death state entered','dead' in row['states'])
         if name.endswith('item-get-bow'):valid('actual chest invokes item-get state','itemget' in row['states'])
@@ -236,6 +238,7 @@ class Suite:
         self.enter('forest')
         lift_plan=[('bush','BUSH',None),('rock','ROCK_SMALL',None),('boulder','BOULDER',None),('pot','CAVE_FLOOR_LIFT',None)]
         lift_plan += [('bush-'+B.FACES[f],'BUSH',f) for f in range(4)]
+        lift_plan += [('bush-sword-drop','BUSH',0)]
         for label,mt,want_facing in lift_plan:
             self.enter('forest')
             if label in ('pot','boulder'):
@@ -248,8 +251,11 @@ class Suite:
             if not found:self.missing.append(label+' natural lift target');continue
             _,_,tile,key=found;f=KEYS.index(key);point=(tile[0]*16+8,tile[1]*16+14)
             self.reset(point,f)
-            events={8:[('R',True)],9:[('R',False)],24:[(KEYS[(f+1)%4],True)],35:[(KEYS[(f+1)%4],False)],40:[('R',True)],41:[('R',False)]}
-            self.record('lift-carry-throw-'+label,f,84,events,point,'Natural '+label+' lifted with R, carried by movement, then thrown with R.')
+            release='B' if label.endswith('sword-drop') else 'R'
+            events={8:[('R',True)],9:[('R',False)],24:[(KEYS[(f+1)%4],True)],
+                    35:[(KEYS[(f+1)%4],False),(KEYS[(f+3)%4],True)],46:[(KEYS[(f+3)%4],False)],
+                    52:[(release,True)],53:[(release,False)]}
+            self.record('lift-carry-throw-'+label,f,100,events,point,'Natural '+label+' lifted with R, carried out and back to show both walking poses, then released with '+release+'.')
         # Water is entered by walking off a natural bank; there is no swim state.
         self.enter('forest');found=None
         import guard_probe as G
