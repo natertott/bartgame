@@ -17,7 +17,7 @@ import struct
 ROOT=Path(__file__).resolve().parent.parent
 BASELINE=Path('/workspace/setup/blight-reference-before')
 ALLOW_PREFIXES=('BLIGHT','FOREST_ROT','ROT_','BTREE_','SICKTREE_','SICK_',
-                'MOSS_BLIGHT','DEAD_TREE','CANOPY_BLIGHT')
+                'MOSS_BLIGHT','CANOPY_BLIGHT')
 
 
 def digest(value):
