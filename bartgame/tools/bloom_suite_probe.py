@@ -287,6 +287,41 @@ def mechanical_traces(rom,map_,header):
     return rows
 
 
+def interrupted_jumps(c,defs):
+    """A genuine contact hit must never leave a fractional-height hover."""
+    rows=[]
+    for f,d in enumerate(FACES):
+        for late,water in ((False,False),(True,False),(True,True)):
+            reset(c,defs,f,4);hold(c,'B');c.run_frame();hold(c)
+            P.run(c,24 if late else 3)
+            px,py=P.player_pos(c)
+            slot=W.spawn_enemy(c,0,px,py-8);base=P.sym('gActors')+slot*64
+            trace=[];hit=False
+            for tick in range(105 if water else 60):
+                c.run_frame();now=snapshot(c);trace.append(now)
+                if now['state']==3 and not hit:
+                    hit=True
+                    # Contact has already run the game's damage path. Remove
+                    # its source so one recovery is isolated from repeat hits.
+                    P.w8(c,base,0)
+                    if water:
+                        tx,ty=now['position'][0]//16,(now['position'][1]-2)//16
+                        safe=(P.r16(c,P.sym('gPl')+14)//16,(P.r16(c,P.sym('gPl')+16)-2)//16)
+                        for yy in range(ty-2,ty+3):
+                            for xx in range(tx-2,tx+3):
+                                if (xx,yy)!=safe:tile_set(c,xx,yy,defs['MT_WATER'])
+            label=d+' '+('late' if late else 'early')+' airborne hit'+(' over water' if water else '')
+            check(label+' is actual enemy-contact hurt',hit)
+            check(label+' completes gravity and reaches ground',trace[-1]['z']==0 and trace[-1]['zvel']==0 and trace[-1]['state']==0,trace[-1])
+            if water:
+                check(label+' applies the normal drowning state on landing',any(t['state']==4 and t['sub']==1 for t in trace))
+                check(label+' charges contact and drowning damage once',trace[-1]['hp']==20,trace[-1]['hp'])
+            else:
+                check(label+' preserves one contact hit',trace[-1]['hp']==22,trace[-1]['hp'])
+            rows.append({'case':label,'trace':trace})
+    return rows
+
+
 def hazards_and_death(c,defs):
     rows=[]
     for label,mt,sub in (('water','MT_WATER',1),('pit','MT_PIT',0)):
@@ -325,7 +360,8 @@ def main():
     ap.add_argument('--out',default='/workspace/setup/bloom-suite-probe.json')
     args=ap.parse_args();defs=B.configure(args)
     global defs_global;defs_global=defs
-    c=B.boot(args.rom);depth_and_guard(c,defs);jump_rows=jumps(c,defs);lift_rows=lifts(c,defs);hazard_rows=hazards_and_death(c,defs)
+    c=B.boot(args.rom);depth_and_guard(c,defs);jump_rows=jumps(c,defs);lift_rows=lifts(c,defs)
+    interrupted_rows=interrupted_jumps(c,defs);hazard_rows=hazards_and_death(c,defs)
     # Return transitions reload all static sprite allocations, so do these
     # after the per-area allocation checks and before independent ROM boots.
     c=B.boot(args.rom);ledge_rows=ledge_and_dropin(c,defs)
@@ -341,7 +377,8 @@ def main():
             'emulator':'mGBA 0.10.5','method':__doc__.strip(),
             'passed':sum(r['passed'] for r in checks),'total':len(checks),'checks':checks,
             'jump_traces':jump_rows,'lift_traces':lift_rows,'hazard_traces':hazard_rows,
-            'ledge_dropin_traces':ledge_rows,'mechanical_comparison':comparisons}
+            'ledge_dropin_traces':ledge_rows,'interrupted_jump_traces':interrupted_rows,
+            'mechanical_comparison':comparisons}
     Path(args.out).write_text(json.dumps(report,indent=2)+'\n')
     print('RESULT %s %d/%d'%('PASS' if all(r['passed'] for r in checks) else 'FAIL',report['passed'],report['total']))
     return int(not all(r['passed'] for r in checks))
