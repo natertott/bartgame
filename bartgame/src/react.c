@@ -49,8 +49,12 @@ void room_crack_open(int tx, int ty) {
     int side = tile_gate_side(tx, ty);
     if (side >= 0)
         open_gate_tiles(side, MT_DOOR_OPEN);
-    else
+    else {
         room_change(tx, ty, trail_here());
+        if (gGame.area == AREA_FOREST && gSpots.has_treasure &&
+            tx == gSpots.pocket_gate.x && ty == gSpots.pocket_gate.y && gSpots.pocket_kind == 1)
+            gWorld.cells[gGame.cell].opened |= CELL_POCKET_OPEN;
+    }
     fx_spawn(FX_PUFF, tx * 16 + 8, ty * 16 + 8);
     sfx_play(SFX_SECRET);
 }
@@ -59,8 +63,12 @@ void room_web_burn(int tx, int ty) {
     int side = tile_gate_side(tx, ty);
     if (side >= 0)
         open_gate_tiles(side, trail_here());
-    else
+    else {
         room_change(tx, ty, trail_here());
+        if (gGame.area == AREA_FOREST && gSpots.has_treasure &&
+            tx == gSpots.pocket_gate.x && ty == gSpots.pocket_gate.y && gSpots.pocket_kind == 2)
+            gWorld.cells[gGame.cell].opened |= CELL_POCKET_OPEN;
+    }
     fx_spawn(FX_FLAME, tx * 16 + 8, ty * 16 + 8);
     sfx_play(SFX_LAMP);
 }

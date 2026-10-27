@@ -36,9 +36,9 @@ static u8 sHubcap; /* the pending transition is the Drain Cap's: drop in at the 
 
 static const char* const sKeyItemText[4] = {
     "",
-    "You found the " INK_HIGH "Blightseeds" INK_BASE "!|Dark seeds that burst. Set one with " INK_GOLD "B" INK_BASE " beside a cracked wall.",
-    "You found the " INK_HIGH "Grail Lamp" INK_BASE "!|A flame that is not of this wood. Swing it with " INK_GOLD "B" INK_BASE " to burn webs and light censers.",
-    "You found the " INK_HIGH "Petal Cloak" INK_BASE "!|Press " INK_GOLD "B" INK_BASE " to leap. A chasm is only a breath wide.",
+    "You found the " INK_HIGH "Blightseeds" INK_BASE "!|Dark seeds that burst. Equip them, then plant one beside a cracked seal.",
+    "You found the " INK_HIGH "Grail Lamp" INK_BASE "!|A flame that is not of this wood. Equip it to burn webs and brush, and to light censers.",
+    "You found the " INK_HIGH "Petal Cloak" INK_BASE "!|Equip it to leap. A chasm is only a breath wide; look for treasure beyond broken ground.",
 };
 
 /* --------------------------------------------------------- darkness -- */
@@ -224,17 +224,29 @@ void game_return_to_hub(void) {
 }
 
 /* --------------------------------------------------------- chests -- */
+/* A required trial's reward follows the same item-get/equip path as any
+   key item, with ownership recorded once in the existing saved Cell. */
+void game_give_key_item(int cell) {
+    Cell* c = &gWorld.cells[cell];
+    int item = c->role_arg;
+    int bit;
+    if (c->role != ROLE_KEYITEM || item < 1 || item > 3 || (c->flags & CF_ITEM_TAKEN) ||
+        !(gWorld.myst_flags[cell] & MF_WON))
+        return;
+    bit = item == 1 ? ITEM_BOMBS : item == 2 ? ITEM_LAMP : ITEM_CLOAK;
+    if (item == 1)
+        gPl.bombs = 10;
+    c->flags |= CF_CHEST_OPEN | CF_ITEM_TAKEN;
+    player_item_get(bit, item == 1 ? F_ICON32_BOMBS : item == 2 ? F_ICON32_LAMP : F_ICON32_CLOAK);
+    textbox_open(sKeyItemText[item]);
+    sfx_play(SFX_CHEST);
+}
+
 static void give_chest(Cell* c) {
     switch (c->role) {
-        case ROLE_KEYITEM: {
-            int item = c->role_arg;
-            int bit = item == 1 ? ITEM_BOMBS : item == 2 ? ITEM_LAMP : ITEM_CLOAK;
-            if (item == 1)
-                gPl.bombs = 10;
-            player_item_get(bit, item == 1 ? F_ICON32_BOMBS : item == 2 ? F_ICON32_LAMP : F_ICON32_CLOAK);
-            textbox_open(sKeyItemText[item]);
+        case ROLE_KEYITEM:
+            game_give_key_item(gGame.cell);
             break;
-        }
         case ROLE_KEYCHEST:
             gPl.keys++;
             player_item_get(0, F_ICON32_KEY);

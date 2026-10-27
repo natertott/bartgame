@@ -69,8 +69,7 @@ def enter(c, cell, kind, size, style):
         P.hold(c, 'UP', 2)
         if area(c) == AREA_MYST:
             break
-    P.run(c, 60)
-    return area(c) == AREA_MYST
+    return CP.wait_play(c, AREA_MYST)
 
 
 def leave(c):
@@ -81,7 +80,7 @@ def leave(c):
         P.hold(c, 'DOWN', 2)
         if area(c) != AREA_MYST:
             break
-    P.run(c, 60)
+    CP.wait_play(c, 1)
     return area(c)
 
 
@@ -112,7 +111,7 @@ def main():
     W = P.sym('gWorld')
     mysts = [(i, P.r8(c, W + MYST_OFF + i)) for i in range(25) if P.r8(c, W + MYST_OFF + i)]
     check('WORLD: the wood has mystery rooms', 5 <= len(mysts) <= 15, '%d: %s' % (len(mysts), [(i, KINDS[m & 15], (m >> 4) & 3, (m >> 6) & 3) for i, m in mysts]))
-    cell = [i for i in range(25) if i not in (w['entry'], w['goal']) and w['cells'][i]['role'] != 7][0]
+    cell = [i for i in range(25) if i not in (w['entry'], w['goal']) and w['cells'][i]['role'] not in (3, 7)][0]
     # CHEST, small cave
     ok = enter(c, cell, 'chest', 0, 0)
     check('CHEST: a mouth in the wall leads into a cave', ok, 'area %d' % area(c))

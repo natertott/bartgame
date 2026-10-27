@@ -99,6 +99,7 @@ void myst_build(int cell) {
     const Style* st;
     int x, y, i, n;
     bool8 done = (gWorld.myst_flags[cell] & MF_DONE) != 0;
+    bool8 won = (gWorld.myst_flags[cell] & MF_WON) != 0;
     sCell = cell;
     sKind = MYST_KIND(m);
     sSize = MYST_SIZE(m);
@@ -132,8 +133,15 @@ void myst_build(int cell) {
         if (--n == 0)
             break;
     }
+    /* Trial entrances and the centre must always connect. The ordinary
+       furniture is decorative, never the thing that locks a key behind itself. */
+    if (gWorld.cells[cell].role == ROLE_KEYITEM) {
+        for (y = 2; y < sH - 1; y++)
+            for (x = cx() - 1; x <= cx(); x++)
+                room_set(x, y, myst_ground(x, y));
+    }
     /* the event's furniture */
-    switch (sKind) {
+    switch (won ? MK_NONE : sKind) {
         case MK_POTS: {
             static const s8 at[6][2] = { { -3, -2 }, { 0, -2 }, { 3, -2 }, { -3, 2 }, { 0, 2 }, { 3, 2 } };
             int prize = rng_range(&sR, 6);
@@ -169,6 +177,13 @@ void myst_build(int cell) {
                 y = cy() + at[i][1];
                 if (y < 2)
                     y = 2;
+                if (gWorld.cells[cell].role == ROLE_KEYITEM) {
+                    int xx, yy;
+                    for (xx = MIN(x, cx()); xx <= MAX(x, cx()); xx++)
+                        room_set(xx, cy(), myst_ground(xx, cy()));
+                    for (yy = MIN(y, cy()); yy <= MAX(y, cy()); yy++)
+                        room_set(x, yy, myst_ground(x, yy));
+                }
                 room_set(x, y, done ? myst_ground(x, y) : st->fsw);
                 room_set_overlay(x, y, done ? MT_MYST_SWITCH_DOWN : MT_MYST_SWITCH);
             }
@@ -204,8 +219,11 @@ void myst_build(int cell) {
         default:
             break;
     }
-    /* the way out, in the bottom wall; shut for a fight until it is won */
-    set_door(!done && (sKind == MK_WAVES || sKind == MK_SURVIVE || sKind == MK_MINIBOSS));
+    if (won)
+        place_chest(cx(), (sKind == MK_TORCHES) ? cy() + 2 : cy(), done);
+    /* Optional gauntlets seal the exit. Required trials permit retreat and
+       retry, so an unprepared player can return without forfeiting the run. */
+    set_door(!done && !won && gWorld.cells[cell].role != ROLE_KEYITEM && (sKind == MK_WAVES || sKind == MK_SURVIVE || sKind == MK_MINIBOSS));
     room_render();
 }
 
@@ -241,6 +259,7 @@ static void spawn_wave(int n) {
 }
 
 static void finish(void) {
+    gWorld.myst_flags[sCell] |= MF_WON;
     sPhase = 9;
     set_door(FALSE);
     place_chest(cx(), (sKind == MK_TORCHES) ? cy() + 2 : cy(), FALSE);
@@ -256,7 +275,7 @@ void myst_enter(void) {
     sCount = 0;
     if (sKind == MK_NPC)
         npc_spawn(NPC_STRANGER, cx() * 16 + 8, cy() * 16 + 14);
-    if (myst_done())
+    if (myst_done() || (flags() & MF_WON))
         sPhase = 9;
 }
 
@@ -357,6 +376,11 @@ void myst_update(void) {
 }
 
 static void give_prize(void) {
+    if (gWorld.cells[sCell].role == ROLE_KEYITEM) {
+        game_give_key_item(sCell);
+        gWorld.myst_flags[sCell] |= MF_DONE;
+        return;
+    }
     switch (sSize) {
         case MS_SMALL:
             gPl.gilt += 10;
@@ -380,6 +404,10 @@ static void give_prize(void) {
 
 void myst_chest_opened(int tx, int ty) {
     if (myst_done())
+        return;
+    /* A progression reward is earned by its event; touching the cell's
+       coordinates before completion cannot turn it into a free chest. */
+    if (gWorld.cells[sCell].role == ROLE_KEYITEM && !(flags() & MF_WON))
         return;
     room_change(tx, ty, myst_ground(tx, ty));
     room_change_overlay(tx, ty, MT_MYST_CHEST_OPEN);

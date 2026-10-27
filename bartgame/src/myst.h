@@ -15,6 +15,7 @@ enum { MY_CAVE, MY_HOLLOW, MY_THICKET };
 #define MYST_PACK(kind, size, style) ((kind) | ((size) << 4) | ((style) << 6))
 #define MF_DONE 1 /* the reward is taken */
 #define MF_SEEN 2 /* the room was entered */
+#define MF_WON 4 /* event won: an unclaimed reward survives leaving and saving */
 #define SIDE_MOUTH 4 /* a from_side for load_forest: at the mouth */
 
 void myst_build(int cell);           /* the room, from the cell's mystery */

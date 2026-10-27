@@ -1,7 +1,7 @@
 """Walk the maze's critical path in the real ROM: every key gate opened
 with its key item, in order, until the goal room.
 
-  KEYS     each key chest opens and grants its item
+  TRIALS   three earned mystery rewards grant the barrier-opening items
   CRACK    a bomb beside the cracked wall opens it
   WEB      the lamp burns the web
   CHASM    the cloak leaps the chasm
@@ -143,6 +143,15 @@ def cross(c, side, frames=160):
     return cell(c), before
 
 
+def wait_play(c, expected_area=1, frames=600):
+    """Room generation can span video frames. Inspect only a settled room."""
+    for _ in range(frames):
+        if gstate(c)==1 and area(c)==expected_area:
+            return True
+        c.run_frame()
+    return False
+
+
 def walk_until_new_room(c, key, frames):
     """hold the key until the room changes (or frames run out), then let
     the transition finish with nothing held: the hero stays at the door
@@ -155,8 +164,7 @@ def walk_until_new_room(c, key, frames):
         if cell(c) != start:
             break
     c.clear_keys(k)
-    for _ in range(60):
-        c.run_frame()
+    wait_play(c,1)
 
 
 def side_between(a, b):
@@ -203,6 +211,60 @@ def open_chest(c):
         if tt_at(c, tx, ty) == mt('CHEST_OPEN'):
             return True
     return False
+
+
+def enter_trial(c):
+    """Walk into this forest cell's actual generated mystery mouth."""
+    import myst_probe as M
+    mouths = M.tiles_of(c, lambda m: m['type'] == 'MYST')
+    if not mouths:
+        return False
+    tx,ty=mouths[0]
+    heal(c); clear_enemies(c)
+    teleport(c,tx*16+8,(ty+1)*16+14)
+    for _ in range(40):
+        P.hold(c,'UP',2)
+        if area(c)==2:
+            break
+    return wait_play(c,2)
+
+
+def earn_trial(c, claim=True):
+    """Solve an actual required event and claim its chest. Combat drives
+    sword hits through the game, with healing/debug positioning to isolate
+    event completion; enemy HP and the reward flags are never written."""
+    import myst_probe as M
+    if not enter_trial(c):
+        return False
+    W=P.sym('gWorld'); here=cell(c)
+    packed=P.r8(c,W+M.MYST_OFF+here)
+    kind=M.KINDS[packed&15]
+    if not (P.r8(c,W+M.FLAGS_OFF+here)&4):
+        if M.tiles_of(c,lambda m:m['type']=='CHEST'):
+            return False  # a required gift cannot be a free chest
+        if kind=='switches':
+            for tx,ty in M.tiles_of(c,lambda m:m['name']=='myst_switch',1):
+                heal(c); teleport(c,tx*16+8,ty*16+12); P.run(c,8)
+        elif kind in ('waves','miniboss'):
+            for _ in range(240):
+                heal(c)
+                if M.tiles_of(c,lambda m:m['type']=='CHEST'):
+                    break
+                enemy=find_actor(c,2)
+                if enemy:
+                    teleport(c,enemy['x'],enemy['y']+22)
+                    P.hold(c,'UP',2)
+                    P.press(c,'B',2,16)
+                else:
+                    P.run(c,60)
+        else:
+            return False  # deliberately no item-dependent trial in this pool
+    if not claim:
+        return bool(P.r8(c,W+M.FLAGS_OFF+here)&4)
+    if not M.open_chest(c):
+        return False
+    dismiss(c)
+    return M.leave(c)==1
 
 
 def pl(c, off, w=False):
@@ -297,9 +359,9 @@ def main():
 
     # 1. bombs
     ok = go_to(w['key_cell'][0])
-    check('KEYS: reached the bombs chest room', ok, 'cell %d' % cell(c))
-    open_chest(c)
-    check('KEYS: the chest grants the bombs', pl(c, ITEMS) & 2, 'items 0x%02x bombs %d' % (pl(c, ITEMS), pl(c, BOMBS)))
+    check('TRIAL: reached the seed trial room', ok, 'cell %d' % cell(c))
+    check('TRIAL: its event is completed and claimed', earn_trial(c))
+    check('KEYS: the earned chest grants the bombs', pl(c, ITEMS) & 2, 'items 0x%02x bombs %d' % (pl(c, ITEMS), pl(c, BOMBS)))
     P.snap(c, os.path.join(S, 'cp1.png'))
     # 2. the crack: go to the gate cell, bomb it
     gc, gs = w['gate_cell'][0], w['gate_side'][0]
@@ -316,9 +378,9 @@ def main():
     check('CRACK: the bomb opened it', new == ny_of(gc, gs), 'cell %d -> %d' % (before, new))
     # 3. lamp
     ok = go_to(w['key_cell'][1])
-    check('KEYS: reached the lamp chest room', ok, 'cell %d' % cell(c))
-    open_chest(c)
-    check('KEYS: the chest grants the lamp', pl(c, ITEMS) & 4, 'items 0x%02x' % pl(c, ITEMS))
+    check('TRIAL: reached the candle trial room', ok, 'cell %d' % cell(c))
+    check('TRIAL: its event is completed and claimed', earn_trial(c))
+    check('KEYS: the earned chest grants the lamp', pl(c, ITEMS) & 4, 'items 0x%02x' % pl(c, ITEMS))
     gc, gs = w['gate_cell'][1], w['gate_side'][1]
     ok = go_to(gc)
     check('WEB: reached the web', ok, 'cell %d' % cell(c))
@@ -330,9 +392,9 @@ def main():
     check('WEB: the lamp burned it', new == ny_of(gc, gs), 'cell %d -> %d' % (before, new))
     # 4. cloak
     ok = go_to(w['key_cell'][2])
-    check('KEYS: reached the cloak chest room', ok, 'cell %d' % cell(c))
-    open_chest(c)
-    check('KEYS: the chest grants the cloak', pl(c, ITEMS) & 8, 'items 0x%02x' % pl(c, ITEMS))
+    check('TRIAL: reached the cape trial room', ok, 'cell %d' % cell(c))
+    check('TRIAL: its event is completed and claimed', earn_trial(c))
+    check('KEYS: the earned chest grants the cloak', pl(c, ITEMS) & 8, 'items 0x%02x' % pl(c, ITEMS))
     gc, gs = w['gate_cell'][2], w['gate_side'][2]
     ok = go_to(gc)
     check('CHASM: reached the chasm', ok, 'cell %d' % cell(c))

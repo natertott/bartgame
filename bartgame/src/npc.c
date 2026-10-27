@@ -347,9 +347,9 @@ static void talk_sage(void) {
     Cell* goal = &gWorld.cells[gWorld.goal];
     (void)goal;
     if (!(gPl.items & ITEM_BOMBS))
-        start_text("Ahh... you " INK_HIGH "bloomed" INK_BASE ". In the muck, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. " INK_HIGH "Three doors" INK_BASE " it keeps: one cracked, one webbed, one a chasm.|What opens them lies in chests before them. Cut what you can. " INK_GOLD "R" INK_BASE " rolls. Go up the drain, little bloom.");
+        start_text("Ahh... you " INK_HIGH "bloomed" INK_BASE ". In the muck, from a seed the dead king swallowed.|The wood above has taken the blight into its heart. " INK_HIGH "Three doors" INK_BASE " it keeps: one cracked, one webbed, one a chasm.|Three trials guard what opens them. Find the old mouths in the wood, and earn their gifts. Cut what you can. " INK_GOLD "R" INK_BASE " rolls. Go up the drain, little bloom.");
     else if (!(gPl.items & ITEM_CLOAK))
-        start_text("The blight keeps its keys close to its locks. Look for chests in the dead ends. The wood is a maze, but every maze is a tree.");
+        start_text("A cracked seal, a pale web, a broken way. Each trial gives a gift for the next barrier.|Tracks remember feet, not promises. A path may lead to treasure, or draw you away. Remember the branches you could not enter.");
     else
         start_text("You carry the seed, the flame and the petal. The Heart waits in the deepest glade. Cut it out.");
 }
@@ -379,7 +379,7 @@ static void finish_shop(int choice) {
         }
     } else if (choice == 1) {
         if (!(gPl.items & ITEM_BOMBS)) {
-            start_text("Seeds? You would not know how to plant them. Find the chest first.");
+            start_text("Seeds? You would not know how to plant them. Earn the seed trial's gift first.");
         } else if (gPl.gilt >= 15) {
             gPl.gilt -= 15;
             gPl.bombs += 5;
