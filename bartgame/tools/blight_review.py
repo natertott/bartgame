@@ -55,6 +55,9 @@ def grid(c, names):
 def focus(c, names, feature=None):
     w,h,tiles,walk=grid(c,names)
     targets=[p for p,n in tiles.items() if feature and any(v.startswith(FEATURES[feature]) for v in n)]
+    if feature=='blighted-tree':
+        bases=[p for p,n in tiles.items() if any(v.startswith(FEATURES[feature]) and v.endswith(('_4','_5')) for v in n)]
+        targets=bases or targets
     def score(p):
         x,y=p;cx=max(0,min(w-15,x-7));cy=max(0,min(h-10,y-5))
         visible=[tiles[xx,yy] for yy in range(cy,cy+10) for xx in range(cx,cx+15)]
@@ -65,9 +68,10 @@ def focus(c, names, feature=None):
         base=diversity*3+min(interesting,30)*2-max(0,walls-65)
         if targets:
             # Frame a feature above/near the hero, avoiding a wall-only view.
-            distance=min(abs(x-tx)*1.2+abs(y-(ty+2)) for tx,ty in targets)
+            below=1 if feature=='blighted-tree' else 2
+            distance=min(abs(x-tx)*1.2+abs(y-(ty+below)) for tx,ty in targets)
             count=sum(any(n.startswith(FEATURES[feature]) for n in pair) for pair in visible)
-            base+=min(count,12)*15-distance*4
+            base+=min(count,12)*15-distance*(40 if feature=='blighted-tree' else 4)
         return base
     if not walk:raise AssertionError('no natural safe camera target')
     x,y=max(walk,key=score)
@@ -179,6 +183,14 @@ def main():
         changes=[{'cell':a['cell'],'field':k} for a,b in zip(report['rooms'],old['rooms']) for k in keys if a[k]!=b[k]]
         report['physical_comparison']={'checked_rooms':len(report['rooms']),'unchanged_rooms':len(report['rooms'])-len(set(v['cell'] for v in changes)),'differences':changes}
         assert not changes,changes
+        report['visual_controls']=[]
+        controls=['drain-control.png']+[r['image'] for r in report['rooms'] if r['stage']==0]
+        for filename in controls:
+            before=Image.open(Path(args.match).parent/filename).convert('RGB')
+            after=Image.open(out/filename).convert('RGB')
+            different=sum(a!=b for a,b in zip(before.getdata(),after.getdata()))
+            report['visual_controls'].append({'file':filename,'identical':different==0,'different_pixels':different})
+            print('CONTROL', 'PASS' if different==0 else 'DIFF', filename, different,flush=True)
     (out/'capture.json').write_text(json.dumps(report,indent=2)+'\n')
     print('PASS:',len(report['rooms']),'generated rooms,',len(report['features']),'feature views',flush=True)
 
