@@ -1,27 +1,18 @@
 /* BARTGAME: a forest room from a maze cell. Deterministic from the world
-   seed and the cell index, so a room is the same every visit.
+   seed and cell index, so returning with an item restores the same place.
 
-   A room is 32x24 metatiles, planned as a grid of 3x3-tile chunks (ten
-   by seven over the carvable part) drawn from a bank: forest, open
-   ground, paths of one, two or three tiles' width, water, plank
-   bridges, cliffs and their ramps. The plan is laid in strokes: a
-   landing inside each door, two or three clearings (rectangles of
-   open chunks, a lake in the heart of a wide one), winding chunk paths
-   from the doors to the clearings and between them, then a river
-   meandering across or a cliff along a row. Every stroke chooses its
-   pieces to meet, so water, ledges and paths are shapes and never a
-   scatter of single tiles. The chunks expand into a mask; the mask
-   becomes ground, and the tile passes draw the seams: shores, verges,
-   trail edges, the canopy's faces and crowns.
+   A coarse clearing/corridor plan reserves a connected route between the
+   doors. Tile-scale ellipses soften the clearings; continuous meandering
+   watersheds widen into pond basins; crossings extend to protected dry
+   banks, and terraced ground has ramps and falls rather than random ledges.
+   Shores, verges and path-edge families blend materials afterwards.
 
-   Then the dressing, by the chunk: a tree, a ring of bushes, a fall of
-   rocks, a ruined wall between its pillars, a hedge of thorns, dead
-   trees and their bones, crystals, a lantern among flowers, a meadow, a
-   hollow log by its stump, a great boulder; and alone on a tile only
-   what reads alone: bushes, rocks, posts, stumps, logs, pillars,
-   flowers, grass. Nothing closes a way. Everything the run depends on
-   is placed on ground the flood from the first door reaches, and a door
-   the flood misses is carved to. */
+   A reserved route is distinct from its dirt artwork: grass can conceal
+   one exit's lane, and a tempting dirt spur can lead to an optional pocket.
+   Those pockets are walled glades with bomb, candle or cape access. They
+   never contain mandatory progress. Required mouths, actors and objects
+   are placed only on the entry component, and mandatory mouths have a
+   deterministic fallback when random wall-face trials find nothing. */
 #include "gba.h"
 #include "util.h"
 #include "room.h"
@@ -44,11 +35,15 @@ static u8 sMask[H][W];
 #define P_H 1
 #define P_V 2
 #define P_MID 4
+#define P_BANK 16 /* dry bridge landing: never dressed with solids */
+#define P_HIDDEN 8 /* a traversable lane whose worn trail has grown over */
 static u8 sPath[H][W];
 /* the room's trail (the blight's vein in a blighted room) and whether it
    is blighted, for the helpers that put ground down */
 static u16 sTrail;
 static bool8 sBlighted;
+static u8 sStage;
+static bool8 reached(int x, int y);
 
 
 /* ------------------------------------------------------------ helpers -- */
@@ -125,6 +120,7 @@ static bool8 is_plain(int x, int y) {
     if (!is_floor(x, y))
         return FALSE;
     t = room_get(x, y);
+    if(sPath[y][x] & P_BANK) return FALSE;
     return t < MT_MOSS_FLOWERS2 || (t >= MT_BLIGHT_GROUND0 && t <= MT_BLIGHT_FLOOR) || t == MT_BLIGHT_FLOOR2 || t == MT_MOSS_SHADE ||
            (t >= MT_SHORE_1 && t <= MT_VERGE_F);
 }
@@ -520,8 +516,8 @@ static void plan(const Cell* c, bool8 arena, bool8 entry) {
             }
     }
     /* a river, or a cliff: never both */
-    if (!arena && !entry && (c->arch == ARCH_POND || rng_range(&sR, 3) == 0))
-        river(rng_next(&sR) & 1);
+    /* Water is drawn as a continuous tile-scale watershed after expansion,
+       so a river cannot break into disconnected three-tile squares. */
     if (!arena && !entry && !sWater && (c->arch == ARCH_RUINS || c->arch == ARCH_BONEYARD || rng_range(&sR, 3) == 0))
         terrace();
 }
@@ -625,6 +621,138 @@ static void expand(void) {
     }
 }
 
+/* Organic clearings are the broad volumes of a landscape, not a grid of
+   identical square rooms. Corridors keep their reserved middle line. */
+static void shape_clearings(void) {
+    int i, x, y;
+    for (i = 0; i < sClearCount; i++) {
+        CRect* r = &sClear[i];
+        int cx = CX0 + r->x * 3 + r->w * 3 / 2;
+        int cy = CY0 + r->y * 3 + r->h * 3 / 2;
+        int rx = r->w * 3 / 2 + 1, ry = r->h * 3 / 2 + 1;
+        for (y = MAX(2, cy - ry); y <= MIN(H - 2, cy + ry); y++) {
+            for (x = MAX(1, cx - rx); x <= MIN(W - 2, cx + rx); x++) {
+                int dx = x - cx, dy = y - cy;
+                int d = dx * dx * ry * ry + dy * dy * rx * rx;
+                int limit = rx * rx * ry * ry;
+                if (sMask[y][x] == M_WALL && d < limit * 4 / 5)
+                    sMask[y][x] = M_FLOOR;
+                else if (sMask[y][x] == M_FLOOR && !(sPath[y][x] & P_MID) && d > limit &&
+                         x >= CX0 + r->x * 3 && x < CX0 + (r->x + r->w) * 3 &&
+                         y >= CY0 + r->y * 3 && y < CY0 + (r->y + r->h) * 3)
+                    sMask[y][x] = M_WALL;
+            }
+        }
+    }
+}
+
+/* A river is one continuous band, two or three tiles wide, whose banks
+   drift by at most one tile per row. Try orientations/locations that cross
+   a path rather than run along it: every plank has land at both ends. */
+static void watershed(const Cell* c, bool8 arena, bool8 entry) {
+    int tries, i, j;
+    if (arena || entry || sTerraceRow >= 0 ||
+        (c->arch != ARCH_POND && hash32(gWorld.seed, c->dist + 719) % 4))
+        return;
+    for (tries = 0; tries < 12; tries++) {
+        bool8 vertical = (hash32(gWorld.seed, c->dist * 17 + tries) & 1) != 0;
+        int length = vertical ? H - 4 : W - 2;
+        int limit = vertical ? W : H;
+        int width = 2 + (tries & 1), ok = 1;
+        int pos = 4 + hash32(gWorld.seed, c->dist * 43 + tries) % (limit - 9);
+        s8 at[W];
+        for (i = 0; i < length; i++) {
+            if (i && i % 4 == 0)
+                pos += (int)(hash32(gWorld.seed, tries * 997 + i * 31 + c->dist) % 3) - 1;
+            pos = CLAMP(pos, 3, limit - width - 3);
+            at[i] = pos;
+            for (j = 0; j < width; j++) {
+                int x = vertical ? pos + j : i + 1;
+                int y = vertical ? i + 2 : pos + j;
+                if (sMask[y][x] == M_LEDGE || sMask[y][x] == M_RAMP ||
+                    ((sPath[y][x] & P_MID) && !(sPath[y][x] & (vertical ? P_H : P_V))))
+                    ok = 0;
+            }
+        }
+        if (!ok)
+            continue;
+        for (i = 0; i < length; i++) {
+            for (j = 0; j < width; j++) {
+                int x = vertical ? at[i] + j : i + 1;
+                int y = vertical ? i + 2 : at[i] + j;
+                if (sPath[y][x] & P_MID)
+                    sMask[y][x] = vertical ? M_BRIDGE_H : M_BRIDGE_V;
+                else
+                    sMask[y][x] = M_WATER;
+            }
+        }
+        if(c->arch==ARCH_POND) {
+            int mid=length*2/3;
+            int bx=vertical ? at[mid]+width/2 : mid+1;
+            int by=vertical ? mid+2 : at[mid]+width/2;
+            int x,y;
+            for(y=MAX(3,by-3);y<=MIN(H-3,by+3);y++)
+                for(x=MAX(2,bx-4);x<=MIN(W-3,bx+4);x++) {
+                    int dx=x-bx,dy=y-by;
+                    if(dx*dx*9+dy*dy*16>144 || (sPath[y][x]&P_MID) ||
+                       sMask[y][x]==M_LEDGE || sMask[y][x]==M_RAMP) continue;
+                    sMask[y][x]=M_WATER;
+                }
+        }
+        sWater = TRUE;
+        return;
+    }
+}
+
+/* Trails are suggestions, not a graph overlay. Occasionally one arrival
+   lane has been reclaimed by grass. A few fading sections suggest the
+   route, but the dirt never reveals every junction. Physical floor and
+   the reserved lane remain, so dressing cannot close the hidden route. */
+static void trail_story(const Cell* c, bool8 arena, bool8 entry) {
+    int x, y, side, active[4], n = 0;
+    u32 clue = hash32(gWorld.seed, c->dist * 59 + c->arch * 13 + 881);
+    if (arena || entry)
+        return;
+    for (side = 0; side < 4; side++)
+        if (c->gate[side] != GATE_WALL)
+            active[n++] = side;
+    if (n < 2 || clue % 4 == 0)
+        return;
+    side = active[(clue >> 4) % n];
+    for (y = 2; y < H - 1; y++)
+        for (x = 1; x < W - 1; x++) {
+            int d = side == SIDE_N ? y : side == SIDE_S ? H - 1 - y : side == SIDE_W ? x : W - 1 - x;
+            if (d >= 2 && d < 9 && (sPath[y][x] & P_MID) && !(sPath[y][x] & P_BANK) && sMask[y][x] == M_FLOOR)
+                sPath[y][x] |= P_HIDDEN;
+        }
+}
+
+/* Finish every crossing as a bridge between real banks. The old chunk
+   corners could leave a plank ending in water. Extend that same crossing
+   axis through its channel, then reserve a dry landing against dressing. */
+static void bridge_landings(void) {
+    int x,y,dir;
+    for(y=2;y<H-1;y++) for(x=1;x<W-1;x++) {
+        u8 m=sMask[y][x];
+        bool8 horizontal=m==M_BRIDGE_H;
+        if(m!=M_BRIDGE_H && m!=M_BRIDGE_V) continue;
+        for(dir=-1;dir<=1;dir+=2) {
+            int dx=horizontal ? dir : 0,dy=horizontal ? 0 : dir;
+            int tx=x+dx,ty=y+dy;
+            while(interior(tx,ty) && (watery(sMask[ty][tx]) || sMask[ty][tx]==m)) {
+                sMask[ty][tx]=m;
+                sPath[ty][tx]|=P_MID|(horizontal ? P_H : P_V);
+                tx+=dx;ty+=dy;
+            }
+            if(interior(tx,ty)) {
+                if(sMask[ty][tx]==M_WALL || sMask[ty][tx]==M_LEDGE)
+                    sMask[ty][tx]=M_FLOOR;
+                sPath[ty][tx]|=P_MID|P_BANK|(horizontal ? P_H : P_V);
+            }
+        }
+    }
+}
+
 /* Water pours off the cliff: in a run of ledges four or more long, two
    ledges become a fall, a pool of water gathers on the high ground
    behind them and a churned pool on the low ground under them, as far
@@ -711,9 +839,13 @@ static bool8 place_tree_kind(int x, int y, u16 crown, u16 trunk) {
 
 /* a living tree: one in three with a lantern hung in it */
 static bool8 place_tree(int x, int y) {
-    if (rng_range(&sR, 3) == 0)
-        return place_tree_kind(x, y, MT_TREE2_0, MT_TREE2_4);
-    return place_tree_kind(x, y, MT_TREE_TOP_NW, MT_TREE_TRUNK_W);
+    int roll=rng_range(&sR,12);
+    if ((sStage==1 && roll==0) || (sStage==2 && roll<6))
+        return place_tree_kind(x,y,MT_SICKTREE_0,MT_SICKTREE_4);
+    if (roll<3) return place_tree_kind(x,y,MT_BIRCH_0,MT_BIRCH_4);
+    if (roll<6) return place_tree_kind(x,y,MT_FIR_0,MT_FIR_4);
+    if (roll<8) return place_tree_kind(x,y,MT_TREE2_0,MT_TREE2_4);
+    return place_tree_kind(x,y,MT_TREE_TOP_NW,MT_TREE_TRUNK_W);
 }
 
 /* a tree of 3x4, a great tree or the blight's: a 3x3 crown on the
@@ -849,34 +981,82 @@ static void refresh_edges(int x0, int y0, int x1, int y1) {
 
 /* a pocket dug two tiles into the wall beside a path, a bush or a
    boulder across its mouth, a hoard inside */
-static void dig_alcove(void) {
+static void dig_alcove(int cell) {
     static const s8 d[4][2] = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
-    int i;
-    for (i = 0; i < 80; i++) {
+    int i, kind = 1 + hash32(gWorld.seed, cell * 313 + 29) % 3;
+    int length = kind == 3 ? 2 : 1;
+    for (i = 0; i < 160; i++) {
         int x = 3 + rng_range(&sR, W - 6), y = 4 + rng_range(&sR, H - 8);
-        int k = rng_range(&sR, 4);
-        int mx = x + d[k][0], my = y + d[k][1];         /* the mouth */
-        int ix = x + 2 * d[k][0], iy = y + 2 * d[k][1]; /* the hoard */
-        if (!is_plain(x, y) || near_door(x, y) || near_door(mx, my))
+        int k = rng_range(&sR, 4), dx = d[k][0], dy = d[k][1];
+        int ix = x + (length + 1) * dx, iy = y + (length + 1) * dy;
+        int n, ok = 1;
+        if (!is_plain(x,y) || !reached(x,y) || near_door(x,y) || !interior(ix,iy))
             continue;
-        if (!interior(mx, my) || !interior(ix, iy) || mx < 2 || mx > W - 3 || my < 3 || my > H - 3)
+        /* The neck and hoard are entirely in virgin canopy, and a wall
+           encloses both flanks and the back: no free route round a gate. */
+        for (n = 1; n <= length + 1; n++) {
+            int tx=x+n*dx, ty=y+n*dy;
+            if (!interior(tx,ty) || !inside(tx+dy,ty+dx) || !inside(tx-dy,ty-dx) ||
+                sMask[ty][tx]!=M_WALL || type_at(tx,ty)!=TT_SOLID ||
+                sMask[ty+dx][tx+dy]!=M_WALL || type_at(tx+dy,ty+dx)!=TT_SOLID ||
+                sMask[ty-dx][tx-dy]!=M_WALL || type_at(tx-dy,ty-dx)!=TT_SOLID)
+                ok=0;
+        }
+        if (!inside(ix+dx,iy+dy) || sMask[iy+dy][ix+dx]!=M_WALL || type_at(ix+dx,iy+dy)!=TT_SOLID)
+            ok=0;
+        if (!ok)
             continue;
-        if (sMask[my][mx] != M_WALL || sMask[iy][ix] != M_WALL)
-            continue;
-        /* the pocket must be walled on its other sides, so it is a pocket */
-        if (sMask[iy + d[k][0]][ix + d[k][1]] != M_WALL || sMask[iy - d[k][0]][ix - d[k][1]] != M_WALL)
-            continue;
-        if (sMask[iy + d[k][0]][ix + d[k][1]] != M_WALL)
-            continue;
-        sMask[my][mx] = M_FLOOR;
-        sMask[iy][ix] = M_FLOOR;
-        room_set(mx, my, (rng_next(&sR) & 1) ? MT_BOULDER : MT_BUSH);
-        room_set(ix, iy, sBlighted ? MT_BLIGHT_FLOOR : MT_MOSS0);
-        room_set_overlay(ix, iy, MT_SPARKLE);
-        refresh_edges(MIN(x, ix) - 1, MIN(y, iy) - 1, MAX(x, ix) + 1, MAX(y, iy) + 1);
-        gSpots.treasure.x = ix;
-        gSpots.treasure.y = iy;
-        gSpots.has_treasure = 1;
+        for (n=1;n<=length;n++) {
+            int tx=x+n*dx,ty=y+n*dy;
+            bool8 opened=(gWorld.cells[cell].opened & CELL_POCKET_OPEN)!=0;
+            sMask[ty][tx]=M_FLOOR;
+            room_set(tx,ty,kind==3 ? MT_PIT : opened ? sTrail : kind==1 ? MT_CRACK : MT_WEB);
+            room_set_overlay(tx,ty,MT_NONE);
+        }
+        /* Where the forest is thick enough, the alcove opens into a
+           two-by-two glade beyond its neck. Check its whole outer ring
+           before opening it: an optional item never gains a free bypass. */
+        {
+            int sign=(hash32(gWorld.seed,cell*19)&1) ? 1 : -1;
+            int px=dy*sign,py=dx*sign,a,b,wide=1;
+            for(b=0;b<2;b++) for(a=0;a<2;a++) {
+                int tx=ix+a*px+b*dx,ty=iy+a*py+b*dy,k2;
+                if(!interior(tx,ty) || sMask[ty][tx]!=M_WALL || type_at(tx,ty)!=TT_SOLID) {wide=0;continue;}
+                for(k2=0;k2<4;k2++) {
+                    int nx=tx+d[k2][0],ny=ty+d[k2][1];
+                    if(!inside(nx,ny)) {wide=0;continue;}
+                    /* The one front edge is the intended gate neck. */
+                    if(nx==ix-dx && ny==iy-dy) continue;
+                    if(sMask[ny][nx]!=M_WALL || type_at(nx,ny)!=TT_SOLID) wide=0;
+                }
+            }
+            if(wide) for(b=0;b<2;b++) for(a=0;a<2;a++) {
+                int tx=ix+a*px+b*dx,ty=iy+a*py+b*dy;
+                sMask[ty][tx]=M_FLOOR;
+                room_set(tx,ty,sBlighted ? MT_BLIGHT_FLOOR : MT_MOSS0+(a+b)%3);
+                room_set_overlay(tx,ty,MT_NONE);
+            }
+        }
+        sMask[iy][ix]=M_FLOOR;
+        room_set(ix,iy,sBlighted ? MT_BLIGHT_FLOOR : MT_MOSS0);
+        room_set_overlay(ix,iy,(gWorld.cells[cell].opened & CELL_LOOTED) ? MT_NONE : MT_SPARKLE);
+        /* The tempting dirt spur points into optional content, not
+           necessarily to the next mandatory gate. The clue can mislead. */
+        room_set(x,y,sTrail);
+        for(n=1;n<=4;n++) {
+            int tx=x-n*dx,ty=y-n*dy;
+            if(!interior(tx,ty) || !is_floor(tx,ty)) break;
+            if(sPath[ty][tx]&P_MID) {
+                int j;
+                for(j=1;j<n;j++) room_set(x-j*dx,y-j*dy,sTrail);
+                break;
+            }
+        }
+        gSpots.treasure.x=ix; gSpots.treasure.y=iy;
+        gSpots.has_treasure=1;
+        gSpots.pocket_gate.x=x+dx; gSpots.pocket_gate.y=y+dy;
+        gSpots.pocket_kind=kind;
+        refresh_edges(MIN(x,ix)-1,MIN(y,iy)-1,MAX(x,ix)+1,MAX(y,iy)+1);
         return;
     }
 }
@@ -999,6 +1179,25 @@ static void dress_chunk(int cx, int cy, int v, bool8 blighted) {
     }
 }
 
+/* Clusters follow shade and banks. A little litter in the clearing is
+   deliberate; a random checkerboard of every possible prop is not. */
+static void undergrowth(const Cell* c) {
+    int patch;
+    for(patch=0;patch<8;patch++) {
+        int x=2+rng_range(&sR,W-4),y=3+rng_range(&sR,H-5),dx,dy;
+        bool8 bank=watery(sMask[y][x-1]) || watery(sMask[y][x+1]) ||
+                   sMask[y-1][x]==M_WALL || sMask[y+1][x]==M_WALL;
+        if(!bank && patch>2) continue;
+        for(dy=-1;dy<=1;dy++) for(dx=-1;dx<=1;dx++) {
+            if(!plain_free(x+dx,y+dy) || (ABS(dx)+ABS(dy)>1 && (rng_next(&sR)&1))) continue;
+            if(c->stage>=2 && rng_range(&sR,3)<c->stage-1)
+                floor_at(x+dx,y+dy,MT_SICK_BONES);
+            else
+                floor_at(x+dx,y+dy,bank ? MT_FERN_PATCH : MT_LEAF_LITTER);
+        }
+    }
+}
+
 /* ------------------------------------------------------- reachability -- */
 /* flood from (sx, sy) over passable tiles into sReach */
 static void flood_reach(int sx, int sy) {
@@ -1038,7 +1237,7 @@ static bool8 find_spot(Spot* out, int tries, int mode) {
         int x = 2 + rng_range(&sR, W - 4), y = 3 + rng_range(&sR, H - 5);
         if (!reached(x, y) || near_door(x, y))
             continue;
-        if (!is_floor(x, y))
+        if (!is_floor(x, y) || (mode && (sPath[y][x] & P_BANK)))
             continue;
         if (mode == 2 && !clear3(x, y))
             continue;
@@ -1058,7 +1257,10 @@ static void carve_to_center(int x, int y) {
     while (x != cx || y != cy) {
         bool8 horiz = (x != cx);
         if (interior(x, y) && !passable(x, y)) {
-            room_set(x, y, (room_type(x, y) == TT_WATER) ? (horiz ? MT_BRIDGE : MT_BRIDGE_V) : sTrail);
+            bool8 water=room_type(x,y)==TT_WATER;
+            room_set(x, y, water ? (horiz ? MT_BRIDGE : MT_BRIDGE_V) : sTrail);
+            sMask[y][x]=water ? (horiz ? M_BRIDGE_H : M_BRIDGE_V) : M_FLOOR;
+            sPath[y][x]|=P_MID|(horiz ? P_H : P_V);
             room_set_overlay(x, y, MT_NONE);
         }
         if (horiz)
@@ -1068,6 +1270,8 @@ static void carve_to_center(int x, int y) {
     }
     if (!passable(cx, cy)) {
         room_set(cx, cy, sTrail);
+        sMask[cy][cx]=M_FLOOR;
+        sPath[cy][cx]|=P_MID;
         room_set_overlay(cx, cy, MT_NONE);
     }
 }
@@ -1127,6 +1331,8 @@ void roomgen_preview(int cell, const u8** mask, const u8** path) {
     sTerraceRow = -1;
     plan(c, arena, entry);
     expand();
+    shape_clearings();
+    watershed(c, arena, entry);
     for (s = 0; s < 4; s++) {
         int x0, y0, x1, y1, k;
         if (c->gate[s] == GATE_WALL)
@@ -1137,6 +1343,10 @@ void roomgen_preview(int cell, const u8** mask, const u8** path) {
             int oy = (s == SIDE_N) ? k : (s == SIDE_S) ? -k : 0;
             carve(x0 + ox, y0 + oy);
             carve(x1 + ox, y1 + oy);
+            if (interior(x0 + ox, y0 + oy) && watery(sMask[y0 + oy][x0 + ox]))
+                sMask[y0 + oy][x0 + ox] = (s == SIDE_N || s == SIDE_S) ? M_BRIDGE_V : M_BRIDGE_H;
+            if (interior(x1 + ox, y1 + oy) && watery(sMask[y1 + oy][x1 + ox]))
+                sMask[y1 + oy][x1 + ox] = (s == SIDE_N || s == SIDE_S) ? M_BRIDGE_V : M_BRIDGE_H;
             if (interior(x0 + ox, y0 + oy))
                 sPath[y0 + oy][x0 + ox] |= P_MID;
             if (interior(x1 + ox, y1 + oy))
@@ -1144,6 +1354,8 @@ void roomgen_preview(int cell, const u8** mask, const u8** path) {
         }
     }
     add_waterfalls();
+    bridge_landings();
+    trail_story(c, arena, entry);
     *mask = &sMask[0][0];
     *path = &sPath[0][0];
 }
@@ -1227,6 +1439,7 @@ void roomgen_build(int cell) {
     sTerraceRow = -1;
     bool8 blighted = roomgen_blighted(cell);
     sBlighted = blighted;
+    sStage = c->stage;
     sTrail = blighted ? MT_BLIGHT_VEIN : MT_PATH;
     bool8 arena = (c->arch == ARCH_ARENA), entry = (c->arch == ARCH_ENTRY);
 
@@ -1238,6 +1451,8 @@ void roomgen_build(int cell) {
     /* the plan in chunks, then the mask from it */
     plan(c, arena, entry);
     expand();
+    shape_clearings();
+    watershed(c, arena, entry);
 
     /* the door corridors: two wide and six deep from each opening, a
        trail, so the lane a hero walks in by is always open to where the
@@ -1252,6 +1467,10 @@ void roomgen_build(int cell) {
             int oy = (s == SIDE_N) ? k : (s == SIDE_S) ? -k : 0;
             carve(x0 + ox, y0 + oy);
             carve(x1 + ox, y1 + oy);
+            if (interior(x0 + ox, y0 + oy) && watery(sMask[y0 + oy][x0 + ox]))
+                sMask[y0 + oy][x0 + ox] = (s == SIDE_N || s == SIDE_S) ? M_BRIDGE_V : M_BRIDGE_H;
+            if (interior(x1 + ox, y1 + oy) && watery(sMask[y1 + oy][x1 + ox]))
+                sMask[y1 + oy][x1 + ox] = (s == SIDE_N || s == SIDE_S) ? M_BRIDGE_V : M_BRIDGE_H;
             if (interior(x0 + ox, y0 + oy))
                 sPath[y0 + oy][x0 + ox] |= P_MID | ((s == SIDE_N || s == SIDE_S) ? P_V : P_H);
             if (interior(x1 + ox, y1 + oy))
@@ -1259,6 +1478,8 @@ void roomgen_build(int cell) {
         }
     }
     add_waterfalls();
+    bridge_landings();
+    trail_story(c, arena, entry);
 
     /* lay the ground */
     for (y = 0; y < H; y++) {
@@ -1266,7 +1487,7 @@ void roomgen_build(int cell) {
             u16 mt;
             switch (sMask[y][x]) {
                 case M_FLOOR:
-                    if (sPath[y][x] & P_MID)
+                    if ((sPath[y][x] & (P_MID | P_HIDDEN)) == P_MID)
                         mt = sTrail;
                     else
                         mt = blighted ? blight_pick() : moss_pick(c->stage);
@@ -1347,9 +1568,9 @@ void roomgen_build(int cell) {
             if (sMask[y][x] != M_FLOOR)
                 continue;
             t = room_get(x, y);
-            if (sPath[y][x] & P_MID) {
-                int pm = ((sMask[y - 1][x] == M_FLOOR && !(sPath[y - 1][x] & P_MID)) ? 1 : 0) | ((sMask[y][x + 1] == M_FLOOR && !(sPath[y][x + 1] & P_MID)) ? 2 : 0) |
-                         ((sMask[y + 1][x] == M_FLOOR && !(sPath[y + 1][x] & P_MID)) ? 4 : 0) | ((sMask[y][x - 1] == M_FLOOR && !(sPath[y][x - 1] & P_MID)) ? 8 : 0);
+            if ((sPath[y][x] & (P_MID | P_HIDDEN)) == P_MID) {
+                int pm = ((sMask[y - 1][x] == M_FLOOR && ((sPath[y - 1][x] & (P_MID | P_HIDDEN)) != P_MID)) ? 1 : 0) | ((sMask[y][x + 1] == M_FLOOR && ((sPath[y][x + 1] & (P_MID | P_HIDDEN)) != P_MID)) ? 2 : 0) |
+                         ((sMask[y + 1][x] == M_FLOOR && ((sPath[y + 1][x] & (P_MID | P_HIDDEN)) != P_MID)) ? 4 : 0) | ((sMask[y][x - 1] == M_FLOOR && ((sPath[y][x - 1] & (P_MID | P_HIDDEN)) != P_MID)) ? 8 : 0);
                 if (pm && t == MT_PATH)
                     room_set(x, y, MT_PEDGE_1 + pm - 1);
                 continue;
@@ -1454,12 +1675,19 @@ void roomgen_build(int cell) {
         scatter_solid(MT_STUMP, rng_range(&sR, 2), 40);
         scatter_solid(MT_LOG, rng_range(&sR, 2), 40);
         scatter_solid(MT_LANTERN_POST, rng_range(&sR, 2), 40);
-        scatter_floor(MT_TALL_GRASS, 22);
-        scatter_floor(MT_MOSS_FLOWERS, 10);
-        scatter_floor(MT_MOSS_FLOWERS2, 6);
+        undergrowth(c);
+        scatter_floor(MT_TALL_GRASS, 6);
+        scatter_floor(MT_MOSS_FLOWERS, 5);
+        scatter_floor(MT_MOSS_FLOWERS2, 3);
+        if(c->stage>=2) {
+            scatter_solid(MT_SICK_STUMP,2,50);
+            scatter_solid(MT_SICK_ROCK,2,50);
+        }
     } else {
         /* the pack draws stones and bones on grass: the blight keeps to its own */
         scatter_floor(MT_BLIGHT_FLOOR2, 3);
+        scatter_solid(MT_SICK_ROCK,2,50);
+        scatter_solid(MT_SICK_STUMP,2,50);
     }
     switch (blighted && !arena ? ARCH_COUNT : c->arch) {
         case ARCH_RUINS:
@@ -1496,8 +1724,6 @@ void roomgen_build(int cell) {
         default:
             break;
     }
-    if (!arena && !entry && rng_range(&sR, 5) < 3)
-        dig_alcove();
 
     /* keep the door approaches open: two tiles in from each opening */
     for (s = 0; s < 4; s++) {
@@ -1572,10 +1798,28 @@ void roomgen_build(int cell) {
                 break;
             }
         }
+        if (!gSpots.has_mouth) {
+            /* Guaranteed task access even when no random wall-face trial
+               succeeded: connect a secluded face to the central clearing. */
+            int mx = (hash32(gWorld.seed,cell) & 1) ? 4 : W-5, my = 3;
+            int ax,ay,rx=W/2,ry=H/2;
+            for(ay=2;ay<H-1;ay++) for(ax=1;ax<W-1;ax++)
+                if(reached(ax,ay)) {rx=ax;ry=ay;}
+            carve_to_center(mx,my+1);
+            carve_to_center(rx,ry);
+            sMask[my][mx]=M_WALL;
+            room_set(mx,my,style==MY_CAVE ? MT_MOUTH_CAVE : style==MY_HOLLOW ? MT_MOUTH_HOLLOW : MT_MOUTH_THICKET);
+            room_set_overlay(mx,my,MT_NONE);
+            gSpots.mouth.x=mx; gSpots.mouth.y=my; gSpots.has_mouth=1;
+            flood_reach(W/2,H/2);
+        }
     }
     /* role objects */
     switch (c->role) {
         case ROLE_KEYITEM:
+            /* Its reward is earned in the mandatory mystery, not handed
+               out by a second free chest in the forest. */
+            break;
         case ROLE_CHEST:
         case ROLE_KEYCHEST:
             ensure_fronted_spot(&gSpots.chest);
@@ -1625,19 +1869,11 @@ void roomgen_build(int cell) {
         default:
             break;
     }
-    /* the hoard must be reachable once its stopper is lifted */
-    if (gSpots.has_treasure && !reached(gSpots.treasure.x, gSpots.treasure.y)) {
-        int mx = gSpots.treasure.x, my = gSpots.treasure.y, k, ok = 0;
-        static const s8 d[4][2] = { { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 } };
-        for (k = 0; k < 4; k++) {
-            int nx = mx + d[k][0], ny = my + d[k][1];
-            u8 t = type_at(nx, ny);
-            if ((t == TT_LIFT1 || t == TT_LIFT2) && inside(nx + d[k][0], ny + d[k][1]) && reached(nx + d[k][0], ny + d[k][1]))
-                ok = 1;
-        }
-        if (!ok)
-            gSpots.has_treasure = 0;
-    }
+    /* Side pockets never hold a mandatory reward. Their entrance is on
+       the already-proved connected component, their interior deliberately
+       inaccessible until the player returns with the corresponding item. */
+    if (!arena && !entry && (hash32(gWorld.seed, cell * 73 + 211) % 5 < 4))
+        dig_alcove(cell);
     /* monster spots: the rooms are bigger, so a few more */
     {
         int n = c->density + (c->density ? 2 : 0);
@@ -1678,10 +1914,14 @@ void roomgen_build(int cell) {
         for (x = 0; x < W; x++) {
             u16 mt = room_get(x, y);
             u32 ink = hash32(gWorld.seed, cell * 7919 + y * W + x);
-            if (mt == MT_BLIGHT_FLOOR || mt == MT_BLIGHT_FLOOR2)
-                room_set(x, y, MT_FOREST_ROT0 + ink % 8);
+            if (mt == MT_BLIGHT_FLOOR || mt == MT_BLIGHT_FLOOR2) {
+                int dx=x-W/2,dy=y-H/2;
+                bool8 heart_vein=arena && ((ABS(dx*2+dy)%7==0) || (ABS(dx-dy*2)%9==0) ||
+                                        (dx*dx+dy*dy>=25 && dx*dx+dy*dy<=36));
+                room_set(x,y,heart_vein ? MT_FOREST_ROT7 : MT_FOREST_ROT0+ink%8);
+            }
             else if (mt == MT_CANOPY || mt == MT_CANOPY2)
-                room_set(x, y, MT_FOREST_CANOPY0 + ink % 6);
+                room_set(x, y, MT_FOREST_CANOPY0 + ((x + (gWorld.seed & 1)) & 1) + 2 * ((y + ((gWorld.seed >> 1) & 1)) & 1));
         }
     }
     room_render();

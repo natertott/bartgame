@@ -23,6 +23,9 @@ typedef struct {
     Spot treasure;  /* the alcove's hoard, behind a bush or a boulder */
     Spot mouth;     /* the mystery's mouth in a wall */
     u8 has_chest, has_npc, has_relic, has_boss, has_shrine, has_treasure, has_mouth;
+    /* Appended: old probe/save offsets above stay unchanged. */
+    Spot pocket_gate;
+    u8 pocket_kind; /* 1 bombs, 2 candle, 3 cape; optional, never progression */
 } RoomSpots;
 
 extern RoomSpots gSpots;
