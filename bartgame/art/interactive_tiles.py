@@ -222,6 +222,53 @@ def spring(frame=0):
     return rows(im)
 
 
+def votive_statue():
+    """A carved figure holding the shrine's warm sun at its chest."""
+    im,d=canvas()
+    # Crown/head, shoulders and robe form one connected, readable carving.
+    d.ellipse((5,0,10,5),fill=1)
+    d.ellipse((6,1,9,4),fill=14)
+    d.line([(7,1),(8,1)],fill=15)
+    d.polygon([(5,4),(10,4),(12,7),(12,11),(11,13),(4,13),(3,11),(3,7)],fill=1)
+    d.polygon([(6,5),(9,5),(11,8),(10,12),(5,12),(4,8)],fill=9)
+    d.line([(5,7),(4,9),(5,11)],fill=14)
+    d.line([(10,6),(11,9),(10,11)],fill=8)
+    d.line([(6,10),(6,12)],fill=13)
+    d.line([(9,10),(9,12)],fill=8)
+    # The forearms hold a luminous medallion, matching the floor marker.
+    d.line([(4,8),(6,10)],fill=14)
+    d.line([(11,8),(9,10)],fill=13)
+    d.ellipse((6,6,9,9),fill=7)
+    d.line([(7,6),(7,8)],fill=15)
+    d.point((8,7),fill=15)
+    # Broad stepped plinth: the colliding feet still occupy the lower half.
+    d.rectangle((1,13,14,14),fill=1)
+    d.line([(3,13),(12,13)],fill=14)
+    d.line([(3,14),(12,14)],fill=11)
+    d.line([(1,15),(14,15)],fill=1)
+    return rows(im)
+
+
+def shrine_plate():
+    """A sun medallion distinguishes the heal trigger from ordinary flowers."""
+    im,d=canvas()
+    d.ellipse((0,0,15,15),fill=1)
+    d.ellipse((1,0,14,13),fill=11)
+    d.arc((1,0,14,13),175,315,fill=7,width=1)
+    d.arc((1,1,14,14),5,145,fill=9,width=1)
+    d.ellipse((3,2,12,11),fill=2)
+    # Ivory/gold is resident in this palette; introducing cyan would require
+    # another palette and disturb the established scene/material contracts.
+    rays=[((7,3),(7,4)),((10,4),(9,5)),((11,7),(10,7)),
+          ((10,10),(9,9)),((7,11),(7,10)),((4,10),(5,9)),
+          ((3,7),(4,7)),((4,4),(5,5))]
+    for a,b in rays:d.line([a,b],fill=7)
+    d.polygon([(7,5),(9,7),(7,9),(5,7)],fill=7)
+    d.line([(7,5),(7,7),(6,7)],fill=15)
+    d.point((4,1),fill=15)
+    return rows(im)
+
+
 REPLACEMENTS={
     'myst_switch':[plate(False)],'myst_switch_down':[plate(True)],
     'pit':[pit()],'pit_inner':[pit(inner=True)],
@@ -233,10 +280,14 @@ REPLACEMENTS={
     'cave_exit':[threshold('cave')],'hollow_exit':[threshold('hollow')],
     'thicket_exit':[threshold('thicket')],
     'myst_spring':[spring(0),spring(1)],
+    'statue':[votive_statue()],
 }
 CHANGED_NAMES=set(REPLACEMENTS)
 POT_ROWS=REPLACEMENTS['myst_pot'][0]
 POT_PALETTE='glade_wood_stone'
+ADDED_TILES=[{'name':'shrine_plate','pal':'glade_wood_stone','type':'FLOOR',
+              'coll':0,'prop':True,'art':shrine_plate()}]
+CHANGED_NAMES.update(m['name'] for m in ADDED_TILES)
 
 
 def apply(metatiles,palettes):
@@ -249,13 +300,19 @@ def apply(metatiles,palettes):
         if len(new)>1:m['frames']=new;m.pop('art',None)
         else:m['art']=new[0];m.pop('frames',None)
         assert {k:v for k,v in m.items() if k not in ('art','frames')}==contract,m['name']
+    # Append after all imported/painted tile ids, preserving saved and authored
+    # contracts. This marker is used only by an unused healing shrine.
+    existing={m['name'] for m in metatiles}
+    assert not existing.intersection(m['name'] for m in ADDED_TILES)
+    metatiles.extend(deepcopy(ADDED_TILES))
 
 
 def preview(metatiles,path='/workspace/setup/interactive-tiles-source.png'):
     """Source art audit only; real gameplay evidence is captured in mGBA."""
     import palettes
     groups=dict(palettes.BG_PALETTES)
-    selected=[m for n in REPLACEMENTS for m in metatiles if m['name']==n]
+    selected=[m for n in list(REPLACEMENTS)+[m['name'] for m in ADDED_TILES]
+              for m in metatiles if m['name']==n]
     out=Image.new('RGB',(864,42+((len(selected)+5)//6)*130),'#101820')
     d=ImageDraw.Draw(out)
     d.text((10,10),'Interactive materials / native source art (not an emulator capture)',fill='#e8e8d0')
@@ -287,7 +344,7 @@ def background_preview(metatiles,path='/workspace/setup/interactive-tiles-backgr
                 index=0 if ch=='.' else int(ch,16)
                 if index:pix[x,y]=(*tuple(int(pal[index][j:j+2],16) for j in (1,3,5)),255)
         return im
-    names=list(REPLACEMENTS)
+    names=list(REPLACEMENTS)+[m['name'] for m in ADDED_TILES]
     out=Image.new('RGB',(936,50+((len(names)+2)//3)*146),'#101820');d=ImageDraw.Draw(out)
     d.text((10,10),'Actual tile pixels / healthy, blight, cave backgrounds / SOURCE COMPOSITES, not gameplay',fill='#e8e8d0')
     bases=[tile(table[n]) for n in ('moss0','blight_floor','cave_floor0')]
