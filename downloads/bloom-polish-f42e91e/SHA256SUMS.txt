@@ -1,0 +1,2 @@
+b8d76c00875361f14c308fcf591f12903870c063ddd749780d29dca5142ef7d5  bartgame-bloom-polish-f42e91e.gba
+7ed57f9ecba499208739b21cfe40a2b3a7bb0b69e4cb4350c11c74cdc5b04a3f  bartgame-bloom-polish-f42e91e.zip

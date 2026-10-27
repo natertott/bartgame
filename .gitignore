@@ -1,4 +1,4 @@
-# ROMs and copyrighted game data - must never be committed
+# Base-game ROMs and extracted game data stay local.
 *.gba
 *.gbc
 *.gb
@@ -6,6 +6,10 @@
 *.7z
 *.rar
 baserom*.gba
+
+# Published standalone BARTGAME build.
+!/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.gba
+!/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.zip
 
 # OS junk
 .DS_Store

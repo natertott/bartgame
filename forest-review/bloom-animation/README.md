@@ -3,6 +3,8 @@
 Bloom keeps the original flower, clothing, idle and walking art. This pass
 cleans up the roll and makes weapons and item actions easier to read.
 
+[Download the final ROM](../../downloads/README.md).
+
 The animations below are **crops of actual mGBA 0.10.5 frames**, enlarged 3×
 without smoothing. Actions come from button presses on naturally generated
 forest ground, with a full inventory, cleared actors and debug positioning.
