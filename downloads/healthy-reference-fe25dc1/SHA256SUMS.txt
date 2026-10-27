@@ -1,0 +1,2 @@
+d346f72866060e452f8751efc51dc0b074d8cb240ceba159784b97939da78f59  bartgame-healthy-reference-fe25dc1.gba
+266c1185188a5d9effc89ddd992db2ab73aadf39fcb000ae3ca02c1eb7cf7be1  bartgame-healthy-reference-fe25dc1.zip

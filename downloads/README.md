@@ -1,6 +1,29 @@
 # BARTGAME downloads
 
-## Latest: Blighted Forest atlas artwork
+## Latest: regular forest material polish
+
+The regular forest now uses clustered cool-green foliage, clearer oak,
+birch and fir sprites, warm roots, quiet ground, mossy banks and subtle
+water reflections. Shared woodland materials connect it to the updated
+blighted forest. All previous item, title and Bloom updates are included.
+
+- [Download the updated GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.gba)
+- [Download the updated ZIP](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.zip)
+- [SHA256 checksums](healthy-reference-fe25dc1/SHA256SUMS.txt)
+- [Actual mGBA comparisons, screenshots and animation](../forest-review/healthy-reference/README.md)
+
+Open the `.gba` in mGBA. Built from source commit
+[`fe25dc1`](https://github.com/natertott/bartgame/commit/fe25dc1f38dd2d6894f53c3130785235d2b4db70).
+All 75 sampled room layouts and spawn records match the previous build;
+progression, surface and rendering checks pass.
+
+ROM SHA256:
+
+```text
+d346f72866060e452f8751efc51dc0b074d8cb240ceba159784b97939da78f59
+```
+
+## Previous: Blighted Forest atlas artwork
 
 The forest now uses blue-violet canopy, luminous mossy ruins, quieter purple
 earth, softer decay edges, twisted trees, crystals, pools and mist inspired

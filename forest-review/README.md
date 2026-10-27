@@ -1,6 +1,14 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: Blighted Forest atlas artwork
+## Latest: regular forest material polish
+
+[View the regular forest in actual mGBA runs](healthy-reference/README.md).
+Clustered cool-green foliage, clearer tree sprites, warm roots, quiet
+ground, mossy banks and subtle water reflections connect the living
+forest to the updated blight. The gallery includes matched comparisons,
+native frames and actual animation clips.
+
+## Previous: Blighted Forest atlas artwork
 
 [View the new forest in real mGBA runs](blight-reference/README.md).
 Blue-violet canopy, mossy luminous ruins, quieter earth, blended decay,

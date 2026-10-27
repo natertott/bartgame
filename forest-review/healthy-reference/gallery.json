@@ -1,0 +1,2543 @@
+{
+  "emulator": "mGBA 0.10.5",
+  "method": "Native PNG/GIF/report files copied byte-for-byte. Sheets enlarge complete 240x160 frames 2x with nearest-neighbour scaling and add captions outside the framebuffers. No source-art overlays or painted game pixels.",
+  "before": [
+    {
+      "folder": "before/seed-b4a7",
+      "seed": "0xb4a7",
+      "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+      "fixture_version": 3,
+      "rooms": 25,
+      "features": 7,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": null
+    },
+    {
+      "folder": "before/seed-6",
+      "seed": "0x6",
+      "rom_sha256": "d3b9049cdcc48f43aa6415838d28fa8f2efc15cdeb6341b2660dbe244b95bd76",
+      "fixture_version": 3,
+      "rooms": 25,
+      "features": 7,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": null
+    }
+  ],
+  "after": [
+    {
+      "folder": "after/seed-b4a7",
+      "seed": "0xb4a7",
+      "rom_sha256": "d346f72866060e452f8751efc51dc0b074d8cb240ceba159784b97939da78f59",
+      "fixture_version": 3,
+      "rooms": 25,
+      "features": 7,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": [
+        {
+          "file": "drain-control.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-20-stage3.png",
+          "identical": true,
+          "different_pixels": 0
+        }
+      ]
+    },
+    {
+      "folder": "after/seed-6",
+      "seed": "0x6",
+      "rom_sha256": "d346f72866060e452f8751efc51dc0b074d8cb240ceba159784b97939da78f59",
+      "fixture_version": 3,
+      "rooms": 25,
+      "features": 7,
+      "physical_comparison": {
+        "checked_rooms": 25,
+        "unchanged_rooms": 25,
+        "differences": []
+      },
+      "visual_controls": [
+        {
+          "file": "drain-control.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-04-stage3.png",
+          "identical": false,
+          "different_pixels": 3520,
+          "allowed_changed_materials": [
+            "birch_0",
+            "birch_1",
+            "birch_2",
+            "birch_3",
+            "birch_4",
+            "birch_5",
+            "black",
+            "bones",
+            "boulder",
+            "bridge",
+            "bridge_v",
+            "bush",
+            "canopy",
+            "canopy2",
+            "canopy_glint",
+            "canopy_lantern",
+            "canopy_n",
+            "canopy_s",
+            "chest",
+            "chest_open",
+            "clover_0",
+            "clover_1",
+            "clover_2",
+            "clover_3",
+            "fence",
+            "fern_patch",
+            "fir_0",
+            "fir_1",
+            "fir_2",
+            "fir_3",
+            "fir_4",
+            "fir_5",
+            "forest_canopy0",
+            "forest_canopy1",
+            "forest_canopy2",
+            "forest_canopy3",
+            "forest_canopy4",
+            "forest_canopy5",
+            "gboulder_0",
+            "gboulder_1",
+            "gboulder_2",
+            "gboulder_3",
+            "gtree2_0",
+            "gtree2_1",
+            "gtree2_10",
+            "gtree2_11",
+            "gtree2_2",
+            "gtree2_3",
+            "gtree2_4",
+            "gtree2_5",
+            "gtree2_6",
+            "gtree2_7",
+            "gtree2_8",
+            "gtree2_9",
+            "gtree_0",
+            "gtree_1",
+            "gtree_10",
+            "gtree_11",
+            "gtree_2",
+            "gtree_3",
+            "gtree_4",
+            "gtree_5",
+            "gtree_6",
+            "gtree_7",
+            "gtree_8",
+            "gtree_9",
+            "hlog_0",
+            "hlog_1",
+            "lantern_post",
+            "leaf_litter",
+            "ledge_n",
+            "ledge_s",
+            "ledge_s_e",
+            "ledge_s_w",
+            "log",
+            "meadow_0",
+            "meadow_1",
+            "meadow_2",
+            "meadow_3",
+            "meadow_4",
+            "meadow_5",
+            "meadow_6",
+            "meadow_7",
+            "meadow_8",
+            "moss0",
+            "moss1",
+            "moss2",
+            "moss_flowers",
+            "moss_flowers2",
+            "moss_shade",
+            "mossy_stone",
+            "myst_chest",
+            "myst_chest_open",
+            "myst_pot",
+            "myst_switch",
+            "myst_switch_down",
+            "path",
+            "path_edge_n",
+            "pedge_1",
+            "pedge_2",
+            "pedge_3",
+            "pedge_4",
+            "pedge_5",
+            "pedge_6",
+            "pedge_7",
+            "pedge_8",
+            "pedge_9",
+            "pedge_a",
+            "pedge_b",
+            "pedge_c",
+            "pedge_c1",
+            "pedge_c2",
+            "pedge_c3",
+            "pedge_c4",
+            "pedge_c5",
+            "pedge_c6",
+            "pedge_c7",
+            "pedge_c8",
+            "pedge_c9",
+            "pedge_ca",
+            "pedge_cb",
+            "pedge_cc",
+            "pedge_cd",
+            "pedge_ce",
+            "pedge_cf",
+            "pedge_d",
+            "pedge_e",
+            "pedge_f",
+            "pillar",
+            "raft_0",
+            "raft_1",
+            "raft_2",
+            "raft_3",
+            "relic",
+            "rock",
+            "rock2",
+            "rock3",
+            "rock_small",
+            "ruin_wall",
+            "shore_1",
+            "shore_2",
+            "shore_3",
+            "shore_4",
+            "shore_5",
+            "shore_6",
+            "shore_7",
+            "shore_8",
+            "shore_9",
+            "shore_a",
+            "shore_b",
+            "shore_c",
+            "shore_c1",
+            "shore_c2",
+            "shore_c3",
+            "shore_c4",
+            "shore_c5",
+            "shore_c6",
+            "shore_c7",
+            "shore_c8",
+            "shore_c9",
+            "shore_ca",
+            "shore_cb",
+            "shore_cc",
+            "shore_cd",
+            "shore_ce",
+            "shore_cf",
+            "shore_d",
+            "shore_e",
+            "shore_f",
+            "shroomring_0",
+            "shroomring_1",
+            "shroomring_2",
+            "shroomring_3",
+            "statue",
+            "stump",
+            "tall_grass",
+            "thicket_crown",
+            "thicket_edge_1",
+            "thicket_edge_2",
+            "thicket_edge_3",
+            "thicket_edge_4",
+            "thicket_edge_5",
+            "thicket_edge_6",
+            "thicket_edge_7",
+            "thicket_edge_8",
+            "thicket_edge_9",
+            "thicket_edge_a",
+            "thicket_edge_b",
+            "thicket_edge_c",
+            "thicket_edge_d",
+            "thicket_edge_e",
+            "thicket_edge_f",
+            "thicket_exit",
+            "thicket_face",
+            "thicket_glow",
+            "thicket_prop",
+            "thicket_wall",
+            "thorn",
+            "torch",
+            "torch_lit",
+            "tree2_0",
+            "tree2_1",
+            "tree2_2",
+            "tree2_3",
+            "tree2_4",
+            "tree2_5",
+            "tree_mid_e",
+            "tree_mid_w",
+            "tree_top_ne",
+            "tree_top_nw",
+            "tree_trunk_e",
+            "tree_trunk_w",
+            "treerock_0",
+            "treerock_1",
+            "treerock_2",
+            "treerock_3",
+            "verge_1",
+            "verge_2",
+            "verge_3",
+            "verge_4",
+            "verge_5",
+            "verge_6",
+            "verge_7",
+            "verge_8",
+            "verge_9",
+            "verge_a",
+            "verge_b",
+            "verge_c",
+            "verge_c1",
+            "verge_c2",
+            "verge_c3",
+            "verge_c4",
+            "verge_c5",
+            "verge_c6",
+            "verge_c7",
+            "verge_c8",
+            "verge_c9",
+            "verge_ca",
+            "verge_cb",
+            "verge_cc",
+            "verge_cd",
+            "verge_ce",
+            "verge_cf",
+            "verge_d",
+            "verge_e",
+            "verge_f",
+            "water",
+            "water_1",
+            "water_2",
+            "water_3",
+            "water_4",
+            "water_5",
+            "water_6",
+            "water_7",
+            "water_8",
+            "water_9",
+            "water_a",
+            "water_b",
+            "water_c",
+            "water_c1",
+            "water_c2",
+            "water_c3",
+            "water_c4",
+            "water_c5",
+            "water_c6",
+            "water_c7",
+            "water_c8",
+            "water_c9",
+            "water_ca",
+            "water_cb",
+            "water_cc",
+            "water_cd",
+            "water_ce",
+            "water_cf",
+            "water_d",
+            "water_e",
+            "water_f",
+            "water_foam",
+            "water_lily",
+            "waterfall"
+          ],
+          "allowed_changed_bounds": [
+            {
+              "metatile": [
+                23,
+                14
+              ],
+              "framebuffer_rect": [
+                160,
+                76,
+                176,
+                92
+              ],
+              "materials": [
+                "water_b"
+              ]
+            },
+            {
+              "metatile": [
+                22,
+                15
+              ],
+              "framebuffer_rect": [
+                144,
+                92,
+                160,
+                108
+              ],
+              "materials": [
+                "water_9"
+              ]
+            },
+            {
+              "metatile": [
+                23,
+                15
+              ],
+              "framebuffer_rect": [
+                160,
+                92,
+                176,
+                108
+              ],
+              "materials": [
+                "water_c3"
+              ]
+            },
+            {
+              "metatile": [
+                24,
+                15
+              ],
+              "framebuffer_rect": [
+                176,
+                92,
+                192,
+                108
+              ],
+              "materials": [
+                "water_3"
+              ]
+            },
+            {
+              "metatile": [
+                22,
+                16
+              ],
+              "framebuffer_rect": [
+                144,
+                108,
+                160,
+                124
+              ],
+              "materials": [
+                "water_8"
+              ]
+            },
+            {
+              "metatile": [
+                23,
+                16
+              ],
+              "framebuffer_rect": [
+                160,
+                108,
+                176,
+                124
+              ],
+              "materials": [
+                "water"
+              ]
+            },
+            {
+              "metatile": [
+                24,
+                16
+              ],
+              "framebuffer_rect": [
+                176,
+                108,
+                192,
+                124
+              ],
+              "materials": [
+                "water_2"
+              ]
+            },
+            {
+              "metatile": [
+                22,
+                17
+              ],
+              "framebuffer_rect": [
+                144,
+                124,
+                160,
+                140
+              ],
+              "materials": [
+                "water_c"
+              ]
+            },
+            {
+              "metatile": [
+                23,
+                17
+              ],
+              "framebuffer_rect": [
+                160,
+                124,
+                176,
+                140
+              ],
+              "materials": [
+                "water_4"
+              ]
+            },
+            {
+              "metatile": [
+                24,
+                17
+              ],
+              "framebuffer_rect": [
+                176,
+                124,
+                192,
+                140
+              ],
+              "materials": [
+                "water_6"
+              ]
+            },
+            {
+              "metatile": [
+                22,
+                18
+              ],
+              "framebuffer_rect": [
+                144,
+                140,
+                160,
+                156
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                23,
+                18
+              ],
+              "framebuffer_rect": [
+                160,
+                140,
+                176,
+                156
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                24,
+                18
+              ],
+              "framebuffer_rect": [
+                176,
+                140,
+                192,
+                156
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                22,
+                19
+              ],
+              "framebuffer_rect": [
+                144,
+                156,
+                160,
+                160
+              ],
+              "materials": [
+                "water_d"
+              ]
+            },
+            {
+              "metatile": [
+                23,
+                19
+              ],
+              "framebuffer_rect": [
+                160,
+                156,
+                176,
+                160
+              ],
+              "materials": [
+                "water_5"
+              ]
+            },
+            {
+              "metatile": [
+                24,
+                19
+              ],
+              "framebuffer_rect": [
+                176,
+                156,
+                192,
+                160
+              ],
+              "materials": [
+                "water_7"
+              ]
+            }
+          ],
+          "changed_pixels_within_materials": true,
+          "retained_pixels_identical": true
+        },
+        {
+          "file": "room-09-stage3.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-14-stage3.png",
+          "identical": false,
+          "different_pixels": 6437,
+          "allowed_changed_materials": [
+            "birch_0",
+            "birch_1",
+            "birch_2",
+            "birch_3",
+            "birch_4",
+            "birch_5",
+            "black",
+            "bones",
+            "boulder",
+            "bridge",
+            "bridge_v",
+            "bush",
+            "canopy",
+            "canopy2",
+            "canopy_glint",
+            "canopy_lantern",
+            "canopy_n",
+            "canopy_s",
+            "chest",
+            "chest_open",
+            "clover_0",
+            "clover_1",
+            "clover_2",
+            "clover_3",
+            "fence",
+            "fern_patch",
+            "fir_0",
+            "fir_1",
+            "fir_2",
+            "fir_3",
+            "fir_4",
+            "fir_5",
+            "forest_canopy0",
+            "forest_canopy1",
+            "forest_canopy2",
+            "forest_canopy3",
+            "forest_canopy4",
+            "forest_canopy5",
+            "gboulder_0",
+            "gboulder_1",
+            "gboulder_2",
+            "gboulder_3",
+            "gtree2_0",
+            "gtree2_1",
+            "gtree2_10",
+            "gtree2_11",
+            "gtree2_2",
+            "gtree2_3",
+            "gtree2_4",
+            "gtree2_5",
+            "gtree2_6",
+            "gtree2_7",
+            "gtree2_8",
+            "gtree2_9",
+            "gtree_0",
+            "gtree_1",
+            "gtree_10",
+            "gtree_11",
+            "gtree_2",
+            "gtree_3",
+            "gtree_4",
+            "gtree_5",
+            "gtree_6",
+            "gtree_7",
+            "gtree_8",
+            "gtree_9",
+            "hlog_0",
+            "hlog_1",
+            "lantern_post",
+            "leaf_litter",
+            "ledge_n",
+            "ledge_s",
+            "ledge_s_e",
+            "ledge_s_w",
+            "log",
+            "meadow_0",
+            "meadow_1",
+            "meadow_2",
+            "meadow_3",
+            "meadow_4",
+            "meadow_5",
+            "meadow_6",
+            "meadow_7",
+            "meadow_8",
+            "moss0",
+            "moss1",
+            "moss2",
+            "moss_flowers",
+            "moss_flowers2",
+            "moss_shade",
+            "mossy_stone",
+            "myst_chest",
+            "myst_chest_open",
+            "myst_pot",
+            "myst_switch",
+            "myst_switch_down",
+            "path",
+            "path_edge_n",
+            "pedge_1",
+            "pedge_2",
+            "pedge_3",
+            "pedge_4",
+            "pedge_5",
+            "pedge_6",
+            "pedge_7",
+            "pedge_8",
+            "pedge_9",
+            "pedge_a",
+            "pedge_b",
+            "pedge_c",
+            "pedge_c1",
+            "pedge_c2",
+            "pedge_c3",
+            "pedge_c4",
+            "pedge_c5",
+            "pedge_c6",
+            "pedge_c7",
+            "pedge_c8",
+            "pedge_c9",
+            "pedge_ca",
+            "pedge_cb",
+            "pedge_cc",
+            "pedge_cd",
+            "pedge_ce",
+            "pedge_cf",
+            "pedge_d",
+            "pedge_e",
+            "pedge_f",
+            "pillar",
+            "raft_0",
+            "raft_1",
+            "raft_2",
+            "raft_3",
+            "relic",
+            "rock",
+            "rock2",
+            "rock3",
+            "rock_small",
+            "ruin_wall",
+            "shore_1",
+            "shore_2",
+            "shore_3",
+            "shore_4",
+            "shore_5",
+            "shore_6",
+            "shore_7",
+            "shore_8",
+            "shore_9",
+            "shore_a",
+            "shore_b",
+            "shore_c",
+            "shore_c1",
+            "shore_c2",
+            "shore_c3",
+            "shore_c4",
+            "shore_c5",
+            "shore_c6",
+            "shore_c7",
+            "shore_c8",
+            "shore_c9",
+            "shore_ca",
+            "shore_cb",
+            "shore_cc",
+            "shore_cd",
+            "shore_ce",
+            "shore_cf",
+            "shore_d",
+            "shore_e",
+            "shore_f",
+            "shroomring_0",
+            "shroomring_1",
+            "shroomring_2",
+            "shroomring_3",
+            "statue",
+            "stump",
+            "tall_grass",
+            "thicket_crown",
+            "thicket_edge_1",
+            "thicket_edge_2",
+            "thicket_edge_3",
+            "thicket_edge_4",
+            "thicket_edge_5",
+            "thicket_edge_6",
+            "thicket_edge_7",
+            "thicket_edge_8",
+            "thicket_edge_9",
+            "thicket_edge_a",
+            "thicket_edge_b",
+            "thicket_edge_c",
+            "thicket_edge_d",
+            "thicket_edge_e",
+            "thicket_edge_f",
+            "thicket_exit",
+            "thicket_face",
+            "thicket_glow",
+            "thicket_prop",
+            "thicket_wall",
+            "thorn",
+            "torch",
+            "torch_lit",
+            "tree2_0",
+            "tree2_1",
+            "tree2_2",
+            "tree2_3",
+            "tree2_4",
+            "tree2_5",
+            "tree_mid_e",
+            "tree_mid_w",
+            "tree_top_ne",
+            "tree_top_nw",
+            "tree_trunk_e",
+            "tree_trunk_w",
+            "treerock_0",
+            "treerock_1",
+            "treerock_2",
+            "treerock_3",
+            "verge_1",
+            "verge_2",
+            "verge_3",
+            "verge_4",
+            "verge_5",
+            "verge_6",
+            "verge_7",
+            "verge_8",
+            "verge_9",
+            "verge_a",
+            "verge_b",
+            "verge_c",
+            "verge_c1",
+            "verge_c2",
+            "verge_c3",
+            "verge_c4",
+            "verge_c5",
+            "verge_c6",
+            "verge_c7",
+            "verge_c8",
+            "verge_c9",
+            "verge_ca",
+            "verge_cb",
+            "verge_cc",
+            "verge_cd",
+            "verge_ce",
+            "verge_cf",
+            "verge_d",
+            "verge_e",
+            "verge_f",
+            "water",
+            "water_1",
+            "water_2",
+            "water_3",
+            "water_4",
+            "water_5",
+            "water_6",
+            "water_7",
+            "water_8",
+            "water_9",
+            "water_a",
+            "water_b",
+            "water_c",
+            "water_c1",
+            "water_c2",
+            "water_c3",
+            "water_c4",
+            "water_c5",
+            "water_c6",
+            "water_c7",
+            "water_c8",
+            "water_c9",
+            "water_ca",
+            "water_cb",
+            "water_cc",
+            "water_cd",
+            "water_ce",
+            "water_cf",
+            "water_d",
+            "water_e",
+            "water_f",
+            "water_foam",
+            "water_lily",
+            "waterfall"
+          ],
+          "allowed_changed_bounds": [
+            {
+              "metatile": [
+                10,
+                8
+              ],
+              "framebuffer_rect": [
+                0,
+                28,
+                16,
+                44
+              ],
+              "materials": [
+                "water_b"
+              ]
+            },
+            {
+              "metatile": [
+                11,
+                8
+              ],
+              "framebuffer_rect": [
+                16,
+                28,
+                32,
+                44
+              ],
+              "materials": [
+                "bridge_v"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                8
+              ],
+              "framebuffer_rect": [
+                32,
+                28,
+                48,
+                44
+              ],
+              "materials": [
+                "water_b"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                8
+              ],
+              "framebuffer_rect": [
+                160,
+                28,
+                176,
+                44
+              ],
+              "materials": [
+                "water_b"
+              ]
+            },
+            {
+              "metatile": [
+                10,
+                9
+              ],
+              "framebuffer_rect": [
+                0,
+                44,
+                16,
+                60
+              ],
+              "materials": [
+                "water_a"
+              ]
+            },
+            {
+              "metatile": [
+                11,
+                9
+              ],
+              "framebuffer_rect": [
+                16,
+                44,
+                32,
+                60
+              ],
+              "materials": [
+                "bridge_v"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                9
+              ],
+              "framebuffer_rect": [
+                32,
+                44,
+                48,
+                60
+              ],
+              "materials": [
+                "water_a"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                9
+              ],
+              "framebuffer_rect": [
+                144,
+                44,
+                160,
+                60
+              ],
+              "materials": [
+                "water_9"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                9
+              ],
+              "framebuffer_rect": [
+                160,
+                44,
+                176,
+                60
+              ],
+              "materials": [
+                "water_c3"
+              ]
+            },
+            {
+              "metatile": [
+                21,
+                9
+              ],
+              "framebuffer_rect": [
+                176,
+                44,
+                192,
+                60
+              ],
+              "materials": [
+                "water_3"
+              ]
+            },
+            {
+              "metatile": [
+                10,
+                10
+              ],
+              "framebuffer_rect": [
+                0,
+                60,
+                16,
+                76
+              ],
+              "materials": [
+                "water_e"
+              ]
+            },
+            {
+              "metatile": [
+                11,
+                10
+              ],
+              "framebuffer_rect": [
+                16,
+                60,
+                32,
+                76
+              ],
+              "materials": [
+                "bridge_v"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                10
+              ],
+              "framebuffer_rect": [
+                32,
+                60,
+                48,
+                76
+              ],
+              "materials": [
+                "water_e"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                10
+              ],
+              "framebuffer_rect": [
+                144,
+                60,
+                160,
+                76
+              ],
+              "materials": [
+                "water_8"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                10
+              ],
+              "framebuffer_rect": [
+                160,
+                60,
+                176,
+                76
+              ],
+              "materials": [
+                "water"
+              ]
+            },
+            {
+              "metatile": [
+                21,
+                10
+              ],
+              "framebuffer_rect": [
+                176,
+                60,
+                192,
+                76
+              ],
+              "materials": [
+                "water_2"
+              ]
+            },
+            {
+              "metatile": [
+                16,
+                11
+              ],
+              "framebuffer_rect": [
+                96,
+                76,
+                112,
+                92
+              ],
+              "materials": [
+                "torch"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                11
+              ],
+              "framebuffer_rect": [
+                144,
+                76,
+                160,
+                92
+              ],
+              "materials": [
+                "water_c"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                11
+              ],
+              "framebuffer_rect": [
+                160,
+                76,
+                176,
+                92
+              ],
+              "materials": [
+                "water_4"
+              ]
+            },
+            {
+              "metatile": [
+                21,
+                11
+              ],
+              "framebuffer_rect": [
+                176,
+                76,
+                192,
+                92
+              ],
+              "materials": [
+                "water_6"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                12
+              ],
+              "framebuffer_rect": [
+                144,
+                92,
+                160,
+                108
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                12
+              ],
+              "framebuffer_rect": [
+                160,
+                92,
+                176,
+                108
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                21,
+                12
+              ],
+              "framebuffer_rect": [
+                176,
+                92,
+                192,
+                108
+              ],
+              "materials": [
+                "bridge"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                13
+              ],
+              "framebuffer_rect": [
+                144,
+                108,
+                160,
+                124
+              ],
+              "materials": [
+                "water_f"
+              ]
+            },
+            {
+              "metatile": [
+                20,
+                13
+              ],
+              "framebuffer_rect": [
+                160,
+                108,
+                176,
+                124
+              ],
+              "materials": [
+                "bridge_v"
+              ]
+            },
+            {
+              "metatile": [
+                21,
+                13
+              ],
+              "framebuffer_rect": [
+                176,
+                108,
+                192,
+                124
+              ],
+              "materials": [
+                "water_f"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                14
+              ],
+              "framebuffer_rect": [
+                32,
+                124,
+                48,
+                140
+              ],
+              "materials": [
+                "torch"
+              ]
+            },
+            {
+              "metatile": [
+                19,
+                15
+              ],
+              "framebuffer_rect": [
+                144,
+                140,
+                160,
+                156
+              ],
+              "materials": [
+                "torch"
+              ]
+            }
+          ],
+          "changed_pixels_within_materials": true,
+          "retained_pixels_identical": true
+        },
+        {
+          "file": "room-18-stage3.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-19-stage3.png",
+          "identical": false,
+          "different_pixels": 3147,
+          "allowed_changed_materials": [
+            "birch_0",
+            "birch_1",
+            "birch_2",
+            "birch_3",
+            "birch_4",
+            "birch_5",
+            "black",
+            "bones",
+            "boulder",
+            "bridge",
+            "bridge_v",
+            "bush",
+            "canopy",
+            "canopy2",
+            "canopy_glint",
+            "canopy_lantern",
+            "canopy_n",
+            "canopy_s",
+            "chest",
+            "chest_open",
+            "clover_0",
+            "clover_1",
+            "clover_2",
+            "clover_3",
+            "fence",
+            "fern_patch",
+            "fir_0",
+            "fir_1",
+            "fir_2",
+            "fir_3",
+            "fir_4",
+            "fir_5",
+            "forest_canopy0",
+            "forest_canopy1",
+            "forest_canopy2",
+            "forest_canopy3",
+            "forest_canopy4",
+            "forest_canopy5",
+            "gboulder_0",
+            "gboulder_1",
+            "gboulder_2",
+            "gboulder_3",
+            "gtree2_0",
+            "gtree2_1",
+            "gtree2_10",
+            "gtree2_11",
+            "gtree2_2",
+            "gtree2_3",
+            "gtree2_4",
+            "gtree2_5",
+            "gtree2_6",
+            "gtree2_7",
+            "gtree2_8",
+            "gtree2_9",
+            "gtree_0",
+            "gtree_1",
+            "gtree_10",
+            "gtree_11",
+            "gtree_2",
+            "gtree_3",
+            "gtree_4",
+            "gtree_5",
+            "gtree_6",
+            "gtree_7",
+            "gtree_8",
+            "gtree_9",
+            "hlog_0",
+            "hlog_1",
+            "lantern_post",
+            "leaf_litter",
+            "ledge_n",
+            "ledge_s",
+            "ledge_s_e",
+            "ledge_s_w",
+            "log",
+            "meadow_0",
+            "meadow_1",
+            "meadow_2",
+            "meadow_3",
+            "meadow_4",
+            "meadow_5",
+            "meadow_6",
+            "meadow_7",
+            "meadow_8",
+            "moss0",
+            "moss1",
+            "moss2",
+            "moss_flowers",
+            "moss_flowers2",
+            "moss_shade",
+            "mossy_stone",
+            "myst_chest",
+            "myst_chest_open",
+            "myst_pot",
+            "myst_switch",
+            "myst_switch_down",
+            "path",
+            "path_edge_n",
+            "pedge_1",
+            "pedge_2",
+            "pedge_3",
+            "pedge_4",
+            "pedge_5",
+            "pedge_6",
+            "pedge_7",
+            "pedge_8",
+            "pedge_9",
+            "pedge_a",
+            "pedge_b",
+            "pedge_c",
+            "pedge_c1",
+            "pedge_c2",
+            "pedge_c3",
+            "pedge_c4",
+            "pedge_c5",
+            "pedge_c6",
+            "pedge_c7",
+            "pedge_c8",
+            "pedge_c9",
+            "pedge_ca",
+            "pedge_cb",
+            "pedge_cc",
+            "pedge_cd",
+            "pedge_ce",
+            "pedge_cf",
+            "pedge_d",
+            "pedge_e",
+            "pedge_f",
+            "pillar",
+            "raft_0",
+            "raft_1",
+            "raft_2",
+            "raft_3",
+            "relic",
+            "rock",
+            "rock2",
+            "rock3",
+            "rock_small",
+            "ruin_wall",
+            "shore_1",
+            "shore_2",
+            "shore_3",
+            "shore_4",
+            "shore_5",
+            "shore_6",
+            "shore_7",
+            "shore_8",
+            "shore_9",
+            "shore_a",
+            "shore_b",
+            "shore_c",
+            "shore_c1",
+            "shore_c2",
+            "shore_c3",
+            "shore_c4",
+            "shore_c5",
+            "shore_c6",
+            "shore_c7",
+            "shore_c8",
+            "shore_c9",
+            "shore_ca",
+            "shore_cb",
+            "shore_cc",
+            "shore_cd",
+            "shore_ce",
+            "shore_cf",
+            "shore_d",
+            "shore_e",
+            "shore_f",
+            "shroomring_0",
+            "shroomring_1",
+            "shroomring_2",
+            "shroomring_3",
+            "statue",
+            "stump",
+            "tall_grass",
+            "thicket_crown",
+            "thicket_edge_1",
+            "thicket_edge_2",
+            "thicket_edge_3",
+            "thicket_edge_4",
+            "thicket_edge_5",
+            "thicket_edge_6",
+            "thicket_edge_7",
+            "thicket_edge_8",
+            "thicket_edge_9",
+            "thicket_edge_a",
+            "thicket_edge_b",
+            "thicket_edge_c",
+            "thicket_edge_d",
+            "thicket_edge_e",
+            "thicket_edge_f",
+            "thicket_exit",
+            "thicket_face",
+            "thicket_glow",
+            "thicket_prop",
+            "thicket_wall",
+            "thorn",
+            "torch",
+            "torch_lit",
+            "tree2_0",
+            "tree2_1",
+            "tree2_2",
+            "tree2_3",
+            "tree2_4",
+            "tree2_5",
+            "tree_mid_e",
+            "tree_mid_w",
+            "tree_top_ne",
+            "tree_top_nw",
+            "tree_trunk_e",
+            "tree_trunk_w",
+            "treerock_0",
+            "treerock_1",
+            "treerock_2",
+            "treerock_3",
+            "verge_1",
+            "verge_2",
+            "verge_3",
+            "verge_4",
+            "verge_5",
+            "verge_6",
+            "verge_7",
+            "verge_8",
+            "verge_9",
+            "verge_a",
+            "verge_b",
+            "verge_c",
+            "verge_c1",
+            "verge_c2",
+            "verge_c3",
+            "verge_c4",
+            "verge_c5",
+            "verge_c6",
+            "verge_c7",
+            "verge_c8",
+            "verge_c9",
+            "verge_ca",
+            "verge_cb",
+            "verge_cc",
+            "verge_cd",
+            "verge_ce",
+            "verge_cf",
+            "verge_d",
+            "verge_e",
+            "verge_f",
+            "water",
+            "water_1",
+            "water_2",
+            "water_3",
+            "water_4",
+            "water_5",
+            "water_6",
+            "water_7",
+            "water_8",
+            "water_9",
+            "water_a",
+            "water_b",
+            "water_c",
+            "water_c1",
+            "water_c2",
+            "water_c3",
+            "water_c4",
+            "water_c5",
+            "water_c6",
+            "water_c7",
+            "water_c8",
+            "water_c9",
+            "water_ca",
+            "water_cb",
+            "water_cc",
+            "water_cd",
+            "water_ce",
+            "water_cf",
+            "water_d",
+            "water_e",
+            "water_f",
+            "water_foam",
+            "water_lily",
+            "waterfall"
+          ],
+          "allowed_changed_bounds": [
+            {
+              "metatile": [
+                11,
+                15
+              ],
+              "framebuffer_rect": [
+                176,
+                108,
+                192,
+                124
+              ],
+              "materials": [
+                "water_9"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                15
+              ],
+              "framebuffer_rect": [
+                192,
+                108,
+                208,
+                124
+              ],
+              "materials": [
+                "water_3"
+              ]
+            },
+            {
+              "metatile": [
+                1,
+                16
+              ],
+              "framebuffer_rect": [
+                16,
+                124,
+                32,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                3,
+                16
+              ],
+              "framebuffer_rect": [
+                48,
+                124,
+                64,
+                140
+              ],
+              "materials": [
+                "ledge_s_w"
+              ]
+            },
+            {
+              "metatile": [
+                4,
+                16
+              ],
+              "framebuffer_rect": [
+                64,
+                124,
+                80,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                5,
+                16
+              ],
+              "framebuffer_rect": [
+                80,
+                124,
+                96,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                6,
+                16
+              ],
+              "framebuffer_rect": [
+                96,
+                124,
+                112,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                7,
+                16
+              ],
+              "framebuffer_rect": [
+                112,
+                124,
+                128,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                8,
+                16
+              ],
+              "framebuffer_rect": [
+                128,
+                124,
+                144,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                9,
+                16
+              ],
+              "framebuffer_rect": [
+                144,
+                124,
+                160,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                10,
+                16
+              ],
+              "framebuffer_rect": [
+                160,
+                124,
+                176,
+                140
+              ],
+              "materials": [
+                "ledge_s_e"
+              ]
+            },
+            {
+              "metatile": [
+                11,
+                16
+              ],
+              "framebuffer_rect": [
+                176,
+                124,
+                192,
+                140
+              ],
+              "materials": [
+                "waterfall"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                16
+              ],
+              "framebuffer_rect": [
+                192,
+                124,
+                208,
+                140
+              ],
+              "materials": [
+                "waterfall"
+              ]
+            },
+            {
+              "metatile": [
+                13,
+                16
+              ],
+              "framebuffer_rect": [
+                208,
+                124,
+                224,
+                140
+              ],
+              "materials": [
+                "ledge_s"
+              ]
+            },
+            {
+              "metatile": [
+                11,
+                17
+              ],
+              "framebuffer_rect": [
+                176,
+                140,
+                192,
+                156
+              ],
+              "materials": [
+                "water_foam"
+              ]
+            },
+            {
+              "metatile": [
+                12,
+                17
+              ],
+              "framebuffer_rect": [
+                192,
+                140,
+                208,
+                156
+              ],
+              "materials": [
+                "water_foam"
+              ]
+            }
+          ],
+          "changed_pixels_within_materials": true,
+          "retained_pixels_identical": true
+        },
+        {
+          "file": "room-23-stage3.png",
+          "identical": true,
+          "different_pixels": 0
+        },
+        {
+          "file": "room-24-stage3.png",
+          "identical": true,
+          "different_pixels": 0
+        }
+      ]
+    }
+  ],
+  "native_files": [
+    {
+      "file": "before/seed-b4a7/capture.json",
+      "sha256": "55bd320a79892a8262373b884455ace20014d1580f41c507d48a9553a733e806"
+    },
+    {
+      "file": "before/seed-b4a7/birch.png",
+      "sha256": "e69104c484fa5e61e8a5f282278cd33124d4c0c4dc59daa0e6a2979ac60147c2"
+    },
+    {
+      "file": "before/seed-b4a7/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "before/seed-b4a7/fir.png",
+      "sha256": "0512d91b10b5a387d87719bd2223be1ffc70a6598595e38dade6707e81d41a9e"
+    },
+    {
+      "file": "before/seed-b4a7/great-tree.png",
+      "sha256": "02b80c9f0f7bb61054689b6a2e3d343f489c801131127bb6e5ce0d1b081fe677"
+    },
+    {
+      "file": "before/seed-b4a7/ground-growths.png",
+      "sha256": "9dd54c69fdd7636e82005f9de585e301d23e72d6c77575338bbbf97e2e79a963"
+    },
+    {
+      "file": "before/seed-b4a7/oak.png",
+      "sha256": "d18897cb24356be5f3fb1ae1bce3ebffbbc606da6ed8d625fa0a12319c33e0f7"
+    },
+    {
+      "file": "before/seed-b4a7/path-canopy.png",
+      "sha256": "040e23a9630c897f66de21f83ebd0bc8a42418d6e61eda9082904f57030f15f2"
+    },
+    {
+      "file": "before/seed-b4a7/pond-bank.png",
+      "sha256": "919318c1ff1342b71aa1ac8a61303fd98e568dd7a37e10b5f710f624ecc2e9e0"
+    },
+    {
+      "file": "before/seed-b4a7/room-00-stage2.png",
+      "sha256": "f539145721260c32e6bee25b843c056e50ea69ceac7312284b1353a97273bdbe"
+    },
+    {
+      "file": "before/seed-b4a7/room-01-stage2.png",
+      "sha256": "c52de740ad12c329ed7d5a4ee185712ee285b83a3c21cafe7c348d5eb3f151ef"
+    },
+    {
+      "file": "before/seed-b4a7/room-02-stage2.png",
+      "sha256": "9645ff830af92e83de7990ad8ed12e666ff2b2ddd254e49bd37592bcaf840b3e"
+    },
+    {
+      "file": "before/seed-b4a7/room-03-stage2.png",
+      "sha256": "fc4e036a11cb40ce74bd7f89f7bfd1a9f6132fbeb586bbf6fbf4110957409d01"
+    },
+    {
+      "file": "before/seed-b4a7/room-04-stage1.png",
+      "sha256": "874094d5ffd86dd28b9a2fbbc409d3ebf572a86b2b0dfe3d3ed5933f0dc02575"
+    },
+    {
+      "file": "before/seed-b4a7/room-05-stage2.png",
+      "sha256": "a2790db2e6760a4d0438671e14abd62a0537ca28d7af921564155b531f5f2832"
+    },
+    {
+      "file": "before/seed-b4a7/room-06-stage2.png",
+      "sha256": "ffd0621c5701a1faeab79f42d6818a0684d8a467890db7a193b66aa3f6a6851f"
+    },
+    {
+      "file": "before/seed-b4a7/room-07-stage1.png",
+      "sha256": "7a658de50b2ba46649cf77bee8edea30ce680f017af424adf23baddd505424ec"
+    },
+    {
+      "file": "before/seed-b4a7/room-08-stage1.png",
+      "sha256": "41b4b0871de79e8b371188764b02a7d269bf1d86e0e3d9a98a9d631428b82e43"
+    },
+    {
+      "file": "before/seed-b4a7/room-09-stage1.png",
+      "sha256": "001f1375bc32c0f79ed748e23d5af2a227318a86d6561dbf3667a3178b3a0519"
+    },
+    {
+      "file": "before/seed-b4a7/room-10-stage2.png",
+      "sha256": "8890bb54c82f880750e10359be59150ad5cf55081ea13229fcc5908635e4dfcb"
+    },
+    {
+      "file": "before/seed-b4a7/room-11-stage0.png",
+      "sha256": "ee35634d27734c2d6843cc7a3acd8b0e80c97ddb28afffd84d7f9963d2273228"
+    },
+    {
+      "file": "before/seed-b4a7/room-12-stage1.png",
+      "sha256": "ac7438a77856cb5aa4c81f7d17344be0ad1e3dc75757ee1654db16ce175dc941"
+    },
+    {
+      "file": "before/seed-b4a7/room-13-stage1.png",
+      "sha256": "ef8f535968444f67fc93bc64d557cafec236e96a33fbc9deafda150023cac773"
+    },
+    {
+      "file": "before/seed-b4a7/room-14-stage1.png",
+      "sha256": "7ad34822db61930176ba6bda9c11aed9446aa3af7861659c771d270e39c4fdea"
+    },
+    {
+      "file": "before/seed-b4a7/room-15-stage2.png",
+      "sha256": "45d77a2b1abf2df389c8bf1a744d4a74c667b979e30b4390ae09367d1e8b43d7"
+    },
+    {
+      "file": "before/seed-b4a7/room-16-stage0.png",
+      "sha256": "843fadd7e281c570e16c8b91ad6164cd5a976509af3d2671fb05b8b74618bcf0"
+    },
+    {
+      "file": "before/seed-b4a7/room-17-stage1.png",
+      "sha256": "6115fc438966177f6d42ef9cafda391ca437935539985ad408a441638fe76d5c"
+    },
+    {
+      "file": "before/seed-b4a7/room-18-stage1.png",
+      "sha256": "0225899fbf74fd347b5a468336ee08c8017edceb281bacb5e7975101b7f0d5d2"
+    },
+    {
+      "file": "before/seed-b4a7/room-19-stage1.png",
+      "sha256": "2bd568a1bbcd723e63241e3cd3a68a87ec396ee3a03a517f59e6b163016d32c3"
+    },
+    {
+      "file": "before/seed-b4a7/room-20-stage3.png",
+      "sha256": "4baa0ead582ea6775e229f5d11140fdbea4696f0b659ab3adf71ef8128cdd788"
+    },
+    {
+      "file": "before/seed-b4a7/room-21-stage0.png",
+      "sha256": "9fdd061fc81eea7971c38cd9b573a31a17a9a833ce997749d7f308495e4f514c"
+    },
+    {
+      "file": "before/seed-b4a7/room-22-stage0.png",
+      "sha256": "11b161e3a26322f001603d562396ab3492ed161ee6c78ac06de4593b35dfac39"
+    },
+    {
+      "file": "before/seed-b4a7/room-23-stage0.png",
+      "sha256": "205044c85cfcaf8ebaf9e533e191f42f49a4fb9f2659ed9bcb0986cf351e8574"
+    },
+    {
+      "file": "before/seed-b4a7/room-24-stage0.png",
+      "sha256": "e1cee01d6424894562725847be91c061971c0ef63ef2074f8c202ce9e986a383"
+    },
+    {
+      "file": "before/seed-b4a7/great-tree.gif",
+      "sha256": "ec0bad280f94817631a24053ec2e5b8f567df25f678ce8a076a0a5290f541b81"
+    },
+    {
+      "file": "before/seed-b4a7/path-canopy.gif",
+      "sha256": "037435514e5e9130fdc9a618d3e6ac2a275d2a96a5da282890bedf8da4398fbb"
+    },
+    {
+      "file": "before/seed-b4a7/pond-bank.gif",
+      "sha256": "22575388de0dbeaeca6a08e3b41f22d8c88979d43829fcef07caab8cbbbafe38"
+    },
+    {
+      "file": "before/seed-6/capture.json",
+      "sha256": "152931af1325ad563b40b7657173978edc998a0c5ce47eeec6dbab5893cc43bd"
+    },
+    {
+      "file": "before/seed-6/birch.png",
+      "sha256": "c177c8e63edd80653bc40c56e814e1865976fe28295767ae993e033e1e1b3896"
+    },
+    {
+      "file": "before/seed-6/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "before/seed-6/fir.png",
+      "sha256": "da8ccddb53706c431b7f3ce8d035f6312fdbd1802b675d1f4d59bd6f12a6033e"
+    },
+    {
+      "file": "before/seed-6/great-tree.png",
+      "sha256": "e84ecb3c9e166e78f704371b05941db06a021d177ac4b90f047de5f3d98a2a94"
+    },
+    {
+      "file": "before/seed-6/ground-growths.png",
+      "sha256": "625923e971b5319cda489205767ad66c94029a292d20f0cf3b12d6984f7b48d4"
+    },
+    {
+      "file": "before/seed-6/oak.png",
+      "sha256": "bc9c41fce276ebb73ac06f89d9e29524386e11c383d14c9770f196e8e668a537"
+    },
+    {
+      "file": "before/seed-6/path-canopy.png",
+      "sha256": "bf03f0488532d81177949ef06cc77ba40c9931087471457ba7f71ce144ea1385"
+    },
+    {
+      "file": "before/seed-6/pond-bank.png",
+      "sha256": "5b869e354855686115ed43e94954ec4630354dfab8efd1bff376adc76c235c39"
+    },
+    {
+      "file": "before/seed-6/room-00-stage0.png",
+      "sha256": "47cc922a034f9c7d9a4751b934097777d296deb4e6b18fd76ecdb47a671139fb"
+    },
+    {
+      "file": "before/seed-6/room-01-stage1.png",
+      "sha256": "25977c83ada514e7f395a3d122a09e712b6e020636203153ba38bf1b86efdb73"
+    },
+    {
+      "file": "before/seed-6/room-02-stage1.png",
+      "sha256": "2641f3c2c886605e0b186acc50be1c241827ebb088cd258e819ba0620669bb41"
+    },
+    {
+      "file": "before/seed-6/room-03-stage2.png",
+      "sha256": "3dd23a5af335ad315def72854dce2ba5e585369dcc402077a1f7574fe5485b15"
+    },
+    {
+      "file": "before/seed-6/room-04-stage3.png",
+      "sha256": "7bd5c60b664046910e2d34afa1e231a081188be2522688d10be2a5b6f90774bc"
+    },
+    {
+      "file": "before/seed-6/room-05-stage0.png",
+      "sha256": "cc9da5252789b9639cd20042570db03801242c7423db105d3265f3cec6ce56eb"
+    },
+    {
+      "file": "before/seed-6/room-06-stage1.png",
+      "sha256": "770f0bdb0bb452b38715894d680b1620509983d4a169f63ca17570b21e3071ca"
+    },
+    {
+      "file": "before/seed-6/room-07-stage0.png",
+      "sha256": "6fb0ad806a16136c27b2b561a1ced3cd1af77f9b8a5f9feea27e35cc652faaec"
+    },
+    {
+      "file": "before/seed-6/room-08-stage2.png",
+      "sha256": "54d03332ab10d55048be5da10e35f06f3e4ef002c8bb1a552a4bfd02a38fcf8c"
+    },
+    {
+      "file": "before/seed-6/room-09-stage3.png",
+      "sha256": "a0064901c3697a6660d1ae21b0998c55da038fc987d9697e80aa035df2179ae7"
+    },
+    {
+      "file": "before/seed-6/room-10-stage0.png",
+      "sha256": "ad6558712f5fcb21070a4f43053706a252a27c84fa0c2c972d93a51ba5e236cc"
+    },
+    {
+      "file": "before/seed-6/room-11-stage1.png",
+      "sha256": "a2288ddf7c5d0fe848c99aeb97a8996eb4911793d36fa50c28f63296113e3f2f"
+    },
+    {
+      "file": "before/seed-6/room-12-stage0.png",
+      "sha256": "6ba0429e507ffc13b8cc9ea06cbb8358d12af26a73b681fa2c434ad9ef71d2cd"
+    },
+    {
+      "file": "before/seed-6/room-13-stage2.png",
+      "sha256": "9b477a3fa4bf197572596fc28f5f5a518a99b3020e104901725a66f9e4f75dc5"
+    },
+    {
+      "file": "before/seed-6/room-14-stage3.png",
+      "sha256": "ff71c4af40114f48d7c25e9e17a32e237ceedba8108b36439709c96da1391814"
+    },
+    {
+      "file": "before/seed-6/room-15-stage0.png",
+      "sha256": "460e36c468236d44bf611a103d8ab0ebe2f0139a98530ee8e83a863a546b1b4d"
+    },
+    {
+      "file": "before/seed-6/room-16-stage0.png",
+      "sha256": "072713771ffc8ac90107a80b3d83f18b3775e13c08c47e861de5b801b55056f4"
+    },
+    {
+      "file": "before/seed-6/room-17-stage0.png",
+      "sha256": "e236ac5f41a9100c2352869a2a42112847581551d144195d3698d608656117e9"
+    },
+    {
+      "file": "before/seed-6/room-18-stage3.png",
+      "sha256": "d6c7317eb43ca6ff816043c672b85be9c006c942b659b72e068398c27bc20954"
+    },
+    {
+      "file": "before/seed-6/room-19-stage3.png",
+      "sha256": "a67a94851965f250d52dbb97608766c873fd7596501478328560f93656be998f"
+    },
+    {
+      "file": "before/seed-6/room-20-stage0.png",
+      "sha256": "f4e453d9aa542f9dc32dcae8831a9013ae75350789ed49e4d420ec5dfa2d6a91"
+    },
+    {
+      "file": "before/seed-6/room-21-stage0.png",
+      "sha256": "611fee88fc69fa8660ed92e96d78f5f83ebaf3af7009c5c2bf8c2072f451a04c"
+    },
+    {
+      "file": "before/seed-6/room-22-stage0.png",
+      "sha256": "8bba4138fc21eb274d1217f8c7e5e6aad7f8faa9ddd32da3a95b8bcaf0fb0849"
+    },
+    {
+      "file": "before/seed-6/room-23-stage3.png",
+      "sha256": "58400e4ee3ee42556de4fc27895cef7322b0d29573a2029f56c00a7a49d56ff9"
+    },
+    {
+      "file": "before/seed-6/room-24-stage3.png",
+      "sha256": "a026f979e3a959d7bcc9520e18d91f6df9ab3965fc16311e55650714478aae24"
+    },
+    {
+      "file": "before/seed-6/great-tree.gif",
+      "sha256": "e4a7f89a411a9f415f18cab8a0afe0744be3bf719481045ba2fc279168b051e2"
+    },
+    {
+      "file": "before/seed-6/path-canopy.gif",
+      "sha256": "3e8510a52b0308d516497b7375c3946be96fdd06a84265ff8d5e990afc338f5d"
+    },
+    {
+      "file": "before/seed-6/pond-bank.gif",
+      "sha256": "84b5a3ee4839c7f147b753a1648aa147b3f1d9091ca37b85f816807cff18ffce"
+    },
+    {
+      "file": "after/seed-b4a7/capture.json",
+      "sha256": "5ae20e19714e86710f64f1c11256563a437b82f1681a5b1b60259969713482ac"
+    },
+    {
+      "file": "after/seed-b4a7/birch.png",
+      "sha256": "0fb0c2b64bdf2cb243d2213c98a2dbe3815afecc945d803dd1539173b2a9ce68"
+    },
+    {
+      "file": "after/seed-b4a7/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "after/seed-b4a7/fir.png",
+      "sha256": "62f0117460bbded267034b7e96fa13bea236750c44fbc5c809c4fccfa6199ab1"
+    },
+    {
+      "file": "after/seed-b4a7/great-tree.png",
+      "sha256": "eaecaef7e5a1e42016571a622936f14f38b45aa8028e811ff779636fca6cdaa6"
+    },
+    {
+      "file": "after/seed-b4a7/ground-growths.png",
+      "sha256": "a3446c8fd671b2ee645614008ab5b6f5eb994965b4eddc664d445f4e19322df7"
+    },
+    {
+      "file": "after/seed-b4a7/oak.png",
+      "sha256": "53569c7d05285396ec81d0566627c7b964c5d8feaeb05b72c49f211cd4cebc86"
+    },
+    {
+      "file": "after/seed-b4a7/path-canopy.png",
+      "sha256": "1d378df9dbf108df6d4ca000e46f292b9460e0751bf807fe31d11621cb51c02f"
+    },
+    {
+      "file": "after/seed-b4a7/pond-bank.png",
+      "sha256": "be162894c293ae6f0660b5658e203e10b67815675be8309d6182aa26167e2804"
+    },
+    {
+      "file": "after/seed-b4a7/room-00-stage2.png",
+      "sha256": "2a9303935200f3abff3c808c074c65cf79c53daac9ef1b91632bb5a231c18031"
+    },
+    {
+      "file": "after/seed-b4a7/room-01-stage2.png",
+      "sha256": "79ec76ebdf2f7bdaaa3b539a0480d2cc53ae4b517844c83dfe9f9a5a94789514"
+    },
+    {
+      "file": "after/seed-b4a7/room-02-stage2.png",
+      "sha256": "b9e054adc8923e3d5ab80c50259cc4dd1295bba17ea357762386385d8330e672"
+    },
+    {
+      "file": "after/seed-b4a7/room-03-stage2.png",
+      "sha256": "a7d9030688ecce1a8fe62012195ea7f07df74454e4bea35a9edf861e7498feda"
+    },
+    {
+      "file": "after/seed-b4a7/room-04-stage1.png",
+      "sha256": "8dc4a6a7c6ad38b9a345a712112cc6e66857b81ba43d6c54c774198955cd1d49"
+    },
+    {
+      "file": "after/seed-b4a7/room-05-stage2.png",
+      "sha256": "f0d1c0939ee5ed4254f32828eeaaf8930d374b32847c73b87e9302501d602062"
+    },
+    {
+      "file": "after/seed-b4a7/room-06-stage2.png",
+      "sha256": "b274ba7e37e54cb556dd9ea7333219cdf9ffbc72d019c1ec3ff4f49a91189662"
+    },
+    {
+      "file": "after/seed-b4a7/room-07-stage1.png",
+      "sha256": "a5ab6b60b6322f9ed085d387fdaeeebb927ce1653f8c4dfa4f6305ddf606ae3a"
+    },
+    {
+      "file": "after/seed-b4a7/room-08-stage1.png",
+      "sha256": "1ec6fbe5bdef8ee4326e81d4776d2af4b55dcfcf85948180103b9e20bf34fca7"
+    },
+    {
+      "file": "after/seed-b4a7/room-09-stage1.png",
+      "sha256": "b3959a78a4d5363300dbddca149b2992b436b5b795c3e330243504ae6ee437e3"
+    },
+    {
+      "file": "after/seed-b4a7/room-10-stage2.png",
+      "sha256": "795cc1c6b2ceccba6b198c856484204074dd8b90348d1a5cc41565a267bb9b2e"
+    },
+    {
+      "file": "after/seed-b4a7/room-11-stage0.png",
+      "sha256": "f85e91f97e7c3f0db516043fd76c0a1eb6a492027e21056722217814542df987"
+    },
+    {
+      "file": "after/seed-b4a7/room-12-stage1.png",
+      "sha256": "3b0aec030ad56c5aa2ff9a05fb374b7a13bedf149f74dff8e424569fb8510be6"
+    },
+    {
+      "file": "after/seed-b4a7/room-13-stage1.png",
+      "sha256": "c100d98936deee6a14df3a5b5377d33d107ef30922f3d5530ef12d25ef00b4d5"
+    },
+    {
+      "file": "after/seed-b4a7/room-14-stage1.png",
+      "sha256": "07c48654c053caaf95168adddbd467098b705858b3a9782dc66e348943e5577e"
+    },
+    {
+      "file": "after/seed-b4a7/room-15-stage2.png",
+      "sha256": "cdeb8227f202aa8628d6b655911ef0b914142576e44bc3834bc0843772a42ec8"
+    },
+    {
+      "file": "after/seed-b4a7/room-16-stage0.png",
+      "sha256": "759231c2f98e200976071b7350fc83c610e1cd20d39265df8b784b7fc3daf116"
+    },
+    {
+      "file": "after/seed-b4a7/room-17-stage1.png",
+      "sha256": "732e797695e0ec31fdf2200214f7ddb3ec884981509f2a87719a8618e558bf36"
+    },
+    {
+      "file": "after/seed-b4a7/room-18-stage1.png",
+      "sha256": "79ffb50746a595e01f9f0c69ea17b1950668689e029319980198d749b5308595"
+    },
+    {
+      "file": "after/seed-b4a7/room-19-stage1.png",
+      "sha256": "934da50d155ffd6dd15d7978e797e8bbf53b59feab9d90d90305fcea1b344618"
+    },
+    {
+      "file": "after/seed-b4a7/room-20-stage3.png",
+      "sha256": "4baa0ead582ea6775e229f5d11140fdbea4696f0b659ab3adf71ef8128cdd788"
+    },
+    {
+      "file": "after/seed-b4a7/room-21-stage0.png",
+      "sha256": "fb734dd09475f40dba1ac03791047036625297839c36d79ed3b47571b394f3e8"
+    },
+    {
+      "file": "after/seed-b4a7/room-22-stage0.png",
+      "sha256": "8e1dc139d619ab8f839e8ff9fc5b219e16901910104918105e090a4b441efcb3"
+    },
+    {
+      "file": "after/seed-b4a7/room-23-stage0.png",
+      "sha256": "abbd80c3bb94f882f1e96632647c5a64ae7b16be5d4c9230221ded51f5e6fcea"
+    },
+    {
+      "file": "after/seed-b4a7/room-24-stage0.png",
+      "sha256": "7273d4b12e6747f752845f39bb59aeece221660ee64e2a55b9d46cb1ad387047"
+    },
+    {
+      "file": "after/seed-b4a7/great-tree.gif",
+      "sha256": "cc94ead2554c67b6eb37dc37f5f6cbba341fe09946a6026b6969541a46cd179e"
+    },
+    {
+      "file": "after/seed-b4a7/path-canopy.gif",
+      "sha256": "0355a2e6894f3626640cc33d255614ef36932b355e44dbc5f0312e1c96b6b8e1"
+    },
+    {
+      "file": "after/seed-b4a7/pond-bank.gif",
+      "sha256": "99b703a4cf939fa07a2acfddf32bdd69a3ab9959305abade255aaa8309865357"
+    },
+    {
+      "file": "after/seed-6/capture.json",
+      "sha256": "5df16ed264b9acb5a09062733d8187a3fb5bb330d0f3d58a4e551b5d0e13b3a2"
+    },
+    {
+      "file": "after/seed-6/birch.png",
+      "sha256": "b9cc6affaeeaa2d825b3d7640692dbf47af08780f2af69279503503a43a74b99"
+    },
+    {
+      "file": "after/seed-6/drain-control.png",
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "file": "after/seed-6/fir.png",
+      "sha256": "b309972273b9ff7e0b78facd17aba4e6ff0def17601eb200d20144090e5cfa5e"
+    },
+    {
+      "file": "after/seed-6/great-tree.png",
+      "sha256": "76937369f4d0d9dcfcf35a69991503f7deb9304d348239e0e8a521518c3679bb"
+    },
+    {
+      "file": "after/seed-6/ground-growths.png",
+      "sha256": "bc814528e766d41934b4f5afb1da8d206f897056de9721bb5a5a60dd19103452"
+    },
+    {
+      "file": "after/seed-6/oak.png",
+      "sha256": "5fe52adb1815acec8d48e7fc31a533d5f2e9022ff2dcf0a3f1bb6b3f1a6498cc"
+    },
+    {
+      "file": "after/seed-6/path-canopy.png",
+      "sha256": "8d5ffc9aea93bdc23a21d9acbc38a4ca07d3217340e88cba77ad58dc660c5924"
+    },
+    {
+      "file": "after/seed-6/pond-bank.png",
+      "sha256": "18a5a2b1b47df2bdcdd39d3a97267029e38053bc7292ded4830b7e12eacf348a"
+    },
+    {
+      "file": "after/seed-6/room-00-stage0.png",
+      "sha256": "8e318387ad4381b35d07c777eba2c12a871796381885e9e178d7f0fce2fc1751"
+    },
+    {
+      "file": "after/seed-6/room-01-stage1.png",
+      "sha256": "57bc025e3ef36086b217225c4ff97b44126ed20964a5c17e2382ca5b06f3a47c"
+    },
+    {
+      "file": "after/seed-6/room-02-stage1.png",
+      "sha256": "ef0d3441cd4a83a1c07ff9a3644ba3096684a56512374ca70872e850c1e638c9"
+    },
+    {
+      "file": "after/seed-6/room-03-stage2.png",
+      "sha256": "46b051d6043766745345f982346df0f4ad89944192ff71032cd23c33f6a7b262"
+    },
+    {
+      "file": "after/seed-6/room-04-stage3.png",
+      "sha256": "669ad8f6c5151b1ff74e8d125677fef8f3eb45134effe0bb9439364df1cfde2f"
+    },
+    {
+      "file": "after/seed-6/room-05-stage0.png",
+      "sha256": "9e23a268f1ea042aadd15daa51d7426a007d3ffe7eeb3482413cce01b19a4fda"
+    },
+    {
+      "file": "after/seed-6/room-06-stage1.png",
+      "sha256": "0abb4a74af2a6398af5bba683a8964aab04a9697379f69dbe128c462e3c8560e"
+    },
+    {
+      "file": "after/seed-6/room-07-stage0.png",
+      "sha256": "dfe92d8c7a025a37d6c6083936d5699359661107d2616dd1793b134769092476"
+    },
+    {
+      "file": "after/seed-6/room-08-stage2.png",
+      "sha256": "04fcb160490fc058e2b701e089bbe0d0d6c51df60f48972877ce3e749c53d178"
+    },
+    {
+      "file": "after/seed-6/room-09-stage3.png",
+      "sha256": "a0064901c3697a6660d1ae21b0998c55da038fc987d9697e80aa035df2179ae7"
+    },
+    {
+      "file": "after/seed-6/room-10-stage0.png",
+      "sha256": "dc94d6f76c35d90ad9bbab46ff9a36125b34091d200ffcf91df7e69d3422596c"
+    },
+    {
+      "file": "after/seed-6/room-11-stage1.png",
+      "sha256": "194b604bbdfe264e26c0b6d7adf2dbecf84fa59e3c92adf147d78bc661b29a8c"
+    },
+    {
+      "file": "after/seed-6/room-12-stage0.png",
+      "sha256": "ef3386e8a380ec999fa536e1afe19a67beb50c3ac55736cea52b74c548500de0"
+    },
+    {
+      "file": "after/seed-6/room-13-stage2.png",
+      "sha256": "0a58215d9f694782c34364d9c103e6450ef5628f75f95c896d0bcb8515b26ce9"
+    },
+    {
+      "file": "after/seed-6/room-14-stage3.png",
+      "sha256": "233047c8391c563f9fcc92cc2ebeb95d8e114349dd97b3d7b3b72ca3ad7691c2"
+    },
+    {
+      "file": "after/seed-6/room-15-stage0.png",
+      "sha256": "aece070456400487a2542dea6000427db2c625281c0615263e9225d079e04905"
+    },
+    {
+      "file": "after/seed-6/room-16-stage0.png",
+      "sha256": "eae256523f32dbd5abd40a290ce325c1c2f44f0218890f798a8dc107681cb2f4"
+    },
+    {
+      "file": "after/seed-6/room-17-stage0.png",
+      "sha256": "6dbd84db6251cb1b50b8d605e9ad9f4effd7d6b0ef8b001b286ec692eec20f8c"
+    },
+    {
+      "file": "after/seed-6/room-18-stage3.png",
+      "sha256": "d6c7317eb43ca6ff816043c672b85be9c006c942b659b72e068398c27bc20954"
+    },
+    {
+      "file": "after/seed-6/room-19-stage3.png",
+      "sha256": "a2a3275bc699889c7351c1db8db24f1888bca68c746b7c5ba5e3b08c1bd04970"
+    },
+    {
+      "file": "after/seed-6/room-20-stage0.png",
+      "sha256": "2aac3c385fb7dea0e6338685a853745d84d368a9d563802d267635483ff71767"
+    },
+    {
+      "file": "after/seed-6/room-21-stage0.png",
+      "sha256": "c6ca0b66c1e7d8d4fdfbe2de49242317d6327b02d1ec299715acc10b250d1c83"
+    },
+    {
+      "file": "after/seed-6/room-22-stage0.png",
+      "sha256": "1d42384cfbcc15463fd9466201cf094c58893cd5ed8ae3ef201059c7b78b438f"
+    },
+    {
+      "file": "after/seed-6/room-23-stage3.png",
+      "sha256": "58400e4ee3ee42556de4fc27895cef7322b0d29573a2029f56c00a7a49d56ff9"
+    },
+    {
+      "file": "after/seed-6/room-24-stage3.png",
+      "sha256": "a026f979e3a959d7bcc9520e18d91f6df9ab3965fc16311e55650714478aae24"
+    },
+    {
+      "file": "after/seed-6/great-tree.gif",
+      "sha256": "5e0694c0ed40b30ddb04a7bb650d5ca3b9840467d21374deef7cb7e08435d0ce"
+    },
+    {
+      "file": "after/seed-6/path-canopy.gif",
+      "sha256": "16182b75c81482dad3e65640e40e3b8d9bc6708664a17759ca52fd468f535c69"
+    },
+    {
+      "file": "after/seed-6/pond-bank.gif",
+      "sha256": "b0108055f0493f1ce666f4363189365ebb249d628adf632ba6eedce361aeb2a4"
+    }
+  ],
+  "comparison_views": [
+    {
+      "dataset": "captures",
+      "file": "great-tree.png",
+      "caption": "Living trees / canopy, trunks and roots"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "pond-bank.png",
+      "caption": "Pond and bridge / softer banks and water"
+    },
+    {
+      "dataset": "captures",
+      "file": "path-canopy.png",
+      "caption": "Forest trail / grass, earth and foliage"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-03-stage2.png",
+      "caption": "The transition / living forest meets blight"
+    }
+  ],
+  "landscape_views": [
+    {
+      "dataset": "captures",
+      "file": "great-tree.png",
+      "caption": "Large living trees",
+      "context": "Seed 0xB4A7 / tree feature view"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "pond-bank.png",
+      "caption": "Pond, banks and bridge",
+      "context": "Seed 6 / pond feature view"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "birch.png",
+      "caption": "Birch and understory",
+      "context": "Seed 6 / tree feature view"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "fir.png",
+      "caption": "Evergreens and forest floor",
+      "context": "Seed 6 / tree feature view"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-21-stage0.png",
+      "caption": "Water through healthy woodland",
+      "context": "Seed 6 / stage 0"
+    },
+    {
+      "dataset": "seed-6",
+      "file": "room-03-stage2.png",
+      "caption": "The first spread of blight",
+      "context": "Seed 6 / stage 2"
+    }
+  ],
+  "sheets": [
+    {
+      "file": "before-after.png",
+      "sha256": "cfd6dd9d19bf617eeef6778bb3f4c7437dba852f634d5a14879d2200bde8dfbd"
+    },
+    {
+      "file": "landscapes.png",
+      "sha256": "cc0db4812a4af7471083e89d222a1ee68b06dfbdc610475baae98a45f4394048"
+    }
+  ],
+  "source_preview": {
+    "file": "source-preview.png",
+    "sha256": "cd10c7a6bfc60c96f6bd1b0d03b76a5db8bf3fb872d33b66d70258de2d2f8b8f",
+    "method": "Source-asset preview; separate from actual emulator captures."
+  }
+}

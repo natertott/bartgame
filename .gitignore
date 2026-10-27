@@ -51,3 +51,7 @@ docs/sim_runs.json
 # Reviewed playable Blighted Forest atlas build
 !/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.gba
 !/downloads/blight-reference-cdb99b8/bartgame-blight-reference-cdb99b8.zip
+
+# Reviewed playable regular-forest material build
+!/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.gba
+!/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.zip

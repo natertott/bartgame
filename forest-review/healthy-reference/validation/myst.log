@@ -1,0 +1,30 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS WORLD: the wood has mystery rooms              13: [(0, 'miniboss', 1, 0), (3, 'fairy', 0, 0), (6, 'miniboss', 2, 1), (7, 'waves', 1, 2), (9, 'waves', 1, 1), (11, 'switches', 1, 0), (12, 'pots', 0, 0), (13, 'torches', 2, 2), (15, 'survive', 1, 0), (16, 'waves', 1, 0), (17, 'miniboss', 2, 1), (18, 'waves', 0, 1), (21, 'pots', 0, 2)]
+PASS CHEST: a mouth in the wall leads into a cave   area 2
+PASS CHEST: the chest opens and pays ten gilt       gilt 0 -> 10
+PASS CHEST: the way out leads back to the wood      area 1 cell 1
+PASS POTS: a medium hollow                          area 2
+PASS POTS: one pot held the prize                   gilt 10 -> 42 (6 pots)
+PASS SWITCHES: a medium thicket                     area 2
+PASS SWITCHES: every plate pressed, a chest appears plates 4
+PASS SWITCHES: the chest pays a piece of heart      pieces 0 -> 1
+PASS WAVES: a large cave                            area 2
+PASS WAVES: the way out is shut                     exits 0
+PASS WAVES: monsters came in waves                  first wave 4
+PASS WAVES: three waves down, a chest and the way out
+PASS WAVES: the large chest pays a key              keys 0 -> 1
+PASS MINIBOSS: a large hollow                       area 2
+PASS MINIBOSS: a knight captain with twenty hp      [20]
+PASS MINIBOSS: slain, a chest
+PASS SURVIVE: a small thicket                       area 2
+PASS SURVIVE: the clock runs out, a chest
+PASS FAIRY: a small hollow                          area 2
+PASS FAIRY: the spring fills the hearts             hp 24 / 24
+PASS NPC: a stranger in a small cave
+PASS NPC: ten gilt buys a piece of heart            gilt 15 pieces 2
+PASS TORCHES: a medium thicket
+PASS TORCHES: three censers lit, a chest            unlit 0
+PASS BOULDERS: a large thicket
+PASS BOULDERS: every boulder lifted, a chest        left 0
+PASS BOULDERS: the way out, and the wood
+RESULT PASS 28/28
