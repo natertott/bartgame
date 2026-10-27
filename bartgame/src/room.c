@@ -59,6 +59,7 @@ void room_clear(int w, int h, u16 fill) {
     for (i = 0; i < ROOM_MAX_W * ROOM_MAX_H; i++) {
         gRoom.ground[i] = fill;
         gRoom.overlay[i] = MT_NONE;
+        gRoom.underlay[i] = fill;
     }
 }
 
@@ -66,6 +67,8 @@ void room_set(int mx, int my, u16 mt) {
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
     gRoom.ground[my * ROOM_MAX_W + mx] = mt;
+    if (mt == MT_NONE || !metatile_prop[mt])
+        gRoom.underlay[my * ROOM_MAX_W + mx] = mt;
 }
 
 void room_set_overlay(int mx, int my, u16 mt) {
@@ -136,6 +139,23 @@ static void map_write(int sb_base, int mx, int my, u16 mt) {
     m[33] = e[3];
 }
 
+/* Physical ground props keep their original logical tile and collision.
+   Their transparent artwork is displayed over the stored floor using BG1.
+   Meaningful existing overlays win (crowns, portals, event furniture); only
+   incidental sparkle/mist is suppressed where it would replace the prop. */
+static void render_cell(int x, int y) {
+    int i=y*ROOM_MAX_W+x;
+    u16 ground=gRoom.ground[i],overlay=gRoom.overlay[i],base=gRoom.underlay[i];
+    if (ground!=MT_NONE && metatile_prop[ground] && base!=MT_NONE && base!=ground) {
+        map_write(SB_GROUND,x,y,base);
+        if (overlay==MT_NONE || overlay==MT_SPARKLE || overlay==MT_SPARKLE_WHITE || overlay==MT_BLIGHT_MIST)
+            overlay=ground;
+    } else {
+        map_write(SB_GROUND,x,y,ground);
+    }
+    map_write(SB_OVERLAY,x,y,overlay);
+}
+
 void room_render(void) {
     int x, y;
     /* clear both 64x64 maps */
@@ -143,8 +163,7 @@ void room_render(void) {
     dma3_fill32(0, SCREENBLOCK(SB_GROUND), 0x2000);
     for (y = 0; y < gRoom.h; y++) {
         for (x = 0; x < gRoom.w; x++) {
-            map_write(SB_GROUND, x, y, gRoom.ground[y * ROOM_MAX_W + x]);
-            map_write(SB_OVERLAY, x, y, gRoom.overlay[y * ROOM_MAX_W + x]);
+            render_cell(x,y);
         }
     }
     room_build_solid();
@@ -153,9 +172,20 @@ void room_render(void) {
 void room_change(int mx, int my, u16 mt) {
     if (mx < 0 || my < 0 || mx >= gRoom.w || my >= gRoom.h)
         return;
-    gRoom.ground[my * ROOM_MAX_W + mx] = mt;
+    {
+        int i=my*ROOM_MAX_W+mx;
+        u16 old=gRoom.ground[i],base=gRoom.underlay[i];
+        /* Lifting/cutting a prop exposes the exact substrate it covered,
+           including rot, shore or trail, rather than the caller's generic
+           grass fallback. Chests and lit censers remain material props. */
+        if(old!=MT_NONE && metatile_prop[old] && mt!=MT_NONE && !metatile_prop[mt] &&
+           metatile_type[mt]==TT_FLOOR && base!=MT_NONE)
+            mt=base;
+        gRoom.ground[i]=mt;
+        if(mt==MT_NONE || !metatile_prop[mt])gRoom.underlay[i]=mt;
+    }
     solid_cell_update(mx, my);
-    map_write(SB_GROUND, mx, my, mt);
+    render_cell(mx,my);
 }
 
 void room_change_overlay(int mx, int my, u16 mt) {
@@ -163,7 +193,7 @@ void room_change_overlay(int mx, int my, u16 mt) {
         return;
     gRoom.overlay[my * ROOM_MAX_W + mx] = mt;
     solid_cell_update(mx, my);
-    map_write(SB_OVERLAY, mx, my, mt);
+    render_cell(mx,my);
 }
 
 bool8 room_solid_px(int px, int py) {

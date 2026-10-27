@@ -13,6 +13,8 @@ typedef struct {
     u16 ground[ROOM_MAX_W * ROOM_MAX_H];
     u16 overlay[ROOM_MAX_W * ROOM_MAX_H];
     u8 solid[64 * 64]; /* 1 = solid 8x8 cell */
+    /* Display substrate only; logical tile/type/collision offsets stay fixed. */
+    u16 underlay[ROOM_MAX_W * ROOM_MAX_H];
 } Room;
 
 extern Room gRoom;

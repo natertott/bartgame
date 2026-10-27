@@ -327,11 +327,14 @@ def build():
     # Build using the existing native-resolution drawing vocabulary, replacing
     # the pack's flattened cut-outs with ground/face/crown-aware metatiles.
     grass_before,water_before=W.grass,W.water
+    rot_depth_before=W.ROT_D
+    W.ROT_D=8.5
     W.grass,W.water=woodland_grass,flowing_water
     try:
         T={n:(g,[a.copy() for a in frames],speed) for n,(g,frames,speed) in W.tiles().items()}
     finally:
         W.grass,W.water=grass_before,water_before
+        W.ROT_D=rot_depth_before
     # The middle wood decays through grass/bruise edge families, rather than
     # isolated hard-edged purple squares or a grey earth substitute.
     decay={W.ID['earth_2']:W.ID['v_1'], W.ID['earth_3']:W.ID['v_2'],
@@ -385,7 +388,39 @@ def build():
     return T
 
 
-TILES=build()
+# Decorative objects are material layers, never a replacement patch of grass.
+# Compare before palette quantization so a shared foreground colour is kept
+# unless the painter left the exact substrate pixel unchanged.
+PROP_NAMES=set()
+
+def remove_substrates(T):
+    bases={}
+    plain=woodland_grass(0)
+    for n in ('bush','bones','rock_small','boulder','rock','rock2','rock3','stump','log',
+              'pillar','ruin_wall','statue','lantern_post','thorn','mossy_stone',
+              'chest','chest_open','torch','torch_lit'):
+        bases[n]=plain
+    for prefix, seeds in (('gboulder',(0,1,2,0)),('treerock',(1,0,0,2)),('hlog',(0,1))):
+        for i,seed in enumerate(seeds): bases['%s_%d'%(prefix,i)]=woodland_grass(seed)
+    for prefix in ('tree2','birch','fir'):
+        for i in range(2):bases['%s_%d'%(prefix,4+i)]=woodland_grass(i)
+    for i,n in enumerate(('tree_trunk_w','tree_trunk_e')):bases[n]=woodland_grass(i)
+    for prefix in ('gtree','gtree2'):
+        for i in range(3):bases['%s_%d'%(prefix,9+i)]=woodland_grass(i%3)
+    for prefix,variant in (('btree',0),('sicktree',1)):
+        for i in range(2):bases['%s_%d'%(prefix,4+i)]=rotten(variant)
+    for n in ('leaf_litter','fern_patch'):bases[n]=woodland_grass(1)
+    for n in ('sick_bones','sick_stump','sick_rock'):bases[n]=rotten(4)
+    for style in ('cave','hollow','thicket'):
+        bases[style+'_prop']=woodland_grass(0) if style=='thicket' else W.myst_floor(style,5)
+    for n,base in bases.items():
+        if n not in T:continue
+        g,frames,speed=T[n]
+        T[n]=(g,[np.where(a==base,0,a).astype(np.uint8) for a in frames],speed)
+        PROP_NAMES.add(n)
+    return T
+
+TILES=remove_substrates(build())
 # The painter uses named global inks; compress each material to its own 15.
 # Nearest-colour conversion is confined to build-time, never the GBA runtime.
 GROUPS={}
@@ -415,6 +450,7 @@ def apply(metatiles, palettes):
     for m in metatiles:
         n=m['name']
         if n.startswith(('sw_','swh_')): continue
+        if n in PROP_NAMES: m['prop']=True
         if n in TILES:
             g,frames,speed=TILES[n]; pal=GROUPS[PREFIX+g]
             lut={v:closest(HEX[v],pal) for a in frames for v in np.unique(a) if v}

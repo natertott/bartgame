@@ -206,6 +206,8 @@ c.append(c_array_u8('metatile_type', mt_type))
 h.append('extern const u8 metatile_type[];')
 c.append(c_array_u8('metatile_coll', mt_coll))
 h.append('extern const u8 metatile_coll[];')
+c.append(c_array_u8('metatile_prop', [int(bool(mt.get('prop'))) for mt in tiles.METATILES]))
+h.append('extern const u8 metatile_prop[];')
 h.append('typedef struct { u16 tile; u8 frames; u8 speed; const u16* data; } TileAnim;')
 h.append('typedef struct { const u16* tiles; u16 tile_count; const u16* map; const TileAnim* anims; u8 anim_count; const u16* pals; u8 pal_count; } Tileset;')
 set_rows = []

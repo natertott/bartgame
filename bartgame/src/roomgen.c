@@ -1385,7 +1385,7 @@ static void lay_rot(int stage) {
         for (t = 0; t < 40; t++) {
             bx[k] = 2 + rng_range(&sR, W - 4);
             by[k] = 3 + rng_range(&sR, H - 5);
-            if (grassy(room_get(bx[k], by[k])))
+            if (grassy(gRoom.underlay[by[k] * ROOM_MAX_W + bx[k]]))
                 break;
         }
         br[k] = (stage >= 2) ? 4 + rng_range(&sR, 3) : 3 + rng_range(&sR, 2);
@@ -1399,7 +1399,7 @@ static void lay_rot(int stage) {
                 if (d2 < r2)
                     f += (r2 - d2) * 256 / r2;
             }
-            if (f >= 128 && grassy(room_get(x, y)) && room_get_overlay(x, y) == MT_NONE)
+            if (f >= 128 && grassy(gRoom.underlay[y * ROOM_MAX_W + x]) && room_get_overlay(x, y) == MT_NONE)
                 rot[y][x] = 1;
         }
     for (y = 1; y < H - 1; y++)
@@ -1419,7 +1419,8 @@ static void lay_rot(int stage) {
                 if (rot[y][x] == 2 && ((rot[y - 1][x] != 2 && rot[y + 1][x] != 2) || (rot[y][x - 1] != 2 && rot[y][x + 1] != 2)))
                     rot[y][x] = 1;
     for (y = 1; y < H - 1; y++)
-        for (x = 1; x < W - 1; x++)
+        for (x = 1; x < W - 1; x++) {
+            u16 mt=room_get(x,y),paint=MT_NONE;
             if (stage >= 2 && rot[y][x]) {
                 static const u16 edge[16] = {
                     MT_ROT_00, MT_ROT_10, MT_ROT_20, MT_ROT_30,
@@ -1427,11 +1428,27 @@ static void lay_rot(int stage) {
                     MT_ROT_80, MT_ROT_90, MT_ROT_A0, MT_ROT_B0,
                     MT_ROT_C0, MT_ROT_D0, MT_ROT_E0, MT_ROT_F0
                 };
-                int sides = (!rot[y-1][x] ? 1 : 0) | (!rot[y][x+1] ? 2 : 0) |
-                            (!rot[y+1][x] ? 4 : 0) | (!rot[y][x-1] ? 8 : 0);
-                room_set(x, y, edge[sides]);
-            } else if (rot[y][x] == 2)
-                room_set(x, y, (rng_range(&sR, 8) == 0) ? MT_BLIGHT_GROUND2 : MT_BLIGHT_GROUND0 + (rng_next(&sR) & 1));
+                int sides=(!rot[y-1][x]?1:0)|(!rot[y][x+1]?2:0)|
+                          (!rot[y+1][x]?4:0)|(!rot[y][x-1]?8:0);
+                int blocked=(sides&9?1:0)|(sides&3?2:0)|(sides&6?4:0)|(sides&12?8:0);
+                int corners=((!rot[y-1][x-1]?1:0)|(!rot[y-1][x+1]?2:0)|
+                             (!rot[y+1][x+1]?4:0)|(!rot[y+1][x-1]?8:0)) & ~blocked;
+                int bit,rank=1,offset=0;
+                /* Families contain the allowed corner submasks in ascending
+                   order, so compress only corner bits not consumed by sides. */
+                for(bit=1;bit<16;bit<<=1) if(!(blocked&bit)) {
+                    if(corners&bit)offset+=rank;
+                    rank<<=1;
+                }
+                paint=edge[sides]+offset;
+            } else if (rot[y][x] == 2) {
+                paint=(rng_range(&sR,8)==0)?MT_BLIGHT_GROUND2:MT_BLIGHT_GROUND0+(rng_next(&sR)&1);
+            }
+            if(paint!=MT_NONE) {
+                if(metatile_prop[mt])gRoom.underlay[y*ROOM_MAX_W+x]=paint;
+                else room_set(x,y,paint);
+            }
+        }
 }
 
 bool8 roomgen_blighted(int cell) {
@@ -1527,6 +1544,8 @@ void roomgen_build(int cell) {
                 case M_RAMP: mt = sTrail; break;
                 default: mt = MT_CANOPY; break;
             }
+            if(metatile_prop[mt] && sMask[y][x]==M_FLOOR)
+                gRoom.underlay[y*ROOM_MAX_W+x]=blighted?MT_BLIGHT_FLOOR:MT_MOSS0+hash32(gWorld.seed,y*W+x)%3;
             room_set(x, y, mt);
         }
     }
@@ -1651,6 +1670,8 @@ void roomgen_build(int cell) {
         if (g != GATE_OPEN) {
             room_set(x0, y0, gt);
             room_set(x1, y1, gt);
+            gRoom.underlay[y0*ROOM_MAX_W+x0]=sTrail;
+            gRoom.underlay[y1*ROOM_MAX_W+x1]=sTrail;
             if (g == GATE_CHASM && s == SIDE_N) {
                 /* a pit band through the whole opening, 1 deep */
                 room_set(x0, 1, MT_PIT); room_set(x1, 1, MT_PIT);
