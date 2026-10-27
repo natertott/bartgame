@@ -27,6 +27,11 @@ FEATURES = {
     'crystals': ('blight_crystal',),
     'mixed-blight': ('rot_',),
 }
+DEEP_FEATURES = {
+    'deep-wall': ('blight_wall',),
+    'deep-pool': ('blight_pool',),
+    'deep-tree': ('forest_blight_tree',),
+}
 
 
 def memory(c, at, size):
@@ -76,6 +81,40 @@ def focus(c, names, feature=None):
     if not walk:raise AssertionError('no natural safe camera target')
     x,y=max(walk,key=score)
     return [x*16+8,y*16+12]
+
+
+def deep_focus(c, names, feature):
+    """Frame actual targets above Bloom, clear of the HUD and screen edge.
+
+    These additional views never replace the frozen comparison standing
+    points. Score the actual camera offset (Bloom is 104px below its top),
+    not an approximate tile-centred crop. A complete wall-tree must fit.
+    """
+    w,h,tiles,walk=grid(c,names)
+    prefixes=DEEP_FEATURES[feature]
+    targets=[p for p,ns in tiles.items() if any(n.startswith(prefixes) for n in ns)]
+    if feature=='deep-tree':
+        targets=[p for p,ns in tiles.items() if 'forest_blight_tree4' in ns]
+    if not targets or not walk:return None
+    def score(p):
+        x,y=p;cx=max(0,min(w*16-240,x*16+8-120));cy=max(0,min(h*16-160,y*16+12-104))
+        visible=[]
+        for tx,ty in targets:
+            sx,sy=tx*16-cx,ty*16-cy
+            if feature=='deep-tree':
+                if 8<=sx<=200 and 64<=sy<=128:visible.append((sx+16,sy-8))
+            elif 8<=sx<=216 and 32<=sy<=128:visible.append((sx+8,sy+8))
+        if not visible:return (-1000000,0)
+        # Keep the focal material near the middle of the playable picture;
+        # prefer contiguous wall/pool clusters to a distant corner sliver.
+        distance=min(abs(sx-120)+abs(sy-72) for sx,sy in visible)
+        central=sum(48<=sx<=192 and 40<=sy<=112 for sx,sy in visible)
+        value=1000+min(central,12)*35+min(len(visible),20)*8-distance*5
+        return value,len(visible)
+    position=max(walk,key=lambda p:score(p)[0]);value,count=score(position)
+    if value<0:return None
+    return {'position':[position[0]*16+8,position[1]*16+12],
+            'focus_score':value,'visible_feature_tiles':count}
 
 
 def settle(c, position):
@@ -133,6 +172,7 @@ def main():
     ap.add_argument('out');ap.add_argument('--rom',default=P.ROM);ap.add_argument('--map',default=P.MAP)
     ap.add_argument('--assets-header',default=str(Path(P.ROOT)/'build/gen/assets.h'))
     ap.add_argument('--seed',default='0xB4A7');ap.add_argument('--match');ap.add_argument('--no-gifs',action='store_true')
+    ap.add_argument('--deep-features',action='store_true',help='Append new, separately labelled deep-material views without changing matched standing points')
     args=ap.parse_args();P.MAP=args.map;P._syms=None
     names=definitions(args.assets_header);out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
     old=json.loads(Path(args.match).read_text()) if args.match else None
@@ -155,7 +195,7 @@ def main():
               'image':filename,**contract(c)}
         report['rooms'].append(room)
         print('CAPTURE',cell,'stage',desc['stage'],position,flush=True)
-    if old:plan=old['features']
+    if old:plan=list(old['features'])
     else:
         plan=[]
         for feature in FEATURES:
@@ -171,11 +211,27 @@ def main():
             if candidates:
                 _,cell,position=max(candidates)
                 plan.append({'feature':feature,'cell':cell,'position':position,'image':feature+'.png'})
+    if args.deep_features:
+        for feature in DEEP_FEATURES:
+            if any(v['feature']==feature for v in plan):continue
+            candidates=[]
+            for cell,desc in enumerate(world['cells']):
+                # Prefer the regular maze for material views; arena-only
+                # seeds can still show their real pools or edge trees.
+                if desc['stage']<3:continue
+                L.warp(c,cell,next(i for i,g in enumerate(desc['gate']) if g));C.clear_enemies(c)
+                view=deep_focus(c,names,feature)
+                if view:
+                    candidates.append((desc['role']!=2,view['focus_score'],cell,view))
+            if candidates:
+                _,_,cell,view=max(candidates,key=lambda item:item[:3])
+                plan.append({'feature':feature,'cell':cell,'image':feature+'.png',
+                             'supplemental':True,**view})
     for view in plan:
         cell=view['cell'];desc=world['cells'][cell]
         L.warp(c,cell,next(i for i,g in enumerate(desc['gate']) if g));settle(c,view['position'])
         P.snap(c,str(out/view['image']));report['features'].append(dict(view,**contract(c)))
-        if not args.no_gifs and view['feature'] in ('blighted-tree','ruined-wall','glowing-pool'):
+        if not args.no_gifs and view['feature'] in ('blighted-tree','ruined-wall','glowing-pool',*DEEP_FEATURES):
             report['animations'].append(gif(c,out/(view['feature']+'.gif')))
         print('FEATURE',view['feature'],cell,view['position'],flush=True)
     if old:
