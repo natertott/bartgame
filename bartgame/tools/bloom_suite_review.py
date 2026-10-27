@@ -190,7 +190,8 @@ class Suite:
     def save(self):
         report={'rom_sha256':hashlib.sha256(Path(self.args.rom).read_bytes()).hexdigest(),'seed':hex(self.seed),'fixture_version':3,
                 'emulator':'mGBA 0.10.5','method':'Real button actions on natural generated terrain. Inventory/position/facing and cleared unrelated actors are fixtures. No terrain or action pose/frame injection. Full native PNGs; GIFs enlarge whole frames 2x/sample30fps; filmstrips crop live player positions.',
-                'implemented_states':list(STATES),'not_implemented':['swimming','running/sprint'],
+                'state_enum':list(STATES),'implemented_states':[s for s in STATES if s not in ('talk','frozen')],
+                'unused_enum_states':['talk','frozen'],'not_implemented':['swimming','running/sprint'],
                 'activation_checks':{'passed':sum(v['passed'] for r in self.rows for v in r.get('validations',[])),
                                      'total':sum(len(r.get('validations',[])) for r in self.rows)},
                 'captures':self.rows,'missing':self.missing}
