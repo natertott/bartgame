@@ -1,9 +1,11 @@
 """Verify readable interactive scenery and its real gameplay in mGBA.
 
-Generated field chests, mystery doors, switches and rewards use actual inputs.
-Inventory/location and mystery descriptors are test fixtures; no screenshot
-from this probe is presented as generated gameplay evidence. Hardware OAM,
-OBJ VRAM and BG maps verify the display, rather than trusting renderer tags.
+Generated field chests, mystery doors, switches, pocket hoards and censer
+rewards use actual inputs. Inventory/location and mystery descriptors are
+test fixtures; one isolated leaf-litter cell exercises equal-priority chest
+occlusion. No screenshot from this probe is presented as generated gameplay
+evidence. Hardware OAM, OBJ VRAM and BG maps verify the display, rather than
+trusting renderer tags.
 """
 import argparse
 import hashlib
@@ -91,12 +93,34 @@ def chest_display(c,defs,tier,opened,x,y,label):
     return box
 
 
+def near_chest_depth(c,defs,x,y,label):
+    # A flat prop raises Bloom to OBJpriority1. Exercise the actual display
+    # competition with a chest lid while his feet remain north of the solid
+    # chest footprint. This is a disclosed isolated physical-floor fixture.
+    room=P.sym('gRoom');at=(y-1)*32+x
+    P.w16(c,room+2+at*2,defs['MT_LEAF_LITTER'])
+    P.w16(c,room+2050+at*2,65535);P.w16(c,room+8194+at*2,defs['MT_MOSS0'])
+    for qy in ((y-1)*2,(y-1)*2+1):
+        for qx in (x*2,x*2+1):P.w8(c,room+4098+qy*64+qx,0)
+    C.teleport(c,x*16+8,y*16);P.w8(c,P.sym('gActors')+7,2);P.run(c,6)
+    hero=next((e for e in B.oam(c) if e['tile']==0 and e['shape']==1 and e['size']==3),None)
+    tile=P.r16(c,B.static_symbol('sChestTile'))&65535
+    chest=next((e for e in B.oam(c) if e['tile']==tile and e['shape']==0 and e['size']==2),None)
+    check(label+' north-side Bloom and chest are both drawn',hero is not None and chest is not None)
+    if not hero or not chest:return
+    check(label+' flat litter raises Bloom to the foreground',hero['priority']==1,hero)
+    check(label+' near chest remains above foreground Bloom',chest['priority']==1 and chest['index']<hero['index'],{'chest':chest,'hero':hero})
+    cp={(chest['x']+px,chest['y']+py) for px,py in B.pixels(memory(c,0x06010000+tile*32,512),32,32)}
+    hp={(hero['x']+px,hero['y']+py) for px,py in B.pixels(memory(c,0x06010000,1024),64,32)}
+    check(label+' depth fixture exercises actual opaque lid/body overlap',bool(cp&hp),len(cp&hp))
+
+
 def field_chests(c,defs,world):
     cases=(('wooden money chest',lambda d:d['role']==4 and d['arg']==0,0,'gilt'),
            ('brass map chest',lambda d:d['role']==4 and d['arg']==7,1,'map'),
            ('relic bow chest',lambda d:d['role']==4 and d['arg']==6,2,'bow'),
            ('relic small-key chest',lambda d:d['role']==10,2,'key'))
-    rows=[]
+    rows=[];depth_tiers=set()
     for label,predicate,tier,reward in cases:
         cell=next((i for i,d in enumerate(world['cells']) if predicate(d)),None)
         check(label+' exists in the generated seed',cell is not None)
@@ -110,6 +134,8 @@ def field_chests(c,defs,world):
         old=resources(c);base=S.under(c,x,y)
         chest_display(c,defs,tier,False,x,y,label+' closed')
         check(label+' preserves its underlying floor',S.entry(c,28,x,y)==S.expected(c,base))
+        if tier not in depth_tiers:
+            near_chest_depth(c,defs,x,y,label);depth_tiers.add(tier)
         check(label+' opens by walking into its front',C.open_chest(c))
         C.dismiss(c);focus(c,x,y);new=resources(c)
         expected=(new['gilt']==old['gilt']+30 if reward=='gilt' else
@@ -246,6 +272,107 @@ def entrance_visibility(args,defs):
     return rows
 
 
+def hoard_entry(c):
+    for i in range(1,96):
+        a=P.sym('gActors')+i*64
+        if P.r8(c,a)!=4 or P.r8(c,a+1)!=3 or not P.r8(c,a+50):continue
+        sh=sheet(c,P.r8(c,a+36));tile=(P.r16(c,a+44)&65535)+P.r8(c,a+37)*sh['tiles']
+        parts=[e for e in B.oam(c) if e['tile']==tile and e['shape']==sh['shape'] and e['size']==sh['size']]
+        return a,parts[0] if len(parts)==1 else None,sh
+    return None,None,None
+
+
+def pocket_hoards(args,defs):
+    c=P.boot(args.rom,seed=6);C.dismiss(c);world=C.world(c);P.enter_forest(c)
+    rows=[]
+    for cell,kind in ((4,1),(24,2),(12,2)):
+        side=next(i for i,g in enumerate(world['cells'][cell]['gate']) if g)
+        L.warp(c,cell,side);C.clear_enemies(c)
+        spots=P.sym('gSpots');gx,gy=P.r8(c,spots+55),P.r8(c,spots+56)
+        tx,ty=P.r8(c,spots+44),P.r8(c,spots+45)
+        label='seed6 cell%d %s pocket'%(cell,'bomb' if kind==1 else 'candle')
+        check(label+' is the natural item-gated pocket',P.r8(c,spots+57)==kind,{'gate':[gx,gy],'treasure':[tx,ty]})
+        dx=(tx>gx)-(tx<gx);dy=(ty>gy)-(ty<gy)
+        key='RIGHT' if dx>0 else 'LEFT' if dx<0 else 'DOWN' if dy>0 else 'UP'
+        back={'UP':'DOWN','DOWN':'UP','LEFT':'RIGHT','RIGHT':'LEFT'}[key]
+        px,py=(gx-dx)*16+8,(gy-dy)*16+12
+        C.teleport(c,px,py);P.run(c,96)
+        a,e,sh=hoard_entry(c)
+        check(label+' pending hoard is visible in actual OAM',e is not None)
+        overlap=0
+        if a and e:
+            check(label+' hoard stays behind the barrier material',e['priority']==2,e)
+            blob=memory(c,0x06010000+e['tile']*32,sh['tiles']*32)
+            camx,camy=P.r16(c,P.sym('gCamX')),P.r16(c,P.sym('gCamY'))
+            overlap=sum(gx*16<=e['x']+camx+x<(gx+1)*16 and gy*16<=e['y']+camy+y<(gy+1)*16
+                        for x,y in B.pixels(blob,sh['width'],sh['height']))
+            if cell in (4,12):
+                check(label+' exercises real opaque hoard/barrier overlap',overlap>0,overlap)
+            # A placed hoard does not expire; its draw path still has to obey
+            # the same hidden and invulnerability flags as ordinary actors.
+            flags=P.r8(c,a+31);P.w8(c,a+31,flags|0x20);P.run(c,3)
+            check(label+' hidden flag still suppresses the hoard',hoard_entry(c)[1] is None)
+            P.w8(c,a+31,flags);P.w8(c,a+28,8)
+            visibility=[]
+            for _ in range(10):c.run_frame();visibility.append(hoard_entry(c)[1] is not None)
+            check(label+' blink flags still alternate visibility',any(visibility) and not all(visibility),visibility)
+            P.w8(c,a+28,0);P.run(c,3)
+        barrier=defs['MT_CRACK' if kind==1 else 'MT_WEB']
+        check(label+' intact gate is still displayed on BG1',C.tt_at(c,gx,gy)==barrier and S.entry(c,24,gx,gy)==S.expected(c,barrier))
+        p=P.sym('gPl');P.w8(c,p+8,P.r8(c,p+8)|(2 if kind==1 else 4))
+        if kind==1:P.w8(c,p+7,10)
+        C.equip_b(c,2 if kind==1 else 3)
+        C.teleport(c,px,py);P.hold(c,key,5);P.press(c,'A',2,4)
+        if kind==1:P.hold(c,back,30);P.run(c,170)
+        else:P.run(c,30)
+        flag=P.sym('gWorld')+4+cell*13+4
+        check(label+' actual item opens the physical barrier',P.r8(c,P.sym('metatile_type')+C.tt_at(c,gx,gy))==defs['TT_FLOOR'])
+        check(label+' real opening records its save bit',bool(P.r8(c,flag)&0x20))
+        C.teleport(c,px,py);P.run(c,12)
+        check(label+' opened reward remains normally drawable',hoard_entry(c)[1] is not None)
+        old=P.r16(c,p+4);P.hold(c,key,36);P.run(c,12)
+        check(label+' walking through the opened neck collects the hoard',bool(P.r8(c,flag)&0x10) and hoard_entry(c)[0] is None)
+        check(label+' pays exactly the original ten gilt',P.r16(c,p+4)==old+10,{'before':old,'after':P.r16(c,p+4)})
+        L.warp(c,cell,side);C.clear_enemies(c)
+        check(label+' collected hoard stays gone on return',hoard_entry(c)[0] is None and bool(P.r8(c,flag)&0x10))
+        check(label+' opened barrier stays open on return',P.r8(c,P.sym('metatile_type')+C.tt_at(c,gx,gy))==defs['TT_FLOOR'] and bool(P.r8(c,flag)&0x20))
+        rows.append({'seed':6,'cell':cell,'kind':kind,'gate':[gx,gy],'treasure':[tx,ty],'opaque_overlap_pixels':overlap})
+    return rows
+
+
+def gardener_access(args,defs):
+    import roomgen_probe as R
+    import quest_probe as Q
+    c=P.boot(args.rom,seed=22);C.dismiss(c);world=C.world(c);P.enter_forest(c)
+    cell=9;data=world['cells'][cell];side=next(i for i,g in enumerate(data['gate']) if g)
+    L.warp(c,cell,side);C.clear_enemies(c)
+    check('seed22 cell9 remains the natural gardener quest',data['role']==7)
+    layout=R.Layout(c,defs);reachable=layout.flood(R.landing(side))
+    spots=P.sym('gSpots');nx,ny=P.r8(c,spots+27),P.r8(c,spots+28)
+    check('seed22 gardener south approach connects to the entry component',layout.reaches(reachable,(nx,ny+1)),[nx,ny+1])
+    torches=M.tiles_of(c,lambda m:m['name']=='torch')
+    check('seed22 gardener has all four cold censers',len(torches)==4,torches)
+    p=P.sym('gPl');P.w8(c,p+8,P.r8(c,p+8)|4);C.equip_b(c,3)
+    for i,(x,y) in enumerate(torches):
+        check('seed22 censer%d has a connected south approach'%i,layout.reaches(reachable,(x,y+1)),[x,y+1])
+        C.heal(c);C.clear_enemies(c);C.teleport(c,x*16+8,(y+1)*16+14)
+        P.hold(c,'UP',4);P.press(c,'A',2,30)
+        check('seed22 censer%d lights through actual candle use'%i,C.tt_at(c,x,y)==defs['MT_TORCH_LIT'])
+    check('seed22 all four real censers are now lit',len(M.tiles_of(c,lambda m:m['name']=='torch_lit'))==4)
+    npc=C.find_actor(c,5,4);check('seed22 gardener remains available for the reward',npc is not None)
+    if npc:
+        old=P.r8(c,p+6);Q.talk(c,npc);P.run(c,40)
+        reward=C.find_actor(c,4,4)
+        if reward:C.teleport(c,reward['x'],reward['y']+2);P.run(c,10)
+        check('seed22 completed candle quest pays its key',P.r8(c,p+6)==old+1)
+    flag=P.sym('gWorld')+4+cell*13+11
+    check('seed22 gardener completion records its save flag',bool(P.r8(c,flag)&4))
+    L.warp(c,cell,side);C.clear_enemies(c)
+    check('seed22 all four censer states persist on return',len(M.tiles_of(c,lambda m:m['name']=='torch_lit'))==4 and not M.tiles_of(c,lambda m:m['name']=='torch'))
+    check('seed22 completed gardener quest remains completed',bool(P.r8(c,flag)&4))
+    return {'seed':22,'cell':cell,'npc_approach':[nx,ny+1],'censers':torches}
+
+
 def bg_pixels(c,x,y):
     """Decode the actual BG1 map and character data to RGBA-like RGB555."""
     return tile_pixels(c,S.entry(c,24,x,y))
@@ -351,11 +478,13 @@ def main():
     fields=field_chests(c,defs,world);rooms=mysteries(c,defs,world);switches(c,defs,world)
     trial_exits(c,defs,world);materials(c,defs,world);shrine_row=shrine(args,defs)
     entrances=entrance_visibility(args,defs)
+    hoards=pocket_hoards(args,defs);gardener=gardener_access(args,defs)
     report={'rom_sha256':hashlib.sha256(Path(args.rom).read_bytes()).hexdigest(),
             'emulator':'mGBA 0.10.5','method':__doc__.strip(),
             'passed':sum(r['passed'] for r in checks),'total':len(checks),'checks':checks,
             'field_chests':fields,'mystery_rooms':rooms,'shrine':shrine_row,
-            'entrance_visibility':entrances,'retained_contracts':contracts}
+            'entrance_visibility':entrances,'pocket_hoards':hoards,'gardener_access':gardener,
+            'retained_contracts':contracts}
     Path(args.out).write_text(json.dumps(report,indent=2)+'\n')
     print('RESULT %s %d/%d'%('PASS' if report['passed']==report['total'] else 'FAIL',report['passed'],report['total']))
     return int(report['passed']!=report['total'])
