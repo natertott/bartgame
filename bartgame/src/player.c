@@ -30,7 +30,7 @@ static u8 sLastShieldFrame = 0xFF;
 static u8 sWalkTimer;
 /* Visual action state is transient, outside PlayerState/save data. One
    streamed 32x32 layer serves the sword, held tools and airborne cape. */
-static u16 sActionTile, sLastActionFrame;
+static u16 sActionTile, sLastActionFrame, sShadowTile;
 static u8 sUseItem, sUseTimer, sUseLength, sUseFacing;
 
 static void hero_set_frame(int frame) {
@@ -128,6 +128,7 @@ void player_init(int px, int py, int facing) {
     sLastFrame = 0xFF;
     sLastActionFrame = 0xFFFF;
     sActionTile = sprite_alloc(16);
+    sShadowTile = sprite_load_sheet(SHEET_BLOOMSHADOW);
     sUseItem = sUseTimer = sUseLength = 0;
     sWalkTimer = 0;
     gPl.sword_active = gPl.lamp_timer = gPl.shield_up = 0;
@@ -825,10 +826,24 @@ static const u8 sAtkFrame[3][4] = {
 static const u8 sHurtFrame[4] = { F_HERO_HURT_N, F_HERO_HURT_E, F_HERO_HURT_S, F_HERO_HURT_E };
 static const u8 sJumpFrame[4] = { F_HERO_JUMP_N, F_HERO_JUMP_E, F_HERO_JUMP_S, F_HERO_JUMP_E };
 static const u8 sGuardFrame[4] = { F_HERO_GUARD_N, F_HERO_GUARD_E, F_HERO_GUARD_S, F_HERO_GUARD_E };
+static const u8 sGuardStep[2][4] = {
+    { F_HERO_GUARD_N1, F_HERO_GUARD_E1, F_HERO_GUARD_S1, F_HERO_GUARD_E1 },
+    { F_HERO_GUARD_N2, F_HERO_GUARD_E2, F_HERO_GUARD_S2, F_HERO_GUARD_E2 },
+};
+static const u8 sLiftFrame[3][4] = {
+    { F_HERO_LIFT_N0, F_HERO_LIFT_E0, F_HERO_LIFT_S0, F_HERO_LIFT_E0 },
+    { F_HERO_LIFT_N1, F_HERO_LIFT_E1, F_HERO_LIFT_S1, F_HERO_LIFT_E1 },
+    { F_HERO_LIFT_N2, F_HERO_LIFT_E2, F_HERO_LIFT_S2, F_HERO_LIFT_E2 },
+};
 static const u8 sUseFrame[3][4] = {
     { F_HERO_USE_N1, F_HERO_USE_E1, F_HERO_USE_S1, F_HERO_USE_E1 },
     { F_HERO_USE_N2, F_HERO_USE_E2, F_HERO_USE_S2, F_HERO_USE_E2 },
     { F_HERO_USE_N3, F_HERO_USE_E3, F_HERO_USE_S3, F_HERO_USE_E3 },
+};
+static const u8 sBowFrame[3][4] = {
+    { F_HERO_BOW_N0, F_HERO_BOW_E0, F_HERO_BOW_S0, F_HERO_BOW_E0 },
+    { F_HERO_BOW_N1, F_HERO_BOW_E1, F_HERO_BOW_S1, F_HERO_BOW_E1 },
+    { F_HERO_BOW_N2, F_HERO_BOW_E2, F_HERO_BOW_S2, F_HERO_BOW_E2 },
 };
 static const u8 sCapeFrame[3][4] = {
     { F_HERO_CAPE_N1, F_HERO_CAPE_E1, F_HERO_CAPE_S1, F_HERO_CAPE_E1 },
@@ -842,17 +857,20 @@ static const u8 sCarryFrame[3][4] = {
     { F_HERO_CARRY_N2, F_HERO_CARRY_E2, F_HERO_CARRY_S2, F_HERO_CARRY_E2 },
 };
 
-/* The load, held where the Bloom's carry frames hold their barrel: at
-   her chest, or across her back facing north, so it stays in sight; and
-   lifted there from the ground. Offsets of the 16x16 load from her feet,
-   by facing. */
+/* Lift from the actual object's tile to the raised hands. The final
+   top-left (-8,-40) matches a thrown 16px object's initial z=24 exactly,
+   so releasing it does not teleport the artwork away from the hands. */
 static void draw_load(Actor* a) {
-    static const s8 at[4][2] = { { -8, -23 }, { 0, -24 }, { -3, -26 }, { -16, -24 } }; /* N E S W */
+    if (a->flags & AF_HIDDEN || (a->iframes && (gFrame & 2)))
+        return;
     int t = (a->state == PS_LIFT) ? a->timer : LIFT_FRAMES;
-    int gy = -12, cy = at[a->facing][1];
-    int sx = PX(a->x) + at[a->facing][0] - gCamX;
+    int tx, ty;
+    facing_tile(&tx, &ty);
+    int gx = tx * 16, gy = ty * 16;
+    int cx = PX(a->x) - 8, cy = PX(a->y) - 40;
     int ease = t * (2 * LIFT_FRAMES - t);
-    int sy = PX(a->y) + gy + ((cy - gy) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - PX(a->z) - gCamY;
+    int sx = gx + ((cx - gx) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - gCamX;
+    int sy = gy + ((cy - gy) * ease) / (LIFT_FRAMES * LIFT_FRAMES) - PX(a->z) - gCamY;
     draw_sprite(sx, sy, SHEET_LIFT, lift_sheet_tile(), gPl.carry - 1, 0, a->prio, PAL_OBJ_LIFT);
 }
 
@@ -876,21 +894,25 @@ static void action_frame(int frame, int sx, int sy, int flip, int prio) {
     draw_sprite(sx, sy, SHEET_BLOOMFX, sActionTile, 0, flip, prio, bloomfx_frame_pal[frame]);
 }
 
-/* This layer has its own anchor: southward reach extends below the feet,
-   and the northward blade must remain visible over the back of the bloom. */
+/* Earlier OAM entries appear nearer to the viewer. North-facing held
+   tools belong on the far side of the body; the back-worn cape belongs on
+   the near side when Bloom faces north. The cutting sweep stays legible
+   over the body and uses the gameplay reach rectangle as its anchor. */
 static void draw_action(Actor* a, bool8 behind) {
     if (a->flags & AF_HIDDEN || (a->iframes && (gFrame & 2)))
         return;
     int f = a->facing;
     int sx = PX(a->x)-16-gCamX, sy = PX(a->y)-32-PX(a->z)-gCamY;
-    if (behind) {
-        if (a->state == PS_JUMP && a->sub == 0) {
-            static const u8 cape[4] = { F_BLOOMFX_CAPE_N0, F_BLOOMFX_CAPE_E0, F_BLOOMFX_CAPE_S0, F_BLOOMFX_CAPE_E0 };
-            action_frame(cape[f]+cape_step(a), sx, sy, f==FACE_W, a->prio);
-        }
+    if (a->state == PS_JUMP && a->sub == 0) {
+        if (behind != (f != FACE_N))
+            return;
+        static const u8 cape[4] = { F_BLOOMFX_CAPE_N0, F_BLOOMFX_CAPE_E0, F_BLOOMFX_CAPE_S0, F_BLOOMFX_CAPE_E0 };
+        action_frame(cape[f]+cape_step(a), sx, sy, f==FACE_W, a->prio);
         return;
     }
     if (a->state == PS_ATTACK) {
+        if (behind)
+            return;
         static const u8 sword[4] = { F_BLOOMFX_SWORD_N0, F_BLOOMFX_SWORD_E0, F_BLOOMFX_SWORD_S0, F_BLOOMFX_SWORD_W0 };
         int x0,y0,x1,y1;
         sword_bounds(&x0,&y0,&x1,&y1);
@@ -898,6 +920,8 @@ static void draw_action(Actor* a, bool8 behind) {
         int step=t<2?0:t<5?1:t<9?2:t<13?3:4;
         action_frame(sword[f]+step, x0-gCamX, y0-(f==FACE_S?8:0)-gCamY-PX(a->z), 0, a->prio);
     } else if (a->state == PS_NORMAL && sUseTimer) {
+        if (behind != (f == FACE_N))
+            return;
         int base = -1;
         if (sUseItem == EQ_BOW) {
             static const u8 bow[4] = { F_BLOOMFX_BOW_N0, F_BLOOMFX_BOW_E0, F_BLOOMFX_BOW_S0, F_BLOOMFX_BOW_E0 };
@@ -909,11 +933,26 @@ static void draw_action(Actor* a, bool8 behind) {
         if (base>=0)
             action_frame(base+use_step(), sx, sy, f==FACE_W, a->prio);
     } else if (a->state == PS_NORMAL && gPl.shield_up) {
-        static const s8 at[4][2] = { { -8,-34 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
+        if (behind != (f == FACE_N))
+            return;
+        static const s8 at[4][2] = { { -3,-27 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
         static const u8 frame[4] = { F_SHIELD_BACK, F_SHIELD_SIDE, F_SHIELD_FRONT, F_SHIELD_SIDE };
         draw_sprite(PX(a->x)+at[f][0]-gCamX, PX(a->y)+at[f][1]-PX(a->z)-gCamY,
                     SHEET_SHIELD, SHIELD_TILE, player_shield_frame(frame[f]), f==FACE_W, a->prio, player_shield_palette(frame[f]));
     }
+}
+
+static void draw_ground_shadow(Actor* a) {
+    if (!sShadowTile || a->z <= 0 || a->state == PS_FALL || a->state == PS_DEAD ||
+        (a->flags & (AF_HIDDEN | AF_NOSHADOW)))
+        return;
+    int px = PX(a->x), py = PX(a->y);
+    /* This footprint stays on the ground even when the airborne body is
+       raised above a prop. Crowns and solid foreground still occlude it. */
+    int prio = room_type_px(px, py - 1) == TT_FRONT ? 1 : 2;
+    prio = room_prop_priority(px, py, 0, 16, 8, prio);
+    draw_sprite(px - 8 - gCamX, py - 5 - gCamY, SHEET_BLOOMSHADOW,
+                sShadowTile, 0, 0, prio, PAL_OBJ_HERO);
 }
 
 void player_draw(void) {
@@ -938,8 +977,11 @@ void player_draw(void) {
             frame = sAtkFrame[gPl.sword_phase][f];
             break;
         case PS_HURT:
-        case PS_DEAD:
             frame = sHurtFrame[f];
+            break;
+        case PS_DEAD:
+            frame = gPl.dead_timer < 12 ? F_HERO_DEAD_0 : gPl.dead_timer < 26 ? F_HERO_DEAD_1 : F_HERO_DEAD_2;
+            a->hflip = 0;
             break;
         case PS_FALL: {
             int t = FALL_FRAMES - a->timer;
@@ -951,13 +993,13 @@ void player_draw(void) {
             break;
         }
         case PS_JUMP:
-            frame = a->sub == 0 ? sCapeFrame[cape_step(a)][f] : sJumpFrame[f];
+            frame = sCapeFrame[cape_step(a)][f];
             break;
         case PS_ITEMGET:
             frame = F_HERO_ITEMGET;
             break;
         case PS_LIFT:
-            frame = a->timer < 4 ? sUseFrame[0][f] : sCarryFrame[0][f];
+            frame = sLiftFrame[a->timer < 4 ? 0 : a->timer < 8 ? 1 : 2][f];
             break;
         case PS_SWALLOWED:
             /* startled, then shrinking into the mouth like into a hole */
@@ -971,11 +1013,15 @@ void player_draw(void) {
         }
         default:
             if (a->state == PS_NORMAL && sUseTimer) {
-                frame = sUseFrame[use_step()][f];
+                frame = sUseItem == EQ_BOW ? sBowFrame[use_step()][f] : sUseFrame[use_step()][f];
                 break;
             }
-            if (gPl.shield_up) {
-                frame = sGuardFrame[f];
+            if (a->state == PS_NORMAL && gPl.shield_up) {
+                /* Guarding moves at half speed, so the feet take twice as
+                   long to complete the same stride while the shield stays
+                   planted at the hand. */
+                int step = a->speed && sWalkTimer ? (sWalkTimer / 14) & 3 : 0;
+                frame = step == 1 ? sGuardStep[0][f] : step == 3 ? sGuardStep[1][f] : sGuardFrame[f];
                 break;
             }
             if (a->speed && sWalkTimer) {
@@ -1009,11 +1055,14 @@ void player_draw(void) {
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
         draw_sprite(sx, sy, SHEET_ICON32, icon32_frame_tile(gPl.got_item), 0, 0, 1, icon32_frame_palette(gPl.got_item));
     }
-    /* Earlier OAM entries draw on top: tools stay visible over the body;
-       the cape opens behind it. Props contain no duplicate baked items. */
-    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry)
+    /* Body and held parts share terrain priority, then their OAM order
+       supplies directional depth. No prop is duplicated in body artwork. */
+    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f != FACE_N)
         draw_load(a);
     draw_action(a,FALSE);
     actor_draw(a);
     draw_action(a,TRUE);
+    if ((a->state == PS_LIFT || a->state == PS_CARRY) && gPl.carry && f == FACE_N)
+        draw_load(a);
+    draw_ground_shadow(a);
 }
