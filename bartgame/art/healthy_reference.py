@@ -25,7 +25,7 @@ GROUPS[TREE]=['#000000','#101828','#102c38','#184040','#185844','#287454','#388c
               '#a8c880','#305038','#e8e8d0','#28202c','#605038','#a08058','#d8a048','#ffe0a0']
 GROUPS[BARK]=['#000000','#101828','#183c38','#305038','#608448','#28202c','#605038','#987848',
               '#b89860','#d0b888','#d8a048','#ffe0a0','#b050a0','#302038','#000000','#000000']
-GROUPS[WATER]=['#000000','#101828','#383028','#705840','#907850','#b09868','#101c38','#183848',
+GROUPS[WATER]=['#000000','#101828','#383028','#705840','#907850','#b09868','#101c38','#184858',
                '#205468','#287080','#489898','#88c0c0','#d0e8d8','#38683c','#789850','#e8e0d0']
 GROUPS[STONE]=['#000000','#101828','#183c38','#305038','#486840','#608448','#789848','#e8c060',
                '#605038','#987848','#242838','#404850','#687068','#909880','#c0c0a0','#fff0b8']
@@ -46,14 +46,16 @@ def leaf_spray(a,cx,cy,rx,ry,seed,wrap=False):
     levels=np.where((oval>.67)&(light<.25),0,levels)
     for i,ink in enumerate(ramp):a[body&(levels==i)]=ink
     r=P.rng(seed)
-    for _ in range(int(rx*ry*.9)):
+    for _ in range(int(rx*ry*.34)):
         x=int(round(cx+r.uniform(-.86,.86)*rx));y=int(round(cy+r.uniform(-.8,.8)*ry));X,Y=x%w,y%h
         if not body[Y,X]:continue
         lit=light[Y,X]>.12
-        hi=W.ID['leaf_br' if lit else 'leaf_lt'];mid=W.ID['leaf_lt' if lit else 'leaf_mid'];dark=W.ID['shadow']
-        # Two- and three-pixel lanceolate leaves; whole clusters carry light.
-        shape=['.h.','hmd','.d.'] if (x+y+seed)&1 else ['.h','hm','d.']
-        P.stamp(a,x,y,shape,dict(h=hi,m=mid,d=dark),wrap=wrap,mask=body)
+        hi=W.ID['leaf_br' if lit else 'leaf_mid'];mid=W.ID['leaf_lt' if lit else 'leaf_md'];dark=W.ID['shadow' if lit else 'leaf_deep']
+        # Sparse tips follow several directions. The shaded bough remains
+        # visible underneath instead of becoming an all-over slash texture.
+        shapes=(['hm','d.'],['.h','dm'],['.h.','dml'],['hm.','.dd'],['h','m','d'],['.mh','dd.'])
+        shape=shapes[int(r.randint(len(shapes)))]
+        P.stamp(a,x,y,shape,dict(h=hi,m=mid,l=mid,d=dark),wrap=wrap,mask=body)
     return a
 
 
@@ -83,27 +85,31 @@ def canopy_face():
 
 
 def grass(seed=0):
-    """Damp, fine-textured turf with quiet low-contrast leaf-shaped patches."""
+    """Quiet turf; every variant has comparable light and dark coverage."""
+    yy,xx=np.mgrid[:16,:16]
     field=P.fbm(16,16,1400+seed,((2,.75),(4,.25)))
+    field=(field-field.mean())/max(.01,float(field.std()))
+    # Do not turn a randomly darker noise mean into an entire dark tile.
+    # Sparse damp flecks carry the field rather than big filled islands.
     a=np.full((16,16),W.ID['grass_m'],np.uint8)
-    a[field<.34]=W.ID['grass_d'];a[field>.72]=W.ID['grass_l']
-    for i,(x,y) in enumerate(P.scatter(1407+seed*29,12,mind=3)):
+    small=((xx*5+yy*3+seed)%7)<3
+    a[(field<-1.05)&small]=W.ID['grass_d']
+    a[(field>1.4)&small]=W.ID['grass_l']
+    for i,(x,y) in enumerate(P.scatter(1407+seed*29,10,mind=3)):
         if i%4==0:P.stamp(a,x,y,['.l','md'],dict(l=W.ID['grass_l'],m=W.ID['grass_m'],d=W.ID['grass_d']),wrap=True)
         else:
             a[y,x]=W.ID['grass_d'];a[y,(x+1)%16]=W.ID['grass_m' if i%2 else 'grass_d']
-    # A rare warm tip belongs to a tuft, not isolated bright noise.
-    for x,y in P.scatter(1517+seed,2,mind=9):
+    for x,y in P.scatter(1517+seed,1,mind=9):
         P.stamp(a,x,y,['.l','md'],dict(l=W.ID['grass_b'],m=W.ID['grass_l'],d=W.ID['grass_d']),wrap=True)
     return a
 
 
 def earth():
-    f=P.fbm(16,16,1703,((2,.7),(4,.3)))
+    """Packed soil and sparse grit, without a repeated round noise island."""
     a=np.full((16,16),W.ID['trail_m'],np.uint8)
-    a[f<.31]=W.ID['trail_d'];a[f>.72]=W.ID['trail_l']
-    for i,(x,y) in enumerate(P.scatter(1733,8,mind=4)):
-        a[y,x]=W.ID['trail_d' if i%3 else 'trail_l']
-        if i%3==0:a[y,(x+1)%16]=W.ID['trail_m']
+    for i,(x,y) in enumerate(P.scatter(1733,10,mind=4)):
+        a[y,x]=W.ID['trail_d' if i%4 else 'trail_l']
+        if i%4==0:a[y,(x+1)%16]=W.ID['trail_m']
     return a
 
 
@@ -112,20 +118,23 @@ def tree(cols=2,variant=0,species='oak',lantern=False):
     if species=='birch':
         for tx in (mid-5,mid+3):
             pts=[(tx+1,18),(tx-1,h-18),(tx+1,root)]
-            stroke(a,pts,'bark_dk',4);stroke(a,pts,'white',2)
+            stroke(a,pts,'bark_dk',5);stroke(a,pts,'white',3)
             for y in range(22,root,5):stroke(a,[(tx-1,y),(tx+1,y)],'bark',1)
         boughs=[(mid-6,8,10,7),(mid+6,10,9,7),(mid-8,18,8,6),(mid+6,22,9,6),(mid-2,25,11,6)]
     elif species=='fir':
-        stroke(a,[(mid,5),(mid,root)],'bark_dk',5);stroke(a,[(mid-1,11),(mid-1,root)],'bark_l',2)
+        stroke(a,[(mid,5),(mid,root)],'bark_dk',6);stroke(a,[(mid-1,11),(mid-1,root)],'bark_l',3)
         boughs=[(mid,5,4,4),(mid-1,11,7,5),(mid+1,18,10,5),(mid-1,24,13,5),(mid+1,29,13,5)]
     else:
         pts=[(mid-2,h-35),(mid+2,h-23),(mid-1,root)]
-        stroke(a,pts,'bark_dk',7);stroke(a,[(mid-1,h-34),(mid+1,h-22),(mid-2,root)],'bark_l',3)
+        stroke(a,pts,'bark_dk',8);stroke(a,[(mid-1,h-34),(mid+1,h-22),(mid-2,root)],'bark_l',4)
         stroke(a,[(mid,h-23),(mid-9,h-32),(mid-12,h-40)],'bark',3)
         stroke(a,[(mid,h-23),(mid+10,h-31),(mid+13,h-37)],'bark',3)
         boughs=[(mid-3,8,mid*.63,7),(mid-9,16,mid*.58,8),(mid+8,15,mid*.6,8),(mid-1,23,mid*.8,8)]
         if cols==3:boughs += [(9,30,10,8),(38,30,10,8),(23,36,14,8)]
     for i,(x,y,rx,ry) in enumerate(boughs):leaf_spray(a,x+variant*(1 if i&1 else -1),y,rx,ry,731+i*31+variant*79)
+    # A dark silhouette separates an individual tree from canopy behind it.
+    crown=np.isin(a,W.C('leaf_deep','shadow','leaf_md','leaf_mid','leaf_lt','leaf_br','leaf_hl'))
+    P.outline(a,crown,W.ID['outline'])
     # Exposed roots carry the same warm wood as the lantern supports.
     for sign in (-1,1):
         pts=[(mid,root-3),(mid+sign*5,root+1),(mid+sign*(mid-4),h-3)]
@@ -138,13 +147,37 @@ def tree(cols=2,variant=0,species='oak',lantern=False):
     return [a[y:y+16,x:x+16].copy() for y in range(0,h,16) for x in range(0,w,16)]
 
 
-def bank_water(raw):
-    """Cool bank shadows and broken reflection; foam is for actual falls."""
-    a=raw.copy();foam=W.ID['foam'];lt=W.ID['water_lt'];rip=W.ID['ripple']
-    yy,xx=np.mgrid[:16,:16]
-    bright=(a==foam)|(a==rip)
-    # Keep a few short reflected highlights, eliminating the bright border.
-    a[bright]=lt;a[bright&((xx+yy*3)%7<2)]=W.ID['water_md']
+def water_body(seed,frame):
+    """Calm blue water with short horizontal reflections, never round blobs."""
+    a=np.full((16,16),W.ID['water_md'],np.uint8)
+    for i,(x,y) in enumerate(((2,4),(10,12))):
+        x=(x+seed*3)%16
+        for dx in range(3):a[y,(x+dx)%16]=W.ID['water_dk']
+        x=(x+frame*2)%16
+        for dx in range(2):a[(y-1)%16,(x+dx)%16]=W.ID['water_lt']
+    return a
+
+
+def bank_water(raw,name,frame):
+    """Preserve authored banks, pads and falls over a quiet water body."""
+    a=raw.copy();yy,xx=np.mgrid[:16,:16]
+    if name=='water':return water_body(0,frame)
+    if name=='waterfall' or name.startswith('bridge'):return a
+    if name.startswith('water_') and name not in ('water_lily','water_foam'):
+        tail=name[6:]
+        if len(tail)>1 and tail.startswith('c'):
+            region=P.nick_fields(51,r=5)[int(tail[1:],16)][0]
+        else:region=P.band_fields(49,lo=3,hi=5,r=2)[int(tail,16)][0]
+        body=water_body(0,frame);a[~region]=body[~region]
+        # Broken reflected highlights replace the former bright border.
+        bright=(a==W.ID['foam'])|(a==W.ID['ripple'])
+        a[bright]=W.ID['water_lt'];a[bright&((xx+yy*3)%7<2)]=W.ID['water_md']
+        return a
+    seed=1 if name=='water_lily' else 6 if name=='water_foam' else 2+int(name[5:]) if name.startswith('raft_') else 0
+    old=F.flowing_water(seed,frame);body=water_body(seed,frame)
+    # Pads and waterfall churn retain their source pixels and silhouette.
+    mask=(a==old)&np.isin(a,W.C('water_dk','water_md','water_lt'))
+    a[mask]=body[mask]
     return a
 
 
@@ -205,7 +238,7 @@ def _raw_tiles():
             if n=='black':continue
             put(n,GRASS,[rematerial(a,n) for a in frames],speed)
         elif group=='wood_water':
-            put(n,WATER,[bank_water(a) if n.startswith('water_') and n!='water_foam' else a.copy() for a in frames],speed)
+            put(n,WATER,[bank_water(a,n,frame) for frame,a in enumerate(frames)],speed)
     return t
 
 
