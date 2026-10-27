@@ -1953,7 +1953,7 @@ void roomgen_build(int cell) {
             if (find_spot(&gSpots.shrine, 300, 2)) {
                 gSpots.has_shrine = 1;
                 room_set(gSpots.shrine.x, gSpots.shrine.y, MT_STATUE);
-                room_set(gSpots.shrine.x, gSpots.shrine.y + 1, (c->flags & CF_SHRINE_USED) ? MT_MOSSY_STONE : MT_MOSS_FLOWERS);
+                room_set(gSpots.shrine.x, gSpots.shrine.y + 1, (c->flags & CF_SHRINE_USED) ? MT_MOSSY_STONE : MT_SHRINE_PLATE);
                 room_set_overlay(gSpots.shrine.x, gSpots.shrine.y + 1, MT_SPARKLE);
             }
             break;
