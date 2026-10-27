@@ -1,6 +1,12 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: Bloom action animation
+## Latest: imported opening screen
+
+[View the supplied title artwork in the actual ROM](title-reference/README.md).
+The title now uses the screenshot's complete composition and colours at
+the GBA's native resolution. The gallery includes before/after captures.
+
+## Previous: Bloom action animation
 
 [Watch the real-mGBA animation comparisons](bloom-animation/README.md).
 Bloom now has compact rolls, visible sword reach in every direction and

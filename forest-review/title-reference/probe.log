@@ -1,0 +1,81 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS title asset is complete RGB555 bitmap
+PASS unobscured framebuffer equals entire imported title replicated
+PASS fresh title uses Mode3 and BG2 0x1443
+PASS fresh title VRAM equals every source RGB555 word
+PASS fresh title bitmap-safe OBJ allocations []
+PASS fresh title keeps name and baked subtitle unobscured []
+PASS fresh title shows blinking prompt
+PASS title prompt uses Mode3 and BG2 0x1443
+PASS title prompt VRAM equals every source RGB555 word
+PASS title prompt bitmap-safe OBJ allocations [{'index': 0, 'x': 88, 'y': 140, 'w': 64, 'h': 32, 'tile': 876}]
+PASS title prompt keeps name and baked subtitle unobscured [{'index': 0, 'x': 88, 'y': 140, 'w': 64, 'h': 32, 'tile': 876}]
+PASS Start begins a new run
+PASS new run wakes in Drain
+PASS new run respects selected seed
+PASS new run returns to Mode0 0x1740
+PASS new run restores world display layers
+PASS new run restores HUD atlas
+PASS new run restores UI frame atlas
+PASS new run restores fixed OBJ colours dialogue portraits and the keeper orb have dynamic colours
+PASS new run disables title brightness fade 0x0
+PASS new run has visible Bloom
+PASS forest transition remains playable
+PASS forest returns to Mode0 0x1740
+PASS forest restores world display layers
+PASS forest restores HUD atlas
+PASS forest restores UI frame atlas
+PASS forest restores fixed OBJ colours dialogue portraits and the keeper orb have dynamic colours
+PASS forest disables title brightness fade 0x0
+PASS forest has visible Bloom
+PASS pause opens after title transition
+PASS map remains Mode0 after title
+PASS pause closes to live forest
+PASS save fixture uses real death/save record
+PASS saved title recognises record
+PASS saved title defaults to Continue
+PASS saved title uses Mode3 and BG2 0x1443
+PASS saved title VRAM equals every source RGB555 word
+PASS saved title bitmap-safe OBJ allocations [{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]
+PASS saved title keeps name and baked subtitle unobscured [{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]
+PASS saved title framebuffer preserves unobscured reference 0 differing pixels
+PASS Down selects New Game
+PASS Up returns selection to Continue
+PASS Continue enters the saved run
+PASS Continue keeps saved inventory
+PASS Continue keeps saved maze
+PASS Continue wakes in Drain
+PASS continued run returns to Mode0 0x1740
+PASS continued run restores world display layers
+PASS continued run restores HUD atlas
+PASS continued run restores UI frame atlas
+PASS continued run restores fixed OBJ colours dialogue portraits and the keeper orb have dynamic colours
+PASS continued run disables title brightness fade 0x0
+PASS continued run has visible Bloom
+PASS New Game selection survives redraw
+PASS New Game starts from saved title
+PASS New Game clears old inventory/resources
+PASS New Game selects a new maze seed
+PASS fresh run after save returns to Mode0 0x1740
+PASS fresh run after save restores world display layers
+PASS fresh run after save restores HUD atlas
+PASS fresh run after save restores UI frame atlas
+PASS fresh run after save restores fixed OBJ colours dialogue portraits and the keeper orb have dynamic colours
+PASS fresh run after save disables title brightness fade 0x0
+PASS fresh run after save has visible Bloom
+PASS Grail fixture enters real win path
+PASS win screen returns to title
+PASS returned title uses Mode3 and BG2 0x1443
+PASS returned title VRAM equals every source RGB555 word
+PASS returned title bitmap-safe OBJ allocations [{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]
+PASS returned title keeps name and baked subtitle unobscured [{'index': 0, 'x': 88, 'y': 120, 'w': 64, 'h': 32, 'tile': 876}, {'index': 1, 'x': 93, 'y': 122, 'w': 8, 'h': 8, 'tile': 937}]
+PASS returned title framebuffer preserves unobscured reference 0 differing pixels
+PASS returned title Continue remains usable
+PASS second title round trip returns to Mode0 0x1740
+PASS second title round trip restores world display layers
+PASS second title round trip restores HUD atlas
+PASS second title round trip restores UI frame atlas
+PASS second title round trip restores fixed OBJ colours dialogue portraits and the keeper orb have dynamic colours
+PASS second title round trip disables title brightness fade 0x0
+PASS second title round trip has visible Bloom
+RESULT PASS 79/79

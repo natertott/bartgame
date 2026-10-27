@@ -1,0 +1,2 @@
+629b27d29cbffbfee63a8b70c450cdbd95a28da5bae78a43aa4401d081d7a211  bartgame-title-reference-66422bc.gba
+7099e440a09e367c89d65002a74e8de3abf14fa93030c89c4e89ffb388b5527d  bartgame-title-reference-66422bc.zip

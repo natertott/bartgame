@@ -1,0 +1,28 @@
+{
+  "rom_sha256": "629b27d29cbffbfee63a8b70c450cdbd95a28da5bae78a43aa4401d081d7a211",
+  "source_commit": "66422bcfafdbbaf24ea2018a4882c5871b3d5866",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "title": {
+      "passed": 79,
+      "total": 79
+    },
+    "menu": {
+      "passed": 21,
+      "total": 21
+    },
+    "bloom": {
+      "passed": 274,
+      "total": 274
+    }
+  },
+  "source_reference_sha256": "da1c5ab21efd6c83f8cddb22ad18bcaf84301f049bc77347e9e2988a7cfd5178",
+  "native_title_size": [
+    240,
+    160
+  ],
+  "unique_RGB555_colours": 2070,
+  "exact_native_framebuffer_match": true,
+  "all_bitmap_VRAM_bytes_match": true,
+  "screenshots": "Unmodified native240x160 mGBA framebuffers. Contact sheets use nearest-neighbour3x enlargement and external captions."
+}

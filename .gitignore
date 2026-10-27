@@ -10,6 +10,8 @@ baserom*.gba
 # Published standalone BARTGAME build.
 !/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.gba
 !/downloads/bloom-polish-f42e91e/bartgame-bloom-polish-f42e91e.zip
+!/downloads/title-reference-66422bc/bartgame-title-reference-66422bc.gba
+!/downloads/title-reference-66422bc/bartgame-title-reference-66422bc.zip
 
 # OS junk
 .DS_Store

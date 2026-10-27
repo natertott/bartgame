@@ -1,0 +1,27 @@
+{
+  "source": "art/ref/title-reference.jpg",
+  "source_sha256": "da1c5ab21efd6c83f8cddb22ad18bcaf84301f049bc77347e9e2988a7cfd5178",
+  "source_size": [
+    1179,
+    796
+  ],
+  "crop_rect": [
+    0,
+    0,
+    1179,
+    796
+  ],
+  "resample": "Pillow Image.Resampling.LANCZOS",
+  "pillow_version": "13.0.0",
+  "target_size": [
+    240,
+    160
+  ],
+  "pixel_format": "GBA Mode 3 RGB555, little-endian u16, row-major",
+  "pixel_count": 38400,
+  "bitmap_bytes": 76800,
+  "bitmap_sha256": "c2907a216208da383458d2f06918652c67a551780723fc4618946eb33fcaaaef",
+  "unique_rgb555_colours": 2070,
+  "composition": "Entire reference retained; no crop, redraw, or added lettering.",
+  "aspect": "Full image resized to 3:2, retaining every gold border ornament."
+}
