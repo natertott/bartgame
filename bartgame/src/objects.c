@@ -608,6 +608,16 @@ void objects_draw(void) {
             continue;
         if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8 && player_hand_composite())
             continue;
+        if (a->kind==AK_PICKUP && a->v[2] && gGame.area==AREA_FOREST &&
+            !(gWorld.cells[gGame.cell].opened & CELL_POCKET_OPEN)) {
+            /* The oversized hoard is a clue beyond its gate. Keep it under
+               the gate's BG1 material until that gate has actually opened;
+               flat sparkle below the bag must not promote it over the web
+               or cracked stones that the player needs to recognize. */
+            draw_sprite(PX(a->x)-a->w/2-gCamX,PX(a->y)-a->h-PX(a->z)-gCamY,
+                        a->sheet,a->tile,a->frame,a->hflip,2,a->pal);
+            continue;
+        }
         if (a->kind == AK_PROJ || a->kind == AK_PICKUP || a->kind == AK_FX || a->kind == AK_OBJECT)
             actor_draw(a);
     }
