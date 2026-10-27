@@ -322,6 +322,36 @@ def interrupted_jumps(c,defs):
     return rows
 
 
+def wall_bounces(c,defs):
+    rows=[]
+    for f,d in enumerate(FACES):
+        for hurt in ((False,True) if f==1 else (False,)):
+            reset(c,defs,f,1)
+            B.reset_player(c,264,240 if f==0 else 230,f,equipment=(0,1,0));P.run(c,64)
+            cells=([(x,13 if f==0 else 15) for x in (15,16,17)] if f in (0,2) else
+                   [(17 if f==1 else 15,y) for y in (13,14,15)])
+            for x,y in cells:tile_set(c,x,y,defs['MT_CANOPY'])
+            hold(c,KEYS[f],'R');trace=[];bounced=False;contact=False;slot=None
+            for tick in range(70):
+                c.run_frame()
+                if tick==0:hold(c)
+                now=snapshot(c);trace.append(now)
+                if now['state']==0 and now['z']>0 and not bounced:
+                    bounced=True
+                    if hurt:
+                        px,py=P.player_pos(c);slot=W.spawn_enemy(c,0,px,py-8)
+                if now['state']==3 and slot is not None and not contact:
+                    contact=True;P.w8(c,P.sym('gActors')+slot*64,0)
+            label=d+' roll-wall bounce'+(' followed by contact' if hurt else '')
+            check(label+' starts from real roll input and collision',any(t['state']==1 for t in trace) and bounced)
+            if hurt:check(label+' receives actual airborne enemy damage',contact)
+            check(label+' lands after knockback finishes',trace[-1]['state']==0 and trace[-1]['z']==0 and trace[-1]['zvel']==0,trace[-1])
+            if hurt:
+                check(label+' retains an uncaped recovery',all(t['sub']==3 for t in trace if t['state']==5),sorted({t['sub'] for t in trace if t['state']==5}))
+            rows.append({'case':label,'trace':trace})
+    return rows
+
+
 def hazards_and_death(c,defs):
     rows=[]
     for label,mt,sub in (('water','MT_WATER',1),('pit','MT_PIT',0)):
@@ -361,7 +391,7 @@ def main():
     args=ap.parse_args();defs=B.configure(args)
     global defs_global;defs_global=defs
     c=B.boot(args.rom);depth_and_guard(c,defs);jump_rows=jumps(c,defs);lift_rows=lifts(c,defs)
-    interrupted_rows=interrupted_jumps(c,defs);hazard_rows=hazards_and_death(c,defs)
+    interrupted_rows=interrupted_jumps(c,defs);bounce_rows=wall_bounces(c,defs);hazard_rows=hazards_and_death(c,defs)
     # Return transitions reload all static sprite allocations, so do these
     # after the per-area allocation checks and before independent ROM boots.
     c=B.boot(args.rom);ledge_rows=ledge_and_dropin(c,defs)
@@ -378,7 +408,7 @@ def main():
             'passed':sum(r['passed'] for r in checks),'total':len(checks),'checks':checks,
             'jump_traces':jump_rows,'lift_traces':lift_rows,'hazard_traces':hazard_rows,
             'ledge_dropin_traces':ledge_rows,'interrupted_jump_traces':interrupted_rows,
-            'mechanical_comparison':comparisons}
+            'wall_bounce_traces':bounce_rows,'mechanical_comparison':comparisons}
     Path(args.out).write_text(json.dumps(report,indent=2)+'\n')
     print('RESULT %s %d/%d'%('PASS' if all(r['passed'] for r in checks) else 'FAIL',report['passed'],report['total']))
     return int(not all(r['passed'] for r in checks))
