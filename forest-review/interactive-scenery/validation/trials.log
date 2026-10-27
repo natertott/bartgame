@@ -1,0 +1,56 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS a mandatory event is item-independent switches
+PASS the reward is not owned on arrival
+PASS the forest has no free progression chest
+PASS an unfinished trial permits retreat
+PASS retreat grants no item
+PASS the event is completed before its reward
+PASS won but unclaimed trial can be left
+PASS returning retains earned reward
+PASS a won event does not restart its fight
+PASS the earned reward is claimable
+PASS claim returns to forest
+PASS the barrier item is owned
+PASS item and event ownership persist cell 0b event 07
+PASS completed trial can be revisited
+PASS won trial does not respawn enemies
+PASS won trial has no new reward chest
+PASS reward cannot duplicate bombs
+PASS completed trial exit stays open
+PASS a mandatory event is item-independent waves
+PASS the reward is not owned on arrival
+PASS the forest has no free progression chest
+PASS an unfinished trial permits retreat
+PASS retreat grants no item
+PASS the event is completed before its reward
+PASS won but unclaimed trial can be left
+PASS returning retains earned reward
+PASS a won event does not restart its fight
+PASS the earned reward is claimable
+PASS claim returns to forest
+PASS the barrier item is owned
+PASS item and event ownership persist cell 0b event 07
+PASS completed trial can be revisited
+PASS won trial does not respawn enemies
+PASS won trial has no new reward chest
+PASS reward cannot duplicate bombs
+PASS completed trial exit stays open
+PASS a mandatory event is item-independent miniboss
+PASS the reward is not owned on arrival
+PASS the forest has no free progression chest
+PASS an unfinished trial permits retreat
+PASS retreat grants no item
+PASS the event is completed before its reward
+PASS won but unclaimed trial can be left
+PASS returning retains earned reward
+PASS a won event does not restart its fight
+PASS the earned reward is claimable
+PASS claim returns to forest
+PASS the barrier item is owned
+PASS item and event ownership persist cell 0b event 07
+PASS completed trial can be revisited
+PASS won trial does not respawn enemies
+PASS won trial has no new reward chest
+PASS reward cannot duplicate bombs
+PASS completed trial exit stays open
+RESULT PASS 54/54

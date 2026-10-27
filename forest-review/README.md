@@ -1,6 +1,14 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: complete Bloom animation review
+## Latest: readable interactive scenery
+
+[View 40 actual mGBA cases, comparisons and the video reel](interactive-scenery/README.md).
+Three larger chest tiers, full-tile pressure plates, tall cave/hollow/thicket
+entrances, clear hazards and barriers, larger censers/pots and explicit healing
+markers make interactions easier to recognize. The gallery includes the final
+ROM, actual item use and rewards, and native screenshots on both forest palettes.
+
+## Previous: complete Bloom animation review
 
 [Watch 99 real mGBA before/after recordings and the video reel](bloom-suite/README.md).
 Directional equipment layering, sword clarity, guard walking, lifting and

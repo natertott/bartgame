@@ -1,0 +1,5399 @@
+{
+  "method": "Publish actual mGBA interactive-scenery captures and comparisons.\n\npython tools/interactive_gallery.py BEFORE_CAPTURES AFTER_CAPTURES OUT\n\nNative framebuffers are copied unchanged. Captions, nearest-neighbour\nscaling and adjacent before/after panels are the only changes to images.\nSame seed/cell/feature cases may have relocated targets after entrance\nclearance changes; the capture reports retain those differences explicitly.",
+  "before_rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+  "after_rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+  "counts": {
+    "before": {
+      "captures": 40,
+      "exact_palette_gifs": 31,
+      "activation_checks": {
+        "passed": 32,
+        "total": 32
+      }
+    },
+    "after": {
+      "captures": 40,
+      "exact_palette_gifs": 31,
+      "activation_checks": {
+        "passed": 32,
+        "total": 32
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "name": "forest-wood-chest",
+      "gif": "comparisons/forest-wood-chest.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": false,
+      "colour_count": 266,
+      "duration_ms": 1860,
+      "timeline_frames": 29
+    },
+    {
+      "name": "forest-brass-chest",
+      "gif": "comparisons/forest-brass-chest.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": false,
+      "colour_count": 263,
+      "duration_ms": 1860,
+      "timeline_frames": 28
+    },
+    {
+      "name": "blight-relic-chest",
+      "gif": "comparisons/blight-relic-chest.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": true,
+      "colour_count": 250,
+      "duration_ms": 1860,
+      "timeline_frames": 41
+    },
+    {
+      "name": "blight-wood-chest",
+      "gif": "comparisons/blight-wood-chest.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": false,
+      "colour_count": 282,
+      "duration_ms": 1860,
+      "timeline_frames": 33
+    },
+    {
+      "name": "forest-cave-door",
+      "gif": "comparisons/forest-cave-door.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": false
+      },
+      "exact_palette": false,
+      "colour_count": 627,
+      "duration_ms": 2060,
+      "timeline_frames": 26
+    },
+    {
+      "name": "forest-hollow-door",
+      "gif": "comparisons/forest-hollow-door.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": false
+      },
+      "exact_palette": false,
+      "colour_count": 602,
+      "duration_ms": 2060,
+      "timeline_frames": 26
+    },
+    {
+      "name": "blight-thicket-door",
+      "gif": "comparisons/blight-thicket-door.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": false,
+        "same_position": false,
+        "same_initial_camera": false,
+        "same_physical_contract": false
+      },
+      "exact_palette": false,
+      "colour_count": 670,
+      "duration_ms": 2060,
+      "timeline_frames": 52
+    },
+    {
+      "name": "cave-exit",
+      "gif": "comparisons/cave-exit.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": false
+      },
+      "exact_palette": false,
+      "colour_count": 731,
+      "duration_ms": 2060,
+      "timeline_frames": 53
+    },
+    {
+      "name": "cave-floor-switch",
+      "gif": "comparisons/cave-floor-switch.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": false
+      },
+      "exact_palette": true,
+      "colour_count": 252,
+      "duration_ms": 1460,
+      "timeline_frames": 15
+    },
+    {
+      "name": "thicket-censer",
+      "gif": "comparisons/thicket-censer.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": false
+      },
+      "exact_palette": true,
+      "colour_count": 223,
+      "duration_ms": 1600,
+      "timeline_frames": 14
+    },
+    {
+      "name": "forest-shrine",
+      "gif": "comparisons/forest-shrine.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": true,
+      "colour_count": 217,
+      "duration_ms": 1600,
+      "timeline_frames": 36
+    },
+    {
+      "name": "blight-bomb-wall",
+      "gif": "comparisons/blight-bomb-wall.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": false,
+      "colour_count": 296,
+      "duration_ms": 3660,
+      "timeline_frames": 76
+    },
+    {
+      "name": "blight-cobweb",
+      "gif": "comparisons/blight-cobweb.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": false,
+        "same_position": false,
+        "same_initial_camera": false,
+        "same_physical_contract": false
+      },
+      "exact_palette": false,
+      "colour_count": 280,
+      "duration_ms": 1600,
+      "timeline_frames": 22
+    },
+    {
+      "name": "blight-cape-hole",
+      "gif": "comparisons/blight-cape-hole.gif",
+      "matched_case": {
+        "same_seed": true,
+        "same_cell": true,
+        "same_target": true,
+        "same_position": true,
+        "same_initial_camera": true,
+        "same_physical_contract": true
+      },
+      "exact_palette": false,
+      "colour_count": 268,
+      "duration_ms": 1600,
+      "timeline_frames": 32
+    }
+  ],
+  "fixture_note": "Same seed/cell/feature cases; entrance headroom intentionally relocates some generated targets and subsequent placements. Original positions, cameras and physical contracts are in capture.json.",
+  "same_target_cases": 31,
+  "same_camera_cases": 31,
+  "palette_note": "Native PNGs preserve exact framebuffer pixels. GIFs exceeding 256 union colours are quantized; exact_palette metadata records precision.",
+  "video": {
+    "path": "interactive-scenery-reel.mp4",
+    "frames": 1478,
+    "fps": 30,
+    "seconds": 49.266666666666666,
+    "clips": [
+      "forest-wood-chest",
+      "forest-brass-chest",
+      "forest-relic-chest",
+      "blight-wood-chest",
+      "blight-relic-chest",
+      "forest-cave-door",
+      "mixed-cave-door",
+      "forest-hollow-door",
+      "blight-hollow-door",
+      "forest-thicket-door",
+      "blight-thicket-door",
+      "cave-exit",
+      "hollow-exit",
+      "thicket-exit",
+      "cave-floor-switch",
+      "hollow-floor-switch",
+      "thicket-floor-switch",
+      "thicket-censer",
+      "forest-bomb-wall",
+      "blight-bomb-wall",
+      "forest-cobweb",
+      "blight-cobweb",
+      "forest-cape-hole",
+      "blight-cape-hole",
+      "forest-shrine"
+    ],
+    "note": "Lossy H.264 review convenience; original GIFs and native PNGs retained."
+  },
+  "files": [
+    {
+      "path": "after/blight-bomb-wall/frame-000.png",
+      "bytes": 17150,
+      "sha256": "a0a454c23fe27b178d54fd0bdeafeb0fb6d2135f7027efca53507c60c73592da"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-007.png",
+      "bytes": 17118,
+      "sha256": "60a1dc94032b106c1b4a37e9b92efe631975cb41c26e73a6992f04aff72f941a"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-012.png",
+      "bytes": 17133,
+      "sha256": "a3b13c6de90647b3c1bcfc24c7db9a4380b6ff9ec3ceee6ce910033c3f25dd95"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-020.png",
+      "bytes": 17063,
+      "sha256": "d2ec6fbe279136700898ec6727738299f9ab82debc0a035643ba259b9b8a597b"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-032.png",
+      "bytes": 17126,
+      "sha256": "fb065f6a55447b1d539b0dd48c8da0178ab3ec9a9dd08237bb24dcca0c63dabd"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-048.png",
+      "bytes": 17305,
+      "sha256": "794439583428f67ebef1ba31e1c397459fe37b6f49149c0dbc6c998d4d4678ef"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-064.png",
+      "bytes": 17394,
+      "sha256": "4838d0b3d1e9afdc5bd34cf5d09c26b6b04a0cc11a1c8c55f64b6ce551fcadb9"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-080.png",
+      "bytes": 17316,
+      "sha256": "26031feee6d18b1ef064575745b435777865ca61e455538f78328f3267185ff6"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-175.png",
+      "bytes": 17242,
+      "sha256": "1ea06b8180b951aac7c60be8b5409cb21eb668405842126ecd8b93ed6358ab91"
+    },
+    {
+      "path": "after/blight-bomb-wall/frame-219.png",
+      "bytes": 17061,
+      "sha256": "e8da464e129a42824265ece900868b407024d0cfc326fd85c717c8508f3b78b1"
+    },
+    {
+      "path": "after/blight-bomb-wall-frames.png",
+      "bytes": 127678,
+      "sha256": "2d441bd0d6016d7b01d227a864cbd8666bb8918d093ba912b05f4c160ede07a4"
+    },
+    {
+      "path": "after/blight-bomb-wall.gif",
+      "bytes": 2473641,
+      "sha256": "628b2e2f14c6d9e1b7cd6263db4df4b598a7edc2158c83175f934be0a35b430d"
+    },
+    {
+      "path": "after/blight-bomb-wall.png",
+      "bytes": 17150,
+      "sha256": "a0a454c23fe27b178d54fd0bdeafeb0fb6d2135f7027efca53507c60c73592da"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-000.png",
+      "bytes": 15277,
+      "sha256": "9eb367fa3a4568c46d3426f193b756dcb1ed2e2daa2f71adbedbdf36056bbf07"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-007.png",
+      "bytes": 15127,
+      "sha256": "884d1875118d3a3e6c6bf953322f3ccbdc5995abb95fc2c30cd677d337025313"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-012.png",
+      "bytes": 14849,
+      "sha256": "9968e51519d26b0f507152a2ab267467de6fa04b45def17e0f163dc737ba82bc"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-020.png",
+      "bytes": 15189,
+      "sha256": "5d7d40891dd73f6bf4f2a658420a154892ade245975334f6158710a524bce05d"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-022.png",
+      "bytes": 15236,
+      "sha256": "63aaa7715c115ddf737930e6b15cb73d3dad0df262b5beefd5684fdc31b5c63c"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-032.png",
+      "bytes": 12500,
+      "sha256": "48e84b910f05f6d2040f6197e1a264669a5476c17a1465e77b17de4f034bff11"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-048.png",
+      "bytes": 12557,
+      "sha256": "088a2182718b9eafebee94851d5c0b4a16d5dd23bfee65865d91abaea75d33d2"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-064.png",
+      "bytes": 12704,
+      "sha256": "a09fbafe3df4f1f40a184f78141b7d0e4431cc5b61937730669a0f392db34d73"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-080.png",
+      "bytes": 12543,
+      "sha256": "fa038f5bcff753a8cd24f24ad0447e42711577e623dfccd6d60fa7acc0a6ceff"
+    },
+    {
+      "path": "after/blight-brass-chest/frame-111.png",
+      "bytes": 12654,
+      "sha256": "7a620253bba7cda3a6a81d2e0837f988edd19ad535ad99ea8dbc9f496748de2f"
+    },
+    {
+      "path": "after/blight-brass-chest-frames.png",
+      "bytes": 123065,
+      "sha256": "6b7df98caef495787af4f7b7d1bdb4988d344bcc92d7e26e8c093c29570e9d3d"
+    },
+    {
+      "path": "after/blight-brass-chest.gif",
+      "bytes": 951840,
+      "sha256": "faefbc1a3a4f1fdc3f776c4b786094e819a1b30bf8add10419e48d55d25dc6a6"
+    },
+    {
+      "path": "after/blight-brass-chest.png",
+      "bytes": 15277,
+      "sha256": "9eb367fa3a4568c46d3426f193b756dcb1ed2e2daa2f71adbedbdf36056bbf07"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-000.png",
+      "bytes": 14883,
+      "sha256": "93c7ed09d1a20636eefff292ce775f5a17dfea8c9be623ad89a9b226ee47bfab"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-007.png",
+      "bytes": 14887,
+      "sha256": "d8826009ac34be8cd34aaec29059601972698646c265c5bacd53aa3afb69ecf8"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-012.png",
+      "bytes": 14950,
+      "sha256": "756e0ff6681b28ab7e4b6123150a3f33574f6680f431cc8637e3ca3e6a44dcf3"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-020.png",
+      "bytes": 14983,
+      "sha256": "66fb33ccb45edba74672b784170e75683bba835dacdc60daa1f9f09892fdf6ca"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-024.png",
+      "bytes": 15174,
+      "sha256": "29e66a8cf6c5b2ff1a323030e45bb0849291ec820c1035103a0b5aa822385aa6"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-032.png",
+      "bytes": 14873,
+      "sha256": "a3cdd9dd270cb6f46b12f2085c9667ca98f3b0b762439e40af31cb0f283307dc"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-048.png",
+      "bytes": 14550,
+      "sha256": "e839bb83839d36833c3d2bb2c6f799a5bc17e09c14fd50fdf22fee12546f0b1d"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-058.png",
+      "bytes": 13370,
+      "sha256": "06c7471f71b3f358107515919f18a005055976b7c71f1f801b58770ae89c6a44"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-064.png",
+      "bytes": 13169,
+      "sha256": "8ec81b5af87845480fab55ad8c360eaf978aa6a6aeb31aa277a95e2aa5650fcd"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-080.png",
+      "bytes": 13352,
+      "sha256": "c1d62e44aef06803d9bbbaea09eb7b998065dcecea8ea58187c137eb57c47ca6"
+    },
+    {
+      "path": "after/blight-cape-hole/frame-095.png",
+      "bytes": 13340,
+      "sha256": "9622a91b05b0db2324a9df62395d7e6083894ea3d3475e602466de60d529c464"
+    },
+    {
+      "path": "after/blight-cape-hole-frames.png",
+      "bytes": 161061,
+      "sha256": "287f6504cad2440cc0c274ec5ec0b9689981fa5cc9a5fa36083f2978680cc1af"
+    },
+    {
+      "path": "after/blight-cape-hole.gif",
+      "bytes": 1071904,
+      "sha256": "5b7fe9b29abeeb0beaa3f2b1a7c8506baf5ac6fa0c538fe99fc8452529590531"
+    },
+    {
+      "path": "after/blight-cape-hole.png",
+      "bytes": 14883,
+      "sha256": "93c7ed09d1a20636eefff292ce775f5a17dfea8c9be623ad89a9b226ee47bfab"
+    },
+    {
+      "path": "after/blight-cobweb/frame-000.png",
+      "bytes": 14761,
+      "sha256": "bffad7bd32154efd1ee07b19c5812221ac03c7d09a98840d3f121a8b57d75350"
+    },
+    {
+      "path": "after/blight-cobweb/frame-007.png",
+      "bytes": 14518,
+      "sha256": "1e72f3d75f600a72d92bc37f4e05e889083ab7aed7b0b0ceeefd335dbf230591"
+    },
+    {
+      "path": "after/blight-cobweb/frame-012.png",
+      "bytes": 14471,
+      "sha256": "35002b0e5e9f4b2adce4061a84adb9e000824372e91947e1a95add953ab7f6da"
+    },
+    {
+      "path": "after/blight-cobweb/frame-020.png",
+      "bytes": 14333,
+      "sha256": "8b549315b5a5f50b0f812b03db4f5e0c8c610ae0abc306c20653e44ef89aeb74"
+    },
+    {
+      "path": "after/blight-cobweb/frame-026.png",
+      "bytes": 14370,
+      "sha256": "7cd8f9ea737c83fe4fd148044b617832faa7dc354d2c49867fb0f965995002de"
+    },
+    {
+      "path": "after/blight-cobweb/frame-032.png",
+      "bytes": 14634,
+      "sha256": "cc663ef75d37b9d8783cdf89b22fd2780d2ad426986ce39804efc3cd9a5dcdf8"
+    },
+    {
+      "path": "after/blight-cobweb/frame-048.png",
+      "bytes": 14362,
+      "sha256": "9efd62f4ebca8fdacce97d0d920b6d9bc560438a0b0d412c76fc855955f98e49"
+    },
+    {
+      "path": "after/blight-cobweb/frame-064.png",
+      "bytes": 14370,
+      "sha256": "7cd8f9ea737c83fe4fd148044b617832faa7dc354d2c49867fb0f965995002de"
+    },
+    {
+      "path": "after/blight-cobweb/frame-080.png",
+      "bytes": 14409,
+      "sha256": "e4ccd203b0c59c37baf036ae7bdc94ef6d0fa94ee0d7247a6ac3cb40aefff422"
+    },
+    {
+      "path": "after/blight-cobweb/frame-095.png",
+      "bytes": 14435,
+      "sha256": "1aa9aba015c78a2da72bac6e9c2e8fba18188518eb243ec04f76970dda9845ef"
+    },
+    {
+      "path": "after/blight-cobweb-frames.png",
+      "bytes": 135469,
+      "sha256": "15f95319ee028169fca1fc112027b2168390a5de10b6f4be383add9ffaa9b247"
+    },
+    {
+      "path": "after/blight-cobweb.gif",
+      "bytes": 774888,
+      "sha256": "08d2bcb30c1150592e22a17cb933ca5157a6896dcde32b2408fac55da069566f"
+    },
+    {
+      "path": "after/blight-cobweb.png",
+      "bytes": 14761,
+      "sha256": "bffad7bd32154efd1ee07b19c5812221ac03c7d09a98840d3f121a8b57d75350"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-000.png",
+      "bytes": 16534,
+      "sha256": "98921cb05ebd26819d8a2ef5500279f7b30d177dd198a9e826f34ee51d898b95"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-007.png",
+      "bytes": 16188,
+      "sha256": "a735f48819dceb82eb6ffa2126ebe952d9b00a9485ff17e3fdd052cfabc05520"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-012.png",
+      "bytes": 15889,
+      "sha256": "67ec1b9ca0fc5c526df4963ef81c8762effb67dc67dcb515b95fff6bcb99c3c1"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-020.png",
+      "bytes": 15316,
+      "sha256": "a28dabde0b26309a67b279f1de8836ad9961e4f2246b8edd2096858f056b90e3"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-048.png",
+      "bytes": 7073,
+      "sha256": "0a271c3fd14a38027dc5f2ec851983eb3aae6a3fa04fb7f9f0bad3dede78f6fb"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-064.png",
+      "bytes": 7346,
+      "sha256": "c1b5fba562676dfe32762b035d30fadcd7812beff2395006d483c09dd145defb"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-080.png",
+      "bytes": 7590,
+      "sha256": "2fb48c3064864c9dd8a5f5eb017cf0bd857d9f5296033d9253820290c865a39c"
+    },
+    {
+      "path": "after/blight-hollow-door/frame-123.png",
+      "bytes": 7568,
+      "sha256": "1e6d6e5e2fb8752041d2bdf4c8bc48417c9666eaf170849529f9d4aee84c1639"
+    },
+    {
+      "path": "after/blight-hollow-door-frames.png",
+      "bytes": 115172,
+      "sha256": "c1d633cea05ce5d35872fa52d26b9dd505bbeecd809e4fae033c73d99638e511"
+    },
+    {
+      "path": "after/blight-hollow-door.gif",
+      "bytes": 1095755,
+      "sha256": "e8184c89568379cdc0239f793725024410420f4e37deef6a1f7bf90ad562671d"
+    },
+    {
+      "path": "after/blight-hollow-door.png",
+      "bytes": 16534,
+      "sha256": "98921cb05ebd26819d8a2ef5500279f7b30d177dd198a9e826f34ee51d898b95"
+    },
+    {
+      "path": "after/blight-locked-door/frame-000.png",
+      "bytes": 13963,
+      "sha256": "bbe42f48f77102961fd7e3df21dca47e5b52c7bdd04a4fe983da92adec01da17"
+    },
+    {
+      "path": "after/blight-locked-door/frame-007.png",
+      "bytes": 13701,
+      "sha256": "f6c85f2a5d077cc67e8b7ba39c3cfc905eab0ec63d63ecd82e34110d55fdac97"
+    },
+    {
+      "path": "after/blight-locked-door/frame-012.png",
+      "bytes": 13701,
+      "sha256": "f6c85f2a5d077cc67e8b7ba39c3cfc905eab0ec63d63ecd82e34110d55fdac97"
+    },
+    {
+      "path": "after/blight-locked-door/frame-020.png",
+      "bytes": 13600,
+      "sha256": "01ca6923f735654bec0d7da944fa7bfa779bc46499a292dd62b6e4092c7d4a21"
+    },
+    {
+      "path": "after/blight-locked-door/frame-032.png",
+      "bytes": 13740,
+      "sha256": "6f7ac67c8a2b5b710714216c1a9ccc57c5e012382c4b27685d39286ba67c69c3"
+    },
+    {
+      "path": "after/blight-locked-door/frame-048.png",
+      "bytes": 13779,
+      "sha256": "38de668424c6809ea5e9eadd68afe57c005c6515b7e86a20f6f914d90e79b0ba"
+    },
+    {
+      "path": "after/blight-locked-door/frame-063.png",
+      "bytes": 13776,
+      "sha256": "62e2548e40d5060a235100dc1c009b20166f63c9279a67b6c25f23b382cf7dfb"
+    },
+    {
+      "path": "after/blight-locked-door-frames.png",
+      "bytes": 124424,
+      "sha256": "68c5a67e473a7384cfe0e2ea0191d5c49c912248818f0206c64e1531f18ba7b7"
+    },
+    {
+      "path": "after/blight-locked-door.gif",
+      "bytes": 383553,
+      "sha256": "58bd75358bb42068c68aba949a0ac7a8ed0120f4cfe397c7128611135e2dc833"
+    },
+    {
+      "path": "after/blight-locked-door.png",
+      "bytes": 13963,
+      "sha256": "bbe42f48f77102961fd7e3df21dca47e5b52c7bdd04a4fe983da92adec01da17"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-000.png",
+      "bytes": 14721,
+      "sha256": "b63747b3ca3139a7e4d4576b536376643aa2e5cd049964817bdbf9d55d110321"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-007.png",
+      "bytes": 14513,
+      "sha256": "04bc320c5ebfa14eb0e82a43312845bd5e9b07badfc62118ea4e156fc9ce42b2"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-012.png",
+      "bytes": 14553,
+      "sha256": "3021880cd06cc30217ce1ad87ad4d6af3e232f208dcb72d2833e3d1b106485c3"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-020.png",
+      "bytes": 14725,
+      "sha256": "f9f74b9a5cd60ee80818ecca2d422f1378d6197b818faad4b67806e9c48103f5"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-022.png",
+      "bytes": 14600,
+      "sha256": "9fa365b7ea5dba7e77577c197fd674169d26454828c9d5b00ce68b0911ce1bd8"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-032.png",
+      "bytes": 13095,
+      "sha256": "acc6515bca9e02acdb37b27d6a078cf234a9532ace1fb2044c6a995c48fc06b2"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-048.png",
+      "bytes": 13403,
+      "sha256": "ebdebad8daed2ddd251691c0bd52150de663a99de59fc90aefc80a5712ecd7e1"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-064.png",
+      "bytes": 13438,
+      "sha256": "296b845d80cd9ff779faa60b52a7706c9ea7e6b3b238ac267b594e0e05e62596"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-080.png",
+      "bytes": 13680,
+      "sha256": "fbd96436ed1facb319146720c8ace5162e02bb5e310a7f3c7ff436a238f33b4e"
+    },
+    {
+      "path": "after/blight-relic-chest/frame-111.png",
+      "bytes": 13547,
+      "sha256": "600311ce96b8b13fa9bc981801df76c8ba1b8fd97e99196daefbe1104d8f2c45"
+    },
+    {
+      "path": "after/blight-relic-chest-frames.png",
+      "bytes": 115622,
+      "sha256": "0e2ce5521dbe11c20780584b4d08971f2ca5710dc36d26cb783a6ed53ff992b9"
+    },
+    {
+      "path": "after/blight-relic-chest.gif",
+      "bytes": 974123,
+      "sha256": "db982a01133a056eb3a625185b07fd78a043c94ef0f73905faf732c9b39af5aa"
+    },
+    {
+      "path": "after/blight-relic-chest.png",
+      "bytes": 14721,
+      "sha256": "b63747b3ca3139a7e4d4576b536376643aa2e5cd049964817bdbf9d55d110321"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-000.png",
+      "bytes": 14113,
+      "sha256": "910656f302e14e9329307f3bcd1f109f22efac8c129df15b14bbe15f47ff11b9"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-007.png",
+      "bytes": 13951,
+      "sha256": "9b72b82ffb20c7f5b9bb561bc83c581f411213a9e9c0a4c225cbf9333d4c65ca"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-012.png",
+      "bytes": 13673,
+      "sha256": "6560eb69d75ccaebf2d965bddda56ad16e7b80c7a9a4425a11182ffdd733979b"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-020.png",
+      "bytes": 12551,
+      "sha256": "7611ff7f3c5f33b719839876c0c3f854d0b95e025d742ac91a96e767424689f6"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-022.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-032.png",
+      "bytes": 5881,
+      "sha256": "da07ffe23d8af4bcebb5e7c342ed2ef3691827684e4b6c5a6a39d054f8364442"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-048.png",
+      "bytes": 6335,
+      "sha256": "cf90b760742990c8d2381f04143ee9243900addf3207b18764100e7e613d3b01"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-064.png",
+      "bytes": 6457,
+      "sha256": "afb2541d356363752742de869b0cc0fd6766c14048eabe6e440dde501deac58f"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-080.png",
+      "bytes": 6749,
+      "sha256": "3474f4b2421486f08f4cabeec8e19216b29f0afbad6a946cdbe5b0fbb008a428"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-106.png",
+      "bytes": 6732,
+      "sha256": "d4f03b696e41af9aa61d1174180ef62f00df78d03b51a7ca22c60cde2769b02e"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-114.png",
+      "bytes": 6276,
+      "sha256": "44169d481bbdc0340ecca4702905c2b1d2b9cb10f9ca523f4d8b863c8d794070"
+    },
+    {
+      "path": "after/blight-thicket-door/frame-123.png",
+      "bytes": 6357,
+      "sha256": "bba6b784f7f74f52bf685fb0a424d0d384b3b74b7e8bf3de268cb34ed56ef6d3"
+    },
+    {
+      "path": "after/blight-thicket-door-frames.png",
+      "bytes": 100346,
+      "sha256": "1a9ad75fce81364d14ba42a2dc6c3eae98421610032bcd46ef5f21dc366310ff"
+    },
+    {
+      "path": "after/blight-thicket-door.gif",
+      "bytes": 880302,
+      "sha256": "de36a58dc75f6c4f8c0b954c4c15697740661b2613bdfbd2434ba7b05a3bbef2"
+    },
+    {
+      "path": "after/blight-thicket-door.png",
+      "bytes": 14113,
+      "sha256": "910656f302e14e9329307f3bcd1f109f22efac8c129df15b14bbe15f47ff11b9"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-000.png",
+      "bytes": 15270,
+      "sha256": "f133aeb6c46792f06dea6207f36db4376ab6195e133a3b3f879782d604dca2d0"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-007.png",
+      "bytes": 15231,
+      "sha256": "906a7ce987d8adc8ec46f9f7e743d814f0b6d4f7279aab9538c19e62d7f5cfea"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-012.png",
+      "bytes": 15165,
+      "sha256": "feca45afe51e13d32445c3f3da2317c12600688625615d83b6402797fff3b588"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-020.png",
+      "bytes": 15519,
+      "sha256": "6fe00659c07d9ee89ce5cd094ea1d9617546a89f1c45d53feb3e401e266cfc64"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-022.png",
+      "bytes": 15570,
+      "sha256": "3db6b074e56a0190909620d1b7c51055baa6a41ce5eddbbda6c520b5eba4606b"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-032.png",
+      "bytes": 15051,
+      "sha256": "2d54f00780987af0dfbe2eb8bbdfacc02e93b5870da5fa86e88507eb626e330c"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-048.png",
+      "bytes": 15163,
+      "sha256": "6032affc7ad3994fbbf7f65a133bfd1e43c0d7e47e359f68d77570918c13ee3e"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-064.png",
+      "bytes": 15227,
+      "sha256": "daa61383b6bcccc405ce9a8d19ea1dd942c38fda1dce1042f982f8eb2b5710a6"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-080.png",
+      "bytes": 15244,
+      "sha256": "0b66d76520f692d1ad25450462fc3bdc4ab15ece0b45362c869a4f69e92a611b"
+    },
+    {
+      "path": "after/blight-wood-chest/frame-111.png",
+      "bytes": 15219,
+      "sha256": "3821d1f03d0d6208cf31eeb5ef7da33b588a13235ff674351bc29167e6c33f31"
+    },
+    {
+      "path": "after/blight-wood-chest-frames.png",
+      "bytes": 125379,
+      "sha256": "94c0a985de9db3f2f59c839c3e9d42ed93a18f28790d1470dd870be76fd2b636"
+    },
+    {
+      "path": "after/blight-wood-chest.gif",
+      "bytes": 881303,
+      "sha256": "1d944bcb824b0e0cb638df42ca5b73658f39ae9462b2988a22c404a6102e4419"
+    },
+    {
+      "path": "after/blight-wood-chest.png",
+      "bytes": 15270,
+      "sha256": "f133aeb6c46792f06dea6207f36db4376ab6195e133a3b3f879782d604dca2d0"
+    },
+    {
+      "path": "after/capture.json",
+      "bytes": 1657495,
+      "sha256": "d8ca395a68781094285759d2bd27ba55f2483b952660d61b2b9cefb57e88d331"
+    },
+    {
+      "path": "after/cave-exit/frame-000.png",
+      "bytes": 7236,
+      "sha256": "2cd02af538a206ac55f3e0beaeb338784cdcd43ef2ad242a90815e2b07ed0d11"
+    },
+    {
+      "path": "after/cave-exit/frame-007.png",
+      "bytes": 7236,
+      "sha256": "2cd02af538a206ac55f3e0beaeb338784cdcd43ef2ad242a90815e2b07ed0d11"
+    },
+    {
+      "path": "after/cave-exit/frame-012.png",
+      "bytes": 7209,
+      "sha256": "2db8cf7de573aaac573e618c020169ad680a71694ea3e8c899c103f822472bfc"
+    },
+    {
+      "path": "after/cave-exit/frame-020.png",
+      "bytes": 7137,
+      "sha256": "b50df2769f8f8ed3a7615612c098b26815bf0b5fa3ad872f247f2dda0994cbd9"
+    },
+    {
+      "path": "after/cave-exit/frame-032.png",
+      "bytes": 7011,
+      "sha256": "2ff8f0914f5f1511a241240ab3402789950c55a8a20a7960223f4d770abee13f"
+    },
+    {
+      "path": "after/cave-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/cave-exit/frame-038.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/cave-exit/frame-039.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/cave-exit/frame-048.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/cave-exit/frame-064.png",
+      "bytes": 15636,
+      "sha256": "b527b4ae65b67c92a89cab4d323578e142076d9eff40aa76269711ac6156e913"
+    },
+    {
+      "path": "after/cave-exit/frame-080.png",
+      "bytes": 15537,
+      "sha256": "5892bc1041bbd78c853f73503c6047fe6fab74ca5061af2ab572a42495c8d46d"
+    },
+    {
+      "path": "after/cave-exit/frame-123.png",
+      "bytes": 15427,
+      "sha256": "e9e03a58aa6f1f071d3c08a86d48901c099a0a1d375b16218b4dd497c626cc15"
+    },
+    {
+      "path": "after/cave-exit-frames.png",
+      "bytes": 100931,
+      "sha256": "dac6ee6daf027f2383da06e91df5f9a78d155bd538979eaa0d70e00b45f91faf"
+    },
+    {
+      "path": "after/cave-exit.gif",
+      "bytes": 1168903,
+      "sha256": "67d2f3d5938594890aea57cab7d4f49b92df8b38869dc156223e9316f5c29df5"
+    },
+    {
+      "path": "after/cave-exit.png",
+      "bytes": 7236,
+      "sha256": "2cd02af538a206ac55f3e0beaeb338784cdcd43ef2ad242a90815e2b07ed0d11"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-000.png",
+      "bytes": 7235,
+      "sha256": "7a0418c04987bd84e391128710cca75de04957d649c68e98c670b499685773ce"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-007.png",
+      "bytes": 7235,
+      "sha256": "7a0418c04987bd84e391128710cca75de04957d649c68e98c670b499685773ce"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-012.png",
+      "bytes": 7272,
+      "sha256": "eeb80835df21f335a387c4fd292ccf664f154baa6d87d1cafcfb2f395abdffbb"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-020.png",
+      "bytes": 7161,
+      "sha256": "16ac4885267c68567cf455b1a1bcd27cffdf772258608e888d8389b259a4f0f1"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-027.png",
+      "bytes": 7278,
+      "sha256": "22959886019aba6fdbf469e81bb7aaa766f43445b2b3d4bcb60664de141d8eb8"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-032.png",
+      "bytes": 7146,
+      "sha256": "7ae1784737fca43efee5199b20aa19f3ea3bae30380f91babfef172e20eee8b6"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-048.png",
+      "bytes": 7143,
+      "sha256": "af44fa2fd60431b49ad3b8bccc37c7f91279ec1cba0a3c9497e0d1a7acd929b7"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-064.png",
+      "bytes": 7143,
+      "sha256": "af44fa2fd60431b49ad3b8bccc37c7f91279ec1cba0a3c9497e0d1a7acd929b7"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-080.png",
+      "bytes": 7143,
+      "sha256": "af44fa2fd60431b49ad3b8bccc37c7f91279ec1cba0a3c9497e0d1a7acd929b7"
+    },
+    {
+      "path": "after/cave-floor-switch/frame-087.png",
+      "bytes": 7143,
+      "sha256": "af44fa2fd60431b49ad3b8bccc37c7f91279ec1cba0a3c9497e0d1a7acd929b7"
+    },
+    {
+      "path": "after/cave-floor-switch-frames.png",
+      "bytes": 67296,
+      "sha256": "e5c35fe4090f7525960cec01532f0f55bb6ca5fd4d31cd480ddd67a9be9a00b6"
+    },
+    {
+      "path": "after/cave-floor-switch.gif",
+      "bytes": 272815,
+      "sha256": "2e1ae28338d4c59a028bc763decfd53ba1df5228a98ad76fb43963448b7d8a86"
+    },
+    {
+      "path": "after/cave-floor-switch.png",
+      "bytes": 7235,
+      "sha256": "7a0418c04987bd84e391128710cca75de04957d649c68e98c670b499685773ce"
+    },
+    {
+      "path": "after/cave-pot/frame-000.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-007.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-012.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-020.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-032.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-048.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot/frame-063.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-pot-frames.png",
+      "bytes": 65730,
+      "sha256": "8cfbd0f423d36870267ab6bab079d50a419e15dac8439b2cf1dddf852b5421e7"
+    },
+    {
+      "path": "after/cave-pot.gif",
+      "bytes": 20668,
+      "sha256": "2187219118a78d11d02684901ac20ce776ed05e028ce286190f11ec0ed32cb22"
+    },
+    {
+      "path": "after/cave-pot.png",
+      "bytes": 7750,
+      "sha256": "7a307e8a91c3127277f3f9d7c2927a762e13ad2920df54df57e3989ce4e58127"
+    },
+    {
+      "path": "after/cave-spring/frame-000.png",
+      "bytes": 7353,
+      "sha256": "aa39d0dee0f1c6ff7aadb1bb6550c94b513bc20db44a2660ca7ac47ac72ef6a4"
+    },
+    {
+      "path": "after/cave-spring/frame-007.png",
+      "bytes": 7346,
+      "sha256": "173582d03d20a75a3649048f7ed9cfbe9dd951110742cbe36eff96606cfbb5c0"
+    },
+    {
+      "path": "after/cave-spring/frame-012.png",
+      "bytes": 7346,
+      "sha256": "173582d03d20a75a3649048f7ed9cfbe9dd951110742cbe36eff96606cfbb5c0"
+    },
+    {
+      "path": "after/cave-spring/frame-020.png",
+      "bytes": 7353,
+      "sha256": "aa39d0dee0f1c6ff7aadb1bb6550c94b513bc20db44a2660ca7ac47ac72ef6a4"
+    },
+    {
+      "path": "after/cave-spring/frame-032.png",
+      "bytes": 7346,
+      "sha256": "173582d03d20a75a3649048f7ed9cfbe9dd951110742cbe36eff96606cfbb5c0"
+    },
+    {
+      "path": "after/cave-spring/frame-048.png",
+      "bytes": 7353,
+      "sha256": "aa39d0dee0f1c6ff7aadb1bb6550c94b513bc20db44a2660ca7ac47ac72ef6a4"
+    },
+    {
+      "path": "after/cave-spring/frame-063.png",
+      "bytes": 7346,
+      "sha256": "173582d03d20a75a3649048f7ed9cfbe9dd951110742cbe36eff96606cfbb5c0"
+    },
+    {
+      "path": "after/cave-spring-frames.png",
+      "bytes": 63830,
+      "sha256": "9cf95f5701ef036a213d9b937af421cd0295553e674ad0bb3f93506b897a3ad8"
+    },
+    {
+      "path": "after/cave-spring.gif",
+      "bytes": 104718,
+      "sha256": "10a58b52ca538eed9b3fb817d9370d829bb4b9f4e807003765781f302beaf213"
+    },
+    {
+      "path": "after/cave-spring.png",
+      "bytes": 7353,
+      "sha256": "aa39d0dee0f1c6ff7aadb1bb6550c94b513bc20db44a2660ca7ac47ac72ef6a4"
+    },
+    {
+      "path": "after/drain-control/frame-000.png",
+      "bytes": 8995,
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "path": "after/drain-control/frame-007.png",
+      "bytes": 9105,
+      "sha256": "c3517aa7b79bd508c54e37343415ed789af30f8a64a7bf7384101d5caacc5632"
+    },
+    {
+      "path": "after/drain-control/frame-012.png",
+      "bytes": 9089,
+      "sha256": "870da299b7e6b56dcabf89aeb5abd4163889c412a6a80f17c969af78a39ad46d"
+    },
+    {
+      "path": "after/drain-control/frame-020.png",
+      "bytes": 9029,
+      "sha256": "644e07689b7485a11f7a2d4f4a8a59932330ba5975315854955547fc023c6d58"
+    },
+    {
+      "path": "after/drain-control/frame-032.png",
+      "bytes": 8999,
+      "sha256": "e88b8019a7c39e23a1f542856b06a98bf6e91579a06c58b04ee3d82e1de7079e"
+    },
+    {
+      "path": "after/drain-control/frame-048.png",
+      "bytes": 9009,
+      "sha256": "19113a4ad8b581d8cb86f0de3d8ec8438f8e5815cc966d15a3a3493e25c66784"
+    },
+    {
+      "path": "after/drain-control/frame-063.png",
+      "bytes": 9059,
+      "sha256": "d00e270b34b67fc2eebd2fdabd9f3b75a9f8e18ff484454bf18616c14bb62970"
+    },
+    {
+      "path": "after/drain-control-frames.png",
+      "bytes": 69675,
+      "sha256": "b030ac917a3f729735cbfeddb70c1d469d956b0ae471baff480b90e10b146f4b"
+    },
+    {
+      "path": "after/drain-control.gif",
+      "bytes": 299626,
+      "sha256": "328d44f6b2326283c4a5b931e485b05e3afeac14685187656f03af64ec13f58b"
+    },
+    {
+      "path": "after/drain-control.png",
+      "bytes": 8995,
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "path": "after/drain-exit/frame-000.png",
+      "bytes": 12664,
+      "sha256": "4a2988e0c568e00bba2ee5cd987ebd2768ff1f3aa879c942468505066d606cca"
+    },
+    {
+      "path": "after/drain-exit/frame-007.png",
+      "bytes": 12694,
+      "sha256": "2fd5c60abfef2837255b774889251db7300edfcdb939f76993a452174a427dbb"
+    },
+    {
+      "path": "after/drain-exit/frame-012.png",
+      "bytes": 12710,
+      "sha256": "6067b3590bd3b4e34bd7ed6b2c2620dedf74bcf4a1645a10a1b8113ac262ba61"
+    },
+    {
+      "path": "after/drain-exit/frame-020.png",
+      "bytes": 12668,
+      "sha256": "5f677d4ebff971d6939f2bb3db2c3a5bd9280992c5cb50ca3fa654ff28ce5227"
+    },
+    {
+      "path": "after/drain-exit/frame-032.png",
+      "bytes": 12686,
+      "sha256": "597b81d279993ff2583fadc8981930e2885e7f9d71e6bfc5a2b897a82c56311e"
+    },
+    {
+      "path": "after/drain-exit/frame-048.png",
+      "bytes": 12701,
+      "sha256": "442575b709ee80fb1d0d6d57312b29fea7eb6862b0fff44e71fe1232cf3012e5"
+    },
+    {
+      "path": "after/drain-exit/frame-063.png",
+      "bytes": 12688,
+      "sha256": "66bbf7134197cb251ec9512c6b1b81abe36c51ae8e9134f84d8af7c47e565d27"
+    },
+    {
+      "path": "after/drain-exit-frames.png",
+      "bytes": 87722,
+      "sha256": "e9e5747401cf3a36a70422b374e24b7b8545aa857e2dd1adca2d5ed76b872a5b"
+    },
+    {
+      "path": "after/drain-exit.gif",
+      "bytes": 635327,
+      "sha256": "cdfbc123a549c9cfab23d20f9a700f6a2039f5f8f4dfe2d1abfda69d0e26254d"
+    },
+    {
+      "path": "after/drain-exit.png",
+      "bytes": 12664,
+      "sha256": "4a2988e0c568e00bba2ee5cd987ebd2768ff1f3aa879c942468505066d606cca"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-000.png",
+      "bytes": 13423,
+      "sha256": "41ec2fa273834c520c8f65497fc1db99ebc965c1365586e179191307598a3792"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-007.png",
+      "bytes": 13414,
+      "sha256": "b0244683a791087db34f076a9e6e22b59538c61d070191832bc7f5b17ec6325a"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-012.png",
+      "bytes": 13630,
+      "sha256": "c8981c3d3bca51fc6dbee2fec7d43c1307c5cb2f735468bf8973dc8b08c2597e"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-020.png",
+      "bytes": 13681,
+      "sha256": "a3d7c7303d47bfebc63372888edb003e7e50e20fabb6d0133aafbc6c6b8fd525"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-032.png",
+      "bytes": 13806,
+      "sha256": "0888956f8e65e65f9f4965c054762521fac332c47e198ff978006454aeee02cf"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-048.png",
+      "bytes": 13890,
+      "sha256": "e6b78b2037297f8b327414e915fc8796a467a7e55a7c0a711413831e74889416"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-064.png",
+      "bytes": 14124,
+      "sha256": "6247d1b9210638c4b6bc9617d095568a6c24205f038b7994065bc1161d7d1b47"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-080.png",
+      "bytes": 14149,
+      "sha256": "4e2cea1a1eda7d5592a9db0cd41065684d8870b19c1dd684a1d94dc693c8204c"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-175.png",
+      "bytes": 13847,
+      "sha256": "599a39513e2c6dbaa679e6a876f20bfb1a5e203090fd66c564102cc6916d4059"
+    },
+    {
+      "path": "after/forest-bomb-wall/frame-219.png",
+      "bytes": 13615,
+      "sha256": "810e1e5a671ce8656724751340455a5d19d58d80182bda2ce45742ea59c870bb"
+    },
+    {
+      "path": "after/forest-bomb-wall-frames.png",
+      "bytes": 103453,
+      "sha256": "136800ee5b3b2dcdb249ec70ce92fa796be10564d21e377f6b32644df02a8b6b"
+    },
+    {
+      "path": "after/forest-bomb-wall.gif",
+      "bytes": 2002982,
+      "sha256": "73056b2c21a66b2db4171099eed54e3b2c8a1c52808cabc99a71d84f2a5a0b21"
+    },
+    {
+      "path": "after/forest-bomb-wall.png",
+      "bytes": 13423,
+      "sha256": "41ec2fa273834c520c8f65497fc1db99ebc965c1365586e179191307598a3792"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-000.png",
+      "bytes": 15348,
+      "sha256": "1070b0c70c74e26bf49d177a58a8986d6bd070efefb321785de5ddf6a830172c"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-007.png",
+      "bytes": 15345,
+      "sha256": "d6a79bb3122e76611262ab3b2510698c4c2b5ebeb1a8524e00fbabd4c65fecfb"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-012.png",
+      "bytes": 15150,
+      "sha256": "d9cb338b44b97b5d6da8cc0b4e3a62d4eea322450792995f5b0d581ce4ccc5a5"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-020.png",
+      "bytes": 14989,
+      "sha256": "a9256ca89958b8c9fb4b1ecfc1c949aa0ebae191b2009c8dd8a0589361f70e26"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-022.png",
+      "bytes": 14855,
+      "sha256": "ac42b55e97f7a64fee92ad1d9541da19fcfdc39e99563233b868f4d6ae327e4c"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-032.png",
+      "bytes": 12097,
+      "sha256": "2e1006fb6f56ad7af43818c409aa0929110316823b04185a456047369f03002c"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-048.png",
+      "bytes": 12230,
+      "sha256": "880bddf92f1465a884caa43e368268b12d0f2e27cb029a23b2954a0bd764068c"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-064.png",
+      "bytes": 12229,
+      "sha256": "e247a9ee4c55f90fe9ad9cb8bffe94b102604773354992ea5e2f4c4ddcfcdb86"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-080.png",
+      "bytes": 12257,
+      "sha256": "5b2cdc49c88e237b89af28005aee54b20975e916667e64f3b2eadfb3461f6b0d"
+    },
+    {
+      "path": "after/forest-brass-chest/frame-111.png",
+      "bytes": 12234,
+      "sha256": "bf7d46e147b793b9320d354d73adc084f58001dfadcee01211645eeeb0930363"
+    },
+    {
+      "path": "after/forest-brass-chest-frames.png",
+      "bytes": 101693,
+      "sha256": "4c7cb9ec5275d7208994d3fc983849053f2cf972182387146b7b3dff757e107c"
+    },
+    {
+      "path": "after/forest-brass-chest.gif",
+      "bytes": 683314,
+      "sha256": "20c729458e06bd466848b7655ef86751a044e81e72d526c0adbffcde5776e1a0"
+    },
+    {
+      "path": "after/forest-brass-chest.png",
+      "bytes": 15348,
+      "sha256": "1070b0c70c74e26bf49d177a58a8986d6bd070efefb321785de5ddf6a830172c"
+    },
+    {
+      "path": "after/forest-bush/frame-000.png",
+      "bytes": 14259,
+      "sha256": "3020fc22598cd405c9455f2e9b649bae02a38cfe11176ca94db1d88f4cc6e771"
+    },
+    {
+      "path": "after/forest-bush/frame-007.png",
+      "bytes": 14197,
+      "sha256": "efe18bda731c946120981d0f0bb13f35c80fd0c9fe9fdc3dd96ca3c185e58c23"
+    },
+    {
+      "path": "after/forest-bush/frame-012.png",
+      "bytes": 14197,
+      "sha256": "efe18bda731c946120981d0f0bb13f35c80fd0c9fe9fdc3dd96ca3c185e58c23"
+    },
+    {
+      "path": "after/forest-bush/frame-020.png",
+      "bytes": 14208,
+      "sha256": "09d73adacdb1e9fcde7d98e32687499314ef6f94fe818a9860af276a50c28eae"
+    },
+    {
+      "path": "after/forest-bush/frame-032.png",
+      "bytes": 14197,
+      "sha256": "efe18bda731c946120981d0f0bb13f35c80fd0c9fe9fdc3dd96ca3c185e58c23"
+    },
+    {
+      "path": "after/forest-bush/frame-048.png",
+      "bytes": 14197,
+      "sha256": "efe18bda731c946120981d0f0bb13f35c80fd0c9fe9fdc3dd96ca3c185e58c23"
+    },
+    {
+      "path": "after/forest-bush/frame-063.png",
+      "bytes": 14208,
+      "sha256": "09d73adacdb1e9fcde7d98e32687499314ef6f94fe818a9860af276a50c28eae"
+    },
+    {
+      "path": "after/forest-bush-frames.png",
+      "bytes": 100298,
+      "sha256": "e645f5821a5ca410a9888b1a0c5131fa28705ce94bcde99e228bcdae79b45202"
+    },
+    {
+      "path": "after/forest-bush.gif",
+      "bytes": 237621,
+      "sha256": "e78c5a3793a213b61614d9aa799d0cb868e87474072b0746d6fdeff20ab19f65"
+    },
+    {
+      "path": "after/forest-bush.png",
+      "bytes": 14259,
+      "sha256": "3020fc22598cd405c9455f2e9b649bae02a38cfe11176ca94db1d88f4cc6e771"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-000.png",
+      "bytes": 16852,
+      "sha256": "d91be37d6191b3b51b103c74eedf04b4e30cc05a3e0a4aab2c09878bc422bde8"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-007.png",
+      "bytes": 16822,
+      "sha256": "547f78ce9316e8f45800ec6db6ce2543f6a9174f7c1d91e926f39cda7deedf45"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-012.png",
+      "bytes": 16985,
+      "sha256": "55b884a604193ca53d57ca76b94344a4b3390f2cdcb89074b945317c4076ca08"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-020.png",
+      "bytes": 17128,
+      "sha256": "3cb2a58efee0cdf2a062d51d87f7dba42c4d01300b81d86e21d7d4880c44edff"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-024.png",
+      "bytes": 17114,
+      "sha256": "5df0099214a29f8781eaf1f383338d5b9db8c9442e8344a8e1e950f8d9476403"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-032.png",
+      "bytes": 17119,
+      "sha256": "474d1b653bcb2f5deaf51634b038298063902a71931f6d9ee45ea7bd04148169"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-048.png",
+      "bytes": 16515,
+      "sha256": "1aee31035fae31d15e1f2fef617697364fd0c87621156c0bfcd4291d91630821"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-058.png",
+      "bytes": 15409,
+      "sha256": "cc379e3111fe36901a9a7333fe66d707a6789a6cc80755a604d3a4637af96709"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-064.png",
+      "bytes": 15433,
+      "sha256": "06034e195af19ddf4db2f3c4e6cf4ed002a437369190ee5809e7a2ac5e504545"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-080.png",
+      "bytes": 15462,
+      "sha256": "0d2ec5d4720d09d72395624cdd63e659a452cb95b1a86b66197c3b8350adcbef"
+    },
+    {
+      "path": "after/forest-cape-hole/frame-095.png",
+      "bytes": 15433,
+      "sha256": "06034e195af19ddf4db2f3c4e6cf4ed002a437369190ee5809e7a2ac5e504545"
+    },
+    {
+      "path": "after/forest-cape-hole-frames.png",
+      "bytes": 123928,
+      "sha256": "359f15fcd298c75229f5ec1c79de7702fe3a1a1577f2efb9a2abb348dddc6e8e"
+    },
+    {
+      "path": "after/forest-cape-hole.gif",
+      "bytes": 963655,
+      "sha256": "f38d342e98d17b51a641d69bd1c52e7d05b0b285074c49622ae5eb9758338c6f"
+    },
+    {
+      "path": "after/forest-cape-hole.png",
+      "bytes": 16852,
+      "sha256": "d91be37d6191b3b51b103c74eedf04b4e30cc05a3e0a4aab2c09878bc422bde8"
+    },
+    {
+      "path": "after/forest-cave-door/frame-000.png",
+      "bytes": 12379,
+      "sha256": "156ecccd3db7dbdec11705f27285c235eeeb90dafdc07b4568825541918181a8"
+    },
+    {
+      "path": "after/forest-cave-door/frame-007.png",
+      "bytes": 12399,
+      "sha256": "8c86d52672697fe7f5fc62b013c5e6c0e9fee6763f5f6e6094a5144ae699ea2d"
+    },
+    {
+      "path": "after/forest-cave-door/frame-012.png",
+      "bytes": 12157,
+      "sha256": "e78709c532c85ea3ea0581af609000c2ca124974c5e4f1203848f430ff80e174"
+    },
+    {
+      "path": "after/forest-cave-door/frame-020.png",
+      "bytes": 12199,
+      "sha256": "3d56acf9a51c74d61549e8687bb3dacceb4405e692f2978ccca53dc0865a6183"
+    },
+    {
+      "path": "after/forest-cave-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/forest-cave-door/frame-048.png",
+      "bytes": 6471,
+      "sha256": "69e1d8362b409cf0560fe1530c88c7a34732b96d61d8ac6f2c03391af14804e7"
+    },
+    {
+      "path": "after/forest-cave-door/frame-064.png",
+      "bytes": 6561,
+      "sha256": "235e0604622b7f1ada593c9a852bfc36f0b8e05a159da74aed250bb7d3e96425"
+    },
+    {
+      "path": "after/forest-cave-door/frame-080.png",
+      "bytes": 6561,
+      "sha256": "235e0604622b7f1ada593c9a852bfc36f0b8e05a159da74aed250bb7d3e96425"
+    },
+    {
+      "path": "after/forest-cave-door/frame-123.png",
+      "bytes": 6561,
+      "sha256": "235e0604622b7f1ada593c9a852bfc36f0b8e05a159da74aed250bb7d3e96425"
+    },
+    {
+      "path": "after/forest-cave-door-frames.png",
+      "bytes": 90567,
+      "sha256": "5c02d3a3c147c8be72f8291bd59bff24d7473b0d3e44bc485df7d29a6850f434"
+    },
+    {
+      "path": "after/forest-cave-door.gif",
+      "bytes": 550838,
+      "sha256": "ce9b04b6dbcc0722a251a963b51c33c874e6fa1576d9596e87960eff5882e9cb"
+    },
+    {
+      "path": "after/forest-cave-door.png",
+      "bytes": 12379,
+      "sha256": "156ecccd3db7dbdec11705f27285c235eeeb90dafdc07b4568825541918181a8"
+    },
+    {
+      "path": "after/forest-cobweb/frame-000.png",
+      "bytes": 13230,
+      "sha256": "6a94703fa50bde98057da9940cab0e25453a6cd5cad0410a9bfb806136b50a6d"
+    },
+    {
+      "path": "after/forest-cobweb/frame-007.png",
+      "bytes": 13202,
+      "sha256": "aec4663bb78ce1d3cfe892aea21f9fefb7e8b81aacd74c46ed047cef1b153320"
+    },
+    {
+      "path": "after/forest-cobweb/frame-012.png",
+      "bytes": 13163,
+      "sha256": "aa84c00369774b0b432029762f8fb9d382ab35bc178768229ba4e0df41372b88"
+    },
+    {
+      "path": "after/forest-cobweb/frame-020.png",
+      "bytes": 13304,
+      "sha256": "40f275c015f1f7ecea9fbd87ee6e39b9a2ab337482a004947f6b00f16d8fcbeb"
+    },
+    {
+      "path": "after/forest-cobweb/frame-026.png",
+      "bytes": 13228,
+      "sha256": "0beb645c1f131ea377b2a86a7c3662fa72496840f7bea6e211db06405fccccf7"
+    },
+    {
+      "path": "after/forest-cobweb/frame-032.png",
+      "bytes": 13260,
+      "sha256": "86d7b87eeeb9a15f23df0f783589c10af88b8775300514dd450c5360ea2ce066"
+    },
+    {
+      "path": "after/forest-cobweb/frame-048.png",
+      "bytes": 13228,
+      "sha256": "0beb645c1f131ea377b2a86a7c3662fa72496840f7bea6e211db06405fccccf7"
+    },
+    {
+      "path": "after/forest-cobweb/frame-064.png",
+      "bytes": 13200,
+      "sha256": "184e8f2a4826da8796780ffa6f3bdecea6e13c3f379fa67e52a8c3d5e55d5a21"
+    },
+    {
+      "path": "after/forest-cobweb/frame-080.png",
+      "bytes": 13296,
+      "sha256": "a8e2e359ad0e150923c959e059aaf2ccb067e6517a61c2f85130ae760388df63"
+    },
+    {
+      "path": "after/forest-cobweb/frame-095.png",
+      "bytes": 13200,
+      "sha256": "184e8f2a4826da8796780ffa6f3bdecea6e13c3f379fa67e52a8c3d5e55d5a21"
+    },
+    {
+      "path": "after/forest-cobweb-frames.png",
+      "bytes": 105971,
+      "sha256": "1aadd550831d6b1be5283e0cf6e0dc544462e76d1a4c867fa2ea3c3165536dfc"
+    },
+    {
+      "path": "after/forest-cobweb.gif",
+      "bytes": 768394,
+      "sha256": "757cc2c4d2d14f8d1072d8d52375795f5ce3f7c22db2765dc97c477518a49d65"
+    },
+    {
+      "path": "after/forest-cobweb.png",
+      "bytes": 13230,
+      "sha256": "6a94703fa50bde98057da9940cab0e25453a6cd5cad0410a9bfb806136b50a6d"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-000.png",
+      "bytes": 12572,
+      "sha256": "08641396ef24cc4ba25ffc578eb3dfe30623b9624f6b4cd39fd40c162e837a66"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-007.png",
+      "bytes": 12553,
+      "sha256": "bbf6a078a7974dadaaf7035a802c7a40593daa87250cd085b446f6c65469b0f7"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-012.png",
+      "bytes": 12743,
+      "sha256": "7909d7d83a87eb2918bb9276f0112160cb71254dfbe63700d1dafc43f01de705"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-020.png",
+      "bytes": 12612,
+      "sha256": "f9d122912515d0de9adbc700c4ff2f5765476e1aff1c2c49613172ef8f92124f"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-048.png",
+      "bytes": 6436,
+      "sha256": "8b6585fb4b8b31bbcd6e55752173e517cad650199ec3bfe739b40b6e7d358370"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-064.png",
+      "bytes": 6517,
+      "sha256": "b2b0bece15c07abf45d25e903f61885ebf4f39282b37e8eb5dc8bed948dc32e7"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-080.png",
+      "bytes": 6517,
+      "sha256": "b2b0bece15c07abf45d25e903f61885ebf4f39282b37e8eb5dc8bed948dc32e7"
+    },
+    {
+      "path": "after/forest-hollow-door/frame-123.png",
+      "bytes": 6517,
+      "sha256": "b2b0bece15c07abf45d25e903f61885ebf4f39282b37e8eb5dc8bed948dc32e7"
+    },
+    {
+      "path": "after/forest-hollow-door-frames.png",
+      "bytes": 90501,
+      "sha256": "3426a7c22b57a0632ae47798a858dcb6d90c0eb59841874f0dca3d92bf06c47c"
+    },
+    {
+      "path": "after/forest-hollow-door.gif",
+      "bytes": 522594,
+      "sha256": "08fbf4ef24628154d290c4fd643a2ac36789f7f0a1f5ce4376881207d5a9da83"
+    },
+    {
+      "path": "after/forest-hollow-door.png",
+      "bytes": 12572,
+      "sha256": "08641396ef24cc4ba25ffc578eb3dfe30623b9624f6b4cd39fd40c162e837a66"
+    },
+    {
+      "path": "after/forest-locked-door/frame-000.png",
+      "bytes": 12282,
+      "sha256": "d517f0cf819bcf9043948db3d224c0cf9b5614f1b83f30c7ced1a91feae9faa7"
+    },
+    {
+      "path": "after/forest-locked-door/frame-007.png",
+      "bytes": 12267,
+      "sha256": "21d94e770df65b7e3913c882ff142aa045776ba6e34dc10af149a877ab6ed1d0"
+    },
+    {
+      "path": "after/forest-locked-door/frame-012.png",
+      "bytes": 12267,
+      "sha256": "21d94e770df65b7e3913c882ff142aa045776ba6e34dc10af149a877ab6ed1d0"
+    },
+    {
+      "path": "after/forest-locked-door/frame-020.png",
+      "bytes": 12292,
+      "sha256": "78b800eb0159be651b7a8abd8255e8f700e31f51aec42b02f8bae244c0ff462a"
+    },
+    {
+      "path": "after/forest-locked-door/frame-032.png",
+      "bytes": 12248,
+      "sha256": "1a059f4e9f8294d9bb589f236f25ca9d169ae76d5c8323a8f7f293073b7fbd62"
+    },
+    {
+      "path": "after/forest-locked-door/frame-048.png",
+      "bytes": 12285,
+      "sha256": "7215961eb6b01e889efc68f978a38b40ec143e445fd61466c1e09822f45dadb5"
+    },
+    {
+      "path": "after/forest-locked-door/frame-063.png",
+      "bytes": 12286,
+      "sha256": "fce06da0ed03eb043e772c032552282cfd122214a6ba97425bc8c6fd91976dd6"
+    },
+    {
+      "path": "after/forest-locked-door-frames.png",
+      "bytes": 87897,
+      "sha256": "83f21b439d384e5f58ac450c48ca763bc2300478cca005f1664931173b313145"
+    },
+    {
+      "path": "after/forest-locked-door.gif",
+      "bytes": 490239,
+      "sha256": "3182abfcd0a8c0876b98bf9afbbade61f76e017a115ecdf9bb5bb8ea4e922a55"
+    },
+    {
+      "path": "after/forest-locked-door.png",
+      "bytes": 12282,
+      "sha256": "d517f0cf819bcf9043948db3d224c0cf9b5614f1b83f30c7ced1a91feae9faa7"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-000.png",
+      "bytes": 14086,
+      "sha256": "337eb98d222b31b73de27af6d19c41658fb76d09d129524d2fc12169feaf5029"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-007.png",
+      "bytes": 14030,
+      "sha256": "3105377972621c9d1448d83c7b2f293d51011641514c258aabb0c7b2315cc3a8"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-012.png",
+      "bytes": 13930,
+      "sha256": "471ad2a88e8c272fa60765f5bc83177d3ea1222a6542f92a6b03a3a34e91f762"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-020.png",
+      "bytes": 14013,
+      "sha256": "e940b1f83ef4bb89c7c01aac23f45f1abf15e6aaeb10a2061247c9bf16f1eeb4"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-022.png",
+      "bytes": 14109,
+      "sha256": "e54aa80b7dcf9e853a4fa8a864fe11ea11c0dbfef104d8e7e20862c1046a628b"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-032.png",
+      "bytes": 12138,
+      "sha256": "e1c9119b2d66c83d7481dea4e5542aa533c801b1761fc697ca5f5c395cf9fdfe"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-048.png",
+      "bytes": 12256,
+      "sha256": "e4dc79b26b5bfab37c854f9708f19b7ea2c043d8ae4198b1c3b1d64f835044e9"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-064.png",
+      "bytes": 12238,
+      "sha256": "ffe865f0bcc8c0db37253e675a12550719860d016970c27ba0edf6c961a3e6c9"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-080.png",
+      "bytes": 12309,
+      "sha256": "3f7d3ab1593f8946e97895ddee48a463b1596fdb4227bbbbaed95f9381b634d4"
+    },
+    {
+      "path": "after/forest-relic-chest/frame-111.png",
+      "bytes": 12265,
+      "sha256": "4de2635e45a7c8101350dbab873c06f89fff08707dd9b073587b6ffc43409382"
+    },
+    {
+      "path": "after/forest-relic-chest-frames.png",
+      "bytes": 96041,
+      "sha256": "465714df83aeb77ca9a013981cf73752c012b8dd3a889bc22559c922be81401c"
+    },
+    {
+      "path": "after/forest-relic-chest.gif",
+      "bytes": 683381,
+      "sha256": "29fa0b627391ff0482a1493f00b6ac0694f358658822988e629f55160dc1cc24"
+    },
+    {
+      "path": "after/forest-relic-chest.png",
+      "bytes": 14086,
+      "sha256": "337eb98d222b31b73de27af6d19c41658fb76d09d129524d2fc12169feaf5029"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-000.png",
+      "bytes": 13720,
+      "sha256": "2f100e73d51df87be8b6865da6c864d635fdcc2b4b898208626cd38aad09d022"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-007.png",
+      "bytes": 13624,
+      "sha256": "13c915501a8f372748457f7754320c920f0e57dca296064f8cdbe0a10238967c"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-012.png",
+      "bytes": 13624,
+      "sha256": "13c915501a8f372748457f7754320c920f0e57dca296064f8cdbe0a10238967c"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-020.png",
+      "bytes": 13678,
+      "sha256": "bcbbb18a1fd0500ded4e6b3b59fb73d3fe279e9280957e3bcb2abafa988d7a9c"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-032.png",
+      "bytes": 13630,
+      "sha256": "1287e753f0ecd43a213e114fcd7bbf8cd05add099c3ba87347a60deac2d80f64"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-048.png",
+      "bytes": 13661,
+      "sha256": "7f5e9f313198d1654b914fa68f4d4525f4158144cf61448cfdc841a815611dbd"
+    },
+    {
+      "path": "after/forest-relic-pedestal/frame-063.png",
+      "bytes": 13640,
+      "sha256": "4c7a7790395914e8284b36666a059b57d94e8093e11ac127e0b518f43e34a2a0"
+    },
+    {
+      "path": "after/forest-relic-pedestal-frames.png",
+      "bytes": 96262,
+      "sha256": "1c7138e32a4ed4a3fed3ae18fec008d1adb9b73571d06fbbfd8bf484563e597c"
+    },
+    {
+      "path": "after/forest-relic-pedestal.gif",
+      "bytes": 287732,
+      "sha256": "f2dfd1031d31f6e6e4e04a3148a94c5263a3db9463ec7127d3ac75462a351398"
+    },
+    {
+      "path": "after/forest-relic-pedestal.png",
+      "bytes": 13720,
+      "sha256": "2f100e73d51df87be8b6865da6c864d635fdcc2b4b898208626cd38aad09d022"
+    },
+    {
+      "path": "after/forest-rock_small/frame-000.png",
+      "bytes": 16516,
+      "sha256": "70eb165e324d20a7e5f2b026e7a2b2fa8070558880506ede8cfd5b308b8e77e6"
+    },
+    {
+      "path": "after/forest-rock_small/frame-007.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small/frame-012.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small/frame-020.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small/frame-032.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small/frame-048.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small/frame-063.png",
+      "bytes": 16382,
+      "sha256": "332c6c156c54c6fba916dd524f5f7fe624b6ba1ff734f2fbf9a331d1878a8489"
+    },
+    {
+      "path": "after/forest-rock_small-frames.png",
+      "bytes": 109159,
+      "sha256": "f408984033fe5a4760e1605133da905558a1bded249787836d0be20b954063af"
+    },
+    {
+      "path": "after/forest-rock_small.gif",
+      "bytes": 120007,
+      "sha256": "9c0bbe007e86d3293522ffbf2b039389e6d658e87ba1d40aa4e945d52d40813b"
+    },
+    {
+      "path": "after/forest-rock_small.png",
+      "bytes": 16516,
+      "sha256": "70eb165e324d20a7e5f2b026e7a2b2fa8070558880506ede8cfd5b308b8e77e6"
+    },
+    {
+      "path": "after/forest-shrine/frame-000.png",
+      "bytes": 14627,
+      "sha256": "228f7340e92a8db7404a3884045d7956851528ed9edfe401e27b4087a70aea1f"
+    },
+    {
+      "path": "after/forest-shrine/frame-007.png",
+      "bytes": 14631,
+      "sha256": "06e427e3da4af799bfb79db1f92401eed361bafcc04c881dd157cd6099b8fbf1"
+    },
+    {
+      "path": "after/forest-shrine/frame-012.png",
+      "bytes": 14469,
+      "sha256": "2ebd9fe0158930c6d8fb3f006d962a62252efd90db4c00535573dca0a8fc2c90"
+    },
+    {
+      "path": "after/forest-shrine/frame-020.png",
+      "bytes": 13796,
+      "sha256": "010a9838a82e5155de3aa2f1ed3b44034a69e57e05454990f1a00e3905160a2a"
+    },
+    {
+      "path": "after/forest-shrine/frame-027.png",
+      "bytes": 13484,
+      "sha256": "f8260be1c1e0f60cc029032c4862de5868ca12cad02bd856b537ea23ef3d3f8a"
+    },
+    {
+      "path": "after/forest-shrine/frame-032.png",
+      "bytes": 10270,
+      "sha256": "64c86b65ec5f0ba1fb9b1e51119531e88c35ef693bd6549ce1c57edff732301f"
+    },
+    {
+      "path": "after/forest-shrine/frame-048.png",
+      "bytes": 10477,
+      "sha256": "21caa3b2e986409e604194ab8f73809d454b8356dbb13ecc2ef9f878d419bec4"
+    },
+    {
+      "path": "after/forest-shrine/frame-064.png",
+      "bytes": 10676,
+      "sha256": "30390342b7156c375e20576850d4983aef5763445a79a36add57d1cb3a59b644"
+    },
+    {
+      "path": "after/forest-shrine/frame-080.png",
+      "bytes": 10719,
+      "sha256": "4ebe13fc6882d0aa11cab7b306c8fb0ec12212f20cdc913755bd370518d021f5"
+    },
+    {
+      "path": "after/forest-shrine/frame-095.png",
+      "bytes": 10682,
+      "sha256": "af87db52db0ab41557d9324acef54c7631bb8dc3c348fcea660b39fb3df00030"
+    },
+    {
+      "path": "after/forest-shrine-frames.png",
+      "bytes": 101806,
+      "sha256": "30091344f0ddd4d65fda8a4ca1d9d9f06db80e518a7e9d913ef1285cc1abb04f"
+    },
+    {
+      "path": "after/forest-shrine.gif",
+      "bytes": 791679,
+      "sha256": "7ff3599fc0fc3333204b19d1f6382b7616cba774890f2fe8020f6cc8f60397f6"
+    },
+    {
+      "path": "after/forest-shrine.png",
+      "bytes": 14627,
+      "sha256": "228f7340e92a8db7404a3884045d7956851528ed9edfe401e27b4087a70aea1f"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-000.png",
+      "bytes": 13126,
+      "sha256": "8a4f1e2cd15f668ddeb51845c394bded1baa7186ee8d42ef561321f550b08c89"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-007.png",
+      "bytes": 13071,
+      "sha256": "68f26229448ab8980590880d6b8e3f78d045c9b2fdcbac5f0961dd1fdc91bd13"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-012.png",
+      "bytes": 13084,
+      "sha256": "d3b5ebfdd46140e0bfb5ea0f03c3377ca6ccf8efb166aa604b0270508e3febda"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-020.png",
+      "bytes": 11293,
+      "sha256": "e93d750a7d72f1ac5f850f8f1e0b3d085399052164cf9f218bf4342d3d083d47"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-022.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-032.png",
+      "bytes": 5956,
+      "sha256": "b99f9c63f67feb6f9a737fd61054461146fd76ddf6cecf5e6fad6eabc30f3a31"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-048.png",
+      "bytes": 6105,
+      "sha256": "9d9d2b471c7f513e3b30660e136271f24f9d122cf15f0038e801fb504a51e008"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-064.png",
+      "bytes": 6168,
+      "sha256": "b697a01a45e0e48a3be9360d0a3c2a35e157b4af2ff1928212a69c2b3c4e8e69"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-080.png",
+      "bytes": 6712,
+      "sha256": "e7618304ae3effe120aef8ed9389619ef2444fb542c295b147ea39a796cc4611"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-122.png",
+      "bytes": 6587,
+      "sha256": "efee88d89da0cedac39a1da2be7492b21ef7ad6ce9bda8909ac1cef455d886d2"
+    },
+    {
+      "path": "after/forest-thicket-door/frame-123.png",
+      "bytes": 6034,
+      "sha256": "0b08ab71898ca741ca3c0c4239350bef2e6bdb7f77e81def43c47983d8afb94d"
+    },
+    {
+      "path": "after/forest-thicket-door-frames.png",
+      "bytes": 86790,
+      "sha256": "1122262297560672bf3f5e8170a055e05be6d182499e853f7c770985c854d52e"
+    },
+    {
+      "path": "after/forest-thicket-door.gif",
+      "bytes": 836128,
+      "sha256": "4d9d59f43a6d59119fbbc32a6449d26b5ac614a29115f3b60a9fd7c3e4cacd2b"
+    },
+    {
+      "path": "after/forest-thicket-door.png",
+      "bytes": 13126,
+      "sha256": "8a4f1e2cd15f668ddeb51845c394bded1baa7186ee8d42ef561321f550b08c89"
+    },
+    {
+      "path": "after/forest-thorn/frame-000.png",
+      "bytes": 14876,
+      "sha256": "bba0bd1064ece8f984ba94dd37213d41aa5ce0fba38b2f915f2c9473b4aa5617"
+    },
+    {
+      "path": "after/forest-thorn/frame-007.png",
+      "bytes": 14886,
+      "sha256": "c942eaba644e6c6d4ad2ae39b17faa473652e9b6e10c66a2d339dc1c93be563d"
+    },
+    {
+      "path": "after/forest-thorn/frame-012.png",
+      "bytes": 14886,
+      "sha256": "c942eaba644e6c6d4ad2ae39b17faa473652e9b6e10c66a2d339dc1c93be563d"
+    },
+    {
+      "path": "after/forest-thorn/frame-020.png",
+      "bytes": 14886,
+      "sha256": "28439c560062698e9bb9dcc2584c5dbc720768441798e60115c49a308a479fdd"
+    },
+    {
+      "path": "after/forest-thorn/frame-032.png",
+      "bytes": 14886,
+      "sha256": "c942eaba644e6c6d4ad2ae39b17faa473652e9b6e10c66a2d339dc1c93be563d"
+    },
+    {
+      "path": "after/forest-thorn/frame-048.png",
+      "bytes": 14896,
+      "sha256": "7450b9d0c32f7e338f183ef18f0f05dcb3e1ce7e56548acb797cc13d92f48b00"
+    },
+    {
+      "path": "after/forest-thorn/frame-063.png",
+      "bytes": 14876,
+      "sha256": "bba0bd1064ece8f984ba94dd37213d41aa5ce0fba38b2f915f2c9473b4aa5617"
+    },
+    {
+      "path": "after/forest-thorn-frames.png",
+      "bytes": 101600,
+      "sha256": "1ab8ae1eec6ed3a64127cce84ea5a059af12acd4b38faf60ad1abae9c7bedcb2"
+    },
+    {
+      "path": "after/forest-thorn.gif",
+      "bytes": 260752,
+      "sha256": "1fc59b55da724439462e959608ddf9590b83b326393b857dd159377767d6f935"
+    },
+    {
+      "path": "after/forest-thorn.png",
+      "bytes": 14876,
+      "sha256": "bba0bd1064ece8f984ba94dd37213d41aa5ce0fba38b2f915f2c9473b4aa5617"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-000.png",
+      "bytes": 13395,
+      "sha256": "3190e9da3358d89834c9c46338289810f0cc31e765cc7c770758d7a371797071"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-007.png",
+      "bytes": 13365,
+      "sha256": "0ff3384a524546c8d0866e17a34cff6a4ef3a297bef0a406f3ebfd37a42c374c"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-012.png",
+      "bytes": 13216,
+      "sha256": "9ed5fb632c9b33efef93ca2d760e5a24476ae7f0fe214378db01207501691d9f"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-020.png",
+      "bytes": 12844,
+      "sha256": "65ca5c30b52c6d303f60794d2dd6574f696300d2141dd09249695c1270ce81a5"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-022.png",
+      "bytes": 12757,
+      "sha256": "8b3a80e648ed1c101504882eb86fa9ea03f11c72b1052a5650d7fd8ded480d8d"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-032.png",
+      "bytes": 11445,
+      "sha256": "63445fe53b5cbdc01f2d1f8cfe470ca1d20f714c0781a8c195f567986b1c2a52"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-048.png",
+      "bytes": 11614,
+      "sha256": "b377154fca133fbc0a37252f82f4c9bc4381c309dd6b3dfbcac54ecd9905ba24"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-064.png",
+      "bytes": 11614,
+      "sha256": "7405e67cfdbf44bffd63cb66d9f20d9c40ea1f9cfa57ec0e5c3fed0ebef7f3b3"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-080.png",
+      "bytes": 11614,
+      "sha256": "b377154fca133fbc0a37252f82f4c9bc4381c309dd6b3dfbcac54ecd9905ba24"
+    },
+    {
+      "path": "after/forest-wood-chest/frame-111.png",
+      "bytes": 11616,
+      "sha256": "11e2fde3d2b62274f88a5476e741d94664866c15d613c7dd0a58909a5e5aaa83"
+    },
+    {
+      "path": "after/forest-wood-chest-frames.png",
+      "bytes": 94687,
+      "sha256": "a0174e51ef0d5569c99c35bae24fc0928c1a9278355da255654a0e42b7a9f2a4"
+    },
+    {
+      "path": "after/forest-wood-chest.gif",
+      "bytes": 664546,
+      "sha256": "9dad3734c32f1c6ec3e320054502d31012c53fb29f1cde54da9aecbcf6b6cad2"
+    },
+    {
+      "path": "after/forest-wood-chest.png",
+      "bytes": 13395,
+      "sha256": "3190e9da3358d89834c9c46338289810f0cc31e765cc7c770758d7a371797071"
+    },
+    {
+      "path": "after/hollow-exit/frame-000.png",
+      "bytes": 7631,
+      "sha256": "ca6ad5c8bf0f31222a237c5390cb5b89582510306fe92aff22cd72a3376315ca"
+    },
+    {
+      "path": "after/hollow-exit/frame-007.png",
+      "bytes": 7631,
+      "sha256": "ca6ad5c8bf0f31222a237c5390cb5b89582510306fe92aff22cd72a3376315ca"
+    },
+    {
+      "path": "after/hollow-exit/frame-012.png",
+      "bytes": 7567,
+      "sha256": "764475481d6a85fc46ee187f1074377dc97c11690dffac55248ffae1e5dc0c13"
+    },
+    {
+      "path": "after/hollow-exit/frame-020.png",
+      "bytes": 7482,
+      "sha256": "f17742e09455289f374a9ee608d6668641e207b36a9211e984943bbf8eb31108"
+    },
+    {
+      "path": "after/hollow-exit/frame-032.png",
+      "bytes": 7316,
+      "sha256": "4eb6f83f71e6942732878622320c43a076d5e209f1e41387313768f6298e1509"
+    },
+    {
+      "path": "after/hollow-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/hollow-exit/frame-038.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/hollow-exit/frame-041.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/hollow-exit/frame-048.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/hollow-exit/frame-064.png",
+      "bytes": 13628,
+      "sha256": "aad948717faf338eff34daeb5480b20d183e48c8fd7679031b9f3e802d4a87f2"
+    },
+    {
+      "path": "after/hollow-exit/frame-080.png",
+      "bytes": 13617,
+      "sha256": "8d155be73376074628f4166f9c5a20c3b4487d5f876627fb86efa4e44ac74296"
+    },
+    {
+      "path": "after/hollow-exit/frame-123.png",
+      "bytes": 13653,
+      "sha256": "7af2ffd388d05c804fc975a0b6eefa368e0dd7a31d0ba4b26b8abc35e4377aa2"
+    },
+    {
+      "path": "after/hollow-exit-frames.png",
+      "bytes": 97777,
+      "sha256": "cb676a31388b7201794986c7a6856648d8caad3fbb4ca1fc0f0192eda5522198"
+    },
+    {
+      "path": "after/hollow-exit.gif",
+      "bytes": 1183244,
+      "sha256": "05f801581fda1822d294cc3d908eeba0c9791e5bbb1a5861f6b1eafc550e004b"
+    },
+    {
+      "path": "after/hollow-exit.png",
+      "bytes": 7631,
+      "sha256": "ca6ad5c8bf0f31222a237c5390cb5b89582510306fe92aff22cd72a3376315ca"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-000.png",
+      "bytes": 7216,
+      "sha256": "b43196c2e56e8eb6cd3a9c511e8d8391bd6b0e77db75be74c2623a41185ada17"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-007.png",
+      "bytes": 7216,
+      "sha256": "b43196c2e56e8eb6cd3a9c511e8d8391bd6b0e77db75be74c2623a41185ada17"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-012.png",
+      "bytes": 7204,
+      "sha256": "7553db0db615b5ed922d2659be85e032bbf7bb444395d35ee2df6f2742c27e71"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-020.png",
+      "bytes": 7184,
+      "sha256": "2cb110797bc81aba0b057d8f9776dc7187bacf52c6614a610696878c9ae595c9"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-027.png",
+      "bytes": 7217,
+      "sha256": "125b8e597dd9f857d7bf39e9b57c126f43d8eeb7425e25180cdea42e95bdbfe8"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-032.png",
+      "bytes": 7156,
+      "sha256": "c6d41b360e64062b4dab0f41e40d832ff81e3a8beb91a931eac87879523b8f1e"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-048.png",
+      "bytes": 7115,
+      "sha256": "562a708d4f862b0b4291e6e3f0a595b7c5765935bbc5da45012f05867e1803e8"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-064.png",
+      "bytes": 7115,
+      "sha256": "562a708d4f862b0b4291e6e3f0a595b7c5765935bbc5da45012f05867e1803e8"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-080.png",
+      "bytes": 7115,
+      "sha256": "562a708d4f862b0b4291e6e3f0a595b7c5765935bbc5da45012f05867e1803e8"
+    },
+    {
+      "path": "after/hollow-floor-switch/frame-087.png",
+      "bytes": 7115,
+      "sha256": "562a708d4f862b0b4291e6e3f0a595b7c5765935bbc5da45012f05867e1803e8"
+    },
+    {
+      "path": "after/hollow-floor-switch-frames.png",
+      "bytes": 66445,
+      "sha256": "eac74adc961343fed4b34d0c7e7ede227891b680e8cc5342e0739687c9985d0e"
+    },
+    {
+      "path": "after/hollow-floor-switch.gif",
+      "bytes": 278588,
+      "sha256": "3fb678f4c0bdd311fe329dc651c783b41d539819f2a87dec044b3bd2f8d4f40f"
+    },
+    {
+      "path": "after/hollow-floor-switch.png",
+      "bytes": 7216,
+      "sha256": "b43196c2e56e8eb6cd3a9c511e8d8391bd6b0e77db75be74c2623a41185ada17"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-000.png",
+      "bytes": 6198,
+      "sha256": "8ffa99b210809a05d8dfc69f9e18539f8d8d81819f8f3c2575e6bdbdddfe35f6"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-007.png",
+      "bytes": 6198,
+      "sha256": "8ffa99b210809a05d8dfc69f9e18539f8d8d81819f8f3c2575e6bdbdddfe35f6"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-012.png",
+      "bytes": 6040,
+      "sha256": "71c0a012a612519d800066d0dd1efe4d372bb143c3a68c6442228ff654b6f6c0"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-020.png",
+      "bytes": 5849,
+      "sha256": "ccc734a452413a173dd611b3db48c3cf75ef913a05679494cbae52bf222078b6"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-022.png",
+      "bytes": 5781,
+      "sha256": "8de8ab06c0b6597d4d6b50e9688587f28e47a13ef7d0203a78f173fa8aae651b"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-032.png",
+      "bytes": 5514,
+      "sha256": "6162f0f8d0eb9c9694e2a7ed602fe765960a84682a8cf34d068d1c9309646060"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-048.png",
+      "bytes": 5759,
+      "sha256": "737c42eb72317b854c4ee9faee256136df49ba4bd99ee06e0c0f27f04b61dc73"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-064.png",
+      "bytes": 5910,
+      "sha256": "db7ad5ec797eca810b84e969b761f601ba7d658827760251715874b92f349fbc"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-080.png",
+      "bytes": 5911,
+      "sha256": "43e7524cda4519f38451550eb9784a9f698aea9ffd722698f8ed5220ae97e811"
+    },
+    {
+      "path": "after/large-thicket-chest/frame-111.png",
+      "bytes": 5907,
+      "sha256": "f26d204dbb727690888440bc7ba99a1b78c6b2b2626059ef08bc576b461b4749"
+    },
+    {
+      "path": "after/large-thicket-chest-frames.png",
+      "bytes": 53879,
+      "sha256": "c8b3de11652fcacb1b77f8d74ed745e57bbce54cf4bff80b254aa8925b863791"
+    },
+    {
+      "path": "after/large-thicket-chest.gif",
+      "bytes": 392337,
+      "sha256": "39f669221e73a793ad9541b4d5646c99d8f7cee45f43296c59717e89c4483264"
+    },
+    {
+      "path": "after/large-thicket-chest.png",
+      "bytes": 6198,
+      "sha256": "8ffa99b210809a05d8dfc69f9e18539f8d8d81819f8f3c2575e6bdbdddfe35f6"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-000.png",
+      "bytes": 7453,
+      "sha256": "3cdd1ab2de5816fc5f6a53d4340a50fdab1b4ca0f78bd524fa531575c87b67c4"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-007.png",
+      "bytes": 7453,
+      "sha256": "3cdd1ab2de5816fc5f6a53d4340a50fdab1b4ca0f78bd524fa531575c87b67c4"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-012.png",
+      "bytes": 7388,
+      "sha256": "b1cdddd502e06f86f67abf65741c4c24f1f322427dc63ff2574d836bc19905b1"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-020.png",
+      "bytes": 7246,
+      "sha256": "54e147070d0b7b80bf6d2974024c1f9a1f9df7a434ce7e83980bc0f8d26d1183"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-022.png",
+      "bytes": 7248,
+      "sha256": "1e48f25e91a083863ee229b094651f314d98c530250e33dc3e38b48384696b3a"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-032.png",
+      "bytes": 6512,
+      "sha256": "2b7f96d14a8fffd536e43ac42a7a5c5f51e2fb6c998cb40435d6a9041af0e888"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-048.png",
+      "bytes": 6746,
+      "sha256": "a5d80c2d2c44a908f9b81adc66753cc2a53855310c8b995f3d32bfa6870bfced"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-064.png",
+      "bytes": 6822,
+      "sha256": "69f76afe0d0275c92801efe104b088c2c0352beda78e935c264ce6e5b70685c5"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-080.png",
+      "bytes": 6828,
+      "sha256": "4f18dd60b7c347c5893dd7319a50b628f05cc7d5e5dad3ac6be61f22631bd95d"
+    },
+    {
+      "path": "after/medium-cave-chest/frame-111.png",
+      "bytes": 6829,
+      "sha256": "3845db4ceff08dc9d569116020128da750d249eb36d9510311b1011f079e8411"
+    },
+    {
+      "path": "after/medium-cave-chest-frames.png",
+      "bytes": 65282,
+      "sha256": "5ffe54dbe45b286df2020fd8ee68af51855abe41099a982b261b9e508ae3dbd9"
+    },
+    {
+      "path": "after/medium-cave-chest.gif",
+      "bytes": 441449,
+      "sha256": "677da5f7371589cb3a135ea699974ca74e57fab4ab542488a2b51b6daee472e7"
+    },
+    {
+      "path": "after/medium-cave-chest.png",
+      "bytes": 7453,
+      "sha256": "3cdd1ab2de5816fc5f6a53d4340a50fdab1b4ca0f78bd524fa531575c87b67c4"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-000.png",
+      "bytes": 14803,
+      "sha256": "99a2974a10f1b0006c4ca788d19a06306242ff6eaefc8795bf15a4011b0c18d2"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-007.png",
+      "bytes": 14781,
+      "sha256": "c4f5f7249b491448b948180336b6f180c17a1436ead5cb97b76aecfc0885a596"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-012.png",
+      "bytes": 14872,
+      "sha256": "331f5e3ee0b9db2718ec57eda69304dbc01552b101855f4de96eb652f8ab8bf9"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-020.png",
+      "bytes": 14569,
+      "sha256": "3a170d021296d60c748429b11481feacec512c267ae561d8cfe1b7476c5ff99d"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-048.png",
+      "bytes": 6561,
+      "sha256": "c4a243aa1ffeed9beb413202914375da99f85ed68f701e0854d009fdffe2b584"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-064.png",
+      "bytes": 6667,
+      "sha256": "1650b5f185302223917c9b4575b5b29a7cb4b619270803ded12a6834015a787b"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-080.png",
+      "bytes": 6667,
+      "sha256": "1650b5f185302223917c9b4575b5b29a7cb4b619270803ded12a6834015a787b"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-116.png",
+      "bytes": 7134,
+      "sha256": "98d517871e35ec31d4c6b475bdda8ba1e4deedd862f8537feab0b7a28ab9b2b2"
+    },
+    {
+      "path": "after/mixed-cave-door/frame-123.png",
+      "bytes": 6877,
+      "sha256": "6acbf6c97c1459d584888e8c4d81d3d19a1a8b541f49acb0fe123d123451db82"
+    },
+    {
+      "path": "after/mixed-cave-door-frames.png",
+      "bytes": 101523,
+      "sha256": "25cd910c6fc3e018731244a5e5afa75f81d2786054eae941bb1805382fc4bea6"
+    },
+    {
+      "path": "after/mixed-cave-door.gif",
+      "bytes": 876586,
+      "sha256": "f5b7898126a7087d33cd69d0eef04365d7e02636eef96320b85178242cc19d7b"
+    },
+    {
+      "path": "after/mixed-cave-door.png",
+      "bytes": 14803,
+      "sha256": "99a2974a10f1b0006c4ca788d19a06306242ff6eaefc8795bf15a4011b0c18d2"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-000.png",
+      "bytes": 7583,
+      "sha256": "af0f7039152875a9efc03039682d319247125dcd4a8aae275a192868908c2c41"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-007.png",
+      "bytes": 7583,
+      "sha256": "af0f7039152875a9efc03039682d319247125dcd4a8aae275a192868908c2c41"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-012.png",
+      "bytes": 7687,
+      "sha256": "9a7e261a47f7b7ea45cf5885c60b41599c8e6c1059adaea2d36a4d78eda9cb1b"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-020.png",
+      "bytes": 7361,
+      "sha256": "742a16c956e92ca96dc60d59b4333772a5d8923b3096c2bb73090c632a8efe12"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-022.png",
+      "bytes": 7311,
+      "sha256": "40c4dc155bbcc1e41583ed357aef2feaece9bd38b7acfdd4c129ad19df5436a4"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-032.png",
+      "bytes": 6459,
+      "sha256": "2af2b46f077e45c4c4e6ff32c1e5d4df1e0d5f8ea093e0d5e19c03626f3dca8f"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-048.png",
+      "bytes": 6610,
+      "sha256": "6f2e574e9fe84a77ab4aa59a90dc2b33bc653b4b833e55d1f0f669fd3a1630cf"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-064.png",
+      "bytes": 6610,
+      "sha256": "85c5c808c3ff97f712265c00f50ea2f8056e6c873972d5abc99fe96ed026a950"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-080.png",
+      "bytes": 6610,
+      "sha256": "6f2e574e9fe84a77ab4aa59a90dc2b33bc653b4b833e55d1f0f669fd3a1630cf"
+    },
+    {
+      "path": "after/small-hollow-chest/frame-111.png",
+      "bytes": 6611,
+      "sha256": "0cbde997cf2ebe85db546aa0b163ee0db3f230f20d0e585eebe2e7ef3ce9e072"
+    },
+    {
+      "path": "after/small-hollow-chest-frames.png",
+      "bytes": 62150,
+      "sha256": "b0466012cb43d3b4f709e1ddcb545d704348c306fd398f81823093edc3fa05cd"
+    },
+    {
+      "path": "after/small-hollow-chest.gif",
+      "bytes": 443724,
+      "sha256": "8fed4ea0ae3603e4ddbee1689c1aa8506b4e973d6d166ac09bb134fb0f36328d"
+    },
+    {
+      "path": "after/small-hollow-chest.png",
+      "bytes": 7583,
+      "sha256": "af0f7039152875a9efc03039682d319247125dcd4a8aae275a192868908c2c41"
+    },
+    {
+      "path": "after/thicket-boulder/frame-000.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-007.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-012.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-020.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-032.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-048.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder/frame-063.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-boulder-frames.png",
+      "bytes": 53818,
+      "sha256": "ede26c62e8e3fc5f6feb8295841123ae95393e0d8653ccff813dbab52ce51704"
+    },
+    {
+      "path": "after/thicket-boulder.gif",
+      "bytes": 14698,
+      "sha256": "8d5bfd3b6895b38dd7fbc49869cd0ebb8f7c5a39a97750a8f36422de788480a6"
+    },
+    {
+      "path": "after/thicket-boulder.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "after/thicket-censer/frame-000.png",
+      "bytes": 6683,
+      "sha256": "f32db42d7916c60a6ebe778857c1e6f8826cfc17454e1a60a772ae201e9edb16"
+    },
+    {
+      "path": "after/thicket-censer/frame-007.png",
+      "bytes": 6683,
+      "sha256": "f32db42d7916c60a6ebe778857c1e6f8826cfc17454e1a60a772ae201e9edb16"
+    },
+    {
+      "path": "after/thicket-censer/frame-012.png",
+      "bytes": 6674,
+      "sha256": "01b4d1c7203288beb79e7631514a8931f5edb56411950494fe499c2097f567f9"
+    },
+    {
+      "path": "after/thicket-censer/frame-020.png",
+      "bytes": 6823,
+      "sha256": "50f85919fbfd93ce4cdc3c9f2e2d26cf0af5f0ba0a580d296b4542bcc04c1154"
+    },
+    {
+      "path": "after/thicket-censer/frame-025.png",
+      "bytes": 6763,
+      "sha256": "d15d5dab5dc546fd76a2f26f2620bc5cd8d492c826f10035380394e4870740eb"
+    },
+    {
+      "path": "after/thicket-censer/frame-032.png",
+      "bytes": 6890,
+      "sha256": "cd400643a20a707777fe51707c620696d84b6a68b7fd35cdcb754b911c7ac1b4"
+    },
+    {
+      "path": "after/thicket-censer/frame-048.png",
+      "bytes": 6763,
+      "sha256": "d15d5dab5dc546fd76a2f26f2620bc5cd8d492c826f10035380394e4870740eb"
+    },
+    {
+      "path": "after/thicket-censer/frame-064.png",
+      "bytes": 6763,
+      "sha256": "d15d5dab5dc546fd76a2f26f2620bc5cd8d492c826f10035380394e4870740eb"
+    },
+    {
+      "path": "after/thicket-censer/frame-080.png",
+      "bytes": 6763,
+      "sha256": "d15d5dab5dc546fd76a2f26f2620bc5cd8d492c826f10035380394e4870740eb"
+    },
+    {
+      "path": "after/thicket-censer/frame-095.png",
+      "bytes": 6763,
+      "sha256": "d15d5dab5dc546fd76a2f26f2620bc5cd8d492c826f10035380394e4870740eb"
+    },
+    {
+      "path": "after/thicket-censer-frames.png",
+      "bytes": 57828,
+      "sha256": "48101043a90fe9d4fb4d861cdaf6f5164ae8b1159199fef2d884d6e6746bde2f"
+    },
+    {
+      "path": "after/thicket-censer.gif",
+      "bytes": 203847,
+      "sha256": "b4ad89fa2e66cc793494eb5c054a2b622f2922d67739eef497d99955433ef479"
+    },
+    {
+      "path": "after/thicket-censer.png",
+      "bytes": 6683,
+      "sha256": "f32db42d7916c60a6ebe778857c1e6f8826cfc17454e1a60a772ae201e9edb16"
+    },
+    {
+      "path": "after/thicket-exit/frame-000.png",
+      "bytes": 6529,
+      "sha256": "66b381034ffdb728d31fffcc0c4c1ff2b36be09f598eb30e07ed40f7ed12cb91"
+    },
+    {
+      "path": "after/thicket-exit/frame-007.png",
+      "bytes": 6529,
+      "sha256": "66b381034ffdb728d31fffcc0c4c1ff2b36be09f598eb30e07ed40f7ed12cb91"
+    },
+    {
+      "path": "after/thicket-exit/frame-012.png",
+      "bytes": 6491,
+      "sha256": "d5ec9bdf4562ec1e94033de1312ef0f2abcf932c8ba71686a16a2f3ddd1af78d"
+    },
+    {
+      "path": "after/thicket-exit/frame-020.png",
+      "bytes": 6418,
+      "sha256": "f2270a6dd7142e30286432ba3462af3df319e140c128eabad57e38d36e288f45"
+    },
+    {
+      "path": "after/thicket-exit/frame-032.png",
+      "bytes": 6355,
+      "sha256": "e186f24c970206ed1ad09cd798f4ec33881d8f5499b2b75f9dccafba3a56fca7"
+    },
+    {
+      "path": "after/thicket-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/thicket-exit/frame-039.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/thicket-exit/frame-043.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/thicket-exit/frame-048.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "after/thicket-exit/frame-064.png",
+      "bytes": 13740,
+      "sha256": "7ea46d4149d28f354fb016b66121badade2bafc18a0ce7e6138b36f9a095283e"
+    },
+    {
+      "path": "after/thicket-exit/frame-080.png",
+      "bytes": 13750,
+      "sha256": "098bb11245ab894e30f9332cf3be0da002d52a7e813996c05dfa6762a9b199fe"
+    },
+    {
+      "path": "after/thicket-exit/frame-123.png",
+      "bytes": 14053,
+      "sha256": "51a1bba96c1170473f5abeafd4665480587320fef00e3e0d9531130567754522"
+    },
+    {
+      "path": "after/thicket-exit-frames.png",
+      "bytes": 93641,
+      "sha256": "9e1d8ccd78d147e56ad711a7b9c2b78d3a229e6286557ffeb021f1fd11488fbe"
+    },
+    {
+      "path": "after/thicket-exit.gif",
+      "bytes": 1065452,
+      "sha256": "188a056dbb4c08276d47fec632fff5657f628286d6aa2194b5af0fb3e9d1e0ca"
+    },
+    {
+      "path": "after/thicket-exit.png",
+      "bytes": 6529,
+      "sha256": "66b381034ffdb728d31fffcc0c4c1ff2b36be09f598eb30e07ed40f7ed12cb91"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-000.png",
+      "bytes": 6449,
+      "sha256": "c14c597841cb7f0685655dc1b699cebd0abd6dfd32e595a97031f7e0624c6dec"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-007.png",
+      "bytes": 6449,
+      "sha256": "c14c597841cb7f0685655dc1b699cebd0abd6dfd32e595a97031f7e0624c6dec"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-012.png",
+      "bytes": 6465,
+      "sha256": "e7caa95ece2783ef02b1abbf43100bfb283923f9f4a3965f6e7d178f72f2db10"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-020.png",
+      "bytes": 6448,
+      "sha256": "9879cf37508e783aa7c9f35249413b28c7ffaef742b6db15cfddaaa2f67a686c"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-027.png",
+      "bytes": 6424,
+      "sha256": "e6b8239de1e317594660b1b4720a6fd4eac816c1c3170524b47e599c1f5de6b9"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-032.png",
+      "bytes": 6467,
+      "sha256": "92253b72a0324b17dd44bb948b85a6c5d13d9008a947a203b2fca33f29512658"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-048.png",
+      "bytes": 6443,
+      "sha256": "99befb5fa3cddc6563103ecfeebc7a80f14dcde1277a6cbd98cc3a24f5fcf445"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-064.png",
+      "bytes": 6443,
+      "sha256": "99befb5fa3cddc6563103ecfeebc7a80f14dcde1277a6cbd98cc3a24f5fcf445"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-080.png",
+      "bytes": 6443,
+      "sha256": "99befb5fa3cddc6563103ecfeebc7a80f14dcde1277a6cbd98cc3a24f5fcf445"
+    },
+    {
+      "path": "after/thicket-floor-switch/frame-087.png",
+      "bytes": 6443,
+      "sha256": "99befb5fa3cddc6563103ecfeebc7a80f14dcde1277a6cbd98cc3a24f5fcf445"
+    },
+    {
+      "path": "after/thicket-floor-switch-frames.png",
+      "bytes": 62103,
+      "sha256": "94e1b55be073b0aefdaedd151b4ce1b42cb5264637f9b9aae4e2d35dbbbca5f9"
+    },
+    {
+      "path": "after/thicket-floor-switch.gif",
+      "bytes": 216193,
+      "sha256": "92c1dad2e2ba4f49a5698fa9d7d444f48e5a8e319a05077966e75ba59fc19a8c"
+    },
+    {
+      "path": "after/thicket-floor-switch.png",
+      "bytes": 6449,
+      "sha256": "c14c597841cb7f0685655dc1b699cebd0abd6dfd32e595a97031f7e0624c6dec"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-000.png",
+      "bytes": 17473,
+      "sha256": "749aa8d8ef3677f6594a903798e93ac5952891d6f19272221186f89340c20163"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-007.png",
+      "bytes": 17397,
+      "sha256": "99e81b06e26436a834d68b4f1146fc7f5ba046aee956f53d2dea0291a8198c54"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-012.png",
+      "bytes": 17446,
+      "sha256": "317517d99f5eeabc1a0f622407c9c4ba0aa08b9f1b79f1fee790c1acef3941d0"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-020.png",
+      "bytes": 17330,
+      "sha256": "572c4c80a722ba6cfff2022a4f54d696a9c68851f268e00c23bcf452a730fa3f"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-032.png",
+      "bytes": 17519,
+      "sha256": "e064221ccb822d6db436231db36a97d17191073d7ae07218d68e79f80fd6412b"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-048.png",
+      "bytes": 17643,
+      "sha256": "acd2a8e9ee0703b797001689eebcf303b9e3c3c6ea102b64716a621980e018e5"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-064.png",
+      "bytes": 17682,
+      "sha256": "8c14f2f40e762ddef3e796d248d41da141941b321d6b14c770fba32cbd09189b"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-080.png",
+      "bytes": 17642,
+      "sha256": "dbfa72a039d7823598ebbb4ad6f77128f263043dd3ef4b89bbcb8d27c9f9a824"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-175.png",
+      "bytes": 17511,
+      "sha256": "865f53116de11a28005c8d42ead2c7b1e5055fd01afd394b6bf3d8b6bd25442a"
+    },
+    {
+      "path": "before/blight-bomb-wall/frame-219.png",
+      "bytes": 17323,
+      "sha256": "1b8bb2b45c88194c990d9b92ed5341d749e3be989a8a9dc3fe13da70016cd43e"
+    },
+    {
+      "path": "before/blight-bomb-wall-frames.png",
+      "bytes": 132348,
+      "sha256": "62c6e0c4cafcb2455c71cab43ba29a72029e426be29f5875cfcef79352183f28"
+    },
+    {
+      "path": "before/blight-bomb-wall.gif",
+      "bytes": 2512889,
+      "sha256": "df6d615a90e3898f505ef02edb288a9e69552c852bbbd8f17d7ada845149ed9c"
+    },
+    {
+      "path": "before/blight-bomb-wall.png",
+      "bytes": 17473,
+      "sha256": "749aa8d8ef3677f6594a903798e93ac5952891d6f19272221186f89340c20163"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-000.png",
+      "bytes": 15520,
+      "sha256": "87129b6eebe0bd804f42dd8299d6328a21b9fdb972ae2a35cd78d1e5c820e2f9"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-007.png",
+      "bytes": 15411,
+      "sha256": "286f7ef0a18383d2cd7ecef1c24d58f07f76e2019f8c7081918dacc28db22178"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-012.png",
+      "bytes": 15010,
+      "sha256": "4683d90e086db07005769ab1bc76b890ab6f0f7b6db40ca2e7dc58baee5a4882"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-020.png",
+      "bytes": 15256,
+      "sha256": "893c27fe6ca77ba6d19ef2f90c3c509868fdabd3ac79e96fff3a9b36eed3a063"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-022.png",
+      "bytes": 15452,
+      "sha256": "f68b6a29bff344d7ebe4f50b3962758d1ae86022a4c6e7966402e97efac7d465"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-032.png",
+      "bytes": 12667,
+      "sha256": "7eae8b596989a55aa489b866777aa0043e7b0cf9af0a48d694a95375f6e6dfc6"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-048.png",
+      "bytes": 12784,
+      "sha256": "22a6559d490dc578a91fcb40f25d2b5338fbd652056ef980108e8c9cf9a4d77e"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-064.png",
+      "bytes": 12919,
+      "sha256": "555035bd08963d366f12c4ebfa503943f5c5c8c011db9bb1cdaa1f82283f76b1"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-080.png",
+      "bytes": 12769,
+      "sha256": "c77ce2319b872833d91ac850ccb06a0d0c56791d5674b07a2c14acf84b617598"
+    },
+    {
+      "path": "before/blight-brass-chest/frame-111.png",
+      "bytes": 12865,
+      "sha256": "96519b7debace5116e7a239a9a5fdd341246926c5b12a7ef802b827ae77e6cbd"
+    },
+    {
+      "path": "before/blight-brass-chest-frames.png",
+      "bytes": 126347,
+      "sha256": "b8ba968f851568b166cac80fdc1798e14c5819eb27be6952b39954fe17fb1e37"
+    },
+    {
+      "path": "before/blight-brass-chest.gif",
+      "bytes": 964142,
+      "sha256": "157a382587ead706cdbc1eaad03976aa89ad9b89ee21ff4ae85d143609445220"
+    },
+    {
+      "path": "before/blight-brass-chest.png",
+      "bytes": 15520,
+      "sha256": "87129b6eebe0bd804f42dd8299d6328a21b9fdb972ae2a35cd78d1e5c820e2f9"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-000.png",
+      "bytes": 15084,
+      "sha256": "cfb6154bbcdf77ea6fcf6f9bab6060ecd79ab8127ca83dba2b9499e02bde3561"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-007.png",
+      "bytes": 15053,
+      "sha256": "9a1211733c0b25eeb40c8363f592612dd27bb0f9e5143d08cb652de0f5bb8252"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-012.png",
+      "bytes": 15127,
+      "sha256": "e4bc4a590c5d2b2ecc337213f8e0976132030af5a12c7d358c3bf82f4bc6972e"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-020.png",
+      "bytes": 15174,
+      "sha256": "5d8a9bede8fa7ca788e4868369657559cee77066d47ef9ee11f30f6f6e0ed065"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-024.png",
+      "bytes": 15366,
+      "sha256": "d9b0f038fdfd180283c04acde324970b78d8f071dc70f9df2e66110bd613e333"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-032.png",
+      "bytes": 15033,
+      "sha256": "07f6128aa6d66aa4a80881bc40bde0059cb9d5f26435fb8e633c2fd76050e0d7"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-048.png",
+      "bytes": 14516,
+      "sha256": "033246aca24e04557956693c384191fbb994bd938a3a9706a490c6891a8f71be"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-058.png",
+      "bytes": 13495,
+      "sha256": "4590ce4a58259e409e3d50e8efaa7fdfc7534e6735c932eb79bfbfbf5dc88c67"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-064.png",
+      "bytes": 13307,
+      "sha256": "957ad804413b804ff34ba1e338f91280b0feed56b8c5003a2dafc9b8b2f5dc1e"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-080.png",
+      "bytes": 13498,
+      "sha256": "b7ca2aafe3a95098acd20b4957f2f4ed909cb4a2fe90b6182f4acd05b750a765"
+    },
+    {
+      "path": "before/blight-cape-hole/frame-095.png",
+      "bytes": 13466,
+      "sha256": "ba264a96c989fba289d64a72a07dda935fbb9880ab3fdb53da936b0726210063"
+    },
+    {
+      "path": "before/blight-cape-hole-frames.png",
+      "bytes": 162373,
+      "sha256": "ba432c052740b6a4e587104e5c1f3f6c9cdb65e1a729d7f9e7db758943d57230"
+    },
+    {
+      "path": "before/blight-cape-hole.gif",
+      "bytes": 1078848,
+      "sha256": "8f762dde41c1e7bd4e7c7f1945fe6548adc3ac1fc2998e1ece66d53f7279ae4c"
+    },
+    {
+      "path": "before/blight-cape-hole.png",
+      "bytes": 15084,
+      "sha256": "cfb6154bbcdf77ea6fcf6f9bab6060ecd79ab8127ca83dba2b9499e02bde3561"
+    },
+    {
+      "path": "before/blight-cobweb/frame-000.png",
+      "bytes": 17157,
+      "sha256": "2631271b312a3e3a90c1e6be422324774d5679bb219730c7d7d990e42b4792c0"
+    },
+    {
+      "path": "before/blight-cobweb/frame-007.png",
+      "bytes": 16970,
+      "sha256": "d6062fec7cf71df54262d31b594cb90e96a6bab23097dc8d6399bb66c09bd131"
+    },
+    {
+      "path": "before/blight-cobweb/frame-012.png",
+      "bytes": 16865,
+      "sha256": "76c6e161ba72657faa11dce033cbe21f2ecc519c6c20c3ed434d71c7c3996c4b"
+    },
+    {
+      "path": "before/blight-cobweb/frame-020.png",
+      "bytes": 16113,
+      "sha256": "1cbbe26ffc9f9fc50de63295a98ed809a857c349c099df1eb675ec2114f39751"
+    },
+    {
+      "path": "before/blight-cobweb/frame-026.png",
+      "bytes": 16242,
+      "sha256": "a523a6ad2f5268c5b6aaf710d21fd28b53c31efb5898373bcd4811c18537100c"
+    },
+    {
+      "path": "before/blight-cobweb/frame-032.png",
+      "bytes": 16478,
+      "sha256": "a4c505aa4d81249da2a26a23292433e004c576a73c72d94dd6c9852ffdfdc9d9"
+    },
+    {
+      "path": "before/blight-cobweb/frame-048.png",
+      "bytes": 16253,
+      "sha256": "f40ed6ba92e9b22ba494bd6a783a94a6d8b56f90b317c8cc16161c5520d2008e"
+    },
+    {
+      "path": "before/blight-cobweb/frame-064.png",
+      "bytes": 16242,
+      "sha256": "a523a6ad2f5268c5b6aaf710d21fd28b53c31efb5898373bcd4811c18537100c"
+    },
+    {
+      "path": "before/blight-cobweb/frame-080.png",
+      "bytes": 16303,
+      "sha256": "c342da9dc7851f49dbee15e71ada5ee5ee286830abd355cfaeeb6d3da92d520e"
+    },
+    {
+      "path": "before/blight-cobweb/frame-095.png",
+      "bytes": 16248,
+      "sha256": "e2f062b2f310583581637693fc0adb1352e8cfeffec156fc6b3e9704b5735d32"
+    },
+    {
+      "path": "before/blight-cobweb-frames.png",
+      "bytes": 142842,
+      "sha256": "33fef2c3b425ada54676657056e6f39a10332cc6d4ebf17792915f2ac7315d98"
+    },
+    {
+      "path": "before/blight-cobweb.gif",
+      "bytes": 757142,
+      "sha256": "9809296879d6eb83eb293c1b989873a3d5fe6f39acdd9d198969f136f3c2ab24"
+    },
+    {
+      "path": "before/blight-cobweb.png",
+      "bytes": 17157,
+      "sha256": "2631271b312a3e3a90c1e6be422324774d5679bb219730c7d7d990e42b4792c0"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-000.png",
+      "bytes": 17818,
+      "sha256": "260dfa84bfbebdb30f1c3f5f53323bf6ce67606a1bcfac91401d98ac1329f3c0"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-007.png",
+      "bytes": 17637,
+      "sha256": "0b8a9d6091ac51f27f109cdac11998f0d6dc71cccfed48048238b98428749e48"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-012.png",
+      "bytes": 17722,
+      "sha256": "fa7e6fb488ca7250362f7c25edb36e972fcaceaa61ce6ff15959474d009a1e53"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-020.png",
+      "bytes": 18009,
+      "sha256": "ba9707a8fc2c17f2b9a3a1b0ed631f56941358b085be21ffe17135a073c4bcd8"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-048.png",
+      "bytes": 6366,
+      "sha256": "04c5d92d5f5029889dd0d27661539655acc860a37ccf9698c310d153eb070051"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-064.png",
+      "bytes": 6420,
+      "sha256": "8f8da005246634fe14338947cb11cd7d6cb180147e1613c574bb40168e7ec11e"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-080.png",
+      "bytes": 6686,
+      "sha256": "13b08aee92b259477a9fc634571877ea18875faa75c86be221aacd44860e9944"
+    },
+    {
+      "path": "before/blight-hollow-door/frame-123.png",
+      "bytes": 6626,
+      "sha256": "7e81a93a60a1b76da8bcd1541a59b13392b9ff491fc1f79bf29bd65d2a00bc70"
+    },
+    {
+      "path": "before/blight-hollow-door-frames.png",
+      "bytes": 108954,
+      "sha256": "9d752d765f7bb18c870b0094a91f1da8f11cffed0e396e7c724f384862ccb0ec"
+    },
+    {
+      "path": "before/blight-hollow-door.gif",
+      "bytes": 1006589,
+      "sha256": "b7198abb13cbc254654bb39a3a737db3d8a3d0fabcae75c12bcaf93d362c74ec"
+    },
+    {
+      "path": "before/blight-hollow-door.png",
+      "bytes": 17818,
+      "sha256": "260dfa84bfbebdb30f1c3f5f53323bf6ce67606a1bcfac91401d98ac1329f3c0"
+    },
+    {
+      "path": "before/blight-locked-door/frame-000.png",
+      "bytes": 14045,
+      "sha256": "7ae60445feb384cec3434748c34995afdb813890946485f4dc24a34986278674"
+    },
+    {
+      "path": "before/blight-locked-door/frame-007.png",
+      "bytes": 13937,
+      "sha256": "ba0c8bba9b6ccafb745d1acdfb558a8b528de9b8aec2ae0506e78a2a78548afd"
+    },
+    {
+      "path": "before/blight-locked-door/frame-012.png",
+      "bytes": 13937,
+      "sha256": "ba0c8bba9b6ccafb745d1acdfb558a8b528de9b8aec2ae0506e78a2a78548afd"
+    },
+    {
+      "path": "before/blight-locked-door/frame-020.png",
+      "bytes": 13918,
+      "sha256": "548f51d38fc6ed54c024d8ac8d62e46c917223863c83587fe81f6b7e6b24c1b7"
+    },
+    {
+      "path": "before/blight-locked-door/frame-032.png",
+      "bytes": 14124,
+      "sha256": "6c385b2e6ac5193e4fc8dc85cb9ea4a735d7d9cbbf5eee003ff8a05c544660f6"
+    },
+    {
+      "path": "before/blight-locked-door/frame-048.png",
+      "bytes": 13883,
+      "sha256": "da06e1a13f55a795c056b69b7acfef4b252dec59a5a1af6f8d45ac20551d6f12"
+    },
+    {
+      "path": "before/blight-locked-door/frame-063.png",
+      "bytes": 14092,
+      "sha256": "8d71dc61855ab0f1967ffb4efebfa28fe0da76c35ab9fed44f25baa47ac08170"
+    },
+    {
+      "path": "before/blight-locked-door-frames.png",
+      "bytes": 124341,
+      "sha256": "179c5b5e5d69d23cfa608cd48f84f10661950d42b3786d88a8082e2dcdccf858"
+    },
+    {
+      "path": "before/blight-locked-door.gif",
+      "bytes": 352392,
+      "sha256": "fdfa48d3eef3649aa0761d55d10a77a8b20cd3df73cc4138da4c40a591437779"
+    },
+    {
+      "path": "before/blight-locked-door.png",
+      "bytes": 14045,
+      "sha256": "7ae60445feb384cec3434748c34995afdb813890946485f4dc24a34986278674"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-000.png",
+      "bytes": 14290,
+      "sha256": "005e52809c33c0858c3df95fa1fa5f16bdfa95897d33ded92e087ca93588583f"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-007.png",
+      "bytes": 14147,
+      "sha256": "f1ee79add80d3b84a9be9743d67d8aa7524e23b2e93f13db6728e61db9102628"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-012.png",
+      "bytes": 14090,
+      "sha256": "b5aedfa2050f4c7628ae92260667c73f5a54692ef14e21cffc1f1d05652fb51c"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-020.png",
+      "bytes": 14370,
+      "sha256": "9a1a69e375ae459fbd98ea67fff8b79ebbb9364de8ceef1c2246cd3e58becff1"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-022.png",
+      "bytes": 14271,
+      "sha256": "e2a5c847372aa8f150690d95e156d65afd4e37c2115b9fa968fb71db0f18f3e9"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-032.png",
+      "bytes": 12824,
+      "sha256": "17ea0a026b3b562e6a8fb7bb8a13a51e342777c43f742b43f8de036ca848e8dc"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-048.png",
+      "bytes": 13169,
+      "sha256": "9791388fd5570519515ebb5aaca912e659a9c25a9ddb46ca428eb6a51219717c"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-064.png",
+      "bytes": 13201,
+      "sha256": "d1ef73c712654dbf9c9fee7128f6a714fb8c7c8cbd0cd90105a8ab7b571f905c"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-080.png",
+      "bytes": 13444,
+      "sha256": "3fccc3682119d48260b8f7202f34476af97af9f38155b14c96b00fcf71ae0cba"
+    },
+    {
+      "path": "before/blight-relic-chest/frame-111.png",
+      "bytes": 13311,
+      "sha256": "b55326549b59043419cc3307566b8b5580e9c9b957e8a9b1aa5f960c0564cc3f"
+    },
+    {
+      "path": "before/blight-relic-chest-frames.png",
+      "bytes": 113400,
+      "sha256": "e21e763c68b07f46a5424cbb53560176b1dca4e6352a24896603603554967813"
+    },
+    {
+      "path": "before/blight-relic-chest.gif",
+      "bytes": 964492,
+      "sha256": "00bde592bbf0679bf899ac038e76d4107ae7d2fe553833715cae32cc2f805b5d"
+    },
+    {
+      "path": "before/blight-relic-chest.png",
+      "bytes": 14290,
+      "sha256": "005e52809c33c0858c3df95fa1fa5f16bdfa95897d33ded92e087ca93588583f"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-000.png",
+      "bytes": 16342,
+      "sha256": "cf6ddf1fb58e98488ba980f51ce3729e70b486dfc0d3f372e589cf9da29b7791"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-007.png",
+      "bytes": 16373,
+      "sha256": "c15fc65dd2673faf3e9284d8b49c5bff4e5e96b03353d1c9bee04200c8c7e04f"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-012.png",
+      "bytes": 16359,
+      "sha256": "b4a789b4c5f6f383c935babc66c27c17e04c21e563658f43a81cd00f92f0f4d0"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-020.png",
+      "bytes": 16168,
+      "sha256": "6ca5914103d79a77695c064dd27369ff5a5054d10dbb26954df842eb11e5620f"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-048.png",
+      "bytes": 5245,
+      "sha256": "39a97f1c69d4256ee010476692b25cbcd8256537133f2c5fdad7f5c318d0b029"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-064.png",
+      "bytes": 5226,
+      "sha256": "6e675001b640fd4275ce6864f0c41bc7d9ff7c922e746a3eee60c298b4222098"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-080.png",
+      "bytes": 5226,
+      "sha256": "6e675001b640fd4275ce6864f0c41bc7d9ff7c922e746a3eee60c298b4222098"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-113.png",
+      "bytes": 5468,
+      "sha256": "f330cd44d37dc50b487c28326d9ace133424923c845ea0ffa63b40c45f23c7c0"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-121.png",
+      "bytes": 5911,
+      "sha256": "36aac20f7976cc03af439e54951412445debfeecaafbf5b55ba521b81d287747"
+    },
+    {
+      "path": "before/blight-thicket-door/frame-123.png",
+      "bytes": 5183,
+      "sha256": "a9452db62d3bc873efe35e077b09401bb6fa1eaf9ce7cf6d0fe7b63f358453ee"
+    },
+    {
+      "path": "before/blight-thicket-door-frames.png",
+      "bytes": 98297,
+      "sha256": "1f47bf495413567d51d239776cad496fb2970bf0447e0edd1f93006ffbab7d33"
+    },
+    {
+      "path": "before/blight-thicket-door.gif",
+      "bytes": 867216,
+      "sha256": "08e9cf4df2a7185a49e1cdb2768bc60aaaec6afe1149020644b511d1f0dd51b4"
+    },
+    {
+      "path": "before/blight-thicket-door.png",
+      "bytes": 16342,
+      "sha256": "cf6ddf1fb58e98488ba980f51ce3729e70b486dfc0d3f372e589cf9da29b7791"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-000.png",
+      "bytes": 15054,
+      "sha256": "40fbfabc079d93653d858d8d10fc3042febc2fbccdd1fd5c9883ef1ac5ea9da7"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-007.png",
+      "bytes": 15095,
+      "sha256": "da0ba651c126709fb7e0f356ad8d618a66c91d1806379afb9abefab6f4640ac4"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-012.png",
+      "bytes": 14920,
+      "sha256": "00cf6d6a3cade58364b60641e067c5d79763f0259092050adf40509d0522d4b0"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-020.png",
+      "bytes": 15330,
+      "sha256": "d6f7343750d5761b88c61f7e7ca64a2cc8e252868a520ae63354f413935827d8"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-022.png",
+      "bytes": 15498,
+      "sha256": "44a7e6f57e06e7a37524896b935d6191e9bf5e6111c7da7acc9d2e33bddd13e4"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-032.png",
+      "bytes": 15024,
+      "sha256": "0d9d74d09cfd949ee786fa328e46ce4a28362e8d06b7dbc1b7968f8a9c29aa17"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-048.png",
+      "bytes": 15124,
+      "sha256": "87d407f4b22991891e6a76a666adae9da4c01f41f589fa91eb345e3defbe1627"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-064.png",
+      "bytes": 15132,
+      "sha256": "717ca49a3b5afc5f2a2ca145096d626cb5b4962ef31e5628f3427e70203d41e8"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-080.png",
+      "bytes": 15145,
+      "sha256": "c90d357a47bcda33799fd862108f979aca6bdaf86d006bb1a09ee8c9a97a0e25"
+    },
+    {
+      "path": "before/blight-wood-chest/frame-111.png",
+      "bytes": 15128,
+      "sha256": "e8735fcb5e6154a0b3af08b0cfc97cdbc7fee618d2623e721083703ca71167ad"
+    },
+    {
+      "path": "before/blight-wood-chest-frames.png",
+      "bytes": 124461,
+      "sha256": "a900988900dbf97f71200607c626055f4fe4ce77c9391a1d2d34224dcfa529c1"
+    },
+    {
+      "path": "before/blight-wood-chest.gif",
+      "bytes": 878282,
+      "sha256": "763cf35876d9d49b019541885cb32628701611caa36a9a2cce6e9fca8ed7a70d"
+    },
+    {
+      "path": "before/blight-wood-chest.png",
+      "bytes": 15054,
+      "sha256": "40fbfabc079d93653d858d8d10fc3042febc2fbccdd1fd5c9883ef1ac5ea9da7"
+    },
+    {
+      "path": "before/capture.json",
+      "bytes": 1648125,
+      "sha256": "164d02964dd00de010d42530780e2b4e6779e3fa381b47139df8c25f671d553d"
+    },
+    {
+      "path": "before/cave-exit/frame-000.png",
+      "bytes": 6501,
+      "sha256": "d8f30726230470951d60e4653713f9dd9169535f19e3e12d46e81d6cf6bb5c39"
+    },
+    {
+      "path": "before/cave-exit/frame-007.png",
+      "bytes": 6501,
+      "sha256": "d8f30726230470951d60e4653713f9dd9169535f19e3e12d46e81d6cf6bb5c39"
+    },
+    {
+      "path": "before/cave-exit/frame-012.png",
+      "bytes": 6528,
+      "sha256": "6fef5353f1941ebd5880a32294d27dad194b3bb3dd78d1d310f5ccda8d7591a0"
+    },
+    {
+      "path": "before/cave-exit/frame-020.png",
+      "bytes": 6498,
+      "sha256": "5b2522ae91ad7aba8b9585c3aaa6402a307f8bfa349d8879159e11ee3b0b0780"
+    },
+    {
+      "path": "before/cave-exit/frame-032.png",
+      "bytes": 6301,
+      "sha256": "e067120f9a9fb99f682227addf455e4be50ea2f8fe6486da75f0d4e0d8e3eef4"
+    },
+    {
+      "path": "before/cave-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/cave-exit/frame-038.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/cave-exit/frame-039.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/cave-exit/frame-048.png",
+      "bytes": 12520,
+      "sha256": "f07ba1a491a48c51bde376c361975fa9375faded61a1416f904bb6269543ad7a"
+    },
+    {
+      "path": "before/cave-exit/frame-064.png",
+      "bytes": 13429,
+      "sha256": "5f8333ae4fb38971c5f1487c077baea838d090f22f329129bc7742fd9b153c36"
+    },
+    {
+      "path": "before/cave-exit/frame-080.png",
+      "bytes": 13485,
+      "sha256": "2e9d1cf23ac2477ea4653bab98fe3a0be328f783c99e477ebee195f9cd1396a0"
+    },
+    {
+      "path": "before/cave-exit/frame-123.png",
+      "bytes": 13463,
+      "sha256": "29b756c6784fc2d1bda99d6e908a8448a23b44d0f6c81b21669a09ada8e6aae2"
+    },
+    {
+      "path": "before/cave-exit-frames.png",
+      "bytes": 107472,
+      "sha256": "1efa8b2df1fa29e34691eb53c8223054947a7ddaaf834b82d920cc242704d85b"
+    },
+    {
+      "path": "before/cave-exit.gif",
+      "bytes": 961496,
+      "sha256": "2003a32b4c2faa44b7290293226a5ff6cf1e596a4c5b10f6eda2e4abf984c69a"
+    },
+    {
+      "path": "before/cave-exit.png",
+      "bytes": 6501,
+      "sha256": "d8f30726230470951d60e4653713f9dd9169535f19e3e12d46e81d6cf6bb5c39"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-000.png",
+      "bytes": 6307,
+      "sha256": "a9dc87251f3322e0e480273928e849d366dae05e754b823cfda9f7d2056367a8"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-007.png",
+      "bytes": 6307,
+      "sha256": "a9dc87251f3322e0e480273928e849d366dae05e754b823cfda9f7d2056367a8"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-012.png",
+      "bytes": 6343,
+      "sha256": "6a460127e90d837db3fd0e565a00693900d525451e0040bae589eb93963adc61"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-020.png",
+      "bytes": 6197,
+      "sha256": "9111145143e47f94154a3ce825a0d3416254457634641bbeb6b53cf714f4c831"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-027.png",
+      "bytes": 6310,
+      "sha256": "41be4af710a609abb8641108e925b38e06d71b8d6489cde1aebef8ef0431ee60"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-032.png",
+      "bytes": 6281,
+      "sha256": "b873bf4422206bd763072706f024582b9416a9f99c9fa61930d57e72e8a5cb56"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-048.png",
+      "bytes": 6267,
+      "sha256": "4225fa426969ae879d43abe9bbb2dc7ccc948a4c42cc609962bd7668ea7dae63"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-064.png",
+      "bytes": 6267,
+      "sha256": "4225fa426969ae879d43abe9bbb2dc7ccc948a4c42cc609962bd7668ea7dae63"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-080.png",
+      "bytes": 6267,
+      "sha256": "4225fa426969ae879d43abe9bbb2dc7ccc948a4c42cc609962bd7668ea7dae63"
+    },
+    {
+      "path": "before/cave-floor-switch/frame-087.png",
+      "bytes": 6267,
+      "sha256": "4225fa426969ae879d43abe9bbb2dc7ccc948a4c42cc609962bd7668ea7dae63"
+    },
+    {
+      "path": "before/cave-floor-switch-frames.png",
+      "bytes": 62799,
+      "sha256": "85d44ab31cc46aca796922c55003e24768e0304ce56926a264af98f16807f3e6"
+    },
+    {
+      "path": "before/cave-floor-switch.gif",
+      "bytes": 253436,
+      "sha256": "e1cae070f8cbdd3d63063dbeca36a4df37585eb3d334e1a5e7b040bb57337108"
+    },
+    {
+      "path": "before/cave-floor-switch.png",
+      "bytes": 6307,
+      "sha256": "a9dc87251f3322e0e480273928e849d366dae05e754b823cfda9f7d2056367a8"
+    },
+    {
+      "path": "before/cave-pot/frame-000.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-007.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-012.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-020.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-032.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-048.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot/frame-063.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-pot-frames.png",
+      "bytes": 63770,
+      "sha256": "fc9f0942f3a7e571cd206892d52f38d7e2fb8367d9bf4fcf18f2d6447b9b6c50"
+    },
+    {
+      "path": "before/cave-pot.gif",
+      "bytes": 19671,
+      "sha256": "1cc99a1721c07453c453b5214c6f29d2aa3a56e22e87bd4255fc486e25ead568"
+    },
+    {
+      "path": "before/cave-pot.png",
+      "bytes": 7041,
+      "sha256": "c50a42665c4b0f07fb45b726da276091a9bba0f3217f708c7df99b601579c026"
+    },
+    {
+      "path": "before/cave-spring/frame-000.png",
+      "bytes": 6553,
+      "sha256": "ae9dcb39922bc1b4fb160b9e66c814a026202dbdcb0553848b308252866f1efd"
+    },
+    {
+      "path": "before/cave-spring/frame-007.png",
+      "bytes": 6551,
+      "sha256": "ebf858d3bff8ce6a24b24d696c5c11164b549f3423f7d21cc86a2845ec6bdac3"
+    },
+    {
+      "path": "before/cave-spring/frame-012.png",
+      "bytes": 6551,
+      "sha256": "ebf858d3bff8ce6a24b24d696c5c11164b549f3423f7d21cc86a2845ec6bdac3"
+    },
+    {
+      "path": "before/cave-spring/frame-020.png",
+      "bytes": 6553,
+      "sha256": "ae9dcb39922bc1b4fb160b9e66c814a026202dbdcb0553848b308252866f1efd"
+    },
+    {
+      "path": "before/cave-spring/frame-032.png",
+      "bytes": 6551,
+      "sha256": "ebf858d3bff8ce6a24b24d696c5c11164b549f3423f7d21cc86a2845ec6bdac3"
+    },
+    {
+      "path": "before/cave-spring/frame-048.png",
+      "bytes": 6553,
+      "sha256": "ae9dcb39922bc1b4fb160b9e66c814a026202dbdcb0553848b308252866f1efd"
+    },
+    {
+      "path": "before/cave-spring/frame-063.png",
+      "bytes": 6551,
+      "sha256": "ebf858d3bff8ce6a24b24d696c5c11164b549f3423f7d21cc86a2845ec6bdac3"
+    },
+    {
+      "path": "before/cave-spring-frames.png",
+      "bytes": 60613,
+      "sha256": "86eb6ab11c31162a82d31527e1d826c359baa82822d14b526b160a2eeebd2786"
+    },
+    {
+      "path": "before/cave-spring.gif",
+      "bytes": 99402,
+      "sha256": "0cfe0b097d87b23650407496b94b0491583ef81cac2e482eac8e79e3a5a6cfe0"
+    },
+    {
+      "path": "before/cave-spring.png",
+      "bytes": 6553,
+      "sha256": "ae9dcb39922bc1b4fb160b9e66c814a026202dbdcb0553848b308252866f1efd"
+    },
+    {
+      "path": "before/drain-control/frame-000.png",
+      "bytes": 8995,
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "path": "before/drain-control/frame-007.png",
+      "bytes": 9105,
+      "sha256": "c3517aa7b79bd508c54e37343415ed789af30f8a64a7bf7384101d5caacc5632"
+    },
+    {
+      "path": "before/drain-control/frame-012.png",
+      "bytes": 9089,
+      "sha256": "870da299b7e6b56dcabf89aeb5abd4163889c412a6a80f17c969af78a39ad46d"
+    },
+    {
+      "path": "before/drain-control/frame-020.png",
+      "bytes": 9029,
+      "sha256": "644e07689b7485a11f7a2d4f4a8a59932330ba5975315854955547fc023c6d58"
+    },
+    {
+      "path": "before/drain-control/frame-032.png",
+      "bytes": 8999,
+      "sha256": "e88b8019a7c39e23a1f542856b06a98bf6e91579a06c58b04ee3d82e1de7079e"
+    },
+    {
+      "path": "before/drain-control/frame-048.png",
+      "bytes": 9009,
+      "sha256": "19113a4ad8b581d8cb86f0de3d8ec8438f8e5815cc966d15a3a3493e25c66784"
+    },
+    {
+      "path": "before/drain-control/frame-063.png",
+      "bytes": 9059,
+      "sha256": "d00e270b34b67fc2eebd2fdabd9f3b75a9f8e18ff484454bf18616c14bb62970"
+    },
+    {
+      "path": "before/drain-control-frames.png",
+      "bytes": 69675,
+      "sha256": "b030ac917a3f729735cbfeddb70c1d469d956b0ae471baff480b90e10b146f4b"
+    },
+    {
+      "path": "before/drain-control.gif",
+      "bytes": 299626,
+      "sha256": "328d44f6b2326283c4a5b931e485b05e3afeac14685187656f03af64ec13f58b"
+    },
+    {
+      "path": "before/drain-control.png",
+      "bytes": 8995,
+      "sha256": "7af34c3bba283a02b43ed7795c93f633e3bdce6c8f0ddc7fb226d4b5d949991e"
+    },
+    {
+      "path": "before/drain-exit/frame-000.png",
+      "bytes": 12664,
+      "sha256": "4a2988e0c568e00bba2ee5cd987ebd2768ff1f3aa879c942468505066d606cca"
+    },
+    {
+      "path": "before/drain-exit/frame-007.png",
+      "bytes": 12694,
+      "sha256": "2fd5c60abfef2837255b774889251db7300edfcdb939f76993a452174a427dbb"
+    },
+    {
+      "path": "before/drain-exit/frame-012.png",
+      "bytes": 12710,
+      "sha256": "6067b3590bd3b4e34bd7ed6b2c2620dedf74bcf4a1645a10a1b8113ac262ba61"
+    },
+    {
+      "path": "before/drain-exit/frame-020.png",
+      "bytes": 12668,
+      "sha256": "5f677d4ebff971d6939f2bb3db2c3a5bd9280992c5cb50ca3fa654ff28ce5227"
+    },
+    {
+      "path": "before/drain-exit/frame-032.png",
+      "bytes": 12686,
+      "sha256": "597b81d279993ff2583fadc8981930e2885e7f9d71e6bfc5a2b897a82c56311e"
+    },
+    {
+      "path": "before/drain-exit/frame-048.png",
+      "bytes": 12701,
+      "sha256": "442575b709ee80fb1d0d6d57312b29fea7eb6862b0fff44e71fe1232cf3012e5"
+    },
+    {
+      "path": "before/drain-exit/frame-063.png",
+      "bytes": 12688,
+      "sha256": "66bbf7134197cb251ec9512c6b1b81abe36c51ae8e9134f84d8af7c47e565d27"
+    },
+    {
+      "path": "before/drain-exit-frames.png",
+      "bytes": 87722,
+      "sha256": "e9e5747401cf3a36a70422b374e24b7b8545aa857e2dd1adca2d5ed76b872a5b"
+    },
+    {
+      "path": "before/drain-exit.gif",
+      "bytes": 635327,
+      "sha256": "cdfbc123a549c9cfab23d20f9a700f6a2039f5f8f4dfe2d1abfda69d0e26254d"
+    },
+    {
+      "path": "before/drain-exit.png",
+      "bytes": 12664,
+      "sha256": "4a2988e0c568e00bba2ee5cd987ebd2768ff1f3aa879c942468505066d606cca"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-000.png",
+      "bytes": 15060,
+      "sha256": "9a1adbef24c2e68c555c9225160023331f0a4c48f9b86a437886af5514249bf2"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-007.png",
+      "bytes": 14973,
+      "sha256": "41f90cd096d4795f1cdb16a8f3c500a7bf7d658b4204444cd5ae09686f3afffc"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-012.png",
+      "bytes": 14543,
+      "sha256": "2d0e206fdc95a3915f9678126f2e059f0e784bef638ba8a003e6ca834358adee"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-020.png",
+      "bytes": 14101,
+      "sha256": "417ccbebd4877c40ef4200e6cbb8884bec2fa24004a2136e5cff45438c8fa0ae"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-032.png",
+      "bytes": 14133,
+      "sha256": "5e1d53215630b442746a7ede5121458fcac02f4e118e843bfabaa947f46d2375"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-048.png",
+      "bytes": 15827,
+      "sha256": "f443824180378e9945f2e2fd286f64abbb2f8a4f93f461795b1de44b7a56fa4a"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-064.png",
+      "bytes": 15925,
+      "sha256": "c381f396a3a45e71c2a3a79f48da9dc28724d3f5dea8e9cf5fa021fb3a2c15c5"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-080.png",
+      "bytes": 16064,
+      "sha256": "13b442fb6e7809f1a8b7bf346bbca9f21312791523449bfe6002c5ef6644082d"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-175.png",
+      "bytes": 15740,
+      "sha256": "922d80390beeb0f02ff4e6307064df47c8e26ebccaafe83be82d4eeb6d77f0c1"
+    },
+    {
+      "path": "before/forest-bomb-wall/frame-219.png",
+      "bytes": 15495,
+      "sha256": "5940b70275740c301e0607a9d91711610943434fd927b684942cdcf641cba16b"
+    },
+    {
+      "path": "before/forest-bomb-wall-frames.png",
+      "bytes": 115084,
+      "sha256": "918894511095563ab10fcf4557e5fce2c021763470d9eb1d6bd8cb1394f5a0ad"
+    },
+    {
+      "path": "before/forest-bomb-wall.gif",
+      "bytes": 2255406,
+      "sha256": "b61391c279e554eadb369e3f8f39e562a84672b79c5b4d1edc3ec8a9c39bca80"
+    },
+    {
+      "path": "before/forest-bomb-wall.png",
+      "bytes": 15060,
+      "sha256": "9a1adbef24c2e68c555c9225160023331f0a4c48f9b86a437886af5514249bf2"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-000.png",
+      "bytes": 15070,
+      "sha256": "9f2adf94039279bb9da6f8d0e1788e80a59cd43c883c60dec740b013ef00c2c7"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-007.png",
+      "bytes": 15074,
+      "sha256": "fe9a1a78a462dea9c78a2b079a80fa52a12f2bd199a24009103f957e0ebe9708"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-012.png",
+      "bytes": 14890,
+      "sha256": "a9922bb292a2a9dc8997d9ba38cf4e1e667c71c4397296fc21c53ec280753076"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-020.png",
+      "bytes": 14863,
+      "sha256": "299a7ccb4c68df742789540991084ff634d7076308af0acd98bfc39f65753e0d"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-022.png",
+      "bytes": 14749,
+      "sha256": "d32e645ffe5306460ef3e141c83f72ea5038d564f38a074b1d2131ae054012a7"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-032.png",
+      "bytes": 11945,
+      "sha256": "29bec3e7a11b105de07f99a150fb38d9128944a12cc9e7383b8141b74e332bca"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-048.png",
+      "bytes": 12079,
+      "sha256": "1e4e6810d7a6c9c1f3a62d119a0140f89b04cbeee811db46575b1bdf979d26a7"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-064.png",
+      "bytes": 12077,
+      "sha256": "5620a0d3a03834f590c98912309ced031ba0f7ed308c5537d6a536b1a123add1"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-080.png",
+      "bytes": 12107,
+      "sha256": "a1190e9ecc1c238266a690c5370ba74469f327db7cbd9961a0221a7f82ba922a"
+    },
+    {
+      "path": "before/forest-brass-chest/frame-111.png",
+      "bytes": 12083,
+      "sha256": "5143a03abe861af55b142206d653a8259a3ea8b0659bb1a3199d4f4ab7b1db80"
+    },
+    {
+      "path": "before/forest-brass-chest-frames.png",
+      "bytes": 102011,
+      "sha256": "081338c6e0d15784a31e65719a6de4cb2a99e9380ff4795e222e8e6950dff1ca"
+    },
+    {
+      "path": "before/forest-brass-chest.gif",
+      "bytes": 680360,
+      "sha256": "4bcf0d36420eca12fa067bbc6648cfde4ce0291ed63affb614f2b93cd03af798"
+    },
+    {
+      "path": "before/forest-brass-chest.png",
+      "bytes": 15070,
+      "sha256": "9f2adf94039279bb9da6f8d0e1788e80a59cd43c883c60dec740b013ef00c2c7"
+    },
+    {
+      "path": "before/forest-bush/frame-000.png",
+      "bytes": 14744,
+      "sha256": "7a2394c872a1a05177ef649f583784cc80dff3ea2060a80067c57cfc8e577714"
+    },
+    {
+      "path": "before/forest-bush/frame-007.png",
+      "bytes": 14657,
+      "sha256": "f43490fe29e1469cd1e6e8749b3a3ae88a3c411ca785e0dd09a068ffbe666cb1"
+    },
+    {
+      "path": "before/forest-bush/frame-012.png",
+      "bytes": 14657,
+      "sha256": "f43490fe29e1469cd1e6e8749b3a3ae88a3c411ca785e0dd09a068ffbe666cb1"
+    },
+    {
+      "path": "before/forest-bush/frame-020.png",
+      "bytes": 14682,
+      "sha256": "148e56a88b12bb35a2c6dc4b1a47d79755d32fd314421d682b4d6249d87d0167"
+    },
+    {
+      "path": "before/forest-bush/frame-032.png",
+      "bytes": 14657,
+      "sha256": "f43490fe29e1469cd1e6e8749b3a3ae88a3c411ca785e0dd09a068ffbe666cb1"
+    },
+    {
+      "path": "before/forest-bush/frame-048.png",
+      "bytes": 14672,
+      "sha256": "22abb8f04d8c8fb6bf522d48edde17e09ec395133e3a77763113b9781d9523be"
+    },
+    {
+      "path": "before/forest-bush/frame-063.png",
+      "bytes": 14667,
+      "sha256": "3d378a15422e3ac54d261a0cd68f6c8b03df693a36755bc157790e3ba7382847"
+    },
+    {
+      "path": "before/forest-bush-frames.png",
+      "bytes": 101438,
+      "sha256": "d7e444c4f240ac26721eaaff8b31e3c8d68476584c953a96b244a8d8ea76a25f"
+    },
+    {
+      "path": "before/forest-bush.gif",
+      "bytes": 267505,
+      "sha256": "04cb3ab71719bae10b2af39a4179dc17ed7c9edd0fcedec6d8733e07e2f86c9f"
+    },
+    {
+      "path": "before/forest-bush.png",
+      "bytes": 14744,
+      "sha256": "7a2394c872a1a05177ef649f583784cc80dff3ea2060a80067c57cfc8e577714"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-000.png",
+      "bytes": 16009,
+      "sha256": "815e709419cdef01b53dd9e943eb92869002073795a16c5d82e00880c7860def"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-007.png",
+      "bytes": 15957,
+      "sha256": "9e1f8b426c1946ce37003b60337009a0ee691b9a5d41f770e4210f8e67a6ddbb"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-012.png",
+      "bytes": 16218,
+      "sha256": "c6878d1fcdd441b631974833c4e4dd87f750a8ed2e24a5b9aeded0d75749cfce"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-020.png",
+      "bytes": 16389,
+      "sha256": "85c4c044babf1b3f776ee7ec4503d23d0b93515a076b9bfcdaec2123179c07ec"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-024.png",
+      "bytes": 16417,
+      "sha256": "135c83399f6618983093a72d30bcd4fee3757bbd2591033b2a15bc5cb530b4ad"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-032.png",
+      "bytes": 16233,
+      "sha256": "c0b09a9fc09470f06fc4703db111d35398e9087648e9bc814c6d2d9611dd344b"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-048.png",
+      "bytes": 15159,
+      "sha256": "a8b4684ea88edebb2299340d15eeff4f05fd9eb03876950b0276aae1194c970a"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-058.png",
+      "bytes": 14515,
+      "sha256": "72aae3d6b0338c9d89aa3a3fd613f3c39b47dfc41d1207d884e3e1b58c79d0ff"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-064.png",
+      "bytes": 14366,
+      "sha256": "8865335bdb63009a46d38957a828c5bced8875fe5a1f88d85ba5a9343c87cffa"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-080.png",
+      "bytes": 14331,
+      "sha256": "bacb364e796095ce1285c2b8b35f584f0230d813e9e9e21b65a34a14895797d7"
+    },
+    {
+      "path": "before/forest-cape-hole/frame-095.png",
+      "bytes": 14366,
+      "sha256": "8865335bdb63009a46d38957a828c5bced8875fe5a1f88d85ba5a9343c87cffa"
+    },
+    {
+      "path": "before/forest-cape-hole-frames.png",
+      "bytes": 134550,
+      "sha256": "23b7c36bf42f31b92bbce3e14fde73a080228c49b2850b5921f5809cb3e5f155"
+    },
+    {
+      "path": "before/forest-cape-hole.gif",
+      "bytes": 936823,
+      "sha256": "6c0ac476f02e2004b306fe4178bb3eb022cfdc89c0f06195e950fc3101adf0ab"
+    },
+    {
+      "path": "before/forest-cape-hole.png",
+      "bytes": 16009,
+      "sha256": "815e709419cdef01b53dd9e943eb92869002073795a16c5d82e00880c7860def"
+    },
+    {
+      "path": "before/forest-cave-door/frame-000.png",
+      "bytes": 11962,
+      "sha256": "f0252313116dce3040b5539f65e489f04d37cc90e0e8672503c9e1dcf2e62af1"
+    },
+    {
+      "path": "before/forest-cave-door/frame-007.png",
+      "bytes": 11980,
+      "sha256": "d9c8904af83860729a9be7ad4ac4b552974081efe09be2e34427e428dc2688b9"
+    },
+    {
+      "path": "before/forest-cave-door/frame-012.png",
+      "bytes": 11657,
+      "sha256": "b8775470fcbb96289a63eb246e93d031d305d57ccd171cca0b29e135a8b534af"
+    },
+    {
+      "path": "before/forest-cave-door/frame-020.png",
+      "bytes": 11480,
+      "sha256": "ee054546a8ef1a24373b49762df24ec219f8464a0abb41fb64b7f44ea9901e63"
+    },
+    {
+      "path": "before/forest-cave-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/forest-cave-door/frame-048.png",
+      "bytes": 5849,
+      "sha256": "e90779ccc6878460925249eadd269f42d56909e958c6e8d9dfa1475dc1c8e1b2"
+    },
+    {
+      "path": "before/forest-cave-door/frame-064.png",
+      "bytes": 5838,
+      "sha256": "c94d3a128c86e5df3ea2c210a7a1d06623d20b4dd0e788a0acf2383064eb079f"
+    },
+    {
+      "path": "before/forest-cave-door/frame-080.png",
+      "bytes": 5838,
+      "sha256": "c94d3a128c86e5df3ea2c210a7a1d06623d20b4dd0e788a0acf2383064eb079f"
+    },
+    {
+      "path": "before/forest-cave-door/frame-123.png",
+      "bytes": 5838,
+      "sha256": "c94d3a128c86e5df3ea2c210a7a1d06623d20b4dd0e788a0acf2383064eb079f"
+    },
+    {
+      "path": "before/forest-cave-door-frames.png",
+      "bytes": 80651,
+      "sha256": "e8a32340f9de751e7d1446163abce1cc0abe7984c942f48ff194519e6b4f0ab4"
+    },
+    {
+      "path": "before/forest-cave-door.gif",
+      "bytes": 546793,
+      "sha256": "dcc75628cc6560e56e4511d5a4b97b9fca1607c8c01e55e1cd00d2130d347045"
+    },
+    {
+      "path": "before/forest-cave-door.png",
+      "bytes": 11962,
+      "sha256": "f0252313116dce3040b5539f65e489f04d37cc90e0e8672503c9e1dcf2e62af1"
+    },
+    {
+      "path": "before/forest-cobweb/frame-000.png",
+      "bytes": 13636,
+      "sha256": "5d5b14a94536de04f0646e636a14eb43d76d4a2c282e1b606c4d7a457a5be8d2"
+    },
+    {
+      "path": "before/forest-cobweb/frame-007.png",
+      "bytes": 13575,
+      "sha256": "302be425aa54fc3d20b21239b2179384554c9be541a7bc1dac22b489ed22f9d0"
+    },
+    {
+      "path": "before/forest-cobweb/frame-012.png",
+      "bytes": 13575,
+      "sha256": "302be425aa54fc3d20b21239b2179384554c9be541a7bc1dac22b489ed22f9d0"
+    },
+    {
+      "path": "before/forest-cobweb/frame-013.png",
+      "bytes": 13573,
+      "sha256": "b01a91dcf9b8c5b9338aba9a6f364ba8d1f0b337723e262016d789efcb6954f2"
+    },
+    {
+      "path": "before/forest-cobweb/frame-020.png",
+      "bytes": 13660,
+      "sha256": "702bfa42baa11f950507ca3e3a19354dbdf671699a1188eb3bd72d09ee8c58f8"
+    },
+    {
+      "path": "before/forest-cobweb/frame-032.png",
+      "bytes": 13648,
+      "sha256": "6584aa1182de8cb6968b8513bb49b862b9c43460cf0671b1f830aed6782faa5a"
+    },
+    {
+      "path": "before/forest-cobweb/frame-048.png",
+      "bytes": 13573,
+      "sha256": "b01a91dcf9b8c5b9338aba9a6f364ba8d1f0b337723e262016d789efcb6954f2"
+    },
+    {
+      "path": "before/forest-cobweb/frame-064.png",
+      "bytes": 13573,
+      "sha256": "b01a91dcf9b8c5b9338aba9a6f364ba8d1f0b337723e262016d789efcb6954f2"
+    },
+    {
+      "path": "before/forest-cobweb/frame-080.png",
+      "bytes": 13634,
+      "sha256": "4ba4ab00e4b6d7d495e0f6b748c6fe6b977097d3d7351b1eff59654d97041b7a"
+    },
+    {
+      "path": "before/forest-cobweb/frame-095.png",
+      "bytes": 13573,
+      "sha256": "b01a91dcf9b8c5b9338aba9a6f364ba8d1f0b337723e262016d789efcb6954f2"
+    },
+    {
+      "path": "before/forest-cobweb-frames.png",
+      "bytes": 99971,
+      "sha256": "73e15884c1d58a03c8bef4990dcf96975704393bb914cc88953d5776b4bd5439"
+    },
+    {
+      "path": "before/forest-cobweb.gif",
+      "bytes": 274002,
+      "sha256": "6de57fdcf1584c84d9de48e0dad6908b666896c0af110e5202482e2e65f0883d"
+    },
+    {
+      "path": "before/forest-cobweb.png",
+      "bytes": 13636,
+      "sha256": "5d5b14a94536de04f0646e636a14eb43d76d4a2c282e1b606c4d7a457a5be8d2"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-000.png",
+      "bytes": 12014,
+      "sha256": "b7f1bd2b12194f77d2da15c0eb397ef5b9b1513f0594e79e39e327e1118a1336"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-007.png",
+      "bytes": 11983,
+      "sha256": "453ae7692524f1a5b8641d7ede6ea130feaa482f8177d7219343e1522bbcb0d4"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-012.png",
+      "bytes": 11985,
+      "sha256": "4c5fe8f7d740b40a8cc22034d45d0551864e1caf0c84b162111555fc212d8f0a"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-020.png",
+      "bytes": 11560,
+      "sha256": "9d5d267e3ccd37e8fbb4f17acb1281651c9b2dcf1dfdfc730bd9ff9b2ea63b49"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-048.png",
+      "bytes": 5752,
+      "sha256": "7f3983367c01a8e546a790965fefca603ed0fce687def65a0fe411b5ea77893b"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-064.png",
+      "bytes": 5757,
+      "sha256": "9c4be409a9423d0d21de54efcd61daec8545051fd81c6de3b65d6a11dc2069c4"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-080.png",
+      "bytes": 5757,
+      "sha256": "9c4be409a9423d0d21de54efcd61daec8545051fd81c6de3b65d6a11dc2069c4"
+    },
+    {
+      "path": "before/forest-hollow-door/frame-123.png",
+      "bytes": 5757,
+      "sha256": "9c4be409a9423d0d21de54efcd61daec8545051fd81c6de3b65d6a11dc2069c4"
+    },
+    {
+      "path": "before/forest-hollow-door-frames.png",
+      "bytes": 80147,
+      "sha256": "12409115add1800ca476b61d422b352a5d6a9f17e8b73cdfa284fbdbad0873b4"
+    },
+    {
+      "path": "before/forest-hollow-door.gif",
+      "bytes": 520111,
+      "sha256": "4707c3049ae652cdaf75fc5848579619530a6a896471230e5d2bd830c00e0d1f"
+    },
+    {
+      "path": "before/forest-hollow-door.png",
+      "bytes": 12014,
+      "sha256": "b7f1bd2b12194f77d2da15c0eb397ef5b9b1513f0594e79e39e327e1118a1336"
+    },
+    {
+      "path": "before/forest-locked-door/frame-000.png",
+      "bytes": 12364,
+      "sha256": "c0c6cbc432381761c81b49e1e3cde112715de95e26c171f4478736c03671b7c6"
+    },
+    {
+      "path": "before/forest-locked-door/frame-007.png",
+      "bytes": 12388,
+      "sha256": "fafc0d934f26f25cc0f4e379f004b26bf34592a37cc1ef685ffa96e33080e2e3"
+    },
+    {
+      "path": "before/forest-locked-door/frame-012.png",
+      "bytes": 12388,
+      "sha256": "fafc0d934f26f25cc0f4e379f004b26bf34592a37cc1ef685ffa96e33080e2e3"
+    },
+    {
+      "path": "before/forest-locked-door/frame-020.png",
+      "bytes": 12326,
+      "sha256": "b7cffd45001ce07c9ffa7e8af7590a5d663f254220ee5ff075fcfa79321677d1"
+    },
+    {
+      "path": "before/forest-locked-door/frame-032.png",
+      "bytes": 12369,
+      "sha256": "37407b80b450b6494ae3537c61ee591bbf1a3293fc17c551bb42df1921c8a0c1"
+    },
+    {
+      "path": "before/forest-locked-door/frame-048.png",
+      "bytes": 12380,
+      "sha256": "465a5e84266af7fb067f81f5fb23281ea2f5007103c9e76e0867c8fdaab85fa1"
+    },
+    {
+      "path": "before/forest-locked-door/frame-063.png",
+      "bytes": 12347,
+      "sha256": "23e0fb5dc106362e1110048296ee4436a3128cbbcdf3e42ed260e23ebd1de696"
+    },
+    {
+      "path": "before/forest-locked-door-frames.png",
+      "bytes": 88035,
+      "sha256": "12d0fa4b2028d4475fce6e7b7f9a150fe0f48f7a303b4bf77266f000f199dd84"
+    },
+    {
+      "path": "before/forest-locked-door.gif",
+      "bytes": 491028,
+      "sha256": "a630e1c720238a07385532f072768584e8d6a94d9793cdb1139eeddb4cf6f670"
+    },
+    {
+      "path": "before/forest-locked-door.png",
+      "bytes": 12364,
+      "sha256": "c0c6cbc432381761c81b49e1e3cde112715de95e26c171f4478736c03671b7c6"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-000.png",
+      "bytes": 12472,
+      "sha256": "71b2916fb972f8ce5d7e1ce8b9b96ba21b64ba11f73f2e5f097f1ba09cf04ba9"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-007.png",
+      "bytes": 12445,
+      "sha256": "0a7e47d3fb82999957a1bbee7b90a5a3a58b60640dfbf697808795964bb7d54e"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-012.png",
+      "bytes": 12270,
+      "sha256": "3ddabf8a8b087cbdb1905f5a94ccbff3f298cff6a2bb3d6aaf2a5349872c32b1"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-020.png",
+      "bytes": 12689,
+      "sha256": "10468941f11cdd75c076428fa92d85c2697847825b5be0c295997dba9d0b4924"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-022.png",
+      "bytes": 12627,
+      "sha256": "2c2f1459008a55fb1d923e712f0480ba685d1e4db565571397f9b6dce60fb1e7"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-032.png",
+      "bytes": 11580,
+      "sha256": "ceacca3f59b47c0f8fd7f18051185d75a8e8097d226c9e298131ccd278d381b5"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-048.png",
+      "bytes": 11666,
+      "sha256": "2ac635c6748dbea4ba83b434916bc13789ad05fc1e181c1ac74b425b78f03edd"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-064.png",
+      "bytes": 11676,
+      "sha256": "436e18dcbf08e7d04e8e0388c65b011f0631a76bcc9fed305130a3ca4fe63b19"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-080.png",
+      "bytes": 11666,
+      "sha256": "2ac635c6748dbea4ba83b434916bc13789ad05fc1e181c1ac74b425b78f03edd"
+    },
+    {
+      "path": "before/forest-relic-chest/frame-111.png",
+      "bytes": 11684,
+      "sha256": "56e117d8750b0697f50d78e43de1b1fbf80315f606069448d8bad73ffd362c84"
+    },
+    {
+      "path": "before/forest-relic-chest-frames.png",
+      "bytes": 95989,
+      "sha256": "f8f3fbd5fa8415711241449b257400a415b00ec7705da82f6bf85f59de2e0950"
+    },
+    {
+      "path": "before/forest-relic-chest.gif",
+      "bytes": 546666,
+      "sha256": "3f5e83ff4111ad79c2417ebd0210564287c0d9a772c96514c7696fd231eac8af"
+    },
+    {
+      "path": "before/forest-relic-chest.png",
+      "bytes": 12472,
+      "sha256": "71b2916fb972f8ce5d7e1ce8b9b96ba21b64ba11f73f2e5f097f1ba09cf04ba9"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-000.png",
+      "bytes": 13720,
+      "sha256": "2f100e73d51df87be8b6865da6c864d635fdcc2b4b898208626cd38aad09d022"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-007.png",
+      "bytes": 13624,
+      "sha256": "13c915501a8f372748457f7754320c920f0e57dca296064f8cdbe0a10238967c"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-012.png",
+      "bytes": 13624,
+      "sha256": "13c915501a8f372748457f7754320c920f0e57dca296064f8cdbe0a10238967c"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-020.png",
+      "bytes": 13678,
+      "sha256": "bcbbb18a1fd0500ded4e6b3b59fb73d3fe279e9280957e3bcb2abafa988d7a9c"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-032.png",
+      "bytes": 13630,
+      "sha256": "1287e753f0ecd43a213e114fcd7bbf8cd05add099c3ba87347a60deac2d80f64"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-048.png",
+      "bytes": 13661,
+      "sha256": "7f5e9f313198d1654b914fa68f4d4525f4158144cf61448cfdc841a815611dbd"
+    },
+    {
+      "path": "before/forest-relic-pedestal/frame-063.png",
+      "bytes": 13640,
+      "sha256": "4c7a7790395914e8284b36666a059b57d94e8093e11ac127e0b518f43e34a2a0"
+    },
+    {
+      "path": "before/forest-relic-pedestal-frames.png",
+      "bytes": 96262,
+      "sha256": "1c7138e32a4ed4a3fed3ae18fec008d1adb9b73571d06fbbfd8bf484563e597c"
+    },
+    {
+      "path": "before/forest-relic-pedestal.gif",
+      "bytes": 287732,
+      "sha256": "f2dfd1031d31f6e6e4e04a3148a94c5263a3db9463ec7127d3ac75462a351398"
+    },
+    {
+      "path": "before/forest-relic-pedestal.png",
+      "bytes": 13720,
+      "sha256": "2f100e73d51df87be8b6865da6c864d635fdcc2b4b898208626cd38aad09d022"
+    },
+    {
+      "path": "before/forest-rock_small/frame-000.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-007.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-012.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-020.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-032.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-048.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small/frame-063.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-rock_small-frames.png",
+      "bytes": 103525,
+      "sha256": "716570cc18ee9bac43d0fc338467786e544e391df60fc823c6bcbf7e790addcc"
+    },
+    {
+      "path": "before/forest-rock_small.gif",
+      "bytes": 32055,
+      "sha256": "c70ffa66d945f418ac81a2fdd86f4b73a8287407a567a250d1105e6f070aa20b"
+    },
+    {
+      "path": "before/forest-rock_small.png",
+      "bytes": 15167,
+      "sha256": "d8eb989e13dff8cb145740d01ce432a5b0b18a5150540e346264341e71fa1a2e"
+    },
+    {
+      "path": "before/forest-shrine/frame-000.png",
+      "bytes": 14503,
+      "sha256": "bef33a249464df0e6ab525f668ec8d45e7d505eec4757d7d046dee9b5165941a"
+    },
+    {
+      "path": "before/forest-shrine/frame-007.png",
+      "bytes": 14487,
+      "sha256": "5d48ccaa7ecb9b9db63aeafd52e1cd75bb143b27270e2644203be725b300cbad"
+    },
+    {
+      "path": "before/forest-shrine/frame-012.png",
+      "bytes": 14359,
+      "sha256": "e114775160b0e4391a7eae2f423a0faf9c2b1b466d10d073947584c5b02d36ba"
+    },
+    {
+      "path": "before/forest-shrine/frame-020.png",
+      "bytes": 13781,
+      "sha256": "bdcb5997c38439da0a0ede3cbc28a214f2616d8028291f745c91b282801956e3"
+    },
+    {
+      "path": "before/forest-shrine/frame-027.png",
+      "bytes": 13501,
+      "sha256": "b4c2d8d6c91aab55fb83d02280c2135b68d1ca06648d899e86ecf3d07c46561b"
+    },
+    {
+      "path": "before/forest-shrine/frame-032.png",
+      "bytes": 10240,
+      "sha256": "a047683c02f365322d08ff23f60a430e5349339ac9106255751b5a6e58efc47b"
+    },
+    {
+      "path": "before/forest-shrine/frame-048.png",
+      "bytes": 10447,
+      "sha256": "9e3656bb428140f1ed154e911688e32523d8f12dce271f45b93d50db818a567e"
+    },
+    {
+      "path": "before/forest-shrine/frame-064.png",
+      "bytes": 10645,
+      "sha256": "4f28f981680ffda77acdf5605dbaadc51986ffff075a463eddf22f69e43177d4"
+    },
+    {
+      "path": "before/forest-shrine/frame-080.png",
+      "bytes": 10689,
+      "sha256": "a4b4673c1d939f64f053d7d69950b12bdaa06cf5a848adc35a7a51217723678e"
+    },
+    {
+      "path": "before/forest-shrine/frame-095.png",
+      "bytes": 10651,
+      "sha256": "ce0a6a38596d8e2e2ca1ef9c60cd65c0494cf1c4d2921344bdbba4bc00109184"
+    },
+    {
+      "path": "before/forest-shrine-frames.png",
+      "bytes": 102220,
+      "sha256": "b68a46d042990563b3f5c6450f56a62fc8fb7854fecc3493d79f61f3130c38bd"
+    },
+    {
+      "path": "before/forest-shrine.gif",
+      "bytes": 790547,
+      "sha256": "90b59ce0429cd0c29050bf83baa11e9983a957ceb531dbb5ce987cf1583c1068"
+    },
+    {
+      "path": "before/forest-shrine.png",
+      "bytes": 14503,
+      "sha256": "bef33a249464df0e6ab525f668ec8d45e7d505eec4757d7d046dee9b5165941a"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-000.png",
+      "bytes": 13267,
+      "sha256": "5165754fe109a6a41896348ed095239cbed1b837d28709564badccfe5dcc7a41"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-007.png",
+      "bytes": 13184,
+      "sha256": "0607cbefadd2659769a56bd51c387deccc8273d9247a95569fd2c21cddb85104"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-012.png",
+      "bytes": 12974,
+      "sha256": "322fe3fe2f6a471c1f59ea3a8abbdd11d95b45a6bdf15d84ec96eaa322b64c7c"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-020.png",
+      "bytes": 11095,
+      "sha256": "780e785ff656e3569f4cab1924a3b50f041f66386c54b1c5512580bb34a84cb9"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-022.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-032.png",
+      "bytes": 5426,
+      "sha256": "941bbfa20dda7f7bbb24ab8d2c5d29ccc9775ee9a5be9bbb3e24f3af9969c22f"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-048.png",
+      "bytes": 5426,
+      "sha256": "75dba4eb1845bee289e89734cd9b4ac70776900cc8b29548556bf4e4b1af3753"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-064.png",
+      "bytes": 5414,
+      "sha256": "a8dfbfcd1d40734649f73812c735780f635cb9e32475ab0c9f7a6e6425602e5c"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-080.png",
+      "bytes": 5926,
+      "sha256": "70cadd4758a4165c135f4617c183be3db2af1251c7648f5c29a8db471033b832"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-121.png",
+      "bytes": 5881,
+      "sha256": "ae48de3cd086a81cde6bb3d559aeabd43026b9b065d12ef55568de5d69f37532"
+    },
+    {
+      "path": "before/forest-thicket-door/frame-123.png",
+      "bytes": 5258,
+      "sha256": "8c55dd0707365497ca96d4a87b83f3590b5b173718ae78f0e09755e3252ae6de"
+    },
+    {
+      "path": "before/forest-thicket-door-frames.png",
+      "bytes": 84182,
+      "sha256": "c7b62ff88f0ad43cea6b202c2034d201c55f8a2e443ecaec4339232730741d35"
+    },
+    {
+      "path": "before/forest-thicket-door.gif",
+      "bytes": 776537,
+      "sha256": "73dbd9d34fcb37a6a037b8531500235bd085bc04d1f5771ceade04627660c6eb"
+    },
+    {
+      "path": "before/forest-thicket-door.png",
+      "bytes": 13267,
+      "sha256": "5165754fe109a6a41896348ed095239cbed1b837d28709564badccfe5dcc7a41"
+    },
+    {
+      "path": "before/forest-thorn/frame-000.png",
+      "bytes": 14530,
+      "sha256": "b83195c0f72fc206a90dc4fc61bcf6939241269d7e76fb37f222b7562bbeb16a"
+    },
+    {
+      "path": "before/forest-thorn/frame-007.png",
+      "bytes": 14541,
+      "sha256": "5d2dd599f90082c36168b6f9f8aa90eed4d771cb05157b0efbd3e15c5d25d879"
+    },
+    {
+      "path": "before/forest-thorn/frame-012.png",
+      "bytes": 14541,
+      "sha256": "5d2dd599f90082c36168b6f9f8aa90eed4d771cb05157b0efbd3e15c5d25d879"
+    },
+    {
+      "path": "before/forest-thorn/frame-020.png",
+      "bytes": 14530,
+      "sha256": "b83195c0f72fc206a90dc4fc61bcf6939241269d7e76fb37f222b7562bbeb16a"
+    },
+    {
+      "path": "before/forest-thorn/frame-032.png",
+      "bytes": 14541,
+      "sha256": "5d2dd599f90082c36168b6f9f8aa90eed4d771cb05157b0efbd3e15c5d25d879"
+    },
+    {
+      "path": "before/forest-thorn/frame-048.png",
+      "bytes": 14541,
+      "sha256": "5d2dd599f90082c36168b6f9f8aa90eed4d771cb05157b0efbd3e15c5d25d879"
+    },
+    {
+      "path": "before/forest-thorn/frame-063.png",
+      "bytes": 14530,
+      "sha256": "b83195c0f72fc206a90dc4fc61bcf6939241269d7e76fb37f222b7562bbeb16a"
+    },
+    {
+      "path": "before/forest-thorn-frames.png",
+      "bytes": 100598,
+      "sha256": "5812f2b739d0931ebf881b565464490ea605e0bc3ac1dad408a9804a3774a88c"
+    },
+    {
+      "path": "before/forest-thorn.gif",
+      "bytes": 200672,
+      "sha256": "baecd15e0b6cc419a8537e35f5185f10a703aadbdf15959c42ef322bc7add35c"
+    },
+    {
+      "path": "before/forest-thorn.png",
+      "bytes": 14530,
+      "sha256": "b83195c0f72fc206a90dc4fc61bcf6939241269d7e76fb37f222b7562bbeb16a"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-000.png",
+      "bytes": 13117,
+      "sha256": "67cc6f3ac8f308fab3b6a30a496c7740b3971334b56a41ef77db3c8ba5d86a66"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-007.png",
+      "bytes": 13087,
+      "sha256": "1a35c35045372c32818e12acd60ae512c54fcec2129929c57e92102057926794"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-012.png",
+      "bytes": 12884,
+      "sha256": "c77819a9643d0f44dd3b29253f601db53d040ed655371effdc31765576d6a8e8"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-020.png",
+      "bytes": 12638,
+      "sha256": "086f7cc51c2d49a0c620e9b33927a3cc4efca00f92dd2977751d5ad5b0f8783b"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-022.png",
+      "bytes": 12597,
+      "sha256": "43449d3d35dee67ee1355707e80318e43ec205cfe1ac27c5193eb2838be6f0b8"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-032.png",
+      "bytes": 11381,
+      "sha256": "6098343bee06d7b1d733e74cb88cd02f052a808bcfb36451d2427a133026d62b"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-048.png",
+      "bytes": 11549,
+      "sha256": "452af28748eb840746986a75238b64ba0443c87846b69a0154c9af1039dede67"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-064.png",
+      "bytes": 11550,
+      "sha256": "1bf593ef805e359e04b261f0808d926f64a046f99de28eb91d219d188aa2ceb2"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-080.png",
+      "bytes": 11549,
+      "sha256": "452af28748eb840746986a75238b64ba0443c87846b69a0154c9af1039dede67"
+    },
+    {
+      "path": "before/forest-wood-chest/frame-111.png",
+      "bytes": 11551,
+      "sha256": "4a7805239db041c48315ced673e9842dd144bc21f94539bc157326954e9a511e"
+    },
+    {
+      "path": "before/forest-wood-chest-frames.png",
+      "bytes": 93580,
+      "sha256": "f502fb53e537a13eee30893c0d213f660a19b390e48d340eaed59ccaadcb3dd8"
+    },
+    {
+      "path": "before/forest-wood-chest.gif",
+      "bytes": 660533,
+      "sha256": "06347f1bf4f43e6a608ebc8b55ee8a30ec3962cb5e8a452e73005f866da6547b"
+    },
+    {
+      "path": "before/forest-wood-chest.png",
+      "bytes": 13117,
+      "sha256": "67cc6f3ac8f308fab3b6a30a496c7740b3971334b56a41ef77db3c8ba5d86a66"
+    },
+    {
+      "path": "before/hollow-exit/frame-000.png",
+      "bytes": 6680,
+      "sha256": "a39fad03ff7df5cb9baacb7ea4ef9401efa1c62d327cf194695a65bd6cffa8a7"
+    },
+    {
+      "path": "before/hollow-exit/frame-007.png",
+      "bytes": 6680,
+      "sha256": "a39fad03ff7df5cb9baacb7ea4ef9401efa1c62d327cf194695a65bd6cffa8a7"
+    },
+    {
+      "path": "before/hollow-exit/frame-012.png",
+      "bytes": 6627,
+      "sha256": "d79eee7e53dad573373e55f944c82189e9ffc42f055ca59fff635ab93f04489d"
+    },
+    {
+      "path": "before/hollow-exit/frame-020.png",
+      "bytes": 6619,
+      "sha256": "a00047a5ee155f98f7d83cba6a39e32f015413803a2830cb62b82c400996f26e"
+    },
+    {
+      "path": "before/hollow-exit/frame-032.png",
+      "bytes": 6487,
+      "sha256": "cc07734085525c7773fa7384cc929148153f20197b81a98b21c5899fa5c163fc"
+    },
+    {
+      "path": "before/hollow-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/hollow-exit/frame-038.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/hollow-exit/frame-041.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/hollow-exit/frame-048.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/hollow-exit/frame-064.png",
+      "bytes": 14221,
+      "sha256": "b2f46045dde2fe231125dc0ee83c9fb9893af941628cb4175ee2beee440502e1"
+    },
+    {
+      "path": "before/hollow-exit/frame-080.png",
+      "bytes": 14234,
+      "sha256": "1e5cd11f1684294b3b5f37d225229acf1a1f3625bc7eaf976dfcc76051ba4daa"
+    },
+    {
+      "path": "before/hollow-exit/frame-123.png",
+      "bytes": 14248,
+      "sha256": "d95bc725d3b0a4393ba7fddbfab694c7aec29af41a2fc953208d30a1112ef85c"
+    },
+    {
+      "path": "before/hollow-exit-frames.png",
+      "bytes": 112796,
+      "sha256": "284547f44caf5e5b0f74dc010059383e5d82223d66c357331c84a27808b29ab6"
+    },
+    {
+      "path": "before/hollow-exit.gif",
+      "bytes": 1098968,
+      "sha256": "88d82416fef464623f807013519b6d07bf34d5c7001e478575e0d65af0b938f7"
+    },
+    {
+      "path": "before/hollow-exit.png",
+      "bytes": 6680,
+      "sha256": "a39fad03ff7df5cb9baacb7ea4ef9401efa1c62d327cf194695a65bd6cffa8a7"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-000.png",
+      "bytes": 6246,
+      "sha256": "fab5af7942d5fc9319fb0f171fdf97b63d09f05e30d6d45c0c9027d47dc6daa5"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-007.png",
+      "bytes": 6246,
+      "sha256": "fab5af7942d5fc9319fb0f171fdf97b63d09f05e30d6d45c0c9027d47dc6daa5"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-012.png",
+      "bytes": 6238,
+      "sha256": "f629ee039871aeac7c4824b0c26f03b164ce6ca7663dab05f16b3c456411909d"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-020.png",
+      "bytes": 6220,
+      "sha256": "12ab7397bee440d02c464e1786f3ae29673faeed1a328a1e7131c78a8038b847"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-027.png",
+      "bytes": 6255,
+      "sha256": "83447c0ce4c8c2504e136ff2b2d540d652602ee753d9522150e9e04c96f869d9"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-032.png",
+      "bytes": 6267,
+      "sha256": "7b10a2575f513175f833e264cc645c43e7920545940594a6a5d980fdd10a04a8"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-048.png",
+      "bytes": 6192,
+      "sha256": "fdedcbffb8e9d948dff49a20c39b1fa018ce3d79260025e5a5be037690f109e0"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-064.png",
+      "bytes": 6192,
+      "sha256": "fdedcbffb8e9d948dff49a20c39b1fa018ce3d79260025e5a5be037690f109e0"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-080.png",
+      "bytes": 6192,
+      "sha256": "fdedcbffb8e9d948dff49a20c39b1fa018ce3d79260025e5a5be037690f109e0"
+    },
+    {
+      "path": "before/hollow-floor-switch/frame-087.png",
+      "bytes": 6192,
+      "sha256": "fdedcbffb8e9d948dff49a20c39b1fa018ce3d79260025e5a5be037690f109e0"
+    },
+    {
+      "path": "before/hollow-floor-switch-frames.png",
+      "bytes": 61845,
+      "sha256": "4640553eacbe67c67351a04c23b0d5dd0eaddfd25beed5d32be708600369ffeb"
+    },
+    {
+      "path": "before/hollow-floor-switch.gif",
+      "bytes": 261871,
+      "sha256": "396342616ba45c23a15a12fef5949e3b5e33e78ba20adb3dba486190223fc374"
+    },
+    {
+      "path": "before/hollow-floor-switch.png",
+      "bytes": 6246,
+      "sha256": "fab5af7942d5fc9319fb0f171fdf97b63d09f05e30d6d45c0c9027d47dc6daa5"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-000.png",
+      "bytes": 5340,
+      "sha256": "623404edf6695cff6adef3001158a4476d2f29794edcef28c86a9abaa8b13dbe"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-007.png",
+      "bytes": 5340,
+      "sha256": "623404edf6695cff6adef3001158a4476d2f29794edcef28c86a9abaa8b13dbe"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-012.png",
+      "bytes": 5255,
+      "sha256": "95bb0a8c9a7efe335779d7e1ac078fc3ef3aae3304047fbf24568ed9e950161e"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-020.png",
+      "bytes": 5395,
+      "sha256": "5f148bd501a46eaa9930ad07b43f1d8a34767e5decb6ad9a0cb5d5ce935c7c95"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-022.png",
+      "bytes": 5424,
+      "sha256": "989134f08863d2071d94612d490e3cce8a5796f2dccd3f6274c4f7a13ca50c6b"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-032.png",
+      "bytes": 5288,
+      "sha256": "29c94695802004f88267489a77ec700ebab90a7fedf80d57d0a18a939a51bdf0"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-048.png",
+      "bytes": 5530,
+      "sha256": "d83d89d0e913fe7ea958bf071f4a24da2b6870a4c516ed5326ff037ec0a13a04"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-064.png",
+      "bytes": 5683,
+      "sha256": "924211b252d3829e1b4e87cf7e8b610550e59e67a56c899f1e619c6d3b7d26c0"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-080.png",
+      "bytes": 5682,
+      "sha256": "b544b2c7c88234caeace0d14c61f76faedbbd99163ac0aeb74374eb8880a3cb0"
+    },
+    {
+      "path": "before/large-thicket-chest/frame-111.png",
+      "bytes": 5678,
+      "sha256": "b9d1166db813c63d84c019c150a61ec56369d771f0c29d609b5ac83b72ce6ddb"
+    },
+    {
+      "path": "before/large-thicket-chest-frames.png",
+      "bytes": 51683,
+      "sha256": "198279907817ab488e6d1049d89b6604ca2fe4d2c54e6e28f976e02a1f86d9d3"
+    },
+    {
+      "path": "before/large-thicket-chest.gif",
+      "bytes": 376346,
+      "sha256": "31d42b3794666143ba7677b0f9f720158e512c49620d70129ecc23972e143a93"
+    },
+    {
+      "path": "before/large-thicket-chest.png",
+      "bytes": 5340,
+      "sha256": "623404edf6695cff6adef3001158a4476d2f29794edcef28c86a9abaa8b13dbe"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-000.png",
+      "bytes": 6581,
+      "sha256": "a14c5be4aca0f19a08ffbf49884d91a17bf9bef4bdda8dcbef404fe92f5308d5"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-007.png",
+      "bytes": 6581,
+      "sha256": "a14c5be4aca0f19a08ffbf49884d91a17bf9bef4bdda8dcbef404fe92f5308d5"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-012.png",
+      "bytes": 6420,
+      "sha256": "efa2865b96e41ee37f238b0d4a1cf63313356e02d52c2692b7058ca20c3326a0"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-020.png",
+      "bytes": 6458,
+      "sha256": "8d7e516c0c5e9b178eaafa09d0a1d97f32912b2405a8fa60434c51631b75da8e"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-022.png",
+      "bytes": 6465,
+      "sha256": "fd20c08503b35bc06d4915352f46bd5619e63f363533520c68539771f5b8c38a"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-032.png",
+      "bytes": 6295,
+      "sha256": "01729e2ce2ca2e132c57ff2c8b4fd48a4fdcd3abc311d1702a8fb2d6a0e5bd80"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-048.png",
+      "bytes": 6528,
+      "sha256": "888517f1fb4404c26c675eb5bd6cc520a3b2cdf347b3846024cd0940662efcfc"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-064.png",
+      "bytes": 6606,
+      "sha256": "367c746f35ac49e9811c1434f56c6b85461c71c02e6b55239476d52b2705b581"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-080.png",
+      "bytes": 6612,
+      "sha256": "ccf1eee6af3fc617fe7117d5a37df98dec9493f08a81ccae9c4ab9e7ba8e2ddd"
+    },
+    {
+      "path": "before/medium-cave-chest/frame-111.png",
+      "bytes": 6613,
+      "sha256": "7a7a31e2495fb18b808341c752fb6b815b9d8bbae3be6455a79d6eb2c692e404"
+    },
+    {
+      "path": "before/medium-cave-chest-frames.png",
+      "bytes": 62709,
+      "sha256": "e9594b8a338e8541486a2830f1804a3e8fa0575cda1693e458d08abc5beca586"
+    },
+    {
+      "path": "before/medium-cave-chest.gif",
+      "bytes": 430365,
+      "sha256": "2e97b977953e8ed5dcc7c40e5ea1e2407a47bf3654f3f1b8e2912097c6b5be5b"
+    },
+    {
+      "path": "before/medium-cave-chest.png",
+      "bytes": 6581,
+      "sha256": "a14c5be4aca0f19a08ffbf49884d91a17bf9bef4bdda8dcbef404fe92f5308d5"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-000.png",
+      "bytes": 15088,
+      "sha256": "740ec4ee1be36544dd11b81c08a9bd1efdbdf7b2c69cc6c2b05d754d0bed0871"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-007.png",
+      "bytes": 15086,
+      "sha256": "197d4c64b3d98b6392fe8d8569bf3dcf96606d020af533dba39681a6ddecdf6a"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-012.png",
+      "bytes": 15002,
+      "sha256": "5fa0d6ceeb01d62bbe6c2ce3f33c25169649ba5e8e3104eb42f7e33e44489ff1"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-020.png",
+      "bytes": 14729,
+      "sha256": "ed39f5decabb1ac61906bb7352cd187d4d991e7f43c06332b1262e48646f6781"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-032.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-048.png",
+      "bytes": 6154,
+      "sha256": "9e77924187d4b1da91e87ddfc0ea84e2a2afd1fa7fba642da0b6d69f5870da8b"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-064.png",
+      "bytes": 6123,
+      "sha256": "80c5936e58141eaede01223b52626ebee90ff65eb0262fbb3276ac4ff9ca37ca"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-080.png",
+      "bytes": 6123,
+      "sha256": "80c5936e58141eaede01223b52626ebee90ff65eb0262fbb3276ac4ff9ca37ca"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-116.png",
+      "bytes": 6756,
+      "sha256": "810499cdb416857834e06ab297114f09b19e9f556b50143f2b90d6de67f61968"
+    },
+    {
+      "path": "before/mixed-cave-door/frame-123.png",
+      "bytes": 6232,
+      "sha256": "797fce1f5d23e4e6b3c8e7bdec41a56bedda3d5347c66edfa93a0a87c76c5d0e"
+    },
+    {
+      "path": "before/mixed-cave-door-frames.png",
+      "bytes": 90891,
+      "sha256": "ee99e3ee2210edffaeb2514495d00c0e2df28a96c683c57a397f49e1bc5e3400"
+    },
+    {
+      "path": "before/mixed-cave-door.gif",
+      "bytes": 888557,
+      "sha256": "c88abeaa300949dc6823a8f5e7b29d45e750760d12880e5931b2a754ef7071e7"
+    },
+    {
+      "path": "before/mixed-cave-door.png",
+      "bytes": 15088,
+      "sha256": "740ec4ee1be36544dd11b81c08a9bd1efdbdf7b2c69cc6c2b05d754d0bed0871"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-000.png",
+      "bytes": 6592,
+      "sha256": "6ed0ece66a696f136a9e1df09db736e788156a1635c2831b58f2c0f6f9f7470c"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-007.png",
+      "bytes": 6592,
+      "sha256": "6ed0ece66a696f136a9e1df09db736e788156a1635c2831b58f2c0f6f9f7470c"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-012.png",
+      "bytes": 6663,
+      "sha256": "ae428c99eee5e65aa53ecad7eb07921c60e44f09928d9bcad95a368e91d0cd8b"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-020.png",
+      "bytes": 6502,
+      "sha256": "909e784187f128fda845e860e35ef3e28dcdd4138bfb0994eabe2bbbccc8f6d6"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-022.png",
+      "bytes": 6528,
+      "sha256": "10a4d5500535314f4c4d9961dbbbd41e20e5e94ff83715fe3cebddb3ebdeccd7"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-032.png",
+      "bytes": 6262,
+      "sha256": "43e3fd237efb1f8aaa3a5ac4955f631d5ac4498be08d271a9080c65732fc8a2d"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-048.png",
+      "bytes": 6412,
+      "sha256": "da544ed5244e8e080219be80f641101622aa40e8a8e9ecdba143ff09462945d3"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-064.png",
+      "bytes": 6412,
+      "sha256": "ae166964932ef80e1a1a67ba048287243081e3cabe4913254c0abe2e7e44df72"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-080.png",
+      "bytes": 6412,
+      "sha256": "da544ed5244e8e080219be80f641101622aa40e8a8e9ecdba143ff09462945d3"
+    },
+    {
+      "path": "before/small-hollow-chest/frame-111.png",
+      "bytes": 6412,
+      "sha256": "d816b7f50cc59b3767937e3fb061c30df6856cb7d36724728fefdedabeab93a5"
+    },
+    {
+      "path": "before/small-hollow-chest-frames.png",
+      "bytes": 59993,
+      "sha256": "3b0a2328ed945f5d8881e925b9b7614d7ba304ce89bb3146094cd835f00d0cc9"
+    },
+    {
+      "path": "before/small-hollow-chest.gif",
+      "bytes": 427670,
+      "sha256": "ec40ddf0b296edde92365dc8b4293d06e76435d81eedbc9a3de7484f094df73d"
+    },
+    {
+      "path": "before/small-hollow-chest.png",
+      "bytes": 6592,
+      "sha256": "6ed0ece66a696f136a9e1df09db736e788156a1635c2831b58f2c0f6f9f7470c"
+    },
+    {
+      "path": "before/thicket-boulder/frame-000.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-007.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-012.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-020.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-032.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-048.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder/frame-063.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-boulder-frames.png",
+      "bytes": 53818,
+      "sha256": "ede26c62e8e3fc5f6feb8295841123ae95393e0d8653ccff813dbab52ce51704"
+    },
+    {
+      "path": "before/thicket-boulder.gif",
+      "bytes": 14698,
+      "sha256": "8d5bfd3b6895b38dd7fbc49869cd0ebb8f7c5a39a97750a8f36422de788480a6"
+    },
+    {
+      "path": "before/thicket-boulder.png",
+      "bytes": 5549,
+      "sha256": "54cdac526b9dd73b9b439005b2934f30d06aeea2f84f2a84f99c4af70f6f5490"
+    },
+    {
+      "path": "before/thicket-censer/frame-000.png",
+      "bytes": 6685,
+      "sha256": "1deda91876b94151c22842b0a26b61053cca6c7bad40302c7bdd47a0c9216b77"
+    },
+    {
+      "path": "before/thicket-censer/frame-007.png",
+      "bytes": 6685,
+      "sha256": "1deda91876b94151c22842b0a26b61053cca6c7bad40302c7bdd47a0c9216b77"
+    },
+    {
+      "path": "before/thicket-censer/frame-012.png",
+      "bytes": 6685,
+      "sha256": "4c7efdb371be29703a191311ee55ccc57e3c5e7671626bbf2964c0df31b20bcd"
+    },
+    {
+      "path": "before/thicket-censer/frame-020.png",
+      "bytes": 6834,
+      "sha256": "7e79e601d22079075b40eb9f07332c4fb198492a310f21e8a8e4b1dda92ba827"
+    },
+    {
+      "path": "before/thicket-censer/frame-025.png",
+      "bytes": 6775,
+      "sha256": "e5c67405c15f5c16ed766f0d3dd002fac294eafed7b5ac4c051740948a18cd23"
+    },
+    {
+      "path": "before/thicket-censer/frame-032.png",
+      "bytes": 6902,
+      "sha256": "071807dbf7f1fef05a27713e1f2a7861bc00c46506e8cfb8e63e8e02bd736c49"
+    },
+    {
+      "path": "before/thicket-censer/frame-048.png",
+      "bytes": 6775,
+      "sha256": "e5c67405c15f5c16ed766f0d3dd002fac294eafed7b5ac4c051740948a18cd23"
+    },
+    {
+      "path": "before/thicket-censer/frame-064.png",
+      "bytes": 6775,
+      "sha256": "e5c67405c15f5c16ed766f0d3dd002fac294eafed7b5ac4c051740948a18cd23"
+    },
+    {
+      "path": "before/thicket-censer/frame-080.png",
+      "bytes": 6775,
+      "sha256": "e5c67405c15f5c16ed766f0d3dd002fac294eafed7b5ac4c051740948a18cd23"
+    },
+    {
+      "path": "before/thicket-censer/frame-095.png",
+      "bytes": 6775,
+      "sha256": "e5c67405c15f5c16ed766f0d3dd002fac294eafed7b5ac4c051740948a18cd23"
+    },
+    {
+      "path": "before/thicket-censer-frames.png",
+      "bytes": 58686,
+      "sha256": "6ece7efe2a7f1fbc98b72c26c6507db2770eeb08d3b136986e0fd63853786d7d"
+    },
+    {
+      "path": "before/thicket-censer.gif",
+      "bytes": 203551,
+      "sha256": "8c513ef4bf1bf3d5af0345e8df0fd52c760acdff71c5faa1511b90273f9a14ae"
+    },
+    {
+      "path": "before/thicket-censer.png",
+      "bytes": 6685,
+      "sha256": "1deda91876b94151c22842b0a26b61053cca6c7bad40302c7bdd47a0c9216b77"
+    },
+    {
+      "path": "before/thicket-exit/frame-000.png",
+      "bytes": 5633,
+      "sha256": "f580fdba0a8ef76718df84fcc886ac811c0bfe743696bf460145bfec4e7624f8"
+    },
+    {
+      "path": "before/thicket-exit/frame-007.png",
+      "bytes": 5633,
+      "sha256": "f580fdba0a8ef76718df84fcc886ac811c0bfe743696bf460145bfec4e7624f8"
+    },
+    {
+      "path": "before/thicket-exit/frame-012.png",
+      "bytes": 5624,
+      "sha256": "7f85113d9c25b957dc8ba48c749c2eefbb841d772f4bf3b485cb0f7a4ab58497"
+    },
+    {
+      "path": "before/thicket-exit/frame-020.png",
+      "bytes": 5641,
+      "sha256": "35a5a7aaabd7758e8965c7988200773fa99932e0b26d728d829b6c7b41f90343"
+    },
+    {
+      "path": "before/thicket-exit/frame-032.png",
+      "bytes": 5493,
+      "sha256": "d887f07d9fd168b00c72806b67af6bdcf51d412c912086ee0387bbd728f22e20"
+    },
+    {
+      "path": "before/thicket-exit/frame-036.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/thicket-exit/frame-039.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/thicket-exit/frame-043.png",
+      "bytes": 192,
+      "sha256": "47fbde60709a27683035d7b385f06dd1447f68c6548272758e15a335cf3bc15e"
+    },
+    {
+      "path": "before/thicket-exit/frame-048.png",
+      "bytes": 13193,
+      "sha256": "a59a8013bb71879b6a47a69802688af094c9efa17322e840bc331c67f05df416"
+    },
+    {
+      "path": "before/thicket-exit/frame-064.png",
+      "bytes": 14389,
+      "sha256": "74dad6112072f6972295140753efd2b9ca16dca94de8966f2fec4e824ab54f04"
+    },
+    {
+      "path": "before/thicket-exit/frame-080.png",
+      "bytes": 14508,
+      "sha256": "2e5880132ec124dd7d305b9db5b4d65c797429d8c9b47b37abcfb8a29340758e"
+    },
+    {
+      "path": "before/thicket-exit/frame-123.png",
+      "bytes": 14613,
+      "sha256": "4ba05918705be4971289a7078d9710dc4d933bfae9e4215e8fef082c4824e684"
+    },
+    {
+      "path": "before/thicket-exit-frames.png",
+      "bytes": 117797,
+      "sha256": "ae95c2bee473eabd8d05ba6cfbc58c706e56ade72af0791d5a12d7b1656cd566"
+    },
+    {
+      "path": "before/thicket-exit.gif",
+      "bytes": 1289369,
+      "sha256": "b654e040706042a0120b9ae53d0d974df23aa13a3179a41d7ad47ff1fc5587cf"
+    },
+    {
+      "path": "before/thicket-exit.png",
+      "bytes": 5633,
+      "sha256": "f580fdba0a8ef76718df84fcc886ac811c0bfe743696bf460145bfec4e7624f8"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-000.png",
+      "bytes": 6231,
+      "sha256": "f86867b1d87a37f6517a1d549cb9e4bee50a213eeb66076b4d92053d0f9913a0"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-007.png",
+      "bytes": 6231,
+      "sha256": "f86867b1d87a37f6517a1d549cb9e4bee50a213eeb66076b4d92053d0f9913a0"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-012.png",
+      "bytes": 6247,
+      "sha256": "4231a488ffe89378179f0b338b0a896a130f4247c34bd346e7d7e8436891c3cb"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-020.png",
+      "bytes": 6268,
+      "sha256": "0fcfde501cffb8b5e36a2367459f7b90bb6478b2f36ca48f33dd7ffb7d9fbe65"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-027.png",
+      "bytes": 6244,
+      "sha256": "7486010ba3b4b14f40322caa7de8e62f4f7466e1f5228296967a7b0ce51bd3d7"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-032.png",
+      "bytes": 6283,
+      "sha256": "d778668e93cdc357337724aa713a07cb9c5b5303791f5314593e9e35b6cb2a05"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-048.png",
+      "bytes": 6279,
+      "sha256": "75df871ce68a7b6a1cedecc0e9891814934b427bbdfbe1dd05ddbb47b81d7534"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-064.png",
+      "bytes": 6279,
+      "sha256": "75df871ce68a7b6a1cedecc0e9891814934b427bbdfbe1dd05ddbb47b81d7534"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-080.png",
+      "bytes": 6279,
+      "sha256": "75df871ce68a7b6a1cedecc0e9891814934b427bbdfbe1dd05ddbb47b81d7534"
+    },
+    {
+      "path": "before/thicket-floor-switch/frame-087.png",
+      "bytes": 6279,
+      "sha256": "75df871ce68a7b6a1cedecc0e9891814934b427bbdfbe1dd05ddbb47b81d7534"
+    },
+    {
+      "path": "before/thicket-floor-switch-frames.png",
+      "bytes": 61393,
+      "sha256": "e9c9eaae6b1fa43ddbbfc3b5ce5021ec8f3897a6932887481c4a3d3236bd984d"
+    },
+    {
+      "path": "before/thicket-floor-switch.gif",
+      "bytes": 212126,
+      "sha256": "b06e49484aadb97d83589c773868b73395905a42e7fd24795c95ef7375279980"
+    },
+    {
+      "path": "before/thicket-floor-switch.png",
+      "bytes": 6231,
+      "sha256": "f86867b1d87a37f6517a1d549cb9e4bee50a213eeb66076b4d92053d0f9913a0"
+    },
+    {
+      "path": "before-after.png",
+      "bytes": 323515,
+      "sha256": "3560de2320b85d884ff75dc5a44aa3144a7b6e5e8a88168bd9cb070b93fec9bd"
+    },
+    {
+      "path": "comparisons/blight-bomb-wall-contact.png",
+      "bytes": 128328,
+      "sha256": "4bd5827161d85d19ac77c9175564e7e700f633a6f25e92f687e190de4763f90c"
+    },
+    {
+      "path": "comparisons/blight-bomb-wall.gif",
+      "bytes": 4692305,
+      "sha256": "0e76f30ca647b11012aa147fdac87cfec29145c86f28c5c3359e211c60f6cae1"
+    },
+    {
+      "path": "comparisons/blight-cape-hole-contact.png",
+      "bytes": 121915,
+      "sha256": "284ba0484f346c14ae5a02b64dba911c5d8b9f635632570d5ecd869764cbcf40"
+    },
+    {
+      "path": "comparisons/blight-cape-hole.gif",
+      "bytes": 2081285,
+      "sha256": "e463502e8594cdf7970c937e999651d043875e718443095c30b4f96b0710ba4b"
+    },
+    {
+      "path": "comparisons/blight-cobweb-contact.png",
+      "bytes": 168096,
+      "sha256": "5be84cfb70f89c5299c0c7eda2011c6be37e6b3a690d1295a87a6a09c4a7ba17"
+    },
+    {
+      "path": "comparisons/blight-cobweb.gif",
+      "bytes": 1524219,
+      "sha256": "9a1615bed4e8b725bd032c543fa0a711f9a256744e154388342314537d89d051"
+    },
+    {
+      "path": "comparisons/blight-relic-chest-contact.png",
+      "bytes": 101950,
+      "sha256": "97282f5a78b184fa93716e0ddb30a638518dc616337a4b2f0a1d9a6fda5df37f"
+    },
+    {
+      "path": "comparisons/blight-relic-chest.gif",
+      "bytes": 1876966,
+      "sha256": "6ecd659779d9bc457e57385f17f4d30ade4dd58f53834366111fd76222dac0c5"
+    },
+    {
+      "path": "comparisons/blight-thicket-door-contact.png",
+      "bytes": 92603,
+      "sha256": "1550e2949e15ca8cc91948bb710eeca4f8d51653a6e04d04755529400c3f2c5d"
+    },
+    {
+      "path": "comparisons/blight-thicket-door.gif",
+      "bytes": 1944223,
+      "sha256": "b488c8877facda6d0a440d40553ccd09f962177191f28190ea23e07318382412"
+    },
+    {
+      "path": "comparisons/blight-wood-chest-contact.png",
+      "bytes": 113525,
+      "sha256": "cccbdd758191829ef67c852a20227df3fd8ce464f1a487c70651a7a800c82843"
+    },
+    {
+      "path": "comparisons/blight-wood-chest.gif",
+      "bytes": 1702715,
+      "sha256": "c4ceeee626fd80bb067c877b931c5a37f365ad0e49afe6516ba27a403bd3e3f5"
+    },
+    {
+      "path": "comparisons/cave-exit-contact.png",
+      "bytes": 129993,
+      "sha256": "ba3c9e46e1f50de744ac714b2d91a5fdd622695087a5fc7a3d2bca0268f6e154"
+    },
+    {
+      "path": "comparisons/cave-exit.gif",
+      "bytes": 2401711,
+      "sha256": "b733b5aef9ab76cb460c79a106db9d587fefc4d4282556b4c767b26d47fdb45b"
+    },
+    {
+      "path": "comparisons/cave-floor-switch-contact.png",
+      "bytes": 68342,
+      "sha256": "32f0eab615f9499606adb1e75e2f5162e13654215898c168bb6dba928338d254"
+    },
+    {
+      "path": "comparisons/cave-floor-switch.gif",
+      "bytes": 511076,
+      "sha256": "91bf6f1a824f67fd0f28e5fe9813cc88f1a125baa28a3ec2b5e2e615db7f30f9"
+    },
+    {
+      "path": "comparisons/forest-brass-chest-contact.png",
+      "bytes": 96628,
+      "sha256": "7dee95c99f8c85fa7e6181c70f69a9b723ff9637dc406f893e3b314576ba2853"
+    },
+    {
+      "path": "comparisons/forest-brass-chest.gif",
+      "bytes": 1311363,
+      "sha256": "24e7b9e00f37a33835f639f363a1f695b157c8e7635097e0ba968f7078ff5f1e"
+    },
+    {
+      "path": "comparisons/forest-cave-door-contact.png",
+      "bytes": 84505,
+      "sha256": "ccf68cc383654cf84cb58002b47561ff7859b5b1cd8ce02ce58c54eb86963930"
+    },
+    {
+      "path": "comparisons/forest-cave-door.gif",
+      "bytes": 1114567,
+      "sha256": "f664691dafe64aafdd7b7d38daac2fedd9b4df58c3df6e060d08ef6aded31e40"
+    },
+    {
+      "path": "comparisons/forest-hollow-door-contact.png",
+      "bytes": 84488,
+      "sha256": "0da0be7d0387ebf14cb7a8c6564280505071dd10eb3a2a5e39ad16ed732e9c0a"
+    },
+    {
+      "path": "comparisons/forest-hollow-door.gif",
+      "bytes": 1059305,
+      "sha256": "b62ffba3c1114497f0c8506a29bf8c5aed7d7f7576af7ed536b5502b93f920fb"
+    },
+    {
+      "path": "comparisons/forest-shrine-contact.png",
+      "bytes": 83643,
+      "sha256": "29f98072fdfeea404c7699b9ad4a4247db703d5257e3cf34210f29c4ccf98e4e"
+    },
+    {
+      "path": "comparisons/forest-shrine.gif",
+      "bytes": 1497314,
+      "sha256": "8bb37a22b699f027e6c9ecdfed4b6e0a7afc77f90e01e3f0f37c40721e2b1f13"
+    },
+    {
+      "path": "comparisons/forest-wood-chest-contact.png",
+      "bytes": 88089,
+      "sha256": "b52ecd717e6c69c602dfee00e0d4eea6e42093154f1e265a640fade8e8a4b766"
+    },
+    {
+      "path": "comparisons/forest-wood-chest.gif",
+      "bytes": 1260683,
+      "sha256": "1ffecdbeb4da72cc0b9f77a204999f30435345327a69a8d7ccb3919a54fa59d8"
+    },
+    {
+      "path": "comparisons/thicket-censer-contact.png",
+      "bytes": 55598,
+      "sha256": "c7888bfa8a66306f31d6a029641b0dcb1249274a462ec2e0d02da0e40effed2f"
+    },
+    {
+      "path": "comparisons/thicket-censer.gif",
+      "bytes": 383801,
+      "sha256": "161f9dc82da590e40e3b25cc91a5e2754246123b68e44897548db8625395e7fb"
+    },
+    {
+      "path": "interactive-scenery-reel.mp4",
+      "bytes": 3139127,
+      "sha256": "cfa6854dfa5729725af3d238cc77b49fa58e52555458ac59fa188d19e498f14a"
+    },
+    {
+      "path": "overview.png",
+      "bytes": 277780,
+      "sha256": "6641ae28a670bcb737fb011f3b6bd029259dbf120886c504125a55ea5794c7ff"
+    }
+  ]
+}

@@ -1,6 +1,30 @@
 # BARTGAME downloads
 
-## Latest: complete Bloom animation polish
+## Latest: readable interactive scenery
+
+Larger wooden, brass and relic chests, full-tile switches, tall cave/hollow/
+thicket entrances, clear pits and barriers, larger censers/pots, and explicit
+healing shrine markers now stand out against the forest and blight. Intact
+barriers stay in front of hidden hoards. A pre-existing unreachable-censer
+placement bug is fixed. Existing rewards, progression and saves are retained.
+
+- [Download the final GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/interactive-scenery-3d3f8aa/bartgame-interactive-scenery-3d3f8aa.gba)
+- [Download the ZIP](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/interactive-scenery-3d3f8aa/bartgame-interactive-scenery-3d3f8aa.zip)
+- [SHA256 checksums](interactive-scenery-3d3f8aa/SHA256SUMS.txt)
+- [40 actual mGBA cases, comparisons and video](../forest-review/interactive-scenery/README.md)
+
+Open the `.gba` in mGBA. Built from game source commit
+[`3d3f8aa`](https://github.com/natertott/bartgame/commit/3d3f8aa970a163959655463dc52efd75c15597e1).
+All 625 sampled generated rooms pass traversal checks, and all 549 interaction
+checks pass. Previous forest, blight, Bloom, item and title updates are included.
+
+ROM SHA256:
+
+```text
+bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee
+```
+
+## Previous: complete Bloom animation polish
 
 Bloom now has direction-correct equipment depth, cleaner sword and item
 motions, continuous lifting/throwing, guard walking, phased jumps with ground

@@ -1,0 +1,112 @@
+{
+  "rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+  "results": [
+    {
+      "test": "budget",
+      "exit_code": 0,
+      "tail": [
+        "PASS 0x0 ROM remained unchanged during sweep ",
+        "RESULT PASS 2046/2046, 582 contexts, maximum 854/876 tiles"
+      ],
+      "log": "interactive-final-budget.log"
+    },
+    {
+      "test": "scope",
+      "exit_code": 0,
+      "tail": [
+        "RESULT PASS 4038/4038 interactive scope checks; changed BG tiles: forest=10, sewer=0, myst=9"
+      ],
+      "log": "interactive-final-scope.log"
+    },
+    {
+      "test": "bloom",
+      "exit_code": 0,
+      "tail": [
+        "PASS return drop ends on its feet ",
+        "RESULT PASS 469/469"
+      ],
+      "log": "interactive-final-bloom.log"
+    },
+    {
+      "test": "sword",
+      "exit_code": 0,
+      "tail": [
+        "PASS queued sword follows roll recovery ",
+        "RESULT PASS 274/274"
+      ],
+      "log": "interactive-final-sword.log"
+    },
+    {
+      "test": "mechanics",
+      "exit_code": 0,
+      "tail": [
+        "PASS BOW: ten arrows for ten gilt                   arrows 15 gilt 40",
+        "RESULT PASS 22/22"
+      ],
+      "log": "interactive-final-mechanics.log"
+    },
+    {
+      "test": "lift",
+      "exit_code": 0,
+      "tail": [
+        "PASS PAUSE: the L trigger uses the bombs          bombs 5 -> 4",
+        "RESULT PASS 14/14"
+      ],
+      "log": "interactive-final-lift.log"
+    },
+    {
+      "test": "critical",
+      "exit_code": 0,
+      "tail": [
+        "PASS WIN: the Grail ends the run                  state 6",
+        "RESULT PASS 21/21"
+      ],
+      "log": "interactive-final-critical.log"
+    },
+    {
+      "test": "trials",
+      "exit_code": 0,
+      "tail": [
+        "PASS completed trial exit stays open ",
+        "RESULT PASS 54/54"
+      ],
+      "log": "interactive-final-trials.log"
+    },
+    {
+      "test": "myst",
+      "exit_code": 0,
+      "tail": [
+        "PASS BOULDERS: the way out, and the wood            ",
+        "RESULT PASS 28/28"
+      ],
+      "log": "interactive-final-myst.log"
+    },
+    {
+      "test": "pockets",
+      "exit_code": 0,
+      "tail": [
+        "PASS seed has all three item pocket types {1, 2, 3}",
+        "RESULT PASS 18/18"
+      ],
+      "log": "interactive-final-pockets.log"
+    },
+    {
+      "test": "save",
+      "exit_code": 0,
+      "tail": [
+        "PASS corrupted checksum rejected",
+        "RESULT PASS 6/6"
+      ],
+      "log": "interactive-final-save.log"
+    },
+    {
+      "test": "quest",
+      "exit_code": 0,
+      "tail": [
+        "PASS TORCH: the gardener pays a key               keys 4 -> 5",
+        "RESULT PASS 12/12"
+      ],
+      "log": "interactive-final-quest.log"
+    }
+  ]
+}

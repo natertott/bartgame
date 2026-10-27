@@ -1,0 +1,112 @@
+{
+  "rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+  "before_rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+  "game_source_commit": "3d3f8aa970a163959655463dc52efd75c15597e1",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "probe": {
+      "passed": 549,
+      "total": 549,
+      "report": "validation/probe.json"
+    },
+    "scope": {
+      "passed": 4038,
+      "total": 4038,
+      "report": "validation/scope.json"
+    },
+    "surfaces": {
+      "passed": 2538,
+      "total": 2538,
+      "report": "validation/surfaces.json"
+    },
+    "budget": {
+      "passed": 2046,
+      "total": 2046,
+      "report": "validation/budget.json"
+    },
+    "bloom": {
+      "passed": 469,
+      "total": 469,
+      "report": "validation/bloom.json"
+    },
+    "sword": {
+      "passed": 274,
+      "total": 274,
+      "report": "validation/sword.json"
+    },
+    "mechanics": {
+      "passed": 22,
+      "total": 22,
+      "report": "validation/mechanics.log"
+    },
+    "lift": {
+      "passed": 14,
+      "total": 14,
+      "report": "validation/lift.log"
+    },
+    "critical": {
+      "passed": 21,
+      "total": 21,
+      "report": "validation/critical.log"
+    },
+    "trials": {
+      "passed": 54,
+      "total": 54,
+      "report": "validation/trials.log"
+    },
+    "myst": {
+      "passed": 28,
+      "total": 28,
+      "report": "validation/myst.log"
+    },
+    "pockets": {
+      "passed": 18,
+      "total": 18,
+      "report": "validation/pockets.log"
+    },
+    "save": {
+      "passed": 6,
+      "total": 6,
+      "report": "validation/save.log"
+    },
+    "quest": {
+      "passed": 12,
+      "total": 12,
+      "report": "validation/quest.log"
+    },
+    "geometry": {
+      "passed": 625,
+      "total": 625,
+      "report": "validation/geometry.json",
+      "includes": "four distinct quest censers and all required approaches, exits, bridges and item pockets"
+    }
+  },
+  "scope": "All 912 original metatile identifiers and physical contracts retained; only shrine_plate appended at ID 912. All 101 Bloom frames/effects, 29 existing complete sprite sheets, three other lift frames, palettes, items and title exact. Interactive ground art and the carried pot change; unrelated terrain remains exact.",
+  "budget": {
+    "forest_subtiles": 997,
+    "sewer_subtiles": 999,
+    "myst_subtiles": 199,
+    "bg_limit": 1024,
+    "max_obj_tile": 854,
+    "obj_limit": 876,
+    "obj_headroom": 22
+  },
+  "intentional_changes": [
+    "Larger directional-depth chest and doorway presentation",
+    "Local entrance clearance and headroom placement",
+    "Intact barrier occlusion over oversized pocket hoards",
+    "Healing shrine marker tile",
+    "Reachable distinct censer quest placement, including baseline seed22/cell9 bug"
+  ],
+  "save_format_changed": false,
+  "captures": {
+    "matched_seed_cell_pairs": 40,
+    "checks": {
+      "passed": 32,
+      "total": 32
+    },
+    "same_target_and_camera": 31,
+    "palette_note": "Native PNGs preserve exact framebuffer pixels. GIFs exceeding 256 union colours are quantized; exact_palette metadata records precision.",
+    "manifest": "gallery-manifest.json"
+  }
+}

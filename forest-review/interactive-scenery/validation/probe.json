@@ -1,0 +1,5511 @@
+{
+  "rom_sha256": "bbd08678b1e10fb110e562a6374b0242cb8e73affbdd747f033fd0ce99619eee",
+  "emulator": "mGBA 0.10.5",
+  "method": "Verify readable interactive scenery and its real gameplay in mGBA.\n\nGenerated field chests, mystery doors, switches, pocket hoards and censer\nrewards use actual inputs. Inventory/location and mystery descriptors are\ntest fixtures; one isolated leaf-litter cell exercises equal-priority chest\nocclusion. No screenshot from this probe is presented as generated gameplay\nevidence. Hardware OAM, OBJ VRAM and BG maps verify the display, rather than\ntrusting renderer tags.",
+  "passed": 549,
+  "total": 549,
+  "checks": [
+    {
+      "name": "all existing metatiles retain their logical ids",
+      "passed": true,
+      "detail": {
+        "metatiles": 912,
+        "changed": []
+      }
+    },
+    {
+      "name": "metatile_type preserves every existing physical contract",
+      "passed": true,
+      "detail": {
+        "metatiles": 912
+      }
+    },
+    {
+      "name": "metatile_coll preserves every existing physical contract",
+      "passed": true,
+      "detail": {
+        "metatiles": 912
+      }
+    },
+    {
+      "name": "metatile_prop preserves every existing physical contract",
+      "passed": true,
+      "detail": {
+        "metatiles": 912
+      }
+    },
+    {
+      "name": "wooden money chest exists in the generated seed",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest keeps a real unopened chest interaction",
+      "passed": true,
+      "detail": [
+        [
+          9,
+          13
+        ]
+      ]
+    },
+    {
+      "name": "wooden money chest closed painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        11,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "wooden money chest closed has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "wooden money chest closed is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "wooden money chest closed actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest closed chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 9,
+        "hero": 6
+      }
+    },
+    {
+      "name": "wooden money chest closed visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          192
+        ],
+        "logical_tile": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "name": "wooden money chest closed old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "wooden money chest preserves its underlying floor",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest north-side Bloom and chest are both drawn",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest flat litter raises Bloom to the foreground",
+      "passed": true,
+      "detail": {
+        "index": 7,
+        "x": 88,
+        "y": 72,
+        "tile": 0,
+        "pal": 0,
+        "shape": 1,
+        "size": 3,
+        "priority": 1,
+        "flip": false
+      }
+    },
+    {
+      "name": "wooden money chest near chest remains above foreground Bloom",
+      "passed": true,
+      "detail": {
+        "chest": {
+          "index": 6,
+          "x": 104,
+          "y": 88,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 1,
+          "flip": false
+        },
+        "hero": {
+          "index": 7,
+          "x": 88,
+          "y": 72,
+          "tile": 0,
+          "pal": 0,
+          "shape": 1,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      }
+    },
+    {
+      "name": "wooden money chest depth fixture exercises actual opaque lid/body overlap",
+      "passed": true,
+      "detail": 18
+    },
+    {
+      "name": "wooden money chest opens by walking into its front",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest pays its original reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 0,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 2
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 2
+        }
+      }
+    },
+    {
+      "name": "wooden money chest opened painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        7,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "wooden money chest opened has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "wooden money chest opened is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "wooden money chest opened actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest opened chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 9,
+        "hero": 6
+      }
+    },
+    {
+      "name": "wooden money chest opened visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          192
+        ],
+        "logical_tile": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "name": "wooden money chest opened old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "wooden money chest open state retains the exact substrate",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest remains opened after revisiting",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest revisited painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        7,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "wooden money chest revisited has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "wooden money chest revisited is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "wooden money chest revisited actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "wooden money chest revisited chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 9,
+        "hero": 6
+      }
+    },
+    {
+      "name": "wooden money chest revisited visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          192
+        ],
+        "logical_tile": [
+          9,
+          13
+        ]
+      }
+    },
+    {
+      "name": "wooden money chest revisited old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "wooden money chest cannot grant its reward twice",
+      "passed": true,
+      "detail": {
+        "expected": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 2
+        },
+        "actual": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 2
+        }
+      }
+    },
+    {
+      "name": "brass map chest exists in the generated seed",
+      "passed": true
+    },
+    {
+      "name": "brass map chest keeps a real unopened chest interaction",
+      "passed": true,
+      "detail": [
+        [
+          20,
+          14
+        ]
+      ]
+    },
+    {
+      "name": "brass map chest closed painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        10,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "brass map chest closed has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "brass map chest closed is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "brass map chest closed actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "brass map chest closed chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 11,
+        "hero": 6
+      }
+    },
+    {
+      "name": "brass map chest closed visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          208
+        ],
+        "logical_tile": [
+          20,
+          14
+        ]
+      }
+    },
+    {
+      "name": "brass map chest closed old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "brass map chest preserves its underlying floor",
+      "passed": true
+    },
+    {
+      "name": "brass map chest north-side Bloom and chest are both drawn",
+      "passed": true
+    },
+    {
+      "name": "brass map chest flat litter raises Bloom to the foreground",
+      "passed": true,
+      "detail": {
+        "index": 7,
+        "x": 88,
+        "y": 72,
+        "tile": 0,
+        "pal": 0,
+        "shape": 1,
+        "size": 3,
+        "priority": 1,
+        "flip": false
+      }
+    },
+    {
+      "name": "brass map chest near chest remains above foreground Bloom",
+      "passed": true,
+      "detail": {
+        "chest": {
+          "index": 6,
+          "x": 104,
+          "y": 88,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 1,
+          "flip": false
+        },
+        "hero": {
+          "index": 7,
+          "x": 88,
+          "y": 72,
+          "tile": 0,
+          "pal": 0,
+          "shape": 1,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      }
+    },
+    {
+      "name": "brass map chest depth fixture exercises actual opaque lid/body overlap",
+      "passed": true,
+      "detail": 28
+    },
+    {
+      "name": "brass map chest opens by walking into its front",
+      "passed": true
+    },
+    {
+      "name": "brass map chest pays its original reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 2
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 6
+        }
+      }
+    },
+    {
+      "name": "brass map chest opened painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        6,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "brass map chest opened has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "brass map chest opened is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "brass map chest opened actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "brass map chest opened chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 11,
+        "hero": 6
+      }
+    },
+    {
+      "name": "brass map chest opened visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          208
+        ],
+        "logical_tile": [
+          20,
+          14
+        ]
+      }
+    },
+    {
+      "name": "brass map chest opened old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "brass map chest open state retains the exact substrate",
+      "passed": true
+    },
+    {
+      "name": "brass map chest remains opened after revisiting",
+      "passed": true
+    },
+    {
+      "name": "brass map chest revisited painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        6,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "brass map chest revisited has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "brass map chest revisited is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "brass map chest revisited actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "brass map chest revisited chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 9,
+        "hero": 6
+      }
+    },
+    {
+      "name": "brass map chest revisited visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          208
+        ],
+        "logical_tile": [
+          20,
+          14
+        ]
+      }
+    },
+    {
+      "name": "brass map chest revisited old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "brass map chest cannot grant its reward twice",
+      "passed": true,
+      "detail": {
+        "expected": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 6
+        },
+        "actual": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 6
+        }
+      }
+    },
+    {
+      "name": "relic bow chest exists in the generated seed",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest keeps a real unopened chest interaction",
+      "passed": true,
+      "detail": [
+        [
+          17,
+          14
+        ]
+      ]
+    },
+    {
+      "name": "relic bow chest closed painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        9,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic bow chest closed has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic bow chest closed is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic bow chest closed actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest closed chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 10,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic bow chest closed visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          264,
+          208
+        ],
+        "logical_tile": [
+          17,
+          14
+        ]
+      }
+    },
+    {
+      "name": "relic bow chest closed old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic bow chest preserves its underlying floor",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest north-side Bloom and chest are both drawn",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest flat litter raises Bloom to the foreground",
+      "passed": true,
+      "detail": {
+        "index": 7,
+        "x": 88,
+        "y": 72,
+        "tile": 0,
+        "pal": 0,
+        "shape": 1,
+        "size": 3,
+        "priority": 1,
+        "flip": false
+      }
+    },
+    {
+      "name": "relic bow chest near chest remains above foreground Bloom",
+      "passed": true,
+      "detail": {
+        "chest": {
+          "index": 6,
+          "x": 104,
+          "y": 88,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 1,
+          "flip": false
+        },
+        "hero": {
+          "index": 7,
+          "x": 88,
+          "y": 72,
+          "tile": 0,
+          "pal": 0,
+          "shape": 1,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      }
+    },
+    {
+      "name": "relic bow chest depth fixture exercises actual opaque lid/body overlap",
+      "passed": true,
+      "detail": 34
+    },
+    {
+      "name": "relic bow chest opens by walking into its front",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest pays its original reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 0,
+          "items2": 6
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "relic bow chest opened painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic bow chest opened has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic bow chest opened is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic bow chest opened actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest opened chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 9,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic bow chest opened visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          264,
+          208
+        ],
+        "logical_tile": [
+          17,
+          14
+        ]
+      }
+    },
+    {
+      "name": "relic bow chest opened old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic bow chest open state retains the exact substrate",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest remains opened after revisiting",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest revisited painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic bow chest revisited has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic bow chest revisited is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic bow chest revisited actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic bow chest revisited chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 10,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic bow chest revisited visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          264,
+          208
+        ],
+        "logical_tile": [
+          17,
+          14
+        ]
+      }
+    },
+    {
+      "name": "relic bow chest revisited old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic bow chest cannot grant its reward twice",
+      "passed": true,
+      "detail": {
+        "expected": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        },
+        "actual": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "relic small-key chest exists in the generated seed",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest keeps a real unopened chest interaction",
+      "passed": true,
+      "detail": [
+        [
+          20,
+          16
+        ]
+      ]
+    },
+    {
+      "name": "relic small-key chest closed painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        9,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic small-key chest closed has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic small-key chest closed is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic small-key chest closed actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest closed chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 7,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic small-key chest closed visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          240
+        ],
+        "logical_tile": [
+          20,
+          16
+        ]
+      }
+    },
+    {
+      "name": "relic small-key chest closed old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic small-key chest preserves its underlying floor",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest opens by walking into its front",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest pays its original reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 0,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "relic small-key chest opened painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic small-key chest opened has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic small-key chest opened is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic small-key chest opened actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest opened chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 7,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic small-key chest opened visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          240
+        ],
+        "logical_tile": [
+          20,
+          16
+        ]
+      }
+    },
+    {
+      "name": "relic small-key chest opened old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic small-key chest open state retains the exact substrate",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest remains opened after revisiting",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest revisited painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "relic small-key chest revisited has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "relic small-key chest revisited is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "relic small-key chest revisited actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "relic small-key chest revisited chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 7,
+        "hero": 6
+      }
+    },
+    {
+      "name": "relic small-key chest revisited visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          312,
+          240
+        ],
+        "logical_tile": [
+          20,
+          16
+        ]
+      }
+    },
+    {
+      "name": "relic small-key chest revisited old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "relic small-key chest cannot grant its reward twice",
+      "passed": true,
+      "detail": {
+        "expected": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        },
+        "actual": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "cave enters through its generated door",
+      "passed": true
+    },
+    {
+      "name": "cave inner exit doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "cave inner exit has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "cave inner exit is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 80,
+          "y": 80,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave inner exit actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave has the expected sized reward chest",
+      "passed": true,
+      "detail": [
+        [
+          6,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "cave reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        11,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "cave reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "cave reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 88,
+          "y": 48,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "cave reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          88,
+          48
+        ],
+        "logical_tile": [
+          6,
+          4
+        ]
+      }
+    },
+    {
+      "name": "cave reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "cave chest opens normally",
+      "passed": true
+    },
+    {
+      "name": "cave chest tier matches its unchanged reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 30,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 40,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "cave claimed reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        7,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "cave claimed reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "cave claimed reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 88,
+          "y": 48,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave claimed reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave claimed reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "cave claimed reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          88,
+          48
+        ],
+        "logical_tile": [
+          6,
+          4
+        ]
+      }
+    },
+    {
+      "name": "cave claimed reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "cave enlarged inner door exits to the forest",
+      "passed": true
+    },
+    {
+      "name": "cave outer mouth doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "cave outer mouth has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "cave outer mouth is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave outer mouth actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave returning through the larger mouth still works",
+      "passed": true
+    },
+    {
+      "name": "cave claimed reward stays claimed on return",
+      "passed": true
+    },
+    {
+      "name": "cave persisted reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        5,
+        7,
+        27,
+        31
+      ]
+    },
+    {
+      "name": "cave persisted reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "cave persisted reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 88,
+          "y": 48,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave persisted reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave persisted reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "cave persisted reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          88,
+          48
+        ],
+        "logical_tile": [
+          6,
+          4
+        ]
+      }
+    },
+    {
+      "name": "cave persisted reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "cave revisiting does not duplicate resources",
+      "passed": true
+    },
+    {
+      "name": "cave exit remains usable on revisit",
+      "passed": true
+    },
+    {
+      "name": "hollow enters through its generated door",
+      "passed": true
+    },
+    {
+      "name": "hollow inner exit doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "hollow inner exit has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "hollow inner exit is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow inner exit actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow has the expected sized reward chest",
+      "passed": true,
+      "detail": [
+        [
+          9,
+          6
+        ]
+      ]
+    },
+    {
+      "name": "hollow reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        10,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "hollow reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "hollow reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "hollow reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          80
+        ],
+        "logical_tile": [
+          9,
+          6
+        ]
+      }
+    },
+    {
+      "name": "hollow reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "hollow chest opens normally",
+      "passed": true
+    },
+    {
+      "name": "hollow chest tier matches its unchanged reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 40,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 0,
+          "arrows": 20,
+          "items2": 7
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 40,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 1,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "hollow claimed reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        6,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "hollow claimed reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "hollow claimed reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow claimed reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow claimed reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "hollow claimed reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          80
+        ],
+        "logical_tile": [
+          9,
+          6
+        ]
+      }
+    },
+    {
+      "name": "hollow claimed reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "hollow enlarged inner door exits to the forest",
+      "passed": true
+    },
+    {
+      "name": "hollow outer mouth doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "hollow outer mouth has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "hollow outer mouth is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow outer mouth actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow returning through the larger mouth still works",
+      "passed": true
+    },
+    {
+      "name": "hollow claimed reward stays claimed on return",
+      "passed": true
+    },
+    {
+      "name": "hollow persisted reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        4,
+        6,
+        28,
+        31
+      ]
+    },
+    {
+      "name": "hollow persisted reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "hollow persisted reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow persisted reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow persisted reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "hollow persisted reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          136,
+          80
+        ],
+        "logical_tile": [
+          9,
+          6
+        ]
+      }
+    },
+    {
+      "name": "hollow persisted reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "hollow revisiting does not duplicate resources",
+      "passed": true
+    },
+    {
+      "name": "hollow exit remains usable on revisit",
+      "passed": true
+    },
+    {
+      "name": "thicket enters through its generated door",
+      "passed": true
+    },
+    {
+      "name": "thicket inner exit doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "thicket inner exit has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "thicket inner exit is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket inner exit actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket has the expected sized reward chest",
+      "passed": true,
+      "detail": [
+        [
+          12,
+          8
+        ]
+      ]
+    },
+    {
+      "name": "thicket reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        9,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "thicket reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "thicket reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "thicket reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          184,
+          112
+        ],
+        "logical_tile": [
+          12,
+          8
+        ]
+      }
+    },
+    {
+      "name": "thicket reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "thicket chest opens normally",
+      "passed": true
+    },
+    {
+      "name": "thicket chest tier matches its unchanged reward",
+      "passed": true,
+      "detail": {
+        "before": {
+          "hp_max": 24,
+          "gilt": 40,
+          "keys": 1,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 1,
+          "arrows": 20,
+          "items2": 7
+        },
+        "after": {
+          "hp_max": 24,
+          "gilt": 60,
+          "keys": 2,
+          "bombs": 0,
+          "items": 65,
+          "pieces": 1,
+          "arrows": 20,
+          "items2": 7
+        }
+      }
+    },
+    {
+      "name": "thicket claimed reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "thicket claimed reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "thicket claimed reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket claimed reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket claimed reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "thicket claimed reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          184,
+          112
+        ],
+        "logical_tile": [
+          12,
+          8
+        ]
+      }
+    },
+    {
+      "name": "thicket claimed reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "thicket enlarged inner door exits to the forest",
+      "passed": true
+    },
+    {
+      "name": "thicket outer mouth doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "thicket outer mouth has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "thicket outer mouth is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket outer mouth actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket returning through the larger mouth still works",
+      "passed": true
+    },
+    {
+      "name": "thicket claimed reward stays claimed on return",
+      "passed": true
+    },
+    {
+      "name": "thicket persisted reward painted chest is larger than one tile",
+      "passed": true,
+      "detail": [
+        3,
+        5,
+        29,
+        31
+      ]
+    },
+    {
+      "name": "thicket persisted reward has a valid resident frame",
+      "passed": true,
+      "detail": 56
+    },
+    {
+      "name": "thicket persisted reward is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 58,
+          "tile": 56,
+          "pal": 7,
+          "shape": 0,
+          "size": 2,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket persisted reward actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket persisted reward chest stays behind the approaching player",
+      "passed": true,
+      "detail": {
+        "chest": 8,
+        "hero": 6
+      }
+    },
+    {
+      "name": "thicket persisted reward visible chest is centered on its physical interaction",
+      "passed": true,
+      "detail": {
+        "sprite_top_left": [
+          184,
+          112
+        ],
+        "logical_tile": [
+          12,
+          8
+        ]
+      }
+    },
+    {
+      "name": "thicket persisted reward old small chest is absent from BG1",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "thicket revisiting does not duplicate resources",
+      "passed": true
+    },
+    {
+      "name": "thicket exit remains usable on revisit",
+      "passed": true
+    },
+    {
+      "name": "switch chamber enters normally",
+      "passed": true
+    },
+    {
+      "name": "medium switch task contains four full plates",
+      "passed": true,
+      "detail": [
+        [
+          5,
+          2
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          12,
+          9
+        ]
+      ]
+    },
+    {
+      "name": "switch 0 fills the complete tile",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "switch 0 responds to a real footstep",
+      "passed": true
+    },
+    {
+      "name": "switch 0 pressed state is visibly distinct",
+      "passed": true,
+      "detail": 94
+    },
+    {
+      "name": "switch 0 remains walkable",
+      "passed": true
+    },
+    {
+      "name": "switch 1 fills the complete tile",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "switch 1 responds to a real footstep",
+      "passed": true
+    },
+    {
+      "name": "switch 1 pressed state is visibly distinct",
+      "passed": true,
+      "detail": 94
+    },
+    {
+      "name": "switch 1 remains walkable",
+      "passed": true
+    },
+    {
+      "name": "switch 2 fills the complete tile",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "switch 2 responds to a real footstep",
+      "passed": true
+    },
+    {
+      "name": "switch 2 pressed state is visibly distinct",
+      "passed": true,
+      "detail": 94
+    },
+    {
+      "name": "switch 2 remains walkable",
+      "passed": true
+    },
+    {
+      "name": "switch 3 fills the complete tile",
+      "passed": true,
+      "detail": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "switch 3 responds to a real footstep",
+      "passed": true
+    },
+    {
+      "name": "switch 3 pressed state is visibly distinct",
+      "passed": true,
+      "detail": 94
+    },
+    {
+      "name": "switch 3 remains walkable",
+      "passed": true
+    },
+    {
+      "name": "all four real plate steps earn one chest",
+      "passed": true
+    },
+    {
+      "name": "earned switch chest opens normally",
+      "passed": true
+    },
+    {
+      "name": "switch reward remains a piece of heart",
+      "passed": true
+    },
+    {
+      "name": "solved switch room can be left",
+      "passed": true
+    },
+    {
+      "name": "solved switch room can be reentered",
+      "passed": true
+    },
+    {
+      "name": "solved plates remain inactive after returning",
+      "passed": true
+    },
+    {
+      "name": "solved plates do not grant a second closed chest",
+      "passed": true
+    },
+    {
+      "name": "cave battle chamber enters through the mouth",
+      "passed": true
+    },
+    {
+      "name": "cave shut trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "cave shut trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "cave shut trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave shut trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave shut trial has no active exit trigger",
+      "passed": true
+    },
+    {
+      "name": "cave closed door physically prevents leaving",
+      "passed": true
+    },
+    {
+      "name": "cave won trial restores both real exit tiles",
+      "passed": true
+    },
+    {
+      "name": "cave opened trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "cave opened trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "cave opened trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "cave opened trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "cave opened trial door permits leaving",
+      "passed": true
+    },
+    {
+      "name": "hollow battle chamber enters through the mouth",
+      "passed": true
+    },
+    {
+      "name": "hollow shut trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "hollow shut trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "hollow shut trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow shut trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow shut trial has no active exit trigger",
+      "passed": true
+    },
+    {
+      "name": "hollow closed door physically prevents leaving",
+      "passed": true
+    },
+    {
+      "name": "hollow won trial restores both real exit tiles",
+      "passed": true
+    },
+    {
+      "name": "hollow opened trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "hollow opened trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "hollow opened trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "hollow opened trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "hollow opened trial door permits leaving",
+      "passed": true
+    },
+    {
+      "name": "thicket battle chamber enters through the mouth",
+      "passed": true
+    },
+    {
+      "name": "thicket shut trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "thicket shut trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "thicket shut trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 1,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket shut trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket shut trial has no active exit trigger",
+      "passed": true
+    },
+    {
+      "name": "thicket closed door physically prevents leaving",
+      "passed": true
+    },
+    {
+      "name": "thicket won trial restores both real exit tiles",
+      "passed": true
+    },
+    {
+      "name": "thicket opened trial door doorway is wider and taller than Bloom",
+      "passed": true,
+      "detail": {
+        "entry": [
+          0,
+          17,
+          32,
+          64
+        ],
+        "bloom": [
+          20,
+          0,
+          44,
+          29
+        ]
+      }
+    },
+    {
+      "name": "thicket opened trial door has a valid resident frame",
+      "passed": true,
+      "detail": 72
+    },
+    {
+      "name": "thicket opened trial door is drawn exactly once in hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 96,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "thicket opened trial door actual OBJ VRAM matches the intended art",
+      "passed": true
+    },
+    {
+      "name": "thicket opened trial door permits leaving",
+      "passed": true
+    },
+    {
+      "name": "PIT retains a deep quiet cavity",
+      "passed": true,
+      "detail": {
+        "dark_pixels": 80,
+        "sample_pixels": 80
+      }
+    },
+    {
+      "name": "PIT rim visibly separates the drop from its floor",
+      "passed": true,
+      "detail": {
+        "center_mean": 2.5,
+        "rim_mean": 9.255208333333332
+      }
+    },
+    {
+      "name": "PIT remains an actual falling hazard",
+      "passed": true
+    },
+    {
+      "name": "FOREST_BLIGHT_PIT retains a deep quiet cavity",
+      "passed": true,
+      "detail": {
+        "dark_pixels": 80,
+        "sample_pixels": 80
+      }
+    },
+    {
+      "name": "FOREST_BLIGHT_PIT rim visibly separates the drop from its floor",
+      "passed": true,
+      "detail": {
+        "center_mean": 1.6666666666666667,
+        "rim_mean": 8.268229166666666
+      }
+    },
+    {
+      "name": "FOREST_BLIGHT_PIT remains an actual falling hazard",
+      "passed": true
+    },
+    {
+      "name": "cobweb has broad pale silk against the dark opening",
+      "passed": true,
+      "detail": 113
+    },
+    {
+      "name": "bombable wall retains a readable stone and fracture range",
+      "passed": true
+    },
+    {
+      "name": "CRACK retains its correct item interaction",
+      "passed": true
+    },
+    {
+      "name": "CRACK keeps its physical barrier",
+      "passed": true
+    },
+    {
+      "name": "WEB retains its correct item interaction",
+      "passed": true
+    },
+    {
+      "name": "WEB keeps its physical barrier",
+      "passed": true
+    },
+    {
+      "name": "DOOR_LOCKED retains its correct item interaction",
+      "passed": true
+    },
+    {
+      "name": "DOOR_LOCKED keeps its physical barrier",
+      "passed": true
+    },
+    {
+      "name": "TORCH retains its correct item interaction",
+      "passed": true
+    },
+    {
+      "name": "TORCH keeps its physical barrier",
+      "passed": true
+    },
+    {
+      "name": "TORCH_LIT retains its correct item interaction",
+      "passed": true
+    },
+    {
+      "name": "TORCH_LIT keeps its physical barrier",
+      "passed": true
+    },
+    {
+      "name": "natural shrine has the explicit unused interaction plate",
+      "passed": true,
+      "detail": {
+        "seed": "0xdeadbeef",
+        "cell": 5,
+        "plate": [
+          17,
+          12
+        ]
+      }
+    },
+    {
+      "name": "shrine plate is actually drawn above the forest floor",
+      "passed": true
+    },
+    {
+      "name": "walking onto the shrine plate heals the injured player",
+      "passed": true
+    },
+    {
+      "name": "shrine use records its one-use flag",
+      "passed": true
+    },
+    {
+      "name": "used shrine replaces its bright plate with the spent stone",
+      "passed": true
+    },
+    {
+      "name": "spent shrine stays spent after revisiting",
+      "passed": true
+    },
+    {
+      "name": "revisiting a spent shrine grants no second heal",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell0 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          9,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell0 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        9,
+        10
+      ]
+    },
+    {
+      "name": "0xb4a7 cell0 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell0 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell0 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell3 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          21,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell3 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        21,
+        10
+      ]
+    },
+    {
+      "name": "0xb4a7 cell3 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell3 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell3 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell6 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          26,
+          13
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell6 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        26,
+        13
+      ]
+    },
+    {
+      "name": "0xb4a7 cell6 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 136,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell6 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        136,
+        43,
+        168,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell6 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell7 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          29,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell7 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        29,
+        20
+      ]
+    },
+    {
+      "name": "0xb4a7 cell7 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 184,
+          "y": 48,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell7 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "name": "0xb4a7 cell7 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell9 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          5,
+          13
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell9 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        5,
+        13
+      ]
+    },
+    {
+      "name": "0xb4a7 cell9 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 72,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell9 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        72,
+        43,
+        104,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell9 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell11 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          24,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell11 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        24,
+        4
+      ]
+    },
+    {
+      "name": "0xb4a7 cell11 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell11 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xb4a7 cell11 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell12 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          22,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell12 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        22,
+        7
+      ]
+    },
+    {
+      "name": "0xb4a7 cell12 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell12 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell12 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell13 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          22,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell13 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        22,
+        4
+      ]
+    },
+    {
+      "name": "0xb4a7 cell13 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell13 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xb4a7 cell13 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell15 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          9,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell15 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        9,
+        10
+      ]
+    },
+    {
+      "name": "0xb4a7 cell15 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 9,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell15 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell15 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell16 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          6,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell16 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        6,
+        4
+      ]
+    },
+    {
+      "name": "0xb4a7 cell16 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 88,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell16 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        88,
+        33,
+        120,
+        80
+      ]
+    },
+    {
+      "name": "0xb4a7 cell16 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell17 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          6,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell17 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        6,
+        4
+      ]
+    },
+    {
+      "name": "0xb4a7 cell17 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 88,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell17 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        88,
+        33,
+        120,
+        80
+      ]
+    },
+    {
+      "name": "0xb4a7 cell17 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell18 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell18 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        8,
+        7
+      ]
+    },
+    {
+      "name": "0xb4a7 cell18 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell18 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell18 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xb4a7 cell21 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          21,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "0xb4a7 cell21 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        21,
+        10
+      ]
+    },
+    {
+      "name": "0xb4a7 cell21 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 26,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xb4a7 cell21 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xb4a7 cell21 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell2 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          29,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell2 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        29,
+        20
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell2 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 184,
+          "y": 48,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell2 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell2 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell3 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          23,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell3 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        23,
+        7
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell3 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell3 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell3 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell4 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          18,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell4 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        18,
+        4
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell4 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell4 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell4 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell6 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          23,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell6 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        23,
+        4
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell6 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell6 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell6 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell10 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          20,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell10 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        20,
+        4
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell10 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell10 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell10 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell15 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          24,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell15 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        24,
+        4
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell15 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 11,
+          "x": 104,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell15 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell15 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell19 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          11,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell19 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        11,
+        7
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell19 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell19 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell19 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0xdeadbeef cell24 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          18,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell24 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        18,
+        10
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell24 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell24 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0xdeadbeef cell24 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell0 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          11,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell0 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        11,
+        4
+      ]
+    },
+    {
+      "name": "0x7 cell0 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell0 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0x7 cell0 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell1 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          29,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell1 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        29,
+        20
+      ]
+    },
+    {
+      "name": "0x7 cell1 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 184,
+          "y": 48,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell1 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "name": "0x7 cell1 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell3 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell3 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        8,
+        7
+      ]
+    },
+    {
+      "name": "0x7 cell3 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell3 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0x7 cell3 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell5 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          19,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell5 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        19,
+        4
+      ]
+    },
+    {
+      "name": "0x7 cell5 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 16,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell5 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0x7 cell5 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell8 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          5,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell8 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        5,
+        4
+      ]
+    },
+    {
+      "name": "0x7 cell8 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 72,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell8 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        72,
+        33,
+        104,
+        80
+      ]
+    },
+    {
+      "name": "0x7 cell8 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell11 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          17,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell11 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        17,
+        7
+      ]
+    },
+    {
+      "name": "0x7 cell11 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 10,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell11 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0x7 cell11 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell14 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          24,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell14 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        24,
+        7
+      ]
+    },
+    {
+      "name": "0x7 cell14 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 7,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell14 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0x7 cell14 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell17 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          20,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell17 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        20,
+        7
+      ]
+    },
+    {
+      "name": "0x7 cell17 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell17 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0x7 cell17 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell21 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          17,
+          7
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell21 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        17,
+        7
+      ]
+    },
+    {
+      "name": "0x7 cell21 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 26,
+          "tile": 72,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell21 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "name": "0x7 cell21 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "0x7 cell23 doorway approach contains exactly one physical mouth",
+      "passed": true,
+      "detail": [
+        [
+          11,
+          4
+        ]
+      ]
+    },
+    {
+      "name": "0x7 cell23 doorway approach keeps the arch below the HUD edge",
+      "passed": true,
+      "detail": [
+        11,
+        4
+      ]
+    },
+    {
+      "name": "0x7 cell23 doorway approach is present in actual hardware OAM",
+      "passed": true,
+      "detail": [
+        {
+          "index": 8,
+          "x": 104,
+          "y": 16,
+          "tile": 56,
+          "pal": 7,
+          "shape": 2,
+          "size": 3,
+          "priority": 2,
+          "flip": false
+        }
+      ]
+    },
+    {
+      "name": "0x7 cell23 doorway approach complete painted silhouette is visible outside the HUD",
+      "passed": true,
+      "detail": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "name": "0x7 cell23 doorway approach hardware pixels match this entrance style",
+      "passed": true
+    },
+    {
+      "name": "door approach visibility covers all three styles",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket is the natural item-gated pocket",
+      "passed": true,
+      "detail": {
+        "gate": [
+          3,
+          15
+        ],
+        "treasure": [
+          2,
+          15
+        ]
+      }
+    },
+    {
+      "name": "seed6 cell4 bomb pocket pending hoard is visible in actual OAM",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket hoard stays behind the barrier material",
+      "passed": true,
+      "detail": {
+        "index": 7,
+        "x": 24,
+        "y": 72,
+        "tile": 278,
+        "pal": 11,
+        "shape": 0,
+        "size": 2,
+        "priority": 2,
+        "flip": false
+      }
+    },
+    {
+      "name": "seed6 cell4 bomb pocket exercises real opaque hoard/barrier overlap",
+      "passed": true,
+      "detail": 47
+    },
+    {
+      "name": "seed6 cell4 bomb pocket hidden flag still suppresses the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket blink flags still alternate visibility",
+      "passed": true,
+      "detail": [
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "name": "seed6 cell4 bomb pocket intact gate is still displayed on BG1",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket actual item opens the physical barrier",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket real opening records its save bit",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket opened reward remains normally drawable",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket walking through the opened neck collects the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket pays exactly the original ten gilt",
+      "passed": true,
+      "detail": {
+        "before": 0,
+        "after": 10
+      }
+    },
+    {
+      "name": "seed6 cell4 bomb pocket collected hoard stays gone on return",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell4 bomb pocket opened barrier stays open on return",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket is the natural item-gated pocket",
+      "passed": true,
+      "detail": {
+        "gate": [
+          24,
+          4
+        ],
+        "treasure": [
+          24,
+          3
+        ]
+      }
+    },
+    {
+      "name": "seed6 cell24 candle pocket pending hoard is visible in actual OAM",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket hoard stays behind the barrier material",
+      "passed": true,
+      "detail": {
+        "index": 9,
+        "x": 104,
+        "y": 28,
+        "tile": 310,
+        "pal": 11,
+        "shape": 0,
+        "size": 2,
+        "priority": 2,
+        "flip": false
+      }
+    },
+    {
+      "name": "seed6 cell24 candle pocket hidden flag still suppresses the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket blink flags still alternate visibility",
+      "passed": true,
+      "detail": [
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "name": "seed6 cell24 candle pocket intact gate is still displayed on BG1",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket actual item opens the physical barrier",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket real opening records its save bit",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket opened reward remains normally drawable",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket walking through the opened neck collects the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket pays exactly the original ten gilt",
+      "passed": true,
+      "detail": {
+        "before": 10,
+        "after": 20
+      }
+    },
+    {
+      "name": "seed6 cell24 candle pocket collected hoard stays gone on return",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell24 candle pocket opened barrier stays open on return",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket is the natural item-gated pocket",
+      "passed": true,
+      "detail": {
+        "gate": [
+          12,
+          19
+        ],
+        "treasure": [
+          11,
+          19
+        ]
+      }
+    },
+    {
+      "name": "seed6 cell12 candle pocket pending hoard is visible in actual OAM",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket hoard stays behind the barrier material",
+      "passed": true,
+      "detail": {
+        "index": 9,
+        "x": 72,
+        "y": 72,
+        "tile": 326,
+        "pal": 11,
+        "shape": 0,
+        "size": 2,
+        "priority": 2,
+        "flip": false
+      }
+    },
+    {
+      "name": "seed6 cell12 candle pocket exercises real opaque hoard/barrier overlap",
+      "passed": true,
+      "detail": 47
+    },
+    {
+      "name": "seed6 cell12 candle pocket hidden flag still suppresses the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket blink flags still alternate visibility",
+      "passed": true,
+      "detail": [
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "name": "seed6 cell12 candle pocket intact gate is still displayed on BG1",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket actual item opens the physical barrier",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket real opening records its save bit",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket opened reward remains normally drawable",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket walking through the opened neck collects the hoard",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket pays exactly the original ten gilt",
+      "passed": true,
+      "detail": {
+        "before": 20,
+        "after": 30
+      }
+    },
+    {
+      "name": "seed6 cell12 candle pocket collected hoard stays gone on return",
+      "passed": true
+    },
+    {
+      "name": "seed6 cell12 candle pocket opened barrier stays open on return",
+      "passed": true
+    },
+    {
+      "name": "seed22 cell9 remains the natural gardener quest",
+      "passed": true
+    },
+    {
+      "name": "seed22 gardener south approach connects to the entry component",
+      "passed": true,
+      "detail": [
+        8,
+        15
+      ]
+    },
+    {
+      "name": "seed22 gardener has all four cold censers",
+      "passed": true,
+      "detail": [
+        [
+          6,
+          15
+        ],
+        [
+          17,
+          15
+        ],
+        [
+          6,
+          17
+        ],
+        [
+          18,
+          18
+        ]
+      ]
+    },
+    {
+      "name": "seed22 censer0 has a connected south approach",
+      "passed": true,
+      "detail": [
+        6,
+        16
+      ]
+    },
+    {
+      "name": "seed22 censer0 lights through actual candle use",
+      "passed": true
+    },
+    {
+      "name": "seed22 censer1 has a connected south approach",
+      "passed": true,
+      "detail": [
+        17,
+        16
+      ]
+    },
+    {
+      "name": "seed22 censer1 lights through actual candle use",
+      "passed": true
+    },
+    {
+      "name": "seed22 censer2 has a connected south approach",
+      "passed": true,
+      "detail": [
+        6,
+        18
+      ]
+    },
+    {
+      "name": "seed22 censer2 lights through actual candle use",
+      "passed": true
+    },
+    {
+      "name": "seed22 censer3 has a connected south approach",
+      "passed": true,
+      "detail": [
+        18,
+        19
+      ]
+    },
+    {
+      "name": "seed22 censer3 lights through actual candle use",
+      "passed": true
+    },
+    {
+      "name": "seed22 all four real censers are now lit",
+      "passed": true
+    },
+    {
+      "name": "seed22 gardener remains available for the reward",
+      "passed": true
+    },
+    {
+      "name": "seed22 completed candle quest pays its key",
+      "passed": true
+    },
+    {
+      "name": "seed22 gardener completion records its save flag",
+      "passed": true
+    },
+    {
+      "name": "seed22 all four censer states persist on return",
+      "passed": true
+    },
+    {
+      "name": "seed22 completed gardener quest remains completed",
+      "passed": true
+    }
+  ],
+  "field_chests": [
+    {
+      "cell": 17,
+      "tier": 0,
+      "reward": "gilt",
+      "position": [
+        9,
+        13
+      ]
+    },
+    {
+      "cell": 18,
+      "tier": 1,
+      "reward": "map",
+      "position": [
+        20,
+        14
+      ]
+    },
+    {
+      "cell": 21,
+      "tier": 2,
+      "reward": "bow",
+      "position": [
+        17,
+        14
+      ]
+    },
+    {
+      "cell": 4,
+      "tier": 2,
+      "reward": "key",
+      "position": [
+        20,
+        16
+      ]
+    }
+  ],
+  "mystery_rooms": [
+    {
+      "cell": 1,
+      "style": "cave",
+      "size": 0
+    },
+    {
+      "cell": 1,
+      "style": "hollow",
+      "size": 1
+    },
+    {
+      "cell": 1,
+      "style": "thicket",
+      "size": 2
+    }
+  ],
+  "shrine": {
+    "seed": "0xdeadbeef",
+    "cell": 5,
+    "plate": [
+      17,
+      12
+    ]
+  },
+  "entrance_visibility": [
+    {
+      "seed": "0xb4a7",
+      "cell": 0,
+      "style": 0,
+      "mouth": [
+        9,
+        10
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 3,
+      "style": 0,
+      "mouth": [
+        21,
+        10
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 6,
+      "style": 1,
+      "mouth": [
+        26,
+        13
+      ],
+      "screen_bounds": [
+        136,
+        43,
+        168,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 7,
+      "style": 2,
+      "mouth": [
+        29,
+        20
+      ],
+      "screen_bounds": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 9,
+      "style": 1,
+      "mouth": [
+        5,
+        13
+      ],
+      "screen_bounds": [
+        72,
+        43,
+        104,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 11,
+      "style": 0,
+      "mouth": [
+        24,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 12,
+      "style": 0,
+      "mouth": [
+        22,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 13,
+      "style": 2,
+      "mouth": [
+        22,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 15,
+      "style": 0,
+      "mouth": [
+        9,
+        10
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 16,
+      "style": 0,
+      "mouth": [
+        6,
+        4
+      ],
+      "screen_bounds": [
+        88,
+        33,
+        120,
+        80
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 17,
+      "style": 1,
+      "mouth": [
+        6,
+        4
+      ],
+      "screen_bounds": [
+        88,
+        33,
+        120,
+        80
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 18,
+      "style": 1,
+      "mouth": [
+        8,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xb4a7",
+      "cell": 21,
+      "style": 2,
+      "mouth": [
+        21,
+        10
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 2,
+      "style": 0,
+      "mouth": [
+        29,
+        20
+      ],
+      "screen_bounds": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 3,
+      "style": 2,
+      "mouth": [
+        23,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 4,
+      "style": 1,
+      "mouth": [
+        18,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 6,
+      "style": 0,
+      "mouth": [
+        23,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 10,
+      "style": 1,
+      "mouth": [
+        20,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 15,
+      "style": 0,
+      "mouth": [
+        24,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 19,
+      "style": 1,
+      "mouth": [
+        11,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0xdeadbeef",
+      "cell": 24,
+      "style": 1,
+      "mouth": [
+        18,
+        10
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 0,
+      "style": 2,
+      "mouth": [
+        11,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 1,
+      "style": 0,
+      "mouth": [
+        29,
+        20
+      ],
+      "screen_bounds": [
+        184,
+        65,
+        216,
+        112
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 3,
+      "style": 2,
+      "mouth": [
+        8,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 5,
+      "style": 0,
+      "mouth": [
+        19,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 8,
+      "style": 1,
+      "mouth": [
+        5,
+        4
+      ],
+      "screen_bounds": [
+        72,
+        33,
+        104,
+        80
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 11,
+      "style": 2,
+      "mouth": [
+        17,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 14,
+      "style": 2,
+      "mouth": [
+        24,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 17,
+      "style": 2,
+      "mouth": [
+        20,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 21,
+      "style": 1,
+      "mouth": [
+        17,
+        7
+      ],
+      "screen_bounds": [
+        104,
+        43,
+        136,
+        90
+      ]
+    },
+    {
+      "seed": "0x7",
+      "cell": 23,
+      "style": 1,
+      "mouth": [
+        11,
+        4
+      ],
+      "screen_bounds": [
+        104,
+        33,
+        136,
+        80
+      ]
+    }
+  ],
+  "pocket_hoards": [
+    {
+      "seed": 6,
+      "cell": 4,
+      "kind": 1,
+      "gate": [
+        3,
+        15
+      ],
+      "treasure": [
+        2,
+        15
+      ],
+      "opaque_overlap_pixels": 47
+    },
+    {
+      "seed": 6,
+      "cell": 24,
+      "kind": 2,
+      "gate": [
+        24,
+        4
+      ],
+      "treasure": [
+        24,
+        3
+      ],
+      "opaque_overlap_pixels": 0
+    },
+    {
+      "seed": 6,
+      "cell": 12,
+      "kind": 2,
+      "gate": [
+        12,
+        19
+      ],
+      "treasure": [
+        11,
+        19
+      ],
+      "opaque_overlap_pixels": 47
+    }
+  ],
+  "gardener_access": {
+    "seed": 22,
+    "cell": 9,
+    "npc_approach": [
+      8,
+      15
+    ],
+    "censers": [
+      [
+        6,
+        15
+      ],
+      [
+        17,
+        15
+      ],
+      [
+        6,
+        17
+      ],
+      [
+        18,
+        18
+      ]
+    ]
+  },
+  "retained_contracts": {
+    "baseline_rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+    "metatiles": 912
+  }
+}

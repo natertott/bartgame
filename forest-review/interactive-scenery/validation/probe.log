@@ -1,0 +1,552 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS all existing metatiles retain their logical ids {'metatiles': 912, 'changed': []}
+PASS metatile_type preserves every existing physical contract {'metatiles': 912}
+PASS metatile_coll preserves every existing physical contract {'metatiles': 912}
+PASS metatile_prop preserves every existing physical contract {'metatiles': 912}
+PASS wooden money chest exists in the generated seed
+PASS wooden money chest keeps a real unopened chest interaction [(9, 13)]
+PASS wooden money chest closed painted chest is larger than one tile [5, 11, 27, 31]
+PASS wooden money chest closed has a valid resident frame 56
+PASS wooden money chest closed is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS wooden money chest closed actual OBJ VRAM matches the intended art
+PASS wooden money chest closed chest stays behind the approaching player {'chest': 9, 'hero': 6}
+PASS wooden money chest closed visible chest is centered on its physical interaction {'sprite_top_left': [136, 192], 'logical_tile': [9, 13]}
+PASS wooden money chest closed old small chest is absent from BG1 (0, 0, 0, 0)
+PASS wooden money chest preserves its underlying floor
+PASS wooden money chest north-side Bloom and chest are both drawn
+PASS wooden money chest flat litter raises Bloom to the foreground {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}
+PASS wooden money chest near chest remains above foreground Bloom {'chest': {'index': 6, 'x': 104, 'y': 88, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}, 'hero': {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}}
+PASS wooden money chest depth fixture exercises actual opaque lid/body overlap 18
+PASS wooden money chest opens by walking into its front
+PASS wooden money chest pays its original reward {'before': {'hp_max': 24, 'gilt': 0, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 2}, 'after': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 2}}
+PASS wooden money chest opened painted chest is larger than one tile [5, 7, 27, 31]
+PASS wooden money chest opened has a valid resident frame 56
+PASS wooden money chest opened is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS wooden money chest opened actual OBJ VRAM matches the intended art
+PASS wooden money chest opened chest stays behind the approaching player {'chest': 9, 'hero': 6}
+PASS wooden money chest opened visible chest is centered on its physical interaction {'sprite_top_left': [136, 192], 'logical_tile': [9, 13]}
+PASS wooden money chest opened old small chest is absent from BG1 (0, 0, 0, 0)
+PASS wooden money chest open state retains the exact substrate
+PASS wooden money chest remains opened after revisiting
+PASS wooden money chest revisited painted chest is larger than one tile [5, 7, 27, 31]
+PASS wooden money chest revisited has a valid resident frame 56
+PASS wooden money chest revisited is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS wooden money chest revisited actual OBJ VRAM matches the intended art
+PASS wooden money chest revisited chest stays behind the approaching player {'chest': 9, 'hero': 6}
+PASS wooden money chest revisited visible chest is centered on its physical interaction {'sprite_top_left': [136, 192], 'logical_tile': [9, 13]}
+PASS wooden money chest revisited old small chest is absent from BG1 (0, 0, 0, 0)
+PASS wooden money chest cannot grant its reward twice {'expected': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 2}, 'actual': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 2}}
+PASS brass map chest exists in the generated seed
+PASS brass map chest keeps a real unopened chest interaction [(20, 14)]
+PASS brass map chest closed painted chest is larger than one tile [4, 10, 28, 31]
+PASS brass map chest closed has a valid resident frame 56
+PASS brass map chest closed is drawn exactly once in hardware OAM [{'index': 11, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS brass map chest closed actual OBJ VRAM matches the intended art
+PASS brass map chest closed chest stays behind the approaching player {'chest': 11, 'hero': 6}
+PASS brass map chest closed visible chest is centered on its physical interaction {'sprite_top_left': [312, 208], 'logical_tile': [20, 14]}
+PASS brass map chest closed old small chest is absent from BG1 (0, 0, 0, 0)
+PASS brass map chest preserves its underlying floor
+PASS brass map chest north-side Bloom and chest are both drawn
+PASS brass map chest flat litter raises Bloom to the foreground {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}
+PASS brass map chest near chest remains above foreground Bloom {'chest': {'index': 6, 'x': 104, 'y': 88, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}, 'hero': {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}}
+PASS brass map chest depth fixture exercises actual opaque lid/body overlap 28
+PASS brass map chest opens by walking into its front
+PASS brass map chest pays its original reward {'before': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 2}, 'after': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 6}}
+PASS brass map chest opened painted chest is larger than one tile [4, 6, 28, 31]
+PASS brass map chest opened has a valid resident frame 56
+PASS brass map chest opened is drawn exactly once in hardware OAM [{'index': 11, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS brass map chest opened actual OBJ VRAM matches the intended art
+PASS brass map chest opened chest stays behind the approaching player {'chest': 11, 'hero': 6}
+PASS brass map chest opened visible chest is centered on its physical interaction {'sprite_top_left': [312, 208], 'logical_tile': [20, 14]}
+PASS brass map chest opened old small chest is absent from BG1 (0, 0, 0, 0)
+PASS brass map chest open state retains the exact substrate
+PASS brass map chest remains opened after revisiting
+PASS brass map chest revisited painted chest is larger than one tile [4, 6, 28, 31]
+PASS brass map chest revisited has a valid resident frame 56
+PASS brass map chest revisited is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS brass map chest revisited actual OBJ VRAM matches the intended art
+PASS brass map chest revisited chest stays behind the approaching player {'chest': 9, 'hero': 6}
+PASS brass map chest revisited visible chest is centered on its physical interaction {'sprite_top_left': [312, 208], 'logical_tile': [20, 14]}
+PASS brass map chest revisited old small chest is absent from BG1 (0, 0, 0, 0)
+PASS brass map chest cannot grant its reward twice {'expected': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 6}, 'actual': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 6}}
+PASS relic bow chest exists in the generated seed
+PASS relic bow chest keeps a real unopened chest interaction [(17, 14)]
+PASS relic bow chest closed painted chest is larger than one tile [3, 9, 29, 31]
+PASS relic bow chest closed has a valid resident frame 56
+PASS relic bow chest closed is drawn exactly once in hardware OAM [{'index': 10, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic bow chest closed actual OBJ VRAM matches the intended art
+PASS relic bow chest closed chest stays behind the approaching player {'chest': 10, 'hero': 6}
+PASS relic bow chest closed visible chest is centered on its physical interaction {'sprite_top_left': [264, 208], 'logical_tile': [17, 14]}
+PASS relic bow chest closed old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic bow chest preserves its underlying floor
+PASS relic bow chest north-side Bloom and chest are both drawn
+PASS relic bow chest flat litter raises Bloom to the foreground {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}
+PASS relic bow chest near chest remains above foreground Bloom {'chest': {'index': 6, 'x': 104, 'y': 88, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 1, 'flip': False}, 'hero': {'index': 7, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 1, 'flip': False}}
+PASS relic bow chest depth fixture exercises actual opaque lid/body overlap 34
+PASS relic bow chest opens by walking into its front
+PASS relic bow chest pays its original reward {'before': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 0, 'items2': 6}, 'after': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}}
+PASS relic bow chest opened painted chest is larger than one tile [3, 5, 29, 31]
+PASS relic bow chest opened has a valid resident frame 56
+PASS relic bow chest opened is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic bow chest opened actual OBJ VRAM matches the intended art
+PASS relic bow chest opened chest stays behind the approaching player {'chest': 9, 'hero': 6}
+PASS relic bow chest opened visible chest is centered on its physical interaction {'sprite_top_left': [264, 208], 'logical_tile': [17, 14]}
+PASS relic bow chest opened old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic bow chest open state retains the exact substrate
+PASS relic bow chest remains opened after revisiting
+PASS relic bow chest revisited painted chest is larger than one tile [3, 5, 29, 31]
+PASS relic bow chest revisited has a valid resident frame 56
+PASS relic bow chest revisited is drawn exactly once in hardware OAM [{'index': 10, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic bow chest revisited actual OBJ VRAM matches the intended art
+PASS relic bow chest revisited chest stays behind the approaching player {'chest': 10, 'hero': 6}
+PASS relic bow chest revisited visible chest is centered on its physical interaction {'sprite_top_left': [264, 208], 'logical_tile': [17, 14]}
+PASS relic bow chest revisited old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic bow chest cannot grant its reward twice {'expected': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}, 'actual': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}}
+PASS relic small-key chest exists in the generated seed
+PASS relic small-key chest keeps a real unopened chest interaction [(20, 16)]
+PASS relic small-key chest closed painted chest is larger than one tile [3, 9, 29, 31]
+PASS relic small-key chest closed has a valid resident frame 56
+PASS relic small-key chest closed is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic small-key chest closed actual OBJ VRAM matches the intended art
+PASS relic small-key chest closed chest stays behind the approaching player {'chest': 7, 'hero': 6}
+PASS relic small-key chest closed visible chest is centered on its physical interaction {'sprite_top_left': [312, 240], 'logical_tile': [20, 16]}
+PASS relic small-key chest closed old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic small-key chest preserves its underlying floor
+PASS relic small-key chest opens by walking into its front
+PASS relic small-key chest pays its original reward {'before': {'hp_max': 24, 'gilt': 30, 'keys': 0, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}, 'after': {'hp_max': 24, 'gilt': 30, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}}
+PASS relic small-key chest opened painted chest is larger than one tile [3, 5, 29, 31]
+PASS relic small-key chest opened has a valid resident frame 56
+PASS relic small-key chest opened is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic small-key chest opened actual OBJ VRAM matches the intended art
+PASS relic small-key chest opened chest stays behind the approaching player {'chest': 7, 'hero': 6}
+PASS relic small-key chest opened visible chest is centered on its physical interaction {'sprite_top_left': [312, 240], 'logical_tile': [20, 16]}
+PASS relic small-key chest opened old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic small-key chest open state retains the exact substrate
+PASS relic small-key chest remains opened after revisiting
+PASS relic small-key chest revisited painted chest is larger than one tile [3, 5, 29, 31]
+PASS relic small-key chest revisited has a valid resident frame 56
+PASS relic small-key chest revisited is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS relic small-key chest revisited actual OBJ VRAM matches the intended art
+PASS relic small-key chest revisited chest stays behind the approaching player {'chest': 7, 'hero': 6}
+PASS relic small-key chest revisited visible chest is centered on its physical interaction {'sprite_top_left': [312, 240], 'logical_tile': [20, 16]}
+PASS relic small-key chest revisited old small chest is absent from BG1 (0, 0, 0, 0)
+PASS relic small-key chest cannot grant its reward twice {'expected': {'hp_max': 24, 'gilt': 30, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}, 'actual': {'hp_max': 24, 'gilt': 30, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}}
+PASS cave enters through its generated door
+PASS cave inner exit doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS cave inner exit has a valid resident frame 72
+PASS cave inner exit is drawn exactly once in hardware OAM [{'index': 7, 'x': 80, 'y': 80, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS cave inner exit actual OBJ VRAM matches the intended art
+PASS cave has the expected sized reward chest [(6, 4)]
+PASS cave reward painted chest is larger than one tile [5, 11, 27, 31]
+PASS cave reward has a valid resident frame 56
+PASS cave reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 88, 'y': 48, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS cave reward actual OBJ VRAM matches the intended art
+PASS cave reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS cave reward visible chest is centered on its physical interaction {'sprite_top_left': [88, 48], 'logical_tile': [6, 4]}
+PASS cave reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS cave chest opens normally
+PASS cave chest tier matches its unchanged reward {'before': {'hp_max': 24, 'gilt': 30, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}, 'after': {'hp_max': 24, 'gilt': 40, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}}
+PASS cave claimed reward painted chest is larger than one tile [5, 7, 27, 31]
+PASS cave claimed reward has a valid resident frame 56
+PASS cave claimed reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 88, 'y': 48, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS cave claimed reward actual OBJ VRAM matches the intended art
+PASS cave claimed reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS cave claimed reward visible chest is centered on its physical interaction {'sprite_top_left': [88, 48], 'logical_tile': [6, 4]}
+PASS cave claimed reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS cave enlarged inner door exits to the forest
+PASS cave outer mouth doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS cave outer mouth has a valid resident frame 56
+PASS cave outer mouth is drawn exactly once in hardware OAM [{'index': 10, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS cave outer mouth actual OBJ VRAM matches the intended art
+PASS cave returning through the larger mouth still works
+PASS cave claimed reward stays claimed on return
+PASS cave persisted reward painted chest is larger than one tile [5, 7, 27, 31]
+PASS cave persisted reward has a valid resident frame 56
+PASS cave persisted reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 88, 'y': 48, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS cave persisted reward actual OBJ VRAM matches the intended art
+PASS cave persisted reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS cave persisted reward visible chest is centered on its physical interaction {'sprite_top_left': [88, 48], 'logical_tile': [6, 4]}
+PASS cave persisted reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS cave revisiting does not duplicate resources
+PASS cave exit remains usable on revisit
+PASS hollow enters through its generated door
+PASS hollow inner exit doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS hollow inner exit has a valid resident frame 72
+PASS hollow inner exit is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS hollow inner exit actual OBJ VRAM matches the intended art
+PASS hollow has the expected sized reward chest [(9, 6)]
+PASS hollow reward painted chest is larger than one tile [4, 10, 28, 31]
+PASS hollow reward has a valid resident frame 56
+PASS hollow reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS hollow reward actual OBJ VRAM matches the intended art
+PASS hollow reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS hollow reward visible chest is centered on its physical interaction {'sprite_top_left': [136, 80], 'logical_tile': [9, 6]}
+PASS hollow reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS hollow chest opens normally
+PASS hollow chest tier matches its unchanged reward {'before': {'hp_max': 24, 'gilt': 40, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 0, 'arrows': 20, 'items2': 7}, 'after': {'hp_max': 24, 'gilt': 40, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 1, 'arrows': 20, 'items2': 7}}
+PASS hollow claimed reward painted chest is larger than one tile [4, 6, 28, 31]
+PASS hollow claimed reward has a valid resident frame 56
+PASS hollow claimed reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS hollow claimed reward actual OBJ VRAM matches the intended art
+PASS hollow claimed reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS hollow claimed reward visible chest is centered on its physical interaction {'sprite_top_left': [136, 80], 'logical_tile': [9, 6]}
+PASS hollow claimed reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS hollow enlarged inner door exits to the forest
+PASS hollow outer mouth doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS hollow outer mouth has a valid resident frame 56
+PASS hollow outer mouth is drawn exactly once in hardware OAM [{'index': 10, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS hollow outer mouth actual OBJ VRAM matches the intended art
+PASS hollow returning through the larger mouth still works
+PASS hollow claimed reward stays claimed on return
+PASS hollow persisted reward painted chest is larger than one tile [4, 6, 28, 31]
+PASS hollow persisted reward has a valid resident frame 56
+PASS hollow persisted reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS hollow persisted reward actual OBJ VRAM matches the intended art
+PASS hollow persisted reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS hollow persisted reward visible chest is centered on its physical interaction {'sprite_top_left': [136, 80], 'logical_tile': [9, 6]}
+PASS hollow persisted reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS hollow revisiting does not duplicate resources
+PASS hollow exit remains usable on revisit
+PASS thicket enters through its generated door
+PASS thicket inner exit doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS thicket inner exit has a valid resident frame 72
+PASS thicket inner exit is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS thicket inner exit actual OBJ VRAM matches the intended art
+PASS thicket has the expected sized reward chest [(12, 8)]
+PASS thicket reward painted chest is larger than one tile [3, 9, 29, 31]
+PASS thicket reward has a valid resident frame 56
+PASS thicket reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS thicket reward actual OBJ VRAM matches the intended art
+PASS thicket reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS thicket reward visible chest is centered on its physical interaction {'sprite_top_left': [184, 112], 'logical_tile': [12, 8]}
+PASS thicket reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS thicket chest opens normally
+PASS thicket chest tier matches its unchanged reward {'before': {'hp_max': 24, 'gilt': 40, 'keys': 1, 'bombs': 0, 'items': 65, 'pieces': 1, 'arrows': 20, 'items2': 7}, 'after': {'hp_max': 24, 'gilt': 60, 'keys': 2, 'bombs': 0, 'items': 65, 'pieces': 1, 'arrows': 20, 'items2': 7}}
+PASS thicket claimed reward painted chest is larger than one tile [3, 5, 29, 31]
+PASS thicket claimed reward has a valid resident frame 56
+PASS thicket claimed reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS thicket claimed reward actual OBJ VRAM matches the intended art
+PASS thicket claimed reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS thicket claimed reward visible chest is centered on its physical interaction {'sprite_top_left': [184, 112], 'logical_tile': [12, 8]}
+PASS thicket claimed reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS thicket enlarged inner door exits to the forest
+PASS thicket outer mouth doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS thicket outer mouth has a valid resident frame 56
+PASS thicket outer mouth is drawn exactly once in hardware OAM [{'index': 9, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS thicket outer mouth actual OBJ VRAM matches the intended art
+PASS thicket returning through the larger mouth still works
+PASS thicket claimed reward stays claimed on return
+PASS thicket persisted reward painted chest is larger than one tile [3, 5, 29, 31]
+PASS thicket persisted reward has a valid resident frame 56
+PASS thicket persisted reward is drawn exactly once in hardware OAM [{'index': 8, 'x': 104, 'y': 58, 'tile': 56, 'pal': 7, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}]
+PASS thicket persisted reward actual OBJ VRAM matches the intended art
+PASS thicket persisted reward chest stays behind the approaching player {'chest': 8, 'hero': 6}
+PASS thicket persisted reward visible chest is centered on its physical interaction {'sprite_top_left': [184, 112], 'logical_tile': [12, 8]}
+PASS thicket persisted reward old small chest is absent from BG1 (0, 0, 0, 0)
+PASS thicket revisiting does not duplicate resources
+PASS thicket exit remains usable on revisit
+PASS switch chamber enters normally
+PASS medium switch task contains four full plates [(5, 2), (12, 2), (5, 9), (12, 9)]
+PASS switch 0 fills the complete tile [0, 0, 16, 16]
+PASS switch 0 responds to a real footstep
+PASS switch 0 pressed state is visibly distinct 94
+PASS switch 0 remains walkable
+PASS switch 1 fills the complete tile [0, 0, 16, 16]
+PASS switch 1 responds to a real footstep
+PASS switch 1 pressed state is visibly distinct 94
+PASS switch 1 remains walkable
+PASS switch 2 fills the complete tile [0, 0, 16, 16]
+PASS switch 2 responds to a real footstep
+PASS switch 2 pressed state is visibly distinct 94
+PASS switch 2 remains walkable
+PASS switch 3 fills the complete tile [0, 0, 16, 16]
+PASS switch 3 responds to a real footstep
+PASS switch 3 pressed state is visibly distinct 94
+PASS switch 3 remains walkable
+PASS all four real plate steps earn one chest
+PASS earned switch chest opens normally
+PASS switch reward remains a piece of heart
+PASS solved switch room can be left
+PASS solved switch room can be reentered
+PASS solved plates remain inactive after returning
+PASS solved plates do not grant a second closed chest
+PASS cave battle chamber enters through the mouth
+PASS cave shut trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS cave shut trial door has a valid resident frame 72
+PASS cave shut trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 1, 'flip': False}]
+PASS cave shut trial door actual OBJ VRAM matches the intended art
+PASS cave shut trial has no active exit trigger
+PASS cave closed door physically prevents leaving
+PASS cave won trial restores both real exit tiles
+PASS cave opened trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS cave opened trial door has a valid resident frame 72
+PASS cave opened trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS cave opened trial door actual OBJ VRAM matches the intended art
+PASS cave opened trial door permits leaving
+PASS hollow battle chamber enters through the mouth
+PASS hollow shut trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS hollow shut trial door has a valid resident frame 72
+PASS hollow shut trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 1, 'flip': False}]
+PASS hollow shut trial door actual OBJ VRAM matches the intended art
+PASS hollow shut trial has no active exit trigger
+PASS hollow closed door physically prevents leaving
+PASS hollow won trial restores both real exit tiles
+PASS hollow opened trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS hollow opened trial door has a valid resident frame 72
+PASS hollow opened trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS hollow opened trial door actual OBJ VRAM matches the intended art
+PASS hollow opened trial door permits leaving
+PASS thicket battle chamber enters through the mouth
+PASS thicket shut trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS thicket shut trial door has a valid resident frame 72
+PASS thicket shut trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 1, 'flip': False}]
+PASS thicket shut trial door actual OBJ VRAM matches the intended art
+PASS thicket shut trial has no active exit trigger
+PASS thicket closed door physically prevents leaving
+PASS thicket won trial restores both real exit tiles
+PASS thicket opened trial door doorway is wider and taller than Bloom {'entry': [0, 17, 32, 64], 'bloom': [20, 0, 44, 29]}
+PASS thicket opened trial door has a valid resident frame 72
+PASS thicket opened trial door is drawn exactly once in hardware OAM [{'index': 7, 'x': 104, 'y': 96, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS thicket opened trial door actual OBJ VRAM matches the intended art
+PASS thicket opened trial door permits leaving
+PASS PIT retains a deep quiet cavity {'dark_pixels': 80, 'sample_pixels': 80}
+PASS PIT rim visibly separates the drop from its floor {'center_mean': 2.5, 'rim_mean': 9.255208333333332}
+PASS PIT remains an actual falling hazard
+PASS FOREST_BLIGHT_PIT retains a deep quiet cavity {'dark_pixels': 80, 'sample_pixels': 80}
+PASS FOREST_BLIGHT_PIT rim visibly separates the drop from its floor {'center_mean': 1.6666666666666667, 'rim_mean': 8.268229166666666}
+PASS FOREST_BLIGHT_PIT remains an actual falling hazard
+PASS cobweb has broad pale silk against the dark opening 113
+PASS bombable wall retains a readable stone and fracture range
+PASS CRACK retains its correct item interaction
+PASS CRACK keeps its physical barrier
+PASS WEB retains its correct item interaction
+PASS WEB keeps its physical barrier
+PASS DOOR_LOCKED retains its correct item interaction
+PASS DOOR_LOCKED keeps its physical barrier
+PASS TORCH retains its correct item interaction
+PASS TORCH keeps its physical barrier
+PASS TORCH_LIT retains its correct item interaction
+PASS TORCH_LIT keeps its physical barrier
+PASS natural shrine has the explicit unused interaction plate {'seed': '0xdeadbeef', 'cell': 5, 'plate': [17, 12]}
+PASS shrine plate is actually drawn above the forest floor
+PASS walking onto the shrine plate heals the injured player
+PASS shrine use records its one-use flag
+PASS used shrine replaces its bright plate with the spent stone
+PASS spent shrine stays spent after revisiting
+PASS revisiting a spent shrine grants no second heal
+PASS 0xb4a7 cell0 doorway approach contains exactly one physical mouth [(9, 10)]
+PASS 0xb4a7 cell0 doorway approach keeps the arch below the HUD edge [9, 10]
+PASS 0xb4a7 cell0 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell0 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell0 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell3 doorway approach contains exactly one physical mouth [(21, 10)]
+PASS 0xb4a7 cell3 doorway approach keeps the arch below the HUD edge [21, 10]
+PASS 0xb4a7 cell3 doorway approach is present in actual hardware OAM [{'index': 11, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell3 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell3 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell6 doorway approach contains exactly one physical mouth [(26, 13)]
+PASS 0xb4a7 cell6 doorway approach keeps the arch below the HUD edge [26, 13]
+PASS 0xb4a7 cell6 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 136, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell6 doorway approach complete painted silhouette is visible outside the HUD [136, 43, 168, 90]
+PASS 0xb4a7 cell6 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell7 doorway approach contains exactly one physical mouth [(29, 20)]
+PASS 0xb4a7 cell7 doorway approach keeps the arch below the HUD edge [29, 20]
+PASS 0xb4a7 cell7 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 184, 'y': 48, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell7 doorway approach complete painted silhouette is visible outside the HUD [184, 65, 216, 112]
+PASS 0xb4a7 cell7 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell9 doorway approach contains exactly one physical mouth [(5, 13)]
+PASS 0xb4a7 cell9 doorway approach keeps the arch below the HUD edge [5, 13]
+PASS 0xb4a7 cell9 doorway approach is present in actual hardware OAM [{'index': 9, 'x': 72, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell9 doorway approach complete painted silhouette is visible outside the HUD [72, 43, 104, 90]
+PASS 0xb4a7 cell9 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell11 doorway approach contains exactly one physical mouth [(24, 4)]
+PASS 0xb4a7 cell11 doorway approach keeps the arch below the HUD edge [24, 4]
+PASS 0xb4a7 cell11 doorway approach is present in actual hardware OAM [{'index': 7, 'x': 104, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell11 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xb4a7 cell11 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell12 doorway approach contains exactly one physical mouth [(22, 7)]
+PASS 0xb4a7 cell12 doorway approach keeps the arch below the HUD edge [22, 7]
+PASS 0xb4a7 cell12 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell12 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell12 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell13 doorway approach contains exactly one physical mouth [(22, 4)]
+PASS 0xb4a7 cell13 doorway approach keeps the arch below the HUD edge [22, 4]
+PASS 0xb4a7 cell13 doorway approach is present in actual hardware OAM [{'index': 9, 'x': 104, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell13 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xb4a7 cell13 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell15 doorway approach contains exactly one physical mouth [(9, 10)]
+PASS 0xb4a7 cell15 doorway approach keeps the arch below the HUD edge [9, 10]
+PASS 0xb4a7 cell15 doorway approach is present in actual hardware OAM [{'index': 9, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell15 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell15 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell16 doorway approach contains exactly one physical mouth [(6, 4)]
+PASS 0xb4a7 cell16 doorway approach keeps the arch below the HUD edge [6, 4]
+PASS 0xb4a7 cell16 doorway approach is present in actual hardware OAM [{'index': 7, 'x': 88, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell16 doorway approach complete painted silhouette is visible outside the HUD [88, 33, 120, 80]
+PASS 0xb4a7 cell16 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell17 doorway approach contains exactly one physical mouth [(6, 4)]
+PASS 0xb4a7 cell17 doorway approach keeps the arch below the HUD edge [6, 4]
+PASS 0xb4a7 cell17 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 88, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell17 doorway approach complete painted silhouette is visible outside the HUD [88, 33, 120, 80]
+PASS 0xb4a7 cell17 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell18 doorway approach contains exactly one physical mouth [(8, 7)]
+PASS 0xb4a7 cell18 doorway approach keeps the arch below the HUD edge [8, 7]
+PASS 0xb4a7 cell18 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell18 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell18 doorway approach hardware pixels match this entrance style
+PASS 0xb4a7 cell21 doorway approach contains exactly one physical mouth [(21, 10)]
+PASS 0xb4a7 cell21 doorway approach keeps the arch below the HUD edge [21, 10]
+PASS 0xb4a7 cell21 doorway approach is present in actual hardware OAM [{'index': 11, 'x': 104, 'y': 26, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xb4a7 cell21 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xb4a7 cell21 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell2 doorway approach contains exactly one physical mouth [(29, 20)]
+PASS 0xdeadbeef cell2 doorway approach keeps the arch below the HUD edge [29, 20]
+PASS 0xdeadbeef cell2 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 184, 'y': 48, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell2 doorway approach complete painted silhouette is visible outside the HUD [184, 65, 216, 112]
+PASS 0xdeadbeef cell2 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell3 doorway approach contains exactly one physical mouth [(23, 7)]
+PASS 0xdeadbeef cell3 doorway approach keeps the arch below the HUD edge [23, 7]
+PASS 0xdeadbeef cell3 doorway approach is present in actual hardware OAM [{'index': 10, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell3 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xdeadbeef cell3 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell4 doorway approach contains exactly one physical mouth [(18, 4)]
+PASS 0xdeadbeef cell4 doorway approach keeps the arch below the HUD edge [18, 4]
+PASS 0xdeadbeef cell4 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell4 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xdeadbeef cell4 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell6 doorway approach contains exactly one physical mouth [(23, 4)]
+PASS 0xdeadbeef cell6 doorway approach keeps the arch below the HUD edge [23, 4]
+PASS 0xdeadbeef cell6 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell6 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xdeadbeef cell6 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell10 doorway approach contains exactly one physical mouth [(20, 4)]
+PASS 0xdeadbeef cell10 doorway approach keeps the arch below the HUD edge [20, 4]
+PASS 0xdeadbeef cell10 doorway approach is present in actual hardware OAM [{'index': 11, 'x': 104, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell10 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xdeadbeef cell10 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell15 doorway approach contains exactly one physical mouth [(24, 4)]
+PASS 0xdeadbeef cell15 doorway approach keeps the arch below the HUD edge [24, 4]
+PASS 0xdeadbeef cell15 doorway approach is present in actual hardware OAM [{'index': 11, 'x': 104, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell15 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0xdeadbeef cell15 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell19 doorway approach contains exactly one physical mouth [(11, 7)]
+PASS 0xdeadbeef cell19 doorway approach keeps the arch below the HUD edge [11, 7]
+PASS 0xdeadbeef cell19 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell19 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xdeadbeef cell19 doorway approach hardware pixels match this entrance style
+PASS 0xdeadbeef cell24 doorway approach contains exactly one physical mouth [(18, 10)]
+PASS 0xdeadbeef cell24 doorway approach keeps the arch below the HUD edge [18, 10]
+PASS 0xdeadbeef cell24 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0xdeadbeef cell24 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0xdeadbeef cell24 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell0 doorway approach contains exactly one physical mouth [(11, 4)]
+PASS 0x7 cell0 doorway approach keeps the arch below the HUD edge [11, 4]
+PASS 0x7 cell0 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell0 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0x7 cell0 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell1 doorway approach contains exactly one physical mouth [(29, 20)]
+PASS 0x7 cell1 doorway approach keeps the arch below the HUD edge [29, 20]
+PASS 0x7 cell1 doorway approach is present in actual hardware OAM [{'index': 7, 'x': 184, 'y': 48, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell1 doorway approach complete painted silhouette is visible outside the HUD [184, 65, 216, 112]
+PASS 0x7 cell1 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell3 doorway approach contains exactly one physical mouth [(8, 7)]
+PASS 0x7 cell3 doorway approach keeps the arch below the HUD edge [8, 7]
+PASS 0x7 cell3 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell3 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0x7 cell3 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell5 doorway approach contains exactly one physical mouth [(19, 4)]
+PASS 0x7 cell5 doorway approach keeps the arch below the HUD edge [19, 4]
+PASS 0x7 cell5 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 16, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell5 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0x7 cell5 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell8 doorway approach contains exactly one physical mouth [(5, 4)]
+PASS 0x7 cell8 doorway approach keeps the arch below the HUD edge [5, 4]
+PASS 0x7 cell8 doorway approach is present in actual hardware OAM [{'index': 7, 'x': 72, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell8 doorway approach complete painted silhouette is visible outside the HUD [72, 33, 104, 80]
+PASS 0x7 cell8 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell11 doorway approach contains exactly one physical mouth [(17, 7)]
+PASS 0x7 cell11 doorway approach keeps the arch below the HUD edge [17, 7]
+PASS 0x7 cell11 doorway approach is present in actual hardware OAM [{'index': 10, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell11 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0x7 cell11 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell14 doorway approach contains exactly one physical mouth [(24, 7)]
+PASS 0x7 cell14 doorway approach keeps the arch below the HUD edge [24, 7]
+PASS 0x7 cell14 doorway approach is present in actual hardware OAM [{'index': 7, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell14 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0x7 cell14 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell17 doorway approach contains exactly one physical mouth [(20, 7)]
+PASS 0x7 cell17 doorway approach keeps the arch below the HUD edge [20, 7]
+PASS 0x7 cell17 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell17 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0x7 cell17 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell21 doorway approach contains exactly one physical mouth [(17, 7)]
+PASS 0x7 cell21 doorway approach keeps the arch below the HUD edge [17, 7]
+PASS 0x7 cell21 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 26, 'tile': 72, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell21 doorway approach complete painted silhouette is visible outside the HUD [104, 43, 136, 90]
+PASS 0x7 cell21 doorway approach hardware pixels match this entrance style
+PASS 0x7 cell23 doorway approach contains exactly one physical mouth [(11, 4)]
+PASS 0x7 cell23 doorway approach keeps the arch below the HUD edge [11, 4]
+PASS 0x7 cell23 doorway approach is present in actual hardware OAM [{'index': 8, 'x': 104, 'y': 16, 'tile': 56, 'pal': 7, 'shape': 2, 'size': 3, 'priority': 2, 'flip': False}]
+PASS 0x7 cell23 doorway approach complete painted silhouette is visible outside the HUD [104, 33, 136, 80]
+PASS 0x7 cell23 doorway approach hardware pixels match this entrance style
+PASS door approach visibility covers all three styles
+PASS seed6 cell4 bomb pocket is the natural item-gated pocket {'gate': [3, 15], 'treasure': [2, 15]}
+PASS seed6 cell4 bomb pocket pending hoard is visible in actual OAM
+PASS seed6 cell4 bomb pocket hoard stays behind the barrier material {'index': 7, 'x': 24, 'y': 72, 'tile': 278, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS seed6 cell4 bomb pocket exercises real opaque hoard/barrier overlap 47
+PASS seed6 cell4 bomb pocket hidden flag still suppresses the hoard
+PASS seed6 cell4 bomb pocket blink flags still alternate visibility [False, True, True, False, False, True, True, False, False, True]
+PASS seed6 cell4 bomb pocket intact gate is still displayed on BG1
+PASS seed6 cell4 bomb pocket actual item opens the physical barrier
+PASS seed6 cell4 bomb pocket real opening records its save bit
+PASS seed6 cell4 bomb pocket opened reward remains normally drawable
+PASS seed6 cell4 bomb pocket walking through the opened neck collects the hoard
+PASS seed6 cell4 bomb pocket pays exactly the original ten gilt {'before': 0, 'after': 10}
+PASS seed6 cell4 bomb pocket collected hoard stays gone on return
+PASS seed6 cell4 bomb pocket opened barrier stays open on return
+PASS seed6 cell24 candle pocket is the natural item-gated pocket {'gate': [24, 4], 'treasure': [24, 3]}
+PASS seed6 cell24 candle pocket pending hoard is visible in actual OAM
+PASS seed6 cell24 candle pocket hoard stays behind the barrier material {'index': 9, 'x': 104, 'y': 28, 'tile': 310, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS seed6 cell24 candle pocket hidden flag still suppresses the hoard
+PASS seed6 cell24 candle pocket blink flags still alternate visibility [False, True, True, False, False, True, True, False, False, True]
+PASS seed6 cell24 candle pocket intact gate is still displayed on BG1
+PASS seed6 cell24 candle pocket actual item opens the physical barrier
+PASS seed6 cell24 candle pocket real opening records its save bit
+PASS seed6 cell24 candle pocket opened reward remains normally drawable
+PASS seed6 cell24 candle pocket walking through the opened neck collects the hoard
+PASS seed6 cell24 candle pocket pays exactly the original ten gilt {'before': 10, 'after': 20}
+PASS seed6 cell24 candle pocket collected hoard stays gone on return
+PASS seed6 cell24 candle pocket opened barrier stays open on return
+PASS seed6 cell12 candle pocket is the natural item-gated pocket {'gate': [12, 19], 'treasure': [11, 19]}
+PASS seed6 cell12 candle pocket pending hoard is visible in actual OAM
+PASS seed6 cell12 candle pocket hoard stays behind the barrier material {'index': 9, 'x': 72, 'y': 72, 'tile': 326, 'pal': 11, 'shape': 0, 'size': 2, 'priority': 2, 'flip': False}
+PASS seed6 cell12 candle pocket exercises real opaque hoard/barrier overlap 47
+PASS seed6 cell12 candle pocket hidden flag still suppresses the hoard
+PASS seed6 cell12 candle pocket blink flags still alternate visibility [False, False, False, True, True, False, False, True, True, False]
+PASS seed6 cell12 candle pocket intact gate is still displayed on BG1
+PASS seed6 cell12 candle pocket actual item opens the physical barrier
+PASS seed6 cell12 candle pocket real opening records its save bit
+PASS seed6 cell12 candle pocket opened reward remains normally drawable
+PASS seed6 cell12 candle pocket walking through the opened neck collects the hoard
+PASS seed6 cell12 candle pocket pays exactly the original ten gilt {'before': 20, 'after': 30}
+PASS seed6 cell12 candle pocket collected hoard stays gone on return
+PASS seed6 cell12 candle pocket opened barrier stays open on return
+PASS seed22 cell9 remains the natural gardener quest
+PASS seed22 gardener south approach connects to the entry component [8, 15]
+PASS seed22 gardener has all four cold censers [(6, 15), (17, 15), (6, 17), (18, 18)]
+PASS seed22 censer0 has a connected south approach [6, 16]
+PASS seed22 censer0 lights through actual candle use
+PASS seed22 censer1 has a connected south approach [17, 16]
+PASS seed22 censer1 lights through actual candle use
+PASS seed22 censer2 has a connected south approach [6, 18]
+PASS seed22 censer2 lights through actual candle use
+PASS seed22 censer3 has a connected south approach [18, 19]
+PASS seed22 censer3 lights through actual candle use
+PASS seed22 all four real censers are now lit
+PASS seed22 gardener remains available for the reward
+   talk: box 1 state 1 hero (136, 263)
+PASS seed22 completed candle quest pays its key
+PASS seed22 gardener completion records its save flag
+PASS seed22 all four censer states persist on return
+PASS seed22 completed gardener quest remains completed
+RESULT PASS 549/549
