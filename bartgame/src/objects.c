@@ -541,13 +541,49 @@ void objects_update(void) {
     }
 }
 
-/* The bomb being released is the actual object, drawn above the hand.
-   There is no second held-bomb sprite. Once planted it joins ground props. */
-void objects_draw_hand(void) {
+static bool8 player_hand_composite(void) {
+    return !(gPlayer->flags & AF_HIDDEN) && gPlayer->state != PS_FALL &&
+           !(gPlayer->state == PS_DEAD && gPl.dead_timer > 60 && (gPl.dead_timer & 4));
+}
+
+/* A released load or player arrow keeps its hand-side depth while its
+   visual rectangle still intersects Bloom. Physics and travel are wholly
+   independent of this short composite stage. */
+static bool8 player_release_overlap(Actor* a) {
+    if ((a->kind != AK_OBJECT || a->type != OBJ_THROWN) &&
+        (a->kind != AK_PROJ || a->type != PJ_ARROW || !a->v[0]))
+        return FALSE;
+    if (!player_hand_composite())
+        return FALSE;
+    int ax = PX(a->x) - a->w / 2;
+    int ay = PX(a->y) - a->h - PX(a->z);
+    int px = PX(gPlayer->x) - gPlayer->w / 2;
+    int py = PX(gPlayer->y) - gPlayer->h - PX(gPlayer->z);
+    return ax < px + gPlayer->w && ax + a->w > px &&
+           ay < py + gPlayer->h && ay + a->h > py;
+}
+
+/* The released bomb is the actual object, ordered around Bloom with the
+   other held tools. North is on the far side; every part uses this frame's
+   resolved terrain priority. Once planted it joins ground props. */
+void objects_draw_hand(bool8 behind) {
     int i;
     for (i=1;i<ACTOR_MAX;i++) {
         Actor* a=&gActors[i];
+        if (player_release_overlap(a)) {
+            if ((a->dir == DIR_N) == behind) {
+                int sx = PX(a->x) - a->w / 2 - gCamX;
+                int sy = PX(a->y) - a->h - PX(a->z) - gCamY;
+                draw_sprite(sx, sy, a->sheet, a->tile, a->frame,
+                            a->hflip, gPlayer->prio, a->pal);
+            }
+            continue;
+        }
         if (a->kind!=AK_OBJECT || a->type!=FX_BOMB_OBJ || a->timer2>=8)
+            continue;
+        if (!player_hand_composite())
+            continue;
+        if ((gPlayer->facing == FACE_N) != behind)
             continue;
         int t=a->timer2;
         int x=(a->vx*(8-t)+PX(a->x)*t)/8;
@@ -560,7 +596,9 @@ void objects_draw(void) {
     int i;
     for (i = 1; i < ACTOR_MAX; i++) {
         Actor* a = &gActors[i];
-        if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8)
+        if (player_release_overlap(a))
+            continue;
+        if (a->kind==AK_OBJECT && a->type==FX_BOMB_OBJ && a->timer2<8 && player_hand_composite())
             continue;
         if (a->kind == AK_PROJ || a->kind == AK_PICKUP || a->kind == AK_FX || a->kind == AK_OBJECT)
             actor_draw(a);
