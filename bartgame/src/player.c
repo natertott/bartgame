@@ -26,6 +26,7 @@ PlayerState gPl;
 #define SHIELD_TILE 44
 
 static u8 sLastFrame = 0xFF;
+static u8 sLastShieldFrame = 0xFF;
 static u8 sWalkTimer;
 /* Visual action state is transient, outside PlayerState/save data. One
    streamed 32x32 layer serves the sword, held tools and airborne cape. */
@@ -130,9 +131,36 @@ void player_init(int px, int py, int facing) {
     sUseItem = sUseTimer = sUseLength = 0;
     sWalkTimer = 0;
     gPl.sword_active = gPl.lamp_timer = gPl.shield_up = 0;
-    /* the blade and shield sheets stay resident for the HUD's slots */
+    /* The blade stays resident; one shield view streams into its original
+       reservation so both designs cost no extra live OBJ allocation. */
     dma3_copy32(sheets[SHEET_SWORD].tiles, OBJ_TILE(SWORD_TILE), sheets[SHEET_SWORD].tile_count * 32);
-    dma3_copy32(sheets[SHEET_SHIELD].tiles, OBJ_TILE(SHIELD_TILE), sheets[SHEET_SHIELD].tile_count * 32);
+    sLastShieldFrame=0xFF;
+}
+
+void player_shield_upgrade(void) {
+    gPl.items2 |= ITEM2_SHIELD_UPGRADE;
+}
+
+int player_shield_icon(void) {
+    return (gPl.items2&ITEM2_SHIELD_UPGRADE)?F_ICON32_SHIELD_UPGRADED:F_ICON32_SHIELD;
+}
+
+static int shield_source_frame(int view) {
+    return view+((gPl.items2&ITEM2_SHIELD_UPGRADE)?F_SHIELD_UPGRADED_FRONT:F_SHIELD_FRONT);
+}
+
+int player_shield_frame(int view) {
+    int source=shield_source_frame(view);
+    if (sLastShieldFrame!=source) {
+        const SpriteSheet* sh=&sheets[SHEET_SHIELD];
+        sLastShieldFrame=source;
+        vram_queue(sh->tiles+source*sh->frame_tiles*16,OBJ_TILE(SHIELD_TILE),sh->frame_tiles*32);
+    }
+    return 0;
+}
+
+int player_shield_palette(int view) {
+    return shield_frame_pal[shield_source_frame(view)];
 }
 
 void player_set_pos(int px, int py) {
@@ -845,7 +873,7 @@ static void action_frame(int frame, int sx, int sy, int flip, int prio) {
         sLastActionFrame = frame;
         vram_queue(sh->tiles + frame * sh->frame_tiles * 16, OBJ_TILE(sActionTile), sh->frame_tiles * 32);
     }
-    draw_sprite(sx, sy, SHEET_BLOOMFX, sActionTile, 0, flip, prio, PAL_OBJ_GEAR);
+    draw_sprite(sx, sy, SHEET_BLOOMFX, sActionTile, 0, flip, prio, bloomfx_frame_pal[frame]);
 }
 
 /* This layer has its own anchor: southward reach extends below the feet,
@@ -884,7 +912,7 @@ static void draw_action(Actor* a, bool8 behind) {
         static const s8 at[4][2] = { { -8,-34 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
         static const u8 frame[4] = { F_SHIELD_BACK, F_SHIELD_SIDE, F_SHIELD_FRONT, F_SHIELD_SIDE };
         draw_sprite(PX(a->x)+at[f][0]-gCamX, PX(a->y)+at[f][1]-PX(a->z)-gCamY,
-                    SHEET_SHIELD, SHIELD_TILE, frame[f], f==FACE_W, a->prio, PAL_OBJ_GEAR);
+                    SHEET_SHIELD, SHIELD_TILE, player_shield_frame(frame[f]), f==FACE_W, a->prio, player_shield_palette(frame[f]));
     }
 }
 
@@ -979,7 +1007,7 @@ void player_draw(void) {
     if (a->state == PS_ITEMGET && gPl.got_item) {
         int sx = PX(a->x) - 16 - gCamX;
         int sy = PX(a->y) - 60 - gCamY - ((gPl.got_timer < 16) ? (16 - gPl.got_timer) : 0);
-        draw_sprite(sx, sy, SHEET_ICON32, icon32_frame_tile(gPl.got_item), 0, 0, 1, PAL_OBJ_ICONS);
+        draw_sprite(sx, sy, SHEET_ICON32, icon32_frame_tile(gPl.got_item), 0, 0, 1, icon32_frame_palette(gPl.got_item));
     }
     /* Earlier OAM entries draw on top: tools stay visible over the body;
        the cape opens behind it. Props contain no duplicate baked items. */

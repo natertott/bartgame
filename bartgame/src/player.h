@@ -18,6 +18,7 @@ enum { PS_NORMAL, PS_ROLL, PS_ATTACK, PS_HURT, PS_FALL, PS_JUMP, PS_ITEMGET, PS_
 #define ITEM2_HUBCAP 0x02  /* the Drain Cap: the way home */
 #define ITEM2_MAP 0x04     /* the Map: every cell of the wood drawn */
 #define ITEM2_ASTROLABE 0x08 /* the Astrolabe: chests, the Heart and the barriers marked */
+#define ITEM2_SHIELD_UPGRADE 0x10 /* green-and-gold visual shield variant */
 
 /* what a button holds: the pause menu assigns one to A, B and L */
 enum { EQ_NONE, EQ_SWORD, EQ_BOMBS, EQ_LAMP, EQ_CLOAK, EQ_SHIELD, EQ_BOW, EQ_HUBCAP, EQ_COUNT };
@@ -77,5 +78,9 @@ void player_item_pose(int eq);  /* brief visual anticipation/use/recovery */
 void player_swallow(void);      /* the Drain Cap: a mouth takes the hero under */
 void player_drop_in(void);      /* arriving from the ceiling, falling to the feet */
 bool8 player_shoot(void);       /* the bow: an arrow the way he faces, FALSE without one */
+void player_shield_upgrade(void);
+int player_shield_icon(void);
+int player_shield_frame(int view); /* streamed resident view; draw with returned frame */
+int player_shield_palette(int view);
 
 #endif

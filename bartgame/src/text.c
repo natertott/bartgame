@@ -449,8 +449,8 @@ void shop_draw(void) {
     draw_sprite(14 + nudge[(gFrame >> 3) & 3], SH_ROW_Y(sShopCursor) * 8 + 4, SHEET_UIMARKS, OBJ_TILE_UI, F_UIMARKS_PICK, 0, 0, PAL_OBJ_UIKIT);
     face_draw(SH_FACE_X, SH_FACE_Y, 0);
     for (i = 0; i < sShopCount; i++)
-        draw_sprite(SH_ICON_X, SH_ROW_Y(i) * 8, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, PAL_OBJ_ITEMS);
-    draw_sprite(SH_DET_X * 8 + 6, 70, SHEET_ITEMS, sShopIconTile, sShopItems[sShopCursor].icon, 0, 0, PAL_OBJ_ITEMS);
+        draw_sprite(SH_ICON_X, SH_ROW_Y(i) * 8, SHEET_ITEMS, sShopIconTile, sShopItems[i].icon, 0, 0, items_frame_pal[sShopItems[i].icon]);
+    draw_sprite(SH_DET_X * 8 + 6, 70, SHEET_ITEMS, sShopIconTile, sShopItems[sShopCursor].icon, 0, 0, items_frame_pal[sShopItems[sShopCursor].icon]);
 }
 
 void shop_close(void) {
@@ -484,6 +484,7 @@ static Canvas sPurse, sCount[SLOT_COUNT];
 static u32 sCountPix[SLOT_COUNT][4 * 8];
 static s16 sPurseGilt, sPurseKeys;       /* what the purse shows */
 static u8 sHudEq[SLOT_COUNT];            /* whose icons are resident */
+static u8 sHudIconFrame[SLOT_COUNT];     /* also tracks shield design changes */
 static s16 sHudCount[SLOT_COUNT];        /* what each count shows, -1 none */
 
 static void hud_init(void) {
@@ -492,6 +493,7 @@ static void hud_init(void) {
     for (s = 0; s < SLOT_COUNT; s++) {
         vwf_canvas_obj(&sCount[s], sCountPix[s], OBJ_TILE_HUD_COUNTS + s * 4, 2, 2);
         sHudEq[s] = 0xFF;
+        sHudIconFrame[s] = 0xFF;
         sHudCount[s] = -1;
     }
     hud_stale();
@@ -505,7 +507,7 @@ static void hud_stale(void) {
 static int hud_icon(int eq) {
     switch (eq) {
         case EQ_SWORD: return F_ICON32_SWORD;
-        case EQ_SHIELD: return F_ICON32_SHIELD;
+        case EQ_SHIELD: return player_shield_icon();
         case EQ_BOMBS: return F_ICON32_BOMBS;
         case EQ_LAMP: return F_ICON32_LAMP;
         case EQ_CLOAK: return F_ICON32_CLOAK;
@@ -543,10 +545,10 @@ static void hud_refresh(void) {
         hud_purse();
     }
     for (s = 0; s < SLOT_COUNT; s++) {
-        int eq = gPl.equip[s], n = hud_count(eq);
-        if (eq != sHudEq[s]) {
-            int f = hud_icon(eq);
+        int eq = gPl.equip[s], n = hud_count(eq), f = hud_icon(eq);
+        if (eq != sHudEq[s] || sHudIconFrame[s] != (u8)f) {
             sHudEq[s] = eq;
+            sHudIconFrame[s] = f;
             if (f >= 0)
                 vram_queue(icons->tiles + f * icons->frame_tiles * 16, OBJ_TILE(OBJ_TILE_HUD_ICONS + s * 16),
                            icons->frame_tiles * 32);
@@ -605,7 +607,7 @@ static void hud_sprites(void) {
     }
     for (s = 0; s < SLOT_COUNT; s++)
         if (hud_icon(sHudEq[s]) >= 0)
-            obj_square(HUD_SLOT_TX(s) * 8, 0, 2, OBJ_TILE_HUD_ICONS + s * 16, PAL_OBJ_ICONS);
+            obj_square(HUD_SLOT_TX(s) * 8, 0, 2, OBJ_TILE_HUD_ICONS + s * 16, icon32_frame_pal[sHudIconFrame[s]]);
     obj_square(HUD_MAP_TX * 8, 0, 2, OBJ_TILE_MINIMAP, PAL_OBJ_UIKIT);
 }
 

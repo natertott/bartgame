@@ -15,6 +15,32 @@
 static u16 sItemsTile, sFxTile, sProjTile, sLiftTile, sArrowTile, sMouthTile, sPickTile, sIconTile;
 #define ICON_CACHE_SLOTS 8
 static u8 sIconFrame[ICON_CACHE_SLOTS], sIconAge[ICON_CACHE_SLOTS];
+static u16 sIconWorldPal[256] ALIGN4;
+static u8 sIconMenu;
+
+static void icon32_invalidate(void) {
+    memset(sIconFrame,0xFF,sizeof(sIconFrame));
+    memset(sIconAge,0xFF,sizeof(sIconAge));
+}
+
+/* The paused bag can borrow actor palettes: none of those actors is drawn
+   there. Retain the live colours (including portrait/orb animation), rather
+   than rebuilding them from default ROM palettes when the bag closes. */
+void icon32_menu_begin(void) {
+    if (!sIconMenu)
+        memcpy32(sIconWorldPal,gPalObj,sizeof(sIconWorldPal));
+    sIconMenu=1;
+    icon32_invalidate();
+}
+
+void icon32_menu_end(void) {
+    if (sIconMenu) {
+        memcpy32(gPalObj,sIconWorldPal,sizeof(sIconWorldPal));
+        gPalDirty=1;
+    }
+    sIconMenu=0;
+    icon32_invalidate();
+}
 
 static void ensure_sheets(void) {
     if (!sItemsTile)
@@ -54,8 +80,11 @@ u16 icon32_frame_tile(int frame) {
             if (slot < 0 || sIconAge[i] > sIconAge[slot])
                 slot=i;
         }
-        vram_queue(sh->tiles + frame * sh->frame_tiles * 16,
+        const u16* pixels=sIconMenu?icon32_exact_tiles:sh->tiles;
+        vram_queue(pixels + frame * sh->frame_tiles * 16,
                    OBJ_TILE(sIconTile + slot * sh->frame_tiles), sh->frame_tiles * 32);
+        if (sIconMenu)
+            pal_set_obj(slot,&icon32_exact_pal[frame*16]);
         sIconFrame[slot]=frame;
     }
     /* Maintain exact LRU ranks on hits as well as uploads. A page that
@@ -69,10 +98,22 @@ u16 icon32_frame_tile(int frame) {
     return sIconTile + slot * sh->frame_tiles;
 }
 
+int icon32_frame_palette(int frame) {
+    if (sIconMenu) {
+        int i;
+        /* Resolve before looking up the palette slot; callers may request
+           the palette before or after requesting the cached tile base. */
+        icon32_frame_tile(frame);
+        for (i=0;i<ICON_CACHE_SLOTS;i++)
+            if (sIconFrame[i]==frame)
+                return i;
+    }
+    return icon32_frame_pal[frame];
+}
+
 void objects_room_reset(void) {
     sItemsTile = sFxTile = sProjTile = sLiftTile = sArrowTile = sMouthTile = sPickTile = sIconTile = 0;
-    memset(sIconFrame,0xFF,sizeof(sIconFrame));
-    memset(sIconAge,0xFF,sizeof(sIconAge));
+    icon32_menu_end();
     ensure_sheets();
 }
 
@@ -177,6 +218,7 @@ Actor* pickup_spawn(int type, int px, int py) {
     static const u8 frames[] = { F_PICK32_HEART, F_PICK32_GILT, F_PICK32_BOMB_PICKUP, F_PICK32_GILT_BIG, F_PICK32_KEY, F_PICK32_RELIC, F_PICK32_GRAIL,
                                  F_PICK32_ARROW1, F_PICK32_ARROW5, F_PICK32_ARROW10 };
     a->frame = frames[type];
+    a->pal = pick32_frame_pal[a->frame];
     a->hitbox = HB_SMALL;
     a->timer = 0;
     a->z = Q16(8);
@@ -356,6 +398,7 @@ void bomb_place(int px, int py) {
         return;
     actor_set_sheet(a, SHEET_ITEMS, sItemsTile);
     a->frame = F_ITEMS_BOMBS;
+    a->pal = items_frame_pal[a->frame];
     a->timer = 0;
     a->timer2 = 0;
     a->prio = 2;
@@ -475,6 +518,7 @@ static void bomb_update(Actor* a) {
         a->frame = F_ITEMS_BOMB_LIT;
     else
         a->frame = F_ITEMS_BOMBS;
+    a->pal = items_frame_pal[a->frame];
 }
 
 /* ------------------------------------------------------------ update -- */
