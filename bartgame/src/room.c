@@ -156,6 +156,35 @@ static void render_cell(int x, int y) {
     map_write(SB_OVERLAY,x,y,overlay);
 }
 
+/* BG1 now carries transparent material as well as the original crowns.
+   A grounded sprite is in front of a prop once its feet pass that prop's
+   south edge; flat litter is always below sprites. Keep the authored crown
+   occlusion while its feet remain beneath an authored overlay. A fringe
+   touching the sprite's upper bounding box is not a tree in front of it.
+   Explicit UI, flying-effect and background-shadow priorities stay intact. */
+int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
+    int x,y,front=0,behind=0;
+    int half=MIN(width/2,12), top=py-MIN(height,32)-z, bottom=py-z-1;
+    int x0=MAX(0,(px-half)/16),x1=MIN(gRoom.w-1,(px+half)/16);
+    int y0=MAX(0,top/16),y1=MIN(gRoom.h-1,bottom/16);
+    if(priority!=2)return priority;
+    if(px>=0 && py>=4 && px<gRoom.w*16 && py<gRoom.h*16) {
+        u16 feet=gRoom.overlay[((py-4)/16)*ROOM_MAX_W+px/16];
+        if(feet!=MT_NONE && feet!=MT_SPARKLE && feet!=MT_SPARKLE_WHITE && feet!=MT_BLIGHT_MIST)
+            return priority;
+    }
+    for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
+        int at=y*ROOM_MAX_W+x;
+        u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
+        if(ov!=MT_NONE && ov!=MT_SPARKLE && ov!=MT_SPARKLE_WHITE && ov!=MT_BLIGHT_MIST)
+            continue; /* this cell displays the authored crown, not material */
+        if(mt==MT_NONE || !metatile_prop[mt])continue;
+        if(metatile_coll[mt]==0 || py>=(y+1)*16 || z>=16)front=1;
+        else if(px>=x*16 && px<(x+1)*16)behind=1;
+    }
+    return front && !behind ? 1 : priority;
+}
+
 void room_render(void) {
     int x, y;
     /* clear both 64x64 maps */

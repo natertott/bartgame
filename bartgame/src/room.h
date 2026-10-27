@@ -42,6 +42,7 @@ u8 room_type(int mx, int my);
 u8 room_type_px(int px, int py);
 void room_build_solid(void);
 void room_render(void);
+int room_prop_priority(int px,int py,int z,int width,int height,int priority);
 bool8 room_solid_px(int px, int py);
 bool8 room_box_solid(int x0, int y0, int x1, int y1);
 void room_load_def(const RoomDef* def);

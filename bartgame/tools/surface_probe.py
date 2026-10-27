@@ -36,6 +36,45 @@ def expected(c,mt):
     return tuple(P.r16(c,a+i*2)&65535 for i in range(4))
 
 
+def hero_priority(c):
+    # HERO_TILE is resident tile0, 64x32 (horizontal shape1,size3), palette0.
+    # UI icons use other tiles/palettes, so inspect the actual hardware OAM.
+    for i in range(128):
+        at=0x07000000+i*8
+        a0=P.r16(c,at)&65535;a1=P.r16(c,at+2)&65535;a2=P.r16(c,at+4)&65535
+        if (a0&0x0300)==0x0200:continue
+        if ((a0>>14)&3)==1 and (a1>>14)==3 and (a2&1023)==0 and (a2>>12)==0:
+            return (a2>>10)&3
+    return None
+
+
+def depth_checks(c,w):
+    for cell,x,y,want,label in ((0,16,11,1,'flat prop under hero'),
+                                (6,23,18,1,'rock north of hero'),
+                                (20,13,6,1,'blighted rock north of hero'),
+                                (6,23,16,2,'hero behind solid prop')):
+        L.warp(c,cell,next(i for i,g in enumerate(w['cells'][cell]['gate']) if g))
+        CP.clear_enemies(c);CP.teleport(c,x*16+8,y*16+12);P.run(c,96)
+        check('OAM '+label,hero_priority(c)==want,'priority %s'%hero_priority(c))
+    # Original tree crowns must still hide the hero when his feet are beneath
+    # them. Choose a real traversable crown tile, not a staged wall overlap.
+    target=None
+    for cell,d in enumerate(w['cells']):
+        L.warp(c,cell,next(i for i,g in enumerate(d['gate']) if g))
+        _,_,grid=CP.room_tiles(c);room=P.sym('gRoom')
+        for (x,y),mt in grid.items():
+            ov=P.r16(c,room+2050+(y*32+x)*2)&65535
+            if ov==65535 or not 3<=x<29 or not 3<=y<21:continue
+            name=L.tiles.METATILES[ov]['name']
+            if name.startswith(('tree_top','tree_mid','tree2_','gtree','birch_','fir_')) and P.r8(c,P.sym('metatile_type')+mt)==0:
+                target=(x,y);break
+        if target:break
+    check('traversable original crown found',target is not None)
+    if target:
+        CP.clear_enemies(c);CP.teleport(c,target[0]*16+8,target[1]*16+12);P.run(c,96)
+        check('OAM original crown still occludes hero',hero_priority(c)==2,'priority %s'%hero_priority(c))
+
+
 def main():
     c=P.boot();CP.dismiss(c);w=CP.world(c);P.enter_forest(c)
     counts=0
@@ -51,6 +90,7 @@ def main():
             if ov in (65535,CP.mt('SPARKLE'),CP.mt('SPARKLE_WHITE'),CP.mt('BLIGHT_MIST')):
                 check('BG1 uses transparent prop',entry(c,24,x,y)==expected(c,mt))
     check('nonzero props checked',counts>50,str(counts))
+    depth_checks(c,w)
     # Lifting through the real button path must reveal the stored surface.
     for name in ('BUSH','ROCK_SMALL','BOULDER'):
         found=None

@@ -339,7 +339,8 @@ void actor_draw(Actor* a) {
         return; /* hurt blink */
     int sx = PX(a->x) - a->w / 2 - gCamX;
     int sy = PX(a->y) - a->h - PX(a->z) - gCamY;
-    draw_sprite(sx, sy, a->sheet, a->tile, a->frame, a->hflip, a->prio, a->pal);
+    int prio=room_prop_priority(PX(a->x),PX(a->y),PX(a->z),a->w,a->h,a->prio);
+    draw_sprite(sx, sy, a->sheet, a->tile, a->frame, a->hflip, prio, a->pal);
 }
 
 /* ---------------------------------------------------- vram upload queue -- */
