@@ -2,7 +2,7 @@
 
 python tools/blight_gallery.py --before-root BEFORE --after-root AFTER --out OUT
 
-Each root contains the ``captures`` (seed0xB4A7) and ``seed-6`` directories
+Each root contains the ``captures`` (seed 0xB4A7) and ``seed-6`` directories
 written by blight_review.py. Native PNGs and GIFs are copied byte-for-byte.
 Sheets only enlarge whole frames 2x with nearest-neighbour scaling; captions
 are outside the framebuffers. No source artwork is composited into a frame.
@@ -23,12 +23,12 @@ COMPARISONS = (
     ('captures', 'room-20-stage3.png', 'The Heart / final blight stage'),
 )
 LANDSCAPES = (
-    ('captures', 'mixed-blight.png', 'Mixed forest', 'Seed0xB4A7 / stage2'),
-    ('seed-6', 'room-19-stage3.png', 'Blue-violet canopy and ruins', 'Seed6 / stage3'),
-    ('seed-6', 'room-14-stage3.png', 'Bridges through deep blight', 'Seed6 / stage3'),
-    ('seed-6', 'glowing-pool.png', 'Glowing growths and pools', 'Seed6 / deep-forest feature view'),
-    ('seed-6', 'blighted-tree.png', 'Twisted magenta tree', 'Seed6 / mixed-forest feature view'),
-    ('captures', 'room-20-stage3.png', 'The Heart', 'Seed0xB4A7 / stage3 arena'),
+    ('captures', 'mixed-blight.png', 'Mixed forest', 'Seed 0xB4A7 / stage 2'),
+    ('seed-6', 'room-19-stage3.png', 'Blue-violet canopy and ruins', 'Seed 6 / stage 3'),
+    ('seed-6', 'room-14-stage3.png', 'Bridges through deep blight', 'Seed 6 / stage 3'),
+    ('seed-6', 'glowing-pool.png', 'Glowing growths and pools', 'Seed 6 / deep-forest feature view'),
+    ('seed-6', 'blighted-tree.png', 'Twisted magenta tree', 'Seed 6 / mixed-forest feature view'),
+    ('captures', 'room-20-stage3.png', 'The Heart', 'Seed 0xB4A7 / stage 3 arena'),
 )
 INK = '#eee9d7'
 MUTED = '#b9b3c9'
@@ -139,8 +139,8 @@ def main():
     comparison(args.before_root, args.after_root, args.out)
     landscapes(args.after_root, args.out)
     report = {
-        'emulator':'mGBA0.10.5',
-        'method':'Native PNG/GIF files copied byte-for-byte. Review sheets enlarge complete native frames2x using nearest-neighbour scaling and add captions outside them. No altered framebuffer pixels or source-art overlays.',
+        'emulator':'mGBA 0.10.5',
+        'method':'Native PNG/GIF files copied byte-for-byte. Review sheets enlarge complete native frames 2x using nearest-neighbour scaling and add captions outside them. No altered framebuffer pixels or source-art overlays.',
         'before':before_reports, 'after':after_reports,
         'native_files':before_files + after_files,
         'comparison_views':[{'dataset':d, 'file':f, 'caption':c} for d, f, c in COMPARISONS],
