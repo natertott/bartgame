@@ -4207,3 +4207,7 @@ blight_reference.apply(METATILES, dict(_pl.BG_PALETTES))
 # Living woodland materials after the blight source; imported decay stays exact.
 import healthy_reference
 healthy_reference.apply(METATILES, dict(_pl.BG_PALETTES))
+
+# Ground interactions keep their physical contracts but read at native scale.
+import interactive_tiles
+interactive_tiles.apply(METATILES, dict(_pl.BG_PALETTES))
