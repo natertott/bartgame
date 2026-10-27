@@ -53,6 +53,7 @@ def warp(c, cell, side):
     P.w8(c, ssym('sTransPhase'), 0)
     P.w8(c, P.sym('gGame'), 2)
     P.run(c, 70)
+    assert CP.wait_play(c, 1), 'forest room transition did not settle'
 
 
 def ttype(v):

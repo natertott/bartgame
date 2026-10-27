@@ -1,0 +1,24 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS CAP: the Drain Cap is in the pack at the start items2 2
+PASS CAP: it is on no button                        equip [0, 1, 5]
+PASS BOW: a chest in the wood holds the bow         cells [21] stage [0]
+PASS KNIGHT: a blow to its front lands              hp 10 -> 8
+PASS GATHER: out of reach, the heart stays          hp 16 kind 4
+PASS GATHER: a swing gathers it                     hp 24
+PASS DEFLECT: the seed is turned north, the hero's  kind 3 v0 1 dir 0
+PASS DEFLECT: it flies away up the room             y 203 -> 185
+PASS DEFLECT: the turned seed hurts a beetle        kind 0 hp 0
+PASS CARRY: a bush to lift                          (19, 8, (19, 9), 'UP')
+PASS CARRY: lifted, arms up                         state 11 carry 1
+PASS CARRY: a swing drops it and the sword comes out state 2 carry 0 thrown True
+PASS CARRY: the dropped load broke                  
+PASS BOW: A looses an arrow, one fewer              arrows 19 arrow {'kind': 3, 'type': 3, 'state': 0, 'timer': 4, 'x': 256, 'y': 205, 'z': 6, 'speed': 768, 'hp': 0, 'coll': 0, 'facing': 2}
+PASS BOW: the arrow hit the beetle                  kind 0 hp 0
+PASS BOW: no arrows, nothing flies                  
+PASS CAP: the mouth takes the hero                  state 12
+PASS CAP: home in the drain, at the spawn           area 0 pos (200, 270)
+PASS CAP: he dropped in from the ceiling            zmax 96 state 0
+PASS CAP: in the drain, the cap only speaks         box 1 state 0
+PASS BOW: the Peddler sells arrows now              wares 3
+PASS BOW: ten arrows for ten gilt                   arrows 15 gilt 40
+RESULT PASS 22/22

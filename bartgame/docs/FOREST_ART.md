@@ -45,8 +45,11 @@ composited outside the game. Screenshots remain generated review outputs.
 
 For a baseline comparison, pass `--rom PATH --map PATH` with a matched
 original ROM and linker map. Compare per-cell `geometry_sha256` values and
-`drain_control.png` pixels. On seed `0xB4A7`, all 25 collision/spawn contracts
-and every Drain control pixel matched the pre-change build.
+`drain_control.png` pixels. In the first artwork-only revision, seed `0xB4A7` retained all 25
+collision/spawn contracts and every Drain control pixel. The subsequent
+[engine rework](FOREST_GENERATION.md) deliberately changes the generated
+layouts; its separate room, progression and persistence probes validate the
+new traversal contracts instead of expecting old layouts.
 
 The asset builder enforces the hardware budgets: at most 1024 8x8 terrain
 subtiles and 12 material palettes per area, 15 opaque colours per palette,

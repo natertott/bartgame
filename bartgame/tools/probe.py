@@ -57,6 +57,14 @@ def boot(rom=ROM, frames=30, seed=0xB4A7, start=True):
         w16(c, a, seed & 0xFFFF)
         w16(c, a + 2, seed >> 16)
     press(c, 'START', 2, 40)
+    # Candidate-scored maze generation can span several video frames. Wait
+    # for the actual state change instead of inspecting a half-built World.
+    for _ in range(1200):
+        if c.memory.u8[sym('gGame')] != 0:
+            break
+        c.run_frame()
+    else:
+        raise RuntimeError('the ROM did not finish starting its seeded run')
     for _ in range(40):
         c.run_frame()
     # the opening text box
@@ -189,3 +197,9 @@ def enter_forest(c):
     run(c, 3)
     hold(c, 'UP', 60)
     run(c, 40)
+    for _ in range(600):
+        if r8(c, sym('gGame')) == 1 and r8(c, sym('gGame') + 1) == 1:
+            break
+        c.run_frame()
+    else:
+        raise RuntimeError('the forest entrance transition did not settle')

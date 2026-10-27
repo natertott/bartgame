@@ -1,0 +1,50 @@
+seed 0xdeadbeef
+entry 22 goal 8 path [22, 21, 16, 11, 12, 7, 2, 3, 4, 9, 8]
+gates [(11, 1, 'CRACK'), (7, 0, 'WEB'), (3, 1, 'CHASM')]
+keys [15, 24, 6]
+PASS ENTRY: the drain leads to the entry cell     cell 22
+   cross 22 side 3: 22 -> 21 pos (490, 200) hp 24
+   cross 21 side 3: 21 -> 20 pos (490, 200) hp 24
+   cross 20 side 0: 20 -> 15 pos (256, 364) hp 24
+PASS TRIAL: reached the seed trial room           cell 15
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the bombs      items 0x43 bombs 10
+   cross 15 side 2: 15 -> 20 pos (256, 52) hp 24
+   cross 20 side 1: 20 -> 21 pos (22, 200) hp 24
+   cross 21 side 0: 21 -> 16 pos (256, 364) hp 24
+   cross 16 side 0: 16 -> 11 pos (256, 364) hp 24
+PASS CRACK: reached the cracked wall              cell 11
+PASS CRACK: the bomb opened it                    cell 11 -> 12
+   cross 12 side 1: 12 -> 13 pos (22, 200) hp 24
+   cross 13 side 1: 13 -> 14 pos (22, 200) hp 24
+   cross 14 side 2: 14 -> 19 pos (256, 52) hp 24
+   cross 19 side 2: 19 -> 24 pos (256, 52) hp 24
+PASS TRIAL: reached the candle trial room         cell 24
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the lamp       items 0x47
+   cross 24 side 0: 24 -> 19 pos (256, 364) hp 24
+   cross 19 side 0: 19 -> 14 pos (256, 364) hp 24
+   cross 14 side 3: 14 -> 13 pos (490, 200) hp 24
+   cross 13 side 3: 13 -> 12 pos (490, 200) hp 24
+   cross 12 side 0: 12 -> 7 pos (256, 364) hp 24
+PASS WEB: reached the web                         cell 7
+PASS WEB: the lamp burned it                      cell 7 -> 2
+   cross 2 side 3: 2 -> 1 pos (490, 200) hp 24
+   cross 1 side 2: 1 -> 6 pos (256, 52) hp 24
+PASS TRIAL: reached the cape trial room           cell 6
+PASS TRIAL: its event is completed and claimed    
+PASS KEYS: the earned chest grants the cloak      items 0x4f
+   cross 6 side 0: 6 -> 1 pos (256, 364) hp 24
+   cross 1 side 1: 1 -> 2 pos (22, 200) hp 24
+   cross 2 side 1: 2 -> 3 pos (22, 200) hp 24
+PASS CHASM: reached the chasm                     cell 3
+PASS CHASM: the cloak crossed it                  cell 4 (hp 24)
+   cross 4 side 2: 4 -> 9 pos (256, 52) hp 24
+   cross 9 side 3: 9 -> 8 pos (490, 200) hp 24
+PASS GOAL: the goal room is entered               cell 8
+PASS BOSS: the Heart is in the goal room          {'kind': 2, 'type': 5, 'state': 0, 'timer': 60, 'x': 272, 'y': 192, 'z': 4, 'speed': 128, 'hp': 40, 'coll': 0, 'facing': 2}
+PASS BOSS: the Heart dies to the sword            swings 38 hp left None
+PASS BOSS: the Grail drops                        {'kind': 4, 'type': 6, 'state': 0, 'timer': 148, 'x': 158, 'y': 213, 'z': 0, 'speed': 0, 'hp': 0, 'coll': 0, 'facing': 2}
+PASS WIN: the Grail ends the run                  state 6
+RESULT PASS 21/21

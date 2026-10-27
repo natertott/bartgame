@@ -1,0 +1,658 @@
+{
+  "seed": "0xb4a7",
+  "rom_sha256": "2ba1b3926e781dc7f138a7af117f8e25b845d43dab49fcc1a7d33ffe2df0f5e0",
+  "method": "mGBA native framebuffers with debug room navigation",
+  "pacing": {
+    "legs": [
+      {
+        "stage": 0,
+        "from": 22,
+        "to": 11,
+        "cells": [
+          22,
+          21,
+          16,
+          11
+        ],
+        "crossings": 3
+      },
+      {
+        "stage": 1,
+        "from": 11,
+        "to": 7,
+        "cells": [
+          11,
+          16,
+          21,
+          22,
+          23,
+          18,
+          17,
+          12,
+          7
+        ],
+        "crossings": 8
+      },
+      {
+        "stage": 2,
+        "from": 7,
+        "to": 0,
+        "cells": [
+          7,
+          12,
+          17,
+          18,
+          13,
+          14,
+          9,
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "crossings": 11
+      },
+      {
+        "stage": 3,
+        "from": 0,
+        "to": 20,
+        "cells": [
+          0,
+          5,
+          10,
+          15,
+          20
+        ],
+        "crossings": 4
+      }
+    ],
+    "required_crossings": 26,
+    "required_rooms": 21,
+    "optional_rooms": 4,
+    "repeated_crossings": 6,
+    "route": [
+      22,
+      21,
+      16,
+      11,
+      16,
+      21,
+      22,
+      23,
+      18,
+      17,
+      12,
+      7,
+      12,
+      17,
+      18,
+      13,
+      14,
+      9,
+      4,
+      3,
+      2,
+      1,
+      0,
+      5,
+      10,
+      15,
+      20
+    ]
+  },
+  "world": {
+    "cells": [
+      {
+        "gate": [
+          0,
+          2,
+          1,
+          0
+        ],
+        "role": 3,
+        "arg": 3,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          1,
+          1,
+          2
+        ],
+        "role": 5,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          2,
+          0,
+          1
+        ],
+        "role": 5,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          4,
+          0,
+          2
+        ],
+        "role": 5,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          0,
+          1,
+          4
+        ],
+        "role": 10,
+        "arg": 3,
+        "stage": 1
+      },
+      {
+        "gate": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "role": 6,
+        "arg": 23,
+        "stage": 2
+      },
+      {
+        "gate": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "role": 0,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          0,
+          2,
+          0
+        ],
+        "role": 3,
+        "arg": 2,
+        "stage": 1
+      },
+      {
+        "gate": [
+          0,
+          0,
+          5,
+          0
+        ],
+        "role": 4,
+        "arg": 5,
+        "stage": 1
+      },
+      {
+        "gate": [
+          1,
+          0,
+          2,
+          0
+        ],
+        "role": 5,
+        "arg": 0,
+        "stage": 1
+      },
+      {
+        "gate": [
+          1,
+          0,
+          2,
+          0
+        ],
+        "role": 7,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          0,
+          0,
+          2,
+          0
+        ],
+        "role": 3,
+        "arg": 1,
+        "stage": 0
+      },
+      {
+        "gate": [
+          2,
+          0,
+          1,
+          0
+        ],
+        "role": 4,
+        "arg": 8,
+        "stage": 1
+      },
+      {
+        "gate": [
+          5,
+          1,
+          1,
+          0
+        ],
+        "role": 0,
+        "arg": 0,
+        "stage": 1
+      },
+      {
+        "gate": [
+          2,
+          0,
+          1,
+          1
+        ],
+        "role": 0,
+        "arg": 0,
+        "stage": 1
+      },
+      {
+        "gate": [
+          2,
+          0,
+          6,
+          0
+        ],
+        "role": 5,
+        "arg": 0,
+        "stage": 2
+      },
+      {
+        "gate": [
+          2,
+          0,
+          1,
+          0
+        ],
+        "role": 10,
+        "arg": 3,
+        "stage": 0
+      },
+      {
+        "gate": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "role": 4,
+        "arg": 0,
+        "stage": 1
+      },
+      {
+        "gate": [
+          1,
+          1,
+          3,
+          1
+        ],
+        "role": 4,
+        "arg": 7,
+        "stage": 1
+      },
+      {
+        "gate": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "role": 0,
+        "arg": 0,
+        "stage": 1
+      },
+      {
+        "gate": [
+          6,
+          0,
+          0,
+          0
+        ],
+        "role": 2,
+        "arg": 0,
+        "stage": 3
+      },
+      {
+        "gate": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "role": 4,
+        "arg": 6,
+        "stage": 0
+      },
+      {
+        "gate": [
+          0,
+          1,
+          7,
+          1
+        ],
+        "role": 1,
+        "arg": 0,
+        "stage": 0
+      },
+      {
+        "gate": [
+          3,
+          5,
+          0,
+          1
+        ],
+        "role": 8,
+        "arg": 0,
+        "stage": 0
+      },
+      {
+        "gate": [
+          0,
+          0,
+          0,
+          5
+        ],
+        "role": 4,
+        "arg": 4,
+        "stage": 0
+      }
+    ],
+    "entry": 22,
+    "goal": 20,
+    "gate_cell": [
+      23,
+      4,
+      15
+    ],
+    "gate_side": [
+      0,
+      3,
+      2
+    ],
+    "key_cell": [
+      11,
+      7,
+      0
+    ],
+    "path": [
+      22,
+      23,
+      18,
+      19,
+      14,
+      9,
+      4,
+      3,
+      2,
+      1,
+      6,
+      5,
+      10,
+      15,
+      20
+    ]
+  },
+  "rooms": [
+    {
+      "cell": 0,
+      "stage": 2,
+      "role": 3,
+      "image": "room-00-stage2.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 1,
+      "stage": 2,
+      "role": 5,
+      "image": "room-01-stage2.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 2,
+      "stage": 2,
+      "role": 5,
+      "image": "room-02-stage2.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 3,
+      "stage": 2,
+      "role": 5,
+      "image": "room-03-stage2.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 4,
+      "stage": 1,
+      "role": 10,
+      "image": "room-04-stage1.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 5,
+      "stage": 2,
+      "role": 6,
+      "image": "room-05-stage2.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 6,
+      "stage": 2,
+      "role": 0,
+      "image": "room-06-stage2.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 7,
+      "stage": 1,
+      "role": 3,
+      "image": "room-07-stage1.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 8,
+      "stage": 1,
+      "role": 4,
+      "image": "room-08-stage1.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 9,
+      "stage": 1,
+      "role": 5,
+      "image": "room-09-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 10,
+      "stage": 2,
+      "role": 7,
+      "image": "room-10-stage2.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 11,
+      "stage": 0,
+      "role": 3,
+      "image": "room-11-stage0.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 12,
+      "stage": 1,
+      "role": 4,
+      "image": "room-12-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 13,
+      "stage": 1,
+      "role": 0,
+      "image": "room-13-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 14,
+      "stage": 1,
+      "role": 0,
+      "image": "room-14-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 15,
+      "stage": 2,
+      "role": 5,
+      "image": "room-15-stage2.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 16,
+      "stage": 0,
+      "role": 10,
+      "image": "room-16-stage0.png",
+      "optional_pocket": true
+    },
+    {
+      "cell": 17,
+      "stage": 1,
+      "role": 4,
+      "image": "room-17-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 18,
+      "stage": 1,
+      "role": 4,
+      "image": "room-18-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 19,
+      "stage": 1,
+      "role": 0,
+      "image": "room-19-stage1.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 20,
+      "stage": 3,
+      "role": 2,
+      "image": "room-20-stage3.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 21,
+      "stage": 0,
+      "role": 4,
+      "image": "room-21-stage0.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 22,
+      "stage": 0,
+      "role": 1,
+      "image": "room-22-stage0.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 23,
+      "stage": 0,
+      "role": 8,
+      "image": "room-23-stage0.png",
+      "optional_pocket": false
+    },
+    {
+      "cell": 24,
+      "stage": 0,
+      "role": 4,
+      "image": "room-24-stage0.png",
+      "optional_pocket": false
+    }
+  ],
+  "tasks": [
+    {
+      "reward": "Blightseeds",
+      "cell": 11,
+      "kind": "switches",
+      "style": 0,
+      "image": "required-task-1.png"
+    },
+    {
+      "reward": "Candle",
+      "cell": 7,
+      "kind": "waves",
+      "style": 2,
+      "image": "required-task-2.png"
+    },
+    {
+      "reward": "Petal Cape",
+      "cell": 0,
+      "kind": "miniboss",
+      "style": 0,
+      "image": "required-task-3.png"
+    }
+  ],
+  "pockets": [
+    {
+      "kind": 3,
+      "cell": 0,
+      "gate": [
+        11,
+        17
+      ],
+      "hoard": [
+        11,
+        19
+      ],
+      "image": "pocket-cape.png"
+    },
+    {
+      "kind": 2,
+      "cell": 5,
+      "gate": [
+        22,
+        15
+      ],
+      "hoard": [
+        22,
+        16
+      ],
+      "image": "pocket-candle.png"
+    },
+    {
+      "kind": 1,
+      "cell": 6,
+      "gate": [
+        29,
+        17
+      ],
+      "hoard": [
+        30,
+        17
+      ],
+      "image": "pocket-bomb.png"
+    }
+  ]
+}

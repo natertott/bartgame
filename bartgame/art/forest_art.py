@@ -332,6 +332,19 @@ def build():
         T={n:(g,[a.copy() for a in frames],speed) for n,(g,frames,speed) in W.tiles().items()}
     finally:
         W.grass,W.water=grass_before,water_before
+    # The middle wood decays through grass/bruise edge families, rather than
+    # isolated hard-edged purple squares or a grey earth substitute.
+    decay={W.ID['earth_2']:W.ID['v_1'], W.ID['earth_3']:W.ID['v_2'],
+           W.ID['earth_4']:W.ID['v_3'], W.ID['earth_5']:W.ID['v_4'],
+           W.ID['earth_6']:W.ID['mag_d']}
+    for n,(g,frames,speed) in list(T.items()):
+        if n.startswith('rot_'):
+            painted=[]
+            for frame in frames:
+                a=frame.copy()
+                for src,dst in decay.items(): a[frame==src]=dst
+                painted.append(a)
+            T[n]=('wood_sick',painted,speed)
     for i in range(3): T['moss%d'%i]=('wood_grass',[woodland_grass(i,3)],None)
     for n,i in (('canopy',0),('canopy2',1),('canopy_glint',2)):
         T[n]=('wood_leaf',[canopy(i)],None)

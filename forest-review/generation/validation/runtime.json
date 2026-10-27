@@ -1,0 +1,88 @@
+[
+  {
+    "command": [
+      "python",
+      "tools/mandatory_trials.py",
+      "--seed",
+      "0xB4A7"
+    ],
+    "exit_code": 0,
+    "log": "mandatory_trials-0xB4A7.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/pocket_probe.py",
+      "--seed",
+      "0xB4A7"
+    ],
+    "exit_code": 0,
+    "log": "pocket_probe-0xB4A7.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/critical_path.py",
+      "--seed",
+      "0xB4A7",
+      "--boss"
+    ],
+    "exit_code": 0,
+    "log": "critical_path-0xB4A7.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/critical_path.py",
+      "--seed",
+      "0xDEADBEEF",
+      "--boss"
+    ],
+    "exit_code": 0,
+    "log": "critical_path-0xDEADBEEF.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/wood_probe.py"
+    ],
+    "exit_code": 0,
+    "log": "wood_probe.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/quest_probe.py"
+    ],
+    "exit_code": 0,
+    "log": "quest_probe.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/myst_probe.py"
+    ],
+    "exit_code": 0,
+    "log": "myst_probe.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/revisit_probe.py"
+    ],
+    "exit_code": 0,
+    "log": "revisit_probe.log"
+  },
+  {
+    "command": [
+      "python",
+      "tools/save_probe.py",
+      "--legacy-rom",
+      "/workspace/setup/before-engine.gba",
+      "--legacy-map",
+      "/workspace/setup/before-engine.map"
+    ],
+    "exit_code": 0,
+    "log": "save_probe.log"
+  }
+]

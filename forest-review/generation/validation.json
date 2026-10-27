@@ -1,0 +1,454 @@
+{
+  "rom_sha256": "2ba1b3926e781dc7f138a7af117f8e25b845d43dab49fcc1a7d33ffe2df0f5e0",
+  "host": {
+    "solvability_seeds": 19999,
+    "pacing_seeds": 15000
+  },
+  "runtime_rooms": {
+    "checked": 625,
+    "failed": 0,
+    "bridge_crossings": 926,
+    "required_task_rooms": 75,
+    "optional_pockets": 338,
+    "wrong_item_bypasses": 0
+  },
+  "runtime_commands": [
+    {
+      "command": [
+        "python",
+        "tools/mandatory_trials.py",
+        "--seed",
+        "0xB4A7"
+      ],
+      "exit_code": 0,
+      "log": "mandatory_trials-0xB4A7.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/pocket_probe.py",
+        "--seed",
+        "0xB4A7"
+      ],
+      "exit_code": 0,
+      "log": "pocket_probe-0xB4A7.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/critical_path.py",
+        "--seed",
+        "0xB4A7",
+        "--boss"
+      ],
+      "exit_code": 0,
+      "log": "critical_path-0xB4A7.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/critical_path.py",
+        "--seed",
+        "0xDEADBEEF",
+        "--boss"
+      ],
+      "exit_code": 0,
+      "log": "critical_path-0xDEADBEEF.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/wood_probe.py"
+      ],
+      "exit_code": 0,
+      "log": "wood_probe.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/quest_probe.py"
+      ],
+      "exit_code": 0,
+      "log": "quest_probe.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/myst_probe.py"
+      ],
+      "exit_code": 0,
+      "log": "myst_probe.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/revisit_probe.py"
+      ],
+      "exit_code": 0,
+      "log": "revisit_probe.log"
+    },
+    {
+      "command": [
+        "python",
+        "tools/save_probe.py",
+        "--legacy-rom",
+        "/workspace/setup/before-engine.gba",
+        "--legacy-map",
+        "/workspace/setup/before-engine.map"
+      ],
+      "exit_code": 0,
+      "log": "save_probe.log"
+    }
+  ],
+  "examples": [
+    {
+      "seed": "0xb4a7",
+      "rom_sha256": "2ba1b3926e781dc7f138a7af117f8e25b845d43dab49fcc1a7d33ffe2df0f5e0",
+      "pacing": {
+        "legs": [
+          {
+            "stage": 0,
+            "from": 22,
+            "to": 11,
+            "cells": [
+              22,
+              21,
+              16,
+              11
+            ],
+            "crossings": 3
+          },
+          {
+            "stage": 1,
+            "from": 11,
+            "to": 7,
+            "cells": [
+              11,
+              16,
+              21,
+              22,
+              23,
+              18,
+              17,
+              12,
+              7
+            ],
+            "crossings": 8
+          },
+          {
+            "stage": 2,
+            "from": 7,
+            "to": 0,
+            "cells": [
+              7,
+              12,
+              17,
+              18,
+              13,
+              14,
+              9,
+              4,
+              3,
+              2,
+              1,
+              0
+            ],
+            "crossings": 11
+          },
+          {
+            "stage": 3,
+            "from": 0,
+            "to": 20,
+            "cells": [
+              0,
+              5,
+              10,
+              15,
+              20
+            ],
+            "crossings": 4
+          }
+        ],
+        "required_crossings": 26,
+        "required_rooms": 21,
+        "optional_rooms": 4,
+        "repeated_crossings": 6,
+        "route": [
+          22,
+          21,
+          16,
+          11,
+          16,
+          21,
+          22,
+          23,
+          18,
+          17,
+          12,
+          7,
+          12,
+          17,
+          18,
+          13,
+          14,
+          9,
+          4,
+          3,
+          2,
+          1,
+          0,
+          5,
+          10,
+          15,
+          20
+        ]
+      }
+    },
+    {
+      "seed": "0xdeadbeef",
+      "rom_sha256": "2ba1b3926e781dc7f138a7af117f8e25b845d43dab49fcc1a7d33ffe2df0f5e0",
+      "pacing": {
+        "legs": [
+          {
+            "stage": 0,
+            "from": 22,
+            "to": 15,
+            "cells": [
+              22,
+              21,
+              20,
+              15
+            ],
+            "crossings": 3
+          },
+          {
+            "stage": 1,
+            "from": 15,
+            "to": 24,
+            "cells": [
+              15,
+              20,
+              21,
+              16,
+              11,
+              12,
+              13,
+              14,
+              19,
+              24
+            ],
+            "crossings": 9
+          },
+          {
+            "stage": 2,
+            "from": 24,
+            "to": 6,
+            "cells": [
+              24,
+              19,
+              14,
+              13,
+              12,
+              7,
+              2,
+              1,
+              6
+            ],
+            "crossings": 8
+          },
+          {
+            "stage": 3,
+            "from": 6,
+            "to": 8,
+            "cells": [
+              6,
+              1,
+              2,
+              3,
+              4,
+              9,
+              8
+            ],
+            "crossings": 6
+          }
+        ],
+        "required_crossings": 26,
+        "required_rooms": 19,
+        "optional_rooms": 6,
+        "repeated_crossings": 8,
+        "route": [
+          22,
+          21,
+          20,
+          15,
+          20,
+          21,
+          16,
+          11,
+          12,
+          13,
+          14,
+          19,
+          24,
+          19,
+          14,
+          13,
+          12,
+          7,
+          2,
+          1,
+          6,
+          1,
+          2,
+          3,
+          4,
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "seed": "0x6",
+      "rom_sha256": "2ba1b3926e781dc7f138a7af117f8e25b845d43dab49fcc1a7d33ffe2df0f5e0",
+      "pacing": {
+        "legs": [
+          {
+            "stage": 0,
+            "from": 22,
+            "to": 0,
+            "cells": [
+              22,
+              17,
+              16,
+              15,
+              10,
+              5,
+              0
+            ],
+            "crossings": 6
+          },
+          {
+            "stage": 1,
+            "from": 0,
+            "to": 11,
+            "cells": [
+              0,
+              5,
+              10,
+              15,
+              16,
+              17,
+              12,
+              7,
+              2,
+              1,
+              6,
+              11
+            ],
+            "crossings": 11
+          },
+          {
+            "stage": 2,
+            "from": 11,
+            "to": 13,
+            "cells": [
+              11,
+              6,
+              1,
+              2,
+              3,
+              8,
+              13
+            ],
+            "crossings": 6
+          },
+          {
+            "stage": 3,
+            "from": 13,
+            "to": 18,
+            "cells": [
+              13,
+              8,
+              3,
+              4,
+              9,
+              14,
+              19,
+              18
+            ],
+            "crossings": 7
+          }
+        ],
+        "required_crossings": 30,
+        "required_rooms": 21,
+        "optional_rooms": 4,
+        "repeated_crossings": 10,
+        "route": [
+          22,
+          17,
+          16,
+          15,
+          10,
+          5,
+          0,
+          5,
+          10,
+          15,
+          16,
+          17,
+          12,
+          7,
+          2,
+          1,
+          6,
+          11,
+          6,
+          1,
+          2,
+          3,
+          8,
+          13,
+          8,
+          3,
+          4,
+          9,
+          14,
+          19,
+          18
+        ]
+      }
+    }
+  ],
+  "frame_budget": [
+    {
+      "cell": 22,
+      "video_frames": 180,
+      "game_updates": 180,
+      "ratio": 1.0
+    },
+    {
+      "cell": 11,
+      "video_frames": 180,
+      "game_updates": 180,
+      "ratio": 1.0
+    },
+    {
+      "cell": 7,
+      "video_frames": 180,
+      "game_updates": 180,
+      "ratio": 1.0
+    },
+    {
+      "cell": 0,
+      "video_frames": 180,
+      "game_updates": 180,
+      "ratio": 1.0
+    },
+    {
+      "cell": 20,
+      "video_frames": 180,
+      "game_updates": 180,
+      "ratio": 1.0
+    }
+  ]
+}

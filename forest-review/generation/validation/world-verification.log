@@ -1,0 +1,9 @@
+gcc -O2 -fno-builtin -w -I src -I build/gen -o build/host/gates build/host/gates.c src/world.c src/util.c
+./build/host/gates
+seeds 1..19999: bad 0, short paths 0, locks/run 1.16, key chests/run 1.16, all three quests 19997
+gcc -O2 -fno-builtin -w -I src -I build/gen -o build/host/pacing build/host/pacing.c src/world.c src/util.c
+./build/host/pacing
+profile 0: 5000 seeds, crossings 21.04 [18,24], optional 7.75, repeated crossings 4.79, detours 2.00, tuning misses 0, attempts/run 4.97, fallbacks 0
+profile 1: 5000 seeds, crossings 26.64 [24,32], optional 4.87, repeated crossings 7.50, detours 2.45, tuning misses 0, attempts/run 14.22, fallbacks 2
+profile 2: 5000 seeds, crossings 28.04 [25,34], optional 4.20, repeated crossings 8.24, detours 3.00, tuning misses 0, attempts/run 30.06, fallbacks 14
+PASS: progression and pacing

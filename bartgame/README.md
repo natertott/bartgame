@@ -7,6 +7,11 @@ home, and a blighted wood above it that is a different maze every time.
 Loosely after Boorman's *Excalibur*, Bataille's sun and rot, *Slay the
 Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
 
+The current forest engine and artwork rework is described in
+[Forest generation](docs/FOREST_GENERATION.md). See the
+[real mGBA review gallery](../forest-review/README.md) for generated rooms,
+required trials, item-gated pockets and seeded route diagrams.
+
 ## The demo
 
 - **The Drain.** You wake in a sewer hall: brass pipes on the walls, a
@@ -24,8 +29,11 @@ Spire*'s runs and *Zelda*'s rooms. Dark, grungy, medieval, with gold in it.
   to the Heart. Every room is a glade, a grove, a ruin, a pond, a thicket
   or a boneyard, full of monsters. Three key gates stand on the way to
   the Heart: a cracked wall, a pale web, a chasm. Their keys, the
-  Blightseed Bombs, the Grail Lamp and the Petal Cloak, wait in chests
-  that are always reachable before the gate they open. Locked doors on
+  Blightseed Bombs, the candle (Grail Lamp) and the Petal Cloak, are earned
+  from three required mystery trials: floor plates, waves and a guardian.
+  Each trial is reachable before its reward is needed; there is no free
+  field chest for these items. The balanced route targets 24–32 room
+  crossings with at least two reward detours and four optional rooms. Locked doors on
   the side branches want small keys; the keys sit in rooms that need no
   key, and no lock ever stands between you and a key item, a key chest or
   the Heart. Dead ends hold chests, shrines and three kinds of quest

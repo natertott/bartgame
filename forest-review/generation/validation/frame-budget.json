@@ -1,0 +1,32 @@
+[
+  {
+    "cell": 22,
+    "video_frames": 180,
+    "game_updates": 180,
+    "ratio": 1.0
+  },
+  {
+    "cell": 11,
+    "video_frames": 180,
+    "game_updates": 180,
+    "ratio": 1.0
+  },
+  {
+    "cell": 7,
+    "video_frames": 180,
+    "game_updates": 180,
+    "ratio": 1.0
+  },
+  {
+    "cell": 0,
+    "video_frames": 180,
+    "game_updates": 180,
+    "ratio": 1.0
+  },
+  {
+    "cell": 20,
+    "video_frames": 180,
+    "game_updates": 180,
+    "ratio": 1.0
+  }
+]
