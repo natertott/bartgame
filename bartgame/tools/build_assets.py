@@ -386,21 +386,17 @@ h.append('extern const u16 hud_tiles[];')
 h.append('#define HUD_TILE_COUNT %d\n' % len(ui_kit.HUD_TILES))
 
 # --------------------------------------------------------------- title --
-tpix, tpal = title.render()  # 240x160 indices, palette of <=16 hex colors
-tts = Tileset(limit=1024)
-tmap = []
-for ty in range(0, 160, 8):
-    row = []
-    for tx in range(0, 240, 8):
-        n, hf, vf = tts.add(tpix, tx, ty)
-        row.append(n | (hf << 10) | (vf << 11))
-    tmap += row + [0] * 2  # 32-wide map rows
-c.append(c_array_u16('title_tiles', bytes_to_u16(b''.join(tts.tiles))))
-c.append(c_array_u16('title_map', tmap))
-c.append(c_array_u16('title_pal', [rgb15(x) for x in tpal] + [0] * (16 - len(tpal))))
-h.append('extern const u16 title_tiles[];\nextern const u16 title_map[];\nextern const u16 title_pal[];')
-h.append('#define TITLE_TILE_COUNT %d\n' % len(tts.tiles))
-print('title: %d tiles' % len(tts.tiles))
+title_bitmap = title.render_bitmap()
+assert len(title_bitmap) == title.WIDTH * title.HEIGHT
+c.append(c_array_u16('title_bitmap', title_bitmap))
+h.append('#define TITLE_WIDTH %d' % title.WIDTH)
+h.append('#define TITLE_HEIGHT %d' % title.HEIGHT)
+h.append('#define TITLE_BITMAP_PIXELS %d' % len(title_bitmap))
+h.append('#define TITLE_BITMAP_BYTES %d' % (len(title_bitmap) * 2))
+h.append('extern const u16 title_bitmap[TITLE_BITMAP_PIXELS];\n')
+title.write_metadata(os.path.join(OUT, 'title-import.json'), title_bitmap)
+print('title: %dx%d RGB555 bitmap, %d colours' %
+      (title.WIDTH, title.HEIGHT, len(set(title_bitmap))))
 
 # --------------------------------------------------------------- rooms --
 h.append('typedef struct { u8 w, h; const u16* ground; const u16* overlay; const u8* objects; u8 object_count; } RoomDef;')
