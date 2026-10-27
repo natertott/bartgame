@@ -15,6 +15,11 @@ def rgb(hex_):
 
 
 def material_pixels(name):
+    if name == 'myst_pot':
+        # Keep the lifted vessel identical to the final interactive-ground
+        # painter rather than reverting to the earlier, smaller pot.
+        import interactive_tiles
+        return interactive_tiles.REPLACEMENTS[name][0], H.GROUPS['glade_wood_stone']
     if name in H.TILES:
         group,frames,_=H.TILES[name]
         rows=H.quantize(frames[0],group)
