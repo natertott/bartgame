@@ -4176,6 +4176,16 @@ wood_art.apply(METATILES)
 import env_pack  # noqa: E402
 env_pack.apply(METATILES)
 
+# Additional visual variants share exactly the original collision contracts.
+for _i in range(8):
+    mt('forest_rot%d' % _i, 'forest', 'FLOOR', flat(4))
+for _i in range(6):
+    mt('forest_canopy%d' % _i, 'wood', 'SOLID', flat(1))
+
+# The forest's final native-resolution art; keep the Drain's tiles intact.
+import forest_art  # noqa: E402
+forest_art.apply(METATILES, dict(_pl.BG_PALETTES))
+
 # the Drain's hall, painted whole and cut into cells of its own (sw_drain.py)
 import sw_drain  # noqa: E402
 METATILES.extend(sw_drain.METATILES)

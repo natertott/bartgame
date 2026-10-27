@@ -1,0 +1,13 @@
+{
+  "rom_sha256": "243dc73b6613b179e9ae99ffed7c95cb498f76f25c404a0bd5ae3a2146b5197c",
+  "seed": "0xB4A7",
+  "emulator": "mGBA 0.10.5",
+  "capture_method": "Real ROM framebuffers; debug room navigation. Sheets are 2x nearest-neighbour with captions outside frames.",
+  "checks": {
+    "forest_mechanics": "22/22",
+    "mysteries": "28/28",
+    "critical_path_and_boss": "18/18 on seeds 0xB4A7 and 0xDEADBEEF",
+    "unchanged_collision_and_spawn_contracts": "25/25",
+    "drain_control": "pixel-identical to original"
+  }
+}

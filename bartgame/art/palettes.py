@@ -411,3 +411,9 @@ BG_PALETTES = [(n, c) for n, c in BG_PALETTES if n not in MERGE]
 # the Drain's hall: palettes packed from its painting (sw_drain.py)
 import sw_drain as _sd  # noqa: E402
 BG_PALETTES += _sd.PALETTES
+
+# Forest-only art groups. They are loaded only in the forest/interior sets.
+import forest_art as _forest
+BG_PALETTES += sorted(_forest.GROUPS.items())
+import forest_sprites as _enemies
+OBJ_PALETTES = [(n, _enemies.PALETTES.get(n, c)) for n, c in OBJ_PALETTES]

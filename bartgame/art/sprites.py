@@ -79,3 +79,7 @@ for (_name, _pal, _w, _h, _frames) in sw_folk.SHEETS:
     for _f, _rows in _frames.items():
         assert len(_rows) == _h and all(len(r) == _w for r in _rows), (_name, _f)
     SHEETS.append({'name': _name, 'pal': _pal, 'w': _w, 'h': _h, 'frames': _frames})
+
+# Forest enemies retain their engine frame contracts, in newly drawn art.
+import forest_sprites
+forest_sprites.apply(SHEETS)

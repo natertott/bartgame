@@ -1,0 +1,206 @@
+{
+  "seed": "0xb4a7",
+  "rom_sha256": "243dc73b6613b179e9ae99ffed7c95cb498f76f25c404a0bd5ae3a2146b5197c",
+  "navigation": "mGBA runtime room transitions; original generated rooms and enemies",
+  "captures": [
+    {
+      "file": "forest_00_stage1.png",
+      "cell": 0,
+      "stage": 1,
+      "area": 1,
+      "geometry_sha256": "954abe3534f3446cd1dcf6d7c8f7ad6868a60d7e82beecc96c3c6c37b5bf9369"
+    },
+    {
+      "file": "forest_01_stage1.png",
+      "cell": 1,
+      "stage": 1,
+      "area": 1,
+      "geometry_sha256": "6d3c951f85e6ac97e5d54c15371cec8adc4f45faa197cb6058f68519c051e787"
+    },
+    {
+      "file": "forest_02_stage1.png",
+      "cell": 2,
+      "stage": 1,
+      "area": 1,
+      "geometry_sha256": "a9233b55443d7fe006ea0f4b16b195108102e982c7b0664c8be7bd00df5a6fa4"
+    },
+    {
+      "file": "forest_03_stage1.png",
+      "cell": 3,
+      "stage": 1,
+      "area": 1,
+      "geometry_sha256": "a96a9def74d72147d9e5470dc6166b2e24150aa2e84ddd2faafc1f2be9f3f949"
+    },
+    {
+      "file": "forest_04_stage2.png",
+      "cell": 4,
+      "stage": 2,
+      "area": 1,
+      "geometry_sha256": "3086e50516e1d63c02d3d1bd8bfa44e8d7239939bd309d68ce75e6821cd9bc5f"
+    },
+    {
+      "file": "forest_05_stage0.png",
+      "cell": 5,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "2d3f631b8a8620e0a22d58060d4717045ff6ff035259d0d83d5ab4307960305d"
+    },
+    {
+      "file": "forest_06_stage0.png",
+      "cell": 6,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "cca489ef5ff515df2805d89f5af46c1d4e826d4f4cbda8fb4091a30c0553d110"
+    },
+    {
+      "file": "forest_07_stage3.png",
+      "cell": 7,
+      "stage": 3,
+      "area": 1,
+      "geometry_sha256": "b1b99aae9511976a7655b91ff87e19e38c4c079147ce08a243a4147db8496228"
+    },
+    {
+      "file": "forest_08_stage1.png",
+      "cell": 8,
+      "stage": 1,
+      "area": 1,
+      "geometry_sha256": "9d5cce42bdb31116ffe471b8cf18204efce0e4672a51bc2cacb87ceb094a2324"
+    },
+    {
+      "file": "forest_09_stage2.png",
+      "cell": 9,
+      "stage": 2,
+      "area": 1,
+      "geometry_sha256": "ad9c6e995a534d1e740b425bb65fd79fe6583f3404ef1ed74db9ace3b4edf8f2"
+    },
+    {
+      "file": "forest_10_stage0.png",
+      "cell": 10,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "def47224adbcc89deaf94b714b8cadf6aa633fab85352c146d772d6b06519dcc"
+    },
+    {
+      "file": "forest_11_stage0.png",
+      "cell": 11,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "393b1fbed85435634bf708040bb5acc40397763cee1141ed835adcf6406d0f03"
+    },
+    {
+      "file": "forest_12_stage3.png",
+      "cell": 12,
+      "stage": 3,
+      "area": 1,
+      "geometry_sha256": "ac87f50fbecb2cd93250f0733c171d73f625e5b569cd8d6909cf272c9e2d5fa4"
+    },
+    {
+      "file": "forest_13_stage3.png",
+      "cell": 13,
+      "stage": 3,
+      "area": 1,
+      "geometry_sha256": "136d004408d33edede4c1ae30af71427a184715916d926b0b9f63e2a1b8b98b0"
+    },
+    {
+      "file": "forest_14_stage2.png",
+      "cell": 14,
+      "stage": 2,
+      "area": 1,
+      "geometry_sha256": "d3ff892c745a5b7d6b5ad191dc41b9daeb24133e42d472706d3ad533971df977"
+    },
+    {
+      "file": "forest_15_stage0.png",
+      "cell": 15,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "7ed89e909d3c46077ef0a8502cdb6acaf0c4cea24cac6a4445046fcb05372b4b"
+    },
+    {
+      "file": "forest_16_stage0.png",
+      "cell": 16,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "d4a227ce3eb56d69846436cec21ffc8ada2ba14f0428d31c3ca1add756b9e6a0"
+    },
+    {
+      "file": "forest_17_stage0.png",
+      "cell": 17,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "e73084810a426875a6d7fb988d0604f336388812348ed4ba864e12242552f208"
+    },
+    {
+      "file": "forest_18_stage3.png",
+      "cell": 18,
+      "stage": 3,
+      "area": 1,
+      "geometry_sha256": "311484de1b37d863c7e481684ad3e70d304c750a33db921b4a6f55e11f1ac41e"
+    },
+    {
+      "file": "forest_19_stage0.png",
+      "cell": 19,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "0d017afa77cce1cef4d807cdfea2453cda7bb68846c451aebb94b644837c7c70"
+    },
+    {
+      "file": "forest_20_stage0.png",
+      "cell": 20,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "ac64be2921d34c5d3885e278342c45368b819577ee93b6509d55d56a21977459"
+    },
+    {
+      "file": "forest_21_stage0.png",
+      "cell": 21,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "42c5f36d256dc2ea8c66733323a6bac8c4362758c32a91dc3cf102218e032778"
+    },
+    {
+      "file": "forest_22_stage0.png",
+      "cell": 22,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "bb0cd90edf58b6694eed1a6e0d09dbde072fd0b1c5a302e09c6d39feeaac2734"
+    },
+    {
+      "file": "forest_23_stage0.png",
+      "cell": 23,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "1aa06007f0e3b026b530ab0b4e2b83208acb9917821603b08014cd0f34ee88d2"
+    },
+    {
+      "file": "forest_24_stage0.png",
+      "cell": 24,
+      "stage": 0,
+      "area": 1,
+      "geometry_sha256": "2873617f328bb675f6c38b8541b8a86605664af29f7d66fd445d9c5d70fe7ac6"
+    },
+    {
+      "file": "mystery_cave.png",
+      "cell": 5,
+      "kind": "chest",
+      "size": 0,
+      "style": 0,
+      "area": 2
+    },
+    {
+      "file": "mystery_hollow.png",
+      "cell": 14,
+      "kind": "pots",
+      "size": 1,
+      "style": 1,
+      "area": 2
+    },
+    {
+      "file": "mystery_thicket.png",
+      "cell": 16,
+      "kind": "survive",
+      "size": 0,
+      "style": 2,
+      "area": 2
+    }
+  ]
+}

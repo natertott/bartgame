@@ -1671,5 +1671,18 @@ void roomgen_build(int cell) {
         if (is_floor(px, py))
             room_set_overlay(px, py, blighted ? MT_BLIGHT_MIST : MT_SPARKLE_WHITE);
     }
+    /* Skin only after placement, spawn selection and map marks are finished.
+       Coordinate hashes add variety without consuming the layout RNG. All
+       replacements retain the original type and quarter collision mask. */
+    for (y = 0; y < H; y++) {
+        for (x = 0; x < W; x++) {
+            u16 mt = room_get(x, y);
+            u32 ink = hash32(gWorld.seed, cell * 7919 + y * W + x);
+            if (mt == MT_BLIGHT_FLOOR || mt == MT_BLIGHT_FLOOR2)
+                room_set(x, y, MT_FOREST_ROT0 + ink % 8);
+            else if (mt == MT_CANOPY || mt == MT_CANOPY2)
+                room_set(x, y, MT_FOREST_CANOPY0 + ink % 6);
+        }
+    }
     room_render();
 }
