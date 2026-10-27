@@ -1,0 +1,2 @@
+d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac  bartgame-bloom-suite-c518ba9.gba
+1fe0077530ea07e216bf2f3f52bbb7f34ab1dbe9458bbdc8a7f24b7af241620a  bartgame-bloom-suite-c518ba9.zip

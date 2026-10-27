@@ -1,5 +1,9 @@
 # Bloom action animation
 
+The later [complete-suite audit](BLOOM_SUITE.md) supersedes the directional
+layering and jump presentation described below. This file records the first
+animation pass.
+
 The [mGBA review gallery](../../forest-review/bloom-animation/README.md) shows
 the animation changes on generated forest ground. Bloom's original idle,
 walking frames and palette are retained.

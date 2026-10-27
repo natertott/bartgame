@@ -55,3 +55,7 @@ docs/sim_runs.json
 # Reviewed playable regular-forest material build
 !/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.gba
 !/downloads/healthy-reference-fe25dc1/bartgame-healthy-reference-fe25dc1.zip
+
+# Reviewed playable complete Bloom animation build
+!/downloads/bloom-suite-c518ba9/bartgame-bloom-suite-c518ba9.gba
+!/downloads/bloom-suite-c518ba9/bartgame-bloom-suite-c518ba9.zip

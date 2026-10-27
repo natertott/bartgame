@@ -1,6 +1,14 @@
 # Forest engine and artwork rework — real mGBA review
 
-## Latest: regular forest material polish
+## Latest: complete Bloom animation review
+
+[Watch 99 real mGBA before/after recordings and the video reel](bloom-suite/README.md).
+Directional equipment layering, sword clarity, guard walking, lifting and
+throwing, jump phases/shadows, rolls, hurt, drowning and death are polished
+across the Drain, healthy forest, blighted forest and caves. Two hovering
+bugs found during the audit are fixed. The gallery links the final ROM.
+
+## Previous: regular forest material polish
 
 [View the regular forest in actual mGBA runs](healthy-reference/README.md).
 Clustered cool-green foliage, clearer tree sprites, warm roots, quiet

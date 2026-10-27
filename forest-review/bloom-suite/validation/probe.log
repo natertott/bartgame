@@ -1,0 +1,491 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+PASS n shield wood is present
+PASS n shield has facing-correct depth {'hero': {'index': 5, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 6, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS north shield stays beside the raised hands [2, -24]
+PASS north shield retains a readable visible rim behind Bloom {'visible_opaque_pixels': 73}
+PASS n shield green is present
+PASS n shield has facing-correct depth {'hero': {'index': 5, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 6, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS north shield stays beside the raised hands [2, -24]
+PASS north shield retains a readable visible rim behind Bloom {'visible_opaque_pixels': 58}
+PASS n guarded movement has alternating leg poses [48, 68, 69]
+PASS n guard strafe retains shield facing
+PASS n guarded poses reach actual OBJ VRAM
+PASS n bow effect is present
+PASS n bow has facing-correct depth {'hero': 6, 'effect': 7}
+PASS north bow retains visible limbs beyond the blossom {'visible_opaque_pixels': 53}
+PASS n released arrow is drawn once at the hand
+PASS n released arrow retains hand-side depth
+PASS n lamp effect is present
+PASS n lamp has facing-correct depth {'hero': 5, 'effect': 6}
+PASS n sword effect is present
+PASS n sword has facing-correct depth {'hero': 6, 'effect': 5}
+PASS n planted bomb is the real visible object
+PASS n held bomb uses facing-correct depth
+PASS e shield wood is present
+PASS e shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS e shield green is present
+PASS e shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 5, 'x': 122, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS e guarded movement has alternating leg poses [49, 70, 71]
+PASS e guard strafe retains shield facing
+PASS e guarded poses reach actual OBJ VRAM
+PASS e bow effect is present
+PASS e bow has facing-correct depth {'hero': 8, 'effect': 7}
+PASS e released arrow is drawn once at the hand
+PASS e released arrow retains hand-side depth
+PASS e lamp effect is present
+PASS e lamp has facing-correct depth {'hero': 7, 'effect': 6}
+PASS e sword effect is present
+PASS e sword has facing-correct depth {'hero': 6, 'effect': 5}
+PASS e planted bomb is the real visible object
+PASS e held bomb uses facing-correct depth
+PASS s shield wood is present
+PASS s shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS s shield green is present
+PASS s shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': False}, 'shield': {'index': 5, 'x': 112, 'y': 88, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': False}}
+PASS s guarded movement has alternating leg poses [47, 72, 73]
+PASS s guard strafe retains shield facing
+PASS s guarded poses reach actual OBJ VRAM
+PASS s bow effect is present
+PASS s bow has facing-correct depth {'hero': 8, 'effect': 7}
+PASS s released arrow is drawn once at the hand
+PASS s released arrow retains hand-side depth
+PASS s lamp effect is present
+PASS s lamp has facing-correct depth {'hero': 6, 'effect': 5}
+PASS s sword effect is present
+PASS s sword has facing-correct depth {'hero': 6, 'effect': 5}
+PASS s planted bomb is the real visible object
+PASS s held bomb uses facing-correct depth
+PASS w shield wood is present
+PASS w shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': True}, 'shield': {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 9, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}}
+PASS w shield green is present
+PASS w shield has facing-correct depth {'hero': {'index': 6, 'x': 88, 'y': 72, 'tile': 0, 'pal': 0, 'shape': 1, 'size': 3, 'priority': 2, 'flip': True}, 'shield': {'index': 5, 'x': 102, 'y': 80, 'tile': 44, 'pal': 12, 'shape': 0, 'size': 1, 'priority': 2, 'flip': True}}
+PASS w guarded movement has alternating leg poses [49, 70, 71]
+PASS w guard strafe retains shield facing
+PASS w guarded poses reach actual OBJ VRAM
+PASS w bow effect is present
+PASS w bow has facing-correct depth {'hero': 8, 'effect': 7}
+PASS w released arrow is drawn once at the hand
+PASS w released arrow retains hand-side depth
+PASS w lamp effect is present
+PASS w lamp has facing-correct depth {'hero': 7, 'effect': 6}
+PASS w sword effect is present
+PASS w sword has facing-correct depth {'hero': 6, 'effect': 5}
+PASS w planted bomb is the real visible object
+PASS w held bomb uses facing-correct depth
+PASS ground shadow uses the small resident allocation 72
+PASS n airborne ground shadow exists at tick 2
+PASS n cape has facing-correct depth at tick 2
+PASS n airborne ground shadow exists at tick 3
+PASS n cape has facing-correct depth at tick 3
+PASS n airborne ground shadow exists at tick 4
+PASS n cape has facing-correct depth at tick 4
+PASS n airborne ground shadow exists at tick 5
+PASS n cape has facing-correct depth at tick 5
+PASS n airborne ground shadow exists at tick 6
+PASS n cape has facing-correct depth at tick 6
+PASS n airborne ground shadow exists at tick 7
+PASS n cape has facing-correct depth at tick 7
+PASS n airborne ground shadow exists at tick 8
+PASS n cape has facing-correct depth at tick 8
+PASS n airborne ground shadow exists at tick 9
+PASS n cape has facing-correct depth at tick 9
+PASS n airborne ground shadow exists at tick 10
+PASS n cape has facing-correct depth at tick 10
+PASS n airborne ground shadow exists at tick 11
+PASS n cape has facing-correct depth at tick 11
+PASS n airborne ground shadow exists at tick 12
+PASS n cape has facing-correct depth at tick 12
+PASS n airborne ground shadow exists at tick 13
+PASS n cape has facing-correct depth at tick 13
+PASS n airborne ground shadow exists at tick 14
+PASS n cape has facing-correct depth at tick 14
+PASS n airborne ground shadow exists at tick 15
+PASS n cape has facing-correct depth at tick 15
+PASS n airborne ground shadow exists at tick 16
+PASS n cape has facing-correct depth at tick 16
+PASS n airborne ground shadow exists at tick 17
+PASS n cape has facing-correct depth at tick 17
+PASS n airborne ground shadow exists at tick 18
+PASS n cape has facing-correct depth at tick 18
+PASS n airborne ground shadow exists at tick 19
+PASS n cape has facing-correct depth at tick 19
+PASS n airborne ground shadow exists at tick 20
+PASS n cape has facing-correct depth at tick 20
+PASS n airborne ground shadow exists at tick 21
+PASS n cape has facing-correct depth at tick 21
+PASS n airborne ground shadow exists at tick 22
+PASS n cape has facing-correct depth at tick 22
+PASS n airborne ground shadow exists at tick 23
+PASS n cape has facing-correct depth at tick 23
+PASS n airborne ground shadow exists at tick 24
+PASS n cape has facing-correct depth at tick 24
+PASS n airborne ground shadow exists at tick 25
+PASS n cape has facing-correct depth at tick 25
+PASS n airborne ground shadow exists at tick 26
+PASS n cape has facing-correct depth at tick 26
+PASS n airborne ground shadow exists at tick 27
+PASS n cape has facing-correct depth at tick 27
+PASS n airborne ground shadow exists at tick 28
+PASS n cape has facing-correct depth at tick 28
+PASS n airborne ground shadow exists at tick 29
+PASS n cape has facing-correct depth at tick 29
+PASS n airborne ground shadow exists at tick 30
+PASS n cape has facing-correct depth at tick 30
+PASS n airborne ground shadow exists at tick 31
+PASS n cape has facing-correct depth at tick 31
+PASS n airborne ground shadow exists at tick 32
+PASS n cape has facing-correct depth at tick 32
+PASS n airborne ground shadow exists at tick 33
+PASS n cape has facing-correct depth at tick 33
+PASS n jump shows takeoff, flight and landing poses [51, 53, 55]
+PASS n shadow stays at ground feet while Bloom rises [(-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5)]
+PASS n shadow stays behind the airborne body
+PASS n cape returns to grounded normal state
+PASS n cape retains its original flight duration 34
+PASS e airborne ground shadow exists at tick 2
+PASS e cape has facing-correct depth at tick 2
+PASS e airborne ground shadow exists at tick 3
+PASS e cape has facing-correct depth at tick 3
+PASS e airborne ground shadow exists at tick 4
+PASS e cape has facing-correct depth at tick 4
+PASS e airborne ground shadow exists at tick 5
+PASS e cape has facing-correct depth at tick 5
+PASS e airborne ground shadow exists at tick 6
+PASS e cape has facing-correct depth at tick 6
+PASS e airborne ground shadow exists at tick 7
+PASS e cape has facing-correct depth at tick 7
+PASS e airborne ground shadow exists at tick 8
+PASS e cape has facing-correct depth at tick 8
+PASS e airborne ground shadow exists at tick 9
+PASS e cape has facing-correct depth at tick 9
+PASS e airborne ground shadow exists at tick 10
+PASS e cape has facing-correct depth at tick 10
+PASS e airborne ground shadow exists at tick 11
+PASS e cape has facing-correct depth at tick 11
+PASS e airborne ground shadow exists at tick 12
+PASS e cape has facing-correct depth at tick 12
+PASS e airborne ground shadow exists at tick 13
+PASS e cape has facing-correct depth at tick 13
+PASS e airborne ground shadow exists at tick 14
+PASS e cape has facing-correct depth at tick 14
+PASS e airborne ground shadow exists at tick 15
+PASS e cape has facing-correct depth at tick 15
+PASS e airborne ground shadow exists at tick 16
+PASS e cape has facing-correct depth at tick 16
+PASS e airborne ground shadow exists at tick 17
+PASS e cape has facing-correct depth at tick 17
+PASS e airborne ground shadow exists at tick 18
+PASS e cape has facing-correct depth at tick 18
+PASS e airborne ground shadow exists at tick 19
+PASS e cape has facing-correct depth at tick 19
+PASS e airborne ground shadow exists at tick 20
+PASS e cape has facing-correct depth at tick 20
+PASS e airborne ground shadow exists at tick 21
+PASS e cape has facing-correct depth at tick 21
+PASS e airborne ground shadow exists at tick 22
+PASS e cape has facing-correct depth at tick 22
+PASS e airborne ground shadow exists at tick 23
+PASS e cape has facing-correct depth at tick 23
+PASS e airborne ground shadow exists at tick 24
+PASS e cape has facing-correct depth at tick 24
+PASS e airborne ground shadow exists at tick 25
+PASS e cape has facing-correct depth at tick 25
+PASS e airborne ground shadow exists at tick 26
+PASS e cape has facing-correct depth at tick 26
+PASS e airborne ground shadow exists at tick 27
+PASS e cape has facing-correct depth at tick 27
+PASS e airborne ground shadow exists at tick 28
+PASS e cape has facing-correct depth at tick 28
+PASS e airborne ground shadow exists at tick 29
+PASS e cape has facing-correct depth at tick 29
+PASS e airborne ground shadow exists at tick 30
+PASS e cape has facing-correct depth at tick 30
+PASS e airborne ground shadow exists at tick 31
+PASS e cape has facing-correct depth at tick 31
+PASS e airborne ground shadow exists at tick 32
+PASS e cape has facing-correct depth at tick 32
+PASS e airborne ground shadow exists at tick 33
+PASS e cape has facing-correct depth at tick 33
+PASS e jump shows takeoff, flight and landing poses [57, 59, 61]
+PASS e shadow stays at ground feet while Bloom rises [(-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5)]
+PASS e shadow stays behind the airborne body
+PASS e cape returns to grounded normal state
+PASS e cape retains its original flight duration 34
+PASS s airborne ground shadow exists at tick 2
+PASS s cape has facing-correct depth at tick 2
+PASS s airborne ground shadow exists at tick 3
+PASS s cape has facing-correct depth at tick 3
+PASS s airborne ground shadow exists at tick 4
+PASS s cape has facing-correct depth at tick 4
+PASS s airborne ground shadow exists at tick 5
+PASS s cape has facing-correct depth at tick 5
+PASS s airborne ground shadow exists at tick 6
+PASS s cape has facing-correct depth at tick 6
+PASS s airborne ground shadow exists at tick 7
+PASS s cape has facing-correct depth at tick 7
+PASS s airborne ground shadow exists at tick 8
+PASS s cape has facing-correct depth at tick 8
+PASS s airborne ground shadow exists at tick 9
+PASS s cape has facing-correct depth at tick 9
+PASS s airborne ground shadow exists at tick 10
+PASS s cape has facing-correct depth at tick 10
+PASS s airborne ground shadow exists at tick 11
+PASS s cape has facing-correct depth at tick 11
+PASS s airborne ground shadow exists at tick 12
+PASS s cape has facing-correct depth at tick 12
+PASS s airborne ground shadow exists at tick 13
+PASS s cape has facing-correct depth at tick 13
+PASS s airborne ground shadow exists at tick 14
+PASS s cape has facing-correct depth at tick 14
+PASS s airborne ground shadow exists at tick 15
+PASS s cape has facing-correct depth at tick 15
+PASS s airborne ground shadow exists at tick 16
+PASS s cape has facing-correct depth at tick 16
+PASS s airborne ground shadow exists at tick 17
+PASS s cape has facing-correct depth at tick 17
+PASS s airborne ground shadow exists at tick 18
+PASS s cape has facing-correct depth at tick 18
+PASS s airborne ground shadow exists at tick 19
+PASS s cape has facing-correct depth at tick 19
+PASS s airborne ground shadow exists at tick 20
+PASS s cape has facing-correct depth at tick 20
+PASS s airborne ground shadow exists at tick 21
+PASS s cape has facing-correct depth at tick 21
+PASS s airborne ground shadow exists at tick 22
+PASS s cape has facing-correct depth at tick 22
+PASS s airborne ground shadow exists at tick 23
+PASS s cape has facing-correct depth at tick 23
+PASS s airborne ground shadow exists at tick 24
+PASS s cape has facing-correct depth at tick 24
+PASS s airborne ground shadow exists at tick 25
+PASS s cape has facing-correct depth at tick 25
+PASS s airborne ground shadow exists at tick 26
+PASS s cape has facing-correct depth at tick 26
+PASS s airborne ground shadow exists at tick 27
+PASS s cape has facing-correct depth at tick 27
+PASS s airborne ground shadow exists at tick 28
+PASS s cape has facing-correct depth at tick 28
+PASS s airborne ground shadow exists at tick 29
+PASS s cape has facing-correct depth at tick 29
+PASS s airborne ground shadow exists at tick 30
+PASS s cape has facing-correct depth at tick 30
+PASS s airborne ground shadow exists at tick 31
+PASS s cape has facing-correct depth at tick 31
+PASS s airborne ground shadow exists at tick 32
+PASS s cape has facing-correct depth at tick 32
+PASS s airborne ground shadow exists at tick 33
+PASS s cape has facing-correct depth at tick 33
+PASS s jump shows takeoff, flight and landing poses [63, 65, 67]
+PASS s shadow stays at ground feet while Bloom rises [(-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5)]
+PASS s shadow stays behind the airborne body
+PASS s cape returns to grounded normal state
+PASS s cape retains its original flight duration 34
+PASS w airborne ground shadow exists at tick 2
+PASS w cape has facing-correct depth at tick 2
+PASS w airborne ground shadow exists at tick 3
+PASS w cape has facing-correct depth at tick 3
+PASS w airborne ground shadow exists at tick 4
+PASS w cape has facing-correct depth at tick 4
+PASS w airborne ground shadow exists at tick 5
+PASS w cape has facing-correct depth at tick 5
+PASS w airborne ground shadow exists at tick 6
+PASS w cape has facing-correct depth at tick 6
+PASS w airborne ground shadow exists at tick 7
+PASS w cape has facing-correct depth at tick 7
+PASS w airborne ground shadow exists at tick 8
+PASS w cape has facing-correct depth at tick 8
+PASS w airborne ground shadow exists at tick 9
+PASS w cape has facing-correct depth at tick 9
+PASS w airborne ground shadow exists at tick 10
+PASS w cape has facing-correct depth at tick 10
+PASS w airborne ground shadow exists at tick 11
+PASS w cape has facing-correct depth at tick 11
+PASS w airborne ground shadow exists at tick 12
+PASS w cape has facing-correct depth at tick 12
+PASS w airborne ground shadow exists at tick 13
+PASS w cape has facing-correct depth at tick 13
+PASS w airborne ground shadow exists at tick 14
+PASS w cape has facing-correct depth at tick 14
+PASS w airborne ground shadow exists at tick 15
+PASS w cape has facing-correct depth at tick 15
+PASS w airborne ground shadow exists at tick 16
+PASS w cape has facing-correct depth at tick 16
+PASS w airborne ground shadow exists at tick 17
+PASS w cape has facing-correct depth at tick 17
+PASS w airborne ground shadow exists at tick 18
+PASS w cape has facing-correct depth at tick 18
+PASS w airborne ground shadow exists at tick 19
+PASS w cape has facing-correct depth at tick 19
+PASS w airborne ground shadow exists at tick 20
+PASS w cape has facing-correct depth at tick 20
+PASS w airborne ground shadow exists at tick 21
+PASS w cape has facing-correct depth at tick 21
+PASS w airborne ground shadow exists at tick 22
+PASS w cape has facing-correct depth at tick 22
+PASS w airborne ground shadow exists at tick 23
+PASS w cape has facing-correct depth at tick 23
+PASS w airborne ground shadow exists at tick 24
+PASS w cape has facing-correct depth at tick 24
+PASS w airborne ground shadow exists at tick 25
+PASS w cape has facing-correct depth at tick 25
+PASS w airborne ground shadow exists at tick 26
+PASS w cape has facing-correct depth at tick 26
+PASS w airborne ground shadow exists at tick 27
+PASS w cape has facing-correct depth at tick 27
+PASS w airborne ground shadow exists at tick 28
+PASS w cape has facing-correct depth at tick 28
+PASS w airborne ground shadow exists at tick 29
+PASS w cape has facing-correct depth at tick 29
+PASS w airborne ground shadow exists at tick 30
+PASS w cape has facing-correct depth at tick 30
+PASS w airborne ground shadow exists at tick 31
+PASS w cape has facing-correct depth at tick 31
+PASS w airborne ground shadow exists at tick 32
+PASS w cape has facing-correct depth at tick 32
+PASS w airborne ground shadow exists at tick 33
+PASS w cape has facing-correct depth at tick 33
+PASS w jump shows takeoff, flight and landing poses [57, 59, 61]
+PASS w shadow stays at ground feet while Bloom rises [(-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5), (-8, -5)]
+PASS w shadow stays behind the airborne body
+PASS w cape returns to grounded normal state
+PASS w cape retains its original flight duration 34
+PASS n R lifts the actual local bush
+PASS n lift lasts twelve updates 12
+PASS n lift has bend, raise and settle poses [35, 74, 75, 76]
+PASS n carried object remains visible
+PASS n carried object has facing-correct depth
+PASS n overhead load anchor aligns with throw origin [-8, -40]
+PASS n throw releases continuously from the hands {'carried': [248, 190], 'released': [248, 187], 'max_delta': 3}
+PASS n thrown object retains hand-side depth while overlapping Bloom
+PASS n R creates the actual moving thrown actor
+PASS n thrown physics retains speed and airborne launch
+PASS n throw clears the carried state
+PASS e R lifts the actual local bush
+PASS e lift lasts twelve updates 12
+PASS e lift has bend, raise and settle poses [38, 77, 78, 79]
+PASS e carried object remains visible
+PASS e carried object has facing-correct depth
+PASS e overhead load anchor aligns with throw origin [-8, -40]
+PASS e throw releases continuously from the hands {'carried': [248, 190], 'released': [250, 190], 'max_delta': 2}
+PASS e thrown object retains hand-side depth while overlapping Bloom
+PASS e R creates the actual moving thrown actor
+PASS e thrown physics retains speed and airborne launch
+PASS e throw clears the carried state
+PASS s R lifts the actual local bush
+PASS s lift lasts twelve updates 12
+PASS s lift has bend, raise and settle poses [32, 80, 81, 82]
+PASS s carried object remains visible
+PASS s carried object has facing-correct depth
+PASS s overhead load anchor aligns with throw origin [-8, -40]
+PASS s throw releases continuously from the hands {'carried': [248, 190], 'released': [248, 192], 'max_delta': 2}
+PASS s thrown object retains hand-side depth while overlapping Bloom
+PASS s R creates the actual moving thrown actor
+PASS s thrown physics retains speed and airborne launch
+PASS s throw clears the carried state
+PASS w R lifts the actual local bush
+PASS w lift lasts twelve updates 12
+PASS w lift has bend, raise and settle poses [38, 77, 78, 79]
+PASS w carried object remains visible
+PASS w carried object has facing-correct depth
+PASS w overhead load anchor aligns with throw origin [-8, -40]
+PASS w throw releases continuously from the hands {'carried': [248, 190], 'released': [245, 190], 'max_delta': 3}
+PASS w thrown object retains hand-side depth while overlapping Bloom
+PASS w R creates the actual moving thrown actor
+PASS w thrown physics retains speed and airborne launch
+PASS w throw clears the carried state
+PASS n early airborne hit is actual enemy-contact hurt
+PASS n early airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 24, 'facing': 0, 'position': [256, 209], 'z': 0, 'zvel': 0, 'pose': 3, 'carry': 0, 'hp': 22, 'camera': [136, 105]}
+PASS n early airborne hit preserves one contact hit 22
+PASS n late airborne hit is actual enemy-contact hurt
+PASS n late airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 0, 'facing': 0, 'position': [256, 208], 'z': 0, 'zvel': 0, 'pose': 3, 'carry': 0, 'hp': 22, 'camera': [136, 104]}
+PASS n late airborne hit preserves one contact hit 22
+PASS n late airborne hit over water is actual enemy-contact hurt
+PASS n late airborne hit over water completes gravity and reaches ground {'state': 0, 'sub': 1, 'timer': 0, 'facing': 0, 'position': [256, 230], 'z': 0, 'zvel': 0, 'pose': 3, 'carry': 0, 'hp': 20, 'camera': [136, 126]}
+PASS n late airborne hit over water applies the normal drowning state on landing
+PASS n late airborne hit over water charges contact and drowning damage once 20
+PASS e early airborne hit is actual enemy-contact hurt
+PASS e early airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 24, 'facing': 1, 'position': [290, 241], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [170, 137]}
+PASS e early airborne hit preserves one contact hit 22
+PASS e late airborne hit is actual enemy-contact hurt
+PASS e late airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 0, 'facing': 1, 'position': [292, 241], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [172, 137]}
+PASS e late airborne hit preserves one contact hit 22
+PASS e late airborne hit over water is actual enemy-contact hurt
+PASS e late airborne hit over water completes gravity and reaches ground {'state': 0, 'sub': 1, 'timer': 0, 'facing': 1, 'position': [256, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 20, 'camera': [136, 126]}
+PASS e late airborne hit over water applies the normal drowning state on landing
+PASS e late airborne hit over water charges contact and drowning damage once 20
+PASS s early airborne hit is actual enemy-contact hurt
+PASS s early airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 24, 'facing': 2, 'position': [256, 274], 'z': 0, 'zvel': 0, 'pose': 0, 'carry': 0, 'hp': 22, 'camera': [136, 170]}
+PASS s early airborne hit preserves one contact hit 22
+PASS s late airborne hit is actual enemy-contact hurt
+PASS s late airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 0, 'facing': 2, 'position': [256, 275], 'z': 0, 'zvel': 0, 'pose': 0, 'carry': 0, 'hp': 22, 'camera': [136, 171]}
+PASS s late airborne hit preserves one contact hit 22
+PASS s late airborne hit over water is actual enemy-contact hurt
+PASS s late airborne hit over water completes gravity and reaches ground {'state': 0, 'sub': 1, 'timer': 0, 'facing': 2, 'position': [256, 230], 'z': 0, 'zvel': 0, 'pose': 0, 'carry': 0, 'hp': 20, 'camera': [136, 126]}
+PASS s late airborne hit over water applies the normal drowning state on landing
+PASS s late airborne hit over water charges contact and drowning damage once 20
+PASS w early airborne hit is actual enemy-contact hurt
+PASS w early airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 24, 'facing': 3, 'position': [221, 241], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [101, 137]}
+PASS w early airborne hit preserves one contact hit 22
+PASS w late airborne hit is actual enemy-contact hurt
+PASS w late airborne hit completes gravity and reaches ground {'state': 0, 'sub': 0, 'timer': 0, 'facing': 3, 'position': [219, 241], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [99, 137]}
+PASS w late airborne hit preserves one contact hit 22
+PASS w late airborne hit over water is actual enemy-contact hurt
+PASS w late airborne hit over water completes gravity and reaches ground {'state': 0, 'sub': 1, 'timer': 0, 'facing': 3, 'position': [256, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 20, 'camera': [136, 126]}
+PASS w late airborne hit over water applies the normal drowning state on landing
+PASS w late airborne hit over water charges contact and drowning damage once 20
+PASS n roll-wall bounce starts from real roll input and collision
+PASS n roll-wall bounce lands after knockback finishes {'state': 0, 'sub': 0, 'timer': 0, 'facing': 0, 'position': [264, 242], 'z': 0, 'zvel': 0, 'pose': 3, 'carry': 0, 'hp': 24, 'camera': [144, 138]}
+PASS e roll-wall bounce starts from real roll input and collision
+PASS e roll-wall bounce lands after knockback finishes {'state': 0, 'sub': 0, 'timer': 0, 'facing': 1, 'position': [260, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 24, 'camera': [140, 126]}
+PASS e roll-wall bounce followed by contact starts from real roll input and collision
+PASS e roll-wall bounce followed by contact receives actual airborne enemy damage
+PASS e roll-wall bounce followed by contact lands after knockback finishes {'state': 0, 'sub': 0, 'timer': 11, 'facing': 1, 'position': [259, 246], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [139, 142]}
+PASS e roll-wall bounce followed by contact retains an uncaped recovery [3]
+PASS s roll-wall bounce starts from real roll input and collision
+PASS s roll-wall bounce lands after knockback finishes {'state': 0, 'sub': 0, 'timer': 0, 'facing': 2, 'position': [264, 234], 'z': 0, 'zvel': 0, 'pose': 0, 'carry': 0, 'hp': 24, 'camera': [144, 130]}
+PASS w roll-wall bounce starts from real roll input and collision
+PASS w roll-wall bounce lands after knockback finishes {'state': 0, 'sub': 0, 'timer': 0, 'facing': 3, 'position': [268, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 24, 'camera': [148, 126]}
+PASS water is entered by walking into a real physical tile
+PASS water selects the proper fall variant
+PASS water retains its 36-update fall duration 36
+PASS water shows all three sinking poses
+PASS water restores the safe position and charges one heart quarter {'state': 0, 'sub': 1, 'timer': 0, 'facing': 1, 'position': [256, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [136, 126]}
+PASS pit is entered by walking into a real physical tile
+PASS pit selects the proper fall variant
+PASS pit retains its 36-update fall duration 36
+PASS pit shows all three sinking poses
+PASS pit restores the safe position and charges one heart quarter {'state': 0, 'sub': 0, 'timer': 0, 'facing': 1, 'position': [263, 230], 'z': 0, 'zvel': 0, 'pose': 6, 'carry': 0, 'hp': 22, 'camera': [143, 126]}
+PASS actual enemy contact triggers death
+PASS death progresses through three collapse poses
+PASS death settles instead of returning to the standing hurt pose
+PASS n ledge is jumped by pushing against its physical edge
+PASS n ledge drop has takeoff, airborne and landing bodies [51, 53, 55]
+PASS n ledge drop finishes grounded
+PASS s ledge is jumped by pushing against its physical edge
+PASS s ledge drop has takeoff, airborne and landing bodies [63, 65, 67]
+PASS s ledge drop finishes grounded
+PASS Drain Cap input triggers swallowing
+PASS return transition triggers the real ceiling drop
+PASS ceiling drop uses a landing progression [63, 65, 67, 255]
+PASS return drop ends on its feet
+PASS walk-n physical action trace matches the frozen ROM []
+PASS sword-n physical action trace matches the frozen ROM []
+PASS roll-n physical action trace matches the frozen ROM []
+PASS cape-n physical action trace matches the frozen ROM []
+PASS guard-walk-n physical action trace matches the frozen ROM []
+PASS walk-e physical action trace matches the frozen ROM []
+PASS sword-e physical action trace matches the frozen ROM []
+PASS roll-e physical action trace matches the frozen ROM []
+PASS cape-e physical action trace matches the frozen ROM []
+PASS guard-walk-e physical action trace matches the frozen ROM []
+PASS walk-s physical action trace matches the frozen ROM []
+PASS sword-s physical action trace matches the frozen ROM []
+PASS roll-s physical action trace matches the frozen ROM []
+PASS cape-s physical action trace matches the frozen ROM []
+PASS guard-walk-s physical action trace matches the frozen ROM []
+PASS walk-w physical action trace matches the frozen ROM []
+PASS sword-w physical action trace matches the frozen ROM []
+PASS roll-w physical action trace matches the frozen ROM []
+PASS cape-w physical action trace matches the frozen ROM []
+PASS guard-walk-w physical action trace matches the frozen ROM []
+RESULT PASS 489/489

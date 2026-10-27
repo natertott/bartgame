@@ -1,6 +1,30 @@
 # BARTGAME downloads
 
-## Latest: regular forest material polish
+## Latest: complete Bloom animation polish
+
+Bloom now has direction-correct equipment depth, cleaner sword and item
+motions, continuous lifting/throwing, guard walking, phased jumps with ground
+shadows, and polished roll, hurt, drowning and death poses. Airborne damage
+and wall bounces now recover to a proper landing. All previous forest, item
+and title updates are included.
+
+- [Download the final GBA ROM](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/bloom-suite-c518ba9/bartgame-bloom-suite-c518ba9.gba)
+- [Download the ZIP](https://github.com/natertott/bartgame/raw/refs/heads/forest-art/downloads/bloom-suite-c518ba9/bartgame-bloom-suite-c518ba9.zip)
+- [SHA256 checksums](bloom-suite-c518ba9/SHA256SUMS.txt)
+- [99 actual mGBA before/after recordings and video reel](../forest-review/bloom-suite/README.md)
+
+Open the `.gba` in mGBA. Built from game source commit
+[`c518ba9`](https://github.com/natertott/bartgame/commit/c518ba9fbdc4efdee5b43330dcbd5105c329eaa6).
+The 97 ordinary action clips retain their gameplay traces; two recovery
+clips demonstrate intentional hovering fixes. Save data remains compatible.
+
+ROM SHA256:
+
+```text
+d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac
+```
+
+## Previous: regular forest material polish
 
 The regular forest now uses clustered cool-green foliage, clearer oak,
 birch and fir sprites, warm roots, quiet ground, mossy banks and subtle

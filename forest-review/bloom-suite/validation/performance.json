@@ -1,0 +1,48 @@
+{
+  "rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+  "method": "Actual mGBA; natural floor, cleared unrelated actors, healed player, repeated real sword/shield/cape inputs; count game updates against 180 video frames per background.",
+  "passed": 5,
+  "total": 5,
+  "samples": [
+    {
+      "background": "drain",
+      "cell": null,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "background": "forest",
+      "cell": 5,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "background": "blight",
+      "cell": 19,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "background": "cave",
+      "cell": 0,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    },
+    {
+      "background": "heart",
+      "cell": 18,
+      "video_frames": 180,
+      "vblanks": 180,
+      "game_updates": 180,
+      "passed": true
+    }
+  ]
+}

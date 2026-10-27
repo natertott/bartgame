@@ -1,0 +1,78 @@
+{
+  "rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+  "baseline_rom_sha256": "d346f72866060e452f8751efc51dc0b074d8cb240ceba159784b97939da78f59",
+  "game_source_commit": "c518ba9fbdc4efdee5b43330dcbd5105c329eaa6",
+  "emulator": "mGBA 0.10.5",
+  "checks": {
+    "probe": {
+      "passed": 489,
+      "total": 489,
+      "report": "validation/probe.json"
+    },
+    "core": {
+      "passed": 274,
+      "total": 274,
+      "report": "validation/core.json"
+    },
+    "budget": {
+      "passed": 2046,
+      "total": 2046,
+      "report": "validation/budget.json"
+    },
+    "scope": {
+      "passed": 3774,
+      "total": 3774,
+      "report": "validation/scope.json"
+    },
+    "performance": {
+      "passed": 5,
+      "total": 5,
+      "report": "validation/performance.json"
+    },
+    "mechanics": {
+      "passed": 22,
+      "total": 22,
+      "report": "validation/mechanics.log"
+    },
+    "lift": {
+      "passed": 14,
+      "total": 14,
+      "report": "validation/lift.log"
+    },
+    "critical": {
+      "passed": 21,
+      "total": 21,
+      "report": "validation/critical.log"
+    },
+    "myst": {
+      "passed": 28,
+      "total": 28,
+      "report": "validation/myst.log"
+    },
+    "surfaces": {
+      "passed": 2538,
+      "total": 2538,
+      "report": "validation/surfaces.log"
+    }
+  },
+  "captures": {
+    "matched_pairs": 99,
+    "activation_checks": {
+      "passed": 166,
+      "total": 166
+    },
+    "ordinary_gameplay_traces_unchanged": 97,
+    "intentional_recovery_changes": [
+      "air-hurt-recovery",
+      "roll-wall-bounce"
+    ],
+    "source_poses_seen": 99,
+    "source_poses_total": 101,
+    "source_poses_not_reachable": [
+      "jump_n",
+      "jump_e"
+    ]
+  },
+  "performance_scope": "Five representative 180-frame samples, unrelated actors cleared; not a worst-case combat benchmark.",
+  "scope": "Environment frames, physical contracts, 26 unrelated sprite sheets, item icons, title, palettes and nine idle/walk frames exact. Bloom action/lift graphics and rendering/recovery code changed."
+}

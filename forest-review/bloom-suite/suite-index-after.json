@@ -1,0 +1,3994 @@
+{
+  "rom_sha256": "d5f9eda0647c0b197011656cd9fd758f2438df6c4e7e212dd100d31fc3f130ac",
+  "fixture_version": 3,
+  "captures": [
+    {
+      "folder": "drain",
+      "name": "drain-idle-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n"
+      ],
+      "validations": [],
+      "gif": "drain/drain-idle-n.gif",
+      "filmstrip": "drain/drain-idle-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-idle-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e"
+      ],
+      "validations": [],
+      "gif": "drain/drain-idle-e.gif",
+      "filmstrip": "drain/drain-idle-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-idle-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_s"
+      ],
+      "validations": [],
+      "gif": "drain/drain-idle-s.gif",
+      "filmstrip": "drain/drain-idle-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-idle-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e"
+      ],
+      "validations": [],
+      "gif": "drain/drain-idle-w.gif",
+      "filmstrip": "drain/drain-idle-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-walk-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "walk_n1",
+        "walk_n2"
+      ],
+      "validations": [
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-walk-n.gif",
+      "filmstrip": "drain/drain-walk-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-walk-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "walk_e1",
+        "walk_e2"
+      ],
+      "validations": [
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-walk-e.gif",
+      "filmstrip": "drain/drain-walk-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-walk-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_s",
+        "walk_s1",
+        "walk_s2"
+      ],
+      "validations": [
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-walk-s.gif",
+      "filmstrip": "drain/drain-walk-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-walk-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "walk_e1",
+        "walk_e2"
+      ],
+      "validations": [
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-walk-w.gif",
+      "filmstrip": "drain/drain-walk-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-roll-n",
+      "background": "drain",
+      "states": [
+        "normal",
+        "roll"
+      ],
+      "poses": [
+        "idle_n",
+        "roll_2",
+        "roll_3",
+        "roll_4",
+        "roll_5",
+        "roll_n1",
+        "roll_n6",
+        "roll_n7"
+      ],
+      "validations": [
+        {
+          "name": "expected action state roll",
+          "passed": true
+        },
+        {
+          "name": "roll has at least four actual tumble poses",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-roll-n.gif",
+      "filmstrip": "drain/drain-roll-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-roll-e",
+      "background": "drain",
+      "states": [
+        "normal",
+        "roll"
+      ],
+      "poses": [
+        "idle_e",
+        "roll_1",
+        "roll_2",
+        "roll_3",
+        "roll_4",
+        "roll_5",
+        "roll_6",
+        "roll_7"
+      ],
+      "validations": [
+        {
+          "name": "expected action state roll",
+          "passed": true
+        },
+        {
+          "name": "roll has at least four actual tumble poses",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-roll-e.gif",
+      "filmstrip": "drain/drain-roll-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-roll-s",
+      "background": "drain",
+      "states": [
+        "normal",
+        "roll"
+      ],
+      "poses": [
+        "idle_s",
+        "roll_2",
+        "roll_3",
+        "roll_4",
+        "roll_5",
+        "roll_s1",
+        "roll_s6",
+        "roll_s7"
+      ],
+      "validations": [
+        {
+          "name": "expected action state roll",
+          "passed": true
+        },
+        {
+          "name": "roll has at least four actual tumble poses",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-roll-s.gif",
+      "filmstrip": "drain/drain-roll-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-roll-w",
+      "background": "drain",
+      "states": [
+        "normal",
+        "roll"
+      ],
+      "poses": [
+        "idle_e",
+        "roll_1",
+        "roll_2",
+        "roll_3",
+        "roll_4",
+        "roll_5",
+        "roll_6",
+        "roll_7"
+      ],
+      "validations": [
+        {
+          "name": "expected action state roll",
+          "passed": true
+        },
+        {
+          "name": "roll has at least four actual tumble poses",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-roll-w.gif",
+      "filmstrip": "drain/drain-roll-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-sword-n",
+      "background": "drain",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_n",
+        "atk_n1",
+        "atk_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-sword-n.gif",
+      "filmstrip": "drain/drain-sword-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-sword-e",
+      "background": "drain",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-sword-e.gif",
+      "filmstrip": "drain/drain-sword-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-sword-s",
+      "background": "drain",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_s",
+        "atk_s1",
+        "atk_s3",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-sword-s.gif",
+      "filmstrip": "drain/drain-sword-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-sword-w",
+      "background": "drain",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-sword-w.gif",
+      "filmstrip": "drain/drain-sword-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-wood-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-wood-n.gif",
+      "filmstrip": "drain/drain-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-wood-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-wood-e.gif",
+      "filmstrip": "drain/drain-shield-wood-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-wood-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-wood-s.gif",
+      "filmstrip": "drain/drain-shield-wood-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-wood-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-wood-w.gif",
+      "filmstrip": "drain/drain-shield-wood-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-green-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "green shield upgrade flag is enabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-green-n.gif",
+      "filmstrip": "drain/drain-shield-green-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-green-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "green shield upgrade flag is enabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-green-e.gif",
+      "filmstrip": "drain/drain-shield-green-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-green-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "green shield upgrade flag is enabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-green-s.gif",
+      "filmstrip": "drain/drain-shield-green-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-green-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "green shield upgrade flag is enabled",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-green-w.gif",
+      "filmstrip": "drain/drain-shield-green-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-walk-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "guard_n1",
+        "guard_n2",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-walk-n.gif",
+      "filmstrip": "drain/drain-shield-walk-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-walk-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "guard_e1",
+        "guard_e2",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-walk-e.gif",
+      "filmstrip": "drain/drain-shield-walk-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-walk-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "guard_s1",
+        "guard_s2",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-walk-s.gif",
+      "filmstrip": "drain/drain-shield-walk-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-shield-walk-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_e",
+        "guard_e1",
+        "guard_e2",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        },
+        {
+          "name": "directional action actually travels",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-shield-walk-w.gif",
+      "filmstrip": "drain/drain-shield-walk-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bow-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_n0",
+        "bow_n1",
+        "bow_n2",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bow-n.gif",
+      "filmstrip": "drain/drain-bow-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bow-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_e0",
+        "bow_e1",
+        "bow_e2",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bow-e.gif",
+      "filmstrip": "drain/drain-bow-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bow-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_s0",
+        "bow_s1",
+        "bow_s2",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bow-s.gif",
+      "filmstrip": "drain/drain-bow-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bow-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_e0",
+        "bow_e1",
+        "bow_e2",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bow-w.gif",
+      "filmstrip": "drain/drain-bow-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-lamp-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-lamp-n.gif",
+      "filmstrip": "drain/drain-lamp-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-lamp-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "use_e1",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-lamp-e.gif",
+      "filmstrip": "drain/drain-lamp-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-lamp-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_s",
+        "use_s1",
+        "use_s2",
+        "use_s3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-lamp-s.gif",
+      "filmstrip": "drain/drain-lamp-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-lamp-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "use_e1",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-lamp-w.gif",
+      "filmstrip": "drain/drain-lamp-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bomb-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bomb-n.gif",
+      "filmstrip": "drain/drain-bomb-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bomb-e",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "use_e1",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bomb-e.gif",
+      "filmstrip": "drain/drain-bomb-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bomb-s",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_s",
+        "use_s1",
+        "use_s2",
+        "use_s3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bomb-s.gif",
+      "filmstrip": "drain/drain-bomb-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-bomb-w",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_e",
+        "use_e1",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-bomb-w.gif",
+      "filmstrip": "drain/drain-bomb-w-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-cape-n",
+      "background": "drain",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_n1",
+        "cape_n2",
+        "cape_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-cape-n.gif",
+      "filmstrip": "drain/drain-cape-n-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-cape-e",
+      "background": "drain",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-cape-e.gif",
+      "filmstrip": "drain/drain-cape-e-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-cape-s",
+      "background": "drain",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_s1",
+        "cape_s2",
+        "cape_s3",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-cape-s.gif",
+      "filmstrip": "drain/drain-cape-s-frames.png"
+    },
+    {
+      "folder": "drain",
+      "name": "drain-cape-w",
+      "background": "drain",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "drain/drain-cape-w.gif",
+      "filmstrip": "drain/drain-cape-w-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-sword-n",
+      "background": "forest",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_n",
+        "atk_n1",
+        "atk_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-sword-n.gif",
+      "filmstrip": "worlds/forest-sword-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-sword-e",
+      "background": "forest",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-sword-e.gif",
+      "filmstrip": "worlds/forest-sword-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-shield-wood-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-shield-wood-n.gif",
+      "filmstrip": "worlds/forest-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-shield-wood-s",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-shield-wood-s.gif",
+      "filmstrip": "worlds/forest-shield-wood-s-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-cape-n",
+      "background": "forest",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_n1",
+        "cape_n2",
+        "cape_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-cape-n.gif",
+      "filmstrip": "worlds/forest-cape-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-cape-e",
+      "background": "forest",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-cape-e.gif",
+      "filmstrip": "worlds/forest-cape-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-lamp-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-lamp-n.gif",
+      "filmstrip": "worlds/forest-lamp-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-bow-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_n0",
+        "bow_n1",
+        "bow_n2",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-bow-n.gif",
+      "filmstrip": "worlds/forest-bow-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "forest-bomb-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/forest-bomb-n.gif",
+      "filmstrip": "worlds/forest-bomb-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-sword-n",
+      "background": "blight",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_n",
+        "atk_n1",
+        "atk_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-sword-n.gif",
+      "filmstrip": "worlds/blight-sword-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-sword-e",
+      "background": "blight",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-sword-e.gif",
+      "filmstrip": "worlds/blight-sword-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-shield-wood-n",
+      "background": "blight",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-shield-wood-n.gif",
+      "filmstrip": "worlds/blight-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-shield-wood-s",
+      "background": "blight",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-shield-wood-s.gif",
+      "filmstrip": "worlds/blight-shield-wood-s-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-cape-n",
+      "background": "blight",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_n1",
+        "cape_n2",
+        "cape_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-cape-n.gif",
+      "filmstrip": "worlds/blight-cape-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-cape-e",
+      "background": "blight",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-cape-e.gif",
+      "filmstrip": "worlds/blight-cape-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-lamp-n",
+      "background": "blight",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-lamp-n.gif",
+      "filmstrip": "worlds/blight-lamp-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-bow-n",
+      "background": "blight",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_n0",
+        "bow_n1",
+        "bow_n2",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-bow-n.gif",
+      "filmstrip": "worlds/blight-bow-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "blight-bomb-n",
+      "background": "blight",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/blight-bomb-n.gif",
+      "filmstrip": "worlds/blight-bomb-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-sword-n",
+      "background": "cave",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_n",
+        "atk_n1",
+        "atk_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-sword-n.gif",
+      "filmstrip": "worlds/cave-sword-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-sword-e",
+      "background": "cave",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-sword-e.gif",
+      "filmstrip": "worlds/cave-sword-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-shield-wood-n",
+      "background": "cave",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-shield-wood-n.gif",
+      "filmstrip": "worlds/cave-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-shield-wood-s",
+      "background": "cave",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-shield-wood-s.gif",
+      "filmstrip": "worlds/cave-shield-wood-s-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-cape-n",
+      "background": "cave",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_n1",
+        "cape_n2",
+        "cape_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-cape-n.gif",
+      "filmstrip": "worlds/cave-cape-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-cape-e",
+      "background": "cave",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-cape-e.gif",
+      "filmstrip": "worlds/cave-cape-e-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-lamp-n",
+      "background": "cave",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real lamp interaction window entered",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-lamp-n.gif",
+      "filmstrip": "worlds/cave-lamp-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-bow-n",
+      "background": "cave",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "bow_n0",
+        "bow_n1",
+        "bow_n2",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "real arrow projectile emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-bow-n.gif",
+      "filmstrip": "worlds/cave-bow-n-frames.png"
+    },
+    {
+      "folder": "worlds",
+      "name": "cave-bomb-n",
+      "background": "cave",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "use_n1",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "real armed bomb object emitted",
+          "passed": true
+        }
+      ],
+      "gif": "worlds/cave-bomb-n.gif",
+      "filmstrip": "worlds/cave-bomb-n-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-rock",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-rock.gif",
+      "filmstrip": "special-v2/lift-carry-throw-rock-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-boulder",
+      "background": "cave",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-boulder.gif",
+      "filmstrip": "special-v2/lift-carry-throw-boulder-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-pot",
+      "background": "cave",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-pot.gif",
+      "filmstrip": "special-v2/lift-carry-throw-pot-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush-n",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush-n.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-n-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush-e",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_n",
+        "carry_n1",
+        "carry_n2",
+        "carry_s",
+        "carry_s1",
+        "idle_e",
+        "idle_n",
+        "lift_e0",
+        "lift_e1",
+        "lift_e2",
+        "use_n2",
+        "use_n3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush-e.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-e-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush-s",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_s",
+        "idle_e",
+        "idle_s",
+        "lift_s0",
+        "lift_s1",
+        "lift_s2",
+        "use_e2",
+        "use_e3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush-s.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-s-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush-w",
+      "background": "forest",
+      "states": [
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "carry_e",
+        "carry_n",
+        "carry_n1",
+        "carry_s",
+        "carry_s1",
+        "carry_s2",
+        "idle_e",
+        "idle_s",
+        "lift_e0",
+        "lift_e1",
+        "lift_e2",
+        "use_s2",
+        "use_s3"
+      ],
+      "validations": [
+        {
+          "name": "expected action state carry",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush-w.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-w-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "lift-carry-throw-bush-sword-drop",
+      "background": "forest",
+      "states": [
+        "attack",
+        "carry",
+        "lift",
+        "normal"
+      ],
+      "poses": [
+        "atk_e",
+        "atk_e1",
+        "atk_e3",
+        "carry_e",
+        "carry_e1",
+        "carry_e2",
+        "carry_n",
+        "idle_e",
+        "idle_n",
+        "lift_n0",
+        "lift_n1",
+        "lift_n2"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        },
+        {
+          "name": "real carried load present",
+          "passed": true
+        },
+        {
+          "name": "real thrown load actor released",
+          "passed": true
+        },
+        {
+          "name": "sword interrupts carry after releasing load",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/lift-carry-throw-bush-sword-drop.gif",
+      "filmstrip": "special-v2/lift-carry-throw-bush-sword-drop-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-drowning",
+      "background": "forest",
+      "states": [
+        "fall",
+        "normal"
+      ],
+      "poses": [
+        "drown_1",
+        "drown_2",
+        "drown_3",
+        "idle_e",
+        "walk_e1"
+      ],
+      "validations": [
+        {
+          "name": "expected action state fall",
+          "passed": true
+        },
+        {
+          "name": "water fall subtype is active",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-drowning.gif",
+      "filmstrip": "special-v2/forest-drowning-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-pit-fall",
+      "background": "forest",
+      "states": [
+        "fall",
+        "normal"
+      ],
+      "poses": [
+        "fall_1",
+        "fall_2",
+        "fall_3",
+        "idle_s",
+        "walk_s1",
+        "walk_s2"
+      ],
+      "validations": [
+        {
+          "name": "expected action state fall",
+          "passed": true
+        },
+        {
+          "name": "pit fall subtype is active",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-pit-fall.gif",
+      "filmstrip": "special-v2/forest-pit-fall-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-ledge-jump",
+      "background": "forest",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_s1",
+        "cape_s2",
+        "cape_s3",
+        "idle_s",
+        "walk_s1"
+      ],
+      "validations": [
+        {
+          "name": "actual ledge-drop jump entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-ledge-jump.gif",
+      "filmstrip": "special-v2/forest-ledge-jump-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-hurt-n",
+      "background": "forest",
+      "states": [
+        "hurt",
+        "normal"
+      ],
+      "poses": [
+        "hurt_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "actual contact hurt state entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-hurt-n.gif",
+      "filmstrip": "special-v2/forest-hurt-n-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-hurt-e",
+      "background": "forest",
+      "states": [
+        "hurt",
+        "normal"
+      ],
+      "poses": [
+        "hurt_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "actual contact hurt state entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-hurt-e.gif",
+      "filmstrip": "special-v2/forest-hurt-e-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-hurt-s",
+      "background": "forest",
+      "states": [
+        "hurt",
+        "normal"
+      ],
+      "poses": [
+        "hurt_s",
+        "idle_s"
+      ],
+      "validations": [
+        {
+          "name": "actual contact hurt state entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-hurt-s.gif",
+      "filmstrip": "special-v2/forest-hurt-s-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-hurt-w",
+      "background": "forest",
+      "states": [
+        "hurt",
+        "normal"
+      ],
+      "poses": [
+        "hurt_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "actual contact hurt state entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-hurt-w.gif",
+      "filmstrip": "special-v2/forest-hurt-w-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-death",
+      "background": "forest",
+      "states": [
+        "dead"
+      ],
+      "poses": [
+        "dead_0",
+        "dead_1",
+        "dead_2"
+      ],
+      "validations": [
+        {
+          "name": "actual death state entered",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-death.gif",
+      "filmstrip": "special-v2/forest-death-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-cap-return-drop-in",
+      "background": "forest",
+      "states": [
+        "jump",
+        "normal",
+        "swallowed"
+      ],
+      "poses": [
+        "255",
+        "cape_s1",
+        "cape_s2",
+        "cape_s3",
+        "fall_2",
+        "fall_3",
+        "idle_s",
+        "jump_s"
+      ],
+      "validations": [
+        {
+          "name": "cap invokes actual swallow state",
+          "passed": true
+        },
+        {
+          "name": "cap returns through ceiling drop",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-cap-return-drop-in.gif",
+      "filmstrip": "special-v2/forest-cap-return-drop-in-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "forest-item-get-bow",
+      "background": "forest",
+      "states": [
+        "itemget",
+        "normal"
+      ],
+      "poses": [
+        "idle_n",
+        "itemget"
+      ],
+      "validations": [
+        {
+          "name": "actual chest invokes item-get state",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/forest-item-get-bow.gif",
+      "filmstrip": "special-v2/forest-item-get-bow-frames.png"
+    },
+    {
+      "folder": "special-v2",
+      "name": "drain-forest-transition",
+      "background": "drain",
+      "states": [
+        "hurt",
+        "normal"
+      ],
+      "poses": [
+        "255",
+        "hurt_n",
+        "idle_n",
+        "walk_n1"
+      ],
+      "validations": [
+        {
+          "name": "ordinary exit reaches forest",
+          "passed": true
+        }
+      ],
+      "gif": "special-v2/drain-forest-transition.gif",
+      "filmstrip": "special-v2/drain-forest-transition-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "forest-crown-sword-n",
+      "background": "forest",
+      "states": [
+        "attack",
+        "normal"
+      ],
+      "poses": [
+        "atk_n",
+        "atk_n1",
+        "atk_n3",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "expected action state attack",
+          "passed": true
+        }
+      ],
+      "gif": "fore/forest-crown-sword-n.gif",
+      "filmstrip": "fore/forest-crown-sword-n-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "forest-crown-shield-wood-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "fore/forest-crown-shield-wood-n.gif",
+      "filmstrip": "fore/forest-crown-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "forest-crown-cape-e",
+      "background": "forest",
+      "states": [
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "expected action state jump",
+          "passed": true
+        },
+        {
+          "name": "cape visibly gains height",
+          "passed": true
+        }
+      ],
+      "gif": "fore/forest-crown-cape-e.gif",
+      "filmstrip": "fore/forest-crown-cape-e-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "forest-rock-behind-shield-wood-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "fore/forest-rock-behind-shield-wood-n.gif",
+      "filmstrip": "fore/forest-rock-behind-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "forest-rock-front-shield-wood-n",
+      "background": "forest",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "fore/forest-rock-front-shield-wood-n.gif",
+      "filmstrip": "fore/forest-rock-front-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "fore",
+      "name": "drain-counter-shield-wood-n",
+      "background": "drain",
+      "states": [
+        "normal"
+      ],
+      "poses": [
+        "guard_n",
+        "idle_n"
+      ],
+      "validations": [
+        {
+          "name": "shield raised from held item button",
+          "passed": true
+        },
+        {
+          "name": "wooden shield upgrade flag is disabled",
+          "passed": true
+        }
+      ],
+      "gif": "fore/drain-counter-shield-wood-n.gif",
+      "filmstrip": "fore/drain-counter-shield-wood-n-frames.png"
+    },
+    {
+      "folder": "interrupt",
+      "name": "air-hurt-recovery",
+      "background": "forest",
+      "states": [
+        "hurt",
+        "jump",
+        "normal"
+      ],
+      "poses": [
+        "cape_e1",
+        "cape_e2",
+        "cape_e3",
+        "hurt_e",
+        "idle_e"
+      ],
+      "validations": [
+        {
+          "name": "actual contact hurt state entered",
+          "passed": true
+        },
+        {
+          "name": "actual cape jump precedes contact",
+          "passed": true
+        },
+        {
+          "name": "ordinary enemy collision triggers airborne hurt",
+          "passed": true
+        },
+        {
+          "name": "exactly one contact hit is isolated",
+          "passed": true
+        }
+      ],
+      "gif": "interrupt/air-hurt-recovery.gif",
+      "filmstrip": "interrupt/air-hurt-recovery-frames.png",
+      "intentional_behavior_change": true,
+      "recovery_observation": {
+        "landed": true,
+        "final_state": "normal",
+        "final_z_q16": 0,
+        "final_zvel_q16": 0,
+        "final_hp": 22
+      }
+    },
+    {
+      "folder": "interrupt",
+      "name": "roll-wall-bounce",
+      "background": "forest",
+      "states": [
+        "normal",
+        "roll"
+      ],
+      "poses": [
+        "idle_e",
+        "roll_1"
+      ],
+      "validations": [
+        {
+          "name": "actual roll entered",
+          "passed": true
+        },
+        {
+          "name": "physical wall triggers the airborne bounce",
+          "passed": true
+        }
+      ],
+      "gif": "interrupt/roll-wall-bounce.gif",
+      "filmstrip": "interrupt/roll-wall-bounce-frames.png",
+      "intentional_behavior_change": true,
+      "recovery_observation": {
+        "landed": true,
+        "final_state": "normal",
+        "final_z_q16": 0,
+        "final_zvel_q16": 0,
+        "final_hp": 24
+      }
+    }
+  ],
+  "count": 99,
+  "implemented_states": [
+    "normal",
+    "roll",
+    "attack",
+    "hurt",
+    "fall",
+    "jump",
+    "itemget",
+    "dead",
+    "lift",
+    "carry",
+    "swallowed"
+  ],
+  "pose_coverage": {
+    "seen": [
+      "idle_s",
+      "walk_s1",
+      "walk_s2",
+      "idle_n",
+      "walk_n1",
+      "walk_n2",
+      "idle_e",
+      "walk_e1",
+      "walk_e2",
+      "atk_s",
+      "atk_n",
+      "atk_e",
+      "atk_s1",
+      "atk_n1",
+      "atk_e1",
+      "atk_s3",
+      "atk_n3",
+      "atk_e3",
+      "roll_1",
+      "roll_2",
+      "roll_3",
+      "roll_4",
+      "roll_5",
+      "roll_6",
+      "roll_7",
+      "hurt_s",
+      "hurt_n",
+      "hurt_e",
+      "jump_s",
+      "itemget",
+      "carry_s",
+      "carry_s1",
+      "carry_s2",
+      "carry_n",
+      "carry_n1",
+      "carry_n2",
+      "carry_e",
+      "carry_e1",
+      "carry_e2",
+      "drown_1",
+      "drown_2",
+      "drown_3",
+      "fall_1",
+      "fall_2",
+      "fall_3",
+      "guard_s",
+      "guard_n",
+      "guard_e",
+      "use_n1",
+      "cape_n1",
+      "use_n2",
+      "cape_n2",
+      "use_n3",
+      "cape_n3",
+      "use_e1",
+      "cape_e1",
+      "use_e2",
+      "cape_e2",
+      "use_e3",
+      "cape_e3",
+      "use_s1",
+      "cape_s1",
+      "use_s2",
+      "cape_s2",
+      "use_s3",
+      "cape_s3",
+      "guard_n1",
+      "guard_n2",
+      "guard_e1",
+      "guard_e2",
+      "guard_s1",
+      "guard_s2",
+      "lift_n0",
+      "lift_n1",
+      "lift_n2",
+      "lift_e0",
+      "lift_e1",
+      "lift_e2",
+      "lift_s0",
+      "lift_s1",
+      "lift_s2",
+      "dead_0",
+      "dead_1",
+      "dead_2",
+      "bow_n0",
+      "bow_n1",
+      "bow_n2",
+      "bow_e0",
+      "bow_e1",
+      "bow_e2",
+      "bow_s0",
+      "bow_s1",
+      "bow_s2",
+      "roll_n1",
+      "roll_n6",
+      "roll_n7",
+      "roll_s1",
+      "roll_s6",
+      "roll_s7"
+    ],
+    "not_seen": [
+      "jump_n",
+      "jump_e"
+    ]
+  },
+  "activation_checks": {
+    "passed": 166,
+    "total": 166
+  },
+  "gameplay_differences": [
+    {
+      "name": "air-hurt-recovery",
+      "different_frames": [
+        {
+          "tick": 13,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 14,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 15,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 16,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 17,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 18,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 19,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 20,
+          "fields": [
+            "state",
+            "timer",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 21,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 22,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 23,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 24,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 25,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 26,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 27,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 28,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 29,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 30,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 31,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 32,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 33,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 34,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 35,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 36,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 37,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 38,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 39,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 40,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 41,
+          "fields": [
+            "state",
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 42,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 43,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 44,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 45,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 46,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 47,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 48,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 49,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 50,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 51,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 52,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 53,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 54,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 55,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 56,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 57,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 58,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 59,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 60,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 61,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 62,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 63,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 64,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 65,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 66,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 67,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 68,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 69,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 70,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 71,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 72,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 73,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 74,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 75,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 76,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 77,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 78,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 79,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 80,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 81,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 82,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 83,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 84,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 85,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 86,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 87,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 88,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 89,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 90,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 91,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 92,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 93,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 94,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 95,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 96,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 97,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 98,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 99,
+          "fields": [
+            "timer",
+            "position",
+            "z_q16",
+            "zvel_q16"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "roll-wall-bounce",
+      "different_frames": [
+        {
+          "tick": 16,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 17,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 18,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 19,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 20,
+          "fields": [
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 21,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 22,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 23,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 24,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 25,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 26,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 27,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 28,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 29,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 30,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 31,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 32,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 33,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 34,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 35,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 36,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 37,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 38,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 39,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 40,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 41,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 42,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 43,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 44,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 45,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 46,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 47,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 48,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 49,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 50,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 51,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 52,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 53,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 54,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 55,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 56,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 57,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 58,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 59,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 60,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 61,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 62,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 63,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 64,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 65,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 66,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 67,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 68,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 69,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 70,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 71,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 72,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 73,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 74,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 75,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 76,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 77,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 78,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 79,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 80,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 81,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 82,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 83,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 84,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 85,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 86,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 87,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 88,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        },
+        {
+          "tick": 89,
+          "fields": [
+            "z_q16",
+            "zvel_q16"
+          ]
+        }
+      ]
+    }
+  ]
+}

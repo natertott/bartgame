@@ -1,0 +1,6 @@
+drain hall: 370 metatiles (38 animated), 11 palettes, 106 pixels remapped
+{'background': 'drain', 'cell': None, 'video_frames': 180, 'vblanks': 180, 'game_updates': 180, 'passed': True}
+{'background': 'forest', 'cell': 5, 'video_frames': 180, 'vblanks': 180, 'game_updates': 180, 'passed': True}
+{'background': 'blight', 'cell': 19, 'video_frames': 180, 'vblanks': 180, 'game_updates': 180, 'passed': True}
+{'background': 'cave', 'cell': 0, 'video_frames': 180, 'vblanks': 180, 'game_updates': 180, 'passed': True}
+{'background': 'heart', 'cell': 18, 'video_frames': 180, 'vblanks': 180, 'game_updates': 180, 'passed': True}
