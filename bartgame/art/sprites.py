@@ -104,3 +104,7 @@ reference_assets.apply(SHEETS)
 # Bloom carries the same material shapes that were visible on the ground.
 import bloom_loads
 bloom_loads.apply(SHEETS)
+
+# Larger treasure furniture and readable woodland thresholds share lift inks.
+import interactive_props
+SHEETS.extend(interactive_props.SHEETS)
