@@ -926,6 +926,10 @@ static void draw_action(Actor* a, bool8 behind) {
         if (sUseItem == EQ_BOW) {
             static const u8 bow[4] = { F_BLOOMFX_BOW_N0, F_BLOOMFX_BOW_E0, F_BLOOMFX_BOW_S0, F_BLOOMFX_BOW_E0 };
             base=bow[f];
+            /* Raise the far-facing bow just above the petals. Its grip
+               remains in the raised hands and meets the released arrow. */
+            if (f == FACE_N)
+                sy -= 4;
         } else if (sUseItem == EQ_LAMP) {
             static const u8 lamp[4] = { F_BLOOMFX_LAMP_N0, F_BLOOMFX_LAMP_E0, F_BLOOMFX_LAMP_S0, F_BLOOMFX_LAMP_E0 };
             base=lamp[f];
@@ -938,7 +942,7 @@ static void draw_action(Actor* a, bool8 behind) {
     } else if (a->state == PS_NORMAL && gPl.shield_up) {
         if (behind != (f == FACE_N))
             return;
-        static const s8 at[4][2] = { { -3,-27 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
+        static const s8 at[4][2] = { { 2,-24 }, { 2,-24 }, { -8,-16 }, { -18,-24 } };
         static const u8 frame[4] = { F_SHIELD_BACK, F_SHIELD_SIDE, F_SHIELD_FRONT, F_SHIELD_SIDE };
         draw_sprite(PX(a->x)+at[f][0]-gCamX, PX(a->y)+at[f][1]-PX(a->z)-gCamY,
                     SHEET_SHIELD, SHIELD_TILE, player_shield_frame(frame[f]), f==FACE_W, a->prio, player_shield_palette(frame[f]));
