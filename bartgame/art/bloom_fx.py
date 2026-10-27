@@ -52,7 +52,7 @@ def sword(direction, phase):
     if 1<=phase<=3:
         # A single restrained contour keeps the full outer reach visible;
         # the short cream leading segment travels with the steel blade.
-        stroke(c,curve,2)
+        stroke(c,curve,3)
         q=(.82,.5,.18)[phase-1] if direction in ('n','s') else (.18,.5,.82)[phase-1]
         at=round(q*(len(curve)-1))
         # A tapered leading edge reads as a passing crescent, while the
@@ -158,4 +158,14 @@ for tool,draw in (('bow',bow),('lamp',lamp),('cape',cape)):
         for phase in range(3):FRAMES['%s_%s%d'%(tool,direction,phase)]=draw(direction,phase)
 for name,rows in FRAMES.items():
     assert len(rows)==32 and all(len(row)==32 for row in rows),name
-SHEETS=[{'name':'bloomfx','w':32,'h':32,'pal':'gear','frames':FRAMES}]
+def ground_shadow():
+    c=Canvas(16,8)
+    for y in range(2,6):
+        for x in range(2,14):
+            distance=((x-7.5)/6)**2+((y-3.5)/2)**2
+            if distance<.60 or (distance<1 and (x+y)%2==0):c.set(x,y,1)
+    return c.rows()
+
+
+SHEETS=[{'name':'bloomfx','w':32,'h':32,'pal':'gear','frames':FRAMES},
+        {'name':'bloomshadow','w':16,'h':8,'pal':'hero','frames':{'shadow':ground_shadow()}}]

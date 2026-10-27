@@ -2,6 +2,8 @@
 
 Idle/walking art and palette remain untouched. Weapons, carried objects and
 swing trails are separate engine layers, so these poses contain Bloom only.
+Directional guard steps, lift poses and collapse frames append to the old
+frame order. Existing frame IDs and the 32-tile streamed body stay stable.
 All frames use the original 64x32 sheet, with feet anchored at (32, 32).
 """
 from px import Canvas
@@ -15,6 +17,8 @@ SWORD_HAND = {
     's': ((42, 19), (32, 26), (22, 20)),
 }
 USE_HAND = {'n': (39, 16), 'e': (42, 19), 's': (39, 23)}
+BOW_HAND = {'n': (32, 9), 'e': (42, 14), 's': (32, 24)}
+CARRY_HAND = ((25, 7), (39, 7))
 
 
 def _poly(c, points, color):
@@ -98,14 +102,30 @@ def _base(idle, facing, dx=0, dy=0):
 
 def _arm(c, shoulder, elbow, hand, raised=False):
     """One compact leaf sleeve and a small cream hand, with joined clusters."""
-    _line(c,[shoulder,elbow,hand],1,5)
-    _line(c,[shoulder,elbow,hand],3,3)
-    _line(c,[shoulder,(elbow[0],elbow[1]-1),hand],5,2)
+    _line(c,[shoulder,elbow,hand],1,3)
+    _line(c,[shoulder,elbow,hand],3,2)
+    _line(c,[shoulder,(elbow[0],elbow[1]-1),hand],5)
     _line(c,[(shoulder[0]-1,shoulder[1]-1),(elbow[0]-1,elbow[1]-1)],10)
     hx,hy = hand
     c.rect(hx-1,hy-1,hx+1,hy+1,1)
     c.rect(hx-1,hy-1,hx,hy,15)
     c.set(hx+1,hy,14)
+
+
+def _head_in_front(c, idle, facing, dy=0):
+    """The blossom occludes far-side arms instead of wearing gloves on it."""
+    for y,row in enumerate(idle[facing][:17]):
+        for x,ch in enumerate(row):
+            if ch != '.':c.set(x,y+dy,int(ch,16))
+
+
+def _boots(c, rows):
+    for y in range(25,32):
+        for x in range(64):c.set(x,y,-1)
+    for y,row in enumerate(rows):
+        if y<25:continue
+        for x,ch in enumerate(row):
+            if ch not in '.7':c.set(x,y,int(ch,16))
 
 
 def _finish(c):
@@ -124,11 +144,16 @@ def _attack(idle, facing, phase):
     # The free arm balances the changing sword arm; the flower's head and
     # expression stay intact while the shoulders turn into the blow.
     if facing == 'n':
-        _arm(c,(27,17),(25,19),(24,22))
-        _arm(c,(37,17),(hand[0],19),hand)
+        active=27 if phase==2 else 37
+        free=37 if phase==2 else 27
+        _arm(c,(free,18),(free,20),(free+(-1 if free<32 else 1),22))
+        _arm(c,(active,17),((active+hand[0])//2,18),hand)
+        _head_in_front(c,idle,facing,1 if phase==0 else 0)
     elif facing == 's':
-        _arm(c,(27,18),(24,20),(23,22))
-        _arm(c,(37,18),(hand[0],22),hand)
+        active=27 if phase==2 else 37
+        free=37 if phase==2 else 27
+        _arm(c,(free,18),(free,20),(free+(-2 if free<32 else 2),22))
+        _arm(c,(active,18),((active+hand[0])//2,22),hand)
     else:
         _arm(c,(29,18),(27,20),(28,22))
         _arm(c,(36,18),(39,19),hand)
@@ -149,14 +174,32 @@ def _use(idle, facing, phase):
     else:
         _arm(c,(29,18),(32,21),(37,20))
         _arm(c,(36,17),(39,17 if phase == 1 else 18),hand)
+    if facing=='n':_head_in_front(c,idle,facing,1 if phase==0 else 0)
+    return _finish(c)
+
+
+def _bow(idle, facing, phase):
+    c=_base(idle,facing,0,1 if phase==2 else 0)
+    hand=BOW_HAND[facing]
+    if facing=='n':
+        _arm(c,(27,18),(24,13),(27,10))
+        _arm(c,(37,18),(40,13),hand)
+        _head_in_front(c,idle,facing,1 if phase==2 else 0)
+    elif facing=='s':
+        _arm(c,(27,18),(27,22),(29,24))
+        _arm(c,(37,18),(37,22),hand)
+    else:
+        _arm(c,(29,18),(33,17),(36,15))
+        _arm(c,(36,18),(39,16),hand)
     return _finish(c)
 
 
 def _guard(idle, facing):
     c = _base(idle,facing,0,1)
     if facing == 'n':
-        _arm(c,(27,18),(25,16),(27,13))
-        _arm(c,(37,18),(39,16),(37,13))
+        _arm(c,(27,18),(30,17),(34,14))
+        _arm(c,(37,18),(40,18),(42,16))
+        _head_in_front(c,idle,facing,1)
     elif facing == 's':
         _arm(c,(27,19),(28,22),(31,23))
         _arm(c,(37,19),(36,22),(33,23))
@@ -167,16 +210,17 @@ def _guard(idle, facing):
 
 
 def _carry(idle, facing, step):
-    c = _base(idle,facing,0,1 if step else 0)
-    if facing == 'n':
-        _arm(c,(27,17),(25,19),(26,18))
-        _arm(c,(37,17),(40,19),(39,18))
-    elif facing == 's':
-        _arm(c,(27,18),(29,21),(34,19))
-        _arm(c,(37,18),(42,20),(43,17))
-    else:
-        _arm(c,(29,18),(32,21),(37,20))
-        _arm(c,(36,18),(42,21),(44,17))
+    c = _base(idle,facing)
+    _arm(c,(27,18),(21,13),CARRY_HAND[0])
+    _arm(c,(37,18),(43,13),CARRY_HAND[1])
+    _head_in_front(c,idle,facing)
+    if facing!='n':
+        # Near-side palms wrap the bottom corners of the overhead load;
+        # far-side north hands remain naturally behind the blossom.
+        for hx,hy in CARRY_HAND:
+            c.rect(hx-1,hy-1,hx+1,hy+1,1)
+            c.rect(hx-1,hy-1,hx,hy,15)
+            c.set(hx+1,hy,14)
     if step:
         # An alternating one-pixel boot step; the held load remains stable.
         for y in range(25,32):
@@ -190,6 +234,24 @@ def _carry(idle, facing, step):
                     continue
                 lift = (x < 32) == (step == 1)
                 c.set(x,y-int(lift),int(ch,16))
+    return _finish(c)
+
+
+def _lift(idle, facing, phase):
+    if phase==2:return _carry(idle,facing,0)
+    c=_base(idle,facing,0,2 if phase==0 else 1)
+    hands={
+        'n':(((27,23),(37,23)),((25,13),(39,13))),
+        'e':(((39,27),(45,25)),((35,17),(42,16))),
+        's':(((27,29),(37,29)),((26,17),(38,17))),
+    }[facing][phase]
+    if phase==0:
+        _arm(c,(27,20),(hands[0][0]-1,24),hands[0])
+        _arm(c,(37,20),(hands[1][0]+1,24),hands[1])
+    else:
+        _arm(c,(27,19),(23,17),hands[0])
+        _arm(c,(37,19),(42,17),hands[1])
+    if facing=='n':_head_in_front(c,idle,facing,2 if phase==0 else 1)
     return _finish(c)
 
 
@@ -225,6 +287,76 @@ def _itemget(idle):
     return _finish(c)
 
 
+def _crouch(idle, facing, depth):
+    """Keep the flower round while folding the coat and legs below it."""
+    src=idle[facing];c=Canvas(64,32)
+    for y,row in enumerate(src):
+        if y<17:
+            dest=y+depth
+        else:
+            dest=17+depth+round((y-17)*(14-depth)/14)
+        for x,ch in enumerate(row):
+            if ch!='.' and not (ch=='7' and y>=26):c.set(x,dest,int(ch,16))
+    return _finish(c)
+
+
+def _resample(rows, width, height, cx=32, cy=24, turns=0):
+    points=[(x,y) for y,row in enumerate(rows) for x,ch in enumerate(row) if ch!='.']
+    left,right=min(x for x,y in points),max(x for x,y in points)
+    top,bottom=min(y for x,y in points),max(y for x,y in points)
+    a=[list(row[left:right+1]) for row in rows[top:bottom+1]]
+    for _ in range(turns%4):a=[list(row) for row in zip(*a[::-1])]
+    h,w=len(a),len(a[0]);c=Canvas(64,32)
+    for y in range(height):
+        for x in range(width):
+            ch=a[min(h-1,int((y+.5)*h/height))][min(w-1,int((x+.5)*w/width))]
+            if ch!='.':c.set(cx-width//2+x,cy-height//2+y,int(ch,16))
+    return _finish(c)
+
+
+def _drown(idle, phase):
+    """A progressively submerged blossom and one small surface reflection.
+
+    No solid blue skirt, detached bubbles or baked terrain rectangle is
+    carried to a pond whose actual water may have a different colour.
+    """
+    c=Canvas(64,32);shift=(10,18,24)[phase]
+    for y,row in enumerate(idle['s'][:18]):
+        for x,ch in enumerate(row):
+            if ch!='.' and y+shift<29:c.set(x,y+shift,int(ch,16))
+    # The single connected lip fits inside the 16px water cell.
+    _line(c,[(25,27),(26,28),(29,29),(35,29),(38,28),(39,27)],12)
+    return c.rows()
+
+
+def _hurt(idle, facing):
+    c=_base(idle,facing,0,1)
+    if facing=='e':
+        _arm(c,(29,19),(26,22),(26,24))
+        _arm(c,(36,19),(39,22),(39,24))
+    else:
+        _arm(c,(27,19),(24,21),(24,23))
+        _arm(c,(37,19),(40,21),(40,23))
+    if facing=='n':_head_in_front(c,idle,facing,1)
+    return _finish(c)
+
+
+def _death(idle, phase):
+    if phase==0:return _crouch(idle,'s',3)
+    kneel=_crouch(idle,'s',7)
+    c=Canvas.from_rows(kneel)
+    # The little face closes its eyes while the flower slumps; preserve its
+    # petal outline and palette instead of flashing a standing hurt pose.
+    for y in (18,19):
+        for x in range(27,36):
+            if c.get(x,y)==1:c.set(x,y,15)
+    _line(c,[(27,18),(29,18)],1)
+    _line(c,[(33,18),(35,18)],1)
+    if phase==1:return _finish(c)
+    # Settle on the ground, a compact sideways flower and folded coat.
+    return _resample(_finish(c),29,18,cx=32,cy=23,turns=1)
+
+
 def apply(sheets):
     hero = next(s for s in sheets if s['name'] == 'hero')
     frames = hero['frames']
@@ -241,6 +373,25 @@ def apply(sheets):
             frames['use_'+f+str(phase+1)] = _use(idle,f,phase)
             frames['cape_'+f+str(phase+1)] = _cape(idle,f,phase)
         frames['jump_'+f] = frames['cape_'+f+'2']
+        frames['hurt_'+f] = _hurt(idle,f)
     frames['itemget'] = _itemget(idle)
+    clean_roll=frames['roll_3']
+    for phase,(w,h,cy) in enumerate(((22,20,22),(16,15,25),(10,9,27))):
+        frames['fall_'+str(phase+1)]=_resample(clean_roll,w,h,cy=cy,turns=phase)
+        frames['drown_'+str(phase+1)]=_drown(idle,phase)
+    # Append only: save data and every established F_HERO_* index stay put.
+    for f in 'nes':
+        for step in (1,2):
+            c=Canvas.from_rows(frames['guard_'+f])
+            _boots(c,frames['walk_'+f+str(step)])
+            frames['guard_'+f+str(step)]=_finish(c)
+    for f in 'nes':
+        for phase in range(3):frames['lift_'+f+str(phase)]=_lift(idle,f,phase)
+    for phase in range(3):frames['dead_'+str(phase)]=_death(idle,phase)
+    for f in 'nes':
+        for phase in range(3):frames['bow_'+f+str(phase)]=_bow(idle,f,phase)
+    for f in 'ns':
+        for phase,depth in ((1,3),(6,7),(7,1)):
+            frames['roll_'+f+str(phase)]=_crouch(idle,f,depth)
     for name,rows in frames.items():
         assert len(rows) == 32 and all(len(row) == 64 for row in rows),name
