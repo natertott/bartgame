@@ -26,7 +26,7 @@ STATES=('normal','roll','attack','hurt','fall','jump','itemget','dead','talk','f
 ACTIONS=(('idle',1,(),32,0,0),('walk',1,('DIR',),48,34,48),
          ('roll',1,('DIR','R'),48,1,68),('sword',1,('B',),40,1,0),
          ('shield-wood',5,('B',),48,28,0),('shield-green',5,('B',),48,28,0),
-         ('shield-walk',5,('B','DIR'),64,40,48),
+         ('shield-walk',5,('B','DIR'),80,56,48),
          ('bow',6,('B',),44,1,0),('lamp',3,('B',),48,1,0),
          ('bomb',2,('B',),64,1,0),('cape',4,('B',),56,1,48))
 
@@ -346,6 +346,35 @@ class Suite:
         self.reset(point,0,5)
         self.record('drain-counter-shield-wood-n',0,48,{8:[('B',True)],36:[('B',False)]},point,'Actual authored TT_FRONT counter foreground; player priority1 follows normal rendering.')
         self.save()
+
+
+def combine_reports(root,folders=('drain','worlds','special-v2','fore')):
+    """Index independently captured groups without duplicating their traces."""
+    root=Path(root);defs=B.definitions(root/'assets.h')
+    poses={v:k[7:].lower() for k,v in defs.items() if k.startswith('F_HERO_')}
+    captures=[];seen=set();checks=[];hashes=set();differences=[]
+    for folder in folders:
+        report=json.loads((root/folder/'suite.json').read_text());hashes.add(report['rom_sha256'])
+        assert not report['missing'],(folder,report['missing'])
+        for row in report['captures']:
+            checks.extend(row['validations'])
+            seen.update(t['hero_frame'] for t in row['trace'] if t['game_state']==1 and t['hero_frame'] in poses)
+            captures.append({'folder':folder,'name':row['name'],'background':row['background'],
+                             'states':row['states'],'poses':row['poses'],'validations':row['validations'],
+                             'gif':folder+'/'+row['name']+'.gif','filmstrip':folder+'/'+row['filmstrip']})
+            comparison=row.get('gameplay_comparison')
+            if comparison and comparison['different_frames']:
+                differences.append({'name':row['name'],'different_frames':comparison['different_frames']})
+    romhash=hashlib.sha256((root/'bartgame.gba').read_bytes()).hexdigest()
+    assert hashes=={romhash},hashes
+    assert all(c['passed'] for c in checks),checks
+    result={'rom_sha256':romhash,'fixture_version':3,'captures':captures,'count':len(captures),
+            'implemented_states':[s for s in STATES if s not in ('talk','frozen')],
+            'pose_coverage':{'seen':[poses[i] for i in sorted(seen)],'not_seen':[poses[i] for i in sorted(set(poses)-seen)]},
+            'activation_checks':{'passed':sum(c['passed'] for c in checks),'total':len(checks)},
+            'gameplay_differences':differences}
+    (root/'suite-index.json').write_text(json.dumps(result,indent=2)+'\n')
+    return result
 
 
 def main():
