@@ -162,6 +162,15 @@ def static_checks(args,old,new):
         box=alpha_bounds(raw,*pickup_meta[-2:]);size=[box[2]-box[0],box[3]-box[1]] if box else [0,0]
         check('native_scale','world pickup '+str(i)+' fits one tile',bool(box) and max(size)<=16 and 4<=min(size),size)
     check('native_scale','inventory illustrations remain separately authored 32px',new.sheet('icon32')[0][-2:]==(32,32))
+    exact_exceptions=[]
+    for index in range(new.defs['SHEET_ICON32_FRAMES']):
+        a=old.read(old.symbols['icon32_exact_tiles']+index*512,512)
+        b=new.read(new.symbols['icon32_exact_tiles']+index*512,512)
+        same=a==b;allowed=same and primitive(b,32,32)
+        check('pixel_redraw','exact menu illustration '+str(index)+' native drawing changed',not same or allowed,
+              'explicit transparent none illustration' if allowed else None)
+        if allowed:exact_exceptions.append(index)
+    details['unchanged_exact_menu_primitives']=exact_exceptions
     check('native_scale','portrait illustrations have six native frames',new.defs['SHEET_FACE_FRAMES']==6)
     glitter=new.named('metatile_glitter',len(expected))
     check('glitter','multiple native materials explicitly support glitter',sum(bool(v) for v in glitter)>=8,sum(bool(v) for v in glitter))
