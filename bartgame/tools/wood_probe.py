@@ -148,10 +148,18 @@ def main():
     i = free_slot(c)
     fx, fy = P.player_pos(c)
     put_actor(c, i, AK_PROJ, 0, fx, fy - 30, 6, flags=1, dir_=16, speed=0x100, damage=2, timer=1)
-    P.press(c, 'B', 2, 4)
+    # The native sword now sweeps through three painted contact regions.
+    # A centred incoming seed meets the later part of that swing rather
+    # than an invisible full-width rectangle on its first active frame.
+    hp_before_reflection = P.r16(c, pl)
+    P.press(c, 'B', 2, 0)
+    for _ in range(13):
+        if P.actor(c, i)['kind'] != AK_PROJ or P.r8(c, A + i * 64 + 48) == 1:
+            break
+        P.run(c, 1)
     a = P.actor(c, i)
     v0 = P.r8(c, A + i * 64 + 48)
-    check('DEFLECT: the seed is turned north, the hero\'s', a['kind'] == AK_PROJ and v0 == 1 and P.r8(c, A + i * 64 + 6) == 0, 'kind %d v0 %d dir %d' % (a['kind'], v0, P.r8(c, A + i * 64 + 6)))
+    check('DEFLECT: the seed is turned north, the hero\'s', a['kind'] == AK_PROJ and v0 == 1 and P.r8(c, A + i * 64 + 6) == 0 and P.r16(c, pl) == hp_before_reflection, 'kind %d v0 %d dir %d hp %d' % (a['kind'], v0, P.r8(c, A + i * 64 + 6), P.r16(c, pl)))
     y0 = a['y']
     P.run(c, 6)
     check('DEFLECT: it flies away up the room', P.actor(c, i)['kind'] != AK_PROJ or P.actor(c, i)['y'] < y0, 'y %d -> %d' % (y0, P.actor(c, i)['y']))
