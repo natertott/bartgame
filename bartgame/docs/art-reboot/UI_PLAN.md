@@ -6,18 +6,18 @@ interface is authored in `art/reboot_ui.py`, with the compact runtime HUD in
 
 ## Implemented contracts
 
-- All51 named kit tiles,4 HUD tiles,6 UI sprite marks,13 map markers,12 dots
+- All 51 named kit tiles, 4 HUD tiles, 6 UI sprite marks, 13 map markers, 12 dots
   and the cursor use the shared native materials; identifiers remain stable.
-- All97 glyph advances match the frozen baseline. New six-pixel capitals and
+- All 97 glyph advances match the frozen baseline. New six-pixel capitals and
   five-pixel lowercase use the existing nine-row storage and text wrapping.
-- Six48×48 portraits match the new world NPC identities and use fifteen shared
-  inks each, padded to legal64×64 hardware canvases.
-- The title is drawn directly at240×160 from27 shared RGB555 colours. Its
+- Six 48×48 portraits match the new world NPC identities and use fifteen shared
+  inks each, padded to legal 64×64 hardware canvases.
+- The title is drawn directly at 240×160 from 27 shared RGB555 colours. Its
   prompts overlay a dark-water channel integrated with dirty roots and masonry.
-- The24px HUD uses a96×24 fixed BG canvas for ten hearts, currency, keys and
-  the R lifting cue. Equipment uses dedicated16px drawings. The minimap paints
-  a15px cell grid inside its existing32px hardware canvas; its bottom is clear.
-- The vitals canvas reserves36 BG tiles rather than the old six-tile purse.
+- The 24px HUD uses a 96×24 fixed BG canvas for ten hearts, currency, keys and
+  the R lifting cue. Equipment uses dedicated 16px drawings. The minimap paints
+  a 15px cell grid inside its existing 32px hardware canvas; its bottom is clear.
+- The vitals canvas reserves 36 BG tiles rather than the old six-tile purse.
   Fullscreen pages reuse that space, and returning to play rebuilds it.
 
 Native source previews are explicitly labelled. Actual title, menu, HUD, shop
