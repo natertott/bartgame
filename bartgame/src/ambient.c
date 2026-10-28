@@ -11,7 +11,7 @@
 #include "text.h"
 #include "ambient.h"
 
-#define AMBIENT_MAX_SITES 256
+#define AMBIENT_MAX_SITES (ROOM_MAX_W * ROOM_MAX_H)
 #define AMBIENT_VIEW_SITES 24
 typedef struct {
     s16 x,y;
@@ -43,27 +43,23 @@ static int surface(int x,int y) {
 }
 
 void ambient_room_reset(void) {
-    int bx,by,k;
+    int tx,ty,k;
     gAmbientSiteCount=gAmbientPotential=gAmbientVisible=gAmbientPeaks=0;
     sAmbientTile=0;
     sAmbientFrame=0xFFFFFFFF;
-    /* At most one reflection in each 32px patch. Choose an authored shiny
-       material within it, so a nearby dry path never receives a stray star. */
-    for(by=0;by<gRoom.h;by+=2) for(bx=0;bx<gRoom.w;bx+=2) {
-        u32 h=hash32(gWorld.seed,(gGame.area*997+gGame.cell*131+by*32+bx)*97);
-        for(k=0;k<4;k++) {
-            int at=(k+(h&3))&3,tx=bx+(at&1),ty=by+(at>>1);
-            if(tx>=gRoom.w || ty>=gRoom.h)continue;
-            int material=surface(tx,ty);
-            if(!material)continue;
-            AmbientSite* s=&sAmbientSites[gAmbientSiteCount++];
-            s->tx=tx;s->ty=ty;
-            s->x=tx*16+4+((h>>8)&7);
-            s->y=ty*16+4+((h>>12)&7);
-            s->phase=(h>>16)&63;
-            s->foreground=material==2;
-            break;
-        }
+    /* Every authored reflective cell can contribute one glint. The viewport
+       still selects at most 24 sites and phases them independently; dry
+       paths remain empty while wet leaves and stone can glitter richly. */
+    for(ty=0;ty<gRoom.h;ty++) for(tx=0;tx<gRoom.w;tx++) {
+        int material=surface(tx,ty);
+        if(!material)continue;
+        u32 h=hash32(gWorld.seed,(gGame.area*997+gGame.cell*131+ty*ROOM_MAX_W+tx)*97);
+        AmbientSite* s=&sAmbientSites[gAmbientSiteCount++];
+        s->tx=tx;s->ty=ty;
+        s->x=tx*16+4+((h>>8)&7);
+        s->y=ty*16+4+((h>>12)&7);
+        s->phase=(h>>16)&63;
+        s->foreground=material==2;
     }
     /* A stable spatial shuffle avoids spending the viewport's finite glint
        budget only along its top edge in dense, wet rooms. */
