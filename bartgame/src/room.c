@@ -211,6 +211,10 @@ static void render_cell(int x, int y) {
    occlusion while its feet remain beneath an authored overlay. A fringe
    touching the sprite's upper bounding box is not a tree in front of it.
    Explicit UI, flying-effect and background-shadow priorities stay intact. */
+static bool8 floor_mark(u16 mt) {
+    return mt==MT_MYST_SWITCH || mt==MT_MYST_SWITCH_DOWN;
+}
+
 int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     int x,y,front=0,behind=0;
     int half=MIN(width/2,16), top=py-MIN(height,64)-z, bottom=py-z-1;
@@ -219,13 +223,17 @@ int room_prop_priority(int px,int py,int z,int width,int height,int priority) {
     if(priority!=2)return priority;
     if(px>=0 && py>=4 && px<gRoom.w*16 && py<gRoom.h*16) {
         u16 feet=gRoom.overlay[((py-4)/16)*ROOM_MAX_W+px/16];
-        if(feet!=MT_NONE && feet!=MT_SPARKLE && feet!=MT_SPARKLE_WHITE && feet!=MT_BLIGHT_MIST &&
+        if(feet!=MT_NONE && feet!=MT_SPARKLE && feet!=MT_SPARKLE_WHITE && feet!=MT_BLIGHT_MIST && !floor_mark(feet) &&
            !(interactive_chest_ready() && interactive_chest_overlay(feet)))
             return priority;
     }
     for(y=y0;y<=y1;y++) for(x=x0;x<=x1;x++) {
         int at=y*ROOM_MAX_W+x;
         u16 mt=gRoom.ground[at],ov=gRoom.overlay[at];
+        if(floor_mark(ov)) {
+            front=1; /* A plate belongs beneath feet, not above the body. */
+            continue;
+        }
         if(ov!=MT_NONE && ov!=MT_SPARKLE && ov!=MT_SPARKLE_WHITE && ov!=MT_BLIGHT_MIST &&
            !(interactive_chest_ready() && interactive_chest_overlay(ov)))
             continue; /* this cell displays the authored crown, not material */

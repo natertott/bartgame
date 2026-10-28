@@ -31,10 +31,13 @@ static bool8 incidental(u16 mt) {
    happens to share its cell. A nonreflective authored crown hides the floor. */
 static int surface(int x,int y) {
     u16 ground=room_get(x,y),overlay=room_get_overlay(x,y);
-    if(!incidental(overlay))
-        return metatile_glitter[overlay] ? 2 : 0;
+    if(!incidental(overlay)) {
+        if(!metatile_glitter[overlay])return 0;
+        return overlay==MT_MYST_SWITCH || overlay==MT_MYST_SWITCH_DOWN ? 1 : 2;
+    }
     if(ground==MT_NONE || !metatile_glitter[ground])return 0;
-    if(metatile_prop[ground] || metatile_type[ground]==TT_CHEST ||
+    if(metatile_prop[ground])return metatile_coll[ground] ? 2 : 1;
+    if(metatile_type[ground]==TT_CHEST ||
        metatile_type[ground]==TT_CHEST_OPEN)return 2;
     return 1;
 }
